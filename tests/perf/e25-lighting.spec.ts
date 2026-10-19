@@ -1,3 +1,4 @@
+import { collectedHeap } from './collected-heap';
 import { devices, type Page } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../e2e/fixtures';
@@ -26,12 +27,14 @@ async function measure(page: Page, preset: 'L1' | 'night') {
   }, preset);
 }
 
-test('T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets', async ({ page }) => {
+test('T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets', async ({ page, context }) => {
   test.setTimeout(240_000);
   await page.goto('/?test=1&renderer=webgl&quality=high&audio=muted&dpr=1'); await page.waitForFunction(() => Boolean(window.__SS__));
   const morning = await measure(page, 'L1'); await page.locator('canvas').screenshot({ path: `${out}/perf-high-morning.png` });
-  const night = await measure(page, 'night'); await page.locator('canvas').screenshot({ path: `${out}/perf-high-night.png` });
+  const night = { ...await measure(page, 'night'), ...await collectedHeap(page, context) };
+  await page.locator('canvas').screenshot({ path: `${out}/perf-high-night.png` });
   mkdirSync(out, { recursive: true }); writeFileSync(`${out}/perf-high.json`, JSON.stringify({ morning, night }, null, 2) + '\n');
+  expect(night.heapMB).toBeLessThanOrEqual(qualityBudgets.high.heapMB);
   for (const run of [morning, night]) {
     expect(run.quality).toBe('high'); expect(run.infected).toBe(60);
     expect(run.frameMsP95).toBeLessThanOrEqual(qualityBudgets.high.frameMs); expect(run.drawCalls).toBeLessThanOrEqual(qualityBudgets.high.drawCalls);
@@ -48,8 +51,10 @@ test.describe('Pixel 7 emulated low', () => {
     const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
     await page.goto('/?test=1&renderer=webgl&quality=low&audio=muted'); await page.waitForFunction(() => Boolean(window.__SS__));
     const morning = await measure(page, 'L1'); await page.screenshot({ path: `${out}/perf-low-morning.png` });
-    const night = await measure(page, 'night'); await page.screenshot({ path: `${out}/perf-low-night.png` });
+    const night = { ...await measure(page, 'night'), ...await collectedHeap(page, context) };
+    await page.screenshot({ path: `${out}/perf-low-night.png` });
     mkdirSync(out, { recursive: true }); writeFileSync(`${out}/perf-low.json`, JSON.stringify({ morning, night }, null, 2) + '\n');
+    expect(night.heapMB).toBeLessThanOrEqual(qualityBudgets.low.heapMB);
     for (const run of [morning, night]) { expect(run.quality).toBe('low'); expect(run.drawCalls).toBeLessThanOrEqual(qualityBudgets.low.drawCalls); }
     // E18-AC08 measures this phone proxy at p50 (>= 30 fps). The daylight frame of the same scene is the
     // baseline the light field must not degrade: night may cost at most 10% (or 1.5 ms) over the morning.

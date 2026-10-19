@@ -1,0 +1,118 @@
+[
+  {
+    "label": "matrix-final-webgl2",
+    "command": [
+      "npm",
+      "run",
+      "scene:catalog",
+      "--",
+      "--matrix",
+      "--filter",
+      "perf-heap-*",
+      "--backend",
+      "webgl2",
+      "--jobs",
+      "1",
+      "--out",
+      "docs/reports/perf-w5b/final-source-webgl2"
+    ],
+    "env": {
+      "SCENE_PORT": "35683",
+      "SCENE_SERVER": "preview"
+    },
+    "exitCode": 0
+  },
+  {
+    "label": "native-final-high-e18",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/l4-budgets.spec.ts",
+      "tests/perf/l7-district.spec.ts",
+      "tests/perf/l7-encounters.spec.ts",
+      "tests/perf/e18-desktop.spec.ts",
+      "tests/perf/e18-devices.spec.ts",
+      "tests/perf/e18-memory.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--grep",
+      "high|T-E18"
+    ],
+    "env": {
+      "E2E_PORT": "35684",
+      "E2E_RENDERER": "webgpu",
+      "L7_PERF_BACKEND": "webgpu",
+      "E18_WEBGPU_PROXY": "1",
+      "L4_PERF_OUTPUT": "docs/reports/perf-w5b/stream-native-webgpu",
+      "L7_PERF_OUTPUT": "docs/reports/perf-w5b/stream-native-webgpu"
+    },
+    "exitCode": 0
+  },
+  {
+    "label": "matrix-final-webgpu",
+    "command": [
+      "npm",
+      "run",
+      "scene:catalog",
+      "--",
+      "--matrix",
+      "--filter",
+      "perf-heap-*",
+      "--backend",
+      "webgpu",
+      "--jobs",
+      "1",
+      "--out",
+      "docs/reports/perf-w5b/final-source-webgpu"
+    ],
+    "env": {
+      "SCENE_PORT": "35685",
+      "SCENE_SERVER": "preview"
+    },
+    "exitCode": 0
+  },
+  {
+    "label": "native-final-light-weather-lifecycle",
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/e25-lighting.spec.ts",
+      "tests/perf/e25-light-lab.spec.ts",
+      "tests/perf/weather.spec.ts",
+      "tests/perf/l5-budgets.spec.ts",
+      "tests/perf/l7-lifecycle.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "env": {
+      "E2E_PORT": "35686"
+    },
+    "exitCode": 0
+  },
+  {
+    "label": "source-final-e18-regression",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/e18-counters.spec.ts",
+      "tests/perf/e18-download.spec.ts",
+      "tests/e2e/e18-quality.spec.ts",
+      "tests/e2e/e18-mobile.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "env": {
+      "E2E_PORT": "35687"
+    },
+    "exitCode": 0
+  }
+]

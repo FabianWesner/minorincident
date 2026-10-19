@@ -1,0 +1,13 @@
+{
+  "path": "public/assets/layouts/D-FAIR.layout.json",
+  "base": "8db67f235",
+  "byteIdenticalToBase": true,
+  "sha256": "d2fa32aa78dc8950f2c6885710a16fd21df00ed83596f2dd6b5a18b9bebc0030",
+  "missingAnchors": [
+    "pair-plaza",
+    "pair-harbor-street",
+    "pair-metro-entrance",
+    "pair-kessler-lane"
+  ],
+  "failure": "tests/visual/l7-pairs.spec.ts reads .position from these missing raw-layout anchors before its image loop."
+}

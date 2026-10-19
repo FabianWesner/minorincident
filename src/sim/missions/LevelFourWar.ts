@@ -498,9 +498,10 @@ export class LevelFourWar {
     // Nearby concealed exits reach the camp first; distant street mouths must not consume the whole alarm allocation.
     entries.sort((a, b) => dist(a.at, courier) - dist(b.at, courier));
     const count = Math.min(this.alarmInfected(), entries.length * l4.war.group[1]);
+    const soldiers = this.liveSoldiers();
     for (let n = 0; n < count; n++) {
       const { at, origin } = entries[Math.floor(n / l4.war.group[1])];
-      const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true);
+      const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true, l4.war.headroom, false, true);
       if (!id) break;
       const arrival = world.entities.get(id)!;
       // Keep every alarm identity at its authored exit. A crowded/parked hull
@@ -508,7 +509,13 @@ export class LevelFourWar {
       Object.assign(arrival.transform, at);
       world.solids.admit(arrival, 'l4.alarm.exit', 1.9);
       ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
-      const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
+      // No soldier moves or takes damage during this synchronous arrival batch.
+      // Preserve stable ties without sorting the same roster for every arrival.
+      let soldier: EntitySnapshot | undefined, nearest = Infinity;
+      for (const candidate of soldiers) {
+        const d = dist(candidate.transform, at);
+        if (d < nearest) { nearest = d; soldier = candidate; }
+      }
       if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
     }
     world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
@@ -549,20 +556,24 @@ export class LevelFourWar {
   }
   /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
   private spawnRoom(keep = 0): boolean {
-    const cap = l4.war.caps.characters[this.low ? 'low' : 'high'];
-    return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap - keep;
+    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep;
+    if (!(limit > 0)) return false;
+    let count = 0;
+    for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && (e.infected || e.civilian) && ++count >= limit) return false;
+    return true;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
-  private emerge(at: Point, push = false, headroom: number = l4.war.headroom, streetSlot = false): number {
+  private emerge(at: Point, push = false, headroom: number = l4.war.headroom, streetSlot = false, deferAdmission = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     const reserved = ai.director.reserved - (streetSlot ? 1 : 0);
     const keep = streetSlot ? 0 : Math.max(0, headroom - this.streetReserve());
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
-    // Admit around the authored exit once, using exact hull/body clearance.
-    // A coarse nav snap followed by admission displaced arrivals twice.
-    const id = o.spawnPedestrian(at), e = world.entities.get(id)!;
-    o.turnNow(e);
+    // Keep the authored point rather than snapping it through a coarse route
+    // margin. The alarm caller assigns its exit and performs one final
+    // admission synchronously; other emergences retain normal admission.
+    const id = o.spawnPedestrian(at, {}, !deferAdmission), e = world.entities.get(id)!;
+    o.turnNow(e, undefined, !deferAdmission);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
     return id;

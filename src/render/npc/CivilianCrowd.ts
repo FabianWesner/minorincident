@@ -11,7 +11,7 @@ import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
-import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, type MeshLambertNodeMaterial, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
+import { Color, Group, InstancedMesh, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, type MeshLambertNodeMaterial, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
 import type { Materials } from '../Materials';
 import { civilianMaterial } from './CivilianMaterial';
 import { AssetRegistry } from '../../assets/registry';
@@ -105,12 +105,12 @@ class CivilianBatch extends Group {
   private strideScale = 1;
   private readonly capacity: number;
   private readonly corpseLod: 'lod1' | 'lod2';
-  private readonly frame: InstancedBufferAttribute;
-  private readonly tint: InstancedBufferAttribute;
+  private readonly frame: InterleavedBufferAttribute;
+  private readonly tint: InterleavedBufferAttribute;
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (negative for a routine grip); w is the
    * displayed pose-atlas row. Packed so the draw stays within WebGPU's 8 vertex buffers (a separate `_pose_frame`
    * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
-  private readonly overlay: InstancedBufferAttribute;
+  private readonly overlay: InterleavedBufferAttribute;
   private readonly shirt = new Color();
   private registry?: AssetRegistry;
   source = 'placeholder';
@@ -123,9 +123,12 @@ class CivilianBatch extends Group {
     // The phone's plaza war and final-horde carpet keep every body using the shipped far
     // silhouette. Freeze this choice so later quality changes cannot duplicate it.
     this.corpseLod = world.scenario === 'L3' || (world.scenario === 'L4' || world.scenario === 'L7') && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
-    this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
-    this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
-    this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
+    // The fields are consumed together. One stream avoids three WebGPU writes
+    // per visible model while retaining every float and attribute location.
+    const data = new InstancedInterleavedBuffer(new Float32Array(this.capacity * 9), 9, 1).setUsage(StreamDrawUsage);
+    this.frame = new InterleavedBufferAttribute(data, 1, 0);
+    this.tint = new InterleavedBufferAttribute(data, 4, 1);
+    this.overlay = new InterleavedBufferAttribute(data, 4, 5);
     this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
@@ -181,7 +184,7 @@ class CivilianBatch extends Group {
     // Warm the band actually used for settled bodies: L4/L7 phones freeze LOD2,
     // while desktop and L6 freeze LOD1. Warming a different band left the first
     // phone corpse baking geometry and compiling its shader during combat.
-    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.world.scenario === 'L6');
+    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, true);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
@@ -287,9 +290,9 @@ class CivilianBatch extends Group {
     this.mesh.castShadow = !low && !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
     if (index) {
-      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
-        attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
-      }
+      this.mesh.instanceMatrix.clearUpdateRanges(); this.mesh.instanceMatrix.addUpdateRange(0, index * 16); this.mesh.instanceMatrix.needsUpdate = true;
+      const data = this.frame.data;
+      data.clearUpdateRanges(); data.addUpdateRange(0, index * data.stride); data.needsUpdate = true;
     }
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {

@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5 -> 2.28.24.66:/srv/mi/ws/perf-heap-w5-eac263
+[remote] cache-gc deleted:none
+[remote] sync 24s, 22334 files; job /srv/mi/jobs/perf-heap-w5-eac263-69383-1792377644; queueing for a slot
+[runner] slot 0 acquired; load 0.44 0.15 0.23
+
+ RUN  v5.0.3 /srv/mi/jobs/perf-heap-w5-eac263-69383-1792377644
+
+ ✓  functional  tests/unit/render/routine-props-pool.test.ts (2 tests) 48ms
+ ✓  functional  tests/unit/render/instanced-occlusion.test.ts (1 test) 56ms
+ ✓  functional  tests/unit/render/static-corpses.test.ts (13 tests) 805ms
+
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+   Start at  02:41:10
+   Duration  2.10s (transform 40%, tests 31%, import 28%, worker 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 24s, remote total 7s)

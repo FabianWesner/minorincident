@@ -1,0 +1,22 @@
+{
+  "name": "perf-heap-mounted-gun",
+  "note": "T-E22-20-mounted-muzzle: isolate the production HMG nest so its barrel, gunner and shot contacts are visible. The runner must die; its body remains in the last frames. Review the mounted barrel and aiming pose on both tiers, zooms and backends.",
+  "seed": 10,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "props": [{ "asset": "prop.hmg-nest", "at": [0, 0], "yaw": 0 }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [1, 4] },
+    { "id": "hmg", "kind": "pedestrian", "at": [0, -1.8], "yaw": 180,
+      "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier" },
+      "state": { "ally": { "role": "soldier", "weapon": "hmg" } } },
+    { "id": "target", "kind": "infected", "at": [-3, -1.8], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [-1, 0], "zoom": 1 },
+  "frames": 120,
+  "sheet": 8,
+  "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "actorHealth": { "target": [0, 0] } }
+}

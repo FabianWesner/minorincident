@@ -29,7 +29,8 @@ export class Civilians {
     world.events.on('noise', event => { if (event.type === 'noise' && event.radius >= 6) this.alarm(event.position); });
   }
   private duration(range: readonly [number, number]): number { return range[0] + Math.floor(this.rng.next() * (range[1] - range[0] + 1)); }
-  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; zooAnimal?: ZooSpecies; owner?: number; waypoints?: Point[]; model?: string; schedule?: CivilianActivity[]; panicReaction?: 'flee' | 'freeze' } = {}): number {
+  /** Scripted alarm initialization can hand admission to its synchronous final-placement owner. */
+  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; zooAnimal?: ZooSpecies; owner?: number; waypoints?: Point[]; model?: string; schedule?: CivilianActivity[]; panicReaction?: 'flee' | 'freeze' } = {}, admit = true): number {
     const def = civilianRoles.find(d => d.role === role) ?? civilianRoles[0];
     const nav = this.world.infected!.nav;
     const animal = options.zooAnimal ? infectedDef(`infected.${options.zooAnimal}`) : undefined;
@@ -45,7 +46,7 @@ export class Civilians {
       combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
     if (options.pet === 'dog') { civilian.model = dogModel(this.world.seed, e.id, false); civilian.variant = civilian.model.replace(/^amb\./, 'inf.'); }
-    this.world.spatial.set(e.id, position.x, position.z); this.world.solids.admit(e, 'civilian.spawn'); return e.id;
+    this.world.spatial.set(e.id, position.x, position.z); if (admit) this.world.solids.admit(e, 'civilian.spawn'); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);

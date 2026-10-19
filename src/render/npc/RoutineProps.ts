@@ -17,6 +17,13 @@ export class RoutineProps extends Group {
   readonly aiming = new Map<number, { until: number; direction: { x: number; y?: number; z: number } }>();
   private readonly meshes = new Map<CivilianProp, InstancedMesh>();
   private readonly gripMatrix = new Matrix4();
+  private readonly droppedMatrix = new Matrix4();
+  private readonly droppedTilt = new Matrix4().makeRotationZ(-Math.PI / 2);
+  private readonly droppedBounds = new Box3();
+  private readonly point = new Vector3();
+  private readonly contactPool: RoutineProps['contacts'] = [];
+  private readonly gunPool: (RoutineProps['guns'][number] & { muzzle: Vector3 })[] = [];
+  private readonly probeHands = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(shading?: Materials) {
     super(); this.name = 'morning-props';
     const part = (geometry: BufferGeometry, color: string, x = 0, y = 0, z = 0) => {
@@ -46,7 +53,7 @@ export class RoutineProps extends Group {
       'watering-can': [part(new CylinderGeometry(.13, .13, .22, 12), '#68a093', .035, -.29), bar(.18, .035, -.045, 0, '#426b60'), ...[-.09, .09].map(z => part(new CylinderGeometry(.01, .01, .14, 8), '#426b60', .035, -.11, z)), part(new CylinderGeometry(.033, .045, .3, 8).rotateZ(-.85), '#68a093', .225, -.22), part(new CylinderGeometry(.065, .025, .05, 10).rotateZ(-.85), '#bec9ba', .335, -.13)],
     };
     for (const [name, parts] of Object.entries(shapes)) {
-      const geometry = mergeGeometries(parts)!; parts.forEach(p => p.dispose());
+      const geometry = mergeGeometries(parts)!; parts.forEach(p => p.dispose()); geometry.computeBoundingBox();
       const material = shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
       const mesh = new InstancedMesh(geometry, material, 128); mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;
       this.meshes.set(name as CivilianProp, mesh); this.add(mesh);
@@ -57,11 +64,18 @@ export class RoutineProps extends Group {
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
     this.place(prop, this.gripMatrix);
     const muzzle = prop === 'pistol' ? [0, .02, .2] : prop === 'rifle' ? [0, .02, .9] : prop === 'hunting-rifle' ? [0, .01, .97] : null;
-    if (muzzle) { this.muzzles.set(entity, new Vector3(...muzzle).applyMatrix4(this.gripMatrix)); this.guns.push({entity,geometry:this.meshes.get(prop)!.geometry,matrix:this.gripMatrix.clone()}); }
-    if (hand && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test')) {
-      const world = new Float32Array(hand.length), point = new Vector3();
-      for (let i = 0; i < hand.length; i += 3) point.fromArray(hand, i).applyMatrix4(matrix).toArray(world, i);
-      this.contacts.push({ entity, prop, hand: world, geometry: this.meshes.get(prop)!.geometry, matrix: this.gripMatrix.clone() });
+    if (muzzle) {
+      const gun = this.gunPool[this.guns.length] ??= { entity, geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4(), muzzle: new Vector3() };
+      gun.entity = entity; gun.geometry = this.meshes.get(prop)!.geometry; gun.matrix.copy(this.gripMatrix);
+      gun.muzzle.set(muzzle[0], muzzle[1], muzzle[2]).applyMatrix4(this.gripMatrix);
+      this.muzzles.set(entity, gun.muzzle); this.guns.push(gun);
+    }
+    if (hand && this.probeHands) {
+      const contact = this.contactPool[this.contacts.length] ??= { entity, prop, hand: new Float32Array(hand.length), geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4() };
+      if (contact.hand.length !== hand.length) contact.hand = new Float32Array(hand.length);
+      for (let i = 0; i < hand.length; i += 3) this.point.fromArray(hand, i).applyMatrix4(matrix).toArray(contact.hand, i);
+      contact.entity = entity; contact.prop = prop; contact.geometry = this.meshes.get(prop)!.geometry; contact.matrix.copy(this.gripMatrix);
+      this.contacts.push(contact);
     }
   }
   place(prop: CivilianProp, matrix: Matrix4): void {
@@ -75,9 +89,9 @@ export class RoutineProps extends Group {
     mesh.setMatrixAt(mesh.count++, matrix);
   }
   dropped(prop: CivilianProp, at: { x: number; y: number; z: number; yaw: number }): void {
-    const mesh = this.meshes.get(prop)!, pose = new Matrix4().makeRotationY(at.yaw).multiply(new Matrix4().makeRotationZ(-Math.PI / 2));
+    const mesh = this.meshes.get(prop)!, pose = this.droppedMatrix.makeRotationY(at.yaw).multiply(this.droppedTilt);
     if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
-    const floor = new Box3().copy(mesh.geometry.boundingBox!).applyMatrix4(pose).min.y;
+    const floor = this.droppedBounds.copy(mesh.geometry.boundingBox!).applyMatrix4(pose).min.y;
     pose.setPosition(at.x, at.y - floor + .015, at.z); this.place(prop, pose);
   }
   finish(): void { for (const mesh of this.meshes.values()) if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }

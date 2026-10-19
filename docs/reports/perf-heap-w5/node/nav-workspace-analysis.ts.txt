@@ -1,0 +1,26 @@
+import { writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { loadL4 } from '../sim-runner/l4Bots';
+import type { NavGrid, Wall } from '../../src/sim/ai/NavGrid';
+const Before = (createRequire(import.meta.url)('./nav-before.cjs') as { NavGrid: typeof NavGrid }).NavGrid;
+const { world } = await loadL4(2, 'low');
+try {
+  const after = world.infected!.nav;
+  const before = new Before(after.ground, after.walls, after.clearance, after.center, after.mask, after.cellSize);
+  const blocks = (after as unknown as { blockers: Map<number, Wall> }).blockers;
+  for (const [id, wall] of blocks) before.setBlocker(id, wall, true);
+  const refuges = (world.npcs!.civilians.outbreak as unknown as { refuges: { x: number; z: number }[] }).refuges;
+  const queries = refuges.flatMap(from => Array.from({ length: 36 }, (_, i) => ({ from, to: { x: from.x + Math.cos(i / 36 * Math.PI * 2) * (1.4 + i % 5 * .65), z: from.z + Math.sin(i / 36 * Math.PI * 2) * (1.4 + i % 5 * .65) }, radius: .35 })));
+  for (const q of queries) if (before.visible(q.from, q.to, q.radius) !== after.visible(q.from, q.to, q.radius)) throw new Error('oracle mismatch');
+  let sink = 0;
+  const run = (nav: NavGrid, loops: number) => { const start = performance.now(); for (let i = 0; i < loops; i++) for (const q of queries) sink += Number(nav.visible(q.from, q.to, q.radius)); return performance.now() - start; };
+  run(before, 10); run(after, 10);
+  const samples = [];
+  for (let i = 0; i < 8; i++) {
+    let old: number, current: number;
+    if (i % 2) { current = run(after, 30); old = run(before, 30); } else { old = run(before, 30); current = run(after, 30); }
+    samples.push({ beforeMs: old, afterMs: current });
+  }
+  const report = { seed: 2, tier: 'low', oracleQueries: queries.length, iterationsPerSample: 30, samples, sink };
+  writeFileSync('docs/reports/perf-heap-w5/node/nav-workspace.json', JSON.stringify(report, null, 2)); console.log(JSON.stringify(report));
+} finally { world.dispose(); }

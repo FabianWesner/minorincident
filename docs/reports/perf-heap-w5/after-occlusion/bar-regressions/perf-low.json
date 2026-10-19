@@ -1,0 +1,2422 @@
+{
+  "before": {
+    "chunkResidency": null,
+    "terrain": null,
+    "infected": {
+      "count": 100,
+      "liveCount": 100,
+      "available": 250
+    },
+    "effects": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
+      "enabled": true,
+      "colorblind": false,
+      "gore": "Full",
+      "quality": "low",
+      "flashReduction": false,
+      "time": 0.016666666666666666,
+      "lastSpray": {
+        "actionId": "",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 0,
+        "chunks": 0,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 0,
+      "particles": 0,
+      "particleCap": 512,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 30,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 120,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 8,
+      "submitted": 24,
+      "completed": 24,
+      "prebuilt": 24,
+      "failed": 0
+    },
+    "nodeBuilds": 253,
+    "profile": {
+      "other": {
+        "drawCalls": 25,
+        "triangles": 33535
+      },
+      "shadows": {
+        "drawCalls": 8,
+        "triangles": 27353
+      },
+      "crowd": {
+        "drawCalls": 6,
+        "triangles": 129520
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 27346
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 27346
+      },
+      "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+        "drawCalls": 1,
+        "triangles": 215
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+        "drawCalls": 1,
+        "triangles": 104
+      },
+      "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+        "drawCalls": 1,
+        "triangles": 84
+      },
+      "view:other/crowd-accessories/acc.hair-bun:lod1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+        "drawCalls": 1,
+        "triangles": 144
+      },
+      "view:other/crowd-accessories/acc.hair-afro:lod1": {
+        "drawCalls": 1,
+        "triangles": 120
+      },
+      "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+        "drawCalls": 1,
+        "triangles": 108
+      },
+      "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+        "drawCalls": 1,
+        "triangles": 72
+      },
+      "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+        "drawCalls": 1,
+        "triangles": 80
+      },
+      "view:other/sunset-grove/Mesh": {
+        "drawCalls": 4,
+        "triangles": 68
+      },
+      "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+        "drawCalls": 1,
+        "triangles": 132
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 5,
+        "triangles": 2760
+      },
+      "view:other/sunset-grove/scene-ground": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/sunset-grove/grass-gpu-wind": {
+        "drawCalls": 1,
+        "triangles": 0
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+        "drawCalls": 6,
+        "triangles": 6
+      },
+      "shadow:other/Render Pipeline/Render Pipeline": {
+        "drawCalls": 1,
+        "triangles": 1
+      }
+    },
+    "updateCpuMs": 2.3000001907348633,
+    "renderCpuMs": 1.3999996185302734,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 59.880239520957105,
+    "frameMs": 16.700000000000273,
+    "simMs": 0,
+    "simTicks": 0,
+    "simWorldMs": 0,
+    "simTickMs": 0,
+    "uiMs": 0,
+    "drawCalls": 39,
+    "triangles": 190408,
+    "geometries": 258,
+    "textures": 93,
+    "entities": 101,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 0,
+      "simMs": 51.69999980926514,
+      "viewMs": 2756
+    },
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 16,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 77830536,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L1"
+    }
+  },
+  "perf": {
+    "chunkResidency": null,
+    "terrain": null,
+    "infected": {
+      "count": 100,
+      "liveCount": 100,
+      "available": 250
+    },
+    "effects": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
+      "enabled": true,
+      "colorblind": false,
+      "gore": "Full",
+      "quality": "low",
+      "flashReduction": false,
+      "time": 0.016666666666666666,
+      "lastSpray": {
+        "actionId": "",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 0,
+        "chunks": 0,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 0,
+      "particles": 0,
+      "particleCap": 512,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 30,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 120,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 8,
+      "submitted": 24,
+      "completed": 24,
+      "prebuilt": 24,
+      "failed": 0
+    },
+    "nodeBuilds": 498,
+    "profile": {
+      "other": {
+        "drawCalls": 28,
+        "triangles": 34135
+      },
+      "shadows": {
+        "drawCalls": 8,
+        "triangles": 27353
+      },
+      "crowd": {
+        "drawCalls": 6,
+        "triangles": 129520
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 27346
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 27346
+      },
+      "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+        "drawCalls": 1,
+        "triangles": 215
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+        "drawCalls": 1,
+        "triangles": 104
+      },
+      "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+        "drawCalls": 1,
+        "triangles": 84
+      },
+      "view:other/crowd-accessories/acc.hair-bun:lod1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+        "drawCalls": 1,
+        "triangles": 144
+      },
+      "view:other/crowd-accessories/acc.hair-afro:lod1": {
+        "drawCalls": 1,
+        "triangles": 120
+      },
+      "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+        "drawCalls": 1,
+        "triangles": 108
+      },
+      "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+        "drawCalls": 1,
+        "triangles": 72
+      },
+      "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+        "drawCalls": 1,
+        "triangles": 80
+      },
+      "view:other/sunset-grove/Mesh": {
+        "drawCalls": 4,
+        "triangles": 68
+      },
+      "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+        "drawCalls": 1,
+        "triangles": 132
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 5,
+        "triangles": 2760
+      },
+      "view:other/sunset-grove/scene-ground": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/sunset-grove/grass-gpu-wind": {
+        "drawCalls": 1,
+        "triangles": 0
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+        "drawCalls": 6,
+        "triangles": 6
+      },
+      "shadow:other/Render Pipeline/Render Pipeline": {
+        "drawCalls": 1,
+        "triangles": 1
+      },
+      "view:other/infected-health-bars/Mesh": {
+        "drawCalls": 3,
+        "triangles": 600
+      }
+    },
+    "updateCpuMs": 2.6999998092651367,
+    "renderCpuMs": 1.3000001907348633,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 59.88023952095874,
+    "frameMs": 16.699999999999818,
+    "simMs": 0,
+    "simTicks": 0,
+    "simWorldMs": 0,
+    "simTickMs": 0,
+    "uiMs": 0,
+    "drawCalls": 42,
+    "triangles": 191008,
+    "geometries": 235,
+    "textures": 93,
+    "entities": 101,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 0,
+      "simMs": 19,
+      "viewMs": 1956.2000007629395
+    },
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 29,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 66812816,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L1"
+    }
+  },
+  "bars": {
+    "count": 100,
+    "draws": 3,
+    "bars": [
+      {
+        "id": 3,
+        "fraction": 1,
+        "x": 841.073025568295,
+        "y": 432.1476200351894,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.425149650875412,
+          1.7749982204384338,
+          -0.6182411944140611
+        ]
+      },
+      {
+        "id": 4,
+        "fraction": 1,
+        "x": 827.9738795851379,
+        "y": 442.31255256656823,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.464768988555512,
+          1.765776461695296,
+          0.29423593876644816
+        ]
+      },
+      {
+        "id": 5,
+        "fraction": 1,
+        "x": 809.6933068243827,
+        "y": 445.253054240569,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.016991386639738,
+          1.724079450219918,
+          0.9464619017269982
+        ]
+      },
+      {
+        "id": 6,
+        "fraction": 1,
+        "x": 800.5962388683826,
+        "y": 455.12530990180875,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.18724740056988,
+          1.7452196996180547,
+          1.7350424129070277
+        ]
+      },
+      {
+        "id": 7,
+        "fraction": 1,
+        "x": 790.3268975381428,
+        "y": 460.73795335090546,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.090343388621939,
+          1.6998372368582864,
+          2.27202767387724
+        ]
+      },
+      {
+        "id": 8,
+        "fraction": 1,
+        "x": 771.9736670786679,
+        "y": 467.6250184006195,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.842747226088115,
+          1.695207869573018,
+          3.141633668558363
+        ]
+      },
+      {
+        "id": 9,
+        "fraction": 1,
+        "x": 756.5101162776366,
+        "y": 471.28070415750756,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.57652114046391,
+          1.732734232726365,
+          3.802928921091471
+        ]
+      },
+      {
+        "id": 10,
+        "fraction": 1,
+        "x": 740.1716714949083,
+        "y": 478.07259827633357,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.348251261873635,
+          1.6763719369523074,
+          4.547405114922626
+        ]
+      },
+      {
+        "id": 11,
+        "fraction": 1,
+        "x": 725.6866123287649,
+        "y": 479.92151308632043,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.00721642187034,
+          1.6753799318135094,
+          5.052130662305721
+        ]
+      },
+      {
+        "id": 12,
+        "fraction": 1,
+        "x": 703.1833693590256,
+        "y": 484.50327549346486,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          9.549407796996313,
+          1.6695474314467589,
+          5.9079807401089965
+        ]
+      },
+      {
+        "id": 13,
+        "fraction": 1,
+        "x": 686.7262705212179,
+        "y": 485.7186879664337,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          9.146092889451225,
+          1.6924877326548327,
+          6.457074949752517
+        ]
+      },
+      {
+        "id": 14,
+        "fraction": 1,
+        "x": 667.9923918329528,
+        "y": 488.62196186764163,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          8.743788758428913,
+          1.7053290134267698,
+          7.136928611900572
+        ]
+      },
+      {
+        "id": 15,
+        "fraction": 1,
+        "x": 650.5813599559752,
+        "y": 487.94844813357116,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          8.24358870963217,
+          1.740714348525536,
+          7.6363697037395895
+        ]
+      },
+      {
+        "id": 16,
+        "fraction": 1,
+        "x": 626.5089781901531,
+        "y": 492.4476872764251,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          7.684670546754369,
+          1.6601959729133071,
+          8.45765521415759
+        ]
+      },
+      {
+        "id": 17,
+        "fraction": 1,
+        "x": 607.735634274384,
+        "y": 488.35521825526985,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          7.03192161549876,
+          1.7401292250380322,
+          8.882885113855302
+        ]
+      },
+      {
+        "id": 18,
+        "fraction": 1,
+        "x": 589.1535085407164,
+        "y": 499.12319034481027,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          6.878741786158258,
+          1.619993330465256,
+          9.780018021807997
+        ]
+      },
+      {
+        "id": 19,
+        "fraction": 1,
+        "x": 575.706254196741,
+        "y": 484.82677087415476,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          5.910743094636061,
+          1.6923813566204657,
+          9.613278254838818
+        ]
+      },
+      {
+        "id": 20,
+        "fraction": 1,
+        "x": 555.025729963364,
+        "y": 484.2362226759143,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          5.291702060877462,
+          1.6965602008002207,
+          10.186923111742416
+        ]
+      },
+      {
+        "id": 21,
+        "fraction": 1,
+        "x": 541.7310022828891,
+        "y": 477.73983681039107,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          4.601456754501832,
+          1.6925075448605682,
+          10.291444093810782
+        ]
+      },
+      {
+        "id": 22,
+        "fraction": 1,
+        "x": 522.4845833103604,
+        "y": 472.7088103775161,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          3.8793184278265613,
+          1.7732198560580912,
+          10.697372812513983
+        ]
+      },
+      {
+        "id": 23,
+        "fraction": 1,
+        "x": 504.48945119293086,
+        "y": 467.30053752782294,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          3.06763017555334,
+          1.7429625710355268,
+          10.96833744981766
+        ]
+      },
+      {
+        "id": 24,
+        "fraction": 1,
+        "x": 479.2586681846817,
+        "y": 468.9447417662945,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          2.4004921228131906,
+          1.7301564071364481,
+          11.763071888423557
+        ]
+      },
+      {
+        "id": 25,
+        "fraction": 1,
+        "x": 479.3892281014961,
+        "y": 455.8489947398705,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          1.786330329804791,
+          1.7611981461357331,
+          11.23051119609277
+        ]
+      },
+      {
+        "id": 26,
+        "fraction": 1,
+        "x": 461.9180054465404,
+        "y": 451.48240762544805,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          0.99343042967255,
+          1.701978014838744,
+          11.515416975603877
+        ]
+      },
+      {
+        "id": 27,
+        "fraction": 1,
+        "x": 450.9660940637116,
+        "y": 441.6719441723386,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          0.18212084353481117,
+          1.718671455892384,
+          11.433690871736538
+        ]
+      },
+      {
+        "id": 28,
+        "fraction": 1,
+        "x": 436.0981991515622,
+        "y": 433.6494426012766,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -0.6519329275357109,
+          1.747456247593533,
+          11.554088205620467
+        ]
+      },
+      {
+        "id": 29,
+        "fraction": 1,
+        "x": 426.5762859436712,
+        "y": 424.83880980847863,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -1.3672894808435103,
+          1.7858497037293901,
+          11.487666249053724
+        ]
+      },
+      {
+        "id": 30,
+        "fraction": 1,
+        "x": 406.77999892818536,
+        "y": 425.1011697481213,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -2.051760164548753,
+          1.6890769733687208,
+          12.02429820199611
+        ]
+      },
+      {
+        "id": 31,
+        "fraction": 1,
+        "x": 407.78324596801554,
+        "y": 409.27423230493315,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -2.7968053318736708,
+          1.7770635459277742,
+          11.370121617143738
+        ]
+      },
+      {
+        "id": 32,
+        "fraction": 1,
+        "x": 399.8307996918679,
+        "y": 401.7567781833738,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -3.5019348833715966,
+          1.7398908195714355,
+          11.253094270073085
+        ]
+      },
+      {
+        "id": 33,
+        "fraction": 1,
+        "x": 395.9744554313829,
+        "y": 390.35400762574216,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -4.285472328781623,
+          1.727771667755647,
+          10.852009850947951
+        ]
+      },
+      {
+        "id": 34,
+        "fraction": 1,
+        "x": 386.58691483415544,
+        "y": 380.5654956787969,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -5.097047144689789,
+          1.7731265883670275,
+          10.734217605673905
+        ]
+      },
+      {
+        "id": 35,
+        "fraction": 1,
+        "x": 375.4854233468157,
+        "y": 372.70350656454207,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -6.01840053683388,
+          1.6803929666258028,
+          10.65130098415625
+        ]
+      },
+      {
+        "id": 36,
+        "fraction": 1,
+        "x": 380.39151658657875,
+        "y": 363.94758332397754,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -6.2980063766657395,
+          1.7615438500593115,
+          10.152417758553305
+        ]
+      },
+      {
+        "id": 37,
+        "fraction": 1,
+        "x": 378.0013948907043,
+        "y": 354.00008018080416,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -7.015106980949277,
+          1.7342550762593802,
+          9.7381122824479
+        ]
+      },
+      {
+        "id": 38,
+        "fraction": 1,
+        "x": 375.878195755196,
+        "y": 344.72405207380257,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -7.6188359322483805,
+          1.770021179570044,
+          9.390498144405448
+        ]
+      },
+      {
+        "id": 39,
+        "fraction": 1,
+        "x": 378.136084073482,
+        "y": 332.62693522134356,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -8.308983867577922,
+          1.77341690022255,
+          8.73061634470642
+        ]
+      },
+      {
+        "id": 40,
+        "fraction": 1,
+        "x": 376.512142079594,
+        "y": 324.3863269499779,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -8.865927873696876,
+          1.7963249479045729,
+          8.393604231561092
+        ]
+      },
+      {
+        "id": 41,
+        "fraction": 1,
+        "x": 381.6713975708366,
+        "y": 313.2177741342151,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -9.504258945390106,
+          1.73482500992381,
+          7.608634186623981
+        ]
+      },
+      {
+        "id": 42,
+        "fraction": 1,
+        "x": 381.67983527024296,
+        "y": 305.80278079532405,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -10.013135462601916,
+          1.7229177051749502,
+          7.21670441172877
+        ]
+      },
+      {
+        "id": 43,
+        "fraction": 1,
+        "x": 376.535376967816,
+        "y": 297.2263979851941,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -10.682361252963418,
+          1.7892340434995972,
+          6.998192303844334
+        ]
+      },
+      {
+        "id": 44,
+        "fraction": 1,
+        "x": 389.25464009044913,
+        "y": 289.9203206228759,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -10.725824172859284,
+          1.8118144355475607,
+          6.203031761757586
+        ]
+      },
+      {
+        "id": 45,
+        "fraction": 1,
+        "x": 395.9630722243671,
+        "y": 280.2422481310905,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -11.180077832507074,
+          1.80231344178506,
+          5.4445024460374185
+        ]
+      },
+      {
+        "id": 46,
+        "fraction": 1,
+        "x": 403.4764329527792,
+        "y": 272.71946823936923,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -11.481237179275745,
+          1.7782452751096187,
+          4.751565114367487
+        ]
+      },
+      {
+        "id": 47,
+        "fraction": 1,
+        "x": 414.4703373287946,
+        "y": 262.22563046836905,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -11.775384027102866,
+          1.8337954651101853,
+          3.8327713104207035
+        ]
+      },
+      {
+        "id": 48,
+        "fraction": 1,
+        "x": 422.0004432026768,
+        "y": 254.7936737733694,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.031173194358203,
+          1.8462749037020671,
+          3.155765933983332
+        ]
+      },
+      {
+        "id": 49,
+        "fraction": 1,
+        "x": 424.37142453546164,
+        "y": 245.49517924292218,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.695676085370152,
+          1.7918717401448916,
+          2.476456489188969
+        ]
+      },
+      {
+        "id": 50,
+        "fraction": 1,
+        "x": 435.18601642385585,
+        "y": 242.42448276012138,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.469004216017893,
+          1.8463497599172172,
+          1.965486335511713
+        ]
+      },
+      {
+        "id": 51,
+        "fraction": 1,
+        "x": 449.52894719836195,
+        "y": 235.23634433576697,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.510532376461569,
+          1.8315640304106608,
+          1.0092481820895145
+        ]
+      },
+      {
+        "id": 52,
+        "fraction": 1,
+        "x": 459.2990944865042,
+        "y": 229.94568217003382,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.584187127362213,
+          1.8093512317451896,
+          0.31342875653616886
+        ]
+      },
+      {
+        "id": 53,
+        "fraction": 1,
+        "x": 470.5385903003729,
+        "y": 222.78883798093884,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.697097476972118,
+          1.8240049154878761,
+          -0.522840907162923
+        ]
+      },
+      {
+        "id": 54,
+        "fraction": 1,
+        "x": 484.597146714606,
+        "y": 221.93809993318922,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.211182663756333,
+          1.8581126134559938,
+          -1.0466820716235503
+        ]
+      },
+      {
+        "id": 55,
+        "fraction": 1,
+        "x": 493.1471650992041,
+        "y": 213.17823332962828,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.612882584828824,
+          1.8178768724217989,
+          -1.963167729124585
+        ]
+      },
+      {
+        "id": 56,
+        "fraction": 1,
+        "x": 504.6428354581341,
+        "y": 210.1874313011567,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.49252881727034,
+          1.7635292743371451,
+          -2.6354877469260956
+        ]
+      },
+      {
+        "id": 57,
+        "fraction": 1,
+        "x": 521.1836404062635,
+        "y": 204.93508897812552,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.273432405950466,
+          1.7739930007505222,
+          -3.578705285085654
+        ]
+      },
+      {
+        "id": 58,
+        "fraction": 1,
+        "x": 533.8927720308075,
+        "y": 201.24631682545066,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.014633958789219,
+          1.8304553066032412,
+          -4.232138972429162
+        ]
+      },
+      {
+        "id": 59,
+        "fraction": 1,
+        "x": 548.8584448386873,
+        "y": 198.11573164476457,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -11.708632045240819,
+          1.8256675365788482,
+          -5.002494373893917
+        ]
+      },
+      {
+        "id": 60,
+        "fraction": 1,
+        "x": 556.671473726717,
+        "y": 190.80161136945114,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -12.010293795482994,
+          1.8005764336742303,
+          -5.831042957014645
+        ]
+      },
+      {
+        "id": 61,
+        "fraction": 1,
+        "x": 570.4696492244018,
+        "y": 193.10324574294907,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -11.305104201617361,
+          1.8151410193317616,
+          -6.1625248698648605
+        ]
+      },
+      {
+        "id": 62,
+        "fraction": 1,
+        "x": 584.1268640891706,
+        "y": 192.6524852508124,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -10.865753339935175,
+          1.7900974753967347,
+          -6.729028368535026
+        ]
+      },
+      {
+        "id": 63,
+        "fraction": 1,
+        "x": 601.2266200017827,
+        "y": 189.14572473176878,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -10.441987423435485,
+          1.8329985121419696,
+          -7.564195429245665
+        ]
+      },
+      {
+        "id": 64,
+        "fraction": 1,
+        "x": 615.3336389647685,
+        "y": 189.42284384107893,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -9.885657510081344,
+          1.842716432290203,
+          -8.055817901489135
+        ]
+      },
+      {
+        "id": 65,
+        "fraction": 1,
+        "x": 632.2305802526822,
+        "y": 188.1378795095756,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -9.356125864002472,
+          1.841154944807819,
+          -8.779006476083005
+        ]
+      },
+      {
+        "id": 66,
+        "fraction": 1,
+        "x": 640.6578504334165,
+        "y": 195.34326644489104,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -8.61433424939598,
+          1.7586398708478157,
+          -8.662946592743396
+        ]
+      },
+      {
+        "id": 67,
+        "fraction": 1,
+        "x": 655.577829882327,
+        "y": 187.8571452210295,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -8.487730623550775,
+          1.8591782032469055,
+          -9.644700956239348
+        ]
+      },
+      {
+        "id": 68,
+        "fraction": 1,
+        "x": 669.106096226646,
+        "y": 190.28675136127558,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -7.864759850293922,
+          1.8123530695718983,
+          -10.02363774766615
+        ]
+      },
+      {
+        "id": 69,
+        "fraction": 1,
+        "x": 684.9472933510881,
+        "y": 190.47389693268747,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -7.250531401137991,
+          1.8235498186901609,
+          -10.582905380551693
+        ]
+      },
+      {
+        "id": 70,
+        "fraction": 1,
+        "x": 698.6700503473121,
+        "y": 191.7640358842874,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -6.629867251533902,
+          1.840509998942899,
+          -10.972373637133614
+        ]
+      },
+      {
+        "id": 71,
+        "fraction": 1,
+        "x": 711.9248374516671,
+        "y": 194.34781604988538,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -5.975837990231064,
+          1.8240723448520484,
+          -11.287881884433183
+        ]
+      },
+      {
+        "id": 72,
+        "fraction": 1,
+        "x": 725.788455786839,
+        "y": 197.18695031187136,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -5.257713455716036,
+          1.8311852039200645,
+          -11.574924634664136
+        ]
+      },
+      {
+        "id": 73,
+        "fraction": 1,
+        "x": 739.3420987928732,
+        "y": 199.91295762450733,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -4.574809486930981,
+          1.827702274830024,
+          -11.871108512311139
+        ]
+      },
+      {
+        "id": 74,
+        "fraction": 1,
+        "x": 752.5279547035682,
+        "y": 203.6486331880376,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -3.836125391695674,
+          1.8281484363463392,
+          -12.070622536359508
+        ]
+      },
+      {
+        "id": 75,
+        "fraction": 1,
+        "x": 766.8720047476017,
+        "y": 207.5690984368394,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -3.080047731178162,
+          1.7993355431012787,
+          -12.334995727031988
+        ]
+      },
+      {
+        "id": 76,
+        "fraction": 1,
+        "x": 779.2590576717147,
+        "y": 212.33239143733377,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -2.2780064179114277,
+          1.8328726865315303,
+          -12.381762672803895
+        ]
+      },
+      {
+        "id": 77,
+        "fraction": 1,
+        "x": 794.4165768493051,
+        "y": 217.14626700947903,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -1.3722891062774139,
+          1.8746914500798937,
+          -12.512882494271317
+        ]
+      },
+      {
+        "id": 78,
+        "fraction": 1,
+        "x": 802.6035181236307,
+        "y": 223.18364166125264,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -0.7875700834341757,
+          1.7818830019031893,
+          -12.476207201089373
+        ]
+      },
+      {
+        "id": 79,
+        "fraction": 1,
+        "x": 815.6542603237762,
+        "y": 227.0170350207056,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          -0.04538194767216197,
+          1.8134461376322264,
+          -12.616665448250373
+        ]
+      },
+      {
+        "id": 80,
+        "fraction": 1,
+        "x": 823.7835463783756,
+        "y": 234.27240822286424,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          0.680096894261041,
+          1.7988765472041877,
+          -12.38689159590323
+        ]
+      },
+      {
+        "id": 81,
+        "fraction": 1,
+        "x": 834.4977749973214,
+        "y": 240.6739394591821,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          1.412330867512459,
+          1.7604634921999676,
+          -12.345276358070436
+        ]
+      },
+      {
+        "id": 82,
+        "fraction": 1,
+        "x": 842.5520521970724,
+        "y": 247.41259124649403,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          2.1066102479210684,
+          1.7671189954161832,
+          -12.128033806537509
+        ]
+      },
+      {
+        "id": 83,
+        "fraction": 1,
+        "x": 853.1218759728451,
+        "y": 254.75230626730928,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          2.902164695158234,
+          1.7602991804673067,
+          -11.97535043831779
+        ]
+      },
+      {
+        "id": 84,
+        "fraction": 1,
+        "x": 860.2864976905685,
+        "y": 262.58936831437126,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          3.5827278444273247,
+          1.7375917901032665,
+          -11.691668136402072
+        ]
+      },
+      {
+        "id": 85,
+        "fraction": 1,
+        "x": 868.8077384249459,
+        "y": 268.78767577105657,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          4.267842456558547,
+          1.7798477912235597,
+          -11.49154502206759
+        ]
+      },
+      {
+        "id": 86,
+        "fraction": 1,
+        "x": 873.4456607077403,
+        "y": 279.58785240825375,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          4.976607346909056,
+          1.7229116158207134,
+          -10.965400744529461
+        ]
+      },
+      {
+        "id": 87,
+        "fraction": 1,
+        "x": 882.3751276519429,
+        "y": 285.51942520169956,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          5.681849670446589,
+          1.8101978162226118,
+          -10.747670207070875
+        ]
+      },
+      {
+        "id": 88,
+        "fraction": 1,
+        "x": 884.6985253898499,
+        "y": 297.4781894403105,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          6.317126902365111,
+          1.7144204001282901,
+          -10.12901515601746
+        ]
+      },
+      {
+        "id": 89,
+        "fraction": 1,
+        "x": 890.4988861084923,
+        "y": 302.94055012975184,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          6.844214111497308,
+          1.7670737467385962,
+          -9.889322896528704
+        ]
+      },
+      {
+        "id": 90,
+        "fraction": 1,
+        "x": 891.6536051863421,
+        "y": 313.5490139925291,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          7.45814303147931,
+          1.7986322119696325,
+          -9.182928204482337
+        ]
+      },
+      {
+        "id": 91,
+        "fraction": 1,
+        "x": 895.7545779417542,
+        "y": 321.3894059786473,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          7.973102747515966,
+          1.7762967804681153,
+          -8.831709810832663
+        ]
+      },
+      {
+        "id": 92,
+        "fraction": 1,
+        "x": 895.5144268673588,
+        "y": 331.0514782803303,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          8.458543926980106,
+          1.7887583847694515,
+          -8.184698819656482
+        ]
+      },
+      {
+        "id": 93,
+        "fraction": 1,
+        "x": 898.6151292072802,
+        "y": 340.4749820196648,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          8.977703872755768,
+          1.733568040283771,
+          -7.75219740170909
+        ]
+      },
+      {
+        "id": 94,
+        "fraction": 1,
+        "x": 896.0871020478885,
+        "y": 351.1873816193656,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          9.420380665113392,
+          1.7415025514534292,
+          -6.991396339962137
+        ]
+      },
+      {
+        "id": 95,
+        "fraction": 1,
+        "x": 895.7522717716506,
+        "y": 358.6537969728779,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          9.787536947425423,
+          1.7699114533780786,
+          -6.488159015676814
+        ]
+      },
+      {
+        "id": 96,
+        "fraction": 1,
+        "x": 891.1463155507266,
+        "y": 369.72640366755184,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.13593888883993,
+          1.7375135428772381,
+          -5.709825443030134
+        ]
+      },
+      {
+        "id": 97,
+        "fraction": 1,
+        "x": 887.1494610343925,
+        "y": 378.2960143925497,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.432980552541167,
+          1.7712486905075622,
+          -5.0369061894931875
+        ]
+      },
+      {
+        "id": 98,
+        "fraction": 1,
+        "x": 882.3149426162387,
+        "y": 388.25513742456053,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.761238733142463,
+          1.8029727938334403,
+          -4.2698783245053775
+        ]
+      },
+      {
+        "id": 99,
+        "fraction": 1,
+        "x": 878.2316608457085,
+        "y": 396.40064072378283,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          10.96549209318377,
+          1.7547068620597415,
+          -3.729886020752332
+        ]
+      },
+      {
+        "id": 100,
+        "fraction": 1,
+        "x": 867.5528454692129,
+        "y": 408.31641129630145,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.115393904592288,
+          1.683913629659365,
+          -2.807997917251946
+        ]
+      },
+      {
+        "id": 101,
+        "fraction": 1,
+        "x": 862.4089838859063,
+        "y": 415.3009342965999,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.294833121592518,
+          1.7213178989087794,
+          -2.225087261218029
+        ]
+      },
+      {
+        "id": 102,
+        "fraction": 1,
+        "x": 850.3782886843439,
+        "y": 425.28556760928285,
+        "width": 64,
+        "height": 8,
+        "gap": 2,
+        "anchor": [
+          11.366978727179536,
+          1.7211249164990008,
+          -1.319115360567963
+        ]
+      }
+    ]
+  },
+  "crowd": {
+    "telegraphs": [
+      0,
+      0
+    ],
+    "figures": [],
+    "instances": 100,
+    "meshDrawCalls": 1,
+    "objects": 83,
+    "nonInstancedMeshes": 0,
+    "caps": 0,
+    "flashes": 0,
+    "batches": [
+      {
+        "id": "inf.dog.black",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.dog.cream",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "infected.runner",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.brute",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.screamer",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.sprinter",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "infected.riot",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.crawler",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.firefighter",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.hazmat",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "infected.armored",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.butcher",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.bloated",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.alpha",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.dog",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "infected.cat",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.crow",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.nurse",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.gorilla",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.elephant",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.zebra",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.lion",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.jogger",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.baseball-cap",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.suburban-mom",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.delivery-driver",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "infected.patient-zero",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.college-student",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.bbq-dad",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.cashier",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.bathrobe-neighbor",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.skater",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.dog-retriever",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.dog-dachshund",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.dog-k9",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.cat-black",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.teen-skater",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.construction-worker",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.mega-alpha",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      },
+      {
+        "id": "inf.flamingo",
+        "lod": "lod2",
+        "instances": 0,
+        "layout": {
+          "buffers": 8,
+          "locations": 14,
+          "webgpu": true,
+          "webgl2": true
+        },
+        "source": "glb"
+      }
+    ],
+    "assets": []
+  }
+}

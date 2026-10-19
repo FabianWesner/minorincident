@@ -1,0 +1,8 @@
+{
+  "name": "perf-heap-bars-oblique",
+  "extends": "../health-bars/occlusion.json",
+  "note": "T-E29-20-occlusion-bvh: exact accelerated static-triangle queries with an oblique, nonuniformly scaled house. Review hidden bars and roof silhouette at the game camera on both tiers, zooms and backends.",
+  "props": [{ "id": "solid-house", "asset": "bld.house-a", "at": [0, 0], "yaw": 35, "scale": [1.2, 1, 0.8] }],
+  "frames": 60,
+  "sheet": 30
+}

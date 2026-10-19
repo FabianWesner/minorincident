@@ -1,3 +1,4 @@
+import { collectedHeap } from './collected-heap';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
@@ -45,24 +46,26 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       // on Harbor Street so all 1500 frames measure the specified L5 workload.
       a.bot.stop();
       const route = [{ x: -14, z: -39.8 }, { x: 20, z: -39.8 }];
-      let destination = 0, walkedM = 0, last = a.getState().player!.transform;
+      let destination = 0, walkedM = 0, last = a.getEntity(1)!.transform;
       a.input.set({ moveTarget: route[destination], walk: true }); a.resume(); let previous = 0;
       for (let i = 0; i < 1500; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
-        const player = a.getState().player!.transform;
+        const player = a.getEntity(1)!.transform;
         walkedM += Math.hypot(player.x - last.x, player.z - last.z); last = player;
         if (Math.hypot(player.x - route[destination].x, player.z - route[destination].z) < 1.5) { destination = 1 - destination; a.input.set({ moveTarget: route[destination], walk: true }); }
         if (previous && i > 2) { out.push(now - previous); if (now - previous > 40) hitches.push({ i, now, delta: now - previous, level: a.getState().scenario, phase: a.missions.state()?.phase, l5: a.missions.state()?.l5?.phase, perf: a.perf() }); } previous = now;
       }
       a.pause(); observer.disconnect(); return { frames: out, hitches, tasks, walkedM, endLevel: a.getState().scenario, end: a.missions.state() };
     });
+    const heap = await collectedHeap(page, context);
     const frames = measurement.frames;
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
-    const proof = { tier, counts, weather, baselineDrawCalls: baseline.drawCalls, baselineTriangles: baseline.triangles, pairDrawCalls: pair.drawCalls, pairTriangles: pair.triangles, followDrawCalls: follow.drawCalls, followTriangles: follow.triangles,
+    const proof = { tier, counts, weather, ...heap, baselineDrawCalls: baseline.drawCalls, baselineTriangles: baseline.triangles, pairDrawCalls: pair.drawCalls, pairTriangles: pair.triangles, followDrawCalls: follow.drawCalls, followTriangles: follow.triangles,
       p50: percentile(frames, .5), p95: percentile(frames, .95), max: Math.max(...frames) };
     writeFileSync(`${dir}/l5-${tier}.json`, JSON.stringify({ ...proof, pairProfile: pair.profile, pairAssets: pair.profileAssets, followProfile: follow.profile, ...measurement }, null, 2));
     console.log(JSON.stringify(proof));
     // A campaign handover must never turn an L5 frame sample into an L6 loading benchmark.
+    expect(heap.heapMB).toBeLessThanOrEqual(tier === 'high' ? 400 : 250);
     expect(measurement.endLevel).toBe('L5');
     expect(measurement.walkedM).toBeGreaterThan(10);
     // E28-AC10: authored L5 ash is present in the pair-plaza frame within the unchanged precipitation caps.
