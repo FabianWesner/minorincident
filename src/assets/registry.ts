@@ -43,7 +43,10 @@ export class AssetRegistry {
   }
   definition(id: string): AssetDef { const def = this.definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
-    const def = this.definition(id), requested = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
+    const def = this.definition(id);
+    // Abilities and UI entries deliberately have no geometry or placeholder.
+    if (def.nonModel) { const root = new Group(); root.name = id; root.userData.assetId = id; return root; }
+    const requested = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
     const lod = requested !== 'lod0' && !def.lods?.[requested] ? 'lod0' : requested;
     if (decay && !def.decayVariants.includes(decay) && !vehicleDecayFallback(def, decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
     const key = `${id}:${quality === 'low' && def.lowGlb ? 'low' : lod}:${decay ?? ''}`;

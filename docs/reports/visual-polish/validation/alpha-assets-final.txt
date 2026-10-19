@@ -1,0 +1,29 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/visual-polish -> 2.31.10.108:/srv/mi/ws/visual-polish-c23a7d
+[remote] cache-gc deleted:none
+[remote] sync 42s, 25324 files; job /srv/mi/jobs/visual-polish-c23a7d-34155-1792421887; queueing for a slot
+[runner] slot 1 acquired; load 5.49 5.47 4.46
+
+ RUN  v5.0.3 /srv/mi/jobs/visual-polish-c23a7d-34155-1792421887
+
+ ✓  functional  tests/unit/assets/alpha.test.ts (4 tests) 1882ms
+   ✓ T-E07-01-alpha-asset-lod0 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation 1093ms
+   ✓ T-E07-01-alpha-asset-lod1 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation 371ms
+   ✓ T-E07-01-alpha-asset-lod2 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation 409ms
+ ✓  functional  tests/unit/render/crowd-topology.test.ts (1 test) 2334ms
+   ✓ common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07 2331ms
+ ✓  functional  tests/unit/assets/alpha-solid-near.test.ts (2 tests) 350ms
+ ✓  functional  tests/unit/assets/mega-alpha-dog.test.ts (8 tests) 4945ms
+   ✓ T-L10-mega-alpha-lod0 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips 1364ms
+   ✓ T-L10-mega-alpha-lod1 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips 496ms
+   ✓ T-L10-dog-assets-lod0 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 1617ms
+   ✓ T-L10-dog-assets-lod1 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 678ms
+   ✓ T-L10-dog-assets-lod2 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 500ms
+ ✓  functional  tests/unit/render/alpha-body-fidelity.test.ts (2 tests) 743ms
+   ✓ PO #21 @E18 Alpha corpse retains its whole authored body (high) 600ms
+
+ Test Files  5 passed (5)
+      Tests  17 passed (17)
+   Start at  15:01:00
+   Duration  8.70s (tests 47%, transform 39%, import 14%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 42s, remote total 140s)

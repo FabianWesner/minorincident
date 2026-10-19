@@ -1,0 +1,178 @@
+Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+AssertionError: expected 4.744063999998616 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-assault.test.ts:60:17
+     58|     mkdirSync('test-results/epics/E32/E3', { recursive: true });
+     59|     writeFileSync(`test-results/epics/E32/E3/assault-${tier}.json`, JS…
+     60|     expect(p95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+       |                 ^
+     61|   } finally { w.dispose(); }
+     62| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 4.5226350000011735 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL   timing  tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms
+AssertionError: expected 4.943181000009645 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha.test.ts:29:61
+     27|     const proof = { count, alphas: ids.length, minInfected, cap: ai.di…
+     28|     mkdirSync('test-results/alpha-s1', { recursive: true }); writeFile…
+     29|     expect(minInfected).toBe(count); expect(proof.simMsP95).toBeLessTh…
+       |                                                             ^
+     30|   } finally { w.dispose(); }
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+AssertionError: expected 5.972154000017326 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s1.test.ts:30:101
+     28|     const proof = { count, animals: ids.length, minInfected, activatio…
+     29|     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+     30|     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+       |                                                                                                     ^
+     31|   } finally { w.dispose(); }
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 6.550726999994367 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL   timing  tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95
+AssertionError: expected 4.780983999997261 to be less than or equal to 4
+ ❯ tests/sim/world/chunk-residency.test.ts:87:71
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL   functional  tests/sim/combat/l5-shotgun.test.ts > T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/sim/combat/l5-shotgun.test.ts:38:1
+     36| });
+     37|
+     38| test('T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills re…
+       | ^
+     39|   const l = await loadL5(1, 'high', false);
+     40|   try {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL   functional  tests/sim/combat/m1-feel.test.ts > M1-11 M1-12 @E05 connecting hits alternate reactions, kick tumbles into another infected, gore is bounded
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/sim/combat/m1-feel.test.ts:26:106
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+ FAIL   functional  tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex
+AssertionError: expected 4.425004000309855 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-campus-corridor.test.ts:59:89
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/14]⎯
+
+ FAIL   functional  tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.common-worker lod2: body surfaces and red eye cores survive the low bake
+AssertionError: inf.common-worker low-tier triangle reduction: expected 8814 to be less than or equal to 7942.2
+ ❯ tests/unit/render/infected-eyes.test.ts:42:75
+     40|     // Whole-part fallback preserves the skin but pushes L5 beyond E18…
+     41|     // 500k low-tier limit. Keep a useful reduction alongside the surf…
+     42|     expect(geometry.index!.count, `${model} low-tier triangle reductio…
+       |                                                                           ^
+     43|     const after = surfaceAreas(geometry);
+     44|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/14]⎯
+
+ FAIL   functional  tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.cashier lod2: body surfaces and red eye cores survive the low bake
+AssertionError: inf.cashier low-tier triangle reduction: expected 7527 to be less than or equal to 7524.299999999999
+ ❯ tests/unit/render/infected-eyes.test.ts:42:75
+     40|     // Whole-part fallback preserves the skin but pushes L5 beyond E18…
+     41|     // 500k low-tier limit. Keep a useful reduction alongside the surf…
+     42|     expect(geometry.index!.count, `${model} low-tier triangle reductio…
+       |                                                                           ^
+     43|     const after = surfaceAreas(geometry);
+     44|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/14]⎯
+
+ FAIL   functional  tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.bathrobe-neighbor lod2: body surfaces and red eye cores survive the low bake
+AssertionError: inf.bathrobe-neighbor low-tier triangle reduction: expected 8283 to be less than or equal to 7898.099999999999
+ ❯ tests/unit/render/infected-eyes.test.ts:42:75
+     40|     // Whole-part fallback preserves the skin but pushes L5 beyond E18…
+     41|     // 500k low-tier limit. Keep a useful reduction alongside the surf…
+     42|     expect(geometry.index!.count, `${model} low-tier triangle reductio…
+       |                                                                           ^
+     43|     const after = surfaceAreas(geometry);
+     44|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/14]⎯
+
+ FAIL   functional  tests/unit/render/infected-resident-prewarm.test.ts > T-E27-14h @E27 @E18 high loads resident close-detail models before play
+AssertionError: expected [ 'inf.common-worker', …(2) ] to deeply equal [ 'inf.common-worker' ]
+
+- Expected
++ Received
+
+  [
+    "inf.common-worker",
++   "inf.alpha",
++   "inf.mega-alpha",
+  ]
+
+ ❯ tests/unit/render/infected-resident-prewarm.test.ts:15:29
+     13|     await crowd.init();
+     14|     const heroModels = new Set(load.mock.calls.filter(([, lod]) => lod…
+     15|     expect([...heroModels]).toEqual(low ? [] : [model]);
+       |                             ^
+     16|     if (low) expect(load.mock.calls.every(([, lod]) => lod === 'lod2')…
+     17|   } finally { update.mockRestore(); load.mockRestore(); crowd.dispose(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/14]⎯
+
+ FAIL   functional  tests/unit/render/infected-resident-prewarm.test.ts > T-E27-14h @E27 @E18 low retains LOD2 before play
+AssertionError: expected [ 'inf.alpha', 'inf.mega-alpha' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "inf.alpha",
++   "inf.mega-alpha",
++ ]
+
+ ❯ tests/unit/render/infected-resident-prewarm.test.ts:15:29
+     13|     await crowd.init();
+     14|     const heroModels = new Set(load.mock.calls.filter(([, lod]) => lod…
+     15|     expect([...heroModels]).toEqual(low ? [] : [model]);
+       |                             ^
+     16|     if (low) expect(load.mock.calls.every(([, lod]) => lod === 'lod2')…
+     17|   } finally { update.mockRestore(); load.mockRestore(); crowd.dispose(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/14]⎯
+
+
+ Test Files  11 failed | 498 passed | 3 skipped (512)
+      Tests  14 failed | 3172 passed | 11 skipped (3197)
+   Start at  13:40:57
+   Duration  4679.56s (tests 98%, import 1%, transform 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 113s, remote total 4894s)

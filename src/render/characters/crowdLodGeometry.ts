@@ -3,9 +3,9 @@ import { MeshoptSimplifier, type SimplifierFlags } from 'meshoptimizer/simplifie
 
 /** Rigid-part figures: only indices change. Original vertices, colors, eyes
  * and animation ownership survive; no triangle can span two animated parts.
- * Infected runtime bakes opt into surface retention; civilian shipped bakes
- * retain their existing deterministic reduction. */
-export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01, ratio = .35, preserveSurface = false): Promise<void> {
+ * Human runtime and shipped civilian bakes retain each rigid part's surface,
+ * so thin clothing shells cannot collapse into disconnected patches. */
+export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01, ratio = .35, preserveSurface = false, surfaceRetention = .85): Promise<void> {
   if (!geometry.index) return;
   await MeshoptSimplifier.ready;
   const position = geometry.getAttribute('position'), part = geometry.getAttribute('_part_index');
@@ -52,7 +52,7 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     const gripped = grippedParts.has(owner);
     const targetRatio = gripped ? .01 : ratio;
     const sourceIndices = new Uint32Array(indices), target = Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3);
-    const surface = preserveSurface ? area(indices) * .85 : 0;
+    const surface = preserveSurface ? area(indices) * surfaceRetention : 0;
     const tolerance = gripped ? Math.min(maxError, .001) : maxError;
     let [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, (geometry.getAttribute('_gripPosition') ?? position).array as Float32Array, 3, values, stride,
       weights, locks, target, tolerance, flags);

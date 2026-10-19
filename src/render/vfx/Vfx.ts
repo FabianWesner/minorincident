@@ -243,22 +243,24 @@ export class Vfx extends Group {
     const color = this.gore === 'Off' ? 0x776c75 : this.colorblind ? 0xffba48 : 0xe3293c;
     // Blood leaves the body where it stands: on the L3 ramp or deck that is the support height, not the street (y 0).
     const victim = this.world.entities.get(event.targetId), base = this.world.districts?.supportBelow(x, z, (victim?.transform.y ?? .7) - .7) ?? 0;
-    let chunks = 0;
     for (let i = 0; i < n; i++) {
-      const chunk = this.gore === 'Full' && (heavy || kill) && i < (kill ? 4 : 2); if (chunk) chunks++;
       const spread = (this.rng.next() - .5) * (heavy ? 3 : 2), speed = (heavy ? 4.5 : 3) + this.rng.next() * 3;
       const vx = direction.x * speed - direction.z * spread, vz = direction.z * speed + direction.x * spread;
       const vy = 2.3 + this.rng.next() * (heavy ? 2.3 : 1.7), y = 1.1 + this.rng.next() * .25; // height above the support
       const landingTime = (vy + Math.sqrt(vy * vy + 2 * 9.81 * y)) / 9.81;
-      const dropletSize = event.actionId === 'weapon.fists' ? .055 : heavy ? .13 : event.actionId === 'weapon.machete' ? .085 : .11;
-      const size = chunk ? .17 + this.rng.next() * .08 : dropletSize + this.rng.next() * .055;
-      this.particles.spawn(this.time, landingTime, x, base + y, z, vx, vy, vz, size, this.gore === 'Off' || chunk ? 0 : particleShape.drop, color, 9.81, size * 2.4);
+      // Tiny transient droplets; readable blood is the ground decal, never a body-sized capsule.
+      const dropletSize = this.gore === 'Off' ? .055 : heavy ? .025 : .018;
+      const size = dropletSize + this.rng.next() * .01;
+      this.particles.spawn(this.time, Math.min(landingTime, .18), x, base + y, z, vx, vy, vz, size, this.gore === 'Off' ? 0 : particleShape.drop, color, 9.81, size * 2.4);
       if (this.gore !== 'Off' && i % (this.quality === 'low' ? 2 : 5) === 0) {
         const landing = this.landings[this.landingCursor++ % this.landings.length];
-        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.y = this.world.districts?.supportBelow(landing.x, landing.z, base) ?? 0; landing.size = chunk ? .5 : .18 + this.rng.next() * .15; landing.color = color;
+        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.y = this.world.districts?.supportBelow(landing.x, landing.z, base) ?? 0; landing.size = .18 + this.rng.next() * .15; landing.color = color;
       }
     }
-    this.lastSpray = { actionId: event.actionId, direction, droplets: n - chunks, chunks, gravity: 9.81 };
+    // Full gore's small clots are supported ground decals, never airborne capsules.
+    const chunks = this.gore === 'Full' && this.quality === 'high' && (heavy || kill) ? kill ? 4 : 2 : 0;
+    for (let i = 0; i < chunks; i++) this.decals.spawn(this.time, 18, x + (i % 2 ? .12 : -.12), base + .016, z + (i < 2 ? -.08 : .08), i * 1.7, 0, 0, .09, 5, color);
+    this.lastSpray = { actionId: event.actionId, direction, droplets: n, chunks, gravity: 9.81 };
     if (this.gore !== 'Off') {
       this.decals.spawn(this.time, 18, x, base + .016, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.1 : .35, this.colorblind ? 0 : kill ? 6 : 5, color);
       const distance = this.world.combat?.query.clearDistance({ x, z }, direction, 1.8) ?? 1.8;

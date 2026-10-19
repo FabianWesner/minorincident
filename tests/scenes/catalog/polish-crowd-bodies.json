@@ -1,0 +1,84 @@
+{
+  "name": "polish-crowd-bodies",
+  "note": "PO #21/#29: real live Alpha and frozen Alpha/Mega corpses retain authored bodies. Game camera at every matrix zoom/tier/backend.",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "dof": false,
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        1
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha-live",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        2,
+        -1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha-dead",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        1
+      ],
+      "state": {
+        "corpse": true
+      }
+    },
+    {
+      "id": "mega-dead",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        2,
+        1
+      ],
+      "state": {
+        "corpse": true
+      },
+      "look": {
+        "model": "inf.mega-alpha"
+      }
+    },
+    {
+      "id": "runner-near",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -1,
+        -2
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 20,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

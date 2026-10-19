@@ -98,12 +98,14 @@ export class ActionView extends Group {
     await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
   }
   private load(def: (typeof catalog)[string]): Promise<void> {
+    if (this.registry.definition(def.viewAssetId).nonModel) return Promise.resolve();
     let pending = this.loading.get(def.viewAssetId);
     if (!pending) { pending = this.registry.loadAsset(def.viewAssetId).then(model => this.register(def, model)); this.loading.set(def.viewAssetId, pending); }
     return pending;
   }
   /** Model for an action, or null while it is still streaming in (the load is started on demand). */
   private model(def: (typeof catalog)[string]): Object3D | null {
+    if (this.registry.definition(def.viewAssetId).nonModel) return null;
     const asset = this.assets.get(def.viewAssetId); if (asset) return asset.model;
     void this.load(def); return null;
   }

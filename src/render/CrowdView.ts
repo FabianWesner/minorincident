@@ -58,6 +58,8 @@ export class CrowdView extends Group {
   private readonly heroIds = new Set<number>();
   private readonly previousHeroes = new Set<number>();
   private readonly nearest: { id: number; distance: number; role: string }[] = [];
+  private readonly nearBodies: { id: number; distance: number }[] = [];
+  private readonly nearIds = new Set<number>();
   private readonly heroBands = new Map<number, boolean>();
   private readonly rolePixels = new Map<string, number>();
   private readonly roleLods = new Map<string, 'lod1' | 'lod2'>();
@@ -141,11 +143,11 @@ export class CrowdView extends Group {
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(key, mesh); this.add(mesh);
       }
     }
-    // The low tier only ever draws LOD2 (see update); it never loads LOD0/LOD1.
-    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.low ? ['lod2'] : grove ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
+    // Both tiers need a clean near silhouette; Alpha bodies and corpses retain the authored model.
+    const lods: ('lod0' | 'lod1' | 'lod2')[] = !this.low && grove ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
     // Resident infected can reach the close band immediately after a blast.
     // Bake their hero batches behind the loading card, rather than interrupting
-    // play when the first survivor approaches. Low keeps its existing LOD2 set.
+    // play when the first survivor approaches. Low keeps a bounded near band.
     const residents = new Set<string>();
     for (const entity of this.world.entities.iterate()) {
       const role = entity.civilian?.zooAnimal ? `healthy.${entity.civilian.zooAnimal}` : entity.archetype;
@@ -155,7 +157,8 @@ export class CrowdView extends Group {
     }
     await Promise.all(definitions.flatMap(def => {
       const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
-      return (warmHero ? ['lod0' as const, ...lods] : lods).map(lod => this.loadBatch(def, lod));
+      const alpha = (def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha') && residents.has(this.modelAliases.get(def.id)!);
+      return [...new Set(warmHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
     }));
     loadMeasure('view:infected-crowd', started);
     this.update();
@@ -176,13 +179,23 @@ export class CrowdView extends Group {
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
       if (!healthy) markInfectedEyeCores(baked.geometry);
+      baked.geometry.userData.crowdLod = lod;
+      const alpha = asset === 'inf.alpha' || asset === 'inf.mega-alpha';
       if (lod === 'lod2' && !fallback) {
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
         await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
-        // Settled bodies retain identity and color but need no living figure detail.
-        const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
-        if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
-        packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+        if (this.disposed) { baked.geometry.dispose(); return; }
+        if (!alpha) {
+          // Ordinary settled bodies retain their surface without living figure detail.
+          const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
+          if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
+          packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+          this.corpseGeometry.set(key, corpse);
+        }
+      }
+      if (alpha && lod === 'lod0') {
+        const corpse = baked.geometry.clone(); packCrowdParts(corpse);
+        if (human) markCrowdAppearance(corpse, false);
         this.corpseGeometry.set(key, corpse);
       }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
@@ -246,11 +259,11 @@ export class CrowdView extends Group {
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
-      // Death always selects LOD2, on both tiers. Prepare its frozen shader in
+      // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
       // synchronously during play. Waiting for this batch also guarantees the
       // simplified corpse geometry exists before the loading draw.
-      if (lod === 'lod2') {
+      if (lod === (alpha ? 'lod0' : 'lod2')) {
         this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       }
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
@@ -280,8 +293,8 @@ export class CrowdView extends Group {
     this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900, view?.lodCamera);
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
-    heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
-    if (!this.low) for (const e of this.figures) {
+    heroes.clear(); this.nearest.length = 0; this.rolePixels.clear(); this.nearBodies.length = 0; this.nearIds.clear();
+    for (const e of this.figures) {
       if (e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
@@ -293,6 +306,8 @@ export class CrowdView extends Group {
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
       this.rolePixels.set(key, Math.max(this.rolePixels.get(key) ?? 0, pixels));
+      if (this.low && crowdLod(pixels, this.footBands.get(e.id)) === 'lod1') this.nearBodies.push({ id: e.id, distance });
+      if (this.low && !/infected\.(alpha|mega-alpha)/.test(e.archetype)) continue;
       if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
       const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
       this.heroBands.set(e.id, hero); if (!hero) continue;
@@ -301,6 +316,9 @@ export class CrowdView extends Group {
       let at = 0; while (at < this.nearest.length && this.nearest[at].distance <= score) at++;
       if (at < 8) { this.nearest.splice(at, 0, { id: e.id, distance: score, role: key }); if (this.nearest.length > 8) this.nearest.pop(); }
     }
+    // Bound phone geometry while retaining near detail for the closest sixteen bodies.
+    this.nearBodies.sort((a, b) => a.distance - b.distance || a.id - b.id);
+    for (const body of this.nearBodies.slice(0, 16)) this.nearIds.add(body.id);
     // One background tier per role protects the largest visible silhouette and
     // avoids a third active draw for every archetype in a mixed horde.
     for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role)));
@@ -316,7 +334,7 @@ export class CrowdView extends Group {
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
-      const availableLod = this.low ? 'lod2' : 'lod1';
+      const availableLod = 'lod1';
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
       const key = (variant && this.modelKey(variant)) || role;
@@ -330,8 +348,8 @@ export class CrowdView extends Group {
         this.bounds.radius = Math.max(this.bounds.radius, Math.hypot(p[bird * 3] - this.bounds.center.x, p[bird * 3 + 1] - this.bounds.center.y, p[bird * 3 + 2] - this.bounds.center.z) + .5);
       }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod: 'lod0' | 'lod1' | 'lod2' = this.low || e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
-      if (e.health.current > 0 && heroes.has(e.id)) {
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
+      if (heroes.has(e.id) || e.corpse && (def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha')) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));

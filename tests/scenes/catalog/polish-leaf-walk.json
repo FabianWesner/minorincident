@@ -1,0 +1,10 @@
+{
+  "name": "polish-leaf-walk",
+  "extends": "polish-grove-patch.json",
+  "note": "PO #4: camera follows the courier walking past the lamp. Leaves drift along world trajectories instead of travelling with her; compare the leaf triangles against fixed paving across frames.",
+  "script": [{ "frame": 30, "actor": "courier", "do": { "walk": [[-42,-33.23],[-38.05,-33.23]], "loop": true } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "frames": 240,
+  "sheet": 60,
+  "expect": { "consoleErrors": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}
