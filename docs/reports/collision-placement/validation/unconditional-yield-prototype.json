@@ -1,0 +1,48 @@
+{
+  "numTotalTests": 161,
+  "numPassedTests": 157,
+  "numFailedTests": 4,
+  "numPendingTests": 0,
+  "success": false,
+  "failures": [
+    {
+      "file": "levels/L6-protection.test.ts",
+      "assertions": [
+        {
+          "name": "T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run",
+          "messages": [
+            "AssertionError: expected 0.4482758620689655 to be less than or equal to 0.3\n    at /srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/tests/levels/L6-protection.test.ts:23:47\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/continuity.test.ts",
+      "assertions": [
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+          "messages": [
+            "AssertionError: expected 289.76666666666665 to be less than or equal to 210\n    at /srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/tests/levels/continuity.test.ts:45:30\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "sim/npc/zoo-companion.test.ts",
+      "assertions": [
+        {
+          "name": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: high",
+          "messages": [
+            "AssertionError: expected 4.021562309623623 to be less than 4\n    at /srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/tests/sim/npc/zoo-companion.test.ts:16:88\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: low",
+          "messages": [
+            "AssertionError: expected 4.021562309623623 to be less than 4\n    at /srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/tests/sim/npc/zoo-companion.test.ts:16:88\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-70998-1792430711/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    }
+  ]
+}

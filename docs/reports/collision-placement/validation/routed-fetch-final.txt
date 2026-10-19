@@ -1,0 +1,32 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 58s, 25500 files; job /srv/mi/jobs/collision-placement-9aa6d4-42775-1792429731; queueing for a slot
+[runner] slot 1 acquired; load 2.16 2.19 2.50
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-42775-1792429731
+
+ ✓  functional  tests/sim/npc/fetch-leash.test.ts (6 tests) 1476ms
+   ✓ @E08 @E29 authored interaction pickup is never fetched: {"interactTicks":36} 788ms
+ ✓  functional  tests/sim/npc/medkit-fetch.test.ts (5 tests) 2247ms
+   ✓ @E08 @E19 medkit stays at its world position at full health (warning-only corgi: false) 1368ms
+   ✓ @E08 @E19 medkit stays at its world position at full health (warning-only corgi: true) 613ms
+ ✓  functional  tests/sim/l1-toys.test.ts (19 tests) 8107ms
+   ✓ L1 v2 bicycle (8)
+     ✓ T-E19-16a @E19 @E19-AC16 mount by interact, 7.5 m/s above every infected tier, dismount keeps the bicycle in place 2073ms
+     ✓ T-E19-16f @E19 @E19-AC16 mounting beside the parked bike steps onto the apron; a stopped rider can pull away from a wall 801ms
+     ✓ T-E19-16g @E19 @E19-AC16 arriving at the depot parks on clear ground and permits remount after the parcel hand-over 475ms
+     ✓ T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside 309ms
+   ✓ L1 v2 toys (5)
+     ✓ T-E19-20a @E19 @E19-AC20 a closed yard gate blocks movement and sight, an open one does not 339ms
+     ✓ T-E19-20c @E19 @E19-AC11 @E19-AC20 car alarm: 20 s, DistractionEvent, re-arms after 30 s 1199ms
+     ✓ T-E19-20d @E19 @E19-AC20 car wash curtain blocks sight for 15 s and slows infected inside the bay to 50 % 637ms
+   ✓ L1 v2 corgi (6)
+     ✓ T-E19-17a @E19 @E19-AC17 never damaged, no courage loss, not a target of the infected 344ms
+     ✓ T-E19-17b @E19 @E19-AC17 warning ladder: stiffen at 20 m, growl at 14 m, bark at 9 m (1 per 2 s), then nervous 6 s 319ms
+
+ Test Files  3 passed (3)
+      Tests  30 passed (30)
+   Start at  17:09:51
+   Duration  11.45s (tests 56%, transform 37%, import 8%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 58s, remote total 15s)

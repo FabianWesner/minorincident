@@ -1,0 +1,52 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 61s, 25489 files; job /srv/mi/jobs/collision-placement-9aa6d4-45431-1792424485; queueing for a slot
+[runner] slot 0 acquired; load 2.32 1.86 2.16
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-45431-1792424485
+
+ ❯  functional  tests/levels/collision-placement.test.ts (15 tests | 1 failed | 13 skipped) 195ms
+   ↓ L4 perimeter rejects placement and swept passage for every actor kind
+   ↓ NPC spawn admission leaves 0.8 m around a reserved player start
+   ↓ L1 shutter brings an outside companion inside before sealing, with a short transition
+   ↓ L3 all four ramp rail joints meet visible solid caps within 2 cm
+   ↓ a wide door uses its normal to bring in a companion when the courier stands off centre
+   ↓ L3 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L5 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L7 high start has separate visible survivor bodies at tick 66
+   ↓ L7 low start has separate visible survivor bodies at tick 66
+   ↓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf
+   ↓ companion head and rear clear solids even when the central circle is outside
+   ↓ committed contact cells retain the corgi head clearance from the courier
+   ↓ companion head contact projects onto the solid face while retaining forward progress
+   ✓ rollback reserves the entire corgi capsule before accepting a neighbour proposal 183ms
+   × the corgi clears its supporting floor while a raised barrier still blocks its body 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > the corgi clears its supporting floor while a raised barrier still blocks its body
+AssertionError: feet above the floor at y=0.5: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/levels/collision-placement.test.ts:220:109
+    218|     Object.assign(dog.transform, { x: 0, z: 0, y: .8, yaw: 0 });
+    219|     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 9…
+    220|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id, fal…
+       |                                                                                                             ^
+    221|     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 9…
+    222|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id, fal…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 13 skipped (15)
+   Start at  15:42:29
+   Duration  3.57s (transform 80%, import 14%, tests 6%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 61s, remote total 9s)

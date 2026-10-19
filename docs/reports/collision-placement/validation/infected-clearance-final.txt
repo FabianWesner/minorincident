@@ -1,0 +1,20 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+1q); waiting 0s
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+2q, mi-runner-3:2/2+1q); waiting 63s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 152s, 25516 files; job /srv/mi/jobs/collision-placement-9aa6d4-47992-1792432981; queueing for a slot
+[runner] slot 1 acquired; load 1.36 1.29 2.05
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-47992-1792432981
+
+stdout | tests/sim/ai/infected-stuck-l2.test.ts > L2: infected never stand frozen (single seed, 150 s)
+[l2-stuck] still > 2 s in 2 of 41849 samples (0.00 %); longest 2.1 s (id 223 wander at 7.3,4.5 t=109 s)
+
+ ✓  functional  tests/sim/ai/infected-stuck-l2.test.ts > L2: infected never stand frozen (single seed, 150 s) 38985ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:20:44
+   Duration  43.87s (tests 89%, transform 9%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 152s, remote total 956s)

@@ -1,0 +1,50 @@
+{
+  "seed": 1,
+  "frames": 36,
+  "sheet": 12,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "collision-placement-l1-shutter",
+  "l1Placement": "shutter",
+  "ground": "district",
+  "time": "L1",
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -66.4,
+        9
+      ]
+    },
+    {
+      "id": "dog",
+      "kind": "corgi",
+      "at": [
+        -65,
+        9
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -76.6,
+      0.53,
+      41.27
+    ],
+    "zoom": 1
+  },
+  "note": "Production L1 shutter: companion and courier must have separate feet. In shutter mode the trailing dog is admitted inside before the blocker and reappears after the 12 tick transition.",
+  "size": 220
+}

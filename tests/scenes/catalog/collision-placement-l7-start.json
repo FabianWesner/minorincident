@@ -1,0 +1,54 @@
+{
+  "name": "collision-placement-l7-start",
+  "seed": 29,
+  "frames": 66,
+  "sheet": 22,
+  "ground": "district",
+  "time": "L6",
+  "tier": 6,
+  "layout": {
+    "level": "L7",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        220,
+        -30
+      ],
+      [
+        289,
+        55
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        273,
+        15
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      270,
+      3.9,
+      15
+    ],
+    "zoom": 1
+  },
+  "note": "PO #37: production L7 default survivor roster at the night exit through tick 66. Inspect separate bodies and health bars, without reducing roster size.",
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "size": 400,
+  "l7Group": "start"
+}

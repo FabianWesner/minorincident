@@ -1,0 +1,27 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 45s, 25510 files; job /srv/mi/jobs/collision-placement-9aa6d4-99724-1792431587; queueing for a slot
+[runner] slot 1 acquired; load 5.78 4.88 4.31
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-99724-1792431587
+
+ ✓  functional  tests/levels/collision-placement.test.ts (17 tests | 15 skipped) 349ms
+   ✓ companion routes reserve the full body around posts and fall back to body width at narrow doors 333ms
+ ✓  functional  tests/levels/L5.test.ts (15 tests | 14 skipped) 28314ms
+   ✓ L5 Aftermath (15)
+     ✓ T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3 28313ms
+ ✓  functional  tests/sim/npc/zoo-companion.test.ts (5 tests | 3 skipped) 14657ms
+   ✓ @E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: high 7445ms
+   ✓ @E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: low 7211ms
+ ✓  functional  tests/levels/continuity.test.ts (2 tests | 1 skipped) 84029ms
+   ✓ L1 -> L2 world-state continuity (2)
+     ✓ T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover 84027ms
+ ✓  functional  tests/levels/L6-protection.test.ts (1 test) 63744ms
+   ✓ T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run 63737ms
+
+ Test Files  5 passed (5)
+      Tests  7 passed | 33 skipped (40)
+   Start at  17:40:35
+   Duration  113.80s (tests 94%, transform 4%, import 2%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 45s, remote total 117s)

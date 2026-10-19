@@ -1,0 +1,70 @@
+{
+  "webgl2": {
+    "high": {
+      "rows": 39,
+      "drawCallsMax": 110,
+      "trianglesMax": 340142,
+      "actualBackends": [
+        "webgl"
+      ],
+      "actualQualities": [
+        "high"
+      ],
+      "E18Limits": {
+        "drawCallsMax": 600,
+        "trianglesMax": 1500000
+      },
+      "pass": true
+    },
+    "low": {
+      "rows": 39,
+      "drawCallsMax": 109,
+      "trianglesMax": 181183,
+      "actualBackends": [
+        "webgl"
+      ],
+      "actualQualities": [
+        "low"
+      ],
+      "E18Limits": {
+        "drawCallsMax": 300,
+        "trianglesMax": 500000
+      },
+      "pass": true
+    }
+  },
+  "webgpu": {
+    "high": {
+      "rows": 39,
+      "drawCallsMax": 110,
+      "trianglesMax": 340142,
+      "actualBackends": [
+        "webgpu"
+      ],
+      "actualQualities": [
+        "high"
+      ],
+      "E18Limits": {
+        "drawCallsMax": 600,
+        "trianglesMax": 1500000
+      },
+      "pass": true
+    },
+    "low": {
+      "rows": 39,
+      "drawCallsMax": 109,
+      "trianglesMax": 181183,
+      "actualBackends": [
+        "webgpu"
+      ],
+      "actualQualities": [
+        "low"
+      ],
+      "E18Limits": {
+        "drawCallsMax": 300,
+        "trianglesMax": 500000
+      },
+      "pass": true
+    }
+  }
+}

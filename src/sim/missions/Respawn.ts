@@ -97,7 +97,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
     Object.assign(player.transform, anchor, { y: player.survivor?.checkpoint.y ?? player.transform.y });
     world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM);
     if (player.pendingAdmission) player.pendingAdmission.graceTicks = ticks(respawnRule.graceS);
-    gatherAllies(world, anchor, worldKept); return;
+    gatherAllies(world, anchor, worldKept); world.solids.reservePlayerStart(); return;
   }
   Object.assign(player.transform, at);
   world.solids.relocate(player, at, 'checkpoint.respawn', 0, false);
@@ -106,6 +106,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   // E32 ready is an exact pre-assault snapshot; keep its captured defenders and cooldowns.
   gatherAllies(world, at, worldKept);
+  world.solids.reservePlayerStart();
   world.solids.remember(player, 'checkpoint.respawn');
 }
 
