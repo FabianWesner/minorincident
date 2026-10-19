@@ -288,7 +288,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
     if rect_point(mn, mx, console) < 60: return None
     # R7: the approach band (route z -41..-21 plus the walk to the console) stays open ground, so nobody cuts a corner into a box.
-    if mx[0] > 3690 and mn[1] < 5 and mx[1] > -57: return None
+    if mx[0] > 3690 and mn[1] < 5 and mx[1] > -57 and asset != 'prop.emergency-light': return None
     gap = -.1 if run else .6   # run pieces butt against each other
     if any(mn[0] < t[1][0]+gap and mx[0] > t[0][0]-gap and mn[1] < t[1][1]+gap and mx[1] > t[0][1]-gap for t in taken): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
@@ -375,6 +375,9 @@ for x, z, asset, yaw, decay in [(528, -12, 'veh.military-truck', .5, 'wrecked'),
 for x, z, asset, yaw in [(585, 40, 'bld.shed', math.pi/2), (598, 46, 'bld.garage-detached', math.pi/2), (612, 42, 'prop.street-lamp', 0), (690, -28, 'kit.army-checkpoint', math.pi/2), (720, -26, 'prop.emergency-light', 0), (560, -32, 'veh.military-truck', .4), (676, 50, 'prop.tree', 0), (705, 56, 'prop.tree', 1)]:
     dress(asset, x, z, yaw, decay='wrecked' if asset == 'veh.military-truck' else None)
 for x0 in (575, 640): fence_run('prop.picket-fence', (x0, 34), (x0 + 30, 34))
+# Red road flares around the wrecks: the first light points the courier sees after the crawl (render-only, no collider).
+for x, z in [(538, -11), (546, 9), (560, -9), (572, 8), (588, -7.5), (604, 7.5), (632, -6), (655, 12), (690, 32), (725, 17)]:
+    dress('prop.emergency-light', x, z, rng.uniform(0, 6), route_clear=4.6)
 frontage(crash, [('prop.utility-pole', 1)], 28, 6.5, sides=(-1,), jitter=1)
 frontage(crash, [('prop.tree', 3), ('veh.sedan-white@burned', 1), ('veh.suv-dark@wrecked', 1), ('veh.pickup-red@burned', 1), ('prop.sandbag-pallet', 1), ('decay.blown-sandbags', 2), ('prop.jersey-barrier', 1)], 9, (6.5, 13))
 
@@ -447,7 +450,7 @@ for x0, z0, x1, z1 in [(3710, -70, 3930, -70), (3710, 25, 3930, 25)]:
 frontage(complex_route, [('prop.street-lamp', 1)], 20, 5.8, jitter=1)
 frontage(complex_route, [('kit.dispersal-pipe-straight', 3), ('kit.dispersal-tank-bullet', 1), ('kit.dispersal-tank-sphere', 1), ('bld.substation', 2), ('bld.cure-service-building', 1)], 12, (10, 14))
 # R7 verge props sit in the bot's and player's natural line to the console: lights only, nothing to bump into.
-frontage(complex_route, [('prop.emergency-light', 1)], 9, (6.4, 8), chance=.7)
+frontage(complex_route, [('prop.emergency-light', 1)], 7, (5, 7), chance=.9)
 # Road surface: solid edge lines so the asphalt reads as a worn road, not a flat ribbon.
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
@@ -482,8 +485,8 @@ for a_, b_ in route_segments:
             t += rng.uniform(11, 22)
 # R7 apron: painted bays, hazard edges and service lines so the console floor reads as a working plant (paint only).
 for x0 in range(3958, 4040, 9):
-    surface('apron-line', [[x0, -66], [x0 + .25, -66], [x0 + .25, -56], [x0, -56]], 'picketWhite', .004)
-    surface('apron-line', [[x0, 1], [x0 + .25, 1], [x0 + .25, 11], [x0, 11]], 'picketWhite', .004)
+    surface('apron-line', [[x0, -66], [x0 + .25, -66], [x0 + .25, -56], [x0, -56]], 'silver', .004)
+    surface('apron-line', [[x0, 1], [x0 + .25, 1], [x0 + .25, 11], [x0, 11]], 'silver', .004)
 for z0 in (-68.5, 11.5):
     for x0 in range(3954, 4042, 6):
         surface('apron-hazard', [[x0, z0], [x0 + 1.5, z0], [x0 + 1.5, z0 + .6], [x0, z0 + .6]], 'schoolBusYellow', .004)
