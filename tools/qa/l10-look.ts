@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
+import routes from '../../layouts/D-CURE/routes.json' with { type: 'json' };
 /**
  * look-l10 game-camera sweep: every L10 region station at player zooms 0.5 / 1 / 1.5, one tier and backend per run.
  * SCENE_SERVER=preview SCENE_PORT=3471 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/l10-look.ts <label> <high|low> <webgl2|webgpu> [station,...]
@@ -23,10 +24,21 @@ export const stations: { id: string; region: string; at: [number, number] }[] = 
   { id: 'r7-console', region: 'complex', at: [4002, -18] },
   { id: 'r7-epilogue', region: 'epilogue', at: [4020, 4] },
 ];
-const picked = only ? stations.filter(s => only.split(',').includes(s.id)) : stations;
+/** `walk`: one station every 320 m of the critical route (between anchors, where most play happens). */
+const walk = (() => {
+  const pts = routes.regions.flatMap((r, i) => (i ? r.route.slice(1) : r.route) as [number, number][]), out: typeof stations = [];
+  let carry = 160;
+  for (let i = 1; i < pts.length; i++) {
+    const [a, b] = [pts[i - 1], pts[i]], d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    while (carry <= d) { const t = carry / d; out.push({ id: `walk-${out.length}`, region: `walk${Math.floor(out.length / 4)}`, at: [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t] }); carry += 320; }
+    carry -= d;
+  }
+  return out;
+})();
+const picked = only === 'walk' ? walk : only ? stations.filter(s => only.split(',').includes(s.id)) : stations;
 const out = `test-results/look-l10/${label}/${backend}-${tier}`; mkdirSync(out, { recursive: true });
 const session = new SceneSession({ tier: tier as 'high' | 'low', backend: backend as Backend, viewport: { width: 1280, height: 720 } });
-const zooms = [0.5, 1, 1.5];
+const zooms = only === 'walk' ? [1] : [0.5, 1, 1.5];
 const metrics: unknown[] = [];
 try {
   await session.open(); const p = session.page;
