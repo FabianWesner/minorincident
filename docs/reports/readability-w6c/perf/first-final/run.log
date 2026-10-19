@@ -1,0 +1,99 @@
+12:25  up 71 days, 11:18, 3 users, load averages: 2.23 3.85 3.93
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (16.2s)
+{"tier":"high","p50":5.899999999997817,"p95":8.599999999998545,"max":31.600000000000364,"survivors":27,"infected":40,"drawCalls":128,"triangles":429379,"lighting":{"lightFieldMs":0.10000038146972656,"lightPools":21,"lightCandidates":21,"shadowMaps":1,"heroLights":1,"heroShadow":1,"preset":"L6-subway"},"tasks":[]}
+  ✓  2 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › high › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight high (19.9s)
+{"tier":"low","p50":11.799999999999272,"p95":19.5,"max":83.70000000000073,"survivors":27,"infected":30,"drawCalls":77,"triangles":73153,"lighting":{"lightFieldMs":0.3000001907348633,"lightPools":16,"lightCandidates":16,"shadowMaps":0,"heroLights":1,"heroShadow":0,"preset":"L6-subway"},"tasks":[{"start":23091.70000076294,"duration":107},{"start":24614.900000572205,"duration":71},{"start":40451.300000190735,"duration":53}]}
+  ✘  3 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › low › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low (43.5s)
+{"tier":"high","frameP95":16.799999999999272,"simP95":2.1999998092651367,"draws":228,"triangles":878740,"peakInfected":200,"puffs":400,"debris":0,"particles":2183,"lights":0,"props":1,"blasts":7,"initialRegulars":120,"initialAlphas":2,"followers":24,"heapMB":88.560548,"heapAudit":{"usedSize":88560548,"totalSize":90210304,"embedderHeapUsedSize":2622560,"backingStorageSize":404483461}}
+  ✘  4 [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals (25.3s)
+{"tier":"low","frameP95":38.400000000001455,"simP95":7.899999618530273,"draws":95,"triangles":186731,"peakInfected":100,"puffs":120,"debris":0,"particles":569,"lights":0,"props":0,"blasts":7,"initialRegulars":60,"initialAlphas":2,"followers":15,"heapMB":76.096804,"heapAudit":{"usedSize":76096804,"totalSize":77217792,"embedderHeapUsedSize":2489488,"backingStorageSize":170741510}}
+  ✘  5 [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals (26.5s)
+
+
+  1) [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › low › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 80
+    Received:    83.70000000000073
+
+      17 |     const q=(k:number)=>[...frames].sort((a,b)=>a-b)[Math.ceil(frames.length*k)-1];const proof={tier,...initial,p50:q(.5),p95:q(.95),max:Math.max(...frames),...measurement};writeFileSync(`${dir}/${tier}.json`,JSON.stringify(proof,null,2));console.log(JSON.stringify({tier,p50:proof.p50,p95:proof.p95,max:proof.max,survivors:proof.survivors,infected:proof.infected,drawCalls:proof.perf.drawCalls,triangles:proof.perf.triangles,lighting:proof.perf.lighting,tasks:proof.tasks}));
+      18 |     if(process.env.PHONE_PERF==='1'&&tier==='low')expect(proof.p95).toBeLessThanOrEqual(33.3);
+    > 19 |     expect(initial.survivors).toBeGreaterThanOrEqual(25);expect(measurement.endSurvivors).toBeGreaterThanOrEqual(25);expect(initial.infected).toBeGreaterThanOrEqual(tier==='high'?40:30);expect(initial.perf.lighting!.heroShadow).toBe(tier==='high'?1:0);expect(initial.perf.drawCalls).toBeLessThanOrEqual(tier==='high'?600:300);expect(initial.perf.triangles).toBeLessThanOrEqual(tier==='high'?1_500_000:500_000);if(tier==='high')expect(proof.p95).toBeLessThanOrEqual(14);else expect(proof.p50).toBeLessThanOrEqual(1000/30);expect(proof.max).toBeLessThanOrEqual(tier==='high'?50:80);
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+      20 |   });
+      21 | });
+      22 | for(const tier of ['high','low'] as const)test.describe(`transitions ${tier}`,()=>{
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/readability-w6b/tests/perf/l6-budgets.spec.ts:19:540
+
+    Error Context: test-results/playwright/run-3878/perf-l6-budgets-low-T-E24--137ea-y-lights-and-flashlight-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3878/perf-l6-budgets-low-T-E24--137ea-y-lights-and-flashlight-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3878/perf-l6-budgets-low-T-E24--137ea-y-lights-and-flashlight-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 16.7
+    Received:    16.799999999999272
+
+      46 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);
+      47 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);
+    > 48 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);
+         |                           ^
+      49 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);
+      50 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);
+      51 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/readability-w6b/tests/perf/l7-encounters.spec.ts:48:27
+
+    Error Context: test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-85135-llowers-and-queued-arrivals-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-85135-llowers-and-queued-arrivals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-85135-llowers-and-queued-arrivals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.3
+    Received:    38.400000000001455
+
+      46 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);
+      47 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);
+    > 48 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);
+         |                           ^
+      49 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);
+      50 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);
+      51 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/readability-w6b/tests/perf/l7-encounters.spec.ts:48:27
+
+    Error Context: test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3878/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › low › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low 
+    [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals 
+    [chromium] › tests/perf/l7-encounters.spec.ts:4:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals 
+  2 passed (2.3m)
