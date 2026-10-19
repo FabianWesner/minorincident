@@ -27,8 +27,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
   /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
   readonly movingFigure = uniform(0).setGroup(this._uniformGroup);
-  // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
-  private readonly _outputs = new Map<number, Node>();
+  // Frozen copies borrow the same immutable output graphs and source shading uniforms.
+  private _outputs = new Map<string, Node>();
   private readonly _propertyHashes = new Map<string, number>();
   private readonly _programValues: number[] = [];
   private outputFor: (mode: number) => Node;
@@ -168,7 +168,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
   frozenCopy(): PaletteMaterial {
     const copy = this.newCopy(); copy.copy(this); copy.outputFor = this.outputFor;
-    copy._outputs.clear(); copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    copy._outputs = this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
   /** Same key as NodeMaterial, without allocating a child record and hashing
@@ -189,18 +189,19 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   setWeatherMode(mode: number): void {
     if (mode === this.weatherMode) return;
     this.weatherMode = mode;
-    let output = this._outputs.get(mode);
+    const reveal = this.userData.seeThrough ?? false, key = `${mode}:${reveal}`;
+    let output = this._outputs.get(key);
     if (!output) {
       const base = this.outputFor(mode);
-      output = this.userData.seeThrough ? Fn(() => { Discard((this.userData.seeThrough === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(this.userData.seeThrough === 'placement' ? attribute('_occluder', 'float') : undefined)).not()); return base; })() : base;
-      this._outputs.set(mode, output);
+      output = reveal ? Fn(() => { Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not()); return base; })() : base;
+      this._outputs.set(key, output);
     }
     this.outputNode = output; this.needsUpdate = true;
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
   seeThrough(enabled: boolean | 'boss' | 'placement' = true): this {
     if ((this.userData.seeThrough ?? false) === enabled) return this;
-    this.userData.seeThrough = enabled; this._outputs.clear();
+    this.userData.seeThrough = enabled;
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
     return this;
   }

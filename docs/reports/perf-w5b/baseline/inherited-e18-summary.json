@@ -1,0 +1,76 @@
+{
+  "source": "8db67f235 tracked historical receipts; not a fresh same-session baseline",
+  "files": {
+    "test-results/epics/E18/desktop-gpu.json": {
+      "recordedAt": "2026-10-07T13:28:00.957Z",
+      "frameMsP50": 3.1999999999989086,
+      "frameMsP95": 9.199999999999818,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "count": 200
+    },
+    "test-results/epics/E18/memory-high.json": [
+      {
+        "id": "L1",
+        "heapBytes": 82351396,
+        "geometries": 779,
+        "textures": 51
+      },
+      {
+        "id": "L6",
+        "heapBytes": 76471072,
+        "geometries": 172,
+        "textures": 23
+      },
+      {
+        "id": "L1",
+        "heapBytes": 87887520,
+        "geometries": 779,
+        "textures": 51
+      },
+      {
+        "id": "L6",
+        "heapBytes": 77641644,
+        "geometries": 172,
+        "textures": 23
+      },
+      {
+        "id": "L1",
+        "heapBytes": 88649124,
+        "geometries": 779,
+        "textures": 51
+      }
+    ],
+    "test-results/epics/E18/memory-low.json": [
+      {
+        "id": "L1",
+        "heapBytes": 76449600,
+        "geometries": 652,
+        "textures": 48
+      },
+      {
+        "id": "L6",
+        "heapBytes": 65994744,
+        "geometries": 157,
+        "textures": 18
+      },
+      {
+        "id": "L1",
+        "heapBytes": 82076396,
+        "geometries": 652,
+        "textures": 48
+      },
+      {
+        "id": "L6",
+        "heapBytes": 67054768,
+        "geometries": 157,
+        "textures": 18
+      },
+      {
+        "id": "L1",
+        "heapBytes": 82583820,
+        "geometries": 652,
+        "textures": 48
+      }
+    ]
+  }
+}

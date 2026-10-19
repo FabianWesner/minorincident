@@ -1,0 +1,129 @@
+[
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit --maxWorkers=4",
+    "summary": [
+      "Test Files  1 failed | 291 passed | 1 skipped (293)",
+      "Tests  1 failed | 1636 passed | 9 skipped (1646)",
+      "Duration  442.06s (tests 90%, import 7%, transform 2%)",
+      "[remote] done exit=1 (runner 2.31.10.108, sync 31s, remote total 447s)"
+    ],
+    "failure": "Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL   functional  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts\nError: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n \u276f tests/unit/assets/validate.test.ts:83:1\n     81|   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length\u2026\n     82| });\n     83| test('T-E17-02b @E17-AC02 production outputs satisfy orientation, pale\u2026\n       | ^\n     84|   const assets = manifest as AssetDef[];\n     85|   const reports = await validateAssets(assets, true);\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]"
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+    "summary": [
+      "Test Files  1 failed | 504 passed | 3 skipped (508)",
+      "Tests  1 failed | 3161 passed | 11 skipped (3173)",
+      "Duration  2925.52s (tests 98%, import 1%)",
+      "[remote] done exit=1 (runner 2.31.10.108, sync 194s, remote total 2929s)"
+    ],
+    "failure": "Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL   functional  tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex\nAssertionError: expected 6.8636549999937415 to be less than or equal to 4\n \u276f tests/sim/levels/l10-campus-corridor.test.ts:59:89\n\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]"
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit/assets/validate.test.ts --maxWorkers=1",
+    "summary": [
+      "Test Files  1 passed (1)",
+      "Tests  17 passed (17)",
+      "Duration  143.64s (tests 100%)",
+      "[remote] done exit=0 (runner 2.31.10.108, sync 26s, remote total 960s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- bash tools/remote/timing-isolated.sh npx vitest run tests/sim/levels/l10-campus-corridor.test.ts --maxWorkers=1",
+    "summary": [
+      "Test Files  1 passed (1)",
+      "Tests  2 passed (2)",
+      "Duration  46.97s (tests 95%, transform 4%, import 1%)",
+      "[remote] done exit=0 (runner 2.31.10.108, sync 26s, remote total 50s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit --maxWorkers=4",
+    "summary": [
+      "Test Files  293 passed | 1 skipped (294)",
+      "Tests  1640 passed | 9 skipped (1649)",
+      "Duration  231.29s (tests 91%, import 7%, transform 2%)",
+      "[remote] done exit=0 (runner 2.31.10.108, sync 19s, remote total 234s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit/render/static-corpses.test.ts tests/unit/render/routine-props-pool.test.ts tests/unit/render/pre-render.test.ts tests/unit/render/instanced-occlusion.test.ts --maxWorkers=4",
+    "summary": [
+      "Test Files  4 passed (4)",
+      "Tests  33 passed (33)",
+      "Duration  1.69s (transform 43%, import 30%, tests 26%, worker 1%)",
+      "[remote] done exit=0 (runner 94.130.181.173, sync 56s, remote total 9s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit --maxWorkers=4",
+    "log": "units-complete.log",
+    "summary": [
+      "Test Files  293 passed | 1 skipped (294)",
+      "Tests  1641 passed | 9 skipped (1650)",
+      "Duration  220.29s (tests 91%, import 7%, transform 2%)",
+      "[remote] done exit=0 (runner 2.31.10.108, sync 18s, remote total 224s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/levels/L4-alarm-admission.test.ts tests/levels/L4-barricade-prompts.test.ts tests/levels/L4-battlefield-lifecycle.test.ts tests/levels/L4-botprobe.test.ts tests/levels/L4-collapse.test.ts tests/levels/L4-convoy.test.ts tests/levels/L4-finale-pressure.test.ts tests/levels/L4-guidance.test.ts tests/levels/L4-movement.test.ts tests/levels/L4-perimeter.test.ts tests/levels/L4-po-round.test.ts tests/levels/L4-probe.test.ts tests/levels/L4-refuge-visible.test.ts tests/levels/L4-respawn.test.ts tests/sim/npc/l4-systems.test.ts --maxWorkers=4",
+    "log": "l4-final.log",
+    "summary": [
+      "Test Files  13 passed | 2 skipped (15)",
+      "Tests  49 passed | 2 skipped (51)",
+      "Duration  297.11s (tests 98%, transform 1%, import 1%)",
+      "[remote] done exit=0 (runner 2.28.24.66, sync 26s, remote total 300s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/levels/L4-alarm-admission.test.ts tests/sim/npc/l1-civilians.test.ts tests/sim/world/solid-admission.test.ts --maxWorkers=4",
+    "log": "alarm-admission.log",
+    "summary": [
+      "Test Files  3 passed (3)",
+      "Tests  50 passed (50)",
+      "Duration  39.83s (tests 91%, transform 7%, import 2%)",
+      "[remote] done exit=0 (runner 2.31.10.108, sync 20s, remote total 43s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit/render/instanced-occlusion.test.ts tests/unit/render/routine-props-pool.test.ts tests/unit/render/static-corpses.test.ts --maxWorkers=4",
+    "log": "bounds-unit.log",
+    "summary": [
+      "Test Files  3 passed (3)",
+      "Tests  16 passed (16)",
+      "Duration  2.10s (transform 40%, tests 31%, import 28%, worker 1%)",
+      "[remote] done exit=0 (runner 2.28.24.66, sync 24s, remote total 7s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit/render/static-corpses.test.ts --maxWorkers=4",
+    "log": "fallback-final.log",
+    "summary": [
+      "Test Files  1 passed (1)",
+      "Tests  14 passed (14)",
+      "Duration  1.93s (tests 43%, transform 38%, import 19%)",
+      "[remote] done exit=0 (runner 2.28.24.66, sync 24s, remote total 7s)"
+    ],
+    "failure": null
+  },
+  {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+    "log": "full-final.log",
+    "summary": [
+      "Test Files  507 passed | 3 skipped (510)",
+      "Tests  3168 passed | 9 skipped (3177)",
+      "Duration  2995.15s (tests 98%, import 1%)",
+      "[remote] done exit=0 (runner 94.130.181.173, sync 19s, remote total 2998s)"
+    ],
+    "failure": null,
+    "snapshot": "Before the final alarm scoping/bounds/fallback refinements; final units, complete L4, and targeted rendering/admission groups validate those refinements."
+  }
+]

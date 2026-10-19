@@ -166,6 +166,7 @@ export class NpcView extends Group {
   gunMeshes() { return this.civilians.gunMeshes(); }
   heldProps() { return this.civilians.heldProps(); }
   drawnCorpses() { return this.civilians.drawnCorpses(); }
+  aimGun(id: number, direction: { x: number; y?: number; z: number }) { this.civilians.aimGun(id, direction); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }) { return this.civilians.shotMuzzle(id,direction); }
   muzzle(id: number) { return this.civilians.muzzle(id); }
   spout(id: number) { return this.civilians.spout(id); }

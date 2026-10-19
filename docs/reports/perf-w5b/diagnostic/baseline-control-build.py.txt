@@ -1,0 +1,14 @@
+# Rebuild an 8db runtime control without editing the working sources. Run from the repository root.
+# Serve the separate output via a unique preview port under tools/e2e-lock.sh; never port 3300.
+import json, subprocess, tempfile
+from pathlib import Path
+root=Path.cwd(); base='8db67f235'; sources={}
+for rel in subprocess.check_output(['git','diff','--name-only',base,'--','src'],text=True).splitlines():
+ if not rel.endswith(('.ts','.tsx')):continue
+ old=subprocess.run(['git','show',base+':'+rel],capture_output=True,text=True)
+ if old.returncode==0:sources[str(root/rel)]=old.stdout
+config=Path(tempfile.gettempdir())/'perf-w5b-rebuild-base.vite.ts'
+config.write_text('import base from '+json.dumps(str(root/'vite.config.ts'))+';\nconst sources='+json.dumps(sources)+';\nexport default {...base,define:{...base.define,__BUILD_COMMIT__:JSON.stringify("8db67f235")},plugins:[...base.plugins,{name:"base-runtime-control",enforce:"pre",load(id){return sources[id.split("?")[0]];}}]};\n')
+out=Path(tempfile.gettempdir())/'perf-w5b-rebuilt-base-dist'
+subprocess.run(['npm','run','build','--','--config',str(config),'--outDir',str(out)],check=True)
+print(out)

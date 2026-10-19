@@ -17,6 +17,13 @@ export const codeCredits: readonly Credit[] = [
         "licenseUrl": "https://spdx.org/licenses/MIT.html"
     },
     {
+        "title": "three-mesh-bvh 0.9.16",
+        "author": "three-mesh-bvh",
+        "url": "https://www.npmjs.com/package/three-mesh-bvh",
+        "license": "MIT",
+        "licenseUrl": "https://spdx.org/licenses/MIT.html"
+    },
+    {
         "title": "tweakpane 4.0.5",
         "author": "tweakpane",
         "url": "https://www.npmjs.com/package/tweakpane",

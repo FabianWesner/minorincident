@@ -1,0 +1,827 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/e25-light-lab.spec.ts",
+      "tests/perf/weather.spec.ts",
+      "tests/perf/l7-rocket.spec.ts",
+      "tests/perf/l7-encounters.spec.ts",
+      "tests/perf/l7-lifecycle.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 34851 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:34851",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e25-light-lab.spec.ts",
+      "file": "perf/e25-light-lab.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/e25-light-lab.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E25-14c @E25 @E25-AC14 @perf trailer light-lab high within unchanged E18 budgets",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14850,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T00:47:28.175Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b8e3986891dffc7850b3-97aedce6adfc22c2a5bf",
+              "file": "perf/e25-light-lab.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/e25-light-lab.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E25-14c @E25 @E25-AC14 @perf trailer light-lab low within unchanged E18 budgets",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26388,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T00:47:43.658Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b8e3986891dffc7850b3-2b378a7abe3b122acb72",
+              "file": "perf/e25-light-lab.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-encounters.spec.ts",
+      "file": "perf/l7-encounters.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals",
+          "ok": true,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22047,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"high\",\"frameP95\":15.900000000001455,\"simP95\":2.09999942779541,\"draws\":259,\"triangles\":838631,\"peakInfected\":200,\"puffs\":400,\"debris\":0,\"particles\":2181,\"lights\":0,\"props\":1,\"blasts\":7,\"initialRegulars\":120,\"initialAlphas\":2,\"followers\":24,\"heapMB\":86.095112,\"heapAudit\":{\"usedSize\":86095112,\"totalSize\":88375296,\"embedderHeapUsedSize\":2655016,\"backingStorageSize\":410519315}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:48:10.371Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3c28d105f62fdc1f786d-4cfefb3d6f83d3ae0416",
+          "file": "perf/l7-encounters.spec.ts",
+          "line": 4,
+          "column": 46
+        },
+        {
+          "title": "T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals",
+          "ok": false,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 24708,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m52.39999999999782\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m52.39999999999782\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:48:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                      "column": 27,
+                      "line": 48
+                    },
+                    "snippet": "  46 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  47 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 48 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  49 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  50 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  51 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                        "column": 27,
+                        "line": 48
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m52.39999999999782\u001b[39m\n\n  46 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  47 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 48 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  49 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  50 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  51 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:48:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"frameP95\":52.39999999999782,\"simP95\":10.699999809265137,\"draws\":109,\"triangles\":159883,\"peakInfected\":100,\"puffs\":120,\"debris\":0,\"particles\":570,\"lights\":0,\"props\":0,\"blasts\":7,\"initialRegulars\":60,\"initialAlphas\":2,\"followers\":15,\"heapMB\":73.27962,\"heapAudit\":{\"usedSize\":73279620,\"totalSize\":74334208,\"embedderHeapUsedSize\":2530120,\"backingStorageSize\":167703000}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:48:32.709Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                    "column": 27,
+                    "line": 48
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3c28d105f62fdc1f786d-abdda92568f931f50fc3",
+          "file": "perf/l7-encounters.spec.ts",
+          "line": 4,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-lifecycle.spec.ts",
+      "file": "perf/l7-lifecycle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-20-lifecycle @E29-AC20 @perf high L7 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E29-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10418,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:48:58.502Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-146424e2af5f2fa84868",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 49
+        },
+        {
+          "title": "T-E29-20-lifecycle @E29-AC20 @perf low L7 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E29-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9081,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:49:09.132Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-552766298947a1ae0e8f",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 49
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-rocket.spec.ts",
+      "file": "perf/l7-rocket.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap",
+          "ok": true,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14319,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"high\",\"blasts\":7,\"peakInfected\":200,\"frameMax\":25.599999999998545,\"frameP95\":10.600000000000364,\"simP95\":1.3999996185302734,\"draws\":207,\"triangles\":946424,\"heapMB\":68.481964,\"peakHeapMB\":583.8447637557983,\"particles\":2048,\"puffs\":272,\"debris\":0,\"gibs\":80,\"perf\":{\"chunkResidency\":null,\"terrain\":null,\"infected\":{\"count\":350,\"available\":0},\"effects\":{\"obstruction\":{\"remainingTicks\":0,\"opacity\":0},\"shots\":[],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"high\",\"flashReduction\":false,\"time\":11.016000000000007,\"lastSpray\":{\"actionId\":\"explosion.rocket\",\"direction\":{\"x\":-0.9768368255391426,\"z\":-0.21398555154638438},\"droplets\":44,\"chunks\":4,\"gravity\":9.81},\"surfaceSplats\":0,\"pendingSplats\":384,\"particles\":2048,\"particleCap\":2048,\"decals\":600,\"decalCap\":600,\"gibs\":80,\"gibCap\":80,\"telegraphs\":[{\"attackId\":124,\"slot\":123,\"kind\":\"lunge\",\"spawned\":10.617000000000006,\"sourceId\":543},{\"attackId\":125,\"slot\":124,\"kind\":\"lunge\",\"spawned\":10.719100000000008,\"sourceId\":534},{\"attackId\":126,\"slot\":125,\"kind\":\"lunge\",\"spawned\":10.803700000000008,\"sourceId\":493},{\"attackId\":127,\"slot\":126,\"kind\":\"lunge\",\"spawned\":10.888900000000007,\"sourceId\":562},{\"attackId\":128,\"slot\":127,\"kind\":\"lunge\",\"spawned\":10.92570000000001,\"sourceId\":281},{\"attackId\":129,\"slot\":128,\"kind\":\"lunge\",\"spawned\":10.940000000000008,\"sourceId\":532}],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.55,\"z\":0.25},\"blasts\":7,\"puffs\":272,\"puffCap\":400,\"fireballs\":44,\"fireballCap\":96,\"chunks\":63,\"chunkCap\":64,\"flames\":0,\"glows\":1,\"vehicleSmokeColumns\":0,\"columns\":7,\"transientColumns\":7,\"fireColumns\":0,\"columnShadows\":7,\"clouds\":0,\"scorch\":7,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":false},\"coverage\":0,\"detached\":2770,\"dismemberedKills\":554,\"kills\":554,\"explosionRadius\":6},\"nodeBuildMaterials\":{},\"crowdPreparation\":{\"workers\":8,\"submitted\":24,\"completed\":24,\"prebuilt\":24,\"failed\":0},\"nodeBuilds\":193,\"profile\":{\"other\":{\"drawCalls\":53,\"triangles\":177974},\"shadows\":{\"drawCalls\":20,\"triangles\":31147},\"crowd\":{\"drawCalls\":133,\"triangles\":677169}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":27786},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":1708},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":1372},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":1372},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":1708},\"view:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"view:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":27786},\"view:other/crowd-accessories/acc.hat-hard-hat:lod1\":{\"drawCalls\":1,\"triangles\":258},\"view:other/crowd-accessories/acc.hat-baseball-cap:lod1\":{\"drawCalls\":1,\"triangles\":312},\"view:other/crowd-accessories/acc.hair-bun:lod1\":{\"drawCalls\":1,\"triangles\":132},\"view:other/crowd-accessories/acc.hat-flat-cap:lod1\":{\"drawCalls\":1,\"triangles\":112},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/crowd-accessories/acc.hat-sun-hat:lod1\":{\"drawCalls\":1,\"triangles\":324},\"view:other/crowd-accessories/acc.hat-beanie:lod1\":{\"drawCalls\":1,\"triangles\":192},\"view:other/crowd-accessories/acc.hair-afro:lod1\":{\"drawCalls\":1,\"triangles\":120},\"view:other/crowd-accessories/acc.hat-bucket-hat:lod1\":{\"drawCalls\":1,\"triangles\":270},\"view:other/crowd-accessories/acc.hair-side-part:lod1\":{\"drawCalls\":1,\"triangles\":180},\"view:other/crowd-accessories/acc.hair-short-crop:lod1\":{\"drawCalls\":1,\"triangles\":144},\"view:other/crowd-accessories/acc.hair-long-straight:lod1\":{\"drawCalls\":1,\"triangles\":240},\"view:other/crowd-accessories/acc.hair-ponytail:lod1\":{\"drawCalls\":1,\"triangles\":44},\"view:other/Group/Mesh\":{\"drawCalls\":19,\"triangles\":142512},\"view:other/Mesh/Mesh\":{\"drawCalls\":1,\"triangles\":2},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":2},\"shadow:other/Output Color Transform/Output Color Transform\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":4.300000190734863,\"renderCpuMs\":2.3000001907348633,\"propUploads\":0,\"awakeProps\":0,\"fps\":112.35955056180235,\"frameMs\":8.899999999999636,\"simMs\":0,\"simTicks\":0,\"simWorldMs\":0,\"simTickMs\":0,\"uiMs\":0,\"drawCalls\":206,\"triangles\":886290,\"geometries\":359,\"textures\":62,\"entities\":722,\"backend\":\"webgl\",\"loadTiming\":null,\"quality\":{\"setting\":\"high\",\"tier\":\"high\",\"p90Ms\":10,\"slowSeconds\":0,\"budgets\":{\"frameMs\":16.7,\"infected\":200,\"drawCalls\":600,\"triangles\":1500000,\"simMs\":4,\"heapMB\":400,\"pixelRatio\":2,\"shadowSize\":2048,\"bloomMips\":5,\"cullDistance\":60}},\"renderedFrames\":1836,\"contextLost\":false,\"paused\":true,\"heapBytes\":443094447,\"lighting\":{\"lightFieldMs\":0.2999992370605469,\"lightPools\":1,\"lightCandidates\":1,\"shadowMaps\":1,\"heroLights\":0,\"heroShadow\":0,\"preset\":\"golden\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:49:18.496Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d9e154d11bc4eeffef1-b5e7a779ee0bac033783",
+          "file": "perf/l7-rocket.spec.ts",
+          "line": 5,
+          "column": 46
+        },
+        {
+          "title": "T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap",
+          "ok": false,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 17887,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m67.30000000000109\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m67.30000000000109\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts:56:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                      "column": 27,
+                      "line": 56
+                    },
+                    "snippet": "  54 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  55 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 56 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  57 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  58 | });\n  59 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                        "column": 27,
+                        "line": 56
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m67.30000000000109\u001b[39m\n\n  54 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  55 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 56 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  57 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  58 | });\n  59 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts:56:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"blasts\":7,\"peakInfected\":100,\"frameMax\":67.30000000000109,\"frameP95\":31.899999999999636,\"simP95\":3.3000001907348633,\"draws\":160,\"triangles\":328815,\"heapMB\":52.012144,\"peakHeapMB\":270.058087348938,\"particles\":512,\"puffs\":120,\"debris\":0,\"gibs\":30,\"perf\":{\"chunkResidency\":null,\"terrain\":null,\"infected\":{\"count\":234,\"available\":116},\"effects\":{\"obstruction\":{\"remainingTicks\":0,\"opacity\":0},\"shots\":[],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"low\",\"flashReduction\":false,\"time\":11.101099999999974,\"lastSpray\":{\"actionId\":\"explosion.rocket\",\"direction\":{\"x\":0.6471791612930834,\"z\":-0.7623379389666903},\"droplets\":8,\"chunks\":4,\"gravity\":9.81},\"surfaceSplats\":0,\"pendingSplats\":384,\"particles\":512,\"particleCap\":512,\"decals\":600,\"decalCap\":600,\"gibs\":30,\"gibCap\":30,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.55,\"z\":0.25},\"blasts\":7,\"puffs\":120,\"puffCap\":120,\"fireballs\":17,\"fireballCap\":96,\"chunks\":21,\"chunkCap\":64,\"flames\":0,\"glows\":1,\"vehicleSmokeColumns\":0,\"columns\":7,\"transientColumns\":7,\"fireColumns\":0,\"columnShadows\":7,\"clouds\":0,\"scorch\":7,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":false},\"coverage\":0,\"detached\":2435,\"dismemberedKills\":487,\"kills\":487,\"explosionRadius\":6},\"nodeBuildMaterials\":{},\"crowdPreparation\":{\"workers\":8,\"submitted\":24,\"completed\":24,\"prebuilt\":24,\"failed\":0},\"nodeBuilds\":179,\"profile\":{\"other\":{\"drawCalls\":49,\"triangles\":66715},\"shadows\":{\"drawCalls\":20,\"triangles\":4275},\"crowd\":{\"drawCalls\":90,\"triangles\":244142}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":2510},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":910},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":574},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":574},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":910},\"view:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"view:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":2510},\"view:other/crowd-accessories/acc.hat-hard-hat:lod1\":{\"drawCalls\":1,\"triangles\":129},\"view:other/crowd-accessories/acc.hat-baseball-cap:lod1\":{\"drawCalls\":1,\"triangles\":52},\"view:other/crowd-accessories/acc.hair-bun:lod1\":{\"drawCalls\":1,\"triangles\":44},\"view:other/crowd-accessories/acc.hat-flat-cap:lod1\":{\"drawCalls\":1,\"triangles\":28},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/crowd-accessories/acc.hat-sun-hat:lod1\":{\"drawCalls\":1,\"triangles\":216},\"view:other/crowd-accessories/acc.hat-beanie:lod1\":{\"drawCalls\":1,\"triangles\":48},\"view:other/crowd-accessories/acc.hat-bucket-hat:lod1\":{\"drawCalls\":1,\"triangles\":108},\"view:other/crowd-accessories/acc.hair-side-part:lod1\":{\"drawCalls\":1,\"triangles\":108},\"view:other/crowd-accessories/acc.hair-short-crop:lod1\":{\"drawCalls\":1,\"triangles\":96},\"view:other/crowd-accessories/acc.hair-long-straight:lod1\":{\"drawCalls\":1,\"triangles\":80},\"view:other/Group/Mesh\":{\"drawCalls\":17,\"triangles\":59544},\"view:other/Mesh/Mesh\":{\"drawCalls\":1,\"triangles\":2},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":2},\"shadow:other/Output Color Transform/Output Color Transform\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":4.90000057220459,\"renderCpuMs\":6.09999942779541,\"propUploads\":0,\"awakeProps\":0,\"fps\":68.49315068493833,\"frameMs\":14.599999999998545,\"simMs\":2.5,\"simTicks\":1,\"simWorldMs\":2.5,\"simTickMs\":2.5,\"uiMs\":0,\"drawCalls\":159,\"triangles\":315132,\"geometries\":301,\"textures\":48,\"entities\":588,\"backend\":\"webgl\",\"loadTiming\":null,\"quality\":{\"setting\":\"low\",\"tier\":\"low\",\"p90Ms\":32,\"slowSeconds\":0,\"budgets\":{\"frameMs\":33.333333333333336,\"infected\":100,\"drawCalls\":300,\"triangles\":500000,\"simMs\":6,\"heapMB\":250,\"pixelRatio\":1.5,\"shadowSize\":1024,\"bloomMips\":2,\"cullDistance\":45}},\"renderedFrames\":812,\"contextLost\":false,\"paused\":true,\"heapBytes\":264472189,\"lighting\":{\"lightFieldMs\":0.10000038146972656,\"lightPools\":1,\"lightCandidates\":1,\"shadowMaps\":1,\"heroLights\":0,\"heroShadow\":0,\"preset\":\"golden\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:49:33.105Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                    "column": 27,
+                    "line": 56
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5d9e154d11bc4eeffef1-a807c3e78e4e28a6678f",
+          "file": "perf/l7-rocket.spec.ts",
+          "line": 5,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/weather.spec.ts",
+      "file": "perf/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5786,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:49:52.229Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-cbd86cf103554145df86",
+          "file": "perf/weather.spec.ts",
+          "line": 7,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:49:58.286Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-5bc2fd448e596fbd506c",
+          "file": "perf/weather.spec.ts",
+          "line": 7,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17243,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:50:01.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-14fa32cf2e8e02404a69",
+          "file": "perf/weather.spec.ts",
+          "line": 16,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets",
+          "ok": false,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 454,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\", waiting until \"load\"\u001b[22m\n\n    at boot (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts:59:14)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/weather.spec.ts:21:9",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts",
+                      "column": 14,
+                      "line": 59
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39me2e/fixtures.ts:59\n\n  57 | export const testUrl = '/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1';\n  58 | export async function boot(page: Page, url = testUrl): Promise<void> {\n> 59 |   await page.goto(url);\n     |              ^\n  60 |   await page.waitForFunction(() => Boolean(window.__SS__));\n  61 |   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });\n  62 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts",
+                        "column": 14,
+                        "line": 59
+                      },
+                      "message": "Error: page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\", waiting until \"load\"\u001b[22m\n\n\n   at e2e/fixtures.ts:59\n\n  57 | export const testUrl = '/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1';\n  58 | export async function boot(page: Page, url = testUrl): Promise<void> {\n> 59 |   await page.goto(url);\n     |              ^\n  60 |   await page.waitForFunction(() => Boolean(window.__SS__));\n  61 |   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });\n  62 | }\n    at boot (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts:59:14)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/weather.spec.ts:21:9"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 53
+                      },
+                      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:34851/?test=1&renderer=webgl&quality=low&dpr=1.5&audio=muted&profile net::ERR_HTTP_RESPONSE_CODE_FAILURE\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:53\n\n  51 |     const guard = attachErrorGuard(page);\n  52 |     await use(); guard.dispose();\n> 53 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  54 |   }, { auto: true }],\n  55 | });\n  56 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts:53:81)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T00:50:18.810Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-weather-T-E28-10-fram-c21da--frame-sim-and-heap-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34851/perf-weather-T-E28-10-fram-c21da--frame-sim-and-heap-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/e2e/fixtures.ts",
+                    "column": 14,
+                    "line": 59
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-9b71042e0eb7d4c12a92",
+          "file": "perf/weather.spec.ts",
+          "line": 16,
+          "column": 46
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T00:47:27.513Z",
+    "duration": 171872.27599999998,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

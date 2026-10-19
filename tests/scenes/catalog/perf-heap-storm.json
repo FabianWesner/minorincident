@@ -1,0 +1,16 @@
+{
+  "name": "perf-heap-storm",
+  "extends": "../../../specs/scenes/weather-lab-thunderstorm.json",
+  "note": "E28-AC10 fully wet storm shading and rain; compare high/low and game-camera zooms with the storm native heap gate.",
+  "weatherWarmup": 60,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30
+}

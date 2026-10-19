@@ -1,0 +1,21 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { loadL4, runL4 } from '../sim-runner/l4Bots';
+const { world, mission } = await loadL4(2, 'low');
+const nav = world.infected!.nav, old = nav.path.bind(nav);
+type Call = { tick: number; from: number; to: number; budget: number; fresh: boolean; success: boolean; steps: number; ms: number; consecutiveReuse: boolean; everReuse: boolean };
+const calls: Call[] = [], completed = new Set<string>(); let last = '';
+nav.path = (from, to, out, budget) => {
+  const state = nav as unknown as { searching: boolean; searchFrom: number; searchTo: number };
+  const fresh = !state.searching || state.searchFrom !== from || state.searchTo !== to;
+  const start = performance.now(), success = old(from,to,out,budget), ms = performance.now()-start;
+  const key = `${from}:${to}:${budget}`, row = { tick: world.tick, from,to,budget,fresh,success,steps:nav.expansions,ms,consecutiveReuse: fresh && last===key, everReuse: fresh && completed.has(key) };
+  if (mission.state.l4!.turnAt && world.tick<=mission.state.l4!.turnAt+180) calls.push(row);
+  last=success && fresh ? key : ''; if(success&&fresh)completed.add(key);
+  return success;
+};
+try {
+ runL4(world,mission,'complete',{seed:2,god:true,maxSeconds:180,stopWhen:()=>mission.state.l4!.turnAt>0&&world.tick>=mission.state.l4!.turnAt+180});
+ const turnAt=mission.state.l4!.turnAt, summary=(rows: Call[])=>({calls:rows.length,ms:rows.reduce((n,r)=>n+r.ms,0),completedFresh:rows.filter(r=>r.fresh&&r.success).length,consecutiveReuse:rows.filter(r=>r.consecutiveReuse).length,everReuse:rows.filter(r=>r.everReuse).length});
+ const result={turnAt,first10:summary(calls.filter(r=>r.tick<=turnAt+10)),all:summary(calls),calls};
+ mkdirSync('test-results/perf-w5b',{recursive:true});writeFileSync('test-results/perf-w5b/path-calls.json',JSON.stringify(result,null,2));console.log(JSON.stringify({...result,calls:undefined}));
+} finally { world.dispose(); }

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "tests/visual/e25-lighting.spec.ts",
+    "--project=chromium",
+    "--workers=1",
+    "--grep",
+    "T-E25-06"
+  ],
+  "env": {
+    "E2E_PORT": "35691",
+    "E2E_UNITS": "1"
+  },
+  "exitCode": 1,
+  "inherited": true
+}

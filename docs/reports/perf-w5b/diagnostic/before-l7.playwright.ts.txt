@@ -1,0 +1,3 @@
+import base from '/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/playwright.config.ts';
+const port=Number(process.env.E2E_PORT);
+export default { ...base, testDir:'/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests', webServer: {...base.webServer, cwd:'/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5', reuseExistingServer:false, command:`node /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port ${port} --strictPort --configLoader runner --outDir /tmp/perf-w5b-before-shadow-dist`} };

@@ -1,0 +1,79 @@
+{
+  "morning": {
+    "preset": "L1",
+    "frameMsP50": 17.400000000001455,
+    "frameMsP95": 34.19999999999709,
+    "lightFieldMsMean": 0,
+    "drawCalls": 197,
+    "triangles": 261216,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L1"
+    },
+    "quality": "low",
+    "infected": 60,
+    "lamps": {
+      "strength": 0,
+      "resolution": 512,
+      "size": 60,
+      "statics": 530,
+      "litStatics": 530,
+      "candidates": 0,
+      "drawn": 0,
+      "transients": 0,
+      "capacity": 256,
+      "ms": 0,
+      "center": [
+        -11.953125,
+        3.984375
+      ]
+    }
+  },
+  "night": {
+    "preset": "night",
+    "frameMsP50": 17.400000000001455,
+    "frameMsP95": 35,
+    "lightFieldMsMean": 0.32399999618530273,
+    "drawCalls": 195,
+    "triangles": 259911,
+    "lighting": {
+      "lightFieldMs": 0.8000001907348633,
+      "lightPools": 157,
+      "lightCandidates": 157,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "night"
+    },
+    "quality": "low",
+    "infected": 60,
+    "lamps": {
+      "strength": 1,
+      "resolution": 512,
+      "size": 60,
+      "statics": 530,
+      "litStatics": 530,
+      "candidates": 157,
+      "drawn": 157,
+      "transients": 0,
+      "capacity": 256,
+      "ms": 0.8000001907348633,
+      "center": [
+        -11.953125,
+        3.984375
+      ]
+    },
+    "heapMB": 100.518,
+    "heapAudit": {
+      "usedSize": 100518000,
+      "totalSize": 102318080,
+      "embedderHeapUsedSize": 3009152,
+      "backingStorageSize": 446562888
+    }
+  }
+}
