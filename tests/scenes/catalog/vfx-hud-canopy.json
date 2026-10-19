@@ -1,0 +1,82 @@
+{
+  "name": "vfx-hud-canopy",
+  "note": "PO #38 location plus an oversized foreground cherry: combat clearance must include the whole nearby crown at close zoom; inspect both tiers and backends.",
+  "seed": 1,
+  "time": "L2",
+  "ground": "district",
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -37.03,
+        12.82
+      ],
+      [
+        32.97,
+        82.82
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2.03,
+        47.82
+      ],
+      "state": {
+        "attack": "runner",
+        "seconds": 2,
+        "side": "LEFT",
+        "inPlace": true
+      },
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "runner",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -0.5299999999999998,
+        47.82
+      ],
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -2.03,
+      47.82
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "props": [
+    {
+      "id": "foreground-cherry",
+      "asset": "prop.street-tree-blossom",
+      "at": [
+        0.5,
+        50.5
+      ],
+      "scale": 2
+    }
+  ]
+}

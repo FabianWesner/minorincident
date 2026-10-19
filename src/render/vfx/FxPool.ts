@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
-import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
+import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
 import { atan, texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec2, vec3, vec4, linearDepth } from 'three/tsl';
@@ -35,8 +35,9 @@ export class FxPool {
   readonly mesh: InstancedMesh;
   private readonly origin: InstancedBufferAttribute;
   private readonly motion: InstancedBufferAttribute;
+  private readonly visibility: InterleavedBufferAttribute;
   private readonly style: InstancedBufferAttribute;
-  private readonly colors: InstancedBufferAttribute;
+  private readonly colors: InterleavedBufferAttribute;
   private readonly expires: Float64Array;
   private readonly tint = new Color();
   private readonly depthNode: OwnedDepth | null;
@@ -45,6 +46,11 @@ export class FxPool {
   budget: number;
   constructor(readonly cap: number, readonly mode: 'particle' | 'ground' | 'wall', lightSample?: Node<'vec3'>, bloodDecals = false, warnings = false) {
     this.budget = cap;
+    // Share one vertex buffer: a separate visibility buffer exceeds WebGPU's eight-buffer limit.
+    const colorVisibility = new InstancedInterleavedBuffer(new Float32Array(cap * 4), 4).setUsage(DynamicDrawUsage);
+    this.colors = new InterleavedBufferAttribute(colorVisibility, 3, 0);
+    this.visibility = new InterleavedBufferAttribute(colorVisibility, 1, 3);
+    for (let i = 0; i < cap; i++) this.visibility.setX(i, 1);
     this.bloodTextures = bloodDecals && typeof document !== 'undefined' ? ['splats', 'pool', 'trail'].map(kind => {
       const def = (manifest as AssetDef[]).find(asset => asset.id === `decal.blood-${kind}`)!;
       const map = new TextureLoader().load('/' + def.decalTexture!.replace(/^public\//, ''));
@@ -55,8 +61,8 @@ export class FxPool {
     this.origin = new InstancedBufferAttribute(new Float32Array(cap * 4), 4).setUsage(DynamicDrawUsage);
     this.motion = new InstancedBufferAttribute(new Float32Array(cap * 4), 4).setUsage(DynamicDrawUsage);
     this.style = new InstancedBufferAttribute(new Float32Array(cap * 4), 4).setUsage(DynamicDrawUsage);
-    this.colors = new InstancedBufferAttribute(new Float32Array(cap * 3), 3).setUsage(DynamicDrawUsage);
     geometry.setAttribute('fxOrigin', this.origin); geometry.setAttribute('fxMotion', this.motion);
+    geometry.setAttribute('fxVisibility', this.visibility);
     geometry.setAttribute('fxStyle', this.style); geometry.setAttribute('fxColor', this.colors);
     const origin = attribute('fxOrigin', 'vec4'), motion = attribute('fxMotion', 'vec4'), style = attribute('fxStyle', 'vec4');
     const age = this.clock.sub(origin.w), life = motion.w.max(0.001), progress = age.div(life).clamp(0, 1);
@@ -165,7 +171,7 @@ export class FxPool {
           mask = isBlood.select(blood.a, mask); color = isBlood.select(blood.rgb, color);
         }
       }
-      const fade = float(1).sub(progress).min(1).mul(alive);
+      const fade = float(1).sub(progress).min(1).mul(alive).mul(attribute('fxVisibility', 'float'));
       const lit = lightSample ?? vec3(1);
       if (mode === 'particle') {
         const shape = style.y.add(.5).floor(), tracer = shape.equal(particleShape.tracer);
@@ -202,11 +208,14 @@ export class FxPool {
     this.origin.setXYZW(slot, x, y, z, now); this.motion.setXYZW(slot, vx, vy, vz, life);
     this.style.setXYZW(slot, size, shape, gravity, aspect);
     this.tint.setHex(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b);
+    this.visibility.setX(slot, 1); this.visibility.needsUpdate = true;
     this.expires[slot] = now + life;
     this.origin.needsUpdate = this.motion.needsUpdate = this.style.needsUpdate = this.colors.needsUpdate = true;
     this.mesh.visible = true;
     return slot;
   }
+  /** Fade a warning without touching its lifetime, dimensions, or pooled identity. */
+  opacity(slot: number, value: number): void { this.visibility.setX(slot, value); this.visibility.needsUpdate = true; }
   remove(slot: number): void { this.expires[slot] = 0; this.motion.setW(slot, 0); this.motion.needsUpdate = true; this.mesh.visible = this.count > 0; }
   advance(now: number): void { this.clock.value = now; this.mesh.visible = this.count > 0; }
   get count(): number { let n = 0; for (const expiry of this.expires) if (expiry > this.clock.value) n++; return n; }
