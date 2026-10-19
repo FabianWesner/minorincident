@@ -1,0 +1,27 @@
+{
+  "name": "alpha-hit-corpse-base",
+  "note": "alpha-white (QA 13b #21/#29): sustained machine-gun fire on an Alpha until it drops, then the body lies. The figure must keep its own look the whole time: a hit flashes it briefly (no grey-white mass), the downed body and corpse keep the live colours (bloodied is fine). `look` gates the crowd pixels at every sheet frame: pale unsaturated share and hue drift against frame 0.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": { "mode": "game", "target": [2, 0.8, 0], "zoom": 1 },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-2.5, 1], "loadout": ["weapon.army-mg", "weapon.fists"] },
+    { "id": "alpha", "kind": "infected", "archetype": "infected.alpha", "at": [2, 0], "state": "idle", "look": { "model": "inf.alpha" } }
+  ],
+  "script": [
+    { "frame": 6, "actor": "courier", "do": { "attack": "alpha", "seconds": 4, "inPlace": true, "move": [0, 0] } }
+  ],
+  "frames": 300,
+  "sheet": 6,
+  "look": { "whiteShareMax": 0.06, "hueDriftMaxDeg": 40 },
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": { "alpha": [0, 0] }
+  }
+}
