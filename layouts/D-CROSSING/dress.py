@@ -113,7 +113,7 @@ def ok(asset, x, z, yaw=0.0, scale=(1, 1, 1), zone=False, pack=.62):
     # Lane clearance. The layout validator expands the footprint by the lane half width per axis (Liang-Barsky), so use the same test
     # with a hull/view margin on top. Every placement can carry a trunk/base collider (staticCollision), so detours and the
     # cross-country connections also keep the placement CENTRE clear of the 3 m hull samples.
-    margin = {'solid': 2.4, 'tree': .8, 'soft': .5}[kind] if not zone else .15
+    margin = {'solid': .9, 'tree': .25, 'soft': .2}[kind] if not zone else .1
     for pts, hw in ROUTES:
         for a0, a1 in zip(pts, pts[1:]):
             if lane_hit(b, a0, a1, hw + margin):
@@ -200,6 +200,25 @@ def in_dry(x, z, margin=0):
 # Heights (m): grass -.006, dry ground -.004, patch/field base -.0025, stripes 0, shoulders .001, edge lines .0085.
 FIELD_BASE, FIELD_STRIPE, SHOULDER = -.0025, .0004, .001
 
+# Terrain chunk glbs may hold 800 triangles (tools/l9/build-terrain.ts); the base road geometry uses up to ~250 of a chunk, so
+# detail overlays get a per-chunk budget by category and are simply dropped once a chunk is full.
+CHUNK_CAP = {'road': 330, 'field': 200}
+chunk_est = {}
+
+
+def ov(name, poly, token, height, cut=False, cat='road'):
+    xs, zs = [p[0] for p in poly], [p[1] for p in poly]
+    cells = [(cx, cz) for cx in range(int((min(xs) + 600) // 100), int((max(xs) + 600) // 100) + 1)
+             for cz in range(int((min(zs) + 400) // 100), int((max(zs) + 400) // 100) + 1) if 0 <= cx < 12 and 0 <= cz < 8]
+    n = max(1, len(poly) - 2) + (1 if len(cells) > 1 else 0)
+    if any(chunk_est.get((cat, c), 0) + n > CHUNK_CAP[cat] for c in cells):
+        stats['dropped-' + cat] = stats.get('dropped-' + cat, 0) + 1
+        return False
+    for c in cells:
+        chunk_est[(cat, c)] = chunk_est.get((cat, c), 0) + n
+    surface(name, poly, token, height, cut=cut)
+    return True
+
 
 def rot_rect(cx, cz, hx, hz, ang):
     c, s = math.cos(ang), math.sin(ang)
@@ -243,7 +262,8 @@ def lay_field(kind, cx, cz, hx, hz, ang):
                     'scrub': ('olive', 'oliveLight'), 'dust': ('trouserLight', 'khaki')}[kind]
     if kind == 'dust':
         stripe = None
-    surface('field-' + kind, poly, base, FIELD_BASE, cut=False)
+    if not ov('field-' + kind, poly, base, FIELD_BASE, cut=False, cat='field'):
+        return False
     if stripe and kind != 'pasture':
         pitch = 3.0 if kind == 'wheat' else 2.4
         width = .55 if kind == 'wheat' else .8
@@ -254,13 +274,13 @@ def lay_field(kind, cx, cz, hx, hz, ang):
             x0, x1 = -hx + 1.0, hx - 1.0
             rpoly = [[cx + c * x0 - s * (lz - width / 2), cz + s * x0 + c * (lz - width / 2)], [cx + c * x1 - s * (lz - width / 2), cz + s * x1 + c * (lz - width / 2)],
                      [cx + c * x1 - s * (lz + width / 2), cz + s * x1 + c * (lz + width / 2)], [cx + c * x0 - s * (lz + width / 2), cz + s * x0 + c * (lz + width / 2)]]
-            surface('crop-row', rpoly, stripe, FIELD_STRIPE, cut=False)
+            ov('crop-row', rpoly, stripe, FIELD_STRIPE, cut=False, cat='field')
     elif kind == 'pasture':
         # Mowed bands and a couple of lighter patches break the pasture up without a stripe grid.
         for i in range(R.randint(2, 4)):
             bx, bz = R.uniform(-hx * .6, hx * .6), R.uniform(-hz * .6, hz * .6)
             c, s = math.cos(ang), math.sin(ang)
-            surface('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9), stripe, FIELD_STRIPE, cut=False)
+            ov('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9), stripe, FIELD_STRIPE, cut=False, cat='field')
     fields.append((cx, cz, rad, kind, ang, hx, hz))
     return True
 
@@ -313,7 +333,7 @@ for kind, count, rr in [('dust', 70, (7, 26)), ('scrub', 90, (4, 14))]:
             continue
         # patches may sit under props but never under the encounter lanes
         base, stripe = ('trouserLight', None) if kind == 'dust' else ('olive', None)
-        surface('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False)
+        ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field')
         made += 1
     stats['dry-' + kind] = made
 
@@ -332,10 +352,10 @@ for i, (a, b) in enumerate(zip(road_pts, road_pts[1:])):
     for side in (-1, 1):
         sa = [a[0] + ux * t0 + nx * side * 7.0, a[1] + uz * t0 + nz * side * 7.0]
         sb = [a[0] + ux * t1 + nx * side * 7.0, a[1] + uz * t1 + nz * side * 7.0]
-        surface('shoulder', strip_poly(sa, sb, 2.6, 0), 'trouserLight', SHOULDER, cut=False)
+        ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'trouserLight', SHOULDER, cut=False, cat='road')
         ea = [a[0] + ux * t0 + nx * side * 5.55, a[1] + uz * t0 + nz * side * 5.55]
         eb = [a[0] + ux * t1 + nx * side * 5.55, a[1] + uz * t1 + nz * side * 5.55]
-        surface('edge-line', strip_poly(ea, eb, .16, 0), 'picketWhite', .0085, cut=False)
+        ov('edge-line', strip_poly(ea, eb, .16, 0), 'picketWhite', .0085, cut=False, cat='road')
 
 # 4) road continuation past both playable ends (inside the chunk grid here, beyond it as plain base quads below).
 for sx in (-1, 1):
@@ -363,82 +383,155 @@ def candidate_density(x, z):
     return min(1, p)
 
 
-# ---- roadside belt: what the game camera actually sees (the lane plus ~16 m either side at zoom 1, ~8 m at zoom 0.5) ----------
-def along(pts, hw, step, fn, start=6.0, jitter=.35):
-    """Call fn(x, z, ux, uz, nx, nz, d_from_start, hw) at jittered stations along a polyline."""
-    run = 0.0
+# ---- roadside belt: what the game camera actually sees --------------------------------------------------------------
+# The game camera frames ~15 m x 14 m at zoom 1 (22 m at 1.5, 7.5 m at 0.5): the lane itself, a thin verge, and whatever stands
+# within ~12 m of the lane edge. So the dressing is dense there: avenues, hedgerows, bush clumps, gaps with fences and rubble,
+# plus decals ON the roads (patches, cracks, skid marks, dust drifts) so the ribbon is not a flat plane.
+counts = {'avenue': 0, 'hedge': 0, 'bush': 0, 'fence': 0, 'rubble': 0, 'sign': 0, 'ditch': 0, 'dust': 0, 'patch': 0, 'crack': 0, 'skid': 0, 'tuft': 0}
+
+
+def frame_at(a, b, t):
+    d = math.dist(a, b)
+    ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
+    return a[0] + ux * t, a[1] + uz * t, ux, uz, -uz, ux
+
+
+MODES = ['avenue', 'avenue', 'hedge', 'hedge', 'bush', 'bush', 'fence', 'open', 'rubble']
+
+
+def edge_framing(pts, hw, gravel):
     for a, b in zip(pts, pts[1:]):
         d = math.dist(a, b)
-        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
-        t = start if run == 0 else 0
-        while t < d:
-            fn(a[0] + ux * t, a[1] + uz * t, ux, uz, -uz, ux, run + t, hw)
-            t += step * R.uniform(1 - jitter, 1 + jitter)
-        run += d
+        for side in (-1, 1):
+            t = R.uniform(0, 6)
+            mode, left = R.choice(MODES), R.uniform(24, 70)
+            while t < d:
+                x, z, ux, uz, nx, nz = frame_at(a, b, t)
+                yaw = -math.atan2(uz, ux)
+                step = 6.0
+                if mode == 'avenue':
+                    o = hw + R.uniform(3.4, 5.2)
+                    if tree(x + nx * side * o, z + nz * side * o, R.uniform(.85, 1.05)):
+                        counts['avenue'] += 1
+                    step = R.uniform(7.5, 12)
+                elif mode == 'hedge':
+                    o = hw + 1.9
+                    if put('prop.hedge', x + nx * side * o, z + nz * side * o, yaw, (1.0, R.uniform(.9, 1.3), R.uniform(.9, 1.2))):
+                        counts['hedge'] += 1
+                    step = 2.7
+                elif mode == 'bush':
+                    o = hw + R.uniform(2.0, 6.5)
+                    for _ in range(R.randint(1, 3)):
+                        if put(R.choice(['prop.garden-bush', 'prop.garden-bush-small']), x + nx * side * o + R.uniform(-2, 2), z + nz * side * o + R.uniform(-2, 2)):
+                            counts['bush'] += 1
+                    step = R.uniform(4, 8)
+                elif mode == 'fence':
+                    o = hw + 2.3
+                    if put('prop.crowd-fence', x + nx * side * o, z + nz * side * o, yaw + math.pi / 2):
+                        counts['fence'] += 1
+                    step = R.uniform(2.6, 3.4) if R.random() < .75 else 5.5
+                elif mode == 'rubble':
+                    o = hw + R.uniform(2.0, 5.0)
+                    if put(R.choice(['prop.crates', 'prop.pallet', 'prop.trash-bags', 'prop.sandbag-pallet', 'prop.dumpster', 'prop.wheelbarrow', 'prop.traffic-cone']), x + nx * side * o, z + nz * side * o):
+                        counts['rubble'] += 1
+                    step = R.uniform(3, 7)
+                t += step
+                left -= step
+                if left <= 0:
+                    mode, left = R.choice(MODES), R.uniform(24, 70)
 
 
-counts = {'verge-bush': 0, 'verge-tree': 0, 'sign': 0, 'ditch': 0, 'dust': 0}
+def road_decals(pts, hw, gravel, h0):
+    """Flat near-field decals on and beside the lane: they break the ribbon up without touching collision or sim surfaces."""
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        t = R.uniform(2, 8)
+        while t < d - 2:
+            x, z, ux, uz, nx, nz = frame_at(a, b, t)
+            ang = math.atan2(uz, ux)
+            r = R.random()
+            lat = R.uniform(-hw + .8, hw - .8)
+            cx, cz = x + nx * lat, z + nz * lat
+            if r < .22 and not gravel:
+                # resurfaced patch: a different-toned slab
+                w, h = R.uniform(1.4, 3.2), R.uniform(2.0, 5.5)
+                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsDark', h0, cut=False, cat='road')
+                counts['patch'] += 1
+            elif r < .5:
+                # tar crack: thin dark line across or along the lane
+                L = R.uniform(2.5, 8)
+                ca = ang + R.choice([R.uniform(-.25, .25), R.uniform(1.1, 2.0)])
+                p0 = [cx - math.cos(ca) * L / 2, cz - math.sin(ca) * L / 2]
+                p1 = [cx + math.cos(ca) * L / 2, cz + math.sin(ca) * L / 2]
+                ov('road-crack', strip_poly(p0, p1, R.uniform(.07, .16), 0), 'uiDark', h0 + .0004, cut=False, cat='road')
+                counts['crack'] += 1
+            elif r < .62:
+                # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
+                side = R.choice([-1, 1])
+                ex, ez = x + nx * side * (hw - R.uniform(.2, 2.2)), z + nz * side * (hw - R.uniform(.2, 2.2))
+                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9), 'trouserLight', h0, cut=False, cat='road')
+                counts['dust'] += 1
+            elif r < .70 and not gravel:
+                # a pair of dark skid / tyre marks
+                L = R.uniform(5, 13)
+                for off in (-.9, .9):
+                    ox, oz = cx + nx * off, cz + nz * off
+                    ov('skid', strip_poly([ox - ux * L / 2, oz - uz * L / 2], [ox + ux * L / 2 + nx * R.uniform(-.8, .8), oz + uz * L / 2 + nz * R.uniform(-.8, .8)], .28, 0), 'uiDark', h0 + .0002, cut=False, cat='road')
+                counts['skid'] += 1
+            t += R.uniform(3.5, 9)
+        # verge: grass tufts / dark soil / dust beside the lane (ground-level detail inside the frame at zoom 1.5)
+        t = R.uniform(1, 5)
+        while t < d - 1:
+            x, z, ux, uz, nx, nz = frame_at(a, b, t)
+            for side in (-1, 1):
+                o = hw + R.uniform(.4, 6)
+                token = R.choice(['apronOlive', 'apronOlive', 'leather', 'trouserLight', 'oliveLight'])
+                ov('verge-tuft', blob(x + nx * side * o, z + nz * side * o, R.uniform(.7, 2.6), R.uniform(.5, 1.6), math.atan2(uz, ux) + R.uniform(-.3, .3), 8), token, R.choice([.0014, .0018]), cut=False, cat='road')
+                counts['tuft'] += 1
+            t += R.uniform(3.6, 6.2)
 
 
-def verge(x, z, ux, uz, nx, nz, run, hw):
-    for side in (-1, 1):
-        r = R.random()
-        o = hw + R.uniform(2.6, 5.5)
-        px, pz = x + nx * side * o, z + nz * side * o
-        if r < .34:
-            if put(R.choice(['prop.garden-bush', 'prop.garden-bush-small', 'prop.garden-bush-small']), px, pz):
-                counts['verge-bush'] += 1
-                for _ in range(R.randint(0, 2)):
-                    if put('prop.garden-bush-small', px + R.uniform(-2.4, 2.4), pz + R.uniform(-2.4, 2.4)):
-                        counts['verge-bush'] += 1
-        elif r < .62:
-            o = hw + R.uniform(4.0, 9.0)
-            if tree(x + nx * side * o, z + nz * side * o, .9):
-                counts['verge-tree'] += 1
-        elif r < .74:
-            # dust / gravel spill drifting out of the lane: flat near-field patches, 2-5 m
-            q = blob(x + nx * side * (hw + R.uniform(1.8, 5)), z + nz * side * (hw + R.uniform(1.8, 5)), R.uniform(1.6, 4.5), R.uniform(1.0, 2.6), math.atan2(uz, ux), 8)
-            surface('verge-dust', q, 'trouserLight', .0016, cut=False)
-            counts['dust'] += 1
-
-
-def ditch(x, z, ux, uz, nx, nz, run, hw):
-    pass
-
-
-for pts, hw in ROUTES:
-    along(pts, hw, 7.5, verge, start=8)
-    # a drainage ditch: darker soil band beside the shoulder on both sides of every route, interrupted at gates
+for (pts, hw), gravel, h0 in zip(ROUTES, (False, True, True), (.0033, .0055, .0075)):
+    edge_framing(pts, hw, gravel)
+    road_decals(pts, hw, gravel, h0)
+    # drainage ditch: a darker soil band beside the verge on both sides, interrupted
     for a, b in zip(pts, pts[1:]):
         d = math.dist(a, b)
         if d < 40:
             continue
-        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
-        nx, nz = -uz, ux
         for side in (-1, 1):
             t = R.uniform(10, 25)
             while t < d - 22:
-                length = R.uniform(14, 34)
-                length = min(length, d - 14 - t)
+                length = min(R.uniform(14, 34), d - 14 - t)
                 if length < 6:
                     break
-                o = hw + 3.0 + R.uniform(-.3, .8)
-                pa = [a[0] + ux * t + nx * side * o, a[1] + uz * t + nz * side * o]
-                pb = [a[0] + ux * (t + length) + nx * side * o, a[1] + uz * (t + length) + nz * side * o]
-                if (math.hypot(pa[0] + 450, pa[1]) > 22 and math.hypot(pb[0] + 450, pb[1]) > 22 and math.hypot(pa[0] - 450, pa[1]) > 22 and math.hypot(pb[0] - 450, pb[1]) > 22):
-                    surface('ditch', strip_poly(pa, pb, R.uniform(1.1, 2.0), 0), 'leather', .0012, cut=False)
+                x, z, ux, uz, nx, nz = frame_at(a, b, t)
+                o = hw + 5.2 + R.uniform(-.3, .8)
+                pa = [x + nx * side * o, z + nz * side * o]
+                pb = [pa[0] + ux * length, pa[1] + uz * length]
+                if all(math.hypot(q[0] - n[0], q[1] - n[1]) > 24 for q in (pa, pb) for n in ((-450, 0), (450, 0))):
+                    ov('ditch', strip_poly(pa, pb, R.uniform(1.1, 2.0), 0), 'leather', .0012, cut=False, cat='road')
                     counts['ditch'] += 1
                 t += length + R.uniform(10, 40)
 
+
 # road signs: one per ~110 m, alternating sides, on the verge
-def signs(x, z, ux, uz, nx, nz, run, hw):
-    side = 1 if int(run // 110) % 2 else -1
-    if put('prop.street-sign', x + nx * side * (hw + 1.6), z + nz * side * (hw + 1.6), -math.atan2(uz, ux) + (math.pi / 2 if side > 0 else -math.pi / 2)):
-        counts['sign'] += 1
+def signs(pts, hw):
+    run = 0.0
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        t = 30
+        while t < d:
+            x, z, ux, uz, nx, nz = frame_at(a, b, t)
+            side = 1 if int((run + t) // 110) % 2 else -1
+            if put('prop.street-sign', x + nx * side * (hw + 1.0), z + nz * side * (hw + 1.0), -math.atan2(uz, ux) + (math.pi / 2 if side > 0 else -math.pi / 2)):
+                counts['sign'] += 1
+            t += 110 * R.uniform(.85, 1.15)
+        run += d
 
 
 for pts, hw in ROUTES:
-    along(pts, hw, 110, signs, start=30, jitter=.2)
+    signs(pts, hw)
 stats.update(counts)
 
 n_trees = 0
@@ -537,7 +630,7 @@ for fx, fz in farm_list:
         continue
     ux, uz = (foot[0] - fx) / d, (foot[1] - fz) / d
     tip = [foot[0] - ux * (hw + .5), foot[1] - uz * (hw + .5)]
-    surface('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'trouserLight', .0012, cut=False)
+    ov('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'trouserLight', .0012, cut=False, cat='road')
 
 # ---- road furniture -----------------------------------------------------------------------------------------------
 # utility poles along the asphalt (north side) and the dry shortcut (north side), wrecks and signs on the verges.

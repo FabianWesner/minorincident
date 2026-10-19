@@ -32,7 +32,7 @@ for (const cell of chunks) {
   await io.write(`${out}/${cell.id}.glb`, doc);
 }
 /** Materials that only the L9 detail overlays use (layouts/D-CROSSING/dress.py): the coarse horizon keeps the plain ground. */
-const nearField = new Set(['pal_picketWhite', 'pal_canvasTan', 'pal_leather', 'pal_mustard', 'pal_mustardLight', 'pal_apronOlive', 'pal_olive', 'pal_oliveLight', 'pal_trouserLight']);
+const nearField = new Set(['pal_picketWhite', 'pal_canvasTan', 'pal_leather', 'pal_mustard', 'pal_mustardLight', 'pal_apronOlive', 'pal_olive', 'pal_oliveLight', 'pal_trouserLight', 'pal_uiDark', 'pal_pantsDark']);
 const horizon = cloneDocument(source);
 for (const node of horizon.getRoot().listNodes()) {
   if (!node.getMesh()) { node.dispose(); continue; }
