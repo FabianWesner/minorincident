@@ -1,0 +1,9 @@
+{
+  "path": "tests/scenes/catalog/perf-heap-mounted-gun.json",
+  "purpose": "Historical fixture used by the first 96-row WebGL pass; replaced after visual inspection.",
+  "fixture": {
+    "name": "perf-heap-mounted-gun",
+    "extends": "l3-army-inner-cover.json",
+    "note": "T-E22-20-mounted-muzzle: HMG events retain the mounted barrel socket and gunner aiming intent without computing a discarded handheld muzzle. Review gunner, barrel and tracer contacts on both tiers, zooms and backends; retained bodies and inherited undrawn-frame gates remain active."
+  }
+}

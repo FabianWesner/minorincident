@@ -29,7 +29,7 @@ interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number;
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
   private readonly registry: AssetRegistry;
-  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
+  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; copies: Map<PaletteMaterial, PaletteMaterial>; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
@@ -80,20 +80,24 @@ export class EntityAssets extends Group {
         if (!this.disposed && this.world.entities.get(entity.id)) {
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
           const previous = this.records.get(entity.id); previous?.model.removeFromParent();
-          for (const material of previous?.reveal ?? []) { material.dispose(); this.materials.delete(material); } const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
+          const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
           model.traverse(node => { if (node.userData.wheelRadius) { node.rotation.order = 'YXZ'; wheels.push({ node, radius: node.userData.wheelRadius, spin: node.rotation.z, steer: node.rotation.y, front: node.name.startsWith('wheelF') }); } });
-          const reveal: PaletteMaterial[] = [], copies = new Map<PaletteMaterial, PaletteMaterial>();
+          // LODs borrow the same immutable source palette. Keep this actor's
+          // reveal graph and uniforms instead of compiling fresh copies in combat.
+          // The view's materials set retains ownership until level disposal.
+          const reveal: PaletteMaterial[] = [], copies = previous?.copies ?? new Map<PaletteMaterial, PaletteMaterial>();
           if (!/^(npc|char)\./.test(id)) model.traverse(node => {
             if (!(node instanceof Mesh)) return;
             const cut = (material: Material) => {
               if (!(material instanceof PaletteMaterial)) return material;
               let copy = copies.get(material);
-              if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); reveal.push(copy); this.materials.add(copy); }
+              if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); this.materials.add(copy); }
+              if (!reveal.includes(copy)) reveal.push(copy);
               return copy;
             };
             node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
           });
-          this.records.set(entity.id, { model, lod, reveal, bounds: new Box3().setFromObject(model), pose: previous?.pose, wheels });
+          this.records.set(entity.id, { model, lod, reveal, copies, bounds: new Box3().setFromObject(model), pose: previous?.pose, wheels });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -129,6 +133,21 @@ export class EntityAssets extends Group {
     }
   }
   private readonly occlusion = new SubjectOcclusion();
+  /** Compile the cutaway variant behind loading; restore each actor's current state. */
+  prewarmReveal(at?: Vector3, enabled = true): () => void {
+    const saved: [PaletteMaterial, boolean][] = [];
+    const positions: [Object3D, Vector3][] = [];
+    for (const record of this.records.values()) {
+      if (at) { positions.push([record.model, record.model.position.clone()]); record.model.position.copy(this.worldToLocal(at.clone())); }
+      for (const material of record.reveal) {
+        saved.push([material, material.userData.seeThrough === true]); material.seeThrough(enabled);
+      }
+    }
+    return () => {
+      for (const [material, previous] of saved) material.seeThrough(previous);
+      for (const [model, position] of positions) { model.position.copy(position); model.updateMatrixWorld(true); }
+    };
+  }
   /** Scripted convoy vehicles and props use the same camera segments as physical cars. */
   updateReveal(subject?: Box3): void {
     if (subject && this.view) this.occlusion.setSubject(this.view.camera.position, subject);

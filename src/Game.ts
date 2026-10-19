@@ -28,7 +28,7 @@ import { missionIds, resolveCampaignMission, type MissionId } from './levels/mis
 import { Combat } from './sim/combat/Combat';
 import type { TelemetrySink } from './telemetry/sink';
 import { InputSystem } from './input/InputSystem';
-import { Clock } from './core/Clock';
+import { Clock, SIM_FRAME_BUDGET_MS } from './core/Clock';
 import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
 import { GameView } from './render/GameView';
@@ -91,7 +91,7 @@ export class Game {
     const requested = params.get('quality') ?? 'auto';
     if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
     this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
-    this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
+    this.clock = new Clock(params.get('test') === '1' ? 20 : 5, SIM_FRAME_BUDGET_MS);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.view.onMissionChange = () => {
       // Begin/retry is a UI handoff. Its synchronous work is not elapsed play
@@ -424,10 +424,13 @@ export class Game {
   /** Last-frame counters. With `?profile`, `profile` groups submitted geometry by
    * crowd/buildings/props/other and non-view passes (shadows plus fullscreen FX).
    * CPU timers cover presentation updates and renderer submission/driver waits;
-   * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
+   * they are not GPU timer queries. Without profiling, the extra timers stay zero.
+   * `infected.liveCount` is the director cap count (including reserved recoveries),
+   * while `infected.count` also includes settled bodies still in the active pool.
+   * `firstLiveId` and L4 beat counters avoid full debug snapshots in frame probes. */
   perf() {
-    const info = this.view.renderer.info;
-    return { chunkResidency: this.world.chunks?.stats() ?? null, terrain: this.view.terrainPerf(), infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    const info = this.view.renderer.info, l4 = this.world.missions?.state.l4;
+    return { l4: l4 ? { turnAt: l4.turnAt, tankShots: l4.tankShots, lineBreakAt: l4.lineBreakAt } : null, chunkResidency: this.world.chunks?.stats() ?? null, terrain: this.view.terrainPerf(), infected: this.world.infected ? { count: this.world.infected.active.length, liveCount: this.world.infected.director.count, firstLiveId: this.world.infected.active.find(e => e.health.current > 0)?.id ?? null, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }

@@ -71,12 +71,14 @@ export class Explosions {
   private damage(d: ExplosionDef, at: { x: number; z: number }, r: number, sourceId: number, apply: boolean, opts: BlastOptions): void {
     const world = this.world, damage = world.combat?.damage, query = world.combat?.query;
     this.area.x = at.x; this.area.z = at.z; this.area.r = r;
+    // Per call: a chained blast inside damage.apply gathers its own list.
+    const candidates = query ? this.candidates(query, at, r) : [];
     // Copy once: hit events chain into hazards that query neighbours themselves.
     for (const id of [...world.spatial.query(this.area, this.nearby)]) {
       const target = world.entities.get(id);
       if (!target || id === sourceId || target.barricade || (target.health.current <= 0 && !downed(target)) || target.hidden || target.attachedTo !== undefined) continue;
       const dx = target.transform.x - at.x, dz = target.transform.z - at.z, distance = Math.hypot(dx, dz);
-      if (distance > r || (query && !this.visible(query, at, target.transform, target.id))) continue;
+      if (distance > r || (query && !this.visible(query, candidates, at, target.transform, target.id))) continue;
       const amount = blastDamage(d, distance, r), scale = d.damage ? amount / d.damage : 0;
       if (target.vehicle) { world.vehicles?.damage(id, apply ? amount * d.vehicle : 0); continue; }
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
@@ -95,19 +97,30 @@ export class Explosions {
   }
   /** Full cover (static walls, braced barricades) between blast and target shields it; loose props and other explosives
    * do not (a stack of tanks still chains), nor does cover the blast starts inside. */
-  private visible(query: import('./HitQuery').HitQuery, at: { x: number; z: number }, to: { x: number; z: number }, targetId: number): boolean {
+  private visible(query: import('./HitQuery').HitQuery, candidates: readonly import('./HitQuery').CoverWall[], at: { x: number; z: number }, to: { x: number; z: number }, targetId: number): boolean {
     const dx = to.x - at.x, dz = to.z - at.z, distance = Math.hypot(dx, dz);
     if (distance < 1e-6) return true;
-    for (const walls of [query.walls, query.dynamicWalls]) for (const w of walls) {
-      if (w.entityId === targetId || (w.entityId !== undefined && !this.world.entities.get(w.entityId)?.barricade) || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) continue;
-      let near = 0, far = distance;
-      for (const [o, d, c, half] of [[at.x, dx / distance, w.x, w.halfX], [at.z, dz / distance, w.z, w.halfZ]]) {
-        if (Math.abs(d) < 1e-12) { if (o < c - half || o > c + half) { far = -1; break; } continue; }
-        const a = (c - half - o) / d, b = (c + half - o) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
-      }
-      if (far >= near && near < distance - 1e-8) return false;
-    }
+    // perf-w5d: static walls come from this blast's candidates (those near its radius); dynamic walls are tested in full.
+    for (const w of candidates) if (this.blocks(w, at, dx, dz, distance, targetId)) return false;
+    for (const w of query.dynamicWalls) if (this.blocks(w, at, dx, dz, distance, targetId)) return false;
     return true;
+  }
+  /** Static cover walls that could lie between a blast and any target within its radius (1 m margin), in array order. */
+  private candidates(query: import('./HitQuery').HitQuery, at: { x: number; z: number }, r: number): import('./HitQuery').CoverWall[] {
+    const list: import('./HitQuery').CoverWall[] = [], reach = r + 1;
+    for (const w of query.walls) if (Math.abs(w.x - at.x) <= w.halfX + reach && Math.abs(w.z - at.z) <= w.halfZ + reach) list.push(w);
+    return list;
+  }
+  /** One wall's slab test of the blast-to-target segment (the original per-wall rule, scalar). */
+  private blocks(w: import('./HitQuery').CoverWall, at: { x: number; z: number }, dx: number, dz: number, distance: number, targetId: number): boolean {
+    if (w.entityId === targetId || (w.entityId !== undefined && !this.world.entities.get(w.entityId)?.barricade) || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) return false;
+    let near = 0, far = distance;
+    const ux = dx / distance, uz = dz / distance;
+    if (Math.abs(ux) < 1e-12) { if (at.x < w.x - w.halfX || at.x > w.x + w.halfX) return false; }
+    else { const a = (w.x - w.halfX - at.x) / ux, b = (w.x + w.halfX - at.x) / ux; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+    if (Math.abs(uz) < 1e-12) { if (at.z < w.z - w.halfZ || at.z > w.z + w.halfZ) return false; }
+    else { const a = (w.z - w.halfZ - at.z) / uz, b = (w.z + w.halfZ - at.z) / uz; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+    return far >= near && near < distance - 1e-8;
   }
   /** Bruno: direction = horizontal × (1/upward) + up, normalised; strength fades linearly from 1 m to the radius. */
   private push(d: ExplosionDef, at: { x: number; z: number }, r: number, body: RAPIER.RigidBody): void {

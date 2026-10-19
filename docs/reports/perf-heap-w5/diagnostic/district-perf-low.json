@@ -1,0 +1,65 @@
+{
+  "motion": {
+    "bakedFigures": 0,
+    "live": 95,
+    "barelyMoving": 40,
+    "states": {
+      "wander": 77,
+      "attack": 5,
+      "chase": 11,
+      "attracted": 2
+    }
+  },
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+  "touchPoints": 1,
+  "firesStart": 28,
+  "firesEnd": 28,
+  "tier": "low",
+  "backend": "webgl",
+  "blasts": 7,
+  "peakInfected": 100,
+  "frameP50": 17.299999999999272,
+  "frameP95": 34.29999999999927,
+  "frameP99": 36.30000000000109,
+  "hitch": 125.59999999999854,
+  "simP95": 4.100000381469727,
+  "simFrameP95": 6.40000057220459,
+  "draws": 129,
+  "triangles": 210675,
+  "heapMB": 74.638596,
+  "peakPuffs": 120,
+  "peakParts": 0,
+  "peakParticles": 411,
+  "heroLights": 0,
+  "awakeProps": 0,
+  "hitches": [
+    {
+      "frame": 2,
+      "ms": 105.69999999999891,
+      "elapsed": 138.2000001907345,
+      "sim": 18.600000381469727,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 438
+    },
+    {
+      "frame": 112,
+      "ms": 125.59999999999854,
+      "elapsed": 2168.100000190734,
+      "sim": 21.399999618530273,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 443
+    }
+  ],
+  "samples": [],
+  "pipelines": [],
+  "newPrograms": {},
+  "costs": null,
+  "heapAudit": {
+    "usedSize": 74638596,
+    "totalSize": 76447744,
+    "embedderHeapUsedSize": 2732232,
+    "backingStorageSize": 166464951
+  }
+}

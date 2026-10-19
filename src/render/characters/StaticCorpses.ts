@@ -1,5 +1,5 @@
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -8,6 +8,10 @@ import { PaletteMaterial } from '../PaletteMaterial';
 import { staticInstanceAttributes } from '../StaticInstanceAttributes';
 
 const CELL = 40;
+// Civilian model/LOD pools already share their source material. Keep one frozen
+// graph too: copies per pool rebuilt identical shaders as new blast victims
+// settled. Pages still own their geometry and per-instance appearance buffers.
+const sharedFrozenMaterials = new WeakMap<PaletteMaterial, { material: PaletteMaterial; users: number }>();
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[] }
 /** Frozen, baked death geometry in growing 128-body pages within 40 m cells. No per-frame pose
  * texture uploads, AI, physics or population cap for settled bodies. */
@@ -17,9 +21,10 @@ export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
   private readonly slots = new Map<string, { page: Chunk; index: number }>();
   private readonly moved = new Matrix4();
+  private readonly placedSphere = new Sphere();
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
-  private readonly frozenMaterials = new Map<string, MeshLambertNodeMaterial>();
+  private readonly frozenMaterials = new Map<MeshLambertNodeMaterial, MeshLambertNodeMaterial>();
   has(id: number): boolean { return this.bodies.has(String(id)); }
   /** Scene Lab probe: where each frozen body is drawn (matrix translation = the figure's feet). */
   drawn(): { id: number; x: number; y: number; z: number }[] {
@@ -70,9 +75,15 @@ export class StaticCorpses extends Group {
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
-    // Frozen pages need no per-frame bounds work. Recompute when a body joins,
-    // covering every final death vertex so culling cannot drop a visible body.
-    page.mesh.computeBoundingSphere();
+    // Frozen pages need no per-frame bounds work. Cover every joining body's
+    // final death vertices so culling cannot drop a visible body.
+    // Append the new body's stored (float32) transform to the same sphere union
+    // used by computeBoundingSphere. Re-scanning the page for every joining
+    // blast victim made a simultaneous settlement quadratic in body count.
+    page.mesh.getMatrixAt(index, this.moved);
+    this.placedSphere.copy(page.mesh.geometry.boundingSphere!).applyMatrix4(this.moved);
+    if (index === 0) (page.mesh.boundingSphere ??= new Sphere()).copy(this.placedSphere);
+    else page.mesh.boundingSphere!.union(this.placedSphere);
     page.probe.figures.push({ id: e.id, instanceKey, lod: page.probe.lod, clip: 'death-back', phase: 1, drawn: false, feet: [], ...(look ? { appearance: renderedCrowdLook(e.id, look.model, source, tint, look.accessory) } : {}) });
   }
   /** Drop one body: the page's last instance moves into its slot (matrix, tint, overlay), bounds refit. */
@@ -165,10 +176,21 @@ export class StaticCorpses extends Group {
       if (!geometry.boundingSphere) geometry.computeBoundingSphere();
       // One frozen material per source material: every death frame / gore mask shares its shader (l4-collapse-2: a copy per mask
       // compiled a new pipeline mid-fight for each new dismemberment combination).
-      let frozenMaterial = this.frozenMaterials.get(material.uuid);
+      let frozenMaterial = this.frozenMaterials.get(material);
       if (!frozenMaterial) {
-        frozenMaterial = material instanceof PaletteMaterial ? material.frozenCopy() : new MeshLambertNodeMaterial().copy(material);
-        frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; this.frozenMaterials.set(material.uuid, frozenMaterial);
+        if (material instanceof PaletteMaterial) {
+          let shared = sharedFrozenMaterials.get(material);
+          if (!shared) {
+            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null;
+            shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
+          }
+          shared.users++; frozenMaterial = shared.material;
+        } else {
+          // Plain fallback materials retain their per-pool value snapshot.
+          frozenMaterial = new MeshLambertNodeMaterial().copy(material);
+          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null;
+        }
+        this.frozenMaterials.set(material, frozenMaterial);
       }
       frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);
     }
@@ -182,11 +204,12 @@ export class StaticCorpses extends Group {
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts']) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
     geometry.setIndex(frozen.geometry.getIndex());
+    geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
-    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0;
+    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.name = `corpses:${key}`;
     if (frozen.material instanceof PaletteMaterial) {
       // Spatial/death/gore pages share the layout, while their matrices,
       // appearance and bounds remain independent. Avoid a node build per UUID.
@@ -207,7 +230,11 @@ export class StaticCorpses extends Group {
     this.revision++;
     for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); mesh.dispose(); }
     for (const frozen of this.frozen.values()) frozen.geometry.dispose();
-    for (const material of this.frozenMaterials.values()) material.dispose();
+    for (const [source, material] of this.frozenMaterials) {
+      if (!(source instanceof PaletteMaterial)) { material.dispose(); continue; }
+      const shared = sharedFrozenMaterials.get(source)!;
+      if (--shared.users === 0) { material.dispose(); sharedFrozenMaterials.delete(source); }
+    }
     this.frozen.clear(); this.frozenMaterials.clear(); this.chunks.clear(); this.bodies.clear(); this.slots.clear(); this.clear();
   }
   dispose(): void { this.reset(); }

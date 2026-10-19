@@ -1,3 +1,4 @@
+import { collectedHeap } from './collected-heap';
 import { devices } from '@playwright/test';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../e2e/fixtures';
@@ -16,7 +17,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   }
   await boot(page, `/?test=1&scenelab=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${tier}&audio=muted&dpr=1${process.env.L7_PERF_DIAG === '1' ? '&loadProfile=1' : ''}`);
-  const profileSession = process.env.L7_PERF_PROFILE === '1' ? await context.newCDPSession(page) : null;
+  const profileSession = (process.env.L7_PERF_PROFILE === '1' || process.env.L7_PERF_DIAG === '1') ? await context.newCDPSession(page) : null;
   let profileData: unknown;
   if (profileSession) await page.exposeFunction('__perfSweepStartProfile', async () => {
     await profileSession.send('Profiler.enable'); await profileSession.send('Profiler.setSamplingInterval', { interval: 500 }); await profileSession.send('Profiler.start');
@@ -24,8 +25,15 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   if (profileSession) await page.exposeFunction('__perfSweepStopProfile', async () => { profileData = (await profileSession.send('Profiler.stop')).profile; });
   const result = await page.evaluate(async ({ tier, positions, diagnose, profile }) => {
     const a = window.__SS__!, cap = tier === 'high' ? 200 : 100;
-    await a.loadLevel('L7', { seed: 29 }); a.cheats.god(true); a.settings.set({ slowMotion: false }); a.debug.figureJoints(false);
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const buildKeys: unknown[] = [];
+    const onBuild = game.view.renderer.debug.onNodeBuilderCreated;
+    if (diagnose) game.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+      onBuild?.(builder, object);
+      const draw = object as unknown as { initialCacheKey: number; getMaterialCacheKey(): number; getDynamicCacheKey(): number; material: { uuid: string; name: string }; object: { name: string; geometry?: { attributes: Record<string, { itemSize: number }> }; userData: Record<string, unknown> } };
+      if (draw.object.userData.staticInstanceAttributes) buildKeys.push({ tick: a.tick(), material: draw.material.name, uuid: draw.material.uuid, name: draw.object.name, key: draw.initialCacheKey, materialKey: draw.getMaterialCacheKey(), dynamicKey: draw.getDynamicCacheKey(), attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, a]) => [name, a.itemSize])) });
+    };
+    await a.loadLevel('L7', { seed: 29 }); a.cheats.god(true); a.settings.set({ slowMotion: false }); a.debug.figureJoints(false);
     // The corridor extension changed a few collision cells since this fixed
     // stress list was authored. Keep the same plaza/caps and fill legal nearby
     // points rather than throwing halfway through population.
@@ -57,21 +65,21 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     if (diagnose) renderBackend.createRenderPipeline = function (...args) {
       const start = performance.now(), result = originalPipeline.apply(this, args);
       const object = args[0] as { material: { name: string; type: string }; object: { name: string; geometry: { attributes: object }; userData: Record<string, unknown> } };
-      pipelines.push({ ms: performance.now() - start, tick: a.tick(), material: object.material.name || object.material.type, object: object.object.name, attributes: Object.keys(object.object.geometry.attributes), static: !!object.object.userData.staticInstanceAttributes });
+      pipelines.push({ ms: performance.now() - start, tick: a.tick(), material: object.material.name || object.material.type, object: object.object.name, attributes: Object.fromEntries(Object.entries(object.object.geometry.attributes as Record<string, { itemSize: number; normalized?: boolean; array?: { constructor: { name: string } } }>).map(([name, attribute]) => [name, { size: attribute.itemSize, normalized: attribute.normalized, storage: attribute.array?.constructor.name }])), static: !!object.object.userData.staticInstanceAttributes });
       return result;
     };
     const frames: number[] = [], sims: number[] = [], simFrames: number[] = [], draws: number[] = [], triangles: number[] = [];
     const hitches: unknown[] = [];
     const costs: Record<string, number>[] = [];
     const samples: { ms: number; costs: Record<string, number> }[] = [];
-    if (diagnose) a.debug.cpuProfile();
+    if (diagnose && profile) a.debug.cpuProfile();
     let previous = 0, lastBlast = 0, lastProbe = 0, peakInfected = 0, peakPuffs = 0, peakParts = 0, peakParticles = 0, heroLights = 0, awakeProps = 0, blasts = 0;
     a.resume(); const start = performance.now();
     while (performance.now() - start < 8000) {
       const now = await new Promise<number>(r => requestAnimationFrame(r));
       if (previous) frames.push(now - previous); previous = now;
       const perf = a.perf(); if (perf.simTickMs > 0) sims.push(perf.simTickMs); simFrames.push(perf.simMs); draws.push(perf.drawCalls); triangles.push(perf.triangles);
-      if (diagnose) { const cost = a.debug.cpuProfile(); costs.push(cost); if (frames.length) samples.push({ ms: frames.at(-1)!, costs: cost }); }
+      if (diagnose && profile) { const cost = a.debug.cpuProfile(); costs.push(cost); if (frames.length) samples.push({ ms: frames.at(-1)!, costs: cost }); }
       if (frames.at(-1)! > 50) hitches.push({ frame: frames.length, ms: frames.at(-1), elapsed: now - start, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, nodeBuilds: perf.nodeBuilds });
       heroLights = Math.max(heroLights, perf.lighting?.heroLights ?? 0); awakeProps = Math.max(awakeProps, perf.awakeProps);
       if (now - lastBlast >= 1250) { a.explosions.blast('explosion.rocket', { x: -26, z: -4 }); lastBlast = now; blasts++; }
@@ -92,21 +100,14 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const gl = document.querySelector('canvas')!.getContext('webgl2'), extension = gl?.getExtension('WEBGL_debug_renderer_info');
     const gpu = extension ? String(gl!.getParameter(extension.UNMASKED_RENDERER_WEBGL)) : null;
     const p95 = (v: number[], fraction = .95) => [...v].sort((a, b) => a - b)[Math.ceil(v.length * fraction) - 1];
-    return { motion, gpu, touchPoints: navigator.maxTouchPoints, firesStart, firesEnd: fireCount(), tier, backend: a.perf().backend, blasts, peakInfected, frameP50: p95(frames, .5), frameP95: p95(frames), frameP99: p95(frames, .99), hitch: Math.max(...frames), simP95: p95(sims), simFrameP95: p95(simFrames), draws: Math.max(...draws), triangles: Math.max(...triangles), heapMB: (a.perf().heapBytes ?? 0) / 1048576, peakPuffs, peakParts, peakParticles, heroLights, awakeProps, hitches,
+    return { buildKeys, motion, gpu, touchPoints: navigator.maxTouchPoints, firesStart, firesEnd: fireCount(), tier, backend: a.perf().backend, blasts, peakInfected, frameP50: p95(frames, .5), frameP95: p95(frames), frameP99: p95(frames, .99), hitch: Math.max(...frames), simP95: p95(sims), simFrameP95: p95(simFrames), draws: Math.max(...draws), triangles: Math.max(...triangles), heapMB: (a.perf().heapBytes ?? 0) / 1048576, peakPuffs, peakParts, peakParticles, heroLights, awakeProps, hitches,
       samples, pipelines, newPrograms: Object.fromEntries(Object.entries(a.perf().nodeBuildMaterials).map(([key, count]) => [key, count - (programsBefore[key] ?? 0)]).filter(([, count]) => Number(count) > 0)),
       costs: costs.length ? Object.fromEntries(Object.keys(costs[0]).map(key => [key, p95(costs.map(c => c[key]))])) : null };
-  }, { tier, positions, diagnose: process.env.L7_PERF_DIAG === '1', profile: !!profileSession });
-  const heapSession = await context.newCDPSession(page);
-  await heapSession.send('HeapProfiler.collectGarbage');
-  // Settle deferred ArrayBuffer collection across task boundaries before the
-  // retained-heap reading (timing samples above remain untouched).
-  for (let i = 0; i < 3; i++) {
-    await heapSession.send('HeapProfiler.collectGarbage');
-    await page.evaluate(() => new Promise(r => requestAnimationFrame(r)));
-  }
-  result.heapMB = await page.evaluate(() => (window.__SS__!.perf().heapBytes ?? 0) / 1048576);
+  }, { tier, positions, diagnose: process.env.L7_PERF_DIAG === '1' || process.env.L7_PERF_KEYS === '1', profile: !!profileSession });
+  const heap = await collectedHeap(page, context);
+  result.heapMB = heap.heapMB;
   const output = process.env.L7_PERF_OUTPUT ?? 'test-results/epics/E29';
-  mkdirSync(output, { recursive: true }); writeFileSync(`${output}/district-perf-${tier}${backend === 'webgpu' ? '-webgpu' : ''}.json`, JSON.stringify(result, null, 2));
+  mkdirSync(output, { recursive: true }); writeFileSync(`${output}/district-perf-${tier}${backend === 'webgpu' ? '-webgpu' : ''}.json`, JSON.stringify({ ...result, ...heap }, null, 2));
   if (profileSession) writeFileSync(`${output}/district-perf-${tier}.cpuprofile`, JSON.stringify(profileData));
   console.log(JSON.stringify(result));
   await page.locator('canvas').screenshot({ path: `${output}/district-${tier}.png` });
@@ -121,7 +122,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);
   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
-  if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);
+  expect(result.hitch).toBeLessThanOrEqual(50);
   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);
 });
 });
