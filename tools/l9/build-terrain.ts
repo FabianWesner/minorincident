@@ -31,12 +31,14 @@ for (const cell of chunks) {
   counts[cell.id] = triangles;
   await io.write(`${out}/${cell.id}.glb`, doc);
 }
+/** Materials that only the L9 detail overlays use (layouts/D-CROSSING/dress.py): the coarse horizon keeps the plain ground. */
+const nearField = new Set(['pal_picketWhite', 'pal_canvasTan', 'pal_leather', 'pal_mustard', 'pal_mustardLight', 'pal_apronOlive', 'pal_olive', 'pal_oliveLight', 'pal_trouserLight']);
 const horizon = cloneDocument(source);
 for (const node of horizon.getRoot().listNodes()) {
   if (!node.getMesh()) { node.dispose(); continue; }
   if (node.getExtras().terrainChunk) {
     const mesh = node.getMesh()!;
-    for (const p of mesh.listPrimitives()) if (['pal_picketWhite', 'pal_canvasTan'].includes(p.getMaterial()?.getName() ?? '')) p.dispose(); // paint and gravel ruts are near-field detail
+    for (const p of mesh.listPrimitives()) if (nearField.has(p.getMaterial()?.getName() ?? '')) p.dispose(); // paint, gravel ruts, fields, shoulders and dust pans are near-field detail
     const [x, y, z] = node.getTranslation();
     node.setTranslation([x, y - .010, z]); // no coplanar fighting; even 1 cm fork arrows stay within the 2 cm seam budget
     node.setExtras({});
