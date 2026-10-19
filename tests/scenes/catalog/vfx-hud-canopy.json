@@ -1,8 +1,8 @@
 {
   "name": "vfx-hud-canopy",
-  "note": "PO 10-19 game-camera reproduction; inspect the entire foreground crown/combat space, solid reveal core and courier framing. Regression unit tests cover projected canopy radius, clear wall core and teleport framing.",
+  "note": "PO #38 location plus an oversized foreground cherry: combat clearance must include the whole nearby crown at close zoom; inspect both tiers and backends.",
   "seed": 1,
-  "time": "L4",
+  "time": "L2",
   "ground": "district",
   "layout": {
     "level": "L2",
@@ -67,5 +67,16 @@
     "undrawnFramesMax": 0,
     "drawCallsMax": 300,
     "trianglesMax": 500000
-  }
+  },
+  "props": [
+    {
+      "id": "foreground-cherry",
+      "asset": "prop.street-tree-blossom",
+      "at": [
+        0.5,
+        50.5
+      ],
+      "scale": 2
+    }
+  ]
 }

@@ -1,0 +1,55 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+0q); waiting 0s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-hud-polish -> 2.31.10.108:/srv/mi/ws/vfx-hud-polish-8b3136
+[remote] cache-gc deleted:none
+[remote] sync 117s, 25172 files; job /srv/mi/jobs/vfx-hud-polish-8b3136-38639-1792432780; queueing for a slot
+[runner] slot 1 acquired; load 8.36 8.39 7.43
+
+ RUN  v5.0.3 /srv/mi/jobs/vfx-hud-polish-8b3136-38639-1792432780
+
+ ❯  timing  tests/sim/performance/alpha-support.test.ts (2 tests | 1 failed) 5125ms
+   × T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 3926ms
+   ✓ T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms 1197ms
+ ❯  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 2 failed) 6245ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 4402ms
+   × T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 1840ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 9.36258799999996 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 10.949257000000216 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms
+AssertionError: expected 7.1906009999984235 to be less than or equal to 6
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 1 passed (4)
+   Start at  18:02:28
+   Duration  18.29s (tests 64%, transform 29%, import 7%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 117s, remote total 73s)
