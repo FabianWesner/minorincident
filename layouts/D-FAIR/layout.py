@@ -296,7 +296,7 @@ for z in range(-28, 41, 14):
 g.place('prop.fire-hydrant', 88.2, -15.6, 0, .8, soft=True)
 for i, r in enumerate(_rowA):
     g.place('prop.mailbox-blue', 88.2, r[3] + 1.8, math.pi, .8, soft=True)
-    g.place('prop.trash-bin', 88.0, r[3] - 2.4, 0, .9, soft=True)
+    g.place('prop.trash-bags', 88.0, r[3] - 2.4, 0, .9, soft=True)
     if r[3] - 1.2 - (r[1] - r[2] / 2 + .3) > 1.5: g.hedge(90.4, r[1] - r[2] / 2 + .3, 90.4, r[3] - 1.2)
 g.place('veh.sedan-white', 87.4, -21.0, math.pi / 2, 1.0, soft=True)
 g.place('veh.suv-green', 87.4, 12.5, math.pi / 2, 1.0, soft=True)
@@ -309,15 +309,15 @@ for i, r in enumerate(_rowA):
     if i % 2 == 0: g.place('bld.shed', 102.8, z1 - 3.0, math.pi, .8, soft=True)
     else:
         g.place('prop.laundry-line', 101.8, z0 + r[2] / 2, math.pi / 2, 1.0, soft=True)
-        g.place('prop.bbq', 100.9, z1 - 1.3, math.pi / 2, 1.0, soft=True)
-    g.place('prop.lawn-chair-a', 100.8, z0 + 1.4, -math.pi / 2 + .4, 1.0, soft=True)
-    g.place('prop.recycling-bin', 105.2, z0 + .9, 0, 1.0, soft=True)
+        g.place('prop.flower-box', 100.9, z1 - 1.3, math.pi / 2, 1.0, soft=True)
+    g.place('prop.garden-bush-small', 100.8, z0 + 1.4, -math.pi / 2 + .4, 1.0, soft=True)
+    g.place('prop.trash-bags', 105.2, z0 + .9, 0, 1.0, soft=True)
 for i, r in enumerate(_rowB):
     z0, z1 = r[1] - r[2] / 2, r[1] + r[2] / 2
     g.place('prop.tree' if i % 2 else 'prop.street-tree-blossom', 108.6, z0 + 1.5 + _yr.random() * (r[2] - 3.0), 0, .8, soft=True)
     if i % 3 == 0: g.place('bld.garage-detached', 109.4, z1 - 3.8, 0, .7, soft=True)
-    elif i % 3 == 1: g.place('prop.kiddie-pool', 109.0, z0 + 2.2, 0, .9, soft=True); g.place('prop.gnome', 107.4, z0 + 1.2, 0, 1.0, soft=True)
-    else: g.place('prop.wheelbarrow', 108.6, z1 - 1.0, math.pi / 2, 1.0, soft=True); g.place('prop.crates', 109.2, z1 - 2.4, 0, 1.0, soft=True)
+    elif i % 3 == 1: g.place('prop.kiddie-pool', 109.0, z0 + 2.2, 0, .9, soft=True); g.place('prop.flower-box', 107.4, z0 + 1.2, 0, 1.0, soft=True)
+    else: g.place('prop.garden-bush-small', 108.6, z1 - 1.0, math.pi / 2, 1.0, soft=True); g.place('prop.trash-bags', 109.2, z1 - 2.4, 0, 1.0, soft=True)
 # the green street east of the far row: cars in the drives, lamps, a pole line and a tree screen along the edge fence
 for i, r in enumerate(_rowB):
     car = ['veh.pickup-white', 'veh.sedan-blue', 'veh.suv-dark', 'veh.sedan-red', 'veh.pickup-red', 'veh.sedan-white'][i % 6]
@@ -358,14 +358,14 @@ for x, z, a, s in ((82.8, -6.4, 'prop.tree', .8), (82.4, 19.6, 'prop.street-tree
                    (67.6, -12.6, 'prop.tree', .85), (68.2, -29.5, 'prop.tree', .95), (82.2, -29.5, 'prop.street-tree-blossom', .95),
                    (80.8, -21.0, 'prop.tree', .9), (76.0, -30.6, 'prop.tree', .8), (68.2, 20.8, 'prop.street-tree', .85), (82.6, 3.8, 'prop.garden-bush', 1.0)):
     lot(a, x, z, 0, s)
-lot('prop.bbq', 80.0, 14.4, math.pi / 2); lot('prop.lawn-chair-a', 77.8, 14.8, -2.2); lot('prop.lawn-chair-b', 79.4, 16.0, 2.6); lot('prop.folding-chair', 81.4, 15.6, 2.0)
-lot('prop.laundry-line', 67.9, -2.4, 0); lot('prop.wheelbarrow', 74.6, 14.6, .4); lot('prop.crates', 73.9, 15.5, .2)
-lot('prop.kiddie-pool', 79.4, 20.4); lot('prop.sprinkler', 77.2, 18.8, .8); lot('prop.gnome', 74.2, 7.6, 2.4); lot('prop.trash-bags', 83.0, 23.4, .7)
+lot('prop.flower-box', 80.0, 14.4, math.pi / 2); lot('prop.garden-bush-small', 77.8, 14.8, -2.2); lot('prop.garden-bush-small', 79.4, 16.0, 2.6); lot('prop.garden-bush-small', 81.4, 15.6, 2.0)
+lot('prop.laundry-line', 67.9, -2.4, 0); lot('prop.garden-bush-small', 74.6, 14.6, .4); lot('prop.trash-bags', 73.9, 15.5, .2)
+lot('prop.kiddie-pool', 79.4, 20.4); lot('prop.flower-box', 77.2, 18.8, .8); lot('prop.flower-box', 74.2, 7.6, 2.4); lot('prop.trash-bags', 83.0, 23.4, .7)
 lot('veh.pickup-white', 82.4, 11.2, math.pi / 2, .9)
 lot('bld.shed', 68.5, -7.4, 0, .75)
 lot('prop.street-lamp', 68.0, 2.8); lot('prop.street-lamp', 82.2, 2.6)
-lot('prop.bench', 80.8, -11.6, math.pi); lot('prop.crates', 81.6, -25.6, .3); lot('prop.pallet', 81.6, -27.0, .1)
-lot('prop.recycling-bin', 67.6, -11.0, 0); lot('prop.trash-bin', 67.6, -12.2, 0); lot('prop.wheelbarrow', 79.0, -24.0, 1.2)
+lot('prop.garden-bush-small', 80.8, -11.6, math.pi); lot('prop.trash-bags', 81.6, -25.6, .3); lot('prop.trash-bags', 81.6, -27.0, .1)
+lot('prop.trash-bags', 67.6, -11.0, 0); lot('prop.trash-bags', 67.6, -12.2, 0); lot('prop.garden-bush-small', 79.0, -24.0, 1.2)
 lot('bld.shed', 81.8, -31.0, math.pi, .8)
 
 # ------------------------------------------------------------------------------------------------ anchors
