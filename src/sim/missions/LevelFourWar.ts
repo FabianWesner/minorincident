@@ -39,6 +39,9 @@ const fresh = (): L4State => ({
  * civilians fighting (allied fighters v3), the tank, the helicopter and the HMG nests, the collapse director's three line losses and the final fall-back that detonates the fuel truck, the collapse along both routes, and the cellar of Kessler's Hardware.
  * All state lives in `mission.state.l4`, so checkpoints restore it.
  */
+/** Where the first turn happens (the crowd flees from it). */
+const alarmPoint = { x: -25, z: -9 };
+const panicWaves = 4;
 export class LevelFourWar {
   private readonly route = l4Route();
   private readonly stations = l4ConvoyStations(this.route.length);
@@ -481,7 +484,7 @@ export class LevelFourWar {
   private turn(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     // The alarm brings new infected out of camp buildings; the evacuees remain human.
-    const first = { x: -25, z: -9 };
+    const first = alarmPoint;
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
     this.perimeter(true);
     s.turnAt = s.warAt = tick; s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
@@ -546,11 +549,13 @@ export class LevelFourWar {
    * PO 10-13: "when the alarm is on, they panik and try to hide": every person who is not a soldier flees at the alarm, to the
    * nearest refuge away from the turn (a shop or house door, or out of the city along a street edge).
    */
-  private panic(at: Point): void {
+  private panic(at: Point, wave = 0): void {
     const { world } = this, o = this.outbreak(), soldiers = new Set(this.s.soldierIds);
     for (const e of world.entities.iterate()) {
       const c = e.civilian;
-      if (!this.human(e) || !c || c.ally || c.pet || soldiers.has(e.id) || c.state !== 'calm') continue;
+      // perf-w5d: the crowd takes fright over the turn tick and the next three (a quarter per tick, by id),
+      // so the first refuge choices and routes are not all computed on one frame.
+      if (e.id % panicWaves !== wave || !this.human(e) || !c || c.ally || c.pet || soldiers.has(e.id) || c.state !== 'calm') continue;
       o.panic(e, { x: at.x, z: at.z });
     }
   }
@@ -916,6 +921,7 @@ export class LevelFourWar {
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
+    if (s.phase === 'war' && tick > s.turnAt && tick - s.turnAt < panicWaves) this.panic(alarmPoint, tick - s.turnAt);
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (tick >= s.turnDueAt) this.turn();
