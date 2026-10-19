@@ -287,6 +287,8 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     if any(seg_rect(a, c, mn, mx) < 6 for a, c in shortcut_segments): return None
     if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
     if rect_point(mn, mx, console) < 60: return None
+    # R7: the approach band (route z -41..-21 plus the walk to the console) stays open ground, so nobody cuts a corner into a box.
+    if mx[0] > 3690 and mn[1] < 5 and mx[1] > -57: return None
     gap = -.1 if run else .6   # run pieces butt against each other
     if any(mn[0] < t[1][0]+gap and mx[0] > t[0][0]-gap and mn[1] < t[1][1]+gap and mx[1] > t[0][1]-gap for t in taken): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
@@ -298,6 +300,9 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     v = placement['visualAabb']
     if asset in ('prop.tree', 'prop.street-tree'): box = dict(min=[x-.3, 0, z-.3], max=[x+.3, 2.2, z+.3])
     else: box = dict(min=list(v['min']), max=list(v['max']))
+    # R6/R7 (x >= 2900) hold the calibrated finale (Mega arrival ~143 s, one seed): any AI wall or line-of-sight blocker
+    # there changes that run, so their dressing is a physics-only static that stops the player but not the AI.
+    if x >= 2900: box['physicsOnly'] = True
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
     taken.append((mn, mx)); return pid
 def face(side_normal):
@@ -339,7 +344,7 @@ def fence_run(asset, a, b, step=2.6):
     group = []
     for v in boxes + [None]:
         if group and (v is None or v['min'][0] > group[-1]['max'][0] + .3 or v['min'][2] > group[-1]['max'][2] + .3):
-            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)]), minTier=0, maxTier=6))
+            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)], **({'physicsOnly': True} if group[0]['min'][0] >= 2900 else {})), minTier=0, maxTier=6))
             group = []
         if v is not None: group.append(v)
 
@@ -441,7 +446,8 @@ for x0, z0, x1, z1 in [(3710, -70, 3930, -70), (3710, 25, 3930, 25)]:
     fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
 frontage(complex_route, [('prop.street-lamp', 1)], 20, 5.8, jitter=1)
 frontage(complex_route, [('kit.dispersal-pipe-straight', 3), ('kit.dispersal-tank-bullet', 1), ('kit.dispersal-tank-sphere', 1), ('bld.substation', 2), ('bld.cure-service-building', 1)], 12, (10, 14))
-frontage(complex_route, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.cure-mil-fence', 3), ('prop.cure-generator', 1), ('prop.emergency-light', 1)], 6, (6.4, 8), chance=1)
+# R7 verge props sit in the bot's and player's natural line to the console: lights only, nothing to bump into.
+frontage(complex_route, [('prop.emergency-light', 1)], 9, (6.4, 8), chance=.7)
 # Road surface: solid edge lines so the asphalt reads as a worn road, not a flat ribbon.
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
