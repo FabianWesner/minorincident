@@ -39,6 +39,7 @@ import { MotionPresentation, crowdTurnRate } from './characters/MotionPresentati
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
+import { alphaLook, alphaLooks } from '../data/alphaLooks';
 interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
@@ -129,7 +130,7 @@ export class CrowdView extends Group {
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
     if (this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7')
-      for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
+      for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
@@ -273,6 +274,13 @@ export class CrowdView extends Group {
     const key = this.modelAliases.get(id);
     return key && (this.batches.has(`${key}:lod1`) || this.batches.has(`${key}:lod2`)) ? key : undefined;
   }
+  /** PO #23: an Alpha drawn with its default model takes one of the sibling looks, chosen by entity id (same rig and size). An explicit model override keeps its asset. */
+  private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string } }): string {
+    // Naming the shipped asset on purpose (Scene Lab `look.model`, probes) keeps that exact look; the role default and the sim's Mega vary.
+    if (e.infected?.model || e.infected?.variant === 'inf.alpha') return key;
+    const look = alphaLook(key, e.id);
+    return look !== key && this.modelKey(look) === look ? look : key;
+  }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id));
@@ -302,7 +310,7 @@ export class CrowdView extends Group {
       if (distance > this.cullDistance) continue;
       const variant = e.infected?.model ?? e.infected?.variant;
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
-      const key = (variant && this.modelKey(variant)) || role;
+      const key = this.alphaKey((variant && this.modelKey(variant)) || role, e);
       const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
@@ -338,7 +346,7 @@ export class CrowdView extends Group {
       const availableLod = 'lod1';
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = (variant && this.modelKey(variant)) || role;
+      const key = this.alphaKey((variant && this.modelKey(variant)) || role, e);
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);

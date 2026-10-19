@@ -60,7 +60,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         const state = a.getState(), perf = a.perf();
         return { player: state.entities.find(e => e.kind === 'player')?.transform, backend: perf.backend, tier: perf.quality.tier, zoom: state.render.camera.zoom, draws: perf.drawCalls,
           triangles: perf.triangles, alphas: state.entities.filter(e => e.archetype === 'infected.alpha' && !e.infected?.pursuit && e.health.current > 0).length,
-          drawnAlphas: state.render.crowd!.batches.filter(b => b.id === 'inf.alpha').reduce((n, b) => n + b.instances, 0) };
+          drawnAlphas: state.render.crowd!.batches.filter(b => /^inf\.alpha(-|$)/.test(b.id)).reduce((n, b) => n + b.instances, 0) };
       }, entry);
       rows.push({ ...entry, ...row });
       writeFileSync(`${out}/${backend}-${quality}.json`, JSON.stringify(rows, null, 2) + '\n');

@@ -144,13 +144,13 @@ test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.3
       const subjects=[doc.getRoot().listScenes()[0],...doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName()))];
       for (const subject of subjects) {
         const bounds=getBounds(subject),height=bounds.max[1]-bounds.min[1];
-        if (def.id === 'inf.alpha') {
+        if (def.id === 'inf.alpha' || def.id.startsWith('inf.alpha-')) {
           // E07's new large human derives from the 1.8 m worker: ordinary adult
           // bounds below stay exact; Alpha has its own PO height contract.
           const worker = manifest.find(asset => asset.id === 'inf.common-worker')!;
           expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
           expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 1.5);
-        } else if (def.id === 'inf.mega-alpha') {
+        } else if (def.id.startsWith('inf.mega-alpha')) {
           // L10 final boss (PO 10-15): same height as the Alpha, measured at every LOD (the Alpha's own band).
           const worker = manifest.find(asset => asset.id === 'inf.common-worker')!;
           expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
