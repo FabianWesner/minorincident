@@ -257,7 +257,7 @@ def gully():
     for row,(z0,z1) in enumerate([(-GULLY_LEN,0),(0,GULLY_LEN)]):
         cid=f'crossing-11-{3+row}'; ox,oz=500,-400+(3+row)*100
         zs=[z for z in stations if z0<=z<=z1]
-        for part,token in (('bank-w','khaki'),('floor','khakiSeam'),('bank-e','khaki')):
+        for part,token in (('bank-w','trouser'),('floor','leatherEdge'),('bank-e','trouser')):   # look-l9b: the gully banks share the dark dry pan
             verts=[];faces=[]
             for z in zs:
                 r=ring(z); a,b={'bank-w':(0,1),'floor':(1,2),'bank-e':(2,3)}[part]
