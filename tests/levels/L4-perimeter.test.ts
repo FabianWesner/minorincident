@@ -50,7 +50,7 @@ function plazaGrid(w: SimWorld, phase: string): void {
   place(w, pose); player.hidden = hidden; w.physics.playerCollider!.setEnabled(!hidden);
 }
 
-test('@E22 PO16b visible perimeter holds courier at the reported south edge, infected vault it; one-metre plaza gate', async () => {
+test('@E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate', async () => {
   const { world: w, mission: m } = await loadL4(1);
   try {
     w.combat!.damage.god = true;
@@ -76,12 +76,16 @@ test('@E22 PO16b visible perimeter holds courier at the reported south edge, inf
     walk(w, { ...emptyInput(), moveTarget: { x: start.x, z: 28 } }, 120);
     expect(w.controls.blockedMove!.point.z).toBeLessThan(l4.perimeter.z1 - .5);
     expect(w.entities.get(1)!.transform.z).toBeLessThan(l4.perimeter.z1 - .4);
-    // Enough HP to observe crossing without army gunfire ending the fixture halfway through its vault.
+    // Enough HP to observe the collision-safe vault without army gunfire ending the fixture.
     const id = w.infected!.spawn('infected.runner', { x: -8.4, z: 19 });
     const runner = w.entities.get(id)!; runner.health = { current: 100000, max: 100000 };
     place(w, { x: -13, z: 19 }); w.clearInput();
     w.update(); expect(runner.infected!.vault).toBeDefined();
-    for (let i = 0; i < 73; i++) w.update();
+    for (let i = 0; i < 73; i++) {
+      w.update();
+      if (Math.abs(runner.transform.x - l4.perimeter.x1) < .2 + runner.combat!.radius) expect(runner.transform.y - .7, 'feet clear the 1.12 m wire').toBeGreaterThan(1.12);
+      expect(w.solids.offenders).toEqual([]);
+    }
     expect(runner.transform.x).toBeLessThan(l4.perimeter.x1);
     expect(runner.infected!.vault).toBeUndefined();
   } finally { w.dispose(); }

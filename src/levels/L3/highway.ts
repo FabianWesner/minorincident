@@ -20,5 +20,18 @@ export function highwayColliders(p: Placement): StaticCollider[] {
       result.push({id:`${p.id}/highway-${side}-${i}`,aabb:box,walkable:side===0,minTier:p.minTier,maxTier:p.maxTier});
     }
   }
+  for (const joint of highwayJointSegments) {
+    const c = Math.cos(p.yaw), s = Math.sin(p.yaw), yaw = joint.yaw + p.yaw;
+    const x = p.position[0] + joint.x * c + joint.z * s, z = p.position[2] - joint.x * s + joint.z * c;
+    const hx = Math.abs(Math.cos(yaw)) * joint.length / 2 + Math.abs(Math.sin(yaw)) * .35, hz = Math.abs(Math.sin(yaw)) * joint.length / 2 + Math.abs(Math.cos(yaw)) * .35;
+    result.push({ id: `${p.id}/highway-joint-${joint.side}`, aabb: { min: [x - hx, p.position[1] + 5.7, z - hz], max: [x + hx, p.position[1] + 6.65, z + hz], navBlocker: true }, walkable: false, minTier: p.minTier, maxTier: p.maxTier });
+  }
   return result;
 }
+
+/** Integral top-end rail joins, in the ramp's local asset frame; shared by rendering and contact. */
+export const highwayJointSegments = [-1, 1].map(side => {
+  const a = highwayPoint({ position: [0, 0, 0], yaw: 0 } as Placement, 0, side * 2.6), b = [-12, 5.7, -side * 2.58];
+  const dx = b[0] - a[0], dz = b[2] - a[2];
+  return { side, x: (a[0] + b[0]) / 2, z: (a[2] + b[2]) / 2, length: Math.hypot(dx, dz) + .04, yaw: -Math.atan2(dz, dx) };
+});

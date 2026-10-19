@@ -1,0 +1,62 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 83s, 25469 files; job /srv/mi/jobs/collision-placement-9aa6d4-59870-1792422363; queueing for a slot
+[runner] slot 1 acquired; load 6.10 5.69 4.90
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-59870-1792422363
+
+ ❯  functional  tests/levels/collision-placement.test.ts (13 tests | 2 failed | 11 skipped) 351ms
+   ↓ L4 perimeter rejects placement and swept passage for every actor kind
+   ↓ NPC spawn admission leaves 0.8 m around a reserved player start
+   ↓ L1 shutter brings an outside companion inside before sealing, with a short transition
+   ↓ L3 all four ramp rail joints meet visible solid caps within 2 cm
+   ↓ a wide door uses its normal to bring in a companion when the courier stands off centre
+   ↓ L3 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L5 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L7 high start has separate visible survivor bodies at tick 66
+   ↓ L7 low start has separate visible survivor bodies at tick 66
+   ↓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf
+   ↓ companion head and rear clear solids even when the central circle is outside
+   × committed contact cells retain the corgi head clearance from the courier 337ms
+   × companion head contact projects onto the solid face while retaining forward progress 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > committed contact cells retain the corgi head clearance from the courier
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/levels/collision-placement.test.ts:173:63
+    171|     w.spatial.set(dog.id, 2, 0); w.solids.commit();
+    172|     p.transform.x = .9; w.spatial.set(1, .9, 0);
+    173|     expect(w.solids.clear(p.transform, actorRadius(p), p.id)).toBe(fal…
+       |                                                               ^
+    174|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id)).to…
+    175|     w.solids.commit();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > companion head contact projects onto the solid face while retaining forward progress
+AssertionError: expected 1.3 to be less than or equal to 1.08
+ ❯ tests/levels/collision-placement.test.ts:191:29
+    189|     dog.transform.x = 1.3; w.spatial.set(dog.id, 1.3, 0); w.solids.com…
+    190|     expect(dog.transform.x).toBeGreaterThan(1);
+    191|     expect(dog.transform.x).toBeLessThanOrEqual(1.08);
+       |                             ^
+    192|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id, fal…
+    193|   } finally { w.dispose(); }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 11 skipped (13)
+   Start at  15:07:30
+   Duration  5.95s (transform 82%, import 11%, tests 6%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 83s, remote total 10s)

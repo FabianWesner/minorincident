@@ -1,0 +1,66 @@
+[remote] sync /private/tmp/mi-collision-placement-base -> 2.28.24.66:/srv/mi/ws/mi-collision-placement-base-3893a6
+[remote] cache-gc deleted:none
+[remote] sync 32s, 25156 files; job /srv/mi/jobs/mi-collision-placement-base-3893a6-17024-1792414560; queueing for a slot
+[runner] slot 0 acquired; load 0.63 1.43 2.08
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+ RUN  v5.0.3 /srv/mi/jobs/mi-collision-placement-base-3893a6-17024-1792414560
+
+ ❯  timing  tests/sim/performance/zoo-s1.test.ts (2 tests | 1 failed) 3917ms
+   × T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 2946ms
+   ✓ T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms 968ms
+ ❯  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 failed) 4209ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 3163ms
+   ✓ T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 1044ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+AssertionError: expected 6.071821000000455 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s1.test.ts:30:101
+     28|     const proof = { count, animals: ids.length, minInfected, activatio…
+     29|     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+     30|     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+       |                                                                                                     ^
+     31|   } finally { w.dispose(); }
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 5.782895000000281 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 2 passed (4)
+   Start at  12:56:34
+   Duration  12.25s (tests 68%, transform 24%, import 7%)
+
+{
+  "count": 200,
+  "animals": 40,
+  "minInfected": 200,
+  "activations": 112,
+  "cap": 200,
+  "ticks": 600,
+  "simMsP95": 6.071821000000455,
+  "budgetMs": 4
+}
+{
+  "count": 200,
+  "zoo": 20,
+  "activations": 51,
+  "simMsP95": 5.782895000000281,
+  "budgetMs": 4
+}
+[remote] done exit=1 (runner 2.28.24.66, sync 32s, remote total 16s)

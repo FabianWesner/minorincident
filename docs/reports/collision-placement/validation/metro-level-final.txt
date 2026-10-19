@@ -1,0 +1,52 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted: merge-batch13a-6e8240
+[remote] sync 62s, 25492 files; job /srv/mi/jobs/collision-placement-9aa6d4-95672-1792428339; queueing for a slot
+[runner] slot 0 acquired; load 5.67 6.27 6.90
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-95672-1792428339
+
+ ✓  functional  tests/levels/L5-encounters.test.ts (9 tests) 12068ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high 2198ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low 1100ms
+   ✓ @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal 722ms
+   ✓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience 893ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high 787ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low 616ms
+   ✓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return 1753ms
+   ✓ @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 1695ms
+   ✓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save 2287ms
+ ✓  functional  tests/levels/collision-placement.test.ts (15 tests) 25184ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 16418ms
+   ✓ NPC spawn admission leaves 0.8 m around a reserved player start 700ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 691ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 1281ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 2269ms
+   ✓ L5 companion occupies its visible footprint and stays outside courier and reported solids 692ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 1136ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 1101ms
+   ✓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 411ms
+   ✓ the Metro lookout leaves an interior right-lane slot for the complete corgi capsule 460ms
+ ✓  functional  tests/levels/L5.test.ts (15 tests) 204004ms
+   ✓ L5 Aftermath (15)
+     ✓ T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor's death 20786ms
+     ✓ T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4 18748ms
+     ✓ T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3 16873ms
+     ✓ T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier's; 12-20 infected in ones and twos 7852ms
+     ✓ T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot 11996ms
+     ✓ T-E23-08 @E23 @E23-AC08 signs of life: a positional cue with a subtitle within 25 m of each hiding place, none beyond 30 m; no objective marker ever points at a survivor 3753ms
+     ✓ T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run 15058ms
+     ✓ T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person 37477ms
+     ✓ T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count 26198ms
+     ✓ T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal 578ms
+     ✓ T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication 622ms
+     ✓ T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit 12658ms
+     ✓ T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist 2461ms
+     ✓ T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected) 10900ms
+     ✓ T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too 18042ms
+
+ Test Files  3 passed (3)
+      Tests  39 passed (39)
+   Start at  16:46:45
+   Duration  209.20s (tests 96%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 62s, remote total 215s)

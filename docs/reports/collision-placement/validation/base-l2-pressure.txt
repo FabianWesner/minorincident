@@ -1,0 +1,113 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 29s, 25488 files; job /srv/mi/jobs/collision-placement-9aa6d4-29837-1792423985; queueing for a slot
+[runner] slot 0 acquired; load 4.20 4.61 4.98
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-29837-1792423985
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'high',
+  opening: 'direct',
+  seconds: 36.016666666666666,
+  streetEngaged: 5,
+  streetPerMinute: 8.329477093937992,
+  engaged: 24,
+  perMinute: 39.98149005090236,
+  bins15s: [ 11, 17, 17 ],
+  policeTargets: 16,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 122.53333333333333,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 63.75 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'low',
+  opening: 'direct',
+  seconds: 36.05,
+  streetEngaged: 4,
+  streetPerMinute: 6.65742024965326,
+  engaged: 15,
+  perMinute: 24.965325936199726,
+  bins15s: [ 8, 11, 11 ],
+  policeTargets: 11,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 122.8,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 63.75 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'high',
+  opening: 'side',
+  seconds: 54.516666666666666,
+  streetEngaged: 0,
+  streetPerMinute: 0,
+  engaged: 18,
+  perMinute: 19.810455518190157,
+  bins15s: [ 10, 7, 7, 8 ],
+  policeTargets: 12,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 142.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 63.75 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'low',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 1,
+  streetPerMinute: 1.0999083409715857,
+  engaged: 9,
+  perMinute: 9.899175068744272,
+  bins15s: [ 7, 6, 1, 1 ],
+  policeTargets: 6,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 142.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 63.75 }
+  ]
+}
+
+ ✓  functional  tests/levels/L2-finale-pressure.test.ts (2 tests) 79573ms
+   ✓ PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival 36520ms
+   ✓ PO #7b @E20 the arriving player sees police firing on a horde at the bridge 43051ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  15:33:42
+   Duration  82.32s (tests 97%, transform 3%, import 1%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 29s, remote total 91s)

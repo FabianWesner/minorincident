@@ -11,7 +11,7 @@ export const infectedContactDistance = (radius: number): number => meleeRing + M
 function spacingRadius(e: EntitySnapshot, world: SimWorld): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
-  if (e.companion) return world.missions?.state.l5?.metroAt ? .2 : .9;
+  if (e.companion) return world.missions?.state.l5?.metroAt ? actorRadius(e) : .9;
   if (e.civilian?.pet) return .5;
   if (e.survivor) return actorRadius(e);
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
@@ -25,11 +25,12 @@ export function installCharacterSeparation(world: SimWorld): void {
   const neighbors: number[] = [], query = { x: 0, z: 0, r: 2 }, radii: (Body | undefined)[] = [], radiusIds: number[] = [];
   const records = new WeakMap<EntitySnapshot, Body>();
   const bodies: Body[] = [], categories: Body[] = [], reaches: number[][] = [];
+  let narrowQueue = false;
   let active: typeof bodies[number] | undefined;
   let activeReach: number[] = [];
-  const contacts: ContactCells = { epoch: 0, radius: id => radii[id]?.radius ?? 0, intersects: (maximum, x, z) => {
+  const contacts: ContactCells = { epoch: 0, radius: id => { const body = radii[id]; return body ? body.radius + (narrowQueue && body.entity.companion ? .4 : 0) : 0; }, intersects: (maximum, x, z) => {
     if (!active || !maximum) return false;
-    const p = active, r = active.radius;
+    const p = active, r = active.radius + (narrowQueue && active.entity.companion ? .4 : 0);
     const dx = Math.max(x - p.x, 0, p.x - x - 4), dz = Math.max(z - p.z, 0, p.z - z - 4);
     const reach = Math.max(r + maximum + (active.hullContact ? .45 : .3), meleeRing) + Math.max(0, r - .35, maximum - .35);
     return dx * dx + dz * dz < reach * reach;
@@ -38,6 +39,7 @@ export function installCharacterSeparation(world: SimWorld): void {
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
+    narrowQueue = !!world.missions?.state.l5?.metroAt;
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
@@ -57,7 +59,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.hullContact = !!drivenHull && drivenHull.speed < .2 && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
-      body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
+      body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow' && !world.missions?.state.l5?.metroAt;
       body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
       body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
@@ -95,9 +97,16 @@ export function installCharacterSeparation(world: SimWorld): void {
       const body = active!, { entity: e, point: p } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
       const other = neighbor.entity;
-      if (body.courier && !other.civilian?.survivor) return;
-      const dx = body.x - neighbor.x, dz = body.z - neighbor.z, squared = dx * dx + dz * dz;
-      const reach = activeReach[neighbor.category];
+      if (body.courier && !other.civilian?.survivor && !(narrowQueue && other.companion)) return;
+      let dx = body.x - neighbor.x, dz = body.z - neighbor.z;
+      if (narrowQueue && !body.infected && !neighbor.infected && (e.companion || other.companion)) {
+        // Use the closest point on the long body: a circle cannot both push its head clear
+        // and let a person pass beside it in the two-lane Metro opening.
+        const dog = e.companion ? e : other, nx = Math.cos(dog.transform.yaw), nz = -Math.sin(dog.transform.yaw);
+        const along = Math.max(-.4, Math.min(.4, (dx * nx + dz * nz) * (e.companion ? -1 : 1)));
+        const sign = e.companion ? 1 : -1; dx += sign * nx * along; dz += sign * nz * along;
+      }
+      const squared = dx * dx + dz * dz, reach = activeReach[neighbor.category];
       if (squared >= reach * reach || neighbor.charge || (body.passiveCompanion && !neighbor.courier)) return;
       const distance = Math.sqrt(squared), overlap = reach - distance;
       if (overlap <= .001) return;
@@ -112,7 +121,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
       if (pass && bodies.length > 20 && body.infected && !body.l1 && (!body.hullContact || pass > 1)) continue;
       const { entity: e, radius: r, point: p } = body; active = body; activeReach = reaches[body.category];
-      query.x = p.x; query.z = p.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
+      query.x = p.x; query.z = p.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35) + (narrowQueue ? .4 : 0); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
       world.spatial.query(query, neighbors, false, visit, contacts);
       if (p.x !== query.x || p.z !== query.z) { world.spatial.set(e.id, p.x, p.z); world.solids.wrote(e, 'cleanup.separation'); }

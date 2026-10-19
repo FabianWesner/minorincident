@@ -1,0 +1,110 @@
+Unchanged base revision: 2d5e0fb84
+Command: remote vitest collision-placement + pickup-visibility + barrier-joints
+
+Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > L4 perimeter rejects placement and swept passage for every actor kind
+AssertionError: player: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/levels/collision-placement.test.ts:27:96
+     25|       const wall = l4PerimeterWalls[3];
+     26|       Object.assign(e.transform, { x: wall.x - 1, y: .7, z: 16 });
+     27|       expect(w.solids.clear({ x: wall.x, y: .7, z: 16 }, actorRadius(e…
+       |                                                                                                ^
+     28|       expect(w.solids.sweep(e, { x: 1, z: 0 }, 2, actorRadius(e), fals…
+     29|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > NPC spawn admission leaves 0.8 m around the player
+AssertionError: expected 0.72 to be greater than or equal to 0.8
+ ❯ tests/levels/collision-placement.test.ts:40:86
+     38|     w.spatial.set(e.id, e.transform.x, e.transform.z);
+     39|     expect(w.solids.admit(e, 'civilian.spawn')).toBe(true);
+     40|     expect(Math.hypot(e.transform.x - p.transform.x, e.transform.z - p…
+       |                                                                                      ^
+     41|   } finally { w.dispose(); }
+     42| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > L1 shutter brings an outside companion inside before sealing, with a short transition
+AssertionError: expected -2 to be greater than or equal to 0.4
+ ❯ tests/levels/collision-placement.test.ts:54:79
+     52|     m.setGate('fire-shutter', false);
+     53|     expect(m.state.gates['fire-shutter']).toBe(false);
+     54|     expect((dog.transform.x - door.x) * nx + (dog.transform.z - door.z…
+       |                                                                               ^
+     55|     expect(dog.companion!.transitionUntil).toBe(w.tick + 12);
+     56|     for (let i = 0; i < 13; i++) w.update();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > L3 all four ramp rail joints meet visible solid caps within 2 cm
+AssertionError: expected [] to have a length of 4 but got +0
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ tests/levels/collision-placement.test.ts:65:16
+     63|   const ramps = layout.placements.filter(p => p.assetId === 'kit.highw…
+     64|   const caps = layout.placements.filter(p => p.id.startsWith('l3-highw…
+     65|   expect(caps).toHaveLength(4);
+       |                ^
+     66|   for (const ramp of ramps) for (const side of [-1, 1]) {
+     67|     const cap = caps.find(p => p.id === `l3-highway-joint-${ramp.id}-$…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL   functional  tests/unit/levels/barrier-joints.test.ts > continuous fence chains close their nominal-versus-physical panel seams to at most 2 cm
+AssertionError: expected 0.03940446650124141 to be less than or equal to 0.02
+ ❯ tests/unit/levels/barrier-joints.test.ts:15:78
+     13|   for (let i = 1; i < original.length; i++) {
+     14|     const a = drawn.get(original[i - 1].id)!, b = drawn.get(original[i…
+     15|     expect(b.position[0] - a.position[0] - (a.scale[2] + b.scale[2]) *…
+       |                                                                              ^
+     16|   }
+     17|   // Assembly must not accumulate stretching into the authored/cached …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > weapon pickup ring draws above occluders without writing depth or changing colour in fog
+AssertionError: expected 0 to be greater than 90
+ ❯ tests/unit/render/pickup-visibility.test.ts:20:31
+     18|     view.traverse(node => { if (node instanceof Mesh && node.geometry.…
+     19|     expect(ring).toBeDefined();
+     20|     expect(ring!.renderOrder).toBeGreaterThan(90);
+       |                               ^
+     21|     expect(ring!.material).toMatchObject({ depthTest: false, depthWrit…
+     22|   } finally { view.dispose(); geometry.dispose(); material.dispose(); }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > mission pickup rings including the L2 axe stay visible over street props
+AssertionError: expected 0 to be greater than 90
+ ❯ tests/unit/render/pickup-visibility.test.ts:30:33
+     28|     expect(marker.children).toHaveLength(2);
+     29|     for (const child of marker.children as Mesh[]) {
+     30|       expect(child.renderOrder).toBeGreaterThan(90);
+       |                                 ^
+     31|       expect(child.material).toMatchObject({ depthTest: false, depthWr…
+     32|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  7 failed (7)
+   Start at  12:39:46
+   Duration  17.01s (tests 65%, transform 29%, import 6%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 80s, remote total 91s)

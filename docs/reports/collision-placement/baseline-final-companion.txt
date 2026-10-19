@@ -1,0 +1,59 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 26s, 25511 files; job /srv/mi/jobs/collision-placement-9aa6d4-7495-1792431858; queueing for a slot
+[runner] slot 1 acquired; load 5.44 5.52 4.76
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-7495-1792431858
+
+ ❯  functional  tests/levels/collision-placement.test.ts (17 tests | 2 failed | 15 skipped) 242ms
+   ↓ L4 perimeter rejects placement and swept passage for every actor kind
+   ↓ NPC spawn admission leaves 0.8 m around a reserved player start
+   ↓ L1 shutter brings an outside companion inside before sealing, with a short transition
+   ↓ L3 all four ramp rail joints meet visible solid caps within 2 cm
+   ↓ a wide door uses its normal to bring in a companion when the courier stands off centre
+   ↓ L3 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L5 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L7 high start has separate visible survivor bodies at tick 66
+   ↓ L7 low start has separate visible survivor bodies at tick 66
+   ↓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf
+   ↓ companion head and rear clear solids even when the central circle is outside
+   ↓ committed contact cells retain the corgi head clearance from the courier
+   ↓ companion head contact projects onto the solid face while retaining forward progress
+   ↓ the corgi clears its supporting floor while a raised barrier still blocks its body
+   ↓ the Metro lookout leaves an interior right-lane slot for the complete corgi capsule
+   × companion routes reserve the full body around posts and fall back to body width at narrow doors 223ms
+   × a companion ahead of a departing courier walks on instead of sealing the route 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > companion routes reserve the full body around posts and fall back to body width at narrow doors
+AssertionError: a turn reserves the circumscribed capsule: expected 0.35 to be close to 0.84, received difference is 0.49, but expected 0.005
+ ❯ tests/levels/collision-placement.test.ts:227:84
+    225|     const steering = vi.spyOn(nav, 'steer');
+    226|     w.npcs!.move(dog, { x: 6, z: 0 }, 4.5, dog.companion!, 2);
+    227|     expect(steering.mock.calls[0][3], 'a turn reserves the circumscrib…
+       |                                                                                    ^
+    228|     steering.mockClear(); steering.mockImplementationOnce(() => false);
+    229|     w.npcs!.move(dog, { x: 6, z: 0 }, 4.5, dog.companion!, 2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > a companion ahead of a departing courier walks on instead of sealing the route
+AssertionError: the ordinary two-metre follow stop must not pin the player behind its body: expected 1.2 to be greater than 1.5
+ ❯ tests/levels/collision-placement.test.ts:246:107
+    244|     w.npcs!.companion.forceSafe = true;
+    245|     for (let i = 0; i < 30; i++) { w.tick++; w.npcs!.companion.update(…
+    246|     expect(dog.transform.x, 'the ordinary two-metre follow stop must n…
+       |                                                                                                           ^
+    247|     expect(w.solids.clear(dog.transform, .44, dog.id)).toBe(true);
+    248|   } finally { w.dispose(); }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 15 skipped (17)
+   Start at  17:44:47
+   Duration  5.30s (transform 83%, import 12%, tests 5%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 26s, remote total 10s)

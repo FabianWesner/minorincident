@@ -1,0 +1,187 @@
+[remote] sync /private/tmp/mi-collision-placement-base -> 94.130.181.173:/srv/mi/ws/mi-collision-placement-base-3893a6
+[remote] cache-gc deleted:none
+[remote] sync 44s, 25157 files; job /srv/mi/jobs/mi-collision-placement-base-3893a6-13680-1792417858; queueing for a slot
+[runner] slot 1 acquired; load 4.79 3.52 3.06
+
+ RUN  v5.0.3 /srv/mi/jobs/mi-collision-placement-base-3893a6-13680-1792417858
+
+ ✓  functional  tests/levels/ally-combat-feel.test.ts (2 tests) 56560ms
+   ✓ ally combat feel (2)
+     ✓ L4 war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up 41593ms
+     ✓ L3 station attack: the police move and fight in view of the idle courier 14965ms
+ ✓  functional  tests/levels/L4.test.ts (23 tests | 22 skipped) 80632ms
+   ✓ L4 The Safe City Falls (23)
+     ✓ T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing 80628ms
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'high',
+  seconds: 80.83333333333333,
+  metres: 347.70563888012504,
+  routeMetres: 311,
+  walkingSeconds: 155.5,
+  engaged: 25,
+  perMinute: 18.556701030927837,
+  bins15s: [ 4, 10, 6, 10, 4, 2 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -10.786519050598145,
+      z: -6.486454963684082,
+      slots: 106,
+      groups: []
+    },
+    {
+      second: 15,
+      x: -5.2056355476379395,
+      z: 29.50042724609375,
+      slots: 108,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 40.337406158447266,
+      z: 44.84579849243164,
+      slots: 112,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 48.48128128051758,
+      z: -10.428024291992188,
+      slots: 114,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: 9.16336441040039,
+      z: -37.36767578125,
+      slots: 118,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -58.26506423950195,
+      z: -38.974369049072266,
+      slots: 120,
+      groups: [Array]
+    }
+  ],
+  peak: 120,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 78.7 },
+    { type: 'l4.lineBreaks', t: 268.8333333333333 },
+    { type: 'objective:hold', t: 268.8333333333333 },
+    { type: 'l4.heliWithdrawn', t: 275.8333333333333 },
+    { type: 'l4.descended', t: 349.6666666666667 },
+    { type: 'objective:hide', t: 349.6666666666667 },
+    { type: 'l4.doorBarred', t: 351.01666666666665 },
+    { type: 'objective:bar', t: 351.01666666666665 },
+    { type: 'objective:wait', t: 358.01666666666665 }
+  ],
+  totalSeconds: 358.01666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'low',
+  seconds: 79.76666666666667,
+  metres: 339.20704467354454,
+  routeMetres: 304,
+  walkingSeconds: 152,
+  engaged: 12,
+  perMinute: 9.02632678646051,
+  bins15s: [ 1, 2, 3, 4, 3, 1 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -9.754616737365723,
+      z: -6.750065326690674,
+      slots: 48,
+      groups: []
+    },
+    {
+      second: 15,
+      x: -4.583021640777588,
+      z: 29.708740234375,
+      slots: 54,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 47.29216384887695,
+      z: 41.53355026245117,
+      slots: 56,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 48.493186950683594,
+      z: -21.60807228088379,
+      slots: 57,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: -0.27343589067459106,
+      z: -37.37517166137695,
+      slots: 59,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -63.16642379760742,
+      z: -39.342350006103516,
+      slots: 60,
+      groups: [Array]
+    }
+  ],
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 78.7 },
+    { type: 'l4.lineBreaks', t: 268.8333333333333 },
+    { type: 'objective:hold', t: 268.8333333333333 },
+    { type: 'l4.heliWithdrawn', t: 275.8333333333333 },
+    { type: 'l4.descended', t: 348.6166666666667 },
+    { type: 'objective:hide', t: 348.6166666666667 },
+    { type: 'l4.doorBarred', t: 350.01666666666665 },
+    { type: 'objective:bar', t: 350.01666666666665 },
+    { type: 'objective:wait', t: 357.01666666666665 }
+  ],
+  totalSeconds: 357.01666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+ ✓  functional  tests/levels/L4-finale-pressure.test.ts (2 tests) 192482ms
+   ✓ PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap 192476ms
+
+ Test Files  3 passed (3)
+      Tests  5 passed | 22 skipped (27)
+   Start at  13:51:46
+   Duration  198.58s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 44s, remote total 204s)

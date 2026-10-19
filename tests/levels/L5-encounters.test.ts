@@ -1,3 +1,4 @@
+import { actorRadius } from '../../src/sim/world/SolidRegistry';
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
@@ -168,7 +169,9 @@ test('@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutte
     // Keep the intruder stationary to isolate shelter entry from combat damage.
     enemy.combat!.staggerUntil = w.tick + 900;
     for (let i = 0; i < 600 && !m.state.l5!.shutterAt; i++) w.update();
-    expect(m.state.l5!.shutterAt).toBeGreaterThan(0);
+    expect(m.state.l5!.shutterAt, JSON.stringify({ phase: m.state.l5!.phase, metroAt: m.state.l5!.metroAt, player: player.transform, followers: followers.map(e => ({ id: e.id, at: e.transform, inside: m.l5!.insideStation(e.transform) })), dog: [...w.entities.iterate()].find(e => e.companion)?.transform, enemy: enemy.transform })).toBeGreaterThan(0);
+    const dog = [...w.entities.iterate()].find(e => e.companion)!;
+    expect(m.l5!.insideStation(dog.transform), 'the companion is inside before closure').toBe(true);
     expect(followers.every(e => m.l5!.insideStation(e.transform))).toBe(true);
     expect(enemy.transform.z).toBeGreaterThan(door.z + enemy.combat!.radius);
     expect(w.infected!.nav.clear(door.x, door.z, .35)).toBe(false);
@@ -214,8 +217,20 @@ test('@E23 @E23-AC15 the five survivors cross the Metro opening from the real-in
       e.locomotion = { vx: velocities[i][0], vz: velocities[i][1], ax: 0, az: 0, omega: 0, updatedAt: w.tick - 1 };
       w.spatial.set(e.id, e.transform.x, e.transform.z);
     });
-    for (let i = 0; i < 1200 && !m.state.l5!.doneAt; i++) w.update();
-    expect(m.state.l5!.shutterAt).toBeGreaterThan(0);
+    for (let i = 0; i < 1200 && !m.state.l5!.doneAt; i++) {
+      w.update();
+      if (corgi.hidden || corgi.pendingAdmission) continue;
+      expect(w.solids.clear(corgi.transform, .44, corgi.id, false), `corgi/solids at tick ${w.tick}: ${JSON.stringify({ at: corgi.transform, contactClear: w.solids.clear(corgi.transform, .44, corgi.id, false, .020001), offenders: w.solids.offenders.slice(-3) })}`).toBe(true);
+      // Independent visible capsule check: the old central circle let this
+      // waiting corgi's head/rear intersect the queue while it crossed the stairs.
+      const nx = Math.cos(corgi.transform.yaw), nz = -Math.sin(corgi.transform.yaw);
+      for (const e of w.entities.iterate()) {
+        if (e === corgi || !(e.survivor || e.civilian || e.infected || e.escort) || e.hidden || e.pendingAdmission || e.corpse || e.health.current <= 0 || e.passengerOf !== undefined || Math.abs(e.transform.y - corgi.transform.y) >= 1.2) continue;
+        const dx = e.transform.x - corgi.transform.x, dz = e.transform.z - corgi.transform.z, along = Math.max(-.4, Math.min(.4, dx * nx + dz * nz));
+        expect(Math.hypot(dx - nx * along, dz - nz * along), `corgi/actor ${e.id} at tick ${w.tick}: ${JSON.stringify({ dog: corgi.transform, other: e.transform, failures: w.solids.failures, offenders: w.solids.offenders.slice(-3) })}`).toBeGreaterThanOrEqual(.44 + actorRadius(e) - .020001);
+      }
+    }
+    expect(m.state.l5!.shutterAt, JSON.stringify({ phase: m.state.l5!.phase, metroAt: m.state.l5!.metroAt, tick: w.tick, playerHp: player.health, playerHidden: player.hidden, dogHidden: corgi.hidden, pending: corgi.pendingAdmission, passenger: corgi.passengerOf, player: player.transform, dog: corgi.transform, following: corgi.companion?.following, followers: m.state.l5!.survivors.map(r => ({ id: r.id, at: w.entities.get(r.id)?.transform })) })).toBeGreaterThan(0);
     expect(m.state.result!.survivors).toHaveLength(5);
   } finally { w.dispose(); }
 }, 120_000);

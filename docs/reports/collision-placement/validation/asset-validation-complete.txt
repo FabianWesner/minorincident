@@ -1,0 +1,23 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 41s, 25485 files; job /srv/mi/jobs/collision-placement-9aa6d4-78926-1792420871; queueing for a slot
+[runner] slot 0 acquired; load 1.25 1.30 2.78
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-78926-1792420871
+
+ ✓  functional  tests/unit/assets/validate.test.ts (17 tests) 156347ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 148125ms
+   ✓ distance cap for veh.test LODNaN cannot be relaxed by the manifest 623ms
+   ✓ distance cap for bld.house-test LODNaN cannot be relaxed by the manifest 2345ms
+   ✓ distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest 2339ms
+   ✓ @E17-AC02 decay caps apply to variants without changing the integrated base budget 1092ms
+   ✓ @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits 1152ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  14:41:55
+   Duration  156.80s (tests 100%)
+
+JSON report written to /srv/mi/jobs/collision-placement-9aa6d4-78926-1792420871/test-results/collision-placement/validate-final.json
+[remote] pulled test-results/collision-placement/validate-final.json
+[remote] done exit=0 (runner 2.31.10.108, sync 41s, remote total 162s)

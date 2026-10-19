@@ -1,0 +1,75 @@
+{
+  "numTotalTests": 3013,
+  "numPassedTests": 2996,
+  "numFailedTests": 6,
+  "numPendingTests": 11,
+  "success": false,
+  "failures": [
+    {
+      "file": "levels/L2-finale-pressure.test.ts",
+      "assertions": [
+        {
+          "name": "PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival",
+          "messages": [
+            "AssertionError: expected 3 to be less than or equal to 1\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/L2-finale-pressure.test.ts:66:58\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-respawn.test.ts",
+      "assertions": [
+        {
+          "name": "L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint",
+          "messages": [
+            "AssertionError: expected 'timeout' to be 'complete' // Object.is equality\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/L4-respawn.test.ts:44:26\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L5.test.ts",
+      "assertions": [
+        {
+          "name": "L5 Aftermath T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist",
+          "messages": [
+            "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/L5.test.ts:322:86\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L6-protection.test.ts",
+      "assertions": [
+        {
+          "name": "T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run",
+          "messages": [
+            "AssertionError: expected 0.5172413793103449 to be less than or equal to 0.3\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/L6-protection.test.ts:23:47\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L6.test.ts",
+      "assertions": [
+        {
+          "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+          "messages": [
+            "AssertionError: expected 0.1724137931034483 to be greater than or equal to 0.4\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/L6.test.ts:76:229\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/continuity.test.ts",
+      "assertions": [
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+          "messages": [
+            "AssertionError: expected 214.51666666666668 to be less than or equal to 210\n    at /srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/tests/levels/continuity.test.ts:45:30\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-5185-1792425987/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    }
+  ]
+}

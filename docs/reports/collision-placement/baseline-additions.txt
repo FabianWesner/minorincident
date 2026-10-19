@@ -1,0 +1,120 @@
+[remote] sync /private/tmp/mi-collision-placement-base -> 94.130.181.173:/srv/mi/ws/mi-collision-placement-base-3893a6
+[remote] cache-gc deleted:none
+[remote] sync 64s, 25157 files; job /srv/mi/jobs/mi-collision-placement-base-3893a6-49221-1792418615; queueing for a slot
+[runner] slot 1 acquired; load 6.42 6.29 5.52
+
+ RUN  v5.0.3 /srv/mi/jobs/mi-collision-placement-base-3893a6-49221-1792418615
+
+ ❯  functional  tests/levels/collision-placement-added.test.ts (8 tests | 8 failed) 4680ms
+   × NPC spawn admission leaves 0.8 m around a reserved player start 817ms
+   × L3 companion occupies its visible footprint and stays outside courier and reported solids 2002ms
+   × L5 companion occupies its visible footprint and stays outside courier and reported solids 478ms
+   × L7 high start has separate visible survivor bodies at tick 66 566ms
+   × L7 low start has separate visible survivor bodies at tick 66 497ms
+   × L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 293ms
+   × companion head and rear clear solids even when the central circle is outside 12ms
+   × committed contact cells retain the corgi head clearance from the courier 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > NPC spawn admission leaves 0.8 m around a reserved player start
+AssertionError: expected 0.7199999999999989 to be greater than or equal to 0.8
+ ❯ tests/levels/collision-placement-added.test.ts:10:86
+      8|     const p = w.entities.get(1)!, at = { x: p.transform.x + .72, z: p.…
+      9|     const e = w.entities.get(w.npcs!.civilians.spawn('cashier', at, { …
+     10|     expect(Math.hypot(e.transform.x - p.transform.x, e.transform.z - p…
+       |                                                                                      ^
+     11|   } finally { w.dispose(); }
+     12| }, 120_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > L3 companion occupies its visible footprint and stays outside courier and reported solids
+AssertionError: expected 0.3912423556097193 to be greater than or equal to 0.77
+ ❯ tests/levels/collision-placement-added.test.ts:25:60
+     23|       const dx = p.transform.x - dog.transform.x, dz = p.transform.z -…
+     24|       const along = Math.max(-.4, Math.min(.4, dx * nx + dz * nz));
+     25|       expect(Math.hypot(dx - nx * along, dz - nz * along)).toBeGreater…
+       |                                                            ^
+     26|       expect(dog.transform.y).toBeCloseTo(w.districts!.groundHeight(do…
+     27|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > L5 companion occupies its visible footprint and stays outside courier and reported solids
+AssertionError: expected 0.5691205407634059 to be greater than or equal to 0.77
+ ❯ tests/levels/collision-placement-added.test.ts:25:60
+     23|       const dx = p.transform.x - dog.transform.x, dz = p.transform.z -…
+     24|       const along = Math.max(-.4, Math.min(.4, dx * nx + dz * nz));
+     25|       expect(Math.hypot(dx - nx * along, dz - nz * along)).toBeGreater…
+       |                                                            ^
+     26|       expect(dog.transform.y).toBeCloseTo(w.districts!.groundHeight(do…
+     27|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > L7 high start has separate visible survivor bodies at tick 66
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > L7 low start has separate visible survivor bodies at tick 66
+AssertionError: arrive behind the courier in the follow formation: expected 0.7562604014399004 to be less than -0.8
+ ❯ tests/levels/collision-placement-added.test.ts:36:245
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf
+AssertionError: expected 0.09999999999999432 to be greater than or equal to 0.55
+ ❯ tests/levels/collision-placement-added.test.ts:55:46
+     53|     m.setGate('fire-shutter', false);
+     54|     expect(m.state.gates['fire-shutter']).toBe(false);
+     55|     expect(Math.abs(p.transform.x - door.x)).toBeGreaterThanOrEqual(.5…
+       |                                              ^
+     56|     expect(p.transform.y).toBeCloseTo(.7 + w.districts!.groundHeight(p…
+     57|     expect(w.solids.clear(p.transform, actorRadius(p), 1, false)).toBe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > companion head and rear clear solids even when the central circle is outside
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/levels/collision-placement-added.test.ts:68:76
+     66|     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 9…
+     67|     Object.assign(dog.transform, { x: 1.2, z: 0, y: .3, yaw: 0 });
+     68|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id, fal…
+       |                                                                            ^
+     69|     dog.transform.yaw = Math.PI / 2;
+     70|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id, fal…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL   functional  tests/levels/collision-placement-added.test.ts > committed contact cells retain the corgi head clearance from the courier
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/levels/collision-placement-added.test.ts:81:63
+     79|     w.spatial.set(dog.id, dog.transform.x, dog.transform.z); w.solids.…
+     80|     dog.transform.x = p.transform.x + 1; w.spatial.set(dog.id, dog.tra…
+     81|     expect(w.solids.clear(p.transform, actorRadius(p), p.id)).toBe(fal…
+       |                                                               ^
+     82|     expect(w.solids.clear(dog.transform, actorRadius(dog), dog.id)).to…
+     83|     w.solids.commit();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed (8)
+   Start at  14:13:33
+   Duration  9.84s (tests 49%, transform 45%, import 6%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 64s, remote total 546s)

@@ -82,6 +82,18 @@ export function installAgentMotion(world: SimWorld): void {
       groundAgent(world, e);
     }
   }, SimPhase.cleanup + .5);
+  // Facing is part of the long physical footprint and must precede the final contact transaction.
+  world.events.on('sim.tick', () => {
+    for (const e of world.entities.iterate()) if (e.companion) {
+      // A waiting Metro pet sidesteps for the queue while retaining the shaft-facing pose.
+      if (world.missions?.state.l5?.metroAt && !e.companion.following) continue;
+      const p = previous.get(e.id); if (!p) continue;
+      const dx = e.transform.x - p.x, dz = e.transform.z - p.z;
+      if (Math.hypot(dx, dz) / FIXED_DT <= .5) continue;
+      const heading = -Math.atan2(dz, dx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+      if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
+    }
+  }, SimPhase.cleanup + .6);
   world.events.on('sim.tick', () => {
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
@@ -89,12 +101,6 @@ export function installAgentMotion(world: SimWorld): void {
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
       motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
-      // Companion behaviour runs before automatic braking and crowd separation. Keep its existing
-      // 0.3 rad facing limit against the resolved travel too, including a warning's braking slide.
-      if (e.companion && motion.speed > .5) {
-        const heading = -Math.atan2(dz, dx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
-        if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
-      }
     }
   }, SimPhase.cleanup + 1);
 }
