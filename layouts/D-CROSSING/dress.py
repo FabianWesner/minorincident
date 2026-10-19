@@ -463,7 +463,7 @@ def road_decals(pts, hw, gravel, h0):
                 ca = ang + R.choice([R.uniform(-.25, .25), R.uniform(1.1, 2.0)])
                 p0 = [cx - math.cos(ca) * L / 2, cz - math.sin(ca) * L / 2]
                 p1 = [cx + math.cos(ca) * L / 2, cz + math.sin(ca) * L / 2]
-                ov('road-crack', strip_poly(p0, p1, R.uniform(.07, .16), 0), 'uiDark', h0 + .0004, cut=False, cat='road')
+                ov('road-crack', strip_poly(p0, p1, R.uniform(.04, .08), 0), 'uiDark', h0 + .0004, cut=False, cat='road')
                 counts['crack'] += 1
             elif r < .62:
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
@@ -473,10 +473,10 @@ def road_decals(pts, hw, gravel, h0):
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
-                L = R.uniform(5, 13)
+                L = R.uniform(3, 7)
                 for off in (-.9, .9):
                     ox, oz = cx + nx * off, cz + nz * off
-                    ov('skid', strip_poly([ox - ux * L / 2, oz - uz * L / 2], [ox + ux * L / 2 + nx * R.uniform(-.8, .8), oz + uz * L / 2 + nz * R.uniform(-.8, .8)], .28, 0), 'uiDark', h0 + .0002, cut=False, cat='road')
+                    ov('skid', strip_poly([ox - ux * L / 2, oz - uz * L / 2], [ox + ux * L / 2 + nx * R.uniform(-.8, .8), oz + uz * L / 2 + nz * R.uniform(-.8, .8)], .15, 0), 'uiDark', h0 + .0002, cut=False, cat='road')
                 counts['skid'] += 1
             t += R.uniform(3.5, 9)
         # verge: grass tufts / dark soil / dust beside the lane (ground-level detail inside the frame at zoom 1.5)
