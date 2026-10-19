@@ -5,6 +5,7 @@ import type { Game } from '../Game';
 import { newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
+import { debugEntityCounts } from './debugEntityCounts';
 import { button, node, setHidden } from './dom';
 import { Settings, type UISettings } from './Settings';
 import { audioCredits, codeCredits, technologyCredits, toolchainCredits, originalCredit, type Credit } from '../data/credits';
@@ -368,7 +369,7 @@ export class GameUI {
     }
     const closest = nearest.filter(item => item.distance <= 10).sort((a, b) => a.distance - b.distance)[0];
     const entities = [...world.entities.iterate()];
-    const infected = entities.filter(entity => entity.infected);
+    const counts = debugEntityCounts(entities);
     const loadout = player?.weapons ? this.game.world.combat!.runner.loadout.activeEntries().map(entry => entry.id).join(', ') : 'none';
     const seed = world.seed;
     const district = world.districts?.districts.map(d => {
@@ -387,7 +388,7 @@ export class GameUI {
       `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : 'n/a'}`,
       `Loadout: ${loadout || 'empty'} · Camera: ${this.game.view.view.getState().spot ?? 'follow'} / zoom ${this.game.view.view.getState().zoom.toFixed(2)}`,
       `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : 'n/a'}`,
-      `Entities: pedestrians ${entities.filter(e => e.civilian && e.health.current > 0 && !e.infected).length} · infected alive ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt < 0).length} · downed ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt >= 0).length} · corpses ${entities.filter(e => e.corpse || e.infected?.state === 'dead').length}`,
+      `Entities: pedestrians ${counts.pedestrians} · infected alive ${counts.alive} · downed ${counts.downed} · corpses ${counts.corpses}`,
       `Build: ${typeof __BUILD_COMMIT__ === 'undefined' ? 'unknown' : __BUILD_COMMIT__}`,
     ];
     if (this.debugText) this.debugText.textContent = fields.join('\n');
