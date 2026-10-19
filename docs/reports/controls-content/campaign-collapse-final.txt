@@ -1,0 +1,37 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 36s, 25287 files; job /srv/mi/jobs/controls-content-5f907b-39748-1792412005; queueing for a slot
+[runner] slot 1 acquired; load 7.65 6.28 5.03
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-39748-1792412005
+
+ ✓  functional  tests/sim/missions/campaign.test.ts (19 tests | 18 skipped) 7083ms
+   ✓ @E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -> wait completes straight into progression (no cinematic, no reward screen) 7079ms
+ ❯  functional  tests/levels/L4-collapse.test.ts (4 tests | 1 failed | 3 skipped) 103388ms
+   ❯ L4 collapse director (4)
+     × T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 103386ms
+     ↓ T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier
+     ↓ T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows
+     ↓ T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L4-collapse.test.ts > L4 collapse director > T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down
+AssertionError: expected 20 to be less than 20
+ ❯ tests/levels/L4-collapse.test.ts:84:84
+     82|     beatsOnTime(tr);
+     83|     const atTurn = tr.soldiers[0].n, at = (s: number) => tr.soldiers.f…
+     84|     expect(at(tr.beats[2].t)).toBeLessThan(atTurn * .5); expect(at(tr.…
+       |                                                                                    ^
+     85|     expect(tr.barricades).toBeGreaterThanOrEqual(1); expect(tr.knockdo…
+     86|     expect(Math.max(...tr.beats.map(b => b.inside))).toBeGreaterThanOr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 1 passed | 21 skipped (23)
+   Start at  12:14:05
+   Duration  109.13s (tests 91%, transform 7%, import 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 36s, remote total 114s)

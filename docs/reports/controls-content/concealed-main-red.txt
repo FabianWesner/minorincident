@@ -1,0 +1,46 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 94.130.181.173:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 66s, 25349 files; job /srv/mi/jobs/controls-content-5f907b-80203-1792413429; queueing for a slot
+[runner] slot 1 acquired; load 2.14 2.44 2.75
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-80203-1792413429
+
+ ❯  functional  tests/levels/controls-content.test.ts (4 tests | 1 failed | 3 skipped) 906ms
+   ↓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (high)
+   ↓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (low)
+   ↓ @E22 @E22-AC11 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm
+   × @E22 @E22-AC13 first-line pressure can use concealed camp exits after the immediate pickup alarm 903ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/controls-content.test.ts > @E22 @E22-AC13 first-line pressure can use concealed camp exits after the immediate pickup alarm
+AssertionError: expected [] to deeply equal [ { x: -31.5, z: 10.4 } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "x": -31.5,
+-     "z": 10.4,
+-   },
+- ]
++ []
+
+ ❯ tests/levels/controls-content.test.ts:55:19
+     53|   world.tick = Math.ceil((s.turnAt + l4.director.lines[0].pushS * 60) …
+     54|   director.update();
+     55|   expect(spawned).toEqual([{ x: exit[0] - .9, z: exit[1] }]);
+       |                   ^
+     56| }, 120_000);
+     57|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  12:38:18
+   Duration  4.88s (transform 68%, tests 19%, import 12%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 66s, remote total 10s)

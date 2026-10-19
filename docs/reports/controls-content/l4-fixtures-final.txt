@@ -1,0 +1,41 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 37s, 25272 files; job /srv/mi/jobs/controls-content-5f907b-77575-1792410213; queueing for a slot
+[runner] slot 1 acquired; load 1.65 1.79 1.41
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-77575-1792410213
+
+ ❯  functional  tests/levels/L4-movement.test.ts (4 tests | 1 failed) 53631ms
+   × @E22 L4 plaza permits mouse and direct movement on open plaza tiles 16044ms
+   ✓ @E22 L4 war permits mouse and direct movement on open plaza tiles 15609ms
+   ✓ @E22 L4 respawn permits mouse and direct movement on open plaza tiles 14997ms
+   ✓ @E22 a real L4 armory-table corner cannot trap an outward click 6978ms
+ ✓  functional  tests/levels/L4-po-round.test.ts (5 tests) 213268ms
+   ✓ L4 PO round 10-13 (5)
+     ✓ T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks 23618ms
+     ✓ T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding 14223ms
+     ✓ T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 73947ms
+     ✓ T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 35750ms
+     ✓ T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold 65727ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L4-movement.test.ts > @E22 L4 plaza permits mouse and direct movement on open plaza tiles
+AssertionError: plaza/mouse-only/-4.242640687119285,-4.242640687119285: expected 1.0877722330818307 to be less than 1
+ ❯ tests/levels/L4-movement.test.ts:42:90
+     40|     }
+     41|     const p = w.entities.get(1)!.transform;
+     42|     expect(Math.hypot(p.x - target.x, p.z - target.z), `${phase}/${sch…
+       |                                                                                          ^
+     43|   }
+     44| }, 120_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 8 passed (9)
+   Start at  11:44:12
+   Duration  217.14s (tests 97%, transform 2%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 37s, remote total 220s)

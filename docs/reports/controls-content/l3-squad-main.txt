@@ -1,0 +1,18 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 72s, 25273 files; job /srv/mi/jobs/controls-content-5f907b-6957-1792411028; queueing for a slot
+[runner] slot 1 acquired; load 6.92 3.25 2.09
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-6957-1792411028
+
+ ✓  functional  tests/levels/L3.test.ts (21 tests | 20 skipped) 216515ms
+   ✓ L3 The Police Collapse (21)
+     ✓ T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports 216513ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 20 skipped (21)
+   Start at  11:58:24
+   Duration  223.20s (tests 97%, transform 2%)
+
+[remote] pulled test-results/epics/E21/s1.json
+[remote] done exit=0 (runner 2.28.24.66, sync 72s, remote total 229s)

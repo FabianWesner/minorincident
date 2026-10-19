@@ -195,7 +195,7 @@ export class InputSystem implements Lifecycle {
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
     const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
-    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; frame.drive = this.driving; frame.brake = false;
+    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') frame.drive = this.driving; else delete frame.drive; frame.brake = false;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }

@@ -1,0 +1,48 @@
+{
+  "name": "controls-l4-first-line",
+  "note": "First-line pressure after the immediate pickup alarm, using the same concealed camp exits. Counts, combat values, caps and collapse beats remain unchanged.",
+  "l4Convoy": "first-line",
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -23.2,
+        1.6
+      ],
+      "god": true
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -32,
+      0,
+      8
+    ]
+  },
+  "frames": 600,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

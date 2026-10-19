@@ -16,7 +16,7 @@ for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 L4 ${phase} permits 
   const loaded = await loadL4(2); world = loaded.world;
   const w = world, m = loaded.mission;
   while (m.state.l4!.phase === 'convoy') w.update();
-  w.combat!.damage.god = true; m.completeObjective('quartermaster');
+  w.combat!.damage.god = true; if (phase !== 'plaza') m.completeObjective('quartermaster');
   if (phase !== 'plaza') { while (!m.state.l4!.turnAt) w.update(); step(w, 180); }
   if (phase === 'respawn') {
     w.player!.damage(1000, w.tick, true); step(w, 180);
@@ -25,10 +25,12 @@ for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 L4 ${phase} permits 
   // Centre shifted 0.7 m west of the original (-17.5, 4): the parked convoy's nav margin (l4-bus-clear: hull + .85 m) now covers the
   // old east goal tile (-13.26, -0.24). The test still walks the same 6 m diagonals in all four directions from one start; only the
   // start moved so that every goal tile is genuinely open ground.
-  const center = { x: -18.2, z: 4 }, d = 6 / Math.SQRT2;
+  // Before pickup, the north-west goal must also clear the active quartermaster's interaction ring.
+  const center = phase === 'plaza' ? { x: -20.5, z: 1 } : { x: -18.2, z: 4 }, d = 6 / Math.SQRT2;
   for (const [dx, dz] of [[-d, d], [d, -d], [-d, -d], [d, d]]) for (const scheme of ['mouse-only', 'keyboard', 'touch'] as const) {
     const target = { x: center.x + dx, z: center.z + dz };
     expect(w.infected!.nav.clear(target.x, target.z, survivor.radius)).toBe(true);
+    expect(m.interactSnap(target) ?? target, 'ground goal is outside active interaction rings').toEqual(target);
     place(w, center);
     expect(w.infected!.nav.visible(center, target, survivor.radius), `${scheme}: open straight route`).toBe(true);
     if (scheme === 'mouse-only') {

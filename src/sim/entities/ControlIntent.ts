@@ -111,7 +111,8 @@ export class ControlIntent {
       else this.walk(frame, this.moveTarget, distance);
     }
     if (raw.aimSource === 'assist' && combat && !this.attack) {
-      const p = player.transform, facing = { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) };
+      const p = player.transform, length = Math.hypot(frame.move.x, frame.move.z);
+      const facing = length > 0 ? { x: frame.move.x / length, z: frame.move.z / length } : { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) };
       frame.aim = facing; frame.aimPoint = null;
       const side = frame.right.down || frame.right.held ? 'RIGHT' : frame.left.down || frame.left.held ? 'LEFT' : combat.runner.loadout.state.selectedSide;
       combat.assist.facing(p, facing, action(combat.runner.loadout.current(side).id).range);

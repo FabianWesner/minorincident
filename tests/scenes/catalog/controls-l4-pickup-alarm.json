@@ -1,0 +1,30 @@
+{
+  "extends": "l4-hold-perimeter.json",
+  "note": "PO 10-19 production pickup immediately starts alarm and attack in the same sim tick; soldiers begin war footing.",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier"
+  },
+  "frames": 60,
+  "sheet": 20,
+  "script": [],
+  "name": "controls-l4-pickup-alarm",
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "l4Convoy": "pickup",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -23.2,
+        1.6
+      ],
+      "god": true
+    }
+  ]
+}

@@ -69,8 +69,6 @@ export const l4 = {
   },
   /** The machine gun (E06 section 5.3 campaign values): 14 per round, 10 rounds/s, 4 degrees, 26 m, pierce 1, no ammunition. */
   machineGun: { id: 'weapon.army-mg', damage: 14, fireRate: 10, spreadDeg: 4, rangeM: 26, pierce: 1 },
-  /** Beat 3: the first turn fires 40-50 s after the gun is issued (seeded), at the latest this long after the arrival. */
-  turn: { afterGunS: [40, 50] as P, latestAfterArrivalS: 100 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
     fromS: 0, waveEveryS: 11,
