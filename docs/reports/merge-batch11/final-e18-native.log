@@ -1,0 +1,21 @@
+ 0:29  up 70 days, 23:23, 3 users, load averages: 2.34 3.13 3.43
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 11 tests using 1 worker
+
+  ✓   1 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (3.2s)
+  ✓   2 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (6.2s)
+  ✓   3 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (17.6s)
+  ✓   4 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (2.0s)
+  ✓   5 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (4.2s)
+  ✓   6 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (3.4s)
+  ✓   7 [chromium] › tests/perf/e18-counters.spec.ts:23:1 › T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin (3.5s)
+  ✓   8 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.9s)
+  -   9 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+{"phase":"after","run":1,"tier":"high","p95":6.300000000000182,"sim":0.9000005722045898,"update":4,"render":1.8999996185302734,"triangles":571113,"draws":71,"profile":{"other":{"drawCalls":38,"triangles":44945},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":13,"triangles":495021}}}
+  ✓  10 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (15.7s)
+{"phase":"after","run":1,"tier":"low","p95":12.5,"sim":2.6999998092651367,"update":5.5,"render":4.40000057220459,"triangles":127759,"draws":69,"profile":{"other":{"drawCalls":37,"triangles":10508},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":12,"triangles":112976}}}
+  ✓  11 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (17.5s)
+
+  1 skipped
+  10 passed (1.5m)

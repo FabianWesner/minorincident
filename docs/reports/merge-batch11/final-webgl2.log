@@ -1,0 +1,25 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgl2 --jobs 1 --filter night-bodies-eyes-*,e18-infected-surface-lod --out docs/reports/merge-batch11/final-webgl2
+
+[catalog] 9 scenes, 1 browser(s), 960x540, webgl2, high
+[catalog] 1/18 pass e18-infected-surface-lod@high-z1.5 (5.6 s)
+[catalog] 2/18 pass e18-infected-surface-lod@high-z1 (5.5 s)
+[catalog] 3/18 pass e18-infected-surface-lod@high-z0.5 (5.6 s)
+[catalog] 4/18 pass night-bodies-eyes-l1@high-z1.5 (5.2 s)
+[catalog] 5/18 pass night-bodies-eyes-l1@high-z1 (5.0 s)
+[catalog] 6/18 pass night-bodies-eyes-l1@high-z0.5 (5.0 s)
+[catalog] 7/18 pass night-bodies-eyes-night@high-z1.5 (5.0 s)
+[catalog] 8/18 pass night-bodies-eyes-night@high-z1 (5.2 s)
+[catalog] 9/18 pass night-bodies-eyes-night@high-z0.5 (5.4 s)
+[catalog] 9 scenes, 1 browser(s), 960x540, webgl2, low
+[catalog] 10/18 pass e18-infected-surface-lod@low-z1.5 (3.5 s)
+[catalog] 11/18 pass e18-infected-surface-lod@low-z1 (2.6 s)
+[catalog] 12/18 pass e18-infected-surface-lod@low-z0.5 (2.5 s)
+[catalog] 13/18 pass night-bodies-eyes-l1@low-z1.5 (2.4 s)
+[catalog] 14/18 pass night-bodies-eyes-l1@low-z1 (2.4 s)
+[catalog] 15/18 pass night-bodies-eyes-l1@low-z0.5 (2.4 s)
+[catalog] 16/18 pass night-bodies-eyes-night@low-z1.5 (2.3 s)
+[catalog] 17/18 pass night-bodies-eyes-night@low-z1 (2.4 s)
+[catalog] 18/18 pass night-bodies-eyes-night@low-z0.5 (2.5 s)
+18/18 pass in 72 s -> docs/reports/merge-batch11/final-webgl2/index.md

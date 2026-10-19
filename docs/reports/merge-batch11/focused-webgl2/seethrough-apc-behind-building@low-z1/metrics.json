@@ -1,0 +1,1293 @@
+{
+  "spec": "tests/scenes/catalog/seethrough-apc-behind-building.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 30,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 2078,
+    "runMs": 19994,
+    "sceneMs": 22072
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 85,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 63544,
+        "limit": 500000
+      },
+      {
+        "name": "vehicleSilhouette:sedan-left:clear",
+        "pass": true,
+        "value": 1,
+        "limit": 0.6
+      },
+      {
+        "name": "vehicleSilhouette:sedan-right:clear",
+        "pass": true,
+        "value": 1,
+        "limit": 0.6
+      },
+      {
+        "name": "seeThroughCutPixelsOutside",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "seeThroughCutPixelsInside",
+        "pass": true,
+        "value": 44451,
+        "limit": 10
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1783.5926979498745,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f15.varianceMin",
+        "pass": true,
+        "value": 1772.348240634612,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f15.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 1772.0596203599162,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": {
+    "frame": 0,
+    "outside": 0,
+    "inside": 44451,
+    "strength": 1,
+    "cover": 0,
+    "occluder": "bld.house-a@6.0,6.0",
+    "insideMax": 45119
+  },
+  "seeThroughCutSamples": [
+    {
+      "frame": 0,
+      "outside": 0,
+      "inside": 44451,
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.house-a@6.0,6.0"
+    },
+    {
+      "frame": 15,
+      "outside": 0,
+      "inside": 45058,
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.house-a@6.0,6.0"
+    },
+    {
+      "frame": 30,
+      "outside": 0,
+      "inside": 45119,
+      "strength": 1,
+      "cover": 0,
+      "occluder": "bld.house-a@6.0,6.0"
+    }
+  ],
+  "courierShares": [],
+  "vehicleSilhouettes": [
+    {
+      "frame": 0,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23886,
+      "retained": 23886,
+      "share": 1
+    },
+    {
+      "frame": 0,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27576,
+      "retained": 27576,
+      "share": 1
+    },
+    {
+      "frame": 1,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23872,
+      "retained": 23872,
+      "share": 1
+    },
+    {
+      "frame": 1,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27575,
+      "retained": 27575,
+      "share": 1
+    },
+    {
+      "frame": 2,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23868,
+      "retained": 23868,
+      "share": 1
+    },
+    {
+      "frame": 2,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27570,
+      "retained": 27570,
+      "share": 1
+    },
+    {
+      "frame": 3,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23860,
+      "retained": 23860,
+      "share": 1
+    },
+    {
+      "frame": 3,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27527,
+      "retained": 27527,
+      "share": 1
+    },
+    {
+      "frame": 4,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23838,
+      "retained": 23838,
+      "share": 1
+    },
+    {
+      "frame": 4,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27482,
+      "retained": 27482,
+      "share": 1
+    },
+    {
+      "frame": 5,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23810,
+      "retained": 23810,
+      "share": 1
+    },
+    {
+      "frame": 5,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27469,
+      "retained": 27469,
+      "share": 1
+    },
+    {
+      "frame": 6,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23801,
+      "retained": 23801,
+      "share": 1
+    },
+    {
+      "frame": 6,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27447,
+      "retained": 27447,
+      "share": 1
+    },
+    {
+      "frame": 7,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23795,
+      "retained": 23795,
+      "share": 1
+    },
+    {
+      "frame": 7,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27425,
+      "retained": 27425,
+      "share": 1
+    },
+    {
+      "frame": 8,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23775,
+      "retained": 23775,
+      "share": 1
+    },
+    {
+      "frame": 8,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27399,
+      "retained": 27399,
+      "share": 1
+    },
+    {
+      "frame": 9,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23755,
+      "retained": 23755,
+      "share": 1
+    },
+    {
+      "frame": 9,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27402,
+      "retained": 27402,
+      "share": 1
+    },
+    {
+      "frame": 10,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23722,
+      "retained": 23722,
+      "share": 1
+    },
+    {
+      "frame": 10,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27366,
+      "retained": 27366,
+      "share": 1
+    },
+    {
+      "frame": 11,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23744,
+      "retained": 23744,
+      "share": 1
+    },
+    {
+      "frame": 11,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27354,
+      "retained": 27354,
+      "share": 1
+    },
+    {
+      "frame": 12,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23734,
+      "retained": 23734,
+      "share": 1
+    },
+    {
+      "frame": 12,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27336,
+      "retained": 27336,
+      "share": 1
+    },
+    {
+      "frame": 13,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23723,
+      "retained": 23723,
+      "share": 1
+    },
+    {
+      "frame": 13,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27333,
+      "retained": 27333,
+      "share": 1
+    },
+    {
+      "frame": 14,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23727,
+      "retained": 23727,
+      "share": 1
+    },
+    {
+      "frame": 14,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27320,
+      "retained": 27320,
+      "share": 1
+    },
+    {
+      "frame": 15,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23716,
+      "retained": 23716,
+      "share": 1
+    },
+    {
+      "frame": 15,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27309,
+      "retained": 27309,
+      "share": 1
+    },
+    {
+      "frame": 16,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23717,
+      "retained": 23717,
+      "share": 1
+    },
+    {
+      "frame": 16,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27297,
+      "retained": 27297,
+      "share": 1
+    },
+    {
+      "frame": 17,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23709,
+      "retained": 23709,
+      "share": 1
+    },
+    {
+      "frame": 17,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27288,
+      "retained": 27288,
+      "share": 1
+    },
+    {
+      "frame": 18,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23706,
+      "retained": 23706,
+      "share": 1
+    },
+    {
+      "frame": 18,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27306,
+      "retained": 27306,
+      "share": 1
+    },
+    {
+      "frame": 19,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23700,
+      "retained": 23700,
+      "share": 1
+    },
+    {
+      "frame": 19,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27308,
+      "retained": 27308,
+      "share": 1
+    },
+    {
+      "frame": 20,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23700,
+      "retained": 23700,
+      "share": 1
+    },
+    {
+      "frame": 20,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27309,
+      "retained": 27309,
+      "share": 1
+    },
+    {
+      "frame": 21,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23702,
+      "retained": 23702,
+      "share": 1
+    },
+    {
+      "frame": 21,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27309,
+      "retained": 27309,
+      "share": 1
+    },
+    {
+      "frame": 22,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23700,
+      "retained": 23700,
+      "share": 1
+    },
+    {
+      "frame": 22,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27308,
+      "retained": 27308,
+      "share": 1
+    },
+    {
+      "frame": 23,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23703,
+      "retained": 23703,
+      "share": 1
+    },
+    {
+      "frame": 23,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27307,
+      "retained": 27307,
+      "share": 1
+    },
+    {
+      "frame": 24,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23702,
+      "retained": 23702,
+      "share": 1
+    },
+    {
+      "frame": 24,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27310,
+      "retained": 27310,
+      "share": 1
+    },
+    {
+      "frame": 25,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23712,
+      "retained": 23712,
+      "share": 1
+    },
+    {
+      "frame": 25,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27306,
+      "retained": 27306,
+      "share": 1
+    },
+    {
+      "frame": 26,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23711,
+      "retained": 23711,
+      "share": 1
+    },
+    {
+      "frame": 26,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27293,
+      "retained": 27293,
+      "share": 1
+    },
+    {
+      "frame": 27,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23708,
+      "retained": 23708,
+      "share": 1
+    },
+    {
+      "frame": 27,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27291,
+      "retained": 27291,
+      "share": 1
+    },
+    {
+      "frame": 28,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23713,
+      "retained": 23713,
+      "share": 1
+    },
+    {
+      "frame": 28,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27290,
+      "retained": 27290,
+      "share": 1
+    },
+    {
+      "frame": 29,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23711,
+      "retained": 23711,
+      "share": 1
+    },
+    {
+      "frame": 29,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27292,
+      "retained": 27292,
+      "share": 1
+    },
+    {
+      "frame": 30,
+      "id": "sedan-left",
+      "blocking": false,
+      "reference": 23711,
+      "retained": 23711,
+      "share": 1
+    },
+    {
+      "frame": 30,
+      "id": "sedan-right",
+      "blocking": false,
+      "reference": 27294,
+      "retained": 27294,
+      "share": 1
+    }
+  ],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.54319830246914,
+          68.35807677469136,
+          63.73318094135802
+        ],
+        "variance": 1783.5926979498745,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 15,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.69509837962963,
+          68.48631558641975,
+          63.83202546296296
+        ],
+        "variance": 1772.348240634612,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.69989776234569,
+          68.48872106481481,
+          63.83353202160494
+        ],
+        "variance": 1772.0596203599162,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "seethrough-apc-behind-building",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "foreground-building",
+        "asset": "bld.house-a",
+        "at": [
+          6,
+          6
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {
+      "apc": 3,
+      "sedan-left": 4,
+      "sedan-right": 5
+    }
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "seethrough-apc-behind-building",
+    "frame": 30,
+    "tick": 30,
+    "backend": "webgl",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 0,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {
+      "apc": [
+        {
+          "vehicle": "apc",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            1.78,
+            1.01
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            1.78,
+            -1.47
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -1.91,
+            1.01
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -1.91,
+            -1.47
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 4,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -0.32,
+            1.01
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 5,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -0.32,
+            -1.47
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 0,
+          "hubStepCm": 0,
+          "hubStepFrame": 0
+        }
+      ],
+      "sedan-left": [
+        {
+          "vehicle": "sedan-left",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -2.67,
+            4.91
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 28,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-left",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -2.67,
+            3.09
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 28,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-left",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -5.33,
+            4.91
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 28,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-left",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -5.33,
+            3.09
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 28,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        }
+      ],
+      "sedan-right": [
+        {
+          "vehicle": "sedan-right",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            5.33,
+            -3.09
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 29,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-right",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            5.33,
+            -4.91
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 29,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-right",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            2.67,
+            -3.09
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 29,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        },
+        {
+          "vehicle": "sedan-right",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            2.67,
+            -4.91
+          ],
+          "samples": 28,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 29,
+          "hubStepCm": 0,
+          "hubStepFrame": 30
+        }
+      ]
+    },
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 85,
+        "p95": 85,
+        "max": 85
+      },
+      "triangles": {
+        "p50": 63544,
+        "p95": 63544,
+        "max": 63544
+      },
+      "shadowDrawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "shadowTriangles": {
+        "p50": 49949,
+        "p95": 49949,
+        "max": 49949
+      },
+      "stepMs": {
+        "p50": 4,
+        "p95": 4.7,
+        "max": 5.6
+      },
+      "lastFrame": {
+        "drawCalls": 85,
+        "triangles": 63544,
+        "shadowDrawCalls": 15,
+        "shadowTriangles": 49949,
+        "stepMs": 4,
+        "categories": {
+          "other": 80,
+          "shadows": 15,
+          "buildings": 5,
+          "crowd": 0
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {
+      "apc": {
+        "entity": 3,
+        "position": [
+          0,
+          0
+        ],
+        "yawDeg": 0,
+        "yawRateMaxDegS": 0,
+        "bodyOverlaps": 0,
+        "tiltMaxDeg": 0,
+        "tiltFrame": -1,
+        "slipMaxDeg": 0,
+        "slipFrame": -1,
+        "driven": true,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 1000,
+        "decay": null,
+        "speed": 0
+      },
+      "sedan-left": {
+        "entity": 4,
+        "position": [
+          -4,
+          4
+        ],
+        "yawDeg": 0,
+        "yawRateMaxDegS": 9.219479186160574e-14,
+        "bodyOverlaps": 0,
+        "tiltMaxDeg": 0,
+        "tiltFrame": 28,
+        "slipMaxDeg": 0,
+        "slipFrame": -1,
+        "driven": false,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 300,
+        "decay": null,
+        "speed": 0
+      },
+      "sedan-right": {
+        "entity": 5,
+        "position": [
+          4,
+          -4
+        ],
+        "yawDeg": 0,
+        "yawRateMaxDegS": 3.6876002980612326e-14,
+        "bodyOverlaps": 0,
+        "tiltMaxDeg": 0,
+        "tiltFrame": 23,
+        "slipMaxDeg": 0,
+        "slipFrame": -1,
+        "driven": false,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 300,
+        "decay": null,
+        "speed": 0
+      }
+    },
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 30,
+      "solidRadiusMax": 0.569,
+      "occluders": [
+        "bld.house-a@6.0,6.0"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "bld.house-a@6.0,6.0"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          0,
+          0
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": 0,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 30,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.4,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 36.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 30,
+      "sim": {
+        "vehicle": 3,
+        "courier": 0,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 3
+      }
+    },
+    "lods": {
+      "foreground-building": "lod1"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {
+      "foreground-building": {
+        "closedFrames": 0,
+        "firstClosedFrame": null,
+        "inDoorwayFrames": 0,
+        "maxOpen": 0
+      }
+    },
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
