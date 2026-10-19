@@ -11,12 +11,13 @@ import { createCivilianPlaceholder, createCorgiPlaceholder } from './placeholder
 import { restoreStanding } from './prepareCivilianGeometry';
 import { CivilianCrowd } from './CivilianCrowd';
 import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
+import { CorgiTongue, markCorgiTongue } from '../characters/CorgiTongue';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { NpcAnimator } from '../characters/NpcAnimator';
 import { civilianHeight, fitCivilianHeight } from './figureHeight';
 import { attribute, style, text } from '../../ui/dom';
-interface Hero { model: string; humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
+interface Hero { model: string; humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; tongue?: CorgiTongue; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
   private readonly civilians: CivilianCrowd;
@@ -65,6 +66,7 @@ export class NpcView extends Group {
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
     this.child.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
+    markCorgiTongue(this.dog);
     this.dog.traverse(node => {
       if (!(node instanceof Mesh)) return;
       const remap = (old: Material) => {
@@ -76,7 +78,10 @@ export class NpcView extends Group {
     if (this.world.scenario === 'L7' || this.world.scenario === 'L6') {
       const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
       const def = this.registry.definition('char.corgi');
+      // The tongue stays its own mesh (batching skips hidden meshes) so it can retract (CorgiTongue).
+      const tongues: Object3D[] = []; this.dog.traverse(node => { if (node.userData.corgiTongue && node.visible) { node.visible = false; tongues.push(node); } });
       batchRigidParts(this.dog, [...def.requiredNodes, ...def.animatedNodes, ...def.sockets], material, source => (source as import('three').MeshBasicMaterial).color);
+      for (const node of tongues) node.visible = true;
     }
   }
   private loadPet(model: string): Promise<void> {
@@ -136,7 +141,7 @@ export class NpcView extends Group {
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { model: drawnModel, humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort || e.civilian?.pet === 'dog' ? prototype.userData.placeholder ? 'placeholder' : 'glb' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { model: drawnModel, humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort || e.civilian?.pet === 'dog' ? prototype.userData.placeholder ? 'placeholder' : 'glb' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; if (e.companion) hero.tongue = new CorgiTongue(root); this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -148,6 +153,7 @@ export class NpcView extends Group {
       const warn = e.companion?.warn;
       if (hero.animator) hero.animator.update(time, motion.speed, distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
+      hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, hero.root.position.y + civilianHeight(hero.model) + .15, e.transform.z).project(camera);
         style(hero.badge, 'left', `${(this.point.x + 1) / 2 * innerWidth}px`); style(hero.badge, 'top', `${(1 - this.point.y) / 2 * innerHeight}px`); style(hero.badge, 'display', Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none');
@@ -163,6 +169,8 @@ export class NpcView extends Group {
   heroRoot(id: number): Group | undefined { return this.heroes.get(id)?.root; }
   /** Scene Lab probe: the corgi animator's current clip. */
   heroClip(id: number): string | undefined { return this.heroes.get(id)?.animator?.clip; }
+  /** Scene Lab probe: how far the corgi's tongue is out (0 retracted .. 1 out); null without a tongue mesh. */
+  heroTongue(id: number): number | null { const t = this.heroes.get(id)?.tongue; return t?.found ? t.out : null; }
   gunMeshes() { return this.civilians.gunMeshes(); }
   heldProps() { return this.civilians.heldProps(); }
   drawnCorpses() { return this.civilians.drawnCorpses(); }
