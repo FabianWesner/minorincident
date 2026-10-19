@@ -80,7 +80,7 @@ def wall(name, x, z, length, along_x, gap=None):
         px=x+(t if along_x else 0); pz=z+(0 if along_x else t)
         masonry('wall-pier','brick',[1.15,4,1.15],[px,2,pz])
         masonry('pier-cap','sidewalk',[1.35,.22,1.35],[px,4.05,pz])
-for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]: wall(name,x,z,length,axis,gap=(74.0,5.4) if name == 'east' else None)
+for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]: wall(name,x,z,length,axis,gap=(80.0,5.4) if name == 'east' else None)
 
 # Real shipped architecture: ticket pavilions, intact reptile hall and staff lodge.
 for asset,x,z,label,door in [('bld.zoo-gate',0,78,'Zoo tickets','zoo-entrance'),('bld.reptile-house',-14,14,'Reptile House','reptile-door'),('bld.park-lodge',87,32,'Zoo staff and first aid','staff-door')]:
@@ -158,7 +158,7 @@ outlet(1,-101.45,32,1,0,0)                 # west loop, facing the x=-96 path
 outlet(2,101.45,-48,-1,0,math.pi)          # east loop, facing the x=96 path
 outlet(3,-30,-69.45,0,1,-math.pi/2)        # north loop, facing the z=-64 path
 outlet(4,-45,69.45,0,-1,math.pi/2)         # south loop, facing the z=64 path near the arrival plaza
-l.place('prop.light-tower',[104,0,67.4])
+l.place('prop.light-tower',[104,0,74])
 l.place('prop.vending-machine',[10,0,75])
 l.place('prop.hose-reel',[90,0,37])
 l.place('prop.wheelbarrow',[90,0,42])
@@ -220,14 +220,15 @@ for t in range(-96, 97, 8):                     # dashed centre lines
 for t in range(-124, 125, 8):
     for sz in (-1, 1): l.box('ring-line', 'picketWhite', [3.6, .01, .2], [t, .105, sz * 91.7])
 # --- the drive-out: apron from the vehicle pad to the east wall (inside), a steel service gate in the wall, the spur outside to the roadblock
-slab('apron-road', 'asphalt', 100.0, 118.4, 70.6, 77.4, .1)
-slab('apron-kerb-n', 'sidewalk', 100.0, 116.4, 69.6, 70.6, .12); slab('apron-kerb-s', 'sidewalk', 100.0, 116.4, 77.4, 78.4, .12)
-slab('spur-road', 'asphalt', 125.0, 147.0, 70.6, 77.4, .1)
-slab('spur-kerb-n', 'sidewalk', 127.0, 147.0, 68.8, 70.6, .12); slab('spur-kerb-s', 'sidewalk', 127.0, 147.0, 77.4, 79.2, .12)
-slab('gate-apron', 'asphalt', 116.4, 118.4, 70.6, 77.4, .1)
-for t in range(104, 147, 8): l.box('spur-line', 'picketWhite', [3.6, .01, .2], [t, .105, 74.0])
+slab('apron-road', 'asphalt', 96.0, 118.4, 77.0, 83.0, .1)
+slab('apron-link', 'asphalt', 96.0, 100.0, 74.0, 77.2, .1)
+slab('apron-kerb-n', 'sidewalk', 100.0, 116.4, 76.0, 77.0, .12); slab('apron-kerb-s', 'sidewalk', 96.0, 116.4, 83.0, 84.0, .12)
+slab('spur-road', 'asphalt', 125.0, 147.0, 77.0, 83.0, .1)
+slab('spur-kerb-n', 'sidewalk', 127.0, 147.0, 75.2, 77.0, .12); slab('spur-kerb-s', 'sidewalk', 127.0, 147.0, 83.0, 84.8, .12)
+slab('gate-apron', 'asphalt', 116.4, 118.4, 77.0, 83.0, .1)
+for t in range(104, 147, 8): l.box('spur-line', 'picketWhite', [3.6, .01, .2], [t, .105, 80.0])
 # the gate: two steel leaves in the wall gap (visual only, the wall collider stays whole), brick piers and a lintel with a sign
-GZ, GW = 74.0, 5.4
+GZ, GW = 80.0, 5.4
 for side in (-1, 1):
     pz = GZ + side * (GW / 2 + .6)
     l.box('gate-pier', 'brick', [1.2, 4.4, 1.2], [116.0, 2.2, pz]); l.box('gate-pier-cap', 'sidewalk', [1.45, .22, 1.45], [116.0, 4.5, pz])
@@ -264,28 +265,28 @@ def side_row(side, lo, hi, skip=None):
         if put(asset, cx, cz, _FACE[face], sc, margin=.3, tint=_rng.choice(TINTS) if 'house' in asset else None) is not None:
             cursor += width + _rng.choice((2.0, 3.0, 4.5))
         else: cursor += 5.0
-for side, lo, hi, skip in (('N', -146, 146, None), ('S', -146, 146, None), ('W', -100, 100, None), ('E', -100, 100, (66, 82))):
+for side, lo, hi, skip in (('N', -146, 146, None), ('S', -146, 146, None), ('W', -100, 100, None), ('E', -100, 100, (72, 88))):
     side_row(side, lo, hi, skip)
 for t in range(-92, 93, 24):
     for sx in (-1, 1):
-        if sx > 0 and 66 < t < 82: continue
+        if sx > 0 and 72 < t < 88: continue
         put('prop.street-lamp', sx * 126.0, t + 6, 0, 1.0, margin=.2); put('prop.street-lamp', sx * 117.8, t + 18, 0, 1.0, margin=.2)
 for t in range(-116, 117, 24):
     for sz in (-1, 1): put('prop.street-lamp', t + 6, sz * 96.0, 0, 1.0, margin=.2); put('prop.street-lamp', t + 18, sz * 87.8, 0, 1.0, margin=.2)
 # trees and lamps along the outer kerb walk, parked cars on the carriageway edge, a tree screen along the bounds
 for t in range(-100, 101, 12):
     for sx in (-1, 1):
-        if sx > 0 and 64 < t < 84: continue
-        put('prop.street-tree' if (t // 12) % 2 else 'prop.street-tree-blossom', sx * 126.6, t + 3 * sx, 0, .8, margin=.2, shrink=2.2)
+        if sx > 0 and 70 < t < 90: continue
+        put('prop.street-tree' if (t // 12) % 2 else 'prop.tree', sx * 126.6, t + 3 * sx, 0, .8, margin=.2, shrink=2.2)
 for t in range(-120, 121, 12):
-    for sz in (-1, 1): put('prop.street-tree' if (t // 12) % 2 else 'prop.street-tree-blossom', t, sz * 96.6, 0, .8, margin=.2, shrink=2.2)
+    for sz in (-1, 1): put('prop.street-tree' if (t // 12) % 2 else 'prop.tree', t, sz * 96.6, 0, .8, margin=.2, shrink=2.2)
 for k in range(34):
     side = _rng.choice(('N', 'S', 'E', 'W')); t = _rng.uniform(-92, 92)
     if abs(t) < 8: continue          # the four outer probe points of the wall test stay open
     asset = _rng.choice(CARS); yaw = _rng.choice((-1, 1)) * math.pi / 2 + _rng.uniform(-.06, .06)
     if side in ('E', 'W'):
         x = (120.0 if _rng.random() < .5 else 123.4) * (1 if side == 'E' else -1)
-        if side == 'E' and 66 < t < 82: continue
+        if side == 'E' and 72 < t < 88: continue
         put(asset, x, t, yaw, 1.0, margin=.4)
     else:
         z = (89.9 if _rng.random() < .5 else 93.5) * (1 if side == 'S' else -1)
@@ -298,28 +299,45 @@ for t in range(-92, 93, 5):
         put('prop.tree' if (t // 5) % 2 else 'prop.street-tree', x, t + _rng.uniform(-1, 1), 0, .75, margin=0, shrink=2.4)
 # spur flanks, roadblock and lamps
 for x in (131.0, 138.0, 144.0):
-    put('prop.street-lamp', x, 69.6, 0, 1.0, margin=.2); put('prop.street-lamp', x, 78.4, 0, 1.0, margin=.2)
-for k, z in enumerate((71.6, 74.0, 76.4)):
+    put('prop.street-lamp', x, 75.6, 0, 1.0, margin=.2); put('prop.street-lamp', x, 84.4, 0, 1.0, margin=.2)
+for k, z in enumerate((77.6, 80.0, 82.4)):
     put('prop.jersey-barrier', 142.6, z, math.pi / 2, 1.0)
-for z in (71.4, 74.6):
+for z in (77.4, 80.6):
     put('prop.jersey-barrier', 144.2, z + .8, math.pi / 2, 1.0)
-put('veh.military-truck', 145.6, 72.2, math.pi / 2 + .12); put('veh.pickup-red', 144.8, 76.4, 1.2); put('veh.sedan-white', 139.4, 71.8, -math.pi / 2 + .1)
-for z in (70.2, 77.8): put('prop.sandbag-pallet', 143.4, z, 0.0)
-put('prop.light-tower-trailer', 141.6, 69.4, math.pi / 2); put('prop.emergency-light', 140.6, 72.4, 0.0)
-put('prop.emergency-light', 143.0, 77.8, 0.0); put('prop.street-sign', 138.4, 78.6, math.pi)
-for z in (69.8, 78.0, 66.6, 81.4): put('prop.street-tree', 147.6, z, 0, .75, margin=0, shrink=2.4)
+put('veh.military-truck', 145.6, 78.2, math.pi / 2 + .12); put('veh.pickup-red', 144.8, 82.4, 1.2); put('veh.sedan-white', 139.4, 77.8, -math.pi / 2 + .1)
+for z in (76.2, 83.8): put('prop.sandbag-pallet', 143.4, z, 0.0)
+put('prop.light-tower-trailer', 141.6, 75.4, math.pi / 2); put('prop.emergency-light', 140.6, 78.4, 0.0)
+put('prop.emergency-light', 143.0, 83.8, 0.0); put('prop.street-sign', 138.4, 84.6, math.pi)
+for z in (75.8, 84.0, 72.6, 87.4): put('prop.street-tree', 147.6, z, 0, .75, margin=0, shrink=2.4)
 
 # the first thing the camera meets beyond the wall: a canopy of street trees and tall utility poles on the inner kerb walk (they rise above the 4 m wall)
 for t in range(-84, 85, 10):
     for sx in (-1, 1):
-        if sx > 0 and 62 < t < 86: continue
-        put('prop.street-tree' if (t // 10) % 2 else 'prop.street-tree-blossom', sx * 118.0, t, 0, .9, margin=.1, shrink=2.4)
+        if sx > 0 and 68 < t < 92: continue
+        put('prop.street-tree' if (t // 10) % 2 else 'prop.tree', sx * 118.0, t, 0, .9, margin=.1, shrink=2.4)
 for t in range(-112, 113, 10):
-    for sz in (-1, 1): put('prop.street-tree' if (t // 10) % 2 else 'prop.street-tree-blossom', t + 5, sz * 87.8, 0, .9, margin=.1, shrink=2.4)
+    for sz in (-1, 1): put('prop.street-tree' if (t // 10) % 2 else 'prop.tree', t + 5, sz * 87.8, 0, .9, margin=.1, shrink=2.4)
 for t in range(-80, 81, 40):
     for sx in (-1, 1):
-        if sx > 0 and 62 < t < 86: continue
+        if sx > 0 and 68 < t < 92: continue
         put('prop.utility-pole', sx * 117.6, t + 5, 0, 1.0, margin=.1)
 for t in range(-100, 101, 40): put('prop.utility-pole', t + 7, 87.6, math.pi / 2, 1.0, margin=.1); put('prop.utility-pole', t + 7, -87.6, math.pi / 2, 1.0, margin=.1)
+
+# --- the sanctuary lawn (dress-l8-cellar): mown stripes between the paths, verge strips and a few extra lamps. Visual boxes only (no colliders, no surfaces);
+# they stand 2 cm proud of the ground. Stripes stay 3.2 m off the path centre lines and out of the enclosure interiors' fences by construction.
+def _stripe(x0, x1, z0, z1, token):
+    if x1 - x0 < .5 or z1 - z0 < .5: return
+    l.box('lawn-stripe', token, [x1 - x0, .02, z1 - z0], [(x0 + x1) / 2, .011, (z0 + z1) / 2])
+_xs = [-96, -60, -24, 0, 24, 60, 96]; _zs = [-64, 0, 64]
+for zi in range(len(_zs) - 1):
+    for xi in range(len(_xs) - 1):
+        x0, x1, z0, z1 = _xs[xi] + 3.2, _xs[xi + 1] - 3.2, _zs[zi] + 3.2, _zs[zi + 1] - 3.2
+        n = max(1, int((x1 - x0) / 4.0))
+        for k in range(n):
+            if k % 2 == 0: _stripe(x0 + k * (x1 - x0) / n, x0 + (k + 1) * (x1 - x0) / n, z0, z1, 'foliageLight' if (xi + zi) % 2 else 'foliage')
+for _x in (-114.2, 114.2): _stripe(_x - 1.2, _x + 1.2, -83.0, 83.0, 'foliageDark')
+for _z in (-84.2, 84.2): _stripe(-113.0, 113.0, _z - 1.2, _z + 1.2, 'foliageDark')
+for _x, _z in [(-78, -64), (-42, -64), (42, -64), (78, -64), (-78, 0), (-42, 0), (42, 0), (78, 0), (-78, 64), (-42, 64), (78, 64)]:
+    l.place('prop.street-lamp', [_x, 0, _z + 4])
 
 l.export()
