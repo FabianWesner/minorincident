@@ -5,7 +5,7 @@ import type { LookUniforms } from './LookUniforms';
 
 // World-space detail is continuous across merged slabs and district seams, with no texture download.
 const hash = Fn(([p]: [Node<'vec2'>]) => sin(p.dot(vec2(127.1, 311.7))).mul(43758.5453).fract());
-const noise = Fn(([p]: [Node<'vec2'>]) => {
+export const noise = Fn(([p]: [Node<'vec2'>]) => {
   const cell = p.floor(), f = p.fract(), t = f.mul(f).mul(float(3).sub(f.mul(2)));
   return mix(mix(hash(cell), hash(cell.add(vec2(1, 0))), t.x), mix(hash(cell.add(vec2(0, 1))), hash(cell.add(vec2(1, 1))), t.x), t.y);
 });

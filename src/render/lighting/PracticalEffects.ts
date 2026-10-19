@@ -102,7 +102,7 @@ export class BeamMotes extends Mesh<BufferGeometry, MeshBasicNodeMaterial> {
   constructor() {
     const rng = new Rng(77, 'beam-motes'), positions: number[] = [], seeds: number[] = [];
     for (let i = 0; i < BeamMotes.count; i++) {
-      const size = .018 + rng.next() * .022, seed = [rng.next(), rng.next() * 2 - 1, rng.next(), rng.next() * 6.283];
+      const size = .012 + rng.next() * .016, seed = [rng.next(), rng.next() * 2 - 1, rng.next(), rng.next() * 6.283];
       positions.push(-size, 0, 0, size, 0, 0, 0, size * 1.6, 0);
       for (let v = 0; v < 3; v++) seeds.push(...seed);
     }
