@@ -9,6 +9,8 @@ export const levelStreams: Record<string, Partial<Record<MusicState, string>>> =
     Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
 /** Finale reuses the licensed research/subway instrumental palette. */
 levelStreams.L10 = { calm: 'calm-L6', tension: 'tension-L6' };
+/** Levels with their own streamed score (L1-L9 and the L10 finale). Single source for AudioService's level gate. */
+export const scoredLevels: ReadonlySet<string> = new Set(Object.keys(levelStreams));
 /** Score file stem (without `score-` and extension) a level plays in a state. */
 export const scoreFile = (level: string, state: MusicState): string => levelStreams[level]?.[state] ?? state;
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
@@ -36,13 +38,14 @@ export class StreamedMusic {
         // One deck per state: a level switch (only after reset, all decks paused) repoints its source.
         if (deck && deck.file !== file) { deck.media.src = assetUrl(`/assets/audio/score-${file}.${format(deck.media)}`); deck.file = file; }
         if (deck) return deck;
-        const media = new Audio();
+        const media = new Audio(), src = `/assets/audio/score-${file}`;
+        if (import.meta.env.DEV) media.onerror = () => console.error(`Missing score recording: ${src}.* (level ${this.level}, ${state})`);
         // Decks are created lazily on their first state request. Keep that stream
         // buffering across an immediate pause; preload=none aborts its first
         // request in Chromium when the mission intro or pause menu opens.
         media.preload = 'auto';
         media.loop = true;
-        media.src = assetUrl(`/assets/audio/score-${file}.${format(media)}`);
+        media.src = assetUrl(`${src}.${format(media)}`);
         const source = this.context.createMediaElementSource(media), gain = this.context.createGain();
         gain.gain.value = 0;
         source.connect(gain).connect(this.bus);
