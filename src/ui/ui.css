@@ -299,8 +299,21 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
 
 .hud-pin-follower{width:8px;height:8px;border:1px solid #102c21;background:#69ed95;z-index:3;box-shadow:0 0 2px #102c21}
 
-/* Debug controls share the free left rail beneath the player and companion HUD. */
-.full-ui.debug-ui [data-input-controls]{top:260px!important;z-index:21}
-.full-ui.debug-ui [data-audio-controls]{top:310px!important;max-height:calc(100dvh - 370px);overflow:auto;z-index:21}
-.full-ui.debug-ui [data-input-controls][open]{max-height:calc(100vh - 330px);overflow:auto}
-.full-ui.debug-ui [data-input-controls][open]~[data-audio-controls]{top:auto!important;bottom:60px}
+/* Fallback rail (when the debug-tools row is not active): debug controls share the free left rail beneath the player and companion HUD. */
+.full-ui.debug-ui:not(.debug-tools) [data-input-controls]{top:260px!important;z-index:21}
+.full-ui.debug-ui:not(.debug-tools) [data-audio-controls]{top:310px!important;max-height:calc(100dvh - 370px);overflow:auto;z-index:21}
+.full-ui.debug-ui:not(.debug-tools) [data-input-controls][open]{max-height:calc(100vh - 330px);overflow:auto}
+.full-ui.debug-ui:not(.debug-tools) [data-input-controls][open]~[data-audio-controls]{top:auto!important;bottom:60px}
+/* Debug tools get their own row above every game overlay, including letterboxing. */
+body.debug-tools{--debug-row:44px}
+body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]){--debug-row:320px}
+body.debug-tools :is(.hud-vitals,.hud-map,.hud-tracker,.hud-companion,.hud-survivor-vitals,.mission-tracker,.mission-minimap,.mission-toast,.onboarding){margin-top:var(--debug-row)}
+body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]) .story-bubble{top:calc(var(--debug-row) + 12px)!important;transform:translate(-50%,0)!important}
+body.debug-tools.touch-ui [data-testid=pause-button]{margin-top:var(--debug-row)}
+body.debug-tools [data-input-hint]{display:none}
+body.debug-tools [data-input-controls],body.debug-tools [data-audio-controls]{top:4px!important;z-index:39;max-height:calc(var(--debug-row) - 8px);overflow:auto;border-radius:6px;box-sizing:border-box}
+body.debug-tools [data-input-controls]{left:12px!important;max-width:calc(50vw - 18px)!important}
+body.debug-tools [data-audio-controls]{left:calc(50% + 6px)!important;max-width:calc(50vw - 18px)!important}
+body.debug-tools [data-input-controls] :is(input,select){max-width:100%;box-sizing:border-box}
+body.debug-tools [data-input-controls] summary,body.debug-tools [data-audio-controls] summary{cursor:pointer}
+body.debug-tools::before{content:"";position:fixed;inset:0 0 auto;height:var(--debug-row);background:#182333;z-index:38;pointer-events:none}

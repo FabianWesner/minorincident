@@ -1,0 +1,52 @@
+{
+  "name": "vfx-hud-l5-start",
+  "note": "PO 10-19 game-camera reproduction; inspect the entire foreground crown/combat space, solid reveal core and courier framing. Regression unit tests cover projected canopy radius, clear wall core and teleport framing.",
+  "seed": 1,
+  "time": "L5",
+  "ground": "district",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        40.3,
+        -39.4
+      ],
+      [
+        110.3,
+        30.6
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        75.3,
+        -4.4
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      75.3,
+      -4.4
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

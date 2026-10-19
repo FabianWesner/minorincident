@@ -1,0 +1,38 @@
+{
+  "name": "vfx-hud-gate",
+  "extends": "qa-l6-po-gate.json",
+  "note": "PO 10-19: authored service gate and lit yellow bracing paint; no cyan wire cubes, rings or hovering arrows. Game camera, all quality/zoom/backend rows.",
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        149.37,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      149.37,
+      15
+    ],
+    "zoom": 1
+  }
+}

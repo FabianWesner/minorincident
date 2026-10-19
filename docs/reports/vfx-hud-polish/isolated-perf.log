@@ -1,0 +1,38 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-hud-polish -> 94.130.181.173:/srv/mi/ws/vfx-hud-polish-8b3136
+[remote] cache-gc deleted:none
+[remote] sync 56s, 25168 files; job /srv/mi/jobs/vfx-hud-polish-8b3136-94160-1792428298; queueing for a slot
+[runner] slot 1 acquired; load 1.72 1.98 3.68
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+ RUN  v5.0.3 /srv/mi/jobs/vfx-hud-polish-8b3136-94160-1792428298
+
+ ✓  timing  tests/sim/performance/alpha-support.test.ts (2 tests) 2220ms
+   ✓ T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 1551ms
+   ✓ T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms 666ms
+ ❯  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 failed) 3324ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2422ms
+   ✓ T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 898ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.08891500000027 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 3 passed (4)
+   Start at  16:46:17
+   Duration  9.96s (tests 57%, transform 34%, import 8%)
+
+[remote] pulled test-results/vfx-hud-polish/isolated-perf
+[remote] done exit=1 (runner 94.130.181.173, sync 56s, remote total 35s)

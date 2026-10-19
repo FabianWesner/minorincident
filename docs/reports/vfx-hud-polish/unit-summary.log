@@ -1,0 +1,22 @@
+⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts
+Error: Test timed out in 300000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/assets/validate.test.ts:83:1
+     81|   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length…
+     82| });
+     83| test('T-E17-02b @E17-AC02 production outputs satisfy orientation, pale…
+       | ^
+     84|   const assets = manifest as AssetDef[];
+     85|   const reports = await validateAssets(assets, true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 291 passed | 1 skipped (293)
+      Tests  1 failed | 1656 passed | 9 skipped (1666)
+   Start at  16:33:28
+   Duration  452.30s (tests 90%, import 7%, transform 2%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 40s, remote total 1903s)
