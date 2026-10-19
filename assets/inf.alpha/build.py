@@ -14,15 +14,45 @@ P = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--glb', required=True)
 parser.add_argument('--quality', default='high')
+parser.add_argument('--variant', default='base')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
+sys.path.insert(0, str(P))
+from variants import VARIANTS
+V = VARIANTS[args.variant]
+PALETTE = json.loads((P.parents[1] / 'src/assets/palette.json').read_text())
+SKIN = V['skin']
 base = P.parent / 'inf.common-worker/build.py'
 # Redirect the worker's build metadata into this variant, leaving its source intact.
 sys.argv = [str(base), '--']
 ns = {'__file__': str(P / 'build.py'), '__name__': '__alpha_base__'}
-source = base.read_text().replace("'c9a39a'", "'796084'").replace("'5b4f5c'", "'25222c'")
+source = base.read_text().replace("'c9a39a'", repr(PALETTE[SKIN][1:])).replace("'5b4f5c'", "'25222c'")
 # Alter named worker surfaces before its material/owner join. Broad exposed upper
 # arms and a torn vest read at game distance; omit office details that become shards.
-sculpt = """
+def palette_material(token, rough=.75):
+    return f"mat({token!r}, {PALETTE[token][1:]!r}, {rough})"
+# Variant materials exist before the worker's loop reads them. The base keeps its dark clothes (no trim).
+prelude = f"""
+SLEEVES = {V['sleeves']!r}
+BALD = {V['bald']!r}
+M['v_upper'] = {palette_material(V['upper']) if V['upper'] else "M['asphalt']"}
+M['v_trim'] = {palette_material(V['trim']) if V['trim'] else "M['asphalt']"}
+M['v_skin'] = M['infectedSkin']
+"""
+FEATURES = V['features']
+# Upper garments (names before joining) take the variant colour; the white shirt hems follow `shirt`.
+recolour = f"""
+if {bool(V['upper'])!r}:
+    for o in objects:
+        if o.name.startswith(('shirt_body', 'jacket_shell', 'jacket_seam', 'back_rip', 'jacket_hem_rag', 'sleeve_fold', 'sleeve_rag', 'upper_sleeve', 'shoulder_mass')) or {not V['shirt']!r} and o.name.startswith(('torn_shirt_hem', 'shirt_torn_flap')):
+            target = M['v_upper']
+        elif {V['shirt']!r} and o.name.startswith(('torn_shirt_hem', 'shirt_torn_flap')):
+            target = M['v_trim']
+        else:
+            continue
+        o.data.materials.clear(); o.data.materials.append(target)
+        for face in o.data.polygons: face.material_index = 0
+"""
+sculpt = prelude + """
 remove = ('tie_', 'shirt_collar', 'shirt_button', 'shirt_wrinkle', 'welt_pocket',
           'jacket_lapel', 'jacket_button', 'sleeve_wrinkle', 'sleeve_tear_edge',
           'sleeve_torn_flap', 'hair_blood', 'blood_splash2', 'heavy_fringe', 'messy_crown', 'low_nape', 'hair_layer')
@@ -33,7 +63,7 @@ for o in list(objects):
         continue
     if o.name.startswith(('upper_sleeve', 'shoulder_mass')):
         o.data.materials.clear()
-        o.data.materials.append(M['infectedSkin'])
+        o.data.materials.append(M['v_upper'] if SLEEVES else M['infectedSkin'])
         for face in o.data.polygons: face.material_index = 0
     # Expand the existing curved shoulder/upper-arm surfaces, keeping their pivots.
     if o.name.startswith(('upper_sleeve', 'shoulder_mass')):
@@ -41,13 +71,17 @@ for o in list(objects):
         o.data.transform(Matrix.Translation(pivot) @ Matrix.Diagonal(Vector((1.22, 1.13, 1, 1))) @ Matrix.Translation(-pivot))
     if o.name == 'shirt_body':
         o.data.materials.clear()
-        o.data.materials.append(M['asphalt'])
+        o.data.materials.append(M['v_upper'])
         for face in o.data.polygons: face.material_index = 0
         o.scale.x *= 1.10
         o.scale.y *= 1.10
     if o.name.startswith('eye_glow'):
         o.scale *= 1.3
     if o.name.startswith('hair_base'):
+        if BALD:
+            objects.remove(o)
+            bpy.data.objects.remove(o, do_unlink=True)
+            continue
         o.scale.z *= .85
 bpy.ops.object.select_all(action='DESELECT')
 # Raised closed wounds and emissive veins keep the chest readable at distant zoom.
@@ -56,7 +90,7 @@ for side in (-1, 1):
     tube('alpha_vein'+str(side),[(.234,side*.15,1.09),(.25,side*.10,1.02),(.244,side*.14,.97)], [.009,.012,.006], 'eye','torso',N=6,sub=0)
 # A forward neck and broad shoulders preserve the human outline.
 parts['head'].location.x += .035
-"""
+""" + recolour + FEATURES
 marker = '# Applied subdivision defines the sculpted forms; reduce redundant triangles for the crowd budget.'
 assert marker in source
 source = source.replace(marker, sculpt + '\n' + marker)
@@ -69,8 +103,9 @@ exec(compile(source, str(base), 'exec'), ns)
 (P / 'rig-rest.json').unlink(missing_ok=True)
 parts, objects = ns['parts'], ns['objects']
 # Runtime resolves palette names, so RGB changes alone do not change the game.
-ns['M']['infectedSkin'].name = 'pal_purple'
+ns['M']['infectedSkin'].name = 'pal_' + SKIN
 ns['M']['asphalt'] = ns['M']['uiDark']
+dark = ns['M']['uiDark']
 bpy.context.view_layer.update()
 # Compensate for the lower crown and deeper hunch: packed height remains about 2.58 m.
 shape = Matrix.Diagonal(Vector((1.47 * 1.14, 1.47 * 1.22, 1.58, 1)))
@@ -104,9 +139,11 @@ for obj in objects:
     obj.matrix_parent_inverse = obj.parent.matrix_world.inverted()
     obj.matrix_basis = Matrix.Identity(4)
     materials = list(obj.data.materials)
+    # Variant garments and trim keep their palette colour; everything else is the base's single dark clothing tone.
+    keep = {'pal_' + SKIN, 'pal_blood', 'emi_infectedEye'} | ({ns['M']['v_upper'].name, ns['M']['v_trim'].name} if V['upper'] else set())
     for i, material in enumerate(materials):
-        if material.name not in ('pal_purple', 'pal_blood', 'emi_infectedEye'):
-            obj.data.materials[i] = ns['M']['asphalt']
+        if material.name not in keep:
+            obj.data.materials[i] = dark
 # Merge decorations by rigid owner; palette regions remain distinct face materials.
 caps = [obj for obj in objects if obj.name.startswith('stump_')]
 groups = {}
@@ -266,7 +303,7 @@ for lod, limit in enumerate((7800, 2900, 950)):
                              export_extras=True, export_cameras=False, export_lights=False)
     records.append({'lod': lod, 'triangles': sum(triangles(obj) for obj in objects),
                     'fileKB': path.stat().st_size / 1024, 'dimensions': [max(v[i] for v in bounds) - min(v[i] for v in bounds) for i in range(3)]})
-(P / 'build-stats.json').write_text(json.dumps({'derivedFrom': str(base.relative_to(P.parents[1])),
+(output.parent / 'build-stats.json').write_text(json.dumps({'derivedFrom': str(base.relative_to(P.parents[1])),
     'heightRatio': records[0]['dimensions'][2] * 1.08101627 / 1.8,
     'bodyHeightScale': 1.58, 'headScale': [.82, .82, .90], 'shapeScale': [1.6758, 1.7934, 1.58], 'lods': records,
-    'parts': list(parts), 'materials': ['pal_purple', 'pal_uiDark', 'pal_blood', 'emi_infectedEye']}, indent=2) + '\n')
+    'parts': list(parts), 'variant': args.variant, 'materials': sorted({m.name for o in objects for m in o.data.materials})}, indent=2) + '\n')

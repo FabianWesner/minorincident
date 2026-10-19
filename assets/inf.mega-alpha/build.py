@@ -17,7 +17,12 @@ from mathutils import Matrix, Vector
 P = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--glb', required=True)
+parser.add_argument('--variant', default='base')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
+PALETTE = json.loads((P.parents[1] / 'src/assets/palette.json').read_text())
+# PO #23: Mega looks share the rig, height and footprint; they differ in palette and head hardware. base = the shipped Mega.
+VARIANTS = {'base': ('vest', 'leather', ''), 'ashen': ('poloDark', 'argyleGrey', 'horns'), 'ember': ('hairCopper', 'leatherEdge', 'tusks')}
+MASS, SKIN, HARDWARE = VARIANTS[args.variant]
 base = P.parent / 'inf.common-worker/build.py'
 sys.argv = [str(base), '--']
 ns = {'__file__': str(P / 'build.py'), '__name__': '__mega_alpha_base__'}
@@ -97,7 +102,7 @@ for obj in caps:
     obj.matrix_basis = Matrix.Identity(4)
 
 # PO revision: bruised dark skin/muscle, near-black rags, bone armour and bright blood.
-PAL = {'mass': ns['mat']('vest', '752d39', .6), 'skin': ns['mat']('leather', '493128', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
+PAL = {'mass': ns['mat'](MASS, PALETTE[MASS][1:], .6), 'skin': ns['mat'](SKIN, PALETTE[SKIN][1:], .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
 for owner, group in bodies.items():
     for obj in group:
         for i, material in enumerate(list(obj.data.materials)):
@@ -269,6 +274,19 @@ def features(detail):
         put('head', ellipsoid('cheekbones', Vector((ex - .12 * S, 0, ez - .22 * S)), (.14 * S, ew + .22 * S, .08 * S), PAL['bone'], seg + 2, rings))
     for s_, c in eye_pos.items():
         put('head', ellipsoid('eye%d' % s_, c + Vector((.07 * S, 0, -.01 * S)), (.11 * S, .17 * S, .12 * S), PAL['eye'], seg, max(3, rings - 1)))
+    # Head hardware of the sibling looks (PO #23). Horns sweep out and slightly up from the skull sides so the Mega keeps the
+    # Alpha's height; tusks rise from the jaw beside the mouth.
+    hc = (head_lo + head_hi) / 2
+    hw, hd, hh = head_hi.y - head_lo.y, head_hi.x - head_lo.x, head_hi.z - head_lo.z
+    for s_ in (-1, 1):
+        if HARDWARE == 'horns':
+            put('head', spike('horn%d' % s_, Vector((hc.x - .05 * hd, hc.y + s_ * .32 * hw, head_hi.z - .50 * hh)),
+                              (-.1, s_ * 1.0, .12), .10 * hw, .85 * hw, PAL['bone'], sides))
+        elif HARDWARE == 'tusks':
+            put('head', spike('tusk%d' % s_, Vector((head_hi.x - .12 * hd, hc.y + s_ * .20 * hw, head_lo.z + .16 * hh)),
+                              (.35, s_ * .18, 1.0), .075 * hw, .50 * hh, PAL['bone'], sides))
+            put('head', ellipsoid('crownRidge%d' % s_, Vector((hc.x - .20 * hd, hc.y + s_ * .22 * hw, head_hi.z - .12 * hh)),
+                                  (.16 * hd, .09 * hw, .08 * hh), PAL['mass'], seg, rings))
     return out
 
 def bodies_for_lod(level):
@@ -465,7 +483,7 @@ for lod in range(3):
                     'materials': sorted({m.name for o in final for m in o.data.materials})})
     for o in final:
         bpy.data.objects.remove(o)
-(P / 'build-stats.json').write_text(json.dumps({
+(output.parent / 'build-stats.json').write_text(json.dumps({
     'derivedFrom': 'assets/inf.common-worker/build.py (like inf.alpha)', 'heightScale': HEIGHT, 'bulk': BULK,
     'leanDegrees': 14, 'oversizedArm': {'node': 'armR', 'scale': ARM_SCALE},
     'lods': records, 'parts': list(parts)}, indent=2) + '\n')

@@ -15,3 +15,7 @@ npm run assets:validate -- --ids inf.mega-alpha
 ```
 
 Budgets (manifest): 16,000 / 6,000 / 2,000 triangles, 6 materials, 1,600 KB LOD0. QA: `specs/scenes/catalog/inf-mega-alpha-lineup.json` (`npm run scene:catalog -- --matrix --filter 'inf-mega-alpha-lineup'`) and `npx tsx tools/scenelab/lod-objectives.ts <out> inf.mega-alpha`.
+
+## Look variants (PO #23, 2026-10-19)
+
+`build.py --variant ashen|ember` rebuilds the Mega with another palette and head hardware, same rig, hunch, height (2.586 m) and footprint: `ashen` (cold blue shoulder mass, ash-grey skin, two bone horns swept out from the skull sides) and `ember` (burnt-orange mass, dark skin, jaw tusks and skull ridges). Assets `inf.mega-alpha-ashen` / `inf.mega-alpha-ember` (`assets/<id>/model*.glb`); triangles and file sizes are equal to the base within 0.5% at every LOD. The renderer picks the look by entity id (`src/data/alphaLooks.ts`); the sim still sees `variant: inf.mega-alpha`. Scene: `mega-alpha-variants-lineup`.
