@@ -18,6 +18,8 @@ export const worldLook = {
   gradeShadow: '#ffffff', gradeHighlight: '#ffffff', gradeAmount: 0, gradeContrast: 1, gradeSaturation: 1,
   haze: '#ffffff', hazeAmount: 0, hazeStart: 1.25, hazeEnd: 2, hazeHeight: 6,
   cloudShadow: 0, cloudScale: 22, cloudSpeed: 1, beamStrength: 1,
+  // Distant fire glow (L9 burning city): a warm fill that rises along a world direction (glowDirX/Z, start/end in metres along it), facing-weighted.
+  glow: '#ff6a32', glowAmount: 0, glowStart: 0, glowEnd: 500, glowDirX: 1, glowDirZ: 0,
   worldSurvivorRed: '#cf6565', worldBlood: '#994d55', worldRedDark: '#994854', worldSirenRed: '#dc6974',
 } as const;
 
