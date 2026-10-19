@@ -12,14 +12,14 @@ const fixture = () => {
     interiorBuildings: [], interiorPose: { x: Infinity, y: Infinity, z: Infinity }, interiorRevision: 0, appliedInteriorRevision: -1, appliedInteriorCullOff: false,
     foliage: { update: vi.fn(() => seeThrough.center.value.set(-10, -10)), reveal: true }, updateRoofs: vi.fn(),
     holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
-    cutPlacements: new Set(), lodBatches: [], subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
+    lensPlacements: new Set(), cutPlacements: new Set(), lodBatches: [], subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
   }) as DistrictView;
   const camera = new PerspectiveCamera(35, 16 / 9, .1, 1000);
   camera.position.set(8, 12, 8); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
   return { district, view: { camera } as View };
 };
 
-test('player reveal is fully open on the first render and after teleport; a near roof never expands it', () => {
+test('ordinary player reveal is fully open on the first render and after teleport without widening its disc', () => {
   const { district, view } = fixture();
   seeThrough.strength.value = 0; seeThrough.cover.value = 1;
   district.updateFoliage(view, { x: 0, y: .7, z: 0 });

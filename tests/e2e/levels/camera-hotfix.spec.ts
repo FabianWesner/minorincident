@@ -24,6 +24,12 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('line-break');
     await expect(page.getByTestId('mission-tracker')).toHaveAttribute('data-objective', 'hide');
     const out = `test-results/camera-hotfix/game-${renderer}-${quality}`; mkdirSync(out, { recursive: true });
+    const readCamera = () => page.evaluate(() => {
+        const a = window.__SS__!, state = a.getState(), c = state.render.camera;
+        const offset = c.position.map((v, i) => v - c.target[i]);
+        const radius = Math.hypot(...offset);
+        return { backend: a.perf().backend, quality: a.perf().quality.tier, c, radius, polar: Math.acos(offset[1] / radius), player: state.player!.transform, cover: (state.render.districts as { seeThrough: { cover: number } }).seeThrough.cover };
+      });
     const samples = [];
     for (const zoom of [1, .5, 1.5]) {
       await page.mouse.move(640, 360);
@@ -34,12 +40,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
         await page.evaluate(() => window.__SS__!.step(2));
       }
       await page.evaluate(() => window.__SS__!.step(120));
-      const proof = await page.evaluate(() => {
-        const a = window.__SS__!, state = a.getState(), c = state.render.camera;
-        const offset = c.position.map((v, i) => v - c.target[i]);
-        const radius = Math.hypot(...offset);
-        return { backend: a.perf().backend, quality: a.perf().quality.tier, c, radius, polar: Math.acos(offset[1] / radius), player: state.player!.transform };
-      });
+      const proof = await readCamera();
       await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${out}/z${zoom}.png` }); samples.push(proof);
       expect(proof.backend).toBe(renderer); expect(proof.quality).toBe(quality);
@@ -50,6 +51,21 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
       await page.evaluate(() => window.__SS__!.step(120));
       expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom)).toBeCloseTo(zoom, 2);
     }
+    // At wide zoom the lens can sit just outside the shell, while its facade
+    // still fills the viewport. The old 2 m lens margin left these walls opaque.
+    for (const [name, x, z] of [['cellar', -75, -44.2], ['lakeshore', 59.1, 27.5]] as const) {
+      await page.evaluate(async ({ x, z }) => { const a = window.__SS__!; a.teleport('player', { x, z }); await a.step(120); }, { x, z });
+      const proof = await readCamera();
+      expect(proof.c.zoom).toBeCloseTo(1.5, 2); expect(proof.cover, `${name}: the enclosing facade must clear`).toBe(1);
+      expect(Math.abs(proof.polar - cameraFraming.polar)).toBeLessThanOrEqual(8 * Math.PI / 180);
+      expect(proof.radius).toBeGreaterThanOrEqual(cameraFraming.radiusM * 1.5 * .85);
+      samples.push({ ...proof, facade: name });
+      await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/${name}-z1.5.png` });
+    }
+    await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: -56.23, z: 32.11 }); await a.step(120); });
+    await page.keyboard.down('w'); await page.evaluate(() => window.__SS__!.step(1));
+    await page.keyboard.up('w'); await page.evaluate(() => window.__SS__!.step(1));
+    await expect(page.locator('[data-input-hint]')).toContainText('WASD');
     for (const [width, height] of [[1280, 720], [1920, 1080], [2000, 990]]) {
       await page.setViewportSize({ width, height });
       const hint = page.locator('[data-input-hint]'); await expect(hint).toBeVisible();

@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import { Box3, BoxGeometry, BufferAttribute, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, type InterleavedBufferAttribute } from 'three/webgpu';
+import { seeThrough } from '../../../src/render/SeeThrough';
 import { DistrictView } from '../../../src/render/DistrictView';
 import { InstancedGroup } from '../../../src/render/InstancedGroup';
 import { Lighting } from '../../../src/render/Lighting';
@@ -19,7 +20,7 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
   camera.lookAt(0, .72, 0); camera.updateMatrixWorld();
   const view = Object.assign(Object.create(DistrictView.prototype), {
     interiorBuildings: [], interiorPose: { x: Infinity, y: Infinity, z: Infinity }, interiorRevision: 0, appliedInteriorRevision: -1, appliedInteriorCullOff: false,
-    cutPlacements: new Set<Object3D>(), occluderId: '',
+    lensPlacements: new Set(), cutPlacements: new Set<Object3D>(), occluderId: '',
     foliage: { update() {}, reveal: true }, updateRoofs() {}, frameSeconds: 1,
     lensRay: new Vector3(), lensPoint: new Vector3(), holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
     subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
@@ -51,5 +52,47 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
     expect(isUncutProp('prop.recycling-bin', 1), 'short drawn LODs stay whole even when the manifest is taller').toBe(true);
     expect(isUncutProp('prop.recycling-bin', 1.1165), 'LOD0 detail a few cm above the limit stays whole too').toBe(true);
     expect(isUncutProp('bld.garage-detached', 1)).toBe(false);
+  } finally { hero.dispose(); near.dispose(); far.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose(); }
+});
+
+test('@E22 lens-enclosing or frame-filling placement clears its foreground without cutting a neighbouring building, and restores across LOD changes', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting);
+  const material = materials.get('brick').seeThrough(); material.userData.batchFeatures = '0:0:0';
+  const geometry = new BoxGeometry(12, 18, 12), prototype = new Mesh(geometry, material); prototype.position.y = 9;
+  const blocking = new Object3D(), neighbour = new Object3D(); neighbour.position.z = 30;
+  const refs = [blocking, neighbour];
+  const hero = new InstancedGroup(prototype, [...refs]), near = new InstancedGroup(prototype, [...refs]), far = new InstancedGroup(prototype, [...refs]);
+  const camera = new PerspectiveCamera(25, 16 / 9, .1, 600);
+  const district = Object.assign(Object.create(DistrictView.prototype), {
+    interiorBuildings: [], interiorPose: { x: Infinity, y: Infinity, z: Infinity }, interiorRevision: 0, appliedInteriorRevision: -1, appliedInteriorCullOff: false,
+    foliage: { update() {}, reveal: true }, updateRoofs() {}, frameSeconds: 1,
+    cutPlacements: new Set<Object3D>(), lensPlacements: new Set<Object3D>(), occluderId: '',
+    lensRay: new Vector3(), lensPoint: new Vector3(), holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
+    subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
+    lodBatches: [{ id: 'bld.apartment-block-a', height: 18, half: 6, origin: [0, 0], foot: { cx: 0, cz: 0, hx: 6, hz: 6 }, refs, hero, near, far }],
+  }) as DistrictView;
+  const update = (y: number, x = 0) => {
+    camera.position.set(x, y, 0); camera.lookAt(-12, .7, 0); camera.updateMatrixWorld();
+    district.updateFoliage({ camera } as Parameters<DistrictView['updateFoliage']>[0], { x: -12, y: .72, z: 0 });
+  };
+  try {
+    update(10); // The lens is inside the apartment, while the courier is outside.
+    const radius = seeThrough.solidRadius.value;
+    for (const batch of [hero, near, far]) {
+      const mask = (batch.children[0] as Mesh).geometry.getAttribute('_occluder');
+      expect(mask.getX(0)).toBe(2); expect(mask.getX(1)).toBe(0);
+      batch.references.reverse(); batch.update();
+      expect(mask.getX(0)).toBe(0); expect(mask.getX(1)).toBe(2);
+      batch.references.reverse(); batch.update();
+    }
+    expect(radius).toBeLessThan(.5); // No global full-screen reveal.
+    update(10, 7.5); // Keep the cut while the lens clears the facade's 2 m margin.
+    for (const batch of [hero, near, far]) expect((batch.children[0] as Mesh).geometry.getAttribute('_occluder').getX(0)).toBe(2);
+    update(18, 10); // Wider zoom can leave the lens outside the box while its facade fills the viewport.
+    for (const batch of [hero, near, far]) expect((batch.children[0] as Mesh).geometry.getAttribute('_occluder').getX(0)).toBe(2);
+    update(30); // Roof between lens and courier, but the lens is well above it.
+    for (const batch of [hero, near, far]) expect((batch.children[0] as Mesh).geometry.getAttribute('_occluder').getX(0)).toBe(1);
+    district.seeThroughOff = true; update(10);
+    for (const batch of [hero, near, far]) expect((batch.children[0] as Mesh).geometry.getAttribute('_occluder').getX(0)).toBe(0);
   } finally { hero.dispose(); near.dispose(); far.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose(); }
 });

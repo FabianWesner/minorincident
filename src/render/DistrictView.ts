@@ -500,7 +500,7 @@ export class DistrictView extends Group {
     // Open immediately at spawn, teleport and checkpoint restore; never widen to the screen edges.
     seeThrough.strength.value = player && this.foliage.reveal && !this.seeThroughOff ? 1 : 0;
     this.occluderId = '';
-    this.cutPlacements.clear();
+    this.cutPlacements.clear(); this.lensPlacements.clear();
     if (!player || !this.foliage.reveal || this.seeThroughOff) { this.updateCutPlacements(); this.updateInteriors(view, player); return; }
     const feet = player.y - .7;
     const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
@@ -508,6 +508,9 @@ export class DistrictView extends Group {
     if (this.seeThroughReference) { this.updateCutPlacements(true); this.updateInteriors(view, player); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
     this.occludedSubject(view, box);
+    // Clear only the foreground of placements that enclose most of the lens.
+    // The normal courier disc stays bounded; player angle and zoom stay fixed.
+    seeThrough.cover.value = +(this.lensPlacements.size > 0);
     this.updateCutPlacements();
     this.updateInteriors(view, player);
   }
@@ -569,14 +572,16 @@ export class DistrictView extends Group {
   private readonly lensPoint = new Vector3();
   private static readonly footFrames = new WeakMap<Object3D, { entry: Pick<LodBatch, 'foot' | 'origin'>; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
   private readonly cutPlacements = new Set<Object3D>();
+  private readonly lensPlacements = new Set<Object3D>();
   private updateCutPlacements(all = false): void {
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
         const enabled = all || this.cutPlacements.has(ref);
-        if (ref.userData.occluder === enabled) continue;
+        const lens = this.lensPlacements.has(ref);
+        if (ref.userData.occluder === enabled && !!ref.userData.lensOccluder === lens) continue;
         if (worldAssets[entry.id].category === 'building') this.interiorRevision++;
-        entry.hero.seeThrough(enabled, ref); entry.near.seeThrough(enabled, ref); entry.far.seeThrough(enabled, ref);
+        entry.hero.seeThrough(enabled, ref, lens); entry.near.seeThrough(enabled, ref, lens); entry.far.seeThrough(enabled, ref, lens);
       }
     }
   }
@@ -674,11 +679,29 @@ export class DistrictView extends Group {
             enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
             if (enter > exit) break;
           }
-          if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break; }
+          if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); if (entry.id.startsWith('bld.') && this.coversLens(view, entry, ref)) this.lensPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break; }
         }
       }
     }
     return blocked;
+  }
+  /** Enclosing shells and nearby facades covering most of the screen must not leave a flat viewport.
+   * Keep ordinary occluders on the courier disc (the garage fixture covers only ~60% by its bounding rectangle). */
+  private coversLens(view: View, entry: LodBatch, ref: Object3D): boolean {
+    const camera = view.camera, o = camera.position, [c, s, x, z] = DistrictView.footFrame(entry, ref);
+    const dx = o.x - x, dz = o.z - z, lx = Math.abs((dx * c - dz * s) / ref.scale.x), lz = Math.abs((dx * s + dz * c) / ref.scale.z);
+    const top = ref.position.y + entry.height * ref.scale.y;
+    if (o.y <= ref.position.y + .3 || o.y > top + DistrictView.hugDistance || lx > entry.foot.hx + DistrictView.hugDistance / Math.abs(ref.scale.x) || lz > entry.foot.hz + DistrictView.hugDistance / Math.abs(ref.scale.z)) return false;
+    if (lx < entry.foot.hx && lz < entry.foot.hz && o.y < top) return true;
+    let left = 1, right = -1, bottom = 1, upper = -1;
+    for (let corner = 0; corner < 8; corner++) {
+      const px = (corner & 1 ? 1 : -1) * entry.foot.hx * ref.scale.x, pz = (corner & 2 ? 1 : -1) * entry.foot.hz * ref.scale.z;
+      const p = this.lensPoint.set(x + px * c + pz * s, corner & 4 ? top : ref.position.y, z - px * s + pz * c).applyMatrix4(camera.matrixWorldInverse);
+      if (p.z >= -camera.near) return true;
+      p.applyMatrix4(camera.projectionMatrix);
+      left = Math.min(left, p.x); right = Math.max(right, p.x); bottom = Math.min(bottom, p.y); upper = Math.max(upper, p.y);
+    }
+    return Math.max(0, Math.min(1, right) - Math.max(-1, left)) * Math.max(0, Math.min(1, upper) - Math.max(-1, bottom)) / 4 >= 2 / 3;
   }
   private readonly barRay = new Raycaster();
   private readonly barBox = new Box3();

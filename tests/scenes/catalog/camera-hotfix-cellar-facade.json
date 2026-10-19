@@ -1,0 +1,33 @@
+{
+  "extends": "camera-hotfix-refuge-door-7.json",
+  "name": "camera-hotfix-cellar-facade",
+  "note": "The normal follow lens is enclosed by an apartment. Only that placement clears its foreground; the courier keeps her angle and zoom. Original blank-viewport browser thresholds remain binding.",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -89,
+        -60
+      ],
+      [
+        -48,
+        -15
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -75,
+        -44.2
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fists"
+      ]
+    }
+  ]
+}

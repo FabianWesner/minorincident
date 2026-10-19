@@ -1,0 +1,994 @@
+{
+  "spec": "tests/scenes/catalog/camera-hotfix-lakeshore-facade.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 60,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4513,
+    "runMs": 613,
+    "sceneMs": 5126
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 36,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 108535,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 2923.3722484970085,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 62,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 4459.091504639255,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 60,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          75.27727864583333,
+          61.477727864583336,
+          41.72620225694445
+        ],
+        "variance": 2923.3722484970085,
+        "variedTiles": 62,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          89.639697265625,
+          63.05893663194445,
+          33.44309353298611
+        ],
+        "variance": 4459.091504639255,
+        "variedTiles": 60,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "camera-hotfix-lakeshore-facade",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.apartment-block-b:60",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          40.2199,
+          12.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-a:61",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          40.0499,
+          25.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.pharmacy:62",
+        "asset": "bld.pharmacy",
+        "at": [
+          42.050000000000004,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:128",
+        "asset": "prop.privacy-fence",
+        "at": [
+          38.5,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:129",
+        "asset": "prop.privacy-fence",
+        "at": [
+          41.1,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:130",
+        "asset": "prop.privacy-fence",
+        "at": [
+          43.7,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.apartment-block-b:217",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          67.58,
+          35.24
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.privacy-fence:324",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          10.297916666666666
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:325",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          12.852083333333333
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:326",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          15.40625
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:327",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          17.960416666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:328",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          20.514583333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:329",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          23.06875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:330",
+        "asset": "prop.privacy-fence",
+        "at": [
+          66,
+          25.62291666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:331",
+        "asset": "prop.privacy-fence",
+        "at": [
+          67.31428571428572,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:332",
+        "asset": "prop.privacy-fence",
+        "at": [
+          69.94285714285715,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:333",
+        "asset": "prop.privacy-fence",
+        "at": [
+          72.57142857142857,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:334",
+        "asset": "prop.privacy-fence",
+        "at": [
+          75.2,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:335",
+        "asset": "prop.privacy-fence",
+        "at": [
+          77.82857142857144,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:336",
+        "asset": "prop.privacy-fence",
+        "at": [
+          80.45714285714286,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:337",
+        "asset": "prop.privacy-fence",
+        "at": [
+          83.08571428571429,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:362",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          10.297916666666666
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:363",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          12.852083333333333
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:364",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          15.40625
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:365",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          17.960416666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:366",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          20.514583333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:367",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          23.06875
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:368",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          25.62291666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:369",
+        "asset": "prop.privacy-fence",
+        "at": [
+          56.199999999999996,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:370",
+        "asset": "prop.privacy-fence",
+        "at": [
+          59,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:371",
+        "asset": "prop.privacy-fence",
+        "at": [
+          61.8,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:372",
+        "asset": "prop.privacy-fence",
+        "at": [
+          64.6,
+          26.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.pharmacy:373",
+        "asset": "bld.pharmacy",
+        "at": [
+          58,
+          37.050000000000004
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.supermarket:375",
+        "asset": "bld.supermarket",
+        "at": [
+          78.5,
+          36
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.privacy-fence:376",
+        "asset": "prop.privacy-fence",
+        "at": [
+          56.4,
+          30.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:377",
+        "asset": "prop.privacy-fence",
+        "at": [
+          59.6,
+          30.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:378",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          28.091666666666665
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:379",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          30.475
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:380",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          32.858333333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:381",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          35.24166666666667
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:382",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          37.625
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:383",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          40.00833333333334
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:384",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          52.35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:385",
+        "asset": "prop.privacy-fence",
+        "at": [
+          84.4,
+          55.05
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:394",
+        "asset": "prop.street-lamp",
+        "at": [
+          52,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:395",
+        "asset": "prop.street-lamp",
+        "at": [
+          68,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:401",
+        "asset": "prop.bench",
+        "at": [
+          40,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:402",
+        "asset": "prop.bench",
+        "at": [
+          62,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:403",
+        "asset": "prop.bench",
+        "at": [
+          76,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-tree:408",
+        "asset": "prop.street-tree",
+        "at": [
+          70,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:417",
+        "asset": "prop.street-lamp",
+        "at": [
+          64,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:418",
+        "asset": "prop.street-lamp",
+        "at": [
+          80,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:442",
+        "asset": "prop.street-sign",
+        "at": [
+          53.7,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:443",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          46.3,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-barrier-61",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          81.2,
+          42.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-barrier-62",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          81.2,
+          43.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-barrier-63",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          81.2,
+          49
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-barrier-64",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          81.2,
+          50.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-parked-69",
+        "asset": "veh.sedan-green",
+        "at": [
+          44,
+          43.3
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "camera-hotfix-lakeshore-facade",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgpu",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 36,
+        "p95": 36,
+        "max": 36
+      },
+      "triangles": {
+        "p50": 108535,
+        "p95": 108535,
+        "max": 108535
+      },
+      "shadowDrawCalls": {
+        "p50": 33,
+        "p95": 33,
+        "max": 33
+      },
+      "shadowTriangles": {
+        "p50": 98186,
+        "p95": 98186,
+        "max": 98186
+      },
+      "stepMs": {
+        "p50": 1.7,
+        "p95": 2.2,
+        "max": 2.6
+      },
+      "lastFrame": {
+        "drawCalls": 36,
+        "triangles": 108535,
+        "shadowDrawCalls": 33,
+        "shadowTriangles": 98186,
+        "stepMs": 1.2000007629394531,
+        "categories": {
+          "other": 31,
+          "shadows": 33,
+          "buildings": 3,
+          "props": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 60,
+      "solidRadiusMax": 0.438,
+      "occluders": [
+        "bld.apartment-block-b@67.6,35.4"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "bld.apartment-block-b@67.6,35.2"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          59.1,
+          27.5
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": 59.099998474121094,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            59.1,
+            27.5
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 9,
+          "torsoPitchMaxDeg": 9.3,
+          "contacts": 2,
+          "slideMaxCm": 11.5,
+          "slideP95Cm": 9.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 4.5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.apartment-block-b:60": "culled",
+      "bld.apartment-block-a:61": "lod1",
+      "bld.pharmacy:62": "culled",
+      "prop.privacy-fence:128": "culled",
+      "prop.privacy-fence:129": "culled",
+      "prop.privacy-fence:130": "culled",
+      "bld.apartment-block-b:217": "lod1",
+      "prop.privacy-fence:324": "culled",
+      "prop.privacy-fence:325": "culled",
+      "prop.privacy-fence:326": "culled",
+      "prop.privacy-fence:327": "culled",
+      "prop.privacy-fence:328": "culled",
+      "prop.privacy-fence:329": "culled",
+      "prop.privacy-fence:330": "culled",
+      "prop.privacy-fence:331": "culled",
+      "prop.privacy-fence:332": "culled",
+      "prop.privacy-fence:333": "culled",
+      "prop.privacy-fence:334": "culled",
+      "prop.privacy-fence:335": "culled",
+      "prop.privacy-fence:336": "culled",
+      "prop.privacy-fence:337": "culled",
+      "prop.privacy-fence:362": "culled",
+      "prop.privacy-fence:363": "culled",
+      "prop.privacy-fence:364": "culled",
+      "prop.privacy-fence:365": "culled",
+      "prop.privacy-fence:366": "culled",
+      "prop.privacy-fence:367": "culled",
+      "prop.privacy-fence:368": "culled",
+      "prop.privacy-fence:369": "lod1",
+      "prop.privacy-fence:370": "lod0",
+      "prop.privacy-fence:371": "lod1",
+      "prop.privacy-fence:372": "lod1",
+      "bld.pharmacy:373": "culled",
+      "bld.supermarket:375": "culled",
+      "prop.privacy-fence:376": "lod1",
+      "prop.privacy-fence:377": "lod1",
+      "prop.privacy-fence:378": "culled",
+      "prop.privacy-fence:379": "culled",
+      "prop.privacy-fence:380": "culled",
+      "prop.privacy-fence:381": "culled",
+      "prop.privacy-fence:382": "culled",
+      "prop.privacy-fence:383": "culled",
+      "prop.privacy-fence:384": "culled",
+      "prop.privacy-fence:385": "culled",
+      "prop.street-lamp:394": "culled",
+      "prop.street-lamp:395": "culled",
+      "prop.bench:401": "culled",
+      "prop.bench:402": "culled",
+      "prop.bench:403": "culled",
+      "prop.street-tree:408": "culled",
+      "prop.street-lamp:417": "culled",
+      "prop.street-lamp:418": "culled",
+      "prop.street-sign:442": "culled",
+      "prop.fire-hydrant:443": "culled",
+      "l4-barrier-61": "culled",
+      "l4-barrier-62": "culled",
+      "l4-barrier-63": "culled",
+      "l4-barrier-64": "culled",
+      "l4-parked-69": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 1,
+      "staticPairs": 1,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "prop.street-lamp:395",
+        "b": "prop.street-tree:408",
+        "assetA": "prop.street-lamp",
+        "assetB": "prop.street-tree",
+        "intersectingTriangles": 337,
+        "region": {
+          "min": [
+            67.6949691772461,
+            2.027862071990967,
+            52.07999038696289
+          ],
+          "max": [
+            68.2622299194336,
+            3.731004238128662,
+            52.720008850097656
+          ]
+        },
+        "regionCm": [
+          57,
+          170,
+          64
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [
+      {
+        "bone": "torso",
+        "prop": "courier/gun",
+        "asset": "gun",
+        "crossing": false,
+        "clearanceCm": 12.8,
+        "actor": "courier",
+        "frame": 3,
+        "count": 20
+      }
+    ],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 1,
+      "staticPairs": 1,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

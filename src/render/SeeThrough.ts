@@ -12,7 +12,7 @@ export const seeThrough = {
   solidRadius: uniform(.17).setGroup(renderGroup),
   /** Solid reveal is immediate, including the first presented frame. */
   strength: uniform(0).setGroup(renderGroup),
-  /** Legacy diagnostic: reveal stays bounded, including when the camera is inside a roof. */
+  /** A building encloses the lens; only that placement clears its foreground. */
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
@@ -41,10 +41,15 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
 export const seeThroughKeep = (eligible?: Node<'float'>) => {
   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.08)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-  // Retain a screen-stable 35% of every solid surface, even at the centre.
+  // A placement enclosing most of the lens cannot leave a roof across the
+  // entire viewport. Its foreground surfaces clear, while supports and surfaces
+  // behind the subject stay intact. Other placements keep the bounded disc.
+  const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
+    .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
+  // Ordinary cuts retain a screen-stable 35% of the surface, even at the centre.
   // Shared noise across layers keeps the remaining 65% open to the subject.
   const keep = hole.mul(.65).add(.35).greaterThan(noise);
-  return eligible ? eligible.lessThan(.5).or(keep) : keep;
+  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : keep;
 };
 
 /** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small

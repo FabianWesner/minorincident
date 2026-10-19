@@ -1,0 +1,17 @@
+
+Running 12 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl high (15.6s)
+  ✓   2 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl low (7.7s)
+  ✓   3 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high (16.2s)
+  ✓   4 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu low (6.7s)
+  ✓   5 [chromium] › tests/e2e/levels/cellar-position.spec.ts:46:3 › Kessler cellar position › T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures) (29.4s)
+  ✓   6 [chromium] › tests/e2e/levels/cellar-position.spec.ts:79:3 › Kessler cellar position › T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane (14.5s)
+  ✓   7 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl) (20.7s)
+  ✓   8 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu) (20.9s)
+  ✓   9 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl) (20.7s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu) (20.4s)
+  ✓  11 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl) (21.0s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu) (20.9s)
+
+  12 passed (3.6m)
