@@ -201,10 +201,10 @@ export class Lighting {
     this.sun.shadow.needsUpdate = true; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
-    // Broaden and strengthen the rim as the courier occupies fewer screen pixels.
+    // Broaden the coloured rim as the courier occupies fewer screen pixels; keep its energy bounded.
     const distance = view.radius / cameraFraming.radiusM;
     this.heroRimEdge.value = Math.min(.9, .72 * Math.sqrt(distance));
-    this.heroRim.value = (timeOfDay[this.preset].heroRim ?? 0) * Math.max(1, 1 + (distance - 1) * 6);
+    this.heroRim.value = timeOfDay[this.preset].heroRim ?? 0;
     this.roadFocus.value.copy(view.focus);
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.

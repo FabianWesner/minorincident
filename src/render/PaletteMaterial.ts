@@ -124,7 +124,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       If(this.heroFigure.greaterThan(0), () => {
         const edge = lighting.heroRimEdge;
         const band = facing.smoothstep(edge.sub(.08), edge).oneMinus();
-        shaded.addAssign(lighting.rimColor.mul(band).mul(lighting.heroRim));
+        shaded.addAssign(surface.max(vec3(.06)).mul(lighting.rimColor).mul(band).mul(lighting.heroRim));
       });
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
@@ -170,8 +170,29 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const dark = mix(vec3(luminance(result)).mul(.38).add(.006), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       }
+      const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
+      if (!emissive && (mode & flags.hero)) {
+        // A soft contact shade separates the courier from the night road without
+        // raising her highlights. Moving figures (including the corgi) keep their lighting.
+        const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
+          .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
+          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+        result.mulAssign(contact.mul(-.6).add(1));
+        // Soft local fill preserves dark fabric detail; its bounded peak stays below bloom.
+        If(courierRead.greaterThan(0), () => {
+          const soft = result.max(vec3(0)).sqrt().mul(1.35);
+          const filled = mix(vec3(luminance(soft)), soft, 1.3).add(vec3(.25).mul(luminance(surface).smoothstep(.025, .1))).max(vec3(0));
+          result.assign(filled.mul(float(.9).div(max(max(filled.r, filled.g), filled.b).max(.9))));
+          // A mint edge carries the distant silhouette without whitening hair/skin.
+          const edge = lighting.heroRimEdge;
+          const band = facing.smoothstep(edge.sub(.08), edge).oneMinus();
+          result.assign(mix(result, vec3(.55, .92, .8), band.mul(lighting.heroRim).mul(3).clamp(0, .7)));
+        });
+      }
       result.addAssign(this.hitFlash);
-      return vec4(result, this.fade.mul(nodes?.opacity ?? 1));
+      // Opaque courier meshes use scene alpha as a grade-protection mask. The
+      // composite consumes it and writes opaque canvas alpha; no extra render pass.
+      return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()));
     })();
     lighting.paletteMaterials.add(this);
     this.addEventListener('dispose', () => lighting.paletteMaterials.delete(this));

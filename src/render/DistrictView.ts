@@ -16,7 +16,6 @@ import {
   Matrix4,
   Sphere,
   Raycaster,
-  type Intersection,
   type PerspectiveCamera,
   Vector2,
   Vector3,
@@ -680,10 +679,9 @@ export class DistrictView extends Group {
     }
     return blocked;
   }
-  private readonly barRay = new Raycaster();
+  private readonly barRay = Object.assign(new Raycaster(), { firstHitOnly: true });
   private readonly barBox = new Box3();
   private readonly barHit = new Vector3();
-  private readonly barHits: Intersection[] = [];
   private readonly barChecked = new Set<InstancedGroup>();
   /** Enemy bars test drawn solid geometry: navigation boxes intentionally omit roofs and upper walls. */
   occludesBar(camera: PerspectiveCamera, target: Vector3): boolean {
@@ -702,9 +700,8 @@ export class DistrictView extends Group {
         if (!this.barRay.ray.intersectBox(this.barBox, this.barHit) || this.barHit.distanceTo(camera.position) > this.barRay.far) continue;
         const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
         if (this.barChecked.has(batch)) continue;
-        this.barChecked.add(batch); this.barHits.length = 0;
-        this.barRay.intersectObject(batch, true, this.barHits);
-        if (this.barHits.length) return true;
+        this.barChecked.add(batch);
+        if (batch.intersectsRay(this.barRay)) return true;
       }
     }
     return false;

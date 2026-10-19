@@ -28,14 +28,15 @@ for (const quality of ['high', 'low'] as const) test(`T-E29-14 @E29-AC14 W6 rock
     await page.evaluate(async () => { const a = window.__SS__!; a.settings.set({ idPass: true }); await a.screenshotReady(); });
     const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/${name}-mask.png` }));
     await page.evaluate(() => window.__SS__!.settings.set({ idPass: false }));
-    let sum = 0, pixels = 0;
-    for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += luminance(image.data[i], image.data[i + 1], image.data[i + 2]); pixels++; }
+    let sum = 0, pixels = 0, clipped = 0;
+    for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += luminance(image.data[i], image.data[i + 1], image.data[i + 2]); pixels++; if (Math.max(image.data[i], image.data[i + 1], image.data[i + 2]) / 255 >= .97) clipped++; }
     const ring = setup.ring.map(p => {
       const x = Math.round((p[0] + 1) * image.width / 2), y = Math.round((1 - p[1]) * image.height / 2), i = (y * image.width + x) * 4;
       return luminance(image.data[i], image.data[i + 1], image.data[i + 2]);
     });
     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);
-    writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, setup }, null, 2));
+    writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, setup }, null, 2));
+    expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);
     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);
     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);
   }

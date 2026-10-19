@@ -17,12 +17,13 @@ export async function companionReadability(page: Page) {
   });
   const image = PNG.sync.read(await page.locator('canvas').first().screenshot());
   // Render a depth-tested mask with the existing ID materials, bypassing grade/bloom exactly as the courier mask does.
-  await page.evaluate(id => {
+  const maskData = await page.evaluate(id => {
     const view = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game.view;
     const v = view as unknown as { npcs: import('../../src/render/npc/NpcView').NpcView; idPlayer: import('three/webgpu').Material; idBackground: import('three/webgpu').Material };
     const root = v.npcs.heroRoot(id)!;
     const saved = new Map<import('three/webgpu').Mesh, import('three/webgpu').Material | import('three/webgpu').Material[]>();
-    const background = view.scene.background, backgroundNode = view.scene.backgroundNode, shadow = view.renderer.shadowMap.enabled;
+    const background = view.scene.background, backgroundNode = view.scene.backgroundNode, shadow = view.renderer.shadowMap.enabled, depthTest = v.idPlayer.depthTest;
+    v.idPlayer.depthTest = true;
     view.scene.background = null; view.scene.backgroundNode = null; view.renderer.shadowMap.enabled = false;
     view.scene.traverse(node => {
       const mesh = node as import('three/webgpu').Mesh;
@@ -33,10 +34,12 @@ export async function companionReadability(page: Page) {
       mesh.material = dog ? v.idPlayer : v.idBackground;
     });
     view.renderer.render(view.scene, view.camera);
+    const data = view.renderer.domElement.toDataURL('image/png').split(',')[1];
     for (const [mesh, material] of saved) mesh.material = material;
-    view.scene.background = background; view.scene.backgroundNode = backgroundNode; view.renderer.shadowMap.enabled = shadow;
+    view.scene.background = background; view.scene.backgroundNode = backgroundNode; view.renderer.shadowMap.enabled = shadow; v.idPlayer.depthTest = depthTest;
+    return data;
   }, setup.id);
-  const mask = PNG.sync.read(await page.locator('canvas').first().screenshot());
+  const mask = PNG.sync.read(Buffer.from(maskData, 'base64'));
   await page.evaluate(() => window.__SS__!.screenshotReady());
   let sum = 0, pixels = 0;
   for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += luminance(image.data[i], image.data[i + 1], image.data[i + 2]); pixels++; }
