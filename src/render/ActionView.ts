@@ -23,6 +23,7 @@ export class ActionView extends Group {
   private readonly placeholders: PlaceholderLog[] = [];
   private readonly prototypes = new Group();
   private readonly assets = new Map<string, LoadedActionAsset>();
+  private readonly heldMaterials = new Map<Material, Material>();
   private readonly bloodMaterials: PaletteMaterial[] = [];
   private readonly held: Partial<Record<Side, { id: string; model: Object3D; holder: Group; tilt: number }>> = {};
   private readonly pickups = new Map<number, Object3D>();
@@ -113,6 +114,11 @@ export class ActionView extends Group {
         if (!(node instanceof Mesh)) return;
         const remap = (source: Material): Material => {
           const material = this.materials.fromColor(`action:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
+          const heldMaterial = this.materials.fromColor(`action-held:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
+          heldMaterial.movingFigure.value = 1; heldMaterial.heroFigure.value = 1;
+          heldMaterial.userData.sharedPalette = true;
+          this.heldMaterials.set(material, heldMaterial);
+          if (!this.bloodMaterials.includes(heldMaterial)) this.bloodMaterials.push(heldMaterial);
           material.userData.sharedPalette = true;
           if (!this.bloodMaterials.includes(material)) this.bloodMaterials.push(material);
           return material;
@@ -204,7 +210,10 @@ export class ActionView extends Group {
     const striking = Object.keys(combat.runner.running).length > 0;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
-      if (held?.id !== def.id) { const model = this.model(def); if (!model) { if (held) held.holder.visible = false; continue; } held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
+      if (held?.id !== def.id) { const model = this.model(def); if (!model) { if (held) held.holder.visible = false; continue; } held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group();
+        // Pickups keep the ordinary world materials; only carried instances receive the courier fill.
+        clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
+        holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
       const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);

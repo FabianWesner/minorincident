@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5 (5.0s)
+
+
+  1) [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5 
+
+    Error: Courier clipped pixel share
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.03
+    Received:    0.6605120276149725
+
+      37 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);
+      38 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, setup }, null, 2));
+    > 39 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);
+         |                                                             ^
+      40 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);
+      41 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);
+      42 |   }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/readability-w6b/tests/visual/l7-night.spec.ts:39:61
+
+    Error Context: test-results/playwright/run-3862/visual-l7-night-T-E29-14-E-86c53-r-contrast-high-webgl2-z0-5-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3862/visual-l7-night-T-E29-14-E-86c53-r-contrast-high-webgl2-z0-5-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3862/visual-l7-night-T-E29-14-E-86c53-r-contrast-high-webgl2-z0-5-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5 

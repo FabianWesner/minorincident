@@ -25,6 +25,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureRim = uniform(0).setGroup(this._uniformGroup);
   /** Moon bounce on crowd clothing, independent of the driven vehicle's hero rim. */
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
+  /** Only courier meshes receive the continuous survivor surface fill. */
+  readonly heroFigure = uniform(0).setGroup(this._uniformGroup);
+  /** Companion coat retains its identity outside the subway headlamp cone. */
+  readonly companion = uniform(0).setGroup(this._uniformGroup);
   /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
   readonly movingFigure = uniform(0).setGroup(this._uniformGroup);
   // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
@@ -97,21 +101,31 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         field.assign(mix(pool, shadowedPool, lighting.fieldShadow));
       }
       // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
-      const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().smoothstep(.62, .95);
+      const facing = normalView.dot(positionViewDirection).clamp(0, 1);
+      const fresnel = facing.oneMinus().smoothstep(.62, .95);
       const heroMask = float(0).toVar();
       if (mode & (flags.hero | flags.fog)) {
         heroMask.assign(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3)));
       }
-      const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
+      const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim.add(lighting.heroSmokeRim.mul(this.heroFigure))));
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
-      const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
+      // Preserve the established aura on other presets (including driven vehicles).
+      const fillFigure = lighting.heroSurfaceFill.greaterThan(0).select(this.heroFigure, 1);
+      const fill = lighting.heroFillColor.mul(heroMask.mul(fillFigure).mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
       // A narrow Fresnel alone turns dark clothing into disconnected pale seams.
       // Moon bounce carries the whole crowd surface; a restrained rim keeps its outline.
       // Near-black jackets otherwise disappear into the night road between
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
       const figureFill = surface.max(vec3(.12)).mul(lighting.rimColor).mul(this.figureFill).mul(lighting.rim).mul(.9);
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(figureFill).add(rim).toVar();
+      const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
+      // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.
+      If(this.heroFigure.greaterThan(0), () => {
+        const edge = lighting.heroRimEdge;
+        const band = facing.smoothstep(edge.sub(.08), edge).oneMinus();
+        shaded.addAssign(surface.max(vec3(.06)).mul(lighting.rimColor).mul(band).mul(lighting.heroRim));
+      });
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.
@@ -152,12 +166,58 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const courierGlow = reach.smoothstep(2.4, .8);
         // Preserve small coloured practical pools and emissive infected eyes.
         const accent = max(luminance(field).smoothstep(.15, .8), nodes?.glow ? luminance(nodes.glow).mul(this.emissivePower).smoothstep(.05, .15) : float(0));
-        const colour = max(max(cone, courierGlow), accent);
+        const colour = max(max(max(cone, courierGlow), accent), this.companion);
         const dark = mix(vec3(luminance(result)).mul(.38).add(.006), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       }
+      const graded = float(1).toVar();
+      const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
+      if (!emissive && (mode & flags.hero)) {
+        // A soft contact shade separates the courier from the night road without
+        // raising her highlights. Moving figures (including the corgi) keep their lighting.
+        const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
+          .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
+          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+        result.mulAssign(contact.mul(-.6).add(1));
+        // The same local shade reaches the figures pressed around her (followers, corgi), so the
+        // courier's own key light separates her from the crowd instead of a whitening lift.
+        const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
+          .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
+          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+        result.mulAssign(crowded.mul(-.55).add(1));
+        If(courierRead.greaterThan(0), () => {
+          // Hue-preserving albedo lift: scale RGB together so HSV hue/saturation stay authored
+          // (auburn hair, teal/yellow outfit, peach skin) while dark swatches climb out of the night.
+          const top = max(max(surface.r, surface.g), surface.b).max(1e-4);
+          // Exponential shoulder: x2.7 on dark swatches, x1 at the peak, so hair stays darker than skin.
+          const lifted = surface.mul(top.min(.9).mul(-3).exp().oneMinus().mul(.92 / (1 - Math.exp(-2.7))).div(top));
+          // Daylight-like key after the lift, so the form keeps its light and shade: a camera-relative
+          // warm key and neutral fill, plus a little of the night light (pools, moon) so she belongs there.
+          const key = normalView.dot(vec3(-.42, .62, .66)).mul(.5).add(.5);
+          const keyed = lifted.mul(mix(vec3(.66, .66, .72), vec3(1, .97, .9), key.mul(key))).add(result.max(vec3(0)).mul(.2)).toVar();
+          const peak = max(max(keyed.r, keyed.g), keyed.b);
+          keyed.mulAssign(float(.9).div(peak.max(.9)));
+          // Narrow back rim in her own (brightened) colours, warm-white biased: the outline reads at
+          // every zoom without a mint/grey veil over the face and clothes.
+          const band = facing.smoothstep(0, lighting.heroRimEdge.mul(.45)).oneMinus();
+          const tint = mix(surface.div(max(max(surface.r, surface.g), surface.b).max(.02)), vec3(1, .9, .75), .45).mul(.9);
+          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(3.6)).clamp(0, .8)));
+        }).Else(() => {
+          // Other night presets (L5 dusk aura, practical pools): the aura and pools stack on her and the
+          // survivors beside her. Scale RGB together so the brightest channel stays below clipping: the
+          // hue and saturation survive instead of bleaching to white (QA #28).
+          If(max(this.heroFigure, this.figureFill.greaterThan(0).select(1, 0)).greaterThan(0), () => {
+            const top = max(max(result.r, result.g), result.b);
+            result.mulAssign(float(.86).div(top.max(.86)));
+          });
+          // The warm dusk grade would lift her skin/clothes past white again; she keeps the protection mask.
+          graded.assign(this.heroFigure.oneMinus());
+        });
+      }
       result.addAssign(this.hitFlash);
-      return vec4(result, this.fade.mul(nodes?.opacity ?? 1));
+      // Opaque courier meshes use scene alpha as a grade-protection mask. The
+      // composite consumes it and writes opaque canvas alpha; no extra render pass.
+      return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()).mul(graded));
     })();
     lighting.paletteMaterials.add(this);
     this.addEventListener('dispose', () => lighting.paletteMaterials.delete(this));

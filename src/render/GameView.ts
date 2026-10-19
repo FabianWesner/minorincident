@@ -258,7 +258,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -695,7 +695,17 @@ export class GameView implements Lifecycle {
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
   }
-  /** Distance (m) from a point to the nearest living Mega Alpha (pursuit infected), Infinity when none. */
+  /** Keep the courier's full silhouette visible in L7's tightly packed following group/horde. */
+  private nearL7Crowd(at: { x: number; z: number }): boolean {
+    if (this.world.scenario !== 'L7') return false;
+    for (const e of this.world.entities.iterate()) {
+      if (e.id === 1 || e.hidden || e.health.current <= 0 || e.infected?.hidden || !(e.civilian || e.infected || e.escort)) continue;
+      const dx = e.transform.x - at.x, dz = e.transform.z - at.z;
+      if (dx * dx + dz * dz < 9) return true;
+    }
+    return false;
+  }
+  /** Distance (m) to the nearest living Mega Alpha, Infinity when none. */
   private megaDistance(at: { x: number; z: number }): number {
     let best = Infinity;
     for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && !e.infected.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
@@ -900,11 +910,10 @@ export class GameView implements Lifecycle {
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
     if (this.solidCutProbeOff) seeThrough.strength.value = 0;
-    // Retained roof/wall pixels must not hide the courier through several overlapping surfaces.
-    // Reuse the existing foreground silhouette only when the camera segments found an actual blocker.
-    this.courierForeground = !!current && (this.megaDistance(current) < 14 || !!this.districts?.occluderId);
+    // Reuse the foreground silhouette at boss/roof blockers and in L7's close crowd.
+    this.courierForeground = !!current && (this.nearL7Crowd(current) || this.megaDistance(current) < 14 || !!this.districts?.occluderId);
     this.character?.setForeground(this.courierForeground);
-    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
+    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
@@ -986,6 +995,7 @@ export class GameView implements Lifecycle {
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
   private renderBars(): void {
+    this.healthBars?.setCourierMask(this.postFx?.sceneColor);
     const renderer = this.renderer, autoClear = renderer.autoClear, tone = renderer.toneMapping, color = renderer.outputColorSpace;
     try {
       // The material performs its own color conversion, like RenderPipeline's output quad.
