@@ -1,0 +1,71 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgl2 --jobs 1 --filter seethrough-scripted-convoy --out /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-convoy-webgl2
+
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.5% / 10 s; 2 headless browsers + 1 requested; waiting
+[catalog] 3 scenes, 1 browser(s), 960x540, webgl2, high
+[catalog] 1/6 FAIL seethrough-scripted-convoy@high-z1.5 (26.8 s) seeThroughCutPixelsOutside 7800 > 0
+[catalog] 2/6 FAIL seethrough-scripted-convoy@high-z1 (24.0 s) seeThroughCutPixelsOutside 995 > 0
+[catalog] 3/6 pass seethrough-scripted-convoy@high-z0.5 (22.9 s)
+[catalog] 3 scenes, 1 browser(s), 960x540, webgl2, low
+[catalog] 4/6 FAIL seethrough-scripted-convoy@low-z1.5 (23.0 s) seeThroughCutPixelsOutside 14 > 0
+[catalog] 5/6 pass seethrough-scripted-convoy@low-z1 (20.6 s)
+[catalog] 6/6 pass seethrough-scripted-convoy@low-z0.5 (20.0 s)
+3/6 pass in 139 s -> ../../../Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-convoy-webgl2/index.md
+FAIL seethrough-scripted-convoy@high-z1: seeThroughCutPixelsOutside 995 > 0
+FAIL seethrough-scripted-convoy@high-z1.5: seeThroughCutPixelsOutside 7800 > 0
+FAIL seethrough-scripted-convoy@low-z1.5: seeThroughCutPixelsOutside 14 > 0

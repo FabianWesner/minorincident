@@ -1,0 +1,10 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --tier high --jobs 1 --backend webgpu --filter wave3-zoo-routines --out /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-zoo-webgpu
+
+[catalog] 3 scenes, 1 browser(s), 960x540, webgpu, high
+[catalog] 1/3 FAIL wave3-zoo-routines@high-z1.5 (6.3 s) clipping 2 > 0
+[catalog] 2/3 pass wave3-zoo-routines@high-z1 (6.0 s)
+[catalog] 3/3 pass wave3-zoo-routines@high-z0.5 (6.1 s)
+2/3 pass in 19 s -> ../../../Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-zoo-webgpu/index.md
+FAIL wave3-zoo-routines@high-z1.5: clipping 2 > 0

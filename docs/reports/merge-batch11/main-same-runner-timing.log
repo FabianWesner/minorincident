@@ -1,0 +1,52 @@
+[remote] sync /private/tmp/minorincident-merge-batch11-main -> 2.28.24.66:/srv/mi/ws/minorincident-merge-batch11-main-bf55e1
+[remote] cache-gc deleted: credits-complete-4a50df
+[remote] sync 45s, 19243 files; job /srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-97396-1792361352; queueing for a slot
+[runner] slot 0 acquired; load 0.89 1.57 3.05
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-97396-1792361352[39m
+
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3911[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms[39m[33m 2859[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms[33m 1050[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2865[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms[33m 1998[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms[33m 865[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 5168[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[39m[33m 3851[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms[33m 1315[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts[2m > [22mT-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+[31m[1mAssertionError[22m: expected 5.619673000000148 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s1.test.ts:[2m30:101[22m[39m
+    [90m 28|[39m     const proof = { count, animals: ids.length, minInfected, activatio…
+    [90m 29|[39m     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+    [90m 30|[39m     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+    [90m   |[39m                                                                                                     [31m^[39m
+    [90m 31|[39m   } finally { w.dispose(); }
+    [90m 32|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts[2m > [22mT-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+[31m[1mAssertionError[22m: expected 6.819101999999475 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s2.test.ts:[2m26:68[22m[39m
+    [90m 24|[39m     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+    [90m 25|[39m     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+    [90m 26|[39m     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+    [90m   |[39m                                                                    [31m^[39m
+    [90m 27|[39m   } finally { w.dispose(); }
+    [90m 28|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 22:10:00
+[2m   Duration [22m 16.70s[2m (tests 73%, transform 19%, import 8%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 45s, remote total 22s)

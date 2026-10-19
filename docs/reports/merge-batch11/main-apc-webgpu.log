@@ -1,0 +1,19 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --jobs 1 --backend webgpu --filter apc-sedan-contact --out /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-apc-webgpu
+
+[catalog] 3 scenes, 1 browser(s), 960x540, webgpu, high
+[catalog] 1/6 FAIL apc-sedan-contact@high-z1.5 (59.5 s) vehicleSilhouette:parked:blocking 0.1 > 0.3
+[catalog] 2/6 FAIL apc-sedan-contact@high-z1 (57.9 s) vehicleSilhouette:parked:blocking 0 > 0.3
+[catalog] 3/6 FAIL apc-sedan-contact@high-z0.5 (53.5 s) vehicleSilhouette:parked:blocking 0 > 0.3
+[catalog] 3 scenes, 1 browser(s), 960x540, webgpu, low
+[catalog] 4/6 FAIL apc-sedan-contact@low-z1.5 (55.0 s) vehicleSilhouette:parked:blocking 0.1 > 0.3
+[catalog] 5/6 FAIL apc-sedan-contact@low-z1 (53.1 s) vehicleSilhouette:parked:blocking 0 > 0.3
+[catalog] 6/6 FAIL apc-sedan-contact@low-z0.5 (48.7 s) vehicleSilhouette:parked:blocking 0 > 0.3
+0/6 pass in 329 s -> ../../../Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/docs/reports/merge-batch11/main-apc-webgpu/index.md
+FAIL apc-sedan-contact@high-z0.5: vehicleSilhouette:parked:blocking 0 > 0.3
+FAIL apc-sedan-contact@high-z1: vehicleSilhouette:parked:blocking 0 > 0.3
+FAIL apc-sedan-contact@high-z1.5: vehicleSilhouette:parked:blocking 0.1 > 0.3
+FAIL apc-sedan-contact@low-z0.5: vehicleSilhouette:parked:blocking 0 > 0.3
+FAIL apc-sedan-contact@low-z1: vehicleSilhouette:parked:blocking 0 > 0.3
+FAIL apc-sedan-contact@low-z1.5: vehicleSilhouette:parked:blocking 0.1 > 0.3
