@@ -1,0 +1,26 @@
+{
+  "name": "perf-w5d-blast-cover",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": { "mode": "game", "target": [0, 0], "zoom": 1 },
+  "frames": 120,
+  "sheet": 6,
+  "note": "T-E29-19-rocket-cover (perf-w5d): a rocket blast tests cover only against the static walls near its radius (static-wall equality is the oracle tests/sim/explosion-cover-oracle.test.ts). A loose dumpster never shields (spec 07: loose props do not), so the runner behind it dies like the one in the open. Review the blast flash, smoke, both bodies and the dumpster at the game camera.",
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": { "behind-dumpster": [0, 0], "exposed": [0, 0] }
+  },
+  "props": [{ "id": "cover", "asset": "prop.dumpster", "at": [0, 0], "yaw": 0 }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-7, 5], "god": true },
+    { "id": "behind-dumpster", "kind": "infected", "at": [1.6, 0], "archetype": "infected.runner", "state": "idle" },
+    { "id": "exposed", "kind": "infected", "at": [-1.6, 2.6], "archetype": "infected.runner", "state": "idle" }
+  ],
+  "script": [{ "frame": 10, "effect": { "blast": "explosion.rocket", "at": [-1.6, 0] } }]
+}

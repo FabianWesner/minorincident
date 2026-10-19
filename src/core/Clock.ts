@@ -3,7 +3,7 @@ import type { Lifecycle } from './Lifecycle';
 export const FIXED_DT = 1 / 60;
 /** perf-w5d: simulation CPU one rendered frame may spend on catch-up ticks before the rest waits for the next frame. */
 export const SIM_FRAME_BUDGET_MS = 25;
-const wallMs = (): number => (globalThis as { performance?: { now(): number } }).performance?.now() ?? Date.now();
+const wallMs = (): number => (globalThis as { performance?: { now(): number } }).performance?.now() ?? 0;
 
 /**
  * Fixed-step accumulator; render rate never changes the simulation delta.
