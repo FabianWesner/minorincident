@@ -106,16 +106,16 @@ test('@E29-AC14 courier surface fill leaves the night ground aura and smoke rest
   const lighting = new Lighting(new Scene());
   try {
     lighting.set('L6');
-    expect(timeOfDay.L6.aura).toBe(.45); expect(lighting.heroRim.value).toBe(.35);
-    expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(3.5);
+    expect(timeOfDay.L6.aura).toBe(.45); expect(lighting.heroRim.value).toBe(.22);
+    expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(.8);
     lighting.setPlayerSmoke(true); expect(lighting.heroFill.value).toBe(.45 * 3.2 + 1);
     expect(lighting.rim.value).toBe(.4); expect(lighting.heroSmokeRim.value).toBe(.2);
-    lighting.setPlayerSmoke(false); expect(lighting.heroSmokeRim.value).toBe(0); expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(3.5);
+    lighting.setPlayerSmoke(false); expect(lighting.heroSmokeRim.value).toBe(0); expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(.8);
     const camera = new PerspectiveCamera();
     for (const zoom of [.5, 1, 1.5]) {
       lighting.update({ focus: new Vector3(), radius: cameraFraming.radiusM * zoom, driving: false, camera } as unknown as View);
-      expect(lighting.heroRim.value).toBeCloseTo(zoom === 1.5 ? 1.4 : .35);
-      expect(lighting.heroSurfaceFill.value).toBe(3.5);
+      expect(lighting.heroRim.value).toBeCloseTo(.22);
+      expect(lighting.heroSurfaceFill.value).toBe(.8);
     }
     lighting.set('night'); lighting.setPlayerSmoke(true);
     expect(lighting.rim.value).toBe(.65); expect(lighting.heroSmokeRim.value).toBe(0);

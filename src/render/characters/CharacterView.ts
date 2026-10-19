@@ -1,4 +1,5 @@
 import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { positionView } from 'three/tsl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -29,6 +30,10 @@ function loadGear(loader: GLTFLoader, low: boolean): Promise<Group | undefined> 
   return pending;
 }
 
+// Compress depth into a near-camera slice: the courier clears world blockers,
+// while her own face, cap, hair and limbs still occlude one another correctly.
+const foregroundDepth = positionView.z.negate().mul(.001).clamp(.001, .1);
+
 export class CharacterView extends Group {
   private foregroundActive: boolean | undefined;
   /** The same presentation silhouette used through faded buildings: keep the
@@ -38,7 +43,11 @@ export class CharacterView extends Group {
     this.foregroundActive = active;
     this.traverse(node => {
       if (!(node instanceof Mesh)) return;
-      for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.depthTest = !active;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+        material.depthTest = true;
+        const nodeMaterial = material as import('three/webgpu').NodeMaterial, depth = active ? foregroundDepth : null;
+        if (nodeMaterial.depthNode !== depth) { nodeMaterial.depthNode = depth; nodeMaterial.needsUpdate = true; }
+      }
       node.renderOrder = active ? 20 : 0;
     });
   }
@@ -199,6 +208,7 @@ export class CharacterView extends Group {
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
+          node.material.movingFigure.value = 1; node.material.heroFigure.value = 1;
           node.material.userData.sharedPalette = true; source.dispose(); node.castShadow = true;
         } });
         character.rig.head.add(headlamp);

@@ -8,6 +8,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-encounters @E29-AC19
     const session = await context.newCDPSession(page); await session.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   }
   await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=1`);
+  const profiler = process.env.L7_CPU_PROFILE === '1' ? await context.newCDPSession(page) : undefined;
+  if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.start'); }
   const result = await page.evaluate(async tier => {
     const a = window.__SS__!;
     await a.loadLevel('L7', { seed: 29 }); a.cheats.god(true); a.settings.set({ slowMotion: false });
@@ -33,6 +35,10 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-encounters @E29-AC19
     const p95 = (v: number[]) => v.sort((a, b) => a - b)[Math.ceil(v.length * .95) - 1];
     return { tier, frameP95: p95(frames), simP95: p95(sims), draws, triangles, peakInfected, puffs, debris, particles, lights, props, blasts, initialRegulars: initial.arrivals.filter(a => a.group === 700 && !a.alpha).length, initialAlphas: initial.arrivals.filter(a => a.group === 700 && a.alpha).length, followers: initial.roster.length, heapMB: 0 };
   }, tier);
+  if (profiler) {
+    mkdirSync('test-results/epics/E29', { recursive: true });
+    writeFileSync(`test-results/epics/E29/encounters-${tier}.cpuprofile`, JSON.stringify((await profiler.send('Profiler.stop')).profile));
+  }
   const heap = await context.newCDPSession(page);
   for (let i = 0; i < 3; i++) {
     await heap.send('HeapProfiler.collectGarbage');

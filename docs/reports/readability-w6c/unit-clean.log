@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/readability-w6b -> 94.130.181.173:/srv/mi/ws/readability-w6b-5b864d
+[remote] cache-gc deleted:none
+[remote] sync 42s, 25553 files; job /srv/mi/jobs/readability-w6b-5b864d-95102-1792407417; queueing for a slot
+[runner] slot 0 acquired; load 0.89 0.72 1.66
+
+> test:unit
+> vitest run tests/unit --maxWorkers=4 --reporter=json --outputFile=docs/reports/readability-w6c/final-unit-clean/vitest.json
+
+GPU guard: WindowServer 60.1% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer -10.0% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer 0.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.0% / 10 s; 1 headless browsers + 2 requested; waiting
+Scene output must be a worktree-relative path without ..
+fatal: Needed a single revision
+JSON report written to /srv/mi/jobs/readability-w6b-5b864d-95102-1792407417/docs/reports/readability-w6c/final-unit-clean/vitest.json
+[remote] pulled docs/reports/readability-w6c/final-unit-clean
+[remote] done exit=1 (runner 94.130.181.173, sync 42s, remote total 406s)
