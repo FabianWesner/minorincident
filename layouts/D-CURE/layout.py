@@ -267,7 +267,7 @@ def ccw(poly):
     # emit_surfaces' convex clipping expects the road polygons' winding (positive shoelace area in x/z).
     return poly if sum(p[0]*q[1]-q[0]*p[1] for p, q in zip(poly, poly[1:]+poly[:1])) > 0 else poly[::-1]
 THIN = ('prop.street-lamp', 'prop.utility-pole', 'prop.emergency-light', 'prop.fire-hydrant', 'prop.mailbox-blue', 'prop.street-sign')
-def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None):
+def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=False):
     """Place one dressing piece if it keeps every gameplay clearance; returns the placement id or None."""
     mn, mx = footprint(asset, x, z, yaw, scale)
     if route_clear is not None: clear = route_clear
@@ -287,10 +287,18 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None):
     if any(seg_rect(a, c, mn, mx) < 6 for a, c in shortcut_segments): return None
     if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
     if rect_point(mn, mx, console) < 60: return None
-    gap = .6
+    gap = -.1 if run else .6   # run pieces butt against each other
     if any(mn[0] < t[1][0]+gap and mx[0] > t[0][0]-gap and mn[1] < t[1][1]+gap and mx[1] > t[0][1]-gap for t in taken): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
     if decay: l.data['placements'][-1]['decay'] = decay
+    # Dressing collides as one box (trees: trunk only, fence runs: one box per run) instead of the asset's detailed
+    # compound boxes: a garage alone bakes ~100 boxes, and every resident box is a nav wall and a cover wall in the sim.
+    placement = l.data['placements'][-1]; placement['collisionId'] = 'look-l10-box'
+    l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
+    v = placement['visualAabb']
+    if asset in ('prop.tree', 'prop.street-tree'): box = dict(min=[x-.3, 0, z-.3], max=[x+.3, 2.2, z+.3])
+    else: box = dict(min=list(v['min']), max=list(v['max']))
+    if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
     taken.append((mn, mx)); return pid
 def face(side_normal):
     # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
@@ -321,9 +329,19 @@ def region_segments(i):
     r = source['regions'][i]['route']; return list(zip(r, r[1:]))
 def fence_run(asset, a, b, step=2.6):
     d = math.dist(a, b); ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
-    yaw = math.atan2(-uz, ux) + math.pi/2   # run length is the asset's z extent
+    m = l.manifest[asset]['dimensions']
+    yaw = math.atan2(-uz, ux) + (math.pi/2 if m['z'] > m['x'] else 0)   # align the asset's long side with the run
+    boxes = []
     for k in range(int(d // step)):
-        dress(asset, a[0]+ux*(k+.5)*step, a[1]+uz*(k+.5)*step, yaw)
+        if dress(asset, a[0]+ux*(k+.5)*step, a[1]+uz*(k+.5)*step, yaw, run=True):
+            v = l.data['placements'][-1]['visualAabb']; boxes.append(v)
+    # Consecutive pieces merge into one collider per unbroken stretch (gaps from skipped pieces stay open).
+    group = []
+    for v in boxes + [None]:
+        if group and (v is None or v['min'][0] > group[-1]['max'][0] + .3 or v['min'][2] > group[-1]['max'][2] + .3):
+            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)]), minTier=0, maxTier=6))
+            group = []
+        if v is not None: group.append(v)
 
 # Roads do not end in the void: the L9 road continues west past the crash, a service road meets the console apron.
 surface('road-west', [[500, -4], [547, -4], [547, 4], [500, 4]], 'asphalt', .002)
