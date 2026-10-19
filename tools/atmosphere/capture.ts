@@ -45,8 +45,8 @@ try {
           for (const zoom of zooms) {
             const state = await session.page.evaluate(async zoom => {
               const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
-              const rig = game.view.view, target = { x: rig.focus.x, y: rig.focus.y + .72, z: rig.focus.z }, driving = rig.driving, convoy = rig.convoy;
-              rig.reset(target); rig.driving = driving; rig.convoy = convoy;
+              const rig = game.view.view, target = { x: rig.focus.x, y: rig.focus.y + .72, z: rig.focus.z }, driving = rig.driving;
+              rig.reset(target); rig.driving = driving;
               rig.zoom(Math.log(zoom), true); rig.update(target, 0);
               for (let i = 0; i < 4; i++) game.view.update(1);
               await window.__SS__!.screenshotReady();

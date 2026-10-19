@@ -92,7 +92,8 @@ export class InputSystem implements Lifecycle {
     this.keyboard.init(); this.pointer.init(); this.wheel.init(); this.touch.init();
     window.addEventListener('blur', this.release); window.addEventListener('pagehide', this.release);
     document.addEventListener('visibilitychange', this.visibility);
-    this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;top:12px;left:12px;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none';
+    this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none;z-index:21';
+    this.controls.dataset.inputControls = '';
     this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
     this.controls.hidden = !new URLSearchParams(location.search).has('debug');
     this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';

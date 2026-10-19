@@ -874,8 +874,8 @@ export class SceneLab {
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
       return;
     }
-    // Courier follow scenes use the production rig, including narrow-street lens
-    // clearance. A fixed preset can put the catalog camera inside a building.
+    // Courier follow scenes use the production rig and player zoom; the shared
+    // see-through pass handles facades without changing the camera framing.
     if (c.mode === 'follow' && this.actors.get(c.actor)?.entity === 1) {
       const rig = this.game.view.view;
       rig.follow();
