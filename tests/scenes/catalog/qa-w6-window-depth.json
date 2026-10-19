@@ -1,0 +1,14 @@
+{
+  "name": "qa-w6-window-depth",
+  "note": "E25-AC12 powered interior panes at the game lens. The small-fixes-w6 runner additionally compares registered window scanlines at azimuths 45 and 60 degrees, zoom 1, and checks unpowered darkness.",
+  "ground": "asphalt",
+  "size": 30,
+  "time": "night",
+  "dof": false,
+  "props": [{ "asset": "bld.house-a", "at": [0, 0], "powerGroup": "residential" }],
+  "camera": { "mode": "game", "target": [0, 1.3, 0], "zoom": 1 },
+  "frames": 12,
+  "sheet": 2,
+  "shots": [1, 12],
+  "expect": { "consoleErrors": 0 }
+}

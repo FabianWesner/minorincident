@@ -207,7 +207,10 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     const window = new Float32Array(count).fill(anchorList[anchorIndex]?.type === 'window' ? 1 : 0), windowUv = new Float32Array(count * 2);
     if (window[0] > 0) {
       const positions = node.geometry.getAttribute('position'), box = new Box3(), point = new Vector3();
-      for (let i = 0; i < count; i++) { box.expandByPoint(point.set(positions.getX(i), positions.getY(i), positions.getZ(i))); if (i % slice === slice - 1) yield; }
+      // GLTF material primitives may share the whole building's vertex buffer.
+      // Normalize the room against this window's referenced vertices only.
+      const index = node.geometry.index;
+      for (let k = 0; k < (index?.count ?? count); k++) { const i = index ? index.getX(k) : k; box.expandByPoint(point.set(positions.getX(i), positions.getY(i), positions.getZ(i))); if (k % slice === slice - 1) yield; }
       const horizontal = box.max.x - box.min.x > box.max.z - box.min.z ? 0 : 2;
       for (let i = 0; i < count; i++) { windowUv[i * 2] = (positions.getComponent(i, horizontal) - box.min.getComponent(horizontal)) / Math.max(.01, box.max.getComponent(horizontal) - box.min.getComponent(horizontal)); windowUv[i * 2 + 1] = (positions.getY(i) - box.min.y) / Math.max(.01, box.max.y - box.min.y); if (i % slice === slice - 1) yield; }
     }

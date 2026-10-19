@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { boot, test, expect } from '../e2e/fixtures';
+import { windowLine } from '../helpers/window-parallax';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
@@ -133,27 +134,6 @@ test('T-E25-10 @E25 @E25-AC10 wet reflection splats exceed the dry surface on bo
   writeFileSync(`${out}/reflections.json`, JSON.stringify(result, null, 2));
 });
 
-/** Project a scanline on the actual bundled front-window primitive, so camera
- * rotation is removed before measuring the pattern's movement within its frame. */
-async function windowLine(page: import('@playwright/test').Page): Promise<number[][]> {
-  return page.evaluate(() => {
-    const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
-    let line: number[][] = [];
-    game.view.labProbes().districts?.traverse(object => {
-      const mesh = object as import('three').InstancedMesh;
-      if (!mesh.isInstancedMesh || !mesh.count || !mesh.geometry.hasAttribute('_window')) return;
-      const g = mesh.geometry, mask = g.getAttribute('_window'), light = g.getAttribute('_light'), normal = g.getAttribute('normal'), positions = g.getAttribute('position');
-      const vertices: number[][] = [];
-      const instance = mesh.matrixWorld.clone(); mesh.getMatrixAt(0, instance);
-      for (let i = 0; i < mask.count; i++) if (mask.getX(i) === 1 && light.getX(i) === 2 && normal.getX(i) > .8) vertices.push(mesh.position.clone().set(positions.getX(i), positions.getY(i), positions.getZ(i)).applyMatrix4(instance).applyMatrix4(mesh.matrixWorld).toArray());
-      if (!vertices.length) return;
-      const min = [0, 1, 2].map(axis => Math.min(...vertices.map(p => p[axis]))), max = [0, 1, 2].map(axis => Math.max(...vertices.map(p => p[axis])));
-      line = Array.from({ length: 200 }, (_, i) => window.__SS__!.camera.project(max[0] + .002, min[1] + (max[1] - min[1]) * .7, min[2] + (max[2] - min[2]) * i / 199));
-    });
-    return line;
-  });
-}
-
 test('T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth', async ({ page }) => {
   test.setTimeout(180_000);
   const house: SceneSpec = { name: 'interior-window', ground: 'asphalt', size: 30, time: 'night', dof: false, props: [{ asset: 'bld.house-a', at: [0, 0], powerGroup: 'residential' }] };
@@ -161,22 +141,26 @@ test('T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car enviro
   const evidence = [], windows: { angle: number; line: number[][]; luminance: number[]; edge: number; width: number }[] = [];
   for (const subject of scenes) for (const angle of [45, 60]) {
     const radians = angle * Math.PI / 180;
-    await scene(page, { ...subject, camera: { mode: 'pose', position: [Math.cos(radians) * 12, 7, Math.sin(radians) * 12], target: [0, 1.3, 0] } });
+    const radius = subject === house ? 19 : 12;
+    const horizontal = subject === house ? radius * Math.sin(Math.PI * .3) : radius;
+    const height = subject === house ? 1.3 + radius * Math.cos(Math.PI * .3) : 7;
+    await scene(page, { ...subject, camera: { mode: 'pose', position: [Math.cos(radians) * horizontal, height, Math.sin(radians) * horizontal], target: [0, 1.3, 0] } });
     const image = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/${subject.name}-${angle}.png` }));
     evidence.push({ subject: subject.name, angle, lighting: await page.evaluate(() => window.__SS__!.getState().render.lighting) });
     if (subject === house) {
       const line = await windowLine(page); expect(line).toHaveLength(200);
       const luminance = line.map(point => patch(image, point, 1));
-      // Exclude the physical perimeter/middle mullion. The room's far wall
-      // ends at a bright-to-dark boundary inside the central panes.
+      // Search the pane interior: with UVs normalized to the actual window,
+      // the moving depth seam can enter its outer thirds. Exclude the fixed
+      // physical perimeter and middle mullion from the edge measurement.
       let edge = 0, gradient = -Infinity;
-      for (let i = 65; i < 138; i++) if (i < 88 || i > 112) { const delta = luminance[i - 2] - luminance[i + 2]; if (delta > gradient) { gradient = delta; edge = i; } }
+      for (let i = 20; i < 180; i++) if (i < 88 || i > 112) { const delta = luminance[i - 2] - luminance[i + 2]; if (delta > gradient) { gradient = delta; edge = i; } }
       const width = Math.hypot((line.at(-1)![0] - line[0][0]) * image.width / 2, (line.at(-1)![1] - line[0][1]) * image.height / 2);
       windows.push({ angle, line, luminance, edge, width });
     }
   }
   const shiftPx = Math.abs(windows[0].edge - windows[1].edge) / 199 * Math.min(windows[0].width, windows[1].width);
-  await scene(page, { ...house, props: house.props!.map(prop => ({ ...prop, powered: false })), camera: { mode: 'pose', position: [Math.SQRT1_2 * 12, 7, Math.SQRT1_2 * 12], target: [0, 1.3, 0] } });
+  await scene(page, { ...house, props: house.props!.map(prop => ({ ...prop, powered: false })), camera: { mode: 'pose', position: [Math.SQRT1_2 * 19 * Math.sin(Math.PI * .3), 1.3 + 19 * Math.cos(Math.PI * .3), Math.SQRT1_2 * 19 * Math.sin(Math.PI * .3)], target: [0, 1.3, 0] } });
   const off = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/interior-window-off.png` }));
   const dark = windows[0].line.map(point => patch(off, point, 1)), glowRatio = Math.max(...windows[0].luminance) / Math.max(...dark);
   writeFileSync(`${out}/surfaces.json`, JSON.stringify({ evidence, windows, shiftPx, dark, glowRatio }, null, 2));

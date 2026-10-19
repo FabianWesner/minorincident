@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-fixes-w6 -> 2.28.24.66:/srv/mi/ws/small-fixes-w6-968450
+[remote] cache-gc deleted:none
+[remote] sync 22s, 19391 files; job /srv/mi/jobs/small-fixes-w6-968450-69747-1792366437; queueing for a slot
+[runner] slot 1 acquired; load 5.81 5.24 4.09
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-fixes-w6-968450-69747-1792366437[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-windows.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1153[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD[33m 701[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-11p T-E25-12p @E25 shared district materials preserve window and polished-floor shader graphs[33m 328[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 23:34:22
+[2m   Duration [22m 2.71s[2m (tests 49%, transform 35%, import 16%)[22m
+
+[remote] done exit=0 (runner 2.28.24.66, sync 22s, remote total 7s)

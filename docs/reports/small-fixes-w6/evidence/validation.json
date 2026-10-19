@@ -1,0 +1,49 @@
+{
+  "focused": {
+    "distinctPassingTests": 239,
+    "logs": [
+      "targeted-vitest.log",
+      "crowd-budget-vitest.log",
+      "windows-final-vitest.log"
+    ]
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "broadRemote": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+    "status": "interrupted",
+    "exitCode": 130,
+    "reason": "Only the long L6 complete/newbie campaign battery remained after about an hour; docs/qa/deploy-gate.md excludes long bot batteries.",
+    "reportedFiles": 506,
+    "expectedFiles": 507,
+    "unreportedFiles": [
+      "tests/levels/L6-campaign.test.ts"
+    ],
+    "failedTests": [
+      "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms"
+    ],
+    "fileCounts": {
+      "passed": 496,
+      "failed": 7,
+      "skipped": 3
+    },
+    "failedFiles": [
+      "tests/sim/world/chunk-residency.test.ts",
+      "tests/sim/levels/l10-assault.test.ts",
+      "tests/sim/performance/alpha-support.test.ts",
+      "tests/sim/performance/zoo-s1.test.ts",
+      "tests/sim/performance/alpha.test.ts",
+      "tests/sim/performance/alpha-physical.test.ts",
+      "tests/sim/performance/zoo-s2.test.ts"
+    ]
+  },
+  "browser": "unmeasured: admission timeout (browser-status.json)",
+  "fullEpicVerifyAndBrowserSmoke": "not run"
+}
