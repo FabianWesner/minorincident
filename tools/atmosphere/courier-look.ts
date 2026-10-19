@@ -9,7 +9,9 @@ import { courierColourStats, courierFrames, colourFailures, maskLuminance } from
 const phase = process.argv[2] ?? 'after', backend = (process.argv[3] ?? 'webgl2') as Backend;
 const out = `${process.env.LOOK_OUT ?? 'test-results/courier-look'}/${phase}/${backend}`;
 const variants = (process.env.LOOK_VARIANTS ?? 'female,male').split(',') as ('female' | 'male')[];
-const spots = (process.env.LOOK_SPOTS ?? 'L6,L7-rocket,L7-horde').split(',');
+const spots = (process.env.LOOK_SPOTS ?? 'L5-qa,L6,L6-shaft,L7-rocket,L7-horde').split(',');
+/** QA #28 spots (L5 tick 6858, L6 shelter light shaft tick 142) plus the T-E29-14 rocket/horde spots. */
+const spotAt: Record<string, { x: number; z: number } | undefined> = { 'L5-qa': { x: 36.46, z: 41.23 }, 'L6-shaft': { x: .33, z: 3.56 }, 'L7-rocket': { x: 273, z: 15 }, 'L7-horde': { x: -48, z: 46 } };
 const luminance = (r: number, g: number, b: number) => {
   const c = [r, g, b].map(v => v / 255 <= .04045 ? v / 255 / 12.92 : ((v / 255 + .055) / 1.055) ** 2.4);
   return c[0] * .2126 + c[1] * .7152 + c[2] * .0722;
@@ -41,7 +43,7 @@ try {
       await s.page.addStyleTag({ content: 'body > :not(#game), #game > :not(canvas) { visibility:hidden!important }' });
       let loaded = '';
       for (const spotName of spots) {
-        const [level, spot] = spotName.split('-') as [string, string | undefined];
+        const level = spotName.split('-')[0], at = spotAt[spotName];
         if (loaded !== level) {
           await s.page.evaluate(async ({ level, tier }) => {
             const a = window.__SS__!; await a.loadLevel(level, level === 'L7' ? { seed: 29, progression: 'L7-default' } : { seed: 1 }); a.pause(); a.cheats.god(true); a.settings.set({ quality: tier, cameraShake: false });
@@ -49,10 +51,10 @@ try {
           loaded = level;
         }
         for (const variant of variants) for (const zoom of (process.env.LOOK_ZOOMS ?? '0.5,1,1.5').split(',').map(Number)) {
-          const setup = await s.page.evaluate(async ({ level, spot, zoom, variant }) => {
+          const setup = await s.page.evaluate(async ({ at, zoom, variant }) => {
             const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
             const player = game.world.entities.get(1)!; player.survivor!.variant = variant;
-            if (level === 'L7') { a.teleport('player', spot === 'rocket' ? { x: 273, z: 15 } : { x: -48, z: 46 }); a.camera.follow(); await a.step(1); }
+            if (at) { a.teleport('player', at); a.camera.follow(); await a.step(1); }
             else {
               const dog = [...game.world.entities.iterate()].find(e => e.companion);
               if (dog) a.teleport(dog.id, { x: player.transform.x - 2.8, z: player.transform.z + 1 });
@@ -64,12 +66,14 @@ try {
             await a.screenshotReady();
             const perf = a.perf();
             return { py: p.y, ground: game.world.districts?.groundHeight(p.x, p.z), backend: perf.backend, preset: perf.lighting?.preset, ring: Array.from({ length: 16 }, (_, i) => a.camera.project(p.x + 2 * Math.cos(i * Math.PI / 8), p.y - .7, p.z + 2 * Math.sin(i * Math.PI / 8))) };
-          }, { level, spot, zoom, variant });
+          }, { at, zoom, variant });
           const { image, mask, day } = await courierFrames(s.page);
           let sum = 0, pixels = 0, clipped = 0;
           for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += luminance(image.data[i], image.data[i + 1], image.data[i + 2]); pixels++; if (Math.max(image.data[i], image.data[i + 1], image.data[i + 2]) / 255 >= .97) clipped++; }
           const ringPx = setup.ring.filter(p => Math.abs(p[0]) < .99 && Math.abs(p[1]) < .99).map(p => [Math.round((p[0] + 1) * image.width / 2), Math.round((1 - p[1]) * image.height / 2)]);
-          const ring = ringPx.map(([x, y]) => { const i = (y * image.width + x) * 4; return luminance(image.data[i], image.data[i + 1], image.data[i + 2]); });
+          // Ring samples hidden behind her own body (the ground 2 m behind her, under the iso camera) measure her against herself.
+          const onCourier = ([x, y]: number[]) => { const i = (y * mask.width + x) * 4; return mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240; };
+          const ring = ringPx.filter(p => !onCourier(p)).map(([x, y]) => { const i = (y * image.width + x) * 4; return luminance(image.data[i], image.data[i + 1], image.data[i + 2]); });
           const background = ring.reduce((a, b) => a + b, 0) / ring.length;
           const night = courierColourStats(image, day, mask), daylight = courierColourStats(day, day, mask);
           const name = `${spotName}-${variant}-${tier}-z${zoom}`;

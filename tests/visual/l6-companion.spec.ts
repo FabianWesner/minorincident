@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot } from '../e2e/fixtures';
 import { courierClipping } from './courier-clipping';
 import { companionReadability } from './companion-readability';
+import { courierFrames, courierColourStats, colourFailures } from './courier-colours';
 
 test.use({ launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'] } });
 for (const backend of (process.env.READ_BACKENDS ?? 'webgl2,webgpu').split(','))
@@ -27,13 +28,16 @@ for (const quality of ['high', 'low'] as const) test(`L6 companion outside sodiu
     await window.__SS__!.screenshotReady();
   }, zoom);
   const courier = await courierClipping(page, `test-results/epics/E24/companion/${quality}-${backend}-z${zoom}`);
+  const frames = await courierFrames(page);
+  const colourFailed = colourFailures(courierColourStats(frames.image, frames.day, frames.mask), courierColourStats(frames.day, frames.day, frames.mask));
   const result = await companionReadability(page);
   const out = 'test-results/epics/E24/companion'; mkdirSync(out, { recursive: true });
-  writeFileSync(`${out}/${quality}-${backend}-z${zoom}.json`, JSON.stringify({ ...result, courier }, null, 2));
+  writeFileSync(`${out}/${quality}-${backend}-z${zoom}.json`, JSON.stringify({ ...result, courier, colourFailed }, null, 2));
   await page.locator('canvas').first().screenshot({ path: `${out}/${quality}-${backend}-z${zoom}.png` });
   expect(courier.pixels).toBeGreaterThan(200);
   expect(courier.clippedShare, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);
   expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
   expect(result.pixels).toBeGreaterThan(40);
   expect(result.contrast).toBeGreaterThanOrEqual(3);
+  expect(colourFailed, 'Courier keeps her daylight colours at night').toEqual([]);
 });
