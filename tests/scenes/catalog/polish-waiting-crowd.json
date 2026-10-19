@@ -1,0 +1,96 @@
+{
+  "name": "polish-waiting-crowd",
+  "note": "PO #24/#29: waiting civilians use quiet, varied and phase-offset gestures, with clean low-tier bodies.",
+  "ground": "asphalt",
+  "time": "L4",
+  "dof": false,
+  "size": 25,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        2
+      ],
+      "god": true
+    },
+    {
+      "id": "waiting-0",
+      "kind": "pedestrian",
+      "at": [
+        -2.6,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-a"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "waiting-1",
+      "kind": "pedestrian",
+      "at": [
+        -1.3,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-woman-a"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "waiting-2",
+      "kind": "pedestrian",
+      "at": [
+        0.0,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "waiting-3",
+      "kind": "pedestrian",
+      "at": [
+        1.3000000000000003,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "waiting-4",
+      "kind": "pedestrian",
+      "at": [
+        2.6,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-elderly"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
