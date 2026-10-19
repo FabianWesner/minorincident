@@ -1,0 +1,57 @@
+{
+  "base": "888954944",
+  "sourceCommit": "492e86995",
+  "mergeCommits": [
+    "bc89b243d",
+    "bd4ea617e",
+    "492e86995"
+  ],
+  "tips": [
+    "e210203e3",
+    "19bd689a0",
+    "55cc3a6b2"
+  ],
+  "remoteCommand": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+  "afterPolish": {
+    "passed": 3213,
+    "failed": 11,
+    "skipped": 11,
+    "seconds": 3170.58,
+    "exit": 1
+  },
+  "afterPerformance": {
+    "passed": 3250,
+    "failed": 0,
+    "skipped": 9,
+    "seconds": 3241.16,
+    "exit": 0
+  },
+  "mainCrossing": {
+    "passed": 1,
+    "filtered": 10,
+    "exit": 0
+  },
+  "smoke": {
+    "passed": 16,
+    "failed": 0,
+    "flaky": 0
+  },
+  "gate": {
+    "exit": 75,
+    "stage": "scene:matrix admission",
+    "admissionSeconds": 1800,
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed"
+  },
+  "methodChange": "Orchestrator-approved: T-E29-14 excludes courier silhouette from background ring; contrast threshold 3 unchanged",
+  "unmeasured": [
+    "final contrast/colour recaptures",
+    "native body and crowd phase recheck",
+    "WebGL and WebGPU final scene matrices",
+    "later gate e2e and grading",
+    "L4 pickup/first-turn T-E22-20",
+    "L7 and L8 native timing",
+    "standalone E18 native timing and verify"
+  ]
+}
