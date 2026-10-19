@@ -1,0 +1,63 @@
+{
+  "name": "qa-w6-readability-l7",
+  "note": "Game camera courier and corgi outside practical pools; review red/teal clothing and continuous corgi coat against the night ground at every zoom, tier and backend. Pixel contrast regression is tests/visual/l6-companion.spec.ts.",
+  "seed": 1,
+  "time": "L6",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        273,
+        15
+      ],
+      "yaw": 135
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        270.2,
+        16
+      ]
+    },
+    {
+      "id": "survivor",
+      "kind": "pedestrian",
+      "at": [
+        274.5,
+        15
+      ],
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "threat",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        276,
+        17
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 15,
+  "sheet": 7,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "extends": "qa-l7-entry-night-exit.json",
+  "script": [],
+  "hud": false
+}

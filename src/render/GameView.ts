@@ -703,7 +703,17 @@ export class GameView implements Lifecycle {
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
   }
-  /** Distance (m) from a point to the nearest living Mega Alpha (pursuit infected), Infinity when none. */
+  /** Keep the courier's full silhouette visible in L7's tightly packed following group/horde. */
+  private nearL7Crowd(at: { x: number; z: number }): boolean {
+    if (this.world.scenario !== 'L7') return false;
+    for (const e of this.world.entities.iterate()) {
+      if (e.id === 1 || e.hidden || e.health.current <= 0 || e.infected?.hidden || !(e.civilian || e.infected || e.escort)) continue;
+      const dx = e.transform.x - at.x, dz = e.transform.z - at.z;
+      if (dx * dx + dz * dz < 9) return true;
+    }
+    return false;
+  }
+  /** Distance (m) to the nearest living Mega Alpha, Infinity when none. */
   private megaDistance(at: { x: number; z: number }): number {
     let best = Infinity;
     for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && !e.infected.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
@@ -908,11 +918,10 @@ export class GameView implements Lifecycle {
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
     if (this.solidCutProbeOff) seeThrough.strength.value = 0;
-    // Retained roof/wall pixels must not hide the courier through several overlapping surfaces.
-    // Reuse the existing foreground silhouette only when the camera segments found an actual blocker.
-    this.courierForeground = !!current && (this.megaDistance(current) < 14 || !!this.districts?.occluderId);
+    // Reuse the foreground silhouette at boss/roof blockers and in L7's close crowd.
+    this.courierForeground = !!current && (this.nearL7Crowd(current) || this.megaDistance(current) < 14 || !!this.districts?.occluderId);
     this.character?.setForeground(this.courierForeground);
-    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
+    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);

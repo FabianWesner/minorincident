@@ -106,7 +106,7 @@ export class CharacterView extends Group {
       this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
-      vertexMaterial.movingFigure.value = 1;
+      vertexMaterial.movingFigure.value = 1; vertexMaterial.heroFigure.value = 1;
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
       if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
       const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
@@ -126,7 +126,7 @@ export class CharacterView extends Group {
           if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
-          (replacement as PaletteMaterial).movingFigure.value = 1;
+          (replacement as PaletteMaterial).movingFigure.value = 1; (replacement as PaletteMaterial).heroFigure.value = 1;
           if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
@@ -138,7 +138,7 @@ export class CharacterView extends Group {
       const gearScene = await loadGear(loader, low);
       const attachment = (tier: number, parent: import('three').Object3D, size: [number, number, number], position: [number, number, number], token: PaletteToken): void => {
         const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.unique(token));
-        mesh.material.movingFigure.value = 1;
+        mesh.material.movingFigure.value = 1; mesh.material.heroFigure.value = 1;
         mesh.material.userData.sharedPalette = true; mesh.castShadow = true; mesh.position.set(...position); group.add(mesh); parent.add(group); gear.push(group); group.userData.tier = tier;
       };
       // Cumulative gear: bag straps/pouch; pads/holster; vest/cap; heavier armor and mask.
@@ -149,7 +149,7 @@ export class CharacterView extends Group {
           const [nodeName, token] = part.name.split('__') as [string, PaletteToken], node = (character.rig as unknown as Record<string, import('three').Object3D | undefined>)[nodeName];
           if (!node || !(part instanceof Mesh)) continue;
           const mesh = new Mesh(part.geometry, materials.unique(token));
-          mesh.material.movingFigure.value = 1; mesh.material.userData.sharedPalette = true; mesh.castShadow = true;
+          mesh.material.movingFigure.value = 1; mesh.material.heroFigure.value = 1; mesh.material.userData.sharedPalette = true; mesh.castShadow = true;
           const group = new Group(); group.name = 'gear-tier-2'; group.userData.tier = 2; group.add(mesh); node.add(group); gear.push(group);
         }
       }
@@ -175,7 +175,7 @@ export class CharacterView extends Group {
             const material = node.geometry.hasAttribute('color') && !source.name.startsWith('emi_')
               ? materials.fromVertexColors('cure:carried')
               : materials.fromColor(`cure:${source.name}`, (source as import('three').MeshStandardMaterial).color, source.name.startsWith('emi_') ? .6 : 0);
-            material.movingFigure.value = 1; material.userData.sharedPalette = true;
+            material.movingFigure.value = 1; material.heroFigure.value = 1; material.userData.sharedPalette = true;
             source.dispose(); return material;
           };
           node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);

@@ -1,3 +1,4 @@
+import { devicePrompt } from './devicePrompt';
 import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { l5Survivors } from '../data/l5';
 import { l4CellarDistance } from '../data/l4';
@@ -11,11 +12,12 @@ import { weatherLabels } from '../data/weather';
 import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
-import { button, node, text, setHidden, attribute, style } from './dom';
+import { button, node, text as domText, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
 import { markerAnchor } from '../sim/missions/markerAnchor';
+const text: typeof domText = (element, value) => domText(element, devicePrompt(value, document.body.classList.contains('touch-ui')));
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
 export class Hud {
@@ -321,7 +323,7 @@ export class Hud {
       }
       text(this.weapon.hint, shown.name); setHidden(this.weapon.hint, world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
-      attribute(w, 'title', `${description} · click, RMB or Q to switch`); attribute(w, 'aria-label', `Active weapon: ${description}`);
+      attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'click, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
       style(w, '--progress', String(shown.progress));
     }
@@ -387,7 +389,7 @@ export class Hud {
     const opacity = say ? Math.min(1, (tick - say.at) / 10, 1 - (tick - say.until) / 15) : 0;
     setHidden(this.storyBubble, !say || opacity <= 0);
     if (!say || this.storyBubble.hidden) return;
-    if (this.storyBubble.textContent !== say.text) this.storyBubble.textContent = say.text;
+    text(this.storyBubble, say.text);
     style(this.storyBubble, 'opacity', String(Math.max(0, opacity)));
     if (say.id === 0) { style(this.storyBubble, 'left', '50%'); style(this.storyBubble, 'top', '78%'); return; }
     const speaker = world.entities.get(say.id); if (speaker && !speaker.hidden) { this.storyX = speaker.transform.x; this.storyZ = speaker.transform.z; }
