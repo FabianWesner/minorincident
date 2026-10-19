@@ -1,4 +1,4 @@
-import { l4, l4Edges } from '../../data/l4';
+import { l4, l4Edges, l4Inside } from '../../data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
 import type { Mission } from './Mission';
 import type { L4Director, L4Line, L4State } from './types';
@@ -95,7 +95,10 @@ export class L4Collapse {
     const near = (p: Point) => targets.length ? Math.min(...targets.map(t => dist(t.transform, p))) : dist(p, player);
     // Flank: new infected come as one burst at the out-of-view flank point nearest a standing soldier (a trickle is shot down on the way;
     // a burst reaches the sandbags). When the camera covers them all, the nearest street mouths (always beyond the view).
-    let flanks = D.flanks[i].map(pt).filter(p => world.infected!.director.offscreen(p) && dist(p, player) >= 12);
+    // The earlier pickup alarm can begin before the camp has settled. Keep the first
+    // line pressure behind it using the same concealed camp exits as the alarm.
+    const origins = i === 0 ? [...D.flanks[i], ...l4Inside] : D.flanks[i];
+    let flanks = origins.map(pt).filter(p => (world.infected!.director.offscreen(p) || world.infected!.director.occluded(p)) && dist(p, player) >= 12);
     if (!flanks.length) flanks = l4Edges.slice(0, 6).map(e => pt(e.at)).filter(p => world.infected!.director.offscreen(p) && dist(p, player) >= 20).sort((p, q) => dist(p, centre) - dist(q, centre)).slice(0, 2);
     if (!flanks.length || !targets.length) return;
     if (i === 0) flanks = [flanks.sort((p, q) => near(p) - near(q))[0]];

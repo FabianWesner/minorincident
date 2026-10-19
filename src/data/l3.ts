@@ -91,7 +91,7 @@ export const l3 = {
     caps: { high: 200, low: 100 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
-  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, minFightS: 60, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
+  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, minFightS: 60, evacuationS: 15, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,

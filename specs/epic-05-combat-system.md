@@ -32,7 +32,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E05-AC08 | Directional armor: a Riot dummy facing the player takes 0 bullet damage from the front (±60°) and full damage from behind; explosives ignore the shield | sim |
 | E05-AC09 | Statuses: burning deals the defined DoT per second for its duration, doesn't stack beyond max stacks, and is extinguished by water zones | sim |
 | E05-AC10 | Friendly fire: the player's own grenade deals 30% of the base damage to the player and 100% to escorts | sim |
-| E05-AC11 | Aim assist: with a target 8° off aim and in range, the shot direction snaps to it (Default setting); at 15° off it does not; with assist `Off` it never snaps | sim |
+| E05-AC11 | Aim assist: with a target 8° off aim and in range, the shot direction snaps to it (Default setting); at 15° off it does not; with assist `Off` it never snaps. PO 2026-10-19 keyboard auto-aim selects the nearest unobstructed on-screen infected within ±35° of movement (idle: facing), else fires straight ahead; no second snap may widen that cone | sim |
 | E05-AC12 | Every attack emits `combat.attack`, `combat.hit`, `combat.kill` events with entity IDs and positions (consumed by VFX, audio, and tests) | unit |
 | E05-AC13 | In the browser, a scripted mouse sequence (move cursor, LMB, RMB, wheel) in `combat-arena` produces the same per-side state as the sim test (end-to-end wiring) | e2e |
 | E05-AC14 | Kill time-to-kill table: the sim measures TTK for each weapon × archetype pair and writes `test-results/balance/ttk.json`; values lie in the bands defined in `src/data/balance.ts` | sim |

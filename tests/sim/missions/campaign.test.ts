@@ -47,7 +47,7 @@ for (const id of missionIds) test(`T-E12-07-${id}${id === 'L7' ? ' @E29-AC01' : 
 }, id === 'L3' ? 120_000 : 30_000); // Match the dedicated L3 graph check's authored-wave setup timeout.
 test('@E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -> wait completes straight into progression (no cinematic, no reward screen)',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L4;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L4',world.districts!));const api=missionControls(world);api.begin();
-  api.completeObjective('ride');expect(api.state()!.states.arrived).toBe(true);api.completeObjective('quartermaster');expect(api.state()!.steps.hold.status).toBe('pending');
+  api.completeObjective('ride');expect(api.state()!.states.arrived).toBe(true);api.completeObjective('quartermaster');expect(api.state()!.steps.hold.status).toBe('active');expect(api.state()!.states.turned).toBe(true);
   api.completeObjective();expect(api.state()!.states.turned).toBe(true);expect(api.state()!.states['line-broken']).toBe(true);
   api.completeObjective('hide');api.completeObjective('bar');api.completeObjective('wait');for(let i=0;i<400&&api.state()!.phase==='playing';i++)world.update();expect(api.state()!.phase).toBe('progression');
 });

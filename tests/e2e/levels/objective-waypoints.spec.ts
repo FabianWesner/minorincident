@@ -66,7 +66,7 @@ test('L3 defence waypoint @E21: game camera and explained destinations', async (
     api.camera.follow();
     await api.screenshotReady();
   }, l3Anchors['l3-zone']);
-  // PO 2026-10-12: the transition waits for the 60 s rescue fight and the safe boom closure, no longer for the player alone.
+  // PO 2026-10-19: the transition waits for the 15 s evacuation and safe boom closure.
   for (let i = 0; i < 200 && !(await page.evaluate(() => window.__SS__!.missions.state()!.l3!.crossedAt)); i++) await page.evaluate(() => window.__SS__!.step(30));
   const arrived = await page.evaluate(() => window.__SS__!.missions.state()!);
   expect(arrived.l3!.crossedAt).toBeGreaterThan(0);
@@ -102,7 +102,7 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   await page.screenshot({ path: `${output}/after-compound-rendezvous.png` });
   const click = await page.evaluate(([x, z]) => window.__SS__!.input.project({ x, z }), l3Anchors['l3-zone']);
   await page.mouse.click(click.x, click.y);
-  // PO 2026-10-12 ("army rescues us"): the rescue fight lasts minFightS (60 s) and the transition waits for the safe boom closure,
+  // PO 2026-10-19: arrival starts the 15 s evacuation; the transition also waits for safe boom closure,
   // superseding the player-only closure of 10-11. A stray civilian in the arm's path must still not hold it open.
   let arrived = false;
   for (let i = 0; i < 200; i++) {
@@ -119,7 +119,7 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/after-finale-entry.png` });
   // The world is paused: a wall-clock wait cannot finish the PO's five-second combat outro.
-  await page.evaluate(ticks => window.__SS__!.step(ticks), Math.ceil((l3.finale.minFightS + runOutRule.seconds) * 60) + 1);
+  await page.evaluate(ticks => window.__SS__!.step(ticks), Math.ceil((l3.finale.evacuationS + runOutRule.seconds) * 60) + 1);
   await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L4', undefined, { timeout: 120_000 });
   await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
   await page.evaluate(() => window.__SS__!.screenshotReady());

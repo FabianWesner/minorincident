@@ -150,7 +150,7 @@ export class Bicycle {
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
-    if (actual < b.speed * .5) b.speed = actual;
+    if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
     // QA1-02: click-to-move rides exactly like walking (same nav route, steering and corner clearance), only
     // faster (speedScale); the bicycle's own heading model is for direct WASD/stick steering. The steering-
     // model version pinned itself on fence corners where the route turns tighter than the bike can.
@@ -166,9 +166,13 @@ export class Bicycle {
     }
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
-    const want = Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = b.speed / speedMs;
+    const want = frame.drive ? Math.abs(frame.drive.throttle) : Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = Math.abs(b.speed) / speedMs;
     let target = 0, steerTarget = 0;
-    if (want > 0) {
+    if (frame.drive) {
+      steerTarget = Math.max(-1, Math.min(1, frame.drive.steer));
+      // S brakes forward motion before reversing; A/D steer relative to the bicycle.
+      target = speedMs * Math.max(-1, Math.min(1, frame.drive.throttle));
+    } else if (want > 0) {
       const desired = Math.atan2(frame.move.z, frame.move.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading));
       steerTarget = Math.max(-1, Math.min(1, err / .7));
       // Sharp turns shed speed; a turn straight behind slows to a crawl before swinging round.
@@ -178,10 +182,11 @@ export class Bicycle {
     const radius = bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r;
     // At an obstacle, the rider can still walk the front wheel round to pull away.
     // Using only achieved speed here locks the heading forever when the capsule is stopped.
-    const steeringSpeed = want > 0 ? Math.max(b.speed, .8) : b.speed;
+    const steeringSpeed = want > 0 ? Math.sign(b.speed || target) * Math.max(Math.abs(b.speed), .8) : b.speed;
     const turnRate = b.steer * steeringSpeed / radius;
     b.heading += turnRate * FIXED_DT;
-    const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 3) * FIXED_DT;
+    const accel = accelToMs / accelS, braking = b.speed * target < 0 || Math.abs(target) < Math.abs(b.speed);
+    const change = (braking ? (want > 0 ? 9 : 3) : accel) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
     this.lean(b, turnRate);
     if (want > 0) b.pedal += b.speed * FIXED_DT * 1.8; // cadence follows speed; freewheeling while coasting

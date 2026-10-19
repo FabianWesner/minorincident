@@ -135,7 +135,7 @@ describe('L3 squad and checkpoint', () => {
         expect(s.barrierClosedAt).toBeGreaterThan(0);
         for (const q of s.squad) expect(w.entities.get(q.id)!.transform.x).toBeGreaterThanOrEqual(l3.map.zoneX);
       }
-      expect(s.doneAt - s.crossedAt).toBe(l3.finale.minFightS * 60);
+      expect(s.doneAt - s.crossedAt).toBe(15 * 60);
       expect(m.state.phase).toBe('progression');
     } finally { w.dispose(); }
   }, 120_000);
