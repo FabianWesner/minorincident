@@ -39,6 +39,9 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
 };
 /** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after L10. */
 export const lastLevel:Level=10;
+/** Entity IDs a level must keep free while it spawns its own cast: L9 restores the L8 transport (APC + occupants) only after
+ * the crossing's props and lamps exist, so a dressed district would otherwise hand out the incoming IDs first. */
+export function reservedCampaignIds(level:string,campaign?:CampaignSave):number[]|undefined {return level==='L9'&&campaign?.transport?[campaign.transport.vehicle.id,...campaign.transport.occupants.map(e=>e.id)]:undefined;}
 export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<lastLevel?(finished+1) as Level:null;}
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
 /** PO 2026-10-12: the only L3 firearm is the armory handgun; no weapon choice after any level (the L4 machine gun is the army's pickup). */
