@@ -91,6 +91,7 @@ const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] }
  */
 export class SceneLab {
   private convoyOverlapFrames = 0;
+  private animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null as string | null };
   private corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity };
   private courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null as string | null, attachments: 0 };
   spec: SceneSpec | null = null;
@@ -152,7 +153,7 @@ export class SceneLab {
   async load(spec: SceneSpec) {
     this.specials = [];
     this.attackOverlap = { depthCm: 0, frame: 0, actor: '' };
-    this.convoyOverlapFrames = 0; this.corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity }; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, attachments: 0 };
+    this.convoyOverlapFrames = 0; this.animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null }; this.corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity }; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, attachments: 0 };
     // A scene that set a campaign must not leak it into the next scene: a later pickup save would write it against another world.
     this.game.campaign = null;
     if (spec.cureEncounter) {
@@ -1287,6 +1288,8 @@ export class SceneLab {
             const at = (node: Object3D, x: number, y = 0) => node.localToWorld(new Vector3(x, y, 0)).toArray() as Vec3;
             dogBodies.push([{ name: 'body', a: at(body, -.3), b: at(body, .25), radius: .25 }, { name: 'head', a: at(head, .1, .06), b: at(head, .3, -.01), radius: .24 }]);
           }
+          const limbGap = visible ? probes.npcs?.heroLimbGap(actor.entity) ?? null : null;
+          if (limbGap !== null) { const l = this.animalLimbs; l.samples++; if (limbGap > l.gapMaxCm) Object.assign(l, { gapMaxCm: +limbGap.toFixed(2), frame: this.frame, actor: actor.id }); }
           const tongue = actor.kind === 'corgi' ? probes.npcs?.heroTongue(actor.entity) ?? null : null;
           if (tongue !== null && e && visible) {
             // PO 10-19 tongue: retracted after 1.5 s of rest (once the after-run pant is over), out after 0.5 s of walking or running.
@@ -1588,7 +1591,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { collision: this.world.solids.snapshot(), marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
-      convoyOverlapFrames: this.convoyOverlapFrames, courierAttachments: { ...this.courierAttachments }, corgiTongue: { idleSamples: this.corgiTongue.idleSamples, idleOutFrames: this.corgiTongue.idleOutFrames, firstIdleOut: this.corgiTongue.firstIdleOut, movingSamples: this.corgiTongue.movingSamples, movingInFrames: this.corgiTongue.movingInFrames, firstMovingIn: this.corgiTongue.firstMovingIn },
+      convoyOverlapFrames: this.convoyOverlapFrames, courierAttachments: { ...this.courierAttachments }, animalLimbs: { ...this.animalLimbs }, corgiTongue: { idleSamples: this.corgiTongue.idleSamples, idleOutFrames: this.corgiTongue.idleOutFrames, firstIdleOut: this.corgiTongue.firstIdleOut, movingSamples: this.corgiTongue.movingSamples, movingInFrames: this.corgiTongue.movingInFrames, firstMovingIn: this.corgiTongue.firstMovingIn },
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, attackOverlap: { ...this.attackOverlap }, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),

@@ -170,6 +170,8 @@ export class NpcView extends Group {
   /** Scene Lab probe: the corgi animator's current clip. */
   heroClip(id: number): string | undefined { return this.heroes.get(id)?.animator?.clip; }
   /** Scene Lab probe: how far the corgi's tongue is out (0 retracted .. 1 out); null without a tongue mesh. */
+  /** Scene Lab probe: largest jointed-leg detachment from the body (cm); null for escorts. */
+  heroLimbGap(id: number): number | null { return this.heroes.get(id)?.animator?.limbGapCm() ?? null; }
   heroTongue(id: number): number | null { const t = this.heroes.get(id)?.tongue; return t?.found ? t.out : null; }
   gunMeshes() { return this.civilians.gunMeshes(); }
   heldProps() { return this.civilians.heldProps(); }
