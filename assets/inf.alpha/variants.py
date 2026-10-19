@@ -61,7 +61,9 @@ ell('shirt_collar_r',(.1,-.09,1.1),(.07,.075,.04),'v_trim','torso',seg=10,rings=
 tube('tie',[(.19,0,1.12),(.205,.012,.95),(.215,-.01,.8)],[(.03,.035),(.035,.05),(.015,.03)],'blood','torso',N=8,sub=0)
 for s in (-1,1):
     patch('coat_tail'+str(s),[(-.17,s*.02,.76),(-.19,s*.2,.74),(-.2,s*.23,.43),(-.21,s*.1,.37),(-.2,s*.02,.45)],'v_upper','hip',.03)
-ell('skull_growth',(-.03,.04,1.545),(.105,.095,.065),'blood','head',seg=12,rings=8)
+ell('skull_growth_a',(-.04,.05,1.54),(.1,.09,.055),'v_skin','head',seg=12,rings=8)
+ell('skull_growth_b',(.03,-.07,1.555),(.07,.065,.045),'v_skin','head',seg=10,rings=6)
+ell('skull_growth_blood',(-.04,.05,1.585),(.045,.04,.025),'blood','head',seg=8,rings=5)
 ell('forearm_swell',(.065,-.385,.82),(.1,.095,.115),'v_skin','foreArmR',seg=12,rings=8)
 ell('forearm_swell_blood',(.1,-.385,.84),(.045,.04,.05),'blood','foreArmR',seg=8,rings=5)
 '''),
