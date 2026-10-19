@@ -261,11 +261,11 @@ def build_gear(body, lod, sex):
     for side, sg in (('L', 1), ('R', -1)):
         c = bones['arm' + side][0]
         g.patch('tealDark', dome(c, Vector((1, 0, 0)), zup, Vector((0, sg, 0)), 46, 6, 74),
-                cush(.017, 2.0), n(5, 3), n(5, 3), shade=.5)
+                cush(.020, 2.0, .003), n(5, 3), n(5, 3), shade=.5, dilate=2)
         arm = limb_axis(body, [('arm' + side, 'h'), ('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(arm)
         ez = bones['foreArm' + side][0].z
         if lod < 2: g.patch('uiDark', around(arm, lambda s, ez=ez, vz=vz: vz(ez + .042 - .084 * s), 135 * sg, 52),
-                cush(.016, 2.2), n(4, 3), n(5, 3))
+                cush(.019, 2.2, .002), n(4, 3), n(5, 3), dilate=2)
     wz = bones['torso'][0].z
     bcols = n(20, 8)
     g.patch('leather', around(torso, lambda s: wz + .028 - .045 * s, -180 / bcols, 0, closed=True),
@@ -329,13 +329,13 @@ def finish(g, body, variant, lod, out):
                               export_skins=True, export_influence_nb=4, export_def_bones=False, export_vertex_color='ACTIVE')
     print('GEAR', out.name, 'tier cumulative tris', tier_tris, 'verts', len(verts))
 
-BODY_FILE = {0: 'char.courier-{}.skin.glb', 1: 'char.courier-{}.skin.low.glb', 2: 'char.courier-{}.skin.low.glb'}
+BODY_FILE = {0: 'char.courier-{}.skin.glb', 1: 'char.courier-{}.skin.low.glb', 2: 'char.courier-{}.skin.low.glb'}  # the low quality tier draws the low body
 SUFFIX = {0: '.tiers.glb', 1: '.tiers.low.glb', 2: '.tiers.lod2.glb'}
 MODELS = REPO / 'public/assets/models'
 if '--body-dir' in ARGS: MODELS = Path(arg('--body-dir'))
 for variant in ([ONLY] if ONLY else ['female', 'male']):
     for lod in LODS:
-        # every LOD is fitted to the high body (the low body is a decimation of it, gear clearance covers the difference)
-        body = Body(MODELS / BODY_FILE[0].format(variant))
+        # each LOD is fitted to the body it is drawn on (the low body is a separate remesh with a different surface)
+        body = Body(MODELS / BODY_FILE[lod].format(variant))
         gear = build_gear(body, lod, variant)
         finish(gear, body, variant, lod, OUT / f'acc.courier-gear.{variant}{SUFFIX[lod]}')
