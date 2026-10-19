@@ -1,0 +1,41 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13a -> 2.31.10.108:/srv/mi/ws/merge-batch13a-6e8240
+[remote] cache-gc deleted:none
+[remote] sync 37s, 25755 files; job /srv/mi/jobs/merge-batch13a-6e8240-67720-1792420674; queueing for a slot
+[runner] slot 0 acquired; load 0.40 1.21 3.12
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch13a-6e8240-67720-1792420674[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 4159[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4157[2mms[22m[39m
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":2.0285350000003746,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 1176[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1175[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 12110[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 12108[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1421[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms[33m 1419[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1817[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms[33m 1815[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1698[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms[33m 1697[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1500[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms[33m 1498[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1988[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[33m 1986[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s3.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1429[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[33m 1427[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/mega-moves.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1643[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18[33m 1642[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/horde.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[33m 1262[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms[33m 1260[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m      Tests [22m [1m[32m11 passed[39m[22m[2m | [22m[33m33 skipped[39m[90m (44)[39m
+[2m   Start at [22m 14:38:35
+[2m   Duration [22m 36.95s[2m (tests 84%, import 8%, transform 7%)[22m
+
+[remote] done exit=0 (runner 2.31.10.108, sync 37s, remote total 43s)

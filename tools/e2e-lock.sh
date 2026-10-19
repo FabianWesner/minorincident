@@ -10,7 +10,9 @@ if [ "${MI_E2E_JOB_HELD:-}" != 1 ]; then
   export MI_E2E_JOB_HELD=1
   exec python3 "$root/tools/browser-job.py" -- sh "$0" "$@"
 fi
-deadline=$(($(date +%s) + 1800))
+admission_seconds="${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}"
+case "$admission_seconds" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer' >&2; exit 2;; esac
+deadline=$(($(date +%s) + admission_seconds))
 case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
 [ "$(uname -s)" != Darwin ] || [ "$slots" -le 2 ] || slots=2
 workers=''; playwright=0; next_workers=0
@@ -54,7 +56,7 @@ attempt() {
   if [ -s "$started" ] || [ "$rc" -ne 75 ]; then exit "$rc"; fi
 }
 while :; do
-  [ "$(date +%s)" -lt "$deadline" ] || { echo 'Browser admission exceeded 30 minutes; report unmeasured coverage.' >&2; exit 75; }
+  [ "$(date +%s)" -lt "$deadline" ] || { echo "Browser admission exceeded ${admission_seconds} seconds; report unmeasured coverage." >&2; exit 75; }
   # Sample before acquiring slots so waiting for host recovery does not reserve GPU capacity.
   if ! python3 "$root/tools/mac-gpu-guard.py" "$units"; then sleep 2; continue; fi
   i=0

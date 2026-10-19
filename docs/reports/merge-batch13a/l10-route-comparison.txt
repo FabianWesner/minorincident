@@ -1,0 +1,31 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13a -> 94.130.181.173:/srv/mi/ws/merge-batch13a-6e8240
+[remote] cache-gc deleted:none
+[remote] sync 74s, 25726 files; job /srv/mi/jobs/merge-batch13a-6e8240-12258-1792419753; queueing for a slot
+[runner] slot 1 acquired; load 3.79 5.63 6.37
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch13a-6e8240-12258-1792419753[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/levels/l10-campus-corridor.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 30555[2mms[22m[39m
+[runner] functional phase reached; extra slot released
+   [33m[2m✓[22m[39m T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 30553[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m   Start at [22m 14:47:23
+[2m   Duration [22m 34.61s[2m (tests 89%, transform 9%, import 2%)[22m
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch13a-6e8240-12258-1792419753[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/levels/l10-campus-corridor.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 32799[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 32797[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m   Start at [22m 14:47:59
+[2m   Duration [22m 36.05s[2m (tests 91%, transform 7%, import 1%)[22m
+
+L10 comparison: merged=0 main=0
+[remote] done exit=0 (runner 94.130.181.173, sync 74s, remote total 1488s)

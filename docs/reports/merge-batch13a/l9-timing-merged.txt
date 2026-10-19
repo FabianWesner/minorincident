@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13a -> 2.31.10.108:/srv/mi/ws/merge-batch13a-6e8240
+[remote] cache-gc deleted:none
+[remote] sync 69s, 25561 files; job /srv/mi/jobs/merge-batch13a-6e8240-96627-1792417465; queueing for a slot
+[runner] slot 1 acquired; load 6.44 5.36 4.67
+[runner] npm ci (lockfile hash 93c20994f640beef)
+
+added 247 packages in 6s
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch13a-6e8240-96627-1792417465[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m9 skipped[39m[2m)[22m[33m 6929[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 3905[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 3022[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[2m | [22m[33m9 skipped[39m[90m (11)[39m
+[2m   Start at [22m 14:34:25
+[2m   Duration [22m 9.56s[2m (tests 74%, transform 23%, import 4%)[22m
+
+[remote] done exit=0 (runner 2.31.10.108, sync 69s, remote total 2942s)
