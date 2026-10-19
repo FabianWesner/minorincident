@@ -334,7 +334,7 @@ for zi in range(len(_zs) - 1):
         x0, x1, z0, z1 = _xs[xi] + 3.2, _xs[xi + 1] - 3.2, _zs[zi] + 3.2, _zs[zi + 1] - 3.2
         n = max(1, int((x1 - x0) / 4.0))
         for k in range(n):
-            if k % 2 == 0: _stripe(x0 + k * (x1 - x0) / n, x0 + (k + 1) * (x1 - x0) / n, z0, z1, 'foliageLight' if (xi + zi) % 2 else 'foliage')
+            if k % 2 == 0: _stripe(x0 + k * (x1 - x0) / n, x0 + (k + 1) * (x1 - x0) / n, z0, z1, 'foliage')
 for _x in (-114.2, 114.2): _stripe(_x - 1.2, _x + 1.2, -83.0, 83.0, 'foliageDark')
 for _z in (-84.2, 84.2): _stripe(-113.0, 113.0, _z - 1.2, _z + 1.2, 'foliageDark')
 for _x, _z in [(-78, -64), (-42, -64), (42, -64), (78, -64), (-78, 0), (-42, 0), (42, 0), (78, 0), (-78, 64), (-42, 64), (78, 64)]:
