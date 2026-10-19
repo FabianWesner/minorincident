@@ -76,14 +76,13 @@ describe('L4 The Safe City Falls', () => {
     let maxIdle = 0;
     while (s.phase === 'convoy') step(w, 60);
     step(w, 4 * 60);
-    m.completeObjective('quartermaster');
     let infectedBefore = 0;
     for (let t = 0; t < 60 * 60 && s.phase !== 'war'; t++) {
       w.update();
       if (s.phase === 'plaza') infectedBefore = Math.max(infectedBefore, w.infected!.active.length);
       if (t % 30 === 0) for (const e of humans(w)) { const c = e.civilian!; if (c.ally || c.pet || c.state !== 'calm') continue; const moving = !!e.motion?.moving, seated = c.schedule?.[c.scheduleStep ?? 0]?.activity === 'sit'; const key = e.id; if (moving || seated || (c.schedule?.[c.scheduleStep ?? 0]?.facing)) idle[key] = 0; else { idle[key] = (idle[key] ?? 0) + .5; maxIdle = Math.max(maxIdle, idle[key]); } }
     }
-    expect(s.phase).toBe('war'); expect(infectedBefore).toBe(0);
+    expect(s.phase).toBe('plaza'); expect(infectedBefore).toBe(0);
     expect(bad.filter(t => t !== 'outbreak.infection')).toEqual([]);
     expect(s.soldierIds.length).toBeGreaterThanOrEqual(16); expect(maxIdle).toBeLessThanOrEqual(3);
     // No wrecks, damage decals or corpses in the clean city: nothing but the layout's W0 placements (checked statically in l4-static.test.ts).
@@ -135,15 +134,16 @@ describe('L4 The Safe City Falls', () => {
     expect(shots).toBeGreaterThanOrEqual(2000); expect(reloads).toBe(0);
   }, HEAVY);
 
-  test('T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
+  test('T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
     for (const seed of [1, 2, 3]) {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
-      step(w, 5 * 60); l.mission.completeObjective('quartermaster');
+      step(w, 5 * 60);
       const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type !== 'l4.firstTurn') return; turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { at.set(id, { x: w.entities.get(id)!.transform.x, z: w.entities.get(id)!.transform.z }); origins.add(w.entities.get(id)!.appearance!.origin); } });
+      l.mission.completeObjective('quartermaster');
       step(w, 60 * 60);
       expect(turns, `seed ${seed}`).toHaveLength(1);
-      const after = (turns[0].tick - s.gunAt) / 60; expect(after).toBeGreaterThanOrEqual(40); expect(after).toBeLessThanOrEqual(50);
+      expect(turns[0].tick).toBe(s.gunAt);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
       const sources = [...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
       for (const id of turns[0].ids) expect(sources.some(([x, z]) => dist(at.get(id)!, { x, z }) < 2), `new infected ${id} at an authored emergence point`).toBe(true);
@@ -154,11 +154,11 @@ describe('L4 The Safe City Falls', () => {
       expect(Math.max(...groups.values()), 'alarm arrivals remain small groups per exit').toBeLessThanOrEqual(l4.war.group[1]);
       w.dispose();
     }
-    // Without the gun the turn still comes at arrival + 100 s.
+    // The camp remains calm while the player has not collected the gun.
     const l = await loadL4(4); world = l.world; const s = l.world.missions!.state.l4!;
     while (s.phase === 'convoy') l.world.update();
-    const arrived = s.arrivedAt; step(l.world, 101 * 60);
-    expect(s.turnAt).toBeGreaterThan(0); expect((s.turnAt - arrived) / 60).toBeCloseTo(100, 0);
+    step(l.world, 101 * 60);
+    expect(s.turnAt).toBe(0); expect(s.phase).toBe('plaza');
   }, HEAVY);
 
   test('T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold', async () => {

@@ -71,10 +71,10 @@ describe('L4 PO round 10-13', () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     while (s.phase === 'convoy') w.update();
-    step(w, 3 * 60); m.completeObjective('quartermaster');
+    step(w, 3 * 60);
     const post = (id: number) => w.entities.get(id)!.civilian!.ally!.post!;
     let aimedBefore = 0, offPostMax = 0, routineMin = 1, samples = 0;
-    while (s.phase === 'plaza') {
+    while (samples < 90) {
       step(w, 30); if (s.phase !== 'plaza') break; samples++;
       const soldiers = s.soldierIds.map(id => w.entities.get(id)).filter(human);
       aimedBefore = Math.max(aimedBefore, soldiers.filter(e => e.civilian!.story?.clip === 'shoot' || !!e.civilian!.ally!.targetId || e.civilian!.ally!.engaged).length);
@@ -82,7 +82,7 @@ describe('L4 PO round 10-13', () => {
       const peds = [...w.entities.iterate()].filter(e => human(e) && !e.hidden && !e.civilian!.ally && !e.civilian!.pet && !s.soldierIds.includes(e.id));
       routineMin = Math.min(routineMin, peds.filter(e => e.civilian!.state === 'calm' && !!e.civilian!.schedule?.length).length / Math.max(1, peds.length));
     }
-    expect(s.phase).toBe('war'); expect(samples).toBeGreaterThan(40);
+    expect(s.phase).toBe('plaza'); m.completeObjective('quartermaster'); expect(s.phase).toBe('war'); expect(samples).toBeGreaterThan(40);
     // The alarm: soldiers at (or running to) their posts, people panicking (fleeing to a door or a street edge, hiding, gone inside).
     const turn = s.turnAt, soldiers = s.soldierIds.filter(id => human(w.entities.get(id)));
     const armed = new Set(s.armed.map(a => a.id)), turners = new Set(s.turnerIds);
@@ -105,8 +105,8 @@ describe('L4 PO round 10-13', () => {
     const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     while (s.phase === 'convoy') w.update();
-    step(w, 3 * 60); m.completeObjective('quartermaster');
-    while (w.tick + 1 < s.turnDueAt) w.update();
+    // Preserve the old settled arrival cohort; the pickup now triggers the alarm immediately.
+    step(w, 45 * 60);
     const cohort = [...s.evacueeIds, ...s.residentIds].filter(id => {
       const e = w.entities.get(id); return human(e) && !e.hidden && !e.civilian!.pet && inRing(e.transform);
     });
@@ -114,8 +114,9 @@ describe('L4 PO round 10-13', () => {
     const infections: number[] = [];
     w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && cohort.includes(e.entityId) && e.phase === 'stagger') infections.push(w.entities.get(e.entityId)!.infection!.biteSourceId); });
     expect(cohort.length).toBeGreaterThanOrEqual(tier === 'high' ? 20 : 10);
-    w.update();
+    m.completeObjective('quartermaster');
     expect(s.turnAt).toBe(w.tick);
+    expect(s.turnAt).toBe(s.gunAt);
     step(w, 5 * 60);
     const humans = cohort.filter(id => human(w.entities.get(id)));
     const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower');

@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 94.130.181.173:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 43s, 25352 files; job /srv/mi/jobs/controls-content-5f907b-84338-1792413545; queueing for a slot
+[runner] slot 1 acquired; load 1.79 2.22 2.63
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-84338-1792413545
+
+ ✓  functional  tests/levels/controls-content.test.ts (4 tests) 2114ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (high) 897ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (low) 461ms
+   ✓ @E22 @E22-AC11 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm 405ms
+   ✓ @E22 @E22-AC13 first-line pressure can use concealed camp exits after the immediate pickup alarm 348ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  12:39:50
+   Duration  6.18s (transform 53%, tests 35%, import 11%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 43s, remote total 10s)

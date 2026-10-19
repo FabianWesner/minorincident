@@ -333,3 +333,7 @@ Bugs go in the project's issue tracker (the `issue-tracker` skill board) with th
 | A bot that is too smart hides difficulty problems | The `newbie` profile, calibrated against human playtests (§12 of the test concept) |
 | Vision review leniency | Strict [must] items, mandatory justification, comparison sheets saved; a human spot-checks 10% of reviews per milestone |
 | The test API leaks into production | Dynamic import behind `?test`; a bundle check verifies that the `__SS__` string is absent in the prod build (static test) |
+
+## PO controls and timing regressions (2026-10-19)
+
+`tests/sim/controls-content.test.ts` covers local bicycle throttle/steering/reverse and the ±35° visible auto-aim cone (E03/E05/E19). `tests/e2e/controls-content.spec.ts` walks screen north with targets north/south on both backends, both tiers, zoom 1 and 0.5. `tests/sim/missions/l3-base-gates.test.ts` checks the exact 15 s evacuation (E21); `tests/levels/controls-content.test.ts` checks pickup/alarm/attack tick equality and checkpoint order in both tiers (E22). Scene catalog entries `controls-*` cover all four changes through the game camera.

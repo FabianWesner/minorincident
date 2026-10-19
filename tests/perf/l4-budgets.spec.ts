@@ -44,7 +44,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     const l4 = 'window.__SS__.missions.state().l4';
     // The ride and the calm plaza (the bot goes to the quartermaster), then the first turn.
-    await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.getState().tick < 120`, 900);
+    await step(`${l4}.phase === 'plaza'`, 800);
     const turn = await record(`${l4}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
     // Capture the requested surviving-army state after an actual loss, rather than assuming

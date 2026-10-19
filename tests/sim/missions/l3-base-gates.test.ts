@@ -8,7 +8,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => world?.dispose());
 
-test('PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and preserves the evacuation minute', async () => {
+test('PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds', async () => {
   const { world: w, mission: m } = await loadL3(1); world = w;
   m.completeObjective('armory'); m.completeObjective('defend');
   const api = missionControls(w), s = m.state.l3!;
@@ -17,16 +17,16 @@ test('PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and preserves 
   api.teleport('player', { x: l3Anchors['l3-zone'][0], z: 0 });
   w.update();
   expect(s.crossedAt).toBe(w.tick);
-  expect(l3EvacuationText(m)).toContain('Evacuation in 60 s');
+  expect(l3EvacuationText(m)).toContain('Evacuation in 15 s');
   expect(eventCues['l3.crossed']).toBe('stinger.objective');
   expect(w.events.events().filter(e => e.type === 'l3.crossed')).toHaveLength(1);
   expect(m.state.marker).toBeNull();
   expect(s.barrierClosedAt).toBeGreaterThan(0);
-  for (let i = 0; i < 59 * 60; i++) w.update();
+  for (let i = 0; i < 14 * 60; i++) w.update();
   expect(s.doneAt).toBe(0);
   expect(l3EvacuationText(m)).toContain('Evacuation in 1 s');
   for (let i = 0; i < 2 * 60; i++) w.update();
-  expect(s.doneAt - s.crossedAt).toBe(60 * 60);
+  expect(s.doneAt - s.crossedAt).toBe(15 * 60);
   expect(w.events.events().filter(e => e.type === 'l3.crossed')).toHaveLength(1);
 }, 120_000);
 
