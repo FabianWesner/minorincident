@@ -4,7 +4,7 @@
 
 Strength reads through dark bruised skin/muscle, near-black rags, bone shoulder armour and spine spikes, blood scars, enlarged red eyes and glowing chest/back veins. Six palette materials, no textures.
 
-Packed tiers including caps: 15,587 / 5,648 / 1,908 triangles. Reduced bodies are closed solids from per-material voxel unions. Shared joint hierarchy, ordinary/special clips and hidden caps remain intact. Asset tests enforce both horizontal extent ratios ≤ 1.3 and matching height. The close-contact/arrival/speed Scene Lab gates compare visible pixels with a regular Alpha at the same transform/pose (≥ 0.9), retaining courier visibility ≥ 0.6. See [revision report](../../docs/reports/alpha-look/review.md).
+Packed tiers including caps: 12,624 / 5,648 / 1,902 triangles. Every tier, including the close model, uses closed solids from per-material voxel unions. Shared joint hierarchy, ordinary/special clips and hidden caps remain intact. Asset tests enforce both horizontal extent ratios ≤ 1.3 and matching height. The close-contact/arrival/speed Scene Lab gates compare visible pixels with a regular Alpha at the same transform/pose (≥ 0.9), retaining courier visibility ≥ 0.6. See [revision report](../../docs/reports/alpha-look/review.md).
 
 Rebuild:
 

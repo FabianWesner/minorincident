@@ -238,20 +238,19 @@ for lod, limit in enumerate((7800, 2900, 950)):
         obj.data = sources[obj.name].copy()
         obj.hide_set(False)
     objects = allobjects
-    if lod > 0:
-        for obj in objects:
-            if obj not in caps:
-                solid_lod(obj, .045 if lod == 1 else .085)
+    for obj in objects:
+        if obj not in caps:
+            solid_lod(obj, (.0225, .045, .085)[lod])
     total = sum(triangles(obj) for obj in objects)
     for obj in objects:
         reduce(obj, min(1, limit / total))
-        if lod > 0: close_reduced_surfaces(obj)
+        close_reduced_surfaces(obj)
     # Per-owner rounding can exceed the target. Retain all owners, never remove limbs.
     while sum(triangles(obj) for obj in objects) > limit:
         for obj in objects:
             if triangles(obj) > 12:
                 reduce(obj, .92)
-                if lod > 0: close_reduced_surfaces(obj)
+                close_reduced_surfaces(obj)
     for cap in caps:
         cap.scale = (1, 1, 1)
         cap['hidden'] = True

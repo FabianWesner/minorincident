@@ -1,5 +1,5 @@
 // GPU-only environmental motion, following Bruno's shared Wind.js phase pattern (MIT).
-import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, Mesh, MeshBasicNodeMaterial, Vector2, Vector4 } from 'three/webgpu';
+import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, Mesh, MeshBasicNodeMaterial, Vector2, Vector4, type Node } from 'three/webgpu';
 import { attribute, mix, cos, fract, positionGeometry, sin, uniform, uniformArray, vec3 } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
@@ -37,11 +37,16 @@ export class AmbientLife extends Group {
       // `glow` lifts dust into HDR so embers/fireflies/motes catch the existing bloom at night (unlit basic material).
       const glow = kind === 'dust' ? counts.glow ?? 1 : 1;
       material.colorNode = mix(materials.look.nodes[kind], materials.look.nodes.petal, petal).mul(glow);
-      const seed = attribute('_drift', 'vec3'), t = materials.wind, x = seed.x.add(t.mul(kind === 'bird' ? 1.6 : .22)).mod(25).sub(12.5), z = seed.z.add(t.mul(.12)).mod(25).sub(12.5);
+      const seed = attribute('_drift', 'vec3'), t = materials.wind;
+      // World trajectories only recycle by a whole field width at the perimeter.
+      // Camera movement must never translate the leaves already in view.
+      const wrap = (world: Node<'float'>, focus: Node<'float'>) => world.add(focus.sub(world).add(12.5).div(25).floor().mul(25));
+      const x = wrap(seed.x.add(t.mul(kind === 'bird' ? 1.6 : .22)), this.focus.x);
+      const z = wrap(seed.z.add(t.mul(.12)), this.focus.y);
       // `rise`: dust climbs 0..6 m and wraps (embers above fires), otherwise it hovers.
       const y = kind === 'bird' ? sin(t.mul(.3).add(seed.y)).mul(.5).add(4.5) : kind === 'dust' && counts.rise ? fract(seed.y.mul(.159).add(t.mul(.06))).mul(6).add(.2) : sin(t.mul(.5).add(seed.y)).mul(.6).add(kind === 'dust' ? 1.2 : .9);
       const flutter = sin(t.mul(kind === 'bird' ? 8 : 2).add(seed.y));
-      material.positionNode = vec3(positionGeometry.x.mul(cos(t.add(seed.y))).add(x).add(this.focus.x), positionGeometry.y.add(y).add(positionGeometry.x.abs().mul(flutter)), positionGeometry.z.add(z).add(this.focus.y));
+      material.positionNode = vec3(positionGeometry.x.mul(cos(t.add(seed.y))).add(x), positionGeometry.y.add(y).add(positionGeometry.x.abs().mul(flutter)), positionGeometry.z.add(z));
       const mesh = new Mesh(geometry, material); mesh.frustumCulled = false; this.meshes.push(mesh); this.add(mesh);
     }
   }

@@ -1,0 +1,58 @@
+{
+  "name": "polish-blood-ground",
+  "note": "PO #32: a heavy hit leaves tiny brief droplets and long-lived supported ground splats, with no vertical red capsules.",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L5",
+  "dof": false,
+  "size": 35,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2,
+        0
+      ],
+      "god": true
+    },
+    {
+      "id": "victim",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 10,
+      "actor": "victim",
+      "do": {
+        "hit": {
+          "amount": 40,
+          "heavy": true
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

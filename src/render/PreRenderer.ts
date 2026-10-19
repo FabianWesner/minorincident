@@ -22,6 +22,8 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       // light list. Enabling the inactive hero spot warmed the wrong node cache
       // for every daylight batch, leaving distant objects cold on first use.
       if (object.userData.preventPreRender || object instanceof Light) return;
+      // Reserved hero slots have no vertices until their streamed model arrives.
+      if ((object instanceof Mesh || object instanceof LineSegments) && !object.geometry.hasAttribute('position')) return;
       const matrices = object instanceof InstancedMesh ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : undefined;
       saved.push({ ...(object instanceof LineSegments ? {position:object.position.clone()}:{}), object, visible: object.visible, culled: object.frustumCulled, ...(object instanceof InstancedMesh ? { count: object.count, matrices } : {}) });
       object.visible = true;
@@ -41,7 +43,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Each partition shows only its share of leaves while three collects that call's render list
     // (synchronously), so the lanes compile disjoint objects concurrently.
     const leaves: Object3D[] = [];
-    scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments)) leaves.push(object); });
+    scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Sprite || (object instanceof Mesh || object instanceof LineSegments) && object.geometry.hasAttribute('position'))) leaves.push(object); });
     // Static batches share node graphs. Compile one representative of each exact
     // material/attribute/shadow/capacity variant; the draws below still upload and
     // execute every render object, including both instancing driver paths.

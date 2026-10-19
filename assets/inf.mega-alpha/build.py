@@ -1,8 +1,8 @@
 """Mega Alpha (L10 final boss): the Alpha's rig and clip contract at the regular Alpha's height and footprint.
 Headless: python3 tools/blender/run.py assets/inf.mega-alpha/build.py --glb assets/inf.mega-alpha/model.glb
 Derived from the shipped worker like inf.alpha (same node names, identity rest rotations, hidden stump caps).
-LOD0 is the reshaped worker plus authored features (hunch mass, spine ridges, scars, big eyes, oversized right arm).
-LOD1/LOD2 are closed solids: every rigid part is voxel-remeshed per material (watertight union), then reduced; the
+LOD0 is a closed reshaped worker plus authored features (hunch mass, spine ridges, scars, big eyes, oversized right arm).
+All three LODs are closed solids: every rigid part is voxel-remeshed per material (watertight union), then reduced; the
 features are re-authored with fewer segments. No per-triangle decimation of open surfaces.
 """
 import argparse
@@ -372,7 +372,7 @@ def set_cap_lod(level):
             c.data.materials.append(m)
 
 TARGETS = (15600, 5700, 1900)
-VOXEL = (None, .11 * S, .30 * S)
+VOXEL = (.055 * S, .11 * S, .30 * S)
 records = []
 output = Path(args.glb).resolve()
 for lod in range(3):
@@ -381,54 +381,45 @@ for lod in range(3):
     feats = features((2, 1, 0)[lod])
     cap_tris = sum(tris(c) for c in caps)
     feat_tris = sum(tris(o) for g in feats.values() for o in g)
-    if lod == 0:
-        ratio = min(1, (TARGETS[0] - cap_tris - feat_tris) / sum(tris(o) for o in owners_meshes.values()))
-        for owner, o in list(owners_meshes.items()):
-            bpy.context.view_layer.objects.active = o
-            mod = o.modifiers.new('mega surface reduction', 'DECIMATE')
-            mod.ratio = ratio
+    solid = {owner: closed_solid(o, VOXEL[lod], hull=False) for owner, o in owners_meshes.items()}
+    remesh_total = sum(tris(p_) for ps in solid.values() for p_ in ps)
+    ratio = max(.01, min(1, (TARGETS[lod] - cap_tris - feat_tris) / remesh_total))
+    print('BUDGET', lod, 'caps', cap_tris, 'feat', feat_tris, 'remeshed', remesh_total, 'ratio', ratio)
+    owners_meshes = {}
+    for owner, ps in solid.items():
+        for p_ in ps:
+            n = tris(p_)
+            bpy.context.view_layer.objects.active = p_
+            mod = p_.modifiers.new('closed reduce', 'DECIMATE')
+            mod.ratio = max(ratio, min(1, 14 / n))
             mod.use_collapse_triangulate = True
             bpy.ops.object.modifier_apply(modifier=mod.name)
-    else:
-        solid = {owner: closed_solid(o, VOXEL[lod], hull=False) for owner, o in owners_meshes.items()}
-        remesh_total = sum(tris(p_) for ps in solid.values() for p_ in ps)
-        ratio = max(.01, min(1, (TARGETS[lod] - cap_tris - feat_tris) / remesh_total))
-        print('BUDGET', lod, 'caps', cap_tris, 'feat', feat_tris, 'remeshed', remesh_total, 'ratio', ratio)
-        owners_meshes = {}
-        for owner, ps in solid.items():
-            for p_ in ps:
-                n = tris(p_)
-                bpy.context.view_layer.objects.active = p_
-                mod = p_.modifiers.new('closed reduce', 'DECIMATE')
-                mod.ratio = max(ratio, min(1, 14 / n))
-                mod.use_collapse_triangulate = True
-                bpy.ops.object.modifier_apply(modifier=mod.name)
-                # Weld slivers left by the reduction (sub-2 mm edges) so the exported surface stays an exact closed solid.
-                bm_ = bmesh.new()
-                bm_.from_mesh(p_.data)
-                bmesh.ops.remove_doubles(bm_, verts=list(bm_.verts), dist=.003)
-                bmesh.ops.dissolve_degenerate(bm_, dist=.001, edges=list(bm_.edges))
-                # Closed solids only: drop any island that is not watertight after the weld (stray slivers).
-                seen = set()
-                for face in list(bm_.faces):
-                    if face in seen:
-                        continue
-                    island, stack = [], [face]
-                    seen.add(face)
-                    while stack:
-                        f = stack.pop()
-                        island.append(f)
-                        for e in f.edges:
-                            for g in e.link_faces:
-                                if g not in seen:
-                                    seen.add(g)
-                                    stack.append(g)
-                    if len(island) < 4 or any(not e.is_manifold for f in island for e in f.edges):
-                        bmesh.ops.delete(bm_, geom=island, context='FACES')
-                bmesh.ops.delete(bm_, geom=[v for v in bm_.verts if not v.link_faces], context='VERTS')
-                bm_.to_mesh(p_.data)
-                bm_.free()
-            owners_meshes[owner] = join(ps, owner + '__solid')
+            # Weld slivers left by the reduction (sub-2 mm edges) so the exported surface stays an exact closed solid.
+            bm_ = bmesh.new()
+            bm_.from_mesh(p_.data)
+            bmesh.ops.remove_doubles(bm_, verts=list(bm_.verts), dist=.003)
+            bmesh.ops.dissolve_degenerate(bm_, dist=.001, edges=list(bm_.edges))
+            # Closed solids only: drop any island that is not watertight after the weld (stray slivers).
+            seen = set()
+            for face in list(bm_.faces):
+                if face in seen:
+                    continue
+                island, stack = [], [face]
+                seen.add(face)
+                while stack:
+                    f = stack.pop()
+                    island.append(f)
+                    for e in f.edges:
+                        for g in e.link_faces:
+                            if g not in seen:
+                                seen.add(g)
+                                stack.append(g)
+                if len(island) < 4 or any(not e.is_manifold for f in island for e in f.edges):
+                    bmesh.ops.delete(bm_, geom=island, context='FACES')
+            bmesh.ops.delete(bm_, geom=[v for v in bm_.verts if not v.link_faces], context='VERTS')
+            bm_.to_mesh(p_.data)
+            bm_.free()
+        owners_meshes[owner] = join(ps, owner + '__solid')
     final = []
     for owner, o in owners_meshes.items():
         group = [o] + feats.get(owner, [])

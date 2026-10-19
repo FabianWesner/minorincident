@@ -1,0 +1,46 @@
+{
+  "name": "polish-grove-patch",
+  "note": "PO #5 exact sidewalk/lamp location; green lawn must never draw over the paving. World-anchored ambient leaves during camera travel.",
+  "seed": 1,
+  "ground": "district",
+  "time": "L1",
+  "dof": false,
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -52,
+        -47
+      ],
+      [
+        -22,
+        -18
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -38.05,
+        -33.23
+      ],
+      "god": true
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 0.5
+  },
+  "frames": 120,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "seeThroughCutInsideMax": 0
+  }
+}

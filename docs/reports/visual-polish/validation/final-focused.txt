@@ -1,0 +1,123 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/visual-polish -> 2.31.10.108:/srv/mi/ws/visual-polish-c23a7d
+[remote] cache-gc deleted:none
+[remote] sync 764s, 25294 files; job /srv/mi/jobs/visual-polish-c23a7d-63190-1792420579; queueing for a slot
+[runner] slot 1 acquired; load 4.62 2.42 2.68
+[runner] npm ci (lockfile hash 00f1a5352807a34c)
+
+added 247 packages in 9s
+
+ RUN  v5.0.3 /srv/mi/jobs/visual-polish-c23a7d-63190-1792420579
+
+ ✓  functional  tests/unit/vfx/lab-accident.test.ts (4 tests) 317ms
+ ✓  functional  tests/unit/render/visual-polish.test.ts (6 tests) 76ms
+ ✓  functional  tests/unit/vfx/tracers.test.ts (5 tests) 1520ms
+   ✓ @E15 moving tracers use one warm pooled slot per selected round (high) 568ms
+   ✓ @E15 tracer cadence and predicted hit queries preserve an MG burst simulation hash 721ms
+ ✓  functional  tests/sim/combat/m1-feel.test.ts (4 tests) 2123ms
+   ✓ M1-12 @E05 held attacks link three distinct beats then reset after recovery grace 1530ms
+   ✓ @E03-AC20 unarmed retains varied moves across pauses, equal damage, slight kick knockback 352ms
+ ✓  functional  tests/unit/vfx/contact-feedback.test.ts (4 tests) 557ms
+   ✓ @E15 hull collision feedback is bounded and never changes durability (high) 405ms
+ ✓  functional  tests/unit/vfx/integration.test.ts (5 tests) 866ms
+   ✓ M1 E07/E15 @E15 actual infected windups produce tells and clear on interruption without sim writes 494ms
+stdout | tests/unit/render/crowd-lod-geometry.test.ts > @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+{ before: 3782, after: 2946 }
+
+ ✓  functional  tests/unit/assets/civilian-bake.test.ts (6 tests) 8609ms
+   ✓ npc.civilian-man-a: worker transfer preserves all poses, geometry, rig transforms and gun aim 2087ms
+   ✓ npc.civilian-elderly: worker transfer preserves all poses, geometry, rig transforms and gun aim 2230ms
+   ✓ npc.national-guard: worker transfer preserves all poses, geometry, rig transforms and gun aim 2101ms
+   ✓ npc.shelter-survivor.lying: worker transfer preserves all poses, geometry, rig transforms and gun aim 2043ms
+ ✓  functional  tests/unit/render/crowd-lod-geometry.test.ts (2 tests) 1599ms
+   ✓ @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership 740ms
+   ✓ T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels 857ms
+ ✓  functional  tests/unit/vfx/events.test.ts (4 tests) 8491ms
+   ✓ T-E15-hit-flash @E15 repeated hits refresh the pulse; expiration and VFX disable clear it 615ms
+   ✓ T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings 7231ms
+   ✓ T-E15-09 @E15 @E15-AC09 seeded 200 machete kills detach 35% ±5%; gore never changes kills or sim hash 621ms
+ ✓  functional  tests/unit/render/alpha-body-fidelity.test.ts (2 tests) 1498ms
+   ✓ PO #21 @E18 Alpha corpse retains its whole authored body (high) 1190ms
+   ✓ PO #21 @E18 Alpha corpse retains its whole authored body (low) 307ms
+ ✓  functional  tests/unit/vfx/cure-mist.test.ts (2 tests) 677ms
+   ✓ T-E32-23-mist-pool-high @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs 575ms
+ ✓  functional  tests/unit/vfx/pools.test.ts (3 tests) 119ms
+ ✓  functional  tests/unit/render/civilian-surface-retention.test.ts (3 tests) 4075ms
+   ✓ PO #29 @E18 npc.civilian-man-a lod1 reduction retains each visible body surface 2001ms
+   ✓ PO #29 @E18 npc.civilian-man-a lod2 reduction retains each visible body surface 973ms
+   ✓ PO #29 @E18 npc.national-guard lod1 reduction retains each visible body surface 1097ms
+ ✓  functional  tests/unit/vfx/zoo-s2.test.ts (9 tests) 599ms
+   ✓ T-E07-19-gorilla.grab-throw-marker-1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore 365ms
+ ✓  functional  tests/unit/vfx/zoo-s3.test.ts (2 tests) 669ms
+   ✓ T-E07-19-zebra.kick-cue @E07-AC19 exact rear arc/flock area remains visible with particles/flash/gore off 588ms
+ ✓  functional  tests/unit/vfx/blood-scale.test.ts (2 tests) 561ms
+   ✓ PO #32 blood is a supported ground splat with tiny transient drops (high) 521ms
+ ✓  functional  tests/unit/assets/civilian-bake-build.test.ts (72 tests) 46719ms
+   ✓ npc.civilian-elderly:lod0: shipped bake exactly matches runtime preparation 2273ms
+   ✓ npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation 694ms
+   ✓ npc.civilian-elderly:lod2: shipped bake exactly matches runtime preparation 526ms
+   ✓ npc.civilian-man-a:lod0: shipped bake exactly matches runtime preparation 1338ms
+   ✓ npc.civilian-man-a:lod1: shipped bake exactly matches runtime preparation 738ms
+   ✓ npc.civilian-man-a:lod2: shipped bake exactly matches runtime preparation 430ms
+   ✓ npc.civilian-man-a.aftermath:lod0: shipped bake exactly matches runtime preparation 785ms
+   ✓ npc.civilian-man-a.aftermath:lod1: shipped bake exactly matches runtime preparation 555ms
+   ✓ npc.civilian-man-a.aftermath:lod2: shipped bake exactly matches runtime preparation 384ms
+   ✓ npc.civilian-man-b:lod0: shipped bake exactly matches runtime preparation 1168ms
+   ✓ npc.civilian-man-b:lod1: shipped bake exactly matches runtime preparation 634ms
+   ✓ npc.civilian-man-b:lod2: shipped bake exactly matches runtime preparation 398ms
+   ✓ npc.civilian-man-b.aftermath:lod0: shipped bake exactly matches runtime preparation 811ms
+   ✓ npc.civilian-man-b.aftermath:lod1: shipped bake exactly matches runtime preparation 676ms
+   ✓ npc.civilian-man-b.aftermath:lod2: shipped bake exactly matches runtime preparation 306ms
+   ✓ npc.civilian-woman-a:lod0: shipped bake exactly matches runtime preparation 1513ms
+   ✓ npc.civilian-woman-a:lod1: shipped bake exactly matches runtime preparation 534ms
+   ✓ npc.civilian-woman-b:lod0: shipped bake exactly matches runtime preparation 1274ms
+   ✓ npc.civilian-woman-b:lod1: shipped bake exactly matches runtime preparation 579ms
+   ✓ npc.civilian-woman-b:lod2: shipped bake exactly matches runtime preparation 342ms
+   ✓ npc.civilian-woman-b.aftermath:lod0: shipped bake exactly matches runtime preparation 657ms
+   ✓ npc.civilian-woman-b.aftermath:lod1: shipped bake exactly matches runtime preparation 443ms
+   ✓ npc.civilian-woman-b.aftermath:lod2: shipped bake exactly matches runtime preparation 374ms
+   ✓ npc.dale.aftermath:lod0: shipped bake exactly matches runtime preparation 851ms
+   ✓ npc.dale.aftermath:lod1: shipped bake exactly matches runtime preparation 482ms
+   ✓ npc.depot-clerk:lod0: shipped bake exactly matches runtime preparation 1587ms
+   ✓ npc.depot-clerk:lod1: shipped bake exactly matches runtime preparation 505ms
+   ✓ npc.firefighter-alive:lod0: shipped bake exactly matches runtime preparation 1089ms
+   ✓ npc.firefighter-alive:lod1: shipped bake exactly matches runtime preparation 300ms
+   ✓ npc.lab-guard:lod0: shipped bake exactly matches runtime preparation 1465ms
+   ✓ npc.lab-guard:lod1: shipped bake exactly matches runtime preparation 568ms
+   ✓ npc.lab-tech-a:lod0: shipped bake exactly matches runtime preparation 977ms
+   ✓ npc.lab-tech-a:lod1: shipped bake exactly matches runtime preparation 347ms
+   ✓ npc.lab-tech-b:lod0: shipped bake exactly matches runtime preparation 1217ms
+   ✓ npc.lab-tech-b:lod1: shipped bake exactly matches runtime preparation 453ms
+   ✓ npc.marcus.aftermath:lod0: shipped bake exactly matches runtime preparation 728ms
+   ✓ npc.marcus.aftermath:lod1: shipped bake exactly matches runtime preparation 388ms
+   ✓ npc.marcus.aftermath:lod2: shipped bake exactly matches runtime preparation 427ms
+   ✓ npc.mia.aftermath:lod0: shipped bake exactly matches runtime preparation 1299ms
+   ✓ npc.mia.aftermath:lod1: shipped bake exactly matches runtime preparation 364ms
+   ✓ npc.mr-okafor.aftermath:lod0: shipped bake exactly matches runtime preparation 1185ms
+   ✓ npc.mr-okafor.aftermath:lod1: shipped bake exactly matches runtime preparation 728ms
+   ✓ npc.mr-okafor.aftermath:lod2: shipped bake exactly matches runtime preparation 358ms
+   ✓ npc.national-guard:lod0: shipped bake exactly matches runtime preparation 1336ms
+   ✓ npc.national-guard:lod1: shipped bake exactly matches runtime preparation 596ms
+   ✓ npc.national-guard:lod2: shipped bake exactly matches runtime preparation 553ms
+   ✓ npc.police-officer:lod0: shipped bake exactly matches runtime preparation 1155ms
+   ✓ npc.police-officer:lod1: shipped bake exactly matches runtime preparation 361ms
+   ✓ npc.police-officer:lod2: shipped bake exactly matches runtime preparation 328ms
+   ✓ npc.rosa.aftermath:lod0: shipped bake exactly matches runtime preparation 522ms
+   ✓ npc.sam.aftermath:lod0: shipped bake exactly matches runtime preparation 826ms
+   ✓ npc.sam.aftermath:lod1: shipped bake exactly matches runtime preparation 314ms
+   ✓ npc.sam.aftermath:lod2: shipped bake exactly matches runtime preparation 305ms
+   ✓ npc.shelter-survivor.bandaged:lod0: shipped bake exactly matches runtime preparation 964ms
+   ✓ npc.shelter-survivor.bandaged:lod1: shipped bake exactly matches runtime preparation 647ms
+   ✓ npc.shelter-survivor.bandaged:lod2: shipped bake exactly matches runtime preparation 328ms
+   ✓ npc.shelter-survivor.lying:lod0: shipped bake exactly matches runtime preparation 755ms
+   ✓ npc.shelter-survivor.lying:lod1: shipped bake exactly matches runtime preparation 498ms
+   ✓ npc.shelter-survivor.lying:lod2: shipped bake exactly matches runtime preparation 421ms
+   ✓ npc.shelter-survivor.sitting:lod0: shipped bake exactly matches runtime preparation 863ms
+   ✓ npc.shelter-survivor.sitting:lod1: shipped bake exactly matches runtime preparation 597ms
+   ✓ npc.shelter-survivor.sitting:lod2: shipped bake exactly matches runtime preparation 387ms
+
+ Test Files  17 passed (17)
+      Tests  135 passed (135)
+   Start at  14:49:15
+   Duration  65.80s (tests 68%, transform 20%, import 12%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 764s, remote total 80s)
