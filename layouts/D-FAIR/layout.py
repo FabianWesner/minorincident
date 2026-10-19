@@ -255,7 +255,7 @@ for cx in (XC, XP, XM):
 PX0, PX1, PZ0, PZ1 = W / 2, 135.0, -34.4, 41.2
 l.data['bounds'][:] = [[-W / 2, -DEPTH / 2], [W / 2, -DEPTH / 2], [W / 2, PZ0], [PX1, PZ0], [PX1, PZ1], [W / 2, PZ1], [W / 2, DEPTH / 2], [-W / 2, DEPTH / 2], [-W / 2, -DEPTH / 2]]
 l.box('east-yards-terrain', 'grass', [PX1 - PX0, .25, PZ1 - PZ0], [(PX0 + PX1) / 2, -.13, (PZ0 + PZ1) / 2])
-l.box('east-lane-walk', 'sidewalk', [3.4, .12, PZ1 - PZ0], [86.8, .05, (PZ0 + PZ1) / 2])
+l.box('east-lane-walk', 'sidewalk', [3.4, .04, PZ1 - PZ0], [86.8, .02, (PZ0 + PZ1) / 2]); l.data['surfaces'].pop()   # visual only: no walkable slab (L7 owns this ground)
 import random as _random
 _yr = _random.Random(1019)
 _HOUSE = {'a': ('bld.house-a', 1.0, 4.1, -1.6), 'b': ('bld.house-b', 1.0, .2, 5.9), 'c': ('bld.house-c', .8, 5.6 * .8 + .3, -1.25 * .8),
@@ -343,7 +343,7 @@ g.place('bld.house-c', YARD_LIT[0], YARD_LIT[1], FACE_YAW['E'], .8, tint='#ffe9b
 l.anchor('cellar-yard-lit-house', [YARD_LIT[0], 0, YARD_LIT[1]])
 g.place('bld.house-a', 70.4, -24.0, FACE_YAW['E'], 1.0, tint='#bfd8f0')
 g.hedge(75.6, 26.1, 83.2, 26.1, scale=1.0)
-g.hedge(68.2, -33.6, 82.0, -33.6, scale=1.0)
+g.hedge(68.2, -33.6, 79.0, -33.6, scale=1.0)
 g.hedge(66.9, 0.2, 66.9, 8.4, scale=1.0)
 g.hedge(66.9, -33.0, 66.9, -29.0, scale=1.0)
 g.hedge(83.6, -31.5, 83.6, -9.0, scale=1.0)
@@ -364,7 +364,7 @@ lot('prop.kiddie-pool', 79.4, 20.4); lot('prop.sprinkler', 77.2, 18.8, .8); lot(
 lot('veh.pickup-white', 82.4, 11.2, math.pi / 2, .9)
 lot('bld.shed', 68.5, -7.4, 0, .75)
 lot('prop.street-lamp', 68.0, 2.8); lot('prop.street-lamp', 82.2, 2.6)
-lot('prop.bench', 80.8, -11.6, math.pi); lot('prop.crates', 82.4, -25.6, .3); lot('prop.pallet', 82.6, -26.9, .1)
+lot('prop.bench', 80.8, -11.6, math.pi); lot('prop.crates', 81.6, -25.6, .3); lot('prop.pallet', 81.6, -27.0, .1)
 lot('prop.recycling-bin', 67.6, -11.0, 0); lot('prop.trash-bin', 67.6, -12.2, 0); lot('prop.wheelbarrow', 79.0, -24.0, 1.2)
 lot('bld.shed', 81.8, -31.0, math.pi, .8)
 
