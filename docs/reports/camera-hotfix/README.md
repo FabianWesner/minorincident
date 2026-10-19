@@ -46,7 +46,7 @@ The real hide/line-break game captures were also opened: the close view shows bo
 
 ## Final validation
 
-Typecheck, lint and production build pass. The original `npm run verify -- E22` completed its remote CPU phase (110 selected tests passed), then exposed the facade-rendering regression in its browser phase. That browser phase was stopped to fix it; the original command is not claimed as an exit-zero gate. Staged reruns passed the complete 95-test E22 browser suite, then the final expanded facade selector passed the 12 targeted WebGL/WebGPU camera, cellar and blank-viewport tests. The final renderer/corpse suite passed 416/416 on Hetzner. The final deterministic E18 counters passed 7/7.
+[Typecheck](typecheck-final.txt), [lint](lint-final.txt) and [production build](build-final.txt) pass. The original `npm run verify -- E22` completed its remote CPU phase (110 selected tests passed), then exposed the facade-rendering regression in its browser phase. That browser phase was stopped to fix it; the original command is not claimed as an exit-zero gate. Staged reruns passed the complete 95-test E22 browser suite, then the final expanded facade selector passed the 12 targeted WebGL/WebGPU camera, cellar and blank-viewport tests. The final renderer/corpse suite passed 416/416 on Hetzner. The final deterministic E18 counters passed 7/7.
 
 The broad remote unit/sim/levels run finished with 3183 passed, 3 failed and 11 skipped (509 files). One failure caught an early corpse-counter predicate before the lethal-frame correction; the corrected regression passes. The unchanged L10 campus timing measured 7.15 ms under load, then passed its isolated rerun. The unchanged Zoo 200-actor benchmark missed its 4 ms budget both in the broad run (4.03 ms) and isolated (5.58 ms); this remains unresolved. No timing budget was changed.
 
@@ -59,3 +59,15 @@ The broad remote unit/sim/levels run finished with 3183 passed, 3 failed and 11 
 | [Final targeted browser suite](camera-final-browser.txt) | 12/12 pass, including wide facades and actual WASD hint at three viewport sizes |
 | [Final E18 counters](e18-counters-final.txt) | 7/7 pass |
 | [Broad CPU failures](camera-full.txt) / [isolated L10](camera-l10-isolated.txt) | L10 isolated pass; Zoo timing miss remains |
+
+## Native timing
+
+The WebGL quiet-run batch was admitted at 13:17 UTC after approximately 17 minutes queued. Preflight recorded load 2.93, no other headless Chrome or local Vitest processes, and all browser slots held. The reservation released after 2.7 minutes. High passed all limits: war/collapse p95 **9.8/11.5 ms**, sim p95 **2.7 ms**, transition hitches at most **28.6 ms**.
+
+Low under 4× CPU throttle failed at sim p95 **6.1 ms** versus 6 ms. Its captured collapse median **35.3 ms** also exceeds 33.33 ms; turn/line-break hitches **84.4/109.7 ms** exceed 80 ms. Draw/triangle and awake-prop counters remain within tier budgets. [Raw WebGL evidence](native-webgl/run.txt) retains the failure. [Previously tracked evidence](native-webgl/tracked-baseline-comparison.json), rather than a contemporaneous main rerun, already missed the low sim budget (6.25 ms), war median (35.8 ms) and turn hitch (86.4 ms); it does not establish the cause of the current collapse/line-break misses. The native gate is therefore **not green**.
+
+All four native WebGL war/collapse captures were opened: high shows the firing line, bodies, stalls, bus, smoke and burning intersection; low retains the battlefield and courier in the tall phone crop. These are the existing authored overview presets used by the timing harness; gameplay camera regression evidence is in the game captures and matrix above.
+
+After more than three minutes without a reservation (artifact review and comparison), the separate WebGPU batch was admitted at 13:23 UTC with load 2.84 and the same quiet preflight. It released after 2.7 minutes. High passed all limits: war/collapse p95 **10.3/10.6 ms**, sim p95 **2.5 ms**. Low failed sim p95 **6.4 ms** versus 6 ms; war/collapse medians **28.5/25.6 ms** and transition hitches **65.8/49.8/55.1 ms** meet their respective limits. [Raw WebGPU evidence](native-webgpu/run.txt) retains both results. Draws/triangles and awake props meet budgets on both backends and tiers; native low sim timing and the additional WebGL low frame/hitch misses remain unresolved. The unchanged Zoo CPU timing miss also remains. No limit was relaxed and no test skipped to obtain a pass.
+
+All four WebGPU native captures were opened. They show the same battlefield composition as WebGL: active gunfire and bodies by the stalls in the war view, then the burning intersection and smoke in the collapse view. The phone crop retains the courier and the nearby stalls. Both backend assertions executed on native Chrome with `--use-angle=metal`; the WebGPU run additionally selected the actual WebGPU backend. Both held reservations were below three minutes, with a review break between them.
