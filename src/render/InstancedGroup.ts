@@ -1,10 +1,13 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
+import { type BufferGeometry, type Raycaster, type Intersection, Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
+import { MeshBVH, acceleratedRaycast } from 'three-mesh-bvh';
 import { staticInstanceAttributes } from './StaticInstanceAttributes';
+
+const raycastTrees = new WeakMap<BufferGeometry, MeshBVH>();
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
-  private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string; interior?: boolean; indices?: number[] }[] = [];
+  private readonly batches: { mesh: InstancedMesh; source: BufferGeometry; local: Matrix4; base?: Matrix4; door?: string; interior?: boolean; indices?: number[] }[] = [];
   private readonly scratch = new Matrix4();
   private readonly color = new Color();
   private frozenWorld = false;
@@ -40,9 +43,31 @@ export class InstancedGroup extends Group {
       }
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
       const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
-      this.batches.push({ mesh, local, interior: child.userData.interior === true, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
+      this.batches.push({ mesh, source: child.geometry, local, interior: child.userData.interior === true, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
+  }
+  private raycastMesh?: Mesh;
+  private readonly raycastHits: Intersection[] = [];
+  /** Exact static-prototype queries, reusing a triangle BVH across placement/LOD wrappers.
+   * Indirect trees leave shared vertex/index buffers and material groups untouched. */
+  intersectsRay(raycaster: Raycaster): boolean {
+    const probe = this.raycastMesh ??= new Mesh();
+    for (const batch of this.batches) {
+      const mesh = batch.mesh;
+      if (!mesh.count || !mesh.layers.test(raycaster.layers)) continue;
+      let tree = raycastTrees.get(batch.source);
+      if (!tree) { tree = new MeshBVH(batch.source, { indirect: true }); raycastTrees.set(batch.source, tree); }
+      mesh.geometry.boundsTree = tree;
+      probe.geometry = mesh.geometry; probe.material = mesh.material;
+      for (let i = 0; i < mesh.count; i++) {
+        mesh.getMatrixAt(i, this.scratch); probe.matrixWorld.multiplyMatrices(mesh.matrixWorld, this.scratch);
+        this.raycastHits.length = 0;
+        acceleratedRaycast.call(probe, raycaster, this.raycastHits);
+        if (this.raycastHits.length) return true;
+      }
+    }
+    return false;
   }
   private points?: Vector3[];
   /** District origins and batch-local transforms stay fixed; animated placements
@@ -154,5 +179,5 @@ export class InstancedGroup extends Group {
     batch.mesh.setMatrixAt(i, this.scratch);
     const tint = reference.userData.tint; batch.mesh.setColorAt(i, this.color.set(typeof tint === 'string' ? tint : '#ffffff'));
   }
-  dispose(): void { for (const batch of this.batches) { if (batch.mesh.userData.ownedPowerGeometry || batch.mesh.userData.staticInstanceAttributes) batch.mesh.geometry.dispose(); batch.mesh.dispose(); } this.clear(); this.batches.length = 0; }
+  dispose(): void { for (const batch of this.batches) { if (batch.mesh.userData.ownedPowerGeometry || batch.mesh.userData.staticInstanceAttributes) batch.mesh.geometry.dispose(); batch.mesh.dispose(); } this.clear(); this.batches.length = 0; this.raycastMesh = undefined; this.raycastHits.length = 0; }
 }

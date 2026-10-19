@@ -1,8 +1,8 @@
-import { Box3, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
-import { color as colorNode, vec4, renderOutput } from 'three/tsl';
+import { Box3, DataTexture, RGBAFormat, type Texture, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
+import { color as colorNode, vec4, renderOutput, uniform, texture, viewportUV, Fn, Discard } from 'three/tsl';
 import { Ray, ShapeType, type Collider } from '@dimforge/rapier3d-compat';
 import { infectedDefinitions } from '../data/infected';
-import { healthBarColors, healthFraction } from '../ui/health';
+import { healthBarColors, healthFraction, nightHealthBarGains } from '../ui/health';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { pickBodies } from './characters/PickBodies';
@@ -22,6 +22,10 @@ export function barSize(width: number, height: number, mega = false): { width: n
  * HP is read every presentation frame; nothing here writes simulation state. */
 export class HealthBars extends Group {
   private readonly meshes: InstancedMesh[];
+  private readonly unoccluded = new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1, RGBAFormat);
+  private readonly courierMask = texture(this.unoccluded);
+  private readonly outlineGain = uniform(1);
+  private readonly fillGain = uniform(1);
   private readonly bounds = new Box3();
   private readonly screenBounds = new Box3();
   private readonly projection = new Matrix4();
@@ -36,16 +40,22 @@ export class HealthBars extends Group {
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly probing = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld) {
-    super(); this.name = 'infected-health-bars';
+    super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
     this.meshes = [healthBarColors.outline, healthBarColors.background, healthBarColors.fill].map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
       // Convert each bar fragment directly; a full-screen output transform would overwrite the game image.
-      material.fragmentNode = renderOutput(vec4(colorNode(color), 1), NoToneMapping, SRGBColorSpace);
+      material.fragmentNode = Fn(() => {
+        // The foreground courier also occludes world bars behind her face/body.
+        Discard(this.courierMask.sample(viewportUV).a.lessThan(.5));
+        return renderOutput(vec4(colorNode(color).mul(i === 0 ? this.outlineGain : i === 2 ? this.fillGain : 1), 1), NoToneMapping, SRGBColorSpace);
+      })();
       const mesh = new InstancedMesh(new PlaneGeometry(1, 1), material, 350);
       mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 100 + i; this.add(mesh); return mesh;
     });
   }
-  update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean): void {
+  update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
+    this.outlineGain.value = cityNight ? nightHealthBarGains.outline : 1;
+    this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
     this.probes.length = 0;
     for (const layer of this.meshes) layer.count = 0;
     const player = this.world.entities.get(1); if (!player) return;
@@ -91,7 +101,8 @@ export class HealthBars extends Group {
     }
     for (const layer of this.meshes) { layer.visible = layer.count > 0; if (layer.count) layer.instanceMatrix.needsUpdate = true; }
   }
+  setCourierMask(mask?: Texture): void { this.courierMask.value = mask ?? this.unoccluded; }
   get count(): number { return this.meshes[0].count; }
   snapshot() { return { count: this.meshes[0].count, draws: this.meshes[0].count ? 3 : 0, bars: this.probes }; }
-  dispose(): void { for (const layer of this.meshes) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.clear(); }
+  dispose(): void { for (const layer of this.meshes) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.unoccluded.dispose(); this.clear(); }
 }

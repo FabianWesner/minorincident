@@ -2,19 +2,23 @@ import { test, expect } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { SceneSession, readSpec, stopServer } from '../../tools/scenelab/session';
+import { healthBarColors, nightHealthBarGains } from '../../src/ui/health';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 test.describe.configure({ mode: 'serial' });
-const output = 'docs/reports/alpha-bars';
+const output = process.env.HEALTH_BAR_OUT ?? 'docs/reports/alpha-bars';
+const night = process.env.HEALTH_BAR_NIGHT === '1';
+const backend = process.env.HEALTH_BAR_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const fixture = readSpec('tests/scenes/health-bars/shared.json');
 for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [844, 390, 'low']] as const) {
   test(`T-E07-06-bars-${width} @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera ${tier}`, async () => {
     test.setTimeout(180_000);
-    const session = new SceneSession({ tier, viewport: { width, height } });
-    const spec: SceneSpec = { ...fixture, actors: fixture.actors!.filter(a => ['courier', 'near', 'normal'].includes(a.id!)), script: [] };
+    const session = new SceneSession({ backend, tier, viewport: { width, height } });
+    const spec: SceneSpec = { ...fixture, time: night ? 'L6' : fixture.time, actors: fixture.actors!.filter(a => ['courier', 'near', 'normal'].includes(a.id!)), script: [] };
     try {
       await session.open();
       await session.load({ ...spec, barArchetypes: [] });
+      expect(await session.page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
       mkdirSync(output, { recursive: true });
       const beforeImage = PNG.sync.read(await session.screenshot(`${output}/before-${width}.png`));
       await session.load(spec); await session.ready();
@@ -37,6 +41,11 @@ for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [84
       const pixels = [sample(b.x - b.width / 4, b.y), sample(b.x + b.width / 4, b.y), sample(b.x - b.width / 2 - 1, b.y)];
       const ls = pixels.map(luminance), contrast = ls.flatMap((a, i) => ls.slice(i + 1).map(v => (Math.max(a, v) + .05) / (Math.min(a, v) + .05)));
       for (const ratio of contrast) expect(ratio).toBeGreaterThanOrEqual(3);
+      if (night) {
+        const rgb = (hex: string) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+        expect(ls[0]).toBeCloseTo(luminance(rgb(healthBarColors.fill)) * nightHealthBarGains.fill, 2);
+        expect(ls[2]).toBeCloseTo(luminance(rgb(healthBarColors.outline)) * nightHealthBarGains.outline, 2);
+      }
       // Camera movement: bar center stays on its world anchor within two CSS pixels.
       await session.page.evaluate(() => window.__SCENE__!.setCamera({ mode: 'game', target: [-1, 1], zoom: .85 }));
       bars = await state(); expect(bars.count).toBe(1);

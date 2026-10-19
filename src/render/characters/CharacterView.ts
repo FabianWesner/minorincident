@@ -1,4 +1,5 @@
 import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { positionView } from 'three/tsl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -20,6 +21,10 @@ import { CourierLiving } from './CourierRig';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
+// Compress depth into a near-camera slice: the courier clears world blockers,
+// while her own face, cap, hair and limbs still occlude one another correctly.
+const foregroundDepth = positionView.z.negate().mul(.001).clamp(.001, .1);
+
 export class CharacterView extends Group {
   private foregroundActive: boolean | undefined;
   /** The same presentation silhouette used through faded buildings: keep the
@@ -29,7 +34,11 @@ export class CharacterView extends Group {
     this.foregroundActive = active;
     this.traverse(node => {
       if (!(node instanceof Mesh)) return;
-      for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.depthTest = !active;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+        material.depthTest = true;
+        const nodeMaterial = material as import('three/webgpu').NodeMaterial, depth = active ? foregroundDepth : null;
+        if (nodeMaterial.depthNode !== depth) { nodeMaterial.depthNode = depth; nodeMaterial.needsUpdate = true; }
+      }
       node.renderOrder = active ? 20 : 0;
     });
   }
@@ -97,7 +106,7 @@ export class CharacterView extends Group {
       this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
-      vertexMaterial.movingFigure.value = 1;
+      vertexMaterial.movingFigure.value = 1; vertexMaterial.heroFigure.value = 1;
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
       if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
       const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
@@ -117,7 +126,7 @@ export class CharacterView extends Group {
           if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
-          (replacement as PaletteMaterial).movingFigure.value = 1;
+          (replacement as PaletteMaterial).movingFigure.value = 1; (replacement as PaletteMaterial).heroFigure.value = 1;
           if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
@@ -148,7 +157,7 @@ export class CharacterView extends Group {
             const material = node.geometry.hasAttribute('color') && !source.name.startsWith('emi_')
               ? materials.fromVertexColors('cure:carried')
               : materials.fromColor(`cure:${source.name}`, (source as import('three').MeshStandardMaterial).color, source.name.startsWith('emi_') ? .6 : 0);
-            material.movingFigure.value = 1; material.userData.sharedPalette = true;
+            material.movingFigure.value = 1; material.heroFigure.value = 1; material.userData.sharedPalette = true;
             source.dispose(); return material;
           };
           node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
@@ -172,6 +181,7 @@ export class CharacterView extends Group {
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
+          node.material.movingFigure.value = 1; node.material.heroFigure.value = 1;
           node.material.userData.sharedPalette = true; source.dispose(); node.castShadow = true;
         } });
         character.rig.head.add(headlamp);

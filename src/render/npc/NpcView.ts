@@ -76,7 +76,10 @@ export class NpcView extends Group {
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
     if (this.world.scenario === 'L7' || this.world.scenario === 'L6') {
-      const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
+      const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1;
+      // Continuous moon bounce keeps the companion legible beyond the courier/lamp pools.
+      material.figureFill.value = this.world.scenario === 'L6' ? 8 : 4; material.figureRim.value = .5; material.companion.value = 1;
+      material.userData.sharedPalette = true;
       const def = this.registry.definition('char.corgi');
       // The tongue stays its own mesh (batching skips hidden meshes) so it can retract (CorgiTongue).
       const tongues: Object3D[] = []; this.dog.traverse(node => { if (node.userData.corgiTongue && node.visible) { node.visible = false; tongues.push(node); } });

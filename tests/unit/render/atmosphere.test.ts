@@ -6,6 +6,7 @@ import { LookUniforms } from '../../../src/render/LookUniforms';
 import { Lighting } from '../../../src/render/Lighting';
 import { LampInsects } from '../../../src/render/AmbientLife';
 import { timeOfDay } from '../../../src/data/timeOfDay';
+import { cameraFraming } from '../../../src/data/cameraFraming';
 import { worldLook } from '../../../src/data/worldLook';
 import type { PlacedLight } from '../../../src/data/placedLights';
 
@@ -98,5 +99,27 @@ test('@E25 atmosphere 2: haze range follows the camera distance and beam weight 
     lighting.update({ focus: new Vector3(), radius: 19, driving: false, camera } as unknown as View);
     expect(lighting.hazeNear.value).toBeCloseTo(19 * worldLook.hazeStart); expect(lighting.hazeFar.value).toBeCloseTo(19 * worldLook.hazeEnd);
     lighting.set('night'); expect(lighting.practicalEffects.beamStrength.value).toBe(1);
+  } finally { lighting.dispose(); }
+});
+
+test('@E29-AC14 courier surface fill leaves the night ground aura and smoke restoration intact', () => {
+  const lighting = new Lighting(new Scene());
+  try {
+    lighting.set('L6');
+    expect(timeOfDay.L6.aura).toBe(.45); expect(lighting.heroRim.value).toBe(.22);
+    expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(.8);
+    lighting.setPlayerSmoke(true); expect(lighting.heroFill.value).toBe(.45 * 3.2 + 1);
+    expect(lighting.rim.value).toBe(.4); expect(lighting.heroSmokeRim.value).toBe(.2);
+    lighting.setPlayerSmoke(false); expect(lighting.heroSmokeRim.value).toBe(0); expect(lighting.heroFill.value).toBe(.45 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(.8);
+    const camera = new PerspectiveCamera();
+    for (const zoom of [.5, 1, 1.5]) {
+      lighting.update({ focus: new Vector3(), radius: cameraFraming.radiusM * zoom, driving: false, camera } as unknown as View);
+      expect(lighting.heroRim.value).toBeCloseTo(.22);
+      expect(lighting.heroSurfaceFill.value).toBe(.8);
+    }
+    lighting.set('night'); lighting.setPlayerSmoke(true);
+    expect(lighting.rim.value).toBe(.65); expect(lighting.heroSmokeRim.value).toBe(0);
+    lighting.setPlayerSmoke(false); expect(lighting.rim.value).toBe(.45);
+    lighting.set('L6-subway'); expect(lighting.heroRim.value).toBe(0); expect(lighting.heroFill.value).toBe(1.3 * 3.2); expect(lighting.heroSurfaceFill.value).toBe(0);
   } finally { lighting.dispose(); }
 });
