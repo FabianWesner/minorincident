@@ -170,6 +170,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const dark = mix(vec3(luminance(result)).mul(.38).add(.006), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       }
+      const graded = float(1).toVar();
       const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
       if (!emissive && (mode & flags.hero)) {
         // A soft contact shade separates the courier from the night road without
@@ -180,31 +181,43 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         result.mulAssign(contact.mul(-.6).add(1));
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
-        const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3, 1.5)
+        const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
           .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
           .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
-        result.mulAssign(crowded.mul(-.45).add(1));
+        result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
-          // Daylight-like key on her albedo: a camera-relative warm key and cool fill keep the
-          // authored hues (auburn hair, teal/yellow outfit, peach skin); a little of the night
-          // light (practical pools, moon) still tints her so she belongs to the scene.
+          // Hue-preserving albedo lift: scale RGB together so HSV hue/saturation stay authored
+          // (auburn hair, teal/yellow outfit, peach skin) while dark swatches climb out of the night.
+          const top = max(max(surface.r, surface.g), surface.b).max(1e-4);
+          // Exponential shoulder: x2.7 on dark swatches, x1 at the peak, so hair stays darker than skin.
+          const lifted = surface.mul(top.min(.9).mul(-3).exp().oneMinus().mul(.92 / (1 - Math.exp(-2.7))).div(top));
+          // Daylight-like key after the lift, so the form keeps its light and shade: a camera-relative
+          // warm key and neutral fill, plus a little of the night light (pools, moon) so she belongs there.
           const key = normalView.dot(vec3(-.42, .62, .66)).mul(.5).add(.5);
-          const keyed = surface.max(vec3(.015)).mul(mix(vec3(.55, .55, .62), vec3(1, .96, .88), key.mul(key))).add(result.max(vec3(0)).mul(.25)).toVar();
-          // Hue-preserving value lift: scale RGB together so HSV hue/saturation stay authored
-          // while the darkest swatches climb out of the night; the peak stays below clipping/bloom.
-          const peak = max(max(keyed.r, keyed.g), keyed.b).max(1e-4);
-          keyed.mulAssign(peak.min(.9).div(.9).pow(.42).mul(.9).div(peak));
+          const keyed = lifted.mul(mix(vec3(.66, .66, .72), vec3(1, .97, .9), key.mul(key))).add(result.max(vec3(0)).mul(.2)).toVar();
+          const peak = max(max(keyed.r, keyed.g), keyed.b);
+          keyed.mulAssign(float(.9).div(peak.max(.9)));
           // Narrow back rim in her own (brightened) colours, warm-white biased: the outline reads at
           // every zoom without a mint/grey veil over the face and clothes.
           const band = facing.smoothstep(0, lighting.heroRimEdge.mul(.45)).oneMinus();
           const tint = mix(surface.div(max(max(surface.r, surface.g), surface.b).max(.02)), vec3(1, .9, .75), .45).mul(.9);
-          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(2.6)).clamp(0, .65)));
+          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(3.6)).clamp(0, .8)));
+        }).Else(() => {
+          // Other night presets (L5 dusk aura, practical pools): the aura and pools stack on her and the
+          // survivors beside her. Scale RGB together so the brightest channel stays below clipping: the
+          // hue and saturation survive instead of bleaching to white (QA #28).
+          If(max(this.heroFigure, this.figureFill.greaterThan(0).select(1, 0)).greaterThan(0), () => {
+            const top = max(max(result.r, result.g), result.b);
+            result.mulAssign(float(.86).div(top.max(.86)));
+          });
+          // The warm dusk grade would lift her skin/clothes past white again; she keeps the protection mask.
+          graded.assign(this.heroFigure.oneMinus());
         });
       }
       result.addAssign(this.hitFlash);
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
-      return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()));
+      return vec4(result, this.fade.mul(nodes?.opacity ?? 1).mul(courierRead.oneMinus()).mul(graded));
     })();
     lighting.paletteMaterials.add(this);
     this.addEventListener('dispose', () => lighting.paletteMaterials.delete(this));

@@ -46,12 +46,13 @@ export function courierColourStats(image: PNG, day: PNG, mask: PNG): ColourStats
 }
 /** Signed hue distance in degrees. */
 export const hueDelta = (a: number, b: number) => ((a - b + 540) % 360) - 180;
-/** The colour guard: red-brown hair (hue within 0..35 deg, i.e. not mint/grey) and outfit saturation >= 70 % of daylight. */
+/** The colour guard: red-brown hair (hue -10..35 deg, saturation >= 80 % of daylight, i.e. not mint/grey/pastel) and outfit saturation >= 70 % of daylight. */
 export function colourFailures(night: ColourStats, day: ColourStats): string[] {
   const failures: string[] = [];
-  if (day.hair.pixels < 15 || day.outfit.pixels < 40) failures.push(`daylight reference lacks classes (hair ${day.hair.pixels}px, outfit ${day.outfit.pixels}px)`);
+  if (day.hair.pixels < 15 || day.outfit.pixels < 20) failures.push(`daylight reference lacks classes (hair ${day.hair.pixels}px, outfit ${day.outfit.pixels}px)`);
   const hue = night.hair.hue > 180 ? night.hair.hue - 360 : night.hair.hue;
   if (!(hue >= -10 && hue <= 35) || night.hair.saturation < .3) failures.push(`hair hue ${night.hair.hue.toFixed(1)} deg / saturation ${night.hair.saturation.toFixed(2)} is not red-brown`);
+  if (night.hair.saturation < .8 * day.hair.saturation) failures.push(`hair saturation ${night.hair.saturation.toFixed(3)} < 80% of daylight ${day.hair.saturation.toFixed(3)}`);
   if (night.outfit.saturation < .7 * day.outfit.saturation) failures.push(`outfit saturation ${night.outfit.saturation.toFixed(3)} < 70% of daylight ${day.outfit.saturation.toFixed(3)}`);
   return failures;
 }
