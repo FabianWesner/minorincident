@@ -103,7 +103,7 @@ test('T-recover-03 @E19 a recovered infected forgets its chase and re-acquires o
   expect(brain.mode).toBe('chase'); expect(alerts.map(a => a.cause)).toEqual(['sight']);
 });
 
-test('@camera-hotfix debug counts separate recoverable bodies from permanent corpses through recovery and pool reuse', async () => {
+test('@E22 @camera-hotfix debug counts separate recoverable bodies from permanent corpses through recovery and pool reuse', async () => {
   const { w, ai } = await arena(3);
   const dead = zombie(w, 6, 0), downed = zombie(w, -6, 0);
   const deadId = dead.id, downId = downed.id;

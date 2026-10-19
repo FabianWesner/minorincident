@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/camera-hotfix -> 2.28.24.66:/srv/mi/ws/camera-hotfix-6b94ee
+[remote] cache-gc deleted:none
+[remote] sync 47s, 25249 files; job /srv/mi/jobs/camera-hotfix-6b94ee-58644-1792409677; queueing for a slot
+[runner] slot 1 acquired; load 1.64 0.95 0.94
+
+ RUN  v5.0.3 /srv/mi/jobs/camera-hotfix-6b94ee-58644-1792409677
+
+ ✓  functional  tests/levels/camera-route-framing.test.ts (10 tests) 33572ms
+   ✓ L1 authored waypoint sweep preserves player framing @camera-hotfix 1494ms
+   ✓ L2 authored waypoint sweep preserves player framing @camera-hotfix 2836ms
+   ✓ L3 authored waypoint sweep preserves player framing @camera-hotfix 3027ms
+   ✓ L4 authored waypoint sweep preserves player framing @camera-hotfix 1612ms
+   ✓ L5 authored waypoint sweep preserves player framing @camera-hotfix 1350ms
+   ✓ L6 authored waypoint sweep preserves player framing @camera-hotfix 373ms
+   ✓ L7 authored waypoint sweep preserves player framing @camera-hotfix 879ms
+   ✓ L8 authored waypoint sweep preserves player framing @camera-hotfix 951ms
+   ✓ L9 authored waypoint sweep preserves player framing @camera-hotfix 7948ms
+   ✓ L10 authored waypoint sweep preserves player framing @camera-hotfix 13096ms
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  11:35:26
+   Duration  37.55s (tests 90%, transform 9%, import 2%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 47s, remote total 41s)
