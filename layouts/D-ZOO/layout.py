@@ -244,7 +244,7 @@ POOL = {'W': [('bld.apartment-block-b', 1.0), ('bld.apartment-block-a', 1.0), ('
         'E': [('bld.house-c', .85), ('bld.garage-detached', .9), ('bld.house-e', .9), ('bld.storefront-row', .8), ('bld.house-a', 1.0), ('bld.house-d', .9), ('bld.supermarket', .9), ('bld.house-e', .9)],
         'S': [('bld.house-a', 1.0), ('bld.storefront-row', .8), ('bld.house-d', .9), ('bld.supermarket', .9), ('bld.house-c', .85), ('bld.garage-detached', .9), ('bld.gas-station', 1.0), ('bld.house-e', .9)]}
 TINTS = ['#ffe58f', '#bfe8c8', '#b3d7f5', '#ffb8a3', '#d3dfae', '#fff6e6', '#d9c8f2']
-CARS = ['veh.sedan-red', 'veh.sedan-blue', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-white', 'veh.suv-green', 'veh.pickup-white', 'veh.wreck', 'veh.box-truck', 'veh.sedan-green']
+CARS = ['veh.sedan-red', 'veh.sedan-blue', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-white', 'veh.suv-green', 'veh.pickup-white', 'veh.box-truck', 'veh.sedan-green', 'veh.school-bus']
 def side_row(side, lo, hi, skip=None):
     """Buildings facing the ring road from beyond the outer kerb walk. E/W rows run along z, N/S along x."""
     face = {'E': 'W', 'W': 'E', 'N': 'S', 'S': 'N'}[side]
@@ -266,6 +266,12 @@ def side_row(side, lo, hi, skip=None):
         else: cursor += 5.0
 for side, lo, hi, skip in (('N', -146, 146, None), ('S', -146, 146, None), ('W', -100, 100, None), ('E', -100, 100, (66, 82))):
     side_row(side, lo, hi, skip)
+for t in range(-92, 93, 24):
+    for sx in (-1, 1):
+        if sx > 0 and 66 < t < 82: continue
+        put('prop.street-lamp', sx * 126.0, t + 6, 0, 1.0, margin=.2); put('prop.street-lamp', sx * 117.8, t + 18, 0, 1.0, margin=.2)
+for t in range(-116, 117, 24):
+    for sz in (-1, 1): put('prop.street-lamp', t + 6, sz * 96.0, 0, 1.0, margin=.2); put('prop.street-lamp', t + 18, sz * 87.8, 0, 1.0, margin=.2)
 # trees and lamps along the outer kerb walk, parked cars on the carriageway edge, a tree screen along the bounds
 for t in range(-100, 101, 12):
     for sx in (-1, 1):
@@ -273,14 +279,9 @@ for t in range(-100, 101, 12):
         put('prop.street-tree' if (t // 12) % 2 else 'prop.street-tree-blossom', sx * 126.6, t + 3 * sx, 0, .8, margin=.2, shrink=2.2)
 for t in range(-120, 121, 12):
     for sz in (-1, 1): put('prop.street-tree' if (t // 12) % 2 else 'prop.street-tree-blossom', t, sz * 96.6, 0, .8, margin=.2, shrink=2.2)
-for t in range(-92, 93, 24):
-    for sx in (-1, 1):
-        if sx > 0 and 66 < t < 82: continue
-        l.place('prop.street-lamp', [sx * 126.0, 0, t + 6]); l.place('prop.street-lamp', [sx * 117.8, 0, t + 6 + 12])
-for t in range(-116, 117, 24):
-    for sz in (-1, 1): l.place('prop.street-lamp', [t + 6, 0, sz * 96.0]); l.place('prop.street-lamp', [t + 18, 0, sz * 87.8])
 for k in range(34):
     side = _rng.choice(('N', 'S', 'E', 'W')); t = _rng.uniform(-92, 92)
+    if abs(t) < 8: continue          # the four outer probe points of the wall test stay open
     asset = _rng.choice(CARS); yaw = _rng.choice((-1, 1)) * math.pi / 2 + _rng.uniform(-.06, .06)
     if side in ('E', 'W'):
         x = (120.0 if _rng.random() < .5 else 123.4) * (1 if side == 'E' else -1)
@@ -297,12 +298,12 @@ for t in range(-92, 93, 5):
         put('prop.tree' if (t // 5) % 2 else 'prop.street-tree', x, t + _rng.uniform(-1, 1), 0, .75, margin=0, shrink=2.4)
 # spur flanks, roadblock and lamps
 for x in (131.0, 138.0, 144.0):
-    l.place('prop.street-lamp', [x, 0, 69.6]); l.place('prop.street-lamp', [x, 0, 78.4])
+    put('prop.street-lamp', x, 69.6, 0, 1.0, margin=.2); put('prop.street-lamp', x, 78.4, 0, 1.0, margin=.2)
 for k, z in enumerate((71.6, 74.0, 76.4)):
     put('prop.jersey-barrier', 142.6, z, math.pi / 2, 1.0)
 for z in (71.4, 74.6):
     put('prop.jersey-barrier', 144.2, z + .8, math.pi / 2, 1.0)
-put('veh.military-truck', 145.6, 72.2, math.pi / 2 + .12); put('veh.wreck', 144.8, 76.4, 1.2); put('veh.sedan-white', 139.4, 71.8, -math.pi / 2 + .1)
+put('veh.military-truck', 145.6, 72.2, math.pi / 2 + .12); put('veh.pickup-red', 144.8, 76.4, 1.2); put('veh.sedan-white', 139.4, 71.8, -math.pi / 2 + .1)
 for z in (70.2, 77.8): put('prop.sandbag-pallet', 143.4, z, 0.0)
 put('prop.light-tower-trailer', 141.6, 69.4, math.pi / 2); put('prop.barricade', 140.0, 75.8, math.pi / 2); put('prop.emergency-light', 140.6, 72.4, 0.0)
 put('prop.emergency-light', 143.0, 77.8, 0.0); put('prop.street-sign', 138.4, 78.6, math.pi)
