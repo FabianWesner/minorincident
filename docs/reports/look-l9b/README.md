@@ -43,5 +43,5 @@ to near-white at zoom 1 (kept per PO), the fires are still small at zoom 1 on th
 - tests/levels L9/L10 + tests/sim (remote): 153 passed, 3 timing p95 tests failed on a loaded runner and passed on re-run (3/3).
 - Scene Lab round 4 (catalog-high/low, roadLift 1.0): apc nav median 2.4-2.9 (gate 2.5 ok), road 2.3-3.0 ok, player 15.6;
   crawl FAILED (1.2-1.5: the asphalt band was only .045 luminance against the kit rubble at .034). Round 5 raises the lift to
-  2.0 (#aebfd3) and darkens the gully banks; its measurement was queued behind other lanes' browser jobs (see the lane report).
+  2.0 (#aebfd3) and darkens the gully banks; its measurement (night-read-l9-* + l9-look-*) is UNMEASURED: browser admission timed out after 40 min behind a 2-worker Playwright job. The orchestrator gate (scene:matrix night-read-*) must confirm it before merge; if the crawl median is still < 2.5, raise roadLift (2.4) or dim the kit rubble.
 - E18: every look scene passed drawCallsMax 300 / trianglesMax 500k (low) on both tiers; no console errors; clipping 0.
