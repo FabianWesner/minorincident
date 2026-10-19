@@ -1,0 +1,75 @@
+{
+  "name": "atmosphere2-embers-l7",
+  "note": "Atmosphere 2: L7 burning-ruins night (shared L6 preset): ember-brown haze and smoky split tone at the game camera. Scene Lab draws no district AmbientLife, so the rising embers are reviewed in the campaign stills (docs/reports/atmosphere-2/sheets). Review: courier, corgi and infected eyes stay readable under the warm grade.",
+  "seed": 25,
+  "time": "L6",
+  "dof": false,
+  "ground": "asphalt",
+  "size": 42,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 135,
+      "loadout": [
+        "weapon.bat",
+        "weapon.handgun"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "id": "threat",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        4,
+        3
+      ],
+      "yaw": 210,
+      "state": "idle"
+    }
+  ],
+  "props": [
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        -4,
+        2
+      ]
+    },
+    {
+      "id": "bench",
+      "asset": "prop.bench",
+      "at": [
+        -5,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

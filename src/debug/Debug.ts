@@ -32,7 +32,7 @@ export class Debug {
       nature: this.pane.addFolder({ title: 'Grass · foliage · wind', expanded: false }),
     };
     for (const key of Object.keys(values) as (keyof WorldLook)[]) {
-      const folder = /^(fog)/.test(key) ? folders.fog : /^(dof|bloom|vignette)/.test(key) ? folders.post
+      const folder = /^(fog|haze|cloud)/.test(key) ? folders.fog : /^(dof|bloom|vignette|grade)/.test(key) ? folders.post
         : /^(grass|foliage|wind|leaf|petal|dust|bird)/.test(key) ? folders.nature : /^(asphalt|sidewalk)/.test(key) ? folders.surfaces : folders.light;
       const options = typeof values[key] === 'number' ? (() => { const [min, max, step] = lookRanges[key as keyof typeof lookRanges]; return { min, max, step }; })() : {};
       folder.addBinding(values, key, options).on('change', () => {
