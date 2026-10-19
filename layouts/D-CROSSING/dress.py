@@ -772,10 +772,53 @@ for index, p in enumerate(l.data['placements']):
     if chance and NIGHT.random() < chance:
         light_up(index)
 
-# Radio masts (stretched utility poles, a red aviation blinker in src/render/NightAccents.ts). Placed north-west of a lane so
-# the low moon throws their long shadow across it (shadows fall towards +x+z).
+# Radio masts (stretched utility poles, a red aviation blinker in src/render/NightAccents.ts). Placed north (-z) of a lane so
+# the low moon (L9-crossing, azimuth 3.0) throws their ~45 m shadow south across it.
 masts = 0
 for site in [[(-100, -64), (-96, -70), (-106, -66)], [(62, -360), (66, -364), (56, -362)], [(-62, 210), (-70, 206), (-56, 206)]]:
     masts += any(put('prop.utility-pole', x, z, .6, (1.25, 3.1, 1.25)) for x, z in site)
 stats['masts'] = masts
+
+# ---- look-l9 clean-up: open fork/merge gores and crown-in-solid overlaps --------------------------------------------
+# T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry
+# shortcut. Drivers cut these corners, so the sectors between the diverging lanes stay free of anything with a collider,
+# and trees whose crown cuts into another solid (Scene Lab static clipping: tree x pole, tree x lamp, tree in a garage) go.
+GORE_R = 46
+
+
+def in_gore(x, z):
+    for nx, sx in ((-450, 1), (450, -1)):
+        dx = (x - nx) * sx
+        if dx > 0 and math.hypot(dx, z) < GORE_R and -80 < math.degrees(math.atan2(z, dx)) < 65:
+            return True
+    return False
+
+
+def gone(i):
+    p = l.data['placements'][i]
+    name = 'inst:' + p['assetId'] + ':' + str(i + 1)
+    for o in [o for o in l.empties if o.name == name or o.name.startswith('crown:' + p['id'] + ':')]:
+        l.empties.remove(o)
+        bpy.data.objects.remove(o, do_unlink=True)
+    l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != p['id']]
+    l.data['buildings'] = [b for b in l.data['buildings'] if b['id'] != p['id']]
+
+
+solids = [q['visualAabb'] for q in l.data['placements'] if q['assetId'] != 'prop.tree' and kind_of(q['assetId']) == 'solid' and q['visualAabb']['max'][1] > 1.2]
+drop = []
+for i, p in enumerate(l.data['placements']):
+    x, z = p['position'][0], p['position'][2]
+    if in_gore(x, z) and route_d((x, z)) > 0 and not p['assetId'].startswith(('kit.', 'bld.')):
+        drop.append(i)
+        continue
+    if p['assetId'] == 'prop.tree':
+        b = p['visualAabb']
+        mx, mz = (b['max'][0] - b['min'][0]) * .3, (b['max'][2] - b['min'][2]) * .3
+        crown = (b['min'][0] + mx, b['min'][2] + mz, b['max'][0] - mx, b['max'][2] - mz)
+        if any(box_gap(crown, (a['min'][0], a['min'][2], a['max'][0], a['max'][2])) < 0 for a in solids):
+            drop.append(i)
+for i in reversed(drop):
+    gone(i)
+    del l.data['placements'][i]
+stats['look-l9-removed'] = len(drop)
 print('L9 dress:',dict(sorted(stats.items(), key=lambda kv: -kv[1])[:30]), 'placements', len(l.data['placements']))
