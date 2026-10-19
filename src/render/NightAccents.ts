@@ -68,18 +68,19 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     }
   }
   // 2) The refugees marked the gravel tracks: warm storm lanterns on the countryside lane, red road flares on the dry shortcut.
-  for (const route of crossing.routes.filter(r => r.id !== 'road')) {
-    const lantern = route.id === 'countryside', hw = route.width / 2;
+  for (const route of crossing.routes) {
+    // The asphalt road: a sparser line of road flares on the shoulder (an evacuation route, one every ~45 m).
+    const lantern = route.id === 'countryside', asphalt = route.id === 'road', hw = route.width / 2 + (asphalt ? .4 : 0);
     for (const [i, b] of route.points.slice(1).entries()) {
       const a = route.points[i];
-      if (road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue; // shared asphalt
+      if (!asphalt && road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue; // shared asphalt
       const d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
       let side = 1;
       const rng = keyed(`track:${route.id}:${i}`);
-      for (let s = 12 + rng.next() * 8; s < d - 12; s += 20 + rng.next() * 10) {
+      for (let s = 12 + rng.next() * 8; s < d - 12; s += (asphalt ? 38 : 20) + rng.next() * 10) {
         side = -side;
         const o = hw + 1.1 + rng.next() * .9, x = a[0] + ux * s - uz * side * o, z = a[1] + uz * s + ux * side * o, yaw = rng.next() * 6.28;
-        if (nearFork(x, z, 20) || !free(x, z, .8)) continue;
+        if (nearFork(x, z, 20) || x > 440 || !free(x, z, .8)) continue;
         if (lantern) put({ kind: 'lantern', x, y: .14, z, yaw, color: '#ffb35c', glow: 5, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.2, range: 3.4 } });
         else put({ kind: 'flare', x, y: .03, z, yaw, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.6, range: 3.6 } });
       }
