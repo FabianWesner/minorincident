@@ -5,14 +5,14 @@ import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
 import type { SoundPosition } from '../data/audioEvents';
-import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare, megaCueRates } from '../data/audioCues';
+import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare, megaCueRates, stemBank } from '../data/audioCues';
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
 import { MusicDirector, type MusicIntensity, type MusicTransition } from './MusicDirector';
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
-import { StreamedMusic } from './StreamedMusic';
+import { StreamedMusic, scoredLevels } from './StreamedMusic';
 import { l5MusicReady, storyMusic } from '../data/musicBeats';
 import { isMusicThreat } from './MusicThreat';
 import { l1v2 } from '../data/l1v2';
@@ -178,7 +178,7 @@ export class AudioService implements Lifecycle {
         this.reset();
         if (!this.world.scenario)
             return;
-        this.level = /^(?:L[1-68]|L10)$/.test(this.world.scenario) ? this.world.scenario : 'L1';
+        this.level = scoredLevels.has(this.world.scenario) ? this.world.scenario : 'L1';
         this.score.level = this.level;
         this.tier = this.world.districts?.composition.tier ?? 0;
         this.graph.map = fromDistricts(this.world.districts);
@@ -215,7 +215,7 @@ export class AudioService implements Lifecycle {
         for (const bed of ambienceTiers[tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: tier === 5 ? dbGain(-16) : 1 });
     }
-    private get hasScore(): boolean { return /^(?:L[1-68]|L10)$/.test(this.world.scenario ?? ''); }
+    private get hasScore(): boolean { return scoredLevels.has(this.world.scenario ?? ''); }
     private mount(): void {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
@@ -489,10 +489,11 @@ export class AudioService implements Lifecycle {
     private startBedsAndMusic(): void {
         if (!this.available() || this.started || this.starting || this.host.readyForBackground?.() === false)
             return;
-        if (!this.registry.buffers.has('ambience') || !this.registry.buffers.has(`music-${this.level === 'L10' ? 'L6' : this.level}`)) {
+        const bank = stemBank(this.level);
+        if (!this.registry.buffers.has('ambience') || bank && !this.registry.buffers.has(bank)) {
             this.starting = true;
             const generation = this.generation;
-            void Promise.all(['ambience', `music-${this.level === 'L10' ? 'L6' : this.level}`].map(category => this.registry.load(category))).then(() => {
+            void Promise.all(['ambience', ...(bank ? [bank] : [])].map(category => this.registry.load(category))).then(() => {
                 if (generation !== this.generation || this.disposed) return;
                 this.starting = false; this.startBedsAndMusic();
             }).catch(error => { if (generation === this.generation) { this.starting = false; this.registry.errors.push(String(error)); } });
@@ -507,7 +508,7 @@ export class AudioService implements Lifecycle {
         if (this.hasScore && this.level !== 'L5') this.score.prepareDanger();
         if (this.hasScore && this.level !== 'L5') void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         // L5 has no stems: no layered music exists in the silent city (the calm score starts after the first find, see l5Score).
-        for (const layer of this.level === 'L5' ? [] : musicLayers) {
+        for (const layer of this.level === 'L5' || !stemBank(this.level) ? [] : musicLayers) {
             const v = this.play(`music.${this.level === 'L10' ? 'L6' : this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
                 this.stemVoices.set(layer, v);
