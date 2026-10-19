@@ -427,7 +427,7 @@ def edge_framing(pts, hw, gravel):
                     step = R.uniform(4, 8)
                 elif mode == 'fence':
                     o = hw + 2.3
-                    if put('prop.crowd-fence', x + nx * side * o, z + nz * side * o, yaw + math.pi / 2):
+                    if put('prop.crowd-fence', x + nx * side * o, z + nz * side * o, yaw):  # look-l9: runs along the lane (was +pi/2: panels stuck out across the verge like teeth)
                         counts['fence'] += 1
                     step = R.uniform(2.6, 3.4) if R.random() < .75 else 5.5
                 elif mode == 'rubble':
