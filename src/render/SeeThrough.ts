@@ -46,9 +46,12 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // behind the subject stay intact. Other placements keep the bounded disc.
   const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
-  // Fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
+  // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
   const keep = hole.greaterThan(noise);
-  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : keep;
+  // Vehicles and props keep a screen-stable 35% of their surface, even at the centre, so their silhouette stays readable
+  // (shared noise across layers keeps the remaining 65% open to the subject).
+  const silhouette = mix(.35, 1, hole).greaterThan(noise);
+  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
 };
 
 /** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small
