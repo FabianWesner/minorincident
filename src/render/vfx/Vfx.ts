@@ -48,6 +48,10 @@ const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
 const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
 /** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
 export const hitFlashRest = 0.35;
+/** PO #29 (Alphas "flashing pale under fire"): the first hit of a burst flashes at full strength, every further pulse of the
+ * same sustained fire (another pulse due within hitFlashStreak) at about half, so a near-black Alpha shot by the MG and several
+ * allies keeps its own look instead of strobing slate-grey three times a second. */
+export const hitFlashPeak = 0.45, hitFlashRepeat = 0.25, hitFlashStreak = hitFlashRest * 3;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
 export class Vfx extends Group {
@@ -76,6 +80,7 @@ export class Vfx extends Group {
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
   private readonly hitIds = new Uint32Array(512);
   private readonly hitUntil = new Float64Array(512);
+  private readonly hitPeak = new Float32Array(512);
   private hitCount = 0;
   private hitCursor = 0;
   /** alpha-white: start time of each target's last hit flash. Sustained fire (a soldier line, pellets) re-flashed
@@ -220,6 +225,7 @@ export class Vfx extends Group {
   private pulse(id: number): void {
     const started = this.hitStarted.get(id);
     if (started !== undefined && this.time - started < hitFlashRest) return;
+    const peak = started !== undefined && this.time - started < hitFlashStreak ? hitFlashRepeat : hitFlashPeak;
     this.hitStarted.set(id, this.time);
     if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
     let slot = 0;
@@ -228,7 +234,7 @@ export class Vfx extends Group {
       if (this.hitCount < this.hitIds.length) this.hitCount++;
       else { slot = this.hitCursor++ % this.hitIds.length; this.targets.flash(this.hitIds[slot], 0); }
     }
-    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.targets.flash(id, 0.45);
+    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.hitPeak[slot] = peak; this.targets.flash(id, peak);
   }
   private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0, speed = 1, lift = 0): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
@@ -511,9 +517,9 @@ export class Vfx extends Group {
     if (this.enabled) this.blasts.advance(this.time, seconds);
     this.gibs.advance(this.time, seconds);
     for (let i = 0; i < this.hitCount;) {
-      this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 4.5));
+      this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 10 * this.hitPeak[i]));
       if (this.hitUntil[i] <= this.time) {
-        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount];
+        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount]; this.hitPeak[i] = this.hitPeak[this.hitCount];
       } else i++;
     }
     if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {
