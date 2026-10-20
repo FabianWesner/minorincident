@@ -28,6 +28,8 @@ export interface InfectedState {
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
   megaRocketIds?: number[];
+  /** Damaged by a human (courier, ally, companion): hunts that source, sight or not, until `until` (refreshed by every hit). */
+  provoked?: { id: number; until: number };
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;
