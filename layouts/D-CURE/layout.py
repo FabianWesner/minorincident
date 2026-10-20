@@ -557,19 +557,19 @@ for a_, b_ in route_segments:
                 la = lane_lat+track+sway*(k/n)**2; lb = lane_lat+track+sway*((k+1)/n)**2
                 la, lb = max(-2.2, min(2.2, la)), max(-2.2, min(2.2, lb))
                 wa, wb = .13*(1-.7*k/n)/2, .13*(1-.7*(k+1)/n)/2
-                surface('skid', ccw([at(a_, ux, uz, nx, nz, sa, la-wa), at(a_, ux, uz, nx, nz, sb, lb-wb), at(a_, ux, uz, nx, nz, sb, lb+wb), at(a_, ux, uz, nx, nz, sa, la+wa)]), 'uiDark', H_DECAL, cut=False)
+                surface('skid', ccw([at(a_, ux, uz, nx, nz, sa, la-wa), at(a_, ux, uz, nx, nz, sb, lb-wb), at(a_, ux, uz, nx, nz, sb, lb+wb), at(a_, ux, uz, nx, nz, sa, la+wa)]), 'pantsDark', H_DECAL, cut=False)
         t += life.uniform(45, 110)
     # --- tar cracks along the lane (short, mostly parallel) ---
     t = life.uniform(3, 10)
     while t < d - 6:
         lat = life.uniform(-2.2, 2.2); L = life.uniform(1.5, 4.5); ca = life.choice((life.uniform(-.3, .3), life.uniform(1.2, 1.9)))
         cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat; ang = math.atan2(uz, ux)+ca
-        surface('road-crack', rquad(cx, cz, L, .07, ang), 'uiDark', H_DECAL, cut=False)
+        surface('road-crack', rquad(cx, cz, L, .07, ang), 'pantsDark', H_DECAL, cut=False)
         t += life.uniform(9, 20)
     # --- ground life: oil stains, manholes, drain grates, lane arrows, litter and glass ---
     t = life.uniform(6, 20)
     while t < d - 8:
-        lat = life.uniform(-2.0, 2.0); surface('oil-stain', blob(a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat, life.uniform(.45, 1.0)), 'uiDark', H_DECAL, cut=False)
+        lat = life.uniform(-2.0, 2.0); surface('oil-stain', blob(a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat, life.uniform(.4, .8)), 'pantsDark', H_DECAL, cut=False)
         if life.random() < .55:   # a smaller second pool beside it
             surface('oil-stain', blob(a_[0]+ux*(t+life.uniform(.5, 1.3))+nx*(lat+life.uniform(-.5, .5)), a_[1]+uz*(t+.9)+nz*lat, life.uniform(.2, .4)), 'leather', H_DECAL2, cut=False)
         t += life.uniform(22, 48)
@@ -641,12 +641,12 @@ def place_life(i, frac, side, asset, lat, decay=None):
                     if asset.startswith('veh.'): yaw = math.atan2(-uz, ux)+(math.pi if life.random() < .5 else 0)+life.uniform(-.3, .3)
                     elif asset == 'bld.bus-stop': yaw = face((nx*sd, nz*sd))
                     else: yaw = life.uniform(0, 6.28)
-                    pid = dress(asset, x, z, yaw, decay=decay, route_clear=6.2 if asset.startswith(('prop', 'bld')) else None)
+                    pid = dress(asset, x, z, yaw, decay=decay, route_clear=6.2 if asset.startswith(('prop', 'bld', 'veh')) else None)
                     if pid: l.data['placements'][-1]['roadLife'] = True; return pid
             break
     print('road-life skipped', i, asset)
 for i in range(6):
-    for frac, side, asset, lat, decay in [(.12, 1, 'prop.cure-drum-stack', 7.2, None), (.38, -1, 'veh.sedan-white', 10.5, 'burned'), (.62, 1, 'prop.cure-drum-stack', 7.4, None), (.86, -1, 'veh.police-sedan', 9.5, None)] + ([(.5, 1, 'bld.bus-stop', 7.0, None)] if i in (1, 4) else []):
+    for frac, side, asset, lat, decay in [(.12, 1, 'prop.cure-drum-stack', 6.7, None), (.38, -1, 'veh.sedan-white', 8.0, 'burned'), (.62, 1, 'prop.cure-drum-stack', 6.7, None), (.86, -1, 'veh.police-sedan', 8.0, None)] + ([(.5, 1, 'bld.bus-stop', 7.0, None)] if i in (1, 4) else []):
         place_life(i, frac, side, asset, lat, decay)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6

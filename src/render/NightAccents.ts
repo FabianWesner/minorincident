@@ -198,11 +198,14 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
     const [x, , z] = p.position, k = keyed(`life:${p.id}`), clearOfStory = spot(x, z) > 9 && Math.hypot(x - consoleAt[0], z - consoleAt[1]) > 70, l = lane(x, z);
     if (!clearOfStory || x > 3940) continue;
     const h = (dims.get(p.assetId)?.y ?? 1) * p.scale[1];
-    if (p.assetId === 'prop.cure-drum-stack') { if (l > 1 && l < 6) fires.push({ x: x + origin[0], z: z + origin[1], radius: .55, car: false, life: true }); }
+    if (p.assetId === 'prop.cure-drum-stack') { if (l > 1 && l < 6) fires.push({ x: x + origin[0], z: z + origin[1], radius: .85, car: false, life: true }); }
     else if (p.decay === 'burned' && p.assetId.startsWith('veh.') && l > 3 && l < 8.5) fires.push({ x: x + origin[0], z: z + origin[1], radius: 1.2, car: true, life: true });
-    else if (p.assetId === 'bld.bus-stop') put({ kind: 'lantern', x, y: h * .92, z, yaw: 0, color: '#cfe4ff', glow: 5, flicker: 0, strobe: false, pool: { color: '#bcd8ff', intensity: 2.6, range: 4.2 } });
+    else if (p.assetId === 'bld.bus-stop') put({ kind: 'lantern', x, y: h * .92, z, yaw: 0, color: '#cfe4ff', glow: 9, flicker: 0, strobe: false, pool: { color: '#bcd8ff', intensity: 4.6, range: 6.5 } });
     else if (p.assetId === 'veh.police-sedan' && !p.decay) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), ph = k.next() * 2;
+      // Two road flares on the verge side of the lane, a few metres ahead of and behind the car (flat, drive-over safe).
+      const ax = Math.cos(p.yaw), az = -Math.sin(p.yaw), px = -az, pz = ax, toRoad = lane(x + px * 2, z + pz * 2) < lane(x - px * 2, z - pz * 2) ? 1 : -1;
+      for (const dir of [-1, 1]) put({ kind: 'flare', x: x + ax * 3.8 * dir + px * 1.6 * toRoad, y: .03, z: z + az * 3.8 * dir + pz * 1.6 * toRoad, yaw: k.next() * 6.28, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.2, range: 3.2 } });
       for (const [i, lz] of [-.38, .38].entries()) put({ kind: 'beacon', x: x + lz * s, y: h * .98, z: z + lz * c, yaw: p.yaw, color: i ? '#2f6bff' : '#ff2a1a', glow: 9, flicker: 0, strobe: true, seed: ph + i * .5, pool: { color: i ? 'light_siren_blue' : 'light_siren_red', intensity: 2.8, range: 4.2 } });
     }
   }
