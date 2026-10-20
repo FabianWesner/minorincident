@@ -109,18 +109,20 @@ test('T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold
   expect(d.state.phase).toBe('departing');
 });
 
-test('T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out', async () => {
+test('T-E29-13-wait @E29-AC13 distant followers route to the door instead of stopping in formation outside the claim radius', async () => {
   const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, ids = c.state.roster.map(r => r.id);
   gather(w, ids.slice(0, 23));
-  put(w, ids[23], -40, 47); // 31 m away, still walking
+  c.state.roster[23].injured = false; // An uninjured straggler can walk these 31 m within the 20 s stall window.
+  put(w, ids[23], -40, 47);
   put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
-  step(w, 600);
-  expect(d.state.phase).toBe('boarding'); expect(d.state.boarded.length).toBe(23);
-  expect(w.entities.get(1)!.hidden).not.toBe(true);
-  // 30 s later it is still waiting at the door queue, never teleported aboard.
-  for (let i = 0; i < 3000 && !d.state.boarded.includes(ids[23]); i++) step(w, 1);
-  expect(d.state.boarded.includes(ids[23])).toBe(true);
-  step(w, 5); expect(['departing', 'done']).toContain(d.state.phase);
+  step(w, 1);
+  expect(d.claims(w.entities.get(ids[23])!)).toBe(true);
+  expect(d.boardingStatus().count).toBe('Aboard 0/24');
+  expect(d.boardingStatus().waiting).toMatch(/^Waiting for (?:Marcus|Survivor \d+) · \d+ m$/);
+  for (let i = 0; i < 1200 && d.state.phase !== 'departing'; i++) step(w, 1);
+  expect(d.state.phase).toBe('departing'); expect(d.state.boarded).toHaveLength(24);
+  expect(d.boardingStatus()).toEqual({ count: 'Aboard 24/24 · Everyone aboard', waiting: '' });
+  expect(w.events.events().some(e => e.type === 'mission.signal' && e.name === 'l7.survivor-recovered')).toBe(false);
 });
 
 test('T-E29-13-zero @E29-AC01 @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding', async () => {
@@ -196,4 +198,38 @@ test('the last queue follower walks around a courier standing across its boardin
   for (let i = 0; i < 1200 && d.state.phase !== 'departing'; i++) step(w, 1);
   expect(d.state.boarded).toEqual([e.id]); expect(d.state.phase).toBe('departing');
   expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+});
+
+test('T-E29-13-status @E29-AC13 the nearest missing survivor uses the campaign name and distance, and losses leave the denominator', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, [first, second] = c.state.roster;
+  for (const r of c.state.roster.slice(2)) w.entities.get(r.id)!.health.current = 0;
+  first.key = 'rosa'; second.key = 'okafor';
+  put(w, first.id, -64, 47); put(w, second.id, -40, 47);
+  c.update();
+  expect(d.boardingStatus()).toEqual({ count: 'Aboard 0/2', waiting: 'Waiting for Rosa · 11 m' });
+  first.key = 'shelter-0';
+  expect(d.boardingStatus().waiting).toBe('Waiting for Marcus · 11 m');
+  w.entities.get(first.id)!.health.current = 0; c.update();
+  expect(d.boardingStatus()).toEqual({ count: 'Aboard 0/1', waiting: 'Waiting for Mr. Okafor · 35 m' });
+  w.entities.get(second.id)!.health.current = 0; c.update();
+  expect(d.boardingStatus()).toEqual({ count: 'Aboard 0/0 · Everyone aboard', waiting: '' });
+});
+
+test('T-E29-16-boarding-wait @E29-AC16 restoring boarding on a later clock preserves the remaining recovery delay', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, last = c.state.roster.at(-1)!;
+  for (const r of c.state.roster.slice(0, -1)) w.entities.get(r.id)!.health.current = 0;
+  put(w, last.id, -35, 47); put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
+  for (const [i, [dx, dz, halfX, halfZ]] of [[-1.8, 0, .25, 2], [1.8, 0, .25, 2], [0, -1.8, 2, .25], [0, 1.8, 2, .25]].entries()) {
+    const wall = { x: -35 + dx, y: 1.5, z: 47 + dz, halfX, halfY: 1.5, halfZ };
+    w.physics.addBlocker(wall);
+    w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 980_000 + i, blocked: true, wall });
+  }
+  step(w, 600);
+  const snapshot = JSON.parse(JSON.stringify(d.snapshot()));
+  // A different level/save timeline can have a later clock than the captured seam.
+  w.tick += 3600; d.restore(snapshot);
+  step(w, 599);
+  expect(last.id in d.state.entering).toBe(false); expect(d.state.boarded).toEqual([]);
+  step(w, 180);
+  expect(d.state.boarded).toEqual([last.id]); expect(d.state.phase).toBe('departing');
 });
