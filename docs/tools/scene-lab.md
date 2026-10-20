@@ -392,6 +392,10 @@ mug hold only in the standing unit test, the bus only at <= 1 tick per frame): m
 the ride spec runs both tiers, both backends and phone cadences; (4) metrics compared against the same query that was wrong
 (corgi paw sink was measured against the sim floor that had the seam): the seam guard checks the support query itself.
 
+## Figure look gate (`look`)
+
+Top-level `look: { whiteShareMax, lumaRiseMax?, hueDriftMaxDeg?, minPixels? }` measures the crowd figures' own pixels at every sheet frame (the frame with vs without the crowd view, courier and HUD bars hidden): `lookWhiteShare` (pale unsaturated share), `lookLumaRise` (mean brightness / frame 0) and `lookHueDriftDeg` (saturation-weighted hue vs frame 0, the live look). Samples are in `metrics.json` `lookSamples`. Catalog: `alpha-hit-corpse-*` (every Alpha and Mega look shot down and lying; a hit flash must keep the figure's own colours and the body its look, see `docs/reports/alpha-white/`).
+
 ## L10 pursuit and cure catalog
 
 `scene:matrix` includes `l10-q1-*`: seeded dog idle/coats/pounce/pack, obstructed and

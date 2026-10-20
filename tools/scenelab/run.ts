@@ -4,6 +4,7 @@ import { PNG } from 'pngjs';
 import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 import { canvasEdgeNoise } from './edge-noise';
+import { hueDistance, measureLook } from './look';
 import { measureContrast, type ContrastResult } from './contrast';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
@@ -149,7 +150,9 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
+  const lookSamples: ({ frame: number } & Awaited<ReturnType<typeof measureLook>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
+    if (spec.look) lookSamples.push({ frame: f, ...await measureLook(session) });
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
     if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
@@ -197,6 +200,19 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
       { name: 'megaRingNoExactMarker', pass: !ring.exactPins && !ring.coordinates, value: ring.exactPins + Number(ring.coordinates), limit: 0 },
     );
   }
+  if (spec.look) {
+    const minPixels = spec.look.minPixels ?? 200, seen = lookSamples.filter(s => s.pixels >= minPixels);
+    const white = seen.length ? Math.max(...seen.map(s => s.whiteShare)) : Infinity;
+    result.checks.push({ name: 'lookWhiteShare', pass: white <= spec.look.whiteShareMax, value: +white.toFixed(4), limit: spec.look.whiteShareMax });
+    if (spec.look.lumaRiseMax !== undefined) {
+      const live = seen[0]?.luma, rise = live ? Math.max(...seen.map(s => s.luma / live)) : Infinity;
+      result.checks.push({ name: 'lookLumaRise', pass: rise <= spec.look.lumaRiseMax, value: +rise.toFixed(2), limit: spec.look.lumaRiseMax });
+    }
+    if (spec.look.hueDriftMaxDeg !== undefined) {
+      const live = seen.find(s => s.hue !== null)?.hue, drift = live == null ? Infinity : Math.max(...seen.map(s => s.hue === null ? Infinity : hueDistance(s.hue, live)));
+      result.checks.push({ name: 'lookHueDriftDeg', pass: drift <= spec.look.hueDriftMaxDeg, value: +drift.toFixed(1), limit: spec.look.hueDriftMaxDeg });
+    }
+  }
   if (spec.edgeNoise) {
     const value = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.extremeEdgeShare : Infinity));
     result.checks.push({ name: 'alphaSilhouetteBlackWhiteEdgeNoise', pass: value <= spec.edgeNoise.extremeEdgeShareMax, value, limit: spec.edgeNoise.extremeEdgeShareMax });
@@ -236,7 +252,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, vehicleSilhouettes: silhouettes, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, vehicleSilhouettes: silhouettes, pixels, edgeSamples, lookSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

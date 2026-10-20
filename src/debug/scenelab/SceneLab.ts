@@ -54,6 +54,7 @@ import { LevelSevenDeparture } from '../../sim/missions/LevelSevenDeparture';
 import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
 import { installMegaPursuit } from '../../sim/ai/MegaPursuit';
 import { megaAlpha } from '../../data/megaAlpha';
+import { alphaLooks } from '../../data/alphaLooks';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
@@ -639,6 +640,8 @@ export class SceneLab {
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
+        // A named Mega look is drawn exactly (the shipped Mega variant otherwise takes a look by entity id, CrowdView.alphaKey).
+        if (a.look?.model && alphaLooks['inf.mega-alpha'].includes(a.look.model)) world.entities.get(entity)!.infected!.model = a.look.model;
         // L3 layout fixtures have no mission controller to apply the corridor's contact damage.
         if (world.scenario === 'L3') world.entities.get(entity)!.combat!.damageMultiplier = l3.infectedDamage;
       } else {
