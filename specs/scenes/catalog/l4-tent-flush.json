@@ -1,0 +1,52 @@
+{
+ "name": "l4-tent-flush",
+ "note": "PO #41 (small-fixes-w8) with the merge-batch13d fix: the first reception tent stands against the west pallet run so the 0.7 m dead-end alley down to the light tower is closed. Game camera at close zoom on the corner; the tent must read as sitting against the pallets, with no courier-wide slot between them.",
+ "seed": 1,
+ "ground": "district",
+ "time": "L4",
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -50,
+    -2
+   ],
+   [
+    -12,
+    28
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -28,
+    9
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -31,
+   13
+  ],
+  "zoom": 1.5
+ },
+ "frames": 30,
+ "expect": {
+  "consoleErrors": 0
+ },
+ "shots": [
+  29
+ ],
+ "sheet": 10
+}
