@@ -1,3 +1,4 @@
+import { cloneData } from '../../core/clone';
 import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
@@ -194,7 +195,8 @@ export class InfectedSystem {
   settle(entity: EntitySnapshot): void {
     // A recoverable body still owns a live timer and its concurrency slot.
     if (entity.infected!.recoverAt >= 0) return;
-    const body = structuredClone({ ...entity, locomotion: undefined, motion: undefined, combat: { ...entity.combat!, reaction: undefined }, infected: { ...entity.infected!, l1: undefined, path: [], recoverAt: -1 } }); body.corpse = true;
+    // perf-w6: cloneData gives structuredClone's copy of this plain data (fallback for anything else).
+    const body = cloneData({ ...entity, locomotion: undefined, motion: undefined, combat: { ...entity.combat!, reaction: undefined }, infected: { ...entity.infected!, l1: undefined, path: [], recoverAt: -1 } }); body.corpse = true;
     delete body.locomotion; delete body.motion; delete body.combat!.reaction;
     delete body.infected!.l1; body.infected!.path.length = 0;
     this.release(entity); this.world.entities.replace(body);
