@@ -1,4 +1,3 @@
-import { actorRadius } from '../world/SolidRegistry';
 import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
@@ -626,12 +625,7 @@ export class InfectedSystem {
   /** Downed infected stay active and groan once on the ground; at `recoverAt` they get up at full health and hunt by sight again. */
   private recover(e: EntitySnapshot): void {
     const b = e.infected!, c = e.combat!, tick = this.world.tick, getUp = Math.round(infectedRecovery.getUpS * 60);
-    // A downed body is not a collider, so a crowd may have packed onto it (pressing the L3 boom). It stays down until a clear
-    // spot is free within 4 m, then gets up there: never inside the column (L3 perimeter overlaps of 0.2-0.4 m).
-    if (!this.world.solids.find(e.transform, actorRadius(e), e.id)) { b.recoverAt = tick + 30; return; }
-    e.health.current = e.health.max;
-    this.world.solids.admit(e, 'infected.recover');
-    b.recoverAt = -1; b.deadAt = -1; b.grabUntil = 0; b.until = 0; b.cooldown = tick + getUp; b.targetId = 0; b.heardTargetId = 0;
+    e.health.current = e.health.max; b.recoverAt = -1; b.deadAt = -1; b.grabUntil = 0; b.until = 0; b.cooldown = tick + getUp; b.targetId = 0; b.heardTargetId = 0;
     c.attacking = false; c.statuses.length = 0; c.staggerUntil = tick + getUp;
     // The CrowdView heavy reaction plays `get-up` from its 0.7 s mark: start the reaction there and hold still meanwhile.
     c.reaction = { index: c.reaction?.index ?? 0, started: tick - 42, until: tick + getUp, direction: { x: 0, z: 0 }, from: { x: e.transform.x, z: e.transform.z }, to: { x: e.transform.x, z: e.transform.z }, heavy: true };
