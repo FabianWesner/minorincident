@@ -10,20 +10,20 @@ export class SpatialHash {
   private readonly inverseCellSize: number;
   constructor(private readonly cellSize = 4) { this.inverseCellSize = 1 / cellSize; }
   // Keep the position in its bucket so dense queries do not look up every ID again.
-  // perf-w6: one map keyed by both cell coordinates (one lookup per visited cell) and positions indexed by
-  // entity ID. Query order is unchanged: the loops below still visit X columns, then Z rows, then bucket order.
+  // perf-w6: one map keyed by both cell coordinates (one lookup per visited cell; auxiliary IDs from
+  // 1e9 keep the position records in a Map). Query order is unchanged: the loops below still visit X columns, then Z rows, then bucket order.
   private readonly cells = new Map<number, Cell>();
   private readonly free: Position[] = [];
-  private positions: (Position | undefined)[] = [];
+  private readonly positions = new Map<number, Position>();
   set(id: number, x: number, z: number): void {
-    const previous = this.positions[id];
+    const previous = this.positions.get(id);
     if (previous && previous.x === x && previous.z === z) return;
     const cellX = Math.floor(x * this.inverseCellSize), cellZ = Math.floor(z * this.inverseCellSize);
     if (previous && previous.cellX === cellX && previous.cellZ === cellZ) { previous.x = x; previous.z = z; return; }
     if (previous) this.removeFromCell(previous);
     const position = previous ?? this.free.pop() ?? { id, x, z, cellX, cellZ, slot: 0 };
     position.id = id; position.x = x; position.z = z; position.cellX = cellX; position.cellZ = cellZ;
-    this.positions[id] = position;
+    this.positions.set(id, position);
     const key = cellKey(cellX, cellZ);
     let cell = this.cells.get(key);
     if (!cell) this.cells.set(key, cell = { items: [] });
@@ -35,10 +35,10 @@ export class SpatialHash {
     }
   }
   delete(id: number): void {
-    const position = this.positions[id];
+    const position = this.positions.get(id);
     if (!position) return;
     this.removeFromCell(position); this.free.push(position);
-    this.positions[id] = undefined;
+    this.positions.delete(id);
   }
   private removeFromCell(position: Position): void {
     const items = this.cells.get(cellKey(position.cellX, position.cellZ))!.items;
@@ -84,5 +84,5 @@ export class SpatialHash {
     }
     return sorted ? result.sort(numericOrder) : result;
   }
-  reset(): void { this.cells.clear(); this.positions = []; this.free.length = 0; }
+  reset(): void { this.cells.clear(); this.positions.clear(); this.free.length = 0; }
 }
