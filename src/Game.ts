@@ -111,7 +111,7 @@ export class Game {
       this.ticker.reset();
       if (this.world.missions?.state.phase === 'playing') this.view.refreshMissionUI(); else this.view.update(1);
     };
-    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => { this.telemetry?.zoom(delta); this.view.view.zoom(delta); }));
+    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => { this.telemetry?.zoom(delta); this.view.view.zoom(delta); }, () => this.view.view.azimuth));
     this.input.reach = () => {
       const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
       if (!combat || !weapons) return null;
