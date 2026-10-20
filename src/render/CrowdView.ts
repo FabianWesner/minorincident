@@ -220,7 +220,7 @@ export class CrowdView extends Group {
       // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
       // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
       // white constant still dominates its near-black albedo.
-      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.2))));
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))));
       const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
