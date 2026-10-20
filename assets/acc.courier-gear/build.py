@@ -93,6 +93,7 @@ class Gear:
         self.tris = []    # (a, b, c) vertex ids, in tier order
         self.tier_end = []
         self.tint = 'backpackTealDark'
+        self.log = []; self.spans = []
     def n(self, base, minimum=1): return max(minimum, round(base * self.scale))
 
     def patch(self, color, rays, thick, rows, cols, closed=False, bvh=None, cell_color=None, shade=.55,
@@ -162,6 +163,7 @@ class Gear:
         def edge(a, b):
             k = (min(a, b), max(a, b)); edge_count.setdefault(k, []).append((a, b))
         first = len(self.verts)
+        self.log.append(color)
         for (i, j), (_, _, j2) in cells.items():
             quad = [(i, j), (i + 1, j), (i + 1, j2), (i, j2)]
             ids = [vid(*q) for q in quad]
@@ -180,6 +182,7 @@ class Gear:
             s, t = i / rows, j / cols
             e = rounded(s) if closed else rounded(s) * rounded(t)
             self.verts[ids_out[i][j]][2] = 1 - shade * (1 - e) * .5 if shade else 1.0
+        self.spans.append((first, len(self.verts)))
         return self
 
     def tier_mark(self): self.tier_end.append(len(self.tris))
@@ -228,7 +231,7 @@ def build_gear(body, lod, sex):
     bones = body.bones
     n = g.n
     INSET = .003
-    K = .85 if lod else .91   # the low body is a coarser surface: slightly lower plates keep every vertex inside the 2 cm gap gate
+    K = .56 if lod else .62   # plates are at most 1.2 cm above the skin (guard allowance cap): colour contrast and shape carry the read   # the low body is a coarser surface: slightly lower plates keep every vertex inside the 2 cm gap gate
     def cush(T, p=2.5, floor=-INSET):
         return lambda s, t: floor + (T * K - floor) * rounded(s, p) * rounded(t, p)
     def cush_ring(T, p=2.5):
@@ -339,6 +342,8 @@ def finish(g, body, variant, lod, out):
         bpy.ops.object.modifier_apply(modifier=mod.name)
     fold = {'pony1': 'head', 'pony2': 'head', 'pony3': 'head', 'eyeL': 'head', 'eyeR': 'head', 'irisL': 'head', 'irisR': 'head',
             'backpackSocket': 'chest', 'weaponSocketL': 'handL', 'weaponSocketR': 'handR'}
+    thick = me.attributes.new('_thick', 'FLOAT', 'POINT')   # designed plate thickness above the skin (m): lets the Scene Lab guard measure the skin-side gap
+    for vi, v in enumerate(verts): thick.data[vi].value = max(0.0, v[3])
     groups = {}
     for vi, v in enumerate(tmp.data.vertices):
         merged = {}
@@ -368,7 +373,8 @@ def finish(g, body, variant, lod, out):
     bpy.context.view_layer.objects.active = body.rig
     bpy.ops.export_scene.gltf(filepath=str(out), export_format='GLB', use_selection=True, export_yup=True, export_extras=True,
                               export_cameras=False, export_lights=False, export_texcoords=False, export_animations=False,
-                              export_skins=True, export_influence_nb=4, export_def_bones=False, export_vertex_color='ACTIVE')
+                              export_skins=True, export_influence_nb=4, export_def_bones=False, export_vertex_color='ACTIVE', export_attributes=True)
+    print('GEAR_THICK', [(c, round(max([v[3] for v in verts[a:b]] or [0]) * 100, 2)) for c, (a, b) in zip(g.log, g.spans)])
     print('GEAR', out.name, 'tier cumulative tris', tier_tris, 'verts', len(verts))
 
 BODY_FILE = {0: 'char.courier-{}.skin.glb', 1: 'char.courier-{}.skin.low.glb', 2: 'char.courier-{}.skin.low.glb'}  # the low quality tier draws the low body
