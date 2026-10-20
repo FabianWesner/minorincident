@@ -29,7 +29,6 @@ const shot = async (page: Page, name: string) => { await page.evaluate(() => win
 test('T-fix-l5-start @E23 the cellar exit dips to black; the move happens in the dark and the courier is framed right after', async ({ page }) => {
   test.setTimeout(300_000); mkdirSync(out, { recursive: true });
   await begin(page);
-  const cellar = await sample(page);
   // Real input: stand at the brace and hold E (the unbarring), as the L5 playthrough does. completeObjective is an instant cheat path.
   const c = fair.anchors['cellar-interior'].position;
   await page.evaluate(at => { const a = window.__SS__!; a.cheats.god(true); a.teleport('player', at); }, { x: c[0] - .4, z: c[2] + 2.6 });
