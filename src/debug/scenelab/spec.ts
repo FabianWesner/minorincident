@@ -23,7 +23,7 @@ export interface SceneSpec {
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
   /** Production L6 shelter and gate with the collected equipment. */
-  l6Subway?: 'pickup' | 'lamp' | 'gate' | 'entry';
+  l6Subway?: 'pickup' | 'lamp' | 'gate' | 'entry' | 'hatch' | 'retreat';
   /** Production L5 discovery/follower controller, with named prior finds restored before the shot. */
   l5Aftermath?: { found: string[]; /** Initial HP for injured-follower/medicine QA. */ health?: Record<string, number>; alphaAt?: Point; metroIngress?: boolean };
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
