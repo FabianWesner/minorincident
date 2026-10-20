@@ -19,11 +19,13 @@ for (const sex of ['female', 'male']) for (const [lod, limit] of Object.entries(
   // glTF is Y up: tier 1 (knees, gloves) sits low on the body and tier 2 (vest) above the waist: the index order survived the export.
   expect(meanY(0, tiers[0])).toBeLessThan(.55);
   expect(meanY(tiers[0], tiers[1])).toBeGreaterThan(.7);
-  // The Scene Lab guard subtracts `_thick` (designed plate thickness) from each vertex's distance to the skin; capped at 1.2 cm so it cannot hide a gap.
-  const thick = mesh!.geometry.getAttribute('_thick');
-  expect(thick, '_thick attribute').toBeDefined();
-  let maxThick = 0; for (let i = 0; i < thick.count; i++) maxThick = Math.max(maxThick, thick.getX(i));
-  expect(maxThick).toBeLessThanOrEqual(.012);
+  // Closed shells: the skin-side vertices (`_inner` = 1) are what the Scene Lab guard measures against the skin; there must be some, and the
+  // outer faces must exist too (a shell with no outer vertices would measure nothing).
+  const inner = mesh!.geometry.getAttribute('_inner');
+  expect(inner, '_inner attribute').toBeDefined();
+  let innerCount = 0; for (let i = 0; i < inner.count; i++) innerCount += inner.getX(i) > .5 ? 1 : 0;
+  expect(innerCount).toBeGreaterThan(20);
+  expect(innerCount).toBeLessThan(inner.count);
   const names = mesh!.skeleton.bones.map(bone => bone.name);
   for (const required of ['legL', 'kneeL', 'handR', 'chest', 'head']) expect(names).toContain(required);
 });

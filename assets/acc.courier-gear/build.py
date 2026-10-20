@@ -27,6 +27,7 @@ def arg(key, default=None):
 OUT = Path(arg('--out', str(HERE)))
 ONLY = arg('--variant')
 LODS = [int(arg('--lod'))] if arg('--lod') else [0, 1, 2]
+DEBUG = '--debug' in ARGS
 palette = json.loads((REPO / 'src/assets/palette.json').read_text())
 
 def lin(token, k=1.0):
@@ -97,7 +98,7 @@ class Gear:
     def n(self, base, minimum=1): return max(minimum, round(base * self.scale))
 
     def patch(self, color, rays, thick, rows, cols, closed=False, bvh=None, cell_color=None, shade=.55,
-              inset=.004, dilate=0, smooth=1, drop=None, flat_lift=0.0, walls=False, outer=None, tint=None, median=False, remap=None):
+              inset=.004, dilate=0, smooth=1, drop=None, flat_lift=0.0, walls=True, outer=None, tint=None, median=False, remap=None, rim=None, rim_top=True, rim_sides=True):
         """rays(s, t) -> (origin, dir) for s,t in 0..1 (rows x cols grid); thick(s, t) -> outward offset in metres."""
         bvh = bvh or self.body.bvh
         R = rows + 1; C = cols if closed else cols + 1
@@ -143,14 +144,14 @@ class Gear:
                 th = thick(s, t) + flat_lift
                 p = origin[i][j] + dirs[i][j] * (dist[i][j] + th)
                 anchor = origin[i][j] + dirs[i][j] * raw[i][j]
-                self.verts.append([p, anchor, None, th, tm[i][j], remap]); ids_out[i][j] = len(self.verts) - 1
+                self.verts.append([p, anchor, None, th, tm[i][j], remap, 0]); ids_out[i][j] = len(self.verts) - 1
             return ids_out[i][j]
         ids_in = {}
         def vin(i, j):
             if (i, j) not in ids_in:
                 anchor = origin[i][j] + dirs[i][j] * raw[i][j]
                 p = origin[i][j] + dirs[i][j] * (raw[i][j] - inset)
-                self.verts.append([p, anchor, None, 0.0, 0.0, remap]); ids_in[(i, j)] = len(self.verts) - 1
+                self.verts.append([p, anchor, None, 0.0, 0.0, remap, 1]); ids_in[(i, j)] = len(self.verts) - 1
             return ids_in[(i, j)]
         cols_n = C if closed else cols
         cells = {}
@@ -160,26 +161,32 @@ class Gear:
                 j2 = (j + 1) % C if closed else j + 1
                 cells[(i, j)] = (i, j, j2)
         edge_count = {}
-        def edge(a, b):
-            k = (min(a, b), max(a, b)); edge_count.setdefault(k, []).append((a, b))
+        def edge(a, b, center):
+            k = (min(a, b), max(a, b)); edge_count.setdefault(k, []).append((a, b, center))
         first = len(self.verts)
         self.log.append(color)
         for (i, j), (_, _, j2) in cells.items():
             quad = [(i, j), (i + 1, j), (i + 1, j2), (i, j2)]
             ids = [vid(*q) for q in quad]
             cc = cell_color(i, j, rows, cols_n) if cell_color else color
+            if rim and (i == 0 or (rim_top and i == rows - 1) or (rim_sides and not closed and (j == 0 or j == cols_n - 1))): cc = rim
+            center = sum((self.verts[x][0] for x in ids), Vector((0, 0, 0))) / 4
+            if DEBUG and color == 'pantsDark' and outer: print('CELL', i, j, cc)
             for a, b, c in ((0, 1, 2), (0, 2, 3)):
                 pa, pb, pc = (self.verts[ids[k]][0] for k in (a, b, c))
                 # outward-facing winding (the material is single sided): the face normal must point along the ray direction
                 if (pb - pa).cross(pc - pa).dot(dirs[i][j]) < 0: b, c = c, b
                 self.tris.append((ids[a], ids[b], ids[c], cc))
-            for k in range(4): edge(quad[k], quad[(k + 1) % 4])
+            for k in range(4): edge(quad[k], quad[(k + 1) % 4], center)
         for k, lst in edge_count.items():
             if len(lst) != 1 or not walls: continue
-            (a, b) = lst[0]
+            (a, b, center) = lst[0]
             oa, ob = vid(*a), vid(*b); ia, ib = vin(*a), vin(*b)
-            cc = color
-            self.tris.append((oa, ob, ib, cc)); self.tris.append((oa, ib, ia, cc))
+            cc = rim or color
+            pa, pb, pi_ = self.verts[oa][0], self.verts[ob][0], self.verts[ib][0]
+            flip = (pb - pa).cross(pi_ - pa).dot((pa + pb) / 2 - center) < 0
+            t1, t2 = ((oa, ob, ib), (oa, ib, ia)) if not flip else ((oa, ib, ob), (oa, ia, ib))
+            self.tris.append((*t1, cc)); self.tris.append((*t2, cc))
         # shade by distance to the rim (soft edge darkening gives the plates form without extra geometry)
         for (i, j) in list(ids_out_iter(ids_out)):
             s, t = i / rows, j / cols
@@ -233,12 +240,12 @@ def build_gear(body, lod, sex):
     g = Gear(body, lod)
     bones = body.bones
     n = g.n
-    INSET = .003
-    K = .56 if lod else .62   # plates are at most 1.2 cm above the skin (guard allowance cap): colour contrast and shape carry the read   # the low body is a coarser surface: slightly lower plates keep every vertex inside the 2 cm gap gate
-    def cush(T, p=2.5, floor=-INSET):
-        return lambda s, t: floor + (T * K - floor) * rounded(s, p) * rounded(t, p)
-    def cush_ring(T, p=2.5):
-        return lambda s, t: -INSET + (T * K + INSET) * rounded(s, p)
+    zup = Vector((0, 0, 1))
+    def smooth01(x):
+        x = clamp(x); return x * x * (3 - 2 * x)
+    def pad(T, lip=.5, soft=.8):
+        """Raised pad: a lip of lip*T at the rim, rising to T over `soft` of the way in (a visible bulge, not a decal)."""
+        return lambda s, t: T * (lip + (1 - lip) * smooth01(min(math.sin(math.pi * s), math.sin(math.pi * t)) / soft))
     def v_of_z(f):
         def conv(z):
             lo, hi = 0.0, 1.0
@@ -248,71 +255,71 @@ def build_gear(body, lod, sex):
                 else: hi = mid
             return lo
         return conv
-    zup = Vector((0, 0, 1))
-    # torso plates must not follow the arms (aiming/swinging stretched the vest at the armpit): arm weights fold into the chest
-    TORSO = {'armL': 'chest', 'armR': 'chest', 'elbowL': 'chest', 'elbowR': 'chest', 'clavicleL': 'chest', 'clavicleR': 'chest', 'foreArmL': 'chest', 'foreArmR': 'chest'}   # legs stay: the hip hem follows the thighs
-
     def only(allowed, fallback):
         """A plate follows only its own limb's bones (never the other side, never the torso): everything else folds into `fallback`."""
         return {name: fallback for name in body.names if name not in allowed}
+    ARMS = {'armL': 'chest', 'armR': 'chest', 'elbowL': 'chest', 'elbowR': 'chest', 'clavicleL': 'chest', 'clavicleR': 'chest', 'foreArmL': 'chest', 'foreArmR': 'chest'}
+    STEEL, DARK, TRIM = 'pantsDark', 'uiDark', 'silver'
 
-    # ---- tier 1: knee pads, fingerless gloves ----------------------------------------------------------------------
+    # ---- tier 1: knee pads (bulged cap with a silver rim), fingerless gloves -----------------------------------------
     for side in 'LR':
         kz = bones['knee' + side][0].z
         leg = limb_axis(body, [('leg' + side, 'h'), ('knee' + side, 'h'), ('shin' + side, 't')]); vz = v_of_z(leg)
-        g.patch('uiDark', around(leg, lambda s, kz=kz, vz=vz: vz(kz + .052 - .108 * s), 0, 62),
-                cush(.0155, 2.2), n(6, 3), n(8, 3), remap=only({'leg'+side, 'knee'+side, 'shin'+side, 'hip'}, 'leg'+side))
-        if lod < 2: g.patch('silver', around(leg, lambda s, kz=kz, vz=vz: vz(kz + .026 - .052 * s), 0, 34),
-                cush(.019, 2.0), n(3, 2), n(4, 2), shade=.4, remap=only({'leg'+side, 'knee'+side, 'shin'+side, 'hip'}, 'leg'+side))
-    for side in 'LR':
+        g.patch(STEEL, around(leg, lambda s, kz=kz, vz=vz: vz(kz + .058 - .12 * s), 0, 66),
+                pad(.026, .45), n(4, 2), n(5, 3), rim=TRIM, remap=only({'leg' + side, 'knee' + side, 'shin' + side, 'hip'}, 'leg' + side))
+    for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
         g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: -.12 + s * .86, 0, 0, closed=True),
-                cush_ring(.011), n(4, 2), n(9, 5), closed=True, shade=.5, remap=only({'foreArm'+side, 'foreArmTwist'+side, 'hand'+side, 'elbow'+side}, 'hand'+side))
+                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki',
+                remap=only({'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))
     g.tier_mark()
 
-    # ---- tier 2: padded vest ---------------------------------------------------------------------------------------
-    z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .02
+    # ---- tier 2: quilted padded vest (olive, collar, ridges, armholes) ------------------------------------------------
+    z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .035
     torso = lambda v: (Vector((0, 0, v)), zup)
-    cols = n(20, 8); rows = n(6, 3)
+    cols = n(16, 6); rows = n(6, 2)
+    def vest_thick(s, t):
+        r = round(s * rows)
+        if r == 0: return .036                       # raised collar
+        if r == rows: return .024                    # hem
+        return .032 if r % 2 else .022               # quilted ridges
     def vest_color(i, j, R, C):
-        if j == 0: return 'silver'
-        if i == int(R * .66): return 'orange'
-        return 'uiDark'
-    g.patch('uiDark', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True),
-            cush_ring(.017, 2.2), rows, cols, closed=True, bvh=body.bvh_nopack, cell_color=vest_color, shade=.5, dilate=0, smooth=1, median=True,
-            drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 40)   # armholes: nothing at the armpit for the raised arms to stretch
+        if i == 0: return 'oliveLight'               # collar
+        if i == R - 1: return 'oliveSeam'            # hem
+        if j == 0: return 'brass'                    # zip
+        return 'olive' if i % 2 else 'oliveSeam'
+    g.patch('olive', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True), vest_thick, rows, cols, closed=True,
+            bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4,
+            drop=lambda i, j, R, C: 1 <= i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 40)   # armholes
     g.tier_mark()
 
-    # ---- tier 3: shoulder + elbow pads, utility belt ---------------------------------------------------------------
+    # ---- tier 3: shoulder + elbow pads, utility belt ----------------------------------------------------------------
     for side, sg in (('L', 1), ('R', -1)):
         c = bones['arm' + side][0]
-        g.patch('tealDark', dome(c, Vector((1, 0, 0)), zup, Vector((0, sg, 0)), 46, 6, 74),
-                cush(.019, 2.0, .003), n(5, 3), n(5, 3), shade=.5, dilate=0, smooth=1, remap=only({'arm'+side, 'clavicle'+side, 'chest'}, 'arm'+side))
+        g.patch(STEEL, dome(c, Vector((1, 0, 0)), zup, Vector((0, sg, 0)), 50, 4, 78), pad(.032, .45), n(4, 3), n(5, 3), rim='orange',
+                remap=only({'arm' + side, 'clavicle' + side, 'chest'}, 'arm' + side))
         arm = limb_axis(body, [('arm' + side, 'h'), ('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(arm)
         ez = bones['foreArm' + side][0].z
-        if lod < 2: g.patch('uiDark', around(arm, lambda s, ez=ez, vz=vz: vz(ez + .042 - .084 * s), 135 * sg, 52),
-                cush(.018, 2.2, .002), n(4, 3), n(5, 3), dilate=0, smooth=1, remap=only({'arm'+side, 'elbow'+side, 'foreArm'+side, 'foreArmTwist'+side}, 'arm'+side))
+        if lod < 1: g.patch(STEEL, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.026, .45), n(3, 2), n(4, 3), rim=TRIM,
+                remap=only({'arm' + side, 'elbow' + side, 'foreArm' + side, 'foreArmTwist' + side}, 'arm' + side))
     wz = bones['torso'][0].z
-    bcols = n(20, 8)
-    g.patch('leather', around(torso, lambda s: wz + .022 - .034 * s, -180 / bcols, 0, closed=True),
-            cush_ring(.012, 2.0), n(2, 1), bcols, closed=True, bvh=body.bvh_nopack,
-            cell_color=lambda i, j, R, C: 'brass' if j == 0 else 'leather', shade=.5, median=True, remap=TORSO)
-    for sg in (1, -1) if lod < 2 else ():
-        g.patch('uiDark', around(torso, lambda s: wz - .004 - .06 * s, 62 * sg, 17),
-                cush(.016, 2.2), n(3, 2), n(4, 2), bvh=body.bvh_nopack, shade=.5, dilate=0, smooth=1, median=True, remap={k: v for k, v in TORSO.items() if v == 'chest'})
+    bcols = n(16, 8)
+    if lod < 1: g.patch('leather', around(torso, lambda s: wz + .02 - .03 * s, -180 / bcols, 0, closed=True), lambda s, t: .02, 1, bcols, closed=True,
+            bvh=body.bvh_nopack, cell_color=lambda i, j, R, C: 'brass' if j == 0 else 'leather', median=True, shade=.5)
     g.tier_mark()
 
-    # ---- tier 4: reinforced cap (crown plate + ribs), forearm guards -----------------------------------------------
+    # ---- tier 4: helmet shell over the cap (dark grey dome, orange stripe, orange lip), forearm guards -------------------
     head = bones['head']; hc = Vector((0.0, 0, head[1].z - .03))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
-    g.patch('uiDark', dome(hc, yleft, zup, xfwd, 58, 44, 104), cush(.0135, 1.6, .003), n(7, 3), n(10, 4), shade=.5, outer=.55, dilate=0, smooth=1, remap=only({'head', 'neck'}, 'head'))
-    if lod < 2: g.patch('orange', dome(hc, yleft, zup, xfwd, 9, 44, 100), cush(.0185, 1.6, .0085), n(7, 3), n(2, 1), shade=.4, outer=.55, dilate=0, smooth=1, remap=only({'head', 'neck'}, 'head'))
-    for side, sg in (('L', 1), ('R', -1)):
+    helmet_cols = n(12, 4)
+    g.patch(STEEL, dome(hc, yleft, zup, xfwd, 150, 38, 90), lambda s, t: .034 * (.45 + .55 * smooth01(s / .35)) * (.7 + .3 * smooth01(math.sin(math.pi * t) / .5)),
+            n(5, 3), helmet_cols, outer=.6, rim='schoolBusYellow', rim_top=False, rim_sides=False, remap=only({'head', 'neck'}, 'head'),
+            cell_color=lambda i, j, R, C: 'schoolBusYellow' if abs(j - (C - 1) / 2) < .6 and i > 0 else STEEL)
+    for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
         fz = bones['foreArm' + side][0].z
-        g.patch('pantsLight', around(fa, lambda s, fz=fz, vz=vz: vz(fz - .02 - .075 * s), 120 * sg if False else (90 * sg), 78),
-                cush(.012, 2.2), n(3, 2), n(7, 3),
-                cell_color=lambda i, j, R, C: 'uiDark' if i == R - 1 else 'pantsLight', shade=.5, remap=only({'foreArm'+side, 'foreArmTwist'+side, 'elbow'+side, 'hand'+side}, 'foreArm'+side))
+        g.patch(STEEL, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.022, .55), n(2, 2), n(5, 3), rim=TRIM,
+                remap=only({'foreArm' + side, 'foreArmTwist' + side, 'elbow' + side, 'hand' + side}, 'foreArm' + side))
     g.tier_mark()
     return g
 
@@ -345,8 +352,8 @@ def finish(g, body, variant, lod, out):
         bpy.ops.object.modifier_apply(modifier=mod.name)
     fold = {'pony1': 'head', 'pony2': 'head', 'pony3': 'head', 'eyeL': 'head', 'eyeR': 'head', 'irisL': 'head', 'irisR': 'head',
             'backpackSocket': 'chest', 'weaponSocketL': 'handL', 'weaponSocketR': 'handR'}
-    thick = me.attributes.new('_thick', 'FLOAT', 'POINT')   # designed plate thickness above the skin (m): lets the Scene Lab guard measure the skin-side gap
-    for vi, v in enumerate(verts): thick.data[vi].value = max(0.0, v[3])
+    inner = me.attributes.new('_inner', 'FLOAT', 'POINT')   # 1 on the skin-side vertices (shell rim on the skin): the Scene Lab guard measures only these
+    for vi, v in enumerate(verts): inner.data[vi].value = float(v[6])
     groups = {}
     for vi, v in enumerate(tmp.data.vertices):
         merged = {}
@@ -377,7 +384,7 @@ def finish(g, body, variant, lod, out):
     bpy.ops.export_scene.gltf(filepath=str(out), export_format='GLB', use_selection=True, export_yup=True, export_extras=True,
                               export_cameras=False, export_lights=False, export_texcoords=False, export_animations=False,
                               export_skins=True, export_influence_nb=4, export_def_bones=False, export_vertex_color='ACTIVE', export_attributes=True)
-    print('GEAR_THICK', [(c, round(max([v[3] for v in verts[a:b]] or [0]) * 100, 2)) for c, (a, b) in zip(g.log, g.spans)])
+    print('GEAR_OUTER_CM', [(c, round(max([v[3] for v in verts[a:b] if not v[6]] or [0]) * 100, 2)) for c, (a, b) in zip(g.log, g.spans)])
     print('GEAR', out.name, 'tier cumulative tris', tier_tris, 'verts', len(verts))
 
 BODY_FILE = {0: 'char.courier-{}.skin.glb', 1: 'char.courier-{}.skin.low.glb', 2: 'char.courier-{}.skin.low.glb'}  # the low quality tier draws the low body
