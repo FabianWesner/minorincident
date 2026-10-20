@@ -16,7 +16,6 @@ try {
   });
   const wheel = async (dy: number) => { await session.page.mouse.move(640, 360); for (let i = 0; i < 40; i++) await session.page.mouse.wheel(0, dy); await session.page.evaluate(() => window.__SS__!.step(120)); };
   await session.page.evaluate(() => window.__SS__!.step(60));
-  info.state = await session.page.evaluate(() => { const l5 = window.__SS__!.getState().missions as unknown; return JSON.stringify(l5).slice(0, 300); }).catch(() => null);
   await session.screenshot(`${dir}/zoom-1.png`);
   await wheel(100); await session.screenshot(`${dir}/zoom-1.5.png`);
   await wheel(-100); await session.screenshot(`${dir}/zoom-0.5.png`);
