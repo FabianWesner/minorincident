@@ -98,7 +98,7 @@ class Gear:
     def n(self, base, minimum=1): return max(minimum, round(base * self.scale))
 
     def patch(self, color, rays, thick, rows, cols, closed=False, bvh=None, cell_color=None, shade=.55,
-              inset=.004, dilate=0, smooth=1, drop=None, flat_lift=0.0, walls=True, outer=None, tint=None, median=False, remap=None, rim=None, rim_top=True, rim_sides=True):
+              inset=.004, dilate=0, smooth=1, drop=None, flat_lift=0.0, walls=True, outer=None, tint=None, median=False, remap=None, rim=None, rim_top=True, rim_sides=True, rim_cells=True):
         """rays(s, t) -> (origin, dir) for s,t in 0..1 (rows x cols grid); thick(s, t) -> outward offset in metres."""
         bvh = bvh or self.body.bvh
         R = rows + 1; C = cols if closed else cols + 1
@@ -169,7 +169,7 @@ class Gear:
             quad = [(i, j), (i + 1, j), (i + 1, j2), (i, j2)]
             ids = [vid(*q) for q in quad]
             cc = cell_color(i, j, rows, cols_n) if cell_color else color
-            if rim and (i == 0 or (rim_top and i == rows - 1) or (rim_sides and not closed and (j == 0 or j == cols_n - 1))): cc = rim
+            if rim and rim_cells and (i == 0 or (rim_top and i == rows - 1) or (rim_sides and not closed and (j == 0 or j == cols_n - 1))): cc = rim
             center = sum((self.verts[x][0] for x in ids), Vector((0, 0, 0))) / 4
             if DEBUG and color == 'pantsDark' and outer: print('CELL', i, j, cc)
             for a, b, c in ((0, 1, 2), (0, 2, 3)):
@@ -316,7 +316,7 @@ def build_gear(body, lod, sex):
     for az0 in (-158, 158) if lod < 2 else ():   # brass end tabs close the strap visually where it tucks behind the ponytail
         g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, 29, 41, az0), pad(.022, .6), 2, 2, outer=.6, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-22, 22) if lod < 2 else ():
-        g.patch('#0a6f7a', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver',
+        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver', rim_cells=False,
                 remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
