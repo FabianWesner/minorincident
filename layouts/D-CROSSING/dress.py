@@ -819,15 +819,21 @@ def fput(asset, x, z, yaw, scale=(1, 1, 1), decay=None, zone=False):
         return False
     if put(asset, x, z, yaw, scale, decay=decay, zone=zone):
         l.data['placements'][-1]['worldFill'] = True
+        if M[asset]['dimensions']['y'] * scale[1] < LOW: low_boxes.add(fp(asset, x, z, yaw, scale))
         fill['n'] += 1
         return True
     return False
 
 
+# Boxes lower than LOW (hedges, fences, bushes, bins, crates): a crown (bottom above ~2 m) may overhang them.
+LOW = 1.6
+low_boxes = {(q['visualAabb']['min'][0], q['visualAabb']['min'][2], q['visualAabb']['max'][0], q['visualAabb']['max'][2]) for q in l.data['placements'] if q['visualAabb']['max'][1] < LOW}
+
+
 def fill_tree(x, z, s, zone=False):
-    # Whole-crown clearance from every solid (Scene Lab static clipping: crown x pole/lamp/roof), stricter than ok()'s core test.
+    # Whole-crown clearance from every taller solid (Scene Lab static clipping: crown x pole/lamp/roof/car), stricter than ok().
     crown = fp('prop.tree', x, z, 0, (s, s, s))
-    if any(k == 'solid' and box_gap(crown, ob) < .3 for ob, k in neighbours(crown, 1)):
+    if any(k == 'solid' and ob not in low_boxes and box_gap(crown, ob) < .3 for ob, k in neighbours(crown, 1)):
         return False
     return fput('prop.tree', x, z, RF.uniform(0, math.tau), (s, s * RF.uniform(.9, 1.2), s), zone=zone)
 
@@ -879,6 +885,19 @@ for (pts, hw), gravel in zip(ROUTES, (False, True, True)):
                 kind = RF.choices([k for k, _ in FILL_KINDS], [w for _, w in FILL_KINDS])[0]
                 fill_plot(kind, a, ux, uz, nx, nz, s, min(d - 3, s + L), hw, side)
                 s += L + RF.uniform(3, 5)
+# Avenue pass: crowns overhanging the lane edge put mass into every zoom-1 frame (the frame shows ~7 m of road length per verge).
+for (pts, hw), gravel in zip(ROUTES, (False, True, True)):
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
+        nx, nz = -uz, ux
+        for side in (-1, 1):
+            s = RF.uniform(2, 7)
+            while s < d - 3:
+                sc = RF.uniform(.8, 1.0)
+                o = hw + 4.1 + RF.uniform(0, .6)   # core clear of the hedgerows at hw+1.7 (ok() tree/solid rule), crown edge ~hw+1
+                if RF.random() < .8: fill_tree(a[0] + ux * s + nx * side * o, a[1] + uz * s + nz * side * o, sc)
+                s += RF.uniform(8, 12)
 # The drive-out (L9 start, the APC sets off from the zoo road): ok() keeps x < -512 / |z| < 22 empty for the start, so this
 # stretch gets its own pass (zone rules: lane edge + 1.6 m) with hedgerows and groves only, nothing a hull could catch.
 for side in (-1, 1):

@@ -262,8 +262,13 @@ def seg_rect(a, b, mn, mx):
     corners = [(mn[0], mn[1]), (mx[0], mn[1]), (mx[0], mx[1]), (mn[0], mx[1])]
     return min([seg_point(a, b, c) for c in corners] + [rect_point(mn, mx, a), rect_point(mn, mx, b)])
 taken = []   # 2D footprints already used (existing placements plus dressing)
+# Entries: (box min, box max, height, trunk min, trunk max). A tree's box is its crown, its trunk box the 1.2 m base square.
+LOW = 1.6   # world-fill (PO #34): crowns (bottom above ~2 m) may overhang anything lower than this (hedges, fences, bins, cars)
 for p in l.data['placements']:
-    v = p['visualAabb']; taken.append(((v['min'][0], v['min'][2]), (v['max'][0], v['max'][2])))
+    v = p['visualAabb']; b0, b1 = (v['min'][0], v['min'][2]), (v['max'][0], v['max'][2])
+    if p['assetId'] in ('prop.tree', 'prop.street-tree'):
+        x_, z_ = p['position'][0], p['position'][2]; taken.append((b0, b1, v['max'][1], (x_-.6, z_-.6), (x_+.6, z_+.6)))
+    else: taken.append((b0, b1, v['max'][1], b0, b1))
 def footprint(asset, x, z, yaw, scale):
     m = l.manifest['prop.tree' if asset == 'crown:tree' else asset]['dimensions']; dx, dz = m['x']*scale, m['z']*scale
     # Trees collide only at the trunk; the crown may overhang the verge like any street tree.
@@ -299,7 +304,16 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     gap = -.1 if run else 1.0   # run pieces butt against each other; manifest boxes can be a little smaller than the mesh
     # Crowns must not grow into roofs, fences or poles (Scene Lab static clipping), so trees reserve their whole crown.
     omn, omx = footprint('crown:tree', x, z, yaw, scale) if asset in ('prop.tree', 'prop.street-tree') else (mn, mx)
-    if any(omn[0] < t[1][0]+gap and omx[0] > t[0][0]-gap and omn[1] < t[1][1]+gap and omx[1] > t[0][1]-gap for t in taken): return None
+    # world-fill: a thin pole/lamp/hydrant only needs a 0.3 m gap to its neighbours (1 m kept the near-road houses out).
+    thin_ = asset in THIN
+    tree_ = asset in ('prop.tree', 'prop.street-tree'); h_ = l.manifest[asset]['dimensions']['y'] * (1 if asset.startswith(('bld.', 'veh.')) else scale)
+    def hit(a0, a1, b0, b1):
+        g = .3 if not run and (thin_ or (b1[0]-b0[0] < 1.0 and b1[1]-b0[1] < 1.0)) else gap
+        return a0[0] < b1[0]+g and a1[0] > b0[0]-g and a0[1] < b1[1]+g and a1[1] > b0[1]-g
+    for t in taken:
+        if tree_:
+            if hit(mn, mx, t[3], t[4]) or (t[2] >= LOW and hit(omn, omx, t[0], t[1])): return None
+        elif hit(mn, mx, t[3], t[4]) if h_ < LOW else hit(mn, mx, t[0], t[1]): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
     if decay: l.data['placements'][-1]['decay'] = decay
     # Dressing collides as one box (trees: trunk only, fence runs: one box per run) instead of the asset's detailed
@@ -312,7 +326,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     # look-l9b (PO: "soldiers and peds are just walking through the barrier"): R6/R7 dressing is solid for everyone; the
     # finale calibration (tests/sim/levels/l10-arrival.test.ts) is re-run after every dressing change instead.
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
-    taken.append((omn, omx)); return pid
+    taken.append((omn, omx, h_, mn, mx)); return pid
 def face(side_normal):
     # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
     nx, nz = -side_normal[0], -side_normal[1]
@@ -412,7 +426,7 @@ for x0, z0 in [(840, 120), (940, 125), (1100, 120), (1180, 95)]:
 for x0 in (860, 980, 1100, 1180): dress('bld.house-c', x0, -16, -math.pi/2)
 l.data['lawns'] += [dict(min=[x, 30], max=[x + 10, 33]) for x in range(1065, 1230, 18)] + [dict(min=[x, 15], max=[x + 10, 18]) for x in range(1065, 1230, 18)]
 frontage(fringe, [('prop.street-lamp', 1)], 26, 5.8, jitter=1)
-frontage(fringe, houses, 13, (9.4, 10.6), clear=5.6)   # world-fill (PO #34): fronts ~5.5 m from the centre line, in the zoom-1 frame
+frontage(fringe, houses, 13, (9.8, 10.6), clear=5.6)   # world-fill (PO #34): fronts ~5.5 m from the centre line, in the zoom-1 frame
 frontage(fringe, [('prop.street-tree', 2), ('prop.hedge', 3), ('prop.garden-bush', 2), ('prop.mailbox-blue', 1)], 6, (6.6, 9))
 frontage(fringe, [('veh.sedan-blue', 2), ('veh.sedan-green', 1), ('veh.suv-green', 1), ('veh.pickup-white', 1), ('veh.sedan-red@burned', 1), ('veh.suv-dark@wrecked', 1)], 19, 8.4, chance=.8)
 
@@ -666,7 +680,7 @@ def fill_put(asset, a_, F, s, lat, side, yaw=None, decay=None, scale=1.0):
     elif yaw == 'along': yaw = math.atan2(-uz, ux) + (math.pi if fill.random() < .5 else 0) + fill.uniform(-.12, .12)
     elif yaw is None: yaw = fill.uniform(0, math.tau)
     clear = 5.6 if asset.startswith(('bld.', 'kit.')) else 5.4 if asset.startswith('veh.') else 5.3
-    pid = dress(asset, x, z, yaw, scale=scale, decay=decay, route_clear=None if asset in FILL_TREE else clear)
+    pid = dress(asset, x, z, yaw, scale=scale, decay=decay, route_clear=5.0 if asset in FILL_TREE else clear)   # trees: trunk box; dress() still keeps the crown 4.4 m off every lane
     if pid: l.data['placements'][-1]['worldFill'] = True
     return pid
 def fill_run(asset, a_, F, s0, s1, lat, side, step, skip=0.0):
@@ -676,12 +690,20 @@ def fill_run(asset, a_, F, s0, s1, lat, side, step, skip=0.0):
     while s + step <= s1 + .01:
         n = min(fill.randint(2, 4), int((s1 - s + .01) // step))
         if n < 1: break
-        e = s + n*step
         if fill.random() >= skip:
-            p0, p1 = at(a_, ux, uz, nx, nz, s, side*lat), at(a_, ux, uz, nx, nz, e, side*lat)
-            if (p1[0] - p0[0]) + (p1[1] - p0[1]) < 0: p0, p1 = p1, p0
-            fence_run(asset, p0, p1, step, clear=5.3)
-        s = e
+            # fence_run lets pieces butt (gap -.1) against anything: keep the whole run .3 m off every existing footprint
+            # (Scene Lab static clipping: a mil-fence run cut into a service building), shortening it until it is clear.
+            m = l.manifest[asset]['dimensions']; th = min(m['x'], m['z']) / 2 + .3
+            for k in range(n, 0, -1):
+                p0, p1 = at(a_, ux, uz, nx, nz, s, side*lat), at(a_, ux, uz, nx, nz, s + k*step, side*lat)
+                mn = (min(p0[0], p1[0]) - th, min(p0[1], p1[1]) - th); mx = (max(p0[0], p1[0]) + th, max(p0[1], p1[1]) + th)
+                lo, hi = (3, 4) if m['y'] < LOW else (0, 1)   # low runs only keep off tree trunks, taller ones off whole crowns
+                if not any(mn[0] < t[hi][0] and mx[0] > t[lo][0] and mn[1] < t[hi][1] and mx[1] > t[lo][1] for t in taken): break
+            else: k = 0
+            if k:
+                if (p1[0] - p0[0]) + (p1[1] - p0[1]) < 0: p0, p1 = p1, p0
+                fence_run(asset, p0, p1, step, clear=5.3)
+        s = s + n*step
 def plot_yard(a_, F, s0, s1, side):
     run = fill.choice(['prop.hedge', 'prop.hedge', 'prop.cure-garden-wall', 'prop.privacy-fence'])
     fill_run(run, a_, F, s0, s1 - 3.2, 5.75, side, {'prop.hedge': 2.5, 'prop.cure-garden-wall': 3.5, 'prop.privacy-fence': 2.6}[run])
@@ -721,8 +743,8 @@ def plot_ruin(a_, F, s0, s1, side):
     fill_put(fill.choice(['veh.sedan-white', 'veh.suv-dark', 'veh.police-sedan', 'veh.wreck', 'veh.pickup-white']), a_, F, (s0 + s1) / 2, 7.0, side, 'along', decay='burned')
     fill_put(fill.choice(['decay.burned-facade.house', 'decay.makeshift-barricade', 'prop.utility-pole']), a_, F, s1 - 2.5, 7.6, side, 'face')
     fill_put(fill.choice(['bld.house-a', 'bld.house-c', 'bld.house-e', 'bld.mainstreet-brick']), a_, F, (s0 + s1) / 2, 12.5, side, 'face', decay='w3')
-FILL_PLOTS = {0: [(plot_farm, 3), (plot_wrecks, 2)], 1: [(plot_yard, 5), (plot_drive, 2)], 2: [(plot_works, 4), (plot_wrecks, 1)],
-              3: [(plot_post, 4), (plot_wrecks, 1)], 4: [(plot_campus, 4), (plot_drive, 1)], 5: [(plot_ruin, 4), (lambda *q: plot_wrecks(*q, burned=True), 2)]}
+FILL_PLOTS = {0: [(plot_farm, 3), (plot_wrecks, 3)], 1: [(plot_yard, 4), (plot_drive, 3)], 2: [(plot_works, 4), (plot_wrecks, 2)],
+              3: [(plot_post, 4), (plot_wrecks, 2)], 4: [(plot_campus, 4), (plot_drive, 2)], 5: [(plot_ruin, 4), (lambda *q: plot_wrecks(*q, burned=True), 2)]}
 fill_segments = [(i, s) for i in range(6) for s in region_segments(i)]
 fill_segments += [(2, s) for s in zip(source['detours'][0]['route'], source['detours'][0]['route'][1:])]
 fill_segments += [(3, s) for s in zip(source['detours'][1]['route'], source['detours'][1]['route'][1:])]
@@ -737,6 +759,20 @@ for i, (a_, b_) in fill_segments:
             L = fill.uniform(9, 17)
             fill.choices(fns, ws)[0](a_, F, s, min(s + L, d - 5), side)
             s += L + fill.uniform(3, 5)
+# Avenue: the zoom-1 frame shows only ~7 m of road length per verge at 6 m lateral, so plots alone leave most frames bare. Crowns
+# overhanging the sidewalk (trunk 7.5-8.3 m out, crown edge >= 4.4 m from the centre line) put mass into every frame; they may
+# overhang the low runs (LOW) and keep off everything taller.
+AVENUE = {0: ('prop.tree', .55), 1: ('prop.street-tree', .95), 2: ('prop.tree', .35), 3: ('prop.tree', .3), 4: ('prop.street-tree', .9), 5: ('prop.tree', .5)}
+for i, (a_, b_) in fill_segments:
+    F = frame(a_, b_); d = F[0]
+    if d < 16: continue
+    asset, chance = AVENUE[i]
+    for side in (1, -1):
+        s = fill.uniform(3, 8)
+        while s < d - 4:
+            sc = fill.uniform(.85, 1.0)
+            if fill.random() < chance: fill_put(asset, a_, F, s, 4.5 + 3.1*sc + fill.uniform(.15, .6), side, scale=sc)
+            s += fill.uniform(8.5, 11.5)
 for p in l.data['placements'][fill_before:]:
     if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
 print('world-fill placements', len(l.data['placements']) - fill_before)
