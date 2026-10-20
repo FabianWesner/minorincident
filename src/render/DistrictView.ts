@@ -385,9 +385,7 @@ export class DistrictView extends Group {
             p as [number, number, number],
           );
         }
-        const grass = new Grass(d.layout, this.grassMaterial, seed);
-        this.grass.push(grass);
-        root.add(grass);
+        for (const grass of Grass.tiles(d.layout, this.grassMaterial, seed)) { this.grass.push(grass); root.add(grass); }
         for (const b of d.layout.buildings) {
           const p = d.layout.placements.find((p) => p.id === b.id)!;
           this.tag(root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
