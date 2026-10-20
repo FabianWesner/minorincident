@@ -157,7 +157,9 @@ export class CrowdView extends Group {
     }
     await Promise.all(definitions.flatMap(def => {
       const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
-      const alpha = (def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha') && residents.has(this.modelAliases.get(def.id)!);
+      // perf-w6: Alpha bodies draw LOD0 (heroes, and their corpses on both tiers). Levels whose Alphas arrive later (the L4
+      // alarm waves) baked that batch synchronously when the first one died (~200 ms at low/4x CPU); bake it while loading.
+      const alpha = def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha';
       return [...new Set(warmHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
     }));
     loadMeasure('view:infected-crowd', started);
