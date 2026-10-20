@@ -4,8 +4,8 @@ import { InstancedMesh, Matrix4, type BufferGeometry, type Material } from 'thre
  * batches avoid submitting the whole town's fence at one camera.
  * Cell size (10-20, level handover): three builds one node graph per InstancedMesh (its cache key carries the object
  * uuid), so every cell costs a shader build at level load: 16 m cells meant 252 builds in L9 and 536 in L10, about a
- * third of those levels' loading-screen time. 64 m cells keep the culling and draw the same posts with 16x fewer builds. */
-export const perimeterCellSize = 64;
+ * third of those levels' loading-screen time. 128 m cells draw the same posts with 4-8x fewer builds and still skip far fences. */
+export const perimeterCellSize = 128;
 export function batchPerimeterPosts(points: readonly [number, number, number][], geometry: BufferGeometry, material: Material): InstancedMesh[] {
   const cells = new Map<string, [number, number, number][]>();
   for (const point of points) {
