@@ -171,3 +171,37 @@ test('@E22 seated convoy keeps a constant lens offset while passing Fairhaven fa
     expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(distance, 8);
   }
 });
+
+test('@E02-AC03 #67 rocket equipment extends wheel/pinch to 2; switching away returns smoothly within 0.4 seconds', () => {
+  for (const fps of [30, 60, 144]) {
+    const view = new View(), player = { x: 0, z: 0 };
+    view.reset(player); view.setEquippedWeapon('weapon.rocket-launcher'); view.zoom(100);
+    for (let i = 0; i < fps; i++) view.update(player, 1 / fps);
+    expect(view.playerZoom).toBeCloseTo(2, 4);
+    expect(view.getState().zoomLimits).toEqual([.5, 2]);
+    const radius = view.radius;
+    view.setEquippedWeapon('weapon.shotgun');
+    expect(view.radius).toBe(radius); expect(view.getState().targetZoom).toBe(1.5);
+    view.update(player, .1); expect(view.playerZoom).toBeGreaterThan(1.5); expect(view.playerZoom).toBeLessThan(2);
+    for (let i = 0; i < Math.ceil(.3 * fps); i++) view.update(player, 1 / fps);
+    expect(view.playerZoom).toBeLessThanOrEqual(1.5);
+    view.zoom(100, true); expect(view.playerZoom).toBe(1.5);
+    view.setEquippedWeapon('weapon.rocket-launcher'); view.zoom(-100, true); expect(view.playerZoom).toBe(.5);
+    view.encounterScale = 2; view.zoom(100, true); expect(view.playerZoom).toBe(.5);
+    view.reset(player); view.zoom(100, true); expect(view.playerZoom).toBe(1.5);
+  }
+});
+
+test('@E02-AC03 #67 @E18-AC01 rocket view ground stays inside unchanged low culling and streamed-cell coverage', () => {
+  for (const [width, height] of [[1600, 900], [1024, 768], [390, 844], [844, 390]]) {
+    const view = new View(); view.resize(width, height); view.reset({ x: 0, z: 0 });
+    view.setEquippedWeapon('weapon.rocket-launcher'); view.zoom(100, true); view.update({ x: 0, z: 0 }, 0);
+    const ground = new Plane(new Vector3(0, 1, 0), 0);
+    for (const x of [-1, 1]) for (const y of [-1, 1]) {
+      const point = new Ray(view.simCamera.position, new Vector3(x, y, .5).unproject(view.simCamera).sub(view.simCamera.position).normalize()).intersectPlane(ground, new Vector3())!;
+      expect(point.length()).toBeLessThan(45);
+      // Low terrain residency covers a 3x3 neighbourhood of 100 m cells.
+      expect(Math.max(Math.abs(point.x), Math.abs(point.z))).toBeLessThan(100);
+    }
+  }
+});

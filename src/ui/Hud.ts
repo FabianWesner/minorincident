@@ -5,6 +5,7 @@ import { l4CellarDistance } from '../data/l4';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
+import { SurvivorRadar } from './SurvivorRadar';
 import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
@@ -50,7 +51,7 @@ export class Hud {
   private readonly survivorCards = l5Survivors.map(def => ({ def, root: node('div', `survivor-${def.key}`), face: node('div', `survivor-face-${def.key}`), health: this.bar(`survivor-health-${def.key}`) }));
   private readonly survivorText = node('span', 'survivors-found');
   private readonly cueText = node('span', 'sign-of-life');
-  private readonly followerPins = l5Survivors.map(def => ({ key: def.key, pin: this.pin(`follower-${def.key}`) }));
+  private readonly followerRadar = new SurvivorRadar(this.map);
   private readonly threats: HTMLSpanElement[] = [];
   private readonly tracker = node('div', 'objective-tracker');
   private readonly weapon = this.weaponIcon();
@@ -104,7 +105,6 @@ export class Hud {
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
     this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
     this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
-    for (const { key, pin } of this.followerPins) { pin.classList.add('hud-pin-follower'); pin.hidden = true; pin.setAttribute('aria-label', `${key}, rescued survivor`); this.map.append(pin); }
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
     this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
@@ -127,7 +127,10 @@ export class Hud {
     this.damage.hidden = this.bark.hidden = this.interaction.hidden = true;
     const stick = node('div', 'stick-zone'); stick.className = 'hud-stick-zone';
     this.finaleAction.className = 'hud-dispersal-action'; this.finaleAction.hidden = true;
-    this.root.append(this.finaleAction, stick, this.vignette, vitals, companion, this.map, this.tracker, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
+    const navigation = node('div', 'radar-navigation'); navigation.className = 'hud-navigation';
+    this.weatherIcon.className = 'hud-weather';
+    navigation.append(this.map, this.weatherIcon, this.tracker);
+    this.root.append(this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
   }
   private bar(name: string) {
     const root = node('div', `${name}-bar`), fill = node('div', `${name}-fill`), label = node('span', `${name}-label`);
@@ -205,8 +208,8 @@ export class Hud {
   }
   private readonly weatherIcon = node('output', 'weather-icon');
   update(preparing = false): void {
-    if (!this.weatherIcon.parentNode) { this.weatherIcon.style.cssText = 'position:absolute;right:16px;top:170px;color:white;background:#182333;padding:5px;border-radius:6px'; this.root.append(this.weatherIcon); }
     const weather = this.game.world.weather;
+    setHidden(this.weatherIcon, !weather);
     if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); attribute(this.weatherIcon, 'data-weather', weather.kind); }
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
@@ -336,12 +339,7 @@ export class Hud {
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
-    for (const { key, pin } of this.followerPins) {
-      const r = mission?.state.l5?.survivors.find(r => r.key === key), e = r && this.game.world.entities.get(r.id);
-      const alive = !!e && !e.hidden && !e.infection && e.health.current > 0 && (r?.status === 'following' || r?.status === 'sheltered');
-      setHidden(pin, !alive);
-      if (alive && e) { attribute(pin, 'data-entity-id', String(e.id)); this.place(pin, e.transform.x, e.transform.z, px, pz, true); }
-    }
+    this.followerRadar.update(this.game.world.entities, px, pz);
     for (const card of this.survivorCards) {
       const r = mission?.state.l5?.survivors.find(r => r.key === card.def.key);
       const e = r && this.game.world.entities.get(r.id);
