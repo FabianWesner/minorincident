@@ -58,7 +58,7 @@ Gameplay source ends at `0b2ad7b1b`; the packaging-only follow-up is `8586349e9`
 | Fresh remote unit sweep | **1,761 passed / 2 failed / 9 skipped**; asset decode timeout and bundle warning both cleared in isolation | [unit JSON, gzip](results/unit-final.json.gz) |
 | Broader remote level/regression follow-up | **100 passed / 1 failed**; the remaining old 405-second L3 assertion has a fresh passing 420-second run | [regressions, gzip](results/final-regressions.json.gz), [fresh L3 criterion, gzip](results/l3-criterion-final.json.gz) |
 | Isolated remote production asset inventory and static gate | **2 passed**; original 300/180-second deadlines retained; typecheck, lint and build succeed without warnings | [isolated results, gzip](results/isolated-checks-chunked.json.gz) |
-| Final `npm run verify -- E23` | Final simulation **74 passed**; 55 headless browser checks running; performance queued | Local log: `test-results/survivors-ai/verify-E23-chunked.log` |
+| Final `npm run verify -- E23` | Final simulation **74 passed**, headless browser checks **55 passed**; native performance pending | Local log: `test-results/survivors-ai/verify-E23-chunked.log` |
 
 The full sweep's four failures were: E21 complete time at 405.4 seconds against the former 405 ceiling; the unsupported first-beat casualty inference (`20 < 20`); the old mission-ring `depthTest: false` assertion; and the build chunk warning. Fresh L3, L4 and ring checks pass with the reported criteria/renderer corrections. The separate roof data chunk clears the static gate while retaining the original 2 MB limit. All L1–L10 start/checkpoint clearance cases and the continuous L1→L9/L10 campaign replays pass in the full sweep.
 
