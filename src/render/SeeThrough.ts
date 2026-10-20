@@ -16,6 +16,9 @@ export const seeThrough = {
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
+  /** Share of an occluder that survives inside the clear disc. 0 for the courier and her corgi (PO #45: no dither dots over the figures; the disc is cut clean),
+   * .35 while the player drives or rides a vehicle so a faded car or bus still reads as one. */
+  retain: uniform(0).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -46,9 +49,9 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // behind the subject stay intact. Other placements keep the bounded disc.
   const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
-  // Ordinary cuts retain a screen-stable 35% of the surface, even at the centre.
-  // Shared noise across layers keeps the remaining 65% open to the subject.
-  const keep = hole.mul(.65).add(.35).greaterThan(noise);
+  // Vehicle cuts retain a screen-stable 35% of the surface, even at the centre (retain = .35); courier cuts are fully clear inside the disc.
+  // Shared noise across layers keeps the remainder open to the subject.
+  const keep = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain).greaterThan(noise);
   return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : keep;
 };
 

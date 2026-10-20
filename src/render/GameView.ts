@@ -86,6 +86,9 @@ export class GameView implements Lifecycle {
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
+  private readonly revealPet = new Box3();
+  private companionId = -1;
+  private companionSearch = 0;
   private probeVisibilityPending = false;
   private solidCutProbeOff = false;
   private probeHide = { courier: false, crowd: false, environment: false, bars: false };
@@ -914,7 +917,16 @@ export class GameView implements Lifecycle {
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
       this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
       if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
-      if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      const inVehicle = !!(this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle));
+      if (inVehicle) this.revealSubject.union(this.revealVehicle);
+      seeThrough.retain.value = inVehicle || this.revealSubject.max.x - this.revealSubject.min.x > 2 || this.revealSubject.max.z - this.revealSubject.min.z > 2 ? .35 : 0;
+      // PO #45: the see-through disc must clear the corgi next to her too, else its tail dissolves into occluder dots.
+      let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
+      if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
+      if (pet && !pet.hidden && Math.hypot(pet.transform.x - current.x, pet.transform.z - current.z) < 2.6) {
+        this.revealPet.min.set(pet.transform.x - .5, feet, pet.transform.z - .5); this.revealPet.max.set(pet.transform.x + .5, feet + .8, pet.transform.z + .5);
+        this.revealSubject.union(this.revealPet);
+      }
       subject = this.revealSubject;
     }
     this.vehicles?.updateReveal(subject);
