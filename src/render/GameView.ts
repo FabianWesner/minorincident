@@ -1070,7 +1070,7 @@ export class GameView implements Lifecycle {
       if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
         field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
       }
-      this.vehicles?.pushLights(field, aura);
+      this.vehicles?.pushLights(field, aura, timeOfDayPresets[lighting.preset].headlightBeams ? (position, direction, length, angle, colour) => lighting.practicalEffects.pushBeam(position, direction, length, angle, colour) : undefined);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
@@ -1078,6 +1078,7 @@ export class GameView implements Lifecycle {
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
     // still owns its one hero shadow map. Avoid a second city-wide moon pass.
     if (this.world.scenario === 'L7' && this.quality === 'low') lighting.sun.visible = false;
+    this.districts?.accents?.update(this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

@@ -1,0 +1,37 @@
+{
+ "name": "l9-look-city-edge",
+ "note": "look-l9b: the burning next city at the east edge (fixed game camera 2 m before the town-hall front (556, -21): the facade spans the frame with the brick fronts and fires beside it): ground fires between the blocks with 2.4-3.8 m radius, tall flame tongues, dark smoke columns lit from below, lit windows between the fires. Look for fires that read at zoom 1 (not tiny dots), smoke that is a dark column (not flat grey blobs), warm glow on the facades, E18 budgets held.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    460,
+    -110
+   ],
+   [
+    600,
+    80
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   556,
+   -21
+  ],
+  "zoom": 1
+ },
+ "frames": 150,
+ "sheet": 50,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}
