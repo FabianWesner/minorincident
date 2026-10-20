@@ -142,7 +142,7 @@ export class InteractionView extends Group {
           });
           this.occluderMaterials.set(e.id, [...copies.values()]);
         }
-        if (e.pickup && 'kind' in e.pickup) {
+        if (e.pickup && 'kind' in e.pickup && e.pickup.kind !== 'medkit' && e.pickup.kind !== 'soda' && e.pickup.kind !== 'energy-drink') { // PO 10-20: consumables (med packs, soda, energy drinks) need no ground ring
           const marker = new Mesh(this.outlineGeometry, this.teal);
           marker.name = 'pickup-ring'; marker.rotation.x = -Math.PI / 2; marker.scale.setScalar(.63); marker.position.y = .025; marker.renderOrder = 94; object.add(marker);
         }

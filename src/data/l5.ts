@@ -16,7 +16,7 @@ export const l5 = {
   /** Followers (E08 escort follow without a fail state): 2-5 m behind, run slower than the player and every infected. */
   follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, reactS: 1.2, hp: 60 },
   /** Sparse infected: wanderers at the start (ones and twos), the cap, damage like L4's. */
-  infected: { start: { high: 18, low: 12 }, maxGroup: 3, cap: { high: 30, low: 30 }, damage: 1.25, leashM: 14 },
+  infected: { start: { high: 27, low: 18 }, maxGroup: 3, cap: { high: 30, low: 30 }, damage: 1.25, leashM: 14 },
   /** Metro: the trigger at the foot of the entrance, every living follower crosses, the residents are shown briefly, then the shutter rolls shut. */
   metro: { triggerM: 1.2, gatherM: 15, waitS: 10, occupantViewS: 3, lookoutAfterS: 0, occupants: 24, stationX: 37.7854, stationZ: -78 },
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
@@ -90,6 +90,9 @@ export const l5Wanderers: readonly { at: P; n: number; alpha?: boolean }[] = [
   { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [49, 14], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
   { at: [-26, 40], n: 2 }, { at: [-52, -12], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [66, 24], n: 1 }, { at: [10, 13], n: 1 },
+  // PO 10-20 ("L5 feels quite empty"): nine lone shamblers, each >= 8 m from any other wanderer, ring, the cellar exit and the Alpha.
+  { at: [-46, -37.5], n: 1 }, { at: [36, -37.4], n: 1 }, { at: [-12, 43.6], n: 1 }, { at: [40, 28.5], n: 1 }, { at: [14, -24], n: 1 },
+  { at: [-60, 43], n: 1 }, { at: [-4, 28], n: 1 }, { at: [24, 43.6], n: 1 }, { at: [-40, -20], n: 1 },
 ];
 
 /** Fires still burning (E27 hazards: flame cards, ground light and a smoke column) and smoke columns of fires deep inside blocks. */
