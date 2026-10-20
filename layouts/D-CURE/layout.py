@@ -317,7 +317,7 @@ def face(side_normal):
     # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
     nx, nz = -side_normal[0], -side_normal[1]
     return math.atan2(-nz, nx)
-def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chance=1.0, align=True):
+def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chance=1.0, align=True, clear=None):
     """Walk both verges of axis-aligned route segments, placing palette pieces at a setback, facing the road."""
     names = [a for a, _ in palette]; weights = [w for _, w in palette]
     for a, b in segments:
@@ -336,7 +336,7 @@ def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chan
                     yaw = face(n) if align else rng.uniform(0, math.tau)
                     if asset.startswith('veh.'): yaw = math.atan2(-uz, ux) + (math.pi if rng.random() < .5 else 0) + rng.uniform(-.25, .25)
                     if asset.startswith(('prop.tree', 'prop.street-tree')): yaw = rng.uniform(0, math.tau)
-                    dress(asset, x, z, yaw, decay=decay)
+                    dress(asset, x, z, yaw, decay=decay, route_clear=clear)
                 s += spacing + rng.uniform(-jitter, jitter)
 def region_segments(i):
     r = source['regions'][i]['route']; return list(zip(r, r[1:]))
@@ -412,7 +412,7 @@ for x0, z0 in [(840, 120), (940, 125), (1100, 120), (1180, 95)]:
 for x0 in (860, 980, 1100, 1180): dress('bld.house-c', x0, -16, -math.pi/2)
 l.data['lawns'] += [dict(min=[x, 30], max=[x + 10, 33]) for x in range(1065, 1230, 18)] + [dict(min=[x, 15], max=[x + 10, 18]) for x in range(1065, 1230, 18)]
 frontage(fringe, [('prop.street-lamp', 1)], 26, 5.8, jitter=1)
-frontage(fringe, houses, 13, (13, 15))
+frontage(fringe, houses, 13, (9.4, 10.6), clear=5.6)   # world-fill (PO #34): fronts ~5.5 m from the centre line, in the zoom-1 frame
 frontage(fringe, [('prop.street-tree', 2), ('prop.hedge', 3), ('prop.garden-bush', 2), ('prop.mailbox-blue', 1)], 6, (6.6, 9))
 frontage(fringe, [('veh.sedan-blue', 2), ('veh.sedan-green', 1), ('veh.suv-green', 1), ('veh.pickup-white', 1), ('veh.sedan-red@burned', 1), ('veh.suv-dark@wrecked', 1)], 19, 8.4, chance=.8)
 
@@ -424,7 +424,7 @@ for x0, z0, x1, z1 in [(1310, 128, 1500, 128), (1530, 128, 1735, 128), (1310, -7
     fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
 frontage(industrial, [('prop.street-lamp', 1)], 24, 5.8, jitter=1)
 frontage(industrial, [('prop.utility-pole', 1)], 30, 6.5, sides=(1,), jitter=1)
-frontage(industrial, [('bld.cure-service-building', 2), ('bld.substation', 2), ('prop.cure-container-stack', 3), ('veh.box-truck', 2), ('veh.fuel-truck', 1), ('veh.military-truck@wrecked', 1)], 14, (10.5, 15))
+frontage(industrial, [('bld.cure-service-building', 2), ('bld.substation', 2), ('prop.cure-container-stack', 3), ('veh.box-truck', 2), ('veh.fuel-truck', 1), ('veh.military-truck@wrecked', 1)], 14, (9.5, 12), clear=5.6)
 frontage(industrial, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.sandbag-pallet', 1), ('prop.emergency-light', 1)], 8, (6.5, 8.5), chance=.8)
 
 # R4 military zone: checkpoints with white floods, guard towers, sandbags, armour wrecks.
@@ -434,7 +434,7 @@ for x, z, yaw in [(1960, -40, 0), (2070, -110, math.pi), (2280, -40, 0), (2360, 
 for x0, z0, x1, z1 in [(1910, -96, 2120, -96), (2160, -96, 2380, -96), (1910, 128, 2120, 128), (2160, 128, 2380, 128)]:
     fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
 frontage(military, [('prop.street-lamp', 1)], 32, 5.8, jitter=1, sides=(1,))
-frontage(military, [('veh.tank@wrecked', 2), ('veh.military-truck@wrecked', 2), ('kit.guard-tower', 2), ('bld.cure-motor-shelter', 1), ('prop.sandbag-pallet', 2), ('decay.blown-sandbags', 2), ('veh.evac-bus@burned', 1)], 13, (9, 13))
+frontage(military, [('veh.tank@wrecked', 2), ('veh.military-truck@wrecked', 2), ('kit.guard-tower', 2), ('bld.cure-motor-shelter', 1), ('prop.sandbag-pallet', 2), ('decay.blown-sandbags', 2), ('veh.evac-bus@burned', 1)], 13, (8.5, 11), clear=5.6)
 frontage(military, [('prop.jersey-barrier', 3), ('prop.emergency-light', 1), ('decay.blown-sandbags', 2), ('prop.sandbag-pallet', 2), ('prop.cure-mil-fence', 2)], 6, (6.4, 7.5), chance=1)
 
 # R5 research campus: cold floods, ambulances, tents and generators along the lab lanes.
@@ -444,15 +444,16 @@ for x, z in [(2560, -40), (2650, -40), (2750, -45), (2560, 110), (2650, 110), (2
 for x0, z0, x1, z1 in [(2540, 92, 2800, 92), (2540, -26, 2790, -26)]:
     fence_run('prop.cure-quarantine-fence', (x0, z0), (x1, z1), 3.2)
 frontage(campus, [('prop.street-lamp', 1)], 22, 5.8, jitter=1)
-frontage(campus, [('prop.cure-iso-tent', 3), ('prop.cure-generator', 2), ('veh.ambulance', 2), ('veh.ambulance@wrecked', 1), ('bld.cure-lab-annex', 2), ('veh.police-suv', 1), ('prop.tent', 1)], 12, (9, 13))
+frontage(campus, [('prop.cure-iso-tent', 3), ('prop.cure-generator', 2), ('veh.ambulance', 2), ('veh.ambulance@wrecked', 1), ('bld.cure-lab-annex', 2), ('veh.police-suv', 1), ('prop.tent', 1)], 12, (8.5, 11), clear=5.6)
 frontage(campus, [('prop.street-tree', 1), ('prop.hedge', 3), ('prop.lab-signs', 1), ('prop.cure-quarantine-fence', 2)], 7, (6.4, 8.5), chance=.8)
 
 # R6 destroyed corridor: burned streetscape, collapsed fronts, wrecks and red emergency lights.
 corridor = region_segments(5)
 frontage(corridor, [('prop.utility-pole', 1)], 28, 6.5, sides=(-1,), jitter=1)
-# look-l9b: the burned fronts stand 19-23 m back. Scene Lab powers every placement, so their window pools (reach ~10 m) must
-# not touch the E31-AC16 verge band (5.5-8.5 m); at the game camera (+-7.5 m at zoom 1, +-11 m at 1.5) they are off-frame either way.
-frontage(corridor, [('bld.house-a@w3', 2), ('bld.house-c@w3', 2), ('bld.mainstreet-brick@w3', 2), ('bld.storefront-row@w6', 1), ('bld.house-e@w3', 1), ('bld.clinic-annex@burned', 1)], 13, (19, 23))
+# look-l9b put the burned fronts 19-23 m back (off-frame at the game camera, +-7.5 m at zoom 1). world-fill (PO #34): they stand
+# 10.5-12.5 m back so the ruins are in frame; they join the always-off corridor-dark light group below, so no window pool reaches
+# the E31-AC16 verge band (night-read-l10-r6 re-measured).
+frontage(corridor, [('bld.house-a@w3', 2), ('bld.house-c@w3', 2), ('bld.mainstreet-brick@w3', 2), ('bld.storefront-row@w6', 1), ('bld.house-e@w3', 1), ('bld.clinic-annex@burned', 1)], 13, (10.5, 12.5), clear=5.6)
 frontage(corridor, [('veh.school-bus@burned', 1), ('veh.sedan-white@burned', 2), ('veh.suv-dark@burned', 2), ('veh.police-sedan@burned', 1), ('veh.tank@wrecked', 1), ('veh.wreck', 2)], 15, (8, 10), chance=.85)
 frontage(corridor, [('decay.blown-sandbags', 2), ('prop.emergency-light', 1), ('decay.makeshift-barricade', 1), ('prop.jersey-barrier', 1)], 8, (6.4, 8), chance=.75)
 
@@ -660,6 +661,7 @@ FILL_TREE = ('prop.tree', 'prop.street-tree')
 def fill_put(asset, a_, F, s, lat, side, yaw=None, decay=None, scale=1.0):
     d_, ux, uz, nx, nz = F
     x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    if decay and decay not in l.manifest[asset].get('decayVariants', []): decay = None
     if yaw == 'face': yaw = face((nx*side, nz*side))
     elif yaw == 'along': yaw = math.atan2(-uz, ux) + (math.pi if fill.random() < .5 else 0) + fill.uniform(-.12, .12)
     elif yaw is None: yaw = fill.uniform(0, math.tau)

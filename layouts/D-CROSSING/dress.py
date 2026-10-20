@@ -804,6 +804,91 @@ for site in [[(-100, -64), (-96, -70), (-106, -66)], [(62, -360), (66, -364), (5
     masts += any(put('prop.utility-pole', x, z, .6, (1.25, 3.1, 1.25)) for x, z in site)
 stats['masts'] = masts
 
+# ---- world-fill (PO #34, stunning blocker): the near verge the game camera actually frames ----------------------------------
+# "L9 drive -550->353 over a black plain": the edge framing above leaves long 'open' stretches and loses many pieces to the
+# risk/sight-line rules, so most zoom-1 frames (the 12 m lane plus ~3 m of verge each side) show bare ground. This pass walks
+# every lane in plots of 9-17 m with 3-5 m gaps and fills the first 1.5-9 m beyond the lane edge with hedgerows, field fences,
+# tree clumps, bushes, poles, wrecks and the odd farm shed, through the same ok() rules (lanes, detours, cross-country links,
+# sight lines, risks, the start and crash zones). Own RNG and explicit yaw/scale, so no earlier draw from R moves.
+RF = random.Random(934)
+fill = {'n': 0}
+
+
+def fput(asset, x, z, yaw, scale=(1, 1, 1), decay=None, zone=False):
+    if zone and route_d((x, z)) < 1.6 + max(fp(asset, x, z, yaw, scale)[2] - x, fp(asset, x, z, yaw, scale)[3] - z):
+        return False
+    if put(asset, x, z, yaw, scale, decay=decay, zone=zone):
+        l.data['placements'][-1]['worldFill'] = True
+        fill['n'] += 1
+        return True
+    return False
+
+
+def fill_tree(x, z, s, zone=False):
+    # Whole-crown clearance from every solid (Scene Lab static clipping: crown x pole/lamp/roof), stricter than ok()'s core test.
+    crown = fp('prop.tree', x, z, 0, (s, s, s))
+    if any(k == 'solid' and box_gap(crown, ob) < .3 for ob, k in neighbours(crown, 1)):
+        return False
+    return fput('prop.tree', x, z, RF.uniform(0, math.tau), (s, s * RF.uniform(.9, 1.2), s), zone=zone)
+
+
+def fill_plot(kind, a, ux, uz, nx, nz, s0, s1, hw, side, zone=False):
+    yaw = -math.atan2(uz, ux)
+    P = lambda s, o: (a[0] + ux * s + nx * side * (hw + o), a[1] + uz * s + nz * side * (hw + o))
+    mid = (s0 + s1) / 2
+    if kind == 'hedgerow':
+        s = s0
+        while s + 2.5 <= s1:
+            fput('prop.hedge', *P(s + 1.25, 1.7), yaw, (1.0, RF.uniform(.9, 1.3), RF.uniform(.9, 1.2)), zone=zone)
+            s += 2.55
+        fill_tree(*P(mid + RF.uniform(-3, 3), RF.uniform(4.8, 6.5)), RF.uniform(.75, 1.0), zone)
+    elif kind == 'fence':
+        s = s0
+        while s + 2.64 <= s1:
+            if RF.random() < .8: fput(RF.choice(['prop.picket-fence', 'prop.privacy-fence']), *P(s + 1.32, 1.9), yaw + math.pi / 2, zone=zone)
+            s += 2.64
+        fput(RF.choice(['prop.garden-bush', 'prop.garden-bush-small']), *P(s1 - 1, 3.2), RF.uniform(0, math.tau), zone=zone)
+        fill_tree(*P(mid, RF.uniform(5.5, 7.5)), RF.uniform(.8, 1.05), zone)
+    elif kind == 'grove':
+        for k in range(RF.randint(2, 3)):
+            fill_tree(*P(s0 + RF.uniform(1, s1 - s0 - 1), RF.uniform(4.2, 8.5)), RF.uniform(.7, 1.05), zone)
+        for k in range(RF.randint(1, 3)):
+            fput(RF.choice(['prop.garden-bush', 'prop.garden-bush-small']), *P(s0 + RF.uniform(0, s1 - s0), RF.uniform(1.4, 3.2)), RF.uniform(0, math.tau), zone=zone)
+    elif kind == 'wreck':
+        asset, dec = RF.choice(verge_wrecks[:7] + [('veh.sedan-white', 'burned'), ('veh.suv-dark', 'wrecked')])
+        fput(asset, *P(mid, RF.uniform(2.6, 3.6)), yaw + RF.uniform(-.35, .35) + (math.pi if RF.random() < .5 else 0), decay=dec, zone=zone)
+        fput(RF.choice(['prop.crates', 'prop.trash-bags', 'prop.pallet', 'prop.traffic-cone']), *P(s0 + 1, 1.6), RF.uniform(0, math.tau), zone=zone)
+        fput('prop.utility-pole', *P(s1 - 1.5, 1.6), yaw + math.pi / 2, zone=zone)
+    elif kind == 'farm':
+        # A farm gate: parked pickup in the drive, hedge and mailbox. (No sheds: their interiors became closed nav pockets.)
+        fput(RF.choice(['veh.pickup-red', 'veh.pickup-white', 'veh.suv-green']), *P(mid, RF.uniform(3.0, 4.0)), yaw + (math.pi if RF.random() < .5 else 0) + RF.uniform(-.2, .2), zone=zone)
+        fput(RF.choice(['prop.garden-bush', 'prop.hedge']), *P(s0 + 1.5, 1.8), yaw, zone=zone)
+        fput(RF.choice(['prop.mailbox-blue', 'prop.trash-bin', 'prop.wheelbarrow']), *P(s1 - 1.2, 1.6), yaw, zone=zone)
+
+
+FILL_KINDS = [('hedgerow', 3), ('grove', 4), ('fence', 2), ('wreck', 1), ('farm', 1)]
+for (pts, hw), gravel in zip(ROUTES, (False, True, True)):
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
+        nx, nz = -uz, ux
+        for side in (-1, 1):
+            s = RF.uniform(2, 6)
+            while s < d - 6:
+                L = RF.uniform(9, 17)
+                kind = RF.choices([k for k, _ in FILL_KINDS], [w for _, w in FILL_KINDS])[0]
+                fill_plot(kind, a, ux, uz, nx, nz, s, min(d - 3, s + L), hw, side)
+                s += L + RF.uniform(3, 5)
+# The drive-out (L9 start, the APC sets off from the zoo road): ok() keeps x < -512 / |z| < 22 empty for the start, so this
+# stretch gets its own pass (zone rules: lane edge + 1.6 m) with hedgerows and groves only, nothing a hull could catch.
+for side in (-1, 1):
+    s = 3
+    while s < 84:
+        L = RF.uniform(10, 15)
+        fill_plot(RF.choice(['hedgerow', 'grove', 'grove', 'fence']), [-598, 0], 1, 0, 0, 1, s, s + L, 6, side, zone=True)
+        s += L + RF.uniform(3, 4.5)
+stats['world-fill'] = fill['n']
+
 # ---- look-l9 clean-up: open fork/merge gores and crown-in-solid overlaps --------------------------------------------
 # T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry
 # shortcut. Drivers cut these corners, so the sectors between the diverging lanes stay free of anything with a collider,
