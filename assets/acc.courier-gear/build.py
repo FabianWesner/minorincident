@@ -259,13 +259,13 @@ def build_gear(body, lod, sex):
         """A plate follows only its own limb's bones (never the other side, never the torso): everything else folds into `fallback`."""
         return {name: fallback for name in body.names if name not in allowed}
     ARMS = {'armL': 'chest', 'armR': 'chest', 'elbowL': 'chest', 'elbowR': 'chest', 'clavicleL': 'chest', 'clavicleR': 'chest', 'foreArmL': 'chest', 'foreArmR': 'chest'}
-    STEEL, DARK, TRIM = 'pantsDark', 'uiDark', 'silver'
+    STEEL, DARK, TRIM = 'pantsDark', 'uiDark', 'pantsLight'
 
     # ---- tier 1: knee pads (bulged cap with a silver rim), fingerless gloves -----------------------------------------
     for side in 'LR':
         kz = bones['knee' + side][0].z
         leg = limb_axis(body, [('leg' + side, 'h'), ('knee' + side, 'h'), ('shin' + side, 't')]); vz = v_of_z(leg)
-        g.patch(STEEL, around(leg, lambda s, kz=kz, vz=vz: vz(kz + .058 - .12 * s), 0, 66),
+        g.patch(DARK, around(leg, lambda s, kz=kz, vz=vz: vz(kz + .058 - .12 * s), 0, 66),
                 pad(.026, .45), n(4, 2), n(5, 3), rim=TRIM, remap=only({'leg' + side, 'knee' + side, 'shin' + side, 'hip'}, 'leg' + side))
     for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
@@ -275,7 +275,7 @@ def build_gear(body, lod, sex):
     g.tier_mark()
 
     # ---- tier 2: quilted padded vest (olive, collar, ridges, armholes) ------------------------------------------------
-    z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .035
+    z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .02
     torso = lambda v: (Vector((0, 0, v)), zup)
     cols = n(16, 6); rows = n(6, 2)
     def vest_thick(s, t):
@@ -290,17 +290,17 @@ def build_gear(body, lod, sex):
         return 'olive' if i % 2 else 'oliveSeam'
     g.patch('olive', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True), vest_thick, rows, cols, closed=True,
             bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4,
-            drop=lambda i, j, R, C: 1 <= i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 40)   # armholes
+            drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 50)   # armholes
     g.tier_mark()
 
     # ---- tier 3: shoulder + elbow pads, utility belt ----------------------------------------------------------------
     for side, sg in (('L', 1), ('R', -1)):
         c = bones['arm' + side][0]
-        g.patch(STEEL, dome(c, Vector((1, 0, 0)), zup, Vector((0, sg, 0)), 50, 4, 78), pad(.032, .45), n(4, 3), n(5, 3), rim='orange',
+        g.patch(DARK, dome(c, Vector((1, 0, 0)), zup, Vector((0, sg, 0)), 50, 4, 78), pad(.032, .45), n(4, 3), n(5, 3), rim='orange',
                 remap=only({'arm' + side, 'clavicle' + side, 'chest'}, 'arm' + side))
         arm = limb_axis(body, [('arm' + side, 'h'), ('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(arm)
         ez = bones['foreArm' + side][0].z
-        if lod < 1: g.patch(STEEL, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.026, .45), n(3, 2), n(4, 3), rim=TRIM,
+        if lod < 1: g.patch(DARK, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.026, .45), n(3, 2), n(4, 3), rim=TRIM,
                 remap=only({'arm' + side, 'elbow' + side, 'foreArm' + side, 'foreArmTwist' + side}, 'arm' + side))
     wz = bones['torso'][0].z
     bcols = n(16, 8)
@@ -318,7 +318,7 @@ def build_gear(body, lod, sex):
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
         fz = bones['foreArm' + side][0].z
-        g.patch(STEEL, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.022, .55), n(2, 2), n(5, 3), rim=TRIM,
+        g.patch(DARK, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.022, .55), n(2, 2), n(5, 3), rim=TRIM,
                 remap=only({'foreArm' + side, 'foreArmTwist' + side, 'elbow' + side, 'hand' + side}, 'foreArm' + side))
     g.tier_mark()
     return g
