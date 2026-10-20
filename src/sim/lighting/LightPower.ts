@@ -16,6 +16,9 @@ export interface LampState {
  * Visual quality never changes this state. Broken lamps stay broken on restart. */
 export class LightPower {
   readonly lamps = new Map<string, LampState>();
+  /** Render-only dressing lights: authored power only, no lamp entity, never in infected sight. */
+  private readonly decor = new Map<string, string>();
+  private readonly decorOff = new Set<string>();
   private readonly byEntity = new Map<number, LampState>();
   private readonly generators = new Map<number, string>();
   private nextIndex = 0;
@@ -56,7 +59,9 @@ export class LightPower {
   install(districts: DistrictWorld): void {
     this.rebind();
     for (const lamp of this.lamps.values()) lamp.available = false;
+    this.decor.clear(); this.decorOff.clear();
     for (const source of placedLights(districts)) {
+      if (source.decor) { this.decor.set(source.id, source.group); if (!source.on) this.decorOff.add(source.group); continue; }
       const [x, y, z] = source.position;
       const lamp = this.register({ id: source.id, group: source.group, x, y, z, range: source.anchor.range, breakable: source.anchor.breakable }, source.on);
       lamp.available = true;
@@ -87,6 +92,8 @@ export class LightPower {
     this.world.events.emit({ type: powered ? 'power.on' : 'power.off', tick: this.world.tick, group });
   }
   isOn(id: string): boolean {
+    const decor = this.decor.get(id);
+    if (decor !== undefined) return !this.decorOff.has(decor);
     const lamp = this.lamps.get(id);
     if (!lamp || !lamp.available || !lamp.powered || lamp.broken) return false;
     if (lamp.startedAt < 0) return true;

@@ -1,0 +1,55 @@
+{
+ "name": "l9-look-crash-approach",
+ "note": "look-l9b / E31-AC16: the healthy APC drives the last 40 m of asphalt towards the crash (420..462, 0) under the burning-city glow. The E31-AC16 route gate for this stretch is night-read-l9-apc (the same asphalt); here the contrast sampler finds no pairs on the last 40 m before the barricades, so this scene gates budgets, headlights and console only. Look for a dark moonlit ground with warm pools (flares, hazard blinkers, red barricade lamps), grey (not self-lit) paint, no pale flat discs on the ground, the city glow warming the east side of every surface.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    330,
+    -90
+   ],
+   [
+    552,
+    90
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    420,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     462,
+     0
+    ]
+   ],
+   "health": 1000,
+   "floor": true,
+   "driven": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 150,
+ "sheet": 50,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "headlightsDarkFramesMax": 0
+ }
+}
