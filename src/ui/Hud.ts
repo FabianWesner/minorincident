@@ -358,7 +358,8 @@ export class Hud {
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }
-    text(this.survivorText, ` · Survivors found ${l5.found}/5`);
+    const metro = mission.l5?.metroStatus();
+    text(this.survivorText, ` · ${metro ?? `Survivors found ${l5.found}/5`}`);
     // Keep the next hiding place findable between sound pulses and after checkpoint restore.
     // The street and live distance distinguish Sam's bus from the plaza wrecks.
     let nearest: (typeof l5.survivors)[number] | undefined, distance = Infinity;
