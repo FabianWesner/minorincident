@@ -51,6 +51,14 @@ function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 
   if (tier === 'frail' || tier === 'athletic' || tier === 'average') return tier === 'frail' ? 'infected-frail' : tier === 'athletic' ? 'infected-sprint' : 'infected-lurch';
   return speed >= 5.35 ? 'infected-sprint' : speed >= 4.4 && speed < 4.92 ? 'infected-frail' : 'infected-lurch';
 }
+type BakedBatch = ReturnType<typeof bakeInfected>;
+type PreparedBatch = BakedBatch & { corpse: BufferGeometry | null };
+/** Finished crowd batch geometry per model/LOD/tier, reused across levels (CPU data only; every scene draws a clone).
+ * Bounded like the bake cache; the eviction order is least recently used. */
+const preparedBatches = new Map<string, PreparedBatch>();
+const preparedBatchLimit = 48;
+/** A clone with its own userData object: per-level LOD tags must not reach the cached copy. */
+function cloneBatchGeometry(geometry: BufferGeometry): BufferGeometry { const clone = geometry.clone(); clone.userData = { ...geometry.userData }; return clone; }
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number; decay?: string }>();
@@ -172,18 +180,27 @@ export class CrowdView extends Group {
       const loaded = await this.registry.loadAsset(asset, lod, def.decay) as Group;
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
-      const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
-      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}${def.decay ? `.${def.decay}` : ''}:${lod}`), capacity = role === 'crow' ? 800 : 350;
-      const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
+      const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const alpha = asset === 'inf.alpha' || asset === 'inf.mega-alpha', capacity = role === 'crow' ? 800 : 350;
+      // Level handover (10-20): the finished batch geometry (baked, merged, simplified, packed, appearance-marked) is
+      // immutable CPU data that depends only on the model, LOD and tier. Reusing it across levels skips ~1 s of main-thread
+      // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
+      const preparedKey = fallback ? undefined : `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
+      const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
+      let baked: BakedBatch;
+      if (prepared) {
+        preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared); model.updateMatrixWorld(true);
+        baked = { ...prepared, geometry: cloneBatchGeometry(prepared.geometry), shirtColor: prepared.shirtColor?.clone() };
+        if (prepared.corpse) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
+      } else {
+        // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
+        baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback);
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
       if (!healthy) markInfectedEyeCores(baked.geometry);
-      baked.geometry.userData.crowdLod = lod;
-      const alpha = asset === 'inf.alpha' || asset === 'inf.mega-alpha';
       if (lod === 'lod2' && !fallback) {
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
         await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
@@ -201,8 +218,16 @@ export class CrowdView extends Group {
         if (human) markCrowdAppearance(corpse, false);
         this.corpseGeometry.set(key, corpse);
       }
-      const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
+      if (preparedKey) {
+        preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: this.corpseGeometry.has(key) ? cloneBatchGeometry(this.corpseGeometry.get(key)!) : null });
+        if (preparedBatches.size > preparedBatchLimit) { const oldest = preparedBatches.keys().next().value!; const old = preparedBatches.get(oldest)!; old.geometry.dispose(); old.corpse?.dispose(); preparedBatches.delete(oldest); }
+      }
+      }
+      baked.geometry.userData.crowdLod = lod;
+      const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
+      const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       this.accessories?.registerSkull(asset, baked.geometry);
       const instanceData = new InstancedInterleavedBuffer(new Float32Array(capacity * 8), 8, 1).setUsage(StreamDrawUsage);
       const tint = new InterleavedBufferAttribute(instanceData, 4, 4);

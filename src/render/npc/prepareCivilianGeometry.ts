@@ -6,7 +6,7 @@ import { prepareGrip, removeAuthoredCane, handTriangles, gripReach } from './civ
 import { packCrowdParts } from '../../assets/crowdParts';
 import { fitCivilianHeight } from './figureHeight';
 
-export type PreparedCivilian = ReturnType<typeof bakeInfected> & { rig?: Group; gripTriangles?: Float32Array; gripReach?: number };
+export type PreparedCivilian = ReturnType<typeof bakeInfected> & { rig?: Group; gripTriangles?: Float32Array; gripReach?: number; /** markCrowdAppearance already applied (retained copies are marked once). */ marked?: boolean };
 /** Main garment materials per civilian model (first = reference shade) that take the per-person shirt tint. */
 const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-man-a': ['pal_polo', 'pal_poloDark', 'pal_poloLight'],
