@@ -978,12 +978,8 @@ export class SceneLab {
     }
     return this.frame;
   }
-  /** One three.js node frame per tick, as three's own RAF loop (renderers/common/Animation.js) does. Without it,
-   * FRAME-updated nodes such as the PostFx scene pass render once per browser frame, not once per stepped tick. */
-  private nextRenderFrame(): void {
-    const renderer = this.game.view.renderer, nodes = (renderer as unknown as { _nodes: { nodeFrame: { update(): void; frameId: number } } })._nodes;
-    nodes.nodeFrame.update(); (renderer.info as { frame: number }).frame = nodes.nodeFrame.frameId;
-  }
+  /** One three.js node frame per tick (see Renderer.nextNodeFrame), not once per browser frame. */
+  private nextRenderFrame(): void { this.game.view.renderer.nextNodeFrame(); }
   /** Player input for courier plans: keyboard-like `move` for paths (crisp turns), click-like `moveTarget` for moveTo. */
   private drivePlayer(): void {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'); if (!courier) return;

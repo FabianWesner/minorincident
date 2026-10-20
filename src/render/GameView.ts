@@ -940,6 +940,9 @@ export class GameView implements Lifecycle {
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
+    // A teleport snap can follow another render in the same browser frame (checkpoint/test teleports render at once).
+    // FRAME-updated nodes, such as the PostFx scene pass, would keep that earlier camera's image: draw this pose.
+    if (this.view.consumeSnap()) this.renderer.nextNodeFrame();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
     this.renderer.beginProfile(this.camera);
