@@ -326,10 +326,32 @@ def finish(g, body, variant, lod, out):
             if m:
                 t = lin(g.tint, k); c = tuple(c[x] * (1 - m) + t[x] * m for x in range(4))
             attr.data[li].color = c
+    # Skin weights: Blender Data Transfer (vertex groups, nearest face interpolated) from the body mesh, evaluated at each vertex's
+    # anchor on the body surface, so the weights are the body's own blend at that spot (no single-vertex picks across joint seams).
+    tmp_me = bpy.data.meshes.new('anchors'); tmp_me.from_pydata([v[1] for v in verts], [], []); tmp_me.update()
+    tmp = bpy.data.objects.new('anchors', tmp_me); bpy.context.scene.collection.objects.link(tmp)
+    for name in body.names: tmp.vertex_groups.new(name=name)
+    mod = tmp.modifiers.new('xfer', 'DATA_TRANSFER')
+    mod.object = body.obj; mod.use_vert_data = True; mod.data_types_verts = {'VGROUP_WEIGHTS'}
+    mod.vert_mapping = 'POLYINTERP_NEAREST'; mod.layers_vgroup_select_src = 'ALL'; mod.layers_vgroup_select_dst = 'NAME'
+    bpy.context.view_layer.objects.active = tmp
+    with bpy.context.temp_override(object=tmp, active_object=tmp):
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+    fold = {'pony1': 'head', 'pony2': 'head', 'pony3': 'head', 'eyeL': 'head', 'eyeR': 'head', 'irisL': 'head', 'irisR': 'head',
+            'backpackSocket': 'chest', 'weaponSocketL': 'handL', 'weaponSocketR': 'handR'}
     groups = {}
-    for vi, v in enumerate(verts):
-        for name, w in body.weights_at(v[1], remap=v[5]):
-            groups.setdefault(name, []).append((vi, w))
+    for vi, v in enumerate(tmp.data.vertices):
+        merged = {}
+        for ge in v.groups:
+            name = tmp.vertex_groups[ge.group].name; name = fold.get(name, name)
+            rm = verts[vi][5]
+            if rm: name = rm.get(name, name)
+            merged[name] = merged.get(name, 0) + ge.weight
+        top = sorted(merged.items(), key=lambda kv: -kv[1])[:4]
+        total = sum(w for _, w in top) or 1
+        if not top: top = [('chest', 1.0)]; total = 1.0
+        for name, w in top: groups.setdefault(name, []).append((vi, w / total))
+    bpy.data.objects.remove(tmp, do_unlink=True)
     for name, lst in groups.items():
         vg = obj.vertex_groups.new(name=name)
         for vi, w in lst: vg.add([vi], w, 'REPLACE')
