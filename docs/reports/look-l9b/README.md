@@ -18,16 +18,20 @@ Kept: headlight cones with dust, moon shadows, red mast blinker.
 - Catalog: `l9-look-crash-approach` (AC16 contrast gates) and `l9-look-city-edge` (budgets), in `scene:matrix`.
 - Tools: `tools/qa/l9-look-gen.py` (city-edge fixed view), `tools/qa/l9b-capture.sh`.
 
-## Rounds 5-6 (committed, NOT captured: see Gates)
-- Round 5 (`28cefec0d`): roadLift 2.0 #aebfd3 (AC16 band on dark verges), gully banks in the dark pan tokens.
+## Rounds 5-7 (final)
+- Round 5 (`28cefec0d`): gully banks in the dark pan tokens; roadLift 2.0 lifted the crawl read to 4.7-5.0 but made the asphalt
+  a pale day-grey band, so round 7 settles on **roadLift 1.4 #aebfd3**: apc 3.5-3.9, road 3.5-4.0, crawl 3.6-4.1 (gate 2.5,
+  floor 2.0, untouched) at high and low.
 - Round 6 (`573eefd4d`): the flat ground discs/slabs are gone (`dress.py` `FLAT_DISCS = False`: dust pans, scrub mats, pasture
-  patches, road patches, road dust, verge tufts, dry-zone field bases; callers keep every R draw, placements unchanged). The
-  city-edge view moved to the road end (550, -12): town hall and brick fronts at the top of the frame, fires between them.
+  patches, road patches, road dust, verge tufts, dry-zone field bases; callers keep every R draw, placements unchanged).
+- Round 7: city-edge view 2 m before the town-hall front (556, -21); `l9-look-crash-approach` gates budgets/headlights/console
+  (the contrast sampler finds no pairs on the last 40 m before the barricades; AC16 for that asphalt is `night-read-l9-apc`).
   `tools/qa/l9b-before-after.py` builds the before/after sheet from the look-l9 cells.
 
 ## Sheets (WebGPU unless noted; rows = stretches, columns = tier x zoom)
-- `before-after-round4.jpg`: look-l9 cells (WebGPU high z1, from docs/reports/look-l9) next to round 4 high/low z1/z1.5 and
-  WebGL2 high z1. The city-edge "before" cell is look-l9's old viewpoint. Fork after-high cells empty (see below).
+- `before-after.jpg` (FINAL, round 7): look-l9 cells (WebGPU high z1, from docs/reports/look-l9) next to high/low z1/z1.5 and
+  WebGL2 high z1. The city-edge "before" cell is look-l9's old viewpoint.
+- `before-after-round4.jpg`: the same layout for round 4 (fork after-high cells empty, see below).
 - `round1-webgpu.jpg` .. `round3-webgpu.jpg`: iterations (dark preset -> dark dry tokens -> dark ruts/track).
 - `round4-webgpu-high-low-z05-1-15.jpg`: round 4 at zoom 0.5 / 1 / 1.5, high and low. Fork high z1/z1.5 cells are empty
   (Scene Lab "execution context destroyed" on those two runs; the low cells and round 3 show the fork).
@@ -52,11 +56,7 @@ to near-white at zoom 1 (kept per PO), the fires are still small at zoom 1 on th
 - tests/levels L9/L10 + tests/sim (remote): 153 passed, 3 timing p95 tests failed on a loaded runner and passed on re-run (3/3).
 - Scene Lab round 4 (catalog-high/low, roadLift 1.0): apc nav median 2.4-2.9 (gate 2.5 ok), road 2.3-3.0 ok, player 15.6;
   crawl FAILED (1.2-1.5: the asphalt band was only .045 luminance against the kit rubble at .034). Round 5 raises the lift to
-  2.0 (#aebfd3) and darkens the gully banks. UNMEASURED: two admission attempts (40 min, then 60 min) expired while one lane's
-  2-worker Playwright run held both slots for 1 h 49 min. Before merge run, in this worktree (1 slot, ~6 min):
-  `SCENE_PORT=3367 npm run scene -- tests/scenes/catalog/night-read-l9-apc.json tests/scenes/catalog/night-read-l9-road.json tests/scenes/catalog/night-read-l9-crawl.json tests/scenes/catalog/l9-look-crash-approach.json tests/scenes/catalog/l9-look-city-edge.json --backend webgpu --tier high --out test-results/l9b/gates-high`
-  (and `--tier low`); crawl median must be >= 2.5 and floor >= 2.0 without touching the gates. If crawl is still short, raise
-  roadLift to 2.4 (the road scenes have headroom: their verge is .005) or dim the kit rubble. Then re-shoot the sheets:
-  `tools/qa/l9b-capture.sh final` (WebGPU high/low z1/z1.5) + `BACKEND=webgl2 TIERS=high ZOOMS=1 tools/qa/l9b-capture.sh finalgl` and
-  `python3 tools/qa/l9b-before-after.py docs/reports/look-l9b/before-after.jpg test-results/l9b/final-high test-results/l9b/final-low test-results/l9b/finalgl-high`.
+  2.0 and darkened the gully banks (crawl 4.7-5.0); final roadLift 1.4: apc 3.5-3.9, road 3.5-4.0, crawl 3.6-4.1, both tiers,
+  all five catalog scenes pass (route luminance ~.07 against a verge of .005).
+- Final sheet captures (round 7, 38 + 5 scenes): all passed budgets (draws <= 300, tris <= 500k), no console errors, clipping 0.
 - E18: every look scene passed drawCallsMax 300 / trianglesMax 500k (low) on both tiers; no console errors; clipping 0.
