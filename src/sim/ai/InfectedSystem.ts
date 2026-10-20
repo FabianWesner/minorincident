@@ -132,10 +132,10 @@ export class InfectedSystem {
       }
     });
   }
-  /** Any infected damaged by the courier, an ally or the companion hunts that shooter for ~12 s after the last hit, in sight or not. Mega keeps its global pursuit; story-scripted walkers (b.scripted) are exempt. */
+  /** Any infected damaged by the courier or the companion hunts that shooter for ~12 s after the last hit, in sight or not. Mega keeps its global pursuit; story-scripted walkers (b.scripted) are exempt. */
   private provoke(target: EntitySnapshot, sourceId: number): void {
     const b = target.infected!, source = this.world.entities.get(sourceId);
-    if (!source || target.health.current <= 0 || b.pursuit || b.scripted || source.infected || !(source.id === 1 || source.survivor || source.companion || source.civilian?.ally)) return;
+    if (!source || target.health.current <= 0 || b.pursuit || b.scripted || source.infected || !(source.id === 1 || source.companion)) return;
     b.provoked = { id: source.id, until: this.world.tick + provokeTicks };
     if (b.l1) this.press(target.id, source.id, b.provoked.until);
   }
