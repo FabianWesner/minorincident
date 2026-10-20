@@ -39,5 +39,9 @@ for (const quality of ['high', 'low'] as const) test(`L6 companion outside sodiu
   expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
   expect(result.pixels).toBeGreaterThan(40);
   expect(result.contrast).toBeGreaterThanOrEqual(3);
+  // PO #44 (10-19): the corgi read salmon / pinkish-white at night; it keeps its vivid orange and clean white.
+  expect(result.coat.orangePixels, 'orange coat pixels').toBeGreaterThan(30);
+  expect(result.coat.orangeSaturation, 'orange coat saturation').toBeGreaterThanOrEqual(.5); // salmon measured .435, vivid .555
+  expect(result.coat.whitePixels, 'clean white coat pixels (the pink veil leaves almost none)').toBeGreaterThan(500);
   expect(colourFailed, 'Courier keeps her daylight colours at night').toEqual([]);
 });

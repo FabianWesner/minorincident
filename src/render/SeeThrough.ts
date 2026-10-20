@@ -16,6 +16,9 @@ export const seeThrough = {
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
+  /** Share of an occluder that survives inside the clear disc. 0 for the courier and her corgi (PO #45: no dither dots over the figures; the disc is cut clean),
+   * .35 while the player drives or rides a vehicle so a faded car or bus still reads as one. */
+  retain: uniform(0).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -48,9 +51,9 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
   // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
   const keep = hole.greaterThan(noise);
-  // Vehicles and props keep a screen-stable 35% of their surface, even at the centre, so their silhouette stays readable
-  // (shared noise across layers keeps the remaining 65% open to the subject).
-  const silhouette = mix(.35, 1, hole).greaterThan(noise);
+  // Vehicles and props retain a screen-stable share of their surface inside the disc (retain = .35 while the player drives or
+  // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
+  const silhouette = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain).greaterThan(noise);
   return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
 };
 

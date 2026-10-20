@@ -117,7 +117,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Near-black jackets otherwise disappear into the night road between
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
-      const figureFill = surface.max(vec3(.12)).mul(lighting.rimColor).mul(this.figureFill).mul(lighting.rim).mul(.9);
+      // The corgi's moon bounce is a neutral lift of its own coat (PO #44): the blue rim tint turned its orange salmon and its white pink.
+      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(this.figureFill).mul(lighting.rim).mul(.9);
       const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
       // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.
@@ -211,7 +212,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
             result.mulAssign(float(.86).div(top.max(.86)));
           });
           // The warm dusk grade would lift her skin/clothes past white again; she keeps the protection mask.
-          graded.assign(this.heroFigure.oneMinus());
+          // The corgi shares that protection under the night key (PO #44): the purple/orange grade turned its orange salmon and its white pink.
+          graded.assign(max(this.heroFigure, this.companion.mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0))).oneMinus());
         });
       }
       result.addAssign(this.hitFlash);

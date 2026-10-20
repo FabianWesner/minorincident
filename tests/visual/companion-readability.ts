@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { PNG } from 'pngjs';
+import { hsv } from './courier-colours';
 
 const luminance = (r: number, g: number, b: number) => {
   const c = [r, g, b].map(v => v / 255 <= .04045 ? v / 255 / 12.92 : ((v / 255 + .055) / 1.055) ** 2.4);
@@ -42,7 +43,15 @@ export async function companionReadability(page: Page) {
   const mask = PNG.sync.read(Buffer.from(maskData, 'base64'));
   await page.evaluate(() => window.__SS__!.screenshotReady());
   let sum = 0, pixels = 0;
-  for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += luminance(image.data[i], image.data[i + 1], image.data[i + 2]); pixels++; }
+  // PO #44: the coat must stay vivid orange with clean white at night (not salmon / pink). Mean HSV saturation of its orange and white pixels.
+  const orange: number[] = [], white: number[] = [];
+  for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) {
+    const r = image.data[i], g = image.data[i + 1], b = image.data[i + 2];
+    sum += luminance(r, g, b); pixels++;
+    const [h, s, v] = hsv(r, g, b);
+    if ((h < 43 || h > 355) && s > .2 && v > .35) orange.push(s); else if (s < .35 && v > .6) white.push(s);
+  }
+  const mean = (values: number[]) => values.length ? values.reduce((a, b) => a + b, 0) / values.length : 0;
   const ring = setup.ring.filter(p => Math.abs(p[0]) < .99 && Math.abs(p[1]) < .99).map(p => {
     const x = Math.round((p[0] + 1) * image.width / 2), y = Math.round((1 - p[1]) * image.height / 2);
     if (x < 0 || x >= image.width || y < 0 || y >= image.height) throw new Error('Companion ring outside viewport');
@@ -51,5 +60,5 @@ export async function companionReadability(page: Page) {
   });
   if (ring.length < 8) throw new Error('Fewer than eight visible companion background samples');
   const subject = sum / pixels, background = ring.reduce((a, b) => a + b, 0) / ring.length;
-  return { pixels, backgroundSamples: ring.length, subject, background, contrast: (subject + .05) / (background + .05), setup };
+  return { pixels, backgroundSamples: ring.length, subject, background, contrast: (subject + .05) / (background + .05), coat: { orangePixels: orange.length, orangeSaturation: mean(orange), whitePixels: white.length, whiteSaturation: mean(white) }, setup };
 }
