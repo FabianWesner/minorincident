@@ -1,0 +1,40 @@
+{
+  "name": "aggro-alpha-shot-from-behind",
+  "note": "PO 10-20 (L5): \"I shot the alpha in L5, but it's not attacking.\" The courier stands behind an idle Alpha (outside its sight cone) and shoots it with the pistol; the Alpha must turn and close in on her. Inspect the sheet: the Alpha stands facing away in the first frames, then comes at the courier.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L5",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [-9, 0],
+      "yaw": 0,
+      "state": "idle",
+      "loadout": ["weapon.pistol", "weapon.fists"]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [0, 0],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    { "frame": 20, "actor": "courier", "do": { "attack": "alpha", "seconds": 1.2 } }
+  ],
+  "camera": { "mode": "game", "target": [-4, 1.5, 0], "zoom": 1 },
+  "frames": 300,
+  "sheet": 20,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
