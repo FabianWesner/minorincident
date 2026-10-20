@@ -117,7 +117,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Near-black jackets otherwise disappear into the night road between
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
-      const figureFill = surface.max(vec3(.12)).mul(lighting.rimColor).mul(this.figureFill).mul(lighting.rim).mul(.9);
+      // The corgi's moon bounce is a neutral lift of its own coat (PO #44): the blue rim tint turned its orange salmon and its white pink.
+      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(this.figureFill).mul(lighting.rim).mul(.9);
       const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
       // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.
@@ -179,10 +180,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
           .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
         result.mulAssign(contact.mul(-.6).add(1));
-        // The same local shade reaches the figures pressed around her (followers), so the courier's own key light separates her
-        // from the crowd instead of a whitening lift. Not the corgi (PO #44): darkened, its overexposed orange/white read salmon and pink.
+        // The same local shade reaches the figures pressed around her (followers, corgi), so the
+        // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
-          .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus()).mul(this.companion.oneMinus())
+          .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
           .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
         result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
@@ -204,14 +205,15 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(3.6)).clamp(0, .8)));
         }).Else(() => {
           // Other night presets (L5 dusk aura, practical pools): the aura and pools stack on her and the
-          // survivors beside her (not the corgi: its white coat would turn pink). Scale RGB together so the brightest channel stays below clipping: the
+          // survivors beside her. Scale RGB together so the brightest channel stays below clipping: the
           // hue and saturation survive instead of bleaching to white (QA #28).
-          If(max(this.heroFigure, this.figureFill.greaterThan(0).select(1, 0).mul(this.companion.oneMinus())).greaterThan(0), () => {
+          If(max(this.heroFigure, this.figureFill.greaterThan(0).select(1, 0)).greaterThan(0), () => {
             const top = max(max(result.r, result.g), result.b);
             result.mulAssign(float(.86).div(top.max(.86)));
           });
           // The warm dusk grade would lift her skin/clothes past white again; she keeps the protection mask.
-          graded.assign(this.heroFigure.oneMinus());
+          // The corgi shares that protection under the night key (PO #44): the purple/orange grade turned its orange salmon and its white pink.
+          graded.assign(max(this.heroFigure, this.companion.mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0))).oneMinus());
         });
       }
       result.addAssign(this.hitFlash);
