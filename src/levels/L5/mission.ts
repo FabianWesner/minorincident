@@ -28,7 +28,7 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
   // P0 10-20: the Metro ring sits where the arrival starts, on the second tread behind the shutter in the courier's right-hand lane
   // (the followers queue on the left). The old ring at the street-side `metro-entrance` anchor triggered nothing.
   const door = def.anchors['l5-metro-shutter'];
-  def.anchors['l5-metro-in'] = { x: door.x + .35, y: .94, z: door.z - 1.3, radius: .6, yaw: 0 };
+  def.anchors['l5-metro-in'] = { x: door.x - .15, y: .94, z: door.z - 1.6, radius: .65, yaw: 0 };
   const step = (id: string, text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start'], type: ObjectiveDef['type'] = 'custom'): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };

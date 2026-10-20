@@ -14,6 +14,7 @@ import { Pointer } from './devices/Pointer';
 import { RayCursor } from './devices/RayCursor';
 import { Touch } from './devices/Touch';
 import { Wheel } from './devices/Wheel';
+import { objectiveRingRadius } from '../sim/missions/markerAnchor';
 
 export const walkHintKey = 'minor-incident.walk-hint.v1';
 /** Device ownership ends here. sample() runs immediately before every fixed sim tick. */
@@ -29,6 +30,8 @@ export class InputSystem implements Lifecycle {
   readonly wheel: Wheel;
   readonly cursor: RayCursor;
   readonly picker: ClickPick;
+  /** Visible objective rings take precedence over body picks. Supplied before sampling by Game. */
+  objectiveRings: readonly { x: number; z: number; y?: number }[] = [];
   readonly touch: Touch;
   private touchFire: 'touch' | 'assist' | null = null;
   readonly frame = emptyInput();
@@ -247,9 +250,14 @@ export class InputSystem implements Lifecycle {
       frame.mouseAttack = true;
       if (click.shift) { frame.attackInPlace = true; this.pointerGround = false; this.pointerTarget = false; continue; }
       if (this.drivingContext) continue;
-      const picked = this.picker.pick(click.x, click.y, candidates!) ?? this.magnet(player, point, candidates!);
+      const objective = this.objectiveRings.find(ring => {
+        const hit = this.cursor.project(click.x, click.y, (ring.y ?? 0) + .08);
+        return !!hit && Math.hypot(hit.x - ring.x, hit.z - ring.z) <= objectiveRingRadius;
+      });
+      this.cursor.project(click.x, click.y);
+      const picked = objective ? null : this.picker.pick(click.x, click.y, candidates!) ?? this.magnet(player, point, candidates!);
       if (picked) { frame.attackTarget = { id: picked.id, side: 'LEFT' }; this.pointerGround = false; this.pointerTarget = true; frame.pointerTarget = true; }
-      else { frame.moveTarget = { x: point.x, z: point.z }; this.pointerGround = 'move'; this.pointerTarget = false; }
+      else { frame.moveTarget = { x: objective?.x ?? point.x, z: objective?.z ?? point.z }; this.pointerGround = 'move'; this.pointerTarget = false; }
     }
     this.clicks.length = 0;
     if (this.pointer.isHeld(0)) {

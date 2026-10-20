@@ -1,7 +1,6 @@
+import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
-import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
-import { cureFinaleText } from '../sim/missions/LevelTenFinale';
-import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
+import { markerAnchor } from '../sim/missions/markerAnchor';
 import { l4CellarDistance } from '../data/l4';
 // Notification identity/text presentation adapted from Bruno Simon folio-2025
 // Notifications.js (MIT, 41046b5); sim tick deadlines replace wall-clock timers.
@@ -93,7 +92,7 @@ export class MissionUI {
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
-    const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
+    const anchor=markerAnchor(mission),player=this.world.entities.get(1);
     const cellarDistance = playing && player && mission.def.l4 && state.l4?.phase === 'collapse' ? l4CellarDistance(player.transform, this.cellarTurn) : null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     setHidden(this.marker,!playing||!anchor||!player);
@@ -101,14 +100,14 @@ export class MissionUI {
       const distance=cellarDistance ?? (anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null);
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-      this.text(this.tracker,`${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? LevelSixSubway.text(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
-      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? LevelSixSubway.text(mission) ?? objective.text}`);}
+      this.text(this.tracker,`${objectiveText(mission, objective.text)}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
+      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${objectiveText(mission, objective.text)}`);}
       const boundary = this.world.controls.blockedMove && this.world.controls.blockedMove.until > this.world.tick;
       if (boundary) this.text(this.toast, 'MILITARY ZONE · Stay inside the perimeter');
       setHidden(this.toast,!boundary && this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
         const direction = this.routePin.hidden ? anchor : this.cellarTurn;
-        this.point.set(direction.x,1.8,direction.z).project(camera);
+        this.point.set(direction.x,(this.world.districts?.groundHeight(direction.x,direction.z)??anchor.y??0)+1.8,direction.z).project(camera);
         attribute(this.marker,'data-guidance',this.routePin.hidden?'destination':'street-route');
         const margin=42,cx=width/2,cy=height/2;
         let dx=this.point.x*cx,dy=-this.point.y*cy;
@@ -127,7 +126,7 @@ export class MissionUI {
       }
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
-        setHidden(pin,state.steps[s.id].status!=='active'||s.waypoint===false||!anchor);if(pin.hidden)continue;const a=mission.def.anchors[mission.def.l3 && s.id === 'checkpoint' ? state.marker ?? s.anchor : s.anchor];
+        setHidden(pin,state.steps[s.id].status!=='active'||s.waypoint===false||!anchor);if(pin.hidden)continue;const a=anchor!;
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
         style(pin,'left',`${50+dx*scale}%`);style(pin,'top',`${50+dy*scale}%`);
       }

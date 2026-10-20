@@ -39,5 +39,7 @@ test('T-E32-15-D3 @E32-AC15 terminal operator socket faces the reachable interac
   // The retained console's operator socket is one metre along local +X.
   const operatorX = terminal.position[0] + Math.cos(terminal.yaw);
   const operatorZ = terminal.position[2] - Math.sin(terminal.yaw);
-  expect(Math.hypot(x - operatorX, z - operatorZ)).toBeLessThanOrEqual(.6);
+  // Stand clear of the console's front, within its two-metre interaction reach.
+  expect(z - terminal.visualAabb.max[2]).toBeGreaterThanOrEqual(.65);
+  expect(Math.hypot(x - operatorX, z - operatorZ)).toBeLessThanOrEqual(1.1);
 });
