@@ -68,7 +68,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await hold(500);
   const first = o.levels[0];
   if (await page.getByTestId(`character-${o.heroine}`).isVisible().catch(() => false)) await page.getByTestId(`character-${o.heroine}`).click();
-  await page.getByTestId(`level-${first}`).click({ timeout: 60_000 });
+  // ?debug=1 lets locked levels start; they stay aria-disabled, so the click is forced.
+  await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });
 
   // --- per-level state ---
