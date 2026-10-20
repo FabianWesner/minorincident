@@ -167,7 +167,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // Preserve small coloured practical pools and emissive infected eyes.
         const accent = max(luminance(field).smoothstep(.15, .8), nodes?.glow ? luminance(nodes.glow).mul(this.emissivePower).smoothstep(.05, .15) : float(0));
         const colour = max(max(max(cone, courierGlow), accent), this.companion);
-        const dark = mix(vec3(luminance(result)).mul(.38).add(.006), result, colour);
+        // PO 10-15: outside the beam the world stays "visibile, but gray and dark". 13c2 QA: "the tunnel is very dark": a slightly
+        // higher grey keeps walls, rails and the crowd legible at zoom 0.5 while staying clearly below the beam's full colour.
+        const dark = mix(vec3(luminance(result)).mul(.5).add(.012), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       }
       const graded = float(1).toVar();
@@ -253,13 +255,14 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     let output = this._outputs.get(key);
     if (!output) {
       const base = this.outputFor(mode);
-      output = reveal ? Fn(() => { Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not()); return base; })() : base;
+      output = reveal ? Fn(() => { Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : reveal === 'clear' ? float(1) : undefined)).not()); return base; })() : base;
       this._outputs.set(key, output);
     }
     this.outputNode = output; this.needsUpdate = true;
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
-  seeThrough(enabled: boolean | 'boss' | 'placement' = true): this {
+  /** `clear`: like a cut placement, the disc centre opens fully (no 35% screen-stable silhouette). */
+  seeThrough(enabled: boolean | 'boss' | 'placement' | 'clear' = true): this {
     if ((this.userData.seeThrough ?? false) === enabled) return this;
     this.userData.seeThrough = enabled;
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);

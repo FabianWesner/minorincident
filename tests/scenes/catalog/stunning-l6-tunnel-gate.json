@@ -1,0 +1,19 @@
+{
+ "extends": "qa-l6-po-gate.json",
+ "name": "stunning-l6-tunnel-gate",
+ "note": "13c2 L6 verdict: \"the tunnel is very dark\"; #30 \"the 'Block the tunnel' gate is a dithered green-framed panel ... It reads as semi-transparent glass\". At the first service gate (courier beside it, corgi behind it) the tunnel floor, rails and walls must read in a readable fill while keeping the subway mood, and the gate must read as a physical gate.",
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [91.3, 15], "loadout": ["weapon.fire-axe", "weapon.army-mg"] },
+  { "id": "corgi", "kind": "corgi", "at": [90.2, 16.4] }
+ ],
+ "frames": 60,
+ "sheet": 30,
+ "shots": [59],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000
+ }
+}

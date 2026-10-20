@@ -273,8 +273,21 @@ export class InteractionView extends Group {
     for (const [id, o] of this.objects) { const p = this.world.entities.get(id)?.pickup; if (p && 'kind' in p && !p.collected && o.visible) out.push({ id, kind: p.kind, x: o.position.x, y: o.position.y, z: o.position.z }); }
     return out;
   }
+  /** #30 (13c2: "It reads as semi-transparent glass"): a 35% dither over the whole leaf read as a glass pane. The steel frame,
+   * X-brace and fittings now stay solid, and only the dark infill sheet opens fully inside the courier's disc, so she and the corgi
+   * show through an open steel frame. */
   private prepareGate(model: Object3D): void {
-    model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.seeThrough(); });
+    model.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      const swap = (material: Material) => material instanceof PaletteMaterial && material.name === 'pal_uiDark' ? this.gateInfill(material) : material;
+      node.material = Array.isArray(node.material) ? node.material.map(swap) : swap(node.material);
+    });
+  }
+  private readonly gateInfills = new Map<PaletteMaterial, PaletteMaterial>();
+  private gateInfill(material: PaletteMaterial): PaletteMaterial {
+    let infill = this.gateInfills.get(material);
+    if (!infill) { infill = material.frozenCopy().seeThrough('clear'); this.gateInfills.set(material, infill); }
+    return infill;
   }
   private updateGateGuides(): void {
     const player = this.world.entities.get(1), state = this.world.missions?.state.l6;
