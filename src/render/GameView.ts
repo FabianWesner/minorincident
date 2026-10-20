@@ -33,7 +33,7 @@ import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
-import { View } from './View';
+import { View, type CameraPose } from './View';
 import { Renderer } from './Renderer';
 import { preRender } from './PreRenderer';
 import { Lighting } from './Lighting';
@@ -82,6 +82,8 @@ export class GameView implements Lifecycle {
   private departureShot = false;
   private storyFraming = false;
   private l5StationView = false;
+  private l5ClosingPose: CameraPose | null = null;
+  private readonly l5ClosingTarget = new Vector3();
   private l3AttackScale = 1;
   private courierForeground = false;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
@@ -613,10 +615,21 @@ export class GameView implements Lifecycle {
         if (pose) this.view.preset('l5-station-arrival', pose);
       } else if (!showStation && this.l5StationView) {
         const pose = metro?.shutterAt && this.districts?.spots.get('D-FAIR/W5/l5-metro-doors');
-        if (pose) this.view.preset('l5-metro-closing', pose);
+        if (pose) { this.view.preset('l5-metro-closing', pose); this.l5ClosingPose = pose; this.l5ClosingTarget.fromArray(pose.target); }
         else this.view.follow();
       }
       this.l5StationView = showStation;
+      // PO #49: the closing shot frames the shutter, but the courier keeps walking down the stairs and left the frame (or sat
+      // behind the roof). Keep the same angle and distance, and slide the target onto her (80 %), so the doors stay in view behind her.
+      if (this.view.spot === 'l5-metro-closing' && this.l5ClosingPose) {
+        const base = this.l5ClosingPose, p = player.transform, k = 1 - Math.exp(-3 * seconds);
+        const follow = .8, feet = Math.max(0, p.y - .7);
+        this.l5ClosingTarget.x += (base.target[0] + (p.x - base.target[0]) * follow - this.l5ClosingTarget.x) * k;
+        this.l5ClosingTarget.y += (base.target[1] + (feet - base.target[1]) * follow - this.l5ClosingTarget.y) * k;
+        this.l5ClosingTarget.z += (base.target[2] + (p.z - base.target[2]) * follow - this.l5ClosingTarget.z) * k;
+        const t = this.l5ClosingTarget, dx = t.x - base.target[0], dy = t.y - base.target[1], dz = t.z - base.target[2];
+        this.view.cinematic({ position: [base.position[0] + dx, base.position[1] + dy, base.position[2] + dz], target: [t.x, t.y, t.z] });
+      } else this.l5ClosingPose = null;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));

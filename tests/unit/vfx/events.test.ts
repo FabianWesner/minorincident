@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { stateHash } from '../../../src/sim/world/stateHash';
-import { Vfx, hitFlashRest, type Gore } from '../../../src/render/vfx/Vfx';
+import { Vfx, hitFlashRest, hitFlashPeak, hitFlashRepeat, hitFlashStreak, type Gore } from '../../../src/render/vfx/Vfx';
 
 const targets = () => ({ flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} });
 
@@ -16,8 +16,10 @@ test('T-E15-hit-flash @E15 a hit pulses once; sustained fire rests between pulse
     // alpha-white: a second hit inside the rest period does not restart the pulse (sustained fire left Alphas white).
     hit(); expect(strength).toBeCloseTo(0.09); fx.advance(0.03); expect(strength).toBe(0);
     for (let t = 0.11; t < hitFlashRest - 0.01; t += 0.05) { hit(); expect(strength).toBe(0); fx.advance(0.05); }
-    fx.advance(0.02); hit(); expect(strength).toBe(0.45); fx.advance(0.11); expect(strength).toBe(0);
-    fx.advance(hitFlashRest); hit(); fx.set({ vfx: false }); expect(strength).toBe(0);
+    // PO #29: the next pulse of the same sustained burst is weaker; a calm of hitFlashStreak restores the full first-hit flash.
+    fx.advance(0.02); hit(); expect(strength).toBe(hitFlashRepeat); fx.advance(0.11); expect(strength).toBe(0);
+    fx.advance(hitFlashRest); hit(); expect(strength).toBe(hitFlashRepeat); fx.advance(hitFlashStreak / 2); fx.advance(hitFlashStreak / 2); hit(); expect(strength).toBe(hitFlashPeak);
+    fx.set({ vfx: false }); expect(strength).toBe(0);
   } finally { fx.dispose(); world.dispose(); }
 });
 
