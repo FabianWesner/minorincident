@@ -217,6 +217,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     frameCursor += frames.length;
     if (e.phase === 'playing' && run) for (const [ms, tick] of frames) if (ms > 200) { log({ hitch: ms, tick, level: e.level }); if (ms > 500) await issue(ms > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(ms)} ms at tick ${tick}`, false); }
 
+    // The title screen loads L1 speculatively behind the menu: ignore levels outside the range until the first one starts.
+    if (!run && e.level && !o.levels.includes(e.level)) { if (Date.now() - bootWall > 600_000) break; await hold(300); continue; }
     if (e.level && e.level !== lastLevel && e.phase && e.phase !== 'result') {
       if (lastLevel && run && !run.finished) { log({ handoverWithoutResult: lastLevel }); await finishLevel({ ...e, level: lastLevel }); }
       if (lastLevel && o.stopAfterLevel) { log({ handover: lastLevel, to: e.level }); break; }
@@ -318,8 +320,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         return null;
       });
       if (pin) {
-        if (!ring || Math.hypot(ring.x - pin.x, ring.z - pin.z) > .5) { log({ pinGoal: pin, tick: e.tick }); }
+        const changed = !ring || Math.hypot(ring.x - pin.x, ring.z - pin.z) > .5;
         ring = { x: pin.x, y: pin.y, z: pin.z };
+        // A new pin: re-evaluate distances against it on the next pass.
+        if (changed) { log({ pinGoal: pin, tick: e.tick }); await press([]); continue; }
         const r = await page.evaluate(q => window.__SS__!.input.project(q, 'destination'), ring);
         const near = e.player && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) < 25;
         if (near && Date.now() - lastClick > 900) { const sp = safe(r.x, r.y, e); await clickGround(sp.x, sp.y); lastClick = Date.now(); await hold(150); continue; }

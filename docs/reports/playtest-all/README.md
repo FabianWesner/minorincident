@@ -2,7 +2,7 @@
 
 Lane `lane/playtest-all`. The lane started on `lane/p0-l5-finish` (90e0ba7e5) with `lane/l6-tunnel` (247c4e2c4) merged in. L8–L10 and the L5–L7 continue pass ran after `main` 82604a125 was merged as well (e1095f6ab). So L1–L7 of the campaign ran on the pre-hotfix lane build and the rest on main plus l6-tunnel. Every run used a fresh `npm run build` preview, headless, under `tools/e2e-lock.sh` with one browser, port 3821.
 
-Short verdict: **with the driver bugs taken out, no level was proven impossible to finish.**
+Short verdict: **with the driver bugs taken out, no level was proven impossible to finish.** In the male continue pass with the fixed driver, L6 and L7 were also finished by real play.
 - **Real play, no skip:** L3, L4, L5, L8 and L9 were finished by real input.
 - **One step skipped:** L1, L2 and L7 each needed one step skipped. For L1 and L2 the cause was mostly the driver's own pathing; for L7 it was a driver bug (a stale ring), now fixed.
 - **L6:** finished only with two skips. Its "deadlock" was also the stale-ring driver bug, retracted.
@@ -95,7 +95,7 @@ The PO's "lost the shotgun" could not be checked: the driver never picked up a s
 |---|---|---|---|---|
 | L8 | 60 | (0,70) | 3350 ms | Twice, in two sessions; P1 |
 | L5 | 7232 | (-45.4,40.1) | 4216 ms | At the wrecked bus on Lakeshore; P1 |
-| L6 | 52695 | (253,15) | 2750 ms | Near the exit platform; P1 |
+| L6 | 52695 | (253,15) | 2750 ms | Near the exit platform; reproduced in the male run (2716 ms, tick 30167, just after "Bring the survivors into the night" started); P1 |
 | L10 | 0 | – | 2717 ms and 1617 ms | First frames, load tail; P2 |
 | L8 | 3787 | – | 1083 ms | P2 |
 | L7 | 0 | – | 550 ms | P2 |
@@ -171,6 +171,11 @@ No findings. Ride, quartermaster, hold, cellar route, bar and stay down all comp
 ### L6 · The Subway
 
 13. ~~P0 gate deadlock at x=150~~ was a driver artifact (stale ring), retracted.
+13a. **P1, the gate waits on a ring the courier itself blocks.**
+    - Where: male run with the fixed driver, ticks ~4700–23850, position (90.2, 15.1), the first service gate.
+    - What: the l6-next ring sits on the gate line. HUD "Cover the retreat through the tunnel · 0 m", panel "Block the tunnel · Let everyone pass · E to close the gate". The guidance did not move on for about 5 min while two survivors stood just behind the gate among infected. Then it resolved and the level finished by real play.
+    - Code: the gate closes only when every live survivor is past gate.x+2, the player is within 1.7 m of (gate.x+1.4, 15), E is held for 1 s and the corgi is inside (`LevelSixSubway.ts:221`). A player standing on the ring stands in the 2.2 m gap the survivors must pass. The HUD names none of this; "0 m" with no reason.
+    - Capture: `captures/continue-L6-L6-13722-hidden-condition.jpg`
 14. **P2, gate panel stays up after the guidance moves on.** Standing near a service gate always shows "Block the tunnel · Let everyone pass · E to close the gate", even after the guidance has moved past it.
 15. **P1, hitch.** A 2750 ms frame at tick 52695, position (253, 15), near the exit platform.
 16. **Untested.** The "exit" step ("Bring the survivors into the night · 0 m") was skipped by the level cap 10 s after the courier reached the ring, so I couldn't test whether the group exit works. The continue pass re-plays it.
@@ -263,9 +268,24 @@ How the ring and HUD are drawn:
 15. **L9 approach tests the car.** It checks the car's x, not the player's; on foot nothing triggers.
 16. **L1 rings visible through roofs.** Rings with depthTest off show through roofs as rings on the roof. Seen in L1 during the trial run; no capture was kept.
 
+## Continue pass, male heroine, fresh save
+
+Run on main + l6-tunnel with the fixed driver, one browser session per level. Entry was `?debug=1` with a new campaign, so the courier had fists only: a fresh save at gear tier 0.
+
+| Level | Finished | Time | Skips | Notes |
+|---|---|---|---|---|
+| L5 | yes | 10.4 min | look (the step cap; the driver stood at the truck-cab pin after the HUD had moved on to the Lakeshore bus) | 26 deaths with fists |
+| L6 | yes, by real play | 9 min | – | The gate wait 13a; the exit hitch reproduced; the night exit with the group worked |
+| L7 | yes, by real play | 5.6 min | – | Starts at (273, 15); rocket in 2 s, corridor, bus, then a "Level complete" result and the handover to L8 |
+
+Two more L5 observations from this pass:
+- **P2, camera at the Metro entrance.** Standing in the Metro ring (0.3 m, "Wait for the survivors · 0/1 in"), the follow camera frames the courier at the very top edge. Most of the screen shows the fogged elevated rail with a row of see-through figures. Capture: `captures/continue-L5-L5-31141-stuck-at-ring.jpg`
+- **No damage at point-blank, again.** The pattern appeared with fists too (#91 and #86 at 1.1 m, 60/60). This makes the driver's aim at close range the more likely cause. Downgrade it to P3 unless a human sees it.
+
 ## What is left
 
 - **Not played:** the high-quality pass, and a full male campaign. The male continue pass covered L5–L7 only (see below).
+- **Continue from a debug start:** after a ?debug=1 start of L5 (new campaign) and finishing L5, menu Continue shows L6 locked ("Complete Level 5 first"). This is probably sequential unlock by design for debug campaigns; P3.
 - **Driver:** the fight logic needs to kite and retreat so death counts become meaningful. Long-route "stuck" detection should use real progress (distance to the ring), not step changes.
 - **Human checks recommended:**
   - the point-blank no-damage pattern (L5, L6, L3);
