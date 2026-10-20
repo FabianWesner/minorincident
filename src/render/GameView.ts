@@ -394,6 +394,8 @@ export class GameView implements Lifecycle {
     // boarding vehicle/ground that would otherwise hide its first fragments.
     const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
     const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
+    // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
+    const restoreHeld = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -445,7 +447,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -477,7 +479,7 @@ export class GameView implements Lifecycle {
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
     const horizon = this.districts?.horizonForWarmup();
     if (horizon) await this.warmHidden(horizon);
-    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); finish();
+    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
