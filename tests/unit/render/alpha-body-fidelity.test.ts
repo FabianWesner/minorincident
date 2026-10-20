@@ -7,7 +7,7 @@ import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
 import { AssetRegistry } from '../../../src/assets/registry';
 import { infectedDefinitions } from '../../../src/data/infected';
-import * as lodGeometry from '../../../src/render/characters/crowdLodGeometry';
+import { loadGate } from '../../../src/assets/loadGate';
 import { CrowdView } from '../../../src/render/CrowdView';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -30,10 +30,12 @@ for (const low of [false, true]) test(`PO #21 @E18 Alpha corpse retains its whol
     expect(prepare).toHaveBeenCalledWith(expect.any(String), frozen, expect.anything(), expect.anything(), expect.any(Number));
     await view.loadBatch(definition, 'lod2');
     expect([...view.corpseGeometry.values()][0]).toBe(frozen);
-    const simplify = vi.spyOn(lodGeometry, 'simplifyCrowdLod').mockImplementation(async () => { crowd.dispose(); });
+    // Unload while the batch waits for its loading-gate slot: the one suspension point every load takes, including a
+    // cross-level cache hit that skips the bake and the LOD simplification.
+    const gate = vi.spyOn(loadGate, 'wait').mockImplementation(async () => { crowd.dispose(); });
     try {
       await view.loadBatch(definition, 'lod2');
       expect(view.batches.size, 'an unloaded Alpha must never acquire a late mesh/atlas').toBe(0);
-    } finally { simplify.mockRestore(); }
+    } finally { gate.mockRestore(); }
   } finally { prepare.mockRestore(); load.mockRestore(); crowd.dispose(); world.dispose(); }
 });
