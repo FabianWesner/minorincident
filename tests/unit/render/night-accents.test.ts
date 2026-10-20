@@ -58,8 +58,8 @@ test('@E32 L10 night accents: render-only fires on the crash scar and the destro
   const { cure } = await import('../../../src/levels/L10/district');
   const { cureEncounters, cureMedkits } = await import('../../../src/levels/L10/encounters');
   const cureLayout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
-  const { points, fires } = cureAccents(cureLayout.placements);
-  expect(points).toEqual([]);
+  const { points, fires: allFires } = cureAccents(cureLayout.placements);
+  const fires = allFires.filter(f => !f.life), life = allFires.filter(f => f.life);
   expect(fires.length).toBeGreaterThan(6); expect(fires.length).toBeLessThan(60);
   const lines: Point[][] = [...cure.regions.map(r => r.route as Point[]), ...cure.detours.map(d => d.route as Point[])];
   const laneAt = (p: Point) => Math.min(...lines.map(l => Math.min(...l.slice(1).map((b, i) => seg(p, l[i], b))))) - 4;
@@ -70,4 +70,14 @@ test('@E32 L10 night accents: render-only fires on the crash scar and the destro
     expect(f.x < 760 || (f.x >= 2917 && f.x < 3700)).toBe(true);   // R1 and R6 (region envelopes)
   }
   expect(fires.some(f => f.car)).toBe(true);
+  // Road life (barrels, a burning car per region, lit bus stops, police light bars): just outside the 6 m clearance, never on a story spot.
+  expect(life.length).toBeGreaterThan(8); expect(life.length).toBeLessThan(80);
+  for (const f of life) {
+    expect(laneAt([f.x, f.z])).toBeGreaterThan(1);
+    for (const s of [...cureEncounters.map(e => e.at), ...cureMedkits.map(m => m.at)]) expect(Math.hypot(f.x - s[0], f.z - s[1])).toBeGreaterThan(9);
+    expect(Math.hypot(f.x - cure.anchors['cure-console'][0], f.z - cure.anchors['cure-console'][1])).toBeGreaterThan(70);
+  }
+  expect(points.length).toBeGreaterThan(4);
+  for (const a of points) expect(laneAt([a.x, a.z])).toBeGreaterThan(1);
+  expect(points.some(a => a.kind === 'beacon') && points.some(a => a.kind === 'lantern')).toBe(true);
 });

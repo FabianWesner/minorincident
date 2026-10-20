@@ -1,0 +1,64 @@
+{
+ "name": "l10-roadlife-complex",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    3710,
+    -111
+   ],
+   [
+    3950,
+    29
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.0
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    3800,
+    -41
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      3860,
+      -41
+     ]
+    ]
+   }
+  }
+ ],
+ "note": "road-life lane (L10): R7 approach: sidewalks, drains and red beacons. Look for a kerbed sidewalk on both sides narrowing the pale asphalt to ~5 m, ground decals that read as stains/paint (no flat black strokes), skids that follow one lane and fade, warm or siren light points just outside the 6 m clearance, no floating or sunk decals, no sidewalk over a collider. Flat decals only, no collision."
+}
