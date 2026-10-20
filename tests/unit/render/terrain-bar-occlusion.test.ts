@@ -12,7 +12,7 @@ describe('@E29 health bars respect the terrain occlusion rule', () => {
     expect(makeView().occludesBar(camera, new Vector3(0, .9, 0))).toBe(true);
   });
   test('does not treat an overhanging deck as filled terrain in other districts', () => {
-    const district = Object.assign(makeView(), { stepEdges: undefined }) as unknown as DistrictView;
+    const district = Object.assign(makeView(), { maxBarTerrainHeight: 0 }) as unknown as DistrictView;
     const belowDeck = new PerspectiveCamera(); belowDeck.position.set(10, 2, 10);
     expect(district.occludesBar(belowDeck, new Vector3(0, .9, 0))).toBe(false);
   });
