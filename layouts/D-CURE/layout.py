@@ -340,13 +340,13 @@ def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chan
                 s += spacing + rng.uniform(-jitter, jitter)
 def region_segments(i):
     r = source['regions'][i]['route']; return list(zip(r, r[1:]))
-def fence_run(asset, a, b, step=2.6):
+def fence_run(asset, a, b, step=2.6, clear=None):
     d = math.dist(a, b); ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
     m = l.manifest[asset]['dimensions']
     yaw = math.atan2(-uz, ux) + (math.pi/2 if m['z'] > m['x'] else 0)   # align the asset's long side with the run
     boxes = []
     for k in range(int(d // step)):
-        if dress(asset, a[0]+ux*(k+.5)*step, a[1]+uz*(k+.5)*step, yaw, run=True):
+        if dress(asset, a[0]+ux*(k+.5)*step, a[1]+uz*(k+.5)*step, yaw, run=True, route_clear=clear):
             v = l.data['placements'][-1]['visualAabb']; boxes.append(v)
     # Consecutive pieces merge into one collider per unbroken stretch (gaps from skipped pieces stay open).
     group = []
@@ -648,6 +648,96 @@ def place_life(i, frac, side, asset, lat, decay=None):
 for i in range(6):
     for frac, side, asset, lat, decay in [(.12, 1, 'prop.cure-drum-stack', 6.7, None), (.38, -1, 'veh.sedan-white', 8.0, 'burned'), (.62, 1, 'prop.cure-drum-stack', 6.7, None), (.86, -1, 'veh.police-sedan', 8.0, None)] + ([(.5, 1, 'bld.bus-stop', 7.0, None)] if i in (1, 4) else []):
         place_life(i, frac, side, asset, lat, decay)
+# ---- world-fill (PO #34, stunning blocker): a lived-in outskirts belt right beside the road ---------------------------------
+# The game camera frames only ~+-7.5 m across the road at zoom 1 (+-11 m at 1.5), so the look-l10 frontage (houses 13-15 m,
+# fronts 19-23 m back) stays off-frame. This belt fills 5.3-13 m from the centreline in plots of 9-17 m with 3-5 m gaps (AI and
+# survivors still reach the road everywhere): low runs (hedges, garden walls, privacy fences, mil fences, jersey barriers) just
+# past the sidewalk, trees/cars/stock in the middle band and a house, shed or ruin whose roof the camera sees from the near side.
+# Same gameplay clearances as the dressing above (l10-dressing.test.ts: solid >= 5 m from the route, >= 4.5 m from detours);
+# own random stream and appended last, so every earlier placement keeps its id. Existing assets only (instanced per asset).
+fill = random.Random(1034)
+FILL_TREE = ('prop.tree', 'prop.street-tree')
+def fill_put(asset, a_, F, s, lat, side, yaw=None, decay=None, scale=1.0):
+    d_, ux, uz, nx, nz = F
+    x, z = at(a_, ux, uz, nx, nz, s, side*lat)
+    if yaw == 'face': yaw = face((nx*side, nz*side))
+    elif yaw == 'along': yaw = math.atan2(-uz, ux) + (math.pi if fill.random() < .5 else 0) + fill.uniform(-.12, .12)
+    elif yaw is None: yaw = fill.uniform(0, math.tau)
+    clear = 5.6 if asset.startswith(('bld.', 'kit.')) else 5.4 if asset.startswith('veh.') else 5.3
+    pid = dress(asset, x, z, yaw, scale=scale, decay=decay, route_clear=None if asset in FILL_TREE else clear)
+    if pid: l.data['placements'][-1]['worldFill'] = True
+    return pid
+def fill_run(asset, a_, F, s0, s1, lat, side, step, skip=0.0):
+    """Runs of 2-4 pieces; each run is drawn in +x/+z order so fence_run merges its pieces into one collider per unbroken stretch."""
+    d_, ux, uz, nx, nz = F
+    s = s0
+    while s + step <= s1 + .01:
+        n = min(fill.randint(2, 4), int((s1 - s + .01) // step))
+        if n < 1: break
+        e = s + n*step
+        if fill.random() >= skip:
+            p0, p1 = at(a_, ux, uz, nx, nz, s, side*lat), at(a_, ux, uz, nx, nz, e, side*lat)
+            if (p1[0] - p0[0]) + (p1[1] - p0[1]) < 0: p0, p1 = p1, p0
+            fence_run(asset, p0, p1, step, clear=5.3)
+        s = e
+def plot_yard(a_, F, s0, s1, side):
+    run = fill.choice(['prop.hedge', 'prop.hedge', 'prop.cure-garden-wall', 'prop.privacy-fence'])
+    fill_run(run, a_, F, s0, s1 - 3.2, 5.75, side, {'prop.hedge': 2.5, 'prop.cure-garden-wall': 3.5, 'prop.privacy-fence': 2.6}[run])
+    fill_put(fill.choice(['prop.trash-bin', 'prop.recycling-bin', 'prop.mailbox-blue']), a_, F, s1 - 1.6, 5.9, side, 'face')
+    fill_put(fill.choice(['prop.street-tree', 'prop.tree', 'prop.garden-bush', 'prop.street-tree-blossom']), a_, F, (s0 + s1) / 2 + fill.uniform(-2, 2), 8.2, side, scale=fill.uniform(.7, .9))
+    fill_put(fill.choice(['bld.house-a', 'bld.house-b', 'bld.house-c', 'bld.house-d', 'bld.house-e', 'bld.shed']), a_, F, (s0 + s1) / 2, 11.6, side, 'face', decay=fill.choice([None, None, 'w2', 'w3']))
+def plot_drive(a_, F, s0, s1, side):
+    fill_put(fill.choice(['veh.sedan-blue', 'veh.sedan-green', 'veh.suv-green', 'veh.pickup-white', 'veh.suv-dark', 'veh.sedan-red']), a_, F, s0 + 3, 6.7, side, 'along', decay=fill.choice([None, 'wrecked', 'burned']))
+    fill_put(fill.choice(['prop.garden-bush', 'prop.garden-bush-small', 'prop.trash-bags']), a_, F, s1 - 2, 6.0, side)
+    fill_put(fill.choice(['bld.garage-detached', 'bld.shed', 'bld.house-c', 'bld.house-e']), a_, F, (s0 + s1) / 2, 11.0, side, 'face')
+def plot_farm(a_, F, s0, s1, side):
+    fill_run('prop.picket-fence', a_, F, s0, s1, 6.0, side, 2.64, skip=.3)
+    for k in range(fill.randint(1, 2)): fill_put('prop.tree', a_, F, s0 + fill.uniform(2, s1 - s0 - 2), fill.uniform(8.0, 10.5), side, scale=fill.uniform(.7, 1.0))
+    fill_put(fill.choice(['bld.shed', 'bld.garage-detached', 'prop.utility-pole']), a_, F, (s0 + s1) / 2, 12.5, side, 'face')
+def plot_wrecks(a_, F, s0, s1, side, burned=False):
+    fill_put(fill.choice(['veh.wreck', 'veh.sedan-white', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-red']), a_, F, s0 + 3, 6.9, side, 'along', decay='burned' if burned or fill.random() < .5 else 'wrecked')
+    fill_put(fill.choice(['prop.pallet', 'decay.blown-sandbags', 'prop.trash-bags', 'prop.crates']), a_, F, s1 - 2.5, 6.0, side)
+    fill_put('prop.utility-pole', a_, F, (s0 + s1) / 2, 5.7, side, 'along')
+    fill_put('prop.tree', a_, F, s1 - 3, 9.5, side, scale=fill.uniform(.75, 1.0))
+def plot_works(a_, F, s0, s1, side):
+    fill_run('prop.cure-mil-fence', a_, F, s0, s1, 5.7, side, 3.34, skip=.15)
+    fill_put(fill.choice(['prop.cure-drum-stack', 'prop.pallet', 'prop.crates', 'prop.dumpster']), a_, F, s0 + 2.5, 7.6, side)
+    fill_put(fill.choice(['prop.cure-container-stack', 'veh.box-truck', 'veh.military-truck', 'prop.cure-container-stack']), a_, F, (s0 + s1) / 2, 10.0, side, 'along', decay='wrecked' if fill.random() < .4 else None)
+    fill_put(fill.choice(['bld.cure-service-building', 'bld.substation']), a_, F, (s0 + s1) / 2, 15.0, side, 'face')
+def plot_post(a_, F, s0, s1, side):
+    fill_run('prop.jersey-barrier', a_, F, s0, s1 - 3, 5.6, side, 3.0, skip=.2)
+    fill_put(fill.choice(['prop.sandbag-pallet', 'decay.blown-sandbags']), a_, F, s1 - 1.5, 6.3, side)
+    fill_put(fill.choice(['veh.tank', 'veh.military-truck', 'veh.military-truck', 'veh.evac-bus']), a_, F, (s0 + s1) / 2, 9.8, side, 'along', decay=fill.choice(['wrecked', 'burned']))
+    fill_put(fill.choice(['kit.guard-tower', 'bld.cure-motor-shelter', 'prop.cure-mil-fence']), a_, F, (s0 + s1) / 2, 14.0, side, 'face')
+def plot_campus(a_, F, s0, s1, side):
+    fill_run('prop.hedge', a_, F, s0, s1 - 3, 5.75, side, 2.5, skip=.1)
+    fill_put('prop.street-tree', a_, F, (s0 + s1) / 2, 8.0, side, scale=fill.uniform(.7, .85))
+    fill_put(fill.choice(['prop.cure-iso-tent', 'prop.cure-generator', 'veh.ambulance', 'prop.tent']), a_, F, s1 - 2, 10.5, side, 'along', decay='wrecked' if fill.random() < .3 else None)
+    fill_put(fill.choice(['bld.cure-lab-annex', 'bld.clinic-annex']), a_, F, (s0 + s1) / 2, 16.0, side, 'face')
+def plot_ruin(a_, F, s0, s1, side):
+    fill_put(fill.choice(['decay.makeshift-barricade', 'prop.pallet', 'decay.blown-sandbags']), a_, F, s0 + 1.8, 6.0, side)
+    fill_put(fill.choice(['veh.sedan-white', 'veh.suv-dark', 'veh.police-sedan', 'veh.wreck', 'veh.pickup-white']), a_, F, (s0 + s1) / 2, 7.0, side, 'along', decay='burned')
+    fill_put(fill.choice(['decay.burned-facade.house', 'decay.makeshift-barricade', 'prop.utility-pole']), a_, F, s1 - 2.5, 7.6, side, 'face')
+    fill_put(fill.choice(['bld.house-a', 'bld.house-c', 'bld.house-e', 'bld.mainstreet-brick']), a_, F, (s0 + s1) / 2, 12.5, side, 'face', decay='w3')
+FILL_PLOTS = {0: [(plot_farm, 3), (plot_wrecks, 2)], 1: [(plot_yard, 5), (plot_drive, 2)], 2: [(plot_works, 4), (plot_wrecks, 1)],
+              3: [(plot_post, 4), (plot_wrecks, 1)], 4: [(plot_campus, 4), (plot_drive, 1)], 5: [(plot_ruin, 4), (lambda *q: plot_wrecks(*q, burned=True), 2)]}
+fill_segments = [(i, s) for i in range(6) for s in region_segments(i)]
+fill_segments += [(2, s) for s in zip(source['detours'][0]['route'], source['detours'][0]['route'][1:])]
+fill_segments += [(3, s) for s in zip(source['detours'][1]['route'], source['detours'][1]['route'][1:])]
+fill_before = len(l.data['placements'])
+for i, (a_, b_) in fill_segments:
+    F = frame(a_, b_); d = F[0]
+    if d < 16: continue
+    fns = [f for f, _ in FILL_PLOTS[i]]; ws = [w for _, w in FILL_PLOTS[i]]
+    for side in (1, -1):
+        s = fill.uniform(5, 9)
+        while s < d - 12:
+            L = fill.uniform(9, 17)
+            fill.choices(fns, ws)[0](a_, F, s, min(s + L, d - 5), side)
+            s += L + fill.uniform(3, 5)
+for p in l.data['placements'][fill_before:]:
+    if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
+print('world-fill placements', len(l.data['placements']) - fill_before)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6

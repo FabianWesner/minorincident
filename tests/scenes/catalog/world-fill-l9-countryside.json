@@ -1,0 +1,60 @@
+{
+ "name": "world-fill-l9-countryside",
+ "note": "world-fill (PO #34): L9 countryside gravel lane: hedgerows, field fences, farm stock, trees. Look for roadside mass in every frame within ~4-12 m of the road edge (no flat dark plane), nothing on the lane, no floating or sunk props, no clipping, no flicker.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    20,
+    170
+   ],
+   [
+    220,
+    310
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1.0
+ },
+ "frames": 150,
+ "shots": [
+  149
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    100,
+    240
+   ],
+   "yaw": -0.0,
+   "path": [
+    [
+     140,
+     240
+    ]
+   ],
+   "health": 1000,
+   "floor": true,
+   "driven": true
+  }
+ ]
+}
