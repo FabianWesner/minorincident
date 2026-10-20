@@ -46,6 +46,8 @@ const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
 const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
+/** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
+export const hitFlashRest = 0.35;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
 export class Vfx extends Group {
@@ -76,6 +78,9 @@ export class Vfx extends Group {
   private readonly hitUntil = new Float64Array(512);
   private hitCount = 0;
   private hitCursor = 0;
+  /** alpha-white: start time of each target's last hit flash. Sustained fire (a soldier line, pellets) re-flashed
+   * every 0.1 s and left Alphas a permanent white mass; a target flashes at most once per rest period. */
+  private readonly hitStarted = new Map<number, number>();
   private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
   private enabled = true;
   private colorblind = false;
@@ -211,8 +216,12 @@ export class Vfx extends Group {
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
-  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
   private pulse(id: number): void {
+    const started = this.hitStarted.get(id);
+    if (started !== undefined && this.time - started < hitFlashRest) return;
+    this.hitStarted.set(id, this.time);
+    if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
     let slot = 0;
     while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
     if (slot === this.hitCount) {
