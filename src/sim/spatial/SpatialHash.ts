@@ -3,27 +3,30 @@ export interface ContactCells { epoch: number; radius(id: number): number; inter
 type Position = { id: number; x: number; z: number; cellX: number; cellZ: number; slot: number };
 type Bound = { epoch: number; radius: ContactCells['radius']; maximum: number };
 type Cell = { items: Position[]; bound?: Bound; otherBound?: Bound };
+/** Unique for |cell| < 2^15 per axis (±131 km at 4 m cells); a Smi on every engine. Non-finite cells keep one NaN key as before. */
+const cellKey = (cellX: number, cellZ: number): number => cellX * 65536 + cellZ;
 /** 4 m cells; the exact distance filter and numeric sort give stable queries. */
 export class SpatialHash {
   private readonly inverseCellSize: number;
   constructor(private readonly cellSize = 4) { this.inverseCellSize = 1 / cellSize; }
   // Keep the position in its bucket so dense queries do not look up every ID again.
-  private readonly cells = new Map<number, Map<number, Cell>>();
+  // perf-w6: one map keyed by both cell coordinates (one lookup per visited cell) and positions indexed by
+  // entity ID. Query order is unchanged: the loops below still visit X columns, then Z rows, then bucket order.
+  private readonly cells = new Map<number, Cell>();
   private readonly free: Position[] = [];
-  private readonly positions = new Map<number, Position>();
+  private positions: (Position | undefined)[] = [];
   set(id: number, x: number, z: number): void {
-    const previous = this.positions.get(id);
+    const previous = this.positions[id];
     if (previous && previous.x === x && previous.z === z) return;
     const cellX = Math.floor(x * this.inverseCellSize), cellZ = Math.floor(z * this.inverseCellSize);
     if (previous && previous.cellX === cellX && previous.cellZ === cellZ) { previous.x = x; previous.z = z; return; }
     if (previous) this.removeFromCell(previous);
     const position = previous ?? this.free.pop() ?? { id, x, z, cellX, cellZ, slot: 0 };
     position.id = id; position.x = x; position.z = z; position.cellX = cellX; position.cellZ = cellZ;
-    this.positions.set(id, position);
-    let column = this.cells.get(cellX);
-    if (!column) this.cells.set(cellX, column = new Map());
-    let cell = column.get(cellZ);
-    if (!cell) column.set(cellZ, cell = { items: [] });
+    this.positions[id] = position;
+    const key = cellKey(cellX, cellZ);
+    let cell = this.cells.get(key);
+    if (!cell) this.cells.set(key, cell = { items: [] });
     position.slot = cell.items.length; cell.items.push(position);
     // Keep a conservative upper bound as bodies change cells during the current contact phase.
     const bound = cell.bound; if (bound) {
@@ -32,13 +35,13 @@ export class SpatialHash {
     }
   }
   delete(id: number): void {
-    const position = this.positions.get(id);
+    const position = this.positions[id];
     if (!position) return;
     this.removeFromCell(position); this.free.push(position);
-    this.positions.delete(id);
+    this.positions[id] = undefined;
   }
   private removeFromCell(position: Position): void {
-    const items = this.cells.get(position.cellX)!.get(position.cellZ)!.items;
+    const items = this.cells.get(cellKey(position.cellX, position.cellZ))!.items;
     // Retain Map insertion order: contact resolution depends on stable bucket order.
     items.splice(position.slot, 1);
     for (let i = position.slot; i < items.length; i++) items[i].slot = i;
@@ -52,9 +55,8 @@ export class SpatialHash {
     const minX = Math.floor((x - r) * this.inverseCellSize), maxX = Math.floor((x + r) * this.inverseCellSize);
     const minZ = Math.floor((z - r) * this.inverseCellSize), maxZ = Math.floor((z + r) * this.inverseCellSize), radiusSquared = r * r;
     for (let cx = minX; cx <= maxX; cx++) {
-      const column = this.cells.get(cx); if (!column) continue;
       for (let cz = minZ; cz <= maxZ; cz++) {
-        const cell = column.get(cz); if (!cell) continue;
+        const cell = this.cells.get(cellKey(cx, cz)); if (!cell) continue;
         // Empty retained buckets cannot contain a contact or invoke a visitor.
         if (!cell.items.length) continue;
         if (contacts) {
@@ -82,5 +84,5 @@ export class SpatialHash {
     }
     return sorted ? result.sort(numericOrder) : result;
   }
-  reset(): void { this.cells.clear(); this.positions.clear(); this.free.length = 0; }
+  reset(): void { this.cells.clear(); this.positions = []; this.free.length = 0; }
 }
