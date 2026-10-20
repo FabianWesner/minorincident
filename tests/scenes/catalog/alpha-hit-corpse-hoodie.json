@@ -1,0 +1,98 @@
+{
+  "name": "alpha-hit-corpse-hoodie",
+  "note": "alpha-white (QA 13b #21/#29, PO 10-19 \"the alpha looks terrible\"): the inf.alpha-hoodie look takes four close shotgun shells (pellet volleys, the in-play sustained-hit case) until it drops; the body then lies to the end. A hit may flash it briefly in its own colours, but the live figure, the downed body and the corpse keep the inf.alpha-hoodie look (bloodied is fine): `look` gates the crowd pixels at every sheet frame against frame 0 (pale unsaturated share, mean brightness rise, hue drift).",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      4,
+      1,
+      0
+    ],
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        3,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "inf.alpha-hoodie"
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    },
+    {
+      "frame": 40,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    },
+    {
+      "frame": 100,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    }
+  ],
+  "frames": 240,
+  "sheet": 6,
+  "look": {
+    "whiteShareMax": 0.03,
+    "lumaRiseMax": 1.6,
+    "hueDriftMaxDeg": 40
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": {
+      "alpha": [
+        0,
+        0
+      ]
+    }
+  }
+}

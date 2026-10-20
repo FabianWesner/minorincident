@@ -216,9 +216,9 @@ export class CrowdView extends Group {
       // emitter avoids the pink centres from luminance-normalized swatches.
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(sourceColor, vec3(0), parts.z);
       const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : vec3(3, .25, .22);
-      // alpha-white: the hit flash brightens the figure's own colours plus a little white; a flat white add
-      // (0.45 on every channel, then bloom) turned the dark, hulking Alpha into a grey-white mass.
-      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(1.5).add(.15)));
+      // alpha-white: the hit flash brightens the figure's own colours (about x2 at the 0.45 peak) with a trace of
+      // white; a flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass.
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(2).add(.03)));
       const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
