@@ -874,6 +874,10 @@ export class SceneLab {
       this.metroClosed = closed;
       this.staticClips = null;
     }
+    else if ('hurtFollowers' in fx) {
+      let left = fx.hurtFollowers;
+      for (const e of world.entities.values()) if (left > 0 && e.civilian?.survivor?.mode === 'follow' && e.health.current > 0) { e.health.current = Math.max(1, Math.round(e.health.max * fx.fraction)); left--; }
+    }
     else if ('moveProp' in fx) {
       const item = world.props?.items.find(p => p.id.endsWith(`/${fx.moveProp}`));
       if (!item) throw new Error(`moveProp: no pushable ${fx.moveProp}`);

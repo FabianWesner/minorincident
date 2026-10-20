@@ -1,0 +1,19 @@
+{
+ "extends": "../../../specs/scenes/qa-l5-group.json",
+ "name": "stunning-bars-l5-five",
+ "note": "PO #26 kept (\"show health bar for the 5 survivors, so the player knows how they are\"): the five L5 followers are a small group, so all of them carry bars, healthy ones too; only groups larger than five hide healthy bars (QA #37).",
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 1
+ },
+ "frames": 120,
+ "sheet": 30,
+ "shots": [
+  119
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "healthBarsMin": 5
+ }
+}
