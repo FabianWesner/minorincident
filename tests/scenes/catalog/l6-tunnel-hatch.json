@@ -1,0 +1,56 @@
+{
+ "name": "l6-tunnel-hatch",
+ "l6Subway": "hatch",
+ "time": "L6-subway",
+ "dof": false,
+ "hud": true,
+ "ground": "district",
+ "layout": {
+  "level": "L6",
+  "district": "D-SUBWAY",
+  "bbox": [
+   [
+    -32,
+    -30
+   ],
+   [
+    288,
+    32
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    157,
+    15.2
+   ],
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   160,
+   16.6
+  ],
+  "zoom": 1
+ },
+ "frames": 600,
+ "shots": [
+  2,
+  150,
+  400,
+  590
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ },
+ "note": "PO 10-20 #64 \"let me be able to close them to lock Zombies out\": the north maintenance hatch at x162 (camera side, beside the barrier pier) closed by the courier at the start of the retreat. Look for: frame 2 hatch shut with the yellow drop bar across it; frames 150-400 the leaf jolts on each bash (one per second after the bang) while nobody comes through; frame 590 (after 8 bashes) the leaf hangs open and the two arrivals walk out toward the courier. Walls, walkway and hatch readable in the dark."
+}
