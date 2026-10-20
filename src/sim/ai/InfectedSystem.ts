@@ -131,12 +131,13 @@ export class InfectedSystem {
       }
     });
   }
-  /** Any infected damaged by the courier or the companion hunts that shooter for ~12 s after the last hit, in sight or not. Mega keeps its global pursuit; story-scripted walkers (b.scripted) are exempt. */
+  /** Hits wake the victim even out of sight. The vision brain visits the hit-time shooter position once, then uses normal perception;
+   * archetype brains pursue the shooter for 12 s after the last hit. Mega pursuit and scripted walkers keep their own orders. */
   private provoke(target: EntitySnapshot, sourceId: number): void {
     const b = target.infected!, source = this.world.entities.get(sourceId);
     if (!source || target.health.current <= 0 || b.pursuit || b.scripted || source.infected || !(source.id === 1 || source.companion)) return;
     b.provoked = { id: source.id, until: this.world.tick + provokeTicks };
-    if (b.l1) this.press(target.id, source.id, b.provoked.until);
+    if (b.l1) this.rush(target.id, source.transform, b.provoked.until);
   }
   private provoker(e: EntitySnapshot, b: InfectedState): EntitySnapshot | undefined {
     const p = b.provoked; if (!p) return undefined;
@@ -175,7 +176,7 @@ export class InfectedSystem {
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked;
     delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
@@ -282,12 +283,9 @@ export class InfectedSystem {
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       const provoker = this.provoker(e, b);
-      if (provoker && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
-        if (b.l1) { if ((this.world.tick + e.id) % 20 === 0) this.press(e.id, provoker.id, b.provoked!.until); }
-        else {
-          b.heardTargetId = provoker.id; delete b.investigate;
-          if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
-        }
+      if (provoker && !b.l1 && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
+        b.heardTargetId = provoker.id; delete b.investigate;
+        if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
       }
       if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit && !(provoker && !b.l1)) {
         const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
