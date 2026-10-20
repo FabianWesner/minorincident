@@ -14,7 +14,7 @@ const nav = () => bakeNav([{ layout, origin: [0, 0], colliders: placementCollide
 
 test('T-E30-05-district @E30-AC05 intact zoo facilities, named enclosures, public lights and service infrastructure', () => {
   expect(validateLayout(layout, worldAssets)).toEqual([]);
-  expect(layout.bounds).toEqual([[-120,-90],[120,-90],[120,90],[-120,90],[-120,-90]]);
+  expect(layout.bounds).toEqual([[-150,-120],[150,-120],[150,120],[-150,120],[-150,-120]]);
   const base = resolveDecay(layout, 0);
   for (const id of ['bld.zoo-gate','bld.reptile-house','bld.park-lodge','kit.guard-tower','kit.maintenance-corridor','prop.street-lamp','prop.hose-reel','prop.sprinkler']) expect(base.placements.some(p => p.assetId === id), id).toBe(true);
   expect(base.placements.filter(p => p.assetId === 'prop.street-lamp').length).toBeGreaterThanOrEqual(20);

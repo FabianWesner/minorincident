@@ -1,0 +1,14 @@
+{
+ "name": "dress-l8-zoo-corner",
+ "note": "Opus visual QA #34 (verbatim): \"L8 drive-out ... flat dark plane\". L8 south-east corner of the zoo wall with the town beyond: service road ring, kerbs, lamps and parked cars outside the wall. Look for: lit road and lamp light beyond the wall, no bare dark plane, nothing floating or sunk, wall and piers intact.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "layout": { "district": "D-ZOO", "bbox": [[84, 50], [150, 118]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [108, 80], "yaw": 0, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [108, 80] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}
