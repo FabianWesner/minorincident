@@ -19,7 +19,8 @@ const presets: Record<string, string | undefined> = { L2: 'L2-default', L3: 'L3-
 const levels = (process.env.HANDOVER_LEVELS ?? 'L1,L2,L3,L4,L5,L6,L7,L8,L9,L10').split(',');
 const label = `${phase}-${backend}-${tier}-x${throttle}`;
 
-test.use({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1, headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', ...(backend === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] } });
+const gpuArgs = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+test.use({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1, headless: true, launchOptions: { args: [...gpuArgs, ...(backend === 'webgpu' ? ['--enable-unsafe-webgpu'] : [])] } });
 
 test(`@perf level handovers ${label}`, async ({ page, context }) => {
   test.setTimeout(1_500_000); mkdirSync(out, { recursive: true });
@@ -27,7 +28,7 @@ test(`@perf level handovers ${label}`, async ({ page, context }) => {
   page.on('pageerror', error => errors.push(error.message));
   const cdp = await context.newCDPSession(page);
   if (throttle > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: throttle });
-  await page.goto(`/?testApi=1&loadProfile=1&renderer=${backend}&quality=${tier}&dpr=1&audio=muted&seed=1&preload=0${throttle > 1 ? `&workerCpu=${throttle}` : ''}`);
+  await page.goto(`/?testApi=1&loadProfile=${process.env.HANDOVER_LOAD_PROFILE ?? 1}&renderer=${backend}&quality=${tier}&dpr=1&audio=muted&seed=1&preload=0${throttle > 1 ? `&workerCpu=${throttle}` : ''}`);
   await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(() => window.__SS__!.ready);
   expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend);
