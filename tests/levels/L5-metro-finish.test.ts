@@ -9,6 +9,7 @@ import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL5 } from '../../tools/sim-runner/l5Bots';
+import { ObjectiveMarker } from '../../src/render/ObjectiveMarker';
 
 /**
  * P0 10-20 (PO, PROD): "Seems like I cannot finsish L5. THe yellow circle isn't working and whe I go down the subway, I see the subway
@@ -42,6 +43,10 @@ test('@E23 @E23-AC15 P0 the Metro ring marks the arrival, the plinths beside the
   expect(m.l5!.insideStation(p.transform), JSON.stringify(p.transform)).toBe(true);
   expect(m.state.l5!.metroAt).toBeGreaterThan(0);
   expect(m.l5!.metroStatus()).toMatch(/^Wait for the survivors · \d\/5 in$/);
+  const marker = new ObjectiveMarker(w); marker.update(); expect(marker.visible).toBe(true);
+  m.state.l5!.shutterAt = w.tick; marker.update();
+  expect(m.l5!.metroStatus()).toBe('Everyone is in · shutter closing');
+  expect(marker.visible).toBe(false); marker.dispose();
 }, 120_000);
 
 test('@E23 @E24 P1 finishing L5 holding the basement shotgun starts L6 with it, in session and after a reload from the menu', async () => {

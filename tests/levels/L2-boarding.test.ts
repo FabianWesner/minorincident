@@ -19,6 +19,19 @@ function clickAndWait(w: SimWorld, target: { x: number; z: number }, done: () =>
 }
 
 describe('L2 one-attempt interactions', () => {
+  test('a click into the crashed police car resolves to a reachable nav cell and moves', async () => {
+    const l = await atStart(1), w = l.world, p = w.entities.get(1)!;
+    const start = { x: p.transform.x, z: p.transform.z };
+    w.setInput({ moveTarget: { x: 50, z: 2 } }); w.update(); w.setInput({ moveTarget: undefined });
+    const target = w.controls.moveTarget!;
+    expect(Math.hypot(target.x - 50, target.z - 2)).toBeGreaterThan(.25);
+    const nav = w.infected!.nav.forPlayer(.45);
+    expect(nav.clear(target.x, target.z, .45)).toBe(true);
+    for (let i = 0; i < 60 * 45 && Math.hypot(p.transform.x - target.x, p.transform.z - target.z) > 1.25; i++) w.update();
+    expect(Math.hypot(p.transform.x - start.x, p.transform.z - start.z)).toBeGreaterThan(2);
+    expect(Math.hypot(p.transform.x - target.x, p.transform.z - target.z)).toBeLessThan(2);
+  }, 120_000);
+
   test('axe can be taken at 5 s, immediately ringing the alarm, then board normally', async () => {
     const l = await loadL2(1); world = l.world;
     for (let i = 0; i < 5 * 60; i++) l.world.update();
