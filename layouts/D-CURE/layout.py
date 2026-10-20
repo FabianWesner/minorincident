@@ -267,8 +267,8 @@ LOW = 1.6   # world-fill (PO #34): crowns (bottom above ~2 m) may overhang anyth
 for p in l.data['placements']:
     v = p['visualAabb']; b0, b1 = (v['min'][0], v['min'][2]), (v['max'][0], v['max'][2])
     if p['assetId'] in ('prop.tree', 'prop.street-tree'):
-        x_, z_ = p['position'][0], p['position'][2]; taken.append((b0, b1, v['max'][1], (x_-.6, z_-.6), (x_+.6, z_+.6)))
-    else: taken.append((b0, b1, v['max'][1], b0, b1))
+        x_, z_ = p['position'][0], p['position'][2]; taken.append((b0, b1, v['max'][1], (x_-.6, z_-.6), (x_+.6, z_+.6), p['assetId']))
+    else: taken.append((b0, b1, v['max'][1], b0, b1, p['assetId']))
 def footprint(asset, x, z, yaw, scale):
     m = l.manifest['prop.tree' if asset == 'crown:tree' else asset]['dimensions']; dx, dz = m['x']*scale, m['z']*scale
     # Trees collide only at the trunk; the crown may overhang the verge like any street tree.
@@ -304,16 +304,23 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     gap = -.1 if run else 1.0   # run pieces butt against each other; manifest boxes can be a little smaller than the mesh
     # Crowns must not grow into roofs, fences or poles (Scene Lab static clipping), so trees reserve their whole crown.
     omn, omx = footprint('crown:tree', x, z, yaw, scale) if asset in ('prop.tree', 'prop.street-tree') else (mn, mx)
-    # world-fill: a thin pole/lamp/hydrant only needs a 0.3 m gap to its neighbours (1 m kept the near-road houses out).
-    thin_ = asset in THIN
+    # world-fill: a pole/hydrant/mailbox/sign only needs a 0.3 m gap to its neighbours (1 m kept the near-road houses out); lamps
+    # keep 1 m (their arm overhangs the manifest box) and buildings get 0.6 m more (eaves and steps outgrow their visual boxes).
+    # Meshes that outgrow their manifest box (Scene Lab static clipping): the warehouse dock (~1.9 m), the iso-tent's guy lines (~0.9 m).
+    MESH_PAD = {'bld.cure-warehouse': 1.6, 'prop.cure-iso-tent': 1.0}
+    SLIM = ('prop.utility-pole', 'prop.fire-hydrant', 'prop.mailbox-blue', 'prop.street-sign')
+    thin_ = asset in SLIM
     tree_ = asset in ('prop.tree', 'prop.street-tree'); h_ = l.manifest[asset]['dimensions']['y'] * (1 if asset.startswith(('bld.', 'veh.')) else scale)
-    def hit(a0, a1, b0, b1):
-        g = .3 if not run and (thin_ or (b1[0]-b0[0] < 1.0 and b1[1]-b0[1] < 1.0)) else gap
+    bld_ = asset.startswith(('bld.', 'kit.'))
+    def hit(a0, a1, b0, b1, other):
+        g = .3 if not run and (thin_ or other in SLIM) else gap
+        if bld_ or other.startswith(('bld.', 'kit.')): g += .6
+        g += max(MESH_PAD.get(asset, 0), MESH_PAD.get(other, 0))
         return a0[0] < b1[0]+g and a1[0] > b0[0]-g and a0[1] < b1[1]+g and a1[1] > b0[1]-g
     for t in taken:
         if tree_:
-            if hit(mn, mx, t[3], t[4]) or (t[2] >= LOW and hit(omn, omx, t[0], t[1])): return None
-        elif hit(mn, mx, t[3], t[4]) if h_ < LOW else hit(mn, mx, t[0], t[1]): return None
+            if hit(mn, mx, t[3], t[4], t[5]) or (t[2] >= LOW and hit(omn, omx, t[0], t[1], t[5])): return None
+        elif hit(mn, mx, t[3], t[4], t[5]) if h_ < LOW else hit(mn, mx, t[0], t[1], t[5]): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
     if decay: l.data['placements'][-1]['decay'] = decay
     # Dressing collides as one box (trees: trunk only, fence runs: one box per run) instead of the asset's detailed
@@ -326,7 +333,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     # look-l9b (PO: "soldiers and peds are just walking through the barrier"): R6/R7 dressing is solid for everyone; the
     # finale calibration (tests/sim/levels/l10-arrival.test.ts) is re-run after every dressing change instead.
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
-    taken.append((omn, omx, h_, mn, mx)); return pid
+    taken.append((omn, omx, h_, mn, mx, asset)); return pid
 def face(side_normal):
     # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
     nx, nz = -side_normal[0], -side_normal[1]
