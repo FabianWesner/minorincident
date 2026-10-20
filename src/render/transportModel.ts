@@ -48,6 +48,8 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
       const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), color = new Color(swatch).toArray();
       for (let i = 0; i < count; i++) colors.set(color, i * 3);
       geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(opacity), 1));
+      // The shared door/roof material reads cabCrack on every mesh; doors never crack.
+      geometry.setAttribute('cabCrack', new BufferAttribute(new Float32Array(count), 1));
     }
     // One draw per animated door, including glazing, keeps the rare APC within its authored draw budget.
     const geometry = mergeGeometries([panel, pane])!; panel.dispose(); pane.dispose();
