@@ -1,5 +1,5 @@
 import { Vector2, Vector3, type Box3, type Camera, type Node } from 'three/webgpu';
-import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
+import { dot, fract, mix, normalWorld, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
 
 /** One player see-through hole shared by every occluder (leaf crowns, buildings, roofs, poles, props).
  * Foliage writes the projected centre/depth/radius each frame; DistrictView projects the complete subject before every render. Screen UV has a top-left origin. */
@@ -39,7 +39,11 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
  * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
 export const seeThroughKeep = (eligible?: Node<'float'>) => {
-  const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.3)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
+  // QA #48 (L5 pharmacy): the kept 0.3 m band of a wall standing right in front of her drew its top edge across her feet, so she read as
+  // standing on the roof edge. Only support surfaces (facing up) keep the band; walls, kerb faces and risers clear down to 8 cm.
+  const support = normalWorld.y.greaterThan(.5);
+  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(support.select(.3, .08)));
+  const hole = cuttable.select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   // A placement enclosing most of the lens cannot leave a roof across the
   // entire viewport. Its foreground surfaces clear, while supports and surfaces
