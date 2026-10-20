@@ -10,15 +10,36 @@ import type { DistrictLayout, Placement, Point } from '../../src/levels/district
 const SZ = -8;
 const rect = (a: number, b: number, c: number, d: number): Point[] => [[a,b],[c,b],[c,d],[a,d],[a,b]];
 const layout: DistrictLayout = { version: 1, district: 'D-SUBWAY', title: 'Lakeshore — Northgate', geometryHash: '', bounds: rect(-32,-30,288,32), roads: { nodes: [{id:'start',point:[6,-2]},{id:'end',point:[273,15]}], edges:[{id:'track',start:'start',end:'end',points:[[6,-2],[6,15],[273,15]],laneWidth:2.2}] }, placements:[], anchors:{}, buildings:[], colliders:[], walkable:{cellSize:.5,excluded:[]}, lawns:[], lightGroups:[{id:'metro-main',offAt:5},{id:'metro-emergency',offAt:5},{id:'shelter-camp',offAt:5},{id:'self',offAt:5}], acousticZones:[{id:'shelter',preset:'interior',polygon:rect(-30,-28,30,18.8)},{id:'tunnel',preset:'tunnel',polygon:rect(30,11.2,246,18.8)}], surfaces:[{surface:'tile',height:.6,polygon:rect(-30,-28,30,12)},{surface:'gravel',height:.6,polygon:rect(-30,12,30,18.8)},{surface:'gravel',height:.6,polygon:rect(30,11.2,246,18.8)},{surface:'asphalt',height:3.9,polygon:rect(258,0,288,30)}], layers:[] };
+/**
+ * PO 10-20 #63 "a place where I cannot continue, although there is no wall": many of the metro kits' exported helper
+ * boxes carry their Y and Z extents swapped about the box centre (the same exporter fault the escalator treads below
+ * work around). In the tunnel, each 1.7 m side walkway became a 1.7 m tall, 0.32 m thin invisible wall in the middle of
+ * the drawn walkway, and the south wall piers became head-height shelves reaching 1.4 m into the tunnel; the station's
+ * back walls became shelves 2.5 m in front of the drawn wall. Each listed box matches the drawn mesh on every face only
+ * once swapped (measured against the LOD0 triangles). Station 37/38 match the mesh in neither orientation (a chest-high
+ * slab with no drawn geometry): dropped. Guard: tests/unit/levels/l6-collider-visibility.test.ts.
+ */
+const swappedBoxes: Record<string, Set<number>> = {
+  'kit.metro-tunnel': new Set([1, 7, 8, 9, 10, 11, 12]),
+  'kit.maintenance-corridor': new Set([0, 1, 4, 5, 6, 7, 8, 9, 10, 11]),
+  'int.metro-station': new Set([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 34, 35, 36]),
+};
+const undrawnBoxes: Record<string, Set<number>> = { 'int.metro-station': new Set([37, 38]) };
+const swapYZ = (b: { min: number[]; max: number[] }) => {
+  const cy = (b.min[1] + b.max[1]) / 2, cz = (b.min[2] + b.max[2]) / 2, hy = (b.max[2] - b.min[2]) / 2, hz = (b.max[1] - b.min[1]) / 2;
+  return { min: [b.min[0], cy - hy, cz - hz], max: [b.max[0], cy + hy, cz + hz] };
+};
 const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='metro-main'): Placement => {
   const d = worldAssets[assetId]; if (!d) throw new Error(`Unregistered ${assetId}`);
   const hx = (Math.abs(Math.cos(yaw))*d.dimensions.x+Math.abs(Math.sin(yaw))*d.dimensions.z)/2, hz=(Math.abs(Math.sin(yaw))*d.dimensions.x+Math.abs(Math.cos(yaw))*d.dimensions.z)/2;
   const p: Placement={id:`l6-${layout.placements.length}`,assetId,position:[x,y,z],yaw,scale:[1,1,1],minTier:0,maxTier:5,allowRoad:false,lightGroup,visualAabb:{min:[x-hx,y,z-hz],max:[x+hx,y+d.dimensions.y,z+hz]}}; layout.placements.push(p);
   // Delivered low floors and stairs are supports; overhead ribs never obstruct planar navigation.
   // Hinged station/exit leaves are owned by the level, separate from fixed structure.
-  for (const [i, box] of ((physicsAssets as Record<string, { boxes: { min: number[]; max: number[] }[] }>)[assetId]?.boxes ?? []).entries()) {
+  for (const [i, raw] of ((physicsAssets as Record<string, { boxes: { min: number[]; max: number[] }[] }>)[assetId]?.boxes ?? []).entries()) {
+    if (undrawnBoxes[assetId]?.has(i)) continue;
+    const box = swappedBoxes[assetId]?.has(i) ? swapYZ(raw) : raw;
     if (box.min[1] >= 2.4 || assetId==='int.metro-exit') continue;
-    if (assetId==='int.metro-station' && box.min[2]<-9 && box.max[2]>-9 && (Math.abs((box.min[0]+box.max[0])/2-10)<1.5 || Math.abs((box.min[0]+box.max[0])/2+10)<1.5)) continue;
+    if (assetId==='int.metro-station' && raw.min[2]<-9 && raw.max[2]>-9 && (Math.abs((raw.min[0]+raw.max[0])/2-10)<1.5 || Math.abs((raw.min[0]+raw.max[0])/2+10)<1.5)) continue;
     if (assetId==='int.metro-exit' && box.max[1]>3.5 && box.max[0]<-3.8) continue;
     const min:[number,number,number]=[Infinity,Infinity,Infinity],max:[number,number,number]=[-Infinity,-Infinity,-Infinity];
     for(const bx of [box.min[0],box.max[0]]) for(const bz of [box.min[2],box.max[2]]) for(const by of [box.min[1],box.max[1]]) {const q=[x+bx*Math.cos(yaw)+bz*Math.sin(yaw),y+by,z-bx*Math.sin(yaw)+bz*Math.cos(yaw)]; for(let a=0;a<3;a++){min[a]=Math.min(min[a],q[a]);max[a]=Math.max(max[a],q[a]);}}
