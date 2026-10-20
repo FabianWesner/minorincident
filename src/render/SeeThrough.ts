@@ -34,7 +34,7 @@ export const lodHeightSlack = 1.1;
 export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.radius, inner = .55) => positionView.z.greaterThan(seeThrough.depth).select(
   smoothstep(radius.mul(inner * scale), radius.mul(scale), screenUV.sub(seeThrough.center).mul(vec2(screenSize.x.div(screenSize.y), 1)).length()), 1);
 
-/** Solid occluders use a slightly tighter circle than leaf crowns: a lamp post beside the courier stays whole.
+/** Solid occluders use a tighter circle than leaf crowns: a lamp post beside the courier stays whole.
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
  * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
@@ -46,10 +46,12 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // behind the subject stay intact. Other placements keep the bounded disc.
   const lens = eligible?.greaterThan(1.5).and(seeThrough.strength.greaterThan(.5))
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
-  // Ordinary cuts retain a screen-stable 35% of the surface, even at the centre.
-  // Shared noise across layers keeps the remaining 65% open to the subject.
-  const keep = hole.mul(.65).add(.35).greaterThan(noise);
-  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : keep;
+  // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
+  const keep = hole.greaterThan(noise);
+  // Vehicles and props keep a screen-stable 35% of their surface, even at the centre, so their silhouette stays readable
+  // (shared noise across layers keeps the remaining 65% open to the subject).
+  const silhouette = mix(.35, 1, hole).greaterThan(noise);
+  return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
 };
 
 /** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small

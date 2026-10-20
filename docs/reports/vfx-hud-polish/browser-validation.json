@@ -1,0 +1,53 @@
+{
+  "ports": {
+    "e2e": 3681,
+    "scene": 3682
+  },
+  "headless": true,
+  "browserWorkers": 1,
+  "batchTimeoutSeconds": 1100,
+  "matrix": {
+    "webgl2": {
+      "passed": 30,
+      "seconds": 242
+    },
+    "webgpu": {
+      "passed": 30,
+      "seconds": 251
+    }
+  },
+  "focusedRemote": {
+    "passed": 13
+  },
+  "e18Counters": {
+    "passed": 7
+  },
+  "e18IsolatedRemote": {
+    "passed": 3,
+    "failed": 1,
+    "failure": "zoo high p95 5.537 ms > 4 ms; baseline reproduction retained"
+  },
+  "productionBuild": "pass",
+  "typecheck": "pass",
+  "lint": "pass",
+  "hudAndL5": {
+    "startTime": "2026-10-19T18:54:43.529Z",
+    "duration": 160247.814,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "nativeGpuTiming": {
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "durationMs": 12001.800000190735,
+    "ticks": 721,
+    "renderedFrames": 2819,
+    "frameMsP50": 4.100000000000364,
+    "frameMsP95": 5.800000000000182,
+    "count": 200,
+    "passed": 1,
+    "skipped": 1,
+    "budgetMs": 16.7
+  }
+}

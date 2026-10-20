@@ -1,0 +1,24 @@
+{
+  "name": "alpha-variants-lineup",
+  "note": "PO #23 (10-19): 'alphas could have different looks'. All five regular Alpha looks (purple bruiser, denim worker with hard hat, teal hoodie, firefighter, grey suit) side by side with the courier for scale, static rest pose, game camera. Same rig, pose and height; look for different silhouettes (hat, hood, helmet, coat tails, shoulder growths), no floating or intersecting trim, intact eyes. Run with --matrix to see high/low at zoom 1 and 0.5.",
+  "seed": 10,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 60,
+  "dof": false,
+  "props": [
+    { "id": "alpha-base", "asset": "inf.alpha", "at": [-3, 3], "yaw": 30 },
+    { "id": "alpha-worker", "asset": "inf.alpha-worker", "at": [-1.5, 1.5], "yaw": 30 },
+    { "id": "alpha-hoodie", "asset": "inf.alpha-hoodie", "at": [0, 0], "yaw": 30 },
+    { "id": "alpha-fire", "asset": "inf.alpha-fire", "at": [1.5, -1.5], "yaw": 30 },
+    { "id": "alpha-suit", "asset": "inf.alpha-suit", "at": [3, -3], "yaw": 30 }
+  ],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-4.6, 4.6], "yaw": 0, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0, 1.0], "zoom": 1 },
+  "frames": 2,
+  "shots": [0, 1],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 },
+  "sheet": 1
+}

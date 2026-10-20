@@ -39,7 +39,10 @@ import { MotionPresentation, crowdTurnRate } from './characters/MotionPresentati
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
+import { alphaLook, alphaLooks } from '../data/alphaLooks';
 interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+/** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
+export const hitFlashTicks = 8;
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
  * else the brain's jittered run speed (frail 4.7, average 5.1, athletic 5.6 m/s). */
@@ -89,7 +92,7 @@ export class CrowdView extends Group {
   private readonly corpseQuery = { x: 0, z: 0, r: 1.25 };
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly shadows: InstancedMesh;
-  private readonly feedback = new Map<number, { mask: number; strength: number }>();
+  private readonly feedback = new Map<number, { mask: number; strength: number; at: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   private goreEnabled = true;
   private cullDistance = 60;
@@ -129,7 +132,7 @@ export class CrowdView extends Group {
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
     if (this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7')
-      for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
+      for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
@@ -213,7 +216,11 @@ export class CrowdView extends Group {
       // emitter avoids the pink centres from luminance-normalized swatches.
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(sourceColor, vec3(0), parts.z);
       const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : vec3(3, .25, .22);
-      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2));
+      // alpha-white: the hit flash brightens the figure's own colours (glow ~ albedo x strength, about x2 on a
+      // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
+      // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
+      // white constant still dominates its near-black albedo.
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))));
       const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
@@ -273,6 +280,13 @@ export class CrowdView extends Group {
     const key = this.modelAliases.get(id);
     return key && (this.batches.has(`${key}:lod1`) || this.batches.has(`${key}:lod2`)) ? key : undefined;
   }
+  /** PO #23: an Alpha drawn with its default model takes one of the sibling looks, chosen by entity id (same rig and size). An explicit model override keeps its asset. */
+  private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string } }): string {
+    // Naming the shipped asset on purpose (Scene Lab `look.model`, probes) keeps that exact look; the role default and the sim's Mega vary.
+    if (e.infected?.model || e.infected?.variant === 'inf.alpha') return key;
+    const look = alphaLook(key, e.id);
+    return look !== key && this.modelKey(look) === look ? look : key;
+  }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id));
@@ -302,7 +316,7 @@ export class CrowdView extends Group {
       if (distance > this.cullDistance) continue;
       const variant = e.infected?.model ?? e.infected?.variant;
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
-      const key = (variant && this.modelKey(variant)) || role;
+      const key = this.alphaKey((variant && this.modelKey(variant)) || role, e);
       const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
@@ -338,7 +352,7 @@ export class CrowdView extends Group {
       const availableLod = 'lod1';
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = (variant && this.modelKey(variant)) || role;
+      const key = this.alphaKey((variant && this.modelKey(variant)) || role, e);
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
@@ -401,7 +415,7 @@ export class CrowdView extends Group {
           const x = b.birdPositions[bird * 3], z = b.birdPositions[bird * 3 + 2]; this.transform.makeTranslation(x, this.world.districts?.groundHeight(x, z) ?? 0, z);
           this.staticCorpses.place(e, `${key}:bird`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], `${e.id}/${bird}`);
         }
-        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
+        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, 0, 0, this.flashStrength(e, feedback)); }
       } else {
         this.transform.makeRotationY(presented.yaw + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? this.world.districts?.supportBelow(x, z, e.transform.y - .7) ?? 0 : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
@@ -433,7 +447,7 @@ export class CrowdView extends Group {
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         const figure = batch.probe.figures.at(-1);
         if (figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
-        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
+        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
@@ -483,9 +497,15 @@ export class CrowdView extends Group {
     }
     this.corpses.set(e.id, pose); this.corpseSpatial.set(e.id, pose.x, pose.z); return pose;
   }
+  /** alpha-white: the hit flash a figure draws. A pulse lasts 0.1 s of render time (Vfx), and never more than
+   * hitFlashTicks of simulation: paused stepping (QA drivers, e2e) froze the render clock, so every Alpha hit
+   * under fire stayed at peak white. Downed and dead bodies never flash: a corpse keeps its own look. */
+  private flashStrength(e: { health: { current: number } }, feedback: { strength: number; at: number } | undefined): number {
+    return feedback && e.health.current > 0 && this.world.tick - feedback.at <= hitFlashTicks ? feedback.strength : 0;
+  }
   flash(id: number, strength: number): void {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
-    const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0 }; feedback.strength = strength; this.feedback.set(id, feedback);
+    const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0, at: -Infinity }; if (strength > feedback.strength) feedback.at = this.world.tick; feedback.strength = strength; this.feedback.set(id, feedback);
   }
   private limbPosition(id: number, limb: number) {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
@@ -494,7 +514,7 @@ export class CrowdView extends Group {
   }
   detach(id: number, limb: number) {
     const position = this.limbPosition(id, limb); if (!position) return;
-    const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0 }; feedback.mask |= 1 << limb; this.feedback.set(id, feedback); return position;
+    const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0, at: -Infinity }; feedback.mask |= 1 << limb; this.feedback.set(id, feedback); return position;
   }
   clearGore(): void { for (const feedback of this.feedback.values()) feedback.mask = 0; this.staticCorpses.reset(); }
   setGoreEnabled(enabled: boolean): void { if (this.goreEnabled !== enabled) this.staticCorpses.reset(); this.goreEnabled = enabled; }

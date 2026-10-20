@@ -679,7 +679,7 @@ export class LevelTwoRescue {
     const s = this.s;
     if (!s.radioAt || s.phase === 'done') return;
     if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) { s.crossedAt = tick; s.phase = 'checkpoint'; this.mission.radio('L2.checkpoint'); }
-    if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6)) {
+    if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6) && this.world.npcs!.companion.insideBeforeClosing({ x: l2.checkpoint.gateX, z: player.transform.z }, { x: l2.checkpoint.gateX + 1, z: player.transform.z })) {
       s.gateClosedAt = tick; for (const id of ['gate-main', 'gate-north', 'gate-south']) this.wall(id, true);
       // People still on their way can no longer get in: they make for the front of the closed gate instead.
       const g = l2.rescue.havenGate;
@@ -690,8 +690,6 @@ export class LevelTwoRescue {
       }
       for (const id of ['l2-gate-main', 'l2-gate-north', 'l2-gate-south']) this.world.events.emit({ type: 'gate.changed', tick, id, open: false });
       this.world.events.emit({ type: 'l2.gateClosed', tick });
-      // The corgi always makes it through with the courier.
-      for (const e of this.world.entities.iterate()) if (e.companion && !this.inZone(e.transform)) { const p = this.snap({ x: player.transform.x + 1, z: player.transform.z }, .35); Object.assign(e.transform, p); this.world.spatial.set(e.id, p.x, p.z); }
     }
     if (s.gateClosedAt && tick - s.gateClosedAt >= ticks(l2.checkpoint.holdS) && !this.mission.state.states.crossed) { s.phase = 'done'; this.mission.setState('crossed', true); }
   }

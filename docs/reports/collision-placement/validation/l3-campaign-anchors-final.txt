@@ -1,0 +1,29 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 62s, 25545 files; job /srv/mi/jobs/collision-placement-9aa6d4-69995-1792433399; queueing for a slot
+[runner] slot 1 acquired; load 3.77 3.73 4.55
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-69995-1792433399
+
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L1: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L2: every player start and reached checkpoint has no NPC within 0.8 m
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L3: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L3","checkpoints":["start","armory","fallback","segment-2","segment-2b","segment-3","segment-3b"],"declared":["armory","fallback","segment-2","segment-2b","segment-3","segment-3b"]}
+
+ ✓  functional  tests/levels/start-checkpoint-clearance.test.ts > L3: every player start and reached checkpoint has no NPC within 0.8 m 86050ms
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L4: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L5: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L6: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L7: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L8: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L9: every player start and reached checkpoint has no NPC within 0.8 m
+ ↓  functional  tests/levels/start-checkpoint-clearance.test.ts > L10: every player start and reached checkpoint has no NPC within 0.8 m
+ ✓  functional  tests/levels/L6-campaign.test.ts > T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover 271109ms
+ ✓  functional  tests/levels/L6-campaign.test.ts > T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover 299989ms
+
+ Test Files  2 passed (2)
+      Tests  3 passed | 9 skipped (12)
+   Start at  18:11:08
+   Duration  574.71s (tests 99%, transform 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 62s, remote total 582s)

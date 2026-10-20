@@ -12,8 +12,10 @@ import type { AssetDef } from '../../assets/types';
 export interface SceneSpec {
   /** Measure each named vehicle's retained body pixels against the identical unfaded frame. */
   vehicleSilhouettes?: string[];
-  /** Production L2 market release, or its bridge arrival after 20 s of rescue simulation. */
-  l2Release?: boolean | 'bridge' | 'checkpoint';
+  /** Production L1 start or fire-station closure with a trailing companion. */
+  l1Placement?: 'start' | 'shutter';
+  /** Production L2 start, market release, or bridge arrival after 20 s of rescue simulation. */
+  l2Release?: boolean | 'start' | 'bridge' | 'checkpoint';
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
@@ -29,7 +31,7 @@ export interface SceneSpec {
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
   cureProgression?: { checkpoint?: string; authored?: boolean; /** Precharged fixture still needs an explicit release interaction. */ releaseReady?: boolean; /** Restored active hold for exact boundary samples. */ chargeActive?: boolean; /** Release-relative fixture clock for ending frame sequences. */ epilogueElapsed?: number; anchors?: Record<string, Point> };
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
-  l7Group?: boolean;
+  l7Group?: boolean | 'start';
   /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */
   /** `follow` retains the game camera on the bus instead of the authored departure shot. */
   l7Departure?: boolean | 'follow';
@@ -79,6 +81,11 @@ export interface SceneSpec {
   /** Navigation-contrast measurement (E31-AC16): route vs verge from `layouts/<district>/routes.json` or an explicit `route`; gated by `expect.navContrastMin`. */
   contrast?: { district?: string; route?: [number, number][][]; halfWidthM?: number; vergeM?: number; stepM?: number; landmarks?: [number, number, number][] };
   expect?: Expectations;
+  /** alpha-white: crowd-figure colour at every sheet frame (crowd pixels = frame with vs without the crowd view,
+   * courier and HUD bars hidden). `whiteShareMax` bounds the share of pale, unsaturated body pixels (a hit-flash
+   * or fallback-material white mass); `lumaRiseMax` bounds mean body brightness against frame 0; `hueDriftMaxDeg` bounds the saturation-weighted hue against frame 0 (the live
+   * look), so a corpse keeps its own colours. Results in `metrics.json` `lookSamples`. */
+  look?: { whiteShareMax: number; hueDriftMaxDeg?: number; /** Max mean body luma / frame-0 (live) luma. */ lumaRiseMax?: number; minPixels?: number };
   /** Canvas edge check for an isolated actor; normalized crop excludes HUD and other figures. */
   edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number; /** Outline pixels per sqrt(area) of the dark body mask; every sampled frame must stay under it. */ silhouetteRoughnessMax?: number };
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
@@ -247,6 +254,8 @@ export interface Expectations {
   seeThroughCutInsideMax?: number;
   /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
+  /** Sheet frames on which the courier draws in the near-camera foreground slice (over every nearer person and prop). 0 outside boss/L7 crowd fixtures. */
+  courierForegroundFramesMax?: number;
   /** Within 6 m, Mega / regular Alpha body pixels at identical transform/pose, both outside the courier's intended boss-reveal disc. Use 0.9; courier visibility independently stays >= 0.6. */
   megaAlphaVisibleRatioMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
@@ -412,7 +421,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   // Without a courier the (hidden) player waits in a corner, away from the subject.
   // L2 fixtures admit their requested courier pose after mission setup. Start
   // the district at its authored safe spawn before that admission can run.
-  const start = spec.l2Release && source?.anchors['player-start']?.position;
+  const start = (spec.l1Placement || spec.l2Release) && source?.anchors['player-start']?.position;
   const playerStart: Point = start ? [start[0] + shift[0], start[2] + shift[1]] : courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
   const district: DistrictId = spec.layout?.district ?? 'D-GROVE';
   const solid = kept.filter(p => assets.get(p.assetId)?.world?.solid);
@@ -444,9 +453,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if ((spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
+  if ((spec.l1Placement || spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
   if (spec.l6Subway && source) layout.lightGroups = structuredClone(source.lightGroups);
-  for (const name of (spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  for (const name of (spec.l1Placement || spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);

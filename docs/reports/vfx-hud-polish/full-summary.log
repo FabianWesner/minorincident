@@ -1,0 +1,28 @@
+⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 6.0800559999770485 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.541186999995261 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 504 passed | 3 skipped (509)
+      Tests  2 failed | 3183 passed | 9 skipped (3194)
+   Start at  15:44:32
+   Duration  3565.75s (tests 98%, import 1%, transform 1%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 75s, remote total 3571s)

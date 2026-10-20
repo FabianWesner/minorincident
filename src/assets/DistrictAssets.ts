@@ -1,5 +1,5 @@
 import { spinNodes } from "../data/spinNodes";
-import { Box3, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { Box3, Color, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -22,6 +22,7 @@ import { productionIds } from './productionIds';
 import staticBakes from './staticBakes.json';
 import { decodeStaticBake } from './staticBakeData';
 import { decompressCivilianBake } from './civilianBakeData';
+import { addHighwayRailJoints } from './highwayRailJoints';
 import { openFireStationBays } from './fireStationBays';
 import { vehicleDecayFallback } from './vehicleDecay';
 import { lodHeightSlack, occluderMinHeight } from '../render/SeeThrough';
@@ -240,6 +241,10 @@ export class DistrictAssets {
       }
       this.batchMaterials.add(node.material as Material);
     } });
+    if (id === 'kit.highway-onramp') {
+      const material = this.uncut(this.materials.fromColor('highway-rail-joint', new Color('#999996'), 0, true));
+      for (const geometry of addHighwayRailJoints(root, material)) this.geometries.add(geometry);
+    }
     return root;
   }
   /** `decay`: a reviewed decay variant of the asset (`w2`/`w3` buildings, `wrecked` vehicles; E21 per-placement damage). */

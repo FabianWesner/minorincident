@@ -1,0 +1,34 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 30s, 25481 files; job /srv/mi/jobs/collision-placement-9aa6d4-94048-1792423102; queueing for a slot
+[runner] slot 1 acquired; load 6.31 6.47 5.72
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-94048-1792423102
+
+ ❯  functional  tests/levels/L5-encounters.test.ts (9 tests | 1 failed | 8 skipped) 1249ms
+   ↓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high
+   ↓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low
+   ↓ @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal
+   ↓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience
+   ↓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high
+   ↓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low
+   ↓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return
+   × @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 1247ms
+   ↓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L5-encounters.test.ts > @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo
+AssertionError: corgi/actor 22 at tick 4: expected 0.7681663251722526 to be greater than or equal to 0.769999
+ ❯ tests/levels/L5-encounters.test.ts:229:103
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 skipped (9)
+   Start at  15:18:55
+   Duration  7.04s (transform 72%, tests 18%, import 10%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 30s, remote total 11s)

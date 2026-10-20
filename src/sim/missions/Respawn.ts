@@ -66,6 +66,8 @@ function clearThreat(world: SimWorld, at: Spot): void {
     if (brain) {
       if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; if (e.health.current > 0) e.infected.state = 'wander'; }
       brain.ignoreId = 1; brain.ignoreUntil = tick + delay;
+      // Director pressure on the courier (L4 alarm press) ends with the death; it outlived the delay and rushed the anchor again.
+      if (brain.focusId === 1) { brain.focusId = 0; brain.focusUntil = 0; }
       // A pushed body (or one whose goal is the respawn spot) forgets its walk goal: it kept walking to the old goal straight back across
       // the anchor (gate 10-13: four infected within 2-7 m of the bat pickup 3 s after the respawn). Free wanderers take the anchor as
       // home, so their next goals lead away from it; leashed street groups keep their block.
@@ -97,7 +99,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
     Object.assign(player.transform, anchor, { y: player.survivor?.checkpoint.y ?? player.transform.y });
     world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM);
     if (player.pendingAdmission) player.pendingAdmission.graceTicks = ticks(respawnRule.graceS);
-    gatherAllies(world, anchor, worldKept); return;
+    gatherAllies(world, anchor, worldKept); world.solids.reservePlayerStart(); return;
   }
   Object.assign(player.transform, at);
   world.solids.relocate(player, at, 'checkpoint.respawn', 0, false);
@@ -106,6 +108,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   // E32 ready is an exact pre-assault snapshot; keep its captured defenders and cooldowns.
   gatherAllies(world, at, worldKept);
+  world.solids.reservePlayerStart();
   world.solids.remember(player, 'checkpoint.respawn');
 }
 

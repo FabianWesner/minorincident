@@ -1,0 +1,16 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-hud-polish -> 2.31.10.108:/srv/mi/ws/vfx-hud-polish-8b3136
+[remote] cache-gc deleted:none
+[remote] sync 66s, 25163 files; job /srv/mi/jobs/vfx-hud-polish-8b3136-78666-1792425314; queueing for a slot
+[runner] slot 0 acquired; load 0.66 2.41 3.49
+
+ RUN  v5.0.3 /srv/mi/jobs/vfx-hud-polish-8b3136-78666-1792425314
+
+ ✓  functional  tests/unit/render/vfx-hud-polish.test.ts (7 tests) 15ms
+ ✓  functional  tests/unit/ui-telegraphs.test.ts (5 tests) 205ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  15:56:22
+   Duration  2.81s (transform 74%, import 19%, tests 6%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 66s, remote total 7s)

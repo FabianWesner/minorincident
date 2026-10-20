@@ -26,6 +26,7 @@ export class AudioRegistry {
                         if (format === 'm4a')
                             throw error;
                     }
+                if (import.meta.env.DEV) console.error(`Missing audio bank: ${category} (no ${category}.webm or .m4a in public/assets/audio)`);
                 throw new Error(`No supported audio format: ${category}`);
             })());
         return this.loads.get(category)!;

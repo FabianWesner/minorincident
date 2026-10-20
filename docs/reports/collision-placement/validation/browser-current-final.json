@@ -1,0 +1,48 @@
+{
+  "stats": {
+    "startTime": "2026-10-19T18:26:51.389Z",
+    "duration": 243352.12,
+    "expected": 13,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "errors": [],
+  "failures": [
+    {
+      "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+      "file": "e2e/levels/L4.spec.ts",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "retry": 0,
+          "errors": [
+            {
+              "location": {
+                "file": "http://127.0.0.1:3551/build/index-UEJ2lk_b.js",
+                "column": 52076,
+                "line": 12
+              },
+              "message": "Error: page.evaluate: Error: step requires pause()\n    at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)\n    at async <anonymous>:337:30\n    at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)\n    at async <anonymous>:337:30\n    at step (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:22:36)\n    at click (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:71:55)\n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:74:5)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:172:16"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "retry": 1,
+          "errors": [
+            {
+              "location": {
+                "file": "http://127.0.0.1:3551/build/index-UEJ2lk_b.js",
+                "column": 52076,
+                "line": 12
+              },
+              "message": "Error: page.evaluate: Error: step requires pause()\n    at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)\n    at async <anonymous>:337:30\n    at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)\n    at async <anonymous>:337:30\n    at step (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:22:36)\n    at click (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:71:55)\n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:74:5)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:172:16"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

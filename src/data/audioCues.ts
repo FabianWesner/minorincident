@@ -169,6 +169,10 @@ for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.beds]))].entr
 for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.oneShots]))].entries())
     cue(`ambient.${id}`, 'ambience', id === 'gunshot' || id === 'explosion' ? 'shot' : id === 'dog' || id === 'shout' || id === 'scream' ? 'vocal' : 'noise', 0.6, 160 + i * 70, { gain: id === 'dog' ? 0.2 : 0.35, caption: id === 'alarm' ? 'Car alarm' : id === 'scream' ? 'Distant scream' : undefined });
 export const musicLevels = { L1: 120, L2: 120, L3: 128, L4: 96, L5: 120, L6: 120 } as const;
+/** Levels whose layered stems (`music-<level>` bank) exist. L7-L9 play only their streamed score (no stems exist for them). */
+export const stemLevels: ReadonlySet<string> = new Set(Object.keys(musicLevels));
+/** Stem bank a level plays: L10 reuses the L6 stems. */
+export const stemBank = (level: string): string | null => stemLevels.has(level === 'L10' ? 'L6' : level) ? `music-${level === 'L10' ? 'L6' : level}` : null;
 export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
 for (const [level, bpm] of Object.entries(musicLevels))
     for (const [i, layer] of musicLayers.entries())

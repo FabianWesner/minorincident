@@ -1,0 +1,36 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+0q); waiting 0s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 89s, 25515 files; job /srv/mi/jobs/collision-placement-9aa6d4-38854-1792432785; queueing for a slot
+[runner] slot 1 acquired; load 7.92 8.32 7.34
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-38854-1792432785
+
+ ×  functional  tests/levels/collision-placement-baseline-goal.test.ts > companion keeps an open approach next to a bench instead of substituting a wider goal 408ms
+   → expected 0.35 to be close to 0.44, received difference is 0.09000000000000002, but expected 0.005
+stdout | tests/sim/ai/infected-stuck-l2.test.ts > L2: infected never stand frozen (single seed, 150 s)
+[l2-stuck] still > 2 s in 0 of 44606 samples (0.00 %); longest 2.0 s (id 227 wander at -45.6,-26.7 t=90 s)
+
+ ✓  functional  tests/sim/ai/infected-stuck-l2.test.ts > L2: infected never stand frozen (single seed, 150 s) 56752ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement-baseline-goal.test.ts > companion keeps an open approach next to a bench instead of substituting a wider goal
+AssertionError: expected 0.35 to be close to 0.44, received difference is 0.09000000000000002, but expected 0.005
+ ❯ tests/levels/collision-placement-baseline-goal.test.ts:16:39
+     14|     expect(w.npcs!.move(dog, { x: 6, z: 0 }, 4.5, dog.companion!, 2)).…
+     15|     expect(steering.mock.calls).toHaveLength(1);
+     16|     expect(steering.mock.calls[0][3]).toBeCloseTo(.44);
+       |                                       ^
+     17|     expect(dog.companion!.path).toHaveLength(0);
+     18|   } finally { vi.restoreAllMocks(); w.dispose(); }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 1 passed (2)
+   Start at  18:01:19
+   Duration  62.64s (tests 85%, transform 13%, import 2%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 89s, remote total 70s)

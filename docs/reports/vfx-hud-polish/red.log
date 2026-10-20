@@ -1,0 +1,204 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-hud-polish -> 94.130.181.173:/srv/mi/ws/vfx-hud-polish-8b3136
+[remote] cache-gc deleted:none
+[remote] sync 51s, 25161 files; job /srv/mi/jobs/vfx-hud-polish-8b3136-49197-1792424589; queueing for a slot
+[runner] slot 1 acquired; load 2.37 1.97 2.16
+
+ RUN  v5.0.3 /srv/mi/jobs/vfx-hud-polish-8b3136-49197-1792424589
+
+ ❯  functional  tests/unit/render/vfx-hud-polish.test.ts (7 tests | 7 failed) 53ms
+   × L5 checkpoint/entrance teleport frames the courier immediately at 1280x720 15ms
+   × L5 checkpoint/entrance teleport frames the courier immediately at 1920x1080 2ms
+   × L5 checkpoint/entrance teleport frames the courier immediately at 390x844 1ms
+   × foreground canopy clears six metres of combat space at zoom 0.5 3ms
+   × foreground canopy clears six metres of combat space at zoom 1 1ms
+   × L6 bracing guides use lit floor paint and the service gate asset, without wire cubes or floating arrows 17ms
+   × solid reveal has a fully clear core rather than retaining an opaque wall blob 10ms
+ ❯  functional  tests/unit/ui-telegraphs.test.ts (5 tests | 1 failed) 254ms
+   ✓ @E14 colorblind setting recolors existing tells without changing geometry, lifetime or simulation 192ms
+   ✓ PO24 alpha.charge uses one road-aligned pooled warning with the real wind-up 16ms
+   ✓ PO24 alpha.ground-slam uses one road-aligned pooled warning with the real wind-up 13ms
+   ✓ PO24 alpha.grab-throw uses one road-aligned pooled warning with the real wind-up 10ms
+   × horde warnings retain lifetimes while only three distinct nearest/imminent dangers remain readable 21ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/ui-telegraphs.test.ts > horde warnings retain lifetimes while only three distinct nearest/imminent dangers remain readable
+TypeError: Cannot read properties of undefined (reading 'getX')
+ ❯ tests/unit/ui-telegraphs.test.ts:61:48
+     59|     const tells = fx.snapshot().telegraphs, opacity = fx.telegraphs.me…
+     60|     expect(tells).toHaveLength(40);
+     61|     const readable = tells.filter(t => opacity.getX(t.slot) > .1);
+       |                                                ^
+     62|     expect(readable).toHaveLength(3);
+     63|     // Nearby redundant stripes share one representative; the distant …
+ ❯ tests/unit/ui-telegraphs.test.ts:61:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > L5 checkpoint/entrance teleport frames the courier immediately at 1280x720
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > L5 checkpoint/entrance teleport frames the courier immediately at 1920x1080
+AssertionError: expected 1.5539547633020414 to be less than 0.1
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:17:33
+     15|   view.update(courier, 1 / 60); view.present(.01);
+     16|   const projected = new Vector3(courier.x, .9, courier.z).project(view…
+     17|   expect(Math.abs(projected.x)).toBeLessThan(.1); expect(Math.abs(proj…
+       |                                 ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > L5 checkpoint/entrance teleport frames the courier immediately at 390x844
+AssertionError: expected 5.354474349953328 to be less than 0.1
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:17:33
+     15|   view.update(courier, 1 / 60); view.present(.01);
+     16|   const projected = new Vector3(courier.x, .9, courier.z).project(view…
+     17|   expect(Math.abs(projected.x)).toBeLessThan(.1); expect(Math.abs(proj…
+       |                                 ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > foreground canopy clears six metres of combat space at zoom 0.5
+AssertionError: expected 0.187 to be greater than 1.2423737380108066
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:28:41
+     26|   const cameraRight = new Vector3().setFromMatrixColumn(view.camera.ma…
+     27|   const center = new Vector3(0, .72, 0).project(view.camera), edge = c…
+     28|   expect(seeThrough.radius.value * .85).toBeGreaterThan(Math.abs(edge.…
+       |                                         ^
+     29| });
+     30|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > foreground canopy clears six metres of combat space at zoom 1
+AssertionError: expected 0.14539473684210527 to be greater than 0.6070353627108735
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:28:41
+     26|   const cameraRight = new Vector3().setFromMatrixColumn(view.camera.ma…
+     27|   const center = new Vector3(0, .72, 0).project(view.camera), edge = c…
+     28|   expect(seeThrough.radius.value * .85).toBeGreaterThan(Math.abs(edge.…
+       |                                         ^
+     29| });
+     30|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > L6 bracing guides use lit floor paint and the service gate asset, without wire cubes or floating arrows
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:38:72
+     36|     const world = { scenario: 'L6', props: { items: [{ id: 'crate', as…
+     37|     const view = new InteractionView(world, { get: () => material } as…
+     38|     expect(view.children.some(child => child.type === 'LineSegments'))…
+       |                                                                        ^
+     39|     expect(view.children.some(child => child.type === 'Mesh' && 'geome…
+     40|     const source = readFileSync('src/render/InteractionView.ts', 'utf8…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL   functional  tests/unit/render/vfx-hud-polish.test.ts > solid reveal has a fully clear core rather than retaining an opaque wall blob
+AssertionError: expected 'import { Vector2, Vector3, type Box3,…' to contain 'const keep = hole.greaterThan(noise)'
+
+- Expected
++ Received
+
+- const keep = hole.greaterThan(noise)
++ import { Vector2, Vector3, type Box3, type Camera, type Node } from 'three/webgpu';
++ import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
++
++ /** One player see-through hole shared by every occluder (leaf crowns, buildings, roofs, poles, props).
++  * Foliage writes the projected centre/depth/radius each frame; DistrictView projects the complete subject before every render. Screen UV has a top-left origin. */
++ export const seeThrough = {
++   center: uniform(new Vector2(-10, -10)).setGroup(renderGroup),
++   /** View-space z of the courier's farthest body point; only fragments nearer the camera are cut. */
++   depth: uniform(0).setGroup(renderGroup),
++   radius: uniform(.1).setGroup(renderGroup),
++   /** Hole radius for solid occluders (screen-height units): covers the courier or the complete player vehicle. */
++   solidRadius: uniform(.17).setGroup(renderGroup),
++   /** Solid reveal is immediate, including the first presented frame. */
++   strength: uniform(0).setGroup(renderGroup),
++   /** Legacy diagnostic: reveal stays bounded, including when the camera is inside a roof. */
++   cover: uniform(0).setGroup(renderGroup),
++   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
++   floor: uniform(0).setGroup(renderGroup),
++   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
++   bossStrength: uniform(0).setGroup(renderGroup),
++   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
++   bossRadius: uniform(.12).setGroup(renderGroup),
++ };
++
++ /** Placements lower than this never count as occluders (DistrictView's camera-to-courier tests) and are never cut.
++  * PO 2026-10-13 "Bank isn't fully rendered": at zoom 0.66 the group-sized solid hole spans most of the frame, and a
++  * bench nearer the camera than the courier lost everything above 0.3 m (planks, back) while a building occluded her. */
++ export const occluderMinHeight = 1.1;
++ /** LOD0 carries detail (lids, handles) the lower LODs lack, so a prop just under the limit at LOD1 (the height DistrictView classifies by) can draw a few cm above it at LOD0.
++  * Every LOD of such a prop must stay uncut, else the hero batch carries the cut material the classification says it never has (forecourt recycling bin, 1.1165 m at LOD0). */
++ export const lodHeightSlack = 1.1;
++
++ /** Soft circular mask around the courier: 0 at the centre, 1 outside the radius and behind the courier. */
++ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.radius, inner = .55) => positionView.z.greaterThan(seeThrough.depth).select(
++   smoothstep(radius.mul(inner * scale), radius.mul(scale), screenUV.sub(seeThrough.center).mul(vec2(screenSize.x.div(screenSize.y), 1)).length()), 1);
++
++ /** Solid occluders use a slightly tighter circle than leaf crowns: a lamp post beside the courier stays whole.
++  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
++  * they stay opaque, depth-writing and in their batch. Fragments below 0.08 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
++  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
++ export const seeThroughKeep = (eligible?: Node<'float'>) => {
++   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.08)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
++   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
++   // Retain a screen-stable 35% of every solid surface, even at the centre.
++   // Shared noise across layers keeps the remaining 65% open to the subject.
++   const keep = hole.mul(.65).add(.35).greaterThan(noise);
++   return eligible ? eligible.lessThan(.5).or(keep) : keep;
++ };
++
++ /** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small
++  * disc around her are dropped, so a boss standing in front keeps its silhouette, arms and red eyes while the courier stays readable. */
++ export const seeThroughKeepBoss = () => {
++   const hole = mix(1, seeThroughHole(1, seeThrough.bossRadius, .6), seeThrough.bossStrength);
++   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
++   return hole.greaterThan(noise);
++ };
++
++ const revealCorner = new Vector3();
++ /** Project the subject (courier or whole player vehicle) into the shared hole uniforms: the fully clear inner disc encloses every corner, depth is its nearest point.
++  * Also used by scenes without a DistrictView, so Scene Lab asset-only scenes reveal the courier the same way. */
++ export function projectReveal(camera: Camera & { aspect: number }, box: Box3): void {
++   seeThrough.floor.value = box.min.y;
++   let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity, depth = Infinity;
++   for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
++     revealCorner.set(x, y, z).applyMatrix4(camera.matrixWorldInverse); depth = Math.min(depth, revealCorner.z);
++     revealCorner.set(x, y, z).project(camera);
++     const u = revealCorner.x * .5 + .5, v = .5 - revealCorner.y * .5;
++     left = Math.min(left, u); right = Math.max(right, u); top = Math.min(top, v); bottom = Math.max(bottom, v);
++   }
++   seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
++   seeThrough.solidRadius.value = Math.hypot((right - left) * camera.aspect, bottom - top) / 2 / .85;
++   seeThrough.depth.value = depth - .05;
++ }
++
+
+ ❯ tests/unit/render/vfx-hud-polish.test.ts:48:18
+     46| test('solid reveal has a fully clear core rather than retaining an opa…
+     47|   const source = readFileSync('src/render/SeeThrough.ts', 'utf8');
+     48|   expect(source).toContain('const keep = hole.greaterThan(noise)');
+       |                  ^
+     49|   expect(source).not.toContain('hole.mul(.65).add(.35)');
+     50| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  8 failed | 4 passed (12)
+   Start at  15:44:02
+   Duration  4.19s (transform 76%, import 18%, tests 6%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 51s, remote total 10s)

@@ -371,17 +371,21 @@ export class LevelFourWar {
   // ---------------------------------------------------------------------------------------------------------- the perimeter (PO 10-13)
   private fence: number[] = [];
   private fenceWorld: object | null = null;
-  /** Courier-only camp perimeter: physics and player routes agree; NPC routes cross freely. */
+  /** The low military wall blocks every ground body; infected retain their authored vault approach. */
   private perimeter(on: boolean): void {
     const physics = this.world.physics;
     if (this.fenceWorld !== physics.world) { this.fence = []; this.fenceWorld = physics.world; }
     const t = this.world.entities.get(1)!.transform, r = l4.perimeter;
-    if (on && (t.x < r.x0 + .6 || t.x > r.x1 - .6 || t.z < r.z0 + .6 || t.z > r.z1 - .6)) return;
-    this.world.infected!.nav.setPlayerBounds(on ? { x0: r.x0 + .2, x1: r.x1 - .2, z0: r.z0 + .2, z1: r.z1 - .2 } : null);
-    if (!on) { for (const h of this.fence) physics.removeBlocker(h); this.fence = []; return; }
+    const inside = t.x >= r.x0 + .6 && t.x <= r.x1 - .6 && t.z >= r.z0 + .6 && t.z <= r.z1 - .6;
+    this.world.infected!.nav.setPlayerBounds(on && inside ? { x0: r.x0 + .2, x1: r.x1 - .2, z0: r.z0 + .2, z1: r.z1 - .2 } : null);
+    if (!on) { for (const [i, h] of this.fence.entries()) { physics.removeBlocker(h); this.world.solids.setBarrier(l4PerimeterWalls[i].id, null); } this.fence = []; return; }
     if (this.fence.length || !physics.playerBody) return;
-    for (const wall of l4PerimeterWalls) this.fence.push(physics.addBlocker(wall));
+    for (const wall of l4PerimeterWalls) {
+      this.fence.push(physics.addBlocker(wall));
+      this.world.solids.setBarrier(wall.id, wall);
+    }
   }
+  /** An explicit vault lifts the body above the wire before crossing the solid wall. */
   private perimeterVaults(): void {
     if (!this.fence.length) return;
     const nav = this.world.infected!.nav;
@@ -389,13 +393,14 @@ export class LevelFourWar {
       const brain = e.infected!;
       if (brain.vault || e.health.current <= 0 || e.hidden || e.infectionRise || e.attachedTo !== undefined) continue;
       const t = e.transform, r = l4.perimeter;
-      // Entering the camp: the low outer wall costs the same 1.2 s vault as a sandbag.
       const side = t.x < r.x0 ? 2 : t.x > r.x1 ? 3 : t.z < r.z0 ? 0 : t.z > r.z1 ? 1 : -1;
       if (side < 0) continue;
       const wall = l4PerimeterWalls[side], alongX = side >= 2, axis = alongX ? 'x' : 'z', other = alongX ? 'z' : 'x';
       if (Math.abs(t[axis] - wall[axis]) > 1 || Math.abs(t[other] - wall[other]) > (alongX ? wall.halfZ : wall.halfX)) continue;
-      const to = { x: t.x, z: t.z }; to[axis] = wall[axis] + (side === 0 || side === 2 ? 1 : -1) * 1;
-      if (nav.clear(to.x, to.z, e.combat?.radius ?? .35)) brain.vault = { started: this.world.tick, from: { x: t.x, z: t.z }, to, height: .8 };
+      const to = { x: t.x, z: t.z }; to[axis] = wall[axis] + (side === 0 || side === 2 ? 1 : -1);
+      const radius = e.combat?.radius ?? .35;
+      // Bodies can leave the landing during the 1.2 s arc; the contact transaction checks each actual pose.
+      if (nav.clear(to.x, to.z, radius) && this.world.solids.clear({ ...to, y: .7 }, radius, e.id, false)) brain.vault = { started: this.world.tick, from: { x: t.x, z: t.z }, to, height: 1.4 };
     }
   }
   private gateWalls(): CoverWall[] {
@@ -517,7 +522,10 @@ export class LevelFourWar {
         const d = dist(candidate.transform, at);
         if (d < nearest) { nearest = d; soldier = candidate; }
       }
-      if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
+      // PO 10-19 ("start the alarm and attack at the moment when I picked up the MP"): the nearest
+      // concealed exit's group goes for the courier, so the attack lands on her inside the solid perimeter.
+      if (n < l4.war.group[1]) ai.press(id, 1, tick + ticks(12));
+      else if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
     }
     world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
     this.mission.radio('L4.perimeter-active');
@@ -768,9 +776,11 @@ export class LevelFourWar {
       if (d < best) { best = d; qx = cx; qz = cz; const l = Math.hypot(dx, dz) || 1; nx = -dz / l; nz = dx / l; }
     }
     const away = best > .3 ? { x: (p.x - qx) / best, z: (p.z - qz) / best } : { x: nx, z: nz };
-    for (const s of [1, -1]) for (const k of [1, .8, .6]) {
-      const x = qx + away.x * s * want * k, z = qz + away.z * s * want * k;
-      if (Math.hypot(x - qx, z - qz) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
+    // Stay on its own side (camp bodies back into the camp): crossing sent the camp infected over the escape street.
+    // Slide along the street before giving up; only a body standing on the centre line may take either side.
+    for (const s of best > .3 ? [1] : [1, -1]) for (const k of [1, .9, .8]) for (const along of [0, 3, -3, 6, -6]) {
+      const x = qx + away.x * s * want * k - away.z * along, z = qz + away.z * s * want * k + away.x * along;
+      if (this.escapeDistance({ x, z }) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
     }
     return null;
   }

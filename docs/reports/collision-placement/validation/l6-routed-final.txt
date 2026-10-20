@@ -1,0 +1,24 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 73s, 25499 files; job /srv/mi/jobs/collision-placement-9aa6d4-41203-1792429679; queueing for a slot
+[runner] slot 0 acquired; load 1.75 2.14 2.50
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-41203-1792429679
+
+ ✓  functional  tests/levels/L6-protection.test.ts (1 test) 45635ms
+   ✓ T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run 45633ms
+ ✓  functional  tests/levels/L6.test.ts (11 tests) 51932ms
+   ✓ T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail 508ms
+   ✓ T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat 1040ms
+   ✓ T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps 2037ms
+   ✓ T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power 383ms
+   ✓ T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community 23210ms
+   ✓ T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds 455ms
+   ✓ T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band 23672ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  17:09:15
+   Duration  56.14s (tests 92%, transform 6%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 73s, remote total 61s)

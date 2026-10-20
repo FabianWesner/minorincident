@@ -35,4 +35,4 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E11-AC06 | Fire spreads from a fire zone to adjacent flammable props within 3 s (wooden fence, crates) and burns out after the prop's burn time | sim |
 | E11-AC07 | Destructible fence takes melee damage, breaks into ≤ 8 debris pieces that despawn after 8 s, and opens the nav cells it blocked | sim |
 | E11-AC08 | Pickups apply their effects exactly and emit `pickup.collected`; health never exceeds max | sim |
-| E11-AC09 | Interaction ring and progress UI render on top of the world and are readable in every tier (screenshot spot `interact-ui` at W0 and W5) | visual |
+| E11-AC09 | Interaction ring and progress UI render on top of the world and are readable in every tier (screenshot spot `interact-ui` at W0 and W5); **PO 2026-10-19:** weapon, health and mission-pickup rings remain unoccluded at the default game camera, zoom 1.0 and 0.5, high/low quality on WebGL2/WebGPU | visual |

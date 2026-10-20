@@ -1,0 +1,35 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 39s, 25548 files; job /srv/mi/jobs/collision-placement-9aa6d4-6535-1792434126; queueing for a slot
+[runner] slot 0 acquired; load 1.60 1.63 2.10
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-6535-1792434126
+
+ ✓  timing  tests/sim/npc/campaign.test.ts > @E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds 1281ms
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"high","simMsP95":2.2958619999990333,"budget":4}
+{"level":"L2","tier":"high","simMsP95":1.8764679999985674,"budget":4}
+{"level":"L3","tier":"high","simMsP95":1.780336999996507,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.8572510000012699,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.783132000004116,"budget":4}
+
+ ✓  timing  tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 60549ms
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"low","simMsP95":1.8104440000024624,"budget":6}
+{"level":"L2","tier":"low","simMsP95":1.7291310000000522,"budget":6}
+{"level":"L3","tier":"low","simMsP95":1.422139000002062,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.6675720000057481,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.6470450000051642,"budget":6}
+
+ ✓  timing  tests/sim/npc/campaign.test.ts > T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 53164ms
+ ✓  timing  tests/sim/npc/campaign.test.ts > T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise 1428ms
+ ✓  timing  tests/sim/npc/campaign.test.ts > @E08 stray cats use systemic grabs and the short pet down/rise lifecycle 26ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:22:48
+   Duration  120.08s (tests 97%, transform 2%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 39s, remote total 126s)

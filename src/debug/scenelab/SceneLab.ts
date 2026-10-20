@@ -14,13 +14,14 @@ import { completeCampaignLevel } from '../../sim/progression/carryover';
 import { levelNineMission } from '../../levels/L9/mission';
 import { crowdVariety } from '../../render/characters/CrowdAppearance';
 import { propFootprint } from '../../sim/interact/PropSystem';
-import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
+import { Box3, Matrix4, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
 import { ArmyCheckpointBoom } from '../../sim/missions/ArmyCheckpointBoom';
 import { l2 } from '../../data/l2';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
 import { assetUrl } from '../../assets/assetUrl';
+import { addHighwayRailJoints } from '../../assets/highwayRailJoints';
 import { openFireStationBays } from '../../assets/fireStationBays';
 import type { Game } from '../../Game';
 import type { DistrictLayout, Point } from '../../levels/districts/types';
@@ -53,6 +54,7 @@ import { LevelSevenDeparture } from '../../sim/missions/LevelSevenDeparture';
 import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
 import { installMegaPursuit } from '../../sim/ai/MegaPursuit';
 import { megaAlpha } from '../../data/megaAlpha';
+import { alphaLooks } from '../../data/alphaLooks';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
@@ -294,13 +296,27 @@ export class SceneLab {
         e.infected!.state = 'chase';
       }
     });
+    if (spec.l1Placement) {
+      world.scenario = 'L1';
+      const mission = world.loadMission(resolveCampaignMission('L1', world.districts!)); mission.begin();
+      if (spec.l1Placement === 'shutter') {
+        const door = mission.def.anchors['fire-bay-door'], inside = mission.def.anchors['fire-bay-trigger'];
+        this.teleport(world.entities.get(1)!, inside);
+        const dog = [...world.entities.iterate()].find(e => e.companion);
+        if (!dog) throw new Error('L1 shutter fixture needs the companion');
+        const dx = inside.x - door.x, dz = inside.z - door.z, length = Math.hypot(dx, dz);
+        if (!world.solids.relocate(dog, { x: door.x - dx / length * 2, z: door.z - dz / length * 2, y: dog.transform.y }, 'scene.trailing-companion', 2, false)) throw new Error('L1 trailing companion placement blocked');
+        mission.setGate('fire-shutter', false);
+        if (mission.state.gates['fire-shutter']) throw new Error('L1 companion admission did not permit closure');
+      }
+    }
     if (spec.l2Release) {
       world.scenario = 'L2'; applyCampaign(world, preset('L2-default'));
       world.infected!.director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L2', world.districts!));
       mission.begin();
       if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
-      mission.l2!.completed('doors');
+      if (spec.l2Release !== 'start') mission.l2!.completed('doors');
       if (spec.l2Release === 'bridge' || spec.l2Release === 'checkpoint') {
         this.teleport(world.entities.get(1)!, { x: -46.5, z: -39 });
         for (let i = 0; i < 20 * 60; i++) world.update();
@@ -537,8 +553,8 @@ export class SceneLab {
     if (spec.l7Group) {
       world.scenario = 'L7';
       world.l7Encounters = new LevelSevenEncounters(world);
-      world.l7Encounters.prepare([]);
-      for (const e of world.entities.iterate()) if (e.civilian?.survivor) world.l7Encounters.state.roster.push({ id: e.id, key: e.civilian.survivor.key, injured: false, status: 'following', passed: false });
+      world.l7Encounters.prepare(spec.l7Group === 'start' ? undefined : []);
+      for (const e of world.entities.iterate()) if (spec.l7Group !== 'start' && e.civilian?.survivor) world.l7Encounters.state.roster.push({ id: e.id, key: e.civilian.survivor.key, injured: false, status: 'following', passed: false });
       if (spec.l7Departure) {
         world.l7Departure = new LevelSevenDeparture(world); world.l7Departure.install();
         if (spec.l7Departure === 'follow') world.l7Departure.cameraPose = () => null;
@@ -624,6 +640,8 @@ export class SceneLab {
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
+        // A named Mega look is drawn exactly (the shipped Mega variant otherwise takes a look by entity id, CrowdView.alphaKey).
+        if (a.look?.model && alphaLooks['inf.mega-alpha'].includes(a.look.model)) world.entities.get(entity)!.infected!.model = a.look.model;
         // L3 layout fixtures have no mission controller to apply the corridor's contact damage.
         if (world.scenario === 'L3') world.entities.get(entity)!.combat!.damageMultiplier = l3.infectedDamage;
       } else {
@@ -963,12 +981,8 @@ export class SceneLab {
     }
     return this.frame;
   }
-  /** One three.js node frame per tick, as three's own RAF loop (renderers/common/Animation.js) does. Without it,
-   * FRAME-updated nodes such as the PostFx scene pass render once per browser frame, not once per stepped tick. */
-  private nextRenderFrame(): void {
-    const renderer = this.game.view.renderer, nodes = (renderer as unknown as { _nodes: { nodeFrame: { update(): void; frameId: number } } })._nodes;
-    nodes.nodeFrame.update(); (renderer.info as { frame: number }).frame = nodes.nodeFrame.frameId;
-  }
+  /** One three.js node frame per tick (see Renderer.nextNodeFrame), not once per browser frame. */
+  private nextRenderFrame(): void { this.game.view.renderer.nextNodeFrame(); }
   /** Player input for courier plans: keyboard-like `move` for paths (crisp turns), click-like `moveTarget` for moveTo. */
   private drivePlayer(): void {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'); if (!courier) return;
@@ -1558,6 +1572,7 @@ export class SceneLab {
     for (const p of this.built.placements) {
       const root = await this.registry.loadAsset(p.assetId, 'lod0');
       openFireStationBays(p.assetId, root);
+      if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') addHighwayRailJoints(root, new MeshBasicMaterial());
       const holder = new Object3D(); holder.position.fromArray(p.position); holder.rotation.y = p.yaw; holder.scale.fromArray(p.scale); holder.add(root); holder.updateMatrixWorld(true);
       const tris: number[] = [], shutterTris: number[] = [], leaves = buildingDoors[p.assetId]?.leaves.map(l => l.node) ?? [];
       root.traverse(node => {

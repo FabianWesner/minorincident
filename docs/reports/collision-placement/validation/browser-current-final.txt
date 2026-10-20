@@ -1,0 +1,58 @@
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+
+Running 14 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓   2 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (18.5s)
+  ✓   3 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (5.1s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl) (20.4s)
+  ✓   5 [chromium] › tests/e2e/levels/l4-boot.spec.ts:5:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (13.0s)
+  ✓   6 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (4.8s)
+  ✓   7 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (9.5s)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (605ms)
+  ✓   9 [chromium] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (665ms)
+  ✓  10 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (20.1s)
+  ✓  11 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (18.4s)
+  ✓  12 [chromium] › tests/e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (5.5s)
+  ✘  13 [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (50.3s)
+  ✘  14 [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (retry #1) (54.2s)
+  ✓  15 [chromium] › tests/e2e/webgpu-level-transitions.spec.ts:15:1 › T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors (11.2s)
+
+
+  1) [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras
+
+    Error: page.evaluate: Error: step requires pause()
+        at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)
+        at async <anonymous>:337:30
+        at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)
+        at async <anonymous>:337:30
+        at step (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:22:36)
+        at click (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:71:55)
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:74:5)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:172:16
+
+    Error Context: test-results/playwright/run-3551/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: page.evaluate: Error: step requires pause()
+        at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)
+        at async <anonymous>:337:30
+        at Uy.step (http://127.0.0.1:3551/build/index-UEJ2lk_b.js:12:52076)
+        at async <anonymous>:337:30
+        at step (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:22:36)
+        at click (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:71:55)
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:74:5)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:172:16
+
+    Error Context: test-results/playwright/run-3551/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium-retry1/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras
+  13 passed (4.1m)

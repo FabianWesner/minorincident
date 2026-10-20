@@ -63,6 +63,7 @@ import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
+import { courierForegroundWanted } from './courierForeground';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 /** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
@@ -558,7 +559,9 @@ export class GameView implements Lifecycle {
       if (!this.shutter) {
         const ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
         const group = new Group(); group.position.set(door.x, ground, door.z);
-        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
+        // The courier waits 1.2 m behind the leaf: like a vehicle in front of her, it keeps a dithered silhouette inside her
+        // see-through disc (only fragments nearer the camera than she is), so she reads as inside the bay, behind the door (PO #26).
+        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')).seeThrough());
         shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
         // Face the shutter across the door -> trigger (inward) axis: the bay may open east or north.
         const inside = mission.def.anchors['fire-bay-trigger']; if (inside) group.rotation.y = Math.atan2(inside.x - door.x, inside.z - door.z);
@@ -788,7 +791,7 @@ export class GameView implements Lifecycle {
       npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
-      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
+      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(), courierForeground: this.courierForeground, courierOccluder: this.districts?.occluderId ?? '',
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
   private syncMission(): void {
@@ -927,8 +930,10 @@ export class GameView implements Lifecycle {
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
     if (this.solidCutProbeOff) seeThrough.strength.value = 0;
-    // Reuse the foreground silhouette at boss/roof blockers and in L7's close crowd.
-    this.courierForeground = !!current && (this.nearL7Crowd(current) || this.megaDistance(current) < 14 || !!this.districts?.occluderId);
+    // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
+    // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
+    // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
+    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current), this.megaDistance(current));
     this.character?.setForeground(this.courierForeground);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
@@ -940,6 +945,9 @@ export class GameView implements Lifecycle {
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
+    // A teleport snap can follow another render in the same browser frame (checkpoint/test teleports render at once).
+    // FRAME-updated nodes, such as the PostFx scene pass, would keep that earlier camera's image: draw this pose.
+    if (this.view.consumeSnap()) this.renderer.nextNodeFrame();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
     this.renderer.beginProfile(this.camera);

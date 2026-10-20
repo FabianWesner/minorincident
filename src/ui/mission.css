@@ -15,6 +15,7 @@
 .mission-panel button{background:#ffcf77;border:0;border-radius:10px;color:#172131;padding:12px 22px;font:700 18px system-ui;cursor:pointer;width:100%}.mission-panel button:focus-visible{outline:3px solid #61ded1;outline-offset:4px}
 .mission-panel dl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 24px}.mission-panel dt{font-weight:400;color:#c0cad6}.mission-panel dd{text-align:right;margin:0}
 .mission-ui.is-cinematic:before,.mission-ui.is-cinematic:after{content:'';position:absolute;left:0;right:0;height:10%;background:#101721}.mission-ui.is-cinematic:before{top:0}.mission-ui.is-cinematic:after{bottom:0}
+@media(min-width:601px){body:not(.full-ui) .mission-ui.is-cinematic .mission-subtitle{bottom:max(100px,calc(10% + 12px))}}
 @media(max-width:600px){.mission-ui{font-size:15px}.mission-tracker{top:106px;left:12px;padding:10px;max-width:calc(100vw - 140px)}.mission-minimap{right:12px;top:60px;width:88px;height:88px}.mission-subtitle{font-size:17px;bottom:18%;width:80%;padding:10px}.mission-toast{font-size:13px;bottom:28px;width:75%}.mission-panel h1{font-size:24px}}
 
 

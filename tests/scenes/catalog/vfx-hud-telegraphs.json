@@ -1,0 +1,270 @@
+{
+  "name": "vfx-hud-telegraphs",
+  "note": "PO #31 bridge/ramp location, twelve simultaneous real Alpha charge warnings. Inspect three readable representatives and faded redundant lanes on the authored road.",
+  "seed": 7,
+  "ground": "district",
+  "size": 32,
+  "time": "L3",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        161.76,
+        -2.71
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha0",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        156.76,
+        -5.11
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha1",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        156.76,
+        -3.51
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha2",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        156.76,
+        -1.91
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha3",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        156.76,
+        -0.31
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha4",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        155.56,
+        -5.11
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha5",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        155.56,
+        -3.51
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha6",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        155.56,
+        -1.91
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha7",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        155.56,
+        -0.31
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha8",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        154.36,
+        -5.11
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha9",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        154.36,
+        -3.51
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha10",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        154.36,
+        -1.91
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha11",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        154.36,
+        -0.31
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "alpha0",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha1",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha2",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha3",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha4",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha5",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha6",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha7",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha8",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha9",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha10",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha11",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 45,
+  "shots": [
+    1,
+    15,
+    40
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "courierVisibleShareMin": 0.7
+  },
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        126.76,
+        -37.71
+      ],
+      [
+        196.76,
+        32.29
+      ]
+    ]
+  }
+}
