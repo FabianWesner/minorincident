@@ -1,0 +1,24 @@
+{
+ "name": "stunning-cut-l5-pharmacy",
+ "note": "QA #48/#50 (L5 tick 7776, 54.32,36.95, pharmacy, zoom 1): \"the cut clears the roof but the parapet line runs across her feet, so she reads as standing on the roof edge\"; \"when the roof lens cut removes a large roof, the building reads as a black hollow box with a lit rim.\" The cut must show her on the street and the opened building as a lit interior, never a black void.",
+ "seed": 1,
+ "time": "L5",
+ "ground": "district",
+ "layout": { "level": "L5", "district": "D-FAIR", "bbox": [[24, 6], [84, 66]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [54.32, 36.95], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "frames": 60,
+ "sheet": 30,
+ "shots": [59],
+ "expect": {
+  "consoleErrors": 0,
+  "courierVisibleShareMin": 0.6,
+  "seeThroughCutInsideMin": 500,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000
+ }
+}
