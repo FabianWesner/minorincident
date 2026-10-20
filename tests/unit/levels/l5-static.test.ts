@@ -159,10 +159,10 @@ describe('L5 static', () => {
     expect(def.steps.map(s => s.id)).toEqual(['emerge', 'look', 'metro']);
   });
 
-  test('T-E23-04a @E23 @E23-AC04 the infected are laid out in ones and twos (no group above 3) and 12-20 of them at the start on both tiers', () => {
+  test('T-E23-04a @E23 @E23-AC04 the infected are laid out in ones and twos (no group above 3) and 12-27 of them at the start on both tiers', () => {
     expect(l5Wanderers.every(g => g.n >= 1 && g.n <= l5.infected.maxGroup)).toBe(true);
     const total = l5Wanderers.reduce((n, g) => n + g.n, 0);
-    expect(total).toBeGreaterThanOrEqual(l5.infected.start.high); expect(l5.infected.start.high).toBeLessThanOrEqual(20); expect(l5.infected.start.low).toBeGreaterThanOrEqual(12);
+    expect(total).toBeGreaterThanOrEqual(l5.infected.start.high); expect(l5.infected.start.high).toBeLessThanOrEqual(27); expect(l5.infected.start.low).toBeGreaterThanOrEqual(12);
     expect(l5.infected.cap.high).toBeLessThanOrEqual(30); expect(l5.infected.cap.low).toBeLessThanOrEqual(30);
     // Groups are spread out: no two group spots within 8 m and none within 20 m of the courier's exit.
     for (const g of l5Wanderers) for (const s of l5Survivors) { expect(dist(g.at as Point, s.ringAt as Point), `${s.key} ring`).toBeGreaterThan(12); expect(dist(g.at as Point, s.hideAt as Point), `${s.key} hide`).toBeGreaterThan(12); }

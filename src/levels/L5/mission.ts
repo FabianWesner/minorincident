@@ -5,7 +5,7 @@ import type { DistrictId } from '../districts/types';
 
 /**
  * L5 "Aftermath" objective graph (E23 section 4): unbar the cellar door and step out -> look for anyone still alive (five survivors,
- * found in any order by standing next to them; the sign-of-life cues are the only guide, there is no marker on a survivor) -> lead
+ * found in any order by standing next to them; the sign-of-life cues plus an amber ground ring per unfound survivor (SurvivorRings, PO 10-20) guide the search) -> lead
  * whoever is left to the Metro station, where the shutter rolls shut behind the group. No fail timer and no fail on a survivor's
  * death; the level is completable with zero survivors. Beats are driven by `LevelFiveAftermath` (def.l5) through mission states.
  */
