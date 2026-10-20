@@ -1,0 +1,44 @@
+{
+  "seed": 1,
+  "frames": 120,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "courierForegroundFramesMax": 0
+  },
+  "name": "fix-p1-l2-start-courier-crew",
+  "l2Release": "start",
+  "ground": "district",
+  "time": "L2",
+  "tier": 1,
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -73.2,
+        45.2
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -73.2,
+      0.42,
+      45.2
+    ],
+    "zoom": 1
+  },
+  "note": "PO #9 (L2 tick 66-1464, -73.20,45.20): at the L2 start the courier idles on the apron among the six firefighters. She must never draw in the near-camera foreground slice (she was drawn on top of firefighter 2), and no firefighter stands between her and the game camera.",
+  "size": 220
+}
