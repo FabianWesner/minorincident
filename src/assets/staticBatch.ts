@@ -136,7 +136,7 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
 /** District placements never animate their parts. Store world swatch indices (figure batches retain vertex colors),
  * keeping glowing windows separate for power and the window mask. Written as resumable steps so the
  * background loader can spread one large prototype over several frames (staticBatchAsync). */
-function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Generator<void, Group> {
+function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage = false, cache?: Map<string, Material>): Generator<void, Group> {
   source.updateMatrixWorld(true);
   const anchorList = (/^veh\./.test(source.userData.assetId ?? '') ? [] : anchorsFor(source.userData.assetId ?? ''));
   const emissiveAnchors = new Map<string, number>();
@@ -258,7 +258,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       for (const { name, input } of packedInputs) { geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, offset)); offset += input.itemSize; }
     }
     if (emissive) geometry.setAttribute('_lightBase', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count), 1));
-    const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage);
+    const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage, cache);
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }
     if ((bucket & 65536) !== 0) mesh.userData.interior = true;
@@ -266,13 +266,13 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
   }
   return result;
 }
-export function staticBatch(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Group {
-  const run = steps(source, lit, materials, foliage);
+export function staticBatch(source: Object3D, lit: boolean, materials?: Materials, foliage = false, cache?: Map<string, Material>): Group {
+  const run = steps(source, lit, materials, foliage, cache);
   for (let step = run.next(); ; step = run.next()) if (step.done) return step.value;
 }
 /** Same result as staticBatch, yielding to `pause` whenever a slice exceeded `budgetMs` of main-thread time. */
-export async function staticBatchAsync(source: Object3D, lit: boolean, materials: Materials | undefined, pause: () => Promise<void>, budgetMs = 4): Promise<Group> {
-  const run = steps(source, lit, materials);
+export async function staticBatchAsync(source: Object3D, lit: boolean, materials: Materials | undefined, pause: () => Promise<void>, budgetMs = 4, cache?: Map<string, Material>): Promise<Group> {
+  const run = steps(source, lit, materials, false, cache);
   let start = performance.now();
   for (let step = run.next(); ; step = run.next()) {
     if (step.done) return step.value;
@@ -286,8 +286,15 @@ function roadMask(): Node<'float'> {
   return is('asphalt').select(float(1), is('picketWhite').and(positionWorld.y.lessThan(.03)).select(float(1.4), float(0)));
 }
 
-/** Rebuild exactly the same graph for runtime batches and lossless build output. */
-export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false): Material {
+/** Rebuild exactly the same graph for runtime batches and lossless build output.
+ * `cache` (level handover, 10-20): the graph depends only on these arguments, yet every batch got its own material and so
+ * its own node build (138-176 identical `pal_picketWhite` builds per level, ~0.7 s at 1x, ~3 s at 4x CPU). A caller that
+ * owns the batches' lifetime (DistrictAssets) passes a map keyed by the full argument tuple and gets one shared material
+ * per graph; the output is the same material graph with the same uniforms, so the drawn pixels do not change. */
+export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false, cache?: Map<string, Material>): Material {
+  const cacheKey = materials && cache ? `${+emissive}:${+lit}:${+anchors}:${+hasSurface}:${+hasWindows}:${+world}:${+foliage}` : undefined;
+  const cached = cacheKey ? cache!.get(cacheKey) : undefined;
+  if (cached) return cached;
   const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchors ? .08 : 1) : attribute('color', 'vec3');
   const local = attribute('_light', 'float'), power = materials ? materials.lamps.sample(local.lessThan(0).select(0, attribute('_lightBase', 'float').greaterThan(0).select(attribute('_lightBase', 'float').add(local), 0))) : undefined;
   const view = cameraPosition.sub(positionWorld).normalize(), tangent = vec3(0, 1, 0).cross(normalWorld).normalize();
@@ -302,5 +309,6 @@ export function staticBatchMaterial(materials: Materials | undefined, emissive: 
   material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
   material.userData.worldPaletteOnly = !!materials && world;
   material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
+  if (cacheKey) cache!.set(cacheKey, material);
   return material;
 }

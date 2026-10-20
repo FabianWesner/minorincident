@@ -1,4 +1,4 @@
-import { Box3, BufferAttribute, BufferGeometry, Group, InterleavedBuffer, InterleavedBufferAttribute, Mesh, Sphere } from 'three/webgpu';
+import { Box3, BufferAttribute, BufferGeometry, Group, InterleavedBuffer, InterleavedBufferAttribute, Mesh, Sphere, type Material } from 'three/webgpu';
 import type { Materials } from '../render/Materials';
 import { staticBatchMaterial } from './staticBatch';
 
@@ -31,7 +31,7 @@ export function encodeStaticBake(root: Group): Uint8Array {
   for (const array of arrays) { bytes.set(new Uint8Array(array.buffer, array.byteOffset, array.byteLength), offset); offset += Math.ceil(array.byteLength / 4) * 4; }
   return bytes;
 }
-export function decodeStaticBake(bytes: ArrayBuffer, materials: Materials, anchors: boolean): Group {
+export function decodeStaticBake(bytes: ArrayBuffer, materials: Materials, anchors: boolean, cache?: Map<string, Material>): Group {
   const length = new DataView(bytes).getUint32(0, true), header = JSON.parse(new TextDecoder().decode(new Uint8Array(bytes, 4, length))) as Header;
   if (header.version !== 1) throw Error('Unknown static bake version');
   const root = new Group(); let offset = 4 + Math.ceil(length / 4) * 4;
@@ -51,7 +51,7 @@ export function decodeStaticBake(bytes: ArrayBuffer, materials: Materials, ancho
     geometry.boundingBox = new Box3(); geometry.boundingBox.min.fromArray(part.box); geometry.boundingBox.max.fromArray(part.box, 3);
     geometry.boundingSphere = new Sphere(); geometry.boundingSphere.center.fromArray(part.sphere); geometry.boundingSphere.radius = part.sphere[3];
     const emissive = ['window-light', 'roof-light'].includes(part.name);
-    const mesh = new Mesh(geometry, staticBatchMaterial(materials, emissive, true, anchors, geometry.hasAttribute('_surface'), geometry.hasAttribute('_window')));
+    const mesh = new Mesh(geometry, staticBatchMaterial(materials, emissive, true, anchors, geometry.hasAttribute('_surface'), geometry.hasAttribute('_window'), true, false, cache));
     mesh.name = part.name; mesh.userData = part.userData; mesh.castShadow = part.shadow; mesh.receiveShadow = true;
     mesh.matrix.fromArray(part.matrix); mesh.position.fromArray(part.position); mesh.quaternion.fromArray(part.rotation); mesh.scale.fromArray(part.scale); root.add(mesh);
   }
