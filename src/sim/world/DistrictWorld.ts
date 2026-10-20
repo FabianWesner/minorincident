@@ -11,7 +11,6 @@ import {
   resolveDecay,
   resolvePosition,
   minimapData,
-  inside,
 } from "../../levels/districts/validate";
 import { crossValidate } from "../../levels/districts/crossValidate";
 import { placementColliders } from "../../levels/districts/staticCollision";
@@ -20,6 +19,16 @@ import { pushableProps } from "../../data/pushableProps";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
 /** Horizontal reach of a walkable support past its collider edge (m): closes authoring seams between tiled slabs. */
 export const supportSeam = .03;
+/** perf-w6: `inside` for a scalar point, with the identical crossing arithmetic (ground queries run per actor per tick). */
+function insideXZ(px: number, pz: number, polygon: readonly (readonly [number, number])[]): boolean {
+  let result = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const a = polygon[i], b = polygon[j], x = a[0], z = a[1], xx = b[0], zz = b[1];
+    if (z > pz !== zz > pz && px < ((xx - x) * (pz - z)) / (zz - z) + x) result = !result;
+  }
+  return result;
+}
+const none: readonly never[] = [];
 export class DistrictWorld {
   readonly districts;
   readonly nav;
@@ -154,11 +163,11 @@ export class DistrictWorld {
   groundHeight(x: number, z: number): number {
     let height = 0;
     const key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
-    for (const a of this.supports.get(key) ?? []) {
+    for (const a of this.supports.get(key) ?? none) {
       if (x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = Math.max(height, a.max[1]);
     }
-    for (const s of this.slabs.get(key) ?? []) {
-      if (s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
+    for (const s of this.slabs.get(key) ?? none) {
+      if (s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && insideXZ(x, z, s.polygon)) height = s.height;
     }
     return height;
   }
@@ -170,7 +179,7 @@ export class DistrictWorld {
   supportBelow(x: number, z: number, feet: number, rise = .6): number {
     const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     let height = this.groundBelow(x, z, feet, rise);
-    for (const s of this.paving.get(key) ?? []) if (s.height <= limit && s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
+    for (const s of this.paving.get(key) ?? none) if (s.height <= limit && s.height > height && insideXZ(x - s.origin[0], z - s.origin[1], s.polygon)) height = s.height;
     return height;
   }
   /** `groundHeight` for a body at `feet`: only supports and slabs it can step onto, so the street under a deck stays the street (the
@@ -178,14 +187,14 @@ export class DistrictWorld {
   groundBelow(x: number, z: number, feet: number, rise = .6): number {
     const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     let height = 0;
-    for (const a of this.supports.get(key) ?? []) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
-    for (const s of this.slabs.get(key) ?? []) if (s.height <= limit && s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
+    for (const a of this.supports.get(key) ?? none) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
+    for (const s of this.slabs.get(key) ?? none) if (s.height <= limit && s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && insideXZ(x, z, s.polygon)) height = s.height;
     return height;
   }
   /** Visible paving is baked into the layout GLB rather than the solid-prop collider set. */
   pavingHeight(x: number, z: number): number {
     let height = this.groundHeight(x, z);
-    for (const s of this.paving.get(DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4))) ?? []) if (s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
+    for (const s of this.paving.get(DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4))) ?? none) if (s.height > height && insideXZ(x - s.origin[0], z - s.origin[1], s.polygon)) height = s.height;
     return height;
   }
   getState() {
