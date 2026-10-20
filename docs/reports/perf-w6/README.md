@@ -47,3 +47,10 @@ Node timing of the sim changes alone is modest: idle runner warm p50/p95 L7 1.67
   - Sheets opened (both backends): the courier holds the dark machine gun in both hands at chest height, bat on her back; firing frames show the muzzle flash, its ground glow and a tracer toward the runner, which falls and lies on the asphalt (z1/z1.5 the same at distance). The Alpha corpse lies as the full LOD0 body (purple skin, black clothes, red wounds) beside the courier on low z0.5 and high z1; at the tank the Alphas walk around the hull with their telegraph rings and the courier stays readable. No missing figure, clipping or floating body seen.
   - WebGL2 run of the Alpha scenes on the loaded runner did not finish in this lane (4/18 passed when the report was written).
 - Native timing: three quiet-run admissions; the first two hit the 30-minute admission limit (other lanes' matrices held the browsers), the third (08:49, 9 min held) and b4 (09:24, 7 min held) ran. Not measured: L4 high tier, L7 WebGPU, L8 high/low, E18 desktop/device suites.
+
+## Validation
+
+- Typecheck and lint (`eslint src tests tools functions *.config.ts eslint.config.js`): clean. Fresh `npm run build`.
+- Remote full suite (unit + sim + levels, timing-isolated, idle runner 2.31.10.108, HEAD `47d7dd075`): **3,245 pass / 4 fail / 11 skip**; all timing cases (Zoo S1/S2/S3 200, E18-02, alpha 200, L10, L9) pass. The 4 failures were the resident-only Alpha prewarm contract (`T-E27-14h`, `PO #21`) broken by the first Alpha change; fixed in `12018b728` (Alpha LOD0 only where resident or in L4/L5/L7), that file now 6/6 locally incl. a new L4 case ([summary](remote-suite-final.txt)). Earlier sweeps on loaded runners failed only timing cases (load).
+- `npm run test:smoke`: 31/31 pass (after the last commit).
+- `T-E22-20-alarm-warmup` (new) and `T-E22-20` (new `turnBuilds === 0` assertion) — the latter measured in b4 (turn builds 0; the test still fails its unchanged 50 ms limits as listed above).
