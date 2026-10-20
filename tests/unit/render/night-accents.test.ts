@@ -52,3 +52,22 @@ test('@E31 L9 night accents are part of the crossing light field only, and the f
   expect(layout.placements.filter(p => p.lightGroup === 'crossing-lit' && p.assetId.startsWith('bld.house-')).length).toBeGreaterThanOrEqual(6);
   expect(layout.placements.filter(p => p.assetId === 'prop.utility-pole' && p.scale[1] > 2)).toHaveLength(3);
 });
+
+test('@E32 L10 night accents: render-only fires on the crash scar and the destroyed corridor keep clear of every AI line', async () => {
+  const { cureAccents } = await import('../../../src/render/NightAccents');
+  const { cure } = await import('../../../src/levels/L10/district');
+  const { cureEncounters, cureMedkits } = await import('../../../src/levels/L10/encounters');
+  const cureLayout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
+  const { points, fires } = cureAccents(cureLayout.placements);
+  expect(points).toEqual([]);
+  expect(fires.length).toBeGreaterThan(6); expect(fires.length).toBeLessThan(60);
+  const lines: Point[][] = [...cure.regions.map(r => r.route as Point[]), ...cure.detours.map(d => d.route as Point[])];
+  const laneAt = (p: Point) => Math.min(...lines.map(l => Math.min(...l.slice(1).map((b, i) => seg(p, l[i], b))))) - 4;
+  for (const f of fires) {
+    expect(laneAt([f.x, f.z])).toBeGreaterThan(f.car ? 4 : 6);
+    for (const s of [...cureEncounters.map(e => e.at), ...cureMedkits.map(m => m.at)]) expect(Math.hypot(f.x - s[0], f.z - s[1])).toBeGreaterThan(14);
+    expect(Math.hypot(f.x - cure.anchors['cure-console'][0], f.z - cure.anchors['cure-console'][1])).toBeGreaterThan(70);
+    expect(f.x < 760 || (f.x >= 2917 && f.x < 3700)).toBe(true);   // R1 and R6 (region envelopes)
+  }
+  expect(fires.some(f => f.car)).toBe(true);
+});

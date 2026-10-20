@@ -31,6 +31,14 @@ for (const cell of chunks) {
   counts[cell.id] = triangles;
   await io.write(`${out}/${cell.id}.glb`, doc);
 }
+/** Materials that only the detail overlays use (layouts/D-CROSSING/dress.py): the coarse horizon keeps the plain ground.
+ * D-CURE (look-l10): verge/road wear patches fragment the ground, so its horizon is one coarse ground sheet plus the road. */
+const nearField = new Set(['pal_picketWhite', 'pal_canvasTan', 'pal_leather', 'pal_mustard', 'pal_mustardLight', 'pal_apronOlive', 'pal_olive', 'pal_oliveLight', 'pal_trouserLight', 'pal_uiDark', 'pal_pantsDark', 'pal_pantsLight', 'pal_leatherShadow', 'pal_silver', 'pal_capTan', 'pal_khakiSeam', 'pal_oliveSeam', 'pal_pantsCargo']);
+const horizon = cloneDocument(source);
+for (const node of horizon.getRoot().listNodes()) {
+  if (!node.getMesh()) { node.dispose(); continue; }
+  if (node.getExtras().terrainChunk) {
+    const mesh = node.getMesh()!;
     for (const p of mesh.listPrimitives()) { const name = p.getMaterial()?.getName() ?? ''; if (nearField.has(name) || district === 'D-CURE' && name !== 'pal_asphalt') p.dispose(); } // paint and gravel ruts are near-field detail; D-CURE keeps only the road over its ground sheet
     const [x, y, z] = node.getTranslation();
     node.setTranslation([x, y - .010, z]); // no coplanar fighting; even 1 cm fork arrows stay within the 2 cm seam budget

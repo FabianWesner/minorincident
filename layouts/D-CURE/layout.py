@@ -128,7 +128,7 @@ for i,(a,b) in enumerate(zip(route,route[1:])):
     for s in range(6,int(d)-3,14):
         cx=a[0]+(b[0]-a[0])*s/d; cz=a[1]+(b[1]-a[1])*s/d
         tx=(b[0]-a[0])/d*1.5; tz=(b[1]-a[1])/d*1.5
-        surface('mark',[[cx-tx+nx*.025,cz-tz+nz*.025],[cx-tx-nx*.025,cz-tz-nz*.025],[cx+tx-nx*.025,cz+tz-nz*.025],[cx+tx+nx*.025,cz+tz+nz*.025]],'picketWhite',.008)
+        surface('mark',[[cx-tx+nx*.025,cz-tz+nz*.025],[cx-tx-nx*.025,cz-tz-nz*.025],[cx+tx-nx*.025,cz+tz-nz*.025],[cx+tx+nx*.025,cz+tz+nz*.025]],'silver',.008)   # look-l9b recipe: worn grey paint, not self-lit white
 # Both optional routes rejoin the same nav/road graph, with no invisible gates.
 for detour in source['detours']:
     points=detour['route']; ids=[]
@@ -233,6 +233,7 @@ l.place('bld.cure-service-building',[ox+32,0,oz+47])
 # shortcuts, anchors, encounter/medkit spots and the R7 assault ring, so routes, nav, triggers and timing are unchanged.
 import random, re
 rng = random.Random(1019)
+FLAT_PATCHES = False
 full_route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
 route_segments = list(zip(full_route, full_route[1:]))
 detour_segments = [s for d in source['detours'] for s in zip(d['route'], d['route'][1:])]
@@ -302,9 +303,8 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     v = placement['visualAabb']
     if asset in ('prop.tree', 'prop.street-tree'): box = dict(min=[x-.3, 0, z-.3], max=[x+.3, 2.2, z+.3])
     else: box = dict(min=list(v['min']), max=list(v['max']))
-    # R6/R7 (x >= 2900) hold the calibrated finale (Mega arrival ~143 s, one seed): any AI wall or line-of-sight blocker
-    # there changes that run, so their dressing is a physics-only static that stops the player but not the AI.
-    if x >= 2900: box['physicsOnly'] = True
+    # look-l9b (PO: "soldiers and peds are just walking through the barrier"): R6/R7 dressing is solid for everyone; the
+    # finale calibration (tests/sim/levels/l10-arrival.test.ts) is re-run after every dressing change instead.
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
     taken.append((omn, omx)); return pid
 def face(side_normal):
@@ -346,7 +346,7 @@ def fence_run(asset, a, b, step=2.6):
     group = []
     for v in boxes + [None]:
         if group and (v is None or v['min'][0] > group[-1]['max'][0] + .3 or v['min'][2] > group[-1]['max'][2] + .3):
-            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)], **({'physicsOnly': True} if group[0]['min'][0] >= 2900 else {})), minTier=0, maxTier=6))
+            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)], ), minTier=0, maxTier=6))
             group = []
         if v is not None: group.append(v)
 
@@ -483,7 +483,10 @@ for a_, b_ in route_segments:
             quad = [[cx+ca*w/2*i-sa*h/2*j, cz+sa*w/2*i+ca*h/2*j] for i, j in [(-1, -1), (1, -1), (1, 1), (-1, 1)]]
             if all(seg_rect(p0, p1, (min(q[0] for q in quad), min(q[1] for q in quad)), (max(q[0] for q in quad), max(q[1] for q in quad))) > 5 for p0, p1 in route_segments + detour_segments):
                 dry = a_[0] < 800
-                surface('verge-patch', ccw(quad), rng.choice(['gloveKhaki', 'oliveSeam'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
+                token = rng.choice(['gloveKhaki', 'oliveSeam'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam'])
+                # look-l9b: flat patch quads read as placeholder polygons at the game camera (orchestrator 10-20); the rng
+                # draws stay so the dressing stream is unchanged, the shader ground breakup carries the variety.
+                if FLAT_PATCHES: surface('verge-patch', ccw(quad), token, -.003)
             t += rng.uniform(11, 22)
 # R7 apron: painted bays, hazard edges and service lines so the console floor reads as a working plant (paint only).
 for x0 in range(3958, 4040, 9):
