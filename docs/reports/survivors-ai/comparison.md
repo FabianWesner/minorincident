@@ -1,6 +1,6 @@
 # L5 three-seed comparison
 
-Untouched main `60c51a67a` versus the final AI source (required merges included). High tier, seeds 1/2/3, identical policies and budgets, no cheats. Values read **main → branch**. Deaths are courier deaths; rescued counts are living sheltered followers. Raw evidence: [main](compare-main.json), [branch](compare-branch.json). Both raw comparisons are from remote runners; the final branch sweep completed before its full test run.
+Untouched main `60c51a67a` versus the final AI source (required merges included). High tier, seeds 1/2/3, identical policies and budgets, no cheats. Values read **main → branch**. Deaths are courier deaths; rescued counts are living sheltered followers. Raw evidence: [main](compare-main.json), [branch](compare-branch.json). Both raw comparisons are from remote runners. The final [cadence-preserving source repeat](compare-branch-cadence.json) was run locally: all timings, deaths, rescue totals, held weapons and shot counts agree. In evade seed 3, Dale is following instead of hidden; neither run evacuates him.
 
 | Profile / seed | Seconds | Courier deaths | Rescued | Branch armed followers / shots |
 | --- | ---: | ---: | ---: | --- |

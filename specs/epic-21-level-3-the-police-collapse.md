@@ -105,7 +105,7 @@ Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Ti
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E21-AC01 | The L3 mission graph (armory → defend station → fallback → reach army checkpoint) is structurally completable (E12-AC07) and has no fail timer | sim |
-| E21-AC02 | The `complete` bot finishes L3 on **one seed** from the `L3-default` progression (bat + axe) without cheats; sim time **2:00–6:45** (PO 2026-10-11 longer route: the former upper band × 1.8), one seed. | sim |
+| E21-AC02 | The `complete` bot finishes L3 on **one seed** from the `L3-default` progression (bat + axe) without cheats; sim time **2:00–7:00** (PO 2026-10-20 active human escape/fight behavior; three-seed main/branch evidence in `docs/reports/survivors-ai/comparison-l3.md`), one seed. | sim |
 | E21-AC03 | The `newbie` bot finishes on one seed, sim time **2:30–8:06** (PO 2026-10-11 longer route: the former upper band × 1.8, as in AC02), deaths ≤ 2 PO 10-09: single seed. | sim |
 | E21-AC04 | **Handgun:** acquired only at the armory (the `complete` bot has it within 40 s of start); each shot hits at most 1 target (no pierce), a 40 HP infected needs 2 hits, range 22 m; 600 continuous shots never produce a reload, an empty state or an ammo HUD element; bat and axe remain selectable | sim + e2e |
 | E21-AC05 | **Ranged before contact:** in `complete` runs the median distance of handgun kills is ≥ 6 m (**PO 10-12 police guns −50 %**, "so they are overwhelming for the police so the user needs to start running away": ≥ 5 m; the weaker line lets runners closer), while axe/bat kills are ≤ 2.5 m (the weapons have different roles) | sim |

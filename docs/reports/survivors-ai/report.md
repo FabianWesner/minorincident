@@ -11,7 +11,7 @@ Lane `lane/survivors-ai`, based on main `60c51a67a`, with the required merges of
 - **#56/#56b:** The eight existing L5 scenery firearms become actual group pickups. Live followers collect one within two metres, with height/visibility checks, and receive the existing allied pistol/rifle combat. The original action ID and held prop live in the serialized civilian component. Courier mission pickups, shelf weapons, melee, rockets and weapons discarded by the courier are excluded. No additional guns or enemies are authored. The regular campaign survivor payload keeps the weapon through L6/L7/L8; new level clocks clear stale attack/reload/post/target state while preserving the gun. Checkpoint restoration rebases the timers.
 - **#57:** Wreck tops are sampled only on an actor's current height layer; street actors cannot jump up through a wreck. A generated mesh support bake supplies the actual visible wreck roofs above the intentionally clipped 1.65 m crowd-collision band; an independent GLB ray test and source hashes guard it. The corgi samples its full paw footprint so roof edges do not bury the body. Objective/discovery rings resolve the surface at their own position on the appropriate layer and depth-test against wrecks; the overhead arrow keeps its existing visibility.
 
-The PO intake supersedes the old E23 statements that found survivors are always unarmed and never fight. The sole specification edit corrects E24-AC02’s upper time bound, explained below. Enemy counts and weapon damage/accuracy/cadence data are unchanged by this lane. L6 criteria and one L4 inferred first-beat casualty assertion are corrected with three-seed evidence below; the prerequisite rings lane supplies the requested extra loners and its associated count/hash changes.
+The PO intake supersedes the old E23 statements that found survivors are always unarmed and never fight. The two specification edits correct E21-AC02 and E24-AC02’s upper time bounds, explained below. Enemy counts and weapon damage/accuracy/cadence data are unchanged by this lane. L3/L6 criteria and one L4 inferred first-beat casualty assertion are corrected with three-seed evidence below; the prerequisite rings lane supplies the requested extra loners and its associated count/hash changes.
 
 ## Evidence
 
@@ -32,7 +32,7 @@ That prerequisite also changes these assertions relative to main:
 - `tests/unit/levels/l5-static.test.ts`: authored high-count upper bound 20 → 27.
 - `tests/levels/l5-po-2-balance.test.ts`: infected-layout hash `3ea30ea6b351df44b128911ff143484a213c04d197600d3910b3041c5734c2e4` → `8464845744df35c5b51b267a500f0ef37c3faba64bbf722e5c34a5654ea9b90f`.
 
-The three-seed comparison uses untouched main `60c51a67a` and this full branch, so it includes those imported population changes. L5 complete/newbie/evade-only time and death thresholds are unchanged. Additional assertion edits cover pickup ownership, the serialized dropped-weapon marker, ring depth, and the Metro HUD phase introduced by the prerequisite merge.
+The three-seed comparison uses untouched main `60c51a67a` and this full branch, so it includes those imported population changes. L5 complete/newbie/evade-only time and death thresholds are unchanged. Additional assertion edits cover pickup ownership, the serialized dropped-weapon marker, discovery/mission ring depth with the arrow remaining visible, and the Metro HUD phase introduced by the prerequisite merge.
 
 ## L6 criterion corrections
 
@@ -41,3 +41,7 @@ The three-seed comparison uses untouched main `60c51a67a` and this full branch, 
 ## L4 first-beat assertion
 
 [Three-seed main/branch evidence](comparison-l4.md) corrects one inferred casualty: first-beat living soldiers `< initial` becomes `≤ initial`, because E22-AC13 permits a forced break at 62 seconds even with no casualty. Main already has no first-beat loss on two of three seeds. The later strict half-loss assertion, all beat windows, Alpha/barricade checks, caps and corpse persistence stay unchanged.
+
+## L3 complete-time criterion
+
+[Three-seed main/branch evidence](comparison-l3.md) accompanies the complete upper time 405→420 seconds. All three final branch seeds finish; main seed 3 times out. Seed 1 is slower and has one extra courier death versus main. Newbie time/death pins and all gameplay difficulty values remain unchanged. The final attack follow-up preserves an already engaged fighter’s pose, target and cadence.

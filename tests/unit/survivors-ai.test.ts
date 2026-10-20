@@ -151,11 +151,19 @@ test('@E08 attacked officers with the legacy built-in pistol fight within its ra
 
 test('@E08 repeated attacks preserve an engaged fighter’s existing weapon cadence', async () => {
   const { e, z } = await fixture();
-  e.civilian!.ally = { ...allyState('officer'), engaged: true, targetId: z.id, nextAttack: 90 };
+  const other = w.infected!.spawn('infected.runner', { x: -4, z: 0 });
+  e.civilian!.ally = { ...allyState('officer'), engaged: true, targetId: other, nextAttack: 90 };
+  e.civilian!.story = { clip: 'shoot', start: w.tick };
   w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: z.id, targetId: e.id, attackId: 1, special: 'melee', amount: 0 });
   expect(e.civilian!.ally.nextAttack).toBe(90);
+  expect(e.civilian!.ally.targetId).toBe(other);
+  expect(e.civilian!.story?.clip).toBe('shoot');
   e.civilian!.ally.targetId = 0;
   w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: z.id, targetId: e.id, attackId: 2, special: 'melee', amount: 0 });
+  expect(e.civilian!.ally.nextAttack).toBe(90);
+  expect(e.civilian!.ally.targetId).toBe(z.id);
+  e.civilian!.ally.engaged = false;
+  w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: z.id, targetId: e.id, attackId: 3, special: 'melee', amount: 0 });
   expect(e.civilian!.ally.nextAttack).toBeLessThanOrEqual(15);
 });
 

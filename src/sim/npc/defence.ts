@@ -12,10 +12,12 @@ export function alarmVictim(world: SimWorld, e: EntitySnapshot, source: EntitySn
   const c = e.civilian;
   if (!c?.adult || c.pet || c.zooAnimal || e.infection || e.health.current <= 0 || !mobile.has(c.state)) return;
   Object.assign(c.threat, source.transform); c.dangerUntil = world.tick + 120;
-  leaveSeat(e); c.story = null; c.path.length = 0; c.goal = -1;
+  leaveSeat(e);
+  if (!c.ally || !c.ally.engaged) { c.story = null; c.path.length = 0; c.goal = -1; }
   if (c.ally) {
-    const fresh = !c.ally.engaged || c.ally.targetId !== source.id;
-    c.ally.engaged = true; c.ally.targetId = source.id;
+    const fresh = !c.ally.engaged;
+    c.ally.engaged = true;
+    if (fresh || !c.ally.targetId) c.ally.targetId = source.id;
     if (fresh) c.ally.nextAttack = Math.min(c.ally.nextAttack, world.tick + 15);
   }
   else world.npcs!.civilians.state(e, 'flee');
