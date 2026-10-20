@@ -1,0 +1,58 @@
+{
+  "name": "seethrough-companion-clean-z05",
+  "note": "PO #45 (L5 Kessler's cellar): the wall cut drew a noisy dot pattern over the courier and the corgi (tail dissolved into dots). The disc is cut clean over both.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L3",
+  "props": [
+    {
+      "id": "wall",
+      "asset": "bld.house-a",
+      "at": [
+        5,
+        5
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "female",
+        "gearTier": 4
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        1.3,
+        -0.4
+      ],
+      "state": "follow"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 0.5
+  },
+  "frames": 30,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.85,
+    "seeThroughOpenFramesMin": 10,
+    "seeThroughCutInsideMin": 200,
+    "drawCallsMax": 400,
+    "trianglesMax": 600000
+  }
+}
