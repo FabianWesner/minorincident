@@ -36,7 +36,7 @@ export interface InfectedState {
   speed: number; until: number; cooldown: number; attackId: number; special: string; hidden: boolean;
   deadAt: number;
   /** PO "Infected recover": tick at which a knocked-down infected gets up again; -1 = alive or dead for good. `downs` counts its knockdowns. */
-  recoverAt: number; downs: number; recoverWaitFrom?: number;
+  recoverAt: number; downs: number;
   revived: boolean; reviveUsed: boolean; legLost: boolean; detached: boolean;
   birdMotion?: import('../locomotion/MotionResponse').MotionResponse[];
   birdVertical?: import('../locomotion/MotionResponse').MotionResponse[];
