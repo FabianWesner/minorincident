@@ -5,6 +5,8 @@ import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, MeshBasicNodeMateria
 import { float, luminance, vec3 } from 'three/tsl';
 import manifest from '../assets/manifest.json' with { type: 'json' };
 import { crossing } from '../levels/L9/district';
+import { cure } from '../levels/L10/district';
+import { cureEncounters } from '../levels/L10/encounters';
 import { Rng } from '../core/Rng';
 import { footprint, type FieldLight, type LightField } from './LightField';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
@@ -38,8 +40,9 @@ const laneDistance = (p: P2) => Math.min(...crossing.routes.map(r => lineDistanc
 export function nightAccents(world: DistrictWorld | null | undefined): AccentSet {
   if (!world) return empty;
   const hit = cache.get(world); if (hit) return hit;
-  const district = world.districts.find(d => d.id === 'D-CROSSING');
-  const set = district ? crossingAccents(district.decay.placements.filter(p => !district.decay.removed.includes(p.id)), district.origin as P2) : empty;
+  const district = world.districts.find(d => d.id === 'D-CROSSING'), cureDistrict = world.districts.find(d => d.id === 'D-CURE');
+  const set = district ? crossingAccents(district.decay.placements.filter(p => !district.decay.removed.includes(p.id)), district.origin as P2)
+    : cureDistrict ? cureAccents(cureDistrict.decay.placements.filter(p => !cureDistrict.decay.removed.includes(p.id)), cureDistrict.origin as P2) : empty;
   cache.set(world, set);
   return set;
 }
@@ -147,6 +150,46 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     put({ kind: 'beacon', x: p.position[0], y: h * .52, z: p.position[2], yaw: 0, color: '#ff1e12', glow: 9, flicker: 0, strobe: true, pool: { color: 'light_siren_red', intensity: 2.6, range: 5 } });
   }
   return { points, fires };
+}
+
+/** L10 (look-l9b recipe, E32 art addendum): render-only fires on the D-CURE route. Burned wrecks of the crash outskirts (R1) and the
+ * destroyed corridor (R6) still burn, with brush fires on the crash scar and between the corridor fronts. No sim lamps, no
+ * hazards (fires are gameplay damage elsewhere): Blasts draws them, the light field gets always-on pools. Wreck fires sit on
+ * their (already cleared) car, brush fires keep 6 m from the lane edge; all keep 14 m from encounter spots and 70 m from the console. */
+export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0]): AccentSet {
+  const fires: AccentFire[] = [], keyed = (key: string) => new Rng(1019, `l10-night:${key}`);
+  const lines: P2[][] = [...cure.regions.map(r => r.route as P2[]), ...cure.detours.map(d => d.route as P2[]),
+    [cure.regions[5].route[1] as P2, cure.anchors['corridor-breach'] as P2, cure.anchors['r6-r7-seam'] as P2, cure.regions[6].route[5] as P2]];
+  const lane = (x: number, z: number) => Math.min(...lines.map(l => lineDistance([x, z], l))) - 4;
+  const spots = cureEncounters.map(e => e.at as P2), spot = (x: number, z: number) => Math.min(...spots.map(s => Math.hypot(x - s[0], z - s[1])));
+  const consoleAt = cure.anchors['cure-console'] as P2;
+  const boxes = placements.map(p => [p.visualAabb.min[0], p.visualAabb.min[2], p.visualAabb.max[0], p.visualAabb.max[2]] as const);
+  const free = (x: number, z: number, margin: number) => boxes.every(b => x < b[0] - margin || x > b[2] + margin || z < b[1] - margin || z > b[3] + margin);
+  const ok = (x: number, z: number, margin: number) => lane(x, z) > margin && spot(x, z) > 14 && Math.hypot(x - consoleAt[0], z - consoleAt[1]) > 70;
+  const fire = (x: number, z: number, radius: number, car = false) => fires.push({ x: x + origin[0], z: z + origin[1], radius, car });
+  // 1) Burned wrecks keep burning: the crash outskirts and the destroyed corridor.
+  for (const p of placements) {
+    if (!p.assetId.startsWith('veh.') || p.decay !== 'burned') continue;
+    const [x, , z] = p.position, inR1 = x < 760, inR6 = x > 2950 && x < 3680;
+    if (!(inR1 || inR6) || !ok(x, z, 4)) continue;
+    if (keyed(`wreck:${p.id}`).next() < (inR1 ? .8 : .55)) fire(x, z, 1.4, true);
+  }
+  // 2) Brush fires beside the crash scar and between the corridor fronts (one every ~70 m, alternating sides).
+  for (const [ri, region] of [[0, cure.regions[0]], [5, cure.regions[5]]] as const) {
+    const pts = region.route as P2[];
+    for (const [i, b] of pts.slice(1).entries()) {
+      const a = pts[i], d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
+      const stations = keyed(`brush:${ri}:${i}`);
+      for (let s = 20 + stations.next() * 30, n = 0; s < d - 15; s += 60 + stations.next() * 30, n++) {
+        const rng = keyed(`brush:${ri}:${i}:${n}`), side = rng.next() < .5 ? -1 : 1;
+        for (let k = 0; k < 14; k++) {
+          const o = 11 + rng.next() * 11, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
+          if (ok(x, z, 6) && free(x, z, 1.5)) { fire(x, z, 1.1 + rng.next() * .7); break; }
+        }
+      }
+    }
+  }
+  return { points: [], fires };
 }
 
 /** Light-field pools of the accents (appended to the layout statics, always on). */
