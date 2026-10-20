@@ -31,18 +31,22 @@ for (const cell of chunks) {
   counts[cell.id] = triangles;
   await io.write(`${out}/${cell.id}.glb`, doc);
 }
-/** Materials that only the L9 detail overlays use (layouts/D-CROSSING/dress.py): the coarse horizon keeps the plain ground. */
-const nearField = new Set(['pal_picketWhite', 'pal_canvasTan', 'pal_leather', 'pal_mustard', 'pal_mustardLight', 'pal_apronOlive', 'pal_olive', 'pal_oliveLight', 'pal_trouserLight', 'pal_uiDark', 'pal_pantsDark', 'pal_pantsLight', 'pal_leatherShadow', 'pal_silver', 'pal_capTan', 'pal_khakiSeam', 'pal_oliveSeam', 'pal_pantsCargo']);
-const horizon = cloneDocument(source);
-for (const node of horizon.getRoot().listNodes()) {
-  if (!node.getMesh()) { node.dispose(); continue; }
-  if (node.getExtras().terrainChunk) {
-    const mesh = node.getMesh()!;
-    for (const p of mesh.listPrimitives()) if (nearField.has(p.getMaterial()?.getName() ?? '')) p.dispose(); // paint, gravel ruts, fields, shoulders and dust pans are near-field detail
+    for (const p of mesh.listPrimitives()) { const name = p.getMaterial()?.getName() ?? ''; if (nearField.has(name) || district === 'D-CURE' && name !== 'pal_asphalt') p.dispose(); } // paint and gravel ruts are near-field detail; D-CURE keeps only the road over its ground sheet
     const [x, y, z] = node.getTranslation();
     node.setTranslation([x, y - .010, z]); // no coplanar fighting; even 1 cm fork arrows stay within the 2 cm seam budget
     node.setExtras({});
   }
+}
+if (district === 'D-CURE') {
+  const grass = horizon.getRoot().listMaterials().find(m => m.getName() === 'pal_grass');
+  if (!grass) throw Error('D-CURE horizon: no pal_grass material for the ground sheet');
+  const xs = layout.bounds.map(p => p[0]), zs = layout.bounds.map(p => p[1]), [x0, x1, z0, z1] = [Math.min(...xs), Math.max(...xs), Math.min(...zs), Math.max(...zs)];
+  const buffer = horizon.getRoot().listBuffers()[0];
+  const position = horizon.createAccessor().setType('VEC3').setArray(new Float32Array([x0, -.03, z0, x1, -.03, z0, x1, -.03, z1, x0, -.03, z1])).setBuffer(buffer);
+  const normal = horizon.createAccessor().setType('VEC3').setArray(new Float32Array([0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0])).setBuffer(buffer);
+  const indices = horizon.createAccessor().setType('SCALAR').setArray(new Uint16Array([0, 2, 1, 0, 3, 2])).setBuffer(buffer);
+  const sheet = horizon.createMesh('horizon-ground').addPrimitive(horizon.createPrimitive().setAttribute('POSITION', position).setAttribute('NORMAL', normal).setIndices(indices).setMaterial(grass));
+  horizon.getRoot().listScenes()[0].addChild(horizon.createNode('horizon-ground').setMesh(sheet));
 }
 await horizon.transform(join(), prune());
 const horizonTriangles = horizon.getRoot().listMeshes().reduce((sum, mesh) => sum + mesh.listPrimitives().reduce((n, p) => n + (p.getIndices()?.getCount() ?? p.getAttribute('POSITION')!.getCount()) / 3, 0), 0);
