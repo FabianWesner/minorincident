@@ -228,7 +228,7 @@ def build_gear(body, lod, sex):
     bones = body.bones
     n = g.n
     INSET = .003
-    K = .9 if lod else 1.0   # the low body is a coarser surface: slightly lower plates keep every vertex inside the 2 cm gap gate
+    K = .85 if lod else .91   # the low body is a coarser surface: slightly lower plates keep every vertex inside the 2 cm gap gate
     def cush(T, p=2.5, floor=-INSET):
         return lambda s, t: floor + (T * K - floor) * rounded(s, p) * rounded(t, p)
     def cush_ring(T, p=2.5):
@@ -273,8 +273,8 @@ def build_gear(body, lod, sex):
         if i == int(R * .66): return 'orange'
         return 'uiDark'
     g.patch('uiDark', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True),
-            cush_ring(.017, 2.2), rows, cols, closed=True, bvh=body.bvh_nopack, cell_color=vest_color, shade=.5, dilate=0, smooth=1, median=True, remap=TORSO,
-            drop=lambda i, j, R, C: i < R * .62 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 30)   # armholes: nothing at the armpit for the raised arms to stretch
+            cush_ring(.017, 2.2), rows, cols, closed=True, bvh=body.bvh_nopack, cell_color=vest_color, shade=.5, dilate=0, smooth=1, median=True,
+            drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 40)   # armholes: nothing at the armpit for the raised arms to stretch
     g.tier_mark()
 
     # ---- tier 3: shoulder + elbow pads, utility belt ---------------------------------------------------------------
