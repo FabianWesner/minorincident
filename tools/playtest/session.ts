@@ -79,10 +79,20 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
   const levelDeadline = () => wallStart + o.levelMinutes * 60_000;
+  /** The ring the player sees: the active marker's authored anchor (as markerAnchor() resolves it for the 3D ring). The drawn
+   * ring object can still sit at (0, 0, 0) on the first frame of a level, so it is not read directly (10-20: a cached origin ring
+   * walked the courier 274 m away in L7). The drawn height is logged once per step for the audit. */
   const markerRing = async (): Promise<{ x: number; y: number; z: number } | null> => page.evaluate(() => {
-    const m = (window.__SS__!.getState().render as { missionMarker?: { visible: boolean; position: number[] } | null }).missionMarker;
-    return m?.visible ? { x: m.position[0], y: m.position[1], z: m.position[2] } : null;
+    const lab = window.__SCENE__ as unknown as { game?: { world: { missions?: { def: { l3?: unknown; anchors: Record<string, { x: number; z: number; y?: number }> }; state: { marker: string | null } } } } } | undefined;
+    const m = lab?.game?.world.missions, key = m?.state.marker; if (!m || !key) return null;
+    const a = m.def.anchors[m.def.l3 && key === 'l3-route' ? 'l3-zone' : key];
+    return a ? { x: a.x, y: a.y ?? 0, z: a.z } : null;
   });
+  const drawnRing = async (): Promise<number[] | null> => page.evaluate(() => {
+    const m = (window.__SS__!.getState().render as { missionMarker?: { visible: boolean; position: number[] } | null }).missionMarker;
+    return m?.visible ? m.position.map(v => +v.toFixed(2)) : null;
+  });
+  let lastRingRead = 0;
   let ring: { x: number; y: number; z: number } | null = null, ringKey = '';
 
   const startLevel = async (e: Eyes) => {
@@ -256,9 +266,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (key !== lastProgress.key) {
       if (lastProgress.key) log({ progress: key, tick: e.tick, after: Math.round((e.tick - lastProgress.tick) / 60) });
       lastProgress = { key, tick: e.tick, wall: Date.now(), best: e.distance ?? Infinity }; assistMode = false; unstickDir = 0; navAssist = false; navUntil = 0; navEpisodes = 0; lastPos = { x: e.player?.x ?? 0, z: e.player?.z ?? 0, wall: Date.now() };
-      if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, playerY: e.player?.y } }); }
+      if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; await hold(300); run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, drawn: await drawnRing(), playerY: e.player?.y } }); }
       if (stuckLogged.size) bootWall = Date.now();
     }
+    if (Date.now() - lastRingRead > 2000 && !(e.marker === null || !e.marker.visible)) { lastRingRead = Date.now(); const r = await markerRing(); if (r) ring = r; }
     if (`${e.step}|${e.marker?.anchor}` !== ringKey) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; log({ marker: e.marker?.anchor, ring }); }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
