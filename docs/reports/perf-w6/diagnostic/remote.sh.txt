@@ -1,0 +1,8 @@
+#!/bin/sh
+# perf-w6 diagnostic: sim stress fixtures on a Hetzner runner. Usage: sh tools/perf/w6/remote.sh <mode> <rounds> [scenarios...]
+mode=${1:-listeners}; rounds=${2:-3}
+shift 2 2>/dev/null
+scenarios=${*:-l8 l7 zoo2 zoo1}
+for s in $scenarios; do
+  npx tsx tools/perf/w6/sim-profile.ts "$s" low "$rounds" /tmp/w6 "$mode" 2>&1 | grep -v '^mod\|^top\|loading\|loaded'
+done

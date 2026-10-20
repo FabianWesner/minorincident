@@ -1,0 +1,32 @@
+"""Longest recorded frames of a w6 trace run: neighbours, builds, GC events and CPU-profile samples in that frame."""
+import json, sys, collections
+base = sys.argv[1]  # e.g. test-results/w6/trace/break-webgl
+rows = json.load(open(base + '.rows.json'))
+tr = json.load(open(base + '.trace.json')); ev = tr['traceEvents'] if isinstance(tr, dict) else tr
+p = json.load(open(base + '.cpuprofile'))
+mark = next(e for e in ev if e.get('name') == 'w6-start')['ts']
+r = rows['rows']; markAt = rows['markAt']
+order = sorted(range(len(r)), key=lambda i: -r[i]['frame'])[:int(sys.argv[2]) if len(sys.argv) > 2 else 3]
+nodes = {n['id']: n for n in p['nodes']}; parent = {}
+for n in p['nodes']:
+    for c in n.get('children', []): parent[c] = n['id']
+ts = []; cur = p['startTime']
+for d in p['timeDeltas']: cur += d; ts.append(cur)
+for i in order:
+    row = r[i]; end = mark + (row['at'] - markAt) * 1000; start = end - row['frame'] * 1000
+    print(f"\n=== frame {i}: {row['frame']:.1f} ms tick {row['tick']} ticks {row['ticks']} sim {row['sim']:.1f} update {row['update']:.1f} render {row['render']:.1f}")
+    print('   neighbours', [round(x['frame']) for x in r[max(0, i - 3):i + 4]])
+    print('   builds', [b for b in rows['builds'] if abs(b['tick'] - row['tick']) <= 3])
+    for e in ev:
+        if e.get('ph') == 'X' and 'dur' in e and start - 5e3 <= e['ts'] <= end and e['dur'] > 1000 and ('GC' in e['name'] or 'Mark' in e['name'] or 'Sweep' in e['name'] or 'Compact' in e['name']):
+            print(f"   gc {e['name']} {e['dur'] / 1000:.1f} ms at {(e['ts'] - start) / 1000:.1f}")
+    incl = collections.Counter(); n = 0
+    for k, s in enumerate(p['samples']):
+        if not (start <= ts[k] < end): continue
+        n += 1; seen = set(); x = s
+        while x is not None:
+            cf = nodes[x]['callFrame']; l = f"{cf['functionName'] or '(anon)'} {cf['url'].split('/')[-1]}:{cf['lineNumber'] + 1}"
+            if l not in seen: incl[l] += 1; seen.add(l)
+            x = parent.get(x)
+    print(f'   samples {n}')
+    for l, c in incl.most_common(45): print(f'   {100 * c / max(1, n):5.1f}% {l}')

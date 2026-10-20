@@ -1,0 +1,5 @@
+#!/bin/sh
+# perf-w6 diagnostic: per-tick cost by tick phase (mod 60/10/6) for the stress fixtures on a quiet runner.
+for s in ${*:-l8 zoo2 l7}; do
+  echo "== $s"; node tools/perf/w6/ab/new.mjs "$s" low 3 /tmp/w6 2>&1 | grep -E '^(mod|top)'
+done
