@@ -24,13 +24,13 @@ test('weapon pickup ring draws above occluders without writing depth or changing
   } finally { view.dispose(); geometry.dispose(); material.dispose(); }
 });
 
-test('mission pickup rings including the L2 axe stay visible over street props', () => {
+test('mission rings sit behind surface occluders while the overhead arrow stays visible', () => {
   const marker = new ObjectiveMarker({} as never);
   try {
     expect(marker.children).toHaveLength(2);
-    for (const child of marker.children as Mesh[]) {
+    for (const [index, child] of (marker.children as Mesh[]).entries()) {
       expect(child.renderOrder).toBeGreaterThan(90);
-      expect(child.material).toMatchObject({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
+      expect(child.material).toMatchObject({ depthTest: index === 0, depthWrite: false, toneMapped: false, fog: false });
     }
   } finally { marker.dispose(); }
 });

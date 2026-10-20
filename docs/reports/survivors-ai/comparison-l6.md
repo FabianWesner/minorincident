@@ -1,6 +1,6 @@
 # L6 criterion review — three seeds
 
-Main `60c51a67a` and final AI source, `L6-default`, high tier, identical 600-second budgets, no cheats. Values read **main → branch**. Raw evidence: [main](compare-l6-main.json), [branch](compare-l6-branch.json). Both raw comparisons are from remote runners. Local repeats agreed on complete timings within one tick; evade-only casualty counts varied and the remote values below are retained.
+Main `60c51a67a` and final AI source, `L6-default`, high tier, identical 600-second budgets, no cheats. Values read **main → branch**. Raw evidence: [main](compare-l6-main.json), [branch](compare-l6-branch.json). Both table comparisons are from remote runners. The final [cadence-preserving source repeat](compare-l6-branch-cadence.json) was run locally: complete timings, deaths and rescue totals agree exactly. Every evade run still evacuates 0/29; seed 3 records 20 courier deaths, 21 lost and 8 waiting instead of the remote 21/24/5. Casualty variation is retained explicitly.
 
 | Profile / seed | Seconds | Courier deaths | Actually out / 29 | Lost | Waiting alive |
 | --- | ---: | ---: | ---: | ---: | ---: |

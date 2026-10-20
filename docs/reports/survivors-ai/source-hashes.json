@@ -1,7 +1,9 @@
 {
+  "specs/epic-21-level-3-the-police-collapse.md": "ca59cdda0b025a5ada4f1b582e2b5cd7ded72790228e7bd1b8b2926dadb733ab",
   "specs/epic-24-level-6-the-subway.md": "5c97f61cb1c1840dc49b1d983fd1290f9b657269660a744439885b2cc7019814",
   "src/assets/wreckRoofs.ts": "dd8c8ce253236b98d377f93fd1716a24357f00517052a3263b9fc7bc546da7cb",
   "src/audio/AudioService.ts": "e6e04a2cfc6487d989eb21d3bf467cafd8b0b6e12d28a05731ece889c3bb9bbd",
+  "src/data/l3.ts": "49d8825eeaf05975b241288fbd59b73c17ea89bfc9c9c8a4fb756676fbd10628",
   "src/debug/scenelab/SceneLab.ts": "4358f81c606c3ccb74535b8348b943aff0f2ec8265e32deff6274a510759e21a",
   "src/debug/scenelab/spec.ts": "ce02d89b3644651c3008b56b1ff98be1ad77e33e96afe12e9b05a617ce13433d",
   "src/levels/L5/layout.ts": "7fc011e497aefaef4459c29a618e4fb3de4e2b96f0b1b27233397342ab3cb2ca",
@@ -20,7 +22,7 @@
   "src/sim/missions/events.ts": "e70c1a0104f95a640be178b4e84e99980bc47968c4c8c42037234341138ee3d7",
   "src/sim/npc/Civilians.ts": "8bbe7c168d3f0413888561c765a44e004edf1c8ef41fb94a4f6dcd6c1a3ae801",
   "src/sim/npc/Npcs.ts": "4e07380d2c3075eb78e89dff3026ec75e6e6f00e3f8192c4cf8f1e2ad2e0e09b",
-  "src/sim/npc/defence.ts": "a17f226652de1b38a528ccca91fba4117639fad5e69192a9a8d7b2f16c83cb0d",
+  "src/sim/npc/defence.ts": "609d1003e41b49e69fef18fd8f348e6636ccc48d5092a94dfb8000886cb1f0ac",
   "src/sim/npc/types.ts": "fb7b345b599bed32c0899b39a65874ef7050ab47106253a54a1f3f67132bff3c",
   "src/sim/outbreak/Allies.ts": "7b588b4d2d6334ea534137298164a78ad4dc043664af69c58dfcb1ea25fb2927",
   "src/sim/outbreak/Outbreak.ts": "eb40999f3dd1e9e03d6cac14b5e2536d1370e957ca825649a25de97a29ca6ece",
@@ -42,11 +44,13 @@
   "tests/scenes/catalog/survivors-ai-l5-pickup.json": "9b691ea17f0f1537f3d16a5222f0cb174100b72663a36db2462cb6e24a014fc2",
   "tests/scenes/catalog/survivors-ai-wreck-roof.json": "301b1e4bdbb7b26f4a18226675c96716ec2db122504f12454cafd8e127829ace",
   "tests/sim/interact/pickups.test.ts": "4e82dacc50f4ea0dcd4ea6dda82522347321a7da534ea5285000deb4bff697c8",
+  "tests/unit/render/pickup-visibility.test.ts": "f45478c9781efacc5ab132954f6cca574f9d1a6d3b9ccddd8606f74f5d045b88",
   "tests/unit/render/survivor-rings.test.ts": "49f60e8b27f193894ca3b8a698ad070ffab6bafb374c7c0177177d8686d80ac8",
-  "tests/unit/survivors-ai.test.ts": "ba724ecf76b4902cf8a016f532b47b90ba5dabfe120057e54ab69f81a7e58d65",
+  "tests/unit/survivors-ai.test.ts": "19e2e6dc70d9d3cb4c70acf5c119f6023a99a7e14606987c69eeb2548df9f1ad",
   "tests/unit/wreck-roofs.test.ts": "750e639937fa87218a7d9f124b214a86d357d274634f2c21c36337c05ddffd25",
   "tools/assets/bake-wreck-roofs.ts": "ef8b3f46c30b9e016a919c3a9a5711a0fba241a88d69d1ad335a4ca12b698d27",
   "tools/scenelab/session.ts": "1b1659a8bb67a5bd511025d565aeec32812c5033616288b0c720fc7fcd96905b",
+  "tools/survivors-ai/compare-l3.ts": "338abc3e69da684041fe330df770b07c59959163dfb53b9291c9d58f971074b8",
   "tools/survivors-ai/compare-l6.ts": "af9198373c014b733df42cc19e6c2bcdbf7e386c0d7aeef2440876494cc40a8e",
   "tools/survivors-ai/compare.ts": "91cb657f9fa26a68f3d45d76e353a9132c3c35a66c76cf82692af1bec146341c"
 }
