@@ -1,0 +1,41 @@
+{
+  "name": "survivors-ai-bus-ring",
+  "note": "PO #57: actual Sam discovery ring on Lakeshore pavement in front of the L5 wrecked school bus. The ring arc behind the bus must be depth occluded rather than painted over its roof. Courier remains outside discovery range so the ring stays visible.",
+  "ground": "district",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "l5Aftermath": {
+    "found": []
+  },
+  "time": "L5",
+  "tier": 5,
+  "size": 220,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -45,
+        38.5
+      ],
+      "yaw": -90
+    }
+  ],
+  "frames": 120,
+  "sheet": 20,
+  "shots": [
+    1,
+    60,
+    119
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

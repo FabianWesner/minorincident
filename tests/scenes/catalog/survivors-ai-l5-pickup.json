@@ -1,0 +1,63 @@
+{
+  "name": "survivors-ai-l5-pickup",
+  "ground": "district",
+  "size": 220,
+  "time": "L5",
+  "tier": 5,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 15,
+  "shots": [
+    1,
+    15,
+    30,
+    90,
+    179
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "actorWeapons": {
+      "sam": "weapon.handgun"
+    },
+    "actorTravel": {
+      "sam": [
+        2,
+        30
+      ]
+    }
+  },
+  "note": "PO #56: Sam passes within 2 m of the existing handgun at (10,-8.4), moved onto accessible pavement by the production pickup placement. This uses production L5 discovery, the authored street firearm, pickup arbitration, and the follower/ally combat dispatcher. The basement shotgun remains reserved for the courier.",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "l5Aftermath": {
+    "found": [
+      "sam"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        12,
+        -8.4
+      ],
+      "yaw": 0,
+      "state": {
+        "walk": [
+          [
+            18,
+            -8.4
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -17,6 +17,15 @@ const ticks = (s: number) => Math.round(s * 60);
 export function allyState(role: AllyState['role'], post: { x: number; z: number } | null = null, hold = false): AllyState {
   return { role, engaged: false, run: null, runSpeed: l2.allies.firefighter.moveMs, post: post ? { ...post } : null, hold, targetId: 0, nextAttack: 0, hits: 0, forceUntil: 0 };
 }
+/** A level handover keeps the gun but starts a new clock and discards the previous fight's orders/targets. */
+export function readyCarriedAlly(e: EntitySnapshot, tick: number): void {
+  const c = e.civilian!, a = c.ally;
+  delete c.dangerUntil;
+  if (!a) return;
+  a.nextAttack = tick; a.targetId = 0; a.strikeAt = 0; a.forceUntil = 0; a.post = null; a.run = null; a.hold = false;
+  a.mag = 0; a.burstN = 0; a.lastHp = e.health.current;
+  for (const key of ['follow', 'cover', 'strikeTarget', 'step', 'stepAfter', 'still', 'reloadUntil', 'flinchUntil', 'panicUntil', 'blockedAt', 'aimMoveAt', 'aimMoveRestUntil', 'calloutAt'] as const) delete a[key];
+}
 /** v2 hit chance: flat to `nearM`, then linear down to `hitFar` at the gun's range. */
 export function gunHitChance(gun: AllyGun, distance: number): number {
   if (distance <= gun.nearM) return gun.hitNear;
@@ -40,6 +49,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
   if (e.health.current <= 0 || tick < c.knockedUntil) { a.strikeAt = 0; return true; }
   const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);
+  const travelFacing = shooter && c.state !== 'grabbed' && tick < (a.aimMoveRestUntil ?? 0) && Math.hypot(e.locomotion?.vx ?? 0, e.locomotion?.vz ?? 0) > .12;
+  if (travelFacing) { a.strikeAt = 0; if (c.story?.clip === 'shoot') c.story = null; }
   // Hit flinch: any health lost since the last tick plays the hurt clip and holds fire for a quarter second.
   if (a.lastHp !== undefined && e.health.current < a.lastHp - .5 && c.state !== 'grabbed') {
     a.flinchUntil = tick + 16; a.nextAttack = Math.max(a.nextAttack, tick + 16); a.strikeAt = 0; a.step = undefined; c.story = { clip: 'hurt', start: tick };
@@ -71,8 +82,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const audibleThreat = (a.role === 'civilian' || a.forceUntil > tick)
     && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
-  if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
-  if (a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
+  if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
+  if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
     let close = 0;
     for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
     if (close >= civ.panicInfected) {
@@ -166,7 +177,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
           const hit = d <= gun.rangeM + .5 && new Rng(world.seed, `ally-shot:${e.id}:${a.hits}`).next() < gunHitChance(gun, d);
           world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role, ...(a.weapon ? { weapon: a.weapon } : {}), hit, from: { x: e.transform.x, z: e.transform.z }, to: { x: victim.transform.x, z: victim.transform.z } });
           // An Alpha (E07 heavy) shrugs off allied rifle stagger; damage is unchanged (l4-collapse: crowds of soldiers otherwise pin it forever).
-          if (hit) world.combat.damage.apply({ attackId: 0, actionId: 'weapon.pistol', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: 0, stagger: victim.archetype === 'infected.alpha' ? 0 : .25 });
+          if (hit) world.combat.damage.apply({ attackId: 0, actionId: a.actionId ?? 'weapon.pistol', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: 0, stagger: victim.archetype === 'infected.alpha' ? 0 : .25 });
         } else {
           const def = shooter ? l2.allies.officer : ff, reach = shooter ? (a.range ?? l2.allies.officer.rangeM) + 4 : ff.reachM * 1.1;
           if (d <= reach) world.combat.damage.apply({ attackId: 0, actionId: shooter ? 'weapon.pistol' : 'weapon.fire-axe', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: def.damage, multiplier: 1, type: shooter ? 'bullet' : 'melee', knockback: shooter ? 0 : .3, stagger: shooter ? .25 : .1 });
@@ -186,6 +197,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const reach = defence(target) ? Math.max(reachM, pt.defendM) : gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
       if (d > reach * .9 && !a.hold && !a.follow && !a.run) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
+      // The travel-facing interval lowers the gun while the fighter keeps its retreat order.
+      if (travelFacing) return true;
       e.transform.yaw = -Math.atan2(dz, dx);
       const reloading = tick < (a.reloadUntil ?? 0);
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot' && !reloading) c.story = { clip: 'shoot', start: tick };
@@ -266,7 +279,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
 
 /** Ticks until the next shot: bursts, then a reload pause after a magazine; the burst pause pays for the reload (average rate = `shotS`). */
 function cadence(world: SimWorld, e: EntitySnapshot, a: AllyState, shotS: number): number {
-  const c = allyCadence[a.weapon ?? (a.role === 'soldier' ? 'rifle' : 'pistol')], tick = world.tick;
+  const c = allyCadence[(a.weapon === 'shotgun' ? 'hunting-rifle' : a.weapon) ?? (a.role === 'soldier' ? 'rifle' : 'pistol')], tick = world.tick;
   a.mag = (a.mag ?? 0) + 1; a.burstN = (a.burstN ?? 0) + 1;
   if (a.mag >= c.mag) {
     a.mag = 0; a.burstN = 0; a.reloadUntil = tick + ticks(c.reloadS); a.still = undefined;

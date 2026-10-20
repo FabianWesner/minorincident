@@ -1,0 +1,103 @@
+{
+  "name": "survivors-ai-grab-flee",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L5",
+  "tier": 5,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 20,
+  "shots": [
+    1,
+    29,
+    45,
+    90,
+    180,
+    239
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "actorStates": {
+      "saved": "calm"
+    },
+    "actorTravel": {
+      "saved": [
+        2,
+        20
+      ]
+    }
+  },
+  "note": "PO #70: real one-second outbreak grab, interrupted at frame 30 by a hit on the grabber. The survivor immediately runs away toward the courier, then regroups. The stunned attacker and the saved human both persist.",
+  "l7Group": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        6,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "saved",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.rosa.aftermath"
+      },
+      "state": {
+        "survivor": {
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "grabber",
+      "kind": "infected",
+      "at": [
+        -0.9,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "grabber",
+      "do": {
+        "grab": "saved"
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "grabber",
+      "do": {
+        "hit": {
+          "amount": 500
+        }
+      }
+    },
+    {
+      "frame": 120,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            12,
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}

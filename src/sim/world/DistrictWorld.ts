@@ -1,3 +1,4 @@
+import { wreckRoofHeight } from '../../levels/districts/wreckRoofHeight';
 import { closeBarrierJoints } from '../../levels/barrierJoints';
 import { l4BreakableLine } from '../../levels/L4/layout';
 import { isWorldTier } from '../../levels/districts/types';
@@ -6,6 +7,7 @@ import type {
   LevelComposition,
   Point,
   Aabb,
+  Placement,
 } from "../../levels/districts/types";
 import { districtGameplay } from "../../levels/districts/index";
 import {
@@ -29,6 +31,8 @@ export class DistrictWorld {
   /** Visible perimeter fence footprints; shared district seams stay open. */
   readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
+  /** Wreck tops are support only for actors already on their layer; they never lift a street actor. */
+  private readonly wreckRoofs = new Map<number, { bounds: Aabb; placement: Placement; origin: Point }[]>();
   private readonly supports = new Map<number, Aabb[]>();
   /** Raised sidewalk slabs (layout surfaces, tile >= 10 cm) bucketed like `supports`: the paving is baked into the layout GLB without a collider, so walkers need its height from here. */
   private readonly slabs = new Map<number, { min: Point; max: Point; polygon: Point[]; height: number }[]>();
@@ -82,6 +86,16 @@ export class DistrictWorld {
       const a: Aabb = { min: [c.aabb.min[0] + d.origin[0] - supportSeam, c.aabb.min[1], c.aabb.min[2] + d.origin[1] - supportSeam], max: [c.aabb.max[0] + d.origin[0] + supportSeam, c.aabb.max[1], c.aabb.max[2] + d.origin[1] + supportSeam] };
       for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
         const key = DistrictWorld.groundKey(x, z), bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
+      }
+    }
+    for (const d of this.districts) for (const p of d.decay.placements) {
+      if (!p.assetId.startsWith('veh.') || !['wrecked', 'burned'].includes(p.decay ?? '')) continue;
+      for (const c of d.decay.colliders) {
+        if (!c.id.startsWith(`${p.id}/`) || c.walkable) continue;
+        const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
+        for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
+          const key = DistrictWorld.groundKey(x, z), bucket = this.wreckRoofs.get(key) ?? []; bucket.push({ bounds: a, placement: p, origin: d.origin }); this.wreckRoofs.set(key, bucket);
+        }
       }
     }
     for (const d of this.districts) for (const surf of d.layout.surfaces) if (surf.surface === "tile" && (surf.height ?? 0) >= .1) {
@@ -181,6 +195,13 @@ export class DistrictWorld {
     const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     let height = 0;
     for (const a of this.supports.get(key) ?? []) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
+    for (const roof of this.wreckRoofs.get(key) ?? []) {
+      const a = roof.bounds;
+      if (x < a.min[0] || x > a.max[0] || z < a.min[2] || z > a.max[2]) continue;
+      const top = wreckRoofHeight(roof.placement, x - roof.origin[0], z - roof.origin[1]) ?? a.max[1];
+      // An actor already on the clipped collision top belongs on the actual visible roof, even when the roof exceeds that band.
+      if (top <= limit || feet >= a.max[1] - .05) height = Math.max(height, top);
+    }
     for (const s of this.slabs.get(key) ?? []) if (s.height <= limit && s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
     return height;
   }

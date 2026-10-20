@@ -7,8 +7,7 @@ const ticks = (s: number) => Math.round(s * 60);
 const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 
 /**
- * One tick of a found E23 survivor (called by the outbreak layer for live civilians with `survivor` in follow mode). They are unarmed,
- * biteable humans like anyone else; the escort rules of section 5.4: follow the courier at 2-5 m (each in its own slot behind and to
+ * One tick of a found E23 survivor (called by the outbreak layer for live civilians with `survivor` in follow mode). They are biteable humans like anyone else; the escort rules of section 5.4: follow the courier at 2-5 m (each in its own slot behind and to
  * the side of her; through a narrow passage the grid route makes them single file), run at 3.8 m/s (slower than the courier and
  * every infected), call "Wait!" when more than 10 m behind, and briefly crouch before regrouping when an infected is within 8 m. No fail state: a
  * survivor that is lost is simply gone. Returns true (the follower owns the tick).
@@ -19,7 +18,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   if (world.missions?.l8?.follower(e)) return true;
   if (world.l7Encounters?.follower(e) || world.missions?.l6?.follower(e)) return true;
   if (s.mode !== 'follow') return false;
-  // A found survivor stays a calm, upright human: no startle, no flight (the infected decide what happens to them).
+  // Ordinary formation resumes only after the shared defence/release reaction has finished.
   if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
   const player = world.entities.get(1)!, me = e.transform, p = player.transform;
   const ingress = world.missions?.l5?.ingress(e);

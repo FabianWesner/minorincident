@@ -1,0 +1,318 @@
+{
+  "targetedNewTests": 22,
+  "sceneMatrixPass": 12,
+  "freshTypecheck": 0,
+  "freshLint": 0,
+  "freshBuild": 0,
+  "checks": [
+    {
+      "name": "L3 / L4 original-control main",
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "L3 The Police Collapse T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+          "status": "passed"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+          "status": "passed"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-segments @E21 segment helper matches the corridor bounds",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04f @E22 PO 10-12 \"move this soldier away, all busses drive through him\": during the live ride no actor stands inside a convoy vehicle hull",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04e @E22 PO 10-12 \"sound when the bus is driving\": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04d @E22 PO 10-12 \"Bus is extremely vibrating\": the player bus pose has no high-frequency jitter over the whole ride",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "late legacy checks before first-beat assertion correction",
+      "passed": 5,
+      "failed": 1,
+      "cases": [
+        {
+          "name": "PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival",
+          "status": "passed"
+        },
+        {
+          "name": "PO #7b @E20 the arriving player sees police firing on a horde at the bridge",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+          "status": "passed"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+          "status": "passed"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+          "status": "skipped"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-segments @E21 segment helper matches the corridor bounds",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down",
+          "status": "failed"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at \"Fall back!\" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier",
+          "status": "passed"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps",
+          "status": "skipped"
+        },
+        {
+          "name": "PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap",
+          "status": "passed"
+        },
+        {
+          "name": "PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven",
+          "status": "skipped"
+        }
+      ]
+    },
+    {
+      "name": "corrected L4 criterion",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "L4 collapse director T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down",
+          "status": "passed"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at \"Fall back!\" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows",
+          "status": "skipped"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps",
+          "status": "skipped"
+        }
+      ]
+    },
+    {
+      "name": "corrected L6 criteria",
+      "passed": 2,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "T-E24-09-evade @E24 @E24-AC09 a non-fighting courier evacuates at most thirty percent, with real casualties",
+          "status": "passed"
+        },
+        {
+          "name": "T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+          "status": "passed"
+        },
+        {
+          "name": "T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+          "status": "skipped"
+        },
+        {
+          "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+          "status": "skipped"
+        }
+      ]
+    }
+  ],
+  "remoteFullAndFinalVerifier": "pending"
+}
