@@ -401,7 +401,14 @@ export class CharacterView extends Group {
       if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
       let gap = 0, at = [0, 0, 0], vertex = 0;
       const step = Math.max(1, Math.floor(node.geometry.getAttribute('position').count / 300));
-      points(node, 300).forEach((p, k) => { let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b)); if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = k * step; at = p.toArray().map(v => Math.round(v * 1000) / 1000); } });
+      // The gap is measured on the skin side: a plate's outer face sits its designed thickness (`_thick`, written by the gear build, allowance capped at 1.2 cm so it can never hide a real gap; tests/unit/render/courier-gear-tiers.test.ts fails above that)
+      // above the skin by construction, so only the distance beyond that thickness is a real gap. Meshes without it measure the vertex itself.
+      const thick = node.geometry.getAttribute('_thick');
+      points(node, 300).forEach((p, k) => {
+        let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
+        const skin = Math.max(0, Math.sqrt(best) - (thick ? Math.min(.012, thick.getX(k * step)) : 0));
+        if (skin > gap) { gap = skin; vertex = k * step; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
+      });
       report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
     });
     return report;
