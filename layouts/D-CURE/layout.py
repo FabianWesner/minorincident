@@ -466,14 +466,7 @@ frontage(complex_route, [('prop.street-lamp', 1)], 20, 5.8, jitter=1)
 frontage(complex_route, [('kit.dispersal-pipe-straight', 3), ('kit.dispersal-tank-bullet', 1), ('kit.dispersal-tank-sphere', 1), ('bld.substation', 2), ('bld.cure-service-building', 1)], 12, (10, 14))
 # R7 verge props sit in the bot's and player's natural line to the console: lights only, nothing to bump into.
 frontage(complex_route, [('prop.emergency-light', 1)], 7, (5, 7), chance=.9)
-# Road surface: solid edge lines so the asphalt reads as a worn road, not a flat ribbon.
-for a_, b_ in route_segments:
-    d = math.dist(a_, b_)
-    if d < 12 or a_[0] > 3975 or b_[0] > 3975: continue
-    ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d; nx, nz = -uz, ux
-    for side in (1, -1):
-        o0, o1 = 3.45*side, 3.6*side
-        surface('edge-line', ccw([[a_[0]+ux*4.5+nx*o0, a_[1]+uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o0, b_[1]-uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o1, b_[1]-uz*4.5+nz*o1], [a_[0]+ux*4.5+nx*o1, a_[1]+uz*4.5+nz*o1]]), 'silver', .006)
+# look-l10 road life: the edge lines are replaced by kerbed sidewalks (see the road-life block at the end).
 # Verge grass: blade strips beside the road through the residential fringe and the campus lawns (high 28 / low 5 blades per m2).
 for i in (1, 4):
     for a_, b_ in region_segments(i):
@@ -519,27 +512,142 @@ for i in range(6):
 l.data['lightGroups'].append(dict(id='corridor-dark', offAt=0))
 for p in l.data['placements']:
     if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
-# look-l9b: tar cracks and skid marks on the asphalt (thin dark strips, flat, no collision; L9's dress.py recipe), from a
-# separate random stream so the dressing placements are untouched.
-crack_rng = random.Random(1020)
+# ---- look-l10 road life (road-life lane): kerbed sidewalks, lane-following skids and walkable ground decals ------------------
+# Everything here is a flat, collider-free overlay (cut=False) inside the existing 8 m road footprint or on the verge, so
+# navigation, the finale and the route polylines are unchanged. Own random stream: the dressing placements keep their ids.
+life = random.Random(1021)
+SW0, SW1 = 2.5, 4.0           # sidewalk lateral band (m from the centre line), kerb line just inside it
+def frame(a_, b_):
+    d = math.dist(a_, b_); ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d
+    return d, ux, uz, -uz, ux
+def at(a_, ux, uz, nx, nz, s, lat): return [a_[0]+ux*s+nx*lat, a_[1]+uz*s+nz*lat]
+def strip(a_, F, s0, s1, l0, l1):
+    _, ux, uz, nx, nz = F
+    return ccw([at(a_, ux, uz, nx, nz, s0, l0), at(a_, ux, uz, nx, nz, s1, l0), at(a_, ux, uz, nx, nz, s1, l1), at(a_, ux, uz, nx, nz, s0, l1)])
+def blob(cx, cz, r, n=9, jit=.25):
+    ang0 = life.uniform(0, 6.28)
+    return ccw([[cx+math.cos(ang0+k*math.tau/n)*r*life.uniform(1-jit, 1+jit), cz+math.sin(ang0+k*math.tau/n)*r*life.uniform(1-jit, 1+jit)] for k in range(n)])
+def rquad(cx, cz, w, h, ang):
+    c, s_ = math.cos(ang), math.sin(ang)
+    return ccw([[cx+c*w/2*i-s_*h/2*j, cz+s_*w/2*i+c*h/2*j] for i, j in [(-1, -1), (1, -1), (1, 1), (-1, 1)]])
+H_SW, H_KERB, H_JOINT, H_DECAL, H_DECAL2 = .0095, .011, .0105, .0066, .0072
 for a_, b_ in route_segments:
-    d = math.dist(a_, b_)
-    if d < 12 or a_[0] > 3940 or b_[0] > 3940: continue
-    ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d; nx, nz = -uz, ux
-    t = crack_rng.uniform(2, 8)
-    while t < d - 3:
-        lat = crack_rng.uniform(-3.0, 3.0); cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat
-        if crack_rng.random() < .6:
-            L = crack_rng.uniform(2.5, 7); ca = math.atan2(uz, ux) + crack_rng.choice([crack_rng.uniform(-.25, .25), crack_rng.uniform(1.1, 2.0)])
-            w = crack_rng.uniform(.05, .09); p0 = (cx - math.cos(ca)*L/2, cz - math.sin(ca)*L/2); p1 = (cx + math.cos(ca)*L/2, cz + math.sin(ca)*L/2)
-            sx, sz = -math.sin(ca)*w/2, math.cos(ca)*w/2
-            surface('road-crack', ccw([[p0[0]+sx, p0[1]+sz], [p0[0]-sx, p0[1]-sz], [p1[0]-sx, p1[1]-sz], [p1[0]+sx, p1[1]+sz]]), 'uiDark', .0064, cut=False)
-        else:
-            L = crack_rng.uniform(3, 7); drift = crack_rng.uniform(-.8, .8)
-            for off in (-.9, .9):
-                ox, oz = cx + nx*off, cz + nz*off; e0 = (ox - ux*L/2, oz - uz*L/2); e1 = (ox + ux*L/2 + nx*drift, oz + uz*L/2 + nz*drift)
-                surface('skid', ccw([[e0[0]+nx*.075, e0[1]+nz*.075], [e0[0]-nx*.075, e0[1]-nz*.075], [e1[0]-nx*.075, e1[1]-nz*.075], [e1[0]+nx*.075, e1[1]+nz*.075]]), 'uiDark', .0062, cut=False)
-        t += crack_rng.uniform(5, 11)
+    if a_[0] > 3940 or b_[0] > 3940: continue
+    F = frame(a_, b_); d, ux, uz, nx, nz = F
+    if d < 20: continue
+    s0, s1 = 4.5, d - 4.5
+    for side in (1, -1):
+        # kerbed sidewalk: the pale kerb line on the road side, the slab behind it, (the terrain cells are capped at 800 triangles, so no expansion joints)
+        surface('sidewalk', strip(a_, F, s0, s1, side*SW0, side*SW1), 'pants', H_SW, cut=False)
+        surface('kerb', strip(a_, F, s0, s1, side*(SW0-.14), side*SW0), 'pantsLight', H_KERB, cut=False)
+        surface('kerb-shadow', strip(a_, F, s0, s1, side*(SW0-.2), side*(SW0-.14)), 'uiDark', H_JOINT, cut=False)
+    # crosswalk-style stripes in the gaps at each end, so the sidewalk break reads as a crossing
+    for end_s, sgn in ((0, 1), (d, -1)):
+        for k in range(5):
+            t = end_s + sgn*(.8 + k*.8)
+            surface('crosswalk', strip(a_, F, min(t, t+sgn*.4), max(t, t+sgn*.4), -3.6, 3.6), 'silver', H_DECAL2, cut=False)
+    # --- lane-following skid marks: a swerving pair of tracks that stays in one lane and fades out ---
+    t = life.uniform(10, 40)
+    while t < d - 24:
+        lane_lat = life.choice((-1.25, 1.25)); L = life.uniform(9, 17); sway = life.uniform(-.7, .7)
+        n = 7
+        for track in (-.55, .55):
+            for k in range(n):
+                sa, sb = t+L*k/n, t+L*(k+1)/n
+                la = lane_lat+track+sway*(k/n)**2; lb = lane_lat+track+sway*((k+1)/n)**2
+                la, lb = max(-2.2, min(2.2, la)), max(-2.2, min(2.2, lb))
+                wa, wb = .13*(1-.7*k/n)/2, .13*(1-.7*(k+1)/n)/2
+                surface('skid', ccw([at(a_, ux, uz, nx, nz, sa, la-wa), at(a_, ux, uz, nx, nz, sb, lb-wb), at(a_, ux, uz, nx, nz, sb, lb+wb), at(a_, ux, uz, nx, nz, sa, la+wa)]), 'uiDark', H_DECAL, cut=False)
+        t += life.uniform(45, 110)
+    # --- tar cracks along the lane (short, mostly parallel) ---
+    t = life.uniform(3, 10)
+    while t < d - 6:
+        lat = life.uniform(-2.2, 2.2); L = life.uniform(1.5, 4.5); ca = life.choice((life.uniform(-.3, .3), life.uniform(1.2, 1.9)))
+        cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat; ang = math.atan2(uz, ux)+ca
+        surface('road-crack', rquad(cx, cz, L, .07, ang), 'uiDark', H_DECAL, cut=False)
+        t += life.uniform(9, 20)
+    # --- ground life: oil stains, manholes, drain grates, lane arrows, litter and glass ---
+    t = life.uniform(6, 20)
+    while t < d - 8:
+        lat = life.uniform(-2.0, 2.0); surface('oil-stain', blob(a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat, life.uniform(.45, 1.0)), 'uiDark', H_DECAL, cut=False)
+        if life.random() < .55:   # a smaller second pool beside it
+            surface('oil-stain', blob(a_[0]+ux*(t+life.uniform(.5, 1.3))+nx*(lat+life.uniform(-.5, .5)), a_[1]+uz*(t+.9)+nz*lat, life.uniform(.2, .4)), 'leather', H_DECAL2, cut=False)
+        t += life.uniform(22, 48)
+    t = life.uniform(14, 40)
+    while t < d - 10:
+        lat = life.choice((-.35, .35)) if life.random() < .6 else life.choice((-1.7, 1.7)); cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat
+        surface('manhole', blob(cx, cz, .5, 10, .02), 'uiDark', H_DECAL, cut=False)
+        surface('manhole-ring', blob(cx, cz, .4, 10, .02), 'pantsCargo', H_DECAL2, cut=False)
+        for q in (0,): surface('manhole-bar', rquad(cx+ux*q, cz+uz*q, .62, .04, math.atan2(nz, nx)), 'uiDark', H_DECAL2+.0003, cut=False)
+        t += life.uniform(55, 130)
+    t = life.uniform(9, 30)
+    while t < d - 8:
+        side = life.choice((1, -1)); cx, cz = a_[0]+ux*t+nx*side*2.18, a_[1]+uz*t+nz*side*2.18
+        surface('drain', rquad(cx, cz, .95, .32, math.atan2(uz, ux)), 'uiDark', H_DECAL, cut=False)
+        for q in (-2, 0, 2): surface('drain-bar', rquad(cx+ux*q*.13, cz+uz*q*.13, .04, .28, math.atan2(uz, ux)), 'pantsLight', H_DECAL2, cut=False)
+        t += life.uniform(40, 90)
+    t = life.uniform(25, 60)
+    while t < d - 14:
+        for side, lat in ((1, 1.25), (-1, -1.25)):   # right-hand traffic: arrows point along each lane's travel direction
+            cx, cz = at(a_, ux, uz, nx, nz, t, lat)
+            L_, W_, hw = 2.7, .75, .32; fx, fz = ux*side, uz*side; gx, gz = nx, nz
+            def pt(f, g): return [cx+fx*f+gx*g, cz+fz*f+gz*g]
+            surface('lane-arrow', [pt(-L_/2, -hw/2), pt(L_*.1, -hw/2), pt(L_*.1, -W_/2), pt(L_/2, 0), pt(L_*.1, W_/2), pt(L_*.1, hw/2), pt(-L_/2, hw/2)], 'silver', H_DECAL2, cut=False)
+        t += life.uniform(120, 220)
+    t = life.uniform(3, 9)
+    while t < d - 4:
+        for _ in range(life.randint(1, 3)):   # litter drifted against the kerbs and across the lanes
+            lat = life.choice((life.uniform(-3.9, -2.55), life.uniform(2.55, 3.9), life.uniform(-2.3, 2.3)))
+            surface('litter', rquad(a_[0]+ux*(t+life.uniform(-3, 3))+nx*lat, a_[1]+uz*(t+life.uniform(-3, 3))+nz*lat, life.uniform(.18, .5), life.uniform(.12, .3), life.uniform(0, 3.14)), life.choice(('shirt', 'picketWhite', 'canvasTan', 'shirtLight', 'bandage')), (H_DECAL2+.0004) if abs(lat) < 2.5 else (H_JOINT+.0004), cut=False)
+        t += life.uniform(9, 18)
+    t = life.uniform(20, 70)
+    while t < d - 10:   # glass shards: a small glittering cluster, more of it at the crash scar
+        if a_[0] < 800 or life.random() < .35:
+            cx, cz = at(a_, ux, uz, nx, nz, t, life.uniform(-2.3, 2.3))
+            for _ in range(life.randint(5, 9)):
+                px, pz = cx+life.uniform(-.8, .8), cz+life.uniform(-.8, .8); ang = life.uniform(0, 6.28); r = life.uniform(.05, .13)
+                surface('glass', ccw([[px+math.cos(ang)*r, pz+math.sin(ang)*r], [px+math.cos(ang+2.3)*r*.6, pz+math.sin(ang+2.3)*r*.6], [px+math.cos(ang+4.0)*r*.8, pz+math.sin(ang+4.0)*r*.8]]), 'lavenderLight', H_DECAL2+.0006, cut=False)
+        t += life.uniform(25, 60)
+# painted parking bays beside the campus (R5), on a dark pad past the shoulder: lines in worn silver, a few abandoned cars
+for a_, b_ in region_segments(4):
+    if math.dist(a_, b_) < 100: continue
+    F = frame(a_, b_); d, ux, uz, nx, nz = F
+    side = 1 if nz > 0 else -1; s0, s1 = 14, d-14
+    surface('bay-pad', strip(a_, F, s0, s1, side*5.0, side*12.4), 'pantsDark', .0004, cut=False)
+    s = s0 + 1.2
+    while s < s1:
+        surface('bay-line', strip(a_, F, s, s+.14, side*5.2, side*11.8), 'silver', .0009, cut=False)
+        s += 2.9
+    surface('bay-line', strip(a_, F, s0+1.2, s1, side*11.7, side*11.85), 'silver', .0009, cut=False)
+    surface('bay-line', strip(a_, F, s0+1.2, s1, side*5.15, side*5.3), 'silver', .0009, cut=False)
+    for k, s in enumerate(range(int(s0+5), int(s1-5), 29)):
+        x, z = a_[0]+ux*(s+1.4)+nx*side*9.6, a_[1]+uz*(s+1.4)+nz*side*9.6
+        dress(['veh.sedan-white', 'veh.suv-dark', 'veh.pickup-red'][k % 3], x, z, math.atan2(-nz*side, nx*side)+life.uniform(-.06, .06), decay='wrecked' if k % 2 else None)
+# ---- roadside light points just outside the 6 m clearance (render-only lights come from NightAccents.cureAccents) ----
+def place_life(i, frac, side, asset, lat, decay=None):
+    """Scan the region's route from `frac` onwards (step 5 m, then the other lateral offsets) for the first spot dress() accepts."""
+    pts = source['regions'][i]['route']; segs = [(p, q) for p, q in zip(pts, pts[1:]) if math.dist(p, q) >= 40]
+    total = sum(math.dist(p, q) for p, q in segs)
+    for step in range(0, int(total), 5):
+        t = (frac * total + step) % total
+        for p, q in segs:
+            dd = math.dist(p, q)
+            if t > dd: t -= dd; continue
+            d_, ux, uz, nx, nz = frame(p, q)
+            if t < 12 or t > d_ - 12: break
+            for extra in (0, 1.6, 3.2, -1.2):
+                for sd in (side, -side):
+                    x, z = p[0]+ux*t+nx*sd*(lat+extra), p[1]+uz*t+nz*sd*(lat+extra)
+                    if asset.startswith('veh.'): yaw = math.atan2(-uz, ux)+(math.pi if life.random() < .5 else 0)+life.uniform(-.3, .3)
+                    elif asset == 'bld.bus-stop': yaw = face((nx*sd, nz*sd))
+                    else: yaw = life.uniform(0, 6.28)
+                    pid = dress(asset, x, z, yaw, decay=decay, route_clear=6.2 if asset.startswith(('prop', 'bld')) else None)
+                    if pid: l.data['placements'][-1]['roadLife'] = True; return pid
+            break
+    print('road-life skipped', i, asset)
+for i in range(6):
+    for frac, side, asset, lat, decay in [(.12, 1, 'prop.cure-drum-stack', 7.2, None), (.38, -1, 'veh.sedan-white', 10.5, 'burned'), (.62, 1, 'prop.cure-drum-stack', 7.4, None), (.86, -1, 'veh.police-sedan', 9.5, None)] + ([(.5, 1, 'bld.bus-stop', 7.0, None)] if i in (1, 4) else []):
+        place_life(i, frac, side, asset, lat, decay)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6

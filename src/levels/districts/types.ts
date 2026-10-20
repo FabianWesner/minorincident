@@ -44,6 +44,8 @@ export interface Placement extends PlacementTransform {
   navBlocker?: boolean;
   /** Set dressing (L10): its light anchors render (pools, emissives) but are not sim lamps, so infected sight and the sim cost stay unchanged. */
   decorLights?: boolean;
+  /** Road-life dressing (L10): its night light points are drawn by NightAccents.cureAccents. */
+  roadLife?: boolean;
   id: string;
   assetId: string;
   /** Optional baked collision record; visuals still use assetId (L2 annex rubble opts in without rebaking L5). */

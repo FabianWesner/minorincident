@@ -21,7 +21,7 @@ export interface Accent {
   pool?: { color: string; intensity: number; range: number };
 }
 /** Render-only persistent fire (Blasts flame cards, smoke, embers and a flickering pool). */
-export interface AccentFire { x: number; z: number; radius: number; car: boolean }
+export interface AccentFire { x: number; z: number; radius: number; car: boolean; /** Road-life dressing fire (barrel, verge car): sits just outside the 6 m clearance, not in the scar/corridor bands. */ life?: boolean }
 export interface AccentSet { points: Accent[]; fires: AccentFire[] }
 
 const dims = new Map((manifest as { id: string; dimensions?: { x: number; y: number; z: number } }[]).map(a => [a.id, a.dimensions]));
@@ -190,7 +190,23 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       }
     }
   }
-  return { points: [], fires };
+  // 3) Road life (road-life lane): roadside light points on the dressing pieces just outside the 6 m clearance. Burning barrels,
+  // a burning car per region, lit bus stops and police light bars; render-only, kept off the encounter spots and the console.
+  const points: Accent[] = [], put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
+  for (const p of placements) {
+    if (!p.roadLife) continue;
+    const [x, , z] = p.position, k = keyed(`life:${p.id}`), clearOfStory = spot(x, z) > 9 && Math.hypot(x - consoleAt[0], z - consoleAt[1]) > 70, l = lane(x, z);
+    if (!clearOfStory || x > 3940) continue;
+    const h = (dims.get(p.assetId)?.y ?? 1) * p.scale[1];
+    if (p.assetId === 'prop.cure-drum-stack') { if (l > 1 && l < 6) fires.push({ x: x + origin[0], z: z + origin[1], radius: .55, car: false, life: true }); }
+    else if (p.decay === 'burned' && p.assetId.startsWith('veh.') && l > 3 && l < 8.5) fires.push({ x: x + origin[0], z: z + origin[1], radius: 1.2, car: true, life: true });
+    else if (p.assetId === 'bld.bus-stop') put({ kind: 'lantern', x, y: h * .92, z, yaw: 0, color: '#cfe4ff', glow: 5, flicker: 0, strobe: false, pool: { color: '#bcd8ff', intensity: 2.6, range: 4.2 } });
+    else if (p.assetId === 'veh.police-sedan' && !p.decay) {
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), ph = k.next() * 2;
+      for (const [i, lz] of [-.38, .38].entries()) put({ kind: 'beacon', x: x + lz * s, y: h * .98, z: z + lz * c, yaw: p.yaw, color: i ? '#2f6bff' : '#ff2a1a', glow: 9, flicker: 0, strobe: true, seed: ph + i * .5, pool: { color: i ? 'light_siren_blue' : 'light_siren_red', intensity: 2.8, range: 4.2 } });
+    }
+  }
+  return { points, fires };
 }
 
 /** Light-field pools of the accents (appended to the layout statics, always on). */

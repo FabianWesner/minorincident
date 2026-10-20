@@ -1,0 +1,64 @@
+{
+ "name": "l10-roadlife-campus",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    2510,
+    -25
+   ],
+   [
+    2750,
+    115
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.0
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    2600,
+    45
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      2660,
+      45
+     ]
+    ]
+   }
+  }
+ ],
+ "note": "road-life lane (L10): R5 campus: painted parking bays with abandoned cars, kerbed sidewalks, lit bus stop. Look for a kerbed sidewalk on both sides narrowing the pale asphalt to ~5 m, ground decals that read as stains/paint (no flat black strokes), skids that follow one lane and fade, warm or siren light points just outside the 6 m clearance, no floating or sunk decals, no sidewalk over a collider. Flat decals only, no collision."
+}
