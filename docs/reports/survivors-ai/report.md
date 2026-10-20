@@ -9,7 +9,7 @@ Lane `lane/survivors-ai`, based on main `60c51a67a`, with the required merges of
 - **#71:** Every fatal outbreak bite sets actual HP to zero, including unarmed people at the infected cap. Finished civilians are ineligible for survivor bars, including legacy snapshots that contain positive HP. Living grabbed/downed bars read the existing HP fraction. Bodies remain in the world.
 - **#73:** Moving followers and gunners face their actual displacement. A shooter may retain target facing only with a living target in gun range while aiming, outside reload; continuous aiming during movement is capped at two seconds, followed by at least half a second facing travel with the gun lowered. The final correction applies to follower/gunner movement; passive crowd nudges retain the controller’s pose. Repeated hits cannot shorten an engaged fighter’s weapon cadence.
 - **#56/#56b:** The eight existing L5 scenery firearms become actual group pickups. Live followers collect one within two metres, with height/visibility checks, and receive the existing allied pistol/rifle combat. The original action ID and held prop live in the serialized civilian component. Courier mission pickups, shelf weapons, melee, rockets and weapons discarded by the courier are excluded. No additional guns or enemies are authored. The regular campaign survivor payload keeps the weapon through L6/L7/L8; new level clocks clear stale attack/reload/post/target state while preserving the gun. Checkpoint restoration rebases the timers.
-- **#57:** Wreck tops are sampled only on an actor's current height layer; street actors cannot jump up through a wreck. A generated mesh support bake supplies the actual visible wreck roofs above the intentionally clipped 1.65 m crowd-collision band; an independent GLB ray test and source hashes guard it. The roof bake is a separate data chunk using the existing Vite pattern, keeping the unchanged 2 MB chunk warning limit. The corgi samples its full paw footprint so roof edges do not bury the body. Objective/discovery rings resolve the surface at their own position on the appropriate layer and depth-test against wrecks; the overhead arrow keeps its existing visibility.
+- **#57:** Wreck tops are sampled only on an actor's current height layer; street actors cannot jump up through a wreck. A generated mesh support bake supplies the actual visible wreck roofs above the intentionally clipped 1.65 m crowd-collision band; an independent GLB ray test and source hashes guard it. The roof bake is a separate data chunk using the existing Vite pattern, keeping the unchanged 2 MB chunk warning limit: the game entry is 1,257.98 kB and the roof data chunk 755.61 kB. The corgi samples its full paw footprint so roof edges do not bury the body. Objective/discovery rings resolve the surface at their own position on the appropriate layer and depth-test against wrecks; the overhead arrow keeps its existing visibility.
 
 The PO intake supersedes the old E23 statements that found survivors are always unarmed and never fight. The two specification edits correct E21-AC02 and E24-AC02’s upper time bounds, explained below. Enemy counts and weapon damage/accuracy/cadence data are unchanged by this lane. L3/L6 criteria and one L4 inferred first-beat casualty assertion are corrected with three-seed evidence below; the prerequisite rings lane supplies the requested extra loners and its associated count/hash changes.
 
@@ -20,7 +20,7 @@ The PO intake supersedes the old E23 statements that found survivors are always 
 - `tests/scenes/catalog/survivors-ai-*.json`: grab/release, armed fight-back, following through a corner without a threat, production L5 pickup, bus discovery ring and the L5 wreck roof. All use the game camera at zoom 1. [Visual review and retained captures](visual-review.md) covers all twelve scene/tier combinations.
 - `tools/survivors-ai/compare.ts`: identical main/branch comparison for seeds 1/2/3 and complete/newbie/evade-only profiles; no cheats or balance edits.
 
-[Three-seed comparison](comparison.md) is complete. Validation results are recorded below after the queued full runs finish.
+[Three-seed comparison](comparison.md) and the inspected captures are retained with this report.
 
 ## Imported balance pins
 
@@ -45,3 +45,21 @@ The three-seed comparison uses untouched main `60c51a67a` and this full branch, 
 ## L3 complete-time criterion
 
 [Three-seed main/branch evidence](comparison-l3.md) accompanies the complete upper time 405→420 seconds. All three final branch seeds finish; main seed 3 times out. Seed 1 is slower and has one extra courier death versus main. Newbie time/death pins and all gameplay difficulty values remain unchanged. The final attack follow-up preserves an already engaged fighter’s pose, target and cadence.
+
+## Validation
+
+Gameplay source ends at `0b2ad7b1b`; the packaging-only follow-up is `8586349e9`. The complete remote sweep used an earlier snapshot. Its four failures have passing replacements in the supplemental runs below; the raw reports retain the original failures.
+
+| Check | Result | Retained evidence |
+| --- | --- | --- |
+| Final focused cases plus all L8 level tests | **34 passed locally and remotely**, including all 24 new focused unit/level cases | [remote JSON, gzip](results/legacy-soldier-remote-final.json.gz) |
+| Scene Lab, six scenes × WebGPU high/low, zoom 1 | **12 passed**, all captures inspected; affected armed scene refreshed on both tiers after the final gameplay follow-ups | [visual review](visual-review.md), [metrics](scene-evidence.json) |
+| Remote `tests/unit tests/levels` sweep | **2,162 passed / 4 failed / 11 skipped**; three older assertions and the bundle warning are resolved below | [full snapshot JSON, gzip](results/remote-full-snapshot.json.gz) |
+| Fresh remote unit sweep | **1,761 passed / 2 failed / 9 skipped**; asset decode timeout and bundle warning both cleared in isolation | [unit JSON, gzip](results/unit-final.json.gz) |
+| Broader remote level/regression follow-up | **100 passed / 1 failed**; the remaining old 405-second L3 assertion has a fresh passing 420-second run | [regressions, gzip](results/final-regressions.json.gz), [fresh L3 criterion, gzip](results/l3-criterion-final.json.gz) |
+| Isolated remote production asset inventory and static gate | **2 passed**; original 300/180-second deadlines retained; typecheck, lint and build succeed without warnings | [isolated results, gzip](results/isolated-checks-chunked.json.gz) |
+| Final `npm run verify -- E23` | Final simulation **74 passed**; 55 headless browser checks running; performance queued | Local log: `test-results/survivors-ai/verify-E23-chunked.log` |
+
+The full sweep's four failures were: E21 complete time at 405.4 seconds against the former 405 ceiling; the unsupported first-beat casualty inference (`20 < 20`); the old mission-ring `depthTest: false` assertion; and the build chunk warning. Fresh L3, L4 and ring checks pass with the reported criteria/renderer corrections. The separate roof data chunk clears the static gate while retaining the original 2 MB limit. All L1–L10 start/checkpoint clearance cases and the continuous L1→L9/L10 campaign replays pass in the full sweep.
+
+All browser work is headless, with at most one browser owned by this lane, ports 3841/3842 and the shared admission locks. Generated test artifacts outside this report are excluded from commits. No deployment or push was performed.
