@@ -139,13 +139,23 @@ test('@E08 moving shooters face travel on reload/out-of-range and never backpeda
 });
 
 
-test('@E08 attacked officers with the legacy built-in pistol fight within its range instead of fleeing', async () => {
+test.each(['officer', 'soldier'] as const)('@E08 attacked %s with a legacy built-in gun fights within its range instead of fleeing', async role => {
   const { e, z } = await fixture(); z.transform.x = 4;
-  e.civilian!.ally = { ...allyState('officer'), engaged: true };
+  e.civilian!.ally = { ...allyState(role), engaged: false };
   w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: z.id, targetId: e.id, attackId: 1, special: 'melee', amount: 0 });
   step(w, 30);
   expect(e.civilian!.state).toBe('calm');
   expect(w.events.events().some(event => event.type === 'ally.attack' && event.sourceId === e.id)).toBe(true);
+});
+
+test('@E08 legacy soldiers retain their visible rifle and fight back from a grab', async () => {
+  const { e, z } = await fixture(); z.transform.x = -.9; z.combat!.staggerUntil = 0; z.health.current = 10000;
+  e.civilian!.ally = allyState('soldier'); e.appearance!.handProp = 'rifle';
+  w.npcs!.civilians.outbreak!.grab(e, z);
+  expect(e.appearance!.handProp).toBe('rifle');
+  step(w, 30);
+  expect(w.events.events().some(event => event.type === 'ally.attack' && event.sourceId === e.id)).toBe(true);
+  expect(e.appearance!.handProp).toBe('rifle');
 });
 
 
