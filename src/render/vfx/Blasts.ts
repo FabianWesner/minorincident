@@ -55,6 +55,8 @@ export class Blasts extends Group {
   private readonly columnShadows: InstancedMesh;
   readonly scorch = new FxPool(64, 'ground');
   private readonly rng: Rng;
+  /** Cure mist draws from its own stream: the shared one is consumed by every visible fire column, so adding ambient fires changed the mist (L10 title scene peak 12 -> 7 puffs). */
+  private readonly mistRng: Rng;
   private fbCursor = 0; private puffCursor = 0; private debrisCursor = 0;
   private readonly debrisExpiry = new Float64Array(DEBRIS);
   private puffExpiry = new Float64Array(PUFFS); private fbExpiry = new Float64Array(FIREBALLS);
@@ -78,7 +80,7 @@ export class Blasts extends Group {
   slowMotion = true;
   blasts = 0;
   constructor(private readonly world: SimWorld, private readonly host: BlastHost) {
-    super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts');
+    super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts'); this.mistRng = new Rng(world.seed, 'blasts-cure-mist');
     const clock = this.clock, heat = this.heat;
     // Fireballs: origin(x,y,z,birth), params(size, life, delay, rise), style(drift x, drift z, kind, unused).
     // Kind 0 fire: hot noise-eroded lobes that spread outward, cool to red and break apart.
@@ -452,7 +454,7 @@ export class Blasts extends Group {
     const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform, count = this.quality === 'low' ? 8 : 24;
     const pull = epiloguePull(this.world.missions!.state.counters['epilogue-ticks'] ?? 0);
     for (let i = 0; i < count; i++) {
-      const angle = this.rng.next() * Math.PI * 2, distance = Math.sqrt(this.rng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));
+      const angle = this.mistRng.next() * Math.PI * 2, distance = Math.sqrt(this.mistRng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));
       const x = focus.x + Math.cos(angle) * distance, z = focus.z + Math.sin(angle) * distance;
       if (!cureReached(front, { x, z }) || !this.sourceVisible(x, z, 6)) continue;
       const ground = this.world.districts?.groundHeight(x, z) ?? 0;
