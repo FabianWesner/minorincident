@@ -13,7 +13,8 @@ const ticks = (s: number) => Math.round(s*60);
 export class LevelSixSubway {
   constructor(private readonly mission: Mission) {}
   private get w() { return this.mission.world; }
-  private snap(p:Point):Point {const nav=this.w.infected!.nav;for(let d=0;d<=8;d+=.5)for(let i=0;i<(d?16:1);i++){const at={x:p.x+Math.cos(i*Math.PI/8)*d,z:p.z+Math.sin(i*Math.PI/8)*d};if(nav.clear(at.x,at.z,.4))return at;}throw new Error(`No clear metro point ${p.x},${p.z}`);}
+  /** Nearest clear crowd point; `toward` breaks ties within a ring (a tunnel entry opens on the courier's side of its pier). */
+  private snap(p:Point,toward?:Point):Point {const nav=this.w.infected!.nav;for(let d=0;d<=8;d+=.5){let best:Point|null=null;for(let i=0;i<(d?16:1);i++){const at={x:p.x+Math.cos(i*Math.PI/8)*d,z:p.z+Math.sin(i*Math.PI/8)*d};if(nav.clear(at.x,at.z,.4)){if(!toward)return at;if(!best||distance(at,toward)<distance(best,toward))best=at;}}if(best)return best;}throw new Error(`No clear metro point ${p.x},${p.z}`);}
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
@@ -76,6 +77,8 @@ export class LevelSixSubway {
       this.s.survivors.push({key,id,injured,routine,status:'shelter',straggler:false,collected:false,rejoined:false,hold:0});
     });
     for(const x of l6.gates){const id=w.barricades!.spawn({id:`l6-gate-${x}`,groupId:'l6-service',a:{x,z:13.9},b:{x,z:16.1},height:2.3,depth:.22});const e=w.entities.get(id)!;e.archetype='l6.service-gate';e.transform.y=.6;e.interactable!.enabled=false;this.s.gates.push({id,x,closedAt:0,hold:0});}
+    // PO 10-20 #64 "let me be able to close them to lock Zombies out": every tunnel entry hatch has a close prompt.
+    for(const entry of this.s.entries??[]){const door=l6Doors[entry.door],id=w.interactables!.spawn('switch',{x:door.x,z:door.z<15?11.65+l6.hatch.standM:18.35-l6.hatch.standM},{radius:l6.hatch.promptM,holdTime:.3,label:'Close the hatch'});const e=w.entities.get(id)!;e.archetype='l6.entry-switch';e.transform.y=.9;e.interactable!.hint='E / middle-click · lock the infected out';entry.switchId=id;}
     for(const at of [{x:281,z:24},{x:286,z:5}]){const id=w.hazards!.spawn('fire',at,{radius:1.3,duration:7200});w.entities.get(id)!.transform.y=3.95;}
     const lampId=w.interactables!.spawn('switch',{x:1.5,z:-2},{radius:2,holdTime:.3,label:'Pick up headlamp'});
     const lamp=w.entities.get(lampId)!;lamp.archetype='pickup.headlamp';lamp.transform.y=.9;
@@ -105,9 +108,9 @@ export class LevelSixSubway {
       // tunnel access instead, rotating the alternatives so breach two retains
       // at least two sources. Test the snapped pose, which is the actual spawn.
       const candidates=wave<=2?[requested,...[2,3,4,5,6,7].map((_,j)=>2+(j+requested)%6)]:[requested];
-      const door=candidates.find(index=>{const base=l6Doors[index];return ai.director.offscreen(this.snap({x:base.x+(i%2)*.8,z:base.z-1.4}),.6);});
+      const door=candidates.find(index=>{const base=l6Doors[index];return ai.director.offscreen(this.snap({x:base.x+(i%2)*.8,z:base.z-1.4},wave===4?w.entities.get(1)!.transform:undefined),.6);});
       if(door===undefined)continue;
-      const base=l6Doors[door],at=this.snap({x:base.x+(i%2)*.8,z:base.z-1.4});
+      const base=l6Doors[door],at=this.snap({x:base.x+(i%2)*.8,z:base.z-1.4},wave===4?w.entities.get(1)!.transform:undefined);
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
       const id=o.spawnPedestrian(at,{model}),e=w.entities.get(id)!;o.turnNow(e);
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
@@ -128,6 +131,31 @@ export class LevelSixSubway {
     this.say(s.survivors[0].id,'Into the tunnel! Everybody, move!');this.mission.requestCheckpoint('abandon');
   }
   private living() {return this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following');}
+  /**
+   * PO 10-20 #65 "I walk right so didn't find them": during the retreat the ring sits on the group's next
+   * route waypoint (the next gate or the platform, at most aheadM in front of the walking head). When the
+   * courier is more than strayM from every walking survivor, the objective reads "Stay with the group" and
+   * the ring moves onto the group; within regroupM it switches back.
+   */
+  private guide(p:Point):void {
+    const s=this.s,m=this.mission,anchors=m.def.anchors,f=l6.follow;
+    const walkers=this.living().filter(r=>r.status==='following').map(r=>({r,e:this.w.entities.get(r.id)!})).filter(({e})=>!e.hidden);
+    if(!walkers.length){if(s.strayed){s.strayed=false;m.state.marker=s.phase==='exit'?'night-exit':'exit-platform';}return;}
+    const near=Math.min(...walkers.map(({e})=>distance(e.transform,p)));
+    s.strayed=s.strayed?near>f.regroupM:near>f.strayM;
+    // The group is its walking body; a straggler who fell behind is the courier's own errand.
+    const core=walkers.filter(({r})=>!r.straggler||r.rejoined||r.collected),group=core.length?core:walkers;
+    const gx=group.reduce((t,{e})=>t+e.transform.x,0)/group.length,gz=group.reduce((t,{e})=>t+e.transform.z,0)/group.length;
+    const at=(name:string,x:number,z:number,y=.6)=>{const a=anchors[name]??(anchors[name]={x,z,y,radius:2});a.x=x;a.z=z;a.y=y;};
+    at('l6-group',gx,gz,gx>=258?3.9:.6);
+    if(s.phase==='retreat'){
+      // Shelter leg: the group first walks onto the track at the leader's x. Tunnel leg: gates, then the platform.
+      const route=[l6.tunnel.start,...l6.gates,anchors['exit-platform'].x];
+      const next=route.find(x=>x>s.leaderX+1)??route[route.length-1];
+      at('l6-next',s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM),l6.tunnel.z);
+    }
+    m.state.marker=s.strayed?'l6-group':s.phase==='retreat'?'l6-next':'night-exit';
+  }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
@@ -168,13 +196,23 @@ export class LevelSixSubway {
       if(r.collected&&Math.abs(tail-e.transform.x)<5){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
       if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
     }
+    this.guide(p);
     // Telegraph a fixed entrance before the courier reaches it. Two arrivals only,
     // six seconds apart, from the side/ahead; never fill both escape lanes.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door];
       if(!entry.warnedAt&&p.x>=door.x-26&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
+      const sw=entry.switchId===undefined?undefined:w.entities.get(entry.switchId);
+      if(sw?.interactable&&!entry.closedAt&&!entry.brokenAt&&sw.interactable.completed){entry.closedAt=t;entry.hits=l6.hatch.hits;w.events.emit({type:'barricade.sound',tick:t,sourceId:sw.id,position:{x:door.x,y:1.2,z:door.z},phase:'brace',hp:l6.hatch.hits,maxHp:l6.hatch.hits});}
+      if(sw?.interactable){sw.interactable.enabled=!entry.closedAt&&!entry.brokenAt;sw.interactable.label=entry.brokenAt?'Hatch broken':entry.closedAt?'Hatch closed':'Close the hatch';}
       if(entry.warnedAt&&entry.remaining&&t>=entry.nextAt){
-        if(this.spawn(1,[entry.door],4)){entry.remaining--;entry.nextAt=t+360;}
+        // Arrivals behind a closed hatch bash it once per second (telegraphed rattle and impact) and break through at zero.
+        if(entry.closedAt&&!entry.brokenAt){
+          entry.hits=(entry.hits??l6.hatch.hits)-1;entry.hitAt=t;entry.nextAt=t+ticks(l6.hatch.hitS);
+          w.events.emit({type:'barricade.sound',tick:t,sourceId:sw?.id??0,position:{x:door.x,y:1.2,z:door.z},phase:entry.hits>0?'hit':'break',hp:Math.max(0,entry.hits),maxHp:l6.hatch.hits});
+          if(entry.hits<=0){entry.brokenAt=t;entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});}
+        }
+        else if(this.spawn(1,[entry.door],4)){entry.remaining--;entry.nextAt=t+360;}
         else entry.nextAt=t+15;
       }
     }
@@ -203,5 +241,10 @@ export class LevelSixSubway {
     });
     return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,escapedSurvivors};
   }
-  restore(delta:number):void {const s=this.s;for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;}if(s.arrivals)s.arrivals.nextAt+=delta;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
+  /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
+  static text(mission: Pick<Mission,'state'> | null | undefined): string | null {
+    const s=mission?.state.l6;
+    return s?.strayed&&(s.phase==='retreat'||s.phase==='exit')?'Stay with the group':null;
+  }
+  restore(delta:number):void {const s=this.s;for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;if(e.closedAt)e.closedAt+=delta;if(e.hitAt)e.hitAt+=delta;if(e.brokenAt)e.brokenAt+=delta;}if(s.arrivals)s.arrivals.nextAt+=delta;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
 }
