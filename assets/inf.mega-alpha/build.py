@@ -285,9 +285,6 @@ def features(detail):
         elif HARDWARE == 'tusks':
             put('head', spike('tusk%d' % s_, Vector((head_hi.x - .12 * hd, hc.y + s_ * .20 * hw, head_lo.z + .16 * hh)),
                               (.35, s_ * .18, 1.0), .12 * hw, .85 * hh, PAL['bone'], sides))
-            for k, (zf, yf) in enumerate(((.15, .62), (-.15, .40))):
-                put('torso', spike('backGrowth%d_%d' % (s_, k), hump_c + Vector((-rx * .55, s_ * ry * yf, rz * zf)),
-                                   (-.55, s_ * .7, .45), .14 * td * .75, .30 * td, PAL['mass'], sides))
             put('head', ellipsoid('crownRidge%d' % s_, Vector((hc.x - .20 * hd, hc.y + s_ * .22 * hw, head_hi.z - .12 * hh)),
                                   (.16 * hd, .09 * hw, .08 * hh), PAL['mass'], seg, rings))
     return out
