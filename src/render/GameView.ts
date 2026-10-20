@@ -405,6 +405,8 @@ export class GameView implements Lifecycle {
       // its city-wide moon pass here; warming with that sun still visible left
       // hidden blast pools cold until the first rocket.
       this.updateLights();
+      // PO 10-20 #62: the worn headlamp (and its emissive lens) first draws at the shelter pickup. Compile it here.
+      if (this.world.scenario === 'L6') this.character?.showHeadlamp(true);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
@@ -446,7 +448,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -1048,7 +1050,7 @@ export class GameView implements Lifecycle {
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
     lighting.subwayDarkness.value = metro || lighting.preset === 'L6-subway' ? 1 : 0;
-    this.character?.showHeadlamp(!!metro?.flashlight);
+    this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
     lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
     const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;
     lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));

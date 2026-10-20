@@ -3,6 +3,7 @@ export type MissionEvent =
   | { tick:number;type:'l6.breach1'|'l6.breach2'|'l6.abandon'|'l6.exit' }
   | { tick:number;type:'l6.straggler'|'l6.collected'|'l6.rejoined'|'l6.gate-closed';id:number }
   | { tick:number;type:'l6.bang';breach:number;position:{x:number;z:number} }
+  | { tick:number;type:'l6.hatch-broken';door:number }
   | { tick:number;type:'power.off';group:string }
   | { tick: number; type: 'mission.briefing'; id: string; text: string }
   | { tick: number; type: 'objective.started' | 'objective.completed' | 'checkpoint.set' | 'checkpoint.restored' | 'cinematic.started' | 'cinematic.completed' | 'progression.requested' | 'mission.spawned' | 'item.granted'; id: string }
