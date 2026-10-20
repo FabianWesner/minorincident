@@ -165,25 +165,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const cx = e.view.w / 2, cy = e.view.h / 2;
     return { x: cx + (e.marker.x - cx) * .7, y: cy + (e.marker.y - cy) * .7 };
   };
-  const drive = async (e: Eyes, g: { x: number; y: number }) => {
-    // Vehicle WASD is local (W throttle, A/D steer). Steer by where the goal is on screen relative to the car's screen heading.
-    const car = e.driving!, ahead = await page.evaluate(c => { const a = window.__SS__!; return [a.input.project(c, 'player'), a.input.project({ x: c.x + Math.cos(c.yaw) * 4, z: c.z + Math.sin(c.yaw) * 4 }, 'player'), a.input.project({ x: c.x + Math.sin(c.yaw) * 4, z: c.z + Math.cos(c.yaw) * 4 }, 'player')]; }, car);
-    void ahead; // heading convention is learned below
-    const keys = ['KeyW'];
-    const [c, f1, f2] = ahead, h = driveAxis === 1 ? f1 : f2;
-    const hx = h.x - c.x, hy = h.y - c.y, gx = g.x - c.x, gy = g.y - c.y, cross = hx * gy - hy * gx, dot = hx * gx + hy * gy;
-    const angle = Math.atan2(cross, dot);
-    if (Math.abs(angle) > .15) keys.push(angle > 0 ? 'KeyD' : 'KeyA');
-    if (Math.abs(angle) > 2.4) { keys.length = 0; keys.push('KeyS', angle > 0 ? 'KeyA' : 'KeyD'); }
+  /** Vehicle WASD is local (W throttle, A/D steer). Heading comes from the car's own motion; which of A/D turns which way is
+   * learned from what the car does (a turn that makes the error grow flips the sign). */
+  const drive = async (e: Eyes, goal: { x: number; z: number }) => {
+    const car = e.driving!; trail.push({ x: car.x, z: car.z, t: Date.now() }); while (trail.length > 2 && Date.now() - trail[0].t > 1200) trail.shift();
+    const a = trail[0], hx = car.x - a.x, hz = car.z - a.z, moving = Math.hypot(hx, hz) > .8;
+    const gx = goal.x - car.x, gz = goal.z - car.z;
+    if (!moving) { await press(['KeyW']); return; }
+    const err = Math.atan2(hx * gz - hz * gx, hx * gx + hz * gz);
+    if (lastErr !== null && Math.abs(err) > Math.abs(lastErr) + .05 && Math.abs(err) > .3 && Date.now() - steerFlip > 1500 && steering) { steerSign = -steerSign; steerFlip = Date.now(); log({ steerSign, err: +err.toFixed(2) }); }
+    lastErr = err;
+    const keys = ['KeyW']; steering = Math.abs(err) > .12;
+    if (steering) keys.push((err > 0) === (steerSign > 0) ? 'KeyD' : 'KeyA');
     await press(keys);
-    driveSamples.push({ x: car.x, z: car.z, yaw: car.yaw });
-    if (driveSamples.length > 12) {
-      const a = driveSamples[0], b = driveSamples[driveSamples.length - 1]; driveSamples.length = 0;
-      const mx = b.x - a.x, mz = b.z - a.z;
-      if (Math.hypot(mx, mz) > 2) { const m1 = mx * Math.cos(b.yaw) + mz * Math.sin(b.yaw), m2 = mx * Math.sin(b.yaw) + mz * Math.cos(b.yaw); driveAxis = Math.abs(m1) >= Math.abs(m2) ? 1 : 2; }
-    }
   };
-  let driveAxis = 1; const driveSamples: { x: number; z: number; yaw: number }[] = [];
+  const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
 
   const watchAllies = async (e: Eyes) => {
     for (const a of e.allies) {
@@ -295,7 +291,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
 
     if (await fight(e)) { await hold(120); continue; }
-    if (e.driving) { const g = await goalScreen(e); if (g) await drive(e, g); else await press([]); await hold(120); continue; }
+    if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
 
     if (stuckSim > 120 && stuckWall > 60 && !assistMode) {
       assistMode = true; run.assists++;
