@@ -47,8 +47,10 @@ export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignS
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
 }
 export function rackSize(level:number):number {return level<2?1:level<4?2:level<7?3:4;}
-export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel):boolean {
-  return [racks.LEFT,racks.RIGHT].every(r=>Array.isArray(r)&&r.length>=1&&r.length<=rackSize(level)&&new Set(r).size===r.length&&r.every(id=>save.ownedActions.includes(id)));
+/** A carried rack may exceed the level's size by the weapons picked up on the way (Pickups adds a slot per pickup); bounded for saves. */
+export const carriedRackMax=6;
+export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel,carried=false):boolean {
+  return [racks.LEFT,racks.RIGHT].every(r=>Array.isArray(r)&&r.length>=1&&r.length<=(carried?Math.max(rackSize(level),carriedRackMax):rackSize(level))&&new Set(r).size===r.length&&r.every(id=>save.ownedActions.includes(id)));
 }
 export function meetsPrerequisite(save:CampaignSave,id:string):boolean {
   return id.startsWith('level.')?(save.pending?.level??save.completedLevels)>=Number(id.at(-1)):save.upgrades.includes(id)||save.ownedActions.includes(id);

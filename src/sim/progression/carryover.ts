@@ -2,7 +2,7 @@ import { clearOfL2Script, MAX_BODIES, type L1Aftermath } from '../../levels/cont
 import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
 import { commitCrossingHandover } from './crossingHandover';
-import { autoRewards, lastLevel, type CampaignSave, type Level } from './Campaign';
+import { autoRewards, carriedRackMax, lastLevel, type CampaignSave, type Level } from './Campaign';
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
 export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {
@@ -13,25 +13,28 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   if (level === 5) { save.survivors = [...result.survivors ?? []]; save.stationOccupants = structuredClone(result.stationOccupants); save.rescuedSurvivors = structuredClone(result.rescuedSurvivors); }
   if (level === 9) { commitCrossingHandover(save, world); return; }
   if (level !== save.completedLevels + 1) return;
+  const held = world.entities.get(1)?.weapons;
+  const holding = held ? { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) } : null;
   // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
   if (level >= 6) {
     save.completedLevels = level; save.unlockedLevel = Math.max(save.unlockedLevel, Math.min(lastLevel, level + 1)) as Level;
-    const carriedWeapons = level === 7 ? world.entities.get(1)?.weapons : null;
-    if (carriedWeapons) {
-      // L8 receives the exact acquired arsenal (E29-AC13 / E30-AC03); the rocket launcher stays in the racks.
-      const racks = { LEFT: carriedWeapons.LEFT.rack.map(s => s.id), RIGHT: carriedWeapons.RIGHT.rack.map(s => s.id) };
-      save.racks = racks;
-      for (const id of [...racks.LEFT, ...racks.RIGHT]) if (!save.ownedActions.includes(id)) save.ownedActions.push(id);
-    }
+    // L7 -> L8 receives the exact acquired arsenal (E29-AC13 / E30-AC03); the rocket launcher stays in the racks.
+    // Every other late handover keeps what the courier carries too (E24: the player keeps the existing arsenal).
+    if (holding) carry(save, holding, level === 7);
     return;
   }
-  const weapons = level === 4 || level === 5 ? world.entities.get(1)?.weapons : null;
-  const carried = weapons ? { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) } : null;
   autoRewards(save, level);
-  if (carried) {
-    save.racks = carried;
-    for (const id of [...carried.LEFT, ...carried.RIGHT]) if (!save.ownedActions.includes(id)) save.ownedActions.push(id);
-  }
+  // L4 and L5 hand over the exact carried racks; L1-L3 keep the reward racks and add anything carried that they left out.
+  if (holding) carry(save, holding, level === 4 || level === 5);
+}
+/** Rack the carried weapons for the next level (P1 10-20: the L5 shotgun was cut from L6's racks). The unarmed fists are no carry. */
+function carry(save: CampaignSave, holding: CampaignSave['racks'], exact: boolean): void {
+  const racks = exact ? holding : {
+    LEFT: [...new Set([...save.racks.LEFT, ...holding.LEFT.filter(id => id !== 'weapon.fists')])],
+    RIGHT: [...new Set([...save.racks.RIGHT, ...holding.RIGHT.filter(id => id !== 'weapon.fists')])],
+  };
+  save.racks = { LEFT: racks.LEFT.slice(0, carriedRackMax), RIGHT: racks.RIGHT.slice(0, carriedRackMax) };
+  for (const id of [...save.racks.LEFT, ...save.racks.RIGHT]) if (!save.ownedActions.includes(id)) save.ownedActions.push(id);
 }
 
 /** Rounded, and -0 folded to 0 so a JSON round trip of the save reproduces the record exactly. */
