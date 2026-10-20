@@ -204,6 +204,10 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     const minPixels = spec.look.minPixels ?? 200, seen = lookSamples.filter(s => s.pixels >= minPixels);
     const white = seen.length ? Math.max(...seen.map(s => s.whiteShare)) : Infinity;
     result.checks.push({ name: 'lookWhiteShare', pass: white <= spec.look.whiteShareMax, value: +white.toFixed(4), limit: spec.look.whiteShareMax });
+    if (spec.look.lumaRiseMax !== undefined) {
+      const live = seen[0]?.luma, rise = live ? Math.max(...seen.map(s => s.luma / live)) : Infinity;
+      result.checks.push({ name: 'lookLumaRise', pass: rise <= spec.look.lumaRiseMax, value: +rise.toFixed(2), limit: spec.look.lumaRiseMax });
+    }
     if (spec.look.hueDriftMaxDeg !== undefined) {
       const live = seen.find(s => s.hue !== null)?.hue, drift = live == null ? Infinity : Math.max(...seen.map(s => s.hue === null ? Infinity : hueDistance(s.hue, live)));
       result.checks.push({ name: 'lookHueDriftDeg', pass: drift <= spec.look.hueDriftMaxDeg, value: +drift.toFixed(1), limit: spec.look.hueDriftMaxDeg });
