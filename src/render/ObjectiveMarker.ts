@@ -12,7 +12,7 @@ export class ObjectiveMarker extends Group {
   constructor(private readonly world: SimWorld){super();this.ring.renderOrder=94;this.arrow.renderOrder=95;this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.add(this.ring,this.arrow);}
   update():void{
     const mission=this.world.missions,reached=!!mission?.state.l3?.crossedAt,anchor=reached?mission!.def.anchors['l3-zone']:markerAnchor(mission);
-    const searches = searchAnchors(mission), playing = mission?.state.phase === 'playing';
+    const searches = searchAnchors(mission), metroDone = !!mission?.state.l5?.shutterAt, playing = mission?.state.phase === 'playing' && !metroDone;
     this.material.color.set(reached?'#71e8a3':'#ffcf77');this.arrow.visible=!!anchor&&!reached;this.ring.visible=!!anchor;
     this.visible=playing&&(!!anchor||searches.length>0);
     this.position.set(anchor?.x??0,anchor?(this.world.districts?.groundHeight(anchor.x,anchor.z)??anchor.y??0):0,anchor?.z??0);

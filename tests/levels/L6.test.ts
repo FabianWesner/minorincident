@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, expect, test } from 'vitest';
 import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
+import { isCurrentOpenL6Gate } from '../../src/render/InteractionView';
 import { l6, l6InjuryLines } from '../../src/data/l6';
 import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -8,6 +9,13 @@ let world:SimWorld|undefined;
 afterEach(()=>{world?.dispose();world=undefined;});
 const step=(w:SimWorld,n:number)=>{for(let i=0;i<n;i++)w.update();};
 const save=(name:string,data:unknown)=>{mkdirSync('test-results/epics/E24',{recursive:true});writeFileSync(`test-results/epics/E24/${name}.json`,JSON.stringify(data,null,2));};
+test('L6 gate prompt belongs only to the open gate targeted by the current group waypoint',()=>{
+  const gates=[{id:1,x:10,closedAt:0},{id:2,x:30,closedAt:0}];
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:4,gates},1)).toBe(true);
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:4,gates},2)).toBe(false);
+  expect(isCurrentOpenL6Gate({marker:'night-exit',leaderX:4,gates},1)).toBe(false);
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:11,gates:[{...gates[0],closedAt:5},gates[1]]},1)).toBe(false);
+});
 test('T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail',async()=>{
   const l=await loadL6();world=l.world;const m=l.mission;expect(validateMission(m.def)).toEqual([]);expect(m.def.steps.map(s=>s.id)).toEqual(['shelter','stop','retreat','exit']);expect(m.def.deadline).toBeUndefined();expect(m.def.steps.every(s=>!s.timer&&!s.fail.length)).toBe(true);
   for(let i=0;i<4;i++)m.completeObjective();expect(m.state.phase).toBe('cinematic');step(world,400);expect(m.state.phase).toBe('result');expect(m.state.result!.survivorsIn).toBe(29);
