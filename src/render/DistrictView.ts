@@ -156,8 +156,9 @@ export class DistrictView extends Group {
     this.phase.value = 0;
     if (this.world.composition.id === 'L7') {
       this.maxBarTerrainHeight = Math.max(0, ...this.world.districts.flatMap(d => [...d.layout.surfaces.map(s => s.height ?? 0), ...d.decay.colliders.filter(c => c.walkable).map(c => c.aabb.max[1])]));
-      this.stepEdges = new HeightStepEdges(heightSteps(this.world), this.materials); this.add(this.stepEdges);
     }
+    const steps = heightSteps(this.world);
+    if (steps.length) { this.stepEdges = new HeightStepEdges(steps, this.materials); this.add(this.stepEdges); }
     const ambient = timeOfDay[this.world.composition.timeOfDay].ambient;
     if (ambient) { this.ambient = new AmbientLife(this.materials, ambient); this.ambient.setQuality(this.low); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
@@ -727,7 +728,7 @@ export class DistrictView extends Group {
     // Generated retaining faces enclose the L7 height field. Limit the filled-column
     // test to that terrain so overhanging decks still use their exact solid geometry.
     const ray = this.barRay.ray, horizontal = Math.hypot(ray.direction.x, ray.direction.z);
-    if (this.stepEdges && horizontal > 1e-6) for (let distance = this.barRay.far - .15 / horizontal; distance > 0; distance -= .2 / horizontal) {
+    if (this.maxBarTerrainHeight > 0 && this.stepEdges && horizontal > 1e-6) for (let distance = this.barRay.far - .15 / horizontal; distance > 0; distance -= .2 / horizontal) {
       const y = ray.origin.y + ray.direction.y * distance;
       const x = ray.origin.x + ray.direction.x * distance, z = ray.origin.z + ray.direction.z * distance;
       if (this.world.pavingHeight(x, z) > y + .05) return true;
