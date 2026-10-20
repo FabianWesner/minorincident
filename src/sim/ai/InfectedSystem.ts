@@ -704,6 +704,13 @@ export class InfectedSystem {
     if (this.l1 && this.flowUntil < 0) this.flowUntil = this.world.tick + l1Ticks(90); // the first rush = the accident exits
     return this.goTo(id, point, untilTick, 0);
   }
+  /** Director pressure: rush to a human and prefer it over nearer bystanders until `untilTick` (L4 alarm on the courier). */
+  press(id: number, targetId: number, untilTick: number): boolean {
+    const target = this.world.entities.get(targetId), brain = this.world.entities.get(id)?.infected?.l1;
+    if (!target || !brain || !this.rush(id, target.transform, untilTick)) return false;
+    brain.focusId = targetId; brain.focusUntil = untilTick;
+    return true;
+  }
   private goTo(id: number, point: { x: number; z: number }, untilTick: number, distractionId: number): boolean {
     const e = this.world.entities.get(id), brain = e?.infected?.l1;
     if (!e || !brain || e.health.current <= 0 || brain.mode === 'chase' || brain.mode === 'bite' || e.infected!.state === 'attack') return false;

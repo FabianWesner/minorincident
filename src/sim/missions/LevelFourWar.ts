@@ -522,7 +522,10 @@ export class LevelFourWar {
         const d = dist(candidate.transform, at);
         if (d < nearest) { nearest = d; soldier = candidate; }
       }
-      if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
+      // PO 10-19 ("start the alarm and attack at the moment when I picked up the MP"): the nearest
+      // concealed exit's group goes for the courier, so the attack lands on her inside the solid perimeter.
+      if (n < l4.war.group[1]) ai.press(id, 1, tick + ticks(12));
+      else if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
     }
     world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
     this.mission.radio('L4.perimeter-active');
@@ -773,9 +776,11 @@ export class LevelFourWar {
       if (d < best) { best = d; qx = cx; qz = cz; const l = Math.hypot(dx, dz) || 1; nx = -dz / l; nz = dx / l; }
     }
     const away = best > .3 ? { x: (p.x - qx) / best, z: (p.z - qz) / best } : { x: nx, z: nz };
-    for (const s of [1, -1]) for (const k of [1, .8, .6]) {
-      const x = qx + away.x * s * want * k, z = qz + away.z * s * want * k;
-      if (Math.hypot(x - qx, z - qz) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
+    // Stay on its own side (camp bodies back into the camp): crossing sent the camp infected over the escape street.
+    // Slide along the street before giving up; only a body standing on the centre line may take either side.
+    for (const s of best > .3 ? [1] : [1, -1]) for (const k of [1, .9, .8]) for (const along of [0, 3, -3, 6, -6]) {
+      const x = qx + away.x * s * want * k - away.z * along, z = qz + away.z * s * want * k + away.x * along;
+      if (this.escapeDistance({ x, z }) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
     }
     return null;
   }
