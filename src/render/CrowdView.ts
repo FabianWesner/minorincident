@@ -216,10 +216,11 @@ export class CrowdView extends Group {
       // emitter avoids the pink centres from luminance-normalized swatches.
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(sourceColor, vec3(0), parts.z);
       const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : vec3(3, .25, .22);
-      // alpha-white: the hit flash brightens the figure's own colours (glow = albedo x strength, about x2 on a
-      // night-lit body at the 0.45 peak). A flat white add (0.45 on every channel, then bloom) turned the dark
-      // Alpha into a grey-white mass; any white constant still dominates its near-black albedo.
-      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base));
+      // alpha-white: the hit flash brightens the figure's own colours (glow ~ albedo x strength, about x2 on a
+      // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
+      // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
+      // white constant still dominates its near-black albedo.
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.2))));
       const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
