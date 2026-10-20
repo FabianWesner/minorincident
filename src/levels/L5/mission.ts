@@ -25,6 +25,10 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
   def.gates['l5-metro-shutter'] = { anchor: 'l5-metro-shutter', open: true };
   def.anchors['l5-brace'].radius = 1.3; def.anchors['l5-metro-foot'].radius = l5.metro.triggerM; def.anchors['l5-plaza'].radius = 6;
   for (const s of l5Survivors) def.anchors[`l5-ring-${s.key}`].radius = l5.survivors.reachM;
+  // P0 10-20: the Metro ring sits where the arrival starts, on the second tread behind the shutter in the courier's right-hand lane
+  // (the followers queue on the left). The old ring at the street-side `metro-entrance` anchor triggered nothing.
+  const door = def.anchors['l5-metro-shutter'];
+  def.anchors['l5-metro-in'] = { x: door.x + .35, y: .94, z: door.z - 1.3, radius: .6, yaw: 0 };
   const step = (id: string, text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start'], type: ObjectiveDef['type'] = 'custom'): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };
@@ -34,7 +38,7 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
   const look = step('look', 'Look for anyone still alive', 'l5-plaza', state('accounted'), { kind: 'state', key: 'searching', equals: true });
   look.waypoint = false;
   look.onStart = [{ kind: 'radio', id: 'L5.search' }];
-  const metro = step('metro', 'Lead the survivors to the metro station', 'metro-entrance', state('sheltered'), after('look'));
+  const metro = step('metro', 'Lead the survivors down into the Metro', 'l5-metro-in', state('sheltered'), after('look'));
   metro.onStart = [{ kind: 'radio', id: 'L5.accounted' }]; metro.onComplete = [{ kind: 'radio', id: 'L5.twist' }];
   return def;
 }
