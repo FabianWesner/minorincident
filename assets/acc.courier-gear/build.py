@@ -311,10 +311,12 @@ def build_gear(body, lod, sex):
     # ---- tier 4: survivor goggles on the cap (dark strap above the brim, two teal lenses with silver rims), forearm guards ---------
     head = bones['head']; hc = Vector((0.0, 0, head[1].z - .03))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
-    g.patch(DARK, dome(hc, yleft, zup, xfwd, 150, 31, 39), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
+    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, 31, 39), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
             rim=None, remap=only({'head', 'neck'}, 'head'))
+    for az0 in (-158, 158) if lod < 2 else ():   # brass end tabs close the strap visually where it tucks behind the ponytail
+        g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, 29, 41, az0), pad(.022, .6), 2, 2, outer=.6, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-22, 22) if lod < 2 else ():
-        g.patch('tealLight', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver',
+        g.patch('#0a6f7a', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver',
                 remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
