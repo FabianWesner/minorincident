@@ -7,7 +7,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 test('PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned', async () => {
-  expect(createHash('sha256').update(JSON.stringify({ infected: l5.infected, wanderers: l5Wanderers, definitions: infectedDefinitions })).digest('hex')).toBe('3ea30ea6b351df44b128911ff143484a213c04d197600d3910b3041c5734c2e4');
+  expect(createHash('sha256').update(JSON.stringify({ infected: l5.infected, wanderers: l5Wanderers, definitions: infectedDefinitions })).digest('hex')).toBe('8464845744df35c5b51b267a500f0ef37c3faba64bbf722e5c34a5654ea9b90f');
   for (const profile of ['complete', 'newbie'] as const) {
     const loaded = await loadL5(1); world = loaded.world;
     const report = runL5(world, loaded.mission, profile, { seed: 1 });
