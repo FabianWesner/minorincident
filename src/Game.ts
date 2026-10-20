@@ -8,6 +8,7 @@ import { LevelFiveBot } from './debug/bot/LevelFiveBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { LevelTransition, transitionPaint } from './ui/LevelTransition';
 import { RescueFade } from './ui/RescueFade';
+import { l5 } from './data/l5';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
@@ -161,7 +162,8 @@ export class Game {
         this.simMs = performance.now() - start;
         this.simTicks = this.world.tick - tickBefore;
         this.inspect?.update(seconds);
-        this.rescueFade.set(this.world.trapRescue?.fading ?? this.world.l7Departure?.fading ?? false);
+        const l5Exit = this.world.missions?.l5?.fading ?? false;
+        this.rescueFade.set(l5Exit || (this.world.trapRescue?.fading ?? this.world.l7Departure?.fading ?? false), l5Exit ? l5.emerge.fadeOutS : undefined, this.world.scenario === 'L5' ? l5.emerge.fadeInS : undefined);
         if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       if (!this.loading) {

@@ -235,6 +235,8 @@ export interface L4Director {
 export interface L5State {
   phase: 'cellar' | 'emerged' | 'search' | 'metro' | 'shelter' | 'done';
   startAt: number; emergedAt: number; searchAt: number; accountedAt: number; metroAt: number; shutterAt: number; doneAt: number;
+  /** Tick the exit dip to black began (0 = not yet); the courier moves to the street once it has gone dark. */
+  emergeFadeAt?: number;
   /** The five survivors in casting order: entity id and fate (`hidden` until found, then `following`, `dead` or `turned`). */
   survivors: { key: string; id: number; status: 'hidden' | 'following' | 'dead' | 'turned' | 'sheltered'; foundAt: number; cueAt: number; lostAt: number; hold: number }[];
   found: number; lookoutId: number; stationIds: number[]; infectedIds: number[]; medkitIds: number[]; corpseIds: number[]; fireIds: number[];
