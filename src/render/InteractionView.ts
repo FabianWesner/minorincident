@@ -67,7 +67,7 @@ export class InteractionView extends Group {
   private readonly coverageFill = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly debrisMeshes: Mesh[] = [];
-  private readonly entryHatches: { door: number; leaf: Group }[] = [];
+  private readonly entryHatches: { door: number; leaf: Group; bar: Mesh }[] = [];
   private readonly crateGuides: { id: string; ring: Mesh }[] = [];
   private readonly gateGuides: { x: number; line: Mesh }[] = [];
   private disposed = false;
@@ -85,7 +85,9 @@ export class InteractionView extends Group {
         for (const x of [-.7, .7]) { const frame = new Mesh(this.box, this.materials.get('policeBlue')); frame.scale.set(.12, 2, .12); frame.position.set(x, 1, 0); hatch.add(frame); }
         for (let i=0;i<5;i++) { const slat = new Mesh(this.box, this.materials.get('policeBlue')); slat.scale.set(1.3, .12, .14); slat.position.set(0, .25 + i * .35, 0); leaf.add(slat); }
         const signal = new Mesh(this.led, entry.door % 2 ? this.teal : this.white); signal.position.set(.6, 2.1, 0); hatch.add(signal, leaf);
-        this.entryHatches.push({ door: entry.door, leaf }); this.add(hatch);
+        // PO 10-20 #64: a yellow drop bar across the closed hatch reads as "locked" in the dark (albedo-lit by the emergency fill).
+        const bar = new Mesh(this.box, this.materials.get('schoolBusYellow')); bar.scale.set(1.7, .16, .1); bar.position.set(0, 1.05, source.z < 15 ? .12 : -.12); bar.visible = false; hatch.add(bar);
+        this.entryHatches.push({ door: entry.door, leaf, bar }); this.add(hatch);
       }
       for (const prop of world.props?.items ?? []) if (prop.assetId === 'prop.crates' && l6.gates.some(x => Math.abs(prop.pose.p[0] - x) < 5)) {
         const ring = new Mesh(this.box, this.materials.get('schoolBusYellow')); ring.scale.set(1.1, .012, .14); ring.visible = false;
@@ -214,6 +216,8 @@ export class InteractionView extends Group {
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
     if (e.archetype === 'l6.service-gate') { const model = await this.registry.loadAsset('prop.service-gate', lod); this.prepareGate(model); return model; }
+    // PO 10-20 #64: the entry hatch itself is drawn by entryHatches; its close prompt has no body of its own.
+    if (e.archetype === 'l6.entry-switch') return new Group();
     if (e.barricade) {
       const object = this.barricadeObject(e);
       if (e.barricade.slot.sandbag) {
@@ -314,7 +318,8 @@ export class InteractionView extends Group {
   }
   update(camera: Camera): void {
     this.updateGateGuides();
-    for(const hatch of this.entryHatches){const state=this.world.missions?.state.l6?.entries?.find(e=>e.door===hatch.door);const age=state?.warnedAt?this.world.tick-state.warnedAt:-1;hatch.leaf.rotation.x=age<0?0:age<120?Math.sin(age*.65)*.045:-1.2;}
+    // Warned hatches rattle, then swing open. PO 10-20 #64: a closed hatch stays shut and jolts on every bash; a broken one hangs open.
+    for(const hatch of this.entryHatches){const state=this.world.missions?.state.l6?.entries?.find(e=>e.door===hatch.door),tick=this.world.tick;const age=state?.warnedAt?tick-state.warnedAt:-1,hit=state?.hitAt?tick-state.hitAt:99;hatch.bar.visible=!!state?.closedAt&&!state.brokenAt;hatch.leaf.rotation.x=state?.brokenAt?-1.35:state?.closedAt?(hit<14?Math.sin(hit*1.3)*.09*(1-hit/14):0):age<0?0:age<120?Math.sin(age*.65)*.045:-1.2;}
     let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
     const player = this.world.entities.get(1);
     for (const e of this.world.entities.iterate()) {

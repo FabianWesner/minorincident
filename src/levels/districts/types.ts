@@ -37,6 +37,8 @@ export interface Aabb {
   navBlocker?: boolean;
   /** Streamed set dressing (L10): a physics static that blocks the player, but no AI nav/cover wall (keeps the crowd sim cost and routes unchanged). */
   physicsOnly?: boolean;
+  /** Crowd/route navigation only: no physics collider, so the courier's body is never stopped by it (L6 walkway lane edges). */
+  navOnly?: boolean;
   min: [number, number, number];
   max: [number, number, number];
 }

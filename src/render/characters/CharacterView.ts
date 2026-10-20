@@ -179,7 +179,7 @@ export class CharacterView extends Group {
         headlamp.name = 'courier-headlamp'; headlamp.visible = false;
         // The couriers' authored caps sit above the head pivot (different heights).
         headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
-        headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1);
+        headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1); headlamp.userData.worn = headlamp.scale.clone();
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
@@ -222,8 +222,13 @@ export class CharacterView extends Group {
     if (this.characters.get(pose.variant)?.animator.evaluations !== before) this.cpuMs = performance.now() - started;
   }
   /** Mission inventory is authoritative through death, save/load and installation. */
-  showHeadlamp(carried: boolean): void {
-    for (const character of this.characters.values()) if (character.headlamp) character.headlamp.visible = carried;
+  /** PO 10-20 #62: in L6 (`ready`) the lamp stays drawn, collapsed to a point, until carried, so its materials link while loading, never at the pickup. */
+  showHeadlamp(carried: boolean, ready = false): void {
+    for (const character of this.characters.values()) {
+      const lamp = character.headlamp; if (!lamp) continue;
+      lamp.visible = carried || ready;
+      if (lamp.userData.worn) { if (carried) lamp.scale.copy(lamp.userData.worn); else lamp.scale.setScalar(1e-3); }
+    }
   }
   showCure(carried: boolean): void {
     for (const character of this.characters.values()) if (character.cure) character.cure.visible = carried;
