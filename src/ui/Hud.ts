@@ -355,6 +355,14 @@ export class Hud {
         attribute(card.root, 'aria-label', `${card.def.name}, health ${Math.round(fraction * 100)}%`);
       }
     }
+    const departure = this.game.world.l7Departure;
+    if (departure && mission?.state.steps.departure?.status === 'active') {
+      const status = departure.boardingStatus();
+      setHidden(this.survivorText, false); text(this.survivorText, ` · ${status.count}`);
+      setHidden(this.cuePin, true); setHidden(this.cueText, !status.waiting);
+      text(this.cueText, status.waiting ? ` · ${status.waiting}` : '');
+      return;
+    }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }

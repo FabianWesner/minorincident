@@ -3,6 +3,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
 import type { MissionResult } from './types';
+import { l5Survivors } from '../../data/l5';
 import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
@@ -17,6 +18,8 @@ export interface L7DepartureState {
   entering: Record<number, number>;
   lastEnterAt: number;
   startedAt: number;
+  /** One second to read the final boarding confirmation before the shot. */
+  readyAt: number | null;
 }
 const NAV_BUS = 900_700;
 const ease = (t: number) => t * t * (3 - 2 * t);
@@ -25,17 +28,18 @@ const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => M
 /**
  * L7-E2: boarding of the living survivors, the departure shot and the L8 handover. The bus is a set piece (kinematic, like
  * the L4 convoy) with a physics and navigation blocker while it waits. Boarding finishes only when every living follower has
- * stepped through the door; stragglers keep walking to the player (LevelSevenEncounters.follower) and the player waits for
- * them - there is no timer and no kill condition. The player boards last, the shot runs `cfg.seconds`, and `level.completed`
- * carries the boarded roster for L8.
+ * stepped through the door. Boarding owns every follower, including distant stragglers. A stalled approach recovers
+ * through a hidden queue transition after 20 seconds; no living survivor is discarded and there is no fail timer.
+ * The player boards last, the shot runs `cfg.seconds`, and `level.completed` carries the boarded roster for L8.
  */
 export class LevelSevenDeparture {
-  state: L7DepartureState = { phase: 'waiting', busId: 0, boarded: [], entering: {}, lastEnterAt: -1e9, startedAt: 0 };
+  state: L7DepartureState = { phase: 'waiting', busId: 0, boarded: [], entering: {}, lastEnterAt: -1e9, startedAt: 0, readyAt: null };
   /** Set by Game once the handover has been started, so it happens once. */
   handedOver = false;
   private blocker: number | undefined;
   private readonly from = new Map<number, { x: number; z: number }>();
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: { x: number; z: number } }>();
+  private readonly progress = new Map<number, { distance: number; at: number }>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
   constructor(private readonly world: SimWorld) {}
@@ -69,11 +73,9 @@ export class LevelSevenDeparture {
     if (s.phase !== 'boarding') return false;
     const r = w.l7Encounters!.state.roster.find(r => r.id === e.id);
     if (!r || r.status !== 'following') return false;
-    // Far stragglers keep following the player (who stands at the bus), so the cross-city routing stays in one place.
-    if (distance(e.transform, this.door) > cfg.claimRadius) return false;
     const c = e.civilian!, slot = c.survivor!.slot;
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
-    const queue = { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 };
+    const queue = this.queue(slot);
     // Admit when the full footprint reaches the queue, including when the
     // courier is standing between its centre and the last waiting survivor.
     const near = distance(e.transform, queue) <= 1.6 + (e.combat?.radius ?? .35);
@@ -112,8 +114,8 @@ export class LevelSevenDeparture {
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
     const d = Math.hypot(player.transform.x - this.boarding[0], player.transform.z - this.boarding[2]);
-    if (s.phase === 'waiting' && d <= cfg.boardRadius) s.phase = 'boarding';
-    else if (s.phase === 'boarding' && d > cfg.leaveRadius) s.phase = 'waiting';
+    if (s.phase === 'waiting' && d <= cfg.boardRadius) { s.phase = 'boarding'; this.progress.clear(); }
+    else if (s.phase === 'boarding' && d > cfg.leaveRadius) { s.phase = 'waiting'; s.readyAt = null; this.progress.clear(); }
     // Survivors already stepping through the door finish even if the player steps back.
     for (const id of Object.keys(s.entering).map(Number)) {
       const e = w.entities.get(id), t = (w.tick - s.entering[id]) / cfg.enterTicks;
@@ -130,7 +132,45 @@ export class LevelSevenDeparture {
     }
     if (s.phase !== 'boarding') return;
     const living = w.l7Encounters!.state.roster.filter(r => r.status === 'following');
-    if (living.every(r => s.boarded.includes(r.id)) && !Object.keys(s.entering).length) this.depart();
+    for (const r of living) {
+      if (s.boarded.includes(r.id) || r.id in s.entering) { this.progress.delete(r.id); continue; }
+      const e = w.entities.get(r.id)!, queue = this.queue(e.civilian!.survivor!.slot), remaining = distance(e.transform, queue);
+      const progress = this.progress.get(r.id);
+      // Net progress toward the queue, not jitter or walking in circles.
+      if (!progress || remaining < progress.distance - .5) this.progress.set(r.id, { distance: remaining, at: w.tick });
+      else if (w.tick - progress.at >= cfg.stallTicks && w.tick - s.lastEnterAt >= cfg.gapTicks) this.recover(e, queue);
+    }
+    if (living.every(r => s.boarded.includes(r.id)) && !Object.keys(s.entering).length) {
+      s.readyAt ??= w.tick;
+      if (!living.length || w.tick - s.readyAt >= 60) this.depart();
+    } else s.readyAt = null;
+  }
+  private queue(slot: number) { return { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 }; }
+  /** Like the L5 corgi threshold recovery: hide the transition, retain the actor, validate the destination.
+   * The recovered follower still queues and crosses the door for the ordinary enterTicks before counting aboard. */
+  private recover(e: EntitySnapshot, queue: { x: number; z: number }): void {
+    const w = this.world, s = this.state;
+    if (!w.solids.relocate(e, { ...queue, y: w.districts!.groundHeight(queue.x, queue.z) + .7 }, 'l7.boarding-recovery', 1)) return;
+    e.hidden = true;
+    const c = e.civilian!;
+    c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.pauseUntil = Number.MAX_SAFE_INTEGER;
+    if (c.l1) c.l1.target = null;
+    delete e.locomotion; delete e.motion;
+    e.passengerOf = s.busId; w.spatial.delete(e.id);
+    s.lastEnterAt = w.tick; s.entering[e.id] = w.tick;
+    this.from.set(e.id, { x: e.transform.x, z: e.transform.z });
+    this.approaches.delete(e.id); this.progress.delete(e.id);
+    w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l7.survivor-recovered', actorId: e.id });
+  }
+  /** The departure wait shares the existing objective HUD with the L5 metro status. */
+  boardingStatus(): { count: string; waiting: string } {
+    const w = this.world, s = this.state;
+    const living = w.l7Encounters!.state.roster.filter(r => r.status === 'following');
+    const waiting = living.filter(r => !s.boarded.includes(r.id));
+    const missing = waiting.map(r => ({ r, distance: distance(w.entities.get(r.id)!.transform, this.door) })).sort((a, b) => a.distance - b.distance)[0];
+    const count = `Aboard ${living.length - waiting.length}/${living.length}`;
+    const name = missing && (l5Survivors.find(r => r.key === missing.r.key)?.name ?? (missing.r.key === 'shelter-0' ? 'Marcus' : `Survivor ${w.entities.get(missing.r.id)!.civilian!.survivor!.slot + 1}`));
+    return { count: missing ? count : `${count} · Everyone aboard`, waiting: missing ? `Waiting for ${name} · ${Math.ceil(missing.distance)} m` : '' };
   }
   private depart(): void {
     const w = this.world, s = this.state, player = w.entities.get(1)!;
@@ -178,16 +218,18 @@ export class LevelSevenDeparture {
       survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped,
     };
   }
-  snapshot() { return { state: structuredClone(this.state), from: [...this.from], handedOver: this.handedOver, tick: this.world.tick }; }
+  snapshot() { return { state: structuredClone(this.state), from: [...this.from], progress: [...this.progress], handedOver: this.handedOver, tick: this.world.tick }; }
   restore(saved: unknown): void {
     const record = saved as ReturnType<LevelSevenDeparture['snapshot']>, w = this.world, delta = w.tick - record.tick;
     this.state = structuredClone(record.state); this.handedOver = record.handedOver;
     if (this.state.lastEnterAt > -1e9) this.state.lastEnterAt += delta;
     if (this.cinematic) this.state.startedAt += delta;
+    this.state.readyAt = record.state.readyAt == null ? null : record.state.readyAt + delta;
     for (const id of Object.keys(this.state.entering).map(Number)) this.state.entering[id] += delta;
     this.from.clear(); for (const [id, at] of record.from) this.from.set(id, { ...at });
     // Detours belong to the discarded contact timeline; rebuild them from the restored actors.
     this.approaches.clear();
+    this.progress.clear(); for (const [id, progress] of record.progress ?? []) this.progress.set(id, { ...progress, at: progress.at + delta });
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     const blocked = !this.cinematic;
     if (blocked) this.blocker = w.physics.addBlocker(this.wall);
