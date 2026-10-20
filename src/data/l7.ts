@@ -25,7 +25,9 @@ export const l7Departure = {
   /** The player enters this radius around `l7-bus-boarding` to start boarding; leaving the larger one pauses it (those aboard stay aboard). */
   boardRadius: 6, leaveRadius: 16,
   /** Where survivors queue (in front of the bus nose) and the door they step through; one new passenger at most every `gapTicks`. */
-  queue: { x: -72.6, z: 47 }, door: { x: -74.4, z: 47 }, enterTicks: 36, gapTicks: 15, claimRadius: 14,
+  queue: { x: -72.6, z: 47 }, door: { x: -74.4, z: 47 }, enterTicks: 36, gapTicks: 15,
+  /** Recover a living follower after 20 s without 0.5 m net approach progress; never leave anyone behind. */
+  stallTicks: 20 * 60,
   /** Bus lane: straight east along Lakeshore Drive. */
   lane: { z: 47, fromX: -78.5, toX: 40 }, seconds: 9, fadeAtSeconds: 8,
   /** Camera relative to the bus: ahead of it, high, looking back past the bus at the city behind. */
