@@ -405,6 +405,8 @@ export class GameView implements Lifecycle {
       // its city-wide moon pass here; warming with that sun still visible left
       // hidden blast pools cold until the first rocket.
       this.updateLights();
+      // PO 10-20 #62: the worn headlamp (and its emissive lens) first draws at the shelter pickup. Compile it here.
+      if (this.world.scenario === 'L6') this.character?.showHeadlamp(true);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
@@ -446,7 +448,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {

@@ -84,6 +84,8 @@ export class Lighting {
   /** L6 darkness is part of the existing palette output, never an extra pass. */
   readonly subwayDarkness = uniform(0).setGroup(renderGroup);
   readonly headlampOn = uniform(0).setGroup(renderGroup);
+  /** PO 10-20 #63: dim emergency fill (albedo x colour) so no walkable L6 surface reads pure black outside the headlamp cone. */
+  readonly subwayFill = uniform(new Color(.11, .14, .17)).setGroup(renderGroup);
   readonly headlampAim = uniform(new Vector2(1, 0)).setGroup(renderGroup);
   readonly hero = uniform(new Vector3(0, -100, 0));
   readonly rim = uniform(0);
