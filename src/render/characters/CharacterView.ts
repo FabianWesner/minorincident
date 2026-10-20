@@ -400,15 +400,17 @@ export class CharacterView extends Group {
     character.model.traverse(node => {
       if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
       let gap = 0, at = [0, 0, 0], vertex = 0;
-      const step = Math.max(1, Math.floor(node.geometry.getAttribute('position').count / 300));
-      // The gap is measured on the skin side: a plate's outer face sits its designed thickness (`_thick`, written by the gear build, allowance capped at 1.2 cm so it can never hide a real gap; tests/unit/render/courier-gear-tiers.test.ts fails above that)
-      // above the skin by construction, so only the distance beyond that thickness is a real gap. Meshes without it measure the vertex itself.
-      const thick = node.geometry.getAttribute('_thick');
-      points(node, 300).forEach((p, k) => {
-        let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
-        const skin = Math.max(0, Math.sqrt(best) - (thick ? Math.min(.012, thick.getX(k * step)) : 0));
-        if (skin > gap) { gap = skin; vertex = k * step; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
-      });
+      // Gear shells are closed: their skin-side (inner) vertices lie on the skin by construction and carry `_inner` = 1 (written by the gear
+      // build, assets/acc.courier-gear). The guard measures those, i.e. the gap between the gear and the skin, never a plate's outer face.
+      // Meshes without `_inner` (other accessories) measure every vertex.
+      const inner = node.geometry.getAttribute('_inner'), position = node.geometry.getAttribute('position');
+      const all = points(node, position.count), picks: number[] = [];
+      for (let i = 0; i < position.count; i++) if (!inner || inner.getX(i) > .5) picks.push(i);
+      const stride = Math.max(1, Math.floor(picks.length / 300));
+      for (let k = 0; k < picks.length; k += stride) {
+        const p = all[picks[k]]; let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
+        if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = picks[k]; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
+      }
       report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
     });
     return report;
