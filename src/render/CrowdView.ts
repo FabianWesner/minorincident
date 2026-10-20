@@ -188,7 +188,7 @@ export class CrowdView extends Group {
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
       const preparedKey = fallback ? undefined : `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
       const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
-      let baked: BakedBatch;
+      let baked: BakedBatch, createdCorpse: BufferGeometry | null = null;
       if (prepared) {
         preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared); model.updateMatrixWorld(true);
         baked = { ...prepared, geometry: cloneBatchGeometry(prepared.geometry), shirtColor: prepared.shirtColor?.clone() };
@@ -210,17 +210,17 @@ export class CrowdView extends Group {
           const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
-          this.corpseGeometry.set(key, corpse);
+          this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         }
       }
       if (alpha && lod === 'lod0') {
         const corpse = baked.geometry.clone(); packCrowdParts(corpse);
         if (human) markCrowdAppearance(corpse, false);
-        this.corpseGeometry.set(key, corpse);
+        this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
       }
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
       if (preparedKey) {
-        preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: this.corpseGeometry.has(key) ? cloneBatchGeometry(this.corpseGeometry.get(key)!) : null });
+        preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: createdCorpse ? cloneBatchGeometry(createdCorpse) : null });
         if (preparedBatches.size > preparedBatchLimit) { const oldest = preparedBatches.keys().next().value!; const old = preparedBatches.get(oldest)!; old.geometry.dispose(); old.corpse?.dispose(); preparedBatches.delete(oldest); }
       }
       }
