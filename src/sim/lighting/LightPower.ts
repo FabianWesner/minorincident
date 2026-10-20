@@ -111,9 +111,16 @@ export class LightPower {
     // It must not shorten sight to the full-night 9.6 m range.
     return !!preset && preset !== 'L5' && (timeOfDay[preset].practical ?? 0) > .5;
   }
+  /** perf-w6: every infected asks about the same courier position each tick. Lamp state only changes with `revision`
+   * (power, breakage, install, checkpoint rebind) and the tick (startup flicker), so one answer per tick, spot and revision. */
+  private readonly sight = { tick: -1, revision: -1, x: NaN, z: NaN, value: 1 };
   sightMultiplier(target: { x: number; z: number }, night = this.night): number {
     if (!night) return 1;
-    for (const lamp of this.lamps.values()) if (this.isOn(lamp.id) && Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range) return 1;
-    return .6;
+    const memo = this.sight;
+    if (memo.tick === this.world.tick && memo.revision === this.revision && memo.x === target.x && memo.z === target.z) return memo.value;
+    let value = .6;
+    for (const lamp of this.lamps.values()) if (this.isOn(lamp.id) && Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range) { value = 1; break; }
+    memo.tick = this.world.tick; memo.revision = this.revision; memo.x = target.x; memo.z = target.z; memo.value = value;
+    return value;
   }
 }
