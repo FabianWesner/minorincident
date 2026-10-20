@@ -15,7 +15,7 @@ export const l4Dressing: readonly L4Dressing[] = [
   d('reception', 'kit.reception-plaza', -26.0, -8.8, { yaw: 0 }),
   d('reception', 'prop.armory-table', -25.2, 0.6, { yaw: H }),
   // PO #41: the first tent stands flush against the west pallet run (it was a 0.7 m gap, exactly a courier wide), so the dead-end alley down to the light tower is gone and nobody can wedge in it.
-  d('reception', 'prop.tent', -30.7, 12.6, { yaw: H }), d('reception', 'prop.tent', -26.8, 12.6, { yaw: H }), d('reception', 'prop.tent', -22.8, 12.6, { yaw: H }),
+  d('reception', 'prop.tent', -30.8, 12.6, { yaw: H }), d('reception', 'prop.tent', -26.8, 12.6, { yaw: H }), d('reception', 'prop.tent', -22.8, 12.6, { yaw: H }),
   d('water', 'prop.crates', -30.6, 3.4, { yaw: .2 }), d('water', 'prop.crates', -30.6, 4.7, { yaw: -.1 }), d('water', 'prop.crates', -29.2, 3.6, { yaw: .1 }), d('water', 'prop.crates', -20.8, 3.4, { yaw: 0 }),
   d('light', 'prop.light-tower', -31.2, 15.4, { yaw: 0 }), d('light', 'prop.light-tower', -16.6, -12.2, { yaw: PI }),
   // ---------------------------------------------------------------- the sandbag line (north, west and south runs; the east side is the convoy)
