@@ -81,6 +81,9 @@ export class Game {
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
+  /** Focus/visibility loss paused the clock (AudioService host). The pause menu must show once the UI can take it: a loss during
+   * a level load (UI on the loading card) used to leave a no-briefing level (L7) frozen at tick 0 with no Resume (P0 10-20). */
+  private awayPaused = false;
   /** How the current mission level was started (restart replays it; campaign is the state at level start). */
   private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null; setup?: (world: SimWorld) => void } | null = null;
   /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
@@ -108,7 +111,7 @@ export class Game {
     };
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
-      pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
+      pause: () => { this.clock.pause(); this.awayPaused = true; this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
       release: () => { this.input.clear(); this.world.clearInput(); this.ticker.reset(); },
       readyForBackground: () => !this.loading && this.view.backgroundReady,
       offscreen: (p) => { const q = this.view.project(p.x, p.y ?? 0.7, p.z); return Math.abs(q[0]) > 1 || Math.abs(q[1]) > 1 || q[2] > 1; },
@@ -141,6 +144,7 @@ export class Game {
       if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
       else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
+        if (!this.clock.paused) this.awayPaused = false; else if (this.awayPaused) this.ui.pause();
         if (!this.clock.paused && !this.inspect?.enabled) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
