@@ -59,6 +59,8 @@ export interface L1Brain {
   stuckX: number; stuckZ: number; stuckTick: number; stuckCount: number;
   /** A human given up as unreachable (fenced yard, no route) is ignored until `ignoreUntil`. */
   ignoreId: number; ignoreUntil: number;
+  /** Director pressure: this human counts `focusBiasM` nearer when a target is chosen, until `focusUntil`. */
+  focusId?: number; focusUntil?: number;
   /** Route backoff: no new A* request before this tick; retries share the budget with other agents. */
   routeAt?: number;
   /** Walking out of a nav pocket (fence gap, porch alley narrower than the baked clearance) to this point until `escapeUntil`. */
