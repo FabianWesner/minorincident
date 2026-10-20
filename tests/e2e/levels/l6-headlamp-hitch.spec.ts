@@ -19,7 +19,8 @@ for (const quality of ['high', 'low'] as const) test(`T-E24-headlamp-hitch ${web
     const frame = (now: number) => { if (probe.previous) probe.frames.push({ t: now, ms: now - probe.previous }); probe.previous = now; if (!probe.stopped) requestAnimationFrame(frame); };
     requestAnimationFrame(frame); window.__SS__!.resume();
   });
-  await page.waitForTimeout(2500);
+  // Press only once play is steady (90 consecutive frames under 34 ms): the resume after loading has its own first frames.
+  await page.waitForFunction(() => { const f = (window as unknown as { hitch: { frames: { ms: number }[] } }).hitch.frames; return f.length >= 90 && f.slice(-90).every(x => x.ms < 34); }, undefined, { timeout: 60_000, polling: 100 });
   const builds = await page.evaluate(() => ({ count: window.__SS__!.perf().nodeBuilds as number, keys: { ...window.__SS__!.perf().nodeBuildMaterials } as Record<string, number> }));
   const pressed = await page.evaluate(() => performance.now());
   await page.keyboard.down('e'); await page.waitForTimeout(700); await page.keyboard.up('e');
