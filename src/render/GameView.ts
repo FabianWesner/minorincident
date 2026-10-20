@@ -18,6 +18,7 @@ import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
+import { SurvivorRings } from './SurvivorRings';
 import { VehicleView } from './VehicleView';
 import { L2Props } from './L2Props';
 import { L3Props } from './L3Props';
@@ -78,6 +79,7 @@ export class GameView implements Lifecycle {
   readonly scene = Object.assign(new Scene(), { matrixAutoUpdate: false });
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
+  private survivorRings: SurvivorRings | null = null;
   private cinematicId: string | null = null;
   private departureShot = false;
   private storyFraming = false;
@@ -320,7 +322,7 @@ export class GameView implements Lifecycle {
     if (this.npcs) this.scene.add(this.npcs);
     if (this.entityAssets) this.scene.add(this.entityAssets);
     if (this.actions) { this.actions.update(); this.scene.add(this.actions); }
-    if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
+    if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); if (this.world.scenario === 'L5') { this.survivorRings = new SurvivorRings(this.world); this.scene.add(this.survivorRings); } }
     if (this.crowd) this.scene.add(this.crowd);
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
@@ -893,7 +895,7 @@ export class GameView implements Lifecycle {
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
-    this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
+    this.marker?.update(); this.survivorRings?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
     this.syncMountedGun();
@@ -1111,7 +1113,7 @@ export class GameView implements Lifecycle {
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
-    this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
+    this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;} if (this.survivorRings) { this.scene.remove(this.survivorRings); this.survivorRings.dispose(); this.survivorRings = null; }
     if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.mountedGunView) { this.scene.remove(this.mountedGunView); this.mountedGunView.dispose(); this.mountedGunView = null; }
