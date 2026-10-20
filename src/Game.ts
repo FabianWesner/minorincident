@@ -311,7 +311,8 @@ export class Game {
     const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
-    if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
+    // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
+    if(level&&level>save.unlockedLevel&&!['1','true'].includes(this.params.get('debug')??''))throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.
