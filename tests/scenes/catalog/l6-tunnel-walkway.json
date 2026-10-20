@@ -1,0 +1,63 @@
+{
+ "name": "l6-tunnel-walkway",
+ "l6Subway": "gate",
+ "time": "L6-subway",
+ "dof": false,
+ "hud": true,
+ "ground": "district",
+ "layout": {
+  "level": "L6",
+  "district": "D-SUBWAY",
+  "bbox": [
+   [
+    -32,
+    -30
+   ],
+   [
+    288,
+    32
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    112,
+    17.6
+   ],
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": {
+    "walk": [
+     [
+      100,
+      17.7
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   108,
+   16.5
+  ],
+  "zoom": 1
+ },
+ "frames": 150,
+ "shots": [
+  1,
+  75,
+  149
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ },
+ "note": "PO 10-20 #63 \"when I walk left, there is a place where I cannot continue, although there is no wall\": the courier walks screen-left along the camera-side walkway from x112 toward home. Look for: she stays on the drawn walkway (no stop 1.3 m short of its edge), walls/ledge/rails readable in the dark, only drawn things (barrier piers) stop her."
+}

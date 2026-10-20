@@ -349,6 +349,9 @@ export class SceneLab {
         lamp.interactable!.completed = true; Object.assign(player.transform, lamp.transform);
         world.physics.playerBody!.setTranslation(player.transform, true); world.update(); world.update();
       }
+      // PO 10-20 #64/#65 fixtures: 'retreat' starts the group walking from the shelter; 'hatch' also closes the first north hatch (door 5, x78).
+      if (spec.l6Subway === 'retreat' || spec.l6Subway === 'hatch') { mission.completeObjective('shelter'); mission.completeObjective('stop'); }
+      if (spec.l6Subway === 'hatch') { const entry = mission.state.l6!.entries!.find(e => e.door === 5)!; world.entities.get(entry.switchId!)!.interactable!.completed = true; }
       if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
         mission.completeObjective('shelter'); mission.completeObjective('stop');
         for (const [index, r] of mission.state.l6!.survivors.entries()) {
