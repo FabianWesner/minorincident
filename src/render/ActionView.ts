@@ -3,6 +3,7 @@ import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
 import { catalog, action } from '../data/actions/catalog';
+import { l4 } from '../data/l4';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -94,8 +95,24 @@ export class ActionView extends Group {
     const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
     if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) needed.add(entity.pickup.actionId);
+    // perf-w6: the L4 quartermaster issues the machine gun on the alarm tick (no pickup entity). Loading it on first
+    // equip compiled its six held materials inside the alarm frame (92 ms render at low/4x CPU).
+    if (this.world.missions?.l4) needed.add(l4.machineGun.id);
     const defs = Object.values(catalog);
     await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
+  }
+  /** Loading warm-up: a held-material clone of every loaded weapon not drawn now (rack weapons not in hand, issued guns)
+   * at `at`, so their courier-fill materials compile behind the loading card instead of on the first equip. */
+  prewarmHeld(at: Vector3): () => void {
+    const group = new Group(); group.position.copy(at);
+    for (const asset of this.assets.values()) {
+      const clone = asset.model.clone(true);
+      clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
+      group.add(clone);
+    }
+    if (!group.children.length) return () => {};
+    this.add(group); group.updateMatrixWorld(true);
+    return () => group.removeFromParent();
   }
   private load(def: (typeof catalog)[string]): Promise<void> {
     if (this.registry.definition(def.viewAssetId).nonModel) return Promise.resolve();
