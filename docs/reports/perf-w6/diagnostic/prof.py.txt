@@ -1,0 +1,35 @@
+"""Aggregate a .cpuprofile: top self time and top inclusive time by function (name file:line)."""
+import json, sys, collections
+p = json.load(open(sys.argv[1]))
+top = int(sys.argv[2]) if len(sys.argv) > 2 else 40
+nodes = {n['id']: n for n in p['nodes']}
+parent = {}
+for n in p['nodes']:
+    for c in n.get('children', []): parent[c] = n['id']
+dt = collections.Counter()
+samples, deltas = p['samples'], p['timeDeltas']
+last = float(sys.argv[3]) * 1e6 if len(sys.argv) > 3 else 0
+times = []; t = 0
+for d in deltas: t += d; times.append(t)
+end = times[-1]
+for i, s in enumerate(samples):
+    d = deltas[i + 1] if i + 1 < len(deltas) else 0
+    if last and times[i] < end - last: continue
+    dt[s] += d
+def key(n):
+    cf = n['callFrame']; url = cf['url'].split('/src/')[-1] if '/src/' in cf['url'] else cf['url'].split('/')[-1]
+    return f"{cf['functionName'] or '(anon)'} {url}:{cf['lineNumber'] + 1}"
+total = sum(dt.values())
+self_t = collections.Counter(); incl = collections.Counter()
+for nid, t in dt.items():
+    self_t[key(nodes[nid])] += t
+    seen = set(); cur = nid
+    while cur is not None:
+        k = key(nodes[cur])
+        if k not in seen: incl[k] += t; seen.add(k)
+        cur = parent.get(cur)
+print(f'total {total/1000:.1f} ms')
+print('--- self')
+for k, t in self_t.most_common(top): print(f'{t/1000:9.1f} {100*t/total:5.1f}% {k}')
+print('--- inclusive')
+for k, t in incl.most_common(top): print(f'{t/1000:9.1f} {100*t/total:5.1f}% {k}')

@@ -1,0 +1,34 @@
+[remote] sync 41s, 28584 files; job /srv/mi/jobs/agent-ab0a727213d9ce9b8-1dcdf0-80905-1792484831; queueing for a slot
+[runner] slot 0 acquired; load 0.44 1.07 3.97
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+[runner] functional phase reached; extra slot released
+     ✓ @E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot 1122ms
+stdout | tests/sim/barricades.test.ts > T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%
+   ✓ T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40% 5555ms
+   ✓ T-E29-19-dying @E29-AC19 high: rocket death animations retain active-pool slots 895ms
+   ✓ T-E29-19-dying @E29-AC19 low: rocket death animations retain active-pool slots 670ms
+   ✓ T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals 950ms
+   ✓ @E18 phone civilians retain four full footwork slots and restore all desktop slots 380ms
+     ✓ T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 57311ms
+   ✓ T-E32-06-E2-high @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence 5878ms
+   ✓ T-E32-06-E2-low @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence 4961ms
+      slots: 106,
+      slots: 108,
+      slots: 112,
+      slots: 114,
+      slots: 116,
+      slots: 118,
+      slots: 51,
+      slots: 54,
+      slots: 55,
+      slots: 57,
+      slots: 59,
+      slots: 60,
+   × T-E27-14h @E27 @E18 high loads resident close-detail models before play 37ms
+   × T-E27-14h @E27 @E18 low prepares near and far bands before play 10ms
+   × PO #21 @E18 resident Alpha full body is ready before play (high) 10ms
+   × PO #21 @E18 resident Alpha full body is ready before play (low) 5ms
+ Test Files  1 failed | 531 passed | 3 skipped (535)
+      Tests  4 failed | 3245 passed | 11 skipped (3260)
+[remote] done exit=1 (runner 2.31.10.108, sync 41s, remote total 2567s)

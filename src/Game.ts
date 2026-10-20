@@ -35,6 +35,7 @@ import { GameView } from './render/GameView';
 import { loadLayouts } from './levels/layouts';
 import type { DistrictLayout, LevelComposition, Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
+import { warmL4Alarm } from './sim/missions/l4AlarmWarmup';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
@@ -80,6 +81,16 @@ export class Game {
   private levelQueue: Promise<void> = Promise.resolve();
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
+  /** perf-w6: the L4 alarm runs once per page in a scratch world behind the loading card (JIT warm-up, see l4AlarmWarmup). */
+  private alarmWarmup: { composition: LevelComposition; layouts: DistrictLayout[]; seed: number } | null = null;
+  private alarmWarmed = false;
+  private async warmAlarm(): Promise<void> {
+    const pending = this.alarmWarmup; this.alarmWarmup = null;
+    if (!pending || this.alarmWarmed) return;
+    const start = performance.now();
+    await warmL4Alarm(pending.composition, pending.layouts, pending.seed, this.quality.tier === 'low' ? 'low' : 'high');
+    this.alarmWarmed = true; loadMeasure('level:l4-alarm-warmup', start);
+  }
   private speculativeRunning = false;
   /** How the current mission level was started (restart replays it; campaign is the state at level start). */
   private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null; setup?: (world: SimWorld) => void } | null = null;
@@ -213,6 +224,7 @@ export class Game {
         this.quality.startLevel(); this.applyQuality();
         this.view.missionHidden = false;
         await this.view.prepareCharacterVariant();
+        await this.warmAlarm();
         await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); this.view.unfreeze(); this.view.update(1);
         await this.view.renderer.finishWarmUp(); await transitionPaint(); this.firstLevelFrame(id);
         return;
@@ -262,7 +274,7 @@ export class Game {
         const physicsStart = loadMeasure('level:mission+cast', missionStart);
         this.world.physics.prepare(); loadMeasure('level:physics-prepare', physicsStart);
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
-        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
+        const sim=loadMeasure('level:sim',data);this.alarmWarmup = id === 'L4' && !this.alarmWarmed ? { composition, layouts, seed: opts?.seed ?? 1 } : null;const alarm = speculative ? undefined : this.warmAlarm();await this.view.load();await alarm;this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
         if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {

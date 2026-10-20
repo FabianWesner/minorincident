@@ -1,0 +1,69 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { devices } from '@playwright/test';
+import { test } from '../e2e/fixtures';
+
+/** perf-w6 diagnostic (not a gate): Chrome trace (GC, V8, timeline) of the L4 low turn window, 4x CPU throttle, vsync capped. */
+const dir = process.env.W6_OUT ?? 'test-results/w6/trace';
+const renderer = process.env.E2E_RENDERER === 'webgpu' ? 'webgpu' : 'webgl';
+const phase = process.env.W6_PHASE ?? 'turn';
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } });
+test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: devices['Pixel 7'].deviceScaleFactor, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
+test(`w6 L4 low ${phase} trace`, async ({ page, context, browser }) => {
+  test.setTimeout(900_000); mkdirSync(dir, { recursive: true });
+  const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await page.goto(`/?test=1&renderer=${renderer}&quality=low&audio=muted&dpr=1.5&scenelab=1${process.env.W6_PROFILE === '1' ? '&profile' : ''}`);
+  await page.waitForFunction(() => Boolean(window.__SS__));
+  await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L4', { seed: 2, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
+  await page.evaluate(() => {
+    const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game, world = game.world;
+    const builds: unknown[] = []; (window as unknown as { w6Builds: unknown[] }).w6Builds = builds;
+    const onBuild = game.view.renderer.debug.onNodeBuilderCreated;
+    game.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+      onBuild?.(builder, object);
+      const draw = object as unknown as { material: { name: string; type: string }; object: { name: string; parent?: { name: string } } };
+      builds.push({ tick: world.tick, at: performance.now(), material: draw.material.name || draw.material.type, name: draw.object.name, parent: draw.object.parent?.name });
+    };
+  });
+  const step = async (until: string, max = 600) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(15)); };
+  const record = (until: string, tail: number) => page.evaluate(async ({ until, tail }) => {
+    const a = window.__SS__!, rows: { at: number; frame: number; tick: number; ticks: number; sim: number; simTick: number; update: number; render: number }[] = []; let previous = 0, previousTick = a.tick(), end = 0; const deadline = performance.now() + 120_000; a.resume();
+    for (let i = 0; previous < deadline; i++) {
+      const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
+      const tick = a.tick(), steps = tick - previousTick; previousTick = tick;
+      if (previous && i > 2) { const p = a.perf(); rows.push({ at: now, frame: now - previous, tick, ticks: steps, sim: p.simMs, simTick: p.simTickMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+      if (!end && (0, eval)(until)) end = now + tail;
+      if (end && now >= end) break;
+    }
+    a.pause(); return { rows, origin: performance.timeOrigin };
+  }, { until, tail });
+  const l4 = 'window.__SS__.missions.state().l4', beats = 'window.__SS__.perf().l4';
+  await step(`${l4}.phase === 'plaza'`, 800);
+  if (phase !== 'turn') {
+    await page.evaluate(() => window.__SS__!.resume()); await page.evaluate(() => new Promise(r => setTimeout(r, 200))); await page.evaluate(() => window.__SS__!.pause());
+    await step(`${beats}.turnAt > 0`, 400);
+    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 3`, 900);
+    // Same low stress fill as T-E22-20 (20 civilians, 48 infected at the soldier posts).
+    await page.evaluate(() => {
+      const a = window.__SS__!;
+      let civilians = a.query({}).filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length;
+      for (let i = 0; civilians < 20 && i < 600; i++) { const p = { x: -35 + i % 12 * 3, z: -18 + Math.floor(i / 12) * 2 }; try { a.npcs.civilian('cashier', p, { waypoints: [p] }); civilians++; } catch { /* next cell */ } }
+      const posts = a.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').map(e => ({ at: e.transform, yaw: e.transform.yaw }));
+      let infected = a.getState().ai!.count;
+      for (let i = 0; infected < 48 && i < 800; i++) {
+        const post = posts[i % posts.length], angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8, radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
+        try { a.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++; } catch { /* next approach */ }
+      }
+      a.camera.follow();
+    });
+  }
+  const prof = await context.newCDPSession(page); await prof.send('Profiler.enable'); await prof.send('Profiler.setSamplingInterval', { interval: phase === 'turn' ? 200 : 1000 }); await prof.send('Profiler.start');
+  await browser.startTracing(page, { categories: phase === 'turn' ? ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'v8', 'v8.gc', 'disabled-by-default-v8.gc', 'blink.user_timing', 'v8.execute'] : ['v8.gc', 'blink.user_timing'] });
+  const markAt = await page.evaluate(() => { performance.mark('w6-start'); return performance.now(); });
+  const result = phase === 'turn' ? await record(`${beats}.turnAt > 0`, 2_000) : await record(`${beats}.lineBreakAt > 0`, 3_000);
+  const trace = await browser.stopTracing();
+  writeFileSync(`${dir}/${phase}-${renderer}.cpuprofile`, JSON.stringify((await prof.send('Profiler.stop')).profile));
+  writeFileSync(`${dir}/${phase}-${renderer}.trace.json`, trace);
+  writeFileSync(`${dir}/${phase}-${renderer}.rows.json`, JSON.stringify({ ...result, markAt, builds: await page.evaluate(() => (window as unknown as { w6Builds: unknown[] }).w6Builds), turnAt: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.turnAt), measures: await page.evaluate(() => performance.getEntriesByType('measure').filter(m => m.name.startsWith('level:') || m.name.startsWith('view:')).map(m => ({ name: m.name, ms: Math.round(m.duration) }))) }));
+  const frames = result.rows.map(r => r.frame).sort((a, b) => a - b);
+  console.log(JSON.stringify({ phase, renderer, n: frames.length, max: frames.at(-1), p95: frames[Math.ceil(frames.length * .95) - 1] }));
+});

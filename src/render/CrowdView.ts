@@ -131,7 +131,8 @@ export class CrowdView extends Group {
     }
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
-    if (this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7')
+    const alphaLevel = this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7';
+    if (alphaLevel)
       for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
@@ -160,7 +161,9 @@ export class CrowdView extends Group {
     }
     await Promise.all(definitions.flatMap(def => {
       const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
-      const alpha = (def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha') && residents.has(this.modelAliases.get(def.id)!);
+      // perf-w6: Alpha bodies draw LOD0 (heroes, and their corpses on both tiers). In L4/L5/L7 the Alphas arrive during play
+      // (the L4 waves); the first death baked that batch synchronously (~200 ms at low/4x CPU). Bake it while loading there too.
+      const alpha = (alphaLooks['inf.alpha'].includes(def.asset) || alphaLooks['inf.mega-alpha'].includes(def.asset)) && (residents.has(this.modelAliases.get(def.id)!) || alphaLevel);
       return [...new Set(warmHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
     }));
     loadMeasure('view:infected-crowd', started);

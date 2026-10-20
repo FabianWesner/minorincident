@@ -1,0 +1,17 @@
+#!/bin/sh
+# perf-w6 diagnostic: bundle the sim harness twice: tools/perf/w6/ab/base.mjs from a git revision's src/ (default HEAD),
+# tools/perf/w6/ab/new.mjs from the working tree. Usage: sh tools/perf/w6/bundle-base.sh [rev]
+set -e
+rev=${1:-HEAD}
+root=$(cd "$(dirname "$0")/../../.." && pwd)
+cd "$root"
+bundle() { npx esbuild tools/perf/w6/sim-profile.ts --bundle --platform=node --format=esm --outfile="$1" --external:@dimforge/rapier3d-compat --log-level=warning --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"; }
+bundle tools/perf/w6/ab/new.mjs
+snap=$(mktemp -d "${TMPDIR:-/tmp}/w6-base.XXXXXX")
+# Changed tracked src files only: save the working copies, check out the revision's version, bundle, put them back.
+git diff --name-only "$rev" -- src > "$snap/files"
+while read -r f; do mkdir -p "$snap/work/$(dirname "$f")"; cp "$f" "$snap/work/$f"; git show "$rev:$f" > "$f"; done < "$snap/files"
+bundle tools/perf/w6/ab/base.mjs || true
+while read -r f; do cp "$snap/work/$f" "$f"; done < "$snap/files"
+rm -rf "$snap"
+git diff --stat -- src | tail -1
