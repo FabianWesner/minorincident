@@ -157,7 +157,7 @@ export class Game {
         const departure = this.world.l7Departure;
         if (departure?.state.phase === 'done' && (!this.world.missions || this.world.missions.state.phase === 'result') && !departure.handedOver) { departure.handedOver = true; void this.handOver(7); }
         const mission = this.world.missions;
-        if (mission && this.prefetchedMission !== mission && /^L[1-5]$/.test(mission.def.id) && (mission.def.id === 'L2' && mission.state.phase === 'playing' && this.world.tick >= 300 || ['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
+        if (mission && this.prefetchedMission !== mission && /^L[1-9]$/.test(mission.def.id) && (mission.def.id === 'L2' && mission.state.phase === 'playing' && this.world.tick >= 300 || ['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
       }
       this.ui.update();
       this.overlay?.update(seconds);
