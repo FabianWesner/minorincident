@@ -22,7 +22,7 @@ const layout: DistrictLayout = { version: 1, district: 'D-SUBWAY', title: 'Lakes
 const swappedBoxes: Record<string, Set<number>> = {
   'kit.metro-tunnel': new Set([1, 7, 8, 9, 10, 11, 12]),
   'kit.maintenance-corridor': new Set([0, 1, 4, 5, 6, 7, 8, 9, 10, 11]),
-  'int.metro-station': new Set([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 34, 35, 36]),
+  'int.metro-station': new Set([]),
 };
 const undrawnBoxes: Record<string, Set<number>> = { 'int.metro-station': new Set([37, 38]) };
 const swapYZ = (b: { min: number[]; max: number[] }) => {
@@ -45,6 +45,9 @@ const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='me
     for(const bx of [box.min[0]*sx,box.max[0]*sx]) for(const bz of [box.min[2],box.max[2]]) for(const by of [box.min[1],box.max[1]]) {const q=[x+bx*Math.cos(yaw)+bz*Math.sin(yaw),y+by,z-bx*Math.sin(yaw)+bz*Math.cos(yaw)]; for(let a=0;a<3;a++){min[a]=Math.min(min[a],q[a]);max[a]=Math.max(max[a],q[a]);}}
     const walkable=box.max[1]<=.65 || (assetId==='int.metro-exit' && (box.max[1]-box.min[1]<.35 || (box.max[0]-box.min[0]<.3 && box.min[1]<3.5)));
     layout.colliders.push({id:`${p.id}/fixed-${i}`,aabb:{min,max},walkable,minTier:0,maxTier:5});
+    // The shipped L6 balance (escort, entries, infection spread) was tuned with crowds and survivors held in the
+    // central lane by the old walkway boxes. Keep those lane edges for navigation only: the courier walks the drawn walkways.
+    if (assetId==='kit.metro-tunnel' && (i===7 || i===8)) { const lane=raw; const lmin:[number,number,number]=[x+lane.min[0],y+lane.min[1],z+lane.min[2]], lmax:[number,number,number]=[x+lane.max[0],y+lane.max[1],z+lane.max[2]]; layout.colliders.push({id:`${p.id}/lane-${i}`,aabb:{min:lmin,max:lmax,navOnly:true},walkable:false,minTier:0,maxTier:5}); }
   }
   return p;
 };
@@ -76,7 +79,8 @@ for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8+SZ,3.2,Math.PI/2,'
 const south = (x: number) => place('prop.jersey-barrier',x,12.825,.6,Math.PI/2,'metro-main',2.65/3);
 for(const x of l6.gates) { south(x); place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); }
 for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) { if(((x-42)/24)%2) place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); else south(x); }
-for(const x of l6.gates) for(const z of [13.1,16.9]) place('prop.crates',x-3,z,.6,0,'self');
+// Gate crates stand on the drawn side walkways (top y .87, z 11.5-13.2 and 16.8-18.5), clear of the walking lane.
+for(const x of l6.gates) for(const z of [12.35,17.65]) place('prop.crates',x-3,z,.87,0,'self');
 // Appended last so the ids of every other placement stay (placement-solids baseline keys on them).
 // One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
 for(const x of [-24,-12,0,12,24]) place('kit.metro-track',x,15,.35);
