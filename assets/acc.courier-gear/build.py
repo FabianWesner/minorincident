@@ -320,7 +320,7 @@ def build_gear(body, lod, sex):
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
         fz = bones['foreArm' + side][0].z
         g.patch(DARK, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.022, .55), n(2, 2), n(5, 3), rim=TRIM,
-                remap=only({'foreArm' + side, 'foreArmTwist' + side, 'elbow' + side, 'hand' + side}, 'foreArm' + side))
+                remap=only({'arm' + side, 'foreArm' + side, 'foreArmTwist' + side, 'elbow' + side, 'hand' + side}, 'foreArm' + side))
     g.tier_mark()
     return g
 
