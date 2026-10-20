@@ -290,7 +290,7 @@ def build_gear(body, lod, sex):
         return 'olive' if i % 2 else 'oliveSeam'
     g.patch('olive', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True), vest_thick, rows, cols, closed=True,
             bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4,
-            drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 50)   # armholes
+            drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 42)   # armholes
     g.tier_mark()
 
     # ---- tier 3: shoulder + elbow pads, utility belt ----------------------------------------------------------------
