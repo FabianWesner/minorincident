@@ -1,0 +1,15 @@
+{
+ "name": "dress-l8-cellar-l5",
+ "note": "Opus visual QA #35 (verbatim): \"Kessler's cellar (L4 end tick 11768, 75.25,-1.75 / L5 start) sits alone on a featureless dark-green plane at the map edge.\" L5 start (power out, sunset): the same yard hours later. Look for: the lit porch/window of the yard house as the one warm light, burned-out neighbours, hedges, beds and lamps still readable, no bare lawn filling the frame.",
+ "seed": 1,
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "layout": { "level": "L5", "district": "D-FAIR", "bbox": [[58, -36], [140, 42]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [75.3, 1.2], "yaw": 180, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [75.3, 1.2] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}
