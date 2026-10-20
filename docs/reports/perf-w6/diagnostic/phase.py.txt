@@ -1,0 +1,16 @@
+"""Print frames > threshold in L4 perf json phases (phaseCpu) with cpu breakdown and neighbours."""
+import json, sys, gzip
+f = sys.argv[1]; thr = float(sys.argv[2]) if len(sys.argv) > 2 else 35
+d = json.load(gzip.open(f) if f.endswith('.gz') else open(f))
+names = ['turn', 'war', 'tank', 'break', 'collapse']
+for pi, ph in enumerate(d.get('phaseCpu') or []):
+    frames, cpu = ph['frames'], ph['cpu']
+    print(f'== phase {pi} {names[pi] if pi < len(names) else ""} n={len(frames)} max={max(frames):.1f}')
+    for i, fr in enumerate(frames):
+        if fr >= thr:
+            for j in range(max(0, i - 2), min(len(frames), i + 4)):
+                c = cpu[j]
+                print(f'  {"*" if j == i else " "} {j:4d} frame {frames[j]:6.1f} tick {c["tick"]} ticks {c["ticks"]} sim {c["simFrame"]:.1f} simTick {c["sim"]:.1f} upd {c["update"]:.1f} rend {c["render"]:.1f} builds {c["builds"]}')
+            print()
+for k in ['slowCalls']:
+    for s in (d.get(k) or [])[:60]: print(s)

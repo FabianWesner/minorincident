@@ -1,0 +1,15 @@
+#!/bin/sh
+# perf-w6 diagnostic: interleaved A/B of two sim bundles (tools/perf/w6/ab/<a>.mjs vs <b>.mjs) on the same host.
+# Usage: sh tools/perf/w6/ab.sh <a> <b> <repeats> [scenarios...]
+a=$1; b=$2; repeats=${3:-4}
+shift 3
+scenarios=${*:-l8 l7 zoo2 zoo1}
+i=0
+while [ "$i" -lt "$repeats" ]; do
+  for s in $scenarios; do
+    for v in "$a" "$b"; do
+      printf '%s %s ' "$v" "$s"; node "tools/perf/w6/ab/$v.mjs" "$s" low 2 /tmp/w6 2>&1 | grep '^{' | tail -1
+    done
+  done
+  i=$((i + 1))
+done

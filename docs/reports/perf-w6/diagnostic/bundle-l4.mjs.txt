@@ -1,0 +1,9 @@
+// perf-w6 diagnostic: bundle tools/perf/w6/l4-hash.ts (optionally with baseline copies under origDir). Usage: node bundle-l4.mjs <out> [origDir]
+import { build } from 'esbuild';
+import { existsSync, readFileSync } from 'node:fs';
+import { relative, resolve } from 'node:path';
+const [out, orig] = process.argv.slice(2);
+const root = resolve(import.meta.dirname, '../../..');
+const plugins = orig ? [{ name: 'baseline', setup(b) { b.onLoad({ filter: /\/src\/.*\.ts$/ }, args => { const copy = resolve(orig, relative(root, args.path)); return existsSync(copy) ? { contents: readFileSync(copy, 'utf8'), loader: 'ts' } : undefined; }); } }] : [];
+await build({ entryPoints: [resolve(root, 'tools/perf/w6/l4-hash.ts')], bundle: true, platform: 'node', format: 'esm', outfile: out, external: ['@dimforge/rapier3d-compat'], logLevel: 'warning', plugins,
+  banner: { js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);" } });

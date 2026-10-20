@@ -1,0 +1,16 @@
+"""Frame time vs measured CPU (sim+update+render) per phase; unaccounted remainder statistics."""
+import json, sys, gzip
+f = sys.argv[1]
+d = json.load(gzip.open(f) if f.endswith('.gz') else open(f))
+names = ['turn', 'war', 'tank', 'break', 'collapse']
+for pi, ph in enumerate(d.get('phaseCpu') or []):
+    fr, cpu = ph['frames'], ph['cpu']
+    for shift in (0, 1):
+        pairs = [(fr[i], cpu[i + shift]) for i in range(len(fr) - shift)]
+        cs = [c['simFrame'] + c['update'] + c['render'] for _, c in pairs]
+        un = [f - c for (f, _), c in zip(pairs, cs)]
+        n = len(un); mf = sum(f for f, _ in pairs) / n; mc = sum(cs) / n
+        cov = sum((f - mf) * (c - mc) for (f, _), c in zip(pairs, cs)) / n
+        vf = (sum((f - mf) ** 2 for f, _ in pairs) / n) ** .5; vc = (sum((c - mc) ** 2 for c in cs) / n) ** .5
+        big = sorted(range(n), key=lambda i: -pairs[i][0])[:8]
+        print(f'{names[pi]:8s} shift {shift} n={n} frame {mf:.1f} cpu {mc:.1f} corr {cov / (vf * vc + 1e-9):.2f} | top frames (frame/cpu/unacc/ticks): ' + ' '.join(f'{pairs[i][0]:.0f}/{cs[i]:.0f}/{un[i]:.0f}/{pairs[i][1]["ticks"]}' for i in big))

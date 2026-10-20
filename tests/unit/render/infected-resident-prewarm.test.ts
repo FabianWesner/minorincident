@@ -32,3 +32,14 @@ for (const low of [false, true]) test(`PO #21 @E18 resident Alpha full body is r
     expect(load.mock.calls.filter(([def]) => def.asset === 'inf.alpha').map(([, lod]) => lod).sort()).toEqual(['lod0', 'lod1', 'lod2']);
   } finally { update.mockRestore(); load.mockRestore(); crowd.dispose(); }
 });
+
+for (const low of [false, true]) test(`perf-w6 @E22-AC20 L4 bakes the Alpha full body before play although its Alphas arrive later (${low ? 'low' : 'high'})`, async () => {
+  const world = { scenario: 'L4', entities: { iterate: () => [{ archetype: 'infected.runner', infected: {} }] } } as unknown as SimWorld;
+  const crowd = new CrowdView(world, low);
+  const load = vi.spyOn(crowd as unknown as { loadBatch(def: { id: string; asset: string }, lod: string): Promise<void> }, 'loadBatch').mockResolvedValue();
+  const update = vi.spyOn(crowd, 'update').mockImplementation(() => {});
+  try {
+    await crowd.init();
+    expect(load.mock.calls.some(([def, lod]) => def.asset === 'inf.alpha' && lod === 'lod0')).toBe(true);
+  } finally { update.mockRestore(); load.mockRestore(); crowd.dispose(); }
+});

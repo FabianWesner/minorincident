@@ -1,0 +1,13 @@
+// perf-w6 diagnostic: L4 bot run through the alarm; prints the end-state hash and per-tick cost of the alarm ticks.
+import { loadL4, runL4 } from '../../sim-runner/l4Bots';
+const tier = (process.argv[2] ?? 'low') as 'low' | 'high', after = Number(process.argv[3] ?? 600);
+const { world, mission } = await loadL4(2, tier);
+const times: { tick: number; ms: number }[] = [];
+const update = world.update.bind(world);
+world.update = () => { const t = performance.now(); update(); times.push({ tick: world.tick, ms: performance.now() - t }); };
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 600, stopWhen: m => m.state.l4!.turnAt > 0 && world.tick >= m.state.l4!.turnAt + after });
+let hash = 2166136261;
+const s = JSON.stringify(world.getState()); for (let k = 0; k < s.length; k++) hash = Math.imul(hash ^ s.charCodeAt(k), 16777619) >>> 0;
+const turn = mission.state.l4!.turnAt, alarm = times.filter(t => t.tick >= turn && t.tick < turn + 10).map(t => +t.ms.toFixed(2));
+console.log(JSON.stringify({ tier, hash: hash.toString(16), tick: world.tick, turn, alarm, alarmSum: +alarm.reduce((a, b) => a + b, 0).toFixed(2) }));
+world.dispose();

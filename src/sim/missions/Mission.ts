@@ -418,7 +418,7 @@ export class Mission {
       arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
     }
     // perf-w5d: the same snapshot as query({}) (structuredClone of every entity), copied about 3x faster.
-    return { tick: this.world.tick, state: structuredClone(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
+    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
   }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {

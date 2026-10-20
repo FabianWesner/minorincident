@@ -1,0 +1,14 @@
+"""Summarise ab.sh output: median over repeats of round-0 (cold) and round-1 (warm) p50/p95/mean per variant and scenario."""
+import json, sys, collections, statistics
+rows = collections.defaultdict(list)
+for line in open(sys.argv[1]):
+    parts = line.strip().split(' ', 2)
+    if len(parts) < 3 or not parts[2].startswith('{'): continue
+    v, s, j = parts
+    try: d = json.loads(j)
+    except Exception: continue
+    rows[(s, v)].append(d['results'])
+med = statistics.median
+for (s, v), rs in sorted(rows.items()):
+    c = [r[0] for r in rs]; w = [r[-1] for r in rs]
+    print(f'{s:5s} {v:8s} n={len(rs)} cold p50 {med(x["p50"] for x in c):.3f} p95 {med(x["p95"] for x in c):.3f} mean {med(x["mean"] for x in c):.3f} | warm p50 {med(x["p50"] for x in w):.3f} p95 {med(x["p95"] for x in w):.3f} mean {med(x["mean"] for x in w):.3f}')
