@@ -1,0 +1,41 @@
+main threads [(9556, 261715027)]
+frames 443 median gap 1.213
+
+== gap 80.1 ms, main busy 80.1 ms
+      80.1 v8.callFunction
+      80.1 FireAnimationFrame
+      80.0 FunctionCall
+       7.7 V8.StackGuard
+       7.6 V8.HandleInterrupts
+       0.7 V8.BytecodeBudgetInterrupt
+       0.2 V8.BytecodeBudgetInterruptWithStackCheck
+       0.1 UpdateLayoutTree
+       0.1 V8.DeoptimizeCode
+       0.1 Layout
+       0.0 RunMicrotasks
+
+== gap 55.1 ms, main busy 55.1 ms
+      55.1 v8.callFunction
+      55.1 FireAnimationFrame
+      55.1 FunctionCall
+       6.3 V8.StackGuard
+       6.3 V8.HandleInterrupts
+       0.8 Layout
+       0.1 V8.DeoptimizeCode
+       0.1 UpdateLayoutTree
+       0.0 V8.BytecodeBudgetInterrupt
+       0.0 V8.BytecodeBudgetInterruptWithStackCheck
+       0.0 RunMicrotasks
+
+== gap 54.5 ms, main busy 54.5 ms
+      54.5 v8.callFunction
+      54.5 FireAnimationFrame
+      53.9 FunctionCall
+       4.0 V8.StackGuard
+       4.0 V8.HandleInterrupts
+       1.2 UpdateLayoutTree
+       0.6 RunMicrotasks
+       0.2 Layout
+       0.0 V8.BytecodeBudgetInterruptWithStackCheck
+       0.0 V8.DeoptimizeCode
+       0.0 V8.BytecodeBudgetInterrupt

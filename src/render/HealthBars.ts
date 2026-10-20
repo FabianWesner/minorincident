@@ -7,8 +7,15 @@ import type { EntitySnapshot } from '../sim/world/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { pickBodies } from './characters/PickBodies';
 
-export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean): boolean {
-  if (e.civilian?.survivor?.mode === 'follow') return !e.hidden && !e.infection && e.health.current > 0 && !e.corpse;
+/** PO #26 (L5): "show health bar for the 5 survivors, so the player knows how they are". A group this small keeps a bar on every follower. */
+export const followerBarsAlwaysMax = 5;
+/** Larger groups (L6 tunnel crowd, L7's ~24 at the night exit, QA #37 "the ~24 bars are noise"): only hurt followers carry a bar,
+ * and at most this many, the most hurt first. The HUD still lists the group; the bars point at who needs a medkit. */
+export const followerBarCap = 6;
+export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && e.health.current > 0 && !e.corpse;
+/** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
+export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
+  if (e.civilian?.survivor?.mode === 'follow') return isFollower(e) && (fullFollowers || e.health.current < e.health.max);
   return bar && e.faction === 'infected' && !!e.infected && !e.hidden && !e.infected.hidden && !e.corpse &&
     !(e.infected.state === 'dead' && e.infected.recoverAt < 0) &&
     (e.health.current < e.health.max || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
@@ -17,6 +24,8 @@ export function barSize(width: number, height: number, mega = false): { width: n
   const phone = Math.min(width, height) <= 480;
   return mega ? { width: phone ? 72 : 96, height: phone ? 8 : 10 } : { width: phone ? 48 : 64, height: phone ? 6 : 8 };
 }
+
+const ascending = (a: number, b: number) => a - b;
 
 /** Three pooled billboard meshes, independent of population and quality tier.
  * HP is read every presentation frame; nothing here writes simulation state. */
@@ -38,6 +47,7 @@ export class HealthBars extends Group {
   private readonly solidCollider = (c: Collider) => !c.isSensor() && c.shapeType() === ShapeType.Cuboid;
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
+  private readonly hurt: number[] = [];
   private readonly probing = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
@@ -59,8 +69,16 @@ export class HealthBars extends Group {
     this.probes.length = 0;
     for (const layer of this.meshes) layer.count = 0;
     const player = this.world.entities.get(1); if (!player) return;
+    // Follower bars: every follower in a small group, else the most hurt few (no per-frame allocation: the fraction list is reused).
+    let followers = 0; this.hurt.length = 0;
+    for (const e of this.world.entities.iterate()) if (isFollower(e)) { followers++; if (e.health.current < e.health.max) this.hurt.push(healthFraction(e.health.current, e.health.max)); }
+    const full = followers <= followerBarsAlwaysMax;
+    let hurtLimit = Infinity, hurtLeft = followerBarCap;
+    if (!full && this.hurt.length > followerBarCap) { this.hurt.sort(ascending); hurtLimit = this.hurt[followerBarCap - 1]; }
     for (const e of this.world.entities.iterate()) {
-      if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true) || !pickBodies.bounds(e.id, this.bounds)) continue;
+      if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+      if (!full && e.civilian?.survivor?.mode === 'follow') { if (hurtLeft <= 0 || healthFraction(e.health.current, e.health.max) > hurtLimit) continue; hurtLeft--; }
+      if (!pickBodies.bounds(e.id, this.bounds)) continue;
       // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
       const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.

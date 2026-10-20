@@ -1,0 +1,27 @@
+{
+  "name": "perf-w6-army-mg-held",
+  "note": "perf-w6: the L4 quartermaster's machine gun in the courier's hand (its held materials now compile during the loading warm-up, not in the alarm frame). Check the gun sits in the right hand with the courier fill, the barrel points at the runner while firing, the muzzle flash, and the bat on the back.",
+  "seed": 4,
+  "ground": "asphalt",
+  "size": 35,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "loadout": [["weapon.bat", "weapon.fists"], ["weapon.army-mg", "weapon.handgun"]], "look": { "gearTier": 2, "model": "female" } },
+    { "id": "target", "kind": "infected", "at": [7, 0], "archetype": "infected.runner", "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 120,
+  "sheet": 15,
+  "script": [
+    { "frame": 0, "actor": "courier", "do": { "select": "RIGHT", "index": 0 } },
+    { "frame": 40, "actor": "courier", "do": { "attack": "target", "side": "RIGHT", "seconds": 1.2, "inPlace": true } }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "undrawnFramesMax": 0
+  }
+}

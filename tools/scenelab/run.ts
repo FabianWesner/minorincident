@@ -148,6 +148,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   let frame = 0;
   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
   const foreground: { frame: number; active: boolean; occluder: string }[] = [];
+  const barCounts: { frame: number; count: number }[] = [];
   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
@@ -156,6 +157,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if (spec.look) lookSamples.push({ frame: f, ...await measureLook(session) });
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
+    if (spec.expect?.healthBarsMax !== undefined || spec.expect?.healthBarsMin !== undefined) barCounts.push({ frame: f, count: await session.page.evaluate(() => window.__SS__!.getState().render.healthBars?.count ?? 0) });
     if (spec.expect?.courierForegroundFramesMax !== undefined) foreground.push({ frame: f, ...await session.page.evaluate(() => { const r = window.__SS__!.getState().render; return { active: !!r.courierForeground, occluder: r.courierOccluder ?? '' }; }) });
     if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
@@ -236,6 +238,10 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaBodyPixels > 0 && s.megaPixels >= spec.expect!.megaAlphaVisibleRatioMin! * s.alphaPixels), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
+  // Frame 0 draws before the first bar update and before frame-1 script effects; the gates sample the settled frames.
+  const bars = barCounts.filter(b => b.frame > 0).map(b => b.count);
+  if (spec.expect?.healthBarsMax !== undefined) result.checks.push({ name: 'healthBarsMax', pass: bars.length > 0 && Math.max(...bars) <= spec.expect.healthBarsMax, value: bars.length ? Math.max(...bars) : -1, limit: spec.expect.healthBarsMax });
+  if (spec.expect?.healthBarsMin !== undefined) result.checks.push({ name: 'healthBarsMin', pass: bars.length > 0 && Math.min(...bars) >= spec.expect.healthBarsMin, value: bars.length ? Math.min(...bars) : -1, limit: spec.expect.healthBarsMin });
   if (spec.expect?.courierForegroundFramesMax !== undefined) {
     // PO #9/#26: the near-camera foreground slice draws the courier over every nearer person and prop.
     const active = foreground.filter(f => f.active).length;

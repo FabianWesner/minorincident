@@ -77,6 +77,8 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     // The ride and the calm plaza (the bot goes to the quartermaster), then the first turn.
     await step(`${l4}.phase === 'plaza'`, 800);
     const turn = await record(`${beats}.turnAt > 0`, 2_000);
+    // perf-w6: the quartermaster's machine gun (issued on the alarm tick) and every alarm material compile while loading.
+    const turnBuilds = await page.evaluate(() => { const cpu = (window as unknown as { l4Cpu: { builds: number }[] }).l4Cpu; return cpu.at(-1)!.builds - cpu[0].builds; });
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
     // Capture the requested surviving-army state after an actual loss, rather than assuming
     // that a timed Alpha entrance already killed a soldier. Recoverable bodies keep their slots.
@@ -129,7 +131,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const collapseStatic = await page.evaluate(() => window.__SS__!.perf());
     const collapse = await record('true', 6_000);
     const proof = { renderer, tier, seed: 2, beatTicks: await page.evaluate(() => window.__SS__!.perf().l4), counts, firingSoldiers, warAwakeProps: warStatic.awakeProps, collapseAwakeProps: collapseStatic.awakeProps, warDrawCalls: warStatic.drawCalls, warTriangles: warStatic.triangles, collapseDrawCalls: collapseStatic.drawCalls, collapseTriangles: collapseStatic.triangles,
-      warP50: percentile(war, .5), warP95: percentile(war, .95), warMax: Math.max(...war), turnMaxMs: Math.max(...turn), tankMaxMs: Math.max(...tank), breakMaxMs: Math.max(...breakFrames), collapseP50: percentile(collapse, .5), collapseP95: percentile(collapse, .95),
+      warP50: percentile(war, .5), warP95: percentile(war, .95), warMax: Math.max(...war), turnMaxMs: Math.max(...turn), turnBuilds, tankMaxMs: Math.max(...tank), breakMaxMs: Math.max(...breakFrames), collapseP50: percentile(collapse, .5), collapseP95: percentile(collapse, .95),
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, coldBuilds: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Builds: unknown[] }).l4Builds) : [], phaseCpu: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Phases: unknown[] }).l4Phases) : [], slowCalls: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Timing: unknown[] }).l4Timing) : [], warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
@@ -140,6 +142,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
     expect(firingSoldiers).toBeGreaterThanOrEqual(Math.ceil(counts.soldiers * .5));
     expect(proof.lineBroke).toBe(true);
+    expect(proof.turnBuilds, 'node material builds inside the alarm window').toBe(0);
     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.
     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.
     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);

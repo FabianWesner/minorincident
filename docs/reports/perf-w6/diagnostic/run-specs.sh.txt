@@ -1,0 +1,12 @@
+#!/bin/sh
+# perf-w5d: one quiet-run reservation for a list of "<renderer> <spec> <grep>" jobs; outputs in test-results/w6-native/<tag>.
+# Usage: sh tools/perf/w5d/run-specs.sh <tag> webgl:tests/perf/l4-budgets.spec.ts:low webgpu:...
+tag=$1; shift
+out="test-results/w6-native/$tag"; mkdir -p "$out"
+for job in "$@"; do
+  renderer=${job%%:*}; rest=${job#*:}; spec=${rest%%:*}; grep=${rest#*:}
+  name=$(basename "$spec" .spec.ts)-$renderer-$grep
+  echo "== $name $(date +%T)"
+  E2E_RENDERER=$renderer L7_PERF_BACKEND=$renderer L4_PERF_OUTPUT="$out/$name" L7_PERF_OUTPUT="$out/$name" npx playwright test "$spec" --project=chromium --workers=1 --grep "$grep" --reporter=list > "$out/$name.log" 2>&1
+  echo "rc=$? $(date +%T)"; grep -E '^\{"renderer|passed|failed|Error|expect\(' "$out/$name.log" | cut -c1-600 | head -12
+done

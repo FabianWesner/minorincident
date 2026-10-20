@@ -1,0 +1,28 @@
+"""For each long FireAnimationFrame (> thr ms), split profile samples into sim / view update / render / other by stack labels."""
+import json, sys, collections
+tr = json.load(open(sys.argv[1])); ev = tr['traceEvents'] if isinstance(tr, dict) else tr
+p = json.load(open(sys.argv[2])); thr = float(sys.argv[3]) if len(sys.argv) > 3 else 35
+names = {(e['pid'], e['tid']): e['args']['name'] for e in ev if e.get('ph') == 'M' and e.get('name') == 'thread_name'}
+k = [k for k, v in names.items() if v == 'CrRendererMain'][0]
+raf = sorted((e['ts'], e['dur']) for e in ev if (e['pid'], e['tid']) == k and e.get('name') == 'FireAnimationFrame' and e.get('ph') == 'X')
+gcs = [(e['ts'], e['dur']) for e in ev if (e['pid'], e['tid']) == k and e.get('ph') == 'X' and e['name'] == 'MinorGC']
+nodes = {n['id']: n for n in p['nodes']}; parent = {}
+for n in p['nodes']:
+    for c in n.get('children', []): parent[c] = n['id']
+ts = []; cur = p['startTime']
+for d in p['timeDeltas']: cur += d; ts.append(cur)
+def cls(sid):
+    labs = []; x = sid
+    while x is not None: labs.append(nodes[x]['callFrame']['functionName']); x = parent.get(x)
+    if 'simTick' in labs: return 'sim'
+    if '_renderScene' in labs or 'renderShadow' in labs: return 'render'
+    if 'frame' in labs: return 'game-other'
+    return labs[-2] if len(labs) > 1 else '?'
+t0 = raf[0][0]
+for a, d in raf:
+    if d < thr * 1000: continue
+    c = collections.Counter(); n = 0
+    for i, s in enumerate(p['samples']):
+        if a <= ts[i] < a + d: c[cls(s)] += 1; n += 1
+    gc = sum(g[1] for g in gcs if a <= g[0] < a + d) / 1000
+    print(f'{(a - t0) / 1000:7.0f} ms  dur {d / 1000:5.1f}  gc {gc:4.1f}  ' + ' '.join(f'{k}:{100 * v / max(1, n):.0f}%' for k, v in c.most_common(6)))

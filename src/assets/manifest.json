@@ -13780,9 +13780,9 @@
   {
     "id": "ability.turret",
     "category": "weapon",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/ability.turret.glb",
+    "glb": "",
     "dimensions": {
       "x": 0.8,
       "y": 0.24,
@@ -13806,6 +13806,8 @@
     },
     "decayVariants": [],
     "actionCategory": "ability",
+    "nonModel": "ability",
+    "presentationSource": "src/render/ActionView.ts",
     "aliasOf": "abl.turret"
   },
   {

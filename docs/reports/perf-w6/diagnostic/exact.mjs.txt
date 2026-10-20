@@ -1,0 +1,14 @@
+// perf-w6 diagnostic: run base/new bundles on each stress fixture and compare the end-state hash (exactness witness)
+// and timing. Usage: node tools/perf/w6/exact.mjs [rounds=1] [scenarios...]
+import { execFileSync } from 'node:child_process';
+const [roundsArg = '1', ...rest] = process.argv.slice(2);
+const scenarios = rest.length ? rest : ['l8', 'l7', 'zoo2', 'zoo1'];
+let same = true;
+for (const s of scenarios) {
+  const run = v => JSON.parse(execFileSync('node', [`tools/perf/w6/ab/${v}.mjs`, s, 'low', roundsArg, '/tmp/w6'], { encoding: 'utf8', maxBuffer: 1e8 }).split('\n').filter(l => l.startsWith('{')).at(-1));
+  const a = run('base'), b = run('new');
+  const ha = a.results.map(r => r.hash).join(','), hb = b.results.map(r => r.hash).join(',');
+  same &&= ha === hb;
+  console.log(s.padEnd(5), ha === hb ? 'SAME' : 'DIFF', ha, hb, 'p50', a.results.map(r => r.p50).join('/'), '->', b.results.map(r => r.p50).join('/'), 'p95', a.results.map(r => r.p95).join('/'), '->', b.results.map(r => r.p95).join('/'));
+}
+process.exit(same ? 0 : 1);

@@ -8,9 +8,10 @@ import { LevelFiveBot } from './debug/bot/LevelFiveBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { LevelTransition, transitionPaint } from './ui/LevelTransition';
 import { RescueFade } from './ui/RescueFade';
+import { l5 } from './data/l5';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
-import { completePending,newCampaign, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel } from './sim/progression/carryover';
@@ -35,6 +36,7 @@ import { GameView } from './render/GameView';
 import { loadLayouts } from './levels/layouts';
 import type { DistrictLayout, LevelComposition, Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
+import { warmL4Alarm } from './sim/missions/l4AlarmWarmup';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
@@ -80,6 +82,16 @@ export class Game {
   private levelQueue: Promise<void> = Promise.resolve();
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
+  /** perf-w6: the L4 alarm runs once per page in a scratch world behind the loading card (JIT warm-up, see l4AlarmWarmup). */
+  private alarmWarmup: { composition: LevelComposition; layouts: DistrictLayout[]; seed: number } | null = null;
+  private alarmWarmed = false;
+  private async warmAlarm(): Promise<void> {
+    const pending = this.alarmWarmup; this.alarmWarmup = null;
+    if (!pending || this.alarmWarmed) return;
+    const start = performance.now();
+    await warmL4Alarm(pending.composition, pending.layouts, pending.seed, this.quality.tier === 'low' ? 'low' : 'high');
+    this.alarmWarmed = true; loadMeasure('level:l4-alarm-warmup', start);
+  }
   private speculativeRunning = false;
   /** Focus/visibility loss paused the clock (AudioService host). The pause menu must show once the UI can take it: a loss during
    * a level load (UI on the loading card) used to leave a no-briefing level (L7) frozen at tick 0 with no Resume (P0 10-20). */
@@ -154,7 +166,8 @@ export class Game {
         this.simMs = performance.now() - start;
         this.simTicks = this.world.tick - tickBefore;
         this.inspect?.update(seconds);
-        this.rescueFade.set(this.world.trapRescue?.fading ?? this.world.l7Departure?.fading ?? false);
+        const l5Exit = this.world.missions?.l5?.fading ?? false;
+        this.rescueFade.set(l5Exit || (this.world.trapRescue?.fading ?? this.world.l7Departure?.fading ?? false), l5Exit ? l5.emerge.fadeOutS : undefined, this.world.scenario === 'L5' ? l5.emerge.fadeInS : undefined);
         if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       if (!this.loading) {
@@ -217,6 +230,7 @@ export class Game {
         this.quality.startLevel(); this.applyQuality();
         this.view.missionHidden = false;
         await this.view.prepareCharacterVariant();
+        await this.warmAlarm();
         await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); this.view.unfreeze(); this.view.update(1);
         await this.view.renderer.finishWarmUp(); await transitionPaint(); this.firstLevelFrame(id);
         return;
@@ -236,7 +250,7 @@ export class Game {
         const data=loadMeasure('level:layouts',start);
         if (!speculative) this.transition.update(.1, 'Building the neighborhood…');
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null,id==='L7'?this.campaign?.results?.L6?.escapedSurvivors:id==='L8'?this.campaign?.results?.L7?.escapedSurvivors:undefined,id==='L8'?this.campaign?.results?.L7?.companion:undefined);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null,id==='L7'?this.campaign?.results?.L6?.escapedSurvivors:id==='L8'?this.campaign?.results?.L7?.escapedSurvivors:undefined,id==='L8'?this.campaign?.results?.L7?.companion:undefined,reservedCampaignIds(id,this.campaign??undefined));
         const missionStart = loadMeasure('level:world+nav', worldStart);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
@@ -266,7 +280,7 @@ export class Game {
         const physicsStart = loadMeasure('level:mission+cast', missionStart);
         this.world.physics.prepare(); loadMeasure('level:physics-prepare', physicsStart);
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
-        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
+        const sim=loadMeasure('level:sim',data);this.alarmWarmup = id === 'L4' && !this.alarmWarmed ? { composition, layouts, seed: opts?.seed ?? 1 } : null;const alarm = speculative ? undefined : this.warmAlarm();await this.view.load();await alarm;this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
         if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {

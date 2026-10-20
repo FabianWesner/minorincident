@@ -5,6 +5,9 @@ import type { DistrictLayout } from './districts/types';
  * The sealed underground room remains on its existing island.
  */
 export function moveFairhavenCellar(layout: DistrictLayout): void {
+  // The authored layout also holds the sealed east backyards (x 85..135), so its document bounds are a stepped polygon. L4/L5 play on the
+  // original rectangle: navigation, the infected ground and the perimeter are exactly what they were; the backyards are scenery beyond its fence.
+  layout.bounds = [[-85, -65], [85, -65], [85, 65], [-85, 65], [-85, -65]];
   const hardware = layout.placements.find(p => p.assetId === 'bld.kessler-hardware');
   const corner = layout.placements.find(p => p.id === 'bld.apartment-block-b:217');
   if (!hardware || !corner) return;

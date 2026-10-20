@@ -4,7 +4,7 @@ import { devicePrompt } from '../ui/devicePrompt';
 import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
 import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
-import { uv, vec4 } from 'three/tsl';
+import { fract, normalWorld, positionWorld, uv, vec2, vec4 } from 'three/tsl';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
@@ -124,7 +124,8 @@ export class InteractionView extends Group {
       if (!this.disposed) {
         // Moving gate leaves are loaded outside DistrictAssets' static occluder batches.
         // Give their palette materials the same bounded cut, without changing shared pickup/ground materials.
-        if (this.world.toys?.gateIds.includes(e.id) || e.archetype === 'l6.service-gate' || e.interactable?.kind === 'gate' || e.interactable?.kind === 'door' || e.interactable?.kind === 'car-door' || e.archetype === 'prop.fence') {
+        // The L6 service gate keeps its own undissolved steel-mesh copies (prepareGate, #30).
+        if (this.world.toys?.gateIds.includes(e.id) || e.archetype !== 'l6.service-gate' && e.interactable?.kind === 'gate' || e.interactable?.kind === 'door' || e.interactable?.kind === 'car-door' || e.archetype === 'prop.fence') {
           for (const material of this.occluderMaterials.get(e.id) ?? []) { material.dispose(); this.batchMaterials.delete(material); }
           const copies = new Map<PaletteMaterial, PaletteMaterial>();
           object.traverse(node => {
@@ -273,8 +274,32 @@ export class InteractionView extends Group {
     for (const [id, o] of this.objects) { const p = this.world.entities.get(id)?.pickup; if (p && 'kind' in p && !p.collected && o.visible) out.push({ id, kind: p.kind, x: o.position.x, y: o.position.y, z: o.position.z }); }
     return out;
   }
+  /** #30 (13c2: "It reads as semi-transparent glass"): a 35% dither over the whole leaf read as a glass pane. The gate draws with
+   * its own material copies, none dissolved: steel frame, X-brace and fittings stay solid, and the pale infill sheet is a steel
+   * mesh, so she and the corgi show through a physical gate. */
   private prepareGate(model: Object3D): void {
-    model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.seeThrough(); });
+    model.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      const swap = (material: Material) => material instanceof PaletteMaterial ? this.gateMaterial(material) : material;
+      node.material = Array.isArray(node.material) ? node.material.map(swap) : swap(node.material);
+    });
+  }
+  private readonly gateMaterials = new Map<PaletteMaterial, PaletteMaterial>();
+  private readonly gateCopies = new Set<PaletteMaterial>();
+  private gateMaterial(material: PaletteMaterial): PaletteMaterial {
+    if (this.gateCopies.has(material)) return material;
+    let copy = this.gateMaterials.get(material);
+    if (!copy) {
+      copy = material.frozenCopy().seeThrough(false);
+      if (material.name === 'pal_picketWhite') {
+        // 20 cm cells, 4 cm wires in the leaf's own plane; thin top/bottom edges stay whole. The open cells show whoever is
+        // behind it, so the mesh needs no dissolve.
+        const along = positionWorld.xz.dot(vec2(normalWorld.z.negate(), normalWorld.x)), cell = 5, wire = .2;
+        copy.maskNode = fract(along.mul(cell)).lessThan(wire).or(fract(positionWorld.y.mul(cell)).lessThan(wire)).or(normalWorld.y.abs().greaterThan(.7));
+      }
+      this.gateMaterials.set(material, copy); this.gateCopies.add(copy);
+    }
+    return copy;
   }
   private updateGateGuides(): void {
     const player = this.world.entities.get(1), state = this.world.missions?.state.l6;

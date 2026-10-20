@@ -42,6 +42,17 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
 export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'int.basement-cellar']);
+/** QA #50 (L3 supermarket, L5 pharmacy): "the building reads as a black hollow box with a lit rim". Their flat roof deck was authored
+ * in the near-black UI token, so from the game camera the deck inside the light parapet cap read as an empty shell. Draw the deck
+ * like every other flat roof (asphalt); the GLBs stay unchanged. */
+export const DARK_DECK_ROOFS = new Set(['bld.pharmacy', 'bld.supermarket']);
+function asphaltRoofDeck(asset: Object3D, materials: Materials): void {
+  asset.getObjectByName('roof')?.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    const swap = (m: Material) => m.name === 'pal_uiDark' ? materials.world('asphalt', 0, m.vertexColors, m.side, m.userData.surfaceClass ?? 0) : m;
+    node.material = Array.isArray(node.material) ? node.material.map(swap) : swap(node.material);
+  });
+}
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();
@@ -189,6 +200,7 @@ export class DistrictAssets {
       openFireStationBays(id, asset);
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
+      if (DARK_DECK_ROOFS.has(id)) asphaltRoofDeck(asset, this.materials);
       if (id === 'kit.army-checkpoint' || id === 'prop.checkpoint-gate') asset.userData.splitDoors = ['gateArm'];
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       // Keep the Metro shutter independent of its static shell.

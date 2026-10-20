@@ -96,7 +96,7 @@ export class SceneLab {
   private convoyOverlapFrames = 0;
   private animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null as string | null };
   private corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity };
-  private courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null as string | null, attachments: 0 };
+  private courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null as string | null, worstAt: null as number[] | null, attachments: 0 };
   spec: SceneSpec | null = null;
   built: BuiltScene | null = null;
   frame = 0;
@@ -156,7 +156,7 @@ export class SceneLab {
   async load(spec: SceneSpec) {
     this.specials = [];
     this.attackOverlap = { depthCm: 0, frame: 0, actor: '' };
-    this.convoyOverlapFrames = 0; this.animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null }; this.corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity }; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, attachments: 0 };
+    this.convoyOverlapFrames = 0; this.animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null }; this.corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity }; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, worstAt: null, attachments: 0 };
     // A scene that set a campaign must not leak it into the next scene: a later pickup save would write it against another world.
     this.game.campaign = null;
     if (spec.cureEncounter) {
@@ -874,6 +874,10 @@ export class SceneLab {
       this.metroClosed = closed;
       this.staticClips = null;
     }
+    else if ('hurtFollowers' in fx) {
+      let left = fx.hurtFollowers;
+      for (const e of world.entities.values()) if (left > 0 && e.civilian?.survivor?.mode === 'follow' && e.health.current > 0) { e.health.current = Math.max(1, Math.round(e.health.max * fx.fraction)); left--; }
+    }
     else if ('moveProp' in fx) {
       const item = world.props?.items.find(p => p.id.endsWith(`/${fx.moveProp}`));
       if (!item) throw new Error(`moveProp: no pushable ${fx.moveProp}`);
@@ -1246,7 +1250,7 @@ export class SceneLab {
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     if (this.frame % 10 === 0 && this.spec?.actors?.some(a => a.kind === 'courier') && probes.character) {
       const loose = probes.character.looseAttachments(), c = this.courierAttachments; c.samples++; c.attachments = Math.max(c.attachments, loose.length);
-      for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name });
+      for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name, worstAt: a.at });
     }
     const audit = probes.districts?.seeThroughAudit();
     if (audit) {

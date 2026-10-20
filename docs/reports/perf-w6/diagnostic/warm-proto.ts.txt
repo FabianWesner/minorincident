@@ -1,0 +1,24 @@
+// perf-w6 prototype: does a scratch L4 world that runs the alarm (ride and quartermaster objectives, 30 ticks) before the
+// real world loads (a) cut the real alarm ticks and (b) leave the real run bit-identical? Usage: tsx warm-proto.ts <warm|cold>
+import { loadL4, runL4 } from '../../sim-runner/l4Bots';
+const mode = process.argv[2] ?? 'warm';
+if (mode === 'warm') {
+  const t0 = performance.now();
+  const { world: w, mission: m } = await loadL4(2, 'low');
+  const t1 = performance.now();
+  m.completeObjective('ride'); w.update();
+  m.completeObjective('quartermaster');
+  for (let i = 0; i < 30; i++) w.update();
+  const t2 = performance.now();
+  console.log('scratch load', (t1 - t0).toFixed(0), 'ms, alarm + 30 ticks', (t2 - t1).toFixed(0), 'ms, turnAt', m.state.l4!.turnAt);
+  w.dispose();
+}
+const { world, mission } = await loadL4(2, 'low');
+const times: { tick: number; ms: number }[] = [];
+const update = world.update.bind(world);
+world.update = () => { const t = performance.now(); update(); times.push({ tick: world.tick, ms: performance.now() - t }); };
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 600, stopWhen: m => m.state.l4!.turnAt > 0 && world.tick >= m.state.l4!.turnAt + 300 });
+let hash = 2166136261;
+const s = JSON.stringify(world.getState()); for (let k = 0; k < s.length; k++) hash = Math.imul(hash ^ s.charCodeAt(k), 16777619) >>> 0;
+const turn = mission.state.l4!.turnAt, alarm = times.filter(t => t.tick >= turn && t.tick < turn + 10).map(t => +t.ms.toFixed(2));
+console.log(JSON.stringify({ mode, hash: hash.toString(16), turn, alarm, alarmSum: +alarm.reduce((a, b) => a + b, 0).toFixed(2) }));

@@ -1,0 +1,23 @@
+"""Inclusive share of every function on stacks under a root label prefix. usage: under.py profile 'update index-X.js:39552' [top] [lastSeconds]"""
+import json, sys, collections
+p = json.load(open(sys.argv[1])); root = sys.argv[2]; top = int(sys.argv[3]) if len(sys.argv) > 3 else 80
+last = float(sys.argv[4]) * 1e6 if len(sys.argv) > 4 else 0
+nodes = {n['id']: n for n in p['nodes']}; parent = {}
+for n in p['nodes']:
+    for c in n.get('children', []): parent[c] = n['id']
+ts = []; t = 0
+for d in p['timeDeltas']: t += d; ts.append(t)
+cnt = collections.Counter()
+for i, s in enumerate(p['samples']):
+    if last and ts[i] < ts[-1] - last: continue
+    cnt[s] += 1
+def lab(n): cf = n['callFrame']; return f"{cf['functionName'] or '(anon)'} {cf['url'].split('/')[-1]}:{cf['lineNumber'] + 1}"
+inside = collections.Counter(); total = 0
+for sid, c in cnt.items():
+    labs = []; x = sid
+    while x is not None: labs.append(lab(nodes[x])); x = parent.get(x)
+    if not any(l.startswith(root) for l in labs): continue
+    total += c
+    for l in set(labs): inside[l] += c
+print('samples under root', total)
+for l, c in inside.most_common(top): print(f'{100 * c / total:5.1f}% {l}')

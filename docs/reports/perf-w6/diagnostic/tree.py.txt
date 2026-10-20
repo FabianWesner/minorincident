@@ -1,0 +1,39 @@
+"""Call tree below the first node matching a function name. usage: tree.py profile root_name [depth=4] [min_ms=20] [lastSeconds]"""
+import json, sys, collections
+p = json.load(open(sys.argv[1]))
+root_name = sys.argv[2]; depth = int(sys.argv[3]) if len(sys.argv) > 3 else 4; min_ms = float(sys.argv[4]) if len(sys.argv) > 4 else 20
+last = float(sys.argv[5]) * 1e6 if len(sys.argv) > 5 else 0
+nodes = {n['id']: n for n in p['nodes']}
+self_t = collections.Counter(); t = 0; times = []
+for d in p['timeDeltas']: t += d; times.append(t)
+end = times[-1]
+for i, s in enumerate(p['samples']):
+    d = p['timeDeltas'][i + 1] if i + 1 < len(p['timeDeltas']) else 0
+    if last and times[i] < end - last: continue
+    self_t[s] += d
+incl = {}
+def total(nid):
+    if nid in incl: return incl[nid]
+    n = nodes[nid]; v = self_t[nid] + sum(total(c) for c in n.get('children', []))
+    incl[nid] = v; return v
+import sys as _s; _s.setrecursionlimit(100000)
+def label(n):
+    cf = n['callFrame']; return f"{cf['functionName'] or '(anon)'} {cf['url'].split('/')[-1]}:{cf['lineNumber'] + 1}"
+# merge all matching roots (same function at any position) by label path
+agg = collections.defaultdict(lambda: [0.0, {}])
+def merge(nid, tree, lvl):
+    n = nodes[nid]; key = label(n)
+    entry = tree.setdefault(key, [0.0, {}]); entry[0] += total(nid)
+    if lvl < depth:
+        for c in n.get('children', []): merge(c, entry[1], lvl + 1)
+roots = {}
+def find(nid, inside):
+    n = nodes[nid]; match = n['callFrame']['functionName'] == root_name
+    if match and not inside: merge(nid, roots, 0)
+    for c in n.get('children', []): find(c, inside or match)
+find(p['nodes'][0]['id'], False)
+def show(tree, ind):
+    for k, (v, sub) in sorted(tree.items(), key=lambda kv: -kv[1][0]):
+        if v / 1000 < min_ms: continue
+        print(f"{'  ' * ind}{v / 1000:8.1f} {k}"); show(sub, ind + 1)
+show(roots, 0)

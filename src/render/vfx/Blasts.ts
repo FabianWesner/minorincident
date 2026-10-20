@@ -13,9 +13,10 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { seeThroughHole } from '../SeeThrough';
 import { FxPool, groundShape, particleShape } from './FxPool';
 import type { LightField } from '../LightField';
+import { nightAccents, type AccentFire } from '../NightAccents';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
+interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
@@ -54,6 +55,8 @@ export class Blasts extends Group {
   private readonly columnShadows: InstancedMesh;
   readonly scorch = new FxPool(64, 'ground');
   private readonly rng: Rng;
+  /** Cure mist draws from its own stream: the shared one is consumed by every visible fire column, so adding ambient fires changed the mist (L10 title scene peak 12 -> 7 puffs). */
+  private readonly mistRng: Rng;
   private fbCursor = 0; private puffCursor = 0; private debrisCursor = 0;
   private readonly debrisExpiry = new Float64Array(DEBRIS);
   private puffExpiry = new Float64Array(PUFFS); private fbExpiry = new Float64Array(FIREBALLS);
@@ -77,7 +80,7 @@ export class Blasts extends Group {
   slowMotion = true;
   blasts = 0;
   constructor(private readonly world: SimWorld, private readonly host: BlastHost) {
-    super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts');
+    super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts'); this.mistRng = new Rng(world.seed, 'blasts-cure-mist');
     const clock = this.clock, heat = this.heat;
     // Fireballs: origin(x,y,z,birth), params(size, life, delay, rise), style(drift x, drift z, kind, unused).
     // Kind 0 fire: hot noise-eroded lobes that spread outward, cool to red and break apart.
@@ -451,7 +454,7 @@ export class Blasts extends Group {
     const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform, count = this.quality === 'low' ? 8 : 24;
     const pull = epiloguePull(this.world.missions!.state.counters['epilogue-ticks'] ?? 0);
     for (let i = 0; i < count; i++) {
-      const angle = this.rng.next() * Math.PI * 2, distance = Math.sqrt(this.rng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));
+      const angle = this.mistRng.next() * Math.PI * 2, distance = Math.sqrt(this.mistRng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));
       const x = focus.x + Math.cos(angle) * distance, z = focus.z + Math.sin(angle) * distance;
       if (!cureReached(front, { x, z }) || !this.sourceVisible(x, z, 6)) continue;
       const ground = this.world.districts?.groundHeight(x, z) ?? 0;
@@ -488,10 +491,16 @@ export class Blasts extends Group {
       // Persistent fire needs embers even without a preceding blast. Reuse the
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
       // High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz.
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) for (let k = low ? 1 : 2; k > 0; k--) {
-        const spread = Math.max(.6, (e.hazard?.radius ?? .8) * 1.2);
-        this.host.particles.spawn(now, 1.2 + this.rng.next() * .8, c.x + (this.rng.next() - .5) * spread, (c.ground ?? 0) + .5 + this.rng.next() * .4, c.z + (this.rng.next() - .5) * spread, this.windNode.value.x * .5 + (this.rng.next() - .5) * .6, 1.5 + this.rng.next() * 1.2, this.windNode.value.z * .5 + (this.rng.next() - .5) * .6, .035 + this.rng.next() * .025, particleShape.spark, this.rng.next() < .3 ? 0xffe08a : 0xffa040, k === 1 ? .3 : -.15, .24);
-      }
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, e.hazard?.radius ?? .8, low);
+    }
+    // L9 night accents: authored render-only fires (farm brush fires, burning wrecks, the city edge) share the flame/smoke/ember path.
+    const accents = nightAccents(this.world.districts).fires;
+    for (let i = 0; i < accents.length; i++) {
+      const f = accents[i], key = -1_000_000 - i; seen.add(key);
+      let c = this.fireColumns.get(key);
+      // look-l9b: columns scale with the authored radius (brush 1.1-1.8 m, city 2.4-3.8 m), so the fires read at the game camera.
+      if (!c) { const landmark = f.radius >= 2; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
@@ -502,6 +511,13 @@ export class Blasts extends Group {
     }
     for (const id of this.cloudColumns.keys()) if (!clouds.has(id)) this.cloudColumns.delete(id);
     void now;
+  }
+  /** High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz. */
+  private embers(now: number, c: Column, radius: number, low: boolean): void {
+    for (let k = low ? 1 : 2; k > 0; k--) {
+      const spread = Math.max(.6, radius * 1.2);
+      this.host.particles.spawn(now, 1.2 + this.rng.next() * .8, c.x + (this.rng.next() - .5) * spread, (c.ground ?? 0) + .5 + this.rng.next() * .4, c.z + (this.rng.next() - .5) * spread, this.windNode.value.x * .5 + (this.rng.next() - .5) * .6, 1.5 + this.rng.next() * 1.2, this.windNode.value.z * .5 + (this.rng.next() - .5) * .6, .035 + this.rng.next() * .025, particleShape.spark, this.rng.next() < .3 ? 0xffe08a : 0xffa040, k === 1 ? .3 : -.15, .24);
+    }
   }
   /** Conservative render culling; source lifetime, damage and fire light stay authoritative. */
   sourceVisible(x: number, z: number, radius: number): boolean {
@@ -534,15 +550,17 @@ export class Blasts extends Group {
       this.gl.gColor.setXYZW(glows, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); glows++;
     };
     for (const [id, c] of this.fireColumns) {
-      const e = this.world.entities.get(id); if (!e) continue;
-      if (!this.sourceVisible(c.x, c.z, (e.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
-      const big = !!e.vehicle, radius = e.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
-      const life = e.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1;
+      const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) continue;
+      if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
+      const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+      // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
+      const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
+      const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
       for (let i = 0; i < n; i++) {
-        const a = id * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, id * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+        const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
+        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
       }
-      pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + id)) * (.3 + .7 * life));
+      pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
     }
     for (let i = this.glowList.length - 1; i >= 0; i--) {
       const g = this.glowList[i], k = (now - g.born) / g.life;

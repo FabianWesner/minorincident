@@ -1,5 +1,5 @@
 import { Vector2, Vector3, type Box3, type Camera, type Node } from 'three/webgpu';
-import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
+import { dot, fract, mix, normalWorld, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
 
 /** One player see-through hole shared by every occluder (leaf crowns, buildings, roofs, poles, props).
  * Foliage writes the projected centre/depth/radius each frame; DistrictView projects the complete subject before every render. Screen UV has a top-left origin. */
@@ -16,6 +16,9 @@ export const seeThrough = {
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
+  /** Share of an occluder that survives inside the clear disc. 0 for the courier and her corgi (PO #45: no dither dots over the figures; the disc is cut clean),
+   * .35 while the player drives or rides a vehicle so a faded car or bus still reads as one. */
+  retain: uniform(0).setGroup(renderGroup),
   /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
@@ -39,7 +42,11 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
  * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
 export const seeThroughKeep = (eligible?: Node<'float'>) => {
-  const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.3)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
+  // QA #48 (L5 pharmacy): the kept 0.3 m band of a wall standing right in front of her drew its top edge across her feet, so she read as
+  // standing on the roof edge. Support surfaces (facing up) keep the 0.3 m band; vertical faces keep 0.22 m, so 20 cm kerbs stay whole (PO #5).
+  const cuttable = positionWorld.y.greaterThan(seeThrough.floor.add(.3))
+    .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(.22))));
+  const hole = cuttable.select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   // A placement enclosing most of the lens cannot leave a roof across the
   // entire viewport. Its foreground surfaces clear, while supports and surfaces
@@ -48,9 +55,9 @@ export const seeThroughKeep = (eligible?: Node<'float'>) => {
     .and(positionView.z.greaterThan(seeThrough.depth)).and(positionWorld.y.greaterThan(seeThrough.floor.add(.08)));
   // Buildings (placements): fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
   const keep = hole.greaterThan(noise);
-  // Vehicles and props keep a screen-stable 35% of their surface, even at the centre, so their silhouette stays readable
-  // (shared noise across layers keeps the remaining 65% open to the subject).
-  const silhouette = mix(.35, 1, hole).greaterThan(noise);
+  // Vehicles and props retain a screen-stable share of their surface inside the disc (retain = .35 while the player drives or
+  // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
+  const silhouette = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain).greaterThan(noise);
   return eligible ? eligible.lessThan(.5).or(keep.and(lens!.not())) : silhouette;
 };
 

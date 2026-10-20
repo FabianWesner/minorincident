@@ -33,7 +33,7 @@ import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
-import { View } from './View';
+import { View, type CameraPose } from './View';
 import { Renderer } from './Renderer';
 import { preRender } from './PreRenderer';
 import { Lighting } from './Lighting';
@@ -82,11 +82,16 @@ export class GameView implements Lifecycle {
   private departureShot = false;
   private storyFraming = false;
   private l5StationView = false;
+  private l5ClosingPose: CameraPose | null = null;
+  private readonly l5ClosingTarget = new Vector3();
   private l3AttackScale = 1;
   private courierForeground = false;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
+  private readonly revealPet = new Box3();
+  private companionId = -1;
+  private companionSearch = 0;
   private probeVisibilityPending = false;
   private solidCutProbeOff = false;
   private probeHide = { courier: false, crowd: false, environment: false, bars: false };
@@ -395,6 +400,8 @@ export class GameView implements Lifecycle {
     // boarding vehicle/ground that would otherwise hide its first fragments.
     const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
     const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
+    // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
+    const restoreHeld = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -446,7 +453,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -478,7 +485,7 @@ export class GameView implements Lifecycle {
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
     const horizon = this.districts?.horizonForWarmup();
     if (horizon) await this.warmHidden(horizon);
-    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); finish();
+    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -613,10 +620,21 @@ export class GameView implements Lifecycle {
         if (pose) this.view.preset('l5-station-arrival', pose);
       } else if (!showStation && this.l5StationView) {
         const pose = metro?.shutterAt && this.districts?.spots.get('D-FAIR/W5/l5-metro-doors');
-        if (pose) this.view.preset('l5-metro-closing', pose);
+        if (pose) { this.view.preset('l5-metro-closing', pose); this.l5ClosingPose = pose; this.l5ClosingTarget.fromArray(pose.target); }
         else this.view.follow();
       }
       this.l5StationView = showStation;
+      // PO #49: the closing shot frames the shutter, but the courier keeps walking down the stairs and left the frame (or sat
+      // behind the roof). Keep the same angle and distance, and slide the target onto her (80 %), so the doors stay in view behind her.
+      if (this.view.spot === 'l5-metro-closing' && this.l5ClosingPose) {
+        const base = this.l5ClosingPose, p = player.transform, k = 1 - Math.exp(-3 * seconds);
+        const follow = .8, feet = Math.max(0, p.y - .7);
+        this.l5ClosingTarget.x += (base.target[0] + (p.x - base.target[0]) * follow - this.l5ClosingTarget.x) * k;
+        this.l5ClosingTarget.y += (base.target[1] + (feet - base.target[1]) * follow - this.l5ClosingTarget.y) * k;
+        this.l5ClosingTarget.z += (base.target[2] + (p.z - base.target[2]) * follow - this.l5ClosingTarget.z) * k;
+        const t = this.l5ClosingTarget, dx = t.x - base.target[0], dy = t.y - base.target[1], dz = t.z - base.target[2];
+        this.view.cinematic({ position: [base.position[0] + dx, base.position[1] + dy, base.position[2] + dz], target: [t.x, t.y, t.z] });
+      } else this.l5ClosingPose = null;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
@@ -918,7 +936,16 @@ export class GameView implements Lifecycle {
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
       this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
       if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
-      if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      const inVehicle = !!(this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle));
+      if (inVehicle) this.revealSubject.union(this.revealVehicle);
+      seeThrough.retain.value = inVehicle || this.revealSubject.max.x - this.revealSubject.min.x > 2 || this.revealSubject.max.z - this.revealSubject.min.z > 2 ? .35 : 0;
+      // PO #45: the see-through disc must clear the corgi next to her too, else its tail dissolves into occluder dots.
+      let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
+      if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
+      if (pet && !pet.hidden && Math.hypot(pet.transform.x - current.x, pet.transform.z - current.z) < 2.6) {
+        this.revealPet.min.set(pet.transform.x - .5, feet, pet.transform.z - .5); this.revealPet.max.set(pet.transform.x + .5, feet + .8, pet.transform.z + .5);
+        this.revealSubject.union(this.revealPet);
+      }
       subject = this.revealSubject;
     }
     this.vehicles?.updateReveal(subject);
@@ -1071,7 +1098,7 @@ export class GameView implements Lifecycle {
       if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
         field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
       }
-      this.vehicles?.pushLights(field, aura);
+      this.vehicles?.pushLights(field, aura, timeOfDayPresets[lighting.preset].headlightBeams ? (position, direction, length, angle, colour) => lighting.practicalEffects.pushBeam(position, direction, length, angle, colour) : undefined);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
@@ -1079,6 +1106,7 @@ export class GameView implements Lifecycle {
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
     // still owns its one hero shadow map. Avoid a second city-wide moon pass.
     if (this.world.scenario === 'L7' && this.quality === 'low') lighting.sun.visible = false;
+    this.districts?.accents?.update(this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

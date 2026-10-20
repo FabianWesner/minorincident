@@ -1,0 +1,20 @@
+// perf-w6 diagnostic: V8 field representations of hot sim objects (run with node --allow-natives-syntax on the bundle).
+import { readFileSync } from 'node:fs';
+import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { compositions } from '../../../src/levels/compositions';
+import { resolveCampaignMission } from '../../../src/levels/missions';
+import { installPerformanceLevel } from '../../../tests/fixtures/scenarios/performance';
+const w = new SimWorld(); await w.init();
+const composition = compositions.L8;
+w.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
+w.infected!.director.setTier('low'); w.npcs!.setQuality('low');
+w.loadMission(resolveCampaignMission('L8', w.districts!));
+installPerformanceLevel(w, 'low', 'perf-l8-mixed-outbreak');
+w.missions?.prepare();
+for (let i = 0; i < 300; i++) w.update();
+const print = (globalThis as unknown as { debugPrint: (o: unknown) => void }).debugPrint;
+const infected = w.infected!.active.find(e => e.health.current > 0)!, civilian = [...w.entities.iterate()].find(e => e.civilian && e.health.current > 0)!;
+console.log('--- infected transform'); print(infected.transform);
+console.log('--- civilian transform'); print(civilian.transform);
+console.log('--- infected locomotion'); print(infected.locomotion);
+console.log('--- player transform'); print(w.entities.get(1)!.transform);

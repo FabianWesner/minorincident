@@ -1,0 +1,8 @@
+// perf-w6 diagnostic: cost of scratch L4 SimWorlds (first and second load in one process), and of forcing the alarm in one.
+import { loadL4 } from '../../sim-runner/l4Bots';
+for (let i = 0; i < 3; i++) {
+  const t0 = performance.now();
+  const { world } = await loadL4(2, 'low');
+  console.log('load', i, (performance.now() - t0).toFixed(1), 'ms');
+  world.dispose();
+}
