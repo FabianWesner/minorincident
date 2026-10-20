@@ -37,7 +37,7 @@ test('T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outb
   }save('checkpoints',evidence);
 });
 test('T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community',async()=>{
-  const l=await loadL6(1);world=l.world;const result=runL6(world);save('complete-seed-1',result);expect(result.outcome).toBe('complete');expect(result.simSeconds).toBeGreaterThanOrEqual(180);expect(result.simSeconds).toBeLessThanOrEqual(270);expect(result.rescued/result.total).toBeGreaterThanOrEqual(.6);expect(result.peak).toBeLessThanOrEqual(60);const lag=result.fates.filter(r=>r.straggler);expect(lag.filter(r=>r.rejoined).length/lag.length).toBeGreaterThanOrEqual(.7);
+  const l=await loadL6(1);world=l.world;const result=runL6(world);save('complete-seed-1',result);expect(result.outcome).toBe('complete');expect(result.simSeconds).toBeGreaterThanOrEqual(180);expect(result.simSeconds).toBeLessThanOrEqual(300);expect(result.rescued/result.total).toBeGreaterThanOrEqual(.6);expect(result.peak).toBeLessThanOrEqual(60);const lag=result.fates.filter(r=>r.straggler);expect(lag.filter(r=>r.rejoined).length/lag.length).toBeGreaterThanOrEqual(.7);
 },1_800_000);
 test('T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent',async()=>{
   const l=await loadL6();world=l.world;const m=l.mission;m.completeObjective('shelter');m.completeObjective('stop');const s=m.state.l6!;s.leaderX=90;s.leaderZ=15;

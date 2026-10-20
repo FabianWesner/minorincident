@@ -1,3 +1,4 @@
+import { readyCarriedAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -48,6 +49,7 @@ export class LevelSevenEncounters {
       e.hidden = false;
       e.health.current = e.health.max;
       const c = e.civilian!;
+      readyCarriedAlly(e, w.tick);
       delete c.floorY; c.story = null; c.path.length = 0; c.goal = -1; c.pauseUntil = 0; c.state = 'calm';
       c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }

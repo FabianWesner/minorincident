@@ -4,7 +4,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { Point, ZooSpecies } from '../npc/types';
 import { Outbreak } from '../outbreak/Outbreak';
 import { zooStaffLook } from '../../data/zooStaff';
-import { allyState } from '../outbreak/Allies';
+import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
 
 export interface L8ZooState {
@@ -51,7 +51,7 @@ export class LevelEightZoo {
       c.state = 'calm'; c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (c.l1) c.l1.target = null;
       if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
-      if (c.ally) { c.ally.post = null; c.ally.hold = false; delete c.ally.follow; }
+      readyCarriedAlly(e, w.tick);
       c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, waitAt: 0, foundAt: w.tick };
       s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
     }

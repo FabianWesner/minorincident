@@ -205,7 +205,8 @@ test.describe('L5 Aftermath in the browser', () => {
       for (const c of cues) heard.add(c);
       for (let i = 0; i < 12 && !(await mission()).l5!.survivors.find(r => r.key === key && r.status !== 'hidden'); i++) { await interact(); await step(20); }
       expect((await mission()).l5!.survivors.find(r => r.key === key)!.status, key).not.toBe('hidden');
-      await expect(page.getByTestId('survivors-found')).toContainText(`${(await mission()).l5!.found}/5`);
+      const found = (await mission()).l5!.found;
+      await expect(page.getByTestId('survivors-found')).toContainText(found === 5 ? 'Survivors in' : `${found}/5`);
       for (let guard = 0; guard < 40 && await fightNearby(18); guard++) { /* protect the newly found survivor */ }
       await regroup();
       writeFileSync(`${output}/real-input-after-${key}.json`, JSON.stringify(await mission(), null, 1));

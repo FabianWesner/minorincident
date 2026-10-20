@@ -80,8 +80,9 @@ describe('L4 collapse director', () => {
     const tr = war(l.world, l.mission, 2, 'high', false);
     expect(tr.turnedAtTurn).toBeGreaterThanOrEqual(15); expect(tr.turnedAtTurn).toBeLessThanOrEqual(25);
     beatsOnTime(tr);
+    // A forced first-line deadline can precede its first casualty; the later mass loss remains required.
     const atTurn = tr.soldiers[0].n, at = (s: number) => tr.soldiers.find(x => x.t >= s)?.n ?? 0;
-    expect(at(tr.beats[2].t)).toBeLessThan(atTurn * .5); expect(at(tr.beats[0].t)).toBeLessThan(atTurn);
+    expect(at(tr.beats[2].t)).toBeLessThan(atTurn * .5); expect(at(tr.beats[0].t)).toBeLessThanOrEqual(atTurn);
     expect(tr.barricades).toBeGreaterThanOrEqual(1); expect(tr.knockdowns).toBeGreaterThanOrEqual(1);
     expect(Math.max(...tr.beats.map(b => b.inside))).toBeGreaterThanOrEqual(5);
     expect(tr.maxAlive).toBeLessThanOrEqual(l4.war.caps.infected.high);
