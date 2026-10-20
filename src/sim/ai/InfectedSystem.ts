@@ -32,6 +32,7 @@ import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
 export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
+const provokeTicks = 12 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
@@ -114,6 +115,7 @@ export class InfectedSystem {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
       if (target?.infected) {
+        this.provoke(target, event.sourceId);
         target.infected.grabHits++;
         if (target.infected.special === 'pin' && target.infected.grabHits >= 2) this.releasePin(target);
       }
@@ -129,6 +131,19 @@ export class InfectedSystem {
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
       }
     });
+  }
+  /** Any infected damaged by the courier, an ally or the companion hunts that shooter for ~12 s after the last hit, in sight or not. Mega keeps its global pursuit; story-scripted walkers (b.scripted) are exempt. */
+  private provoke(target: EntitySnapshot, sourceId: number): void {
+    const b = target.infected!, source = this.world.entities.get(sourceId);
+    if (!source || target.health.current <= 0 || b.pursuit || b.scripted || source.infected || !(source.id === 1 || source.survivor || source.companion || source.civilian?.ally)) return;
+    b.provoked = { id: source.id, until: this.world.tick + provokeTicks };
+    if (b.l1) this.press(target.id, source.id, b.provoked.until);
+  }
+  private provoker(e: EntitySnapshot, b: InfectedState): EntitySnapshot | undefined {
+    const p = b.provoked; if (!p) return undefined;
+    const source = this.world.entities.get(p.id);
+    if (this.world.tick >= p.until || !source || source.health.current <= 0 || source.hidden) { delete b.provoked; return undefined; }
+    return source;
   }
   /** The director validates the same authored perch that spawn will use. */
   perchFor(id: string, position: { x: number; z: number }, perched?: boolean): { x: number; z: number; y: number } | undefined {
@@ -267,7 +282,15 @@ export class InfectedSystem {
         if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
-      if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit) {
+      const provoker = this.provoker(e, b);
+      if (provoker && !b.pursuit && !b.specialAttack && !e.emerging && !Status.stunned(e, this.world.tick)) {
+        if (b.l1) { if ((this.world.tick + e.id) % 20 === 0) this.press(e.id, provoker.id, b.provoked!.until); }
+        else {
+          b.heardTargetId = provoker.id; delete b.investigate;
+          if (b.state === 'idle' || b.state === 'wander' || b.state === 'alerted' || b.state === 'attracted') { b.state = 'chase'; e.combat!.attacking = false; b.grabUntil = 0; }
+        }
+      }
+      if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit && !(provoker && !b.l1)) {
         const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
         const seen = authoredSight ? this.hearing.closest(e, b.heardTargetId ?? 0) : this.hearing.closestHeard(e);
         if (seen) {
@@ -293,7 +316,7 @@ export class InfectedSystem {
           delete b.investigate; b.state = 'idle';
         }
       }
-      const territory = b.territory;
+      const territory = provoker ? undefined : b.territory;
       if (territory) {
         const target = b.specialAttack?.target ?? b.investigate ?? (b.heardTargetId ? this.world.entities.get(b.heardTargetId)?.transform : undefined);
         if (target && Math.hypot(target.x - territory.x, target.z - territory.z) > territory.radius) {
