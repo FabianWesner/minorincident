@@ -47,6 +47,7 @@ export function layoutSourceHash(id: string): string {
     hash.update(path).update(readFileSync(path));
   if (id === "D-CROSSING") {
     hash.update(readFileSync("layouts/D-CROSSING/routes.json"));
+    hash.update(readFileSync("layouts/D-CROSSING/dress.py"));
     hash.update(readFileSync("assets/kit.river-terrain/model.glb"));
     hash.update(readFileSync("assets/kit.crossing-crash/model.glb"));
     hash.update(readFileSync("tools/layouts/compress.ts"));

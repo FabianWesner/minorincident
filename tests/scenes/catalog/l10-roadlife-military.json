@@ -1,0 +1,64 @@
+{
+ "name": "l10-roadlife-military",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    2160,
+    -145
+   ],
+   [
+    2400,
+    -5
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1.0
+ },
+ "frames": 200,
+ "shots": [
+  199
+ ],
+ "sheet": 50,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    2250,
+    -75
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      2310,
+      -75
+     ]
+    ]
+   }
+  }
+ ],
+ "note": "road-life lane (L10): R4 military: lane arrows, crosswalk stripes, burning barrels. Look for a kerbed sidewalk on both sides narrowing the pale asphalt to ~5 m, ground decals that read as stains/paint (no flat black strokes), skids that follow one lane and fade, warm or siren light points just outside the 6 m clearance, no floating or sunk decals, no sidewalk over a collider. Flat decals only, no collision."
+}

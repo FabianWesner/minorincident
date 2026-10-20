@@ -129,7 +129,7 @@ def emit_surfaces():
 
 surface('countryside', [[-600,-400],[600,-400],[600,400],[-600,400]], 'grass', -.006)
 dry=[[-460,-170],[470,-170],[470,110],[-460,110]]
-surface('dry-ground',dry,'khaki',-.004)
+surface('dry-ground',dry,'leatherEdge',-.004)   # look-l9b: dark dry pan under the moon (the khaki read as an overcast day)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=l.data['bounds']))
 l.data['surfaces'].append(dict(surface='gravel',height=0,polygon=dry+[dry[0]]))
 emitted=set()
@@ -146,7 +146,7 @@ for route in source['routes']:
     pts=route['points']; width=route['width']
     l.data['roads']['edges'].append(dict(id=route['id'],start='start',end='outskirts',points=pts,laneWidth=width))
     height=.002 if route['id']=='road' else .004 if route['id']=='countryside' else .006
-    token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'khakiLight'
+    token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'trouser'
     for j,(a,b) in enumerate(zip(pts,pts[1:])):
         d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
         poly=[[a[0]+nx,a[1]+nz],[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz]]
@@ -180,8 +180,8 @@ for route in source['routes']:
 # Ownership at the fork and the merge: the asphalt road is the through route, the gravel tracks branch off its edge.
 order={'countryside':0,'dry-shortcut':1,'road':2}
 for name,poly,token,height in sorted(strips,key=lambda t:order[t[0]]): surface(name,poly,token,height)
-for mark in marks: surface('road-mark',mark,'picketWhite',.008)
-for poly,height in ruts: surface('track-rut',poly,'canvasTan',height,cut=False)
+for mark in marks: surface('road-mark',mark,'silver',.008)   # look-l9b: worn grey paint under the moon, not self-lit white
+for poly,height in ruts: surface('track-rut',poly,'leatherShadow',height,cut=False)   # look-l9b: darker compacted ruts, not white bars in the headlights
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])
 for v in source['viewpoints']: l.anchor(v['id'],[v['from'][0],0,v['from'][1]])
@@ -257,7 +257,7 @@ def gully():
     for row,(z0,z1) in enumerate([(-GULLY_LEN,0),(0,GULLY_LEN)]):
         cid=f'crossing-11-{3+row}'; ox,oz=500,-400+(3+row)*100
         zs=[z for z in stations if z0<=z<=z1]
-        for part,token in (('bank-w','khaki'),('floor','khakiSeam'),('bank-e','khaki')):
+        for part,token in (('bank-w','trouser'),('floor','leatherEdge'),('bank-e','trouser')):   # look-l9b: the gully banks share the dark dry pan
             verts=[];faces=[]
             for z in zs:
                 r=ring(z); a,b={'bank-w':(0,1),'floor':(1,2),'bank-e':(2,3)}[part]
@@ -293,6 +293,8 @@ l.anchor('crash-wreck',[GULLY_X+1.7,-GULLY_DEPTH,0.0])  # final APC wreck on the
 l.anchor('crawl-start',[GULLY_X+GULLY_HALF+3.5,0,2.6])   # player thrown clear on the far lip, beside the wreck
 l.anchor('crawl-fallback',[GULLY_X+GULLY_HALF+3.5,0,-3.2])
 l.anchor('crawl-end',[547,0,0])               # safe L10 on-foot start, in sight of the city
+# L9 dress-l9: fields, vegetation, farms, road furniture, the next city and the ground beyond the edge (shares this module's globals).
+exec(compile((l.root/'layouts/D-CROSSING/dress.py').read_text(),'dress.py','exec'))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 emit_surfaces()

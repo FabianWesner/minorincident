@@ -4,7 +4,7 @@ import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type 
 import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
-import { surfaceDetail } from './SurfaceDetail';
+import { noise, surfaceDetail } from './SurfaceDetail';
 import { seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
@@ -87,7 +87,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         puddle.assign(pattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)).mul(weatherSurface.wetness.smoothstep(.3, .4)));
         weatherBase.assign(mix(weatherBase, weatherBase.mul(.78), puddle));
       });
-      const surface = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
+      const authored = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
+      // look.roadNeutral (L9): the mauve asphalt swatch reads as grey, dry tarmac under the moon; pools on it keep their hue.
+      const roadMask = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
+      const surface = roadMask ? mix(authored, vec3(luminance(authored)), roadMask.min(1).mul(lighting.look.nodes.roadNeutral)) : authored;
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
       const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);
@@ -127,6 +130,19 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const band = facing.smoothstep(edge.sub(.08), edge).oneMinus();
         shaded.addAssign(surface.max(vec3(.06)).mul(lighting.rimColor).mul(band).mul(lighting.heroRim));
       });
+      // Night ground breakup (look.groundBreakup; 0 except L9): broad dry/damp patches and grit on upward faces, so open
+      // moonlit fields and long lanes are not flat planes. Two world-space value-noise octaves, no texture.
+      If(look.groundBreakup.greaterThan(0), () => {
+        // look-l9b: biased towards darkening (damp/burnt patches); pale highlights are capped so the breakup never reads as
+        // bright polygons on a night ground.
+        const breakup = noise(positionWorld.xz.mul(.11)).mul(.6).add(noise(positionWorld.xz.mul(.8)).mul(.4)).sub(.5).mul(2).clamp(-1, .35);
+        shaded.mulAssign(float(1).add(breakup.mul(look.groundBreakup).mul(normalWorld.y.smoothstep(.7, .95))));
+      });
+      // Distant fire glow (look.glowAmount; 0 except L9's burning city ahead): a warm fill that grows along the authored world
+      // direction, strongest on surfaces turned towards it, with a slow breathing flicker. Uniform ALU only, no pass.
+      const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
+      const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
+      shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.

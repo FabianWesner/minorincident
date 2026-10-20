@@ -272,11 +272,13 @@ export class SimWorld implements Lifecycle {
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
-  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot):void {
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot, reservedIds?: readonly number[]):void {
     const districts=new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
     this.loadScenario('survivor',seed);
     if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
     if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);
+    // L9: the L8 transport (APC + occupants) is restored after the dressed crossing has spawned its props; keep its IDs free.
+    if (reservedIds?.length) this.entities.reserveIds(reservedIds);
     this.carriedSurvivors = carriedSurvivors;
     this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.lightPower?.install(districts);

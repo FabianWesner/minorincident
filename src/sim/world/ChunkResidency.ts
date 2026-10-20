@@ -78,7 +78,7 @@ export class ChunkResidency {
       const live = c.chunks.some(id => this.loaded.has(id));
       if (live && c.handle === undefined) c.handle = this.world.physics.addStatic(c.aabb, [0, 0]);
       if (!live && c.handle !== undefined) { this.world.physics.removeBlocker(c.handle); delete c.handle; }
-      if (live && !c.walkable && (c.aabb.navBlocker || c.aabb.min[1] < 1.8 && c.aabb.max[1] > .05)) {
+      if (live && !c.walkable && !c.aabb.physicsOnly && (c.aabb.navBlocker || c.aabb.min[1] < 1.8 && c.aabb.max[1] > .05)) {
         const a = c.aabb; this.walls.push({ x: (a.min[0] + a.max[0]) / 2, z: (a.min[2] + a.max[2]) / 2, y: (a.min[1] + a.max[1]) / 2, halfX: (a.max[0] - a.min[0]) / 2, halfZ: (a.max[2] - a.min[2]) / 2, halfY: (a.max[1] - a.min[1]) / 2, ...(a.navBlocker ? { navBlocker: true } : {}) });
       }
     }
