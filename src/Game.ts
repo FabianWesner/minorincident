@@ -81,6 +81,9 @@ export class Game {
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
+  /** Focus/visibility loss paused the clock (AudioService host). The pause menu must show once the UI can take it: a loss during
+   * a level load (UI on the loading card) used to leave a no-briefing level (L7) frozen at tick 0 with no Resume (P0 10-20). */
+  private awayPaused = false;
   /** How the current mission level was started (restart replays it; campaign is the state at level start). */
   private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null; setup?: (world: SimWorld) => void } | null = null;
   /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
@@ -99,7 +102,7 @@ export class Game {
       this.ticker.reset();
       if (this.world.missions?.state.phase === 'playing') this.view.refreshMissionUI(); else this.view.update(1);
     };
-    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => { this.telemetry?.zoom(delta); this.view.view.zoom(delta); }));
+    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => { this.telemetry?.zoom(delta); this.view.view.zoom(delta); }, () => this.view.view.azimuth));
     this.input.reach = () => {
       const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
       if (!combat || !weapons) return null;
@@ -108,7 +111,7 @@ export class Game {
     };
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
-      pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
+      pause: () => { this.clock.pause(); this.awayPaused = true; this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
       release: () => { this.input.clear(); this.world.clearInput(); this.ticker.reset(); },
       readyForBackground: () => !this.loading && this.view.backgroundReady,
       offscreen: (p) => { const q = this.view.project(p.x, p.y ?? 0.7, p.z); return Math.abs(q[0]) > 1 || Math.abs(q[1]) > 1 || q[2] > 1; },
@@ -141,6 +144,7 @@ export class Game {
       if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
       else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
+        if (!this.clock.paused) this.awayPaused = false; else if (this.awayPaused) this.ui.pause();
         if (!this.clock.paused && !this.inspect?.enabled) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
@@ -307,7 +311,8 @@ export class Game {
     const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
-    if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
+    // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
+    if(level&&level>save.unlockedLevel&&!['1','true'].includes(this.params.get('debug')??''))throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.

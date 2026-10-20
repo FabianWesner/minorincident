@@ -99,7 +99,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability' || id === 'weapon.fire-axe') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !save.ownedActions.includes('weapon.fire-axe')) return false;
   }
 
-  if(!validRacks(save,save.racks)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
+  if(!validRacks(save,save.racks,save.unlockedLevel,true)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
   const expectedLevel=save.completedLevels+((save.pending?.phase==='unlock'||save.pending?.phase==='cards')?2:1);
   // A finished L6 save written before L7 existed keeps unlockedLevel 6; every later completion unlocks the next level.
   if(save.unlockedLevel!==Math.min(lastLevel,expectedLevel)&&!(save.completedLevels===6&&save.unlockedLevel===6))return false;

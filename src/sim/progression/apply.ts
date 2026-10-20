@@ -39,6 +39,12 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   player.entity.health.max=100+m.health;player.entity.health.current=player.entity.health.max;
   player.progressionSpeed=(4.5+m.speed)/4.5;player.select(save.character,gearTier(save));
   if(world.vehicles){world.vehicles.progressionArmor=m.ramArmor;world.vehicles.progressionBoost=1+m.boost;}
-  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const size=rackSize(level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(save.racks.LEFT.slice(0,size),save.racks.RIGHT.slice(0,size));if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
+  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
+}
+/** The racks a level starts with. The level's rack size is a floor, never a cut: a rack that grew by a pickup (L5's basement
+ * shotgun, Pickups' extra slot) is carried whole (E24: "The player keeps the existing arsenal"; P1 10-20 lost shotgun in L6). */
+export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEFT:string[];RIGHT:string[]} {
+  const size=Math.max(rackSize(level),save.racks.LEFT.length,save.racks.RIGHT.length);
+  return {size,LEFT:[...save.racks.LEFT],RIGHT:[...save.racks.RIGHT]};
 }
 export function actionResolver(defs:Record<string,ActionDef>|null):(id:string)=>ActionDef {return id=>defs?.[id]??action(id);}
