@@ -775,7 +775,8 @@ export class LevelFourWar {
     const away = best > .3 ? { x: (p.x - qx) / best, z: (p.z - qz) / best } : { x: nx, z: nz };
     for (const s of [1, -1]) for (const k of [1, .8, .6]) {
       const x = qx + away.x * s * want * k, z = qz + away.z * s * want * k;
-      if (Math.hypot(x - qx, z - qz) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
+      // The whole street counts, not only the nearest leg: beside a corner the point can lie within gapM of the next leg.
+      if (Math.hypot(x - qx, z - qz) > l4.director.escape.gapM + .5 && this.escapeDistance({ x, z }) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
     }
     return null;
   }
