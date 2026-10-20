@@ -101,8 +101,8 @@ export class Outbreak {
   private grabbedBy(targetId: number, sourceId: number): void {
     const e = this.world.entities.get(targetId), c = e?.civilian, attacker = this.world.entities.get(sourceId);
     if (!e || storyProtected(this.world, e) || !c?.l1 || e.infection || !attacker || !mobile.has(c.state)) return;
-    delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer') this.dropProp(e);
-    if (c.ally && (c.ally.gun || c.ally.role === 'officer')) { c.ally.nextAttack = this.world.tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
+    delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer' && c.ally?.role !== 'soldier') this.dropProp(e);
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier')) { c.ally.nextAttack = this.world.tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
     this.state(e, 'grabbed', ticks(civ.grabS)); this.face(e, attacker.transform, Math.PI); this.hear(e.transform);
   }
   dispose(): void { this.offs.forEach(off => off()); this.offs.length = 0; }
@@ -437,9 +437,9 @@ export class Outbreak {
   grab(e: EntitySnapshot, attacker: EntitySnapshot): void {
     if (storyProtected(this.world, e)) return;
     const c = e.civilian!, tick = this.world.tick;
-    delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer') this.dropProp(e);
+    delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer' && c.ally?.role !== 'soldier') this.dropProp(e);
     this.world.npcs!.civilians.hold(attacker.id); this.rescue.delete(attacker.id);
-    if (c.ally && (c.ally.gun || c.ally.role === 'officer')) { c.ally.nextAttack = tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier')) { c.ally.nextAttack = tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
     this.state(e, 'grabbed', ticks(civ.grabS));
     this.face(e, attacker.transform, Math.PI);
     this.world.events.emit({ type: 'civilian.grabbed', tick, sourceId: attacker.id, targetId: e.id, variant: c.variant, rescueUntil: tick + ticks(civ.rescueWindowS) });
@@ -449,7 +449,7 @@ export class Outbreak {
     const c = e.civilian!, tick = this.world.tick, attacker = this.world.entities.get(c.attacker);
     // PO 2026-10-12 (L3: "Ideally the Zombies will win against police"): a grabbed L3 officer no longer frees himself; only a
     // teammate's or the courier's hit on the grabber rescues him. Elsewhere officers keep fighting from the hold.
-    if (c.ally && (c.ally.gun || c.ally.role === 'officer') && !(c.ally.role === 'officer' && this.world.missions?.def.l3) && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !(c.ally.role === 'officer' && this.world.missions?.def.l3) && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
     if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
