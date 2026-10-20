@@ -190,7 +190,10 @@ export class CrowdView extends Group {
       const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
       let baked: BakedBatch, createdCorpse: BufferGeometry | null = null;
       if (prepared) {
-        preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared); model.updateMatrixWorld(true);
+        preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared);
+        // The bake adds every clip part the model lacks as an empty joint at the origin; the locomotion rig expects them.
+        for (const name of prepared.clip.parts) if (!model.getObjectByName(name)) { const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint); }
+        model.updateMatrixWorld(true);
         baked = { ...prepared, geometry: cloneBatchGeometry(prepared.geometry), shirtColor: prepared.shirtColor?.clone() };
         if (prepared.corpse) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
       } else {
