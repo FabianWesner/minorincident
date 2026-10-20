@@ -20,15 +20,23 @@ export class Grass extends Mesh {
     material.positionNode = vec3(positionLocal.x.add(gust.mul(weight)), positionLocal.y.mul(materials.look.nodes.grassHeight.div(.41)), positionLocal.z.add(cos(phase.add(positionLocal.x)).mul(weight).mul(.45)));
     return material;
   }
-  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number) {
-    const rng = new Rng(seed, `grass:${layout.district}`), positions: number[] = [], tips: number[] = [];
-    const blade = (x: number, z: number, angle: number, height: number, width: number) => {
-      const dx = Math.cos(angle) * width, dz = Math.sin(angle) * width;
-      positions.push(x - dx, .015, z - dz, x + dx, .015, z + dz, x, height, z);
-      tips.push(0, 0, 1);
-    };
-    // Keep grass out of solid footprints and pedestrian paths. Same tests as before, but bounds are
-    // precomputed and bucketed in a 4 m grid (D-GROVE: ~1.6 s -> a few ms per district).
+  /** Lawns longer than this are cut into tiles, so frustum culling drops the grass far from the camera (one district-wide mesh drew every blade, ~200k triangles on L10). */
+  static readonly tileM = 40;
+  /** One mesh per lawn tile; the blade-validity grid (footprints, paving) is built once and shared. */
+  static tiles(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number): Grass[] {
+    const valid = Grass.validity(layout), out: Grass[] = [];
+    for (const [index, lawn] of layout.lawns.entries()) {
+      const w = lawn.max[0] - lawn.min[0], d = lawn.max[1] - lawn.min[1];
+      const nx = Math.max(1, Math.ceil(w / Grass.tileM)), nz = Math.max(1, Math.ceil(d / Grass.tileM));
+      for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
+        const piece = { min: [lawn.min[0] + w * i / nx, lawn.min[1] + d * j / nz] as [number, number], max: [lawn.min[0] + w * (i + 1) / nx, lawn.min[1] + d * (j + 1) / nz] as [number, number] };
+        out.push(new Grass(layout, material, seed, [piece], valid, `${index}:${i}:${j}`));
+      }
+    }
+    return out;
+  }
+  /** Keep grass out of solid footprints and pedestrian paths. Bounds are precomputed and bucketed in a 4 m grid (D-GROVE: ~1.6 s -> a few ms per district). */
+  private static validity(layout: DistrictLayout): (x: number, z: number) => boolean {
     const cell = 4, grid = new Map<number, (((x: number, z: number) => boolean))[]>();
     const key = (cx: number, cz: number) => cx * 100003 + cz;
     const insert = (minX: number, maxX: number, minZ: number, maxZ: number, test: (x: number, z: number) => boolean) => {
@@ -47,10 +55,18 @@ export class Grass extends Mesh {
       const minX = Math.min(...s.polygon.map(p => p[0])), maxX = Math.max(...s.polygon.map(p => p[0])), minZ = Math.min(...s.polygon.map(p => p[1])), maxZ = Math.max(...s.polygon.map(p => p[1]));
       insert(minX, maxX, minZ, maxZ, (x, z) => x > minX && x < maxX && z > minZ && z < maxZ);
     }
-    const valid = (x: number, z: number) => !(grid.get(key(Math.floor(x / cell), Math.floor(z / cell))) ?? []).some(test => test(x, z));
+    return (x: number, z: number) => !(grid.get(key(Math.floor(x / cell), Math.floor(z / cell))) ?? []).some(test => test(x, z));
+  }
+  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, lawns: DistrictLayout['lawns'] = layout.lawns, valid: (x: number, z: number) => boolean = Grass.validity(layout), tile = '') {
+    const rng = new Rng(seed, `grass:${layout.district}${tile ? ':' + tile : ''}`), positions: number[] = [], tips: number[] = [];
+    const blade = (x: number, z: number, angle: number, height: number, width: number) => {
+      const dx = Math.cos(angle) * width, dz = Math.sin(angle) * width;
+      positions.push(x - dx, .015, z - dz, x + dx, .015, z + dz, x, height, z);
+      tips.push(0, 0, 1);
+    };
     let sparseCount = 0;
     for (const density of [5, 23]) {
-      for (const lawn of layout.lawns) {
+      for (const lawn of lawns) {
         const count = Math.ceil((lawn.max[0] - lawn.min[0]) * (lawn.max[1] - lawn.min[1]) * density);
         for (let i = 0; i < count; i++) {
           const x = lawn.min[0] + rng.next() * (lawn.max[0] - lawn.min[0]), z = lawn.min[1] + rng.next() * (lawn.max[1] - lawn.min[1]);
