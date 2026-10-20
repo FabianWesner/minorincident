@@ -147,6 +147,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (spec.vehicleSilhouettes?.length) for (let f = 0; f <= frames; f++) stops.add(f);
   let frame = 0;
   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
+  const foreground: { frame: number; active: boolean; occluder: string }[] = [];
   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
@@ -155,6 +156,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if (spec.look) lookSamples.push({ frame: f, ...await measureLook(session) });
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
+    if (spec.expect?.courierForegroundFramesMax !== undefined) foreground.push({ frame: f, ...await session.page.evaluate(() => { const r = window.__SS__!.getState().render; return { active: !!r.courierForeground, occluder: r.courierOccluder ?? '' }; }) });
     if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
@@ -234,6 +236,11 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaBodyPixels > 0 && s.megaPixels >= spec.expect!.megaAlphaVisibleRatioMin! * s.alphaPixels), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
+  if (spec.expect?.courierForegroundFramesMax !== undefined) {
+    // PO #9/#26: the near-camera foreground slice draws the courier over every nearer person and prop.
+    const active = foreground.filter(f => f.active).length;
+    result.checks.push({ name: 'courierForegroundFrames', pass: foreground.length > 0 && active <= spec.expect.courierForegroundFramesMax, value: active, limit: spec.expect.courierForegroundFramesMax });
+  }
   for (const id of spec.vehicleSilhouettes ?? []) for (const blocking of [false, true]) {
     const samples = silhouettes.filter(sample => sample.id === id && sample.blocking === blocking);
     if (!samples.length) continue;
@@ -252,7 +259,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, vehicleSilhouettes: silhouettes, pixels, edgeSamples, lookSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, courierForeground: foreground, vehicleSilhouettes: silhouettes, pixels, edgeSamples, lookSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }
