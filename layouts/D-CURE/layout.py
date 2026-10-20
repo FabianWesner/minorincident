@@ -713,7 +713,7 @@ def fill_run(asset, a_, F, s0, s1, lat, side, step, skip=0.0):
         s = s + n*step
 def plot_yard(a_, F, s0, s1, side):
     run = fill.choice(['prop.hedge', 'prop.hedge', 'prop.cure-garden-wall', 'prop.privacy-fence'])
-    fill_run(run, a_, F, s0, s1 - 3.2, 5.75, side, {'prop.hedge': 2.5, 'prop.cure-garden-wall': 3.5, 'prop.privacy-fence': 2.6}[run])
+    fill_run(run, a_, F, s0, s1 - 3.2, 5.75, side, {'prop.hedge': 2.5, 'prop.cure-garden-wall': 3.5, 'prop.privacy-fence': 2.56}[run])
     fill_put(fill.choice(['prop.trash-bin', 'prop.recycling-bin', 'prop.mailbox-blue']), a_, F, s1 - 1.6, 5.9, side, 'face')
     fill_put(fill.choice(['prop.street-tree', 'prop.tree', 'prop.garden-bush', 'prop.street-tree-blossom']), a_, F, (s0 + s1) / 2 + fill.uniform(-2, 2), 8.2, side, scale=fill.uniform(.7, .9))
     fill_put(fill.choice(['bld.house-a', 'bld.house-b', 'bld.house-c', 'bld.house-d', 'bld.house-e', 'bld.shed']), a_, F, (s0 + s1) / 2, 11.6, side, 'face', decay=fill.choice([None, None, 'w2', 'w3']))
