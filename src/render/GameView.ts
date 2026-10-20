@@ -826,7 +826,8 @@ export class GameView implements Lifecycle {
       const target = active ? blocked.point : this.world.controls.moveTarget; this.destination.visible = target != null;
       (this.destination.material as MeshBasicNodeMaterial).color.set(active ? '#ff704f' : '#64ffce');
       this.destination.scale.setScalar(active ? 1.4 : 1);
-      if (target) this.destination.position.set(target.x, .12, target.z);
+      // The cursor ray meets the ground at the courier's height (Game.ts setGroundHeight); the ring sits on that same ground, not at y 0 (PO 10-20 #68).
+      if (target) this.destination.position.set(target.x, (this.world.districts?.groundHeight(target.x, target.z) ?? 0) + .12, target.z);
     }
     const profileStart = this.renderer.profile ? performance.now() : 0;
     // The rig steps with the sim; render it between the last two tick poses like every other transform.

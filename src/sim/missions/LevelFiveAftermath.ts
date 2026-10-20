@@ -289,9 +289,19 @@ export class LevelFiveAftermath {
     if (s.cue && tick >= s.cue.until) s.cue = null;
   }
   /** Entry is across the shutter plane, never merely proximity to the street marker. */
-  insideStation(p: Point): boolean {
+  insideStation(p: Point, margin = 0): boolean {
     const door = this.anchor('l5-metro-shutter');
-    return Math.abs(p.x - door.x) <= 1.0 && p.z < door.z - .65 && p.z > door.z - 5;
+    return Math.abs(p.x - door.x) <= 1.0 + margin && p.z < door.z - .65 + margin && p.z > door.z - 5 - margin;
+  }
+  /** Followers that count as in for the shutter (the same test `metro()` closes on). */
+  private sheltering(e: EntitySnapshot): boolean { return this.insideStation(e.transform) && e.transform.z < this.anchor('l5-metro-shutter').z - 1; }
+  /** HUD suffix for the Metro leg: what the shutter is still waiting for (P0 10-20: the PO could not tell what ends the level). */
+  metroStatus(): string | null {
+    const s = this.s; if (s.shutterAt) return s.doneAt ? null : 'Everyone is in · shutter closing';
+    if (s.phase !== 'metro') return null;
+    const group = this.following(), inside = group.filter(({ e }) => this.sheltering(e)).length;
+    if (!s.metroAt) return group.length ? `Survivors in ${inside}/${group.length}` : 'Go down the stairs';
+    return inside < group.length ? `Wait for the survivors · ${inside}/${group.length} in` : 'Everyone is in';
   }
   /** Once the player enters, guide every living follower through the narrow opening. */
   ingress(e: EntitySnapshot): Point | null {
@@ -309,7 +319,8 @@ export class LevelFiveAftermath {
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     if (s.phase !== 'metro' || s.shutterAt) return;
-    if (player.health.current <= 0 || !this.insideStation(player.transform)) { s.metroAt = 0; return; }
+    // A small exit margin: a follower's nudge at the line must not restart the arrival (and its camera) every few ticks.
+    if (player.health.current <= 0 || !this.insideStation(player.transform, s.metroAt ? .45 : 0)) { s.metroAt = 0; return; }
     if (!s.metroAt) { s.metroAt = tick; this.mission.setState('at-metro', true); }
     // Keep the long body along the shaft; the final contact transaction validates this turn.
     for (const e of world.entities.iterate()) if (e.companion && !e.companion.following) e.transform.yaw = Math.PI / 2;
@@ -317,9 +328,8 @@ export class LevelFiveAftermath {
     if (tick >= s.metroAt + ticks(l5.metro.waitS)) {
       for (const { e } of this.following()) if (!this.insideStation(e.transform)) e.civilian!.survivor!.mode = 'follow';
     }
-    const door = this.anchor('l5-metro-shutter');
-    // Leave room for the final contact pass to settle the crowd behind the closed leaf.
-    if (tick >= s.metroAt + ticks(l5.metro.occupantViewS) && this.following().every(({ e }) => this.insideStation(e.transform) && e.transform.z < door.z - 1)) this.shutter();
+    // Leave room for the final contact pass to settle the crowd behind the closed leaf (followers 1 m past the leaf).
+    if (tick >= s.metroAt + ticks(l5.metro.occupantViewS) && this.insideStation(player.transform) && this.following().every(({ e }) => this.sheltering(e))) this.shutter();
   }
   private shutter(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;

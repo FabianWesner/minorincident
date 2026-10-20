@@ -69,7 +69,9 @@ export class InputSystem implements Lifecycle {
   private readonly walkHint = document.createElement('output');
   private walkHintTicks = 0;
   private walkHintDone = false;
-  constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}) {
+  /** `controlAzimuth`: the gameplay camera's fixed azimuth. Movement keys and sticks stay on it while a story preset or cinematic
+   * frames the scene from another side (P0 10-20: the L5 station view looked south, so a held W walked the courier back out). */
+  constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}, private readonly controlAzimuth?: () => number) {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
     this.bindings = new Bindings(storage);
@@ -179,8 +181,9 @@ export class InputSystem implements Lifecycle {
   private aiming(): boolean { return this.active.has('aimUp') || this.active.has('aimDown') || this.active.has('aimLeft') || this.active.has('aimRight'); }
   /** Camera azimuth projected onto ground; pitch does not distort movement. */
   private screenVector(x: number, y: number, out: Vec2): void {
-    this.camera.getWorldDirection(this.direction); const length = Math.hypot(this.direction.x, this.direction.z) || 1;
-    const forwardX = this.direction.x / length, forwardZ = this.direction.z / length;
+    let forwardX: number, forwardZ: number;
+    if (this.controlAzimuth) { const azimuth = this.controlAzimuth(); forwardX = -Math.sin(azimuth); forwardZ = -Math.cos(azimuth); }
+    else { this.camera.getWorldDirection(this.direction); const length = Math.hypot(this.direction.x, this.direction.z) || 1; forwardX = this.direction.x / length; forwardZ = this.direction.z / length; }
     out.x = -forwardZ * x - forwardX * y; out.z = forwardX * x - forwardZ * y;
   }
   private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
