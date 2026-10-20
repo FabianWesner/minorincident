@@ -7,7 +7,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3b @E32-AC21 seed-3
   // PO 2026-10-16 / E32-AC21 preserves the measured ~143 s build-up.
   expect(result.arrival).toBeGreaterThanOrEqual(135);
   expect(result.arrival).toBeLessThanOrEqual(145);
-  expect(result.arrival).toBeCloseTo(tier === 'high' ? 143.15 : 141.9667, 0);
+  // Low pin recalibrated 141.9667 -> 143.4833 by world-fill-l8-l10 (L10 roadside layout change, orchestrator decision 10-20; band unchanged).
+  expect(result.arrival).toBeCloseTo(tier === 'high' ? 143.15 : 143.4833, 0);
   expect(result.fullChargeBossGate).toBe(true);
   expect(result.fullChargeBossGateText).toContain('Kill the Mega Alpha');
   expect(result.bossGatePursuitM).toBeGreaterThan(0);
