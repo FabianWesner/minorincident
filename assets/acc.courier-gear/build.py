@@ -169,6 +169,9 @@ class Gear:
             ids = [vid(*q) for q in quad]
             cc = cell_color(i, j, rows, cols_n) if cell_color else color
             for a, b, c in ((0, 1, 2), (0, 2, 3)):
+                pa, pb, pc = (self.verts[ids[k]][0] for k in (a, b, c))
+                # outward-facing winding (the material is single sided): the face normal must point along the ray direction
+                if (pb - pa).cross(pc - pa).dot(dirs[i][j]) < 0: b, c = c, b
                 self.tris.append((ids[a], ids[b], ids[c], cc))
             for k in range(4): edge(quad[k], quad[(k + 1) % 4])
         for k, lst in edge_count.items():
