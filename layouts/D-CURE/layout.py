@@ -450,7 +450,9 @@ frontage(campus, [('prop.street-tree', 1), ('prop.hedge', 3), ('prop.lab-signs',
 # R6 destroyed corridor: burned streetscape, collapsed fronts, wrecks and red emergency lights.
 corridor = region_segments(5)
 frontage(corridor, [('prop.utility-pole', 1)], 28, 6.5, sides=(-1,), jitter=1)
-frontage(corridor, [('bld.house-a@w3', 2), ('bld.house-c@w3', 2), ('bld.mainstreet-brick@w3', 2), ('bld.storefront-row@w6', 1), ('bld.house-e@w3', 1), ('bld.clinic-annex@burned', 1)], 13, (12.5, 15))
+# look-l9b: the burned fronts stand 19-23 m back. Scene Lab powers every placement, so their window pools (reach ~10 m) must
+# not touch the E31-AC16 verge band (5.5-8.5 m); at the game camera (+-7.5 m at zoom 1, +-11 m at 1.5) they are off-frame either way.
+frontage(corridor, [('bld.house-a@w3', 2), ('bld.house-c@w3', 2), ('bld.mainstreet-brick@w3', 2), ('bld.storefront-row@w6', 1), ('bld.house-e@w3', 1), ('bld.clinic-annex@burned', 1)], 13, (19, 23))
 frontage(corridor, [('veh.school-bus@burned', 1), ('veh.sedan-white@burned', 2), ('veh.suv-dark@burned', 2), ('veh.police-sedan@burned', 1), ('veh.tank@wrecked', 1), ('veh.wreck', 2)], 15, (8, 10), chance=.85)
 frontage(corridor, [('decay.blown-sandbags', 2), ('prop.emergency-light', 1), ('decay.makeshift-barricade', 1), ('prop.jersey-barrier', 1)], 8, (6.4, 8), chance=.75)
 
