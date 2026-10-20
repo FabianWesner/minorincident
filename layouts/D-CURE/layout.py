@@ -538,8 +538,8 @@ for a_, b_ in route_segments:
     s0, s1 = 4.5, d - 4.5
     for side in (1, -1):
         # kerbed sidewalk: the pale kerb line on the road side, the slab behind it, (the terrain cells are capped at 800 triangles, so no expansion joints)
-        surface('sidewalk', strip(a_, F, s0, s1, side*SW0, side*SW1), 'pants', H_SW, cut=False)
-        surface('kerb', strip(a_, F, s0, s1, side*(SW0-.14), side*SW0), 'pantsLight', H_KERB, cut=False)
+        surface('sidewalk', strip(a_, F, s0, s1, side*SW0, side*SW1), 'khakiLight', H_SW, cut=False)
+        surface('kerb', strip(a_, F, s0, s1, side*(SW0-.14), side*SW0), 'silver', H_KERB, cut=False)
         surface('kerb-shadow', strip(a_, F, s0, s1, side*(SW0-.2), side*(SW0-.14)), 'uiDark', H_JOINT, cut=False)
     # crosswalk-style stripes in the gaps at each end, so the sidewalk break reads as a crossing
     for end_s, sgn in ((0, 1), (d, -1)):
