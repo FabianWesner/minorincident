@@ -51,3 +51,20 @@ test('#67 #72 #75 launcher equipment and responsive radar layout @E14-AC05', asy
   await page.evaluate(async () => { const a = window.__SS__!; a.input.set({ selectorSide: 'RIGHT' }); await a.step(1); a.input.clear(); });
   expect((await page.evaluate(() => window.__SS__!.getState())).render.camera.zoomLimits).toEqual([.5, 2]);
 });
+
+test('#67 @E32-AC27 saves and resumes equipped rocket zoom at 2.0', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.goto('/?test=1&ui=1&renderer=webgl&quality=high&audio=muted&dpr=1');
+  await page.waitForFunction(() => !!window.__SS__);
+  await page.evaluate(async () => {
+    const a = window.__SS__!; await a.ready; await a.loadLevel('L10', { seed: 2, checkpoint: 'cure-corridor' }); a.pause(); a.cheats.god(true);
+    const hand = a.getState().player!.weapons!.RIGHT;
+    a.input.set({ selectedSlot: { side: 'RIGHT', index: hand.rack.findIndex(slot => slot.id === 'weapon.rocket-launcher') } }); await a.step(1); a.input.clear();
+  });
+  await page.mouse.move(800, 450); for (let i = 0; i < 6; i++) await page.mouse.wheel(0, 120);
+  await page.evaluate(async () => { const a = window.__SS__!; await a.step(90); a.campaign.save(); });
+  expect(await page.evaluate(() => window.__SS__!.campaign.state()!.cureResume!.cameraZoom)).toBe(2);
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L10'); a.pause(); await a.step(1); });
+  expect((await page.evaluate(() => window.__SS__!.getState())).render.camera.zoom).toBeCloseTo(2, 3);
+  expect((await page.evaluate(() => window.__SS__!.getState())).render.camera.zoomLimits).toEqual([.5, 2]);
+});

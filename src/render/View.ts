@@ -1,6 +1,6 @@
 // Adapted from folio-2025 View.js by Bruno Simon (MIT), commit 41046b5.
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
-import { cameraFraming } from '../data/cameraFraming';
+import { cameraFraming, rocketZoomLimit } from '../data/cameraFraming';
 
 /** Player zoom range as a fraction of the default radius: in until the hero is ~1/3.5 of the viewport height. */
 // PO 2026-10-13: "End of L3, I can zoom out whihc I shouldn't" (scripted beats lock the framing).
@@ -31,7 +31,7 @@ export class View {
   private zoomReturn = 0;
   /** Only the weapon held in the selected rack slot grants the longer rocket view. */
   setEquippedWeapon(id: string | undefined): void {
-    const limit = id === 'weapon.rocket-launcher' ? 2 : zoomLimits[1];
+    const limit = id === 'weapon.rocket-launcher' ? rocketZoomLimit : zoomLimits[1];
     if (limit === this.maxZoom) return;
     this.maxZoom = limit;
     this.targetZoom = Math.min(this.targetZoom, limit);
