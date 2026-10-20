@@ -17,8 +17,8 @@ try {
     spec.actors![0].look = { gearTier, model: sex } as never;
     const swing = pose === 'swing';
     spec.camera = pose === 'game' ? { mode: 'follow', actor: 'courier', zoom: .5 } as never
-      : { mode: 'close', target: [swing ? .6 : 0, .75, 0], radius: swing ? 3.2 : 2.6, azimuth: pose === 'back' ? 220 : 40 } as never;
-    if (!swing) { spec.actors = spec.actors!.slice(0, 1); delete spec.script; }
+      : { mode: 'close', target: [swing ? .6 : 0, swing ? .75 : .85, 0], radius: swing ? 3.2 : 3.1, azimuth: pose === 'back' ? 220 : 40 } as never;
+    if (!swing) { spec.actors = spec.actors!.slice(0, 1); delete spec.script; (spec.actors[0] as { loadout?: unknown }).loadout = [['weapon.fists'], ['weapon.fists']]; }
     spec.frames = swing ? 60 : 24; (spec as { expect?: unknown }).expect = {};
     const dir = `${out}/${sex}-t${gearTier}-${pose}`; mkdirSync(dir, { recursive: true });
     await runSpec(session, spec, { out: dir, shots: [swing ? 44 : 20], sheet: 0 });
