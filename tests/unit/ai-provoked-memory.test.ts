@@ -46,12 +46,29 @@ test('a hit sends an unaware outbreak infected to the shot position without repe
   } finally { world.dispose(); }
 }, 120_000);
 
+test('a hit respects an active director attack move', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena');
+  try {
+    world.infected!.configureL1v2();
+    const id = world.infected!.spawn('infected.runner', { x: 32, z: 0 });
+    const brain = world.entities.get(id)!.infected!.l1!;
+    expect(world.infected!.press(id, 1, world.tick + 720)).toBe(true);
+    const goal = [brain.goalX, brain.goalZ], until = brain.focusUntil;
+    Object.assign(world.entities.get(1)!.transform, { z: 25 });
+    world.combat!.damage.apply({ sourceId: 1, targetId: id, attackId: 9001, actionId: 'weapon.pistol', origin: { x: 0, z: 25 }, direction: { x: 1, z: 0 }, base: 3, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+    expect([brain.goalX, brain.goalZ]).toEqual(goal);
+    expect(brain.focusUntil).toBe(until);
+    expect(brain.focusId).toBe(1);
+  } finally { world.dispose(); }
+}, 120_000);
+
 for (const outbreak of [false, true]) test(`a recycled ${outbreak ? 'outbreak' : 'archetype'} brain forgets the previous actor being hit`, async () => {
   const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena');
   try {
     if (outbreak) world.infected!.configureL1v2();
     const id = world.infected!.spawn('infected.runner', { x: 32, z: 0 });
     const infected = world.entities.get(id)!;
+    if (outbreak) world.infected!.press(id, 1, world.tick + 720);
     world.combat!.damage.apply({ sourceId: 1, targetId: id, attackId: 9001, actionId: 'weapon.pistol', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 3, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
     expect(infected.infected!.provoked).toBeDefined();
     world.infected!.release(infected);
