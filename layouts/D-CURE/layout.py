@@ -35,12 +35,14 @@ for z in range(-1,5):
 l.data['terrainChunks'] = chunks
 
 patches=[]
-def surface(name, poly, token, height=0):
+def surface(name, poly, token, height=0, cut=True):
+    # cut=False (look-l9b): a thin overlay that sits above its owner instead of cutting it (cracks, skids): cutting the road
+    # quads with hundreds of strips fragmented the asphalt past the 10k streamed-horizon budget.
     # Arrow silhouettes are concave; partition them into convex triangles.
     if any((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]) < -1e-8 for a,b,c in zip(poly,poly[1:]+poly[:1],poly[2:]+poly[:2])):
         for tri in tessellate_polygon([[Vector((x,z,0)) for x,z in poly]]):
-            patches.append((name,[poly[v] if isinstance(v,int) else [v.x,v.y] for v in tri],token,height))
-    else: patches.append((name,poly,token,height))
+            patches.append((name,[poly[v] if isinstance(v,int) else [v.x,v.y] for v in tri],token,height,cut))
+    else: patches.append((name,poly,token,height,cut))
 
 def halfplane(poly,a,b,inside):
     out=[]
@@ -69,11 +71,12 @@ def subtract(poly,cutter):
     return outside
 
 def emit_surfaces():
-    for index,(name,poly,token,height) in enumerate(patches):
+    for index,(name,poly,token,height,_) in enumerate(patches):
         pieces=[poly]
         # Flat surface ownership, rather than stacked coplanar slabs. This avoids depth flicker
         # even at the 200 m review camera; paint and intersecting fork lanes have one owner.
-        for _,cutter,_,_ in patches[index+1:]:
+        for _,cutter,_,_,cuts in patches[index+1:]:
+            if not cuts: continue
             pieces=[piece for p in pieces for piece in subtract(p,cutter)]
         for c in chunks:
             ox,oz=c['origin']
@@ -113,6 +116,9 @@ def emit_surfaces():
 
 surface('soil',source['bounds'][:-1],'grass',-.006)
 surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'gloveKhaki',-.004)  # look-l10: dimmer than khaki so the moonlit scar keeps the route read
+# look-l9b: the destroyed corridor (R6) is scorched ground, not a lawn: an ash sheet (pantsDark) under its burned fronts. The moonlit
+# grass there read at .03 luminance (no building shadows from the collapsed w3 fronts) and broke the E31-AC16 verge gate.
+surface('corridor-ash',[[2917,-140],[3697,-140],[3697,140],[2917,140]],'pantsDark',-.005)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=source['bounds']))
 # Graph shares the exact boundary vertex; no duplicate slab or invisible region gate.
 route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
@@ -506,6 +512,32 @@ for x0 in (3955.5, 4040.5):
 # Back rows: distant roofs and trees so the verge beyond the frontage is never empty ground.
 for i in range(6):
     frontage(region_segments(i), [('prop.tree', 3), ('prop.street-tree', 1)], 13, (20, 32), chance=.8)
+# look-l9b: the destroyed corridor has no power. Its burned fronts join a light group that is off at every tier, so only the
+# red emergency lights (their own anchors) and the render-only fires light R6; the warm window pools no longer wash the verge.
+l.data['lightGroups'].append(dict(id='corridor-dark', offAt=0))
+for p in l.data['placements']:
+    if p['assetId'].startswith('bld.') and 2917 <= p['position'][0] <= 3700 and p.get('decorLights'): p['lightGroup'] = 'corridor-dark'
+# look-l9b: tar cracks and skid marks on the asphalt (thin dark strips, flat, no collision; L9's dress.py recipe), from a
+# separate random stream so the dressing placements are untouched.
+crack_rng = random.Random(1020)
+for a_, b_ in route_segments:
+    d = math.dist(a_, b_)
+    if d < 12 or a_[0] > 3940 or b_[0] > 3940: continue
+    ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d; nx, nz = -uz, ux
+    t = crack_rng.uniform(2, 8)
+    while t < d - 3:
+        lat = crack_rng.uniform(-3.0, 3.0); cx, cz = a_[0]+ux*t+nx*lat, a_[1]+uz*t+nz*lat
+        if crack_rng.random() < .6:
+            L = crack_rng.uniform(2.5, 7); ca = math.atan2(uz, ux) + crack_rng.choice([crack_rng.uniform(-.25, .25), crack_rng.uniform(1.1, 2.0)])
+            w = crack_rng.uniform(.05, .09); p0 = (cx - math.cos(ca)*L/2, cz - math.sin(ca)*L/2); p1 = (cx + math.cos(ca)*L/2, cz + math.sin(ca)*L/2)
+            sx, sz = -math.sin(ca)*w/2, math.cos(ca)*w/2
+            surface('road-crack', ccw([[p0[0]+sx, p0[1]+sz], [p0[0]-sx, p0[1]-sz], [p1[0]-sx, p1[1]-sz], [p1[0]+sx, p1[1]+sz]]), 'uiDark', .0064, cut=False)
+        else:
+            L = crack_rng.uniform(3, 7); drift = crack_rng.uniform(-.8, .8)
+            for off in (-.9, .9):
+                ox, oz = cx + nx*off, cz + nz*off; e0 = (ox - ux*L/2, oz - uz*L/2); e1 = (ox + ux*L/2 + nx*drift, oz + uz*L/2 + nz*drift)
+                surface('skid', ccw([[e0[0]+nx*.075, e0[1]+nz*.075], [e0[0]-nx*.075, e0[1]-nz*.075], [e1[0]-nx*.075, e1[1]-nz*.075], [e1[0]+nx*.075, e1[1]+nz*.075]]), 'uiDark', .0062, cut=False)
+        t += crack_rng.uniform(5, 11)
 print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
