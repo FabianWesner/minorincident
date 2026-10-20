@@ -1,0 +1,90 @@
+{
+  "name": "courier-gear-tier4-swing-male",
+  "note": "gear-art: tier 4 gear (all tiers) idle, then a bat swing and a handgun shot at a close target; nothing floats, clips or stretches in the swing. Matrix: zoom 1.5/1/0.5, high and low.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "loadout": [
+        [
+          "weapon.bat",
+          "weapon.fists"
+        ],
+        [
+          "weapon.handgun"
+        ]
+      ],
+      "look": {
+        "gearTier": 4,
+        "model": "male"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        1.4,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 1.4,
+        "inPlace": true
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "courier",
+      "do": {
+        "select": "RIGHT",
+        "index": 0
+      }
+    },
+    {
+      "frame": 130,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "side": "RIGHT",
+        "seconds": 0.8,
+        "inPlace": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 210,
+  "shots": [
+    10,
+    32,
+    44,
+    60,
+    140
+  ],
+  "sheet": 5,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "courierAttachmentGapMaxCm": 2
+  }
+}
