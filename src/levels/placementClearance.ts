@@ -81,7 +81,7 @@ export function firstOverlap(candidate: Placement, obstacles: readonly Footprint
  */
 export function solidOverlaps(layout: DistrictLayout, tier: Tier, pick: (p: Placement) => boolean): { placement: string; assetId: string; collider: string }[] {
   const out: { placement: string; assetId: string; collider: string }[] = [];
-  const solids = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && c.minTier <= tier && c.maxTier >= tier);
+  const solids = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && !c.aabb.navOnly && c.minTier <= tier && c.maxTier >= tier);
   for (const p of layout.placements) {
     if (!pick(p) || p.minTier > tier || p.maxTier < tier) continue;
     const mine = footprints(p, 0, true);
@@ -107,7 +107,7 @@ export function moveOffSolids(layout: DistrictLayout, pick: (p: Placement) => bo
   const bad = new Set(tiers.flatMap(t => solidOverlaps(layout, t, pick).map(o => o.placement)));
   for (const p of layout.placements) {
     if (!bad.has(p.id)) continue;
-    const solids: Footprint[] = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && c.id.split('/')[0] !== p.id)
+    const solids: Footprint[] = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && !c.aabb.navOnly && c.id.split('/')[0] !== p.id)
       .map(c => ({ id: c.id, poly: [[c.aabb.min[0], c.aabb.min[2]], [c.aabb.max[0], c.aabb.min[2]], [c.aabb.max[0], c.aabb.max[2]], [c.aabb.min[0], c.aabb.max[2]]] as Pt[], y0: c.aabb.min[1], y1: c.aabb.max[1] }));
     const spot = findClearSpot(layout, p, solids, { slide: p.assetId.startsWith('veh.'), margin: .15, maxRadius: 12, lawnOk: true });
     if (!spot) continue;

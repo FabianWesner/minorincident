@@ -37,7 +37,7 @@ export class Physics implements Lifecycle {
     if (scenario.survivor && p.y >= survivor.height / 2 - .001 && p.y < survivor.height / 2 + .005) p.y = survivor.height / 2 + .005;
     this.playerBody = this.world.createRigidBody((scenario.survivor ? RAPIER.RigidBodyDesc.kinematicPositionBased() : RAPIER.RigidBodyDesc.dynamic()).setTranslation(p.x, p.y, p.z).lockRotations());
     this.playerCollider = this.world.createCollider((scenario.survivor ? RAPIER.ColliderDesc.capsule(survivor.height / 2 - survivor.radius, survivor.radius) : RAPIER.ColliderDesc.cuboid(0.5, 0.5, 0.5)).setFriction(0).setCollisionGroups(0x00010001), this.playerBody);
-    for (const wall of scenario.walls ?? []) this.world.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z));
+    for (const wall of scenario.walls ?? []) if (!wall.navOnly) this.world.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z));
     if (scenario.survivor) { this.characterController = this.world.createCharacterController(0.005); this.characterController.setSlideEnabled(true); this.characterController.enableAutostep(.4, .2, false); this.characterController.enableSnapToGround(0.1);
       // PO #15: walking into a dynamic prop shoves it (contact impulses) instead of stepping onto it.
       this.characterController.setApplyImpulsesToDynamicBodies(true); this.characterController.setCharacterMass(70); }
@@ -51,6 +51,7 @@ export class Physics implements Lifecycle {
   }
   /** Static layout/blocker AABBs become fixed Rapier colliders at level load only. */
   addStatic(aabb: Aabb, origin: [number,number]): number {
+    if (aabb.navOnly) return -1;
     const half = aabb.max.map((v,i)=>(v-aabb.min[i])/2);
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1])).handle;
   }
@@ -76,7 +77,7 @@ export class Physics implements Lifecycle {
   addBlocker(wall: NonNullable<ScenarioDefinition['walls']>[number]): number {
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z)).handle;
   }
-  removeBlocker(handle: number): void { const collider = this.world!.getCollider(handle); if (collider) this.world!.removeCollider(collider, true); }
+  removeBlocker(handle: number): void { if (handle < 0) return; const collider = this.world!.getCollider(handle); if (collider) this.world!.removeCollider(collider, true); }
   reset(): void { this.prepared = false; this.ground = null; this.characterController = null; this.playerCollider = null; this.playerBody = null; this.world?.free(); this.world = null; }
   dispose(): void { this.reset(); }
   get bodyCount(): number { return this.world?.bodies.len() ?? 0; }
