@@ -154,8 +154,9 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
 
 /** L10 (look-l9b recipe, E32 art addendum): render-only fires on the D-CURE route. Burned wrecks of the crash outskirts (R1) and the
  * destroyed corridor (R6) still burn, with brush fires on the crash scar and between the corridor fronts. No sim lamps, no
- * hazards (fires are gameplay damage elsewhere): Blasts draws them, the light field gets always-on pools. Wreck fires sit on
- * their (already cleared) car, brush fires keep 6 m from the lane edge; all keep 14 m from encounter spots and 70 m from the console. */
+ * hazards (fires are gameplay damage elsewhere): Blasts draws them, the light field gets always-on pools. Their pools (radius x 4,
+ * at most ~7 m) must not reach the E31-AC16 verge band (1.5..4.5 m past the lane edge): wreck fires only on cars >= 8.5 m past
+ * the edge, brush fires >= 12 m (placed 17-24 m out); all keep 14 m from encounter spots and 70 m from the console. */
 export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0]): AccentSet {
   const fires: AccentFire[] = [], keyed = (key: string) => new Rng(1019, `l10-night:${key}`);
   const lines: P2[][] = [...cure.regions.map(r => r.route as P2[]), ...cure.detours.map(d => d.route as P2[]),
@@ -171,8 +172,8 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
   for (const p of placements) {
     if (!p.assetId.startsWith('veh.') || p.decay !== 'burned') continue;
     const [x, , z] = p.position, inR1 = x < 760, inR6 = x > 2950 && x < 3680;
-    if (!(inR1 || inR6) || !ok(x, z, 4)) continue;
-    if (keyed(`wreck:${p.id}`).next() < (inR1 ? .8 : .55)) fire(x, z, 1.4, true);
+    if (!(inR1 || inR6) || !ok(x, z, 8.5)) continue;
+    if (inR1 || keyed(`wreck:${p.id}`).next() < .55) fire(x, z, 1.4, true);   // every clear R1 wreck burns (the crash just happened)
   }
   // 2) Brush fires beside the crash scar and between the corridor fronts (one every ~70 m, alternating sides).
   for (const [ri, region] of [[0, cure.regions[0]], [5, cure.regions[5]]] as const) {
@@ -183,8 +184,8 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
       for (let s = 20 + stations.next() * 30, n = 0; s < d - 15; s += 60 + stations.next() * 30, n++) {
         const rng = keyed(`brush:${ri}:${i}:${n}`), side = rng.next() < .5 ? -1 : 1;
         for (let k = 0; k < 14; k++) {
-          const o = 11 + rng.next() * 11, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
-          if (ok(x, z, 6) && free(x, z, 1.5)) { fire(x, z, 1.1 + rng.next() * .7); break; }
+          const o = 17 + rng.next() * 7, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
+          if (ok(x, z, 12) && free(x, z, 1.5)) { fire(x, z, 1.1 + rng.next() * .7); break; }
         }
       }
     }
