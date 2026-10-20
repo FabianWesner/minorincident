@@ -8,7 +8,12 @@ also updates it after deterministic steps. The renderer never owns or writes HUD
 `Hud` reads live sim components without cloning snapshots. North-up minimap positions
 use X/Z offsets, 30 m radius and 44% usable radius; far objective/home pins clamp to
 the edge and set `data-clamped`. Living detectable infected within 30 m use 256
-preallocated pins (above existing mission infected caps). Ammo, charge, reload,
+preallocated pins (above existing mission infected caps). `SurvivorRadar` uses a
+separate persistent pool for living, visible group survivors, allied followers and
+escorts in every level. Blue pins use the same projection and rim clamp; removed,
+hidden, dead or turned entities disappear on the next update. The radar, weather
+badge and objective share a vertical flex column, including touch/collapsed views.
+Ammo, charge, reload,
 recharge and cooldown values come from the current `ActionSlot`. Shield/armor reflects
 the existing armor fraction or active shield effect. E08 companion entities are read
 when available; before then the portrait says “awaiting rescue.” No companion logic

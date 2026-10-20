@@ -27,9 +27,19 @@ export class View {
   private defaultRadius: number = cameraFraming.radiusM;
   private zoomRatio = 1;
   private targetZoom = 1;
+  private maxZoom: number = zoomLimits[1];
+  private zoomReturn = 0;
+  /** Only the weapon held in the selected rack slot grants the longer rocket view. */
+  setEquippedWeapon(id: string | undefined): void {
+    const limit = id === 'weapon.rocket-launcher' ? 2 : zoomLimits[1];
+    if (limit === this.maxZoom) return;
+    this.maxZoom = limit;
+    this.targetZoom = Math.min(this.targetZoom, limit);
+    this.zoomReturn = this.zoomRatio > limit ? .4 : 0;
+  }
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
   zoom(delta: number, instant = false): void {
-    if (Number.isFinite(delta) && !this.blendTarget && !this.scripted) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
+    if (Number.isFinite(delta) && !this.blendTarget && !this.scripted) this.targetZoom = Math.max(zoomLimits[0], Math.min(this.maxZoom, this.targetZoom * Math.exp(delta)));
     if (instant) this.zoomRatio = this.targetZoom;
   }
   inspectionPose: CameraPose | null = null;
@@ -43,7 +53,7 @@ export class View {
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
   encounterScale = 1;
-  /** The player's eased wheel/pinch zoom ratio (0.5 closest .. 1.5 widest). */
+  /** The player's eased wheel/pinch zoom ratio (0.5 closest .. 1.5 widest, 2 while holding rockets). */
   get playerZoom(): number { return this.zoomRatio; }
   /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
   epilogueScale = 1;
@@ -81,6 +91,7 @@ export class View {
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }): void {
+    this.maxZoom = zoomLimits[1]; this.zoomReturn = 0;
     this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
@@ -138,6 +149,10 @@ export class View {
     }
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
+    if (this.zoomReturn > 0) {
+      this.zoomReturn = Math.max(0, this.zoomReturn - seconds);
+      if (this.zoomReturn < 1e-8) { this.zoomReturn = 0; this.zoomRatio = Math.min(this.zoomRatio, this.maxZoom); }
+    }
     this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
@@ -188,6 +203,6 @@ export class View {
     this.camera.updateMatrixWorld();
   }
   getState() {
-    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [...zoomLimits], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [zoomLimits[0], this.maxZoom], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }
