@@ -48,6 +48,8 @@ export class DistrictAssets {
   private readonly glbLeases = new Map<string, number>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
+  /** One material per static-batch graph (staticBatchMaterial): identical batches share a node build. */
+  private readonly batchMaterialCache = new Map<string, Material>();
   private readonly signTextures: import("three/webgpu").Texture[] = [];
   private readonly assets: AssetRegistry;
   private readonly ktx?: KTX2Loader;
@@ -103,7 +105,7 @@ export class DistrictAssets {
               // Raw InstancedMesh nodes capture a new matrix buffer in their node
               // graph for every cell. Reuse the district's vertex-attribute batch
               // path and shared material so revisits never compile cold shaders.
-              const batch = staticBatch(scene, true, this.materials); this.share(batch);
+              const batch = staticBatch(scene, true, this.materials, false, this.batchMaterialCache); this.share(batch);
               scene.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
               return this.remember(batch);
             }
@@ -148,7 +150,8 @@ export class DistrictAssets {
       // mesh name silently replaced those graphs with the first matte batch.
       const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
       const shared = this.sharedMaterials.get(key);
-      if (shared) { (child.material as Material).dispose(); child.material = shared; }
+      // A cached batch material can already be the shared one: never dispose a material still in use.
+      if (shared) { if (shared !== child.material) (child.material as Material).dispose(); child.material = shared; }
       else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
       // Batched light-bearing dressing keeps the world's existing player cutaway.
       if (child.material instanceof PaletteMaterial) child.material.seeThrough();
@@ -173,7 +176,7 @@ export class DistrictAssets {
       if (url) {
         try {
           const response = await fetch(url); if (!response.ok) throw Error(`Static bake ${response.status}`);
-          const root = decodeStaticBake(await decompressCivilianBake(await response.arrayBuffer()), this.materials, anchorsFor(id).length > 0);
+          const root = decodeStaticBake(await decompressCivilianBake(await response.arrayBuffer()), this.materials, anchorsFor(id).length > 0, this.batchMaterialCache);
           return this.finishBatch(id, this.remember(root));
         } catch { /* Source loading remains the quality-preserving fallback. */ }
       }
@@ -207,7 +210,7 @@ export class DistrictAssets {
       // and foreground loads). Slice the same batch work instead of blocking a frame.
       const paced = loadGate.paced;
       const pause = () => paced ? loadGate.wait() : new Promise<void>(resolve => setTimeout(resolve, 0));
-      const root = this.remember(paced || canonical === 'lod0' ? await staticBatchAsync(asset, true, this.materials, pause) : staticBatch(asset, true, this.materials));
+      const root = this.remember(paced || canonical === 'lod0' ? await staticBatchAsync(asset, true, this.materials, pause, 4, this.batchMaterialCache) : staticBatch(asset, true, this.materials, false, this.batchMaterialCache));
       if (muzzleLocal) {
         const gun = root.children.find(n => n.userData.door === 'gun');
         if (gun) { gun.name = 'gun'; const socket = new Object3D(); socket.name = 'muzzle'; socket.position.copy(muzzleLocal); gun.add(socket); }
@@ -255,7 +258,7 @@ export class DistrictAssets {
     if (!def) {
       const key = `dressing:${id}:${lod}:${decay ?? ''}`;
       if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => {
-        if (anchorsFor(id).length && !/^veh\./.test(id)) { root.userData.assetId = id; const batch = staticBatch(root, true, this.materials); this.share(batch); return this.remember(batch); }
+        if (anchorsFor(id).length && !/^veh\./.test(id)) { root.userData.assetId = id; const batch = staticBatch(root, true, this.materials, false, this.batchMaterialCache); this.share(batch); return this.remember(batch); }
         const group = new Group(); group.add(root); return this.remember(group);
       }));
       return this.cache.get(key)!;
@@ -294,6 +297,7 @@ export class DistrictAssets {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
     for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear();
+    for (const material of this.batchMaterialCache.values()) material.dispose(); this.batchMaterialCache.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     this.glbLeases.clear();
