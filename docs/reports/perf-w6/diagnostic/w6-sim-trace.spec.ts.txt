@@ -1,0 +1,42 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { boot, test } from '../e2e/fixtures';
+
+/** perf-w6 diagnostic (not a gate): per-frame sim and a Chrome trace (GC) of the L8 phone and L7 low horde fixtures, vsync capped. */
+const dir = process.env.W6_OUT ?? 'test-results/w6/trace';
+const which = process.env.W6_FIXTURE ?? 'l8';
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test(`w6 ${which} sim trace`, async ({ page, context, browser }) => {
+  test.setTimeout(300_000); mkdirSync(dir, { recursive: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await boot(page, `/?test=1&renderer=webgl&quality=low&audio=muted&dpr=1&profile`);
+  await page.evaluate(async which => {
+    const a = window.__SS__!;
+    if (which === 'l8') { await a.loadScenario('perf-l8-mixed-outbreak', { seed: 1 }); a.pause(); a.settings.set({ slowMotion: false }); a.camera.cinematic({ position: [-41, 23, 7], target: [-60, .5, -12] }, true); }
+    else {
+      await a.loadLevel('L7', { seed: 29 }); a.cheats.god(true); a.settings.set({ slowMotion: false });
+      a.pause(); a.setLoadout(['weapon.bat'], ['weapon.rocket-launcher']); await a.step(2);
+      const initial = a.getState().l7!;
+      a.teleport('player', { x: -48, z: 46 });
+      initial.roster.forEach((r, i) => a.teleport(r.id, { x: -45 + Math.floor(i / 3) * 1.2, z: 46 + (i % 3 - 1) * 1.2 }));
+      a.camera.cinematic({ position: [-22, 24, 68], target: [-48, 0, 46] }, true);
+    }
+    await a.screenshotReady(); a.resume();
+    const warm = performance.now(); while (performance.now() - warm < 3000) await new Promise(r => requestAnimationFrame(r));
+  }, which);
+  await browser.startTracing(page, { categories: ['devtools.timeline', 'v8', 'v8.gc', 'disabled-by-default-v8.gc'] });
+  const rows = await page.evaluate(async which => {
+    const a = window.__SS__!, rows: { at: number; frame: number; ticks: number; sim: number; simTick: number; update: number; render: number }[] = [];
+    let prev = 0, tick = a.tick(), blastAt = 0; const start = performance.now();
+    while (performance.now() - start < 8000) {
+      const now = await new Promise<number>(r => requestAnimationFrame(r)), p = a.perf(), t = a.tick();
+      if (prev) rows.push({ at: now, frame: now - prev, ticks: t - tick, sim: p.simMs, simTick: p.simTickMs, update: p.updateCpuMs, render: p.renderCpuMs }); prev = now; tick = t;
+      if (which === 'l7' && now - blastAt >= 1250) { a.explosions.blast('explosion.rocket', { x: -64, z: 46 }); blastAt = now; }
+    }
+    a.pause(); return rows;
+  }, which);
+  writeFileSync(`${dir}/${which}.trace.json`, await browser.stopTracing());
+  writeFileSync(`${dir}/${which}.rows.json`, JSON.stringify(rows));
+  const sims = rows.filter(r => r.simTick > 0).map(r => r.simTick).sort((a, b) => a - b);
+  console.log(JSON.stringify({ which, frames: rows.length, simP50: sims[Math.floor(sims.length / 2)], simP95: sims[Math.ceil(sims.length * .95) - 1] }));
+});

@@ -1,0 +1,14 @@
+"""Self samples of a function split by caller and grand-caller. usage: callers.py profile fnName"""
+import json, sys, collections
+p = json.load(open(sys.argv[1])); fn = sys.argv[2]
+nodes = {n['id']: n for n in p['nodes']}; parent = {}
+for n in p['nodes']:
+    for c in n.get('children', []): parent[c] = n['id']
+cnt = collections.Counter(p['samples']); callers = collections.Counter()
+lab = lambda n: f"{n['callFrame']['functionName'] or '(anon)'}:{n['callFrame']['lineNumber'] + 1}" if n else '?'
+for sid, c in cnt.items():
+    if nodes[sid]['callFrame']['functionName'] != fn: continue
+    par = nodes.get(parent.get(sid)); gp = nodes.get(parent.get(par['id'])) if par else None
+    callers[(lab(par), lab(gp))] += c
+tot = sum(callers.values())
+for k, v in callers.most_common(15): print(f'{100 * v / tot:5.1f}% {k}')

@@ -1,0 +1,4 @@
+#!/bin/sh
+# perf-w6: one quiet reservation: lane L4 low WebGL + WebGPU, L7 low horde WebGL, L8 phone (lane HEAD, fresh build).
+lane=$(cd "$(dirname "$0")/../../.." && pwd)
+cd "$lane" && E2E_PORT=3571 sh tools/perf/w6/run-specs.sh lane4 webgl:tests/perf/l4-budgets.spec.ts:low webgpu:tests/perf/l4-budgets.spec.ts:low webgl:tests/perf/l7-encounters.spec.ts:low webgl:tests/perf/l8-budgets.spec.ts:phone
