@@ -8120,7 +8120,7 @@
           92.28323887899539
         ]
       },
-      "id": "veh.sedan-red:666",
+      "id": "veh.sedan-red:667",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8137,7 +8137,7 @@
           92.32294516249746
         ]
       },
-      "id": "veh.sedan-red:669",
+      "id": "veh.sedan-red:670",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8154,7 +8154,7 @@
           88.62787304067474
         ]
       },
-      "id": "veh.sedan-red:672",
+      "id": "veh.sedan-red:673",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8171,7 +8171,7 @@
           76.1
         ]
       },
-      "id": "prop.jersey-barrier:854",
+      "id": "prop.jersey-barrier:856",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8188,7 +8188,7 @@
           80.9
         ]
       },
-      "id": "prop.jersey-barrier:855",
+      "id": "prop.jersey-barrier:857",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8205,7 +8205,7 @@
           76.7
         ]
       },
-      "id": "prop.jersey-barrier:856",
+      "id": "prop.jersey-barrier:858",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8222,7 +8222,7 @@
           79.89999999999999
         ]
       },
-      "id": "prop.jersey-barrier:857",
+      "id": "prop.jersey-barrier:859",
       "maxTier": 5,
       "minTier": 0
     },
@@ -8239,13 +8239,13 @@
           78.21000000238419
         ]
       },
-      "id": "prop.emergency-light:858",
+      "id": "prop.emergency-light:860",
       "maxTier": 5,
       "minTier": 0
     }
   ],
   "district": "D-ZOO",
-  "geometryHash": "0aef7890aca33fa40253bff03d01e1d7644d8a80a3f0541546e26ea848d140db",
+  "geometryHash": "d49a15358d6f1be375d3dd8f3395e7bd5f4f32ca7e82e48862476cb9f5307ba1",
   "lawns": [
     {
       "max": [
@@ -28896,8 +28896,8 @@
     },
     {
       "allowRoad": false,
-      "assetId": "veh.box-truck",
-      "id": "veh.box-truck:660",
+      "assetId": "veh.sedan-green",
+      "id": "veh.sedan-green:660",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
@@ -28913,14 +28913,14 @@
       ],
       "visualAabb": {
         "max": [
-          -51.8911040484366,
-          3.9872,
-          -92.02476502623556
+          -53.114910687860906,
+          1.8999999463558197,
+          -92.54827286867977
         ],
         "min": [
-          -58.780016950365564,
+          -57.55621031094126,
           0,
-          -94.97523497376444
+          -94.45172713132023
         ]
       },
       "yaw": 3.165221390928595
@@ -28989,9 +28989,40 @@
     },
     {
       "allowRoad": false,
-      "assetId": "veh.pickup-red",
-      "id": "veh.pickup-red:663",
+      "assetId": "veh.suv-green",
+      "id": "veh.suv-green:663",
       "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -29.037334053933268,
+        0,
+        -89.9
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          -26.811020735951775,
+          1.8000001617067172,
+          -88.91248133407109
+        ],
+        "min": [
+          -31.26364737191476,
+          0,
+          -90.88751866592892
+        ]
+      },
+      "yaw": -0.017036532636769852
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.pickup-white",
+      "id": "veh.pickup-white:664",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29006,23 +29037,23 @@
       ],
       "visualAabb": {
         "max": [
-          -118.6011379250695,
-          2.2342242002487183,
-          -35.611880405640086
+          -118.99334218938752,
+          1.8999999184161425,
+          -35.990311880737536
         ],
         "min": [
-          -121.3988620749305,
+          -121.00665781061248,
           0,
-          -40.85161333637645
+          -40.473181861279
         ]
       },
       "yaw": 1.521805087932533
     },
     {
       "allowRoad": false,
-      "assetId": "veh.suv-dark",
-      "id": "veh.suv-dark:664",
-      "lightGroup": "block-0",
+      "assetId": "veh.suv-green",
+      "id": "veh.suv-green:665",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29037,23 +29068,23 @@
       ],
       "visualAabb": {
         "max": [
-          124.8780661524418,
-          2.5591,
-          -77.21904834278443
+          124.44308970615755,
+          1.8000001617067172,
+          -77.59787246979502
         ],
         "min": [
-          121.92193384755821,
+          122.35691029384246,
           0,
-          -82.47435565194634
+          -82.09553152493575
         ]
       },
       "yaw": 1.613310970400607
     },
     {
       "allowRoad": false,
-      "assetId": "veh.box-truck",
-      "id": "veh.box-truck:665",
-      "lightGroup": "block-1",
+      "assetId": "veh.sedan-green",
+      "id": "veh.sedan-green:666",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29068,14 +29099,14 @@
       ],
       "visualAabb": {
         "max": [
-          124.90388069171671,
-          3.9872,
-          -57.51812153642973
+          124.3701948184164,
+          1.8999999463558197,
+          -58.745844285786
         ],
         "min": [
-          121.8961193082833,
+          122.42980518158362,
           0,
-          -64.42910916612237
+          -63.201386416766105
         ]
       },
       "yaw": -1.538673002650125
@@ -29083,8 +29114,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-red",
-      "id": "veh.sedan-red:666",
-      "lightGroup": "block-2",
+      "id": "veh.sedan-red:667",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29114,8 +29145,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-white",
-      "id": "veh.sedan-white:667",
-      "lightGroup": "block-3",
+      "id": "veh.sedan-white:668",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29145,8 +29176,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-white",
-      "id": "veh.sedan-white:668",
-      "lightGroup": "block-0",
+      "id": "veh.sedan-white:669",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29176,8 +29207,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-red",
-      "id": "veh.sedan-red:669",
-      "lightGroup": "block-1",
+      "id": "veh.sedan-red:670",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29207,8 +29238,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-green",
-      "id": "veh.sedan-green:670",
-      "lightGroup": "block-2",
+      "id": "veh.sedan-green:671",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29237,9 +29268,9 @@
     },
     {
       "allowRoad": false,
-      "assetId": "veh.pickup-red",
-      "id": "veh.pickup-red:671",
-      "lightGroup": "block-3",
+      "assetId": "veh.pickup-white",
+      "id": "veh.pickup-white:672",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29254,14 +29285,14 @@
       ],
       "visualAabb": {
         "max": [
-          -15.652227021111162,
-          2.2342242002487183,
-          91.18715549240656
+          -16.014504953942037,
+          1.8999999184161425,
+          90.8104463523048
         ],
         "min": [
-          -20.78528876510182,
+          -20.423010832270947,
           0,
-          88.61284450759345
+          88.98955364769522
         ]
       },
       "yaw": -0.004752964110057212
@@ -29269,8 +29300,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-red",
-      "id": "veh.sedan-red:672",
-      "lightGroup": "block-0",
+      "id": "veh.sedan-red:673",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29300,8 +29331,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:673",
-      "lightGroup": "block-1",
+      "id": "veh.sedan-blue:674",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29331,8 +29362,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:674",
-      "lightGroup": "block-2",
+      "id": "veh.sedan-blue:675",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29362,8 +29393,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:675",
-      "lightGroup": "block-3",
+      "id": "veh.sedan-blue:676",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29393,8 +29424,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.suv-green",
-      "id": "veh.suv-green:676",
-      "lightGroup": "block-0",
+      "id": "veh.suv-green:677",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29424,8 +29455,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-white",
-      "id": "veh.sedan-white:677",
-      "lightGroup": "block-1",
+      "id": "veh.sedan-white:678",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29455,8 +29486,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.pickup-white",
-      "id": "veh.pickup-white:678",
-      "lightGroup": "block-2",
+      "id": "veh.pickup-white:679",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29486,8 +29517,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:679",
-      "lightGroup": "block-3",
+      "id": "veh.sedan-blue:680",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29516,9 +29547,40 @@
     },
     {
       "allowRoad": false,
-      "assetId": "veh.pickup-red",
-      "id": "veh.pickup-red:680",
-      "lightGroup": "block-0",
+      "assetId": "veh.sedan-green",
+      "id": "veh.sedan-green:681",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        120.0,
+        0,
+        -65.91848180517061
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          120.99595095054741,
+          1.8999999463558197,
+          -63.68100399105173
+        ],
+        "min": [
+          119.00404904945259,
+          0,
+          -68.15595961928949
+        ]
+      },
+      "yaw": -1.5267716483243232
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.pickup-white",
+      "id": "veh.pickup-white:682",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29533,14 +29595,14 @@
       ],
       "visualAabb": {
         "max": [
-          -81.63274182503842,
-          2.2342242002487183,
-          91.28471528606764
+          -82.00914681469949,
+          1.8999999184161425,
+          90.89445171886399
         ],
         "min": [
-          -86.85939202839073,
+          -86.48298703872966,
           0,
-          88.51528471393237
+          88.90554828113602
         ]
       },
       "yaw": -0.04333011169378853
@@ -29548,8 +29610,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:681",
-      "lightGroup": "block-1",
+      "id": "veh.sedan-blue:683",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29579,8 +29641,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-green",
-      "id": "veh.sedan-green:682",
-      "lightGroup": "block-2",
+      "id": "veh.sedan-green:684",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29610,8 +29672,8 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-blue",
-      "id": "veh.sedan-blue:683",
-      "lightGroup": "block-3",
+      "id": "veh.sedan-blue:685",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29640,9 +29702,9 @@
     },
     {
       "allowRoad": false,
-      "assetId": "veh.pickup-red",
-      "id": "veh.pickup-red:684",
-      "lightGroup": "block-0",
+      "assetId": "veh.pickup-white",
+      "id": "veh.pickup-white:686",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29657,14 +29719,14 @@
       ],
       "visualAabb": {
         "max": [
-          -74.2763512043332,
-          2.2342242002487183,
-          -92.19974927872522
+          -74.6405404799855,
+          1.8999999184161425,
+          -92.5782947863531
         ],
         "min": [
-          -79.42230977856045,
+          -79.05812050290814,
           0,
-          -94.80025072127478
+          -94.4217052136469
         ]
       },
       "yaw": 3.1514787952094307
@@ -29672,8 +29734,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:685",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:687",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29703,8 +29765,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:686",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:688",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29734,8 +29796,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:687",
-      "lightGroup": "block-3",
+      "id": "prop.tree:689",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29765,8 +29827,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:688",
-      "lightGroup": "block-0",
+      "id": "prop.tree:690",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29796,8 +29858,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:689",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:691",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29827,8 +29889,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:690",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:692",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29858,8 +29920,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:691",
-      "lightGroup": "block-3",
+      "id": "prop.tree:693",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29889,8 +29951,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:692",
-      "lightGroup": "block-0",
+      "id": "prop.tree:694",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29920,8 +29982,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:693",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:695",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29951,8 +30013,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:694",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:696",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -29982,8 +30044,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:695",
-      "lightGroup": "block-3",
+      "id": "prop.tree:697",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30013,8 +30075,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:696",
-      "lightGroup": "block-0",
+      "id": "prop.tree:698",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30044,8 +30106,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:697",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:699",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30075,8 +30137,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:698",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:700",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30106,8 +30168,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:699",
-      "lightGroup": "block-3",
+      "id": "prop.tree:701",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30137,8 +30199,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:700",
-      "lightGroup": "block-0",
+      "id": "prop.tree:702",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30168,8 +30230,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:701",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:703",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30199,8 +30261,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:702",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:704",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30230,8 +30292,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:703",
-      "lightGroup": "block-3",
+      "id": "prop.tree:705",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30261,8 +30323,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:704",
-      "lightGroup": "block-0",
+      "id": "prop.tree:706",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30292,8 +30354,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:705",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:707",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30323,8 +30385,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:706",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:708",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30354,8 +30416,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:707",
-      "lightGroup": "block-3",
+      "id": "prop.tree:709",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30385,8 +30447,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:708",
-      "lightGroup": "block-0",
+      "id": "prop.tree:710",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30416,8 +30478,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:709",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:711",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30447,8 +30509,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:710",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:712",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30478,8 +30540,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:711",
-      "lightGroup": "block-3",
+      "id": "prop.tree:713",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30509,8 +30571,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:712",
-      "lightGroup": "block-0",
+      "id": "prop.tree:714",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30540,8 +30602,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:713",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:715",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30571,8 +30633,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:714",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:716",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30602,8 +30664,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:715",
-      "lightGroup": "block-3",
+      "id": "prop.tree:717",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30633,8 +30695,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:716",
-      "lightGroup": "block-0",
+      "id": "prop.tree:718",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30664,8 +30726,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:717",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:719",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30695,8 +30757,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:718",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:720",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30726,8 +30788,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:719",
-      "lightGroup": "block-3",
+      "id": "prop.tree:721",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30757,8 +30819,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:720",
-      "lightGroup": "block-0",
+      "id": "prop.tree:722",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30788,8 +30850,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:721",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:723",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30819,8 +30881,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:722",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:724",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30850,8 +30912,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:723",
-      "lightGroup": "block-3",
+      "id": "prop.tree:725",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30881,8 +30943,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:724",
-      "lightGroup": "block-0",
+      "id": "prop.tree:726",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30912,8 +30974,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:725",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:727",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30943,8 +31005,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:726",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:728",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -30974,8 +31036,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:727",
-      "lightGroup": "block-3",
+      "id": "prop.tree:729",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31005,8 +31067,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:728",
-      "lightGroup": "block-0",
+      "id": "prop.tree:730",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31036,8 +31098,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:729",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:731",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31067,8 +31129,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:730",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:732",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31098,8 +31160,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:731",
-      "lightGroup": "block-3",
+      "id": "prop.tree:733",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31129,8 +31191,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:732",
-      "lightGroup": "block-0",
+      "id": "prop.tree:734",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31160,8 +31222,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:733",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:735",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31191,8 +31253,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:734",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:736",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31222,8 +31284,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:735",
-      "lightGroup": "block-3",
+      "id": "prop.tree:737",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31253,8 +31315,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:736",
-      "lightGroup": "block-0",
+      "id": "prop.tree:738",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31284,8 +31346,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:737",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:739",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31315,8 +31377,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:738",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:740",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31346,8 +31408,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:739",
-      "lightGroup": "block-3",
+      "id": "prop.tree:741",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31377,8 +31439,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:740",
-      "lightGroup": "block-0",
+      "id": "prop.tree:742",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31408,8 +31470,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:741",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:743",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31439,8 +31501,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:742",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:744",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31470,8 +31532,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:743",
-      "lightGroup": "block-3",
+      "id": "prop.tree:745",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31501,8 +31563,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:744",
-      "lightGroup": "block-0",
+      "id": "prop.tree:746",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31532,8 +31594,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:745",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:747",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31563,8 +31625,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:746",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:748",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31594,8 +31656,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:747",
-      "lightGroup": "block-3",
+      "id": "prop.tree:749",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31625,8 +31687,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:748",
-      "lightGroup": "block-0",
+      "id": "prop.tree:750",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31656,8 +31718,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:749",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:751",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31687,8 +31749,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:750",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:752",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31718,8 +31780,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:751",
-      "lightGroup": "block-3",
+      "id": "prop.tree:753",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31749,8 +31811,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:752",
-      "lightGroup": "block-0",
+      "id": "prop.tree:754",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31780,8 +31842,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:753",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:755",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31811,8 +31873,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:754",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:756",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31842,8 +31904,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:755",
-      "lightGroup": "block-3",
+      "id": "prop.tree:757",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31873,8 +31935,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:756",
-      "lightGroup": "block-0",
+      "id": "prop.tree:758",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31904,8 +31966,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:757",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:759",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31935,8 +31997,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:758",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:760",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31966,8 +32028,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:759",
-      "lightGroup": "block-3",
+      "id": "prop.tree:761",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -31997,8 +32059,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:760",
-      "lightGroup": "block-0",
+      "id": "prop.tree:762",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32028,8 +32090,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:761",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:763",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32059,8 +32121,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:762",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:764",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32090,8 +32152,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:763",
-      "lightGroup": "block-3",
+      "id": "prop.tree:765",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32121,8 +32183,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:764",
-      "lightGroup": "block-0",
+      "id": "prop.tree:766",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32152,8 +32214,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:765",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:767",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32183,8 +32245,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:766",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:768",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32214,8 +32276,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:767",
-      "lightGroup": "block-3",
+      "id": "prop.tree:769",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32245,8 +32307,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:768",
-      "lightGroup": "block-0",
+      "id": "prop.tree:770",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32276,8 +32338,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:769",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:771",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32307,8 +32369,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:770",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:772",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32338,8 +32400,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:771",
-      "lightGroup": "block-3",
+      "id": "prop.tree:773",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32369,8 +32431,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:772",
-      "lightGroup": "block-0",
+      "id": "prop.tree:774",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32400,8 +32462,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:773",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:775",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32431,8 +32493,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:774",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:776",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32462,8 +32524,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:775",
-      "lightGroup": "block-3",
+      "id": "prop.tree:777",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32493,8 +32555,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:776",
-      "lightGroup": "block-0",
+      "id": "prop.tree:778",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32524,8 +32586,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:777",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:779",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32555,8 +32617,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:778",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:780",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32586,8 +32648,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:779",
-      "lightGroup": "block-3",
+      "id": "prop.tree:781",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32617,8 +32679,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:780",
-      "lightGroup": "block-0",
+      "id": "prop.tree:782",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32648,8 +32710,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:781",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:783",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32679,8 +32741,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:782",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:784",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32710,8 +32772,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:783",
-      "lightGroup": "block-3",
+      "id": "prop.tree:785",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32741,8 +32803,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:784",
-      "lightGroup": "block-0",
+      "id": "prop.tree:786",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32772,8 +32834,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:785",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:787",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32803,8 +32865,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:786",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:788",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32834,8 +32896,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:787",
-      "lightGroup": "block-3",
+      "id": "prop.tree:789",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32865,8 +32927,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:788",
-      "lightGroup": "block-0",
+      "id": "prop.tree:790",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32896,8 +32958,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:789",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:791",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32927,8 +32989,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:790",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:792",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32958,8 +33020,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:791",
-      "lightGroup": "block-3",
+      "id": "prop.tree:793",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -32989,8 +33051,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:792",
-      "lightGroup": "block-0",
+      "id": "prop.tree:794",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33020,8 +33082,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:793",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:795",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33051,8 +33113,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:794",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:796",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33082,8 +33144,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:795",
-      "lightGroup": "block-3",
+      "id": "prop.tree:797",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33113,8 +33175,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:796",
-      "lightGroup": "block-0",
+      "id": "prop.tree:798",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33144,8 +33206,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:797",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:799",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33175,8 +33237,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:798",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:800",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33206,8 +33268,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:799",
-      "lightGroup": "block-3",
+      "id": "prop.tree:801",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33237,8 +33299,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:800",
-      "lightGroup": "block-0",
+      "id": "prop.tree:802",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33268,8 +33330,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:801",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:803",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33299,8 +33361,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:802",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:804",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33330,8 +33392,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:803",
-      "lightGroup": "block-3",
+      "id": "prop.tree:805",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33361,8 +33423,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:804",
-      "lightGroup": "block-0",
+      "id": "prop.tree:806",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33392,8 +33454,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:805",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:807",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33423,8 +33485,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:806",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:808",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33454,8 +33516,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:807",
-      "lightGroup": "block-3",
+      "id": "prop.tree:809",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33485,8 +33547,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:808",
-      "lightGroup": "block-0",
+      "id": "prop.tree:810",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33516,8 +33578,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:809",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:811",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33547,8 +33609,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:810",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:812",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33578,8 +33640,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:811",
-      "lightGroup": "block-3",
+      "id": "prop.tree:813",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33609,8 +33671,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:812",
-      "lightGroup": "block-0",
+      "id": "prop.tree:814",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33640,8 +33702,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:813",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:815",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33671,8 +33733,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:814",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:816",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33702,8 +33764,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:815",
-      "lightGroup": "block-3",
+      "id": "prop.tree:817",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33733,8 +33795,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:816",
-      "lightGroup": "block-0",
+      "id": "prop.tree:818",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33764,8 +33826,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:817",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:819",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33795,8 +33857,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:818",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:820",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33826,8 +33888,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:819",
-      "lightGroup": "block-3",
+      "id": "prop.tree:821",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33857,8 +33919,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:820",
-      "lightGroup": "block-0",
+      "id": "prop.tree:822",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33888,8 +33950,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:821",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:823",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33919,8 +33981,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:822",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:824",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33950,8 +34012,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:823",
-      "lightGroup": "block-3",
+      "id": "prop.tree:825",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -33981,8 +34043,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:824",
-      "lightGroup": "block-0",
+      "id": "prop.tree:826",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34012,8 +34074,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:825",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:827",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34043,8 +34105,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:826",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:828",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34074,8 +34136,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:827",
-      "lightGroup": "block-3",
+      "id": "prop.tree:829",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34105,8 +34167,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:828",
-      "lightGroup": "block-0",
+      "id": "prop.tree:830",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34136,8 +34198,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:829",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:831",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34167,8 +34229,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:830",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:832",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34198,8 +34260,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:831",
-      "lightGroup": "block-3",
+      "id": "prop.tree:833",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34229,8 +34291,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:832",
-      "lightGroup": "block-0",
+      "id": "prop.tree:834",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34260,8 +34322,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:833",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:835",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34291,8 +34353,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:834",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:836",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34322,8 +34384,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:835",
-      "lightGroup": "block-3",
+      "id": "prop.tree:837",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34353,8 +34415,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:836",
-      "lightGroup": "block-0",
+      "id": "prop.tree:838",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34384,8 +34446,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:837",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:839",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34415,8 +34477,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:838",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:840",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34446,8 +34508,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:839",
-      "lightGroup": "block-3",
+      "id": "prop.tree:841",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34477,8 +34539,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:840",
-      "lightGroup": "block-0",
+      "id": "prop.tree:842",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34508,8 +34570,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:841",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:843",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34539,8 +34601,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:842",
-      "lightGroup": "block-2",
+      "id": "prop.tree:844",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34570,8 +34632,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:843",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:845",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34601,8 +34663,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:844",
-      "lightGroup": "block-0",
+      "id": "prop.tree:846",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34632,8 +34694,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:845",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:847",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34663,8 +34725,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:846",
-      "lightGroup": "block-2",
+      "id": "prop.tree:848",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34694,8 +34756,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:847",
-      "lightGroup": "block-3",
+      "id": "prop.tree:849",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34725,74 +34787,12 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:848",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        131.0,
-        0,
-        75.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          131.31999999284744,
-          3.865000009536743,
-          75.91999999284744
-        ],
-        "min": [
-          130.68000000715256,
-          0,
-          75.28000000715255
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:849",
-      "lightGroup": "block-1",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        131.0,
-        0,
-        84.4
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          131.31999999284744,
-          3.865000009536743,
-          84.71999999284745
-        ],
-        "min": [
-          130.68000000715256,
-          0,
-          84.08000000715256
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:850",
       "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
-        138.0,
+        131.0,
         0,
         75.6
       ],
@@ -34803,12 +34803,12 @@
       ],
       "visualAabb": {
         "max": [
-          138.31999999284744,
+          131.31999999284744,
           3.865000009536743,
           75.91999999284744
         ],
         "min": [
-          137.68000000715256,
+          130.68000000715256,
           0,
           75.28000000715255
         ]
@@ -34823,6 +34823,68 @@
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        131.0,
+        0,
+        84.4
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          131.31999999284744,
+          3.865000009536743,
+          84.71999999284745
+        ],
+        "min": [
+          130.68000000715256,
+          0,
+          84.08000000715256
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:852",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        138.0,
+        0,
+        75.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          138.31999999284744,
+          3.865000009536743,
+          75.91999999284744
+        ],
+        "min": [
+          137.68000000715256,
+          0,
+          75.28000000715255
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:853",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         138.0,
         0,
         84.4
@@ -34849,8 +34911,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:852",
-      "lightGroup": "block-0",
+      "id": "prop.street-lamp:854",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34880,8 +34942,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:853",
-      "lightGroup": "block-1",
+      "id": "prop.street-lamp:855",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34911,8 +34973,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.jersey-barrier",
-      "id": "prop.jersey-barrier:854",
-      "lightGroup": "block-2",
+      "id": "prop.jersey-barrier:856",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34942,8 +35004,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.jersey-barrier",
-      "id": "prop.jersey-barrier:855",
-      "lightGroup": "block-3",
+      "id": "prop.jersey-barrier:857",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -34973,8 +35035,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.jersey-barrier",
-      "id": "prop.jersey-barrier:856",
-      "lightGroup": "block-0",
+      "id": "prop.jersey-barrier:858",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35004,8 +35066,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.jersey-barrier",
-      "id": "prop.jersey-barrier:857",
-      "lightGroup": "block-1",
+      "id": "prop.jersey-barrier:859",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35035,8 +35097,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.emergency-light",
-      "id": "prop.emergency-light:858",
-      "lightGroup": "block-2",
+      "id": "prop.emergency-light:860",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35066,8 +35128,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:859",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:861",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35097,8 +35159,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:860",
-      "lightGroup": "block-0",
+      "id": "prop.street-tree:862",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35128,8 +35190,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:861",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:863",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35159,8 +35221,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:862",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:864",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35190,68 +35252,6 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:863",
-      "lightGroup": "block-3",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -118.0,
-        0,
-        -84
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          -115.21,
-          5.22,
-          -81.21
-        ],
-        "min": [
-          -120.79,
-          0,
-          -86.79
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-tree",
-      "id": "prop.street-tree:864",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        118.0,
-        0,
-        -84
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          120.79,
-          5.22,
-          -81.21
-        ],
-        "min": [
-          115.21,
-          0,
-          -86.79
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-tree",
       "id": "prop.street-tree:865",
       "lightGroup": "block-1",
       "maxTier": 5,
@@ -35259,7 +35259,7 @@
       "position": [
         -118.0,
         0,
-        -64
+        -84
       ],
       "scale": [
         0.9,
@@ -35270,12 +35270,12 @@
         "max": [
           -115.21,
           5.22,
-          -61.21
+          -81.21
         ],
         "min": [
           -120.79,
           0,
-          -66.79
+          -86.79
         ]
       },
       "yaw": 0
@@ -35290,6 +35290,68 @@
       "position": [
         118.0,
         0,
+        -84
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          120.79,
+          5.22,
+          -81.21
+        ],
+        "min": [
+          115.21,
+          0,
+          -86.79
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-tree",
+      "id": "prop.street-tree:867",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -118.0,
+        0,
+        -64
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          -115.21,
+          5.22,
+          -61.21
+        ],
+        "min": [
+          -120.79,
+          0,
+          -66.79
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-tree",
+      "id": "prop.street-tree:868",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        118.0,
+        0,
         -64
       ],
       "scale": [
@@ -35314,8 +35376,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:867",
-      "lightGroup": "block-3",
+      "id": "prop.tree:869",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35345,8 +35407,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:868",
-      "lightGroup": "block-0",
+      "id": "prop.tree:870",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35376,8 +35438,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:869",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:871",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35407,8 +35469,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:870",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:872",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35438,8 +35500,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:871",
-      "lightGroup": "block-3",
+      "id": "prop.tree:873",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35469,8 +35531,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:872",
-      "lightGroup": "block-0",
+      "id": "prop.tree:874",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35500,8 +35562,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:873",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:875",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35531,8 +35593,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:874",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:876",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35562,8 +35624,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:875",
-      "lightGroup": "block-3",
+      "id": "prop.tree:877",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35593,8 +35655,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:876",
-      "lightGroup": "block-0",
+      "id": "prop.tree:878",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35624,8 +35686,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:877",
-      "lightGroup": "block-1",
+      "id": "prop.street-tree:879",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35655,8 +35717,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:878",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:880",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35686,8 +35748,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:879",
-      "lightGroup": "block-3",
+      "id": "prop.tree:881",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35717,8 +35779,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:880",
-      "lightGroup": "block-0",
+      "id": "prop.tree:882",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35748,75 +35810,75 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:881",
-      "lightGroup": "block-1",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -118.0,
-        0,
-        16
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          -115.21,
-          5.22,
-          18.79
-        ],
-        "min": [
-          -120.79,
-          0,
-          13.21
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-tree",
-      "id": "prop.street-tree:882",
-      "lightGroup": "block-2",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        118.0,
-        0,
-        16
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          120.79,
-          5.22,
-          18.79
-        ],
-        "min": [
-          115.21,
-          0,
-          13.21
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.tree",
-      "id": "prop.tree:883",
+      "id": "prop.street-tree:883",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
         -118.0,
         0,
+        16
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          -115.21,
+          5.22,
+          18.79
+        ],
+        "min": [
+          -120.79,
+          0,
+          13.21
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-tree",
+      "id": "prop.street-tree:884",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        118.0,
+        0,
+        16
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          120.79,
+          5.22,
+          18.79
+        ],
+        "min": [
+          115.21,
+          0,
+          13.21
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:885",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -118.0,
+        0,
         26
       ],
       "scale": [
@@ -35841,8 +35903,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:884",
-      "lightGroup": "block-0",
+      "id": "prop.tree:886",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35865,68 +35927,6 @@
           115.21,
           0,
           23.21
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-tree",
-      "id": "prop.street-tree:885",
-      "lightGroup": "block-1",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -118.0,
-        0,
-        36
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          -115.21,
-          5.22,
-          38.79
-        ],
-        "min": [
-          -120.79,
-          0,
-          33.21
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-tree",
-      "id": "prop.street-tree:886",
-      "lightGroup": "block-2",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        118.0,
-        0,
-        36
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          120.79,
-          5.22,
-          38.79
-        ],
-        "min": [
-          115.21,
-          0,
-          33.21
         ]
       },
       "yaw": 0
@@ -35941,6 +35941,68 @@
       "position": [
         -118.0,
         0,
+        36
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          -115.21,
+          5.22,
+          38.79
+        ],
+        "min": [
+          -120.79,
+          0,
+          33.21
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-tree",
+      "id": "prop.street-tree:888",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        118.0,
+        0,
+        36
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          120.79,
+          5.22,
+          38.79
+        ],
+        "min": [
+          115.21,
+          0,
+          33.21
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-tree",
+      "id": "prop.street-tree:889",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -118.0,
+        0,
         56
       ],
       "scale": [
@@ -35965,8 +36027,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:888",
-      "lightGroup": "block-0",
+      "id": "prop.street-tree:890",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -35996,8 +36058,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:889",
-      "lightGroup": "block-1",
+      "id": "prop.tree:891",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36027,8 +36089,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:890",
-      "lightGroup": "block-2",
+      "id": "prop.tree:892",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36058,8 +36120,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:891",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:893",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36089,8 +36151,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:892",
-      "lightGroup": "block-0",
+      "id": "prop.tree:894",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36120,8 +36182,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:893",
-      "lightGroup": "block-1",
+      "id": "prop.tree:895",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36151,8 +36213,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:894",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:896",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36182,8 +36244,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:895",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:897",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36213,8 +36275,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:896",
-      "lightGroup": "block-0",
+      "id": "prop.tree:898",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36244,8 +36306,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:897",
-      "lightGroup": "block-1",
+      "id": "prop.tree:899",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36275,8 +36337,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:898",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:900",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36306,8 +36368,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:899",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:901",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36337,8 +36399,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:900",
-      "lightGroup": "block-0",
+      "id": "prop.tree:902",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36368,8 +36430,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:901",
-      "lightGroup": "block-1",
+      "id": "prop.tree:903",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36399,8 +36461,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:902",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:904",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36430,8 +36492,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:903",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:905",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36461,8 +36523,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:904",
-      "lightGroup": "block-0",
+      "id": "prop.tree:906",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36492,8 +36554,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:905",
-      "lightGroup": "block-1",
+      "id": "prop.tree:907",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36523,8 +36585,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:906",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:908",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36554,8 +36616,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:907",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:909",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36585,8 +36647,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:908",
-      "lightGroup": "block-0",
+      "id": "prop.tree:910",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36616,8 +36678,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:909",
-      "lightGroup": "block-1",
+      "id": "prop.tree:911",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36647,8 +36709,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:910",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:912",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36678,8 +36740,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:911",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:913",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36709,8 +36771,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:912",
-      "lightGroup": "block-0",
+      "id": "prop.tree:914",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36740,8 +36802,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:913",
-      "lightGroup": "block-1",
+      "id": "prop.tree:915",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36771,8 +36833,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:914",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:916",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36802,8 +36864,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:915",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:917",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36833,8 +36895,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:916",
-      "lightGroup": "block-0",
+      "id": "prop.tree:918",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36864,8 +36926,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:917",
-      "lightGroup": "block-1",
+      "id": "prop.tree:919",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36895,8 +36957,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:918",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:920",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36926,8 +36988,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:919",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:921",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36957,8 +37019,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:920",
-      "lightGroup": "block-0",
+      "id": "prop.tree:922",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -36988,8 +37050,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:921",
-      "lightGroup": "block-1",
+      "id": "prop.tree:923",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37019,8 +37081,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:922",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:924",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37050,8 +37112,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:923",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:925",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37081,8 +37143,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:924",
-      "lightGroup": "block-0",
+      "id": "prop.tree:926",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37112,8 +37174,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:925",
-      "lightGroup": "block-1",
+      "id": "prop.tree:927",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37143,8 +37205,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:926",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:928",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37174,8 +37236,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:927",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:929",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37205,8 +37267,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:928",
-      "lightGroup": "block-0",
+      "id": "prop.tree:930",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37236,8 +37298,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:929",
-      "lightGroup": "block-1",
+      "id": "prop.tree:931",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37267,8 +37329,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:930",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:932",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37298,73 +37360,73 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:931",
-      "lightGroup": "block-3",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        83,
-        0,
-        87.8
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          85.79,
-          5.22,
-          90.59
-        ],
-        "min": [
-          80.21,
-          0,
-          85.00999999999999
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.tree",
-      "id": "prop.tree:932",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        93,
-        0,
-        -87.8
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
-      ],
-      "visualAabb": {
-        "max": [
-          95.79,
-          5.22,
-          -85.00999999999999
-        ],
-        "min": [
-          90.21,
-          0,
-          -90.59
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.tree",
-      "id": "prop.tree:933",
+      "id": "prop.street-tree:933",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        83,
+        0,
+        87.8
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          85.79,
+          5.22,
+          90.59
+        ],
+        "min": [
+          80.21,
+          0,
+          85.00999999999999
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:934",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        93,
+        0,
+        -87.8
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "visualAabb": {
+        "max": [
+          95.79,
+          5.22,
+          -85.00999999999999
+        ],
+        "min": [
+          90.21,
+          0,
+          -90.59
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:935",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         93,
         0,
         87.8
@@ -37391,8 +37453,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:934",
-      "lightGroup": "block-2",
+      "id": "prop.street-tree:936",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37422,8 +37484,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-tree",
-      "id": "prop.street-tree:935",
-      "lightGroup": "block-3",
+      "id": "prop.street-tree:937",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37453,8 +37515,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:936",
-      "lightGroup": "block-0",
+      "id": "prop.tree:938",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37484,8 +37546,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.tree",
-      "id": "prop.tree:937",
-      "lightGroup": "block-1",
+      "id": "prop.tree:939",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37515,8 +37577,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:938",
-      "lightGroup": "block-2",
+      "id": "prop.utility-pole:940",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37546,74 +37608,12 @@
     {
       "allowRoad": false,
       "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:939",
-      "lightGroup": "block-3",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -93,
-        0,
-        87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          -91.37731665372849,
-          7.142499923706055,
-          88.02999999225139
-        ],
-        "min": [
-          -94.62268334627151,
-          0,
-          87.1700000077486
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:940",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -93,
-        0,
-        -87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          -91.37731665372849,
-          7.142499923706055,
-          -87.1700000077486
-        ],
-        "min": [
-          -94.62268334627151,
-          0,
-          -88.02999999225139
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
       "id": "prop.utility-pole:941",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
-        -53,
+        -93,
         0,
         87.6
       ],
@@ -37624,12 +37624,12 @@
       ],
       "visualAabb": {
         "max": [
-          -51.377316653728485,
+          -91.37731665372849,
           7.142499923706055,
           88.02999999225139
         ],
         "min": [
-          -54.622683346271515,
+          -94.62268334627151,
           0,
           87.1700000077486
         ]
@@ -37644,6 +37644,68 @@
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        -93,
+        0,
+        -87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          -91.37731665372849,
+          7.142499923706055,
+          -87.1700000077486
+        ],
+        "min": [
+          -94.62268334627151,
+          0,
+          -88.02999999225139
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:943",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -53,
+        0,
+        87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          -51.377316653728485,
+          7.142499923706055,
+          88.02999999225139
+        ],
+        "min": [
+          -54.622683346271515,
+          0,
+          87.1700000077486
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:944",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         -53,
         0,
         -87.6
@@ -37670,74 +37732,12 @@
     {
       "allowRoad": false,
       "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:943",
-      "lightGroup": "block-3",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -13,
-        0,
-        87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          -11.377316653728485,
-          7.142499923706055,
-          88.02999999225139
-        ],
-        "min": [
-          -14.622683346271515,
-          0,
-          87.1700000077486
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:944",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -13,
-        0,
-        -87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          -11.377316653728485,
-          7.142499923706055,
-          -87.1700000077486
-        ],
-        "min": [
-          -14.622683346271515,
-          0,
-          -88.02999999225139
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
       "id": "prop.utility-pole:945",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
-        27,
+        -13,
         0,
         87.6
       ],
@@ -37748,12 +37748,12 @@
       ],
       "visualAabb": {
         "max": [
-          28.622683346271515,
+          -11.377316653728485,
           7.142499923706055,
           88.02999999225139
         ],
         "min": [
-          25.377316653728485,
+          -14.622683346271515,
           0,
           87.1700000077486
         ]
@@ -37768,6 +37768,68 @@
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        -13,
+        0,
+        -87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          -11.377316653728485,
+          7.142499923706055,
+          -87.1700000077486
+        ],
+        "min": [
+          -14.622683346271515,
+          0,
+          -88.02999999225139
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:947",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        27,
+        0,
+        87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          28.622683346271515,
+          7.142499923706055,
+          88.02999999225139
+        ],
+        "min": [
+          25.377316653728485,
+          0,
+          87.1700000077486
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:948",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         27,
         0,
         -87.6
@@ -37794,74 +37856,12 @@
     {
       "allowRoad": false,
       "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:947",
-      "lightGroup": "block-3",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        67,
-        0,
-        87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          68.62268334627151,
-          7.142499923706055,
-          88.02999999225139
-        ],
-        "min": [
-          65.37731665372849,
-          0,
-          87.1700000077486
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
-      "id": "prop.utility-pole:948",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        67,
-        0,
-        -87.6
-      ],
-      "scale": [
-        1.0,
-        1.0,
-        1.0
-      ],
-      "visualAabb": {
-        "max": [
-          68.62268334627151,
-          7.142499923706055,
-          -87.1700000077486
-        ],
-        "min": [
-          65.37731665372849,
-          0,
-          -88.02999999225139
-        ]
-      },
-      "yaw": 1.5707963267948966
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.utility-pole",
       "id": "prop.utility-pole:949",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
-        107,
+        67,
         0,
         87.6
       ],
@@ -37872,12 +37872,12 @@
       ],
       "visualAabb": {
         "max": [
-          108.62268334627151,
+          68.62268334627151,
           7.142499923706055,
           88.02999999225139
         ],
         "min": [
-          105.37731665372849,
+          65.37731665372849,
           0,
           87.1700000077486
         ]
@@ -37892,6 +37892,68 @@
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        67,
+        0,
+        -87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          68.62268334627151,
+          7.142499923706055,
+          -87.1700000077486
+        ],
+        "min": [
+          65.37731665372849,
+          0,
+          -88.02999999225139
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:951",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        107,
+        0,
+        87.6
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "visualAabb": {
+        "max": [
+          108.62268334627151,
+          7.142499923706055,
+          88.02999999225139
+        ],
+        "min": [
+          105.37731665372849,
+          0,
+          87.1700000077486
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:952",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         107,
         0,
         -87.6
@@ -37918,8 +37980,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:951",
-      "lightGroup": "block-3",
+      "id": "prop.street-lamp:953",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -37940,68 +38002,6 @@
         ],
         "min": [
           -78.31999999284744,
-          0,
-          -60.31999999284744
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:952",
-      "lightGroup": "block-0",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        -42,
-        0,
-        -60
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visualAabb": {
-        "max": [
-          -41.68000000715256,
-          3.865000009536743,
-          -59.68000000715256
-        ],
-        "min": [
-          -42.31999999284744,
-          0,
-          -60.31999999284744
-        ]
-      },
-      "yaw": 0
-    },
-    {
-      "allowRoad": false,
-      "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:953",
-      "lightGroup": "block-1",
-      "maxTier": 5,
-      "minTier": 0,
-      "position": [
-        42,
-        0,
-        -60
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visualAabb": {
-        "max": [
-          42.31999999284744,
-          3.865000009536743,
-          -59.68000000715256
-        ],
-        "min": [
-          41.68000000715256,
           0,
           -60.31999999284744
         ]
@@ -38016,6 +38016,68 @@
       "maxTier": 5,
       "minTier": 0,
       "position": [
+        -42,
+        0,
+        -60
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -41.68000000715256,
+          3.865000009536743,
+          -59.68000000715256
+        ],
+        "min": [
+          -42.31999999284744,
+          0,
+          -60.31999999284744
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:955",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        42,
+        0,
+        -60
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          42.31999999284744,
+          3.865000009536743,
+          -59.68000000715256
+        ],
+        "min": [
+          41.68000000715256,
+          0,
+          -60.31999999284744
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:956",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
         78,
         0,
         -60
@@ -38042,8 +38104,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:955",
-      "lightGroup": "block-3",
+      "id": "prop.street-lamp:957",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38073,8 +38135,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:956",
-      "lightGroup": "block-0",
+      "id": "prop.street-lamp:958",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38104,8 +38166,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:957",
-      "lightGroup": "block-1",
+      "id": "prop.street-lamp:959",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38135,8 +38197,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:958",
-      "lightGroup": "block-2",
+      "id": "prop.street-lamp:960",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38166,8 +38228,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:959",
-      "lightGroup": "block-3",
+      "id": "prop.street-lamp:961",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38197,8 +38259,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:960",
-      "lightGroup": "block-0",
+      "id": "prop.street-lamp:962",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -38228,8 +38290,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
-      "id": "prop.street-lamp:961",
-      "lightGroup": "block-1",
+      "id": "prop.street-lamp:963",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [

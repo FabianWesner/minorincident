@@ -245,7 +245,8 @@ POOL = {'W': [('bld.apartment-block-b', 1.0), ('bld.apartment-block-a', 1.0), ('
         'E': [('bld.house-c', .85), ('bld.garage-detached', .9), ('bld.house-e', .9), ('bld.storefront-row', .8), ('bld.house-a', 1.0), ('bld.house-d', .9), ('bld.supermarket', .9), ('bld.house-e', .9)],
         'S': [('bld.house-a', 1.0), ('bld.storefront-row', .8), ('bld.house-d', .9), ('bld.supermarket', .9), ('bld.house-c', .85), ('bld.garage-detached', .9), ('bld.gas-station', 1.0), ('bld.house-e', .9)]}
 TINTS = ['#ffe58f', '#bfe8c8', '#b3d7f5', '#ffb8a3', '#d3dfae', '#fff6e6', '#d9c8f2']
-CARS = ['veh.sedan-red', 'veh.sedan-blue', 'veh.suv-dark', 'veh.pickup-red', 'veh.sedan-white', 'veh.suv-green', 'veh.pickup-white', 'veh.box-truck', 'veh.sedan-green', 'veh.school-bus']
+# Only vehicles narrower than 2.4 m: T-E17-lanes fits every vehicle placed in a district to that district's narrowest lane (D-ZOO paths: 5 m).
+CARS = ['veh.sedan-red', 'veh.sedan-blue', 'veh.suv-green', 'veh.pickup-white', 'veh.sedan-white', 'veh.suv-green', 'veh.pickup-white', 'veh.sedan-green', 'veh.sedan-green', 'veh.sedan-blue']
 def side_row(side, lo, hi, skip=None):
     """Buildings facing the ring road from beyond the outer kerb walk. E/W rows run along z, N/S along x."""
     face = {'E': 'W', 'W': 'E', 'N': 'S', 'S': 'N'}[side]
@@ -304,7 +305,7 @@ for k, z in enumerate((77.6, 80.0, 82.4)):
     put('prop.jersey-barrier', 142.6, z, math.pi / 2, 1.0)
 for z in (77.4, 80.6):
     put('prop.jersey-barrier', 144.2, z + .8, math.pi / 2, 1.0)
-put('veh.military-truck', 145.6, 78.2, math.pi / 2 + .12); put('veh.pickup-red', 144.8, 82.4, 1.2); put('veh.sedan-white', 139.4, 77.8, -math.pi / 2 + .1)
+put('veh.pickup-white', 145.6, 78.2, math.pi / 2 + .12); put('veh.suv-green', 144.8, 82.4, 1.2); put('veh.sedan-white', 139.4, 77.8, -math.pi / 2 + .1)
 for z in (76.2, 83.8): put('prop.sandbag-pallet', 143.4, z, 0.0)
 put('prop.light-tower-trailer', 141.6, 75.4, math.pi / 2); put('prop.emergency-light', 140.6, 78.4, 0.0)
 put('prop.emergency-light', 143.0, 83.8, 0.0); put('prop.street-sign', 138.4, 84.6, math.pi)
