@@ -1,0 +1,65 @@
+{
+ "name": "stunning-bars-l7-start-hurt",
+ "seed": 29,
+ "frames": 60,
+ "sheet": 30,
+ "ground": "district",
+ "time": "L6",
+ "tier": 6,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    220,
+    -30
+   ],
+   [
+    289,
+    55
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    273,
+    15
+   ],
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   270,
+   3.9,
+   15
+  ],
+  "zoom": 1
+ },
+ "note": "QA #37 bar rule: with 10 of the ~24 L7 followers hurt (40%), only the most hurt few (cap 6) carry bars, so the player still sees who needs a medkit without a grid over the group.",
+ "expect": {
+  "consoleErrors": 0,
+  "collisionFailuresMax": 0,
+  "bodyOverlapMaxCm": 2,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000,
+  "healthBarsMax": 6,
+  "healthBarsMin": 1
+ },
+ "size": 400,
+ "l7Group": "start",
+ "script": [
+  {
+   "frame": 1,
+   "effect": {
+    "hurtFollowers": 10,
+    "fraction": 0.4
+   }
+  }
+ ]
+}

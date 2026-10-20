@@ -1,0 +1,55 @@
+{
+ "name": "stunning-bars-l7-start-healthy",
+ "seed": 29,
+ "frames": 60,
+ "sheet": 30,
+ "ground": "district",
+ "time": "L6",
+ "tier": 6,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    220,
+    -30
+   ],
+   [
+    289,
+    55
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    273,
+    15
+   ],
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   270,
+   3.9,
+   15
+  ],
+  "zoom": 1
+ },
+ "note": "QA #37 (13c2: \"The ~24 bars are noise\"): the production L7 start roster (~24 followers, all healthy) carries no world health bars; the group reads as people, not a bar grid. Small groups (<= 5, PO #26 L5) keep every bar; see stunning-bars-l5-five.",
+ "expect": {
+  "consoleErrors": 0,
+  "collisionFailuresMax": 0,
+  "bodyOverlapMaxCm": 2,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "trianglesMaxLow": 500000,
+  "healthBarsMax": 0
+ },
+ "size": 400,
+ "l7Group": "start"
+}
