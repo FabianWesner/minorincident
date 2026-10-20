@@ -81,7 +81,8 @@ export class NavGrid {
   forPlayer(radius: number, cellSize = .5): NavGrid {
     if (radius >= this.clearance - 1e-6 && !this.playerMask) return this;
     if (!this.playerRoutes || Math.abs(this.playerRoutes.clearance - radius) > 1e-6 || this.playerRoutes.cellSize !== cellSize) {
-      this.playerRoutes = new NavGrid(this.ground, this.walls, radius, this.center, this.playerMask ?? this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
+      // Crowd-only lane edges (navOnly) never become player walls (PO 10-20 #63).
+      this.playerRoutes = new NavGrid(this.ground, this.walls.filter(w => !(w as { navOnly?: boolean }).navOnly), radius, this.center, this.playerMask ?? this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
       for (const [id, wall] of this.blockers) this.playerRoutes.setBlocker(id, this.playerWall(wall), true);
       this.playerRoutes.setPlayerBounds(this.playerBounds);
     }
