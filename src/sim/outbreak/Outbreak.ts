@@ -388,16 +388,17 @@ export class Outbreak {
     for (let radius = 1.4; radius <= 4; radius += .65) for (let k = 0; k < 9; k++) {
       const a = angle + ((k + e.id % 9) % 9 - 4) * Math.PI / 12;
       const p = { x: refuge.x + Math.cos(a) * radius, z: refuge.z + Math.sin(a) * radius };
-      if (!nav.clear(p.x, p.z, .5) || !nav.visible(refuge, p, .35)) continue;
+      if (!nav.clear(p.x, p.z, .5)) continue;
       if (!gathered) {
         for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) neighbours.push(other.civilian.l1?.target ?? other.transform);
         gathered = true;
       }
+      // perf-w6: all three tests are pure; the cheap occupancy test now runs before the sight ray (same first spot).
       let occupied = false;
       for (const at of neighbours) {
         if (Math.hypot(at.x - p.x, at.z - p.z) < .85) { occupied = true; break; }
       }
-      if (!occupied) { neighbours.length = 0; return p; }
+      if (!occupied && nav.visible(refuge, p, .35)) { neighbours.length = 0; return p; }
     }
     neighbours.length = 0;
     return { x: e.transform.x, z: e.transform.z };

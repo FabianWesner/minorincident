@@ -29,6 +29,8 @@ export class LevelFiveAftermath {
   private lowest = 1;
   constructor(private readonly mission: Mission) {}
   private get s(): L5State { return this.mission.state.l5!; }
+  /** True while the screen is dark for the cellar exit (UI fade, like TrapRescue.fading). */
+  get fading(): boolean { const s = this.mission.state.l5; return !!s && s.phase === 'cellar' && !!s.emergeFadeAt; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
@@ -171,14 +173,15 @@ export class LevelFiveAftermath {
   }
 
   // ---------------------------------------------------------------------------------------------------------- beats
-  completed(id: string): void {
+  completed(id: string, cheat = false): void {
     if (!this.mission.state.l5) return;
-    if (id === 'emerge') this.emerge();
+    if (id === 'emerge') this.emerge(cheat);
     if (id === 'look') this.findAll();
     if (id === 'metro') this.forceShelter();
   }
   /** The courier unbars the door and steps out at the foot of Kessler Lane: the first look at the devastated city. */
-  private emerge(): void {
+  /** `instant` (the completeObjective cheat and test path) skips the dip to black. */
+  private emerge(instant = false): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'cellar') return;
     const door = world.progression?.campaign?.shelterEntry ?? this.anchor('l5-cellar-door');
@@ -197,7 +200,12 @@ export class LevelFiveAftermath {
       if (exit) break;
     }
     if (!exit) return; // Retry admission on the next tick if the doorway is temporarily occupied.
-    player.transform.yaw = yaw;
+    // PO #33: the street is 150 m from the cellar yard. Dip to black first (the UI reads `fading`), move while dark, fade in on the street.
+    if (!instant) {
+      if (!s.emergeFadeAt) s.emergeFadeAt = tick;
+      if (tick < s.emergeFadeAt + ticks(l5.emerge.fadeOutS + l5.emerge.fadeHoldS)) return;
+    }
+    s.emergeFadeAt = 0;    player.transform.yaw = yaw;
     this.teleport(player, exit);
     for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: exit.x - 1.2, z: exit.z + .8 }, .4); Object.assign(e.transform, p); world.solids.admit(e, 'l5.emerge.companion'); }
     s.phase = 'emerged'; s.emergedAt = tick;
@@ -424,7 +432,7 @@ export class LevelFiveAftermath {
   restore(delta: number): void {
     const s = this.mission.state.l5; if (!s) return;
     this.shutterNavigation(!!s.shutterAt || !this.mission.state.gates['l5-metro-shutter']);
-    for (const key of ['startAt', 'emergedAt', 'searchAt', 'accountedAt', 'metroAt', 'shutterAt', 'doneAt', 'waitedAt'] as const) if (s[key]) s[key] += delta;
+    for (const key of ['emergeFadeAt', 'startAt', 'emergedAt', 'searchAt', 'accountedAt', 'metroAt', 'shutterAt', 'doneAt', 'waitedAt'] as const) if (s[key]) s[key] += delta;
     for (const r of s.survivors) for (const key of ['foundAt', 'cueAt', 'lostAt'] as const) if (r[key]) r[key] += delta;
     if (s.cue) s.cue.until += delta;
     s.gloom = Math.min(s.gloom, this.lowest);

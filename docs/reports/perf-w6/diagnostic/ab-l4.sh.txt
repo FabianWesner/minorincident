@@ -1,0 +1,7 @@
+#!/bin/sh
+# perf-w6 diagnostic: interleaved L4 alarm A/B (cold first-ten-alarm-tick cost and end-state hash). Usage: sh tools/perf/w6/ab-l4.sh <repeats>
+i=0
+while [ "$i" -lt "${1:-4}" ]; do
+  for v in l4-base l4-new; do printf '%s ' "$v"; node "tools/perf/w6/ab/$v.mjs" low 300 2>&1 | grep '^{'; done
+  i=$((i + 1))
+done

@@ -31,6 +31,8 @@ export class Materials {
     this.texture.colorSpace = SRGBColorSpace; this.texture.minFilter = this.texture.magFilter = NearestFilter; this.texture.needsUpdate = true;
   }
   get lamps() { return this.lighting.lamps; }
+  /** E25 light field, for small self-lit emitters that glint where pools reach them (L9 road studs). */
+  get field() { return this.lighting.field; }
   get look() { return this.lighting.look; }
   applyLook(): void {
     const data = this.texture.image.data as Uint8Array;

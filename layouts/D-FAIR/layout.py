@@ -246,6 +246,128 @@ for cx in (XC, XP, XM):
         g.place('prop.street-sign', cx + 3.7, cz + (4.7 if cz > 0 else -4.7), 0, .8, soft=True)
         g.place('prop.fire-hydrant', cx - 3.7, cz + (4.7 if cz > 0 else -4.7), 0, .8, soft=True)
 
+# ------------------------------------------------------------------------------------------------ the east backyards (dress-l8-cellar)
+# Opus visual QA #35: "Kessler's cellar sits alone on a featureless dark-green plane at the map edge." A sealed pocket of the district
+# reaches east of the lot fences (x 85..135, z -34.4..41.2). Its west side is the lots' own 84.4 fence line (z -34.4..41.2, no gap), so no
+# street, lot or path opens into it and no gameplay route, nav cell or timing changes; it only gives the camera a suburb to look at:
+# a fenced lane, two rows of houses back to back (the near row faces the cellar lot, the far row faces a green street), yards, trees,
+# lamps, cars and one lit window (the lit house gets the always-on `l5-cue` group in L5, see src/levels/L5/layout.ts).
+PX0, PX1, PZ0, PZ1 = W / 2, 135.0, -34.4, 41.2
+l.data['bounds'][:] = [[-W / 2, -DEPTH / 2], [W / 2, -DEPTH / 2], [W / 2, PZ0], [PX1, PZ0], [PX1, PZ1], [W / 2, PZ1], [W / 2, DEPTH / 2], [-W / 2, DEPTH / 2], [-W / 2, -DEPTH / 2]]
+l.box('east-yards-terrain', 'grass', [PX1 - PX0, .25, PZ1 - PZ0], [(PX0 + PX1) / 2, -.13, (PZ0 + PZ1) / 2])
+l.box('east-lane-walk', 'sidewalk', [3.4, .04, PZ1 - PZ0], [86.8, .02, (PZ0 + PZ1) / 2]); l.data['surfaces'].pop()   # visual only: no walkable slab (L7 owns this ground)
+import random as _random
+_yr = _random.Random(1019)
+_HOUSE = {'a': ('bld.house-a', 1.0, 4.1, -1.6), 'b': ('bld.house-b', 1.0, .2, 5.9), 'c': ('bld.house-c', .8, 5.6 * .8 + .3, -1.25 * .8),
+          'd': ('bld.house-d', .8, 4.1 * .8 + .25, 0.0), 'e': ('bld.house-e', .85, 4.7 * .85 + .2, 0.0)}
+_TINTS = ['#ffe58f', '#bfe8c8', '#b3d7f5', '#ffb8a3', '#d3dfae', '#fff6e6', '#d9c8f2']
+def east_row(kinds, facing, front_x, z_start, gap, back_x):
+    """One row of houses on the pocket; `front_x` is the line of the front walls, `back_x` the rear fence. Returns [(x, z, w, door_z)]."""
+    yaw = FACE_YAW[facing]
+    sgn = 1 if facing == 'W' else -1                    # direction from the front wall into the house (x)
+    cursor, out = z_start, []
+    for i, k in enumerate(kinds):
+        asset, sc, ddx, ddz = _HOUSE[k]
+        dx_, _, dz_ = dims(asset)
+        zc = cursor + dz_ * sc / 2
+        xc = front_x + sgn * dx_ * sc / 2
+        g.place(asset, xc, zc, yaw, sc, tint=_TINTS[(i * 3 + (1 if facing == 'E' else 0)) % len(_TINTS)])
+        ox, oz = rot(yaw, ddx, ddz)
+        out.append((xc, zc, dz_ * sc, zc + oz, ox))
+        # side fences between lots, from the front fence to the rear fence
+        zb = cursor + dz_ * sc + gap / 2
+        if i < len(kinds) - 1: g.fence('privacy', min(front_x - sgn * 1.0, back_x), zb, max(front_x - sgn * 1.0, back_x), zb)
+        cursor += dz_ * sc + gap
+    return out
+
+_rowA = east_row('acbdea', 'W', 91.0, -33.2, 3.0, 106.0)
+_rowB = east_row('ebacdb', 'E', 121.5, -30.0, 3.0, 106.0)
+g.fence('privacy', 106.0, PZ0 + .4, 106.0, PZ1 - .4)                                  # the rear fence the two rows share
+# front picket fences with a gap at each door path, a path to the lane, a hedge at the lane side
+g.fence('picket', 89.6, PZ0 + 1.0, 89.6, PZ1 - 1.0, gaps=[(r[3], 1.7) for r in _rowA])
+g.fence('picket', 123.2, PZ0 + 1.0, 123.2, PZ1 - 1.0, gaps=[(r[3], 1.7) for r in _rowB])
+for r in _rowA:
+    g.path(86.0, r[3] - .6, 91.2, r[3] + .6)
+for r in _rowB:
+    g.path(121.4, r[3] - .6, 126.5, r[3] + .6)
+# the lane west of the near row: lamps, a hydrant, mailboxes, bins, parked cars
+for z in range(-28, 41, 14):
+    g.place('prop.street-lamp', 88.4, z + 4.0, 0, 1.0, soft=True)
+g.place('prop.fire-hydrant', 88.2, -15.6, 0, .8, soft=True)
+for i, r in enumerate(_rowA):
+    g.place('prop.mailbox-blue', 88.2, r[3] + 1.8, math.pi, .8, soft=True)
+    g.place('prop.flower-box', 88.0, r[3] - 2.4, 0, .9, soft=True)
+    if r[3] - 1.2 - (r[1] - r[2] / 2 + .3) > 1.5: g.hedge(90.4, r[1] - r[2] / 2 + .3, 90.4, r[3] - 1.2)
+g.place('veh.sedan-white', 87.4, -21.0, math.pi / 2, 1.0, soft=True)
+g.place('veh.suv-green', 87.4, 12.5, math.pi / 2, 1.0, soft=True)
+# backyards (x 98..106 behind the near row, 106..114 behind the far row): trees, sheds, laundry, barbecues, chairs, bins
+_yard = [('prop.tree', 104.2, .85), ('prop.street-tree-blossom', 102.6, .8), ('prop.tree', 103.4, .75)]
+for i, r in enumerate(_rowA):
+    z0, z1 = r[1] - r[2] / 2, r[1] + r[2] / 2
+    t = _yard[i % 3]
+    g.place(t[0], t[1], z0 + 1.6 + _yr.random() * (r[2] - 3.2), 0, t[2], soft=True)
+    if i % 2 == 0: g.place('bld.shed', 102.8, z1 - 3.0, math.pi, .8, soft=True)
+    else:
+        g.place('prop.laundry-line', 101.8, z0 + r[2] / 2, math.pi / 2, 1.0, soft=True)
+        g.place('prop.flower-box', 100.9, z1 - 1.3, math.pi / 2, 1.0, soft=True)
+    g.place('prop.garden-bush-small', 100.8, z0 + 1.4, -math.pi / 2 + .4, 1.0, soft=True)
+    g.place('prop.flower-box', 105.2, z0 + .9, 0, 1.0, soft=True)
+for i, r in enumerate(_rowB):
+    z0, z1 = r[1] - r[2] / 2, r[1] + r[2] / 2
+    g.place('prop.tree' if i % 2 else 'prop.street-tree-blossom', 108.6, z0 + 1.5 + _yr.random() * (r[2] - 3.0), 0, .8, soft=True)
+    if i % 3 == 0: g.place('bld.garage-detached', 109.4, z1 - 3.8, 0, .7, soft=True)
+    elif i % 3 == 1: g.place('prop.kiddie-pool', 109.0, z0 + 2.2, 0, .9, soft=True); g.place('prop.flower-box', 107.4, z0 + 1.2, 0, 1.0, soft=True)
+    else: g.place('prop.garden-bush-small', 108.6, z1 - 1.0, math.pi / 2, 1.0, soft=True); g.place('prop.flower-box', 109.2, z1 - 2.4, 0, 1.0, soft=True)
+# the green street east of the far row: cars in the drives, lamps, a pole line and a tree screen along the edge fence
+for i, r in enumerate(_rowB):
+    car = ['veh.pickup-white', 'veh.sedan-blue', 'veh.suv-dark', 'veh.sedan-red', 'veh.pickup-red', 'veh.sedan-white'][i % 6]
+    g.place(car, 126.2, r[3] + (2.8 if i % 2 else -2.8), math.pi / 2 if i % 2 else -math.pi / 2, 1.0, soft=True)
+    if r[3] - 1.2 - (r[1] - r[2] / 2 + .3) > 1.5: g.hedge(122.4, r[1] - r[2] / 2 + .3, 122.4, r[3] - 1.2)
+for z in range(-26, 34, 13):
+    g.place('prop.street-lamp', 129.0, z, 0, 1.0, soft=True)
+    g.place('prop.utility-pole', 131.0, z + 4.5, 0, 1.0, soft=True)
+for z in range(-31, 40, 7):
+    g.place('prop.street-tree' if (z // 7) % 2 else 'prop.street-tree-blossom', 133.2 - (z // 7 % 2) * 1.2, z + _yr.random() * 2.0, 0, .9 + .2 * _yr.random(), soft=True)
+
+# ------------------------------------------------------------------------------------------------ the cellar yard (dress-l8-cellar)
+# The east lot (x 66..84.4, z -34.4..26.9) was a bare lawn round the cellar. It is a sealed island (the fences have no gap), so it takes
+# a lived-in backyard that the game camera (south-east of the cellar, about 12 m of ground in frame at the default zoom) sees: a lit house at the
+# south-west corner, a shed and a clothes line on the west strip, hedges on the fence lines, a vegetable garden and a picnic corner south of the
+# door, a parked pickup and a tree on the east strip, lamps, and a second house and more trees further out for the wide zoom. Nothing stands
+# within 1.5 m of the cellar footprint (x 69.5..80.5, z -9.9..1.9): its door, stair foot and brace anchors keep the open ground they had.
+def lot(asset, x, z, yaw=0.0, s=1.0, **kw):
+    if 69.5 < x < 80.5 and -9.9 < z < 1.9: return None
+    return g.place(asset, x, z, yaw, s, soft=True, **kw)
+YARD_LIT = (69.8, 12.4)
+g.place('bld.house-c', YARD_LIT[0], YARD_LIT[1], FACE_YAW['E'], .8, tint='#ffe9b0')
+l.anchor('cellar-yard-lit-house', [YARD_LIT[0], 0, YARD_LIT[1]])
+g.place('bld.house-a', 70.4, -24.0, FACE_YAW['E'], 1.0, tint='#bfd8f0')
+g.hedge(75.6, 26.1, 83.2, 26.1, scale=1.0)
+g.hedge(68.2, -33.6, 79.0, -33.6, scale=1.0)
+g.hedge(66.9, 0.2, 66.9, 8.4, scale=1.0)
+g.hedge(66.9, -33.0, 66.9, -29.0, scale=1.0)
+g.hedge(83.6, -31.5, 83.6, -9.0, scale=1.0)
+g.hedge(83.6, 0.6, 83.6, 8.0, scale=1.0)
+g.hedge(83.6, 13.0, 83.6, 24.5, scale=1.0)
+for i, (x, z) in enumerate(((77.6, 7.6), (80.4, 7.6), (79.0, 10.4))):      # vegetable garden south of the door
+    lot('prop.flower-bed.large' if i % 2 == 0 else 'prop.flower-bed', x, z, math.pi / 2 + (0 if i % 2 == 0 else math.pi))
+lot('prop.flower-bed.small', 72.2, 5.6, math.pi / 2); lot('prop.flower-bed.small', 72.2, 7.4, math.pi / 2)
+g.path(74.0, 0.4, 76.0, 6.6)                                               # flagstones from the cellar door to the garden
+g.path(73.7, 12.0, 75.9, 12.9, 'sidewalk')                                  # front step path of the lit house
+for x, z, a, s in ((82.8, -6.4, 'prop.tree', .8), (82.4, 19.6, 'prop.street-tree-blossom', .9), (76.0, 22.6, 'prop.tree', .85),
+                   (67.6, -12.6, 'prop.tree', .85), (68.2, -29.5, 'prop.tree', .95), (82.2, -29.5, 'prop.street-tree-blossom', .95),
+                   (80.8, -21.0, 'prop.tree', .9), (76.0, -30.6, 'prop.tree', .8), (68.2, 20.8, 'prop.street-tree', .85), (82.6, 3.8, 'prop.garden-bush', 1.0)):
+    lot(a, x, z, 0, s)
+lot('prop.flower-box', 80.0, 14.4, math.pi / 2); lot('prop.garden-bush-small', 77.8, 14.8, -2.2); lot('prop.garden-bush-small', 79.4, 16.0, 2.6); lot('prop.garden-bush-small', 81.4, 15.6, 2.0)
+lot('prop.laundry-line', 67.9, -2.4, 0); lot('prop.garden-bush-small', 74.6, 14.6, .4); lot('prop.flower-box', 73.9, 15.5, .2)
+lot('prop.kiddie-pool', 79.4, 20.4); lot('prop.flower-box', 77.2, 18.8, .8); lot('prop.flower-box', 74.2, 7.6, 2.4); lot('prop.flower-box', 83.0, 23.4, .7)
+lot('veh.pickup-white', 82.4, 11.2, math.pi / 2, .9)
+lot('bld.shed', 68.5, -7.4, 0, .75)
+lot('prop.street-lamp', 68.0, 2.8); lot('prop.street-lamp', 82.2, 2.6)
+lot('prop.garden-bush-small', 80.8, -11.6, math.pi); lot('prop.flower-box', 81.6, -25.6, .3); lot('prop.flower-box', 81.6, -27.0, .1)
+lot('prop.flower-box', 67.6, -11.0, 0); lot('prop.flower-box', 67.6, -12.2, 0); lot('prop.garden-bush-small', 79.0, -24.0, 1.2)
+lot('bld.shed', 81.8, -31.0, math.pi, .8)
+
 # ------------------------------------------------------------------------------------------------ anchors
 for i, d in enumerate(sorted(doors), 1):
     anchors[f'refuge-door-{i}'] = d
@@ -260,6 +382,11 @@ anchors['town-hall-steps'] = (HALL_X, -21.0)
 anchors['cellar-interior'] = (CELLAR_X, CELLAR_Z)
 for name, (x, z) in anchors.items():
     l.anchor(name, [x, 0, z])
+
+# The sealed east backyards (x > 85) are scenery beyond the L4/L5 fence: their light anchors render (pools, emissives) but are not sim lamps,
+# so they add no sim entities (134 light.anchor entities shifted every later entity id and flipped chaotic L5 ingress outcomes).
+for _p in l.data['placements']:
+    if _p['position'][0] > 85: _p['decorLights'] = True
 
 for _m in G.clear_contacts(g): print('clearance', *_m)
 from pathlib import Path

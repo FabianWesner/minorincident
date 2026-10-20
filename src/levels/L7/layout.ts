@@ -33,6 +33,8 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Explicit W5 retention: keep city shells, road furniture, rubble, wrecks and
     // their colliders. The underground concourse and signs of rescue expire.
     const remove = new Set(layout.placements.filter(p => p.id === 'l5-station' || p.id.startsWith('l5-cue-') || p.assetId === 'prop.hmg-nest' || p.assetId === 'int.basement-cellar' || (p.assetId === 'prop.privacy-fence' && (p.position[0] > 80 || westYardFence(p)))).map(p => p.id));
+    // The sealed east backyards of the L4/L5 cellar (layouts/D-FAIR, x > 85) lie where W6 opens the Northgate branches: they do not exist in L7.
+    for (const p of layout.placements) if (p.position[0] > 85 && p.position[2] > -34.4 && p.position[2] < 41.2 && p.maxTier === 5) remove.add(p.id);
     // The Kessler cellar's walls would close the west corridor: W6 buries it with the rest of the yard.
     for (const c of layout.colliders) if (c.id.startsWith('dressing:cellar-')) remove.add(c.id);
     for (const p of layout.placements) if (p.maxTier === 5 && !remove.has(p.id)) p.maxTier = 6;

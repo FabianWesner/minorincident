@@ -1,0 +1,12 @@
+"""GC events on the renderer main thread of a Chrome trace: count, durations, interval."""
+import json, sys
+t = json.load(open(sys.argv[1])); ev = t['traceEvents'] if isinstance(t, dict) else t
+names = {(e['pid'], e['tid']): e['args']['name'] for e in ev if e.get('ph') == 'M' and e.get('name') == 'thread_name'}
+main = [k for k, v in names.items() if v == 'CrRendererMain']
+for k in main:
+    gcs = sorted((e['ts'], e['dur'], e['name']) for e in ev if (e['pid'], e['tid']) == k and e.get('ph') == 'X' and e['name'] in ('MinorGC', 'MajorGC', 'V8.GC_MC_INCREMENTAL', 'V8.GC_MARK_COMPACTOR', 'V8.GCFinalizeMC', 'V8.GCIncrementalMarking'))
+    if not gcs: continue
+    span = (gcs[-1][0] - gcs[0][0]) / 1e6
+    for n in sorted(set(g[2] for g in gcs)):
+        d = sorted(g[1] / 1000 for g in gcs if g[2] == n)
+        print(f'{n:28s} n={len(d):4d} over {span:.1f}s  total {sum(d):7.1f} ms  median {d[len(d)//2]:.2f}  p90 {d[int(len(d)*.9)]:.2f}  max {d[-1]:.2f}')

@@ -1,0 +1,7 @@
+#!/bin/sh
+# perf-w6 diagnostic: per-method alarm tick costs (cold and warm JIT) and the scratch-world warm-up prototype on a quiet runner.
+for i in 1 2; do
+  echo "== cold $i"; npx tsx tools/perf/w6/turn-profile.ts low 4 /tmp/w6 noprof x 1978 2>&1 | tail -4
+  echo "== warm $i"; npx tsx tools/perf/w6/turn-profile.ts low 4 /tmp/w6 noprof warm 1978 2>&1 | tail -4
+done
+for i in 1 2 3; do npx tsx tools/perf/w6/warm-proto.ts cold; npx tsx tools/perf/w6/warm-proto.ts warm; done

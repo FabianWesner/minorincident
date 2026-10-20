@@ -1,0 +1,13 @@
+import json, sys, collections
+p = json.load(open(sys.argv[1])); ticks = float(sys.argv[2]) if len(sys.argv) > 2 else 1
+self_b = collections.Counter(); incl = collections.Counter()
+def walk(n, stack):
+    cf = n['callFrame']; k = f"{cf['functionName'] or '(anon)'} {cf['url'].split('/')[-1]}:{cf['lineNumber']+1}:{cf['columnNumber']+1}"
+    stack = stack + [k]
+    self_b[k] += n['selfSize']
+    for s in set(stack): incl[s] += n['selfSize']
+    for c in n['children']: walk(c, stack)
+walk(p['head'], [])
+tot = sum(self_b.values())
+print(f'total {tot/1e6:.1f} MB, {tot/ticks/1e3:.1f} kB/tick')
+for k, v in self_b.most_common(int(sys.argv[3]) if len(sys.argv) > 3 else 30): print(f'{v/ticks/1e3:8.2f} kB/tick {100*v/tot:5.1f}% {k}')

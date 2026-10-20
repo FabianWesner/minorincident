@@ -162,6 +162,12 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, f] of fronts.entries()) add(`l5-glass-${i}`, 'decay.broken-glass', f.x, f.z, f.yaw);
     // Power is out everywhere (W5): no street lamp, shop or window is lit; only the cues (a flashlight, the radio) and the fires give light.
     layout.lightGroups.push({ id: 'l5', offAt: 5 }, { id: 'l5-cue', offAt: 5 });
+    // The backyards beside Kessler's cellar (layouts/D-FAIR): their houses are burned out, except the one lit window of the yard (someone is still alive).
+    const litHouse = layout.anchors['cellar-yard-lit-house'];
+    for (const p of layout.placements) if (p.assetId.startsWith('bld.house')) {
+      if (litHouse && Math.hypot(p.position[0] - litHouse.position[0], p.position[2] - litHouse.position[2]) < .5) p.lightGroup = 'l5-cue';
+      else p.decay = 'w3';
+    }
     const w5 = layout.layers.find(l => l.tier === 5);
     if (w5) w5.disableLights.push(...layout.lightGroups.map(g => g.id).filter(id => id !== 'l5-cue'));
     // Reuse the cutaway concourse already shipped for L6, north of the street.

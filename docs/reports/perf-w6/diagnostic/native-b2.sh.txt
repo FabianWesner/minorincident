@@ -1,0 +1,5 @@
+#!/bin/sh
+# perf-w6: one quiet reservation, same host: base (c80052c37, /tmp/w6-base) then lane L4 low WebGL, lane L4 low WebGPU, lane L7 low horde WebGL.
+lane=$(cd "$(dirname "$0")/../../.." && pwd)
+(cd /tmp/w6-base && E2E_PORT=3581 sh run-specs-w6.sh base webgl:tests/perf/l4-budgets.spec.ts:low)
+(cd "$lane" && E2E_PORT=3571 sh tools/perf/w6/run-specs.sh lane webgl:tests/perf/l4-budgets.spec.ts:low webgpu:tests/perf/l4-budgets.spec.ts:low webgl:tests/perf/l7-encounters.spec.ts:low)

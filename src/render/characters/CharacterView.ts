@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
 import { positionView } from 'three/tsl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -19,7 +19,7 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 // Compress depth into a near-camera slice: the courier clears world blockers,
 // while her own face, cap, hair and limbs still occlude one another correctly.
@@ -134,12 +134,14 @@ export class CharacterView extends Group {
         object.castShadow = object.receiveShadow = true;
       });
       for (const material of oldMaterials) material.dispose();
-      // PO 10-19 (P1, "The girl now has a bug on front???"): tier 1-4 avatar gear was placeholder boxes (bcf15a667) plus a
-      // rigid tier-2 GLB (c9ca43df7) that floated off the skinned body. No gear is drawn until real gear art fits the skin;
-      // the tier itself still follows progression in the sim and HUD.
+      // PO 10-19 (P1, "The girl now has a bug on front???"): the old tier 1-4 boxes and the rigid tier-2 GLB floated off the skinned body.
+      // Tier gear is now one skinned mesh (assets/acc.courier-gear) bound to the body's own skeleton with the body's skin weights,
+      // so it deforms with the figure; the tier only moves its draw range (1 extra draw call, the body's vertex-colour material).
       const gear: Group[] = [];
       // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
+      let tierGear: LoadedCharacter['tierGear'];
+      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
       const pilot = isSkin;
       if (pilot) {
         const r = character.rig;
@@ -188,7 +190,7 @@ export class CharacterView extends Group {
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     if (!this.parcel) this.makeParcel(materials);
   }
@@ -203,6 +205,10 @@ export class CharacterView extends Group {
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
+      if (character.tierGear) {
+        const { mesh, tierTris } = character.tierGear, count = pose.gearTier > 0 ? tierTris[Math.min(pose.gearTier, tierTris.length) - 1] ?? 0 : 0;
+        mesh.visible = count > 0; mesh.geometry.setDrawRange(0, count * 3);
+      }
       if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn, ride);
     }
     // E19 story: the courier parcel sits between her hands while she carries it.
@@ -332,6 +338,28 @@ export class CharacterView extends Group {
   private readonly scratchA = new Vector3();
   private readonly scratchB = new Vector3();
   /** Cardboard parcel with the teal depot tape (matches the clerk's hand prop). */
+  /** Skinned tier gear: re-binds the gear GLB's vertices to the body's skeleton by bone name. Missing file = no gear, not a failed load. */
+  private async loadTierGear(loader: GLTFLoader, variant: SurvivorVariant, low: boolean, body: Set<Mesh>, material: Material): Promise<LoadedCharacter['tierGear']> {
+    let bodyMesh: SkinnedMesh | undefined;
+    for (const mesh of body) if ((mesh as SkinnedMesh).isSkinnedMesh && (!bodyMesh || mesh.geometry.getAttribute('position').count > bodyMesh.geometry.getAttribute('position').count)) bodyMesh = mesh as SkinnedMesh;
+    if (!bodyMesh) return undefined;
+    try {
+      const scene = (await loader.loadAsync(`/assets/models/acc.courier-gear.${variant}.tiers${low ? '.low' : ''}.glb`)).scene;
+      let source: SkinnedMesh | undefined; scene.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) source = node as SkinnedMesh; });
+      if (!source) return undefined;
+      const tierTris = JSON.parse(String(source.userData.tierTris)) as number[];
+      const index = new Map(bodyMesh.skeleton.bones.map((bone, i) => [bone.name, i]));
+      const map = source.skeleton.bones.map(bone => index.get(bone.name) ?? 0);
+      const joints = source.geometry.getAttribute('skinIndex'), remapped = new Uint16Array(joints.count * 4);
+      for (let i = 0; i < remapped.length; i++) remapped[i] = map[joints.array[i]];
+      const geometry = source.geometry; geometry.setAttribute('skinIndex', new Uint16BufferAttribute(remapped, 4));
+      const mesh = new SkinnedMesh(geometry, material);
+      mesh.name = 'courier-tier-gear'; mesh.position.copy(bodyMesh.position); mesh.quaternion.copy(bodyMesh.quaternion); mesh.scale.copy(bodyMesh.scale);
+      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false;
+      bodyMesh.parent!.add(mesh); mesh.updateMatrixWorld(true); mesh.bind(bodyMesh.skeleton, bodyMesh.bindMatrix);
+      return { mesh, tierTris };
+    } catch { return undefined; }
+  }
   private makeParcel(materials: Materials): void {
     const group = new Group(); group.name = 'carried-parcel'; group.visible = false;
     const box = new Mesh(new BoxGeometry(.3, .24, .26), materials.fromColor('parcel:card', new Color('#b98a55')));
@@ -342,7 +370,7 @@ export class CharacterView extends Group {
   /** Scene Lab guard (PO 10-19 floating gear): for every visible mesh on the rig that the survivor GLB does not draw itself
    * (gear, accessories), the largest distance in cm from one of its vertices to the nearest posed body vertex. Held weapons
    * (hand sockets) and the separately gated headlamp/cure props are skipped. Debug-only: walks posed vertices on the CPU. */
-  looseAttachments(): { name: string; gapCm: number }[] {
+  looseAttachments(): { name: string; gapCm: number; at: number[] }[] {
     const character = this.characters.get(this.variant); if (!character || !this.visible) return [];
     this.updateMatrixWorld(true);
     const skip = new Set<import('three').Object3D>([character.rig.weaponSocketL, character.rig.weaponSocketR, ...(character.headlamp ? [character.headlamp] : []), ...(character.cure ? [character.cure] : [])]);
@@ -356,13 +384,44 @@ export class CharacterView extends Group {
       }
       return out;
     };
-    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => points(mesh, 1500));
-    const report: { name: string; gapCm: number }[] = [];
+    /** Body surface samples: every posed vertex plus a 1.5 cm grid inside long triangles (decimated flat areas such as the cap have 6 cm
+     * triangles, so nearest-vertex distance overstated the gap there; the guard stays at its limit, only the reference got denser). */
+    const surface = (mesh: Mesh): Vector3[] => {
+      const position = mesh.geometry.getAttribute('position'), index = mesh.geometry.getIndex(), skinned = (mesh as import('three').SkinnedMesh).isSkinnedMesh;
+      const posed: Vector3[] = [];
+      for (let i = 0; i < position.count; i++) {
+        const v = new Vector3();
+        if (skinned) (mesh as import('three').SkinnedMesh).getVertexPosition(i, v); else v.fromBufferAttribute(position, i);
+        posed.push(v.applyMatrix4(mesh.matrixWorld));
+      }
+      const out = posed.slice();
+      if (!index) return out;
+      for (let t = 0; t < index.count; t += 3) {
+        const a = posed[index.getX(t)], b = posed[index.getX(t + 1)], c = posed[index.getX(t + 2)];
+        const edge = Math.max(a.distanceTo(b), b.distanceTo(c), c.distanceTo(a));
+        if (edge < .02) continue;
+        const n = Math.min(8, Math.ceil(edge / .015));
+        for (let i = 1; i < n; i++) for (let j = 1; i + j < n; j++) out.push(new Vector3().addScaledVector(a, 1 - (i + j) / n).addScaledVector(b, i / n).addScaledVector(c, j / n));
+      }
+      return out;
+    };
+    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => surface(mesh));
+    const report: { name: string; gapCm: number; at: number[] }[] = [];
     character.model.traverse(node => {
       if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
-      let gap = 0;
-      for (const p of points(node, 300)) { let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b)); gap = Math.max(gap, Math.sqrt(best)); }
-      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10 });
+      let gap = 0, at = [0, 0, 0], vertex = 0;
+      // Gear shells are closed: their skin-side (inner) vertices lie on the skin by construction and carry `_inner` = 1 (written by the gear
+      // build, assets/acc.courier-gear). The guard measures those, i.e. the gap between the gear and the skin, never a plate's outer face.
+      // Meshes without `_inner` (other accessories) measure every vertex.
+      const inner = node.geometry.getAttribute('_inner'), position = node.geometry.getAttribute('position');
+      const all = points(node, position.count), picks: number[] = [];
+      for (let i = 0; i < position.count; i++) if (!inner || inner.getX(i) > .5) picks.push(i);
+      const stride = Math.max(1, Math.floor(picks.length / 300));
+      for (let k = 0; k < picks.length; k += stride) {
+        const p = all[picks[k]]; let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
+        if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = picks[k]; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
+      }
+      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
     });
     return report;
   }

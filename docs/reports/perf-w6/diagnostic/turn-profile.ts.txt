@@ -1,0 +1,71 @@
+// perf-w5d diagnostic: per-tick and per-listener sim cost around the L4 alarm (turn), Node only.
+import { Session } from 'node:inspector/promises';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { EventBus } from '../../../src/core/EventBus';
+
+const tier = (process.argv[2] ?? 'low') as 'high' | 'low';
+const span = Number(process.argv[3] ?? 120);
+const out = process.argv[4] ?? 'test-results/w5d';
+const cur = { on: false, costs: new Map<string, number>() };
+const proto = EventBus.prototype as unknown as { on: (type: string, cb: (e: unknown) => void, order?: number) => () => void };
+const on = proto.on;
+proto.on = function (type, cb, order) {
+  if (type !== 'sim.tick') return on.call(this, type, cb, order);
+  const name = `${order ?? 1}:${cb.toString().replace(/\s+/g, ' ').slice(0, 90)}`;
+  return on.call(this, type, (e: unknown) => {
+    if (!cur.on) return cb(e);
+    const t = performance.now();
+    try { return cb(e); } finally { cur.costs.set(name, (cur.costs.get(name) ?? 0) + performance.now() - t); }
+  }, order);
+};
+const { loadL4, runL4 } = await import('../../sim-runner/l4Bots');
+if (process.argv[6] === 'warm') {
+  // JIT control: a first world runs through the alarm, so the measured world's alarm runs warm code.
+  const warm = await loadL4(2, tier);
+  runL4(warm.world, warm.mission, 'complete', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => m.state.l4!.turnAt > 0 && warm.world.tick > m.state.l4!.turnAt + 240 });
+  warm.world.dispose();
+}
+const { world, mission } = await loadL4(2, tier);
+const from = Number(process.argv[7] ?? 0);
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => from ? world.tick >= from : m.state.l4!.turnDueAt > 0 && m.state.l4!.turnDueAt - world.tick < 20 });
+console.log('at', world.tick, 'turnDue', mission.state.l4!.turnDueAt, 'phase', mission.state.l4!.phase);
+const session = new Session(); session.connect();
+const profiling = process.env.W5D_PROFILE === '1' || process.argv[5] === 'profile';
+if (profiling) { await session.post('Profiler.enable'); await session.post('Profiler.setSamplingInterval', { interval: 100 }); await session.post('Profiler.start'); }
+// perf-w6: nested method costs on the alarm path (names prefixed with @; they overlap the listener costs).
+const watch = (owner: object | null | undefined, label: string, names: string[]) => {
+  if (!owner) return;
+  const target = owner as Record<string, unknown>;
+  for (const name of names) {
+    const fn = target[name]; if (typeof fn !== 'function') { console.log('no method', label, name); continue; }
+    target[name] = function (this: unknown, ...args: unknown[]) {
+      if (!cur.on) return (fn as (...a: unknown[]) => unknown).apply(this, args);
+      const t = performance.now();
+      try { return (fn as (...a: unknown[]) => unknown).apply(this, args); } finally { const k = `@${label}.${name}`; cur.costs.set(k, (cur.costs.get(k) ?? 0) + performance.now() - t); }
+    };
+  }
+};
+const l4 = mission.l4 as unknown as Record<string, object>;
+watch(l4, 'l4', ['turn', 'emerge', 'panic', 'campCheckpoint', 'perimeter', 'toPosts', 'engageAll', 'waves', 'flushGroups', 'emergeInside', 'alphas', 'armCivilians']);
+watch(l4.director, 'collapse', ['start', 'update']);
+watch(world.npcs?.civilians.outbreak, 'outbreak', ['update', 'flee', 'refugeSpot', 'panic', 'spawnPedestrian', 'turnNow', 'perceive']);
+watch(world.npcs?.civilians, 'civilians', ['update']);
+watch(world.solids, 'solids', ['admit', 'commit', 'find']);
+watch(mission, 'mission', ['capture', 'flushCheckpoint', 'completeObjective']);
+watch(world.combat, 'combat', ['setLoadout']);
+watch(world.infected, 'infected', ['update', 'rush', 'spawn']);
+const rows: { tick: number; ms: number; t0: number; t1: number; top: [string, number][] }[] = [];
+const origUpdate = world.update.bind(world);
+world.update = () => {
+  cur.on = true; cur.costs.clear(); const t0 = Number(process.hrtime.bigint() / 1000n), t = performance.now(); origUpdate(); const ms = performance.now() - t, t1 = Number(process.hrtime.bigint() / 1000n); cur.on = false;
+  rows.push({ tick: world.tick, ms, t0, t1, top: [...cur.costs].sort((a, b) => b[1] - a[1]).slice(0, 30) });
+};
+const start = world.tick;
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 400, stopWhen: () => world.tick >= start + span });
+mkdirSync(out, { recursive: true });
+if (profiling) { const { profile } = await session.post('Profiler.stop'); writeFileSync(`${out}/turn-${tier}.cpuprofile`, JSON.stringify(profile)); }
+writeFileSync(`${out}/turn-${tier}.json`, JSON.stringify({ turnAt: mission.state.l4!.turnAt, rows }, null, 1));
+const sorted = rows.map(r => r.ms).sort((a, b) => a - b), median = sorted[sorted.length >> 1];
+console.log('turnAt', mission.state.l4!.turnAt, 'median', median.toFixed(2), 'p95', sorted[Math.floor(sorted.length * .95)].toFixed(2));
+for (const r of rows) if (r.tick <= mission.state.l4!.turnAt + 6) console.log(r.tick, r.ms.toFixed(2), JSON.stringify(r.top.slice(0, 30).map(([n, v]) => [n.slice(0, 80), +v.toFixed(2)])));
+world.dispose();

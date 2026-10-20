@@ -1,0 +1,129 @@
+// perf-w6 diagnostic (Node only): per-tick sim cost and an optional CPU profile for the L7 horde, the L8 mixed outbreak and Zoo S1/S2 200.
+// Usage: npx tsx tools/perf/w6/sim-profile.ts <l7|l8|zoo1|zoo2> [low|high] [rounds=2] [out] [profile]
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { Session } from 'node:inspector/promises';
+import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { compositions } from '../../../src/levels/compositions';
+import { resolveCampaignMission } from '../../../src/levels/missions';
+import { installPerformanceLevel } from '../../../tests/fixtures/scenarios/performance';
+import { loadLevel } from '../../sim-runner/levels';
+import { missionControls } from '../../../src/sim/missions/controls';
+
+const [scenario = 'l8', tier = 'low', roundsArg = '2', out = 'test-results/w6/sim', prof = ''] = process.argv.slice(2) as [string, 'low' | 'high', string, string, string];
+const rounds = Number(roundsArg);
+// Per-listener cost of every sim.tick listener (name = phase + source head), for the tail-tick breakdown.
+const cur = { on: false, costs: new Map<string, number>() };
+{
+  const { EventBus } = await import('../../../src/core/EventBus');
+  const proto = EventBus.prototype as unknown as { on: (type: string, cb: (e: unknown) => void, order?: number) => () => void };
+  const on = proto.on;
+  if (prof === 'listeners') proto.on = function (type, cb, order) {
+    if (type !== 'sim.tick') return on.call(this, type, cb, order);
+    const name = `${order ?? 1}:${cb.toString().replace(/\s+/g, ' ').slice(0, 70)}`;
+    return on.call(this, type, (e: unknown) => { if (!cur.on) return cb(e); const t = performance.now(); try { return cb(e); } finally { cur.costs.set(name, (cur.costs.get(name) ?? 0) + performance.now() - t); } }, order);
+  };
+}
+const perTick: Map<string, number>[] = [];
+mkdirSync(out, { recursive: true });
+const session = new Session(); session.connect();
+async function setup(): Promise<{ w: SimWorld; tick: (t: number) => void; warm: number; measure: number }> {
+  if (scenario === 'zoo1' || scenario === 'zoo2') {
+    const w = new SimWorld(); await w.init(); w.loadScenario('perf-horde-200');
+    const ai = w.infected!, ids: number[] = [], p = w.entities.get(1)!;
+    if (scenario === 'zoo1') {
+      const species = ['infected.lion', 'infected.gorilla'] as const;
+      for (const old of ai.active.slice(0, 40)) { const at = { x: old.transform.x, z: old.transform.z }; ai.release(old); ids.push(ai.spawn(species[ids.length % 2], at, { state: 'chase' })); }
+      const moves = [['lion.pounce', 'gorilla.pound'], ['lion.flank', 'gorilla.roar']] as const;
+      return { w, warm: 120, measure: 600, tick: t => { if (t % 90 === 0) for (const id of ids) ai.startSpecial(id, moves[Math.floor(t / 90) % 2][ids.indexOf(id) % 2], { id: 1, x: p.transform.x, z: p.transform.z }, { x: p.transform.x, z: p.transform.z, radius: 4, dx: 1, dz: 0 }); w.update(); } };
+    }
+    for (const [i, old] of ai.active.slice(0, 20).entries()) { const at = { x: old.transform.x, z: old.transform.z }; ai.release(old); ids.push(ai.spawn(i % 2 ? 'infected.gorilla' : 'infected.elephant', at, { state: 'chase' })); }
+    return { w, warm: 120, measure: 600, tick: t => {
+      if (t % 90 === 0) for (const [i, id] of ids.entries()) { const e = w.entities.get(id)!; ai.startSpecial(id, i % 2 ? 'gorilla.grab-throw' : t % 180 ? 'elephant.swipe' : 'elephant.charge', { id: 1, x: p.transform.x, z: p.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 }); }
+      w.update();
+    } };
+  }
+  if (scenario === 'l4war') {
+    // T-E22-20 war peak (low): the bot plays to the tank hold, heli orbit, three Alphas and a lost soldier, then the same stress fill.
+    const { loadL4, runL4 } = await import('../../sim-runner/l4Bots');
+    const { world: w, mission } = await loadL4(2, tier);
+    const s = () => mission.state.l4!;
+    const soldiers = () => [...w.entities.iterate()].filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected');
+    runL4(w, mission, 'complete', { seed: 2, god: true, maxSeconds: 600, stopWhen: () => s().turnAt > 0 && s().tankPhase === 'hold' && s().heliPhase === 'orbit' && s().alphaIds.length >= 3 && soldiers().length < s().soldiersAtTurn });
+    const low = tier === 'low';
+    let civilians = [...w.entities.iterate()].filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length;
+    for (let i = 0; civilians < (low ? 20 : 40) && i < 600; i++) { const p = { x: -35 + i % 12 * 3, z: -18 + Math.floor(i / 12) * 2 }; try { w.npcs!.civilians.spawn('cashier', p, { waypoints: [p] }); civilians++; } catch { /* next cell */ } }
+    const posts = soldiers().map(e => ({ at: e.transform, yaw: e.transform.yaw }));
+    let infected = w.infected!.active.filter(e => e.health.current > 0).length;
+    for (let i = 0; infected < (low ? 48 : 80) && i < 800; i++) {
+      const post = posts[i % posts.length], angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8, radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
+      try { w.infected!.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++; } catch { /* next approach */ }
+    }
+    // Continue with the bot driving: one runL4 call per measured tick would rebuild the bot, so drive the war ticks directly.
+    return { w, warm: 0, measure: 480, tick: () => w.update() };
+  }
+  if (scenario === 'l8') {
+    const w = new SimWorld(); await w.init();
+    const composition = compositions.L8;
+    w.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
+    w.infected!.director.setTier(tier); w.npcs!.setQuality(tier);
+    w.loadMission(resolveCampaignMission('L8', w.districts!));
+    installPerformanceLevel(w, tier, 'perf-l8-mixed-outbreak');
+    w.missions?.prepare();
+    if (w.combat) w.combat.damage.god = true;
+    return { w, warm: 180, measure: 480, tick: () => w.update() };
+  }
+  // L7 final horde (tests/perf/l7-encounters.spec.ts): courier and roster at the plaza, a rocket blast every 1.25 s.
+  console.log("loading L7"); const w = await loadLevel("L7", 29); console.log("loaded");
+  w.infected!.director.setTier(tier); w.npcs!.setQuality(tier);
+  if (w.combat) { w.combat.damage.god = true; w.combat.setLoadout(['weapon.bat'], ['weapon.rocket-launcher']); }
+  w.update(); w.update();
+  const c = missionControls(w), roster = w.l7Encounters!.state.roster;
+  c.teleport('player', { x: -48, z: 46 });
+  roster.forEach((r, i) => c.teleport(r.id, { x: -45 + Math.floor(i / 3) * 1.2, z: 46 + (i % 3 - 1) * 1.2 }));
+  return { w, warm: 180, measure: 480, tick: t => { if (t % 75 === 0) w.explosions!.blast('explosion.rocket', { x: -64, z: 46 }); w.update(); } };
+}
+const results = [];
+for (let round = 0; round < rounds; round++) {
+  const { w, tick, warm, measure } = await setup();
+  const times: number[] = [];
+  // W6_WATCH="npcs.civilians.update,infected.update": per-tick cost of nested methods (nested costs overlap).
+  for (const path of (process.env.W6_WATCH ?? '').split(',').filter(Boolean)) {
+    const parts = path.split('.'), name = parts.pop()!;
+    let owner: Record<string, unknown> | undefined = w as unknown as Record<string, unknown>;
+    for (const part of parts) owner = owner?.[part] as Record<string, unknown> | undefined;
+    const fn = owner?.[name]; if (typeof fn !== 'function') { console.log('no method', path); continue; }
+    const target = owner!;
+    target[name] = function (this: unknown, ...args: unknown[]) { if (!cur.on) return fn.apply(this, args); const t = performance.now(); try { return fn.apply(this, args); } finally { cur.costs.set(`@${path}`, (cur.costs.get(`@${path}`) ?? 0) + performance.now() - t); } };
+  }
+  const profiling = prof === 'profile' && round === rounds - 1;
+  for (let t = 0; t < warm + measure; t++) {
+    if (prof === 'alloc' && round === rounds - 1 && t === warm) { await session.post('HeapProfiler.enable'); await session.post('HeapProfiler.startSampling', { samplingInterval: 1024, includeObjectsCollectedByMajorGC: true, includeObjectsCollectedByMinorGC: true }); }
+    if (profiling && t === warm) { await session.post('Profiler.enable'); await session.post('Profiler.setSamplingInterval', { interval: 100 }); await session.post('Profiler.start'); }
+    cur.on = t >= warm; cur.costs = new Map();
+    const s = performance.now(); tick(t); if (t >= warm) { times.push(performance.now() - s); if (round === rounds - 1) perTick.push(cur.costs); }
+  }
+  if (prof === 'alloc' && round === rounds - 1) { const { profile } = await session.post('HeapProfiler.stopSampling'); writeFileSync(`${out}/${scenario}-${tier}.heapprofile`, JSON.stringify(profile)); }
+  if (profiling) { const { profile } = await session.post('Profiler.stop'); writeFileSync(`${out}/${scenario}-${tier}.cpuprofile`, JSON.stringify(profile)); }
+  const sorted = [...times].sort((a, b) => a - b), q = (f: number) => sorted[Math.ceil(sorted.length * f) - 1];
+  const live = w.infected?.active.filter(e => e.health.current > 0).length;
+  const tickTimes = times.map((ms, i) => ({ ms, tick: w.tick - times.length + i + 1 }));
+  const byMod = (m: number) => Array.from({ length: m }, (_, r) => { const v = tickTimes.filter(x => x.tick % m === r).map(x => x.ms); return +(v.reduce((a, b) => a + b, 0) / v.length).toFixed(2); });
+  const top = [...tickTimes].sort((a, b) => b.ms - a.ms).slice(0, Math.ceil(times.length * .05));
+  if (round === rounds - 1) { console.log('mod60', byMod(60).join(' ')); console.log('top5% mod60', JSON.stringify(Array.from({ length: 60 }, (_, r) => top.filter(x => x.tick % 60 === r).length))); console.log('mod10', byMod(10).join(' ')); console.log('mod6', byMod(6).join(' ')); console.log('top5% ticks mod10', JSON.stringify(Array.from({ length: 10 }, (_, r) => top.filter(x => x.tick % 10 === r).length)), 'mod60=0:', top.filter(x => x.tick % 60 === 0).length, 'mod30', top.filter(x => x.tick % 30 === 0).length); }
+  if (prof === 'listeners' && round === rounds - 1) {
+    const order = times.map((ms, i) => ({ ms, i })).sort((a, b) => a.ms - b.ms), n = order.length;
+    const mid = order.slice(Math.floor(n * .4), Math.floor(n * .6)).map(x => x.i), tail = order.slice(Math.floor(n * .95)).map(x => x.i);
+    const avg = (ids: number[]) => { const m = new Map<string, number>(); for (const i of ids) for (const [k, v] of perTick[i]) m.set(k, (m.get(k) ?? 0) + v / ids.length); return m; };
+    const a = avg(mid), b = avg(tail);
+    const keys = [...new Set([...a.keys(), ...b.keys()])].sort((x, y) => (b.get(y) ?? 0) - (b.get(x) ?? 0)).slice(0, 30);
+    console.log('listener                                                                  median  tail5%');
+    for (const k of keys) console.log(k.padEnd(76).slice(0, 76), (a.get(k) ?? 0).toFixed(3).padStart(7), (b.get(k) ?? 0).toFixed(3).padStart(7));
+  }
+  // Exactness witness: every entity's id, pose and health after the run (identical across a behaviour-preserving change).
+  let hash = 2166136261;
+  { const t = JSON.stringify(w.getState()); for (let k = 0; k < t.length; k++) hash = Math.imul(hash ^ t.charCodeAt(k), 16777619) >>> 0; }
+  results.push({ round, hash: hash.toString(16), tick: w.tick, p50: +q(.5).toFixed(3), p95: +q(.95).toFixed(3), max: +q(1).toFixed(3), mean: +(times.reduce((a, b) => a + b, 0) / times.length).toFixed(3), infected: live, entities: w.entities.size });
+  w.dispose();
+}
+session.disconnect();
+console.log(JSON.stringify({ scenario, tier, results }));

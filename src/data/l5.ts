@@ -10,7 +10,7 @@ type P = readonly [number, number];
 
 export const l5 = {
   /** Beat 1: caption, then ~10 s without an objective, then "Look for anyone still alive". */
-  emerge: { interactS: 1.0, objectiveAfterS: 10, captionS: 6 },
+  emerge: { interactS: 1.0, objectiveAfterS: 10, captionS: 6, /** PO #33: the 150 m cellar-to-street jump hides behind a black dip: fade out, move while black, fade in. */ fadeOutS: .4, fadeHoldS: .25, fadeInS: 1 },
   /** The five survivors: stand-to-interact time and reach, sign-of-life cues (heard within 25 m, never beyond 30 m), the direction ping. */
   survivors: { interactS: 1.0, reachM: 2.5, cueRangeM: 25, cueMaxM: 30, cueEveryS: 7, pingS: 4, count: 5 },
   /** Followers (E08 escort follow without a fail state): 2-5 m behind, run slower than the player and every infected. */

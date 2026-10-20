@@ -112,7 +112,8 @@ export class LevelEightZoo {
   }
   update(): void {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
-    ai.director.pendingTurns = [...w.entities.iterate()].filter(e => e.infection && !e.infected).length;
+    let pending = 0; for (const e of w.entities.iterate()) if (e.infection && !e.infected) pending++;
+    ai.director.pendingTurns = pending;
     if (!s.breachedAt && t - s.startedAt >= 3600) {
       s.breachedAt = t; s.nextWave = t + 600;
       s.outlets.forEach((outlet, i) => { for (let n = 0; n < (ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i); });
@@ -127,7 +128,8 @@ export class LevelEightZoo {
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
-    if (w.vehicles!.groupBoarded(s.carId, [...this.roster(), ...[...w.entities.iterate()].filter(e => e.companion).map(e => e.id)])) this.mission.setState('aboard', true);
+    const group = this.roster(); for (const e of w.entities.iterate()) if (e.companion) group.push(e.id);
+    if (w.vehicles!.groupBoarded(s.carId, group)) this.mission.setState('aboard', true);
   }
   /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
   advance(): boolean {

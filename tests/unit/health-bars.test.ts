@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4 } from 'three';
-import { barEligible, barSize } from '../../src/render/HealthBars';
+import { barEligible, barSize, followerBarCap, followerBarsAlwaysMax, isFollower } from '../../src/render/HealthBars';
 import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdPosePalette } from '../../src/render/characters/CrowdPosePalette';
 import { healthBarColors, healthFraction } from '../../src/ui/health';
@@ -48,6 +48,16 @@ test('T-E07-06-bars-bounds @E07-AC06 bounds follow displayed poses, interpolatio
   expect(bodies.bounds(7, box, new Matrix4().makeScale(.5, .5, .5))?.max.toArray()).toEqual([4.5, .5, 2]);
   bodies.begin(); expect(bodies.bounds(7, box)).toBeNull();
   geometry.dispose(); palette.texture.dispose();
+});
+
+test('T-E07-06-bars-followers @E23-AC09 QA #37: healthy followers keep a bar only in a small group', () => {
+  const follower = (current: number) => ({ faction: 'civilian', transform: { x: 30, z: 0 }, health: { current, max: 100 }, civilian: { survivor: { mode: 'follow' } } }) as unknown as EntitySnapshot;
+  expect(followerBarsAlwaysMax).toBe(5); expect(followerBarCap).toBeGreaterThanOrEqual(3);
+  expect(barEligible(follower(100), { x: 0, z: 0 }, false)).toBe(true); // PO #26: L5's five survivors
+  expect(barEligible(follower(100), { x: 0, z: 0 }, false, false)).toBe(false); // L6/L7 crowd: healthy = no bar
+  expect(barEligible(follower(99), { x: 0, z: 0 }, false, false)).toBe(true);
+  expect(barEligible(follower(0), { x: 0, z: 0 }, false, true)).toBe(false);
+  expect(isFollower(follower(50))).toBe(true);
 });
 
 test('T-E32-09-bars @E32 @E32-AC09 regular Alpha bars remain smaller than Mega bars on desktop and phone', () => {

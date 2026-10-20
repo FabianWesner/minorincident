@@ -1,0 +1,15 @@
+{
+ "name": "dress-l8-cellar-l4",
+ "note": "Opus visual QA #35 (verbatim): \"Kessler's cellar (L4 end tick 11768, 75.25,-1.75 / L5 start) sits alone on a featureless dark-green plane at the map edge.\" L4 end: the courier at the cellar door at the game camera. Look for: at least four dressing elements in frame (lit house or porch light, hedges, beds, clothes line, lamps, tree), a visible warm light point, nothing standing on the cellar's door/stair foot, no floating or sunk props, no bare lawn filling the frame.",
+ "seed": 1,
+ "ground": "district",
+ "time": "L4",
+ "tier": 0,
+ "layout": { "level": "L4", "district": "D-FAIR", "bbox": [[58, -36], [140, 42]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [75.3, 1.2], "yaw": 180, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [75.3, 1.2] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}

@@ -1,0 +1,48 @@
+"""Longest rAF intervals in a Chrome trace and what the renderer main thread did inside them."""
+import json, sys, collections
+t = json.load(open(sys.argv[1])); ev = t['traceEvents'] if isinstance(t, dict) else t
+top = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+names = {}
+for e in ev:
+    if e.get('ph') == 'M' and e.get('name') == 'thread_name': names[(e['pid'], e['tid'])] = e['args']['name']
+main = [k for k, v in names.items() if v == 'CrRendererMain']
+print('main threads', main)
+best = None
+for k in main:
+    raf = sorted(e['ts'] for e in ev if (e['pid'], e['tid']) == k and e.get('name') == 'FireAnimationFrame' and e.get('ph') in ('X', 'B'))
+    if not best or len(raf) > len(best[1]): best = (k, raf)
+k, raf = best
+evs = [e for e in ev if (e['pid'], e['tid']) == k and e.get('ph') == 'X' and 'dur' in e]
+gaps = sorted(((raf[i + 1] - raf[i], raf[i], raf[i + 1]) for i in range(len(raf) - 1)), reverse=True)
+print('frames', len(raf), 'median gap', sorted(g[0] for g in gaps)[len(gaps) // 2] / 1000)
+gc_threads = [kk for kk, v in names.items() if kk[0] == k[0] and ('V8' in v or 'GC' in v or 'Worker' in v)]
+for gap, a, b in gaps[:top]:
+    inside = [e for e in evs if e['ts'] >= a and e['ts'] < b]
+    sums = collections.Counter()
+    for e in inside: sums[e['name']] += e['dur']
+    busy = 0; last = a
+    for e in sorted(inside, key=lambda e: e['ts']):
+        s, f = max(e['ts'], last), min(e['ts'] + e['dur'], b)
+        if f > s: busy += f - s; last = f
+    print(f'\n== gap {gap / 1000:.1f} ms, main busy {busy / 1000:.1f} ms')
+    for n, d in sums.most_common(16): print(f'   {d / 1000:7.1f} {n}')
+# Optional: attribute CPU profile samples inside the longest frames (argv[3] = .cpuprofile)
+if len(sys.argv) > 3:
+    p = json.load(open(sys.argv[3])); nodes = {n['id']: n for n in p['nodes']}; parent = {}
+    for n in p['nodes']:
+        for c in n.get('children', []): parent[c] = n['id']
+    ts = []; cur = p['startTime']
+    for d in p['timeDeltas']: cur += d; ts.append(cur)
+    def lab(n):
+        cf = n['callFrame']; return f"{cf['functionName'] or '(anon)'} {cf['url'].split('/')[-1]}:{cf['lineNumber']+1}"
+    for gap, a, b in gaps[:int(sys.argv[4]) if len(sys.argv) > 4 else 2]:
+        incl = collections.Counter(); n = 0
+        for i, s in enumerate(p['samples']):
+            if not (a <= ts[i] < b): continue
+            n += 1; seen = set(); x = s
+            while x is not None:
+                l = lab(nodes[x])
+                if l not in seen: incl[l] += 1; seen.add(l)
+                x = parent.get(x)
+        print(f'\n## cpu samples in gap {gap/1000:.1f} ms: {n}')
+        for l, c in incl.most_common(int(sys.argv[5]) if len(sys.argv) > 5 else 70): print(f'  {100*c/max(1,n):5.1f}% {l}')

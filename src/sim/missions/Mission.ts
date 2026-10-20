@@ -218,9 +218,9 @@ export class Mission {
     if(this.markerObjective!==(current?.id??null)){this.markerObjective=current?.id??null;this.state.marker=current?.waypoint===false?null:current?.anchor??null;}
     if(this.pendingMarker){this.state.marker=this.pendingMarker;this.pendingMarker=null;}
   }
-  private complete(def: ObjectiveDef): void {
+  private complete(def: ObjectiveDef, cheat = false): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    this.l1?.completed(def.id); this.l2?.completed(def.id); this.l3?.completed(def.id); this.l4?.completed(def.id); this.l5?.completed(def.id); this.l6?.completed(def.id);
+    this.l1?.completed(def.id); this.l2?.completed(def.id); this.l3?.completed(def.id); this.l4?.completed(def.id); this.l5?.completed(def.id, cheat); this.l6?.completed(def.id);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
@@ -232,7 +232,7 @@ export class Mission {
     let def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id));
     if (!def && (this.l1?.advance() || this.l2?.advance() || this.l3?.advance() || this.l4?.advance() || this.l5?.advance() || this.l6?.advance() || this.l8?.advance())) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
     if (!def) throw new Error(`No active objective: ${id ?? ''}`);
-    this.complete(def); this.activate(); this.finish(); this.flushCheckpoint();
+    this.complete(def, true); this.activate(); this.finish(); this.flushCheckpoint();
   }
   private finish(): void {
     if (this.finishApplied || this.state.phase !== 'playing' || !this.def.finish.every(id => this.state.steps[id].status === 'completed')) return;
@@ -418,7 +418,7 @@ export class Mission {
       arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
     }
     // perf-w5d: the same snapshot as query({}) (structuredClone of every entity), copied about 3x faster.
-    return { tick: this.world.tick, state: structuredClone(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
+    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
   }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
