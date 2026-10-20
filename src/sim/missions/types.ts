@@ -299,8 +299,11 @@ export interface L6State {
   exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean;
   survivors:{key:string;id:number;injured:boolean;routine:'guard'|'sit'|'talk'|'treat'|'rest'|'share';status:'shelter'|'following'|'dead'|'turned'|'out';straggler:boolean;collected:boolean;rejoined:boolean;hold:number}[];
   gates:{id:number;x:number;closedAt:number;hold:number}[];
-  entries?: { door: number; warnedAt: number; remaining: number; nextAt: number }[];
+  /** Tunnel entries. PO 10-20 #64: `switchId` is the hatch prompt; a closed hatch (`closedAt`) holds its arrivals, who bash it (`hits` left) until it breaks (`brokenAt`). */
+  entries?: { door: number; warnedAt: number; remaining: number; nextAt: number; switchId?: number; closedAt?: number; hits?: number; hitAt?: number; brokenAt?: number }[];
   pushHintShown?: boolean;
+  /** PO 10-20 #65: the courier drifted away from the walking group; the objective points back at it. */
+  strayed?: boolean;
   arrivals?: { remaining: number; door: number; nextAt: number };
   infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
 }
