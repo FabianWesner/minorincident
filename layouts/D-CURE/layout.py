@@ -245,6 +245,17 @@ route_segments = list(zip(full_route, full_route[1:]))
 detour_segments = [s for d in source['detours'] for s in zip(d['route'], d['route'][1:])]
 reg = source['regions']; anc = source['anchors']
 shortcut_segments = [(reg[5]['route'][1], anc['corridor-breach']), (anc['corridor-breach'], anc['r6-r7-seam']), (anc['r6-r7-seam'], reg[6]['route'][5])]
+# Run-out past every route corner: a walker overshoots a turn by a few metres (the L10-D1 seam scene runs 10 m past the R2 corner at x=807), so no solid stands
+# on the straight continuation of the incoming leg.
+def _overshoot():
+    out = []
+    for p0, p1, p2 in zip(full_route, full_route[1:], full_route[2:]):
+        d1, d2 = math.dist(p0, p1), math.dist(p1, p2)
+        if d1 < 1 or d2 < 1: continue
+        ux, uz, vx, vz = (p1[0]-p0[0])/d1, (p1[1]-p0[1])/d1, (p2[0]-p1[0])/d2, (p2[1]-p1[1])/d2
+        if ux*vx + uz*vz < .94: out.append((tuple(p1), (p1[0]+ux*12, p1[1]+uz*12)))
+    return out
+overshoot_segments = _overshoot()
 encounter_text = (l.root / 'src/levels/L10/encounters.ts').read_text()
 spots = [(float(x), float(z)) for x, z in re.findall(r"at: \[(-?[\d.]+), (-?[\d.]+)\]", encounter_text)]
 spots += [tuple(p) for p in anc.values()]
@@ -292,6 +303,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
         cmn, cmx = footprint('crown:tree', x, z, yaw, scale)
         if any(seg_rect(a, c, cmn, cmx) < 4.4 for a, c in route_segments + detour_segments): return None
     if any(seg_rect(a, c, mn, mx) < 6 for a, c in shortcut_segments): return None
+    if any(seg_rect(a, c, mn, mx) < 2.5 for a, c in overshoot_segments): return None
     if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
     if rect_point(mn, mx, console) < 60: return None
     # R7: the approach band (route z -41..-21 plus the walk to the console) stays open ground, so nobody cuts a corner into a box.
