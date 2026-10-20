@@ -21,6 +21,8 @@ export interface TimeOfDayPreset {
   ambient?: { leaf: number; dust: number; bird: number; glow?: number; rise?: boolean };
   /** Sparse insects around powered outdoor lamps, high tier only. */
   lampInsects?: boolean;
+  /** Visible low-beam cones and dust motes in the driven vehicle's headlights (L9 night drive). */
+  headlightBeams?: boolean;
 }
 const golden: TimeOfDayPreset = { sun: '#ffdb9a', intensity: 1.15, polar: 1.15, azimuth: -1.0, shadow: '#66548d', sky: '#eeb888', fog: '#e5b39e', fogNear: 55, fogFar: 140, practical: .25 };
 const presets = {
@@ -44,11 +46,20 @@ const presets = {
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, heroRim: .22,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343b48', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2',
-    look: { skyAmbient: '#a2bad2', groundAmbient: '#8f8a88', vignette: .08, bloomStrength: .18, gradeShadow: '#4a74b0', gradeHighlight: '#d0e4ff', gradeAmount: .75, gradeContrast: 1.15, gradeSaturation: .75, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670' }, ambient: { leaf: 50, dust: 0, bird: 0 } },
+  'L9-crossing': { sun: '#c6d3f2', intensity: .38, polar: 1.12, azimuth: 3.0, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.4, roadColor: '#aebfd3', headlightBeams: true,
+    // E31 art addendum: a low moon (~26 deg) in the north (screen upper right), so trees/poles/fences throw long soft
+    // shadows south across the east-west lanes (screen lower left, clear of the casters' own silhouettes); the ground takes the moon fully (coreLightEdge), only turned-away walls
+    // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
+    // look-l9b (PO 10-19: "washed-out pale lilac haze, no night contrast"): a dark base with a silver key, deep blue shadows and a
+    // contrasty grade; the pools (headlights, lanterns, flares, fires) and the burning-city glow carry the frame.
+    look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d6e2f2', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670', dust: '#d6ff8c', groundBreakup: .22, roadNeutral: .85,
+      coreLightEdge: .45, shadowRadius: 3, glow: '#ff3a10', glowAmount: .25, glowStart: -60, glowEnd: 640, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
+    ambient: { leaf: 24, dust: 70, bird: 0, glow: 3.2 } },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
-  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#30203f', sky: '#302c50', fog: '#5b4f75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.1, roadColor: '#a79ec7',
-    look: { skyAmbient: '#b0accf', groundAmbient: '#978a95', vignette: .1, bloomStrength: .2, gradeShadow: '#7c62b0', gradeHighlight: '#b0f6ff', gradeAmount: .62, gradeContrast: 1.15, gradeSaturation: .78, haze: '#584a8c', hazeAmount: 0, beamStrength: 2, dust: '#8cefff' }, ambient: { leaf: 0, dust: 40, bird: 0, glow: 2.4 } },
+  // look-l9b recipe (orchestrator 10-20: "pale purple road fills a third of every frame, lane stripes glow"): dark moonlit base,
+  // neutral grey asphalt (roadNeutral) with a silver lift sized by the AC16 numbers, deep-blue grade, warm practicals carry the frame.
+  'L10-night': { sun: '#c6d3f2', intensity: .38, polar: 1.02, azimuth: 2.35, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.6, roadColor: '#aebfd3',
+    look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d6e2f2', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#48527c', hazeAmount: 0, beamStrength: 2.4, dust: '#c8d8ff', leaf: '#7b838d', petal: '#5f6670', groundBreakup: .22, roadNeutral: .85 }, ambient: { leaf: 30, dust: 40, bird: 0, glow: 1.6 } },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
   "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, lampInsects: true,
     look: { skyAmbient: '#9dbfce', groundAmbient: '#8d987c', vignette: .08, bloomStrength: .2, gradeShadow: '#3f7f86', gradeHighlight: '#ffd88a', gradeAmount: .75, gradeContrast: 1.05, gradeSaturation: 1.12, haze: '#3a6e58', hazeAmount: .42, hazeHeight: 4, beamStrength: 2.6, dust: '#c6ff66' }, ambient: { leaf: 0, dust: 45, bird: 0, glow: 3 } },

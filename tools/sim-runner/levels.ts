@@ -6,7 +6,7 @@ import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
 import { LevelFiveBot } from '../../src/debug/bot/LevelFiveBot';
 import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 import { followFrustum } from './l3Bots';
-import { preset, type CampaignSave } from '../../src/sim/progression/Campaign';
+import { preset, reservedCampaignIds, type CampaignSave } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
 import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
@@ -43,7 +43,7 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
-    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined, level === 'L8' ? campaign?.results?.L7?.companion : undefined);
+    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined, level === 'L8' ? campaign?.results?.L7?.companion : undefined, reservedCampaignIds(level, campaign));
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));

@@ -21,12 +21,21 @@ export class LevelNineBot {
     const along = car ? ((car.transform.x - a[0]) * (b[0] - a[0]) + (car.transform.z - a[1]) * (b[1] - a[1])) / seg : 0;
     return Math.min(1, (done + Math.max(0, Math.min(seg, along))) / this.length);
   }
+  /** 6 m on straights, up to 16 m before a right-angle bend at waypoint `i`. */
+  private switchRadius(i: number): number {
+    const a = this.path[i - 1], b = this.path[i], c = this.path[i + 1];
+    if (!a || !c) return 6;
+    const turn = Math.abs(Math.atan2(Math.sin(Math.atan2(c[1] - b[1], c[0] - b[0]) - Math.atan2(b[1] - a[1], b[0] - a[0])), Math.cos(Math.atan2(c[1] - b[1], c[0] - b[0]) - Math.atan2(b[1] - a[1], b[0] - a[0]))));
+    return 6 + 10 * Math.min(1, turn / (Math.PI / 2));
+  }
   sample(): InputFrame {
     const w = this.w, f = emptyInput(), l9 = w.missions?.l9;
     const car = l9 && w.entities.get(l9.state.carId);
     if (!car || l9.state.phase !== 'driving') return f;
     const p = car.transform;
-    while (this.index < this.path.length - 1 && Math.hypot(this.path[this.index][0] - p.x, this.path[this.index][1] - p.z) < 6) this.index++;
+    // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
+    // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).
+    while (this.index < this.path.length - 1 && Math.hypot(this.path[this.index][0] - p.x, this.path[this.index][1] - p.z) < this.switchRadius(this.index)) this.index++;
     const dx = this.path[this.index][0] - p.x, dz = this.path[this.index][1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
     f.drive = { throttle: this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
