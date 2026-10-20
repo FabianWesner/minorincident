@@ -301,7 +301,9 @@ export class LevelFiveAftermath {
     if (s.phase !== 'metro') return null;
     const group = this.following(), inside = group.filter(({ e }) => this.sheltering(e)).length;
     if (!s.metroAt) return group.length ? `Survivors in ${inside}/${group.length}` : 'Go down the stairs';
-    return inside < group.length ? `Wait for the survivors · ${inside}/${group.length} in` : 'Everyone is in';
+    const remaining=Math.max(0,Math.ceil((s.metroAt+ticks(l5.metro.occupantViewS)-this.world.tick)/60));
+    if(remaining)return `Stay on the stairs · ${remaining} s · Survivors in ${inside}/${group.length}`;
+    return inside < group.length ? `Wait for the survivors · ${inside}/${group.length} in` : 'Waiting for the corgi';
   }
   /** Once the player enters, guide every living follower through the narrow opening. */
   ingress(e: EntitySnapshot): Point | null {

@@ -8,7 +8,7 @@ export function levelSevenMission(resolve: (district: DistrictId, name: string) 
   anchors['l7-corridor-west'].radius = 12;
   return {
     id: 'L7', briefing: 'Bring the survivors through the ruined city to the evacuation bus.',
-    anchors, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [],
+    anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['corridor-group'], counters: [],
     checkpoints: ['night-exit', 'rocket', 'corridor'], cinematics: {},
     onStart: [{ kind: 'checkpoint', id: 'night-exit' }], onComplete: [], finish: ['departure'],
     steps: [
@@ -16,7 +16,7 @@ export function levelSevenMission(resolve: (district: DistrictId, name: string) 
         start: { kind: 'start' }, complete: { kind: 'event', type: 'l7.armed', count: 1 }, fail: [],
         onComplete: [{ kind: 'checkpoint', id: 'rocket' }] },
       { id: 'corridor', type: 'reach', text: 'Bring the group to the evacuation corridor', anchor: 'l7-corridor-east',
-        start: { kind: 'objectives', ids: ['rocket'], mode: 'all' }, complete: { kind: 'any', triggers: ['l7-corridor-east', 'l7-corridor-west'].map(anchor => ({ kind: 'volume', anchor, edge: 'inside' })) }, fail: [],
+        start: { kind: 'objectives', ids: ['rocket'], mode: 'all' }, complete: { kind: 'state', key: 'corridor-group', equals: true }, fail: [],
         onComplete: [{ kind: 'checkpoint', id: 'corridor' }] },
       { id: 'departure', type: 'custom', text: 'Get everyone aboard the bus', anchor: 'l7-bus-boarding',
         start: { kind: 'objectives', ids: ['corridor'], mode: 'all' }, complete: { kind: 'event', type: 'l7.departed', count: 1 }, fail: [] },

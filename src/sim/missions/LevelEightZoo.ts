@@ -126,6 +126,8 @@ export class LevelEightZoo {
     }
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
+    Object.assign(this.mission.def.anchors.exit,this.door());
+    this.mission.setState('player-boarded',w.vehicles!.active===s.carId);
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, [...this.roster(), ...[...w.entities.iterate()].filter(e => e.companion).map(e => e.id)])) this.mission.setState('aboard', true);
   }
