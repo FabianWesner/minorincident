@@ -64,7 +64,7 @@ test('@E32 L10 night accents: render-only fires on the crash scar and the destro
   const lines: Point[][] = [...cure.regions.map(r => r.route as Point[]), ...cure.detours.map(d => d.route as Point[])];
   const laneAt = (p: Point) => Math.min(...lines.map(l => Math.min(...l.slice(1).map((b, i) => seg(p, l[i], b))))) - 4;
   for (const f of fires) {
-    expect(laneAt([f.x, f.z])).toBeGreaterThan(f.car ? 4 : 6);
+    expect(laneAt([f.x, f.z])).toBeGreaterThan(f.car ? 8.5 : 12);   // pools (<= 7 m) stay out of the AC16 verge band
     for (const s of [...cureEncounters.map(e => e.at), ...cureMedkits.map(m => m.at)]) expect(Math.hypot(f.x - s[0], f.z - s[1])).toBeGreaterThan(14);
     expect(Math.hypot(f.x - cure.anchors['cure-console'][0], f.z - cure.anchors['cure-console'][1])).toBeGreaterThan(70);
     expect(f.x < 760 || (f.x >= 2917 && f.x < 3700)).toBe(true);   // R1 and R6 (region envelopes)

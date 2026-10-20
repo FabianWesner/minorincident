@@ -58,7 +58,7 @@ const presets = {
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
   // look-l9b recipe (orchestrator 10-20: "pale purple road fills a third of every frame, lane stripes glow"): dark moonlit base,
   // neutral grey asphalt (roadNeutral) with a silver lift sized by the AC16 numbers, deep-blue grade, warm practicals carry the frame.
-  'L10-night': { sun: '#c6d3f2', intensity: .38, polar: 1.02, azimuth: 2.35, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.4, roadColor: '#aebfd3',
+  'L10-night': { sun: '#c6d3f2', intensity: .38, polar: 1.02, azimuth: 2.35, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.6, roadColor: '#aebfd3',
     look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d6e2f2', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#48527c', hazeAmount: 0, beamStrength: 2.4, dust: '#c8d8ff', leaf: '#7b838d', petal: '#5f6670', groundBreakup: .22, roadNeutral: .85 }, ambient: { leaf: 30, dust: 40, bird: 0, glow: 1.6 } },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
   "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, lampInsects: true,

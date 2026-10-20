@@ -353,12 +353,17 @@ def fence_run(asset, a, b, step=2.6):
 # Roads do not end in the void: the L9 road continues west past the crash, a service road meets the console apron.
 surface('road-west', [[500, -4], [547, -4], [547, 4], [500, 4]], 'asphalt', .002)
 # Gravel/dirt shoulders break the flat verge; flat surfaces only, no collision.
+# look-l9b: a continuous dark shoulder band (4..9.5 m from the centreline, as L9's leather shoulders) under the strips: the
+# E31-AC16 verge samples (5.5/7/8.5 m) read a dark verge against the silver road instead of bright strips and lawn blades.
 for i, (a, b) in enumerate(route_segments):
     d = math.dist(a, b)
     if d < 20 or a[0] > 3940: continue
     ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
     for side in (1, -1):
-        n = (-uz*side, ux*side); s = 6
+        n = (-uz*side, ux*side)
+        p0 = (a[0]+ux*2+n[0]*4, a[1]+uz*2+n[1]*4); p1 = (a[0]+ux*(d-2)+n[0]*4, a[1]+uz*(d-2)+n[1]*4)
+        surface('shoulder-band', ccw([list(p0), list(p1), [p1[0]+n[0]*5.5, p1[1]+n[1]*5.5], [p0[0]+n[0]*5.5, p0[1]+n[1]*5.5]]), 'leather' if a[0] < 800 else 'leatherEdge', -.0015)
+        s = 6
         while s < d - 8:
             ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
             p0 = (a[0]+ux*s+n[0]*4, a[1]+uz*s+n[1]*4); p1 = (a[0]+ux*(s+ln)+n[0]*4, a[1]+uz*(s+ln)+n[1]*4)
@@ -466,9 +471,9 @@ for i in (1, 4):
     for a_, b_ in region_segments(i):
         xs, zs = sorted([a_[0], b_[0]]), sorted([a_[1], b_[1]])
         if xs[1] - xs[0] > zs[1] - zs[0]:
-            for z0 in (zs[0] + 5.4, zs[0] - 6.8): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))
+            for z0 in (zs[0] + 9.8, zs[0] - 11.2): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))   # look-l9b: beyond the dark shoulder band
         else:
-            for x0 in (xs[0] + 5.4, xs[0] - 6.8): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
+            for x0 in (xs[0] + 9.8, xs[0] - 11.2): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
 # Ground variety in the visible verge band: worn dirt, moss and gravel patches (flat surfaces, no collision).
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
