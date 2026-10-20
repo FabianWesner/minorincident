@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 101s, 25497 files; job /srv/mi/jobs/collision-placement-9aa6d4-33144-1792429442; queueing for a slot
+[runner] slot 1 acquired; load 2.22 2.37 2.63
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-33144-1792429442
+
+ ✓  functional  tests/levels/L5.test.ts (15 tests | 14 skipped) 3858ms
+   ✓ L5 Aftermath (15)
+     ✓ T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist 3856ms
+ ✓  functional  tests/levels/continuity.test.ts (2 tests | 1 skipped) 56073ms
+   ✓ L1 -> L2 world-state continuity (2)
+     ✓ T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover 56072ms
+ ✓  functional  tests/levels/L4-respawn.test.ts (6 tests | 5 skipped) 91941ms
+   ✓ L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint 91939ms
+
+ Test Files  3 passed (3)
+      Tests  3 passed | 20 skipped (23)
+   Start at  17:05:45
+   Duration  95.89s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 101s, remote total 100s)

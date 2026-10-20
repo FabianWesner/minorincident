@@ -1,0 +1,73 @@
+{
+  "seed": 1,
+  "frames": 36,
+  "sheet": 12,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "collision-placement-pickups",
+  "ground": "asphalt",
+  "props": [
+    {
+      "asset": "prop.jersey-barrier",
+      "at": [
+        0,
+        0.5
+      ]
+    },
+    {
+      "asset": "prop.street-sign",
+      "at": [
+        2,
+        1
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3,
+        0
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "weaponPickup": "weapon.fire-axe",
+        "at": [
+          0,
+          0
+        ],
+        "surfaceY": 0
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          2,
+          0
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "note": "Occluder probe: gold weapon and teal health pickup rings remain visible through foreground street props. Inspect both complete ring contours at both zooms."
+}

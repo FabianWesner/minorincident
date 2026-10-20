@@ -1,0 +1,147 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 66s, 25681 files; job /srv/mi/jobs/collision-placement-9aa6d4-49356-1792418616; queueing for a slot
+[runner] slot 1 acquired; load 6.07 6.64 5.01
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-49356-1792418616
+
+ ✓  functional  tests/levels/L3-route.test.ts (1 test) 45206ms
+   ✓ @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway 45193ms
+ ✓  functional  tests/levels/collision-placement.test.ts (12 tests) 49172ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 33196ms
+   ✓ NPC spawn admission leaves 0.8 m around a reserved player start 1211ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 1628ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 2759ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 5512ms
+   ✓ L5 companion occupies its visible footprint and stays outside courier and reported solids 1194ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 1456ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 1501ms
+   ✓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 649ms
+stdout | tests/levels/L4-perimeter.test.ts > @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate
+{"gate":"l4-plaza-1m","phase":"ride","sampled":722,"failures":0}
+{"gate":"l4-plaza-1m","phase":"plaza","sampled":650,"failures":0}
+{"gate":"l4-plaza-1m","phase":"hold/war","sampled":650,"failures":0}
+
+ ❯  functional  tests/levels/L4-perimeter.test.ts (1 test | 1 failed) 66451ms
+   × @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate 66449ms
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'high',
+  opening: 'direct',
+  seconds: 57.166666666666664,
+  streetEngaged: 16,
+  streetPerMinute: 16.793002915451897,
+  engaged: 55,
+  perMinute: 57.72594752186589,
+  bins15s: [ 20, 21, 23, 24 ],
+  policeTargets: 24,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 1,
+  deathsAt: [ '89s@-31,26/escape' ],
+  totalSeconds: 141.86666666666667,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.71666666666667 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'low',
+  opening: 'direct',
+  seconds: 35.96666666666667,
+  streetEngaged: 4,
+  streetPerMinute: 6.672845227062094,
+  engaged: 13,
+  perMinute: 21.686746987951807,
+  bins15s: [ 8, 9, 9 ],
+  policeTargets: 10,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 120.55,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.71666666666667 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'high',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 0,
+  streetPerMinute: 0,
+  engaged: 11,
+  perMinute: 12.098991750687443,
+  bins15s: [ 8, 4, 3, 3 ],
+  policeTargets: 12,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 140.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.71666666666667 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'low',
+  opening: 'side',
+  seconds: 54.53333333333333,
+  streetEngaged: 0,
+  streetPerMinute: 0,
+  engaged: 10,
+  perMinute: 11.002444987775062,
+  bins15s: [ 5, 4, 4, 5 ],
+  policeTargets: 4,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 140.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.71666666666667 }
+  ]
+}
+
+ ✓  functional  tests/levels/L2-finale-pressure.test.ts (2 tests) 186363ms
+   ✓ PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival 109709ms
+   ✓ PO #7b @E20 the arriving player sees police firing on a horde at the bridge 76651ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L4-perimeter.test.ts > @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate
+AssertionError: feet clear the 1.12 m wire: expected 0.050000000000000044 to be greater than 1.12
+ ❯ tests/levels/L4-perimeter.test.ts:86:150
+     84|     for (let i = 0; i < 73; i++) {
+     85|       w.update();
+     86|       if (Math.abs(runner.transform.x - l4.perimeter.x1) < .2 + runner…
+       |                                                                                                                                                      ^
+     87|       expect(w.solids.offenders).toEqual([]);
+     88|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 15 passed (16)
+   Start at  14:05:49
+   Duration  192.63s (tests 94%, transform 5%, import 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 66s, remote total 262s)

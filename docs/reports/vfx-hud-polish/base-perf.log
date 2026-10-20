@@ -1,0 +1,43 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-hud-polish -> 2.28.24.66:/srv/mi/ws/vfx-hud-polish-8b3136
+[remote] cache-gc deleted:none
+[remote] sync 45s, 25163 files; job /srv/mi/jobs/vfx-hud-polish-8b3136-75030-1792425222; queueing for a slot
+[runner] slot 0 acquired; load 6.08 6.51 5.02
+
+ RUN  v5.0.3 /srv/mi/jobs/vfx-hud-polish-8b3136-75030-1792425222
+
+ ❯  timing  tests/sim/performance/alpha-support.test.ts (2 tests | 1 failed) 5958ms
+   × T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 4378ms
+   ✓ T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms 1578ms
+ ❯  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 failed) 7531ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 5683ms
+   ✓ T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 1845ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 9.615112999999837 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 12.435993999999482 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 2 passed (4)
+   Start at  15:54:31
+   Duration  21.17s (tests 66%, transform 27%, import 7%)
+
+[remote] pulled test-results/vfx-hud-polish/base-perf
+[remote] done exit=1 (runner 2.28.24.66, sync 45s, remote total 29s)

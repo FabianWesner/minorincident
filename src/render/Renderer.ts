@@ -80,6 +80,12 @@ export class Renderer extends WebGPURenderer {
   }
   /** Fullscreen pipeline output is single-sampled. Overlay passes must load that
    * canvas, rather than resolving an unrelated MSAA colour buffer over it. */
+  /** Starts a new three.js node frame, as three's own RAF loop (renderers/common/Animation.js) does. FRAME-updated
+   * nodes such as the PostFx scene pass otherwise render once per browser frame, not once per render call. */
+  nextNodeFrame(): void {
+    const nodes = (this as unknown as { _nodes: { nodeFrame: { update(): void; frameId: number } } })._nodes;
+    nodes.nodeFrame.update(); (this.info as { frame: number }).frame = nodes.nodeFrame.frameId;
+  }
   renderOverlay(scene: Scene, camera: Camera): void {
     const previous = this.canvasOverlay;
     this.canvasOverlay = true;

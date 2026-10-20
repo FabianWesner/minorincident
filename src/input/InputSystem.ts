@@ -95,6 +95,8 @@ export class InputSystem implements Lifecycle {
     this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none;z-index:21';
     this.controls.dataset.inputControls = '';
     this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
+    document.body.classList.toggle('debug-tools', new URLSearchParams(location.search).has('debug'));
+    this.controls.dataset.inputControls = '';
     this.controls.hidden = !new URLSearchParams(location.search).has('debug');
     this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
     const select = this.controls.querySelector('select')!;
@@ -325,6 +327,7 @@ export class InputSystem implements Lifecycle {
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
+    document.body.classList.remove('debug-tools');
     this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove(); this.walkHint.remove();
   }
 }

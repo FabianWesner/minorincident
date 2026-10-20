@@ -48,3 +48,43 @@ test.each([
     expect(fx.telegraphs.count).toBe(0);
   } finally { fx.dispose(); world.dispose(); }
 });
+
+test('horde warnings retain lifetimes while only three distinct nearest/imminent dangers remain readable', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('vfx-showcase');
+  const fx = new Vfx(world, { flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} });
+  try {
+    for (let i = 0; i < 40; i++) world.events.emit({ tick: 0, type: 'telegraph', attackId: 100 + i, kind: 'charge', duration: i === 39 ? .1 : 2,
+      position: { x: i % 4 * 4, z: Math.floor(i / 4) * .1 }, radius: 3, angle: 0 });
+    fx.advance(0);
+    const tells = fx.snapshot().telegraphs, opacity = fx.telegraphs.mesh.geometry.getAttribute('fxVisibility');
+    expect(tells).toHaveLength(40);
+    const readable = tells.filter(t => opacity.getX(t.slot) > .1);
+    expect(readable).toHaveLength(3);
+    expect(readable.some(t => t.attackId === 139), 'the imminent fourth-lane attack displaces a slower warning').toBe(true);
+    expect(tells.filter(t => opacity.getX(t.slot) <= .1).reduce((sum, t) => sum + opacity.getX(t.slot), 0)).toBeLessThanOrEqual(.015001);
+    // Nearby redundant stripes share one representative; the distant fourth lane is faded.
+    expect(new Set(readable.map(t => t.x)).size).toBe(3);
+    const urgent = readable.find(t => t.x === 0)!;
+    world.events.emit({ tick: 1, type: 'attack.resolved', attackId: urgent.attackId });
+    fx.advance(0);
+    expect(fx.snapshot().telegraphs.filter(t => opacity.getX(t.slot) > .1)).toHaveLength(3);
+    expect(fx.snapshot().telegraphs).toHaveLength(39);
+  } finally { fx.dispose(); world.dispose(); }
+});
+
+test('warning visibility and palette share a WebGPU vertex buffer without overwriting each other', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('vfx-showcase');
+  const fx = new Vfx(world, { flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} });
+  try {
+    const color = fx.telegraphs.mesh.geometry.getAttribute('fxColor'), visibility = fx.telegraphs.mesh.geometry.getAttribute('fxVisibility');
+    expect('data' in color && 'data' in visibility && color.data === visibility.data, 'interleaved attributes must share one buffer to stay within WebGPU limits').toBe(true);
+    world.events.emit({ tick: 0, type: 'telegraph', attackId: 900, kind: 'charge', position: { x: 2, z: 1 }, radius: 3, angle: 0 });
+    const slot = fx.snapshot().telegraphs[0].slot, before = [color.getX(slot), color.getY(slot), color.getZ(slot)];
+    fx.telegraphs.opacity(slot, .125);
+    expect(visibility.getX(slot)).toBe(.125);
+    expect([color.getX(slot), color.getY(slot), color.getZ(slot)]).toEqual(before);
+    fx.telegraphs.recolor(slot, 0xffffff);
+    expect([color.getX(slot), color.getY(slot), color.getZ(slot)]).toEqual([1, 1, 1]);
+    expect(visibility.getX(slot)).toBe(.125);
+  } finally { fx.dispose(); world.dispose(); }
+});

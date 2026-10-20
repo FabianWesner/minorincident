@@ -83,6 +83,9 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
       expect((await page.evaluate(() => window.__SS__!.getState().player!.health.current))).toBeGreaterThan(0);
       expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('turn');
       await page.evaluate(() => window.__SS__!.cheats.god(true));
+      // The alarm group now presses the courier (PO 10-19), so downed bodies can lie on the armory corner; a click on a
+      // downed infected attacks by design (PO 10-08). Settle the battlefield into corpses so the routes test movement only.
+      await page.evaluate(() => window.__SS__!.cheats.killAll()); await step(page, 150);
     }
     for (let i = 0; i < 20 && Math.abs(await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom as number) - zoom) > .02; i++) { await page.mouse.move(640, 360); await page.mouse.wheel(0, -120); await step(page, 2); }
     await step(page, 30);

@@ -1,0 +1,18 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted: agent-a86209b7db033b1a7-9d50e6
+[remote] sync 32s, 25505 files; job /srv/mi/jobs/collision-placement-9aa6d4-66782-1792430558; queueing for a slot
+[runner] slot 1 acquired; load 2.94 2.68 2.67
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-66782-1792430558
+
+ ✓  functional  tests/levels/collision-placement.test.ts (17 tests | 16 skipped) 217ms
+ ✓  functional  tests/levels/L5.test.ts (15 tests | 14 skipped) 20851ms
+   ✓ L5 Aftermath (15)
+     ✓ T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3 20848ms
+
+ Test Files  2 passed (2)
+      Tests  2 passed | 30 skipped (32)
+   Start at  17:23:13
+   Duration  25.06s (tests 72%, transform 23%, import 5%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 32s, remote total 28s)

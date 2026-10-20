@@ -1,3 +1,4 @@
+import { readableTelegraphs, type TelegraphThreat } from './telegraphPriority';
 import { megaAlpha } from '../../data/megaAlpha';
 import { Group, type BufferGeometry, type Node } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
@@ -45,6 +46,8 @@ const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
 const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
+/** Seconds between two hit flashes on one target: a 0.1 s pulse, then at least 0.25 s in its own colours. */
+export const hitFlashRest = 0.35;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
 export class Vfx extends Group {
@@ -70,11 +73,14 @@ export class Vfx extends Group {
   private landingCursor = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
-  private readonly tells = new Map<number, { slot: number; kind: TelegraphKind; spawned: number; sourceId?: number }>();
+  private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
   private readonly hitIds = new Uint32Array(512);
   private readonly hitUntil = new Float64Array(512);
   private hitCount = 0;
   private hitCursor = 0;
+  /** alpha-white: start time of each target's last hit flash. Sustained fire (a soldier line, pellets) re-flashed
+   * every 0.1 s and left Alphas a permanent white mass; a target flashes at most once per rest period. */
+  private readonly hitStarted = new Map<number, number>();
   private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
   private enabled = true;
   private colorblind = false;
@@ -201,6 +207,7 @@ export class Vfx extends Group {
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
     }
     this.targets.vehicleBloodEnabled?.(this.enabled && this.gore !== 'Off');
+    this.prioritizeTelegraphs();
     this.visible = this.enabled || this.tells.size > 0;
     if (!this.enabled) {
       this.hitStop.reset(); this.targets.clearGore(); this.targets.blood(0);
@@ -209,8 +216,12 @@ export class Vfx extends Group {
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
-  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
   private pulse(id: number): void {
+    const started = this.hitStarted.get(id);
+    if (started !== undefined && this.time - started < hitFlashRest) return;
+    this.hitStarted.set(id, this.time);
+    if (this.hitStarted.size > 2048) for (const [key, at] of this.hitStarted) if (this.time - at >= hitFlashRest) this.hitStarted.delete(key);
     let slot = 0;
     while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
     if (slot === this.hitCount) {
@@ -375,7 +386,9 @@ export class Vfx extends Group {
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
       if (slot < 0) return;
       this.visible = true;
-      this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+      this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+      // Select once per presented update, even when many attacks arrive in one sim tick.
+      this.telegraphs.opacity(slot, 0);
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
     } else if (event.type === 'hazard.exploded') this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
@@ -468,6 +481,13 @@ export class Vfx extends Group {
         (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
     }
   }
+  private prioritizeTelegraphs(): void {
+    if (!this.tells.size) return;
+    const player = this.world.entities.get(1)?.transform;
+    if (!player) return;
+    const readable = readableTelegraphs([...this.tells.values()], player, this.time);
+    for (const tell of this.tells.values()) this.telegraphs.opacity(tell.slot, readable.has(tell.slot) ? 1 : .015 / Math.max(1, this.tells.size - readable.size));
+  }
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
@@ -483,6 +503,7 @@ export class Vfx extends Group {
         else if (brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source!.transform.x, source!.transform.z, 20);
         this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }
     }
+    this.prioritizeTelegraphs();
     this.visible = this.enabled || this.tells.size > 0;
     for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
     if (this.enabled) this.waterStreams(seconds);

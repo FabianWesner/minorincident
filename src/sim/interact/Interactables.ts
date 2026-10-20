@@ -95,6 +95,11 @@ export class Interactables {
   }
   private complete(id: number): void {
     const entity = this.world.entities.get(id)!, c = entity.interactable!;
+    if (isDoor(c.kind) && c.open && this.world.npcs) {
+      const wall = this.doorWalls.get(id) ?? this.authoredWalls.get(id)!, p = this.world.entities.get(1)!.transform;
+      const inside = wall.halfX >= wall.halfZ ? { x: entity.transform.x, z: p.z } : { x: p.x, z: entity.transform.z };
+      if (!this.world.npcs.companion.insideBeforeClosing(entity.transform, inside, Math.min(wall.halfX, wall.halfZ))) { c.hint = 'Waiting for companion'; return; }
+    }
     c.completed = true; c.progress = 1; c.hint = '';
     if (isDoor(c.kind)) {
       c.open = !c.open;

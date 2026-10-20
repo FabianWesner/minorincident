@@ -212,8 +212,10 @@ export class Barricades {
     }
     const vault = brain.vault; if (!vault) return false;
     const t = Math.min(1, (this.world.tick - vault.started) / 72);
-    attacker.transform.x = vault.from.x + (vault.to.x - vault.from.x) * t;
-    attacker.transform.z = vault.from.z + (vault.to.z - vault.from.z) * t;
+    // Taller wire-topped barriers require lifting clear before traversing, then landing beyond the far face.
+    const travel = vault.height >= 1 ? Math.max(0, Math.min(1, (t - .25) / .5)) : t;
+    attacker.transform.x = vault.from.x + (vault.to.x - vault.from.x) * travel;
+    attacker.transform.z = vault.from.z + (vault.to.z - vault.from.z) * travel;
     attacker.transform.y = .7 + Math.sin(t * Math.PI) * (vault.height + .35);
     this.world.spatial.set(attacker.id, attacker.transform.x, attacker.transform.z);
     if (t === 1) { delete brain.vault; brain.path.length = 0; brain.goal = -1; }

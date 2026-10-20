@@ -2,7 +2,6 @@ import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Exit } from '../../levels/L7/layout';
 import { l7Encounters } from '../../data/l7';
 
 export interface L7EncounterState {
@@ -34,10 +33,12 @@ export class LevelSevenEncounters {
     director.levelCap = 200; director.strict = true;
     const roster = carried ?? this.carried ?? w.progression?.campaign?.results?.L6?.escapedSurvivors;
     const count = roster?.length ?? (director.tier === 'low' ? 15 : 24);
+    const leader = w.entities.get(1)!.transform, hx = Math.cos(leader.yaw), hz = -Math.sin(leader.yaw);
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const at = this.clearPoint({ x: l7Exit.position[0] + Math.floor(slot / 3) * 1.2, z: l7Exit.position[2] + (slot % 3 - 1) * 1.2 }, .4);
+      const back = 2.3 + Math.floor(slot / 3) * 1.2, side = (slot % 3 - 1) * 1.2;
+      const at = this.clearPoint({ x: leader.x - hx * back - hz * side, z: leader.z - hz * back + hx * side }, .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);

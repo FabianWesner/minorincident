@@ -114,6 +114,8 @@ export class WorldHumans implements HumanTargetQuery {
  * (PO #25 / 10-16); movement and gunfire scale the awareness radius. A chased
  * target stays tracked within `chaseKeepM` in any direction, else in a wide 150 degree cone, while line of sight is clear.
  */
+/** A director-focused human (InfectedSystem.press) wins against bystanders up to this much nearer. */
+const focusBiasM = 10;
 export class Perception {
   humans: HumanTargetQuery;
   readonly los = new LosRegistry();
@@ -206,11 +208,12 @@ export class Perception {
    */
   closest(e: EntitySnapshot, currentId: number, ignoreId = 0): HumanTarget | undefined {
     let best: HumanTarget | undefined, bestDistance = Infinity, current: HumanTarget | undefined, currentDistance = Infinity;
+    const brain = e.infected?.l1, focus = brain?.focusId && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
     for (const h of this.humans.within(e.transform, this.rangeM)) {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
       if (!(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0);
+      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? focusBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
     }

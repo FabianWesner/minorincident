@@ -30,7 +30,7 @@ export class ActionView extends Group {
   /** Same drawn paving height field used by vehicles; sim support height is the fallback. */
   ground: ((x: number, z: number) => number | null) | null = null;
   private readonly pickupRingGeometry = new RingGeometry(.58, .63, 48).rotateX(-Math.PI / 2);
-  private readonly pickupRingMaterial = new MeshBasicNodeMaterial({ color: '#ffd166', transparent: true, opacity: .9, depthWrite: false, side: DoubleSide });
+  private readonly pickupRingMaterial = new MeshBasicNodeMaterial({ color: '#ffd166', transparent: true, opacity: .9, depthTest: false, depthWrite: false, toneMapped: false, fog: false, side: DoubleSide });
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffd166', depthWrite: false, side: DoubleSide });
@@ -277,24 +277,31 @@ export class ActionView extends Group {
    * Pickup presentation is independent of the player's carried weapons, including an empty rack. */
   private updatePickups(): void {
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) {
+      const { x, z } = entity.transform;
+      const support = this.ground?.(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0;
       let pickup = this.pickups.get(entity.id);
       if (!pickup) {
-        const def = action(entity.pickup.actionId), source = this.model(def);
-        if (!source) continue;
-        const rest = new Group(); rest.add(source.clone(true));
-        const bounds = new Box3().setFromObject(rest, true), size = bounds.getSize(new Vector3());
-        // The thin axis is perpendicular to the broad resting face. This covers both
-        // long +X guns/blades and upright +Y tools without a shared floating pose.
-        if (size.z <= size.x && size.z <= size.y) rest.rotation.x = Math.PI / 2;
-        else if (size.x <= size.y) rest.rotation.z = Math.PI / 2;
-        bounds.setFromObject(rest, true);
-        rest.position.set(-(bounds.min.x + bounds.max.x) / 2, -bounds.min.y, -(bounds.min.z + bounds.max.z) / 2);
         const group = new Group(), marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
-        marker.position.y = .018; if (entity.pickup.surfaceY !== undefined) marker.scale.setScalar(.5); group.add(rest, marker); pickup = group;
+        marker.renderOrder = 94; marker.position.y = .018;
+        if (entity.pickup.surfaceY !== undefined && entity.pickup.surfaceY > support + .05) marker.scale.setScalar(.5);
+        group.add(marker); pickup = group;
         this.pickups.set(entity.id, pickup); this.add(pickup);
       }
-      const { x, z } = entity.transform;
-      pickup.position.set(x, entity.pickup.surfaceY ?? this.ground?.(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0, z);
+      // The marker is usable while the weapon GLB streams; loading art must not hide the pickup.
+      if (!pickup.getObjectByName('pickup-rest')) {
+        const source = this.model(action(entity.pickup.actionId));
+        if (source) {
+          const rest = new Group(); rest.name = 'pickup-rest'; rest.add(source.clone(true));
+          const bounds = new Box3().setFromObject(rest, true), size = bounds.getSize(new Vector3());
+          // Rest the thin axis on the paving for both long guns and upright tools.
+          if (size.z <= size.x && size.z <= size.y) rest.rotation.x = Math.PI / 2;
+          else if (size.x <= size.y) rest.rotation.z = Math.PI / 2;
+          bounds.setFromObject(rest, true);
+          rest.position.set(-(bounds.min.x + bounds.max.x) / 2, -bounds.min.y, -(bounds.min.z + bounds.max.z) / 2);
+          pickup.add(rest);
+        }
+      }
+      pickup.position.set(x, entity.pickup.surfaceY ?? support, z);
       pickup.rotation.y = entity.transform.yaw;
     }
     for (const [id, model] of this.pickups) {

@@ -1,0 +1,193 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 77s, 25485 files; job /srv/mi/jobs/collision-placement-9aa6d4-84363-1792420966; queueing for a slot
+[runner] slot 0 acquired; load 3.16 5.32 6.09
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-84363-1792420966
+
+stdout | tests/levels/L4-perimeter.test.ts > @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate
+{"gate":"l4-plaza-1m","phase":"ride","sampled":722,"failures":0}
+{"gate":"l4-plaza-1m","phase":"plaza","sampled":650,"failures":0}
+{"gate":"l4-plaza-1m","phase":"hold/war","sampled":650,"failures":0}
+
+ ✓  functional  tests/levels/L4-perimeter.test.ts (1 test) 25168ms
+   ✓ @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate 25166ms
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'high',
+  seconds: 81.33333333333333,
+  metres: 348.9428735075568,
+  routeMetres: 311,
+  walkingSeconds: 155.5,
+  engaged: 11,
+  perMinute: 8.114754098360656,
+  bins15s: [ 1, 2, 5, 3, 1, 2 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -10.972354888916016,
+      z: -6.536031723022461,
+      slots: 106,
+      groups: []
+    },
+    {
+      second: 15,
+      x: -5.105463027954102,
+      z: 29.535825729370117,
+      slots: 108,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 41.83811569213867,
+      z: 44.8266716003418,
+      slots: 112,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 48.49080276489258,
+      z: -10.836752891540527,
+      slots: 114,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: 11.37063217163086,
+      z: -37.361167907714844,
+      slots: 118,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -56.06521987915039,
+      z: -38.77138137817383,
+      slots: 120,
+      groups: [Array]
+    }
+  ],
+  peak: 120,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 78.7 },
+    { type: 'l4.lineBreaks', t: 268.8333333333333 },
+    { type: 'objective:hold', t: 268.8333333333333 },
+    { type: 'l4.heliWithdrawn', t: 275.8333333333333 },
+    { type: 'l4.descended', t: 350.18333333333334 },
+    { type: 'objective:hide', t: 350.18333333333334 },
+    { type: 'l4.doorBarred', t: 351.51666666666665 },
+    { type: 'objective:bar', t: 351.51666666666665 },
+    { type: 'objective:wait', t: 358.51666666666665 }
+  ],
+  totalSeconds: 358.51666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'low',
+  seconds: 80.91666666666667,
+  metres: 340.1879627266373,
+  routeMetres: 305,
+  walkingSeconds: 152.5,
+  engaged: 19,
+  perMinute: 14.088568486096806,
+  bins15s: [ 2, 2, 2, 7, 5, 1 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -9.755097389221191,
+      z: -6.745187282562256,
+      slots: 48,
+      groups: []
+    },
+    {
+      second: 15,
+      x: -4.088242053985596,
+      z: 27.599422454833984,
+      slots: 54,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 47.37939453125,
+      z: 44.61142349243164,
+      slots: 56,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 48.49394989013672,
+      z: -18.503862380981445,
+      slots: 57,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: 5.353759765625,
+      z: -36.25870132446289,
+      slots: 59,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -57.18315124511719,
+      z: -38.866180419921875,
+      slots: 60,
+      groups: [Array]
+    }
+  ],
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 78.7 },
+    { type: 'l4.lineBreaks', t: 268.8333333333333 },
+    { type: 'objective:hold', t: 268.8333333333333 },
+    { type: 'l4.heliWithdrawn', t: 275.8333333333333 },
+    { type: 'l4.descended', t: 349.76666666666665 },
+    { type: 'objective:hide', t: 349.76666666666665 },
+    { type: 'l4.doorBarred', t: 351.51666666666665 },
+    { type: 'objective:bar', t: 351.51666666666665 },
+    { type: 'objective:wait', t: 358.51666666666665 }
+  ],
+  totalSeconds: 358.51666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+ ✓  functional  tests/levels/L4-finale-pressure.test.ts (2 tests) 125220ms
+   ✓ PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap 125216ms
+ ✓  functional  tests/levels/L4-collapse.test.ts (4 tests) 212201ms
+   ✓ L4 collapse director (4)
+     ✓ T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 66356ms
+     ✓ T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier 61940ms
+     ✓ T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows 52199ms
+     ✓ T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps 31704ms
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  14:48:01
+   Duration  215.65s (tests 98%, transform 2%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 77s, remote total 454s)

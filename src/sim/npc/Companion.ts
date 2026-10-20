@@ -1,13 +1,17 @@
+import { actorRadius } from '../world/SolidRegistry';
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
 import { motionLimits } from '../locomotion/MotionResponse';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+const doorSides = [0, .5, -.5, .25, -.25, ...Array.from({ length: 56 }, (_, i) => Math.ceil((i + 1) / 2) * .15 * (i % 2 ? -1 : 1))];
 const approaching = new Set(['chase', 'attack', 'alerted', 'migration']);
 /** Immune hero: courage replaces HP, path seeking is shared with E07, with no player collider. */
 export class Companion {
   private readonly target = { x: 0, z: 0 };
+  private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
+  private yieldUntil = 0;
   constructor(readonly world: SimWorld) {
     world.events.on('combat.effect', event => {
       if (event.type !== 'combat.effect' || event.actionId !== 'ability.corgi-lure') return;
@@ -39,6 +43,7 @@ export class Companion {
    * toward the courier facing away). Snap it next to her, facing her, with a clean motion state.
    */
   respawnNear(): void {
+    this.courierProgress.x = NaN; this.yieldUntil = 0;
     const player = this.world.entities.get(1)!.transform, nav = this.world.infected!.nav;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
@@ -51,6 +56,33 @@ export class Companion {
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }
+  /** Close behind the whole party. A bounded relocation briefly hides the dog at a sealed threshold. */
+  insideBeforeClosing(door: { x: number; z: number }, inside: { x: number; z: number } = this.world.entities.get(1)!.transform, halfThickness = .2): boolean {
+    const dx = inside.x - door.x, dz = inside.z - door.z, length = Math.hypot(dx, dz);
+    const nx = dx / (length || 1), nz = dz / (length || 1);
+    for (const e of this.world.entities.iterate()) {
+      const c = e.companion;
+      if (!c || e.passengerOf !== undefined || e.health.current <= 0) continue;
+      if (length < .05) return false;
+      const spine = .4 * Math.abs(Math.cos(e.transform.yaw) * nx - Math.sin(e.transform.yaw) * nz);
+      if ((e.transform.x - door.x) * nx + (e.transform.z - door.z) * nz + .001 >= actorRadius(e) + spine + halfThickness) continue;
+      const yaw = e.transform.yaw; e.transform.yaw = -Math.atan2(nz, nx);
+      let placed = false;
+      for (let depth = 0; depth <= 4.8; depth += .15) for (const side of doorSides) {
+        if (placed) break;
+        const distance = actorRadius(e) + .4 + halfThickness + .01 + depth;
+        const at = { x: door.x + nx * distance - nz * side, z: door.z + nz * distance + nx * side, y: e.transform.y };
+        if (Math.hypot(at.x - inside.x, at.z - inside.z) < .8) continue;
+        at.y = .3 + (this.world.districts?.groundHeight(at.x, at.z) ?? 0);
+        if (!this.world.solids.relocate(e, at, 'companion.door', 0, false)) continue;
+        c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.pickup = null; c.following = false; c.velocity = { x: 0, z: 0 };
+        delete e.locomotion; delete e.motion;
+        c.transitionUntil = this.world.tick + 12; this.yieldUntil = 0; e.hidden = true; placed = true; break;
+      }
+      if (!placed) { e.transform.yaw = yaw; return false; }
+    }
+    return true;
+  }
   /** Warning-only companions leave loot in place; health pickups are useful only while hurt.
    * Recheck pending fetches too: healing or restoring a checkpoint can invalidate the target. */
   private canFetch(entity: EntitySnapshot | undefined, player: EntitySnapshot): boolean {
@@ -60,10 +92,20 @@ export class Companion {
     return pickup.armed && !pickup.interactTicks && !pickup.retain;
   }
   update(): void {
-    const player = this.world.entities.get(1)!, ai = this.world.infected!;
+    const player = this.world.entities.get(1)!, ai = this.world.infected!, progress = this.courierProgress;
+    const speed = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0);
+    if (this.world.tick < progress.tick) this.yieldUntil = 0;
+    if (speed <= .5 || this.world.tick < progress.tick || !Number.isFinite(progress.x) || Math.hypot(player.transform.x - progress.x, player.transform.z - progress.z) > .05) {
+      progress.x = player.transform.x; progress.z = player.transform.z; progress.tick = this.world.tick;
+    }
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
-      if (this.world.missions?.l8?.companion(e)) continue;
+      if (c.transitionUntil !== undefined) {
+        if (this.world.tick < c.transitionUntil) continue;
+        delete c.transitionUntil; e.hidden = false; this.world.solids.admit(e, 'companion.door-arrival', 1, false);
+      }
+      const mission = this.world.missions;
+      if (mission?.l8?.companion(e)) continue;
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
@@ -111,9 +153,16 @@ export class Companion {
           // Lead by the response time: waiting for the courier to be far away before accelerating loses her at a run.
           // Brief l3-polish (the corgi ran inside the horde pack on the L3 ramp): with infected at its heels it runs at the courier's
           // side, a little ahead, instead of trailing into the pursuers behind her.
-          const lead = this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : .25;
+          // A pet in front must walk on, rather than stop within its usual follow band
+          // and seal the departing courier's physical route.
+          const ahead = !riding && playerSpeed > .5 && distance < 2.5 &&
+            (e.transform.x - player.transform.x) * velocity!.x + (e.transform.z - player.transform.z) * velocity!.z > distance * playerSpeed * .5;
+          // Change the normal following route only after actual courier progress stalls.
+          if (ahead && this.world.tick - progress.tick >= 6) this.yieldUntil = this.world.tick + 30;
+          const yielding = ahead && this.world.tick < this.yieldUntil;
+          const lead = yielding ? (distance + 1.5) / playerSpeed : this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : .25;
           this.target.x = player.transform.x + (velocity?.x ?? 0) * lead; this.target.z = player.transform.z + (velocity?.z ?? 0) * lead;
-          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : 2);
+          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : yielding ? .5 : 2);
         }
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }

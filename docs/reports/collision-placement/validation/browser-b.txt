@@ -1,0 +1,164 @@
+
+Running 63 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/cellar-position.spec.ts:46:3 › Kessler cellar position › T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures) (30.1s)
+  ✓   2 [chromium] › tests/e2e/levels/cellar-position.spec.ts:79:3 › Kessler cellar position › T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane (14.4s)
+  ✓   3 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 1 (22.3s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 0.5 (19.9s)
+  ✓   5 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 1.5 (20.2s)
+  ✓   6 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 1 (9.9s)
+  ✓   7 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 0.5 (9.7s)
+  ✓   8 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 1.5 (10.0s)
+  ✓   9 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu high zoom 1 (19.9s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu high zoom 1.5 (20.1s)
+  ✓  11 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu low zoom 1 (9.3s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu low zoom 1.5 (9.5s)
+  ✓  13 [chromium] › tests/e2e/levels/L4.spec.ts:107:3 › L4 The Safe City Falls in the browser › T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds (13.7s)
+  ✘  14 [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (1.9m)
+  ✘  15 [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (retry #1) (1.9m)
+  ✓  16 [chromium] › tests/e2e/levels/L4.spec.ts:202:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (8.3s)
+  ✓  17 [chromium] › tests/e2e/levels/L4.spec.ts:222:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (13.7s)
+  ✓  18 [chromium] › tests/e2e/levels/L4.spec.ts:222:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (13.9s)
+  ✓  19 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgl high zoom 1 (14.1s)
+  ✓  20 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgl high zoom 0.5 (14.9s)
+  ✓  21 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgl low zoom 1 (5.9s)
+  ✓  22 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgl low zoom 0.5 (6.0s)
+  ✓  23 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgpu high zoom 1 (14.6s)
+  ✓  24 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgpu high zoom 0.5 (15.2s)
+  ✓  25 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgpu low zoom 1 (5.3s)
+  ✓  26 [chromium] › tests/e2e/levels/l4-barricade-prompts.spec.ts:6:3 › @E22 no army-line rebuild prompts webgpu low zoom 0.5 (5.5s)
+  ✓  27 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl) (19.6s)
+  ✓  28 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu) (19.9s)
+  ✘  29 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl) (21.8s)
+  ✘  30 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl) (retry #1) (21.7s)
+  ✓  31 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu) (20.1s)
+  ✓  32 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl) (20.0s)
+  ✓  33 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu) (20.2s)
+  ✓  34 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgl high zoom 1 (14.2s)
+  ✓  35 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgl high zoom 0.5 (13.6s)
+  ✓  36 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgl low zoom 1 (4.6s)
+  ✓  37 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgl low zoom 0.5 (5.2s)
+  ✓  38 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgpu high zoom 1 (12.6s)
+  ✓  39 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgpu high zoom 0.5 (13.5s)
+  ✓  40 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgpu low zoom 1 (4.4s)
+  ✓  41 [chromium] › tests/e2e/levels/l4-cellar-guidance.spec.ts:11:3 › @E22 line-broken cellar guidance webgpu low zoom 0.5 (4.7s)
+  ✓  42 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 1 (17.9s)
+  ✓  43 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgl high zoom 1 (18.2s)
+  ✓  44 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgl high zoom 1 (18.1s)
+  ✓  45 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 0.5 (17.2s)
+  ✓  46 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgl high zoom 0.5 (17.7s)
+  ✓  47 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgl high zoom 0.5 (18.4s)
+  ✓  48 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 1 (8.1s)
+  ✓  49 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgl low zoom 1 (9.5s)
+  ✓  50 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgl low zoom 1 (9.8s)
+  ✓  51 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 0.5 (8.4s)
+  ✓  52 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgl low zoom 0.5 (10.0s)
+  ✓  53 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgl low zoom 0.5 (10.1s)
+  ✓  54 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 1 (17.4s)
+  ✓  55 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 1 (18.4s)
+  ✓  56 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgpu high zoom 1 (18.4s)
+  ✓  57 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5 (17.7s)
+  ✓  58 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgpu high zoom 0.5 (17.7s)
+  ✓  59 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5 (18.2s)
+  ✓  60 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 1 (8.0s)
+  ✓  61 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 1 (9.5s)
+  ✓  62 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgpu low zoom 1 (9.5s)
+  ✓  63 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5 (8.9s)
+  ✓  64 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 war: mouse WASD stick webgpu low zoom 0.5 (10.4s)
+  ✓  65 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:62:3 › @E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5 (10.6s)
+
+
+  1) [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)
+
+    Error: one colour fills the frame at x=61.9 z=27.5 (courierRig,Scene,Scene,Scene,Scene)
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.4
+    Received:   0.41
+
+      90 |   else expect(frames.at(-1)!.x, 'walked east toward the original roof band').toBeGreaterThan(66);
+      91 |   for (const f of frames) {
+    > 92 |     expect(f.dominant, `one colour fills the frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)} (${f.hits.join(',')})`).toBeLessThan(walk.maxDominant);
+         |                                                                                                                       ^
+      93 |     expect(f.sd, `flat frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)}`).toBeGreaterThan(20);
+      94 |   }
+      95 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/l4-blank-viewport.spec.ts:92:119
+
+    Error Context: test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: one colour fills the frame at x=62.1 z=27.5 (courierRig,Scene,Scene,Scene,Scene)
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.4
+    Received:   0.406
+
+      90 |   else expect(frames.at(-1)!.x, 'walked east toward the original roof band').toBeGreaterThan(66);
+      91 |   for (const f of frames) {
+    > 92 |     expect(f.dominant, `one colour fills the frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)} (${f.hits.join(',')})`).toBeLessThan(walk.maxDominant);
+         |                                                                                                                       ^
+      93 |     expect(f.sd, `flat frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)}`).toBeGreaterThan(20);
+      94 |   }
+      95 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/l4-blank-viewport.spec.ts:92:119
+
+    Error Context: test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3531/e2e-levels-l4-blank-viewpo-29b51-port-one-flat-colour-webgl--chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras
+
+    Error: Could not travel to {"x":-44,"z":-37.4} from {"x":-3.3936901092529297,"y":0.8500000238418579,"z":40.88429260253906,"yaw":-1.958208391202605} {"hp":67,"deaths":4,"near":1}
+
+      91 |     }
+      92 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    > 93 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
+         |           ^
+      94 |   };
+      95 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      96 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:93:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:188:31
+
+    Error Context: test-results/playwright/run-3531/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: Could not travel to {"x":-44,"z":-37.4} from {"x":-3.3936901092529297,"y":0.8500000238418579,"z":40.88429260253906,"yaw":-1.958208391202605} {"hp":67,"deaths":4,"near":1}
+
+      91 |     }
+      92 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    > 93 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
+         |           ^
+      94 |   };
+      95 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      96 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:93:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement/tests/e2e/levels/L4.spec.ts:188:31
+
+    Error Context: test-results/playwright/run-3531/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium-retry1/error-context.md
+
+  Slow test file: [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts (5.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  2 failed
+    [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)
+    [chromium] › tests/e2e/levels/L4.spec.ts:132:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras
+  61 passed (18.5m)

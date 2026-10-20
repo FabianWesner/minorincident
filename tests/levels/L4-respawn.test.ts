@@ -41,7 +41,7 @@ test('L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from
     if (n < 2) runL4(world, l.mission, 'complete', { maxSeconds: 3 });
   }
   const result = runL4(world, l.mission, 'complete', { maxSeconds: 180 });
-  expect(result.outcome).toBe('complete');
+  expect(result.outcome, JSON.stringify({ phase: l.mission.state.l4!.phase, checkpoint: l.mission.state.checkpoint, player: world.entities.get(1)!.transform, dog: world.entities.values().filter(e => e.companion).map(e => ({ at: e.transform, hidden: e.hidden, pending: e.pendingAdmission })), deaths: result.deaths, timeline: result.timeline })).toBe('complete');
   expect(l.mission.state.l4!.descendAt).toBeGreaterThan(0);
   expect(l.mission.state.stats.deaths).toBeGreaterThanOrEqual(3);
 }, HEAVY);

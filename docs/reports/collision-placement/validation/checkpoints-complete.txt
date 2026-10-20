@@ -1,0 +1,92 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 75s, 25767 files; job /srv/mi/jobs/collision-placement-9aa6d4-95622-1792419452; queueing for a slot
+[runner] slot 1 acquired; load 8.04 8.12 6.97
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-95622-1792419452
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L1: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L1","checkpoints":["start","accident","bat"],"declared":["accident","bat"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L2: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L2","checkpoints":["start","axe","doors","escape","cluster"],"declared":["axe","doors","escape","cluster"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L3: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L3","checkpoints":["start","armory","fallback","segment-2","segment-2b","segment-3","segment-3b"],"declared":["armory","fallback","segment-2","segment-2b","segment-3","segment-3b"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L4: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L4","checkpoints":["start","arrival","turn","line-1","nests","armor","line-break"],"declared":["arrival","turn","line-1","nests","armor","line-break"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L6: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L6","checkpoints":["shelter","start","abandon","mid-tunnel","exit-platform"],"declared":["shelter","abandon","mid-tunnel","exit-platform"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L7: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L7","checkpoints":["night-exit","start","rocket","corridor"],"declared":["night-exit","rocket","corridor"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L8: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L8","checkpoints":["sanctuary","start","breach","escape-route"],"declared":["sanctuary","breach","escape-route"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L9: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L9","checkpoints":["crossing-start","start","outskirts-approach"],"declared":["crossing-start","outskirts-approach"]}
+
+ ❯  functional  tests/levels/start-checkpoint-clearance.test.ts (10 tests | 2 failed) 819562ms
+   ✓ L1: every player start and reached checkpoint has no NPC within 0.8 m 29467ms
+   ✓ L2: every player start and reached checkpoint has no NPC within 0.8 m 49813ms
+   ✓ L3: every player start and reached checkpoint has no NPC within 0.8 m 134597ms
+   ✓ L4: every player start and reached checkpoint has no NPC within 0.8 m 113893ms
+   × L5: every player start and reached checkpoint has no NPC within 0.8 m 118091ms
+   ✓ L6: every player start and reached checkpoint has no NPC within 0.8 m 40691ms
+   ✓ L7: every player start and reached checkpoint has no NPC within 0.8 m 234550ms
+   ✓ L8: every player start and reached checkpoint has no NPC within 0.8 m 32867ms
+   ✓ L9: every player start and reached checkpoint has no NPC within 0.8 m 13753ms
+   × L10: every player start and reached checkpoint has no NPC within 0.8 m 51834ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/start-checkpoint-clearance.test.ts > L5: every player start and reached checkpoint has no NPC within 0.8 m
+AssertionError: {"objective":"metro","detail":"tick-budget: Lead the survivors to the metro station","player":{"x":38.191627502441406,"z":-50.035797119140625},"distance":5.849918700247881,"actors":{}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/levels/start-checkpoint-clearance.test.ts:34:60
+     32|     inspected = true;
+     33|   });
+     34|   expect(report.completed, JSON.stringify(report.blocker)).toBe(true);
+       |                                                            ^
+     35|   expect(inspected).toBe(true);
+     36| }, 900_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/levels/start-checkpoint-clearance.test.ts > L10: every player start and reached checkpoint has no NPC within 0.8 m
+AssertionError: {"objective":"destroyed-corridor","detail":"tick-budget: Carry the cure down the corridor and grab the rocket launcher","player":{"x":2838.9697265625,"z":-3.324894666671753},"distance":98.04458418550595,"actors":{}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/levels/start-checkpoint-clearance.test.ts:34:60
+     32|     inspected = true;
+     33|   });
+     34|   expect(report.completed, JSON.stringify(report.blocker)).toBe(true);
+       |                                                            ^
+     35|   expect(inspected).toBe(true);
+     36| }, 900_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 8 passed (10)
+   Start at  14:23:49
+   Duration  825.38s (tests 99%, transform 1%)
+
+JSON report written to /srv/mi/jobs/collision-placement-9aa6d4-95622-1792419452/test-results/collision-placement/checkpoints-final.json
+[remote] pulled test-results/collision-placement/checkpoints-final.json
+[remote] done exit=1 (runner 94.130.181.173, sync 75s, remote total 1130s)

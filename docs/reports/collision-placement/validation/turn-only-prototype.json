@@ -1,0 +1,31 @@
+{
+  "numTotalTests": 161,
+  "numPassedTests": 159,
+  "numFailedTests": 2,
+  "numPendingTests": 0,
+  "success": false,
+  "failures": [
+    {
+      "file": "levels/L2-finale-pressure.test.ts",
+      "assertions": [
+        {
+          "name": "PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival",
+          "messages": [
+            "AssertionError: expected 2 to be less than or equal to 1\n    at /srv/mi/jobs/collision-placement-9aa6d4-9276-1792431926/tests/levels/L2-finale-pressure.test.ts:66:58\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-9276-1792431926/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L6.test.ts",
+      "assertions": [
+        {
+          "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+          "messages": [
+            "AssertionError: expected 0.1724137931034483 to be greater than or equal to 0.4\n    at /srv/mi/jobs/collision-placement-9aa6d4-9276-1792431926/tests/levels/L6.test.ts:76:229\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-9276-1792431926/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    }
+  ]
+}

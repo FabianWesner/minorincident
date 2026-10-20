@@ -1,0 +1,52 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 57s, 25513 files; job /srv/mi/jobs/collision-placement-9aa6d4-23482-1792432362; queueing for a slot
+[runner] slot 1 acquired; load 2.53 3.36 3.74
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-23482-1792432362
+
+ ✓  functional  tests/levels/collision-placement.test.ts > L4 perimeter rejects placement and swept passage for every actor kind 14743ms
+ ✓  functional  tests/levels/collision-placement.test.ts > NPC spawn admission leaves 0.8 m around a reserved player start 633ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L1 shutter brings an outside companion inside before sealing, with a short transition 675ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L3 all four ramp rail joints meet visible solid caps within 2 cm 1228ms
+ ✓  functional  tests/levels/collision-placement.test.ts > a wide door uses its normal to bring in a companion when the courier stands off centre 13ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L3 companion occupies its visible footprint and stays outside courier and reported solids 2144ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L5 companion occupies its visible footprint and stays outside courier and reported solids 581ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L7 high start has separate visible survivor bodies at tick 66 877ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L7 low start has separate visible survivor bodies at tick 66 854ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 492ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion head and rear clear solids even when the central circle is outside 4ms
+ ✓  functional  tests/levels/collision-placement.test.ts > committed contact cells retain the corgi head clearance from the courier 4ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion head contact projects onto the solid face while retaining forward progress 3ms
+ ✓  functional  tests/levels/collision-placement.test.ts > the corgi clears its supporting floor while a raised barrier still blocks its body 3ms
+ ✓  functional  tests/levels/collision-placement.test.ts > the Metro lookout leaves an interior right-lane slot for the complete corgi capsule 562ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion routes reserve the full body around posts and fall back to body width at narrow doors 4ms
+ ✓  functional  tests/levels/collision-placement.test.ts > a companion ahead of a departing courier walks on instead of sealing the route 3ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer 3241ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band 176238ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2 101179ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition 101560ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start 1ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs) 1ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit 3116ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view 0ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back 8599ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station 25517ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag 0ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports 1ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 % 1ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines 0ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded 0ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them 60431ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP 1675ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression 202905ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits 110252ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-bots @E21 evade-only never attacks and still reaches the army zone 629906ms
+ ✓  functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-segments @E21 segment helper matches the corridor bounds 0ms
+
+ Test Files  2 passed (2)
+      Tests  38 passed (38)
+   Start at  17:56:36
+   Duration  1429.70s (tests 99%, transform 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 57s, remote total 1608s)
