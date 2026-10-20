@@ -228,10 +228,10 @@ def around(axis_f, z_of, a_center, a_half, closed=False):
         return p, e1 * math.cos(a) + e2 * math.sin(a)
     return rays
 
-def dome(center, e_az, e_up, e_out, az_half, el0, el1):
+def dome(center, e_az, e_up, e_out, az_half, el0, el1, az0=0.0):
     """Spherical patch from a point: s = elevation el0..el1 (deg) from the horizontal plane (e_az, e_out), t = azimuth +-az_half."""
     def rays(s, t):
-        el = math.radians(el0 + (el1 - el0) * s); az = math.radians(az_half * (2 * t - 1))
+        el = math.radians(el0 + (el1 - el0) * s); az = math.radians(az0 + az_half * (2 * t - 1))
         d = e_out * math.cos(el) * math.cos(az) + e_az * math.cos(el) * math.sin(az) + e_up * math.sin(el)
         return center, d
     return rays
@@ -259,7 +259,7 @@ def build_gear(body, lod, sex):
         """A plate follows only its own limb's bones (never the other side, never the torso): everything else folds into `fallback`."""
         return {name: fallback for name in body.names if name not in allowed}
     ARMS = {'armL': 'chest', 'armR': 'chest', 'elbowL': 'chest', 'elbowR': 'chest', 'clavicleL': 'chest', 'clavicleR': 'chest', 'foreArmL': 'chest', 'foreArmR': 'chest'}
-    STEEL, DARK, TRIM = 'pantsDark', 'uiDark', 'pantsLight'
+    STEEL, DARK, TRIM = 'pantsDark', 'uiDark', '#6d6a78'   # one mid-grey rim for every pad
 
     # ---- tier 1: knee pads (bulged cap with a silver rim), fingerless gloves -----------------------------------------
     for side in 'LR':
@@ -308,13 +308,14 @@ def build_gear(body, lod, sex):
             bvh=body.bvh_nopack, cell_color=lambda i, j, R, C: 'brass' if j == 0 else 'leather', median=True, shade=.5)
     g.tier_mark()
 
-    # ---- tier 4: helmet shell over the cap (dark grey dome, orange stripe, orange lip), forearm guards -------------------
+    # ---- tier 4: survivor goggles on the cap (dark strap above the brim, two teal lenses with silver rims), forearm guards ---------
     head = bones['head']; hc = Vector((0.0, 0, head[1].z - .03))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
-    helmet_cols = n(12, 4)
-    g.patch(STEEL, dome(hc, yleft, zup, xfwd, 150, 38, 90), lambda s, t: .034 * (.45 + .55 * smooth01(s / .35)) * (.7 + .3 * smooth01(math.sin(math.pi * t) / .5)),
-            n(5, 3), helmet_cols, outer=.6, rim='schoolBusYellow', rim_top=False, rim_sides=False, remap=only({'head', 'neck'}, 'head'),
-            cell_color=lambda i, j, R, C: 'schoolBusYellow' if abs(j - (C - 1) / 2) < .6 and i > 0 else STEEL)
+    g.patch(DARK, dome(hc, yleft, zup, xfwd, 150, 31, 39), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
+            rim=None, remap=only({'head', 'neck'}, 'head'))
+    for az0 in (-22, 22) if lod < 2 else ():
+        g.patch('tealLight', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver',
+                remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
         fz = bones['foreArm' + side][0].z
