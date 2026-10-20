@@ -75,7 +75,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
-  let navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
+  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
   const levelDeadline = () => wallStart + o.levelMinutes * 60_000;
@@ -100,22 +100,25 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
 
   // --- combat and following ---
-  let engaged: { id: number; hp: number; since: number } | null = null;
-  const ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
+  const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
-    const reach = ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
+    // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
+    const lostTime = (Date.now() - lastProgress.wall) / 1000 > 30;
+    const reach = lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (unarmed ? undefined : e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => Math.hypot(a.x - b.x, a.z - b.z) < 2.5)));
-    if (!threat) { if (keysDown.has('Space')) await press([]); engaged = null; return false; }
-    if (!engaged || engaged.id !== threat.id) engaged = { id: threat.id, hp: threat.hp, since: Date.now() };
-    else if (threat.hp < engaged.hp) { engaged.hp = threat.hp; engaged.since = Date.now(); }
-    else if (Date.now() - engaged.since > 8000) {
+    if (!threat) { if (keysDown.has('Space')) await press([]); return false; }
+    // Time spent on a target without hurting it accumulates across target switches.
+    const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
+    if (threat.hp < seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
+    seen.last = now; shotAt.set(threat.id, seen);
+    if (seen.ms > 8000) {
       // A target that takes no damage for 8 s is unreachable (behind a fence) or ignores hits: note it, walk on.
       ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp });
       if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
-      engaged = null; return false;
+      return false;
     }
     if (threat.d > reach) { // walk toward the ally's attacker
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
@@ -146,7 +149,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!e.marker || !e.marker.visible) return null;
     if (!e.marker.offscreen) {
       // The DOM diamond floats 1.8 m above the anchor; click the ring on the ground under it.
-      if (ring) { const p = await page.evaluate(r => window.__SS__!.input.project(r, 'destination'), ring); return p; }
+      if (ring && e.player && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) < 40) return page.evaluate(r => window.__SS__!.input.project(r, 'destination'), ring);
       return { x: e.marker.x, y: e.marker.y + 40 };
     }
     const cx = e.view.w / 2, cy = e.view.h / 2;
@@ -208,7 +211,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.phase === 'playing' && run) for (const [ms, tick] of frames) if (ms > 200) { log({ hitch: ms, tick, level: e.level }); if (ms > 500) await issue(ms > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(ms)} ms at tick ${tick}`, false); }
 
     if (e.level && e.level !== lastLevel && e.phase && e.phase !== 'result') {
-      if (lastLevel && run && !run.finished) { log({ levelLeftUnfinished: lastLevel }); }
+      if (lastLevel && run && !run.finished) { log({ handoverWithoutResult: lastLevel }); await finishLevel({ ...e, level: lastLevel }); }
       if (lastLevel && o.stopAfterLevel) { log({ handover: lastLevel, to: e.level }); break; }
       lastLevel = e.level; levelIndex = o.levels.indexOf(e.level);
       if (levelIndex < 0) { log({ beyondRange: e.level }); break; }
@@ -264,7 +267,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await watchAllies(e);
 
     // Stuck ladder: 20 s confusion (issue), 60 s try E, 120 s state assist, levelMinutes cap → skip step.
-    const atRing = e.distance !== null && e.distance < 4;
+    // The HUD distance can point at a moving guidance waypoint (L3 l3-route); the ring itself decides "at the ring".
+    const ringDist = ring && e.player ? Math.hypot(ring.x - e.player.x, ring.z - e.player.z) : e.distance;
+    const atRing = ringDist !== null && ringDist < 4;
     if (stuckSim > 20 && stuckWall > 20) {
       const tag = `${key}|${atRing ? 'ring' : 'nav'}`;
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
@@ -292,15 +297,38 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Prompts near the objective (or naming it) get E; side prompts (push a dumpster) are ignored like a player would.
     const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover/i.test(e.prompt));
     if (relevant && Date.now() - lastE > 2500) { lastE = Date.now(); log({ prompt: e.prompt, tick: e.tick }); await press([]); await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE'); continue; }
-    if (!g) { await press([]); await hold(200); continue; }
-    const arrived = atRing && e.distance! < 1.2;
+    if (!g && !e.marker?.visible) {
+      // No ring/arrow: follow what the minimap shows (L5 "Search <place>" cue pin, or the active step's pin).
+      const pin = await page.evaluate(() => {
+        const lab = window.__SCENE__ as unknown as { game?: { world: { entities: Map<number, { transform: { x: number; z: number } }>; missions?: { def: { anchors: Record<string, { x: number; z: number; y?: number }>; steps: { id: string; anchor: string; waypoint?: boolean }[] }; state: { steps: Record<string, { status: string }>; l5?: { phase: string; survivors: { key: string; status: string }[] } } } } } } | undefined;
+        const m = lab?.game?.world.missions, p = lab?.game?.world.entities.get(1)?.transform; if (!m || !p) return null;
+        const cue = document.querySelector<HTMLElement>('[data-survivor]:not([hidden])');
+        if (m.state.l5 && cue) { const a = m.def.anchors[`l5-ring-${cue.dataset.survivor}`]; return a ? { x: a.x, y: a.y ?? 0, z: a.z, from: `minimap cue ${cue.getAttribute('aria-label')}` } : null; }
+        const step = m.def.steps.find(s => m.state.steps[s.id]?.status === 'active' && s.waypoint !== false);
+        const pinEl = step && document.querySelector<HTMLElement>(`[data-testid="mission-pin-${step.id}"]:not([hidden])`);
+        if (step && pinEl) { const a = m.def.anchors[step.anchor]; return a ? { x: a.x, y: a.y ?? 0, z: a.z, from: `minimap pin ${step.id}` } : null; }
+        return null;
+      });
+      if (pin) {
+        if (!ring || Math.hypot(ring.x - pin.x, ring.z - pin.z) > .5) { log({ pinGoal: pin, tick: e.tick }); }
+        ring = { x: pin.x, y: pin.y, z: pin.z };
+        const r = await page.evaluate(q => window.__SS__!.input.project(q, 'destination'), ring);
+        const near = e.player && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) < 25;
+        if (near && Date.now() - lastClick > 900) { const sp = safe(r.x, r.y, e); await clickGround(sp.x, sp.y); lastClick = Date.now(); await hold(150); continue; }
+        if (near) { await hold(150); continue; }
+        // far: fall through to the nav-follow block below with this goal
+      } else { await press([]); await hold(200); continue; }
+    }
+    const arrived = atRing && ringDist! < 1.2;
     // Clicks are not getting closer: the player is lost. Locate via the game's nav grid toward the ring and walk it with WASD (logged).
     const moved = e.player ? Math.hypot(e.player.x - lastPos.x, e.player.z - lastPos.z) : 0;
     if (moved > 2.5 && e.player) { lastPos = { x: e.player.x, z: e.player.z, wall: Date.now() }; }
     // Once lost, keep walking the located route for at least 20 s (clicks led back into the same trap otherwise).
-    const stalled = (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
+    // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
+    const far = ringDist !== null && ringDist > 25;
+    const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
     if (stalled && !atRing && ring && e.player) {
-      if (!navAssist) { navAssist = true; navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; run.assists++; assist('nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
+      if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
       const step = await page.evaluate(({ goal }) => {
         const lab = window.__SCENE__ as unknown as { game?: { world: { entities: Map<number, { transform: { x: number; z: number } }>; infected?: { nav: { steer(p: object, g: object, r: object, rad: number, out: { x: number; z: number }, budget: number, nearest: boolean): boolean } } } } } | undefined;
         const w = lab?.game?.world, p = w?.entities.get(1)?.transform; if (!w?.infected || !p) return null;
@@ -311,6 +339,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         return { dx: to.x - from.x, dy: to.y - from.y };
       }, { goal: ring });
       if (Date.now() - navLog > 3000) { navLog = Date.now(); log({ nav: step, keys: step ? wasdToward(e, e.view.w / 2 + step.dx, e.view.h / 2 + step.dy) : null, at: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1) }, tick: e.tick }); }
+      // The route can run through something solid (a parked car): when the keys do not move us for 3 s, side-step around it.
+      if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: Date.now() };
+      if (step && Date.now() - navPos.wall > 3000) {
+        const sides = [['KeyW'], ['KeyD'], ['KeyS'], ['KeyA'], ['KeyW', 'KeyD'], ['KeyS', 'KeyA'], ['KeyW', 'KeyA'], ['KeyS', 'KeyD']];
+        sideStep = (sideStep + 1) % sides.length; log({ navBlocked: { x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1) }, try: sides[sideStep], tick: e.tick });
+        await press(sides[sideStep]); await hold(1200); await press(wasdToward(e, e.view.w / 2 + step.dx, e.view.h / 2 + step.dy)); await hold(800);
+        navPos.wall = Date.now() - 1500; continue;
+      }
       if (step) { await press(wasdToward(e, e.view.w / 2 + step.dx, e.view.h / 2 + step.dy)); await hold(350); continue; }
       unstickDir = (unstickDir + 1) % 4; await press([['KeyA'], ['KeyD'], ['KeyW'], ['KeyS']][unstickDir]); await hold(700); await press([]); continue;
     }
@@ -322,6 +358,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       continue;
     }
     if (navAssist && !stalled) { navAssist = false; await press([]); log({ navAssistEnd: e.tick }); }
+    if (!g) { await hold(150); continue; }
     if (!arrived && Date.now() - lastClick > 900) {
       await press([]);
       const s = safe(g.x, g.y, e); await clickGround(s.x, s.y); lastClick = Date.now();
