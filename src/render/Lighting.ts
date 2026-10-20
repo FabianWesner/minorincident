@@ -160,7 +160,7 @@ export class Lighting {
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
     this.spot.castShadow = !((name === 'L6-subway' || name === 'L6') && this.quality === 'low');
-    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
+    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.look.setPreset(p.look ?? {});
@@ -258,7 +258,10 @@ export class Lighting {
     if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
     else this.shadowDirection.lerp(this.heroTarget, k).normalize();
     this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
-    this.spot.visible = night && !!light;
+    // PO 10-20 #62 (3-5 s freeze at the headlamp pickup): underground the sun has no intensity, so the subway keeps
+    // the hero spot as its one stable light. Swapping sun -> spot changed the light list, and every material warmed
+    // after loading (streamed survivors, crowd bakes) rebuilt its pipeline at the pickup. Unused, the spot fades to 0.
+    this.spot.visible = this.preset === 'L6-subway' || (night && !!light);
     // Keep castShadow stable: Three disposes its ShadowNode when this flag
     // flips, while cached material graphs can still reference that node.
     // Only the active source is visible, so one shadow map is rendered.
@@ -269,7 +272,7 @@ export class Lighting {
       this.spot.target.position.copy(this.promotionTarget).lerp(this.heroTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ), blend);
       this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
       this.spot.intensity = .001 * this.fieldShadow.value;
-    }
+    } else this.spot.intensity = .001 * this.fieldShadow.value;
     this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low', timeOfDay[this.preset].lampInsects, time);
   }
   /** E27 keeps the survivor's capsule and rim readable inside an active smoke cloud. */
