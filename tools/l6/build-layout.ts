@@ -29,10 +29,10 @@ const swapYZ = (b: { min: number[]; max: number[] }) => {
   const cy = (b.min[1] + b.max[1]) / 2, cz = (b.min[2] + b.max[2]) / 2, hy = (b.max[2] - b.min[2]) / 2, hz = (b.max[1] - b.min[1]) / 2;
   return { min: [b.min[0], cy - hy, cz - hz], max: [b.max[0], cy + hy, cz + hz] };
 };
-const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='metro-main'): Placement => {
+const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='metro-main', sx=1): Placement => {
   const d = worldAssets[assetId]; if (!d) throw new Error(`Unregistered ${assetId}`);
-  const hx = (Math.abs(Math.cos(yaw))*d.dimensions.x+Math.abs(Math.sin(yaw))*d.dimensions.z)/2, hz=(Math.abs(Math.sin(yaw))*d.dimensions.x+Math.abs(Math.cos(yaw))*d.dimensions.z)/2;
-  const p: Placement={id:`l6-${layout.placements.length}`,assetId,position:[x,y,z],yaw,scale:[1,1,1],minTier:0,maxTier:5,allowRoad:false,lightGroup,visualAabb:{min:[x-hx,y,z-hz],max:[x+hx,y+d.dimensions.y,z+hz]}}; layout.placements.push(p);
+  const hx = (Math.abs(Math.cos(yaw))*(d.dimensions.x*sx)+Math.abs(Math.sin(yaw))*d.dimensions.z)/2, hz=(Math.abs(Math.sin(yaw))*(d.dimensions.x*sx)+Math.abs(Math.cos(yaw))*d.dimensions.z)/2;
+  const p: Placement={id:`l6-${layout.placements.length}`,assetId,position:[x,y,z],yaw,scale:[sx,1,1],minTier:0,maxTier:5,allowRoad:false,lightGroup,visualAabb:{min:[x-hx,y,z-hz],max:[x+hx,y+d.dimensions.y,z+hz]}}; layout.placements.push(p);
   // Delivered low floors and stairs are supports; overhead ribs never obstruct planar navigation.
   // Hinged station/exit leaves are owned by the level, separate from fixed structure.
   for (const [i, raw] of ((physicsAssets as Record<string, { boxes: { min: number[]; max: number[] }[] }>)[assetId]?.boxes ?? []).entries()) {
@@ -42,7 +42,7 @@ const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='me
     if (assetId==='int.metro-station' && raw.min[2]<-9 && raw.max[2]>-9 && (Math.abs((raw.min[0]+raw.max[0])/2-10)<1.5 || Math.abs((raw.min[0]+raw.max[0])/2+10)<1.5)) continue;
     if (assetId==='int.metro-exit' && box.max[1]>3.5 && box.max[0]<-3.8) continue;
     const min:[number,number,number]=[Infinity,Infinity,Infinity],max:[number,number,number]=[-Infinity,-Infinity,-Infinity];
-    for(const bx of [box.min[0],box.max[0]]) for(const bz of [box.min[2],box.max[2]]) for(const by of [box.min[1],box.max[1]]) {const q=[x+bx*Math.cos(yaw)+bz*Math.sin(yaw),y+by,z-bx*Math.sin(yaw)+bz*Math.cos(yaw)]; for(let a=0;a<3;a++){min[a]=Math.min(min[a],q[a]);max[a]=Math.max(max[a],q[a]);}}
+    for(const bx of [box.min[0]*sx,box.max[0]*sx]) for(const bz of [box.min[2],box.max[2]]) for(const by of [box.min[1],box.max[1]]) {const q=[x+bx*Math.cos(yaw)+bz*Math.sin(yaw),y+by,z-bx*Math.sin(yaw)+bz*Math.cos(yaw)]; for(let a=0;a<3;a++){min[a]=Math.min(min[a],q[a]);max[a]=Math.max(max[a],q[a]);}}
     const walkable=box.max[1]<=.65 || (assetId==='int.metro-exit' && (box.max[1]-box.min[1]<.35 || (box.max[0]-box.min[0]<.3 && box.min[1]<3.5)));
     layout.colliders.push({id:`${p.id}/fixed-${i}`,aabb:{min,max},walkable,minTier:0,maxTier:5});
   }
@@ -71,8 +71,11 @@ place('util.radio',-4,2+SZ,.6,0,'shelter-camp');
 for(let x=30;x<=246;x+=12) place('prop.emergency-light',x,12,3.2,Math.PI/2,'metro-emergency');
 for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8+SZ,3.2,Math.PI/2,'metro-emergency');
 // Paired barriers narrow each service gate to 2.2 m. Alternating piers break long sight lines every 24 m.
-for(const x of l6.gates) for(const z of [12.65,17.35]) place('prop.jersey-barrier',x,z,.6,Math.PI/2);
-for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) place('prop.jersey-barrier',x,((x-42)/24)%2?17.35:12.65,.6,Math.PI/2);
+// South barriers end at the drawn wall pier face (z 11.5, restored with the swapped boxes above): 2.65 m long
+// (scale .8833) from 11.5 to 14.15, so the gate opening (14.15-15.85) is unchanged.
+const south = (x: number) => place('prop.jersey-barrier',x,12.825,.6,Math.PI/2,'metro-main',2.65/3);
+for(const x of l6.gates) { south(x); place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); }
+for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) { if(((x-42)/24)%2) place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); else south(x); }
 for(const x of l6.gates) for(const z of [13.1,16.9]) place('prop.crates',x-3,z,.6,0,'self');
 // Appended last so the ids of every other placement stay (placement-solids baseline keys on them).
 // One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
