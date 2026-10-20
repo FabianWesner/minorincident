@@ -20,6 +20,8 @@ export const placedLightId = (district: string, origin: readonly number[], place
 export interface PlacedLight {
   id: string; placementId: string; assetId: string; group: string; anchor: LightAnchor;
   position: [number, number, number]; direction: [number, number, number]; ground: number; on: boolean;
+  /** Render-only dressing light (Placement.decorLights). */
+  decor?: boolean;
 }
 /** Build the anchor registry once from the resolved layout, including lights without pools.
  * Parked vehicles use the vehicle owner's headlight/brake/beacon state instead. */
@@ -33,7 +35,7 @@ export function placedLights(world: import('../sim/world/DistrictWorld').Distric
         id: placedLightId(district.id, district.origin, placement.id, anchor.name), placementId: placement.id, assetId: placement.assetId,
         group: anchor.powerGroup === 'self' ? placement.lightGroup : anchor.powerGroup, anchor,
         ...placeAnchor(anchor, [placement.position[0] + district.origin[0], placement.position[1], placement.position[2] + district.origin[1]], placement.yaw, placement.scale),
-        ground: placement.position[1], on: lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(anchor.powerGroup) ? anchor.powerGroup : placement.lightGroup),
+        ground: placement.position[1], ...(placement.decorLights ? { decor: true } : {}), on: lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(anchor.powerGroup) ? anchor.powerGroup : placement.lightGroup),
       });
     }
   }
