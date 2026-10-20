@@ -189,6 +189,8 @@ export type Action =
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { spawnActor: ActorSpec } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
 export type EffectSpec =
   | { metroShutter: number }
+  /** Set the first `hurtFollowers` following survivors (by id) to `fraction` of their max health (bar-rule QA). */
+  | { hurtFollowers: number; fraction: number }
   /** A ground pickup (medkit, soda, ...) at [x, z]: its drawn height is checked by `metrics.grounding`. */
   | { pickup: 'medkit' | 'soda' | 'energy-drink'; at: Point }
   | { weaponPickup: string; at: Point; surfaceY?: number; yaw?: number }
@@ -254,6 +256,10 @@ export interface Expectations {
   seeThroughCutInsideMax?: number;
   /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
+  /** Most world health bars drawn on any sheet frame (QA #37: a survivor group must not carry a bar grid). */
+  healthBarsMax?: number;
+  /** Fewest world health bars drawn on any sheet frame (the bars the player needs stay). */
+  healthBarsMin?: number;
   /** Sheet frames on which the courier draws in the near-camera foreground slice (over every nearer person and prop). 0 outside boss/L7 crowd fixtures. */
   courierForegroundFramesMax?: number;
   /** Within 6 m, Mega / regular Alpha body pixels at identical transform/pose, both outside the courier's intended boss-reveal disc. Use 0.9; courier visibility independently stays >= 0.6. */
