@@ -361,7 +361,9 @@ export class SceneLab {
           // send part of the cast back behind the gate, correctly blocking it.
           if (!world.solids.relocate(e, { x: 99 + index * 1.1, y: 1.3, z: 15 }, 'scene.l6-gate', 1.5)) throw new Error(`Cannot stage L6 gate survivor ${r.key}`);
         }
-        mission.state.l6!.leaderX = 105; mission.state.l6!.leaderZ = 15;
+        // Hold the column at the gate being demonstrated until the courier closes it.
+        // A leader already at 105 guides to the next gate, hiding this gate's panel.
+        mission.state.l6!.leaderX = spec.l6Subway === 'gate' ? 89 : 105; mission.state.l6!.leaderZ = 15;
       }
       if (courier?.at) {
         Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
