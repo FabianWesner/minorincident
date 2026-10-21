@@ -45,14 +45,27 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
       const livingGeometry = internal.batches.get(`${key}:lod2`)!.mesh.geometry, livingBefore = surfaceSignature(livingGeometry);
       if (archetype === 'infected.firefighter') expect(internal.corpseGeometry.get(key)!.userData.corpseSource).toBe(manifest.find(a => a.id === def.asset)!.glb);
       const ids: number[] = [];
-      const causes = ['blast', ...(archetype === 'infected.firefighter' ? [] : ['fire']), 'melee', 'gun', 'mega-assault'];
+      const mega = asset === megaAlpha.asset;
+      const causes = mega ? ['blast', 'cure'] : ['blast', ...(archetype === 'infected.firefighter' ? [] : ['fire']), 'melee', 'gun', 'cure'];
       for (const [index, cause] of causes.entries()) {
         // Spawn a living actor, deliver real Damage events and let the ordinary
         // death timer settle it. No corpse flag, HP or deadAt fixture writes.
         const id = w.infected!.spawn(archetype, { x: 2 + index, z: 2 }, { variant: def.asset }); ids.push(id);
+        if (mega) {
+          const e = w.entities.get(id)!; e.infected!.pursuit = true;
+          e.health.current = e.health.max = megaAlpha.hp;
+        }
         w.scenario = 'L10';
         const hit = { attackId: index + 1, sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 100_000, multiplier: 1, knockback: 0, stagger: 0 };
-        if (cause === 'melee') {
+        if (cause === 'cure') w.combat!.damage.cure(w.entities.get(id)!);
+        else if (mega) {
+          // Exercise the actual boss floor and direct-rocket accounting, rather
+          // than killing an ordinary Alpha that only wears the Mega model.
+          w.combat!.damage.apply({ ...hit, actionId: 'weapon.shotgun', type: 'bullet' });
+          expect(w.entities.get(id)!.health.current).toBe(megaAlpha.hp * megaAlpha.conventionalFloor);
+          for (let rocket = 0; w.entities.get(id)!.health.current > 0 && rocket < 10; rocket++)
+            w.combat!.damage.apply({ ...hit, attackId: 1000 + rocket, actionId: 'weapon.rocket-launcher', type: 'explosive', direct: true });
+        } else if (cause === 'melee') {
           w.combat!.damage.apply({ ...hit, actionId: 'weapon.fire-axe', type: 'melee' });
           expect(w.entities.get(id)!.infected!.recoverAt).toBeGreaterThanOrEqual(0);
           // Ordinary melee remains a recoverable downing. A permanent hit
@@ -62,7 +75,7 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
           w.combat!.damage.apply({ ...hit, actionId: 'weapon.shotgun', type: 'bullet' });
           // Alphas/dogs retain the shotgun recovery rule; a blast finishes them.
           if (w.entities.get(id)!.infected!.recoverAt >= 0) w.combat!.damage.apply({ ...hit, actionId: 'weapon.rocket-launcher', type: 'explosive' });
-        } else w.combat!.damage.apply({ ...hit, actionId: cause === 'fire' ? 'burn' : cause === 'mega-assault' ? 'infected.mega-rocket' : 'weapon.rocket-launcher', type: cause === 'fire' ? 'status' : 'explosive', permanent: true });
+        } else w.combat!.damage.apply({ ...hit, actionId: cause === 'fire' ? 'burn' : 'weapon.rocket-launcher', type: cause === 'fire' ? 'status' : 'explosive', permanent: true });
         w.scenario = 'horde-arena'; // Independent victims; L10 spawn caps need its real district.
       }
       expect(crowd.getGoreState().some(f => f.detached.length === 5), 'the guard must exercise explosive dismemberment').toBe(true);
