@@ -1,0 +1,70 @@
+{
+  "baseline": "56d7e7d16",
+  "functionalTree": "d404c97da",
+  "testFilesIdentical": [
+    "tests/e2e/levels/L6.spec.ts",
+    "tests/e2e/levels/l7-entry.spec.ts"
+  ],
+  "finalStats": {
+    "startTime": "2026-10-21T19:43:57.287Z",
+    "duration": 852377.653,
+    "expected": 53,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  },
+  "baselineStats": {
+    "startTime": "2026-10-21T20:02:18.341Z",
+    "duration": 232853.58099999998,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  },
+  "finalFailures": {
+    "T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"result\"\u001b[39m\nReceived: \u001b[31m\"playing\"\u001b[39m"
+    ],
+    "T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m24\u001b[39m"
+    ],
+    "T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ]
+  },
+  "baselineFailures": {
+    "T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"result\"\u001b[39m\nReceived: \u001b[31m\"playing\"\u001b[39m"
+    ],
+    "T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m24\u001b[39m"
+    ],
+    "T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ],
+    "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death [chromium]": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"corridor\"\u001b[39m\nReceived: \u001b[31m\"rocket\"\u001b[39m"
+    ]
+  }
+}
