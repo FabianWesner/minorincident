@@ -10,6 +10,7 @@ import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
+import { weaponKey } from '../data/weaponKeys';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
@@ -55,6 +56,9 @@ export class Hud {
   private readonly tracker = node('div', 'objective-tracker');
   private readonly weapon = this.weaponIcon();
   private weaponActionId = '';
+  private readonly weaponRack = node('div', 'weapon-rack');
+  private weaponRackSignature = '';
+  private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
@@ -87,6 +91,7 @@ export class Hud {
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
     const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root);
     this.corgiBadge.className = 'hud-corgi-badge';
+    this.weaponRack.className = 'hud-weapon-rack hud-panel'; this.weaponRack.setAttribute('aria-label', 'Carried weapons and number keys');
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
@@ -129,7 +134,7 @@ export class Hud {
     const navigation = node('div', 'radar-navigation'); navigation.className = 'hud-navigation';
     this.weatherIcon.className = 'hud-weather';
     navigation.append(this.map, this.weatherIcon, this.tracker);
-    this.root.append(this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
+    this.root.append(this.weaponRack, this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
   }
   private bar(name: string) {
     const root = node('div', `${name}-bar`), fill = node('div', `${name}-fill`), label = node('span', `${name}-label`);
@@ -315,6 +320,23 @@ export class Hud {
       if (selected) shown = { id: slot.id, name, stats, progress, ammo: slot.magazine, charges: slot.charges, state: slot.reloadUntil > world.tick ? 'reloading' : until > world.tick && stats !== 'Ready' ? 'cooldown' : 'ready' };
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
+    const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
+    const signature = entries.map(entry => entry.id).join(',');
+    if (signature !== this.weaponRackSignature) {
+      this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
+      for (const entry of entries) {
+        const item = node('span', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+        item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
+        icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
+        item.title = `${label(entry.id)}${key === undefined ? '' : ` · ${key}`}`; item.setAttribute('aria-label', item.title);
+        item.append(icon);
+        if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, String(key)); badge.className = 'hud-weapon-key'; item.append(badge); }
+        this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
+      }
+    }
+    const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
+    for (const [id, item] of this.weaponRackItems) attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
+    setHidden(this.weaponRack, !entries.length || this.game.input.scheme === 'touch');
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };
     setHidden(this.weapon.root, !shown || (!player.weapons?.LEFT && !player.weapons?.RIGHT && !mission?.def.l1));
