@@ -36,7 +36,7 @@ test('T-E11-weapon-bridge @E11 @E11-AC08 full catalog pickups reuse E06 replacem
   const id = w.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.katana'); step(w, 1);
   expect(w.entities.get(id)).toBeUndefined(); expect(rack.current('LEFT').id).toBe('weapon.katana');
   const dropped = w.query({ kind: 'pickup' })[0];
-  expect(dropped.pickup).toEqual({ actionId: 'weapon.knife', armed: false });
+  expect(dropped.pickup).toEqual({ actionId: 'weapon.knife', armed: false, dropped: true });
   step(w, 60); expect(rack.current('LEFT').id).toBe('weapon.katana');
   expect(w.events.events().filter(e => e.type === 'pickup.collected' && 'pickupId' in e && e.pickupId === id)).toHaveLength(1);
 });

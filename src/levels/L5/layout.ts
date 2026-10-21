@@ -155,7 +155,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       if (!decal && footprints(p, 0, true).length) obstacles.push(...footprints(p, 0, true));
       layout.placements.push(p);
     };
-    for (const [i, e] of l5Dressing.entries()) if (!e.entity) add(`l5-${e.kind}-${i}`, e.assetId, e.x, e.z, e.yaw ?? 0, e.scale ?? 1, e.decay, e.fixed);
+    for (const [i, e] of l5Dressing.entries()) if (!e.entity && e.kind !== 'weapon') add(`l5-${e.kind}-${i}`, e.assetId, e.x, e.z, e.yaw ?? 0, e.scale ?? 1, e.decay, e.fixed);
     for (const [i, c] of collapses.entries()) add(`l5-collapse-${i}`, 'decay.collapsed-facade', c[0], c[1], c[2], 1, undefined, true);
     const fronts = l5Frontages(layout);
     // Bullet damage: the `w5` shells carry their own impacts (`bulletImpact` nodes); the three shop types without a `w5` shell take the burned facade overlay.

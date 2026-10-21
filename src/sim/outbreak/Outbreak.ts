@@ -9,6 +9,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../npc/types';
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
+import { defendHuman } from '../npc/defence';
 import { updateAlly } from './Allies';
 import { followSeat, leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
@@ -100,8 +101,8 @@ export class Outbreak {
   private grabbedBy(targetId: number, sourceId: number): void {
     const e = this.world.entities.get(targetId), c = e?.civilian, attacker = this.world.entities.get(sourceId);
     if (!e || storyProtected(this.world, e) || !c?.l1 || e.infection || !attacker || !mobile.has(c.state)) return;
-    delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (c.ally?.role !== 'officer') this.dropProp(e);
-    if (c.ally?.role === 'officer') { c.ally.nextAttack = this.world.tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
+    delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer' && c.ally?.role !== 'soldier') this.dropProp(e);
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier')) { c.ally.nextAttack = this.world.tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
     this.state(e, 'grabbed', ticks(civ.grabS)); this.face(e, attacker.transform, Math.PI); this.hear(e.transform);
   }
   dispose(): void { this.offs.forEach(off => off()); this.offs.length = 0; }
@@ -196,11 +197,11 @@ export class Outbreak {
         continue;
       }
       if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
+      if (world.scenario === 'L5') world.combat?.pickups.armSurvivor(e);
+      if ((!c.ally || c.survivor) && defendHuman(world, e)) continue;
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
-      if ((world.missions?.l6 || world.l7Encounters || world.missions?.l8) && c.survivor && updateSurvivor(world,e)) continue;
-      if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
-      // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;
+      if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // L5's sheltered station residents keep their indoor routines until L6's breach.
       // They are already protected story actors; outside panic must not send them out of the station.
       if (world.missions?.state.l5?.stationIds.includes(e.id)) { this.routine(e); continue; }
@@ -219,6 +220,7 @@ export class Outbreak {
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.world.npcs!.civilians.release(c.attacker);
     if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
+    if (state === 'finished') e.health.current = 0;
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
@@ -436,9 +438,9 @@ export class Outbreak {
   grab(e: EntitySnapshot, attacker: EntitySnapshot): void {
     if (storyProtected(this.world, e)) return;
     const c = e.civilian!, tick = this.world.tick;
-    delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (c.ally?.role !== 'officer') this.dropProp(e);
+    delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; if (!c.ally?.gun && c.ally?.role !== 'officer' && c.ally?.role !== 'soldier') this.dropProp(e);
     this.world.npcs!.civilians.hold(attacker.id); this.rescue.delete(attacker.id);
-    if (c.ally?.role === 'officer') { c.ally.nextAttack = tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier')) { c.ally.nextAttack = tick; c.ally.strikeAt = 0; c.ally.step = undefined; c.story = null; }
     this.state(e, 'grabbed', ticks(civ.grabS));
     this.face(e, attacker.transform, Math.PI);
     this.world.events.emit({ type: 'civilian.grabbed', tick, sourceId: attacker.id, targetId: e.id, variant: c.variant, rescueUntil: tick + ticks(civ.rescueWindowS) });
@@ -448,7 +450,7 @@ export class Outbreak {
     const c = e.civilian!, tick = this.world.tick, attacker = this.world.entities.get(c.attacker);
     // PO 2026-10-12 (L3: "Ideally the Zombies will win against police"): a grabbed L3 officer no longer frees himself; only a
     // teammate's or the courier's hit on the grabber rescues him. Elsewhere officers keep fighting from the hold.
-    if (c.ally?.role === 'officer' && !this.world.missions?.def.l3 && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
+    if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !(c.ally.role === 'officer' && this.world.missions?.def.l3) && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
     if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
@@ -461,7 +463,7 @@ export class Outbreak {
   }
   private rescued(e: EntitySnapshot): void {
     const c = e.civilian!, tick = this.world.tick; this.stats.rescued++;
-    this.state(e, 'flee'); c.l1!.repickAt = tick; c.l1!.graceUntil = tick + ticks(1);
+    this.state(e, 'flee'); c.dangerUntil = tick + 120; c.l1!.target = null; c.path.length = 0; c.goal = -1; c.story = null; c.l1!.repickAt = tick; c.l1!.graceUntil = tick + ticks(1);
     this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
   }
   /** Healthy animals stay in their authored enclosure loop; no hostile brain or human refuge removal. */
@@ -501,7 +503,7 @@ export class Outbreak {
     this.stats.killed++; this.dropProp(e); e.civilian!.eyesGlow = false;
     // Allied fighters use health for rescue membership and friendly-fire clearance. A fatal bite at the director cap
     // must leave a dead fighter, not a 100-HP "finished" body that still blocks the line and counts as a survivor.
-    if (e.civilian!.ally) e.health.current = 0;
+    e.health.current = 0;
     this.state(e, 'finished'); this.world.events.emit({ type: 'civilian.finished', tick: this.world.tick, id: e.id });
   }
 

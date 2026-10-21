@@ -1,5 +1,5 @@
 import { balancedCrowdModel } from '../../data/crowdAppearance';
-import { allyState, updateAlly } from '../outbreak/Allies';
+import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
@@ -73,6 +73,7 @@ export class LevelSixSubway {
       e.health={current:60,max:60};e.civilian!.survivor={key,mode:'follow',slot:i,leader:0,cover:false,waitAt:0,foundAt:start};
       e.civilian!.story={clip:routine==='sit'?'npc-sit':routine==='rest'?'death-side':routine==='talk'?'npc-gesture':routine==='treat'?'npc-cower':routine==='share'?'npc-give':'idle',start:start-i*13, ...(i===0?{prop:'pistol' as const}:{})};
       if(resident){e.health={current:resident.health.max,max:resident.health.max};e.appearance=structuredClone(resident.appearance);if(i<count)e.civilian!.story=structuredClone(resident.civilian!.story);}
+      if(resident) readyCarriedAlly(e, start);
       if(i===0){e.civilian!.ally=allyState('officer',at,true);e.civilian!.ally.gun={damage:20,shotS:.5,rangeM:16,nearM:16,hitNear:.5,hitFar:.5};e.civilian!.ally.weapon='pistol';}
       this.s.survivors.push({key,id,injured,routine,status:'shelter',straggler:false,collected:false,rejoined:false,hold:0});
     });

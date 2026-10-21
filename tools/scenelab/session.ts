@@ -163,6 +163,18 @@ export const writeJson = (path: string, data: unknown) => { mkdirSync(dirname(pa
 /** Turn spec expectations into pass/fail checks. */
 export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSession['metrics']>>, clipping: Awaited<ReturnType<SceneSession['clipping']>>, errors: string[]) {
   const e = spec.expect ?? {}, checks: { name: string; pass: boolean; value: number; limit: number }[] = [];
+  for (const [actor, weapon] of Object.entries(e.actorWeapons ?? {})) {
+    const pass = metrics.actors[actor]?.heldWeapon === weapon;
+    checks.push({ name: `actorWeapon.${actor}.${weapon}`, pass, value: Number(pass), limit: 1 });
+  }
+  for (const [actor, state] of Object.entries(e.actorStates ?? {})) {
+    const pass = metrics.actors[actor]?.state === state;
+    checks.push({ name: `actorState.${actor}.${state}`, pass, value: Number(pass), limit: 1 });
+  }
+  for (const [actor, limit] of Object.entries(e.actorInViewMin ?? {})) {
+    const value = metrics.actors[actor]?.inViewFrames ?? 0;
+    checks.push({ name: `actorInView.${actor}`, pass: value >= limit, value, limit });
+  }
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   for (const [name, range] of Object.entries(e.cure ?? {})) {
     const value = metrics.cure?.[name as keyof NonNullable<typeof metrics.cure>];

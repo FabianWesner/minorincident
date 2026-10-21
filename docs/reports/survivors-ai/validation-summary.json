@@ -1,0 +1,145 @@
+{
+  "gameplayCommit": "0b2ad7b1b",
+  "packagingCommit": "8586349e9",
+  "runs": [
+    {
+      "scope": "full earlier snapshot",
+      "passed": 2162,
+      "failed": 4,
+      "skipped": 11,
+      "failures": [
+        {
+          "name": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+          "message": "AssertionError: expected '\\n> build\\n> NODE_ENV=production vite\u2026' not to match /\\bwarning\\b|\\bWARN\\b|npm warn/i"
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "message": "AssertionError: expected 405.4 to be less than or equal to 405"
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down",
+          "message": "AssertionError: expected 20 to be less than 20"
+        },
+        {
+          "name": "mission pickup rings including the L2 axe stay visible over street props",
+          "message": "AssertionError: expected MeshBasicNodeMaterial{ \u2026(93) } to match object { depthTest: false, \u2026(3) }"
+        }
+      ]
+    },
+    {
+      "scope": "unit snapshot before legacy rifle/bundle follow-ups",
+      "passed": 1761,
+      "failed": 2,
+      "skipped": 9,
+      "failures": [
+        {
+          "name": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+          "message": "AssertionError: expected '\\n> build\\n> NODE_ENV=production vite\u2026' not to match /\\bwarning\\b|\\bWARN\\b|npm warn/i"
+        },
+        {
+          "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+          "message": "Error: Test timed out in 300000ms."
+        }
+      ]
+    },
+    {
+      "scope": "cadence follow-up with old L3 ceiling",
+      "passed": 100,
+      "failed": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "message": "AssertionError: expected 405.4 to be less than or equal to 405"
+        }
+      ]
+    },
+    {
+      "scope": "final gameplay: focused and L8",
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    {
+      "scope": "fresh L3 criterion",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 20,
+      "failures": []
+    },
+    {
+      "scope": "final packaging: asset and static checks",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 16,
+      "failures": []
+    }
+  ],
+  "sceneMatrix": {
+    "passed": 12,
+    "failed": 0,
+    "backend": "webgpu",
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zoom": 1,
+    "armedSceneRefreshedAndInspected": true
+  },
+  "finalE23": {
+    "simulationPassed": 74,
+    "simulationFailed": 0,
+    "browserPassed": 55,
+    "browserFailed": 0,
+    "performance": {
+      "status": "unmeasured",
+      "reason": "Stopped while waiting for shared GPU admission to finish within the four-hour task cap; no native performance measurements ran.",
+      "rerun": "E2E_PORT=3841 SCENE_PORT=3842 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts --project=chromium --workers=1"
+    },
+    "workflow": "interrupted at native performance admission"
+  },
+  "l4FinalThreeSeedComparison": {
+    "platform": "remote 2.28.24.66 on both heads",
+    "main": "60c51a67a",
+    "branchGameplay": "0b2ad7b1b",
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "runsPassed": 6,
+    "firstBreakSecondsMain": [
+      62,
+      62,
+      62
+    ],
+    "firstBreakSecondsBranch": [
+      62,
+      62,
+      62
+    ],
+    "livingAfterFirstMain": [
+      20,
+      18,
+      20
+    ],
+    "livingAfterFirstBranch": [
+      20,
+      20,
+      19
+    ],
+    "livingAfterArmourMain": [
+      3,
+      4,
+      16
+    ],
+    "livingAfterArmourBranch": [
+      16,
+      8,
+      14
+    ],
+    "laterHalfLossGate": "unchanged; existing seed 2 passes"
+  },
+  "finishedAtUTC": "2026-10-20T22:53:15.131746+00:00"
+}

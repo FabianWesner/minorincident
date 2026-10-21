@@ -1,3 +1,4 @@
+import { alarmVictim, defendHuman } from './defence';
 import { dogModel } from '../../data/dogAppearance';
 import { storyProtected } from './storyProtection';
 import { Rng } from '../../core/Rng';
@@ -24,7 +25,12 @@ export class Civilians {
     this.rng = new Rng(world.seed, 'npc');
     world.events.on('infected.attack', event => {
       if (event.type !== 'infected.attack') return;
-      const source = world.entities.get(event.sourceId); if (source) this.alarm(source.transform);
+      const source = world.entities.get(event.sourceId); if (source) { this.alarm(source.transform); const victim = world.entities.get(event.targetId); if (victim) alarmVictim(world, victim, source); }
+    });
+    world.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit') return;
+      const source = world.entities.get(event.sourceId), victim = world.entities.get(event.targetId);
+      if (source?.infected && victim) alarmVictim(world, victim, source);
     });
     world.events.on('noise', event => { if (event.type === 'noise' && event.radius >= 6) this.alarm(event.position); });
   }
@@ -50,6 +56,7 @@ export class Civilians {
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
+    if (state === 'finished') e.health.current = 0;
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
@@ -125,7 +132,7 @@ export class Civilians {
       if (c.state === 'grabbed') {
         const attacker = this.world.entities.get(c.attacker);
         if (this.world.missions?.state.states['cure-released'] || !attacker || attacker.health.current <= 0 || attacker.combat!.staggerUntil > tick || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > 1.8) {
-          this.state(e, 'flee'); this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
+          this.state(e, 'flee'); c.dangerUntil = tick + 120; this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
         } else if (tick >= c.until) this.state(e, 'bitten', this.duration(c.outbreak ? [30, 42] : npcs.staggerTicks));
       } else if (c.state === 'bitten') { if (tick >= c.until) this.down(e); }
       else if (c.state === 'down') {
@@ -149,6 +156,7 @@ export class Civilians {
           this.world.events.emit({ type: 'civilian.turned', tick, id: e.id, infectedId, variant: c.variant, position: { x: e.transform.x, z: e.transform.z } });
         } else { this.state(e, 'down', 1); }
       }
+      if (defendHuman(this.world, e)) continue;
       if (c.state === 'alarmed') {
         const yaw = -Math.atan2(c.threat.z - e.transform.z, c.threat.x - e.transform.x);
         const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));

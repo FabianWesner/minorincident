@@ -26,7 +26,7 @@ import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
 /** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
 const phoneSocket: [number, number, number] = [.08, -.03, 0];
-const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
+const weaponProps = new Set<string>(['rifle', 'pistol', 'shotgun', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
@@ -244,7 +244,7 @@ class CivilianBatch extends Group {
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
       const carried = e.appearance?.handProp;
       const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
-      const holding = !!handProp && (c.state === 'calm' || c.state === 'grabbed' && c.ally?.role === 'officer') && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || e.appearance?.handProp !== null);
+      const holding = !!handProp && (c.state === 'calm' || c.state === 'flee' && !!c.ally?.gun || c.state === 'grabbed' && (c.ally?.role === 'officer' || !!c.ally?.gun)) && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || e.appearance?.handProp !== null);
       const sourceFrame = frame;
       const player = this.world.entities.get(1)!.transform;
       const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
@@ -258,7 +258,7 @@ class CivilianBatch extends Group {
         frame = this.poses.correct(e.id, frame, ...blend, pose => { if (bent) this.gunAim.hold(pose, sip, handProp === 'coffee' ? cupSocket : phoneSocket); uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand); }); blend[0] = frame; blend[1] = 1;
       }
       const firing = this.props?.aiming.get(e.id);
-      if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) ) {
+      if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'shotgun', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.
         const target = c.ally?.targetId ? this.world.entities.get(c.ally.targetId) : undefined;
         if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());

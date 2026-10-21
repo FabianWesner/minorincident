@@ -1,0 +1,48 @@
+{
+  "gameplayCommit": "0b2ad7b1b",
+  "packagingCommit": "8586349e9",
+  "finalLocalFocusedAndL8": {
+    "passed": 34,
+    "failed": 0
+  },
+  "finalFocusedCases": 24,
+  "typecheckExit": 0,
+  "lintExit": 0,
+  "buildExit": 0,
+  "staticWarningGate": {
+    "passed": true,
+    "evidence": "results/isolated-checks-chunked.json.gz"
+  },
+  "sceneMatrix": {
+    "passed": 12,
+    "failed": 0,
+    "backend": "webgpu",
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zoom": 1,
+    "allContactSheetsInspected": true
+  },
+  "armedSceneRefresh": {
+    "passed": 2,
+    "contactSheetsInspected": 2,
+    "fullResolutionFramesInspected": 2,
+    "consoleErrors": 0,
+    "clippingPairs": 0
+  },
+  "remoteDetails": "validation-summary.json",
+  "finalE23": {
+    "simulationPassed": 74,
+    "simulationFailed": 0,
+    "browserPassed": 55,
+    "browserFailed": 0,
+    "performance": {
+      "status": "unmeasured",
+      "reason": "Stopped while waiting for shared GPU admission to finish within the four-hour task cap; no native performance measurements ran.",
+      "rerun": "E2E_PORT=3841 SCENE_PORT=3842 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts --project=chromium --workers=1"
+    },
+    "workflow": "interrupted at native performance admission"
+  },
+  "finishedAtUTC": "2026-10-20T22:53:15.131165+00:00"
+}

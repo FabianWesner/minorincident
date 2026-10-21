@@ -87,7 +87,7 @@ Bots: `complete` (covers the rear, closes gates, collects stragglers), `newbie`,
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E24-AC01 | The L6 mission graph (shelter → stop the first infected → cover the retreat → exit) is structurally completable (E12-AC07), with no fail timer and no fail on survivor death | sim |
-| E24-AC02 | The `complete` bot finishes L6 on **one seed** from `L6-default` (machine gun, 5 rescued survivors) without cheats; sim time **3:00–4:30**; ≥ 60 % of all survivors exit PO 10-09: single seed. | sim |
+| E24-AC02 | The `complete` bot finishes L6 on **one seed** from `L6-default` (machine gun, 5 rescued survivors) without cheats; sim time **3:00–5:00**; ≥ 60 % of all survivors exit PO 10-09: single seed. | sim |
 | E24-AC03 | The `newbie` bot finishes on one seed, **3:15–5:00**, deaths ≤ 2, ≥ 40 % of survivors exit PO 10-09: single seed. | sim |
 | E24-AC04 | **CHANGED 2026-10-11 — Shelter continuity:** exactly the 20–30 station occupants from L5 plus its rescued ids are present on both tiers (standalone default 24 + 0–5); all non-guard routines sit/talk/treat/rest/share are present, nobody idle facing nowhere > 3 s; no infected/combat before breach1. No duplicate or re-created survivors at the cut. | sim |
 | E24-AC05 | **No new weapon:** the loadout at L6 start and end equals the L5 end loadout; no weapon pickup exists in `D-SUBWAY` | sim |

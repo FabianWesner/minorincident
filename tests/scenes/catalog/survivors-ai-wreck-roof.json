@@ -1,0 +1,64 @@
+{
+  "name": "survivors-ai-wreck-roof",
+  "note": "PO #57: corgi starts on the old 1.65 m crowd-collision band and must stand on the real mesh roof (about 3.3 m), with its full body and paws visible. Courier stands on adjacent pavement. The level regression checks both marker layers.",
+  "ground": "district",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -60,
+        33
+      ],
+      [
+        -30,
+        60
+      ]
+    ]
+  },
+  "time": "L5",
+  "tier": 5,
+  "camera": {
+    "mode": "game",
+    "target": [
+      -46,
+      2,
+      47.4
+    ],
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -46,
+        49
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -46,
+        46.3
+      ],
+      "floorY": 1.65,
+      "yaw": 0
+    }
+  ],
+  "frames": 120,
+  "sheet": 15,
+  "shots": [
+    1,
+    60,
+    119
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "actorInViewMin": {
+      "corgi": 120
+    }
+  }
+}
