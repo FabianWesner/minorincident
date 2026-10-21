@@ -296,11 +296,15 @@ export class LevelSixSubway {
     // `abandon` stays the retry point for the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot.
     // Not while an injured straggler is still out behind (`behind`): a snapshot with them far back made every respawn a
     // new fetch through the horde from the gate (fists playtest 10-21: help <-> bring 41x at gate 90, 2 skips).
-    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behind){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    // Fists playtest 10-21 (after gate 150): with 2 left alive, one through and one 50 m back outside the column, the
+    // checkpoint was taken; every respawn at 152 had the ring lead 40 m back to that survivor through the horde and the
+    // courier died again (~30 s loop). More than half of the living group must be through as well.
+    const through=(x:number)=>live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
+    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behind&&through(gate.x)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
     // Fists playtest 10-21: the courier ran ahead to x 150 with the group 25+ m behind and an injured straggler out at
     // x 125; every death restored that snapshot (horde between courier and group) and respawned at 152, ~18 s apart.
     // The chokepoint checkpoint is taken once the courier is there with the walking column and nobody is out behind.
-    if(!s.mid&&p.x>=150&&tail>=p.x-l6.follow.columnM&&!behind){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
+    if(!s.mid&&p.x>=150&&tail>=p.x-l6.follow.columnM&&!behind&&through(p.x-l6.follow.columnM)){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
       if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
