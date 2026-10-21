@@ -10,6 +10,12 @@ Every frozen page has gore mask `31`: both arms, both legs, and the head are rem
 
 The explicit request for intact permanent corpses must be applied at settlement; transient death effects currently follow `specs/01-art-direction.md` §7 (explosions detach all limbs). Keep that distinction visible in the implementation report and prove the frozen silhouette with real combat events.
 
+## Implementation in progress
+
+`CrowdView` now freezes complete, prewarmed bodies independently of the transient dismemberment mask. Live death/VFX feedback still records dismemberment; permanent pages retain full anatomy. This implements the explicit intact-corpse request over the older full-gore permanent-remnant behavior. The industrial encounter roster also contains firefighters: their corpse path now loads the intact authored source, alongside dogs and Alphas, instead of applying a second reduction to their living LOD. Living meshes, LOD selection, limits, corpse IDs and lifetime are unchanged.
+
+The real-kill guard delivers Damage/VFX events to living actors, lets the production timer settle them, and checks the complete frozen silhouette and retained identities. It covers regular humans, dogs, firefighters, Alphas and the Mega model at both tiers; ordinary melee downings remain recoverable. The baseline guard fails on mask 31 (`guard-red.log`). Final green validation and visuals remain pending.
+
 ## #100 performance investigation
 
 Existing `tests/perf/l10-lod-residency.spec.ts` records frame durations alongside simulation, update, render, shader-build, residency, and population counters, but its thresholds and route do not yet establish the reported debug-start or automatic-continue spikes. No before profile for ticks 2965 or 0 was present in the current worktree report directories when this investigation began. Capture an instrumented reproduction through `tools/perf/quiet-run.sh` before changing load work; distinguish loading-card time from the first playable frame and retain the profile/counters for each spike.
