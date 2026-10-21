@@ -52,7 +52,7 @@ function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 
   return speed >= 5.35 ? 'infected-sprint' : speed >= 4.4 && speed < 4.92 ? 'infected-frail' : 'infected-lurch';
 }
 type BakedBatch = ReturnType<typeof bakeInfected>;
-type PreparedBatch = BakedBatch & { corpse: BufferGeometry | null };
+type PreparedBatch = BakedBatch & { corpse: BufferGeometry | null; corpseClip?: BakedBatch['clip'] };
 /** Finished crowd batch geometry per model/LOD/tier, reused across levels (CPU data only; every scene draws a clone).
  * Bounded like the bake cache; the eviction order is least recently used. */
 const preparedBatches = new Map<string, PreparedBatch>();
@@ -93,6 +93,7 @@ export class CrowdView extends Group {
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
+  private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
   private frozenRevision = -1;
   private readonly figures: EntitySnapshot[] = [];
@@ -192,7 +193,7 @@ export class CrowdView extends Group {
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
       const preparedKey = fallback ? undefined : `${def.id}|${asset}|${def.decay ?? ''}|${lod}|${this.low ? 'low' : 'high'}`;
       const prepared = preparedKey ? preparedBatches.get(preparedKey) : undefined;
-      let baked: BakedBatch, createdCorpse: BufferGeometry | null = null;
+      let baked: BakedBatch, createdCorpse: BufferGeometry | null = null, corpseClip: BakedBatch['clip'] | undefined;
       if (prepared) {
         preparedBatches.delete(preparedKey!); preparedBatches.set(preparedKey!, prepared);
         // The bake adds every clip part the model lacks as an empty joint at the origin; the locomotion rig expects them.
@@ -200,6 +201,7 @@ export class CrowdView extends Group {
         model.updateMatrixWorld(true);
         baked = { ...prepared, geometry: cloneBatchGeometry(prepared.geometry), shirtColor: prepared.shirtColor?.clone() };
         if (prepared.corpse) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
+        if (prepared.corpseClip) this.corpseClips.set(key, prepared.corpseClip);
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
         const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback] as const;
@@ -214,12 +216,19 @@ export class CrowdView extends Group {
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
         if (!alpha) {
-          // Start from the authored surface, before the living far-band reduction.
-          // Reducing twice compounded the allowed surface loss and left permanent
-          // bodies as disconnected shards, especially on low quality (PO #85).
-          const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, true, .98);
+          // Generated living LODs already lost thin shells. Further index-only
+          // reduction made permanent bodies look like shards (PO #85). Dedicated
+          // corpse meshes collapse each intact shell offline and keep their own rig.
+          const dedicated = this.registry.definition(asset).corpseGlb;
+          const body = dedicated ? bakeInfected(await this.registry.loadCorpse(asset, def.decay) as Group, this.registry.definition(asset).animatedNodes) : undefined;
+          if (body) deinterleaveGeometry(body.geometry);
+          const corpse = body ? mergeVertices(body.geometry) : baked.geometry.clone();
+          body?.geometry.dispose();
+          if (!dedicated) await simplifyCrowdLod(corpse, .04, .1, !healthy);
+          else if (!healthy) markInfectedEyeCores(corpse);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
           corpse.userData.crowdLod = lod;
+          if (dedicated) { corpse.userData.corpseSource = dedicated; corpseClip = body!.clip; this.corpseClips.set(key, corpseClip); }
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
           this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         }
@@ -235,7 +244,7 @@ export class CrowdView extends Group {
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
       if (preparedKey) {
-        preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: createdCorpse ? cloneBatchGeometry(createdCorpse) : null });
+        preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: createdCorpse ? cloneBatchGeometry(createdCorpse) : null, corpseClip });
         if (preparedBatches.size > preparedBatchLimit) { const oldest = preparedBatches.keys().next().value!; const old = preparedBatches.get(oldest)!; old.geometry.dispose(); old.corpse?.dispose(); preparedBatches.delete(oldest); }
       }
       }
@@ -316,7 +325,7 @@ export class CrowdView extends Group {
       // synchronously during play. Waiting for this batch also guarantees the
       // simplified corpse geometry exists before the loading draw.
       if (lod === (alpha ? 'lod0' : 'lod2')) {
-        this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+        this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       }
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
@@ -468,7 +477,7 @@ export class CrowdView extends Group {
           const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
-          this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts, !batch.animal ? look : undefined);
+          this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts, !batch.animal ? look : undefined);
           continue;
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
@@ -574,7 +583,7 @@ export class CrowdView extends Group {
     for (const mesh of this.heroSlots.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
     this.heroSlots.clear();
     for (const geometry of this.corpseGeometry.values()) geometry.dispose();
-    this.corpseGeometry.clear();
+    this.corpseGeometry.clear(); this.corpseClips.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.loadedModels.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();

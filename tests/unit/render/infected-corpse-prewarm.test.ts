@@ -22,6 +22,10 @@ for (const scenario of ['blast-stress', 'L4', 'L7']) for (const low of [false, t
       const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
       return gltf.scene;
     });
+    const corpseLoad = vi.spyOn(AssetRegistry.prototype, 'loadCorpse').mockImplementation(async id => {
+      const bytes = readFileSync((manifest as AssetDef[]).find(asset => asset.id === id)!.corpseGlb!);
+      return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+    });
     const prepare = vi.spyOn(StaticCorpses.prototype, 'prepare').mockImplementation(() => {});
     const batches = crowd as unknown as {
       loadBatch(definition: typeof def, lod: 'lod1' | 'lod2'): Promise<void>;
@@ -32,6 +36,6 @@ for (const scenario of ['blast-stress', 'L4', 'L7']) for (const low of [false, t
       await batches.loadBatch(def, 'lod2');
       expect(prepare).toHaveBeenCalledOnce();
       expect([...batches.corpseGeometry.values()]).toContain(prepare.mock.calls[0][1]);
-    } finally { prepare.mockRestore(); load.mockRestore(); crowd.dispose(); world.dispose(); }
+    } finally { prepare.mockRestore(); corpseLoad.mockRestore(); load.mockRestore(); crowd.dispose(); world.dispose(); }
   });
 }

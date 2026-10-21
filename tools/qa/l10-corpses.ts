@@ -14,7 +14,7 @@ const rows: unknown[] = [];
 try {
   for (const backend of (process.env.CORPSE_BACKENDS ?? 'webgl2,webgpu').split(',') as ('webgl2' | 'webgpu')[]) {
     for (const tier of (process.env.CORPSE_TIERS ?? (timing ? 'low' : 'low,high')).split(',') as ('low' | 'high')[]) {
-      const session = new SceneSession({ backend, tier, nativeFrameTiming: timing, viewport: { width: 1280, height: 720 } });
+      const session = new SceneSession({ backend, tier, nativeFrameTiming: timing, query: { debug: 'true' }, viewport: { width: 1280, height: 720 } });
       try {
         await session.open();
         await session.page.evaluate('globalThis.__name = fn => fn');
@@ -78,15 +78,20 @@ try {
             return { level, tick: a.tick(), player: p, corpses: bodies.length, bodies: bodies.map(e => ({ id: e.id, model: e.infected?.model, at: e.transform })) };
           }, { level, tier, models: [...regularInfectedModels] });
           for (const zoom of (timing || ['L7', 'L8'].includes(level) ? [1] : [.5, 1, 1.5])) {
-            const state = await session.page.evaluate(async zoom => {
+            const state = await session.page.evaluate(async ({ zoom, diagnostic }) => {
               const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game, rig = game.view.view;
               const hero = game.world.entities.get(1)!.transform;
+              if (diagnostic) {
+                const modulePath = '/node_modules/three/build/three.webgpu.js';
+                const { MeshBasicNodeMaterial } = await import(modulePath) as typeof import('three/webgpu');
+                game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if (m.name.startsWith('corpses:') && m.count) { Object.defineProperty(m, 'isInstancedMesh', { value: true, writable: true }); m.material = new MeshBasicNodeMaterial({ vertexColors: true }); } });
+              }
               rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
               await a.step(1); await a.screenshotReady();
               const meshes: { name: string; instances: number; triangles: number }[] = [];
               game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if (m.name.startsWith('corpses:') && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
               return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, perf: a.perf(), meshes, corpses: a.query({}).filter(e => e.corpse).length };
-            }, zoom);
+            }, { zoom, diagnostic: !!process.env.CORPSE_DIAGNOSTIC });
             assert.equal(state.backend, backend === 'webgl2' ? 'webgl' : backend);
             assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);
             assert.ok(state.meshes.length > 0, 'Frozen bodies must be drawn');
