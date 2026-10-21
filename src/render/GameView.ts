@@ -614,8 +614,8 @@ export class GameView implements Lifecycle {
     this.entityAssets?.advance();
     const player = this.world.entities.get(1);
     if (player) {
-      const selected = player.weapons?.[player.weapons.selectedSide];
-      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : selected?.rack[selected.index]?.id);
+      const loadout = player.weapons && this.world.combat?.runner.loadout;
+      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),

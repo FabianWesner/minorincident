@@ -311,7 +311,7 @@ export class Hud {
         if (side === (player.weapons?.selectedSide ?? 'LEFT')) shown = { id: side === 'LEFT' ? 'weapon.fists' : 'weapon.kick', name: side === 'LEFT' ? 'Unarmed' : 'Locked', stats: 'Find a weapon', progress: 1, ammo: 0, charges: 0, state: 'empty' };
         continue;
       }
-      const slot = state.rack[state.index], def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id), selected = player.weapons!.selectedSide === side;
+      const slot = world.combat!.runner.loadout.current(side), def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id), selected = player.weapons!.selectedSide === side;
       const name = label(slot.id);
       const stats = def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;

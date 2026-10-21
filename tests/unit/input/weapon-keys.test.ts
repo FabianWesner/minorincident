@@ -7,6 +7,22 @@ import { Bindings, bindingStorageKey } from '../../../src/input/Bindings';
 import { defaultBindings } from '../../../src/data/bindings';
 import { decodeLog, InputLogEncoder } from '../../../src/telemetry/codec';
 
+test('PO #91 key 1 selects bare hands in full weapon racks and preserves their save shape and timers', () => {
+  const l = new Loadout(['weapon.fire-axe'], ['weapon.handgun'], undefined, 1);
+  l.current('LEFT').readyAt = 100;
+  l.input({ ...emptyInput(), selectedWeaponKey: 1 }, 1);
+  expect(l.current('LEFT').id).toBe('weapon.fists');
+  expect(l.state.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
+  l.spend('LEFT', 20, l.definition('weapon.fists'), false);
+  const ready = l.current('LEFT').readyAt;
+  l.input({ ...emptyInput(), selectedWeaponKey: 3 }, 40);
+  expect(l.current('LEFT').id).toBe('weapon.fire-axe'); expect(l.current('LEFT').readyAt).toBe(100);
+  const restored = new Loadout(['weapon.fire-axe'], ['weapon.handgun'], undefined, 1);
+  Object.assign(restored.state, structuredClone(l.state));
+  restored.input({ ...emptyInput(), selectedWeaponKey: 1 }, 60);
+  expect(restored.current('LEFT').id).toBe('weapon.fists'); expect(restored.current('LEFT').readyAt).toBe(ready);
+});
+
 test('@E03 fixed campaign numbers include aliases and leave other catalog actions unnumbered', () => {
   expect(weaponKeys).toEqual({ 'weapon.fists': 1, 'weapon.bat': 2, 'weapon.fire-axe': 3, 'weapon.handgun': 4, 'weapon.army-mg': 5, 'weapon.shotgun': 6, 'weapon.rocket-launcher': 7, 'weapon.molotov': 8, 'weapon.pipe-bomb': 9 });
   expect(weaponKey('weapon.kick')).toBe(1); expect(weaponKey('weapon.pistol')).toBe(4);
