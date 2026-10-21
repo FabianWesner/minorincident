@@ -102,3 +102,14 @@ test('@E24 playtest one survivor left behind gate 90 does not pull the ring back
   expect(m.state.marker).toBe('l6-next');
   expect(m.def.anchors['l6-next'].x).toBeGreaterThan(140);
 }, 240_000);
+
+// Playtest 10-21 (male, campaign weapons): "Stay with the group" pointed at a survivor at (32.4,25.3)/(30.8,27.4) for the
+// rest of the run; the exit never counted everyone out and was skipped at the level cap.
+test('@E24 playtest a survivor who fled into the side rooms beside the tunnel mouth walks back to the group', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, r = s.survivors.find(r => r.status === 'following' && !r.injured)!, e = w.entities.get(r.id)!;
+  Object.assign(e.transform, { x: 32.4, z: 25.3 }); w.spatial.set(e.id, 32.4, 25.3);
+  for (let i = 0; i < 40 * 60; i++) { s.leaderX = 120; s.leaderZ = 15; w.update(); }
+  expect(e.transform.x).toBeGreaterThan(90); expect(Math.abs(e.transform.z - l6.tunnel.z)).toBeLessThan(l6.tunnel.width / 2);
+}, 240_000);
