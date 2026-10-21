@@ -90,3 +90,15 @@ test('@E24 playtest a split group puts the "Stay with the group" ring on a survi
   const ring = m.def.anchors['l6-group'];
   expect(Math.min(...walkers.map(id => Math.hypot(w.entities.get(id)!.transform.x - ring.x, w.entities.get(id)!.transform.z - ring.z)))).toBeLessThan(1);
 }, 240_000);
+
+test('@E24 playtest one survivor left behind gate 90 does not pull the ring back there once the column walked on', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, walkers = s.survivors.filter(r => r.status === 'following' && !r.injured).map(r => r.id);
+  for (const r of s.survivors.filter(r => r.injured)) r.status = 'dead';
+  s.leaderX = 140; s.leaderZ = 15; place(w, walkers.slice(0, -1), 138);
+  const behind = w.entities.get(walkers[walkers.length - 1])!; Object.assign(behind.transform, { x: 70, z: 15 }); w.spatial.set(behind.id, 70, 15);
+  put(w, 140, 15); w.update();
+  expect(m.state.marker).toBe('l6-next');
+  expect(m.def.anchors['l6-next'].x).toBeGreaterThan(140);
+}, 240_000);

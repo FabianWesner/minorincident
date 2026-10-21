@@ -171,8 +171,10 @@ export class LevelSixSubway {
       // while the group is held back (fighting, fleeing at the tunnel mouth); a ring 40 m ahead at the gate wait spot sent
       // the courier away from the group, "Stay with the group" brought it back, and the two alternated every ~6 s. The
       // ring stays within aheadM of the group's walking head and moves to a gate's wait spot once the head is at that gate.
+      // It stays there while the walking column (its healthy tail, #83) is not through; one survivor left far behind no
+      // longer pulls it back to a gate the group passed long ago (playtest 10-21: ring at (92.4,17.3), courier at x 149).
       const head=Math.max(...group.map(({e})=>e.transform.x)),ahead=head+f.aheadM;
-      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&head>=g.x-f.gateGroupM&&(s.leaderX<=g.x+3||walkers.some(({e})=>e.transform.x<=g.x+2)));
+      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&head>=g.x-f.gateGroupM&&(s.leaderX<=g.x+3||(s.tailX??s.leaderX)<=g.x+2));
       const wait=gate&&LevelSixSubway.gateWait(gate.x);
       at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM,Math.max(ahead,l6.tunnel.start))),wait?.z??l6.tunnel.z);
     }
