@@ -4,7 +4,6 @@ import { followFrustum } from '../../tools/sim-runner/l3Bots';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l6, l6Doors } from '../../src/data/l6';
 import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
-import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
