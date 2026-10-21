@@ -310,7 +310,7 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
 /* Debug tools get their own row above every game overlay, including letterboxing. */
 body.debug-tools{--debug-row:44px}
 body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]){--debug-row:320px}
-body.debug-tools :is(.hud-vitals,.hud-map,.hud-tracker,.hud-companion,.hud-survivor-vitals,.mission-tracker,.mission-minimap,.mission-toast,.onboarding){margin-top:var(--debug-row)}
+body.debug-tools :is(.hud-vitals,.hud-map,.hud-tracker,.hud-companion,.hud-durability-panel,.hud-survivor-vitals,.mission-tracker,.mission-minimap,.mission-toast,.onboarding){margin-top:var(--debug-row)}
 body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]) .story-bubble{top:calc(var(--debug-row) + 12px)!important;transform:translate(-50%,0)!important}
 body.debug-tools.touch-ui [data-testid=pause-button]{margin-top:var(--debug-row)}
 body.debug-tools [data-input-hint]{display:none}
