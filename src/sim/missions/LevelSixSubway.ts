@@ -280,10 +280,11 @@ export class LevelSixSubway {
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
       if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
-    // QA 10-21 #87: once every living survivor is through a gate, a death restarts there with the surviving group (as L7's
-    // corridor checkpoints do), not at the shelter with the whole retreat to replay. `abandon` stays the retry point for
-    // the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot, beyond the gate beside the group.
-    for(const gate of s.gates)if(!gate.passed&&live.length&&live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    // QA 10-21 #87: once the walking column (its healthy tail, #83) is through a gate, a death restarts there with the
+    // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. One survivor
+    // left behind (fighting, stuck, an injured straggler) does not withhold it: they are restored where they were.
+    // `abandon` stays the retry point for the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot.
+    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}

@@ -19,6 +19,8 @@ test('@E24 QA #87 a death after the group passed a gate respawns at that gate wi
   for (const r of live.slice(-2)) { r.status = 'dead'; w.entities.get(r.id)!.health.current = 0; }
   const walkers = live.slice(0, -2).map(r => r.id);
   s.leaderX = 108; s.leaderZ = 15; place(w, walkers, 106);
+  // Playtest 10-21: one survivor still fighting far back ("10/11 through") must not withhold the checkpoint.
+  const behind = w.entities.get(walkers[walkers.length - 1])!; Object.assign(behind.transform, { x: 60, z: 15 }); w.spatial.set(behind.id, 60, 15);
   put(w, 70, 15); w.update(); w.update();
   expect(s.gates[0].passed).toBe(true); expect(m.state.checkpoint).toBe('gate-90');
   w.player!.damage(w.entities.get(1)!.health.max, w.tick);
@@ -27,7 +29,7 @@ test('@E24 QA #87 a death after the group passed a gate respawns at that gate wi
   expect(m.state.checkpoint).toBe('gate-90'); expect(s.phase).toBe('retreat');
   expect(Math.hypot(p.x - wait.x, p.z - wait.z), 'respawn beside the passed gate').toBeLessThan(3);
   expect(m.state.l6!.survivors.filter(r => r.status === 'following').length).toBe(walkers.length);
-  for (const id of walkers) expect(w.entities.get(id)!.transform.x).toBeGreaterThan(92);
+  for (const id of walkers.slice(0, -1)) expect(w.entities.get(id)!.transform.x).toBeGreaterThan(92);
   // The next gate takes over once the group is through it as well; the first gate's checkpoint is not taken again.
   m.state.l6!.leaderX = 168; place(w, walkers, 166); w.update(); w.update();
   expect(m.state.checkpoint).toBe('gate-150');
