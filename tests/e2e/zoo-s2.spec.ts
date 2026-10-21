@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
@@ -43,4 +43,7 @@ for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-
   expect(await page.evaluate(id => window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id), id)).toMatchObject({ fraction: 1, width: 48, height: 6 });
   await page.evaluate(async () => { window.__SCENE__!.command('animal', { hit: { amount: 300 } }); await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
   expect(await page.evaluate(id => window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id), id)).toMatchObject({ fraction: .75, width: 48, height: 6 });
+  const out = 'test-results/epics/E07/phone-bars'; mkdirSync(out, { recursive: true });
+  await page.locator('canvas').screenshot({ path: `${out}/elephant-${width}.png` });
+  writeFileSync(`${out}/elephant-${width}.json`, JSON.stringify(await page.evaluate(id => ({ entity: window.__SS__!.getEntity(id), bars: window.__SS__!.getState().render.healthBars }), id), null, 2));
 });
