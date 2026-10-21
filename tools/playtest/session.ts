@@ -5,6 +5,7 @@ import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies } from './startup';
 import { keepMovingWithFists } from './combat';
+import { PlaytestProgress } from './progress';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -92,7 +93,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- per-level state ---
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
-  let visibleProgress = { text: '', tick: 0, wall: Date.now() };
+  let visibleProgress = new PlaytestProgress();
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
@@ -126,7 +127,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
-    visibleProgress = { text: e.objective, tick: e.tick, wall: Date.now() };
+    visibleProgress = new PlaytestProgress();
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
@@ -153,7 +154,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (unarmed ? undefined : e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => Math.hypot(a.x - b.x, a.z - b.z) < 2.5)));
-    if (!threat) { if (keysDown.has('Space')) await press([]); await releaseAim(); return false; }
+    if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
     if (threat.hp < seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
@@ -196,14 +197,25 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
     if (keepMovingWithFists(e.level,e.step,!!e.player?.weapons.every(id => /fists|kick/.test(id)),e.enemies.filter(b => b.d < 3).length)) {
-      // Unarmed, keep covering the moving retreat instead of planting in a crowd. K is the shipped
-      // right-hand kick binding; one short kick makes space, then navigation follows the visible ring.
+      // Punch while walking toward the visible ring against one or two contacts.
+      // Waiting for a fetched survivor keeps the courier beside that visible body.
+      const contacts=e.enemies.filter(b=>b.d<3).length;
+      const escortId=escort?.id,escortNear=escortId===undefined||e.allies.some(b=>b.id===escortId&&b.drawn&&b.d<=4);
+      const goal=contacts<3&&escortNear&&(e.step==='retreat'||e.step==='exit')?await goalScreen(e):null;
+      const approach=goal&&e.player&&ring&&Math.hypot(ring.x-e.player.x,ring.z-e.player.z)>1.5?wasdToward(e,goal.x,goal.y):[];
       await releaseAim();
+      if(approach.length) {
+        const feet=await page.evaluate(at=>window.__SS__!.input.project(at,'destination'),{x:threat.x,z:threat.z});
+        await page.mouse.move(feet.x,feet.y);await press([...approach,'KeyJ']);
+        if(now-lastCrowdKick>750){lastCrowdKick=now;log({fistsRetreat:e.tick,keys:approach,enemy:threat.id});}
+        return true;
+      }
+      // A brief right-hand kick clears a crowd or frees the gate interaction.
       if (now - lastCrowdKick > 750) {
         await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(180); await press([]);
         lastCrowdKick = now; log({ crowdKick: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
       }
-      return false;
+      await press([]);return false;
     }
     if (!ranged.test(e.player?.current ?? '') && e.player && e.player.hp < e.player.max * .3 && threat.d < 2) {
       // A keyboard attack aims through the ground ray, unlike a target click on the drawn chest.
@@ -373,17 +385,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
-    // Evidence only: advancing visible countdowns/counts and a new best distance
-    // count as progress. Walking away and back must not hide a navigation loop.
-    const visibleObjective=e.objective.replace(/ · [\d.]+\s?m\b/g, '');
-    const nearer=e.distance!==null&&e.distance<lastProgress.best-2;
-    if(visibleObjective!==visibleProgress.text||nearer) {
-      log({ visibleProgress: { tick:e.tick, text:visibleObjective, distance:e.distance, reason:visibleObjective!==visibleProgress.text?'hud-change':'nearer' } });
-      visibleProgress={text:visibleObjective,tick:e.tick,wall:Date.now()};
-    }
+    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
+    if(observed.reason)log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
-    run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,Math.min((e.tick-visibleProgress.tick)/60,(Date.now()-visibleProgress.wall)/1000));
+    run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,observed.seconds);
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
