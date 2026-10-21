@@ -1444,6 +1444,22 @@ export class InfectedSystem {
       }
       if (next >= 0 && next !== from) { x = nav.x(next); z = nav.z(next); }
     }
+    // L4's army-bound traffic passes outside a stopped courier's inner combat
+    // rings. Noise investigations otherwise cut through the ring without using
+    // the chaser slots, bunching against her while still heading for the army.
+    const l4Phase = this.world.missions?.state.l4?.phase;
+    if (!survivor && (l4Phase === 'war' || l4Phase === 'collapse') && this.courierStill()) {
+      const p = this.world.entities.get(1)!.transform, dx = x - e.transform.x, dz = z - e.transform.z, length = Math.hypot(dx, dz), passM = 2.5 + radius;
+      const t = length ? Math.max(0, Math.min(1, ((p.x - e.transform.x) * dx + (p.z - e.transform.z) * dz) / (length * length))) : 0;
+      if (length > .01 && Math.hypot(goal.x - p.x, goal.z - p.z) > passM && Math.hypot(p.x - e.transform.x, p.z - e.transform.z) < 7 && Math.hypot(e.transform.x + dx * t - p.x, e.transform.z + dz * t - p.z) < passM) {
+        const side = Math.sign(dx * (e.transform.z - p.z) - dz * (e.transform.x - p.x)) || (e.id % 2 ? 1 : -1);
+        for (let attempt = 0; attempt < 2; attempt++) {
+          const sign = attempt ? -side : side;
+          this.ringPoint.x = p.x - dz / length * passM * sign; this.ringPoint.z = p.z + dx / length * passM * sign;
+          if (nav.clear(this.ringPoint.x, this.ringPoint.z, radius) && nav.visible(e.transform, this.ringPoint, radius)) { x = this.ringPoint.x; z = this.ringPoint.z; break; }
+        }
+      }
+    }
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     const remaining = x === target.x && z === target.z ? distance - (pursue ? radius + 0.36 : 0) : distance;
     if (remaining < 0.02) return;

@@ -162,6 +162,7 @@ export const l4 = {
       [[-25, -8], [-25, 4], [-25, 10]],
       [[-16, -11]], // rear of the north reception line, beside the camp medical supplies
       [[-9.8, -16.5], [-9.8, -6.5], [-11, 16]], // bumper gaps behind the convoy crew, clear of the hulls and south tank swarm
+      [[-11, 16]], // armour falls: rally at the south convoy gap before breaking away onto Lakeshore
     ] as readonly (readonly P[])[],
   },
   /** Section 5.4: allied fighters v3. */
