@@ -165,7 +165,12 @@ export class Lighting {
     this.preset = name; const p = timeOfDay[name];
     this.look.setPreset(p.look ?? {});
     this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
-    if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
+    if (this.environment) {
+      this.environmentNode.value = this.environment.get(name).texture;
+      // The L6 exit changes the reflection preset in play. Generate its PMREM behind
+      // the loading card, before a synchronous GPU submission can stall the exit frame.
+      if (name === 'L6-subway') this.environment.get('L6');
+    }
     this.heroSurfaceFill.value = p.heroFill ?? 0; this.heroRim.value = p.heroRim ?? 0; this.heroSmokeRim.value = 0;
     this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.roadLift.value = p.roadLift ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
@@ -176,7 +181,21 @@ export class Lighting {
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
     this.subwayDarkness.value = name === 'L6-subway' ? 1 : 0;
-    this.applyLook();
+    this.applyLook(); this.setShadowSource(name === 'L6-subway');
+  }
+  /** Keep both night shadow graphs resident. A light-list change retires Three's render
+   * objects (and their last-used programs), so compiling both lists at load is insufficient.
+   * The inactive light contributes neither illumination nor shadow and does not redraw its map. */
+  private setShadowSource(spot: boolean): void {
+    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo';
+    this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
+    this.spot.shadow.intensity = stable ? Number(spot) : 1;
+    this.sun.shadow.intensity = stable ? Number(!spot) : 1;
+    this.spot.shadow.autoUpdate = !stable || spot; this.sun.shadow.autoUpdate = !stable || !spot;
+    // Draw each reserved map once at load, including the currently inactive source.
+    if (stable) { if (!this.sun.shadow.map) this.sun.shadow.needsUpdate = true; if (!this.spot.shadow.map) this.spot.shadow.needsUpdate = true; }
+    this.sun.intensity = spot ? 0 : this.intensity.value;
+    if (!spot && stable) this.spot.intensity = 0;
   }
   /** The L5 gloom ramp (quantised to 0.5 % so a slow fade does not re-apply the look every frame). */
   setGloom(factor: number): void {
@@ -200,7 +219,7 @@ export class Lighting {
     this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.radialFog;
     if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
     this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
-    this.sun.shadow.needsUpdate = true; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
+    this.sun.shadow.needsUpdate = this.sun.shadow.autoUpdate || !this.sun.shadow.map; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
     // Broaden the coloured rim as the courier occupies fewer screen pixels; keep its energy bounded.
@@ -258,14 +277,9 @@ export class Lighting {
     if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
     else this.shadowDirection.lerp(this.heroTarget, k).normalize();
     this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
-    // PO 10-20 #62 (3-5 s freeze at the headlamp pickup): underground the sun has no intensity, so the subway keeps
-    // the hero spot as its one stable light. Swapping sun -> spot changed the light list, and every material warmed
-    // after loading (streamed survivors, crowd bakes) rebuilt its pipeline at the pickup. Unused, the spot fades to 0.
-    this.spot.visible = this.preset === 'L6-subway' || (night && !!light);
     // Keep castShadow stable: Three disposes its ShadowNode when this flag
     // flips, while cached material graphs can still reference that node.
-    // Only the active source is visible, so one shadow map is rendered.
-    this.sun.visible = !this.spot.visible;
+    // Only the active source updates its shadow map.
     if (light) {
       const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
       this.spot.position.copy(this.promotionPosition).lerp(this.heroTarget.set(light.x, light.y ?? 3, light.z), blend);
@@ -273,6 +287,7 @@ export class Lighting {
       this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
       this.spot.intensity = .001 * this.fieldShadow.value;
     } else this.spot.intensity = .001 * this.fieldShadow.value;
+    this.setShadowSource(this.preset === 'L6-subway' || (night && !!light));
     this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low', timeOfDay[this.preset].lampInsects, time);
   }
   /** E27 keeps the survivor's capsule and rim readable inside an active smoke cloud. */
@@ -287,7 +302,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible), heroShadowMaps: Number(this.spot.visible && this.spot.castShadow), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
+    return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible && this.spot.shadow.intensity > 0), heroShadowMaps: Number(this.spot.visible && this.spot.castShadow && this.spot.shadow.autoUpdate), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); if (!this.sharedEnvironment) this.environment?.dispose(); this.fallbackEnvironment.dispose(); this.field.dispose(); this.lamps.dispose(); this.practicalEffects.dispose(); this.scene.remove(this.spot, this.spot.target, this.practicalEffects); this.spot.dispose(); this.scene.backgroundNode = null; }
 }

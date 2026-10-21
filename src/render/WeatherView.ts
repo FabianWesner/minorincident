@@ -147,7 +147,8 @@ export class WeatherView extends Group {
     const look = this.lighting.look, preset = this.lighting.preset;
     const baseIntensity = look.has('sunIntensity') || preset === 'L1' ? look.values.sunIntensity : timeOfDay[preset].intensity;
     this.lighting.intensity.value = baseIntensity * this.lighting.gloom * (1 - w.clouds * .4) * (1 - w.snow * .3);
-    this.lighting.sun.intensity = this.lighting.intensity.value;
+    // Reserved night lights stay in the list; weather must preserve the inactive sun's zero contribution.
+    this.lighting.sun.intensity = this.lighting.intensity.value * this.lighting.sun.shadow.intensity;
     this.lighting.sun.shadow.radius = look.values.shadowRadius + (Math.max(5, look.values.shadowRadius) - look.values.shadowRadius) * w.clouds;
     const authored = timeOfDay[preset], values = look.values;
     this.lighting.fogA.value.set(look.has('fog') && !look.has('fogA') ? values.fog : look.has('sky') && !look.has('fogA') ? values.sky : look.has('fogA') || preset === 'L1' ? values.fogA : authored.sky).lerp(this.cloudSky, w.clouds * .35);
@@ -156,6 +157,9 @@ export class WeatherView extends Group {
     const flags = weatherMaterialFlags;
     // Compile the union at level load, so a scripted blend changes uniforms only.
     let scriptedFeatures = 0;
+    // L6's exterior fog is selected by position in WeatherSystem, outside its timeline.
+    // Include its cloud branch at load so the exit approach only changes uniforms.
+    if (!w.override && this.world.scenario === 'L6') scriptedFeatures |= flags.clouds | flags.fog;
     if (!w.override) for (const key of w.timeline) {
       const p = { ...weatherPresets[key.kind], ...key.preset };
       scriptedFeatures |= (p.clouds ? flags.clouds : 0) | (p.rain ? flags.wet : 0) | (p.flakes ? flags.accumulation : 0) | (p.fog ? flags.fog : 0) | (key.kind === 'thunderstorm' ? flags.flash : 0);
