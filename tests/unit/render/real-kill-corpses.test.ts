@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { expect, test, vi } from 'vitest';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -16,6 +17,13 @@ async function model(path: string) {
   const bytes = readFileSync(path);
   return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
 }
+function surfaceSignature(geometry: BufferGeometry): string {
+  const hash = createHash('sha256');
+  for (const attribute of ['position', 'normal', 'color', '_parts'].map(name => geometry.getAttribute(name)).concat(geometry.index ? [geometry.index] : [])) {
+    const array = attribute.array; hash.update(new Uint8Array(array.buffer, array.byteOffset, array.byteLength));
+  }
+  return hash.digest('hex');
+}
 
 const kinds = ['infected.runner', 'infected.dog', 'infected.alpha', 'infected.firefighter'].map(archetype => ({ archetype, asset: infectedDefinitions.find(d => d.id === archetype)!.asset }));
 kinds.push({ archetype: 'infected.alpha', asset: megaAlpha.asset });
@@ -29,11 +37,12 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
     });
     const corpseLoad = vi.spyOn(AssetRegistry.prototype, 'loadCorpse').mockImplementation(async id => model(manifest.find(a => a.id === id)!.corpseGlb!));
     const fx = new Vfx(w, { flash: (id, strength) => crowd.flash(id, strength), detach: (id, limb) => crowd.detach(id, limb), blood() {}, clearGore: () => crowd.clearGore(), shake() {} });
-    type Internals = { definitions: Map<string, typeof def>; modelAliases: Map<string, string>; corpseGeometry: Map<string, BufferGeometry>; loadBatch(d: typeof def, lod: 'lod2'): Promise<void> };
+    type Internals = { definitions: Map<string, typeof def>; modelAliases: Map<string, string>; corpseGeometry: Map<string, BufferGeometry>; batches: Map<string, { mesh: { geometry: BufferGeometry } }>; loadBatch(d: typeof def, lod: 'lod2'): Promise<void> };
     const internal = crowd as unknown as Internals, key = registerCrowdModel(internal.modelAliases, def);
     internal.definitions.set(key, def);
     try {
       await internal.loadBatch(def, 'lod2');
+      const livingGeometry = internal.batches.get(`${key}:lod2`)!.mesh.geometry, livingBefore = surfaceSignature(livingGeometry);
       if (archetype === 'infected.firefighter') expect(internal.corpseGeometry.get(key)!.userData.corpseSource).toBe(manifest.find(a => a.id === def.asset)!.glb);
       const ids: number[] = [];
       const causes = ['blast', ...(archetype === 'infected.firefighter' ? [] : ['fire']), 'melee', 'gun', 'mega-assault'];
@@ -72,8 +81,9 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
         expect(max - min).toBeGreaterThan(archetype === 'infected.dog' ? .6 : 1);
       }
       const original = ids.map(id => w.entities.get(id));
-      w.tick += 60 * 60 * 2; crowd.update();
+      w.tick += 60 * 60 * 60 * 2; w.update(); crowd.update();
       expect(ids.map(id => w.entities.get(id))).toEqual(original);
+      expect(surfaceSignature(livingGeometry), 'freezing corpses must leave the living surface unchanged').toBe(livingBefore);
     } finally { fx.dispose(); crowd.dispose(); w.dispose(); load.mockRestore(); corpseLoad.mockRestore(); }
   });
 }
