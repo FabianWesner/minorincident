@@ -31,7 +31,7 @@ try {
     await page.waitForFunction(() => !!window.__SCENE__);
     await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     const cdp = await context.newCDPSession(page);
-    for (const scenario of (process.env.HEAP_AUDIT_LIFECYCLE === '1' ? [] : ['light-lab', 'storm-street', 'L7', 'rocket'])) {
+    for (const scenario of (process.env.HEAP_AUDIT_LIFECYCLE === '1' ? [] : ['light-lab', 'storm-street', 'L7', 'rocket', 'corgi-contact'])) {
       console.log(`${backend} ${quality} ${scenario}`);
       await page.evaluate(async ({ scenario, quality }) => {
         const a = window.__SS__!;
@@ -41,6 +41,11 @@ try {
             actors: [{ kind: 'courier', at: [2, 0] }, { kind: 'infected', count: quality === 'high' ? 40 : 30, spread: 6, at: [0, 0], state: 'idle' }],
             camera: { mode: 'game', target: [0, 0], zoom: 1.5 } });
           await window.__SCENE__!.step(180);
+        } else if (scenario === 'corgi-contact') {
+          await window.__SCENE__!.load({ name: 'corgi-contact', seed: 29, ground: 'asphalt', time: 'L1', size: 20, dof: false,
+            actors: [{ kind: 'courier', at: [0, 0] }, { kind: 'corgi', at: [1.5, 0] }],
+            camera: { mode: 'pose', position: [3, 2.3, 3.5], target: [.8, .4, 0] } });
+          await window.__SCENE__!.step(420);
         } else if (scenario === 'L7') {
           await a.loadLevel('L7', { seed: 29 }); a.pause();
           a.teleport('player', { x: -48, z: 46 });

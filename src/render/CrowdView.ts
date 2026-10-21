@@ -55,6 +55,7 @@ export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number; decay?: string }>();
   private readonly modelAliases = new Map<string, string>();
+  private readonly loadedModels = new Set<string>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
   private readonly visibility = new CrowdVisibility();
@@ -267,6 +268,7 @@ export class CrowdView extends Group {
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      if (lod === 'lod1' || lod === 'lod2') this.loadedModels.add(key);
       // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
       // synchronously during play. Waiting for this batch also guarantees the
@@ -278,7 +280,7 @@ export class CrowdView extends Group {
   }
   private modelKey(id: string): string | undefined {
     const key = this.modelAliases.get(id);
-    return key && (this.batches.has(`${key}:lod1`) || this.batches.has(`${key}:lod2`)) ? key : undefined;
+    return key && this.loadedModels.has(key) ? key : undefined;
   }
   /** PO #23: an Alpha drawn with its default model takes one of the sibling looks, chosen by entity id (same rig and size). An explicit model override keeps its asset. */
   private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string } }): string {
@@ -533,6 +535,6 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.loadedModels.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
   }
 }

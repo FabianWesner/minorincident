@@ -1,0 +1,357 @@
+{
+  "perf": {
+    "l4": null,
+    "chunkResidency": null,
+    "terrain": null,
+    "infected": null,
+    "effects": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
+      "enabled": true,
+      "colorblind": false,
+      "gore": "Full",
+      "quality": "low",
+      "flashReduction": false,
+      "time": 0,
+      "lastSpray": {
+        "actionId": "",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 0,
+        "chunks": 0,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 0,
+      "particles": 0,
+      "particleCap": 512,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 30,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 120,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 0,
+      "submitted": 0,
+      "completed": 0,
+      "prebuilt": 0,
+      "failed": 0
+    },
+    "nodeBuilds": 233,
+    "profile": {
+      "other": {
+        "drawCalls": 65,
+        "triangles": 39922
+      },
+      "shadows": {
+        "drawCalls": 20,
+        "triangles": 4275
+      },
+      "crowd": {
+        "drawCalls": 0,
+        "triangles": 0
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/Group/mesh_0": {
+        "drawCalls": 2,
+        "triangles": 574
+      },
+      "shadow:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 910
+      },
+      "shadow:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 280
+      },
+      "shadow:other/Group/rigid-part": {
+        "drawCalls": 14,
+        "triangles": 2510
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/rigid-part": {
+        "drawCalls": 14,
+        "triangles": 2510
+      },
+      "view:other/Group/mesh_0": {
+        "drawCalls": 3,
+        "triangles": 1018
+      },
+      "view:other/Group/mesh_1": {
+        "drawCalls": 3,
+        "triangles": 952
+      },
+      "view:other/Group/mesh_1_1": {
+        "drawCalls": 2,
+        "triangles": 324
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 4,
+        "triangles": 2760
+      },
+      "view:other/Mesh/Mesh": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/Group/mesh_0_1": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/Group/mesh_0_2": {
+        "drawCalls": 1,
+        "triangles": 338
+      },
+      "view:other/Group/mesh_0_3": {
+        "drawCalls": 1,
+        "triangles": 100
+      },
+      "view:other/Group/mesh_0_4": {
+        "drawCalls": 1,
+        "triangles": 884
+      },
+      "view:other/Group/mesh_0_5": {
+        "drawCalls": 1,
+        "triangles": 268
+      },
+      "view:other/Group/mesh_0_6": {
+        "drawCalls": 1,
+        "triangles": 108
+      },
+      "view:other/Group/mesh_3": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/Group/mesh_3_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_3_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/Group/mesh_4": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/Group/mesh_4_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_4_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/Group/mesh_5": {
+        "drawCalls": 1,
+        "triangles": 226
+      },
+      "view:other/Group/mesh_5_1": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "view:other/Group/mesh_5_2": {
+        "drawCalls": 1,
+        "triangles": 276
+      },
+      "view:other/Group/mesh_5_3": {
+        "drawCalls": 1,
+        "triangles": 48
+      },
+      "view:other/Group/mesh_5_4": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "view:other/Group/mesh_5_5": {
+        "drawCalls": 1,
+        "triangles": 368
+      },
+      "view:other/Group/mesh_5_6": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_5_7": {
+        "drawCalls": 1,
+        "triangles": 144
+      },
+      "view:other/Group/mesh_5_8": {
+        "drawCalls": 1,
+        "triangles": 70
+      },
+      "view:other/Group/mesh_7": {
+        "drawCalls": 1,
+        "triangles": 660
+      },
+      "view:other/Group/mesh_7_1": {
+        "drawCalls": 1,
+        "triangles": 702
+      },
+      "view:other/Group/mesh_7_2": {
+        "drawCalls": 1,
+        "triangles": 64
+      },
+      "view:other/Group/mesh_7_3": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "view:other/Group/mesh_7_4": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:other/Group/mesh_6": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/Group/mesh_6_1": {
+        "drawCalls": 1,
+        "triangles": 330
+      },
+      "view:other/Group/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/Group/mesh_2": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/Group/mesh_2_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_2_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/weather/Mesh": {
+        "drawCalls": 2,
+        "triangles": 23760
+      },
+      "view:other/weather/rain-splashes": {
+        "drawCalls": 2,
+        "triangles": 240
+      },
+      "shadow:other/Output Color Transform/Output Color Transform": {
+        "drawCalls": 1,
+        "triangles": 1
+      }
+    },
+    "updateCpuMs": 0.6999998092651367,
+    "renderCpuMs": 2.40000057220459,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 294.117647058855,
+    "frameMs": 3.399999999999636,
+    "simMs": 0,
+    "simTicks": 0,
+    "simWorldMs": 0,
+    "simTickMs": 0,
+    "uiMs": 0,
+    "drawCalls": 85,
+    "triangles": 44197,
+    "geometries": 281,
+    "textures": 110,
+    "entities": 1,
+    "backend": "webgl",
+    "loadTiming": null,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 11,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 723223259,
+    "lighting": {
+      "lightFieldMs": 0.10000038146972656,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
+  },
+  "weather": {
+    "particles": 6000,
+    "flash": 0,
+    "rayDitherRadius": 6,
+    "wetness": 0.05555555555555562,
+    "accumulation": 0,
+    "tracks": 0,
+    "trackPixels": 0
+  }
+}
