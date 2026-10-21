@@ -1,5 +1,7 @@
 # E27 vision review — checklist H
 
+**Current AC15: MET visually (2026-10-22).** Final-source named H review below supersedes the historical physical-consequence claim; full final verification is pending.
+
 Inspected 2026-10-10, headless Chrome / Metal WebGL2. Scene Lab fixtures use a fixed game angle (1.5× framing), and production L4 uses its authored `l4-collapse` photo spot. No L6 missions/data were changed. All twenty-three Scene Lab scenes completed with zero console errors; nine lighting presets and twelve effect scenes are described in the epic reports.
 
 | H item | Result | Inspected evidence / observation |

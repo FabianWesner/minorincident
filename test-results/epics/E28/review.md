@@ -1,5 +1,7 @@
 # E28 weather vision review
 
+**Current AC12: MET (2026-10-22).** Final-source Checklist G below supersedes the historical failure; AC10 remains partial, as recorded in `report.md`.
+
 **AC12: FAIL.** Automated scene loading is green, but it does not constitute vision approval.
 Reference inspected: `initial-drafts/weather-and-time-of-day-moods.png` (S25). I opened all nine final game-camera catalog sheets (frames 0, 60, 120), plus full-size fog-player, snow-tracks, wet-reflections and scripted-strike blackout frames.
 
@@ -53,4 +55,4 @@ This review supersedes the earlier AC12 failure above. I opened the fresh **24 s
 | should | Reflections | PASS — storm pavement carries irregular, broken warm highlights under windows and lamp, with dark gaps; car paint/glass retain specular separation. Dry clear/overcast pavement has no wet streaks. |
 | should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
 
-**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Current verifier: all 71 functional browsers pass; performance stage is still pending.
+**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Final E28 verifier passes all 28 selected Node, 71 functional browser and six quiet performance tests. The original heap-counter discrepancy remains partial under AC10.
