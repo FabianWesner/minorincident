@@ -1,7 +1,7 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
 import { Color, DataTexture, RGBAFormat, UnsignedByteType, type WebGPURenderer, SpotLight, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
-import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float, pmremTexture } from 'three/tsl';
+import { renderGroup, uniform, mix, vec2, viewportUV, Fn, If, texture, reference, float, pmremTexture, PCFShadowFilter } from 'three/tsl';
 import { cameraFraming } from '../data/cameraFraming';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
@@ -16,9 +16,10 @@ import type { PaletteMaterial } from './PaletteMaterial';
 
 // r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
 // grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
-const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
+type ShadowFilterInputs = {
   depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLight['shadow']; depthLayer: Node<'float'>;
-}) => {
+};
+const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: ShadowFilterInputs) => {
   const step = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow));
   let filtered: Node<'float'> = float(0);
   for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
@@ -29,6 +30,17 @@ const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
   }
   return filtered;
 });
+// A stable light list retains the inactive map too. Three's final intensity mix
+// still samples it; skip those taps with a uniform branch, preserving the exact
+// active filter and the warmed graph when the shadow source changes.
+const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'>) => Fn((inputs: ShadowFilterInputs) => {
+  const visibility = float(1).toVar();
+  If(reference('intensity', 'float', inputs.shadow).greaterThan(0), () => { visibility.assign(filter(inputs)); });
+  return visibility;
+});
+const activeSunShadow = activeShadowFilter(stableSunShadow);
+// r186 takes one options object; @types/three still describes the old positional signature.
+const activeSpotShadow = activeShadowFilter(PCFShadowFilter as unknown as (inputs: ShadowFilterInputs) => Node<'float'>);
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -144,8 +156,9 @@ export class Lighting {
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.08; this.sun.shadow.radius = 2;
     // LightShadow.filterNode is public at runtime but omitted from @types/three.
-    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = stableSunShadow;
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof activeSunShadow }).filterNode = activeSunShadow;
     this.spot.castShadow = true; this.spot.shadow.mapSize.set(512, 512); this.spot.shadow.bias = -.0005; this.spot.shadow.normalBias = .03;
+    (this.spot.shadow as typeof this.spot.shadow & { filterNode: typeof activeSpotShadow }).filterNode = activeSpotShadow;
     this.spot.visible = false;
     this.scene.add(this.spot, this.spot.target, this.practicalEffects);
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
