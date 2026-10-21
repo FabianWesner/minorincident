@@ -213,16 +213,19 @@ export class CrowdView extends Group {
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
-        // Preserve colors, eyes, rigid-part ownership and each part's surface.
-        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
-        if (this.disposed) { baked.geometry.dispose(); return; }
         if (!alpha) {
-          // Ordinary settled bodies retain their surface without living figure detail.
-          const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
+          // Start from the authored surface, before the living far-band reduction.
+          // Reducing twice compounded the allowed surface loss and left permanent
+          // bodies as disconnected shards, especially on low quality (PO #85).
+          const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, true, .98);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
+          corpse.userData.crowdLod = lod;
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
           this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         }
+        // Preserve colors, eyes, rigid-part ownership and each part's surface.
+        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
+        if (this.disposed) { baked.geometry.dispose(); return; }
       }
       if (alpha && lod === 'lod0') {
         const corpse = baked.geometry.clone(); packCrowdParts(corpse);
