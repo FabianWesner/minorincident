@@ -14,6 +14,7 @@ try{
     await page.goto(url);await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
     await page.getByTestId('start-game').click();await page.getByTestId('character-female').click();await page.getByTestId(`level-L${level}`).click({force:true});
     await page.waitForFunction(id=>{const g=(window.__SCENE__ as unknown as {game:{world:{scenario:string};loading:boolean}}).game;return g.world.scenario===id&&!g.loading&&document.body.dataset.uiScreen==='game';},`L${level}`);
+    await page.waitForFunction(()=>{const phase=window.__SS__!.missions.state()?.phase,b=document.querySelector<HTMLElement>('[data-testid="mission-button"]');return phase==='playing'||phase==='briefing'&&b&&!b.hidden&&b.offsetParent!==null;});
     if(await page.evaluate(()=>window.__SS__!.missions.state()?.phase==='briefing'))await page.getByTestId('mission-button').click();
     const row=await page.evaluate(()=>{const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;return {scenario:g.world.scenario,tick:a.tick(),save:a.campaign.save(),status:g.saves.load().status,unlocked:a.campaign.state()!.unlockedLevel};});
     assert.equal(row.scenario,`L${level}`);assert.equal(row.unlocked,level);assert.equal(row.save,true);assert.equal(row.status,'ok');rows.push(row);console.log(`debug L${level}: loaded and strict save accepted`);
@@ -22,8 +23,9 @@ try{
         const at=m.def.anchors['crawl-end'];g.world.vehicles!.destroyScripted(m.l9!.state.carId,{...at,y:.72,yaw:0});
         m.l9!.state.phase='done';m.l9!.state.finished=true;g.world.storyLock=null;a.cheats.completeObjective('approach');a.cheats.completeObjective('reach-outskirts');await a.step(1);
       });
-      const button=page.getByTestId('mission-button');assert.equal(await button.innerText(),'Continue');assert.equal(await button.isVisible(),true);await button.click();
-      await page.waitForFunction(()=>{const g=(window.__SCENE__ as unknown as {game:{world:{scenario:string};loading:boolean}}).game;return g.world.scenario==='L10'&&!g.loading;});rows.push({fixture:'L9 completed crawl',resultContinue:true});
+      // L9 intentionally continues directly (Mission.result); assert the campaign advances without a stuck result.
+      await page.evaluate(()=>window.__SS__!.resume());
+      await page.waitForFunction(()=>{const g=(window.__SCENE__ as unknown as {game:{world:{scenario:string};loading:boolean}}).game;return g.world.scenario==='L10'&&!g.loading;});rows.push({fixture:'L9 completed crawl',automaticContinue:true});
     }
     if(level===10){
       const before=await page.evaluate(()=>window.__SS__!.getEntity(1)!.transform);

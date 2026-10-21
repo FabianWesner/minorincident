@@ -45,12 +45,14 @@ if (!(await up())) {
 const profile = join(out, 'profile');
 if (!values['keep-profile']) rmSync(profile, { recursive: true, force: true });
 const runs: LevelRun[] = [], issues: Issue[] = [];
+let sessionsOk=true;
 const session = (options: SessionOptions): boolean => {
   // Each browser session takes one unit of the shared browser lock and releases it when it closes.
   const result = spawnSync('sh', ['tools/e2e-lock.sh', process.execPath, resolve('node_modules/tsx/dist/cli.mjs'), 'tools/playtest/session.ts', JSON.stringify(options)], { stdio: 'inherit', env: { ...process.env, E2E_UNITS: '1' } });
   for (const [file, list] of [[`runs-${options.tag}.json`, runs], [`issues-${options.tag}.json`, issues]] as const) {
     const path = join(out, file); if (existsSync(path)) (list as unknown[]).push(...JSON.parse(readFileSync(path, 'utf8')));
   }
+  sessionsOk &&= result.status === 0;
   return result.status === 0;
 };
 const base = { origin, out, quality, zoom: Number(values.zoom), heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']) } as const;
@@ -66,4 +68,4 @@ const summary = { mode, quality, heroine: base.heroine, zoom: base.zoom, levels,
 writeFileSync(join(out, 'summary.json'), JSON.stringify(summary, null, 2));
 if (!values['keep-profile']) rmSync(profile, { recursive: true, force: true });
 console.log(`playtest ${mode}: ${runs.filter(r => r.finished).length}/${levels.length} levels finished; issues ${JSON.stringify(summary.bySeverity)} → ${out}`);
-process.exit(runs.filter(r => r.finished && !r.skipped.length).length === levels.length ? 0 : 1);
+process.exit(sessionsOk&&runs.filter(r => r.finished && !r.skipped.length).length === levels.length ? 0 : 1);
