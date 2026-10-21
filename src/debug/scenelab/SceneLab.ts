@@ -444,7 +444,7 @@ export class SceneLab {
           e.health.current = hp;
         }
         const x = player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z = player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0);
-        if (!world.solids.relocate(e, { x, z, y: world.districts!.groundHeight(x, z) + .7, yaw: e.transform.yaw }, 'scene.l5-followers', 2)) throw new Error(`Cannot stage L5 follower ${r.key}`);
+        if (!world.solids.relocate(e, { x, z, y: world.districts!.groundHeight(x, z) + .7, yaw: e.transform.yaw }, 'scene.l5-followers', 6)) throw new Error(`Cannot stage L5 follower ${r.key}`);
         this.actors.set(r.key, { id: r.key, kind: 'pedestrian', entity: r.id, spec: { id: r.key, kind: 'pedestrian' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       }
       if (spec.l5Aftermath.metroIngress) {
