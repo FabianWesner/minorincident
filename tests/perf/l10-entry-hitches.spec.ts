@@ -10,8 +10,10 @@ for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug
     expect(result.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
     expect(result.cardClosed).toBeGreaterThan(0);
     expect(result.playableFrames).toBeGreaterThan(100);
-    expect(result.state!.transform.x).toBeGreaterThan(750);
-    expect(result.frames.at(-1)!.tick).toBeGreaterThanOrEqual(2965);
+    // The recording crosses both reported cold-graph boundaries (755/14 and 790/25),
+    // rather than stopping just before the first promotion as the old API walk did.
+    expect(result.state!.transform.x).toBeGreaterThan(800);
+    expect(result.frames.at(-1)!.tick).toBeGreaterThanOrEqual(5131);
     expect(result.max, JSON.stringify(result.hitches)).toBeLessThanOrEqual(200);
   });
 }
