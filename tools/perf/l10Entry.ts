@@ -5,6 +5,12 @@ import type { Page } from '@playwright/test';
 import type { Game } from '../../src/Game';
 import type { InputFrame } from '../../src/input/InputFrame';
 
+interface L10Frame {
+  at: number; dt: number; tick: number; loading: boolean; scenario: string | null;
+  x: number; z: number; sim: number; update: number; render: number; builds: number;
+  heroLight?: string | null; sun?: boolean; spot?: boolean;
+}
+
 /** Device-input recording from the cold-graph reproduction, including both lamp boundaries. */
 const replay = JSON.parse(gunzipSync(readFileSync(new URL('../../tests/fixtures/perf/l10-real-input.json.gz', import.meta.url))).toString()) as { seed: number; ticks: number; inputs: { tick: number; frame: InputFrame }[] };
 const frames: InputFrame[] = []; let cursor = 0;
@@ -32,7 +38,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
   const performanceStartedAt = await page.evaluate(() => performance.now());
   await page.evaluate(frames => {
     const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; input: Game['input']; view: Game['view']; loading: boolean } }).game;
-    const trace = window as unknown as { l10Trace: { at: number; dt: number; tick: number; loading: boolean; scenario: string | null; x: number; z: number; sim: number; update: number; render: number; builds: number }[]; l10TraceRunning: boolean; l10CardClosed?: number };
+    const trace = window as unknown as { l10Trace: L10Frame[]; l10TraceRunning: boolean; l10CardClosed?: number };
     trace.l10Trace = []; trace.l10TraceRunning = true;
     const transition = (g as unknown as { transition: { finish(): void } }).transition, finish = transition.finish;
     transition.finish = function () {
@@ -49,7 +55,9 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
     let last = performance.now();
     const sample = (now: number) => {
       const p = g.world.entities.get(1)?.transform, perf = window.__SS__!.perf();
-      trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds }); last = now;
+      const light = (g.view as unknown as { lighting: { heroLight: string | null; sun: { visible: boolean }; spot: { visible: boolean } } | null }).lighting;
+      trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds,
+        heroLight: light?.heroLight, sun: light?.sun.visible, spot: light?.spot.visible }); last = now;
       if (trace.l10TraceRunning) requestAnimationFrame(sample);
     }; requestAnimationFrame(sample);
   }, frames);
@@ -67,7 +75,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
   await page.evaluate(() => window.__SS__!.resume());
   await page.waitForFunction(ticks => window.__SS__!.tick() >= ticks, replay.ticks, { timeout: 120_000 });
   const result = await page.evaluate(() => {
-    const trace = window as unknown as { l10Trace: { at: number; dt: number; tick: number; loading: boolean; scenario: string | null }[]; l10TraceRunning: boolean; l10CardClosed?: number }; trace.l10TraceRunning = false;
+    const trace = window as unknown as { l10Trace: L10Frame[]; l10TraceRunning: boolean; l10CardClosed?: number }; trace.l10TraceRunning = false;
     window.__SS__!.pause(); window.__SS__!.input.clear();
     const frames = trace.l10Trace, playable = frames.filter(f => f.scenario === 'L10' && f.at >= trace.l10CardClosed!).map(f => ({ ...f, dt: Math.min(f.dt, f.at - trace.l10CardClosed!) }));
     const ordered = playable.map(f => f.dt).sort((a, b) => a - b);

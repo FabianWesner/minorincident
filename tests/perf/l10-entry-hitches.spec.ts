@@ -14,6 +14,9 @@ for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug
     // rather than stopping just before the first promotion as the old API walk did.
     expect(result.state!.transform.x).toBeGreaterThan(800);
     expect(result.frames.at(-1)!.tick).toBeGreaterThanOrEqual(5131);
+    const play = result.frames.filter(f => f.scenario === 'L10' && f.at >= result.cardClosed!);
+    expect(play.every(f => f.sun && f.spot), 'lamp promotion must retain the warmed light list').toBe(true);
+    expect(new Set(play.map(f => f.heroLight)).size, 'the replay must exercise lamp promotion').toBeGreaterThan(1);
     expect(result.max, JSON.stringify(result.hitches)).toBeLessThanOrEqual(200);
   });
 }
