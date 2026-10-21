@@ -239,6 +239,7 @@ export class LevelSixSubway {
     // fighting far back made the whole group wait and sent the courier 70-80 m back through the horde, over and over.
     const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),column=healthy.filter(e=>e.transform.x>=s.leaderX-l6.follow.columnM);
     const tail=column.length?Math.min(...column.map(e=>e.transform.x)):healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
+    const head=column.length?Math.max(s.leaderX,...column.map(e=>e.transform.x)):s.leaderX;
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
@@ -258,9 +259,9 @@ export class LevelSixSubway {
     for(const r of live){const e=w.entities.get(r.id)!;
       if(r.injured&&!r.straggler&&tail-e.transform.x>15){r.straggler=true;w.events.emit({type:'l6.straggler',tick:t,id:r.id});this.say(r.id,l6InjuryLines.straggler);}
       if(r.straggler&&!r.rejoined&&!r.collected&&distance(e.transform,p)<=3){r.collected=true;this.say(1,l6InjuryLines.rejoin);w.events.emit({type:'l6.collected',tick:t,id:r.id});}
-      // Playtest 10-21 (fists, 22 survivors): "Bring the injured survivor back to the group · 0 m" for 7 min with the courier on
-      // the group ring: the column is ~10 m long, so its centre is more than 5 m from the tail. Inside the column counts too.
-      if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<s.leaderX+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
+      // Inside the real column counts too. Combat can displace its head beyond a leader held at the gate:
+      // using that scripted leader as the upper bound kept a returned survivor attached for the next fetch.
+      if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<head+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
       if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
     }
     this.guide(p);
