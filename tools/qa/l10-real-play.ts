@@ -1,22 +1,26 @@
 /** Production assault, ordinary weapon inputs only. No spawned bodies or HP edits. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
 import { SceneSession, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
 
 const out = process.env.L10_OUT ?? 'test-results/fixes-13h-l10/probe';
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend: process.env.L10_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: 'low' });
+const tier: 'low' | 'high' = process.env.L10_TIER === 'high' ? 'high' : 'low';
+const timing = process.argv.includes('--timing');
+const session = new SceneSession({ backend: process.env.L10_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier, nativeFrameTiming: timing });
 try {
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
-  const result = await session.page.evaluate(async () => {
+  const result = await session.page.evaluate(async ({ tier }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
-    a.settings.set({ quality: 'low' });
+    a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
     await a.loadLevel('L10', { seed: 32, checkpoint: 'cure-disperse-ready' });
     a.pause(); a.cheats.god(true); a.teleport(1, { x: 4002, z: -27 });
     a.input.set({ interact: true }); await a.step(1); a.input.clear();
     const kills: unknown[] = [], inputs: unknown[] = [];
     const off = g.world.events.on('combat.kill', event => {
+      if (event.type !== 'combat.kill') return;
       const e = g.world.entities.get(event.targetId)!;
       kills.push({ ...event, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance });
     });
@@ -32,7 +36,11 @@ try {
       } else a.input.clear();
       await a.step(6);
     }
-    off(); a.input.clear(); await a.step(150); await a.screenshotReady();
+    off(); a.input.clear(); await a.step(150);
+    // Paused stepping drives simulation, while VFX have their own render clock.
+    // Let transient blast smoke/gibs expire so they cannot obscure the bodies.
+    for (let seconds = 0; seconds < 35; seconds++) a.vfx.stepRender(1);
+    await a.screenshotReady();
     const bodies = [...g.world.entities.iterate()].filter(e => e.corpse);
     const crowd = (g.view as unknown as { crowd: { corpseGeometry: Map<string, import('three').BufferGeometry> } }).crowd;
     const sources = [...crowd.corpseGeometry].map(([key, geometry]) => ({ key, source: geometry.userData, vertices: geometry.getAttribute('position').count }));
@@ -42,8 +50,35 @@ try {
       if (m.name.startsWith('corpses:') && m.count) pages.push({ name: m.name, instances: m.count, vertices: m.geometry.getAttribute('position').count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, source: m.geometry.userData });
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), perf: a.perf() };
-  });
-  writeFileSync(`${out}/evidence.json`, JSON.stringify(result, null, 2));
-  await session.page.screenshot({ path: `${out}/console.jpg`, type: 'jpeg', quality: 90 });
-  console.log(JSON.stringify({ kills: result.kills.length, bodies: result.bodies.length, sources: result.sources, pages: result.pages, errors: session.errors }, null, 2));
+  }, { tier });
+  const captures = [];
+  for (const zoom of [.5, 1, 1.5]) {
+    const state = await session.page.evaluate(async zoom => {
+      const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, rig = g.view.view, hero = g.world.entities.get(1)!.transform;
+      a.inspect.enable(false);
+      rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
+      await a.step(1); await a.screenshotReady();
+      return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, corpses: a.query({}).filter(e => e.corpse).length };
+    }, zoom);
+    assert.equal(state.backend, session.options.backend === 'webgl2' ? 'webgl' : 'webgpu');
+    assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);
+    assert.ok(Math.abs(Math.hypot(...state.camera.position.map((p, i) => p - state.camera.target[i])) - state.camera.radius) < .01, 'actual camera must match the requested zoom');
+    const samples = [];
+    if (timing && zoom === 1) for (let repeat = 0; repeat < 3; repeat++) samples.push(await session.page.evaluate(async () => {
+      const a = window.__SS__!, frames: number[] = [];
+      a.inspect.enable(true, { courier: 'unchanged' }); a.inspect.timeScale(0);
+      const start = performance.now(); let previous = 0;
+      while (performance.now() - start < 6000) {
+        const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
+        if (previous && now - start > 1000) frames.push(now - previous);
+        previous = now;
+      }
+      frames.sort((a, b) => a - b);
+      return { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1) };
+    }));
+    await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
+    captures.push({ zoom, state, samples });
+  }
+  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, captures, errors: session.errors }, null, 2));
+  console.log(JSON.stringify({ tier, backend: session.options.backend, kills: result.kills.length, bodies: result.bodies.length, captures, errors: session.errors }));
 } finally { await session.close(); stopServer(); }
