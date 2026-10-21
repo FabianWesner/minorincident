@@ -187,9 +187,14 @@ export class LevelSixSubway {
   }
   /** Every movement mode must be able to bring a displaced follower off the walkable side floor. */
   navigationFor(e:EntitySnapshot) {
-    const base=this.w.infected!.nav;
-    if(!this.s.survivors.some(r=>r.id===e.id&&r.status==='following')||Math.abs(e.transform.z-l6.tunnel.z)<=1.8)return base;
-    const floor=base.forPlayer(actorRadius(e));
+    const base=this.w.infected!.nav,r=this.s.survivors.find(r=>r.id===e.id),radius=actorRadius(e);
+    if(r?.status!=='following'||e.transform.x<l6.tunnel.start||Math.abs(e.transform.z-l6.tunnel.z)<=1.8)return base;
+    // Keep ordinary formation/combat steering until a body actually touches or
+    // crosses an artificial lane edge. Collected walkers keep their return route.
+    const side=e.transform.z-l6.tunnel.z;
+    const acrossLane=base.walls.some(w=>(w as {navOnly?:boolean}).navOnly&&Math.abs(e.transform.x-w.x)<w.halfX+radius&&(w.z-l6.tunnel.z)*side>0&&Math.abs(side)>Math.abs(w.z-l6.tunnel.z)-w.halfZ-radius);
+    if(!r.collected&&!r.rejoined&&!acrossLane)return base;
+    const floor=base.forPlayer(radius);
     // Maintenance rooms extend beyond the courier floor; preserve their NPC route.
     return floor.contains(e.transform.x,e.transform.z)?floor:base;
   }
