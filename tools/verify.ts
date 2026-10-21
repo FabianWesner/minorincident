@@ -28,7 +28,7 @@ const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
 const buildCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/e2e-lock.sh', 'sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
   : target === 'E07' || ['E31', 'E32', 'E30', 'E18', 'E23', 'E25', 'E26', 'E27', 'E28'].includes(target)
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'] : ['npm', 'run', 'build'];
 const commands: string[][] = [

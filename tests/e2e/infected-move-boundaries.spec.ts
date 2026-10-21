@@ -74,6 +74,14 @@ for (const move of Object.keys(scenes) as InfectedSpecialMove[]) {
       expect(before.source.infected!.specialAttack!.stage).toBe('telegraph');
       expect(before.markers.some(t => t.attackId === initial.attack.attackId && t.opacity === 1)).toBe(true);
       expect(before.events.some(e => e.type === 'infected.special' && e.attackId === initial.attack.attackId && e.stage === 'active')).toBe(false);
+      // Preserve the authored gameplay view and add an unchanged-tick wide
+      // inspection of the complete boundary (especially the 18/20 m roars
+      // and long charge corridors). Neither camera redraw consumes a sim tick.
+      await s.page.evaluate(({ x, z }) => window.__SCENE__!.setCamera({ mode: 'pose', position: [x + 30, 35, z + 40], target: [x, 0, z] }), initial.attack.area);
+      const overview = await shot('01-boundary-overview');
+      expect(overview.tick).toBe(before.tick);
+      expect(overview.markers.some(t => t.attackId === initial.attack.attackId && t.opacity === 1)).toBe(true);
+      await s.page.evaluate(camera => window.__SCENE__!.setCamera(camera), spec.camera!);
       await s.page.evaluate(() => window.__SS__!.missions.checkpoint('windup'));
       await s.step(1); const active = await shot('02-activation');
       expect(active.tick).toBe(initial.attack.activeTick);
