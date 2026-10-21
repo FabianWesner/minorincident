@@ -73,3 +73,18 @@ test('@E24 QA #88 the held-group reason holds through a 1 s wobble of the rear t
   }
   expect(texts.filter(t => t === 'The group waits: cover the rear from the infected')).toHaveLength(1);
 }, 240_000);
+
+// Playtest 10-21 (baseline weapons run): "Stuck 121 s on "Stay with the group · 0 m"" at x~190: the group was split and
+// its centre, where the ring sat, was empty.
+test('@E24 playtest a split group puts the "Stay with the group" ring on a survivor, not into the empty gap between', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, walkers = s.survivors.filter(r => r.status === 'following' && !r.injured).map(r => r.id);
+  const half = walkers.length >> 1;
+  for (let i = 0; i < (l6.follow.strayDwellS + 1) * 60; i++) {
+    s.leaderX = 214; s.leaderZ = 15; place(w, walkers.slice(0, half), 172); place(w, walkers.slice(half), 214); put(w, 193, 15); w.update();
+  }
+  expect(s.strayed).toBe(true); expect(m.state.marker).toBe('l6-group');
+  const ring = m.def.anchors['l6-group'];
+  expect(Math.min(...walkers.map(id => Math.hypot(w.entities.get(id)!.transform.x - ring.x, w.entities.get(id)!.transform.z - ring.z)))).toBeLessThan(1);
+}, 240_000);

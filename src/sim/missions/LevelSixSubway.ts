@@ -157,7 +157,12 @@ export class LevelSixSubway {
     const core=walkers.filter(({r})=>!r.straggler||r.rejoined||r.collected),group=core.length?core:walkers;
     const gx=group.reduce((t,{e})=>t+e.transform.x,0)/group.length,gz=group.reduce((t,{e})=>t+e.transform.z,0)/group.length;
     const at=(name:string,x:number,z:number,y=.6)=>{const a=anchors[name]??(anchors[name]={x,z,y,radius:2});a.x=x;a.z=z;a.y=y;};
-    at('l6-group',gx,gz,gx>=258?3.9:.6);
+    // Playtest 10-21: a group split by the horde (half fighting back at the gate, half walking on) has its centre in the
+    // empty gap between, and "Stay with the group · 0 m" held for 121 s with the courier standing on that ring. The ring
+    // is the centre while someone walks there, else the group member nearest to the courier.
+    const centred=group.some(({e})=>distance(e.transform,{x:gx,z:gz})<=f.regroupM);
+    const nearest=centred?undefined:group.reduce((a,b)=>distance(b.e.transform,p)<distance(a.e.transform,p)?b:a).e.transform;
+    at('l6-group',nearest?.x??gx,nearest?.z??gz,(nearest?.x??gx)>=258?3.9:.6);
     if(s.phase==='retreat'){
       // Shelter leg: the group first walks onto the track at the leader's x. Tunnel leg: gates, then the platform.
       const route=[l6.tunnel.start,...l6.gates,anchors['exit-platform'].x];
