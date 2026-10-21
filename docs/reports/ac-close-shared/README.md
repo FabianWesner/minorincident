@@ -151,3 +151,19 @@ The corrected full remote unit repeat passes **1,865 tests / 343 files**, seven 
 The refreshed 14 move probes pass again in 2.6 minutes, and the correctly settled hero-shadow probe passes at **85.88% darkening**, hue **254.7°**, promotion blend **1** ([capture/test receipt](evidence/captures-final.log.txt), [shadow reading](evidence/hero-shadow-final.json)). The car corpse fixture is placed at `(2.5,2.5)` outside the hull's solid footprint: its original `(1,2)` footprint overlapped the car and correctly blocked motion through the hull. The final receipt shows it rise and land at approximately `(3.82,0.7,3.87)` with its original id ([car receipt](evidence/car-final.log.txt)). One high-tier late grenade frame was flat/blank and is excluded from signoff pending a pinned-production repeat; a source comment was edited during the dev capture, so that overlap is recorded as a possible cause rather than a proved renderer defect.
 
 The first final E28 attempt was interrupted while its remote build was unnecessarily holding/waiting for a GPU reservation ([receipt](evidence/verify-E28-build-wait.log.txt)). Remote builds now use no browser slot; their artifact pull precedes this verifier's browsers. Local browser and quiet/perf reservations are unchanged, and the complete verifier restarts from its static checks rather than skipping any gate.
+
+## Final-source Checklist G review — 2026-10-22
+
+This review supersedes the earlier AC12 failure above. I opened the fresh **24 six-mood frames** (WebGL2/WebGPU × high/low), the full-size storm and facade frames, and the settled hero-shadow frame. Retained matrix: `docs/reports/ac-close-shared/g-moods.jpg`. References opened: `initial-drafts/weather-and-time-of-day-moods.png` and `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`; `06` §7 permits these interim references while dedicated lighting keyframes are absent.
+
+| Priority | G item | Observed result |
+| --- | --- | --- |
+| must | Emissive glow and visible pools/spill | PASS — yellow windows, headlamps and streetlamp bloom; orange pools brighten nearby pavement and facade. |
+| must | Geometry / hero shadows | PASS — wall-facing window spill remains on the outside pavement; settled lamp casts separate courier, infected and prop shadows. The unchanged hero probe measures 85.88% darkening after promotion blend reaches 1. |
+| must | Colored, appropriate shadows | PASS — blue/purple shadows, long and crisp in haze, broader and subdued under overcast; hero shadow hue 254.7°, no black cutout. |
+| must | Night readability | PASS — courier cap, orange clothing and limbs remain distinct; gray/green infected silhouette and limbs separate from the dark blue street in storm, fog and snow. Dense-fog player contrast is 3.0349:1 over the unchanged 7,585-pixel mask. |
+| should | Beams / haze / glints | PASS — amber shafts cross the haze scene and window spill lights the storm haze; fog softens the distance without hiding the courier. The lightning frame is bright but characters and house remain legible. |
+| should | Reflections | PASS — storm pavement carries irregular, broken warm highlights under windows and lamp, with dark gaps; car paint/glass retain specular separation. Dry clear/overcast pavement has no wet streaks. |
+| should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
+
+**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Current verifier: all 71 functional browsers pass; performance stage is still pending.
