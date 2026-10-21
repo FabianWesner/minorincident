@@ -93,7 +93,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- per-level state ---
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
-  let visibleProgress = new PlaytestProgress();
+  let visibleProgress = new PlaytestProgress(), lastObservation=0;
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
@@ -127,7 +127,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
-    visibleProgress = new PlaytestProgress();
+    visibleProgress = new PlaytestProgress();lastObservation=0;
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
@@ -386,7 +386,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
     const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
-    if(observed.reason)log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
+    if(observed.reason) {
+      lastProgress.tick=e.tick;lastProgress.wall=Date.now();lastProgress.best=e.distance??Infinity;
+      log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
+    }
+    if(Date.now()-lastObservation>=1000) {
+      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp}:null,marker:ring,noProgressSeconds:observed.seconds}});
+    }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
     run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,observed.seconds);
@@ -394,6 +400,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
+    if(o.noSkip&&observed.seconds>=30) {
+      await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
+      log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;
+    }
     // Stuck ladder: 20 s confusion (issue), 60 s try E, 120 s state assist, levelMinutes cap → skip step.
     // The HUD distance can point at a moving guidance waypoint (L3 l3-route); the ring itself decides "at the ring".
     const ringDist = ring && e.player ? Math.hypot(ring.x - e.player.x, ring.z - e.player.z) : e.distance;
