@@ -115,15 +115,17 @@ for (const move of Object.keys(scenes) as InfectedSpecialMove[]) {
         const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
         for (const p of positions) { a.teleport(p.id, p); const e = w.entities.get(p.id)!; if (e.infected && !e.corpse) { e.infected.state = 'idle'; delete e.noiseTarget; } }
       }, initial.positions);
-      const attempt = () => s.page.evaluate(({ id, move }) => {
+      const attempt = () => s.page.evaluate(({ id, move, radius }) => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, e = w.entities.get(id)!, p = w.entities.get(1)!;
-        return w.infected!.startSpecial(id, move, { id: 1, x: p.transform.x, z: p.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 });
-      }, { id: initial.id, move });
+        const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
+        return w.infected!.startSpecial(id, move, { id: 1, x: p.transform.x, z: p.transform.z }, { x: e.transform.x, z: e.transform.z, radius, dx: dx / length, dz: dz / length });
+      }, { id: initial.id, move, radius: initial.attack.area.radius });
       expect(await attempt()).toBe(false); await shot('07-cooldown-rejected');
       await s.step(1); expect(await attempt()).toBe(true);
       const second = await shot('08-second-windup');
       expect(second.markers.some(t => t.attackId === second.source.infected!.specialAttack!.attackId && t.opacity === 1)).toBe(true);
       expect(second.source.infected!.specialAttack!.activeTick).toBe(expiry);
+      expect(second.source.infected!.specialAttack!.area.radius).toBe(initial.attack.area.radius);
       expect(second.source.infected!.specialAttack!.attackId).toBeGreaterThan(initial.attack.attackId);
       await s.step(timing.windup); const secondActive = await shot('09-second-activation');
       expect(secondActive.tick - restoredActive.tick - 7).toBe(timing.cooldown);
