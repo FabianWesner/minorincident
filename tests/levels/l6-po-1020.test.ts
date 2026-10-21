@@ -25,8 +25,10 @@ test('@E24 PO 10-20 #65 the retreat ring sits on the group\'s next waypoint; awa
   expect(m.def.anchors['l6-next'].x).toBeCloseTo(s.leaderX + l6.follow.aheadM, 1);
   // Walk right, away from the group (PO: "the group of people is below me, but I walk right").
   const walkers = s.survivors.filter(r => r.status === 'following').map(r => w.entities.get(r.id)!);
-  const far = Math.max(...walkers.map(e => e.transform.x)) + l6.follow.strayM + 3;
-  put(w, far, 15); w.update();
+  // The group walks on (2.2 m/s) during the strayDwellS hold (QA #84), so start clearly beyond strayM.
+  const far = Math.max(...walkers.map(e => e.transform.x)) + l6.follow.strayM + 8, dwell = l6.follow.strayDwellS * 60 + 1;
+  const hold = (x: number, z: number) => { for (let i = 0; i < dwell; i++) { put(w, x, z); w.update(); } };
+  hold(far, 15);
   expect(s.strayed).toBe(true); expect(m.state.marker).toBe('l6-group'); expect(LevelSixSubway.text(m)).toBe('Stay with the group');
   const group = m.def.anchors['l6-group'], cx = walkers.reduce((t, e) => t + e.transform.x, 0) / walkers.length;
   expect(Math.abs(group.x - cx)).toBeLessThan(2);
@@ -35,10 +37,10 @@ test('@E24 PO 10-20 #65 the retreat ring sits on the group\'s next waypoint; awa
   put(w, nearest.transform.x + 12, nearest.transform.z); w.update();
   expect(s.strayed).toBe(true);
   // Rejoin.
-  put(w, nearest.transform.x + 1, nearest.transform.z); w.update();
+  hold(nearest.transform.x + 1, nearest.transform.z);
   expect(s.strayed).toBe(false); expect(m.state.marker).toBe('l6-next'); expect(LevelSixSubway.text(m)).toBeNull();
   // Checkpoints keep it (the anchors are rebuilt from the restored group on the next tick).
-  put(w, far, 15); w.update(); m.checkpoint('abandon'); m.restore('abandon'); w.update();
+  hold(far + 8, 15); m.checkpoint('abandon'); m.restore('abandon'); w.update();
   expect(m.state.marker).toBe('l6-group');
 }, 240_000);
 
@@ -94,4 +96,23 @@ test('@E24 PO 10-20 #63 the courier walks onto both drawn tunnel walkways (no in
   put(w, 112, 17.6); frame.move = { x: -1, z: 0 };
   for (let i = 0; i < 90; i++) { w.applyInput(frame, 'keyboard'); w.update(); }
   expect(p.transform.x).toBeLessThan(106);
+}, 240_000);
+
+// QA 10-21 #84 "L6 exit (253,16) ticks 63000-89000: objective text flaps "Stay with the group" <-> "Bring the survivors
+// into the night" every 1-3 s (53 flips) while the group is 20-35 m behind; #65 checkpoint needs hysteresis."
+test('@E24 QA #84 the exit "Stay with the group" text switches once per real change, not with every distance wobble', async () => {
+  const { world: w, mission: m } = await loadL6(); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); m.completeObjective('retreat');
+  const s = m.state.l6!; expect(s.phase).toBe('exit');
+  const walkers = s.survivors.filter(r => r.status === 'following').map(r => w.entities.get(r.id)!);
+  const nearest = () => Math.max(...walkers.filter(e => !e.hidden).map(e => e.transform.x));
+  const heads: string[] = []; let last = '';
+  const sample = () => { const t = LevelSixSubway.text(m) ?? 'Bring the survivors into the night'; if (t !== last) heads.push(t); last = t; };
+  // The nearest walker's distance wobbles across the 10/15 m band every 0.75 s (combat, fleeing): no flip at all.
+  for (let i = 0; i < 30 * 60; i++) { put(w, nearest() + ((i / 45 | 0) % 2 ? 17 : 8), 15); w.update(); sample(); }
+  expect(heads).toEqual(['Bring the survivors into the night']);
+  // A real change (courier clearly away for longer than strayDwellS) switches exactly once, and back once on rejoin.
+  for (let i = 0; i < (l6.follow.strayDwellS + 1) * 60; i++) { put(w, nearest() + 30, 15); w.update(); sample(); }
+  for (let i = 0; i < (l6.follow.strayDwellS + 1) * 60; i++) { put(w, nearest() + 2, 15); w.update(); sample(); }
+  expect(heads).toEqual(['Bring the survivors into the night', 'Stay with the group', 'Bring the survivors into the night']);
 }, 240_000);
