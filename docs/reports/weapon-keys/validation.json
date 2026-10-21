@@ -1,0 +1,42 @@
+{
+  "featureSourceCommit": "400f281b2",
+  "baseCommit": "93e1fbea8",
+  "remoteUnitAndLevels": {
+    "exitCode": 0,
+    "passed": 2152,
+    "skipped": 9,
+    "filesPassed": 391,
+    "filesSkipped": 3,
+    "maxWorkers": 4
+  },
+  "focusedMappingAndCodec": {
+    "passed": 15,
+    "filesPassed": 2
+  },
+  "e03SimulationAndSmoke": {
+    "passed": 39,
+    "failed": 0
+  },
+  "e03BrowserAndSmoke": {
+    "passed": 140,
+    "failed": 5,
+    "workers": 1,
+    "headless": true,
+    "manualWebGpuCasesExcluded": true
+  },
+  "baselineComparison": {
+    "test": "tests/e2e/mobile-hud-layout.spec.ts: mobile HUD live 915x412",
+    "limit": 0.27,
+    "featureCoverage": 0.2726152425609449,
+    "baseCoverage": 0.2726152425609449,
+    "featureMeasuredWeaponRackNodes": [],
+    "affectedProjects": [
+      "chromium",
+      "pixel-7",
+      "pixel-7-landscape",
+      "iphone-14",
+      "iphone-14-landscape"
+    ],
+    "baselineCommand": "E2E_PORT=3981 SCENE_PORT=3982 sh tools/e2e-lock.sh npx playwright test tests/e2e/mobile-hud-layout.spec.ts --grep 'mobile HUD live 915x412' --project=chromium --workers=1"
+  }
+}

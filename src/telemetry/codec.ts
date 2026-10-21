@@ -19,7 +19,7 @@ export const schemes: readonly Scheme[] = ['mouse-only', 'mouse-keyboard', 'keyb
 const sources = [null, 'pointer', 'keyboard', 'touch', 'assist'] as const;
 /** Optional boolean fields, two bits each in slot 20: 0 = absent, 1 = false, 2 = true. */
 const optionalFlags = ['brake', 'handbrake', 'mouseAttack', 'attackInPlace', 'selectorActive', 'cancelMove', 'pointerGround', 'pointerTarget', 'navigation', 'walk', 'activeAttack', 'orderedSelection'] as const;
-const FLOAT_SLOTS = 10, SLOTS = 21, ALL = 0x1fffff, HEADER = 13;
+const FLOAT_SLOTS = 10, SLOTS = 22, ALL = 0x3fffff, HEADER = 13;
 /** zoom = wheel delta (float), tier = quality tier index, phase = mission UI command index, view = width * 65536 + height. */
 export type CommandKind = 'zoom' | 'tier' | 'phase' | 'view';
 const commandIds: Record<CommandKind, number> = { zoom: 1, tier: 2, phase: 3, view: 4 };
@@ -90,7 +90,7 @@ export class InputLogEncoder {
     c[19] = (frame.left.down ? 1 : 0) | (frame.left.held ? 2 : 0) | (frame.left.up ? 4 : 0) | (frame.right.down ? 8 : 0) | (frame.right.held ? 16 : 0) | (frame.right.up ? 32 : 0) | (frame.interact ? 64 : 0) | (frame.pause ? 128 : 0);
     const f = frame as unknown as Record<string, boolean | undefined>; let flags = 0;
     for (let i = 0; i < optionalFlags.length; i++) { const v = f[optionalFlags[i]]; flags |= (v === undefined ? 0 : v ? 2 : 1) << (i * 2); }
-    c[20] = flags;
+    c[20] = flags; c[21] = frame.selectedWeaponKey ?? absent;
     let mask = 0;
     if (this.fresh) mask = ALL; else for (let i = 0; i < SLOTS; i++) if (!same(c[i], this.prev[i])) mask |= 1 << i;
     this.fresh = false;
@@ -139,6 +139,7 @@ function frameFrom(c: Float64Array): InputFrame {
   if (c[6] === c[6]) frame.moveTarget = vec(c[6], c[7]);
   if (c[8] === c[8]) frame.drive = { throttle: c[8], steer: c[9] };
   if (c[10] === c[10]) frame.attackTarget = { id: c[10], side: c[11] === 0 ? 'LEFT' : 'RIGHT' };
+  if (c[21] === c[21]) frame.selectedWeaponKey = c[21];
   if (c[14] === c[14]) frame.selectedActiveSlot = c[14];
   if (c[15] === c[15]) frame.selectedSlot = { side: c[16] === 0 ? 'LEFT' : 'RIGHT', index: c[15] };
   if (c[17] === c[17]) frame.selectorSide = c[17] === 0 ? 'LEFT' : 'RIGHT';
@@ -150,9 +151,11 @@ function frameFrom(c: Float64Array): InputFrame {
 /** Decode chunks (already gunzipped, in order) into one frame per sample plus the command stream. */
 export function decodeLog(chunks: Uint8Array[]): DecodedLog {
   let meta: Record<string, unknown> | null = null; const frames: InputFrame[] = []; const schemeList: number[] = []; const commands: LogCommand[] = [];
-  const cur = new Float64Array(SLOTS); let last: InputFrame | null = null; let scheme = 0;
+  const cur = new Float64Array(SLOTS).fill(absent); let last: InputFrame | null = null; let scheme = 0;
   for (const bytes of chunks) {
     const r = new Reader(bytes);
+    // Older MIR1 keyframes stop at slot 20; the appended weapon key stays absent.
+    cur.fill(absent);
     if (bytes.length < HEADER || r.view.getUint32(0, true) !== CHUNK_MAGIC) throw new Error('Not a replay chunk');
     const hasMeta = bytes[4] & 1, start = r.view.getUint32(5, true), end = r.view.getUint32(9, true); r.pos = HEADER;
     if (start !== frames.length) throw new Error(`Replay chunk gap: expected sample ${frames.length}, chunk starts at ${start}`);

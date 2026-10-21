@@ -28,7 +28,7 @@ export class Bindings {
     const seen = new Set<string>();
     for (const action of Object.keys(defaultBindings) as Action[]) {
       if (!Array.isArray(map[action]) || !map[action].length) return false;
-      for (const code of map[action]) { if (typeof code !== 'string' || !validCode(code) || seen.has(code)) return false; seen.add(code); }
+      for (const code of map[action]) { if (typeof code !== 'string' || !validCode(code) || /^(Digit[1-9]|ShiftLeft|ShiftRight)$/.test(code) || seen.has(code)) return false; seen.add(code); }
     }
     return true;
   }
@@ -42,7 +42,7 @@ export class Bindings {
   /** Replaces this action's keyboard alternatives, retaining its fixed mouse mirror. */
   rebind(action: Action, code: string): { ok: boolean; message: string } {
     if (!Object.hasOwn(defaultBindings, action) || !validCode(code) || code.startsWith('Mouse')) return { ok: false, message: 'Choose a valid keyboard code.' };
-    if (/^(Digit[123]|ShiftLeft|ShiftRight)$/.test(code)) return { ok: false, message: `${code} is reserved for rack selection.` };
+    if (/^(Digit[1-9]|ShiftLeft|ShiftRight)$/.test(code)) return { ok: false, message: `${code} is reserved for rack selection.` };
     const conflict = this.action(code);
     if (conflict && conflict !== action) return { ok: false, message: `${code} is already bound to ${conflict}.` };
     const next = structuredClone(this.map);
