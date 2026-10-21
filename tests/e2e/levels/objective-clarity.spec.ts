@@ -57,14 +57,16 @@ for(const quality of ['high','low'] as const){
   test(`PO 10-21 #3 Metro approach clicks at all zooms, ${quality}`,async({page})=>{
     test.setTimeout(300_000);await start(page,quality,'L5');
     for(const zoom of [.5,1,1.5]){
-      await page.evaluate(async()=>{
+      await page.evaluate(async zoom=>{
         const a=window.__SS__!,w=(window.__SCENE__ as unknown as {game:Game}).game.world;
         await a.loadLevel('L5',{seed:1,progression:'L5-default'});a.pause();a.missions.begin();a.cheats.god(true);a.cheats.completeObjective('emerge');a.cheats.completeObjective('look');a.cheats.killAll();
         const s=w.missions!.state.l5!;
-        // Isolate the approach and true arrival trigger; group ingress has its own regression.
-        for(const r of s.survivors){r.status='dead';w.entities.get(r.id)!.hidden=true;w.spatial.delete(r.id);}
+        // Normal zoom also proves the full party can close behind a courier waiting on the ring.
+        const door=w.missions!.def.anchors['l5-metro-shutter'];
+        s.survivors.forEach((r,i)=>{const e=w.entities.get(r.id)!;if(zoom===1){r.status='following';e.hidden=false;e.civilian!.survivor!.mode='follow';a.teleport(r.id,{x:door.x+(i%2?.4:-.4),z:door.z+1.4+Math.floor(i/2)});}else{r.status='dead';e.hidden=true;w.spatial.delete(r.id);}});
+        if(zoom===1){const dog=w.entities.values().find(e=>e.companion)!;a.teleport(dog.id,{x:door.x,z:door.z+3});}
         a.teleport(1,{x:37.6,z:-45.8});a.camera.follow();await a.step(1);
-      });
+      },zoom);
       await capture(page,`${quality}-l5-metro`,zoom);
       const click=await page.evaluate(()=>{const a=window.__SS__!,w=(window.__SCENE__ as unknown as {game:Game}).game.world,r=w.missions!.def.anchors['l5-metro-in'];return a.input.project(r);});
       await page.mouse.click(click.x,click.y);
@@ -76,6 +78,12 @@ for(const quality of ['high','low'] as const){
       expect(arrived,`zoom ${zoom}: a real click enters the actual stair trigger`).toBe(true);
       await expect(page.getByTestId('objective-text')).toContainText('3 s');
       await capture(page,`${quality}-l5-metro-arrived`,zoom);
+      if(zoom===1){
+        let closed=false;
+        for(let i=0;i<200;i++){await page.evaluate(()=>window.__SS__!.step(12));if(await page.evaluate(()=>!!window.__SS__!.missions.state()?.l5?.shutterAt)){closed=true;break;}}
+        expect(closed,'all five followers and the corgi enter while the courier waits on the visible ring').toBe(true);
+        expect(await page.evaluate(()=>window.__SS__!.missions.state()!.l5!.survivors.filter(r=>r.status==='sheltered').length)).toBe(5);
+      }
     }
   });
   test(`PO 10-21 #6 western corridor keeps the group and bus hands it to L8, real input, ${quality}`,async({page})=>{
