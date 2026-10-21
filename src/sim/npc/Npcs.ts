@@ -26,8 +26,8 @@ export class Npcs {
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
-  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600): boolean {
-    const nav = this.world.infected!.nav, footprint = actorRadius(e);
+  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.infected!.nav): boolean {
+    const footprint = actorRadius(e);
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
     if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
@@ -68,14 +68,14 @@ export class Npcs {
     const routed = Math.hypot(dx, dz); if (routed < .01) return true;
     const velocity = Math.min(speed, Math.max(0, distance - stop) * 4, l3Follower ? routed * 4 : Infinity);
     const vx = dx / routed * velocity, vz = dz / routed * velocity;
-    this.moveStep(e, vx / 60, vz / 60);
+    this.moveStep(e, vx / 60, vz / 60, nav);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
-  moveStep(e: EntitySnapshot, dx: number, dz: number): void {
+  moveStep(e: EntitySnapshot, dx: number, dz: number, nav = this.world.infected!.nav): void {
     if (e.passengerOf !== undefined || e.pendingAdmission) return;
     this.world.solids.wrote(e, 'npc.move');
     const x = e.transform.x, z = e.transform.z;
-    moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, actorRadius(e));
+    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e));
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */
