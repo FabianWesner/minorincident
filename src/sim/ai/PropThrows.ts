@@ -52,7 +52,7 @@ export class PropThrows {
     const dx = a.target.x - source.transform.x, dz = a.target.z - source.transform.z, distance = Math.hypot(dx, dz);
     if (distance < .01) return false;
     a.projectile = { objectId: object.id, corpse: object.corpse, started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.min(15, distance) };
-    const body = this.world.entities.get(object.id); if (object.corpse && body) body.corpseThrown = true;
+    const body = this.world.entities.get(object.id); if (object.corpse && body) { body.corpseThrown = true; delete body.corpseBlast; }
     this.world.events.emit({ type: 'infected.prop-thrown', tick: this.world.tick, sourceId: source.id, propId: object.id, attackId: a.attackId });
     this.positionSpecial(a, false); return true;
   }

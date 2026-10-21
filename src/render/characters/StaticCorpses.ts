@@ -36,21 +36,24 @@ export class StaticCorpses extends Group {
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
     // hidden or deleted (level unload or restart) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
     let gone: string[] | null = null;
+    let movedPages: Set<InstancedMesh> | null = null;
     for (const [key, body] of this.bodies) {
       const current = get(body.id);
-      if (current && current !== body) { this.reset(); gone = null; break; }
+      if (current && current !== body) { this.reset(); gone = null; movedPages = null; break; }
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
       // Only thrown bodies change their instance matrix. Handle them during the
       // lifecycle pass instead of walking every permanent body a second time.
       if (body.corpseThrown) {
         const slot = this.slots.get(key)!;
         slot.page.mesh.getMatrixAt(slot.index, this.moved);
-        if (this.moved.elements[12] !== body.transform.x || this.moved.elements[13] !== body.transform.y - .7 || this.moved.elements[14] !== body.transform.z) {
+        if (this.moved.elements[12] !== Math.fround(body.transform.x) || this.moved.elements[13] !== Math.fround(body.transform.y - .7) || this.moved.elements[14] !== Math.fround(body.transform.z)) {
           this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
-          slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true; slot.page.mesh.computeBoundingSphere();
+          slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true;
+          (movedPages ??= new Set()).add(slot.page.mesh);
         }
       }
     }
+    if (movedPages) for (const page of movedPages) page.computeBoundingSphere();
     if (gone) for (const key of gone) this.drop(key);
     for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
   }
