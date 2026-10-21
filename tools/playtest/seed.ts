@@ -1,6 +1,6 @@
 // Seeds a progressed campaign save (an L<n>-default preset through the game's own campaign API) into a playtest profile,
 // so `play.ts --mode continue --entry continue --keep-profile` resumes it from the menu. From visual-qa-13e2.
-// usage (under tools/e2e-lock.sh): tsx tools/playtest/seed.ts <origin> <profileDir> <female|male> [L6-default]
+// usage (under tools/e2e-lock.sh): tsx tools/playtest/seed.ts <origin> <profileDir> <female|male> [L6-default] [weapons|fists]
 import { chromium } from '@playwright/test';
 import { resolve } from 'node:path';
 import { playtestSave } from './startup';
