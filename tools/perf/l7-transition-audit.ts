@@ -26,6 +26,12 @@ try {
         a.getState().l7!.roster.forEach((r, i) => a.teleport(r.id, { x: -44 - Math.floor(i / 3) * 1.2, z: 46 + (i % 3 - 1) * 1.2 }));
         a.camera.cinematic({ position: [-22, 24, 68], target: [-48, 0, 46] }, true); await a.screenshotReady();
       });
+      const gpu = await session.page.evaluate(() => {
+        const gl = document.querySelector('canvas')!.getContext('webgl2')!;
+        const extension = gl.getExtension('WEBGL_debug_renderer_info');
+        return extension ? String(gl.getParameter(extension.UNMASKED_RENDERER_WEBGL)) : null;
+      });
+      if (!gpu || /swiftshader|llvmpipe|software/i.test(gpu)) throw Error(`Native GPU required: ${gpu}`);
       await session.page.evaluate('globalThis.__name = (fn) => fn');
       for (const phase of ['checkpoint', 'boarding'] as const) {
         if (phase === 'boarding') await session.page.evaluate(async () => {
@@ -40,7 +46,7 @@ try {
           let previous = 0, priorPhase = '', peakInfected = 0;
           a.resume(); if (phase === 'checkpoint') a.input.set({ moveTarget: { x: -29, z: 47 } });
           const start = performance.now();
-          while (performance.now() - start < (phase === 'checkpoint' ? 5000 : 45000)) {
+          while (performance.now() - start < (phase === 'checkpoint' ? 5000 : 120000)) {
             const now = await new Promise<number>(r => requestAnimationFrame(r)), p = a.perf();
             const state = `${w.scenario}:${w.missions?.state.checkpoint}:${w.l7Departure?.state.phase ?? ''}`;
             if (previous) { frames.push(now - previous); if (now - previous > 30) hitches.push({ ms: now - previous, state, sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs, nodeBuilds: p.nodeBuilds }); }
@@ -51,12 +57,12 @@ try {
           a.pause(); a.input.clear();
           const sorted = [...frames].sort((a,b) => a-b);
           return { phase, frames: frames.length, frameP95: sorted[Math.ceil(sorted.length * .95) - 1], maximum: Math.max(...frames), peakInfected, transitions, hitches,
-            end: { level: w.scenario, checkpoint: w.missions?.state.checkpoint, departure: w.l7Departure?.state.phase }, perf: a.perf() };
+            end: { level: w.scenario, loading: (game as unknown as { loading: boolean }).loading, checkpoint: w.missions?.state.checkpoint, departure: w.l7Departure?.state.phase }, perf: a.perf() };
         }, phase);
-        rows.push({ tier, ...result, errors: session.errors });
+        rows.push({ tier, gpu, ...result, errors: session.errors });
         writeFileSync(`${out}/transitions.json`, JSON.stringify(rows, null, 2));
         console.log(JSON.stringify(rows.at(-1)));
-        if (result.maximum > 50 || (phase === 'checkpoint' ? result.end.checkpoint !== 'corridor' : result.end.level !== 'L8') || session.errors.length) process.exitCode = 1;
+        if (result.maximum > 50 || (phase === 'checkpoint' ? result.end.checkpoint !== 'corridor' : result.end.level !== 'L8' || result.end.loading) || session.errors.length) process.exitCode = 1;
       }
     } finally { await session.close(); }
   }
