@@ -33,9 +33,11 @@ const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: S
 // A stable light list retains the inactive map too. Three's final intensity mix
 // still samples it; skip those taps with a uniform branch, preserving the exact
 // active filter and the warmed graph when the shadow source changes.
-const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'>) => Fn((inputs: ShadowFilterInputs) => {
+const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'>) => Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: ShadowFilterInputs) => {
   const visibility = float(1).toVar();
-  If(reference('intensity', 'float', inputs.shadow).setGroup(renderGroup).greaterThan(0), () => { visibility.assign(filter(inputs)); });
+  // TSL supplies a proxy over positional arguments. Give the nested Fn a plain
+  // named object; forwarding that proxy loses shadowCoord in r186.
+  If(reference('intensity', 'float', shadow).setGroup(renderGroup).greaterThan(0), () => { visibility.assign(filter({ depthTexture, shadowCoord, shadow, depthLayer })); });
   return visibility;
 });
 const activeSunShadow = activeShadowFilter(stableSunShadow);
