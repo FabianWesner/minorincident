@@ -188,7 +188,7 @@ export class LevelSixSubway {
   /** Every movement mode must be able to bring a displaced follower off the walkable side floor. */
   navigationFor(e:EntitySnapshot) {
     const base=this.w.infected!.nav;
-    if(!this.s.survivors.some(r=>r.id===e.id&&r.status==='following'))return base;
+    if(!this.s.survivors.some(r=>r.id===e.id&&r.status==='following')||Math.abs(e.transform.z-l6.tunnel.z)<=1.8)return base;
     const floor=base.forPlayer(actorRadius(e));
     // Maintenance rooms extend beyond the courier floor; preserve their NPC route.
     return floor.contains(e.transform.x,e.transform.z)?floor:base;
