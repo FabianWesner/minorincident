@@ -225,7 +225,7 @@ export class SolidRegistry {
       // Height rejects most nearby roofs/supports before any ownership lookup.
       if (!(box.y + box.halfY > bottom && box.y - box.halfY < top)) return;
       // L6 followers displaced onto a walkable side walkway must cross the crowd lane edge back to the column.
-      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion || this.world.missions?.state.l6?.survivors.some(r => r.id === e?.id && (r.collected || r.rejoined)))) return;
+      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion || this.world.missions?.state.l6?.survivors.some(r => r.id === e?.id && r.status === 'following'))) return;
       // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
