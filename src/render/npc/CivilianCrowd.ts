@@ -139,6 +139,9 @@ class CivilianBatch extends Group {
     // off-thread. Later tiers still stream their prebuilt atlases during play.
     const source = this.world.scenario === 'L1' && this.world.missions?.state.phase === 'briefing';
     const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod, source);
+    // Level handover (10-20): the appearance marking is a pure function of the baked vertices. Mark the retained copy
+    // once; every level then clones an already marked geometry instead of re-marking it (~50-150 ms per model at 1x).
+    if (cached && !cached.marked) { markCrowdAppearance(cached.geometry); cached.marked = true; }
     let placeholder = false, model: Group;
     if (cached?.rig) model = cached.rig.clone(true);
     else {
@@ -151,6 +154,7 @@ class CivilianBatch extends Group {
       const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
     }
     const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model, this.distant, placeholder);
+    if (!baked.marked) { markCrowdAppearance(baked.geometry); baked.marked = true; }
     this.gunAim = new CrowdGunAim(model, baked.clip.parts);
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
@@ -163,7 +167,6 @@ class CivilianBatch extends Group {
       }
     }
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
-    markCrowdAppearance(baked.geometry);
     this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.userData.crowdLod = this.lod;
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);

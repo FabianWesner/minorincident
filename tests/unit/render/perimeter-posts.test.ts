@@ -8,7 +8,8 @@ test('perimeter instances preserve every post and its exact geometry, material, 
   const batches = batchPerimeterPosts(points, geometry, material), actual: number[][] = [];
   for (const mesh of batches) {
     expect(mesh.geometry).toBe(geometry); expect(mesh.material).toBe(material); expect(mesh.castShadow).toBe(false); expect(mesh.receiveShadow).toBe(true);
-    expect(mesh.count).toBeLessThanOrEqual(8); expect(mesh.boundingSphere).not.toBeNull();
+    // One straight fence line per cell edge: posts every 2 m across a 128 m cell (level handover: fewer cells, fewer shader builds).
+    expect(mesh.count).toBeLessThanOrEqual(64); expect(mesh.boundingSphere).not.toBeNull();
     for (let i = 0; i < mesh.count; i++) { mesh.getMatrixAt(i, matrix); actual.push(new Vector3().setFromMatrixPosition(matrix).toArray()); }
     mesh.dispose();
   }
