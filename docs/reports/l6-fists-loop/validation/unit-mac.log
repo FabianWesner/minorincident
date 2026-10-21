@@ -1,0 +1,44 @@
+
+> test:unit
+> vitest run tests/unit --maxWorkers=4
+
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb
+
+ ❯ |functional| tests/unit/tools/remote-cache-gc.test.ts (1 test | 1 failed) 35ms
+   × remote cache GC removes inactive caches while retaining current caches and live jobs 34ms
+GPU guard: WindowServer 60.1% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer -10.0% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer 0.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.0% / 10 s; 1 headless browsers + 2 requested; waiting
+Scene output must be a worktree-relative path without ..
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/tools/remote-cache-gc.test.ts > remote cache GC removes inactive caches while retaining current caches and live jobs
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/tools/remote-cache-gc.test.ts:25:31
+     23|     const shell = `df() { printf 'Filesystem blocks used available cap…
+     24|     execFileSync('sh', ['-c', shell, 'sh', current]);
+     25|     expect(existsSync(stale)).toBe(false);
+       |                               ^
+     26|     expect(existsSync(current)).toBe(true);
+     27|     expect(existsSync(active)).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 337 passed (338)
+      Tests  1 failed | 1828 passed (1829)
+   Start at  20:13:16
+   Duration  137.03s (tests 91%, import 7%, transform 2%)
+
