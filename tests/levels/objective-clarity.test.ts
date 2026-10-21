@@ -69,7 +69,9 @@ test('PO 10-21 #8 the Metro names its three-second dwell and failed corgi ingres
   for(let i=0;i<1800&&m.l5!.metroStatus()!=='Waiting for the corgi';i++)w.update();
   expect(s.survivors.every(r=>m.l5!.insideStation(w.entities.get(r.id)!.transform))).toBe(true);
   expect(m.l5!.metroStatus()).toBe('Waiting for the corgi');expect(s.shutterAt).toBe(0);
-  ingress.mockReturnValue(true);step(w,1);expect(s.shutterAt).toBeGreaterThan(0);
+  ingress.mockRestore();
+  for(let i=0;i<600&&!s.shutterAt;i++)w.update();
+  expect(s.shutterAt,JSON.stringify({player:w.entities.get(1)!.transform,group:s.survivors.map(r=>w.entities.get(r.id)!.transform),dog:w.entities.values().find(e=>e.companion)?.transform})).toBeGreaterThan(0);
 },60_000);
 test('PO 10-21 #8 L4 hold and L6 defence expose their simulation deadlines',()=>{
   const m={def:{id:'L4'},state:{l4:{phase:'war',warAt:60,turnAt:60,director:{lines:[{},{},{}]}}},world:{tick:60}} as unknown as Mission;

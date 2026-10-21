@@ -317,6 +317,10 @@ export class LevelFiveAftermath {
     // Leave the other lane wide enough for the corgi's 0.88 m footprint,
     // including the follower's 0.15 m arrival tolerance.
     const side = this.world.entities.get(1)!.transform.x < door.x - .1 ? .45 : -.45;
+    // Join the free lane before crossing the leaf: a diagonal approach would push
+    // the courier deeper into the corgi's remaining space on the left stair.
+    if (side > 0 && e.transform.z > door.z - .7 && e.transform.x < door.x + .38)
+      return { x: door.x + .55, z: Math.max(e.transform.z, door.z + .75) };
     return { x: door.x + side, z: door.z - 4.4 + slot * .75 };
   }
   private metro(): void {
