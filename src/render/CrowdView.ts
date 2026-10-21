@@ -9,6 +9,8 @@ import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, registerCrowdModel } from './crowdModels';
 import { markInfectedEyeCores } from './characters/infectedEyes';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
+import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
+import { cloneCrowdGeometry } from './characters/cloneCrowdGeometry';
 import { crowdLod, canHoldCrowdPose } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
@@ -58,7 +60,7 @@ type PreparedBatch = BakedBatch & { corpse: BufferGeometry | null; corpseClip?: 
 const preparedBatches = new Map<string, PreparedBatch>();
 const preparedBatchLimit = 48;
 /** A clone with its own userData object: per-level LOD tags must not reach the cached copy. */
-function cloneBatchGeometry(geometry: BufferGeometry): BufferGeometry { const clone = geometry.clone(); clone.userData = { ...geometry.userData }; return clone; }
+const cloneBatchGeometry = cloneCrowdGeometry;
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number; decay?: string }>();
@@ -247,6 +249,8 @@ export class CrowdView extends Group {
       }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
+      compactCrowdGeometry(baked.geometry);
+      if (createdCorpse) compactCrowdGeometry(createdCorpse);
       if (preparedKey) {
         preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: createdCorpse ? cloneBatchGeometry(createdCorpse) : null, corpseClip });
         if (preparedBatches.size > preparedBatchLimit) { const oldest = preparedBatches.keys().next().value!; const old = preparedBatches.get(oldest)!; old.geometry.dispose(); old.corpse?.dispose(); preparedBatches.delete(oldest); }
