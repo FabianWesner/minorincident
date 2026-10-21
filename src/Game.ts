@@ -1,4 +1,5 @@
 import { LevelEightBot } from './debug/bot/LevelEightBot';
+import { markerAnchor, searchAnchors } from './sim/missions/markerAnchor';
 import { LevelSixBot } from './debug/bot/LevelSixBot';
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
@@ -420,6 +421,9 @@ export class Game {
     else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
       this.input.cursor.setGroundHeight(this.world.districts?.groundHeight(player.x, player.z) ?? 0);
+      const objective = markerAnchor(this.world.missions);
+      this.input.objectiveRings = this.world.missions?.state.phase === 'playing'
+        ? [...(objective ? [objective] : []), ...searchAnchors(this.world.missions)].map(a => ({ ...a, y: this.world.districts?.groundHeight(a.x, a.z) ?? a.y ?? 0 })) : [];
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
       this.world.applyInput(frame, this.input.feed?.scheme ?? this.input.scheme);

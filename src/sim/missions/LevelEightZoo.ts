@@ -93,13 +93,18 @@ export class LevelEightZoo {
     w.physics.addBlocker(wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: bus.id, blocked: true, wall });
     s.carId = w.vehicles!.spawn('vehicle.military-apc', this.point({ x: 96, z: 74 }, 3.5));
-    Object.assign(this.mission.def.anchors.exit, this.door(), { radius: 2 });
+    Object.assign(this.mission.def.anchors.exit, this.boardingRing(), { radius: 2 });
     this.mission.state.actors.apc = s.carId;
   }
   begin(): void { this.state.startedAt = this.w.tick; this.mission.checkpoint('sanctuary'); }
   door(): Point {
     const car = this.w.vehicles!.cars.get(this.state.carId)!, p = car.entity.transform, def = car.physics.def, z = def.width / 2 + .55;
     return { x: p.x + Math.cos(p.yaw) * def.doorX + Math.sin(p.yaw) * z, z: p.z - Math.sin(p.yaw) * def.doorX + Math.cos(p.yaw) * z };
+  }
+  /** The torus clears the solid hull while remaining within the real door's boarding reach. */
+  private boardingRing(): Point {
+    const door=this.door(),yaw=this.w.entities.get(this.state.carId)!.transform.yaw;
+    return {x:door.x+Math.sin(yaw)*.25,z:door.z+Math.cos(yaw)*.25};
   }
   private release(outlet: HouseEmergence, index: number, alpha = false): void {
     const w = this.w, ai = w.infected!;
@@ -127,6 +132,9 @@ export class LevelEightZoo {
     }
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
+    Object.assign(this.mission.def.anchors.exit,this.boardingRing());
+    this.mission.setState('player-boarded',w.vehicles!.active===s.carId);
+    if(this.mission.state.steps.depart.status==='active')this.mission.state.marker=w.vehicles!.active===s.carId?null:'exit';
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     const group = this.roster(); for (const e of w.entities.iterate()) if (e.companion) group.push(e.id);
     if (w.vehicles!.groupBoarded(s.carId, group)) this.mission.setState('aboard', true);

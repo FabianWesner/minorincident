@@ -42,7 +42,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       def.l1 = true;
       for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'lab-bike-rack', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)]) anchor(name, 'D-GROVE', name);
       // Entire completion volume is inside the open doorway, never on the apron.
-      def.anchors['fire-bay-trigger'].radius = .5;
+      def.anchors['fire-bay-trigger'].radius = .65;
       def.onComplete = [{ kind: 'radio', id: 'L1.twist' }];
       // Doors that director infected emerge from (spec PO request 2026-10-07).
       for (let i = 1; i <= 80; i++) { try { anchor(`refuge-door-${i}`, 'D-GROVE', `refuge-door-${i}`); } catch { break; } }

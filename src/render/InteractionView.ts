@@ -1,3 +1,4 @@
+import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
 import { devicePrompt } from '../ui/devicePrompt';
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
@@ -10,6 +11,13 @@ import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
+
+export function isCurrentOpenL6Gate(state: { marker?: string; leaderX: number; waypoint?: { x: number; z: number }; gates: { id: number; x: number; closedAt: number }[] } | undefined, id: number): boolean {
+  if (!state || state.marker !== 'l6-next') return false;
+  if (state.waypoint) return state.gates.some(g => !g.closedAt && g.id === id && Math.hypot(LevelSixSubway.gateWait(g.x).x-state.waypoint!.x,LevelSixSubway.gateWait(g.x).z-state.waypoint!.z)<.1);
+  const next = state.gates.filter(g => !g.closedAt && g.x >= state.leaderX - 3).sort((a, b) => a.x - b.x)[0];
+  return next?.id === id;
+}
 import { isDoor } from '../sim/interact/Interactables';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
@@ -353,13 +361,17 @@ export class InteractionView extends Group {
           if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
         }
       }
-      if (player && e.interactable && (!e.barricade || this.world.barricades!.playerBuildable(e)) && (e.interactable.enabled || e.archetype === 'l6.service-gate' || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
+      const gateState = e.archetype === 'l6.service-gate' ? this.world.missions?.state.l6?.gates.find(g => g.id === e.id) : undefined;
+      const l6State = this.world.missions?.state.l6;
+      if (player && e.interactable && (e.archetype !== 'l6.service-gate' || !!gateState?.closedAt || isCurrentOpenL6Gate(l6State && this.world.missions?.state.marker ? { ...l6State, marker: this.world.missions.state.marker, waypoint: this.world.missions.def.anchors['l6-next'] } : undefined, e.id)) && (!e.barricade || this.world.barricades!.playerBuildable(e)) && (e.interactable.enabled || e.archetype === 'l6.service-gate' || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
         if (d < ringDistance && isMissionInteraction(this.world, e)) { ringDistance = d; ringTarget = e; }
       }
     }
-    const inRange = !!selected && !!player && Math.hypot(selected.transform.x - player.transform.x, selected.transform.z - player.transform.z) <= selected.interactable!.radius;
+    const serviceGate = selected?.archetype === 'l6.service-gate' && this.world.missions?.state.l6?.gates.find(g=>g.id===selected!.id);
+    const stand = serviceGate && !serviceGate.closedAt ? LevelSixSubway.gateWait(serviceGate.x) : selected?.transform;
+    const inRange = !!selected && !!player && !!stand && Math.hypot(stand.x-player.transform.x,stand.z-player.transform.z) <= (serviceGate ? 1.7 : selected.interactable!.radius);
     this.ring.visible = !!ringTarget;
     this.panel.hidden = !inRange;
     if (ringTarget) {
@@ -375,7 +387,10 @@ export class InteractionView extends Group {
       const service = selected.archetype === 'l6.service-gate';
       const label = service ? 'Block the tunnel' : b && !b.intact ? `${c.label} · ${Math.round(b.coverage * 100)}% coverage` : c.label;
       const gate = this.world.missions?.state.l6?.gates.find(g => g.id === selected.id);
-      const purpose = service ? gate?.closedAt ? (b?.props.length ?? 0) >= 2 ? 'Tunnel blocked · keep moving' : 'Push glowing crates onto the line · E to brace' : 'Let everyone pass · E to close the gate' : !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates onto the yellow line · 80% needed';
+      const l6 = this.world.missions?.state.l6;
+      const currentGate = !!gate && isCurrentOpenL6Gate(l6 && this.world.missions?.state.marker ? { ...l6, marker: this.world.missions.state.marker, waypoint: this.world.missions.def.anchors['l6-next'] } : undefined, gate.id);
+      const purpose = service ? gate?.closedAt ? (b?.props.length ?? 0) >= 2 ? 'Tunnel blocked · keep moving' : 'Push glowing crates onto the line · E to brace' : currentGate ? this.world.missions?.l6?.gateStatus(selected.id) : null : !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates onto the yellow line · 80% needed';
+
       const caption = devicePrompt((service ? purpose : c.hint) || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring'), document.body.classList.contains('touch-ui'));
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;

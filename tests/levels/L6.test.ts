@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, expect, test } from 'vitest';
 import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
+import { isCurrentOpenL6Gate } from '../../src/render/InteractionView';
 import { l6, l6InjuryLines } from '../../src/data/l6';
 import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -8,6 +9,13 @@ let world:SimWorld|undefined;
 afterEach(()=>{world?.dispose();world=undefined;});
 const step=(w:SimWorld,n:number)=>{for(let i=0;i<n;i++)w.update();};
 const save=(name:string,data:unknown)=>{mkdirSync('test-results/epics/E24',{recursive:true});writeFileSync(`test-results/epics/E24/${name}.json`,JSON.stringify(data,null,2));};
+test('L6 gate prompt belongs only to the open gate targeted by the current group waypoint',()=>{
+  const gates=[{id:1,x:10,closedAt:0},{id:2,x:30,closedAt:0}];
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:4,gates},1)).toBe(true);
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:4,gates},2)).toBe(false);
+  expect(isCurrentOpenL6Gate({marker:'night-exit',leaderX:4,gates},1)).toBe(false);
+  expect(isCurrentOpenL6Gate({marker:'l6-next',leaderX:11,gates:[{...gates[0],closedAt:5},gates[1]]},1)).toBe(false);
+});
 test('T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail',async()=>{
   const l=await loadL6();world=l.world;const m=l.mission;expect(validateMission(m.def)).toEqual([]);expect(m.def.steps.map(s=>s.id)).toEqual(['shelter','stop','retreat','exit']);expect(m.def.deadline).toBeUndefined();expect(m.def.steps.every(s=>!s.timer&&!s.fail.length)).toBe(true);
   for(let i=0;i<4;i++)m.completeObjective();expect(m.state.phase).toBe('cinematic');step(world,400);expect(m.state.phase).toBe('result');expect(m.state.result!.survivorsIn).toBe(29);
@@ -46,7 +54,7 @@ test('T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under atta
 });
 test('T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion',async()=>{
   const l=await loadL6();world=l.world;const m=l.mission;m.completeObjective('shelter');m.completeObjective('stop');const s=m.state.l6!,gate=s.gates[0];
-  for(const r of s.survivors){const e=world.entities.get(r.id)!;e.transform.x=96;e.transform.z=15;}world.entities.get(s.survivors[0].id)!.transform.x=91;Object.assign(world.entities.get(1)!.transform,{x:91.4,z:15});
+  for(const r of s.survivors){const e=world.entities.get(r.id)!;e.transform.x=96;e.transform.z=15;}world.entities.get(s.survivors[0].id)!.transform.x=91;Object.assign(world.entities.get(1)!.transform,{x:92.4,z:17.3});
   for(let i=0;i<61;i++)m.l6!.update();expect(gate.closedAt).toBe(0);world.entities.get(s.survivors[0].id)!.transform.x=96;for(let i=0;i<61;i++)m.l6!.update();expect(gate.hold).toBe(0);world.tick=1;world.inputFrame.interact=true;m.l6!.update();world.inputFrame.interact=false;for(let i=0;i<58;i++)m.l6!.update();expect(gate.closedAt).toBe(0);m.l6!.update();expect(gate.closedAt).toBe(1);expect(world.entities.get(gate.id)!.barricade!.intact).toBe(true);expect(world.infected!.nav.visible({x:88,z:15},{x:93,z:15},0)).toBe(false);expect(world.infected!.nav.clear(90,15,.4)).toBe(false);
   const hp=world.entities.get(gate.id)!.health.max;expect(hp/(5*world.barricades!.dps('infected.runner'))).toBeCloseTo(10,1);const prop=world.props!.items.find(p=>p.assetId==='prop.crates'&&Math.abs(p.pose.p[0]-87)<1)!;world.props!.place(prop,{p:[90,.6,15],q:[0,0,0,1]});world.barricades!.braceServiceGate(gate.id);const braced=world.entities.get(gate.id)!.health.max;expect(braced).toBe(hp+(prop.metadata.barricadeHP??80));expect(prop.braced).toBe(true);world.barricades!.braceServiceGate(gate.id);expect(world.entities.get(gate.id)!.health.max).toBe(braced);save('gate',{hp,braced,holdSeconds:hp/(5*world.barricades!.dps('infected.runner'))});
 });
