@@ -214,7 +214,11 @@ export class LevelSixSubway {
         }
       }
     }
-    if(around||distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach);
+    // Playtest 10-21 (weapons runs): a survivor who fled the horde into the side rooms north of the tunnel mouth
+    // (x 30-40, z 20-30) stood there for good, because the route back to a goal far down the tunnel exceeds the route
+    // budget; the exit then never counted everyone out. Off the track, a refused route walks to the tunnel mouth first.
+    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach)&&!around&&Math.abs(e.transform.z-l6.tunnel.z)>l6.tunnel.width/2)
+      this.w.npcs!.move(e,{x:l6.tunnel.start,z:l6.tunnel.z},r.injured?1.4:2.2,e.civilian!,reach);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
   update():void {
