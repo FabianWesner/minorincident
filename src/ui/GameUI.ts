@@ -97,7 +97,6 @@ export class GameUI {
         // Locked levels stay focusable (aria-disabled) so a tap or keyboard focus can explain why; activation is blocked.
         // Debug builds (?debug=1) keep the lock styling but let a click start the level anyway (PO 10-20 #76).
         if (b.getAttribute('aria-disabled') === 'true' && !this.debugEnabled) { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
-        if (this.debugEnabled) this.game.campaign = debugCampaign(i as Level, this.game.campaign);
         void this.load(`L${i}`, false, resumeLevel(this.game.campaign) === i);
       });
       b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
@@ -240,6 +239,7 @@ export class GameUI {
     }
     this.show('loading');
     try {
+      if (this.debugEnabled && !resume) this.game.campaign = debugCampaign(Number(id.slice(1)) as Level, this.game.campaign);
       if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, resume ? undefined : Number(id.slice(1)) as Level);
       else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
