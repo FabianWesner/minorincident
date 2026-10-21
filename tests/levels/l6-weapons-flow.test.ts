@@ -2,6 +2,7 @@ import { afterEach, expect, test } from 'vitest';
 import { loadL6 } from '../../tools/sim-runner/l6Bots';
 import { l6 } from '../../src/data/l6';
 import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
+import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
@@ -139,12 +140,22 @@ test('@E24 a returned straggler rejoins the real column before the courier fetch
   // so the leader cannot catch up to the real group while the courier brings this survivor into its tail.
   s.leaderX = 89; s.leaderZ = 15;
   place(w, live.filter(r => !r.injured).map(r => r.id), 108);
+  for (const r of live.filter(r => !r.injured)) {
+    const c = w.entities.get(r.id)!.civilian!;
+    c.dangerUntil = w.tick + 600; c.threat = { x: 90, z: 15 };
+  }
   for (const r of injured) { place(w, [r.id], r === returned ? 99 : 60); r.straggler = true; }
   returned.collected = true; put(w, 100, 15); w.update();
   expect(s.tailX).toBeGreaterThan(s.leaderX + l6.follow.rejoinM);
-  expect(returned.rejoined, 'back inside the real column; must not be dragged back into the horde on the next fetch').toBe(true);
-  expect(returned.collected).toBe(false);
   expect(s.waitFor).toEqual({ kind: 'fetch', id: injured[1].id });
+  // Follow that next fetch with ordinary movement while the column still flees the last threat.
+  // Before the fix the returned survivor follows the courier back out of the column, and the HUD
+  // interrupts the new fetch with "Bring ... back" for the same survivor all over again.
+  const frame = emptyInput(); frame.move = { x: -1, z: 0 };
+  for (let i = 0; i < 360; i++) { w.applyInput(frame, 'keyboard'); w.update(); }
+  expect(s.waitFor, 'the next fetch must not loop back to bringing the already returned survivor').toEqual({ kind: 'fetch', id: injured[1].id });
+  expect(returned.rejoined, 'a returned survivor must not start the fetch/bring loop again').toBe(true);
+  expect(returned.collected).toBe(false);
 }, 240_000);
 
 // Orchestrator 10-21 (fists playtest, male L5->L6): "help the injured survivor who fell behind" <-> "Bring the injured
