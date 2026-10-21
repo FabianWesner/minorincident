@@ -721,7 +721,7 @@ export class LevelFourWar {
   campCheckpoint(id: string, line: number): void {
     const player = this.world.entities.get(1)!.transform;
     const threats = this.world.infected!.active.filter(e => !e.corpse && (e.health.current > 0 || e.infected!.recoverAt >= 0));
-    const posts = l4.director.checkpoints[Math.min(line, 2)].map(([x, z]) => {
+    const posts = l4.director.checkpoints[Math.min(line, l4.director.checkpoints.length - 1)].map(([x, z]) => {
       const at = this.snap({ x, z }, .35);
       return { at, clearance: Math.min(...threats.map(e => dist(e.transform, at))) };
     });
@@ -807,12 +807,18 @@ export class LevelFourWar {
     const remaining = l4CellarDistance(p), claimed = new Set(s.pendingDoor.filter(q => q.id > 0).map(q => q.id));
     let spawned = 0;
     for (const q of s.pendingDoor) {
+      const arrival = q.id > 0 ? world.entities.get(q.id) : undefined;
+      if (arrival?.infected?.scripted) {
+        // Release the approach for ordinary sight-driven combat at the street.
+        if (dist(arrival.transform, q.home) < 1.5 || dist(arrival.transform, p) < 16 && ai.nav.visible(arrival.transform, p, 0)) delete arrival.infected.scripted;
+      }
       if (q.id !== 0 || spawned >= l4.collapse.pendingPerTick) continue;
       // The protected way out precedes the street encounters.
       const early = q.home.x === l4.collapse.egress[0] && q.home.z === l4.collapse.egress[1];
       // Passed groups must not claim the slots reserved for the streets ahead.
       const ahead = remaining - l4CellarDistance(q.home);
-      if (ahead < 0 || ahead > 42 || dist(q.home, p) > 42 || !onStreets && !early) continue;
+      // Existing camp stragglers need time to reach the next block on foot.
+      if (ahead < 0 || ahead > 72 || dist(q.home, p) > 72 || !onStreets && !early) continue;
       const a = this.anchor(q.door);
       if (this.inGap(q.home) || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
       // After the war, the spare regular slots feed small street groups, still under the same cap.
@@ -828,9 +834,10 @@ export class LevelFourWar {
           nearest = d; id = e.id;
         }
         if (id) {
-          const b = world.entities.get(id)!.infected!.l1!; b.mode = 'wander'; b.targetId = 0;
-          straggler = ai.rush(id, q.home, world.tick + ticks(30));
-          if (!straggler) id = 0;
+          const b = world.entities.get(id)!.infected!.l1!; b.mode = 'wander'; b.targetId = 0; b.hasGoal = false;
+          // Own the walk to the street: camp gunfire otherwise pulls every
+          // arrival back into the plaza before it reaches its authored home.
+          world.entities.get(id)!.infected!.scripted = { ...q.home }; straggler = true;
         }
       }
       if (!id) continue;
