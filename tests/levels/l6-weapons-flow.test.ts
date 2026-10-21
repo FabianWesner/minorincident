@@ -157,3 +157,26 @@ test('@E24 playtest the mid-tunnel checkpoint waits for the column when the cour
   s.leaderX = 150; place(w, live, 148); put(w, 151, 15); w.update(); w.update();
   expect(m.state.checkpoint).toBe('mid-tunnel');
 }, 240_000);
+
+// Orchestrator 10-21 (fists playtest after gate 150): "Stay with the group" every ~30 s; the courier respawned at
+// (152.4,17.3) while the ring led ~40 m back to the last survivors behind the gate, and died there again.
+test('@E24 playtest no gate checkpoint while most of the living group is still behind it; respawn there leads forward', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following' && !r.injured);
+  for (const r of s.survivors.filter(r => r.injured)) r.status = 'dead';
+  const [ahead, ...rest] = live.map(r => r.id); for (const id of rest.slice(2)) { s.survivors.find(r => r.id === id)!.status = 'dead'; w.entities.get(id)!.health.current = 0; }
+  const back = rest.slice(0, 2);
+  s.leaderX = 160; s.leaderZ = 15; place(w, [ahead], 158); place(w, back, 104); m.checkpoint('mid-tunnel'); s.mid = true;
+  for (const g of s.gates) if (g.x < 150) g.passed = true;
+  put(w, 150, 15); w.update(); w.update();
+  expect(s.gates[1].passed, '1 of 3 through gate 150').toBeFalsy(); expect(m.state.checkpoint).toBe('mid-tunnel');
+  // All three through: the checkpoint is taken and a respawn there has the ring ahead, not back down the tunnel.
+  place(w, back, 156); w.update(); w.update();
+  expect(m.state.checkpoint).toBe('gate-150');
+  w.player!.damage(w.entities.get(1)!.health.max, w.tick);
+  for (let i = 0; i < 400 && (w.entities.get(1)!.health.current <= 0 || m.state.phase !== 'playing'); i++) w.update();
+  for (let i = 0; i < 3 * 60; i++) w.update();
+  expect(LevelSixSubway.text(m)).not.toBe('Stay with the group');
+  expect(m.def.anchors[m.state.marker!].x).toBeGreaterThan(145);
+}, 240_000);
