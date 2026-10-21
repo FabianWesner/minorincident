@@ -19,9 +19,10 @@ test('@E24 PO 10-20 #65 the retreat ring sits on the group\'s next waypoint; awa
   expect(m.def.anchors['l6-next']).toMatchObject({ x: s.leaderX, z: l6.tunnel.z });
   expect(LevelSixSubway.text(m)).toBeNull();
   // Tunnel leg: the next gate, never more than aheadM in front of the walking head.
-  s.leaderZ = 15; s.leaderX = 84; w.update();
+  const column = (x: number) => s.survivors.filter(r => r.status === 'following').forEach((r, i) => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: x - Math.floor(i / 3) * 1.4, z: 15 + (i % 3 - 1) * 1.2 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  s.leaderZ = 15; s.leaderX = 84; column(84); w.update();
   expect(m.def.anchors['l6-next']).toMatchObject(LevelSixSubway.gateWait(90));
-  s.leaderX = 70; w.update();
+  s.leaderX = 70; column(70); w.update();
   expect(m.def.anchors['l6-next'].x).toBeCloseTo(s.leaderX + l6.follow.aheadM, 1);
   // Walk right, away from the group (PO: "the group of people is below me, but I walk right").
   const walkers = s.survivors.filter(r => r.status === 'following').map(r => w.entities.get(r.id)!);

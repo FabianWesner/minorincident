@@ -1,0 +1,105 @@
+{
+  "mode": "continue",
+  "quality": "low",
+  "heroine": "female",
+  "zoom": 1.5,
+  "levels": [
+    "L6"
+  ],
+  "runs": [
+    {
+      "level": "L6",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 617,
+      "simSeconds": 608,
+      "deaths": 4,
+      "assists": 3,
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter · 0:34 remaining",
+          "tick": 11,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected · Retreat in 0:36",
+          "tick": 2004,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel · 15 m",
+          "tick": 3258,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 6,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              6,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night · 4/5 out · 33 m",
+          "tick": 34402,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.2699999809265137
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 10,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 9,
+    "P3": 0
+  }
+}

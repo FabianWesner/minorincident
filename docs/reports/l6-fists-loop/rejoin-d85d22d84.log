@@ -1,0 +1,37 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb
+
+ ❯ |functional| tests/levels/l6-weapons-flow.test.ts (11 tests | 1 failed | 10 skipped) 492ms
+   × @E24 a returned straggler rejoins the real column before the courier fetches the next one, even when the leader is held behind it 492ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/l6-weapons-flow.test.ts > @E24 a returned straggler rejoins the real column before the courier fetches the next one, even when the leader is held behind it
+AssertionError: the next fetch must not loop back to bringing the already returned survivor: expected { kind: 'bring', id: 15 } to deeply equal { kind: 'fetch', id: 20 }
+
+- Expected
++ Received
+
+  {
+-   "id": 20,
+-   "kind": "fetch",
++   "id": 15,
++   "kind": "bring",
+  }
+
+ ❯ tests/levels/l6-weapons-flow.test.ts:156:100
+    154|   const frame = emptyInput(); frame.move = { x: -1, z: 0 };
+    155|   for (let i = 0; i < 360; i++) { w.applyInput(frame, 'keyboard'); w.u…
+    156|   expect(s.waitFor, 'the next fetch must not loop back to bringing the…
+       |                                                                                                    ^
+    157|   expect(returned.rejoined, 'a returned survivor must not start the fe…
+    158|   expect(returned.collected).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 10 skipped (11)
+   Start at  19:06:41
+   Duration  1.87s (transform 61%, tests 27%, import 12%)
+
