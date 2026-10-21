@@ -21,6 +21,7 @@
     "test:smoke": "sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke",
     "verify": "tsx tools/verify.ts",
     "replay": "sh tools/e2e-lock.sh tsx tools/replay/play.ts",
+    "playtest": "tsx tools/playtest/play.ts",
     "telemetry:stats": "tsx tools/replay/stats.ts",
     "sim": "tsx tools/sim-runner/index.ts",
     "assets:optimize": "tsx tools/assets/optimize.ts",
