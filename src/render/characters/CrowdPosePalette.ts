@@ -53,6 +53,12 @@ export class CrowdPosePalette {
   /** Frame bounds are shared by every component in a pose row. */
   private copyFrame(frame: number, offset: number): void {
     const low = Math.floor(frame), alpha = frame - low, from = low * this.width, to = Math.ceil(frame) * this.width;
+    // A second layer (weapon/hand pose) often corrects the row just written by
+    // locomotion. Integer rows already contain the exact float32 pose.
+    if (alpha === 0) {
+      if (from !== offset) this.rows.copyWithin(offset, from, from + this.width);
+      return;
+    }
     for (let i = 0; i < this.width; i++) this.rows[offset + i] = this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha;
   }
   private component(frame: number, component: number): number {
@@ -92,7 +98,8 @@ export class CrowdPosePalette {
   /** One rig part's matrix of a drawn pose (click picking); same blend as pose(). */
   part(frame: number, outgoing: number, weight: number, part: number, out: Matrix4): Matrix4 {
     const e = out.elements, base = part * 16;
-    for (let i = 0; i < 16; i++) e[i] = this.component(frame, base + i) * weight + this.rows[outgoing * this.width + base + i] * (1 - weight);
+    const low = Math.floor(frame), alpha = frame - low, from = low * this.width + base, to = Math.ceil(frame) * this.width + base;
+    for (let i = 0; i < 16; i++) e[i] = (this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha) * weight + this.rows[outgoing * this.width + base + i] * (1 - weight);
     return out;
   }
   /** CPU counterpart of the shader for regression probes. */
