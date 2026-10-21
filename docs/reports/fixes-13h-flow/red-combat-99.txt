@@ -1,0 +1,33 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-combat.test.ts (2 tests | 1 failed) 4ms
+   × #99 one or two close infected must not plant the fists courier during the moving retreat 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-combat.test.ts > #99 one or two close infected must not plant the fists courier during the moving retreat
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/playtest-combat.test.ts:5:57
+      3|
+      4| test('#99 one or two close infected must not plant the fists courier d…
+      5|   expect(keepMovingWithFists('L6', 'retreat', true, 1)).toBe(true);
+       |                                                         ^
+      6|   expect(keepMovingWithFists('L6', 'exit', true, 2)).toBe(true);
+      7| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  00:55:14
+   Duration  69ms (transform 56%, import 18%, tests 17%, worker 9%)
+
