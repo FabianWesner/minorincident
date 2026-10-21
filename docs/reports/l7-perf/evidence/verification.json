@@ -1,0 +1,196 @@
+{
+  "command": "E2E_PORT=3971 SCENE_PORT=3972 E2E_UNITS=2 MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_E2E=1 npm run verify -- E29",
+  "typecheck": 0,
+  "lint": 0,
+  "build": 0,
+  "selectedSim": {
+    "passed": 112,
+    "failed": 0,
+    "pending": 3246
+  },
+  "functionalRemote": {
+    "planned": 31,
+    "completed": true,
+    "passed": 18,
+    "failed": 13,
+    "skipped": 0,
+    "durationMs": 3450906.085,
+    "failures": [
+      {
+        "file": "e2e/levels/l7-departure.spec.ts",
+        "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, high",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 300000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-departure.spec.ts",
+        "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, low",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 300000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-entry.spec.ts",
+        "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 180000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-entry.spec.ts",
+        "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 180000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-entry.spec.ts",
+        "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 180000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-entry.spec.ts",
+        "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 180000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-focus-load.spec.ts",
+        "title": "@E29 P0 focus lost while L7 loads: the pause menu shows and Resume starts the level",
+        "status": "unexpected",
+        "errors": [
+          "Error: L7 runs after Resume\n\nexpect(received).toBeGreaterThan(expected)\n\nExpected: > 60\nReceived:   28"
+        ]
+      },
+      {
+        "file": "e2e/levels/l7-real-input.spec.ts",
+        "title": "T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and L8 handover",
+        "status": "unexpected",
+        "errors": [
+          "Test timeout of 1200000ms exceeded."
+        ]
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+        "status": "unexpected",
+        "errors": [
+          "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (36) is too large for the implementation when mappedAtCreation == true\n    at Yk.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:576:1545)\n    at nB.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:579:35882)\n    at wN.update (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85443)\n    at _N.updateForRender (http:"
+        ]
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+        "status": "unexpected",
+        "errors": [
+          "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (36) is too large for the implementation when mappedAtCreation == true\n    at Yk.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:576:1545)\n    at nB.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:579:35882)\n    at wN.update (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85443)\n    at _N.updateForRender (http:"
+        ]
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+        "status": "unexpected",
+        "errors": [
+          "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (36) is too large for the implementation when mappedAtCreation == true\n    at Yk.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:576:1545)\n    at nB.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:579:35882)\n    at wN.update (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85443)\n    at _N.updateForRender (http:"
+        ]
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+        "status": "unexpected",
+        "errors": [
+          "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (36) is too large for the implementation when mappedAtCreation == true\n    at Yk.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:576:1545)\n    at nB.createAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:579:35882)\n    at wN.update (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3971/build/WeatherView-q49-JUHp.js:33:85443)\n    at _N.updateForRender (http:"
+        ]
+      },
+      {
+        "file": "e2e/webgpu-level-transitions.spec.ts",
+        "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+        "status": "unexpected",
+        "errors": [
+          "Error: Uncaught errors, console errors and failed requests\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"pageerror: Instance dropped in popErrorScope\",\n+ ]"
+        ]
+      }
+    ]
+  },
+  "nativeMatrix": {
+    "complete": true,
+    "exitCode": 1,
+    "evidence": "final10-budgets.json"
+  },
+  "overallPass": false,
+  "completed": true,
+  "exitCode": 1,
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-perf",
+        "--pull",
+        "test-results/epics/E29/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E29/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-perf",
+        "--env",
+        "E2E_PORT=3971",
+        "--pull",
+        "test-results/playwright/results.json",
+        "--",
+        "sh",
+        "-c",
+        "npm run build && npx playwright test --grep '@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1"
+      ],
+      "exitCode": 1
+    }
+  ],
+  "sourceNote": "Full E29 verification began at the prepared-navigation implementation before final paced-bake/loading-style changes. Final native matrix and render/asset suite cover the later implementation; no final full functional rerun completed."
+}

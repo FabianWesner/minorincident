@@ -12,6 +12,9 @@ export class EventBus<E extends EventRecord> {
   private readonly log: E[] = [];
   private next = 0;
   private length = 0;
+  /** Owners with a scalar-only event variant can copy it without serializing
+   * it; other events still need independent nested payloads in the log. */
+  constructor(private readonly copy: (event: E) => E = event => cloneData(event)) {}
   on(type: E['type'], callback: (event: E) => void, order = 1): () => void {
     let phases = this.callbacks.get(type);
     if (!phases) this.callbacks.set(type, phases = new Map());
@@ -26,8 +29,7 @@ export class EventBus<E extends EventRecord> {
     };
   }
   emit(event: E): void {
-    // perf-w6: the same snapshot as structuredClone (cloneData falls back to it for anything but plain data), ~3x faster.
-    this.log[this.next] = cloneData(event);
+    this.log[this.next] = this.copy(event);
     this.next = (this.next + 1) % 10000;
     this.length = Math.min(10000, this.length + 1);
     const phases = this.callbacks.get(event.type);

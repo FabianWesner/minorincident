@@ -227,7 +227,10 @@ export class LightField {
       count++;
     }
     this.mesh.count = count; this.drawn = count;
-    this.visibilitySource.needsUpdate = true; this.facadeClip.needsUpdate = true; this.mesh.instanceMatrix.needsUpdate = true; if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
+    // Stream the complete drawn prefix, retaining the pool's full capacity.
+    for (const attribute of [this.visibilitySource, this.facadeClip, this.mesh.instanceMatrix, this.mesh.instanceColor]) if (attribute && count) {
+      attribute.clearUpdateRanges(); attribute.addUpdateRange(0, count * attribute.itemSize); attribute.needsUpdate = true;
+    }
     this.dynamics.length = 0;
     this.ms = performance.now() - start;
   }
