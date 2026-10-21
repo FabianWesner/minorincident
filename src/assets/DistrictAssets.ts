@@ -161,8 +161,10 @@ export class DistrictAssets {
       // mesh name silently replaced those graphs with the first matte batch.
       const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
       const shared = this.sharedMaterials.get(key);
-      // A cached batch material can already be the shared one: never dispose a material still in use.
-      if (shared) { if (shared !== child.material) (child.material as Material).dispose(); child.material = shared; }
+      // The graph cache can lend this material to another role (for example a
+      // roof). Keep every borrowed graph alive until the presentation cache retires.
+      this.batchMaterials.add(child.material as Material);
+      if (shared) child.material = shared;
       else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
       // Batched light-bearing dressing keeps the world's existing player cutaway.
       if (child.material instanceof PaletteMaterial) child.material.seeThrough();
@@ -308,8 +310,8 @@ export class DistrictAssets {
   dispose(): void {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
-    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear();
-    for (const material of this.batchMaterialCache.values()) material.dispose(); this.batchMaterialCache.clear();
+    for (const material of new Set([...this.batchMaterials, ...this.batchMaterialCache.values()])) material.dispose();
+    this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear(); this.batchMaterialCache.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     this.glbLeases.clear();
