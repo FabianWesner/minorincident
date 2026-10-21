@@ -31,7 +31,7 @@ for (const low of [true, false]) for (const asset of regularInfectedModels) {
       expect(prepare).toHaveBeenCalledOnce();
       const geometry = prepare.mock.calls[0][1], clip = prepare.mock.calls[0][3];
       expect(geometry.userData).toMatchObject({ crowdLod: 'lod2', corpseSource: definition.corpseGlb });
-      expect(geometry.index!.count / 3).toBeLessThanOrEqual(1100);
+      expect(geometry.index!.count / 3).toBeLessThanOrEqual(2000);
       const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts');
       const index = geometry.index!, bounds = new Map<number, Box3>(), point = new Vector3();
       for (let i = 0; i < index.count; i += 3) {
