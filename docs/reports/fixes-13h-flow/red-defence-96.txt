@@ -1,0 +1,72 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/levels/l6-po-1020.test.ts (13 tests | 4 failed | 6 skipped) 5198ms
+   × @E24 #96 collected injured follower rejoins from walkable position (192.7, 11.8), defence=true 533ms
+   × @E24 #96 collected injured follower rejoins from walkable position (59, 18.2), defence=true 440ms
+   × @E24 #96 collected injured follower rejoins from walkable position (32.4, 25.3), defence=true 758ms
+   × @E24 #96 the uncollected second follower can leave the walkable raised edge at (59, 18.2) 1454ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from walkable position (192.7, 11.8), defence=true
+AssertionError: expected 192.74985124566703 to be greater than 198
+ ❯ tests/levels/l6-po-1020.test.ts:178:25
+    176|   }
+    177|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+    178|   expect(e.transform.x).toBeGreaterThan(gate - 12);
+       |                         ^
+    179|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+    180| }, 240_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from walkable position (59, 18.2), defence=true
+AssertionError: follower moved from (59, 18.2): {"x":58.80606664175009,"z":18.159920923331292,"y":1.5700000143051147,"yaw":-3.1415362203304977}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/levels/l6-po-1020.test.ts:177:96
+    175|     expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).…
+    176|   }
+    177|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+       |                                                                                                ^
+    178|   expect(e.transform.x).toBeGreaterThan(gate - 12);
+    179|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from walkable position (32.4, 25.3), defence=true
+AssertionError: expected 3.16001139292527 to be less than 1.5
+ ❯ tests/levels/l6-po-1020.test.ts:179:38
+    177|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+    178|   expect(e.transform.x).toBeGreaterThan(gate - 12);
+    179|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+       |                                      ^
+    180| }, 240_000);
+    181|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 the uncollected second follower can leave the walkable raised edge at (59, 18.2)
+AssertionError: {"x":59,"z":18.160000095367433,"y":1.5700000143051147,"yaw":0}: expected 59 to be greater than 78
+ ❯ tests/levels/l6-po-1020.test.ts:189:53
+    187|   Object.assign(e.transform,{x:59,z:18.2,y:1.57});w.spatial.set(e.id,5…
+    188|   for(let i=0;i<30*60;i++){put(w,92.4,17.3);w.update();}
+    189|   expect(e.transform.x,JSON.stringify(e.transform)).toBeGreaterThan(78…
+       |                                                     ^
+    190|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+    191| },240_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 3 passed | 6 skipped (13)
+   Start at  01:30:17
+   Duration  6.26s (tests 84%, transform 14%, import 3%)
+

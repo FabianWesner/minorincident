@@ -153,8 +153,9 @@ test('@E24 QA #83 a healthy survivor fighting far behind the column does not hol
   expect(s.paused).toBe(false); expect(s.tailX).toBeGreaterThan(60);
 }, 240_000);
 
+for (const selfDefence of [false,true])
 for (const [x, z, y, gate, seconds] of [[192.7, 11.8, 1.57, 210, 30], [59, 18.2, 1.3, 90, 30], [32.4, 25.3, 1.3, 90, 60]] as const)
-test(`@E24 #96 collected injured follower rejoins from walkable position (${x}, ${z})`, async () => {
+test(`@E24 #96 collected injured follower rejoins from walkable position (${x}, ${z}), defence=${selfDefence}`, async () => {
   const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
   w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
   const s = m.state.l6!; s.leaderX = gate - 1; s.leaderZ = 15;
@@ -167,6 +168,7 @@ test(`@E24 #96 collected injured follower rejoins from walkable position (${x}, 
   injured.straggler = true; injured.collected = true; injured.rejoined = false;
   const e = w.entities.get(injured.id)!;
   Object.assign(e.transform, { x, y, z }); w.spatial.set(e.id, x, z);
+  if(selfDefence){e.civilian!.dangerUntil=w.tick+seconds*60+1;e.civilian!.threat={x:x-1,z};}
   for (let i = 0; i < seconds * 60; i++) {
     const before = { ...e.transform };
     put(w, LevelSixSubway.gateWait(gate).x, LevelSixSubway.gateWait(gate).z); w.update();
@@ -176,3 +178,14 @@ test(`@E24 #96 collected injured follower rejoins from walkable position (${x}, 
   expect(e.transform.x).toBeGreaterThan(gate - 12);
   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
 }, 240_000);
+
+test('@E24 #96 the uncollected second follower can leave the walkable raised edge at (59, 18.2)', async () => {
+  const {world:w,mission:m}=await loadL6(1,'low');world=w;
+  w.combat!.damage.god=true;m.completeObjective('shelter');m.completeObjective('stop');
+  const s=m.state.l6!;s.leaderX=89;s.leaderZ=15;
+  const row=s.survivors.find(r=>r.routine==='guard')!,e=w.entities.get(row.id)!;
+  Object.assign(e.transform,{x:59,z:18.2,y:1.57});w.spatial.set(e.id,59,18.2);
+  for(let i=0;i<30*60;i++){put(w,92.4,17.3);w.update();}
+  expect(e.transform.x,JSON.stringify(e.transform)).toBeGreaterThan(78);
+  expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+},240_000);
