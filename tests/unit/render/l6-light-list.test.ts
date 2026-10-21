@@ -23,7 +23,7 @@ test('@E24 @E25 PO 10-20 #62 the subway keeps one stable light list across the h
   lighting.dispose();
 });
 
-for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-zoo'] as const) {
+for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-zoo', 'L10-night'] as const) {
   test(`${preset} ${quality}: entering and leaving a hero pool retains the light list and only updates the active shadow`, () => {
     const lighting = new Lighting(new Scene()); lighting.set(preset); lighting.setQuality(quality);
     const light = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 9, range: 18, angle: 48, flicker: 'none', shadow: 'hero', position: [0, 3, 0], direction: [0, -1, 0] }), id: 'lamp' };
@@ -42,7 +42,7 @@ for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-
 
 // QA 10-21 #82 "switching quality low -> high throws TypeError: Cannot read properties of null (reading 'depthTexture')
 // in the shadow update": a runtime castShadow flip disposes the ShadowNode that cached materials still update.
-for (const preset of ['L6-subway', 'L6', 'L1', 'L5'] as const) {
+for (const preset of ['L6-subway', 'L6', 'L1', 'L5', 'L10-night'] as const) {
   test(`@E24 QA #82 ${preset}: quality switches never flip castShadow; low L6 only zeroes the spot shadow`, () => {
     const lighting = new Lighting(new Scene()); lighting.set(preset);
     const headlamp = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 9, range: 18, angle: 48, flicker: 'none', shadow: 'hero', position: [1.5, 1.9, -2], direction: [1, -.3, 0] }), id: 'headlamp' };

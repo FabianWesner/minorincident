@@ -197,7 +197,9 @@ export class Lighting {
   private spotSource = false;
   private setShadowSource(spot: boolean): void {
     this.spotSource = spot;
-    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo';
+    // L10's checkpoint lamps also promote the hero spot. Retiring the moon's
+    // light list here rebuilt every warmed scene graph on each pool boundary.
+    const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo' || this.preset === 'L10-night';
     const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
     this.spot.shadow.intensity = spotOff ? 0 : stable ? Number(spot) : 1;
