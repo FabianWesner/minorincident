@@ -67,7 +67,7 @@ export class MissionUI {
     this.marker.textContent = value; this.marker.hidden = markerHidden;
     this.root.hidden = rootHidden; this.root.style.visibility = visibility;
   }
-  update(camera: PerspectiveCamera, width: number, height: number): void {
+  update(camera: PerspectiveCamera, width: number, height: number, storyShot = false): void {
     const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}setHidden(this.root,!mission);if(!mission)return;
     const state=mission.state,playing=state.phase==='playing';
     const cinematic=state.cinematic ? mission.def.cinematics[state.cinematic.id] : null;
@@ -95,7 +95,7 @@ export class MissionUI {
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
     const cellarDistance = playing && player && mission.def.l4 && state.l4?.phase === 'collapse' ? l4CellarDistance(player.transform, this.cellarTurn) : null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
-    setHidden(this.marker,!playing||!anchor||!player);
+    setHidden(this.marker,storyShot||!!this.world.storyLock||!!this.world.l7Departure?.cinematic||!playing||!anchor||!player);
     if(player&&objective&&playing){
       const distance=cellarDistance ?? (anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null);
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
@@ -136,7 +136,7 @@ export class MissionUI {
       if(done)this.text(this.tracker,`✓ ${done.text}`);
     }
   }
-  reset(): void {this.displayedMission=null;this.root.hidden=true;this.routePin.hidden=true;this.phase=this.active='';for(const pin of this.pins.values())pin.remove();this.pins.clear();}
+  reset(): void {this.displayedMission=null;this.root.hidden=true;this.routePin.hidden=true;this.phase=this.active='';this.tracker.textContent='';this.tracker.hidden=true;this.tracker.removeAttribute('data-objective');this.tracker.removeAttribute('data-distance');this.toast.textContent='';this.toast.hidden=true;this.marker.hidden=true;for(const pin of this.pins.values())pin.remove();this.pins.clear();}
   private campaignSummary():string {
     const result=this.world.missions?.state.result,previous=this.world.progression?.campaign?.results??{};
     const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);

@@ -218,13 +218,15 @@ test('T-E29-13-status @E29-AC13 the nearest missing survivor uses the campaign n
 test('T-E29-16-boarding-wait @E29-AC16 restoring boarding on a later clock preserves the remaining recovery delay', async () => {
   const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, last = c.state.roster.at(-1)!;
   for (const r of c.state.roster.slice(0, -1)) w.entities.get(r.id)!.health.current = 0;
-  put(w, last.id, -35, 47); put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
+  // This timer test exercises hidden relocation; visible pockets have their own continuous-assistance tests.
+  put(w, last.id, -30, 47); put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
   for (const [i, [dx, dz, halfX, halfZ]] of [[-1.8, 0, .25, 2], [1.8, 0, .25, 2], [0, -1.8, 2, .25], [0, 1.8, 2, .25]].entries()) {
-    const wall = { x: -35 + dx, y: 1.5, z: 47 + dz, halfX, halfY: 1.5, halfZ };
+    const wall = { x: -30 + dx, y: 1.5, z: 47 + dz, halfX, halfY: 1.5, halfZ };
     w.physics.addBlocker(wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 980_000 + i, blocked: true, wall });
   }
   step(w, 600);
+  expect(w.infected!.director.offscreen(w.entities.get(last.id)!.transform)).toBe(true);
   const snapshot = JSON.parse(JSON.stringify(d.snapshot()));
   // A different level/save timeline can have a later clock than the captured seam.
   w.tick += 3600; d.restore(snapshot);

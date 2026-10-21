@@ -93,3 +93,15 @@ test('@E30 @E30-AC03 L8 standalone keeps all six acquired weapons selectable and
   expect([...save.racks.LEFT,...save.racks.RIGHT]).toEqual(['weapon.bat','weapon.fire-axe','weapon.rocket-launcher','weapon.army-mg','weapon.shotgun','weapon.handgun']);
   expect(decodeSave(JSON.stringify(save))).toEqual({status:'ok',save});
 });
+
+
+test('@E13 @E31-AC15 @E32-AC02 crash weapon loss and reacquisition preserve earned courier gear tier', () => {
+  const save = preset('L10-default');
+  expect(gearTier(save)).toBe(gearTier(preset('L8-default')));
+  expect(gearTier(save)).toBe(4);
+  const combatPower = powerScore(save);
+  expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
+  save.ownedActions.push('weapon.handgun');
+  expect(gearTier(save)).toBe(4);
+  expect(powerScore(save)).toBeGreaterThan(combatPower);
+});

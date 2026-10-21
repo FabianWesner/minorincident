@@ -1,3 +1,4 @@
+import type { Game } from '../../src/Game';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { boot, expect, test, testUrl } from './fixtures';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
@@ -40,12 +41,15 @@ for (const tier of ['high', 'low'] as const) {
 
   test(`T-E02-webgpu-game-canvas @smoke @E02 WebGPU ${tier} L1 L4 L8 game cameras render at both zoom limits`, async ({ page }) => {
     test.setTimeout(300_000);
-    await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', `quality=${tier}`));
+    await boot(page, testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', `quality=${tier}`) + '&scenelab=1');
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe('webgpu');
     const out = 'test-results/webgpu-blank/game'; mkdirSync(out, { recursive: true });
     for (const level of ['L1', 'L4', 'L8']) {
       await page.evaluate(async level => {
         const api = window.__SS__!; await api.loadLevel(level, { seed: 1 }); api.pause(); api.cheats.god(true);
+        // Each canvas comparison authors its own framing; real handovers retain player zoom.
+        const game = (window.__SCENE__ as unknown as { game: Game }).game;
+        game.view.view.zoom(Math.log(1 / game.view.view.getState().targetZoom), true); game.view.advance(0);
         api.missions.begin(); await api.step(60);
         // Exercise the overlay in a real district even before the level's first Alpha encounter.
         const p = api.getState().player!.transform;

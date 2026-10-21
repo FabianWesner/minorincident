@@ -102,6 +102,7 @@ test('T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while whe
   for (const [width, height] of [[1600, 900], [390, 844]]) {
     const view = new View(); view.resize(width, height); view.reset({ x: 0, z: 0 });
     const base = view.radius; view.epilogueScale = 4; view.pull(2, -2, .4);
+    expect(view.storyShot).toBe(true);
     view.zoom(Math.log(.5), true); view.update({ x: 4, z: -3 }, 1 / 60);
     expect(view.getState().zoom).toBe(.5); expect(view.radius).toBeCloseTo(base * 2);
     expect(view.focus.x).toBeGreaterThan(0); expect(view.focus.z).toBeLessThan(0);
@@ -170,4 +171,20 @@ test('@E22 seated convoy keeps a constant lens offset while passing Fairhaven fa
     view.update({ x: -20 + tick * .15, z: 0 }, 1 / 60);
     expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(distance, 8);
   }
+});
+
+
+test('@E02 campaign handovers preserve player zoom through cinematic framing and clamp the preference', () => {
+  for (const zoom of [.5, 1, 1.5]) {
+    const view = new View(); view.zoom(Math.log(zoom), true);
+    view.cinematic({ position: [4, 7, 9], target: [2, 0, 3] }, true);
+    expect(view.storyShot).toBe(true);
+    for (let level = 1; level <= 10; level++) {
+      view.reset({ x: level * 30, z: 0 }, true);
+      expect(view.playerZoom).toBe(zoom); expect(view.getState().targetZoom).toBe(zoom);
+      expect(view.storyShot).toBe(false);
+    }
+  }
+  const view = new View(); view.zoom(100, true); view.reset({ x: 0, z: 0 }, true);
+  expect(view.playerZoom).toBe(zoomLimits[1]);
 });
