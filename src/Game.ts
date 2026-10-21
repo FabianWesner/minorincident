@@ -284,6 +284,7 @@ export class Game {
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
         if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {
+          this.view.advance(0); // Apply the restored held weapon's cap before restoring its zoom.
           this.view.view.zoom(Math.log(this.campaign.cureResume.cameraZoom / this.view.view.getState().targetZoom), true);
           this.view.advance(0);
         }
