@@ -20,4 +20,11 @@ Exact captured camera values are recorded in [captures.json](captures.json).
 
 ## Validation
 
-Pending final gate results.
+- `npm run typecheck`, `npm run lint`, production build: passed.
+- Focused remote mapping/buffer/replay tests: 15 passed (7 new weapon-key tests plus 8 codec tests).
+- Focused real-input browser spec: 2 passed (L2 selection/HUD/touch and mounted-gun/vehicle locks); the updated legacy selection fixture passed too.
+- E03 simulation/smoke selection: **39 passed, 0 failed**. The browser phase was resumed after a session interruption with `--workers=1` and manual WebGPU cases excluded.
+- Full remote unit/level suite: **2,152 passed, 9 skipped** across 391 passing files (3 skipped), exit 0.
+- E03 browser/smoke selection: **140 passed, 5 failed**. All five failures are the same existing landscape HUD coverage assertion (27.2615% versus a 27% limit), across the five Chromium device projects. An isolated build of base `93e1fbea8` reproduces the **identical** 0.2726152425609449 coverage and failure. New rack/badge nodes are hidden and absent from the measured boxes. This pre-existing limit keeps the broad E03 gate red; no criterion was weakened. See [validation.json](validation.json).
+
+Browser commands use `E2E_PORT=3981 SCENE_PORT=3982 sh tools/e2e-lock.sh`, headless ANGLE Metal, one worker. Remote checks use `tools/remote/run.sh`; the full suite caps Vitest at four workers. No deployment, push or merge.
