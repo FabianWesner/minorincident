@@ -104,3 +104,14 @@ test('@E30 #97 early APC boarding shows the breach countdown and prevents drivin
   expect(objectiveText(m, 'Wait for everyone to board the armored vehicle')).not.toContain('0/0');
   expect(Math.hypot(car.transform.x - start.x, car.transform.z - start.z)).toBeLessThan(.25);
 }, 60_000);
+
+test('@E30 #97 the missing corgi is counted even when no human passengers survive', async () => {
+  const w = world = await loadLevel('L8', 1), m = w.missions!, zoo = m.l8!;
+  w.combat!.damage.god = true; zoo.advance();
+  for (const id of zoo.roster()) w.entities.get(id)!.health.current = 0;
+  const dog = w.entities.values().find(e => e.companion)!; put(w, dog.id, 0, 0);
+  const door = zoo.door(); put(w, 1, door.x, door.z);
+  const enter = emptyInput(); enter.interact = true; w.applyInput(enter, 'keyboard'); step(w, 1); w.clearInput(); step(w, 2);
+  expect(m.state.steps.depart.status).toBe('active');
+  expect(objectiveText(m, 'Wait for everyone to board the armored vehicle')).toContain('0/1 aboard · Corgi missing');
+}, 60_000);
