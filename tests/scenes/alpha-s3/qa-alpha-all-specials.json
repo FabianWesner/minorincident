@@ -5,7 +5,7 @@
   "size": 64,
   "time": "L4",
   "dof": false,
-  "note": "One Alpha executes charge, ground slam, grab/throw of a retained corpse, then roar. Inspect locked arrows/rings, courier knockdown, airborne body, regular convergence and health bar. No cooldown reset; activation spacing and effects are asserted by Alpha sims.",
+  "note": "One Alpha executes charge, ground slam, grab/throw of a retained corpse, then roar. The corpse is placed within 2 m before slam recovery ends, and the throw cue follows that real recovery boundary; no cooldown/state reset. Courier takes all three real hits before god protection resumes at f350. Inspect locked arrows/rings, knockdown, airborne original-id body, regular convergence and health bar.",
   "actors": [
     {
       "id": "courier",
@@ -72,27 +72,27 @@
       }
     },
     {
-      "frame": 290,
+      "frame": 260,
       "spawnActor": {
         "id": "body",
         "kind": "infected",
         "archetype": "infected.runner",
         "at": [
-          9,
+          8,
           1
         ],
         "state": "idle"
       }
     },
     {
-      "frame": 290,
+      "frame": 260,
       "actor": "body",
       "do": {
         "corpse": true
       }
     },
     {
-      "frame": 330,
+      "frame": 266,
       "actor": "alpha",
       "do": {
         "special": "alpha.grab-throw",
@@ -100,7 +100,7 @@
       }
     },
     {
-      "frame": 440,
+      "frame": 350,
       "actor": "courier",
       "do": {
         "god": true
@@ -157,8 +157,15 @@
     190,
     249,
     250,
+    260,
+    266,
+    267,
     275,
+    313,
+    314,
+    322,
     330,
+    350,
     377,
     378,
     395,
