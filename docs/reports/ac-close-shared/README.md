@@ -1,31 +1,37 @@
 # Shared acceptance closure — E07 / E27 / E28
 
-Base: `c867e392b`. Work remains in progress. The 2026-10-18 ledger is the starting audit, not proof of the current renderer. Epic statuses stay in progress until their complete acceptance and verification gates pass.
+2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07/E27 verification is still running/pending; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
 
-## Confirmed repair
+| Partial AC | Current disposition |
+| --- | --- |
+| E07-AC05 | Restored/paused warning defect fixed; all 14 move timing probes passed; final wide-boundary and authored-repeat-radius capture review pending. |
+| E07-AC06 | Alpha move/spatial controls and 12-case shared bar matrix pass; final actual Alpha/phone captures pending. |
+| E07-AC13 | Met: named 60-runner Checklist D, all five items. |
+| E07-AC19 | Proposed stampede-corridor rewrite below; remaining zoo move/bar proof awaits final run. |
+| E27-AC15 | Met visually: named H, all seven spots / seven items; final complete verify pending. |
+| E28-AC10 | Real buffer repair + native storm/L5 proof; original legacy heap counter still fails. Proposed measurement clarification below; partial. |
+| E28-AC12 | Met: explicit six-mood G/reference signoff, 4/4 must +3/3 should. |
 
-Checkpoint restoration restored each special's sim timer, locked area and target, but did not replay the consumed telegraph event. The renderer therefore showed no ground warning for a restored windup. A new production-checkpoint regression reproduced this for **all 14 moves** ([before receipt](evidence/restore-before.log.txt)).
+## Repairs and regression evidence
 
-`Vfx.updateSpecialState()` now rebuilds missing special warnings from the current locked attack and its remaining fixed ticks, including paused redraws. It emits no sim event, changes no sim state, and retains the original activation deadline. Paused redraws neither duplicate nor leave the warning at zero opacity; activation removes it normally. The focused remote regression passes **30 tests in four files**, including all 14 restored warnings and the existing VFX integration/zoo marker tests ([receipt](evidence/restore-final.log.txt)).
+- **Restored/paused warnings:** consumed telegraph events were not replayed after checkpoint restore; paused draw selection also left the second warning at opacity zero. `Vfx.updateSpecialState()` rebuilds from the locked sim attack and remaining ticks without emitting events or changing sim state. All 14 real checkpoint regressions failed before repair; 30 focused VFX tests pass after. [Before](evidence/restore-before.log.txt), [after](evidence/restore-final.log.txt), [opened comparison](warning-repair.jpg).
+- **Smoke readability:** isolated survivor labs now use production compositing, preserving the courier's alpha-protected colors; camera-player tube smoke retention is 20%. Existing unchanged player gate improves **1.0134→2.173:1**, coverage **30.58% ≤40%**. The beacon sample is at 2 m inside the actual low cloud instead of empty air at 3 m; unchanged smoke-pixel/1.15× gates measure **2.669×**. Fire smoke is orange below (15.80°), **2.62×** brighter than the top. [Comparison](smoke-repair.jpg), [focused run](evidence/smoke-final.log.txt), JSON readings in `evidence/smoke-*-final.json`.
+- **Blast corpse motion:** retained bodies were omitted from the queued impulse pass. They now fly with the existing radial/upward falloff, one tick later, preserving frozen pose/id and landing position. Plain relative delay/velocity survive real checkpoints; cover and body-footprint controls stop wall crossings, explicit grab throws take ownership. No added collider, combat damage, brain, body removal or difficulty change. Frozen pages update bounds once per moving page and stop uploading when settled. [71-test batch](evidence/corpse-alpha-final.log.txt), [cover/handoff/tooling cases](evidence/corpse-cover-handoff-final.log.txt), [H captures](h-high.jpg).
+- **Crowd memory:** compact only vertices not referenced by the final indexed LOD; share immutable prepared CPU arrays through independent geometry/BufferAttribute GPU wrappers. Twenty shipped asset/tier expanded-attribute and triangle hashes remain exact; dedicated packed/interleaved/group/bounds/ownership regressions pass. [Asset audit](evidence/compact-bake-final.json), [regressions](evidence/compact-final2.log.txt). No model, animation, actor, particle or persistent corpse is cut.
+- **Fog/wet shading:** hue-preserving 8% figure gain in dense fog repairs **2.9636→3.0349:1**, unchanged 7,585-pixel mask /3:1 gate. Anchored noise breaks regular wet sine bands, retaining wet mask/light-field contribution/0.08 brightness cap. [Fog reading](evidence/fog-final.json), [G images](g-moods.jpg).
 
-All **14 headless Scene Lab browser probes pass**, including visible warning opacity, the tick before activation, activation, impact, a restored windup, a restored cooldown, rejection one tick before the next legal windup, and the second activation at its exact authored interval ([receipt](evidence/move-boundaries.log.txt)). The opened Alpha comparison shows the missing second-windup corridor before the paused-selection repair and the visible orange corridor afterwards ([comparison](warning-repair.jpg)). Spatial/phone proof and final framing review remain separate work.
+## Final verification
 
-Remote typecheck and lint pass ([receipt](evidence/static-final.log.txt)). The complete remote unit suite passes **1,860 tests / 342 files**, with nine skipped tests / one skipped file ([receipt](evidence/units.log.txt), [lossless JSON](evidence/unit.json.gz), [summary](evidence/unit-summary.json)). [Runtime source hashes](evidence/runtime-source.json).
+All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 SCENE_PORT=4052 MI_VERIFY_REMOTE_SIM=1 npm run verify -- E<NN>`. Node/static/build work runs remotely; functional browsers are headless and serial under `e2e-lock.sh`; timing/heap stages use `quiet-run.sh` with a 1,195-second reservation cap. Only one browser runs in this lane.
 
-## First complete E27 verifier attempt
+| Verification | Result |
+| --- | --- |
+| Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Receipt](evidence/units-corpses-final2.log.txt). |
+| E07 final | Pending. |
+| E27 final | Running. |
+| E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
 
-`E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 SCENE_PORT=4052 MI_VERIFY_REMOTE_SIM=1 npm run verify -- E27` exited **1**. Typecheck, lint, build and **37 selected Node tests** passed; **39 browser tests passed / two failed**. The verifier stops on the browser failure, so its quiet perf stage did not run. This attempt built the base renderer before the restore repair and does not certify the later renderer change. [Command receipt](evidence/verify-E27.log.txt), [stage checks](evidence/verify-E27-checks.json), [browser result](evidence/verify-E27-browser.json).
-
-- AC11: the fire-column hue/brightness assertions passed (lower 15.80°, lower/top luminance 2.62×), but the beacon patch at world `(0,3,0)` contains zero background-subtracted smoke pixels. The opened full/background images show a low cloud around the police car; its placement must be reconciled with the fixed sampling point before claiming strobe evidence.
-- AC12: the opened night image shows the courier blending into the gray smoke. Mean player/ring contrast is **1.0134:1**, below **2:1**; measured smoke coverage **29.99%** is within the unchanged 40% cap. This is an acceptance failure, not a passing silhouette review.
-
-### Smoke repairs and focused recheck
-
-The isolated survivor scenarios did not instantiate the production composite, although their palette materials write courier grade protection into scene alpha. The direct smoke-lab image therefore lost the courier's intended visible colors. These scenarios now use the same composite as gameplay. Player-ray smoke retention is 20%, leaving room for antialiasing/bloom under the existing 40% final-coverage gate; smoke away from that six-metre tube and all sim effects are unchanged. The beacon test now samples world height **2 m** in its actual low cloud; the former **3 m** point intermittently sampled air. Its >100 smoke-pixel and ≥1.15× strobe assertions are unchanged.
-
-Both existing smoke tests pass together on the repaired source ([receipt](evidence/smoke-final.log.txt)). Lower fire smoke is **15.80°** orange and **2.62×** brighter than its top; beacon on/off smoke is **2.669×**. Night player contrast is **2.173:1**, coverage **30.58%**. [Fire readings](evidence/smoke-fire-final.json), [beacon readings](evidence/smoke-beacon-final.json), [player readings](evidence/smoke-player-final.json).
-
-Opened the [before/after and beacon phases](smoke-repair.jpg): the repaired courier's red/teal clothing and warm face separate from the cloud; the gray billows remain visible around her. The beacon visibly lights the cloud pink in its on phase. This closes the two focused regressions; the complete final-source E27 verifier and its H review are still pending.
+The Alpha contact fixture was corrected to separate a courier-provoked Alpha from the unprovoked soldier-contact check; all original HP/knockdown/cooldown expectations stay. The hero-shadow fixture now submits 90 individual fixed-tick views and requires promotion blend 1 before sampling the unchanged shadow gate. The repeat move probe preserves authored radius (including 18 m Alpha roar) instead of passing a generic one-metre area. These are fixture corrections, not runtime difficulty changes.
 
 ## Spatial controls and shared bars — E07-AC05/06/19
 
@@ -61,113 +67,6 @@ Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, bo
 | Pickups distinguishable from clutter | **Pass:** the bat and grenade have yellow ground rings; the nearby bin, car and bench do not. |
 | VFX preserve player/warnings | **Pass for this named spot:** window/streetlight bloom remains local; neither the courier nor warning outlines disappear under it. |
 
-## Named Checklist H review — E27-AC15
-
-Opened both complete [high](h-high.jpg) and [low](h-low.jpg) frame sheets plus the full-size column frame. [102 final frame/state receipts](evidence/vfx.json.gz) retain actual ticks, backend/tier, entity positions, events and source-image hashes. The seven spots are medium/car/mega blast lab, night building fire, an actually thrown smoke grenade, a persistent wind column, and **production L4's `l4-collapse` objective set piece**. The lab sequences use real physics props and a persistent corpse. The original exploratory fire camera hid the source behind the house; those images are excluded from the retained proof and replaced by an unobstructed fire with the isometric camera aimed at the plume.
-
-| H item | Observed result / evidence limit |
-| --- | --- |
-| Flash → fireball → shockwave → debris → smoke | **Pass:** medium f8/21/46, car f186/200/230 and mega f6/40/70 separate white flash, orange lobes, expanding pale ring, dark flying fragments and cool black plume. L4 f6/40/186 repeats that progression at the authored building. |
-| Physical consequence and persistent scorch | Props move visibly; state receipts quantify medium cart **1.18 m**, cone **1.86 m**, mega cart **7.44 m**, cone **9.28 m**. Car panels detach and the raised chassis settles into a black burning wreck. Dark scorch persists at late frames. Corpse transform stays at its entity anchor; ragdoll motion needs the separate physical regression/visual review, so this subitem is **not yet signed off** solely from these sheets. |
-| Volumetric noisy hot/cold gradient | **Pass:** overlapping lit lobes have bright yellow cores, orange edges, holes and shaded folds; cool dark lobes overtake them. Medium, car and mega differ visibly in scale. |
-| Volumetric lit/wind-bent smoke; player silhouette | **Pass:** persistent column billows rise and bend to screen right, with holes/overlapping edges; full-size night frame shows the courier fully colored below it. Grenade f90 overlays the courier while preserving face/clothes and the red ground warning. Fire lighting is additionally quantified by the unchanged focused smoke test (2.62× lower/top luminance); the distant night sheet alone is too small to judge that ratio. |
-| Car jump/parts/wreck | **Pass:** raised car/body, airborne dark panels and late flames around the charred chassis are separate stages. |
-| Flicker/embers/local illumination | **Pass:** flame tongues change between night f60/90/180/600, sparks rise above them, orange light pools stay around their bases and house facade. |
-| Class intensity | **Pass:** grenade cloud is local and gray; medium/car fill a few metres; mega's broad flash/fire/ring and many persistent fire pockets dominate the lab. |
-
-Final E27 verification and the corpse subitem remain pending; no complete H signoff is inferred from these stills alone.
-
-## Outstanding acceptance
-
-### Proposed rewrite for E07-AC19: zebra stampede corridor
-
-The epic's move row says **1.5 m-wide sweep**, while the current physical-contact rule also hits a human whose centre is **0.76 m** from the lane centre. A fresh remote audit records **100→50 HP** from two distinct zebras at that nominally outside point; the **0.88 m** control remains at **100 HP**. The probe explicitly records `literalCorridorControlPass: false`. [Audit receipt](evidence/corridor-audit.log.txt), [actual positions and hit events](evidence/zebra-corridor.json).
-
-The existing `zoo-s3.test.ts` comment, introduced by **2e4df83867** on 2026-10-15, calls this a PO contact-hit decision: **0.45 m zebra radius + 0.35 m human radius + 0.02 m contact tolerance = 0.82 m**. That comment is secondary provenance; it is not represented as a recovered verbatim PO request. The current test already places its outside control at 0.88 m. This lane changes neither that test nor the contact behavior.
-
-**Proposed wording, awaiting the user's decision:** “The stampede marks a nominal 1.5 m-wide corridor. Ordinary body contact additionally uses the sum of the zebra and human capsule radii plus 0.02 m contact tolerance (0.82 m in the standard human fixture). Each distinct zebra/attack id deals 25 HP once; a target beyond both the marked corridor and that contact boundary is unaffected.”
-
-Reason: this reconciles the nominal ground cue with the established physical-contact behavior. Narrowing collision to the centre corridor would change the current combat behavior, contrary to this task's no-difficulty-change constraint. The literal corridor criterion is **not marked met** by a green existing test.
-
-| Criterion | Current evidence / remaining proof |
-| --- | --- |
-| E07-AC05 | Restored warnings repaired; all 14 timing/restore browser probes pass. Spatial controls pass except the literal zebra corridor proposal; final timing-capture framing review remains pending. |
-| E07-AC06 | Shared Alpha move proof and the desktop/phone, day/night, occlusion bar matrix remain pending. |
-| E07-AC13 | Named 60-runner golden-hour Checklist D passes all five items across both tiers/backends and three actual zooms; see matrix above. |
-| E07-AC19 | Zoo spatial/bar proof remains in progress. The nominal zebra-corridor wording has the proposed rewrite above; literal outside-corridor immunity is not met. |
-| E27-AC15 | All seven named H spots still need explicit review. The newly found AC11/12 regressions are repaired and pass their focused browser tests; final full verification remains pending. |
-| E28-AC10 | Earlier geometry-cache repair and measured storm/L5 ash proof are in [heap-budgets](../heap-budgets/README.md). Its final-source repeat was unmeasured; fresh current-source quiet acceptance remains required. |
-| E28-AC12 | Six-mood Checklist G/reference review remains pending. |
-
-No criterion, threshold, difficulty or test is weakened. No proposed rewrite is adopted. Capture media retained here: two repair comparison sheets so far (limit twelve).
-
-## Current memory candidate (not yet accepted)
-
-Index-only crowd LOD simplification left unreferenced vertices in live/cached geometry. `compactCrowdGeometry` now removes only those vertices after final appearance packing. An exact remote audit of **20 shipped asset/tier cases** keeps every expanded indexed attribute hash and triangle count identical; raw packed channel types/normalization and group/draw/bounds contracts have dedicated regression coverage. The first audit saves 502,368/793,440 vertex bytes across the ten high/low LOD2 model samples; this is CPU geometry accounting, **not** a browser heap result.
-
-The larger candidate removes the prepared-cache's second CPU copy of finished vertex/index arrays. `cloneCrowdGeometry` shares immutable arrays through **independent BufferAttribute/geometry wrappers**, so scene GPU uploads/disposal, per-instance channels, bounds and metadata stay independently owned. The final audit also proves clone attribute equality, separate wrappers and shared array identity for all twenty cases. [Exact asset receipts](evidence/compact-bake-final.json), [remote static/regression receipt](evidence/compact-final2.log.txt). No animation, triangle, actor, particle or corpse is removed. A failed intermediate static check caught a typed morph-channel index; the corrected run passes. Browser heap, pixels and lifecycle acceptance are pending.
-
-The baseline E28 verifier additionally found fog-player contrast **2.9636:1 <3:1** on the repaired composite. Its opened image has a visible but washed courier against the night road. A hue-preserving 8% dense-fog figure gain after the night key is now under test; it leaves the ground/ring and gameplay unchanged. No passing contrast result is claimed yet.
-
-## Baseline E28 verifier
-
-The pre-memory-change production build finishes the complete E28 functional sweep with **26 selected Node tests passing, 69 browser tests passing and one failing**: fog player contrast **2.9636:1**, below the unchanged 3:1 gate. Typecheck, lint and build pass; the browser failure stops the verifier before its performance stage. [Command receipt](evidence/verify-E28-before.log.txt), [stage receipt](evidence/verify-E28-before-checks.json), [browser result](evidence/verify-E28-before-playwright-headless.json), [measured contrast](evidence/fog-before.json). This baseline is not the final source acceptance run.
-
-Opened both interim reference sheets authorized by `06` §7 (`initial-drafts/weather-and-time-of-day-moods.png` and `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`). The weather matrix's regular wet sine bands do not match the broken wet highlights in those targets. The candidate now breaks their spacing/length using anchored world-space noise, retaining the wet mask, light-field contribution and 0.08 brightness cap. Final-source images and all seven explicit G answers remain pending; the baseline mood test's green exit is not treated as vision signoff.
-
-## Candidate validation update
-
-Full remote unit suite on the memory fix plus dense-fog gain passes **1,862 tests / 343 files**, with nine skipped tests / one skipped file ([receipt](evidence/units-final.log.txt)). The later wet-glint shader change and final verifier plumbing pass remote typecheck, lint, the strengthened verifier regression and production build ([receipt](evidence/final-build.log.txt)). Final browser contrast, mood, heap and lifecycle results remain pending. [Candidate source hashes](evidence/runtime-final-source.json).
-
-E07 verification now separates functional browsers from all tagged heap/perf probes under `quiet-run.sh`, keeps each at one worker and archives both browser stage results. Its shared-bar heap probes and physical crowd-budget fixture carry the perf tag; the physical fixture is explicitly included in the quiet selection. With `MI_VERIFY_REMOTE_SIM=1`, static checks and the production build also run remotely; the build is pulled before this verifier starts its browser stages. The unchanged hero-shadow metric `T-E25-06` is cross-tagged to E28-AC12 so its actual shadow/pool pixels supplement the weather moods' G review.
-
-## Quiet memory comparison (diagnostic viewport)
-
-Both builds ran through `quiet-run.sh` with all browser slots held, load <3 and no other headless browser/local Vitest. The fixed **960×600** diagnostic scene uses the same storm, seed 28, 3,600 ticks, camera and three completed-frame collections on each build. It is **not substituted for the native desktop/phone acceptance fixture**. [Before](evidence/heap-before.json), [memory candidate](evidence/heap-memory.json), [build identities](evidence/memory-builds.json), [quiet receipts](evidence/heap-before.log.txt) / [candidate](evidence/heap-memory.log.txt).
-
-| Counter (high / low) | Before | Memory candidate |
-| --- | --- | --- |
-| Collected CDP JS heap, decimal MB | 114.45 / 113.95 | 114.43 / 113.92 |
-| Collected backing stores, decimal MB | 406.70 / 395.93 | 385.76 / 373.35 |
-| Legacy `performance.memory`, MiB | 497.33 / 486.58 | 477.36 / 465.02 |
-| Live scene geometry arrays, decimal MB | 37.60 / 28.20 | 32.66 / 21.65 |
-
-The real backing-store reduction is **20.94 / 22.58 MB**; it is not presented as hundreds of MB of JS-heap savings. Exact unmasked RGB comparison is **zero changed pixels on both tiers**, at the same 960×600 size ([counts](evidence/heap-pixels.json), [remote receipt](evidence/corpse-audit2.log.txt)). The intermediate transfer attempt omitted ignored inputs; its failure is retained and replaced by the successful staged-input comparison. The memory-only build predates the wet-glint shader change. The legacy counter remains high in this diagnostic; actual native acceptance heap readings and the measurement-contract decision remain open.
-
-## Corpse-motion repair and fixture corrections
-
-Checklist H revealed a real omission: `Explosions.queueImpulses` launched props, debris and cars, but ignored retained corpse records. Static instancing in E07-AC14 is **not** a prohibition on motion; the earlier question conflated that requirement with an implementation comment. No H rewrite is proposed on that basis.
-
-Retained infected bodies now receive the same radial/upward falloff, starting one tick later, through a plain fixed-step cosmetic flight component. Their existing thrown-pose path moves the frozen instances, then leaves them at their actual landing location. No collider, contact damage, brain, HP change or corpse removal is introduced. Full cover and the death-pose feet/head footprint stop flights at walls; explicit Alpha/gorilla throws take over ownership. Relative delay/velocity survive real mission checkpoints. Frozen pages update bounds once per moving page, and compare stored float32 translations exactly so settled bodies stop uploading.
-
-Remote typecheck/lint and **71 tests / five files pass** ([receipt](evidence/corpse-alpha-final.log.txt)), including four blast classes' exact first-tick curve, no added rigid bodies/HP damage, identity/permanence, pending/midair checkpoint restoration, cover/radius/zero-impulse controls, original E27 blast tests, Alpha/zoo behavior and the page upload regression. The initial new checkpoint fixture had empty objective text; correcting it exposed no runtime restore defect. Fresh H images and final full verifiers remain pending.
-
-The first E07 verifier passes its **five isolated timing tests** and **372 selected Node tests**, but fails one ordinary Alpha/soldier contact fixture and stops before browsers ([receipt](evidence/verify-E07-first.log.txt), [stages](evidence/verify-E07-first-checks.json), [selected tests](evidence/verify-E07-first-vitest.json.gz)). The kick in that fixture correctly provokes the courier for 720 ticks, overriding the manually assigned soldier noise target; the audit records no Alpha/soldier attack ([actor/target audit](evidence/alpha-contact-before.json.gz)). The corrected fixture keeps the original kick assertions plus a retaliation-target assertion, then uses a separate unprovoked Alpha and a held, non-firing soldier for the unchanged 25 damage / 72-tick knockdown / cooldown / second-hit checks. Runtime targeting and difficulty are unchanged; it passes in the 71-test batch above.
-
-The repaired fog probe passes **3.0349:1** with the same 7,585 player-mask pixels ([reading](evidence/fog-final.json)). The added G hero-shadow probe initially samples **promotionBlend=0** and no usable cast shadow ([before](evidence/hero-shadow-before.json), [receipt](evidence/fog-shadow-final.log.txt)). Its bulk `step(90)` promoted the new lamp only on the final redraw. The probe now submits each intermediate fixed-tick view, as gameplay does, and additionally requires promotion blend **1** before applying the unchanged darkening/hue thresholds. This corrected probe is running with the refreshed captures.
-
-The corrected full remote unit repeat passes **1,865 tests / 343 files**, seven skipped tests / one skipped file ([receipt](evidence/units-corpses-final2.log.txt)). The runner had the optional audio prerequisites, so two former audio skips ran; the new page-update test adds one case. Its first transfer attempt lost a file that was compressed during rsync; the fresh repeat completed normally. No test or skip was added to conceal a failure.
-
-The refreshed 14 move probes pass again in 2.6 minutes, and the correctly settled hero-shadow probe passes at **85.88% darkening**, hue **254.7°**, promotion blend **1** ([capture/test receipt](evidence/captures-final.log.txt), [shadow reading](evidence/hero-shadow-final.json)). The car corpse fixture is placed at `(2.5,2.5)` outside the hull's solid footprint: its original `(1,2)` footprint overlapped the car and correctly blocked motion through the hull. The final receipt shows it rise and land at approximately `(3.82,0.7,3.87)` with its original id ([car receipt](evidence/car-final.log.txt)). One high-tier late grenade frame was flat/blank and is excluded from signoff pending a pinned-production repeat; a source comment was edited during the dev capture, so that overlap is recorded as a possible cause rather than a proved renderer defect.
-
-The first final E28 attempt was interrupted while its remote build was unnecessarily holding/waiting for a GPU reservation ([receipt](evidence/verify-E28-build-wait.log.txt)). Remote builds now use no browser slot; their artifact pull precedes this verifier's browsers. Local browser and quiet/perf reservations are unchanged, and the complete verifier restarts from its static checks rather than skipping any gate.
-
-## Final-source Checklist G review — 2026-10-22
-
-This review supersedes the earlier AC12 failure above. I opened the fresh **24 six-mood frames** (WebGL2/WebGPU × high/low), the full-size storm and facade frames, and the settled hero-shadow frame. Retained matrix: `docs/reports/ac-close-shared/g-moods.jpg`. References opened: `initial-drafts/weather-and-time-of-day-moods.png` and `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`; `06` §7 permits these interim references while dedicated lighting keyframes are absent.
-
-| Priority | G item | Observed result |
-| --- | --- | --- |
-| must | Emissive glow and visible pools/spill | PASS — yellow windows, headlamps and streetlamp bloom; orange pools brighten nearby pavement and facade. |
-| must | Geometry / hero shadows | PASS — wall-facing window spill remains on the outside pavement; settled lamp casts separate courier, infected and prop shadows. The unchanged hero probe measures 85.88% darkening after promotion blend reaches 1. |
-| must | Colored, appropriate shadows | PASS — blue/purple shadows, long and crisp in haze, broader and subdued under overcast; hero shadow hue 254.7°, no black cutout. |
-| must | Night readability | PASS — courier cap, orange clothing and limbs remain distinct; gray/green infected silhouette and limbs separate from the dark blue street in storm, fog and snow. Dense-fog player contrast is 3.0349:1 over the unchanged 7,585-pixel mask. |
-| should | Beams / haze / glints | PASS — amber shafts cross the haze scene and window spill lights the storm haze; fog softens the distance without hiding the courier. The lightning frame is bright but characters and house remain legible. |
-| should | Reflections | PASS — storm pavement carries irregular, broken warm highlights under windows and lamp, with dark gaps; car paint/glass retain specular separation. Dry clear/overcast pavement has no wet streaks. |
-| should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
-
-**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Current verifier: all 71 functional browsers pass; performance stage is still pending.
-
 ## Final-source named H review — 2026-10-22
 
 This review supersedes the earlier incomplete physical-consequence signoff. I opened both final seven-row high/low frame sheets, plus full-size medium/mega flight, night wind column and the two late grenade frames. `docs/reports/ac-close-shared/h-high.jpg` and `h-low.jpg` retain all seven required spots; `evidence/vfx-final.json.gz` records 102 frame states and source-image SHA256s. Grenade frames use a pinned production preview after the earlier dev blank frame failed review; both tiers now pass an explicit non-flat-image assertion. A concurrent source edit is only a possible cause of the old blank, not a proved diagnosis.
@@ -183,3 +82,70 @@ This review supersedes the earlier incomplete physical-consequence signoff. I op
 | should | Class intensity | PASS — grenade is a localized cool gray cloud; medium/car affect a few metres; mega lights a wide area, throws the corpse higher/farther, and leaves multiple fires. |
 
 **AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification remains pending until its receipt is complete.
+
+## Final-source Checklist G review — 2026-10-22
+
+This review supersedes the earlier AC12 failure above. I opened the fresh **24 six-mood frames** (WebGL2/WebGPU × high/low), the full-size storm and facade frames, and the settled hero-shadow frame. Retained matrix: `docs/reports/ac-close-shared/g-moods.jpg`. References opened: `initial-drafts/weather-and-time-of-day-moods.png` and `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`; `06` §7 permits these interim references while dedicated lighting keyframes are absent.
+
+| Priority | G item | Observed result |
+| --- | --- | --- |
+| must | Emissive glow and visible pools/spill | PASS — yellow windows, headlamps and streetlamp bloom; orange pools brighten nearby pavement and facade. |
+| must | Geometry / hero shadows | PASS — wall-facing window spill remains on the outside pavement; settled lamp casts separate courier, infected and prop shadows. The unchanged hero probe measures 85.88% darkening after promotion blend reaches 1. |
+| must | Colored, appropriate shadows | PASS — blue/purple shadows, long and crisp in haze, broader and subdued under overcast; hero shadow hue 254.7°, no black cutout. |
+| must | Night readability | PASS — courier cap, orange clothing and limbs remain distinct; gray/green infected silhouette and limbs separate from the dark blue street in storm, fog and snow. Dense-fog player contrast is 3.0349:1 over the unchanged 7,585-pixel mask. |
+| should | Beams / haze / glints | PASS — amber shafts cross the haze scene and window spill lights the storm haze; fog softens the distance without hiding the courier. The lightning frame is bright but characters and house remain legible. |
+| should | Reflections | PASS — storm pavement carries irregular, broken warm highlights under windows and lamp, with dark gaps; car paint/glass retain specular separation. Dry clear/overcast pavement has no wet streaks. |
+| should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
+
+**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Final E28 verifier passes all 28 selected Node, 71 functional browser and six quiet performance tests. The original heap-counter discrepancy remains partial under AC10.
+
+## Quiet memory comparison (diagnostic viewport)
+
+Both builds ran through `quiet-run.sh` with all browser slots held, load <3 and no other headless browser/local Vitest. The fixed **960×600** diagnostic scene uses the same storm, seed 28, 3,600 ticks, camera and three completed-frame collections on each build. It is **not substituted for the native desktop/phone acceptance fixture**. [Before](evidence/heap-before.json), [memory candidate](evidence/heap-memory.json), [build identities](evidence/memory-builds.json), [quiet receipts](evidence/heap-before.log.txt) / [candidate](evidence/heap-memory.log.txt).
+
+| Counter (high / low) | Before | Memory candidate |
+| --- | --- | --- |
+| Collected CDP JS heap, decimal MB | 114.45 / 113.95 | 114.43 / 113.92 |
+| Collected backing stores, decimal MB | 406.70 / 395.93 | 385.76 / 373.35 |
+| Legacy `performance.memory`, MiB | 497.33 / 486.58 | 477.36 / 465.02 |
+| Live scene geometry arrays, decimal MB | 37.60 / 28.20 | 32.66 / 21.65 |
+
+The real backing-store reduction is **20.94 / 22.58 MB**; it is not presented as hundreds of MB of JS-heap savings. The opened [before/after sheet](heap-pixels.jpg) has matching bodies, rain and pavement. Exact unmasked RGB comparison is **zero changed pixels on both tiers**, at the same 960×600 size ([counts](evidence/heap-pixels.json), [remote receipt](evidence/corpse-audit2.log.txt)). The intermediate transfer attempt omitted ignored inputs; its failure is retained and replaced by the successful staged-input comparison. The memory-only build predates the wet-glint shader change. The legacy counter remains high in this diagnostic; native acceptance readings are below; the measurement-contract decision remains open.
+
+## Native storm and actual L5 peak ash
+
+| Native Metal workload (high / low) | Measurements |
+| --- | --- |
+| Fully wet storm, 20,000 /6,000 particles | Frame p95 **5.8 /7.3 ms**, max **9.2 /10.1 ms**; sim p95 **0.300 /0.800 ms**; collected JS heap **116.68 /116.11 MB**. Native Apple M4; low 390×844, DPR1.5, 4× CPU throttle. Draw/triangle/particle gates pass. |
+| Original storm `perf.heapBytes` counter | **508.07 /564.94 MiB**, still over 400/250; measured before explicit collection. Collected backing stores **385.57 /373.16 decimal MB** are retained separately. Green collected-JS tests do not close this original comparison. |
+| L5 pair-plaza, peak authored ash flakes0.35 | **1,750 /525 particles**; five followers, 13 fires, 37 corpses, 27/18 infected. Ash0.35 persists through the later fog transition in `src/data/weather.ts`; no synthetic extra load replaces actual L5. |
+| L5 frame / memory / scene gates | High p95/max **8.4 /13.3 ms**; phone p50/p95/max **19.2 /34.7 /47.5 ms** at 4× CPU throttle. Collected JS heap **129.54 /113.98 MB**. Draw/triangle and +20% L4 baseline gates pass; >10 m ordinary walk stays in L5. Existing low gate is p50≤33.3 ms/max≤80 ms; no phone p95≤33.3 claim. |
+
+[Storm native high](evidence/storm-native-final-high.json.gz), [low](evidence/storm-native-final-low.json.gz), [L5 high](evidence/l5-final-high.json.gz), [low](evidence/l5-final-low.json.gz), [opened actual ash images](l5-ash.jpg). I opened both full L5 pair-plaza images: gray ash falls over the burned plaza, scattered bodies/wrecks and fires remain, and the five-person group is clustered around the courier. These are performance/fixture observations, not a new L5 lighting acceptance claim.
+
+## Proposed clarification for E28-AC10 — not adopted
+
+“Use the E18 **JS heap** budget of 400/250 decimal MB, measured as CDP `Runtime.getHeapUsage.usedSize` after pausing, retiring completed-frame temporaries and three explicit collections. Record backing storage and legacy `performance.memory` separately, with units, before/after runtime identity, viewport and workload. Keep frame, sim, particle, draw and triangle gates unchanged.”
+
+Reason: the **pre-existing** verifier gates collected CDP JS heap, while the sweep compares legacy `perf.heapBytes` in MiB. These materially different counters disagree. This lane changed neither the collection helper nor either threshold; it demonstrated a real buffer reduction, but the original counter **still fails**. This proposal resolves the inconsistent measurement contract only if the user accepts it; further optimization of the original counter is not asserted impossible. **AC10 stays partial / E28 in-progress.**
+
+## Earlier failures and evidence history
+
+- Baseline E27 verify: 37 Node /39 browser pass, two smoke failures, stopped before perf. [Original run](evidence/verify-E27.log.txt), [stage receipt](evidence/verify-E27-checks.json).
+- Baseline E28 verify: 26 Node /69 browser pass, one fog contrast failure, stopped before perf. [Original run](evidence/verify-E28-before.log.txt), [stage receipt](evidence/verify-E28-before-checks.json).
+- First E07 verify: five isolated timings /372 selected Node pass; provoked Alpha contact fixture fails before browsers. [Run](evidence/verify-E07-first.log.txt), [actual target audit](evidence/alpha-contact-before.json.gz).
+- Intermediate failed transfer/fixture/static receipts remain in `evidence/`; successful replacements are identified above. The interrupted E28 remote build unnecessarily reserved browser capacity; remote builds now use no GPU slot and their pull completes before browser stages. [Interrupted receipt](evidence/verify-E28-build-wait.log.txt).
+- The original high grenade f840 blank failed review; pinned production repeats pass both tiers with non-flat-image assertions. No proved HMR cause is claimed. [Repeat](evidence/grenade-final.log.txt).
+
+Retained media limit: **12 contact/comparison images** in this directory. Source frame hashes, numeric states, command exits and lossless result JSONs live under `evidence/`; raw transient captures are removed after final review. No baseline worktree was created; the one temporary baseline build was removed. Canonical per-epic `review.md`/`report.md` record the same disposition.
+
+
+### Proposed rewrite for E07-AC19: zebra stampede corridor
+
+The epic's move row says **1.5 m-wide sweep**, while the current physical-contact rule also hits a human whose centre is **0.76 m** from the lane centre. A fresh remote audit records **100→50 HP** from two distinct zebras at that nominally outside point; the **0.88 m** control remains at **100 HP**. The probe explicitly records `literalCorridorControlPass: false`. [Audit receipt](evidence/corridor-audit.log.txt), [actual positions and hit events](evidence/zebra-corridor.json).
+
+The existing `zoo-s3.test.ts` comment, introduced by **2e4df83867** on 2026-10-15, calls this a PO contact-hit decision: **0.45 m zebra radius + 0.35 m human radius + 0.02 m contact tolerance = 0.82 m**. That comment is secondary provenance; it is not represented as a recovered verbatim PO request. The current test already places its outside control at 0.88 m. This lane changes neither that test nor the contact behavior.
+
+**Proposed wording, awaiting the user's decision:** “The stampede marks a nominal 1.5 m-wide corridor. Ordinary body contact additionally uses the sum of the zebra and human capsule radii plus 0.02 m contact tolerance (0.82 m in the standard human fixture). Each distinct zebra/attack id deals 25 HP once; a target beyond both the marked corridor and that contact boundary is unaffected.”
+
+Reason: this reconciles the nominal ground cue with the established physical-contact behavior. Narrowing collision to the centre corridor would change the current combat behavior, contrary to this task's no-difficulty-change constraint. The literal corridor criterion is **not marked met** by a green existing test.
