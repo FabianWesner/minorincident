@@ -369,6 +369,8 @@ export class SceneLab {
         Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
         world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, player.transform.x, player.transform.z);
       }
+      // Frame zero must show guidance for the staged column, rather than the shelter state before relocation.
+      if (spec.l6Subway === 'gate') world.update();
     }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
