@@ -19,7 +19,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
+import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -240,7 +240,10 @@ export class CrowdView extends Group {
       const matrix = crowdBlendedMatrix(texture, parts.x, feedbackState.x, outgoing, weight);
       // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
       // pipeline), only the uniform values differ. Missing parts get -1 and never match.
-      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name));
+      // Rig part indices are immutable for this material. Upload them once;
+      // they need no per-object uniform scan in every crowd and shadow draw.
+      const rigParts = sharedUniformGroup('crowdParts');
+      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name)).setGroup(rigParts);
       let visible = part.equal(index('legL')).or(part.equal(index('shinL'))).or(part.equal(index('footL'))).select(feedbackState.y.oneMinus(), 1);
       const groups = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']];
       groups.forEach((names, bit) => {
@@ -464,8 +467,8 @@ export class CrowdView extends Group {
       }
     }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
-    if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
-    if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
+    if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
+    if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
   }
   /** Scene Lab probe: frozen corpses as drawn (feet position). */
   private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();

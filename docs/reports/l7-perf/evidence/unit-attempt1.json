@@ -1,0 +1,11 @@
+{
+  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+  "source": "first candidate (four source files; attempt1/receipt.json)",
+  "passed": 2157,
+  "skipped": 9,
+  "total": 2166,
+  "exitCode": 0,
+  "durationSeconds": 2288.75,
+  "rawLogSha256": "feead50d537f4684b87a7689f85d98d25e334f3d157cedac691553fcd44deafa",
+  "summary": "Test Files  394 passed | 3 skipped (397)\n      Tests  2157 passed | 9 skipped (2166)\n   Start at  06:27:57\n   Duration  2288.75s (tests 99%, import 1%)\n\n[remote] done exit=0 (runner 94.130.181.173, sync 80s, remote total 2293s)"
+}

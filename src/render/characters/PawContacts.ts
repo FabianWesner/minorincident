@@ -81,6 +81,12 @@ export class PawContacts {
   /** Exact Y component of Vector3.applyMatrix4, without unused X/Z work or arrays. */
   private lowest(vertices: readonly Vector3[], matrix: Matrix4): number {
     const e = matrix.elements; let bottom = Infinity;
+    // Scene-graph transforms are affine. Their homogeneous divisor is exactly
+    // one for every sole vertex; retain the general path for other matrices.
+    if (e[3] === 0 && e[7] === 0 && e[11] === 0 && e[15] === 1) {
+      for (const { x, y, z } of vertices) bottom = Math.min(bottom, e[1] * x + e[5] * y + e[9] * z + e[13]);
+      return bottom;
+    }
     for (const { x, y, z } of vertices) {
       const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
       bottom = Math.min(bottom, (e[1] * x + e[5] * y + e[9] * z + e[13]) * w);

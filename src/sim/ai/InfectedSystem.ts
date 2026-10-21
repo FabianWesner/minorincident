@@ -3,7 +3,7 @@ import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { megaAlpha } from '../../data/megaAlpha';
-import { balancedCrowdModel, regularInfectedModels } from '../../data/crowdAppearance';
+import { leastCrowdedModel, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
 import { motionResponse, resetResponse } from '../locomotion/MotionResponse';
@@ -52,6 +52,7 @@ export class InfectedSystem {
   readonly rng: Rng;
   readonly active: EntitySnapshot[] = [];
   readonly pool: EntitySnapshot[] = [];
+  private readonly spawnModelCounts = new Map<string, number>(regularInfectedModels.map(model => [model, 0]));
   readonly counters = { allocated: 0, reused: 0, released: 0 };
   readonly perches: NonNullable<ScenarioDefinition['perches']>;
   readonly crowd: { transform: EntitySnapshot['transform']; radius: number }[] = [];
@@ -173,8 +174,15 @@ export class InfectedSystem {
     if (opts.cureRegion) entity.infected!.cureRegion = opts.cureRegion;
     if (id === 'infected.dog' && !opts.variant) entity.infected!.variant = dogModel(this.world.seed, entity.id, true);
     if (!opts.variant && (id === 'infected.runner' || id === 'infected.sprinter')) {
-      entity.infected!.variant = balancedCrowdModel(regularInfectedModels,
-        this.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), position, entity.id);
+      // A rocket refill admits many actors in one frame. Count the identical
+      // neighbourhood directly, without allocating a mapped crowd per spawn.
+      const counts = this.spawnModelCounts;
+      for (const model of regularInfectedModels) counts.set(model, 0);
+      for (const e of this.active) if (e.health.current > 0 && !e.hidden && !e.infected?.hidden && Math.hypot(e.transform.x - position.x, e.transform.z - position.z) < 30) {
+        const model = e.infected!.model ?? e.infected!.variant;
+        if (counts.has(model)) counts.set(model, counts.get(model)! + 1);
+      }
+      entity.infected!.variant = leastCrowdedModel(regularInfectedModels, counts, entity.id);
     }
     this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
     const requestedX = entity.transform.x, requestedZ = entity.transform.z;

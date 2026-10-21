@@ -7,11 +7,12 @@ import type { Game } from '../../src/Game';
 import { SceneSession, stopServer } from '../scenelab/session';
 
 const out = process.env.L7_TRANSITION_OUT ?? 'test-results/epics/E29/transitions';
+const backend = process.env.L7_PERF_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {
   for (const tier of ['high', 'low'] as const) {
-    const session = new SceneSession({ tier, phone: tier === 'low', nativeFrameTiming: true,
+    const session = new SceneSession({ backend, tier, phone: tier === 'low', nativeFrameTiming: true,
       viewport: tier === 'high' ? { width: 1600, height: 900 } : { width: 390, height: 844 }, query: { profile: '0', dpr: '1' } });
     try {
       await session.open();
@@ -26,11 +27,17 @@ try {
         a.getState().l7!.roster.forEach((r, i) => a.teleport(r.id, { x: -44 - Math.floor(i / 3) * 1.2, z: 46 + (i % 3 - 1) * 1.2 }));
         a.camera.cinematic({ position: [-22, 24, 68], target: [-48, 0, 46] }, true); await a.screenshotReady();
       });
-      const gpu = await session.page.evaluate(() => {
+      const gpu = await session.page.evaluate(async backend => {
+        if (window.__SS__!.perf().backend !== (backend === 'webgpu' ? 'webgpu' : 'webgl')) throw Error('Requested backend was not selected');
+        if (backend === 'webgpu') {
+          const gpu = (navigator as Navigator & { gpu: { requestAdapter(): Promise<{ info: { vendor: string; architecture: string; device: string; description: string } } | null> } }).gpu;
+          const adapter = await gpu.requestAdapter();
+          return adapter ? `${adapter.info.vendor} ${adapter.info.architecture} ${adapter.info.device} ${adapter.info.description}` : null;
+        }
         const gl = document.querySelector('canvas')!.getContext('webgl2')!;
         const extension = gl.getExtension('WEBGL_debug_renderer_info');
         return extension ? String(gl.getParameter(extension.UNMASKED_RENDERER_WEBGL)) : null;
-      });
+      }, backend);
       if (!gpu || /swiftshader|llvmpipe|software/i.test(gpu)) throw Error(`Native GPU required: ${gpu}`);
       await session.page.evaluate('globalThis.__name = (fn) => fn');
       for (const phase of ['checkpoint', 'boarding'] as const) {
@@ -59,7 +66,7 @@ try {
           return { phase, frames: frames.length, frameP95: sorted[Math.ceil(sorted.length * .95) - 1], maximum: Math.max(...frames), peakInfected, transitions, hitches,
             end: { level: w.scenario, loading: (game as unknown as { loading: boolean }).loading, checkpoint: w.missions?.state.checkpoint, departure: w.l7Departure?.state.phase }, perf: a.perf() };
         }, phase);
-        rows.push({ tier, gpu, ...result, errors: session.errors });
+        rows.push({ backend, tier, gpu, ...result, errors: session.errors });
         writeFileSync(`${out}/transitions.json`, JSON.stringify(rows, null, 2));
         console.log(JSON.stringify(rows.at(-1)));
         if (result.maximum > 50 || (phase === 'checkpoint' ? result.end.checkpoint !== 'corridor' : result.end.level !== 'L8' || result.end.loading) || session.errors.length) process.exitCode = 1;

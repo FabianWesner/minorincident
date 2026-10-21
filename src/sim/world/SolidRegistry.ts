@@ -357,11 +357,25 @@ export class SolidRegistry {
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true, playerClearance = 0): Point | null {
     const nav = this.world.infected?.nav, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     let connected = false;
+    let blocker: EntitySnapshot | undefined;
     const direction = { x: 0, z: 0 };
     const player = playerClearance ? this.world.entities.get(1) : undefined;
     const fits = (p: Point) => {
       if (playerClearance && player && ignoreId !== 1 && layers(p, player.transform) && Math.hypot(p.x - player.transform.x, p.z - player.transform.z) < playerClearance) return false;
-      if (navigation && nav && !nav.contains(p.x, p.z, radius) || !this.clear(p, radius, ignoreId)) return false;
+      if (navigation && nav && !nav.contains(p.x, p.z, radius)) return false;
+      // Adjacent admission probes often hit the same body. As in commit(), a
+      // previous contact is an exact rejection witness, never a free-space
+      // proof. Clear probes still run the complete registry query. Transaction
+      // and companion footprints retain their existing specialized checks.
+      if (!this.committing && blocker && !e?.companion && !blocker.companion && actor(blocker) &&
+          !pairExempt(e, blocker) && layers(p, blocker.transform) &&
+          (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + actorRadius(blocker) - skin) ** 2) {
+        this.bodyConflict = true; this.bodyConflictId = blocker.id; return false;
+      }
+      if (!this.clear(p, radius, ignoreId)) {
+        if (this.bodyConflict) blocker = this.world.entities.get(this.bodyConflictId);
+        return false;
+      }
       if (!connected || p === at) return true;
       const dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
       if (!distance) return true;
