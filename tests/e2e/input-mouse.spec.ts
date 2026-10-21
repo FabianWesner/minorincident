@@ -222,7 +222,7 @@ test('T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both 
 
 test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks',async({page})=>{
   await hudStart(page);
-  await page.evaluate(()=>window.__SS__!.setLoadout(['weapon.bat','weapon.crowbar','weapon.machete'],['weapon.kick','weapon.fists','weapon.bat']));
+  await page.evaluate(()=>window.__SS__!.setLoadout(['weapon.bat','weapon.fists','weapon.fire-axe'],['weapon.kick','weapon.fists','weapon.bat']));
   await page.keyboard.press('3');await tick(page,20);
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(2);
   await page.keyboard.press('Shift+2');const frame=await tick(page,20);expect(frame.right.down).toBe(false);
@@ -231,7 +231,7 @@ test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(2);
   await page.keyboard.press('3');await tick(page,20);
   await page.getByTestId('weapon-active').click();await tick(page,20);
-  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(0);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(1);
 });
 
 test('PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups', async ({ page }) => {

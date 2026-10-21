@@ -1,3 +1,4 @@
+import { weaponKey } from '../../data/weaponKeys';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import { Loadout } from './Loadout';
@@ -38,6 +39,7 @@ export class ActionRunner {
   /** `crowd(radius)` counts the living infected a sweep of that radius would reach from the source right now. */
   update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void, crowd?: (radius: number) => number): void {
     const selected = this.loadout.state.selectedSide, selectedId = this.loadout.current(selected).id;
+    const keyedChoice = frame.selectedWeaponKey !== undefined && this.loadout.activeEntries().some(entry => weaponKey(entry.id) === frame.selectedWeaponKey);
     if (!enabled || this.gunReady.id !== selectedId || this.gunReady.side !== selected) {
       Object.assign(this.gunReady, { id: selectedId, side: selected, ticks: 0, until: -1 });
     }
@@ -46,13 +48,13 @@ export class ActionRunner {
       if (!enabled) { delete this.running[side]; delete this.buffered[side]; continue; }
       // Explicit slot/wheel changes cancel an unfired raise before spending ammunition.
       // selectorSide also comes from automatic target intent, which must not abort a pending shot.
-      const selecting = frame.selectedSlot || frame.selector || frame.selectedActiveSlot !== undefined;
+      const selecting = frame.selectedSlot || frame.selector || frame.selectedActiveSlot !== undefined || keyedChoice;
       if (attack?.def.category === 'ranged' && !attack.resolved && ((selecting && side !== selected) || attack.def.id !== this.loadout.current(side).id)) {
         delete this.running[side]; attack = undefined;
       }
       if (attack && tick >= attack.endsAt) { delete this.running[side]; attack = undefined; }
       const button = side === 'LEFT' ? frame.left : frame.right;
-      if (frame.cancelMove || frame.moveTarget || frame.attackTarget || frame.selector || frame.selectedSlot || frame.selectedActiveSlot !== undefined) delete this.buffered[side];
+      if (frame.cancelMove || frame.moveTarget || frame.attackTarget || frame.selector || frame.selectedSlot || frame.selectedActiveSlot !== undefined || keyedChoice) delete this.buffered[side];
       let buffered = this.buffered[side];
       let def = this.loadout.definition(this.loadout.current(side).id);
       if ((frame.mouseAttack || (!button.down && buffered?.mouseAttack)) && def.id === 'weapon.kick') def = this.loadout.definition('weapon.fists');

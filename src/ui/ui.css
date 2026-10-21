@@ -317,3 +317,11 @@ body.debug-tools [data-audio-controls]{left:calc(50% + 6px)!important;max-width:
 body.debug-tools [data-input-controls] :is(input,select){max-width:100%;box-sizing:border-box}
 body.debug-tools [data-input-controls] summary,body.debug-tools [data-audio-controls] summary{cursor:pointer}
 body.debug-tools::before{content:"";position:fixed;inset:0 0 auto;height:var(--debug-row);background:#182333;z-index:38;pointer-events:none}
+
+/* DOM icons and opaque key badges keep the shortcuts readable at every render tier/zoom. */
+.hud-weapon-rack{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));max-width:calc(100vw - 56px);display:flex;flex-wrap:wrap;gap:4px;padding:6px}
+.hud-weapon-choice{position:relative;display:grid;place-items:center;box-sizing:border-box;width:32px;height:36px;padding:2px 2px 9px;border:1px solid #8b8175;border-radius:5px;background:#111b29}
+.hud-weapon-choice img{width:24px;height:24px;object-fit:contain}
+.hud-weapon-choice[data-selected=true]{border-color:#ffe0a0;background:#495040;box-shadow:0 0 0 1px #ffe0a0}
+.hud-weapon-key{position:absolute;right:0;bottom:0;min-width:13px;border-radius:3px;background:#0b111c;color:#fff3da;text-align:center;font:700 12px/14px system-ui,sans-serif}
+.touch-ui .hud-weapon-rack{display:none}

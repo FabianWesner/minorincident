@@ -26,13 +26,15 @@ export interface InputFrame {
   pointerGround?: boolean;
   /** Held target press stops firing if that command loses its target. */
   pointerTarget?: boolean;
-  /** Explicit side for a touch swipe or target attack while approaching. */
-  /** Direct number-key rack choice. Out-of-range slots are ignored. */
-  /** Mouse-mode number keys address the same carried list as RMB. */
+  /** Fixed campaign weapon shortcut (1–9); missing weapons are ignored. */
+  selectedWeaponKey?: number;
+  /** Carried-list index for HUD/test/replay commands. */
   selectedActiveSlot?: number;
+  /** Direct rack slot choice. Out-of-range slots are ignored. */
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
-  /** Device number keys address the ordered rack; saved/test commands retain physical indices. */
+  /** Shift shortcuts address the ordered rack; saved/test commands retain physical indices. */
   orderedSelection?: boolean;
+  /** Explicit side for a touch swipe or target attack while approaching. */
   selectorSide?: 'LEFT' | 'RIGHT';
   /** Resolved click navigation requests the bounded locomotion response. */
   navigation?: boolean;
