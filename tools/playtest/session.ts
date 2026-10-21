@@ -18,7 +18,7 @@ export interface SessionOptions {
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
-export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; deaths: number; assists: number; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
+export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
 
 const hold = (ms: number) => new Promise(r => setTimeout(r, ms));
 const ranged = /pistol|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher/;
@@ -70,13 +70,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
   const safe = (x: number, y: number, e: Eyes) => ({ x: clamp(x, 260, e.view.w - 260), y: clamp(y, 120, e.view.h - 170) });
-  const clickGround = async (x: number, y: number) => { await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
+  const clickGround = async (x: number, y: number) => { await releaseAim(); await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
 
   // --- boot and menu ---
-  const params = `testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
+  // The figure probe checks presence of `test`; production clock/UI/prewarming check `test=1`.
+  // Enable rendered-pose observations while retaining the production play path.
+  const params = `test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
-  await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(false); });
+  await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
   await page.getByTestId('start-game').click({ timeout: 120_000 });
   await hold(500);
   const first = o.levels[0];
@@ -89,6 +91,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
+  let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
@@ -111,14 +114,24 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   const startLevel = async (e: Eyes) => {
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
-    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
-    runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear();
+    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
+    await page.evaluate(() => {
+      const observation = window as unknown as { __playtestAttacks: Record<string, number> };
+      observation.__playtestAttacks = {};
+      const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+      world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
+    });
+    runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
+    if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
   const finishLevel = async (e: Eyes) => {
     if (!run) return;
     run.finished = true; run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
+    const deaths = await page.evaluate(level => { const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null; }, run.level);
+    if (deaths !== null) run.deaths = deaths;
+    run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
     run.weaponsEnd = e.player?.weapons ?? []; prevWeapons = run.weaponsEnd;
     log({ levelEnd: e.level, run }); await capture(`${e.level}-result`);
     writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
@@ -126,6 +139,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
+  let aimHeld: number | null = null, lastAimClick = 0, lastCrowdKick = 0;
+  const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
     // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
@@ -134,14 +149,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (unarmed ? undefined : e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => Math.hypot(a.x - b.x, a.z - b.z) < 2.5)));
-    if (!threat) { if (keysDown.has('Space')) await press([]); return false; }
+    if (!threat) { if (keysDown.has('Space')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
     if (threat.hp < seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
     seen.last = now; shotAt.set(threat.id, seen);
     if (seen.ms > 8000) {
       // A target that takes no damage for 8 s is unreachable (behind a fence) or ignores hits: note it, walk on.
-      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp });
+      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp }); await releaseAim();
       if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
       return false;
     }
@@ -149,15 +164,56 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
       return true;
     }
-    await page.mouse.move(threat.screen.x, threat.screen.y - 18);
-    // Back off while low on health and a melee weapon would trade hits.
-    const keys = ['Space'];
-    if (e.player && e.player.hp < e.player.max * .3 && reach < 5 && threat.d < 2) keys.push(...awayKeys(e, threat));
-    await press(keys);
+    if (e.level === 'L6' && e.player?.weapons.includes('weapon.fire-axe') && e.enemies.filter(b => b.d < 3).length >= 3) {
+      // The carried LEFT axe covers a close crowd while the courier keeps retreating. J is its shipped binding.
+      await releaseAim();
+      if (now - lastCrowdKick > 750) {
+        await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyJ']); await hold(180); await press([]);
+        lastCrowdKick = now; log({ crowdAxe: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
+      }
+      return false;
+    }
+    if (e.level === 'L6' && e.player?.current === 'weapon.fire-axe' && e.player.weapons.includes('weapon.army-mg') && threat.d > 3) {
+      // J selects the LEFT axe. Use the shipped RIGHT binding to return to the carried gun at range.
+      await releaseAim(); await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(60); await press([]);
+      return true;
+    }
+    if (ranged.test(e.player?.current ?? '')) {
+      // Retain the branch's passing gun policy: one body click per target, held until it changes.
+      // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
+      if (keysDown.has('Space')) await press([]);
+      if (aimHeld !== threat.id) {
+        await releaseAim();
+        await page.mouse.move(threat.screen.x, threat.screen.y - 18); await page.mouse.down(); aimHeld = threat.id;
+      }
+      return true;
+    }
+    // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
+    // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
+    // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
+    if (e.level === 'L6' && e.player?.weapons.every(id => /fists|kick/.test(id)) && e.enemies.filter(b => b.d < 3).length >= 3) {
+      // Unarmed, keep covering the moving retreat instead of planting in a crowd. K is the shipped
+      // right-hand kick binding; one short kick makes space, then navigation follows the visible ring.
+      await releaseAim();
+      if (now - lastCrowdKick > 750) {
+        await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(180); await press([]);
+        lastCrowdKick = now; log({ crowdKick: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
+      }
+      return false;
+    }
+    if (!ranged.test(e.player?.current ?? '') && e.player && e.player.hp < e.player.max * .3 && threat.d < 2) {
+      // A keyboard attack aims through the ground ray, unlike a target click on the drawn chest.
+      await releaseAim(); await page.mouse.move(threat.screen.x, threat.screen.y);
+      await press(['Space', ...awayKeys(e, threat)]); return true;
+    }
+    await press([]);
+    if (aimHeld !== threat.id || seen.ms > 1000 && now - lastAimClick > 1000) {
+      await releaseAim();
+      await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id; lastAimClick = now;
+    }
     return true;
   };
   const awayKeys = (e: Eyes, b: Body): string[] => {
-    // Screen-relative: away from the threat in screen space.
     const dx = e.view.w / 2 - b.screen.x, dy = e.view.h / 2 - b.screen.y, out: string[] = [];
     if (Math.abs(dx) > 20) out.push(dx > 0 ? 'KeyD' : 'KeyA');
     if (Math.abs(dy) > 20) out.push(dy > 0 ? 'KeyS' : 'KeyW');
@@ -273,6 +329,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
+      if (e.level === 'L6' && !await page.evaluate(() => window.__SS__!.crowdFigures().some(f => f.drawn && f.joints))) throw new Error('L6 rendered-body observations are unavailable; combat playtest would be invalid');
       // Rack check at the first playing tick (the briefing can still show the previous rack).
       run.weaponsStart = e.player?.weapons ?? [];
       const lost = (prevWeapons ?? []).filter(w => !run!.weaponsStart.includes(w) && !/fists|kick|unarmed/.test(w));
@@ -286,12 +343,32 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const key = `${e.step}|${e.completed}|${e.checkpoint}|${e.objective.replace(/ · [\d.]+\s?m\b/g, '').replace(/ · \d+:\d\d/g, '').replace(/\d+\/\d+ ?s\b/g, '#')}`;
     if (key !== lastProgress.key) {
       if (lastProgress.key) log({ progress: key, tick: e.tick, after: Math.round((e.tick - lastProgress.tick) / 60) });
+      // Diagnostic evidence only: this snapshot never supplies a movement or combat decision.
+      if (e.level === 'L6') log({ l6Observation: await page.evaluate(() => {
+        const a = window.__SS__!, m = a.missions.state()!, s = m.l6!;
+        const p = a.getEntity(1)!;
+        return { tick: a.tick(), deaths: m.stats.deaths, player: { transform: p.transform, health: p.health }, leaderX: s.leaderX, tailX: s.tailX,
+          paused: s.paused, waitFor: s.waitFor, gates: s.gates, survivors: s.survivors.map(r => ({ ...r, transform: a.getEntity(r.id)?.transform })) };
+      }) });
       lastProgress = { key, tick: e.tick, wall: Date.now(), best: e.distance ?? Infinity }; assistMode = false; unstickDir = 0; navAssist = false; navUntil = 0; navEpisodes = 0; lastPos = { x: e.player?.x ?? 0, z: e.player?.z ?? 0, wall: Date.now() };
       if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; await hold(300); run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, drawn: await drawnRing(), playerY: e.player?.y } }); }
       if (stuckLogged.size) bootWall = Date.now();
     }
     if (Date.now() - lastRingRead > 2000 && !(e.marker === null || !e.marker.visible)) { lastRingRead = Date.now(); const r = await markerRing(); if (r) ring = r; }
     if (`${e.step}|${e.marker?.anchor}` !== ringKey) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; log({ marker: e.marker?.anchor, ring }); }
+    if (e.level === 'L6') {
+      if (/help the injured survivor/.test(e.objective)) { fetchHint = await markerRing(); escort = null; }
+      else if (/Bring the injured survivor/.test(e.objective) && !escort && fetchHint) {
+        const hint = fetchHint;
+        const seen = e.allies.filter(b => b.drawn && b.hp > 0 && !b.corpse && b.kind !== 'companion')
+          .sort((a, b) => Math.hypot(a.x - hint.x, a.z - hint.z) - Math.hypot(b.x - hint.x, b.z - hint.z))[0];
+        if (seen && Math.hypot(seen.x - hint.x, seen.z - hint.z) < 6) {
+          escort = { id: seen.id, x: seen.x, z: seen.z }; log({ escortSeen: escort, tick: e.tick });
+        }
+      } else if (e.step !== 'retreat' || /^(Cover the retreat|The group waits: cover the rear)/.test(e.objective)) escort = null;
+      const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
+      if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
+    }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
@@ -317,6 +394,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
     if (await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
+
+    // Escort the person we just fetched, rather than running to the bring ring and leaving them out of view.
+    // Only drawn allies update this remembered position; losing sight sends us back to where we last saw them.
+    if (escort && e.player) {
+      const seen = e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
+      if (!seen || seen.d > 4) {
+        await press([]);
+        if (Date.now() - lastClick > 700) {
+          const s = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: escort.x, z: escort.z });
+          const sp = safe(s.x, s.y, e); await clickGround(sp.x, sp.y); lastClick = Date.now();
+          log({ escortWait: escort.id, at: { x: escort.x, z: escort.z }, tick: e.tick });
+        }
+        await hold(150); continue;
+      }
+    }
 
     if (stuckSim > 120 && stuckWall > 60 && !assistMode) {
       assistMode = true; run.assists++;

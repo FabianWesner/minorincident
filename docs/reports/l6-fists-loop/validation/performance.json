@@ -1,0 +1,693 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l6-budgets.spec.ts",
+      "tests/perf/l6-po-scream.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 4021 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4021",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l6-budgets.spec.ts",
+      "file": "perf/l6-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 6,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight high",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 17044,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"p50\":5,\"p95\":7.300000000001091,\"max\":14.399999999999636,\"survivors\":26,\"infected\":40,\"drawCalls\":111,\"triangles\":459397,\"lighting\":{\"lightFieldMs\":0.20000076293945312,\"lightPools\":21,\"lightCandidates\":21,\"shadowMaps\":1,\"heroLights\":1,\"heroShadow\":1,\"preset\":\"L6-subway\"},\"tasks\":[]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-21T20:07:33.016Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-89ad6bb686309e3cd1d1",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 6,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32643,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"p50\":11.200000000000728,\"p95\":15.299999999999272,\"max\":48.29999999999927,\"survivors\":26,\"infected\":30,\"drawCalls\":57,\"triangles\":78048,\"lighting\":{\"lightFieldMs\":0.8000001907348633,\"lightPools\":16,\"lightCandidates\":16,\"shadowMaps\":0,\"heroLights\":0,\"heroShadow\":0,\"preset\":\"L6-subway\"},\"tasks\":[]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-21T20:07:54.459Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-609c9fb8b983d13b6d4e",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "transitions high",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 22,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame high",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5622,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-21T20:08:27.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-a3e8ee26905c1bd84ab8",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 24,
+              "column": 1
+            }
+          ]
+        },
+        {
+          "title": "transitions low",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 22,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame low",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11792,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-21T20:08:32.745Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-6606e2ce10f5733c21ac",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 24,
+              "column": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l6-po-scream.spec.ts",
+      "file": "perf/l6-po-scream.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgl high debug=false",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:08:44.839Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-1dfa4d793f204bf5bef3",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgl high debug=true",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7793,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:08:53.110Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-e84cfef44dc42fc99893",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgl low debug=false",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:00.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-511aab50deffb82a48ea",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgl low debug=true",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7144,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:08.014Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-86629f512e90da8a88b0",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgpu high debug=false",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:15.169Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-91cf224768604b637260",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgpu high debug=true",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8403,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:24.886Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-68f55c45ccc21010c87c",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgpu low debug=false",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7363,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:33.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-052ed38c4614865455f6",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        },
+        {
+          "title": "@E24 @perf PO33 native L6 screams webgpu low debug=true",
+          "ok": true,
+          "tags": [
+            "E24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T20:09:40.674Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71167d02d2ddb5977603-6e846c77fa09bae7fae9",
+          "file": "perf/l6-po-scream.spec.ts",
+          "line": 5,
+          "column": 115
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T20:07:32.384Z",
+    "duration": 135725.76700000002,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

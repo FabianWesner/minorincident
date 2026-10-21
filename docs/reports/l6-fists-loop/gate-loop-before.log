@@ -1,0 +1,30 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb
+
+ ❯ |functional| tests/levels/l6-weapons-flow.test.ts (12 tests | 1 failed | 11 skipped) 260ms
+   × @E24 stragglers beyond a passed gate retain its checkpoint through deaths instead of restarting the shelter fetch loop 259ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/l6-weapons-flow.test.ts > @E24 stragglers beyond a passed gate retain its checkpoint through deaths instead of restarting the shelter fetch loop
+AssertionError: later stragglers must not erase the gate already passed by everyone: expected 'abandon' to be 'gate-90' // Object.is equality
+
+Expected: "gate-90"
+Received: "abandon"
+
+ ❯ tests/levels/l6-weapons-flow.test.ts:196:103
+    194|     for (let i = 0; i < 400 && (w.entities.get(1)!.health.current <= 0…
+    195|     const p = w.entities.get(1)!.transform;
+    196|     expect(m.state.checkpoint, 'later stragglers must not erase the ga…
+       |                                                                                                       ^
+    197|     expect(Math.hypot(p.x - wait.x, p.z - wait.z), 'retry at the passe…
+    198|     expect(m.state.l6!.survivors.filter(r => r.injured && !r.rejoined)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  19:49:48
+   Duration  1.37s (transform 67%, tests 20%, import 13%)
+

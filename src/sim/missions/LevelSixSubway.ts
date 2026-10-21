@@ -8,6 +8,7 @@ import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
+import type { L6State } from './types';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
@@ -156,19 +157,33 @@ export class LevelSixSubway {
     const core=walkers.filter(({r})=>!r.straggler||r.rejoined||r.collected),group=core.length?core:walkers;
     const gx=group.reduce((t,{e})=>t+e.transform.x,0)/group.length,gz=group.reduce((t,{e})=>t+e.transform.z,0)/group.length;
     const at=(name:string,x:number,z:number,y=.6)=>{const a=anchors[name]??(anchors[name]={x,z,y,radius:2});a.x=x;a.z=z;a.y=y;};
-    at('l6-group',gx,gz,gx>=258?3.9:.6);
+    // Playtest 10-21: a group split by the horde (half fighting back at the gate, half walking on) has its centre in the
+    // empty gap between, and "Stay with the group · 0 m" held for 121 s with the courier standing on that ring. The ring
+    // is the centre while someone walks there, else the group member nearest to the courier.
+    const centred=group.some(({e})=>distance(e.transform,{x:gx,z:gz})<=f.regroupM);
+    const nearest=centred?undefined:group.reduce((a,b)=>distance(b.e.transform,p)<distance(a.e.transform,p)?b:a).e.transform;
+    at('l6-group',nearest?.x??gx,nearest?.z??gz,(nearest?.x??gx)>=258?3.9:.6);
     if(s.phase==='retreat'){
       // Shelter leg: the group first walks onto the track at the leader's x. Tunnel leg: gates, then the platform.
       const route=[l6.tunnel.start,...l6.gates,anchors['exit-platform'].x];
       const next=route.find(x=>x>s.leaderX+1)??route[route.length-1];
-      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&(s.leaderX<=g.x+3||walkers.some(({e})=>e.transform.x<=g.x+2)));
+      // QA 10-21 #88: the ring leads the group the courier can see, not the scripted leader. The leader keeps walking
+      // while the group is held back (fighting, fleeing at the tunnel mouth); a ring 40 m ahead at the gate wait spot sent
+      // the courier away from the group, "Stay with the group" brought it back, and the two alternated every ~6 s. The
+      // ring stays within aheadM of the group's walking head and moves to a gate's wait spot once the head is at that gate.
+      // It stays there while the walking column (its healthy tail, #83) is not through; one survivor left far behind no
+      // longer pulls it back to a gate the group passed long ago (playtest 10-21: ring at (92.4,17.3), courier at x 149).
+      const head=Math.max(...group.map(({e})=>e.transform.x)),ahead=head+f.aheadM;
+      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&head>=g.x-f.gateGroupM&&(s.leaderX<=g.x+3||(s.tailX??s.leaderX)<=g.x+2));
       const wait=gate&&LevelSixSubway.gateWait(gate.x);
-      at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM)),wait?.z??l6.tunnel.z);
+      at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM,Math.max(ahead,l6.tunnel.start))),wait?.z??l6.tunnel.z);
     }
     const wait=s.phase==='retreat'?s.waitFor:undefined,helped=wait&&wait.kind!=='rear'?this.w.entities.get(wait.id):undefined;
     if(wait?.kind==='fetch'&&helped)at('l6-help',helped.transform.x,helped.transform.z);
     if(wait?.kind==='rear')at('l6-help',(s.tailX??s.leaderX)-2,l6.tunnel.z);
-    m.state.marker=s.strayed?'l6-group':wait?.kind==='bring'?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
+    // A collected straggler walks behind the courier: lead them to the column's tail.
+    if(wait?.kind==='bring')at('l6-help',(s.tailX??s.leaderX)+1,l6.tunnel.z);
+    m.state.marker=s.strayed?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
   }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
@@ -201,7 +216,11 @@ export class LevelSixSubway {
         }
       }
     }
-    if(around||distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach);
+    // Playtest 10-21 (weapons runs): a survivor who fled the horde into the side rooms north of the tunnel mouth
+    // (x 30-40, z 20-30) stood there for good, because the route back to a goal far down the tunnel exceeds the route
+    // budget; the exit then never counted everyone out. Off the track, a refused route walks to the tunnel mouth first.
+    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach)&&!around&&Math.abs(e.transform.z-l6.tunnel.z)>l6.tunnel.width/2)
+      this.w.npcs!.move(e,{x:l6.tunnel.start,z:l6.tunnel.z},r.injured?1.4:2.2,e.civilian!,reach);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
   update():void {
@@ -220,19 +239,29 @@ export class LevelSixSubway {
     // fighting far back made the whole group wait and sent the courier 70-80 m back through the horde, over and over.
     const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),column=healthy.filter(e=>e.transform.x>=s.leaderX-l6.follow.columnM);
     const tail=column.length?Math.min(...column.map(e=>e.transform.x)):healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
+    const head=column.length?Math.max(s.leaderX,...column.map(e=>e.transform.x)):s.leaderX;
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
     s.paused=atGate&&(rear||!!behind);
     // QA 10-21 #83: a paused group names its reason and the ring leads to it (an injured straggler to fetch, or the rear to cover).
-    s.waitFor=!s.paused?undefined:behind?{kind:behind.collected?'bring':'fetch',id:behind.id}:{kind:'rear',id:0};
+    // QA 10-21 #88: the held-group reason flipped 3x in 3 s (rear cover as infected crossed the 20 m band). Like `strayed`
+    // (#84) the shown reason changes only once the new one has held for strayDwellS. The first reason, and fetch -> bring
+    // of the same survivor (the courier reached them), show at once.
+    const want:L6State['waitFor']=!s.paused?undefined:behind?{kind:behind.collected?'bring':'fetch',id:behind.id}:{kind:'rear',id:0};
+    const same=(a:L6State['waitFor'],b:L6State['waitFor'])=>a?.kind===b?.kind&&a?.id===b?.id;
+    if(same(want,s.waitFor)||!s.waitFor||(want?.kind==='bring'&&s.waitFor.kind==='fetch'&&s.waitFor.id===want.id)){s.waitFor=want;s.waitFlipAt=0;}
+    else if(!s.waitFlipAt)s.waitFlipAt=t;
+    else if(t-s.waitFlipAt>=ticks(l6.follow.strayDwellS)){s.waitFor=want;s.waitFlipAt=0;}
     s.tailX=tail;
     if(!s.paused){if(s.leaderZ<15)s.leaderZ=Math.min(15,s.leaderZ+2.2/60);else s.leaderX=Math.min(276,s.leaderX+2.2/60);}
     if(!s.injuryLineAt&&s.leaderX>34){s.injuryLineAt=t;this.say(1,l6InjuryLines.retreat);}
     for(const r of live){const e=w.entities.get(r.id)!;
       if(r.injured&&!r.straggler&&tail-e.transform.x>15){r.straggler=true;w.events.emit({type:'l6.straggler',tick:t,id:r.id});this.say(r.id,l6InjuryLines.straggler);}
       if(r.straggler&&!r.rejoined&&!r.collected&&distance(e.transform,p)<=3){r.collected=true;this.say(1,l6InjuryLines.rejoin);w.events.emit({type:'l6.collected',tick:t,id:r.id});}
-      if(r.collected&&Math.abs(tail-e.transform.x)<5){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
+      // Inside the real column counts too. Combat can displace its head beyond a leader held at the gate:
+      // using that scripted leader as the upper bound kept a returned survivor attached for the next fetch.
+      if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<head+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
       if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
     }
     this.guide(p);
@@ -262,7 +291,24 @@ export class LevelSixSubway {
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
       if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
-    if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
+    // QA 10-21 #87: once the walking column (its healthy tail, #83) is through a gate, a death restarts there with the
+    // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. A healthy
+    // survivor left outside the walking column is restored where they were without withholding the checkpoint.
+    // `abandon` stays the retry point for the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot.
+    // An injured straggler before this gate withholds its snapshot. Once they are through, falling behind the later
+    // column must not withhold the gate already passed (fists trace: everyone east of 94, leader at 148, retry at shelter).
+    // Fists playtest 10-21 (after gate 150): with 2 left alive, one through and one 50 m back outside the column, the
+    // checkpoint was taken; every respawn at 152 had the ring lead 40 m back to that survivor through the horde and the
+    // courier died again (~30 s loop). More than half of the living group must be through as well.
+    const through=(x:number)=>live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
+    for(const gate of s.gates){
+      const behindGate=live.some(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<=gate.x+2);
+      if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behindGate&&through(gate.x)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    }
+    // Fists playtest 10-21: the courier ran ahead to x 150 with the group 25+ m behind and an injured straggler out at
+    // x 125; every death restored that snapshot (horde between courier and group) and respawned at 152, ~18 s apart.
+    // The chokepoint checkpoint is taken once the courier is there with the walking column and nobody is out behind.
+    if(!s.mid&&p.x>=150&&tail>=p.x-l6.follow.columnM&&!behind&&through(p.x-l6.follow.columnM)){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
       if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}

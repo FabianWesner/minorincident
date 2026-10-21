@@ -1,0 +1,591 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/l6-exit-approach.spec.ts",
+      "tests/e2e/levels/l6-headlamp-hitch.spec.ts",
+      "tests/e2e/levels/l6-quality-switch.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/test-results/playwright/run-4021",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/agent-ad4a861636dea98bb/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 4021 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4021",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/l6-exit-approach.spec.ts",
+      "file": "e2e/levels/l6-exit-approach.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E24-exit-input @E24-AC17 high zoom 1: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9410,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:36:02.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-e86c8ad794437d789043",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 high zoom 0.5: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9701,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:36:11.981Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-79b1a5e2a311ff7416bc",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 low zoom 1: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8363,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:36:21.687Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-4551949cec5ab2eaff00",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 low zoom 0.5: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:36:30.055Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-640e77a014a9ab480c91",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l6-headlamp-hitch.spec.ts",
+      "file": "e2e/levels/l6-headlamp-hitch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E24-headlamp-hitch webgl2 high: no frame over 50 ms when the headlamp is picked up",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 39701,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "headlamp compiles after pickup: 0 []\n"
+                    },
+                    {
+                      "text": "headlamp webgl high: max before 16.8 ms, max after 16.8 ms, over 50: []; breach max 16.8 ms over 50 []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:36:38.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "044084184026846afc0e-a77a3f90ae7726e22d1e",
+          "file": "e2e/levels/l6-headlamp-hitch.spec.ts",
+          "line": 9,
+          "column": 49
+        },
+        {
+          "title": "T-E24-headlamp-hitch webgl2 low: no frame over 50 ms when the headlamp is picked up",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 39661,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "headlamp compiles after pickup: 0 []\n"
+                    },
+                    {
+                      "text": "headlamp webgl low: max before 16.8 ms, max after 16.8 ms, over 50: []; breach max 16.8 ms over 50 []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:37:18.529Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "044084184026846afc0e-8218083cd8c9916564d6",
+          "file": "e2e/levels/l6-headlamp-hitch.spec.ts",
+          "line": 9,
+          "column": 49
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l6-quality-switch.spec.ts",
+      "file": "e2e/levels/l6-quality-switch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "QA #82 webgl2 L6-shelter: runtime quality switches keep the 3D view and raise no error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13814,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "L6-shelter webgl2: [{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":114,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":4145.164765494321,\"variedTiles\":57,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":142,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":4089.050759812094,\"variedTiles\":57,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":114,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":4203.321410327914,\"variedTiles\":57,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":142,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":4224.198587936724,\"variedTiles\":58,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-zoomed\",\"tier\":\"high\",\"zoom\":1.4999999999913165,\"drawCalls\":136,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":2967.2721069429863,\"variedTiles\":61,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-zoomed\",\"tier\":\"low\",\"zoom\":1.4999999999999996,\"drawCalls\":120,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":2973.266838410508,\"variedTiles\":61,\"frameError\":\"\",\"errors\":0}] errors []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:37:58.199Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d697602a682d744f305-0313eff35fe15ade3f59",
+          "file": "e2e/levels/l6-quality-switch.spec.ts",
+          "line": 19,
+          "column": 27
+        },
+        {
+          "title": "QA #82 webgl2 L6-tunnel: runtime quality switches keep the 3D view and raise no error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13619,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "L6-tunnel webgl2: [{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":64,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":332.5080940092572,\"variedTiles\":56,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":83,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":337.2313018854147,\"variedTiles\":55,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":68,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":331.0349648032387,\"variedTiles\":55,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":85,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":338.82549006176646,\"variedTiles\":54,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-zoomed\",\"tier\":\"high\",\"zoom\":1.4999999999913165,\"drawCalls\":98,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":170.55820093039927,\"variedTiles\":49,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-zoomed\",\"tier\":\"low\",\"zoom\":1.4999999999999996,\"drawCalls\":76,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":178.25298507341392,\"variedTiles\":50,\"frameError\":\"\",\"errors\":0}] errors []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:38:12.019Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d697602a682d744f305-1cb8d50a0af7033cc048",
+          "file": "e2e/levels/l6-quality-switch.spec.ts",
+          "line": 19,
+          "column": 27
+        },
+        {
+          "title": "QA #82 webgl2 L6-exit: runtime quality switches keep the 3D view and raise no error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13691,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "L6-exit webgl2: [{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":74,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":788.5063613980999,\"variedTiles\":51,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":89,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":90,\"variance\":790.8266488421276,\"variedTiles\":51,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":78,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":786.4608243363406,\"variedTiles\":51,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":91,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":792.4398127298374,\"variedTiles\":51,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-zoomed\",\"tier\":\"high\",\"zoom\":1.4999999999913165,\"drawCalls\":101,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":512.5290183559241,\"variedTiles\":51,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-zoomed\",\"tier\":\"low\",\"zoom\":1.4999999999999996,\"drawCalls\":86,\"backend\":\"webgl\",\"preset\":\"L6-subway\",\"frames\":91,\"variance\":508.95744768036263,\"variedTiles\":50,\"frameError\":\"\",\"errors\":0}] errors []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:38:25.644Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d697602a682d744f305-7234123a86fce1df2880",
+          "file": "e2e/levels/l6-quality-switch.spec.ts",
+          "line": 19,
+          "column": 27
+        },
+        {
+          "title": "QA #82 webgl2 L1-street: runtime quality switches keep the 3D view and raise no error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14508,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "L1-street webgl2: [{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":162,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":90,\"variance\":3954.3016973398408,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":184,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":89,\"variance\":4169.879909215273,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-z1\",\"tier\":\"low\",\"zoom\":1,\"drawCalls\":162,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":90,\"variance\":4008.476622222588,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-z1\",\"tier\":\"high\",\"zoom\":1,\"drawCalls\":186,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":91,\"variance\":4235.551942846985,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0},{\"label\":\"high-zoomed\",\"tier\":\"high\",\"zoom\":1.4999999999913165,\"drawCalls\":216,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":90,\"variance\":4189.249485855547,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0},{\"label\":\"low-zoomed\",\"tier\":\"low\",\"zoom\":1.4999999999999996,\"drawCalls\":185,\"backend\":\"webgl\",\"preset\":\"L1\",\"frames\":91,\"variance\":3940.8246790923404,\"variedTiles\":64,\"frameError\":\"\",\"errors\":0}] errors []\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T19:38:39.341Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d697602a682d744f305-928ffeb54ce097173cc1",
+          "file": "e2e/levels/l6-quality-switch.spec.ts",
+          "line": 19,
+          "column": 27
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T19:36:01.855Z",
+    "duration": 172101.28999999998,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

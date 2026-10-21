@@ -1,0 +1,2086 @@
+{
+  "run": "l6-fists-tactics-dev4",
+  "controller": "5b7037e83 before per-gate fix",
+  "observations": [
+    {
+      "progress": "retreat|2|abandon|Cover the retreat through the tunnel \u00b7 Let everyone pass \u00b7 0/18 through",
+      "tick": 13543,
+      "deaths": 1,
+      "player": {
+        "transform": {
+          "x": 148.3549041748047,
+          "y": 1.2699999809265137,
+          "z": 15.107330322265625,
+          "yaw": 0.03197333825805947
+        },
+        "health": {
+          "current": 93.9333333333314,
+          "max": 100
+        }
+      },
+      "leaderX": 147.53333333332353,
+      "tailX": 122.52428449056713,
+      "paused": false,
+      "gates": [
+        {
+          "id": 167,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 168,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 169,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 143,
+          "injured": false,
+          "routine": "guard",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 141.84289605709853,
+            "z": 14.429254155509067,
+            "y": 1.250000001490116,
+            "yaw": 0.03282668569078244
+          }
+        },
+        {
+          "key": "shelter-1",
+          "id": 144,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 145.1658849893428,
+            "z": 15.587864775942352,
+            "y": 1.250000001490116,
+            "yaw": 0.23993155670347546
+          }
+        },
+        {
+          "key": "shelter-2",
+          "id": 145,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 145.9205137677731,
+            "z": 15.729314737876205,
+            "y": 1.250000001490116,
+            "yaw": 0.02571206527599664
+          }
+        },
+        {
+          "key": "shelter-3",
+          "id": 146,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.2132626165968,
+            "z": 14.278498576905704,
+            "y": 1.250000001490116,
+            "yaw": 0.003029381565312958
+          }
+        },
+        {
+          "key": "shelter-4",
+          "id": 147,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 144.9467895543424,
+            "z": 14.908117901910888,
+            "y": 1.250000001490116,
+            "yaw": -0.12194119326750538
+          }
+        },
+        {
+          "key": "shelter-5",
+          "id": 148,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 116.97788479408456,
+            "z": 15.509076233085873,
+            "y": 1.250000001490116,
+            "yaw": -0.00764723086361167
+          }
+        },
+        {
+          "key": "shelter-6",
+          "id": 149,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 139.95747402181476,
+            "z": 14.743802696418925,
+            "y": 1.250000001490116,
+            "yaw": 0.11172754683663048
+          }
+        },
+        {
+          "key": "shelter-7",
+          "id": 150,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.55548823491725,
+            "z": 15.034841740000687,
+            "y": 1.250000001490116,
+            "yaw": 0.03766258668019863
+          }
+        },
+        {
+          "key": "shelter-8",
+          "id": 151,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.89432039262985,
+            "z": 15.305503575647332,
+            "y": 1.250000001490116,
+            "yaw": -0.19552441446437913
+          }
+        },
+        {
+          "key": "shelter-9",
+          "id": 152,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 133.73890765051817,
+            "z": 14.322070219517768,
+            "y": 1.250000001490116,
+            "yaw": -0.05372291171121068
+          }
+        },
+        {
+          "key": "shelter-10",
+          "id": 153,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 109.805130643661,
+            "z": 15.26037463314236,
+            "y": 1.250000001490116,
+            "yaw": 0.0003828950271725715
+          }
+        },
+        {
+          "key": "shelter-11",
+          "id": 154,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.88831805639384,
+            "z": 16.026030356808608,
+            "y": 1.250000001490116,
+            "yaw": 0.1873512199228793
+          }
+        },
+        {
+          "key": "shelter-12",
+          "id": 155,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 6.598623469311292,
+            "z": 0.4900590436145149,
+            "y": 1.300000011920929,
+            "yaw": 2.18837258042189
+          }
+        },
+        {
+          "key": "shelter-13",
+          "id": 156,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 122.52428449056713,
+            "z": 14.944938258667053,
+            "y": 1.250000001490116,
+            "yaw": -0.0029811093778960213
+          }
+        },
+        {
+          "key": "shelter-14",
+          "id": 157,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 133.8217810121927,
+            "z": 15.823749602538493,
+            "y": 1.250000001490116,
+            "yaw": 0.013837825747645787
+          }
+        },
+        {
+          "key": "shelter-15",
+          "id": 158,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 94.3874150400259,
+            "z": 17.11436555106149,
+            "y": 1.5700000143051147,
+            "yaw": 0.04004792035891955
+          }
+        },
+        {
+          "key": "shelter-16",
+          "id": 159,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 89.09951148632685,
+            "z": 6.977960414481902,
+            "y": 0.7,
+            "yaw": 0.30235766705048706
+          }
+        },
+        {
+          "key": "shelter-17",
+          "id": 160,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 127.42636259736784,
+            "z": 15.57467229949489,
+            "y": 1.250000001490116,
+            "yaw": -0.012365666941214678
+          }
+        },
+        {
+          "key": "shelter-18",
+          "id": 161,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 56.13213235868952,
+            "z": 14.709454641767259,
+            "y": 1.2999999999999998,
+            "yaw": -0.030632504846759258
+          }
+        },
+        {
+          "key": "shelter-19",
+          "id": 162,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 43.94968915690346,
+            "z": 15.356541769872603,
+            "y": 1.2999999999999998,
+            "yaw": -8.770634596461964
+          }
+        },
+        {
+          "key": "shelter-20",
+          "id": 163,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 102.07211533765856,
+            "z": 19.938213172041255,
+            "y": 0.7,
+            "yaw": 0.11038510264325892
+          }
+        },
+        {
+          "key": "shelter-21",
+          "id": 164,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 91.32312240715554,
+            "z": 15.609252408109002,
+            "y": 1.2999999999999998,
+            "yaw": -0.43175442097043976
+          }
+        },
+        {
+          "key": "shelter-22",
+          "id": 165,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 51.64111355830797,
+            "z": 26.807419671722094,
+            "y": 0.7,
+            "yaw": -0.1487949631646133
+          }
+        },
+        {
+          "key": "shelter-23",
+          "id": 166,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 91.42288130027654,
+            "z": 16.52797220842247,
+            "y": 1.2999999999999998,
+            "yaw": -0.3162774036003795
+          }
+        },
+        {
+          "key": "dale",
+          "id": 28,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 101.15386549298378,
+            "z": 20.67462479084444,
+            "y": 0.7,
+            "yaw": 0.654157234788633
+          }
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 93.1956950267644,
+            "z": 27.84491937096082,
+            "y": 0.7,
+            "yaw": 0.7705688121372942
+          }
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 136.42173924687702,
+            "z": 15.724956613862762,
+            "y": 1.250000001490116,
+            "yaw": 7.144858583462945e-05
+          }
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 101.13260321393646,
+            "z": 19.582857243843733,
+            "y": 0.7,
+            "yaw": -0.33528094622839444
+          }
+        }
+      ]
+    },
+    {
+      "progress": "retreat|2|abandon|The group waits: help the injured survivor who fell behind",
+      "tick": 13562,
+      "deaths": 1,
+      "player": {
+        "transform": {
+          "x": 149.43240356445312,
+          "y": 1.2699999809265137,
+          "z": 15.072894096374512,
+          "yaw": 0.03192519569840625
+        },
+        "health": {
+          "current": 94.5666666666647,
+          "max": 100
+        }
+      },
+      "leaderX": 148.00999999999013,
+      "tailX": 123.22094823544977,
+      "paused": true,
+      "waitFor": {
+        "kind": "fetch",
+        "id": 158
+      },
+      "gates": [
+        {
+          "id": 167,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 168,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 169,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 143,
+          "injured": false,
+          "routine": "guard",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.53925682458595,
+            "z": 14.408776537903435,
+            "y": 1.250000001490116,
+            "yaw": 0.028546505716026887
+          }
+        },
+        {
+          "key": "shelter-1",
+          "id": 144,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 145.89440592046742,
+            "z": 15.55945884767904,
+            "y": 1.250000001490116,
+            "yaw": 0.24190571385192056
+          }
+        },
+        {
+          "key": "shelter-2",
+          "id": 145,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 146.61703958264778,
+            "z": 15.721081311614018,
+            "y": 1.250000001490116,
+            "yaw": 0.009115435657810613
+          }
+        },
+        {
+          "key": "shelter-3",
+          "id": 146,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.90992510812268,
+            "z": 14.277183663489728,
+            "y": 1.250000001490116,
+            "yaw": 0.0016823581804584127
+          }
+        },
+        {
+          "key": "shelter-4",
+          "id": 147,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 145.6113005360352,
+            "z": 14.903716138153012,
+            "y": 1.250000001490116,
+            "yaw": -0.08999510537316693
+          }
+        },
+        {
+          "key": "shelter-5",
+          "id": 148,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 117.42120564108262,
+            "z": 15.512402479543342,
+            "y": 1.250000001490116,
+            "yaw": -0.007465166487482024
+          }
+        },
+        {
+          "key": "shelter-6",
+          "id": 149,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 140.64969911120238,
+            "z": 14.671223538205822,
+            "y": 1.250000001490116,
+            "yaw": 0.10156949695554367
+          }
+        },
+        {
+          "key": "shelter-7",
+          "id": 150,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 144.25106836037608,
+            "z": 15.010843916801456,
+            "y": 1.250000001490116,
+            "yaw": 0.03146323647232746
+          }
+        },
+        {
+          "key": "shelter-8",
+          "id": 151,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.61406435074727,
+            "z": 15.419357644507754,
+            "y": 1.250000001490116,
+            "yaw": -0.2102402941814915
+          }
+        },
+        {
+          "key": "shelter-9",
+          "id": 152,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 134.43462791467604,
+            "z": 14.358345731060771,
+            "y": 1.250000001490116,
+            "yaw": -0.051656814539943106
+          }
+        },
+        {
+          "key": "shelter-10",
+          "id": 153,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 110.24846394396822,
+            "z": 15.260208709311048,
+            "y": 1.250000001490116,
+            "yaw": 0.0003724621548788464
+          }
+        },
+        {
+          "key": "shelter-11",
+          "id": 154,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.5257541943831,
+            "z": 16.13556544132492,
+            "y": 1.250000001490116,
+            "yaw": 0.10956870610039265
+          }
+        },
+        {
+          "key": "shelter-12",
+          "id": 155,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 6.410763062542131,
+            "z": 0.22556239065072076,
+            "y": 1.300000011920929,
+            "yaw": 2.188372580421909
+          }
+        },
+        {
+          "key": "shelter-13",
+          "id": 156,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 123.22094823544977,
+            "z": 14.946954924688663,
+            "y": 1.250000001490116,
+            "yaw": -0.0028723788388627484
+          }
+        },
+        {
+          "key": "shelter-14",
+          "id": 157,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 134.51838985046234,
+            "z": 15.814804571929582,
+            "y": 1.250000001490116,
+            "yaw": 0.012588966979484494
+          }
+        },
+        {
+          "key": "shelter-15",
+          "id": 158,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 95.57194976621102,
+            "z": 17.056133258142467,
+            "y": 1.5700000143051147,
+            "yaw": 0.039806724793265545
+          }
+        },
+        {
+          "key": "shelter-16",
+          "id": 159,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 89.4296155548686,
+            "z": 6.87499388816028,
+            "y": 0.7,
+            "yaw": 0.30235766705048595
+          }
+        },
+        {
+          "key": "shelter-17",
+          "id": 160,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 128.12298041517266,
+            "z": 15.582912546575713,
+            "y": 1.250000001490116,
+            "yaw": -0.011690557888901436
+          }
+        },
+        {
+          "key": "shelter-18",
+          "id": 161,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 56.5466796765464,
+            "z": 14.722014614757127,
+            "y": 1.2999999999999998,
+            "yaw": -0.030248801614834397
+          }
+        },
+        {
+          "key": "shelter-19",
+          "id": 162,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 44.026537624529524,
+            "z": 15.319574574924081,
+            "y": 1.2999999999999998,
+            "yaw": -7.55230126312863
+          }
+        },
+        {
+          "key": "shelter-20",
+          "id": 163,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 102.51981425316856,
+            "z": 19.888936443531733,
+            "y": 0.7,
+            "yaw": 0.10872778218067215
+          }
+        },
+        {
+          "key": "shelter-21",
+          "id": 164,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 92.41293510149691,
+            "z": 15.90927344344648,
+            "y": 1.2999999999999998,
+            "yaw": -0.4419346358976766
+          }
+        },
+        {
+          "key": "shelter-22",
+          "id": 165,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 51.970522648707686,
+            "z": 26.856799043001537,
+            "y": 0.7,
+            "yaw": -0.14879496316462867
+          }
+        },
+        {
+          "key": "shelter-23",
+          "id": 166,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 91.99079265013916,
+            "z": 16.727547671924956,
+            "y": 1.2999999999999998,
+            "yaw": -0.19013752052002372
+          }
+        },
+        {
+          "key": "dale",
+          "id": 28,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 101.36644210160678,
+            "z": 20.98688780936872,
+            "y": 0.7,
+            "yaw": 0.7697872782489277
+          }
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 94.34650868144459,
+            "z": 26.79813621427225,
+            "y": 0.7,
+            "yaw": 0.7339570772747654
+          }
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 137.1184059107741,
+            "z": 15.724951066043197,
+            "y": 1.250000001490116,
+            "yaw": -2.6739395608107286e-06
+          }
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 101.43143424661618,
+            "z": 19.150042106239642,
+            "y": 0.7,
+            "yaw": -0.6080563553439378
+          }
+        }
+      ]
+    },
+    {
+      "progress": "retreat|2|abandon|Bring the injured survivor back to the group",
+      "tick": 14039,
+      "deaths": 1,
+      "player": {
+        "transform": {
+          "x": 115.3878173828125,
+          "y": 1.2699999809265137,
+          "z": 14.944249153137207,
+          "yaw": -1.612687814172635
+        },
+        "health": {
+          "current": 90,
+          "max": 100
+        }
+      },
+      "leaderX": 148.00999999999013,
+      "tailX": 137.15063993576473,
+      "paused": true,
+      "waitFor": {
+        "kind": "bring",
+        "id": 158
+      },
+      "gates": [
+        {
+          "id": 167,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 168,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 169,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 143,
+          "injured": false,
+          "routine": "guard",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.7965429601396,
+            "z": 14.014385240013285,
+            "y": 1.250000001490116,
+            "yaw": 2.8986778550092973
+          }
+        },
+        {
+          "key": "shelter-1",
+          "id": 144,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 143.08323064230268,
+            "z": 13.965288017870574,
+            "y": 1.250000001490116,
+            "yaw": -1.346708777771569
+          }
+        },
+        {
+          "key": "shelter-2",
+          "id": 145,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 147.6133428468731,
+            "z": 15.609125058386368,
+            "y": 1.2999999999999998,
+            "yaw": 2.7458182130718147
+          }
+        },
+        {
+          "key": "shelter-3",
+          "id": 146,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.38415630414298,
+            "z": 13.769524376072493,
+            "y": 1.250000001490116,
+            "yaw": -0.12903627601005735
+          }
+        },
+        {
+          "key": "shelter-4",
+          "id": 147,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 145.12346701566904,
+            "z": 15.092208660259441,
+            "y": 1.250000001490116,
+            "yaw": -2.8008857634941093
+          }
+        },
+        {
+          "key": "shelter-5",
+          "id": 148,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 128.2985558404808,
+            "z": 15.937337004339206,
+            "y": 1.250000001490116,
+            "yaw": 0.010768908792943375
+          }
+        },
+        {
+          "key": "shelter-6",
+          "id": 149,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 139.06383629771145,
+            "z": 12.860079337088179,
+            "y": 1.5700000143051147,
+            "yaw": -3.141592707556539
+          }
+        },
+        {
+          "key": "shelter-7",
+          "id": 150,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 137.8638103559893,
+            "z": 17.138046229565994,
+            "y": 1.5700000143051147,
+            "yaw": -2.8459673499964184
+          }
+        },
+        {
+          "key": "shelter-8",
+          "id": 151,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 139.6490504935098,
+            "z": 17.139911424635883,
+            "y": 1.5700000143051147,
+            "yaw": -3.14159264301595
+          }
+        },
+        {
+          "key": "shelter-9",
+          "id": 152,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 138.5652849860011,
+            "z": 15.466877048359777,
+            "y": 1.250000001490116,
+            "yaw": -2.41866375892789
+          }
+        },
+        {
+          "key": "shelter-10",
+          "id": 153,
+          "injured": true,
+          "routine": "share",
+          "status": "turned",
+          "straggler": true,
+          "collected": false,
+          "rejoined": true,
+          "hold": 0,
+          "transform": {
+            "x": 114.8291758784874,
+            "z": 14.019955006425565,
+            "y": 1.2999999999999998,
+            "yaw": -1.017387769971119
+          }
+        },
+        {
+          "key": "shelter-11",
+          "id": 154,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 138.58099015825297,
+            "z": 17.139999760287793,
+            "y": 1.5700000143051147,
+            "yaw": -3.141592640731071
+          }
+        },
+        {
+          "key": "shelter-12",
+          "id": 155,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 7.066963270837334,
+            "z": 2.2428084746249297,
+            "y": 1.300000011920929,
+            "yaw": 5.179890618367275
+          }
+        },
+        {
+          "key": "shelter-13",
+          "id": 156,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 138.76844120514465,
+            "z": 14.67490281798588,
+            "y": 1.250000001490116,
+            "yaw": -0.04199399132648944
+          }
+        },
+        {
+          "key": "shelter-14",
+          "id": 157,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 137.1494219924889,
+            "z": 17.139996679913697,
+            "y": 1.5700000143051147,
+            "yaw": -3.141591510777843
+          }
+        },
+        {
+          "key": "shelter-15",
+          "id": 158,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": true,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 112.60550886936319,
+            "z": 15.292573039846173,
+            "y": 1.250000001490116,
+            "yaw": 0.010864253128848221
+          }
+        },
+        {
+          "key": "shelter-16",
+          "id": 159,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 92.79733146736368,
+            "z": 0.4828394071309511,
+            "y": 0.7,
+            "yaw": 1.1678207678511863
+          }
+        },
+        {
+          "key": "shelter-17",
+          "id": 160,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.53593516031245,
+            "z": 15.303018574080168,
+            "y": 1.250000001490116,
+            "yaw": 0.021303200409691622
+          }
+        },
+        {
+          "key": "shelter-18",
+          "id": 161,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 62.63979768907403,
+            "z": 15.270750271572526,
+            "y": 1.2999999999999998,
+            "yaw": -3.188137327044954
+          }
+        },
+        {
+          "key": "shelter-19",
+          "id": 162,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 47.84003762587015,
+            "z": 15.109933176542071,
+            "y": 1.2999999999999998,
+            "yaw": -5.391121047239832
+          }
+        },
+        {
+          "key": "shelter-20",
+          "id": 163,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": true,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 114.17689633154077,
+            "z": 19.341413801406254,
+            "y": 0.7,
+            "yaw": -0.03437769379543147
+          }
+        },
+        {
+          "key": "shelter-21",
+          "id": 164,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 111.6248580711197,
+            "z": 15.474415105461604,
+            "y": 1.2999999999999998,
+            "yaw": 0.18525499690219882
+          }
+        },
+        {
+          "key": "shelter-22",
+          "id": 165,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 60.06049906056738,
+            "z": 28.069509804560703,
+            "y": 0.7,
+            "yaw": -0.4556493870328856
+          }
+        },
+        {
+          "key": "shelter-23",
+          "id": 166,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 110.53139144007984,
+            "z": 14.146067729373721,
+            "y": 1.2999999999999998,
+            "yaw": -0.4295364765789158
+          }
+        },
+        {
+          "key": "dale",
+          "id": 28,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 111.57083480199351,
+            "z": 19.611538984418708,
+            "y": 0.7,
+            "yaw": 0.05430175249174482
+          }
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 112.38123598453214,
+            "z": 20.22792464200889,
+            "y": 0.7,
+            "yaw": 0.40584116734367404
+          }
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 142.86985513238974,
+            "z": 15.97206056099435,
+            "y": 1.250000001490116,
+            "yaw": 0.4293319288447483
+          }
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 111.44860977705702,
+            "z": 18.698000025138317,
+            "y": 1.2999999999999998,
+            "yaw": -1.4441293723286863
+          }
+        }
+      ]
+    },
+    {
+      "progress": "retreat|2|abandon|Cover the retreat through the tunnel",
+      "tick": 14755,
+      "deaths": 2,
+      "player": {
+        "transform": {
+          "x": 3,
+          "y": 1.3200000524520874,
+          "z": 0,
+          "yaw": -0.44031933784089516
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        }
+      },
+      "leaderX": 6,
+      "tailX": -9.999923616120023,
+      "paused": false,
+      "gates": [
+        {
+          "id": 167,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 168,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 169,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 143,
+          "injured": false,
+          "routine": "guard",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -9.999783763863357,
+            "z": 14.599948768669167,
+            "y": 1.2499999970197677,
+            "yaw": 4.093273031811787
+          }
+        },
+        {
+          "key": "shelter-1",
+          "id": 144,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -6.99986279800844,
+            "z": 14.599825190590755,
+            "y": 1.2499999970197677,
+            "yaw": 5.489684432603123
+          }
+        },
+        {
+          "key": "shelter-2",
+          "id": 145,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -2.999887674479992,
+            "z": 14.599808256177143,
+            "y": 1.2499999970197677,
+            "yaw": 4.262660089839801
+          }
+        },
+        {
+          "key": "shelter-3",
+          "id": 146,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 3.000019935556217,
+            "z": 14.599778673793583,
+            "y": 1.2499999970197677,
+            "yaw": 3.139578850301089
+          }
+        },
+        {
+          "key": "shelter-4",
+          "id": 147,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 6.999968133155296,
+            "z": 14.599780074512033,
+            "y": 1.2499999970197677,
+            "yaw": 5.051881921719818
+          }
+        },
+        {
+          "key": "shelter-5",
+          "id": 148,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 10,
+            "z": 14.600000000000001,
+            "y": 1.2499999970197677,
+            "yaw": 1.7276102037280212
+          }
+        },
+        {
+          "key": "shelter-6",
+          "id": 149,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -9.999802597341827,
+            "z": 15.599897946550303,
+            "y": 1.2499999970197677,
+            "yaw": 4.210864708674273
+          }
+        },
+        {
+          "key": "shelter-7",
+          "id": 150,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -6.999888398492601,
+            "z": 15.599807833875007,
+            "y": 1.2499999970197677,
+            "yaw": 4.929426930235042
+          }
+        },
+        {
+          "key": "shelter-8",
+          "id": 151,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -2.9999212632435315,
+            "z": 15.59979219422715,
+            "y": 1.2499999970197677,
+            "yaw": 3.9898078902561993
+          }
+        },
+        {
+          "key": "shelter-9",
+          "id": 152,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 2.9999858168603746,
+            "z": 15.599778230852914,
+            "y": 1.2499999970197677,
+            "yaw": 0.6067270205471794
+          }
+        },
+        {
+          "key": "shelter-10",
+          "id": 153,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 7,
+            "z": 15.600000000000001,
+            "y": 1.2499999970197677,
+            "yaw": 4.524011993429912
+          }
+        },
+        {
+          "key": "shelter-11",
+          "id": 154,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 9.999900441168178,
+            "z": 15.599801327518124,
+            "y": 1.2499999970197677,
+            "yaw": 3.2165511496263153
+          }
+        },
+        {
+          "key": "shelter-12",
+          "id": 155,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -9.99983976982306,
+            "z": 16.599846022708014,
+            "y": 1.2499999970197677,
+            "yaw": 2.0818754519090237
+          }
+        },
+        {
+          "key": "shelter-13",
+          "id": 156,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -6.999917711647371,
+            "z": 16.599793574848746,
+            "y": 1.2499999970197677,
+            "yaw": 1.3295670149915024
+          }
+        },
+        {
+          "key": "shelter-14",
+          "id": 157,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -2.9999572965681334,
+            "z": 16.599781919434715,
+            "y": 1.2499999970197677,
+            "yaw": 2.2087464386291544
+          }
+        },
+        {
+          "key": "shelter-15",
+          "id": 158,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 2.9999559171685934,
+            "z": 16.59978219407716,
+            "y": 1.2499999970197677,
+            "yaw": 0.5657084068144155
+          }
+        },
+        {
+          "key": "shelter-16",
+          "id": 159,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 6.999912051243507,
+            "z": 16.599795922239625,
+            "y": 1.2499999970197677,
+            "yaw": 2.5925744845736323
+          }
+        },
+        {
+          "key": "shelter-17",
+          "id": 160,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 9.999881074674924,
+            "z": 16.59981227817627,
+            "y": 1.2499999970197677,
+            "yaw": 2.688005338554608
+          }
+        },
+        {
+          "key": "shelter-18",
+          "id": 161,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -9.999923616120023,
+            "z": 17.599791317899836,
+            "y": 1.2499999970197677,
+            "yaw": 2.609725677618237
+          }
+        },
+        {
+          "key": "shelter-19",
+          "id": 162,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -6.999949135241421,
+            "z": 17.599783677341957,
+            "y": 1.2499999970197677,
+            "yaw": 5.193120907153338
+          }
+        },
+        {
+          "key": "shelter-20",
+          "id": 163,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -2.999992743026769,
+            "z": 17.599777896302623,
+            "y": 1.2499999970197677,
+            "yaw": 2.5968457460088152
+          }
+        },
+        {
+          "key": "shelter-21",
+          "id": 164,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 2.999930836780523,
+            "z": 17.599788814855824,
+            "y": 1.2499999970197677,
+            "yaw": 1.4695922933663952
+          }
+        },
+        {
+          "key": "shelter-22",
+          "id": 165,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 6.999828436915798,
+            "z": 17.599858759693472,
+            "y": 1.2499999970197677,
+            "yaw": 0.9589155745912499
+          }
+        },
+        {
+          "key": "shelter-23",
+          "id": 166,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 9.999795515492407,
+            "z": 17.59991300113677,
+            "y": 1.2499999970197677,
+            "yaw": 0.6176481399584964
+          }
+        },
+        {
+          "key": "dale",
+          "id": 28,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 13.351555840150516,
+            "z": -1.6183671395527623,
+            "y": 1.300000011920929,
+            "yaw": 0.27200117234043014
+          }
+        },
+        {
+          "key": "rosa",
+          "id": 29,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 16.8997897495167,
+            "z": 5.599928045498249,
+            "y": 1.4199999986588954,
+            "yaw": -2.8182244739372186
+          }
+        },
+        {
+          "key": "okafor",
+          "id": 30,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": 2.513793950046894,
+            "z": -4.8532081353812035,
+            "y": 1.300000011920929,
+            "yaw": -2.83628671529878
+          }
+        },
+        {
+          "key": "sam",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0,
+          "transform": {
+            "x": -5.708471745670915,
+            "z": -2.272117922743302,
+            "y": 1.300000011920929,
+            "yaw": -0.30855256702921935
+          }
+        }
+      ]
+    }
+  ]
+}

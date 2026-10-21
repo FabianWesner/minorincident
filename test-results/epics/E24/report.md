@@ -1,5 +1,7 @@
 # E24 — Level 6: The Subway
 
+Latest regression validation (2026-10-21): [L6 fists and weapons report](../../../docs/reports/l6-fists-loop/README.md). The original implementation report below is historical; current results and baseline failures are recorded in the refresh section at the end.
+
 Branch: `lane/e24-l6`. No deployment or merge to main. Evidence recorded 2026-10-10.
 
 ## Implementation
@@ -64,3 +66,19 @@ The full gate command is `MI_VERIFY_REMOTE_SIM=1 E2E_PORT=3666 npm run verify --
 ## Visual review
 
 Three contact sheets, their full-size frame 90, all seven physical-input photographs and ending UI were inspected; findings and scores are in [review.md](review.md). Earlier discarded captures exposed a street-height error hiding the courier and flames below the raised street; the authored-ground teleport/VFX correction is visible in the accepted exit fixtures.
+
+## 2026-10-21 refresh — l6-fists-loop
+
+Final functional tree: `d404c97da`, on `lane/l6-weapons-flow`. The four requested acceptance gates pass. [Full report, records, bisection logs and captures](../../../docs/reports/l6-fists-loop/README.md).
+
+- Male fists, real L5 → L6 handover: L5 249 s / 0 deaths / 0 skips; L6 349 s / 2 deaths / 0 skips, 81 fist and 45 kick attacks, 8/28 out. Racks remain fists/kick.
+- Seeded `L6-default` weapons: male 221 s / 0 deaths / 0 skips, 215 machine-gun and 11 axe attacks, 11/29 out; female 219 s / 0 deaths / 0 skips, 226 machine-gun and 10 axe attacks, 12/29 out.
+- Mac `tests/e2e/levels/l6-*.spec.ts`: 10/10 pass, one worker. New weapons-flow level regressions: 12/12 pass.
+- Exact remote `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: exit 0, 414 files / 2,251 tests pass; 3 files / 11 tests retain their existing skips. [Log](../../../docs/reports/l6-fists-loop/validation/remote-final.log).
+- Typecheck, lint and build pass. E24 simulation selection: 67 pass, zero failures. Complete/newbie seed 1: 283.62 s / 23 of 29 out and 269.42 s / 18 of 29 out, both zero deaths, within main's retained test bands. Main records are 264.50 s / 27 out and 257.43 s / 12 out. Horde caps, damage, movement speeds and L5 gameplay match main.
+- Native L6 performance and scream checks: 12/12 pass, one worker under the quiet-run guard. [Log](../../../docs/reports/l6-fists-loop/validation/performance.log).
+- Eight high/low, zoom 1/1.5 captures were inspected. Held-group guidance reads 10 m and follows the real head; gate-90 respawn is `(92.4,17.3)` with the group ahead and readable close-gate guidance. [Review and images](../../../docs/reports/l6-fists-loop/README.md#visual-review).
+
+Bisection isolates `2f25c41f7`'s global checkpoint guard and `d85d22d84`'s scripted-leader rejoin bound. The fixes check each gate separately and use the real column head. The new death/respawn regression fails with a shelter retry before the fix and preserves gate 90 afterward, while leaving the injured return and retreat active. The driver uses rendered bodies, normal target clicks, shipped J/K bindings and visible escort pacing. Specs and test thresholds are retained.
+
+Additional validation is **not entirely green**: `npm run verify -- E24` has 53 browser passes and seven failures. The same seven cases reproduce the same assertions on main `56d7e7d16`, using byte-identical test files: T-E24-17 remains playing; two T-E24-15 samples fail red-eye/living-subject assertions; four T-E29-16 cases retain `rocket` instead of `corridor`. [Baseline comparison](../../../docs/reports/l6-fists-loop/validation/E24-baseline-comparison.json). The performance phase was run separately because this broad browser failure stops the verifier. The native Mac unit attempt is 1,828 pass / 1 Linux-only `stat -c` cache-GC fixture failure; that fixture passes in the final Linux suite. Assertions were retained throughout. The one temporary baseline worktree was removed.
