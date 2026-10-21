@@ -91,6 +91,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- per-level state ---
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
+  let visibleProgress = { text: '', tick: 0, wall: Date.now() };
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
@@ -124,6 +125,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
+    visibleProgress = { text: e.objective, tick: e.tick, wall: Date.now() };
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
@@ -372,8 +374,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
-    // Evidence only: use the existing stuck ladder's active-sim and wall-time clocks.
-    run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,Math.min(stuckSim,stuckWall));
+    // Evidence only: advancing visible countdowns/counts/distances are progress.
+    // Keep the driver's existing stuck ladder and movement decisions unchanged.
+    if(e.objective!==visibleProgress.text)visibleProgress={text:e.objective,tick:e.tick,wall:Date.now()};
+    run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,Math.min((e.tick-visibleProgress.tick)/60,(Date.now()-visibleProgress.wall)/1000));
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
