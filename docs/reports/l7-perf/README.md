@@ -1,6 +1,6 @@
 # L7 frame budgets — E29-AC19/20
 
-Work in progress. Candidate 2 fixes measured rocket maxima on both backends; low district/horde frame p95 remains red. Candidate 3 is being measured. The first transition sweep exposes a separate L7→L8 loading hitch; lifecycle is not yet certified.
+Work in progress. AC19 resource and sim caps pass. AC20 remains open: low steady frame p95 and repeatable rocket maxima are not certified; full handover repair is being remeasured. Five-load lifecycle passes all four tier/backend combinations before the handover preparation change.
 
 Base: `33181db1a` (merge of the requested `lane/heap-budgets` and `lane/hitches2`). The preserved production baseline is served independently from `/tmp/l7-perf-baseline-dist`; the candidate uses this worktree's production build. No spec, test, threshold, population, corpse lifetime, particle count, quality setting, LOD policy or draw distance is changed.
 
@@ -8,7 +8,7 @@ Base: `33181db1a` (merge of the requested `lane/heap-budgets` and `lane/hitches2
 
 E29-AC19: high/low draws ≤600/300, triangles ≤1.5M/500k, sim p95 ≤4/6 ms, infected ≤200/100, collected JS heap ≤400/250 decimal MB, and the existing E18 effect/light/prop caps. E29-AC20: warmed desktop/phone frame p95 ≤16.7/33.3 ms, desktop blasts/transitions ≤50 ms, retained resources ≤110% of initial load with accessibility settings preserved. The unchanged fixtures also apply the 50 ms maximum to their phone runs.
 
-The prerequisite heap lane's measured first candidate had low district/horde p95 33.8/33.8 ms and a low rocket maximum of 52.8 ms; collected heaps and sim p95 passed. Its later refinements had not been remeasured. Those historical figures are not a fresh baseline for this merged source. The initial fresh native WebGL batch here exited 75 at the unchanged 30-minute admission limit, before measurement. Later attempts are recorded separately.
+The prerequisite heap lane's measured first candidate had low district/horde p95 33.8/33.8 ms and a low rocket maximum of 52.8 ms; collected heaps and sim p95 passed. Its later refinements had not been remeasured. Those historical figures are not a fresh baseline for this merged source. Two initial original-build timing attempts exited 75 at the unchanged 30-minute admission limit, before measurement. A later complete original-build matrix succeeded in collecting all 12 cases; its failures and passes are in [native-before.json](evidence/native-before.json).
 
 ## Profile and implementation
 
@@ -47,6 +47,37 @@ Raw CPU profiles, complete frame records and individual captures stay in ignored
 
 The merged baseline full remote unit/level suite passes **2,155 tests / 394 files**, with 11 tests / 3 files skipped; [receipt](evidence/unit-before.json). The first candidate passes the selected E29/smoke simulation stage (**112 tests**) of full verify; its browser stage is held behind the budget work. Its complete remote unit/level run passes 2,157 tests, with 9 skipped (same total 2,166 tests; two existing audio checks run on this runner).
 
-The first candidate's native matrix fails low district/horde frame and rocket maximum gates. These are candidate figures, not a newly measured original baseline: [all first-candidate numbers](evidence/attempt1-budgets.json). The isolated original-baseline attempt again timed out before admission. No native pass is claimed. Candidate 2's targeted admission/render tests pass remotely. Its native rocket maxima pass high/low: WebGL 24.9/43.7 ms, WebGPU 22.9/46.3 ms. Low district/horde p95 remains 33.7/33.8 ms WebGL and 33.9/34.6 ms WebGPU. Every measured sim, draw, triangle, population and collected-heap cap passes. [Candidate 2 matrix](evidence/attempt2-budgets.json).
+The first candidate's native matrix fails low district/horde frame and rocket maximum gates. These are candidate figures, not a newly measured original baseline: [all first-candidate numbers](evidence/attempt1-budgets.json). The isolated original-baseline attempt again timed out before admission. No complete native matrix pass is claimed. Candidate 2's targeted admission/render tests pass remotely. Its native rocket maxima pass high/low: WebGL 24.9/43.7 ms, WebGPU 22.9/46.3 ms. Low district/horde p95 remains 33.7/33.8 ms WebGL and 33.9/34.6 ms WebGPU. Every measured sim, draw, triangle, population and collected-heap cap passes. [Candidate 2 matrix](evidence/attempt2-budgets.json).
 
 Candidate 3's first high WebGL transition sweep measures checkpoint 37.2 ms but boarding/handover 2,739.6 ms during L8 loading. This is a failure; it is not excluded from the transition window. E29-AC19/20 remain open pending the final matrix, lifecycle and loading repair.
+
+## Fresh before/after measurements (milliseconds)
+
+The original-build “before” rows use preserved production build `33181db1a`. “Candidate 3” includes the render/admission changes, before handover loading repair. These are whole-run observations, including failures; individual passing attempts are not substituted for failing repeats. The final candidate has a separate receipt and will replace this provisional comparison when its run finishes.
+
+| Backend / case / tier | Frame p95, before → candidate 3 | Maximum, before → candidate 3 | Sim p95, before → candidate 3 |
+| --- | ---: | ---: | ---: |
+| webgpu / district / high | 12.1 → 12.0 | 17.9 → 17.9 | 1.8 → 1.8 |
+| webgl / district / high | 12.2 → 12.0 | 27.5 → 30.7 | 2.1 → 2.1 |
+| webgpu / district / low | 33.0 → 34.1 | 37.2 → 43.5 | 4.3 → 4.5 |
+| webgl / district / low | 34.0 → 33.7 | 37.3 → 36.3 | 4.5 → 4.5 |
+| webgpu / encounters / high | 10.8 → 10.8 | 24.8 → 24.0 | 1.8 → 1.9 |
+| webgl / encounters / high | 11.4 → 10.8 | 25.7 → 25.7 | 2.1 → 2.1 |
+| webgpu / encounters / low | 33.1 → 34.8 | 35.9 → 37.3 | 4.6 → 4.3 |
+| webgl / encounters / low | 33.7 → 33.4 | 47.9 → 49.2 | 5.0 → 4.5 |
+| webgpu / rocket / high | 6.8 → 6.8 | 20.8 → 22.8 | 1.3 → 1.2 |
+| webgl / rocket / high | 8.2 → 7.8 | 24.6 → 25.3 | 1.4 → 1.3 |
+| webgpu / rocket / low | 17.9 → 18.1 | 62.4 → 59.6 | 2.3 → 2.2 |
+| webgl / rocket / low | 31.9 → 20.4 | 65.8 → 49.0 | 2.5 → 2.5 |
+
+AC19 across that matrix: maximum high/low draws **231/165 → 231/165**, triangles **965,941/405,447 → 963,618/393,437**, sim p95 **2.1/5.0 → 2.1/4.5 ms**, collected heap **97.38/86.15 → 97.51/86.30 MB**, infected **200/100 → 200/100**. All literal caps pass. Different real-time frame cadences can change the observed peak triangles/effect ages; populations and geometry settings are unchanged.
+
+AC20 lifecycle, candidate 3: after five L7→L1→L7→L1→L7 loads, retained heap is **95.1–95.7%** of the first load; geometries decrease and textures rise by one (at most 1.8%). Flash reduction, shake and gore settings are preserved in all four cases. [Lifecycle readings](evidence/lifecycle-attempt3.json). The original-build and final-candidate repeat are pending.
+
+## Handover repair iterations
+
+The complete handover window includes the loading card and ends only at a fully loaded L8. Before the loading repair, high WebGL/WebGPU maxima were **2,739.6/2,591.8 ms**. Cooperative node builds, paced asset parsing and smaller warmup groups reduce these to **128.3/110.4 ms**, still failures. [Before](evidence/transitions-before.json), [cooperative iteration](evidence/transitions-attempt4.json).
+
+The latest committed iteration prepares L8's default immutable layout/navigation behind L7's initial card, consumes it once, separates teardown/world/mission work with presented frames, and preserves the prior image while loading. Canvas submissions are capped at 60 per second. An initial uncapped presentation attempt saturated the GPU and was interrupted; it is not counted as completed coverage. The revised iteration is queued for measurement.
+
+Prepared versus fresh L8 construction matches complete sim/entity snapshots at 60-tick intervals over 600 ticks on each tier (**22 snapshots**). [Equivalence receipt](evidence/handover-equivalence.json). The eight-contact admission cache retains the same **518 spawn / 1,120 search / 14 snapshot / 418 corpse** equivalence proof. [Admission receipt](evidence/admission-equivalence.json).
