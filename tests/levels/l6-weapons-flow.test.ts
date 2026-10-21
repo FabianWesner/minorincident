@@ -1,0 +1,75 @@
+import { afterEach, expect, test } from 'vitest';
+import { loadL6 } from '../../tools/sim-runner/l6Bots';
+import { l6 } from '../../src/data/l6';
+import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+let world: SimWorld | undefined;
+afterEach(() => { world?.dispose(); world = undefined; });
+const put = (w: SimWorld, x: number, z: number) => { const p = w.entities.get(1)!; Object.assign(p.transform, { x, y: 1.3, z }); w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z); };
+const place = (w: SimWorld, ids: number[], x: number) => ids.forEach((id, i) => { const e = w.entities.get(id)!; Object.assign(e.transform, { x: x - Math.floor(i / 3) * 1.4, z: 15 + (i % 3 - 1) * 1.2 }); w.spatial.set(id, e.transform.x, e.transform.z); });
+
+// QA 10-21 #87 "rear survivors are killed one by one at gate x~90 … the courier died 10x and every death restarts at the
+// shelter (3,0) with checkpoint 'abandon' -> the whole shelter+retreat replays".
+test('@E24 QA #87 a death after the group passed a gate respawns at that gate with the surviving group, not at the shelter', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!; expect(m.state.checkpoint).toBe('abandon');
+  const live = s.survivors.filter(r => r.status === 'following');
+  // Two lost on the way: the checkpoint keeps the surviving group as it is.
+  for (const r of live.slice(-2)) { r.status = 'dead'; w.entities.get(r.id)!.health.current = 0; }
+  const walkers = live.slice(0, -2).map(r => r.id);
+  s.leaderX = 108; s.leaderZ = 15; place(w, walkers, 106);
+  put(w, 70, 15); w.update(); w.update();
+  expect(s.gates[0].passed).toBe(true); expect(m.state.checkpoint).toBe('gate-90');
+  w.player!.damage(w.entities.get(1)!.health.max, w.tick);
+  for (let i = 0; i < 400 && (w.entities.get(1)!.health.current <= 0 || m.state.phase !== 'playing'); i++) w.update();
+  const p = w.entities.get(1)!.transform, wait = LevelSixSubway.gateWait(90);
+  expect(m.state.checkpoint).toBe('gate-90'); expect(s.phase).toBe('retreat');
+  expect(Math.hypot(p.x - wait.x, p.z - wait.z), 'respawn beside the passed gate').toBeLessThan(3);
+  expect(m.state.l6!.survivors.filter(r => r.status === 'following').length).toBe(walkers.length);
+  for (const id of walkers) expect(w.entities.get(id)!.transform.x).toBeGreaterThan(92);
+  // The next gate takes over once the group is through it as well; the first gate's checkpoint is not taken again.
+  m.state.l6!.leaderX = 168; place(w, walkers, 166); w.update(); w.update();
+  expect(m.state.checkpoint).toBe('gate-150');
+}, 240_000);
+
+// QA 10-21 #88 ""Stay with the group" <-> "Cover the retreat through the tunnel" about every 6 s (~30x) while the group
+// stayed at the tunnel mouth (32,9.8)/(50,4.8) and the plain-retreat ring pointed at the gate wait spot (92.4,17.3), 40 m
+// from the group … Also the held-group reason "cover the rear" flipped 3x in 3 s (13393-13583): waitFor has no dwell".
+test('@E24 QA #88 with the group held back, the ring stays with it and the objective text does not alternate', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, walkers = s.survivors.filter(r => r.status === 'following').map(r => r.id);
+  s.leaderX = 88; s.leaderZ = 15; place(w, walkers, 50); put(w, 52, 15);
+  const texts: string[] = []; let last: string | null | undefined;
+  for (let i = 0; i < 30 * 60; i++) {
+    // The group is held at the tunnel mouth; the courier walks to wherever the ring points, as the driver did.
+    place(w, walkers, 50); s.leaderX = 88;
+    const ring = m.def.anchors[m.state.marker ?? 'l6-next'];
+    const p = w.entities.get(1)!.transform, d = Math.hypot(ring.x - p.x, ring.z - p.z);
+    if (d > .1) put(w, p.x + (ring.x - p.x) / d * Math.min(d, 6 / 60), p.z + (ring.z - p.z) / d * Math.min(d, 6 / 60));
+    w.update();
+    const t = LevelSixSubway.text(m); if (t !== last) texts.push(t ?? 'Cover the retreat through the tunnel'); last = t;
+  }
+  expect(texts).toEqual(['Cover the retreat through the tunnel']);
+  expect(m.state.marker).toBe('l6-next');
+  expect(m.def.anchors['l6-next'].x, 'the ring leads at most aheadM ahead of the group').toBeLessThanOrEqual(50 + l6.follow.aheadM + .5);
+}, 240_000);
+
+test('@E24 QA #88 the held-group reason holds through a 1 s wobble of the rear threat', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, walkers = s.survivors.filter(r => r.status === 'following' && !r.injured).map(r => r.id);
+  for (const r of s.survivors.filter(r => r.injured)) r.status = 'dead';
+  s.leaderX = 89; s.leaderZ = 15; place(w, walkers, 87);
+  const biter = w.entities.get(w.infected!.spawn('infected.runner', { x: 74, z: 15 }))!;
+  const texts: string[] = []; let last: string | null | undefined;
+  for (let i = 0; i < 6 * 60; i++) {
+    // The courier is far ahead of the rear; the nearest infected crosses the 20 m "hot" band every second.
+    put(w, 93, 17); place(w, walkers, 87); s.leaderX = 89;
+    Object.assign(biter.transform, { x: (i / 60 | 0) % 2 ? 40 : 74, z: 15 }); w.spatial.set(biter.id, biter.transform.x, 15);
+    w.update();
+    const t = LevelSixSubway.text(m); if (t !== last) texts.push(String(t)); last = t;
+  }
+  expect(texts.filter(t => t === 'The group waits: cover the rear from the infected')).toHaveLength(1);
+}, 240_000);

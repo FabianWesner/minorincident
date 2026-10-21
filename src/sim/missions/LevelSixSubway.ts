@@ -8,6 +8,7 @@ import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
+import type { L6State } from './types';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
@@ -161,9 +162,14 @@ export class LevelSixSubway {
       // Shelter leg: the group first walks onto the track at the leader's x. Tunnel leg: gates, then the platform.
       const route=[l6.tunnel.start,...l6.gates,anchors['exit-platform'].x];
       const next=route.find(x=>x>s.leaderX+1)??route[route.length-1];
-      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&(s.leaderX<=g.x+3||walkers.some(({e})=>e.transform.x<=g.x+2)));
+      // QA 10-21 #88: the ring leads the group the courier can see, not the scripted leader. The leader keeps walking
+      // while the group is held back (fighting, fleeing at the tunnel mouth); a ring 40 m ahead at the gate wait spot sent
+      // the courier away from the group, "Stay with the group" brought it back, and the two alternated every ~6 s. The
+      // ring stays within aheadM of the group's walking head and moves to a gate's wait spot once the head is at that gate.
+      const head=Math.max(...group.map(({e})=>e.transform.x)),ahead=head+f.aheadM;
+      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&head>=g.x-f.gateGroupM&&(s.leaderX<=g.x+3||walkers.some(({e})=>e.transform.x<=g.x+2)));
       const wait=gate&&LevelSixSubway.gateWait(gate.x);
-      at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM)),wait?.z??l6.tunnel.z);
+      at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM,Math.max(ahead,l6.tunnel.start))),wait?.z??l6.tunnel.z);
     }
     const wait=s.phase==='retreat'?s.waitFor:undefined,helped=wait&&wait.kind!=='rear'?this.w.entities.get(wait.id):undefined;
     if(wait?.kind==='fetch'&&helped)at('l6-help',helped.transform.x,helped.transform.z);
@@ -225,7 +231,14 @@ export class LevelSixSubway {
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
     s.paused=atGate&&(rear||!!behind);
     // QA 10-21 #83: a paused group names its reason and the ring leads to it (an injured straggler to fetch, or the rear to cover).
-    s.waitFor=!s.paused?undefined:behind?{kind:behind.collected?'bring':'fetch',id:behind.id}:{kind:'rear',id:0};
+    // QA 10-21 #88: the held-group reason flipped 3x in 3 s (rear cover as infected crossed the 20 m band). Like `strayed`
+    // (#84) the shown reason changes only once the new one has held for strayDwellS. The first reason, and fetch -> bring
+    // of the same survivor (the courier reached them), show at once.
+    const want:L6State['waitFor']=!s.paused?undefined:behind?{kind:behind.collected?'bring':'fetch',id:behind.id}:{kind:'rear',id:0};
+    const same=(a:L6State['waitFor'],b:L6State['waitFor'])=>a?.kind===b?.kind&&a?.id===b?.id;
+    if(same(want,s.waitFor)||!s.waitFor||(want?.kind==='bring'&&s.waitFor.kind==='fetch'&&s.waitFor.id===want.id)){s.waitFor=want;s.waitFlipAt=0;}
+    else if(!s.waitFlipAt)s.waitFlipAt=t;
+    else if(t-s.waitFlipAt>=ticks(l6.follow.strayDwellS)){s.waitFor=want;s.waitFlipAt=0;}
     s.tailX=tail;
     if(!s.paused){if(s.leaderZ<15)s.leaderZ=Math.min(15,s.leaderZ+2.2/60);else s.leaderX=Math.min(276,s.leaderX+2.2/60);}
     if(!s.injuryLineAt&&s.leaderX>34){s.injuryLineAt=t;this.say(1,l6InjuryLines.retreat);}
@@ -262,6 +275,10 @@ export class LevelSixSubway {
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
       if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
+    // QA 10-21 #87: once every living survivor is through a gate, a death restarts there with the surviving group (as L7's
+    // corridor checkpoints do), not at the shelter with the whole retreat to replay. `abandon` stays the retry point for
+    // the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot, beyond the gate beside the group.
+    for(const gate of s.gates)if(!gate.passed&&live.length&&live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
