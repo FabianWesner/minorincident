@@ -10,9 +10,9 @@ Base: `56d7e7d16` (`lane/fix-13e-l6`). Local branch only: no push, deployment or
 | B | world-fill-l8-l10 `0c7af367b`; weapon-keys `9534f96e5` | `1d559bc36` | 2,256 passed, 9 skipped, zero failed |
 | C | level-load `03691d243`; l7-perf `eecb39eb1` (includes heap-budgets and hitches2) | `a50388e5c` | 2,250 passed, 11 skipped, four timeouts; all four pass isolated |
 
-Typecheck and lint passed after every group. Commands used the requested remote unit/level sweep with four workers. Snapshot durations: A 49.7 min, B 46.6 min, C 71.6 min. The post-hat-correction full sweep at `06360a7a7` finished with 2,252 passed, 11 skipped and two timeouts, both covered by unchanged isolated retries. These raw sweeps are **not reported as zero-failure runs**. [Receipts](remote-suites.json), [A log](evidence/group-A.log.gz), [B log](evidence/group-B.log.gz), [C log](evidence/group-C.log.gz), [post-correction log](evidence/post-hat-full.log.gz).
+Typecheck and lint passed after every group. Commands used the requested remote unit/level sweep with four workers. Snapshot durations: A 49.7 min, B 46.6 min, C 71.6 min. The post-hat-correction full sweep at `06360a7a7` finished with 2,252 passed, 11 skipped and two timeouts, both covered by unchanged isolated retries. The later L5 ring and cache-ownership corrections are covered by focused 16/147-test runs and refreshed browser/native gates; a further complete unit/level sweep was not run after those two corrections. These raw sweeps are **not reported as zero-failure runs**. [Receipts](remote-suites.json), [A log](evidence/group-A.log.gz), [B log](evidence/group-B.log.gz), [C log](evidence/group-C.log.gz), [post-correction log](evidence/post-hat-full.log.gz).
 
-All four C failures are wall-clock limits under contention, without a failed contract assertion. Exact isolated cases on the final source pass without changing a limit: E17 assets 194.4/300 s, L9 prepared navigation 66.0/120 s, E01 static pipeline 90.2/180 s, standalone L7 audit 159.0/300 s. [Assets](isolated-E17.json), [navigation](isolated-nav-final.json), [static pipeline](isolated-static.json), [L7 audit](isolated-l7-audit.json).
+All four C failures are wall-clock limits under contention, without a failed contract assertion. Exact unchanged cases on the integrated tree pass without changing a limit: E17 assets 194.4/300 s, L9 prepared navigation 66.0/120 s, E01 static pipeline 90.2/180 s, standalone L7 audit 159.0/300 s. [Assets](isolated-E17.json), [navigation](isolated-nav-final.json), [static pipeline](isolated-static.json), [L7 audit](isolated-l7-audit.json).
 
 ## Conflicts and integration corrections
 
@@ -27,7 +27,7 @@ No test assertion, budget, image mask, effect population or quality policy was l
 
 ## Browser gates and E29 comparison
 
-At `06360a7a7`: build/typecheck/lint pass; smoke **31/31**; requested level/browser specs **31/31**. Includes L1/L2, L5 finish, L6 headlamp/quality switch, L7 departure/focus, locked-level debug, objective clarity and weapon keys. Final refresh after cache ownership correction is pending.
+Final corrected code: build/typecheck/lint pass; smoke **31/31**; requested level/browser specs **31/31**. Includes L1/L2, L5 finish, L6 headlamp/quality switch, L7 departure/focus, locked-level debug, objective clarity and weapon keys. Both suites were refreshed after the cache ownership correction; E29 was refreshed as well.
 
 Fresh native baseline `56d7e7d16`: **18 passed / 17 failed**. Merged comparison: **19 passed / 17 failed**. **Zero new failure identities**; the additional visible-follower test passes. [Baseline](baseline-E29.json), [comparison](E29-comparison.json), [gate receipts](gates.json), [pre-cache-correction receipts](gates-06360a7a7.json).
 
@@ -43,7 +43,7 @@ Opened and reviewed full side-by-side frames and crops. Initial high-WebGPU rock
 
 Four L7→L8 gameplay captures at tick 180 (both backends/tiers) have **exact RGB and entity equality**. Original high-WebGPU handover captures at tick 120 initially differ only in the requested numbered weapon rack. With that rack present on both trees, **Group B→C L7 and L8 captures are exactly identical across all 1,440,000 pixels**. The earlier unexplained 0.28% does not reproduce in this controlled loader comparison. [Gameplay counts](l8-pixels.json), [original review](load-comparison.jpg), [controlled comparison](load-groupB-comparison.md).
 
-After the deliberate hat-overlap correction, the same full captures differ by 14 L7 pixels and 37 L8 pixels (0.00097% / 0.00257%). Opened [final crop sheet](load-final-review.png): tiny survivor hair/hat edges; courier outfit, world, APC/lights, shadows and camera are unchanged. [Counts](load-final-comparison.md). Pixel-mode load durations are not isolated timing acceptance measurements. Prepared/fresh L8 simulation additionally matches 22 snapshots over 600 ticks per tier; both L10 arrival cases pass with unchanged pins/bands.
+After the deliberate hat-overlap correction, the original tool reports 14 L7 pixels and 37 L8 pixels (pixelmatch threshold zero, with its default anti-alias handling). Direct unfiltered RGB counts are **79 / 55 pixels**, maximum channel deltas 44 / 89: [raw audit](load-raw-pixels.json). Opened [final crop sheet](load-final-review.png): tiny survivor hair/hat edges; courier outfit, world, APC/lights, shadows and camera are unchanged. [Counts](load-final-comparison.md). Pixel-mode load durations are not isolated timing acceptance measurements. Prepared/fresh L8 simulation additionally matches 22 snapshots over 600 ticks per tier; both L10 arrival cases pass with unchanged pins/bands.
 
 ## Native timing
 
@@ -55,4 +55,6 @@ Initial campaign matrix: 11/12 pass; L5 WebGL high is **100.1 > 100 ms**, with 5
 
 ## Remaining reds / finalization
 
-Pending: final functional refresh, final source/base check and final L8 capture after cache correction. The sole owned temporary baseline worktree has been removed. Known pre-existing E03 landscape HUD coverage is 27.26% against 27%; the broad E03 gate was not rerun here. Existing E29 failures and the native baseline failures above are retained explicitly.
+Final smoke and requested levels both pass **31/31**; final E29 remains **19 passed / 17 unchanged failures, zero new**. Final WebGPU capture passes and is reviewed: [full side-by-side](load-ownership-review.png), [enlarged crops](load-ownership-crops.png), [unfiltered counts](load-ownership-raw.json), [original-tool summary](load-ownership-comparison.md). The cache-ownership correction adds **zero raw pixel differences** versus the prior hat-corrected L7 and L8 captures. Against Group B, the same 79/55 tiny hair/hat edge pixels remain. All checks have finished. `lane/fix-13e-l6` remains `56d7e7d16`, all requested lane tips are ancestors, and protected directories are unchanged. The sole owned temporary baseline worktree has been removed. Known pre-existing E03 landscape HUD coverage is 27.26% against 27%; the broad E03 gate was not rerun here. Existing E29 failures and the native baseline failures above are retained explicitly.
+
+Remaining measured red: **17 baseline E29 checks and L7 low rocket maximum 51.0 ms against 50 ms** (pre-Group-C baseline 51.8 ms). The full remote sweeps retain their documented wall-clock timeouts with passing isolated retries. No unresolved merge conflict or newly failing functional case remains.
