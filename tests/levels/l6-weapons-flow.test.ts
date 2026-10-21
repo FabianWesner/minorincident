@@ -146,3 +146,14 @@ test('@E24 playtest the gate checkpoint waits until no injured straggler is out 
   Object.assign(e.transform, { x: 100, z: 15 }); w.spatial.set(e.id, 100, 15); lame.collected = true; w.update(); w.update();
   expect(lame.rejoined).toBe(true); expect(m.state.checkpoint).toBe('gate-90');
 }, 240_000);
+
+test('@E24 playtest the mid-tunnel checkpoint waits for the column when the courier runs ahead', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following' && !r.injured).map(r => r.id);
+  for (const r of s.survivors.filter(r => r.injured)) r.status = 'dead';
+  s.leaderX = 118; s.leaderZ = 15; place(w, live, 116); put(w, 151, 15); w.update(); w.update();
+  expect(s.mid).toBe(false); expect(m.state.checkpoint).not.toBe('mid-tunnel');
+  s.leaderX = 150; place(w, live, 148); put(w, 151, 15); w.update(); w.update();
+  expect(m.state.checkpoint).toBe('mid-tunnel');
+}, 240_000);
