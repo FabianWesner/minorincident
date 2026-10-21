@@ -1,0 +1,342 @@
+[
+  {
+    "backend": "webgl2",
+    "tier": "high",
+    "phase": "checkpoint",
+    "frames": 536,
+    "frameP95": 11.299999999999272,
+    "maximum": 36.599999999998545,
+    "end": {
+      "level": "L7",
+      "loading": false,
+      "checkpoint": "corridor",
+      "departure": "waiting"
+    },
+    "errors": [],
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "loadTiming": {
+      "dataMs": 8.100000381469727,
+      "simMs": 202.5999994277954,
+      "viewMs": 3132
+    },
+    "topHitches": [
+      {
+        "ms": 36.599999999998545,
+        "state": "L7:rocket:waiting",
+        "sim": 5.300000190734863,
+        "update": 12.300000190734863,
+        "render": 3.6999998092651367,
+        "nodeBuilds": 362
+      }
+    ]
+  },
+  {
+    "backend": "webgl2",
+    "tier": "high",
+    "phase": "boarding",
+    "frames": 3016,
+    "frameP95": 18.799999999995634,
+    "maximum": 128.3000000000029,
+    "end": {
+      "level": "L8",
+      "loading": false,
+      "checkpoint": null
+    },
+    "errors": [],
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "loadTiming": {
+      "dataMs": 7.100000381469727,
+      "simMs": 102.19999980926514,
+      "viewMs": 13466.699999809265
+    },
+    "topHitches": [
+      {
+        "ms": 128.3000000000029,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.20000076293945312,
+        "render": 0.19999980926513672,
+        "nodeBuilds": 395
+      },
+      {
+        "ms": 111.19999999999709,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.20000076293945312,
+        "render": 0.19999980926513672,
+        "nodeBuilds": 708
+      },
+      {
+        "ms": 110.69999999999709,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.20000076293945312,
+        "render": 0.19999980926513672,
+        "nodeBuilds": 395
+      }
+    ]
+  },
+  {
+    "backend": "webgl2",
+    "tier": "low",
+    "phase": "checkpoint",
+    "frames": 321,
+    "frameP95": 32.099999999998545,
+    "maximum": 49.900000000001455,
+    "end": {
+      "level": "L7",
+      "loading": false,
+      "checkpoint": "corridor",
+      "departure": "waiting"
+    },
+    "errors": [],
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "loadTiming": {
+      "dataMs": 15,
+      "simMs": 727.1999998092651,
+      "viewMs": 9452.400000572205
+    },
+    "topHitches": [
+      {
+        "ms": 49.900000000001455,
+        "state": "L7:corridor:waiting",
+        "sim": 8,
+        "update": 7.300000190734863,
+        "render": 5.800000190734863,
+        "nodeBuilds": 293
+      },
+      {
+        "ms": 37.19999999999709,
+        "state": "L7:corridor:waiting",
+        "sim": 9.59999942779541,
+        "update": 6.800000190734863,
+        "render": 6,
+        "nodeBuilds": 292
+      },
+      {
+        "ms": 36.899999999999636,
+        "state": "L7:rocket:waiting",
+        "sim": 6.300000190734863,
+        "update": 6.600000381469727,
+        "render": 4.899999618530273,
+        "nodeBuilds": 292
+      }
+    ]
+  },
+  {
+    "backend": "webgl2",
+    "tier": "low",
+    "phase": "boarding",
+    "frames": 2232,
+    "frameP95": 108.69999999999709,
+    "maximum": 503.1999999999971,
+    "end": {
+      "level": "L8",
+      "loading": false,
+      "checkpoint": null
+    },
+    "errors": [],
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "loadTiming": {
+      "dataMs": 12.899999618530273,
+      "simMs": 359.19999980926514,
+      "viewMs": 33374.60000038147
+    },
+    "topHitches": [
+      {
+        "ms": 503.1999999999971,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.9000005722045898,
+        "render": 0.2999992370605469,
+        "nodeBuilds": 313
+      },
+      {
+        "ms": 487.5,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.9000005722045898,
+        "render": 0.2999992370605469,
+        "nodeBuilds": 313
+      },
+      {
+        "ms": 234.90000000000146,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.9000005722045898,
+        "render": 0.2999992370605469,
+        "nodeBuilds": 313
+      }
+    ]
+  },
+  {
+    "backend": "webgpu",
+    "tier": "high",
+    "phase": "checkpoint",
+    "frames": 542,
+    "frameP95": 11.299999999999272,
+    "maximum": 35,
+    "end": {
+      "level": "L7",
+      "loading": false,
+      "checkpoint": "corridor",
+      "departure": "waiting"
+    },
+    "errors": [],
+    "gpu": "apple metal-3  ",
+    "loadTiming": {
+      "dataMs": 8.199999809265137,
+      "simMs": 196.5,
+      "viewMs": 2983.5
+    },
+    "topHitches": [
+      {
+        "ms": 35,
+        "state": "L7:rocket:waiting",
+        "sim": 8.800000190734863,
+        "update": 9.90000057220459,
+        "render": 4.09999942779541,
+        "nodeBuilds": 374
+      }
+    ]
+  },
+  {
+    "backend": "webgpu",
+    "tier": "high",
+    "phase": "boarding",
+    "frames": 3095,
+    "frameP95": 18.799999999995634,
+    "maximum": 110.40000000000146,
+    "end": {
+      "level": "L8",
+      "loading": false,
+      "checkpoint": null
+    },
+    "errors": [],
+    "gpu": "apple metal-3  ",
+    "loadTiming": {
+      "dataMs": 6.5,
+      "simMs": 99.09999942779541,
+      "viewMs": 13903.60000038147
+    },
+    "topHitches": [
+      {
+        "ms": 110.40000000000146,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.10000038146972656,
+        "render": 0.3000001907348633,
+        "nodeBuilds": 669
+      },
+      {
+        "ms": 109.10000000000582,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.10000038146972656,
+        "render": 0.3000001907348633,
+        "nodeBuilds": 607
+      },
+      {
+        "ms": 109.09999999999854,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 0.10000038146972656,
+        "render": 0.3000001907348633,
+        "nodeBuilds": 702
+      }
+    ]
+  },
+  {
+    "backend": "webgpu",
+    "tier": "low",
+    "phase": "checkpoint",
+    "frames": 315,
+    "frameP95": 32.20000000000073,
+    "maximum": 49.79999999999927,
+    "end": {
+      "level": "L7",
+      "loading": false,
+      "checkpoint": "corridor",
+      "departure": "waiting"
+    },
+    "errors": [],
+    "gpu": "apple metal-3  ",
+    "loadTiming": {
+      "dataMs": 15.5,
+      "simMs": 717.6000003814697,
+      "viewMs": 9498.599999427795
+    },
+    "topHitches": [
+      {
+        "ms": 49.79999999999927,
+        "state": "L7:corridor:waiting",
+        "sim": 9.199999809265137,
+        "update": 7.699999809265137,
+        "render": 6.199999809265137,
+        "nodeBuilds": 305
+      },
+      {
+        "ms": 37.5,
+        "state": "L7:corridor:waiting",
+        "sim": 7.799999237060547,
+        "update": 5.800000190734863,
+        "render": 5.100000381469727,
+        "nodeBuilds": 304
+      },
+      {
+        "ms": 36.19999999999891,
+        "state": "L7:rocket:waiting",
+        "sim": 9.800000190734863,
+        "update": 9.699999809265137,
+        "render": 7.100000381469727,
+        "nodeBuilds": 304
+      }
+    ]
+  },
+  {
+    "backend": "webgpu",
+    "tier": "low",
+    "phase": "boarding",
+    "frames": 2041,
+    "frameP95": 108.90000000000146,
+    "maximum": 508.79999999999563,
+    "end": {
+      "level": "L8",
+      "loading": false,
+      "checkpoint": null
+    },
+    "errors": [],
+    "gpu": "apple metal-3  ",
+    "loadTiming": {
+      "dataMs": 21.600000381469727,
+      "simMs": 378.19999980926514,
+      "viewMs": 32754.39999961853
+    },
+    "topHitches": [
+      {
+        "ms": 508.79999999999563,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 1.4000005722045898,
+        "render": 1,
+        "nodeBuilds": 325
+      },
+      {
+        "ms": 505.5,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 1.4000005722045898,
+        "render": 1,
+        "nodeBuilds": 325
+      },
+      {
+        "ms": 270,
+        "state": "L8:null:",
+        "sim": 0,
+        "update": 1.4000005722045898,
+        "render": 1,
+        "nodeBuilds": 325
+      }
+    ]
+  }
+]
