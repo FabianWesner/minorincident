@@ -7,7 +7,7 @@
  * tells the player) so the log can name steps; it is never used to find a trigger.
  * Ground-truth state used to locate the player when lost goes through `locate()` and is always logged.
  */
-export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; screen: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
+export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
 export interface Eyes {
   tick: number; level: string | null; phase: string | null; step: string | null; checkpoint: string | null; completed: number;
   objective: string; tracker: string; distance: number | null;
@@ -36,6 +36,8 @@ export function look(): Eyes {
   const vehicles = p ? a.query({ kind: 'vehicle', within: { x: p.transform.x, z: p.transform.z, r: 6 } }) : [];
   const car = vehicles.find(v => v.vehicle?.driver === 1);
   const enemies: Body[] = [], allies: Body[] = [];
+  const figures = new Map(a.crowdFigures().filter(f => f.drawn).map(f => [f.id, f]));
+  const rect = document.querySelector('canvas')!.getBoundingClientRect();
   if (p) {
     const near = a.query({ within: { x: p.transform.x, z: p.transform.z, r: 32 } });
     for (const e of near) {
@@ -46,7 +48,17 @@ export function look(): Eyes {
       if (enemy && (e.corpse || e.health.current <= 0)) continue;
       if (!a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
-      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, screen: s,
+      const joints = figures.get(e.id)?.joints;
+      if (enemy && !joints) continue;
+      // Aim at the drawn chest, including a lunge or a fall. A fixed offset above the feet misses bodies
+      // at different zooms and can become a ground click; only rendered, on-screen enemies are targets.
+      let aim = { x: s.x, y: s.y - 18 };
+      if (joints?.hip && joints.head) {
+        const at = joints.hip.map((v, i) => v + (joints.head[i] - v) * .6), ndc = a.camera.project(at[0], at[1], at[2]);
+        aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
+      }
+      if (aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
+      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, attacking: e.combat?.attacking };
       (enemy ? enemies : allies).push(b);

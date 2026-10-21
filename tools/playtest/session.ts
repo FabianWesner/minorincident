@@ -63,7 +63,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const params = `testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
-  await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(false); });
+  await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
   await page.getByTestId('start-game').click({ timeout: 120_000 });
   await hold(500);
   const first = o.levels[0];
@@ -101,10 +101,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear();
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
+    if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
   const finishLevel = async (e: Eyes) => {
     if (!run) return;
     run.finished = true; run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
+    const deaths = await page.evaluate(level => { const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null; }, run.level);
+    if (deaths !== null) run.deaths = deaths;
     run.weaponsEnd = e.player?.weapons ?? []; prevWeapons = run.weaponsEnd;
     log({ levelEnd: e.level, run }); await capture(`${e.level}-result`);
     writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
@@ -112,7 +115,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
-  let aimHeld: number | null = null;
+  let aimHeld: number | null = null, lastAimClick = 0;
   const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
@@ -137,27 +140,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
       return true;
     }
-    if (ranged.test(e.player?.current ?? '')) {
-      // Guns the PO's way: left-click the infected and hold. The click locks that target (the game aims at it and keeps
-      // firing while held); a new target is a new click. Space only fires along the facing cone (assist ±35°), which in
-      // the dark tunnel at z1.5 missed most of the time (QA 10-21 #87b: 69 enemy-unhittable events).
-      if (keysDown.has('Space')) await press([]);
-      if (aimHeld !== threat.id) {
-        await releaseAim();
-        await page.mouse.move(threat.screen.x, threat.screen.y - 18); await page.mouse.down(); aimHeld = threat.id;
-      }
-      return true;
+    // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
+    // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
+    // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
+    if (!ranged.test(e.player?.current ?? '') && e.player && e.player.hp < e.player.max * .3 && threat.d < 2) {
+      await releaseAim(); await page.mouse.move(threat.aim.x, threat.aim.y);
+      await press(['Space', ...awayKeys(e, threat)]); return true;
     }
-    await releaseAim();
-    await page.mouse.move(threat.screen.x, threat.screen.y - 18);
-    // Back off while low on health and a melee weapon would trade hits.
-    const keys = ['Space'];
-    if (e.player && e.player.hp < e.player.max * .3 && reach < 5 && threat.d < 2) keys.push(...awayKeys(e, threat));
-    await press(keys);
+    await press([]);
+    if (aimHeld !== threat.id || seen.ms > 1000 && now - lastAimClick > 1000) {
+      await releaseAim();
+      await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id; lastAimClick = now;
+    }
     return true;
   };
   const awayKeys = (e: Eyes, b: Body): string[] => {
-    // Screen-relative: away from the threat in screen space.
     const dx = e.view.w / 2 - b.screen.x, dy = e.view.h / 2 - b.screen.y, out: string[] = [];
     if (Math.abs(dx) > 20) out.push(dx > 0 ? 'KeyD' : 'KeyA');
     if (Math.abs(dy) > 20) out.push(dy > 0 ? 'KeyS' : 'KeyW');
@@ -278,6 +275,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const key = `${e.step}|${e.completed}|${e.checkpoint}|${e.objective.replace(/ · [\d.]+\s?m\b/g, '').replace(/ · \d+:\d\d/g, '').replace(/\d+\/\d+ ?s\b/g, '#')}`;
     if (key !== lastProgress.key) {
       if (lastProgress.key) log({ progress: key, tick: e.tick, after: Math.round((e.tick - lastProgress.tick) / 60) });
+      // Diagnostic evidence only: this snapshot never supplies a movement or combat decision.
+      if (e.level === 'L6') log({ l6Observation: await page.evaluate(() => {
+        const a = window.__SS__!, m = a.missions.state()!, s = m.l6!;
+        const p = a.getEntity(1)!;
+        return { tick: a.tick(), deaths: m.stats.deaths, player: { transform: p.transform, health: p.health }, leaderX: s.leaderX, tailX: s.tailX,
+          paused: s.paused, waitFor: s.waitFor, gates: s.gates, survivors: s.survivors.map(r => ({ ...r, transform: a.getEntity(r.id)?.transform })) };
+      }) });
       lastProgress = { key, tick: e.tick, wall: Date.now(), best: e.distance ?? Infinity }; assistMode = false; unstickDir = 0; navAssist = false; navUntil = 0; navEpisodes = 0; lastPos = { x: e.player?.x ?? 0, z: e.player?.z ?? 0, wall: Date.now() };
       if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; await hold(300); run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, drawn: await drawnRing(), playerY: e.player?.y } }); }
       if (stuckLogged.size) bootWall = Date.now();
