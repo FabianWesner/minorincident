@@ -167,3 +167,19 @@ This review supersedes the earlier AC12 failure above. I opened the fresh **24 s
 | should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
 
 **AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Current verifier: all 71 functional browsers pass; performance stage is still pending.
+
+## Final-source named H review — 2026-10-22
+
+This review supersedes the earlier incomplete physical-consequence signoff. I opened both final seven-row high/low frame sheets, plus full-size medium/mega flight, night wind column and the two late grenade frames. `docs/reports/ac-close-shared/h-high.jpg` and `h-low.jpg` retain all seven required spots; `evidence/vfx-final.json.gz` records 102 frame states and source-image SHA256s. Grenade frames use a pinned production preview after the earlier dev blank frame failed review; both tiers now pass an explicit non-flat-image assertion. A concurrent source edit is only a possible cause of the old blank, not a proved diagnosis.
+
+| Priority | H item | Observed result |
+| --- | --- | --- |
+| must | Staged blast | PASS — medium f6/8/12/21/46, car f186/190/200/230 and mega f6/20/40/70 separate flash, yellow-orange lobes, expanding pale ring, flying fragments and dark plume. Production L4 f6/40/186 repeats the authored sequence. |
+| must | Props / corpses / cars move; scorch stays | PASS — cart/cone displace, car lifts and panels fly; retained body id6 rises to y1.56 in medium and y10.72 in mega, then lands with its original id. Car body id7 rises to y1.47 and lands at (3.82,0.7,3.87); medium late position stays (1.95,0.7,3.90). Late black scorch and burning wreck remain. Cosmetic body flight is now implemented and checkpoint-tested; no combat collider/damage or corpse removal was added. |
+| must | Volumetric noisy hot-to-cold fireball | PASS — overlapping lobes have yellow hot centers, orange folded rims, holes and dark cool clouds; mega has a much broader ring and scattered persistent fires. |
+| must | Lit / wind-bent smoke; visible player | PASS — night house-front fire and separate column have rounded overlapping puffs drifting right; orange lower smoke/cooler top is quantified at 2.62× luminance. Actual thrown grenade cloud keeps the cap, face and orange clothing visible at f90/240/840, with the ground marker visible through the dither. At f840 the smoke has not fully expired; no fade-to-clear claim is made for that frame. |
+| should | Car jump / detached parts / burning wreck | PASS — raised body, separate dark panels and persistent charred burning chassis appear in order. |
+| should | Flicker / embers / nearby lighting | PASS — night flames change shape at f60/90/180/600; sparks rise and warm pools light the pavement and porch/facade. |
+| should | Class intensity | PASS — grenade is a localized cool gray cloud; medium/car affect a few metres; mega lights a wide area, throws the corpse higher/farther, and leaves multiple fires. |
+
+**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification remains pending until its receipt is complete.
