@@ -1,0 +1,7 @@
+{
+  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit/render tests/unit/assets tests/unit/health-bars.test.ts --maxWorkers=4",
+  "files": "160 passed (160)",
+  "tests": "1166 passed (1166)",
+  "duration": "255.05s (tests 89%, import 8%, transform 3%)",
+  "exitCode": 0
+}
