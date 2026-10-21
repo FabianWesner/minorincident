@@ -35,7 +35,7 @@ const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: S
 // active filter and the warmed graph when the shadow source changes.
 const activeShadowFilter = (filter: (inputs: ShadowFilterInputs) => Node<'float'>) => Fn((inputs: ShadowFilterInputs) => {
   const visibility = float(1).toVar();
-  If(reference('intensity', 'float', inputs.shadow).greaterThan(0), () => { visibility.assign(filter(inputs)); });
+  If(reference('intensity', 'float', inputs.shadow).setGroup(renderGroup).greaterThan(0), () => { visibility.assign(filter(inputs)); });
   return visibility;
 });
 const activeSunShadow = activeShadowFilter(stableSunShadow);
