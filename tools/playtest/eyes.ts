@@ -7,7 +7,7 @@
  * tells the player) so the log can name steps; it is never used to find a trigger.
  * Ground-truth state used to locate the player when lost goes through `locate()` and is always logged.
  */
-export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
+export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; drawn: boolean; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
 export interface Eyes {
   tick: number; level: string | null; phase: string | null; step: string | null; checkpoint: string | null; completed: number;
   objective: string; tracker: string; distance: number | null;
@@ -58,7 +58,7 @@ export function look(): Eyes {
         aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
       }
       if (aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
-      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, screen: s, aim,
+      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, drawn: figures.has(e.id), screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, attacking: e.combat?.attacking };
       (enemy ? enemies : allies).push(b);

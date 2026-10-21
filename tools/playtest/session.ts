@@ -78,6 +78,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
   let lastProgress = { key: '', tick: 0, wall: Date.now(), best: Infinity };
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
+  let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
@@ -106,7 +107,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
     });
-    runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear();
+    runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
@@ -150,14 +151,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return true;
     }
     if (e.level === 'L6' && e.player?.weapons.includes('weapon.fire-axe') && e.enemies.filter(b => b.d < 3).length >= 3) {
-      // The carried LEFT axe covers a close crowd while the courier keeps retreating. J is its shipped binding;
-      // the active gun remains selected for the next ranged target.
+      // The carried LEFT axe covers a close crowd while the courier keeps retreating. J is its shipped binding.
       await releaseAim();
       if (now - lastCrowdKick > 750) {
         await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyJ']); await hold(180); await press([]);
         lastCrowdKick = now; log({ crowdAxe: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
       }
       return false;
+    }
+    if (e.level === 'L6' && e.player?.current === 'weapon.fire-axe' && e.player.weapons.includes('weapon.army-mg') && threat.d > 3) {
+      // J selects the LEFT axe. Use the shipped RIGHT binding to return to the carried gun at range.
+      await releaseAim(); await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(60); await press([]);
+      return true;
     }
     if (ranged.test(e.player?.current ?? '')) {
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
@@ -329,6 +334,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (Date.now() - lastRingRead > 2000 && !(e.marker === null || !e.marker.visible)) { lastRingRead = Date.now(); const r = await markerRing(); if (r) ring = r; }
     if (`${e.step}|${e.marker?.anchor}` !== ringKey) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; log({ marker: e.marker?.anchor, ring }); }
+    if (e.level === 'L6') {
+      if (/help the injured survivor/.test(e.objective)) { fetchHint = await markerRing(); escort = null; }
+      else if (/Bring the injured survivor/.test(e.objective) && !escort && fetchHint) {
+        const hint = fetchHint;
+        const seen = e.allies.filter(b => b.drawn && b.hp > 0 && !b.corpse && b.kind !== 'companion')
+          .sort((a, b) => Math.hypot(a.x - hint.x, a.z - hint.z) - Math.hypot(b.x - hint.x, b.z - hint.z))[0];
+        if (seen && Math.hypot(seen.x - hint.x, seen.z - hint.z) < 6) {
+          escort = { id: seen.id, x: seen.x, z: seen.z }; log({ escortSeen: escort, tick: e.tick });
+        }
+      } else if (e.step !== 'retreat' || /^(Cover the retreat|The group waits: cover the rear)/.test(e.objective)) escort = null;
+      const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
+      if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
+    }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
@@ -354,6 +372,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
     if (await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
+
+    // Escort the person we just fetched, rather than running to the bring ring and leaving them out of view.
+    // Only drawn allies update this remembered position; losing sight sends us back to where we last saw them.
+    if (escort && e.player) {
+      const seen = e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
+      if (!seen || seen.d > 4) {
+        await press([]);
+        if (Date.now() - lastClick > 700) {
+          const s = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: escort.x, z: escort.z });
+          const sp = safe(s.x, s.y, e); await clickGround(sp.x, sp.y); lastClick = Date.now();
+          log({ escortWait: escort.id, at: { x: escort.x, z: escort.z }, tick: e.tick });
+        }
+        await hold(150); continue;
+      }
+    }
 
     if (stuckSim > 120 && stuckWall > 60 && !assistMode) {
       assistMode = true; run.assists++;
