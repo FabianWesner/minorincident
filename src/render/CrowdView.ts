@@ -216,24 +216,25 @@ export class CrowdView extends Group {
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
         const dedicated = this.registry.definition(asset).corpseGlb;
-        if (!alpha && dedicated) {
+        const intactDog = role === 'dog';
+        if (!alpha && (dedicated || intactDog)) {
           // Generated living LODs already lost thin shells. Further index-only
           // reduction made permanent bodies look like shards (PO #85). Dedicated
           // corpse meshes collapse each intact shell offline and keep their own rig.
-          const body = bakeInfected(await this.registry.loadCorpse(asset, def.decay) as Group, this.registry.definition(asset).animatedNodes);
+          const body = bakeInfected(await (dedicated ? this.registry.loadCorpse(asset, def.decay) : this.registry.loadAsset(asset, 'lod0', def.decay)) as Group, this.registry.definition(asset).animatedNodes);
           deinterleaveGeometry(body.geometry);
           const corpse = mergeVertices(body.geometry); body.geometry.dispose();
           if (!healthy) markInfectedEyeCores(corpse);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
           corpse.userData.crowdLod = lod;
-          corpse.userData.corpseSource = dedicated; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
+          corpse.userData.corpseSource = dedicated ?? this.registry.definition(asset).glb; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
           this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
         }
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
         await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
         if (this.disposed) { baked.geometry.dispose(); return; }
-        if (!alpha && !dedicated) {
+        if (!alpha && !dedicated && !intactDog) {
           const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
