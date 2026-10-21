@@ -140,6 +140,15 @@ export class GameView implements Lifecycle {
   }
   unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; if (!this.warming) this.update(1); }
   get frozen(): boolean { return this.frozenFrame !== null; }
+  /** Keep the compositor presenting during handover work. The frozen canvas
+   * preserves the last picture while the opaque loading card covers it. A
+   * cheap canvas submission avoids Chrome's no-draw RAF pacing (~100 ms). */
+  presentLoading(): void {
+    if (!this.frozenFrame || this.background) return;
+    const target = this.renderer.getRenderTarget();
+    try { this.renderer.setRenderTarget(null); this.renderer.clear(); }
+    finally { this.renderer.setRenderTarget(target); }
+  }
   private generation = 0;
   private npcs: NpcView | null = null;
   /** Scene Lab drives the same authored metro leaf as the L5 mission clock. */
