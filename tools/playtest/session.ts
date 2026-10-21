@@ -84,9 +84,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
   const cpu = process.env.PLAYTEST_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
-  let cpuStartedAt = 0;
+  let cpuStartedAt = 0, cpuNavigationStartMs: number | undefined;
   if (cpu) {
+    await cpu.send('Performance.enable');
     await cpu.send('Profiler.enable'); await cpu.send('Profiler.start');
+    const { metrics } = await cpu.send('Performance.getMetrics');
+    const navigationStart = metrics.find(metric => metric.name === 'NavigationStart');
+    if (navigationStart) cpuNavigationStartMs = navigationStart.value * 1000;
     cpuStartedAt = await page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
       const clicks: unknown[] = [], builds: unknown[] = [];
@@ -539,7 +543,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (cpu) {
     const cpuEndedAt = await page.evaluate(() => performance.now());
     const { profile } = await cpu.send('Profiler.stop');
-    writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt })); await cpu.detach();
+    writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt, performanceNavigationStartMs: cpuNavigationStartMs })); await cpu.detach();
     writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
     writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
   }

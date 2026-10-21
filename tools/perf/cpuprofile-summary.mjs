@@ -13,7 +13,8 @@ if (windowFlag >= 0 && (!window || window.length !== 2 || !window.every(Number.i
 const nodes = new Map(profile.nodes.map(n => [n.id, n]));
 const parent = new Map();
 for (const n of profile.nodes) for (const c of n.children ?? []) parent.set(c, n.id);
-const self = new Map(); let at = profile.performanceStartedAt ?? 0, total = 0;
+const clockOrigin = Number.isFinite(profile.performanceNavigationStartMs) ? profile.startTime / 1000 - profile.performanceNavigationStartMs : profile.performanceStartedAt ?? 0;
+const self = new Map(); let at = clockOrigin, total = 0;
 for (let i = 0; i < profile.samples.length; i++) {
   const id = profile.samples[i], span = (profile.timeDeltas[i] ?? 0) / 1000, end = at + span;
   const dt = window ? Math.max(0, Math.min(end, window[1]) - Math.max(at, window[0])) : span;
