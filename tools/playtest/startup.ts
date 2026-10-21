@@ -2,7 +2,7 @@ import type { CampaignSave } from '../../src/sim/progression/Campaign';
 
 /** Prepare the persisted loadout that the real Continue menu will resume. */
 export function playtestSave(save: CampaignSave, heroine: CampaignSave['character'], kind: 'weapons' | 'fists'): CampaignSave {
-  return { ...save, character: heroine, ...(kind === 'fists' ? { racks: { LEFT: ['weapon.fists'], RIGHT: ['weapon.kick'] }, ownedActions: ['weapon.fists', 'weapon.kick'] } : {}) };
+  return { ...save, character: heroine, ...(kind === 'fists' ? { racks: { LEFT: ['weapon.fists'], RIGHT: ['weapon.kick'] } } : {}) };
 }
 
 /** Validate observed bodies without depending on a particular crowd count. */
