@@ -1,0 +1,218 @@
+
+ RUN  v5.0.3 /private/tmp/mi-fixes-13g-baseline
+
+ ❯ |functional| tests/unit/input/weapon-keys.test.ts (8 tests | 1 failed | 7 skipped) 4ms
+   × PO #91 key 1 selects bare hands in full weapon racks and preserves their save shape and timers 4ms
+ ❯ |functional| tests/unit/progression/debug-campaign.test.ts (2 tests | 1 failed | 1 skipped) 7ms
+   × PO #89 the debug level-list loader passes a preset-consistent save to every campaign start 6ms
+ ❯ |functional| tests/unit/render/held-action-scale.test.ts (1 test | 1 failed) 95ms
+   × PO #95 actual pipe bomb sits at the palm and has bottle-sized held bounds 94ms
+ ❯ |functional| tests/unit/render/alpha-body-fidelity.test.ts (16 tests | 12 failed) 1022ms
+   × PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (high) 43ms
+   × PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (low) 45ms
+   × PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (high) 37ms
+   × PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (low) 37ms
+   × PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (high) 42ms
+   × PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (low) 39ms
+   × PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (high) 41ms
+   × PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (low) 39ms
+   × PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (high) 74ms
+   × PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (low) 68ms
+   × PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (high) 71ms
+   × PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (low) 66ms
+ ❯ |functional| tests/unit/levels/objective-clarity.test.ts (5 tests | 1 failed | 4 skipped) 5439ms
+   × PO #90 L8 publishes its boarding objective and waypoint on the mission start frame 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/input/weapon-keys.test.ts > PO #91 key 1 selects bare hands in full weapon racks and preserves their save shape and timers
+AssertionError: expected 'weapon.fire-axe' to be 'weapon.fists' // Object.is equality
+
+Expected: "weapon.fists"
+Received: "weapon.fire-axe"
+
+ ❯ tests/unit/input/weapon-keys.test.ts:14:32
+     12|   l.current('LEFT').readyAt = 100;
+     13|   l.input({ ...emptyInput(), selectedWeaponKey: 1 }, 1);
+     14|   expect(l.current('LEFT').id).toBe('weapon.fists');
+       |                                ^
+     15|   expect(l.state.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']…
+     16|   l.spend('LEFT', 20, l.definition('weapon.fists'), false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  |functional| tests/unit/progression/debug-campaign.test.ts > PO #89 the debug level-list loader passes a preset-consistent save to every campaign start
+AssertionError: L2: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ tests/unit/progression/debug-campaign.test.ts:12:48
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  |functional| tests/unit/levels/objective-clarity.test.ts > PO #90 L8 publishes its boarding objective and waypoint on the mission start frame
+AssertionError: expected { Object (kind, key, ...) } to deeply equal { kind: 'start' }
+
+- Expected
++ Received
+
+  {
+-   "kind": "start",
++   "equals": true,
++   "key": "breached",
++   "kind": "state",
+  }
+
+ ❯ tests/unit/levels/objective-clarity.test.ts:68:24
+     66| test('PO #90 L8 publishes its boarding objective and waypoint on the m…
+     67|   const mission=levels.find(l=>l.id==='L8')!.mission, escape=mission.s…
+     68|   expect(escape.start).toEqual({kind:'start'});
+       |                        ^
+     69|   expect(escape.text).toMatch(/survivors.*armored vehicle/i);
+     70|   expect(escape.waypoint).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (low)
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/render/alpha-body-fidelity.test.ts:29:20
+     27|     await view.loadBatch(definition, 'lod0');
+     28|     const source = [...view.batches.values()][0].mesh.geometry, frozen…
+     29|     expect(frozen).toBeDefined(); expect(frozen.index!.count).toBe(sou…
+       |                    ^
+     30|     expect(frozen.hasAttribute('_parts')).toBe(true);
+     31|     expect(prepare).toHaveBeenCalledWith(expect.any(String), frozen, e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  |functional| tests/unit/render/held-action-scale.test.ts > PO #95 actual pipe bomb sits at the palm and has bottle-sized held bounds
+AssertionError: expected 0.6419999897480011 to be less than 0.45
+ ❯ tests/unit/render/held-action-scale.test.ts:27:55
+     25|     const held=socket.children.find(o=>o.visible)!;
+     26|     const size=new Box3().setFromObject(held).getSize(new Vector3());
+     27|     expect(size.x).toBeGreaterThan(.3);expect(size.x).toBeLessThan(.45…
+       |                                                       ^
+     28|     expect(size.y).toBeLessThan(.2);expect(size.z).toBeLessThan(.22);
+     29|     expect(held.getObjectByName('grip')!.getWorldPosition(new Vector3(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  16 failed | 4 passed | 12 skipped (32)
+   Start at  20:40:50
+   Duration  6.23s (tests 65%, transform 28%, import 7%)
+
+
+ RUN  v5.0.3 /private/tmp/mi-fixes-13g-baseline
+
+ ❯ |functional| tests/unit/render/infected-corpse-surface.test.ts (17 tests | 3 failed | 14 skipped) 157ms
+   × PO #93 L10 dog base corpse retains the intact source instead of the reduced living mesh 66ms
+   × PO #93 L10 dog black corpse retains the intact source instead of the reduced living mesh 66ms
+   × PO #93 L10 dog cream corpse retains the intact source instead of the reduced living mesh 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/infected-corpse-surface.test.ts > PO #93 L10 dog base corpse retains the intact source instead of the reduced living mesh
+AssertionError: expected "loadAsset" to be called with arguments: [ 'inf.dog', 'lod0', undefined ]
+
+Received:
+
+  1st loadAsset call:
+
+  [
+    "inf.dog",
+-   "lod0",
++   "lod2",
+    undefined,
+  ]
+
+
+Number of calls: 1
+
+ ❯ tests/unit/render/infected-corpse-surface.test.ts:65:18
+     63|   try{
+     64|     await (crowd as unknown as {loadBatch(definition:typeof def,lod:'l…
+     65|     expect(load).toHaveBeenCalledWith('inf.dog','lod0',coat||undefined…
+       |                  ^
+     66|     expect(prepare.mock.calls[0][1].userData.corpseSource).toBe(asset.…
+     67|     expect(prepare.mock.calls[0][1].index!.count).toBeGreaterThan(3000…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  |functional| tests/unit/render/infected-corpse-surface.test.ts > PO #93 L10 dog black corpse retains the intact source instead of the reduced living mesh
+AssertionError: expected "loadAsset" to be called with arguments: [ 'inf.dog', 'lod0', 'black' ]
+
+Received:
+
+  1st loadAsset call:
+
+  [
+    "inf.dog",
+-   "lod0",
++   "lod2",
+    "black",
+  ]
+
+
+Number of calls: 1
+
+ ❯ tests/unit/render/infected-corpse-surface.test.ts:65:18
+     63|   try{
+     64|     await (crowd as unknown as {loadBatch(definition:typeof def,lod:'l…
+     65|     expect(load).toHaveBeenCalledWith('inf.dog','lod0',coat||undefined…
+       |                  ^
+     66|     expect(prepare.mock.calls[0][1].userData.corpseSource).toBe(asset.…
+     67|     expect(prepare.mock.calls[0][1].index!.count).toBeGreaterThan(3000…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  |functional| tests/unit/render/infected-corpse-surface.test.ts > PO #93 L10 dog cream corpse retains the intact source instead of the reduced living mesh
+AssertionError: expected "loadAsset" to be called with arguments: [ 'inf.dog', 'lod0', 'cream' ]
+
+Received:
+
+  1st loadAsset call:
+
+  [
+    "inf.dog",
+-   "lod0",
++   "lod2",
+    "cream",
+  ]
+
+
+Number of calls: 1
+
+ ❯ tests/unit/render/infected-corpse-surface.test.ts:65:18
+     63|   try{
+     64|     await (crowd as unknown as {loadBatch(definition:typeof def,lod:'l…
+     65|     expect(load).toHaveBeenCalledWith('inf.dog','lod0',coat||undefined…
+       |                  ^
+     66|     expect(prepare.mock.calls[0][1].userData.corpseSource).toBe(asset.…
+     67|     expect(prepare.mock.calls[0][1].index!.count).toBeGreaterThan(3000…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 14 skipped (17)
+   Start at  20:45:11
+   Duration  2.22s (transform 75%, import 17%, tests 7%)
+
