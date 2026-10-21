@@ -50,7 +50,13 @@ const commands: string[][] = [
   ...(target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1'
     ? [
       ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'test-results/playwright/results.json', '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--', 'sh', '-c', 'npm run build && npx playwright test --grep "$1" --grep-invert "$2" --workers=1', 'sh', selection.pattern, infectedGpuPattern],
-      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', gpuSelectionPattern, '--workers=1'],
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', gpuSelectionPattern, '--grep-invert', '@perf', '--workers=1'],
+      ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*@perf)`, '--project=chromium', '--workers=1'],
+    ]
+    : target === 'E07'
+    ? [
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
+      ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*@perf)`, '--project=chromium', '--workers=1'],
     ]
     : target === 'E10'
     ? [
