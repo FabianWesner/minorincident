@@ -1,0 +1,486 @@
+ 5:04  up 73 days,  3:57, 3 users, load averages: 2.48 4.24 4.00
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 20 tests using 1 worker
+
+  ✓   1 [chromium] › tests/perf/e25-light-lab.spec.ts:11:3 › high › T-E25-14c @E25 @E25-AC14 @perf trailer light-lab high within unchanged E18 budgets (13.9s)
+  ✓   2 [chromium] › tests/perf/e25-light-lab.spec.ts:11:3 › low › T-E25-14c @E25 @E25-AC14 @perf trailer light-lab low within unchanged E18 budgets (30.9s)
+  ✓   3 [chromium] › tests/perf/e25-lighting.spec.ts:30:1 › T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets (30.0s)
+  ✓   4 [chromium] › tests/perf/e25-lighting.spec.ts:49:3 › Pixel 7 emulated low › T-E25-14b @E25 @E25-AC14 @perf phone low (4x CPU throttle): L1 morning and night street within the low budget (1.3m)
+{"tier":"high","counts":{"followers":5,"infected":18,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":1750,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":399,"trackPixels":4526}},"heapMB":112.669844,"heapAudit":{"usedSize":112669844,"totalSize":114769920,"embedderHeapUsedSize":2876784,"backingStorageSize":868829629},"baselineDrawCalls":423,"baselineTriangles":718242,"pairDrawCalls":296,"pairTriangles":642975,"followDrawCalls":296,"followTriangles":642975,"p50":5.599999999998545,"p95":8.099999999998545,"max":13.30000000000291}
+  ✓   5 [chromium] › tests/perf/l5-budgets.spec.ts:13:3 › high › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high (45.8s)
+{"tier":"low","counts":{"followers":5,"infected":12,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":525,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":262,"trackPixels":4412}},"heapMB":93.466312,"heapAudit":{"usedSize":93466312,"totalSize":94322688,"embedderHeapUsedSize":2642744,"backingStorageSize":406617848},"baselineDrawCalls":267,"baselineTriangles":280164,"pairDrawCalls":207,"pairTriangles":265349,"followDrawCalls":207,"followTriangles":265349,"p50":15.5,"p95":33.29999999999927,"max":37.600000000000364}
+  ✓   6 [chromium] › tests/perf/l5-budgets.spec.ts:13:3 › low › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low (49.9s)
+{"buildKeys":[],"motion":{"bakedFigures":0,"live":188,"barelyMoving":57,"states":{"wander":158,"chase":15,"attack":11,"attracted":4}},"gpu":"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)","touchPoints":0,"firesStart":28,"firesEnd":28,"tier":"high","backend":"webgl","blasts":7,"peakInfected":200,"frameP50":7.299999999999272,"frameP95":11.899999999999636,"frameP99":13.199999999998909,"hitch":29.200000000000728,"simP95":2.09999942779541,"simFrameP95":2,"draws":208,"triangles":931279,"heapMB":91.787768,"peakPuffs":400,"peakParts":0,"peakParticles":2204,"heroLights":0,"awakeProps":1,"hitches":[],"samples":[],"pipelines":[],"newPrograms":{},"costs":null}
+  ✓   7 [chromium] › tests/perf/l7-district.spec.ts:13:3 › high › T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district high fire and rocket stress (16.3s)
+{"buildKeys":[],"motion":{"bakedFigures":0,"live":97,"barelyMoving":30,"states":{"wander":78,"chase":11,"attack":5,"search":1,"attracted":2}},"gpu":"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)","touchPoints":1,"firesStart":28,"firesEnd":28,"tier":"low","backend":"webgl","blasts":7,"peakInfected":100,"frameP50":17,"frameP95":33.80000000000291,"frameP99":36.20000000000073,"hitch":37.60000000000218,"simP95":4.59999942779541,"simFrameP95":7,"draws":114,"triangles":261099,"heapMB":85.295528,"peakPuffs":120,"peakParts":0,"peakParticles":381,"heroLights":0,"awakeProps":0,"hitches":[],"samples":[],"pipelines":[],"newPrograms":{},"costs":null}
+  ✘   8 [chromium] › tests/perf/l7-district.spec.ts:13:3 › low › T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress (23.8s)
+{"backend":"webgl","tier":"high","hitches":[],"newPrograms":{},"costs":null,"frameMax":24.5,"simFrameP95":2,"updateP95":0,"renderP95":0,"frameP95":10.899999999997817,"simP95":2.1000003814697266,"draws":231,"triangles":929825,"peakInfected":200,"puffs":400,"debris":0,"particles":2156,"lights":0,"props":0,"blasts":7,"initialRegulars":120,"initialAlphas":2,"followers":24,"heapMB":94.4154,"heapAudit":{"usedSize":94415400,"totalSize":95830016,"embedderHeapUsedSize":2597128,"backingStorageSize":417032056}}
+  ✓   9 [chromium] › tests/perf/l7-encounters.spec.ts:6:46 › T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals (22.1s)
+{"backend":"webgl","tier":"low","hitches":[{"ms":44,"elapsed":61.00000038146936,"tick":187,"sim":8,"update":0,"render":0,"builds":292}],"newPrograms":{},"costs":null,"frameMax":44,"simFrameP95":7,"updateP95":0,"renderP95":0,"frameP95":33.79999999999927,"simP95":4.59999942779541,"draws":95,"triangles":201760,"peakInfected":100,"puffs":120,"debris":0,"particles":560,"lights":0,"props":0,"blasts":7,"initialRegulars":60,"initialAlphas":2,"followers":15,"heapMB":85.392908,"heapAudit":{"usedSize":85392908,"totalSize":86654976,"embedderHeapUsedSize":2396944,"backingStorageSize":223996954}}
+  ✘  10 [chromium] › tests/perf/l7-encounters.spec.ts:6:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals (23.9s)
+  ✓  11 [chromium] › tests/perf/l7-lifecycle.spec.ts:5:93 › T-E23-19-lifecycle @E23-AC19 @perf high L5 disposal retains accessibility and releases resources (11.7s)
+  ✓  12 [chromium] › tests/perf/l7-lifecycle.spec.ts:5:93 › T-E23-19-lifecycle @E23-AC19 @perf low L5 disposal retains accessibility and releases resources (9.2s)
+  ✓  13 [chromium] › tests/perf/l7-lifecycle.spec.ts:5:93 › T-E29-20-lifecycle @E29-AC20 @perf high L7 disposal retains accessibility and releases resources (10.4s)
+  ✓  14 [chromium] › tests/perf/l7-lifecycle.spec.ts:5:93 › T-E29-20-lifecycle @E29-AC20 @perf low L7 disposal retains accessibility and releases resources (8.1s)
+{"tier":"high","hitches":[],"counterAgreement":true,"blasts":7,"peakInfected":200,"frameMax":25.599999999998545,"frameP95":8.299999999999272,"simP95":1.3999996185302734,"draws":200,"triangles":946424,"heapMB":67.833276,"peakRawHeapMB":562.564338,"particles":2048,"puffs":269,"debris":0,"gibs":80,"perf":{"l4":null,"chunkResidency":null,"terrain":null,"infected":{"count":350,"liveCount":165,"firstLiveId":295,"available":0},"effects":{"obstruction":{"remainingTicks":0,"opacity":0},"shots":[],"enabled":true,"colorblind":false,"gore":"Full","quality":"high","flashReduction":false,"time":11.006800000000025,"lastSpray":{"actionId":"explosion.rocket","direction":{"x":0.9617106869274887,"z":0.274066697446913},"droplets":48,"chunks":4,"gravity":9.81},"surfaceSplats":0,"pendingSplats":384,"particles":456,"particleCap":2048,"decals":600,"decalCap":600,"gibs":80,"gibCap":80,"telegraphs":[],"hitStop":{"active":false,"until":0,"started":0,"suppressed":0},"flash":0,"blasts":{"wind":{"x":0.55,"z":0.25},"blasts":7,"puffs":272,"puffCap":400,"fireballs":44,"fireballCap":96,"chunks":63,"chunkCap":64,"flames":0,"glows":1,"vehicleSmokeColumns":0,"columns":7,"transientColumns":7,"fireColumns":0,"columnShadows":7,"clouds":0,"scorch":7,"parts":0,"flash":0,"bulletTime":{"scale":1,"remaining":0,"progress":0},"slowMotion":false},"coverage":0,"detached":2735,"dismemberedKills":547,"kills":547,"explosionRadius":6},"nodeBuildMaterials":{},"crowdPreparation":{"workers":8,"submitted":24,"completed":24,"prebuilt":24,"failed":0},"nodeBuilds":154,"profile":{"other":{"drawCalls":50,"triangles":176256},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":127,"triangles":642870}},"profileAssets":{"view:other/Background.mesh/Background.mesh":{"drawCalls":1,"triangles":1984},"shadow:other/Group/rigid-part":{"drawCalls":14,"triangles":27786},"shadow:other/Group/mesh_1":{"drawCalls":2,"triangles":1708},"shadow:other/Group/mesh_1_1":{"drawCalls":1,"triangles":280},"shadow:other/Group/mesh_0":{"drawCalls":2,"triangles":1372},"shadow:other/npcs/Mesh":{"drawCalls":0,"triangles":0},"shadow:other/Group/Mesh":{"drawCalls":0,"triangles":0},"view:other/Group/mesh_0":{"drawCalls":2,"triangles":1372},"view:other/Group/mesh_1":{"drawCalls":2,"triangles":1708},"view:other/Group/mesh_1_1":{"drawCalls":1,"triangles":280},"view:other/Group/rigid-part":{"drawCalls":14,"triangles":27786},"view:other/crowd-accessories/acc.hat-hard-hat:lod1":{"drawCalls":1,"triangles":172},"view:other/crowd-accessories/acc.hat-baseball-cap:lod1":{"drawCalls":1,"triangles":104},"view:other/crowd-accessories/acc.hair-bun:lod1":{"drawCalls":1,"triangles":176},"view:other/crowd-accessories/acc.hat-flat-cap:lod1":{"drawCalls":1,"triangles":140},"view:other/npcs/Mesh":{"drawCalls":0,"triangles":0},"view:other/crowd-accessories/acc.hat-sun-hat:lod1":{"drawCalls":1,"triangles":216},"view:other/crowd-accessories/acc.hair-afro:lod1":{"drawCalls":1,"triangles":120},"view:other/crowd-accessories/acc.hat-bucket-hat:lod1":{"drawCalls":1,"triangles":162},"view:other/crowd-accessories/acc.hair-side-part:lod1":{"drawCalls":1,"triangles":180},"view:other/crowd-accessories/acc.hair-short-crop:lod1":{"drawCalls":1,"triangles":120},"view:other/crowd-accessories/acc.hair-long-straight:lod1":{"drawCalls":1,"triangles":200},"view:other/crowd-accessories/acc.hair-ponytail:lod1":{"drawCalls":1,"triangles":44},"view:other/Group/Mesh":{"drawCalls":17,"triangles":141488},"view:other/Mesh/Mesh":{"drawCalls":1,"triangles":2},"view:other/figure-contact-shadows/figure-contact-shadows":{"drawCalls":1,"triangles":2},"shadow:other/Output Color Transform/Output Color Transform":{"drawCalls":1,"triangles":1}},"updateCpuMs":2.6999998092651367,"renderCpuMs":2,"propUploads":0,"awakeProps":0,"fps":144.9275362318917,"frameMs":6.899999999999636,"simMs":0,"simTicks":0,"simWorldMs":0,"simTickMs":0,"uiMs":0,"drawCalls":197,"triangles":850273,"geometries":331,"textures":63,"entities":713,"backend":"webgl","loadTiming":null,"quality":{"setting":"high","tier":"high","p90Ms":7.3,"slowSeconds":0,"budgets":{"frameMs":16.7,"infected":200,"drawCalls":600,"triangles":1500000,"simMs":4,"heapMB":400,"pixelRatio":2,"shadowSize":2048,"bloomMips":5,"cullDistance":60}},"renderedFrames":2075,"contextLost":false,"paused":true,"heapBytes":396998612,"lighting":{"lightFieldMs":0.09999942779541016,"lightPools":1,"lightCandidates":1,"shadowMaps":1,"heroLights":0,"heroShadow":0,"preset":"golden"}}}
+  ✓  15 [chromium] › tests/perf/l7-rocket.spec.ts:5:46 › T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap (14.4s)
+{"tier":"low","hitches":[{"ms":47.600000000000364,"elapsed":2082.7000001907345,"sim":4.100000381469727,"update":6.299999237060547,"render":6.600000381469727,"builds":147},{"ms":52.80000000000109,"elapsed":2594.5000001907356,"sim":7.800000190734863,"update":10.799999237060547,"render":5.40000057220459,"builds":147},{"ms":49.19999999999891,"elapsed":3862.600000190734,"sim":6,"update":8.5,"render":6.59999942779541,"builds":147},{"ms":50.099999999998545,"elapsed":7703.100000190734,"sim":6.800000190734863,"update":7.600000381469727,"render":6.800000190734863,"builds":147}],"counterAgreement":true,"blasts":7,"peakInfected":100,"frameMax":52.80000000000109,"frameP95":17.799999999999272,"simP95":2.5,"draws":165,"triangles":391672,"heapMB":58.318748,"peakRawHeapMB":306.077117,"particles":512,"puffs":120,"debris":0,"gibs":30,"perf":{"l4":null,"chunkResidency":null,"terrain":null,"infected":{"count":234,"liveCount":100,"firstLiveId":370,"available":116},"effects":{"obstruction":{"remainingTicks":0,"opacity":0},"shots":[],"enabled":true,"colorblind":false,"gore":"Full","quality":"low","flashReduction":false,"time":11.060599999999988,"lastSpray":{"actionId":"explosion.rocket","direction":{"x":0.5278255074978274,"z":-0.8493528322403245},"droplets":12,"chunks":0,"gravity":9.81},"surfaceSplats":0,"pendingSplats":384,"particles":114,"particleCap":512,"decals":600,"decalCap":600,"gibs":30,"gibCap":30,"telegraphs":[],"hitStop":{"active":false,"until":0,"started":0,"suppressed":0},"flash":0,"blasts":{"wind":{"x":0.55,"z":0.25},"blasts":7,"puffs":120,"puffCap":120,"fireballs":16,"fireballCap":96,"chunks":21,"chunkCap":64,"flames":0,"glows":1,"vehicleSmokeColumns":0,"columns":7,"transientColumns":7,"fireColumns":0,"columnShadows":7,"clouds":0,"scorch":7,"parts":0,"flash":0,"bulletTime":{"scale":1,"remaining":0,"progress":0},"slowMotion":false},"coverage":0,"detached":2430,"dismemberedKills":486,"kills":486,"explosionRadius":6},"nodeBuildMaterials":{},"crowdPreparation":{"workers":8,"submitted":24,"completed":24,"prebuilt":24,"failed":0},"nodeBuilds":147,"profile":{"other":{"drawCalls":49,"triangles":66814},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":96,"triangles":308517}},"profileAssets":{"view:other/Background.mesh/Background.mesh":{"drawCalls":1,"triangles":1984},"shadow:other/Group/rigid-part":{"drawCalls":14,"triangles":2510},"shadow:other/Group/mesh_1":{"drawCalls":2,"triangles":910},"shadow:other/Group/mesh_1_1":{"drawCalls":1,"triangles":280},"shadow:other/Group/mesh_0":{"drawCalls":2,"triangles":574},"shadow:other/npcs/Mesh":{"drawCalls":0,"triangles":0},"shadow:other/Group/Mesh":{"drawCalls":0,"triangles":0},"view:other/Group/mesh_0":{"drawCalls":2,"triangles":574},"view:other/Group/mesh_1":{"drawCalls":2,"triangles":910},"view:other/Group/mesh_1_1":{"drawCalls":1,"triangles":280},"view:other/Group/rigid-part":{"drawCalls":14,"triangles":2510},"view:other/crowd-accessories/acc.hat-hard-hat:lod1":{"drawCalls":1,"triangles":86},"view:other/crowd-accessories/acc.hat-baseball-cap:lod1":{"drawCalls":1,"triangles":52},"view:other/crowd-accessories/acc.hair-bun:lod1":{"drawCalls":1,"triangles":88},"view:other/crowd-accessories/acc.hat-flat-cap:lod1":{"drawCalls":1,"triangles":28},"view:other/npcs/Mesh":{"drawCalls":0,"triangles":0},"view:other/crowd-accessories/acc.hat-sun-hat:lod1":{"drawCalls":1,"triangles":162},"view:other/crowd-accessories/acc.hat-bucket-hat:lod1":{"drawCalls":1,"triangles":216},"view:other/crowd-accessories/acc.hair-side-part:lod1":{"drawCalls":1,"triangles":108},"view:other/crowd-accessories/acc.hair-short-crop:lod1":{"drawCalls":1,"triangles":144},"view:other/crowd-accessories/acc.hair-long-straight:lod1":{"drawCalls":1,"triangles":80},"view:other/crowd-accessories/acc.hair-ponytail:lod1":{"drawCalls":1,"triangles":44},"view:other/Group/Mesh":{"drawCalls":17,"triangles":59544},"view:other/Mesh/Mesh":{"drawCalls":1,"triangles":2},"view:other/figure-contact-shadows/figure-contact-shadows":{"drawCalls":1,"triangles":2},"shadow:other/Output Color Transform/Output Color Transform":{"drawCalls":1,"triangles":1}},"updateCpuMs":6.90000057220459,"renderCpuMs":6.299999237060547,"propUploads":0,"awakeProps":0,"fps":59.171597633131,"frameMs":16.900000000001455,"simMs":2.3999996185302734,"simTicks":1,"simWorldMs":2.3000001907348633,"simTickMs":2.3000001907348633,"uiMs":0,"drawCalls":165,"triangles":379606,"geometries":285,"textures":56,"entities":587,"backend":"webgl","loadTiming":null,"quality":{"setting":"low","tier":"low","p90Ms":16,"slowSeconds":0,"budgets":{"frameMs":33.333333333333336,"infected":100,"drawCalls":300,"triangles":500000,"simMs":6,"heapMB":250,"pixelRatio":1.5,"shadowSize":1024,"bloomMips":2,"cullDistance":45}},"renderedFrames":946,"contextLost":false,"paused":true,"heapBytes":308066182,"lighting":{"lightFieldMs":0.5999994277954102,"lightPools":1,"lightCandidates":1,"shadowMaps":1,"heroLights":0,"heroShadow":0,"preset":"golden"}}}
+  ✘  16 [chromium] › tests/perf/l7-rocket.spec.ts:5:46 › T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap (18.1s)
+  ✓  17 [chromium] › tests/perf/weather.spec.ts:7:46 › T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation high (5.1s)
+  ✓  18 [chromium] › tests/perf/weather.spec.ts:7:46 › T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation low (4.9s)
+  ✓  19 [chromium] › tests/perf/weather.spec.ts:16:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets (17.6s)
+  ✓  20 [chromium] › tests/perf/weather.spec.ts:16:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets (30.5s)
+
+
+  1) [chromium] › tests/perf/l7-district.spec.ts:13:3 › low › T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.3
+    Received:    33.80000000000291
+
+      122 |   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);
+      123 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
+    > 124 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
+          |                           ^
+      125 |   expect(result.hitch).toBeLessThanOrEqual(50);
+      126 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);
+      127 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/heap-budgets/tests/perf/l7-district.spec.ts:124:27
+
+    Error Context: test-results/playwright/run-3931/perf-l7-district-low-T-E29-4a467--low-fire-and-rocket-stress-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3931/perf-l7-district-low-T-E29-4a467--low-fire-and-rocket-stress-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3931/perf-l7-district-low-T-E29-4a467--low-fire-and-rocket-stress-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/l7-encounters.spec.ts:6:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.3
+    Received:    33.79999999999927
+
+      54 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);
+      55 |   expect(result.frameMax).toBeLessThanOrEqual(50);
+    > 56 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);
+         |                           ^
+      57 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);
+      58 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);
+      59 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/heap-budgets/tests/perf/l7-encounters.spec.ts:56:27
+
+    Error Context: test-results/playwright/run-3931/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3931/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3931/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/l7-rocket.spec.ts:5:46 › T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 50
+    Received:    52.80000000000109
+
+      63 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);
+      64 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
+    > 65 |   expect(result.frameMax).toBeLessThanOrEqual(50);
+         |                           ^
+      66 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
+      67 | });
+      68 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/heap-budgets/tests/perf/l7-rocket.spec.ts:65:27
+
+    Error Context: test-results/playwright/run-3931/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3931/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3931/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/perf/l7-district.spec.ts:13:3 › low › T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress 
+    [chromium] › tests/perf/l7-encounters.spec.ts:6:46 › T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals 
+    [chromium] › tests/perf/l7-rocket.spec.ts:5:46 › T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap 
+  17 passed (7.8m)
+webgl high light-lab
+webgl high storm-street
+webgl high L7
+webgl high rocket
+webgl high corgi-contact
+webgl low light-lab
+webgl low storm-street
+webgl low L7
+webgl low rocket
+webgl low corgi-contact
+webgpu high light-lab
+webgpu high storm-street
+webgpu high L7
+webgpu high rocket
+webgpu high corgi-contact
+webgpu low light-lab
+webgpu low storm-street
+webgpu low L7
+webgpu low rocket
+webgpu low corgi-contact
+webgl high light-lab
+webgl high storm-street
+webgl high L7
+webgl high rocket
+webgl high corgi-contact
+webgl low light-lab
+webgl low storm-street
+webgl low L7
+webgl low rocket
+webgl low corgi-contact
+webgpu high light-lab
+webgpu high storm-street
+webgpu high L7
+webgpu high rocket
+webgpu high corgi-contact
+webgpu low light-lab
+webgpu low storm-street
+webgpu low L7
+webgpu low rocket
+webgpu low corgi-contact
+[
+  {
+    "name": "L7-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "corgi-contact-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "corgi-contact-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "corgi-contact-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "corgi-contact-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 7,
+    "changedFraction": 0.000012152777777777777,
+    "meanChannelError": 0.00000636574074074074,
+    "maxChannelError": 2
+  },
+  {
+    "name": "light-lab-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "rocket-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 3,
+    "changedFraction": 0.000005208333333333333,
+    "meanChannelError": 0.000023148148148148147,
+    "maxChannelError": 11
+  },
+  {
+    "name": "rocket-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "rocket-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 5,
+    "changedFraction": 0.000008680555555555556,
+    "meanChannelError": 0.000009259259259259259,
+    "maxChannelError": 7
+  },
+  {
+    "name": "rocket-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  }
+]
+[
+  {
+    "name": "L7-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "L7-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "light-lab-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "rocket-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 9,
+    "changedFraction": 0.000015625,
+    "meanChannelError": 0.00002372685185185185,
+    "maxChannelError": 11
+  },
+  {
+    "name": "rocket-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "rocket-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "rocket-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 747,
+    "changedFraction": 0.001296875,
+    "meanChannelError": 0.0016481481481481482,
+    "maxChannelError": 79
+  },
+  {
+    "name": "storm-street-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgpu-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgpu-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  }
+]
