@@ -123,6 +123,9 @@ export class CrowdAccessories extends Group {
       geometry = mergeGeometries(pieces)!; pieces.forEach(g => g.dispose());
     }
     const mesh = new InstancedMesh(geometry, material, 350); mesh.name = `${id}:${lod}`;
+    // Hat rims can share depth with the skull. Keep their overlap independent
+    // of asynchronous material creation order during level preparation.
+    mesh.renderOrder = 1;
     mesh.count = 0; mesh.visible = false; mesh.frustumCulled = false; mesh.receiveShadow = true;
     mesh.instanceMatrix.setUsage(StreamDrawUsage);
     mesh.setColorAt(0, new Color(1, 1, 1)); mesh.instanceColor!.setUsage(StreamDrawUsage);
