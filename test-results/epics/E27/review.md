@@ -1,6 +1,6 @@
 # E27 vision review — checklist H
 
-**Current AC15: MET visually (2026-10-22).** Final-source named H review below supersedes the historical physical-consequence claim; full final verification is pending.
+**Current AC15: MET visually (2026-10-22).** Final-source named H review below supersedes the historical physical-consequence claim; full final verification passes (46 Node, 41 functional browsers, two quiet perf).
 
 Inspected 2026-10-10, headless Chrome / Metal WebGL2. Scene Lab fixtures use a fixed game angle (1.5× framing), and production L4 uses its authored `l4-collapse` photo spot. No L6 missions/data were changed. All twenty-three Scene Lab scenes completed with zero console errors; nine lighting presets and twelve effect scenes are described in the epic reports.
 
@@ -51,4 +51,4 @@ This review supersedes the earlier incomplete physical-consequence signoff. I op
 | should | Flicker / embers / nearby lighting | PASS — night flames change shape at f60/90/180/600; sparks rise and warm pools light the pavement and porch/facade. |
 | should | Class intensity | PASS — grenade is a localized cool gray cloud; medium/car affect a few metres; mega lights a wide area, throws the corpse higher/farther, and leaves multiple fires. |
 
-**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification remains pending until its receipt is complete.
+**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification passes: 46 Node, 41 functional browser and two quiet performance tests.
