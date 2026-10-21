@@ -1,0 +1,109 @@
+{
+  "captures": [
+    {
+      "file": "webgl2-high-z0.5.png",
+      "sha256": "135d2a5a35da38303f4b1a0bef39889a3ccf93ccdc5a5e9c0a850fe7a82d3e78",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgl2",
+      "quality": "high",
+      "zoom": 0.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. Seated before breach: countdown without distance."
+    },
+    {
+      "file": "webgl2-high-z1.5.png",
+      "sha256": "9a3dabe0887d2c39a9bd51491f4650b4d55bbb701470e62fe493c7d49ca24ccc",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgl2",
+      "quality": "high",
+      "zoom": 1.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. After breach: 12/13 aboard, Corgi missing."
+    },
+    {
+      "file": "webgl2-low-z0.5.png",
+      "sha256": "d14c76f7dda72c082de8a5433150900f77dd32856ed9ead439cb862a9b2a1ad4",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgl2",
+      "quality": "low",
+      "zoom": 0.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. Seated before breach: countdown without distance."
+    },
+    {
+      "file": "webgl2-low-z1.5.png",
+      "sha256": "4fef2ba0f808cf6cf24b82bf3eea0ffffa1056e20782ecf9a1157c602f2aab40",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgl2",
+      "quality": "low",
+      "zoom": 1.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. After breach: 12/13 aboard, Corgi missing."
+    },
+    {
+      "file": "webgpu-high-z0.5.png",
+      "sha256": "455b8a4d762c73f30bc018ab3685a873531dd7645436b74544a72102bfe2db03",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 0.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. Seated before breach: countdown without distance."
+    },
+    {
+      "file": "webgpu-high-z1.5.png",
+      "sha256": "304f53e759de1800611df9a5922e37c15d0d5d9746c914e4a588f59c48b13269",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgpu",
+      "quality": "high",
+      "zoom": 1.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. After breach: 12/13 aboard, Corgi missing."
+    },
+    {
+      "file": "webgpu-low-z0.5.png",
+      "sha256": "3eeb96eb42f04e5ae0de5ad2a07e562675de8fd56028bb7badef42f50b87b7a3",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgpu",
+      "quality": "low",
+      "zoom": 0.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. Seated before breach: countdown without distance."
+    },
+    {
+      "file": "webgpu-low-z1.5.png",
+      "sha256": "ed3ce3975e32b35b23a09c2b5d0cc94e7e7d0f3a1cb925df81ef757a3d5882dd",
+      "width": 1600,
+      "height": 900,
+      "backend": "webgpu",
+      "quality": "low",
+      "zoom": 1.5,
+      "reviewed": true,
+      "review": "Clear separation between corgi, Armor and objective; readable text. After breach: 12/13 aboard, Corgi missing."
+    }
+  ],
+  "browserTests": {
+    "passed": 6,
+    "workers": 1,
+    "headless": true,
+    "actualBackendAsserted": true,
+    "zoomsChecked": [
+      0.5,
+      1,
+      1.5
+    ],
+    "phoneLandscape": [
+      844,
+      390
+    ],
+    "phoneTransientCaptureReviewed": true,
+    "phoneReview": "Armor is in the left rail below Home and clear of the objective in the right rail."
+  }
+}
