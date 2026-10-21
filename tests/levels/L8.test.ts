@@ -25,8 +25,9 @@ for (const tier of ['high', 'low'] as const) test(`T-E30-04 T-E30-05 T-E30-07 @E
     expect(w.entities.get(s.busId)?.archetype).toBe('veh.evac-bus');
     expect(w.query({}).filter(e => e.civilian && !e.civilian.zooAnimal && !s.roster.includes(e.id))).toHaveLength(30);
     expect(s.outlets).toHaveLength(4);
+    expect(w.missions!.state.marker).toBe('exit'); expect(w.missions!.state.steps.escape.status).toBe('active');
     advance(w, 3599);
-    expect(w.missions!.state.marker).toBeNull(); expect(w.missions!.state.steps.escape.status).toBe('pending');
+    expect(w.missions!.state.marker).toBe('exit'); expect(w.missions!.state.steps.escape.status).toBe('active');
     expect(w.infected!.active).toHaveLength(0);
     advance(w, 1);
     expect(s.breachedAt).toBe(3600); expect(s.arrivals).toHaveLength(tier === 'low' ? 12 : 24);

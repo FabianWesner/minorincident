@@ -2,7 +2,7 @@
 // named screens, visibility classes, first focus, and separate gameplay input context.
 import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
-import { newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
+import { debugCampaign, newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { debugEntityCounts } from './debugEntityCounts';
@@ -97,6 +97,7 @@ export class GameUI {
         // Locked levels stay focusable (aria-disabled) so a tap or keyboard focus can explain why; activation is blocked.
         // Debug builds (?debug=1) keep the lock styling but let a click start the level anyway (PO 10-20 #76).
         if (b.getAttribute('aria-disabled') === 'true' && !this.debugEnabled) { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
+        if (this.debugEnabled) this.game.campaign = debugCampaign(i as Level, this.game.campaign);
         void this.load(`L${i}`, false, resumeLevel(this.game.campaign) === i);
       });
       b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
