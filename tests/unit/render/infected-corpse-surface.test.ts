@@ -53,3 +53,17 @@ for (const low of [true, false]) for (const asset of regularInfectedModels) {
     } finally { load.mockRestore(); loadCorpse.mockRestore(); prepare.mockRestore(); crowd.dispose(); world.dispose(); }
   });
 }
+
+for(const coat of ['', 'black', 'cream']) test(`PO #93 L10 dog ${coat||'base'} corpse retains the intact source instead of the reduced living mesh`, async()=>{
+  const world=new SimWorld(),crowd=new CrowdView(world,true);world.scenario='L10';
+  const def={...infectedDefinitions.find(d=>d.id==='infected.dog')!,...(coat?{id:`inf.dog.${coat}`,decay:coat}:{})};
+  const asset=manifest.find(d=>d.id==='inf.dog')!;
+  const load=vi.spyOn(AssetRegistry.prototype,'loadAsset').mockImplementation(async(_id,lod)=>model(lod==='lod0'?asset.glb:asset.lods!.lod2!));
+  const prepare=vi.spyOn(StaticCorpses.prototype,'prepare').mockImplementation(()=>{});
+  try{
+    await (crowd as unknown as {loadBatch(definition:typeof def,lod:'lod2'):Promise<void>}).loadBatch(def,'lod2');
+    expect(load).toHaveBeenCalledWith('inf.dog','lod0',coat||undefined);
+    expect(prepare.mock.calls[0][1].userData.corpseSource).toBe(asset.glb);
+    expect(prepare.mock.calls[0][1].index!.count).toBeGreaterThan(3000);
+  }finally{load.mockRestore();prepare.mockRestore();crowd.dispose();world.dispose();}
+});
