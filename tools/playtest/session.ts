@@ -149,6 +149,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
       return true;
     }
+    if (ranged.test(e.player?.current ?? '')) {
+      // Retain the branch's passing gun policy: one body click per target, held until it changes.
+      // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
+      if (keysDown.has('Space')) await press([]);
+      if (aimHeld !== threat.id) {
+        await releaseAim();
+        await page.mouse.move(threat.screen.x, threat.screen.y - 18); await page.mouse.down(); aimHeld = threat.id;
+      }
+      return true;
+    }
     // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
