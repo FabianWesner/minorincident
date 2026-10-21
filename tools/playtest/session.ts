@@ -149,6 +149,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
       return true;
     }
+    if (e.level === 'L6' && e.player?.weapons.includes('weapon.fire-axe') && e.enemies.filter(b => b.d < 3).length >= 3) {
+      // The carried LEFT axe covers a close crowd while the courier keeps retreating. J is its shipped binding;
+      // the active gun remains selected for the next ranged target.
+      await releaseAim();
+      if (now - lastCrowdKick > 750) {
+        await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyJ']); await hold(180); await press([]);
+        lastCrowdKick = now; log({ crowdAxe: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
+      }
+      return false;
+    }
     if (ranged.test(e.player?.current ?? '')) {
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
       // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
