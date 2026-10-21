@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
+import { validateSave } from '../../src/sim/progression/Save';
 import { assertRenderedBodies, playtestSave } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
@@ -18,4 +19,10 @@ test('#99 an empty handover frame is valid; visible bodies still require rendere
   expect(() => assertRenderedBodies([{ drawn: false }])).not.toThrow();
   expect(() => assertRenderedBodies([{ drawn: true, joints: {} }])).not.toThrow();
   expect(() => assertRenderedBodies([{ drawn: true }])).toThrow('rendered-body observations');
+});
+
+test('#99 the fists profile satisfies the real campaign save validator', () => {
+  const source = preset('L6-default');
+  expect(validateSave(source)).toBe(true);
+  expect(validateSave(playtestSave(source, 'male', 'fists'))).toBe(true);
 });
