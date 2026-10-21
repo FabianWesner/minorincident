@@ -25,10 +25,10 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
   def.gates['l5-metro-shutter'] = { anchor: 'l5-metro-shutter', open: true };
   def.anchors['l5-brace'].radius = 1.3; def.anchors['l5-metro-foot'].radius = l5.metro.triggerM; def.anchors['l5-plaza'].radius = 6;
   for (const s of l5Survivors) def.anchors[`l5-ring-${s.key}`].radius = l5.survivors.reachM;
-  // P0 10-20: the Metro ring sits where the arrival starts, on the second tread behind the shutter in the courier's right-hand lane
-  // (the followers queue on the left). The old ring at the street-side `metro-entrance` anchor triggered nothing.
+  // The front-left tread reads between the street-side pillars in the approach camera.
+  // Every point inside the drawn ring lies in the real arrival box behind the shutter.
   const door = def.anchors['l5-metro-shutter'];
-  def.anchors['l5-metro-in'] = { x: door.x + .35, y: .94, z: door.z - 1.3, radius: .6, yaw: 0 };
+  def.anchors['l5-metro-in'] = { x: door.x - .3, y: .94, z: door.z - 1.31, radius: .65, yaw: 0 };
   const step = (id: string, text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start'], type: ObjectiveDef['type'] = 'custom'): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };
