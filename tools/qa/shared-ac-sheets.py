@@ -50,8 +50,7 @@ elif sys.argv[1] == 'moves':
         evidence.append(record)
     for group, start in [('a', 0), ('b', 7)]:
         names = sorted(p.name for p in (root / moves[start]).glob('*.png'))
-        split = (len(names) + 1) // 2
-        for part, phases in enumerate([names[:split], names[split:]], 1):
+        for part, phases in enumerate([names], 1):
             rows = []
             for move in moves[start:start + 7]:
                 ticks = {p['name']: p['tick'] for p in evidence[moves.index(move)]['proof']}

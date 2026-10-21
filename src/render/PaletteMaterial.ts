@@ -169,7 +169,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
         const wet = weatherSurface.wetness.mul(normalWorld.y.max(0));
-        const streak = positionWorld.x.mul(4.1).add(positionWorld.z.mul(.7).sin().mul(1.8)).sin().abs().pow(12).mul(positionWorld.z.mul(1.3).sin().mul(.3).add(.7)).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
+        // Broken, unequal puddle glints rather than a continuous set of evenly
+        // spaced sine bands. World-space noise keeps them anchored as we move.
+        const phase = noise(positionWorld.xz.mul(.6)).mul(5).add(noise(positionWorld.xz.mul(2.4)).mul(1.1));
+        const breakup = noise(positionWorld.xz.mul(vec2(2.3, .45))).smoothstep(.3, .75);
+        const streak = positionWorld.x.mul(4.1).add(phase).sin().abs().pow(12).mul(breakup).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
         result.addAssign(streak);
       });
       if (mode & flags.fog) {
@@ -236,6 +240,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           graded.assign(max(this.heroFigure, this.companion.mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0))).oneMinus());
         });
       }
+      // The final composite's shoulder lowered dense-fog courier contrast just
+      // below 3:1. Keep a small, hue-preserving visibility margin on her figure
+      // after the fog/night key, without lifting the surrounding ground ring.
+      if (mode & flags.fog) result.mulAssign(float(1).add(this.heroFigure.mul(weatherSurface.fog.smoothstep(.4, .8)).mul(.08)));
       result.addAssign(this.hitFlash);
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
