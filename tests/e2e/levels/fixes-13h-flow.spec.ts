@@ -18,6 +18,7 @@ async function boarded(page: Page, quality: 'high' | 'low') {
     a.teleport(1, w.missions!.l8!.door()); await a.step(1); a.camera.follow();
   }, quality);
   await page.keyboard.down('e'); await page.evaluate(() => window.__SS__!.step(2)); await page.keyboard.up('e');
+  await page.evaluate(() => window.__SS__!.step(60));
   await expect(page.getByTestId('vehicle-durability')).toBeVisible();
   await expect(page.getByTestId('objective-text')).toContainText('Wait for the breach');
   await expect(page.getByTestId('objective-text')).not.toContainText(/\b0\s*m\b/);
@@ -34,10 +35,12 @@ async function layout(page: Page, zoom: number) {
   const boxes = await page.evaluate(() => {
     const rect = (id: string) => { const r = document.querySelector<HTMLElement>(`[data-testid=${id}]`)!.getBoundingClientRect(); return { x: r.x, y: r.y, right: r.right, bottom: r.bottom }; };
     const companion = document.body.classList.contains('touch-ui') ? 'corgi-badge' : 'corgi-companion';
-    return { companion: rect(companion), armor: rect('vehicle-durability'), hud: document.querySelector('[data-testid=objective-text]')!.textContent };
+    return { companion: rect(companion), armor: rect('vehicle-durability'), objective: rect('objective-tracker'), hud: document.querySelector('[data-testid=objective-text]')!.textContent };
   });
   const { companion: c, armor: a } = boxes;
   expect(c.right <= a.x || a.right <= c.x || c.bottom + 4 <= a.y || a.bottom + 4 <= c.y, JSON.stringify(boxes)).toBe(true);
+  const o=boxes.objective;
+  expect(o.right<=a.x || a.right<=o.x || o.bottom+4<=a.y || a.bottom+4<=o.y, JSON.stringify(boxes)).toBe(true);
   expect(a.bottom).toBeLessThanOrEqual(page.viewportSize()!.height);
   return boxes;
 }
@@ -47,6 +50,21 @@ for (const quality of ['high', 'low'] as const) {
     test.setTimeout(180_000); await boarded(page, quality);
     const rows = [];
     for (const zoom of [.5, 1, 1.5]) {
+      if (zoom === 1.5) {
+        // Capture the other wait state with one identifiable missing passenger.
+        await page.evaluate(async () => {
+          const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world, zoo = w.missions!.l8!;
+          zoo.advance();
+          const dog = w.entities.values().find(e => e.companion)!; a.teleport(dog.id, { x: 0, z: 0 });
+          for (const id of zoo.roster()) {
+            const e = w.entities.get(id)!; Object.assign(e.transform, zoo.door()); w.spatial.set(id,e.transform.x,e.transform.z);
+            if (!w.vehicles!.boardPassenger(zoo.state.carId,id)) throw new Error(`Fixture passenger ${id} could not board`);
+          }
+          await a.step(120);
+        });
+        await expect(page.getByTestId('objective-text')).toContainText('Corgi missing');
+        await expect(page.getByTestId('objective-text')).not.toContainText('0/0');
+      }
       rows.push({ zoom, ...await layout(page, zoom) });
       if (zoom !== 1) { mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/${backend}-${quality}-z${zoom}.png` }); }
     }
