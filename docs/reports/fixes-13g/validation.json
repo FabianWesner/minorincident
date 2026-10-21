@@ -50,7 +50,14 @@
   },
   "remoteSuite": {
     "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
-    "status": "running"
+    "status": "passed",
+    "exitCode": 0,
+    "passed": 2292,
+    "skipped": 11,
+    "filesPassed": 419,
+    "filesSkipped": 3,
+    "durationSeconds": 3017.39,
+    "runner": "2.28.24.66"
   },
   "reviewedCaptureSheets": 8,
   "captureMatrix": {
@@ -74,5 +81,7 @@
     ]
   },
   "baselineExpectedFailures": 19,
-  "additionalAlphaLoadOrderExpectedFailures": 16
+  "additionalAlphaLoadOrderExpectedFailures": 16,
+  "allRequiredChecksTerminal": true,
+  "allFiveFixesComplete": true
 }
