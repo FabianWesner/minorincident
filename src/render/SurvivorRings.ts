@@ -20,8 +20,8 @@ export class SurvivorRings extends Group {
   }
   /** Rings currently drawn. */
   visibleCount(): number { let n = 0; for (const r of this.rings.values()) if (r.visible) n++; return n; }
-  update(): void {
-    const mission = this.world.missions, l5 = mission?.state.l5, searching = !!l5 && l5.phase === 'search' && !l5.accountedAt;
+  update(storyShot = false): void {
+    const mission = this.world.missions, l5 = mission?.state.l5, searching = !storyShot && !this.world.storyLock && !!l5 && l5.phase === 'search' && !l5.accountedAt;
     const pulse = 1 + .06 * Math.sin(this.world.tick * .12);
     for (const [key, ring] of this.rings) {
       const r = searching ? l5!.survivors.find(x => x.key === key) : undefined, anchor = r && r.status === 'hidden' ? mission!.def.anchors[`l5-ring-${key}`] : null;

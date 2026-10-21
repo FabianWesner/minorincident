@@ -929,7 +929,7 @@ export class GameView implements Lifecycle {
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
-    this.marker?.update(this.view.storyShot); this.survivorRings?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight,this.view.storyShot);
+    this.marker?.update(this.view.storyShot); this.survivorRings?.update(this.view.storyShot); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight,this.view.storyShot);
     pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
     this.syncMountedGun();
