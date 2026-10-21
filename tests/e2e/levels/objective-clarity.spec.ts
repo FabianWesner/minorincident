@@ -173,7 +173,7 @@ for(const quality of ['high','low'] as const)test(`PO 10-21 #4 #5 research and a
     a.teleport(1,{x:2707,z:45});a.camera.follow();await a.step(1);
   });
   await capture(page,`${quality}-l10-research`,1);await capture(page,`${quality}-l10-research`,1.5);
-  await clickGround(page,2707,41.5);
+  await clickGround(page,2707,41.25);
   for(let i=0;i<100;i++){await page.evaluate(()=>window.__SS__!.step(6));if(await page.evaluate(()=>window.__SS__!.missions.state()!.steps.research.status==='completed'))break;}
   expect(await page.evaluate(()=>window.__SS__!.missions.state()!.steps.research.status)).toBe('completed');
 });
