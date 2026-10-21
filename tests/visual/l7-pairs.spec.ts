@@ -1,6 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { test, expect, boot } from '../e2e/fixtures';
+import { levelFiveLayouts } from '../../src/levels/L5/layout';
+import type { DistrictLayout } from '../../src/levels/districts/types';
 
 /** Capture the actual Fairhaven twins with identical cameras. Pixel evidence
  * complements the landmark/decay unit contracts and the recorded vision review. */
@@ -8,12 +10,12 @@ for (const quality of ['high', 'low'] as const) test(`T-E29-18 @E29-AC18 W5/W6 F
   test.setTimeout(600_000);
   await boot(page, `/?test=1&renderer=webgl&quality=${quality}&dpr=1&audio=muted`);
   const out = `test-results/epics/E29/pairs-${quality}`; mkdirSync(out, { recursive: true });
-  const layout = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8'));
+  const layout = levelFiveLayouts([JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as DistrictLayout])[0];
   const points = ['plaza', 'harbor-street', 'metro-entrance', 'kessler-lane'].map(name => {
     const [x, , z] = layout.anchors[`pair-${name}`].position as number[];
     return { name, x, z };
   });
-  const images = new Map<string, PNG>(), poses = new Map<string, unknown>(), proof: unknown[] = [];
+  const images = new Map<string, PNG>(), poses = new Map<string, { position: number[]; target: number[] }>(), proof: unknown[] = [];
   for (const level of ['L5', 'L7'] as const) {
     await page.evaluate(async ({ level, quality }) => { const a = window.__SS__!; await a.loadLevel(level, { seed: 29, progression: `${level}-default` }); a.pause(); a.settings.set({ quality }); }, { level, quality });
     for (const point of points) {
@@ -23,7 +25,8 @@ for (const quality of ['high', 'low'] as const) test(`T-E29-18 @E29-AC18 W5/W6 F
       }, point);
       const image = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/${point.name}-${level}.png` }));
       if (level === 'L5') { images.set(point.name, image); poses.set(point.name, camera); continue; }
-      expect(camera).toEqual(poses.get(point.name));
+      const reference = poses.get(point.name)!;
+      for (const key of ['position', 'target'] as const) camera[key].forEach((value, i) => expect(value).toBeCloseTo(reference[key][i], 10));
       const before = images.get(point.name)!; let changed = 0, visible = 0, count = 0;
       for (let i = 0; i < image.data.length; i += 16) {
         count++;

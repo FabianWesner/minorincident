@@ -53,6 +53,8 @@ import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
 import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
 import { TerrainView } from './TerrainView';
+import { heightSteps } from '../sim/world/HeightSteps';
+import { HeightStepEdges } from './HeightStepEdges';
 import { batchPerimeterPosts } from './PerimeterPosts';
 import { NightAccents, nightAccents } from './NightAccents';
 
@@ -122,6 +124,8 @@ export class DistrictView extends Group {
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
   private terrain?: TerrainView;
+  private stepEdges?: HeightStepEdges;
+  private maxBarTerrainHeight = 0;
   private terrainHorizon?: Group;
   terrainState() { return this.terrain?.snapshot() ?? null; }
   /** Borrowed geometry/materials: the caller warms and detaches this copy. */
@@ -153,6 +157,10 @@ export class DistrictView extends Group {
   }
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
+    if (this.world.composition.id === 'L7') {
+      this.maxBarTerrainHeight = Math.max(0, ...this.world.districts.flatMap(d => [...d.layout.surfaces.map(s => s.height ?? 0), ...d.decay.colliders.filter(c => c.walkable).map(c => c.aabb.max[1])]));
+      this.stepEdges = new HeightStepEdges(heightSteps(this.world), this.materials); this.add(this.stepEdges);
+    }
     const ambient = timeOfDay[this.world.composition.timeOfDay].ambient;
     if (ambient) { this.ambient = new AmbientLife(this.materials, ambient); this.ambient.setQuality(this.low); this.add(this.ambient); }
     const accents = nightAccents(this.world);
@@ -719,6 +727,17 @@ export class DistrictView extends Group {
   occludesBar(camera: PerspectiveCamera, target: Vector3): boolean {
     this.barRay.set(camera.position, this.barHit.copy(target).sub(camera.position).normalize());
     this.barRay.far = camera.position.distanceTo(target) - .01;
+    // Generated retaining faces enclose the L7 height field. Limit the filled-column
+    // test to that terrain so overhanging decks still use their exact solid geometry.
+    const ray = this.barRay.ray, horizontal = Math.hypot(ray.direction.x, ray.direction.z);
+    if (this.stepEdges && horizontal > 1e-6) for (let distance = this.barRay.far - .15 / horizontal; distance > 0; distance -= .2 / horizontal) {
+      const y = ray.origin.y + ray.direction.y * distance;
+      const x = ray.origin.x + ray.direction.x * distance, z = ray.origin.z + ray.direction.z * distance;
+      if (this.world.pavingHeight(x, z) > y + .05) return true;
+      // All support tops are below the camera. Once above their maximum there
+      // is no need to keep marching toward the lens.
+      if (y > this.maxBarTerrainHeight) break;
+    }
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
       for (let i = 0; i < entry.refs.length; i++) {
@@ -1237,6 +1256,7 @@ export class DistrictView extends Group {
   dispose(): void {
     this.disposed = true;
     this.terrain?.dispose();
+    this.stepEdges?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.ambient?.dispose(); this.accents?.dispose();
     this.foliage.dispose();

@@ -14,13 +14,17 @@ export function resolvePosition(
   return [ref.x, ref.z];
 }
 export function inside(point: Point, polygon: Point[]): boolean {
+  return insideXZ(point[0], point[1], polygon);
+}
+/** Scalar form for retained height-field probes in input and rendering hot paths. */
+export function insideXZ(px: number, pz: number, polygon: Point[]): boolean {
   let result = false;
   for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
     const [x, z] = polygon[i],
       [xx, zz] = polygon[j];
     if (
-      z > point[1] !== zz > point[1] &&
-      point[0] < ((xx - x) * (point[1] - z)) / (zz - z) + x
+      z > pz !== zz > pz &&
+      px < ((xx - x) * (pz - z)) / (zz - z) + x
     )
       result = !result;
   }
