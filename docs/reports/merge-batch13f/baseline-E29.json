@@ -1,0 +1,292 @@
+{
+  "commit": "56d7e7d16",
+  "stats": {
+    "startTime": "2026-10-21T10:21:23.351Z",
+    "duration": 530861.8539999999,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 17,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/combat/l7-rocket.spec.ts",
+      "title": "T-E29-05-browser @E29-AC05 rocket HUD stays Ready and firing has no ammunition/reload state",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/combat/l7-rocket.spec.ts",
+      "title": "T-E29-04-browser @E29-AC04 real E collects the rocket beside the wreck and retains the arsenal",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/driving.spec.ts",
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/l7-district.spec.ts",
+      "title": "T-E29-10-district-browser @E29-AC10 persistent W6 fires and late civilian models survive staged loading",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/levels/l7-departure.spec.ts",
+      "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, high",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/levels/l7-departure.spec.ts",
+      "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, low",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/levels/l7-entry.spec.ts",
+      "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"corridor\"\nReceived: \"rocket\"\n\n  56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });\n  57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });\n> 58 |     expect(before.checkpoint).toBe(checkpoint);\n     |                               ^\n  59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });\n  60 |     const after = await page.evaluate(() => window.__SS__!.getState());\n  61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);\n    at /private/tmp/mi-merge-batch13f-base/tests/e2e/levels/l7-entry.spec.ts:58:31"
+      ]
+    },
+    {
+      "file": "e2e/levels/l7-entry.spec.ts",
+      "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"corridor\"\nReceived: \"rocket\"\n\n  56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });\n  57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });\n> 58 |     expect(before.checkpoint).toBe(checkpoint);\n     |                               ^\n  59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });\n  60 |     const after = await page.evaluate(() => window.__SS__!.getState());\n  61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);\n    at /private/tmp/mi-merge-batch13f-base/tests/e2e/levels/l7-entry.spec.ts:58:31"
+      ]
+    },
+    {
+      "file": "e2e/levels/l7-entry.spec.ts",
+      "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"corridor\"\nReceived: \"rocket\"\n\n  56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });\n  57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });\n> 58 |     expect(before.checkpoint).toBe(checkpoint);\n     |                               ^\n  59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });\n  60 |     const after = await page.evaluate(() => window.__SS__!.getState());\n  61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);\n    at /private/tmp/mi-merge-batch13f-base/tests/e2e/levels/l7-entry.spec.ts:58:31"
+      ]
+    },
+    {
+      "file": "e2e/levels/l7-entry.spec.ts",
+      "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"corridor\"\nReceived: \"rocket\"\n\n  56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });\n  57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });\n> 58 |     expect(before.checkpoint).toBe(checkpoint);\n     |                               ^\n  59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });\n  60 |     const after = await page.evaluate(() => window.__SS__!.getState());\n  61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);\n    at /private/tmp/mi-merge-batch13f-base/tests/e2e/levels/l7-entry.spec.ts:58:31"
+      ]
+    },
+    {
+      "file": "e2e/levels/l7-focus-load.spec.ts",
+      "title": "@E29 P0 focus lost while L7 loads: the pause menu shows and Resume starts the level",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/levels/l7-real-input.spec.ts",
+      "title": "T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and L8 handover",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/levels/l7-real-input.spec.ts",
+      "title": "T-E29-17-touch @E29-AC17 touch pickup and corridor checkpoint retain a bounded HUD",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"corridor\"\nReceived: \"rocket\"\n\n  87 |     await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: -23, z: 47 }); a.camera.follow(); await a.step(1); });\n  88 |     await move({ x: -31, z: 47 }, 1);\n> 89 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('corridor');\n     |                                                                                    ^\n  90 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);\n  91 |     for (const id of ['objective-tracker', 'vitals', 'touch-controls']) {\n  92 |       const b = await page.getByTestId(id).boundingBox(); expect(b).not.toBeNull();\n    at /private/tmp/mi-merge-batch13f-base/tests/e2e/levels/l7-real-input.spec.ts:89:84"
+      ]
+    },
+    {
+      "file": "e2e/menus-mouse.spec.ts",
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z0.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z0.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z0.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-night.spec.ts",
+      "title": "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1.5",
+      "project": "chromium",
+      "status": "unexpected",
+      "errors": [
+        "Error: Courier clipped pixel share\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.03\nReceived:    NaN\n\n  44 |     const contrast = (sum / pixels + .05) / (ring.reduce((a, b) => a + b, 0) / ring.length + .05);\n  45 |     writeFileSync(`${out}/${name}.json`, JSON.stringify({ pixels, contrast, clippedShare: clipped / pixels, ringSamples: ring.length, colours, daylight, failures, setup }, null, 2));\n> 46 |     expect(clipped / pixels, 'Courier clipped pixel share').toBeLessThanOrEqual(.03);\n     |                                                             ^\n  47 |     expect(pixels).toBeGreaterThan(200); expect(contrast).toBeGreaterThanOrEqual(3);\n  48 |     expect(failures, 'Courier keeps her daylight colours at night').toEqual([]);\n  49 |     expect(setup.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu'); expect(setup.lighting!.preset).toBe('L6'); expect(setup.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);\n    at /private/tmp/mi-merge-batch13f-base/tests/visual/l7-night.spec.ts:46:61"
+      ]
+    },
+    {
+      "file": "visual/l7-pairs.spec.ts",
+      "title": "T-E29-18 @E29-AC18 W5/W6 Fairhaven pairs retain landmarks and show additional destruction high",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    },
+    {
+      "file": "visual/l7-pairs.spec.ts",
+      "title": "T-E29-18 @E29-AC18 W5/W6 Fairhaven pairs retain landmarks and show additional destruction low",
+      "project": "chromium",
+      "status": "expected",
+      "errors": []
+    }
+  ]
+}
