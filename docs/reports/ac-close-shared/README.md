@@ -27,6 +27,28 @@ Both existing smoke tests pass together on the repaired source ([receipt](eviden
 
 Opened the [before/after and beacon phases](smoke-repair.jpg): the repaired courier's red/teal clothing and warm face separate from the cloud; the gray billows remain visible around her. The beacon visibly lights the cloud pink in its on phase. This closes the two focused regressions; the complete final-source E27 verifier and its H review are still pending.
 
+## Spatial controls and shared bars — E07-AC05/06/19
+
+[Spatial before/after and solid-cover sheet](spatial.jpg), [complete actor/HP/event receipts](evidence/spatial.json.gz). Opened both seven-move halves at readable size. **28 controls pass; the literal zebra corridor control fails** as detailed below. Every pre-activation receipt asserts `inspectionGhost: false` and `god: false`. These are real Scene Lab actors, manual legal attacks and solid privacy fences, with no altered attack timers or damage.
+
+| Move | Boundary outcome (HP) / scope |
+| --- | --- |
+| Alpha charge / grab-throw | Inside 100→70; outside 100→100 for each. |
+| Alpha ground slam | 4 m inner/outer control: 100→75 / 100→100. |
+| Alpha / gorilla roar | Radius−0.01 m receives the roar; radius+0.01 m does not. The covered target hears it, as expected for sound rather than a damaging projectile. Far radius controls are recorded numerically; they do not fit the close image. |
+| Lion pounce / flank | Pounce hits 100→70 at 6 m; 20 m control remains 100 and the lunge stops within 8.001 m. Flank moves laterally >2 m without direct damage. |
+| Gorilla pound / grab-throw | Inside 100→70; outside 100→100 for each. |
+| Elephant charge / swipe | Charge 100→60 / outside 100; swipe 100→75 / outside 100, including the rear/arc control. |
+| Zebra kick | Rear inner control 100→80; outside and front controls remain 100. |
+| Zebra stampede | Two zebras each hit once: inside 100→50, nominally outside **100→50**. Literal corridor check fails; separate 0.88 m physical-contact control is untouched. |
+| Flamingo dive | Inside 100→95; outside 100→100. |
+
+Solid-cover cases pass for all damaging moves; the courier remains untouched behind the fence. The sheets show empty ground warnings before impact, inside knockdowns after the charge/swipe/kick, and the protected courier still standing behind cover. Long charge/stampede cue tails and distant roar targets extend beyond this close camera; the separate per-move timing captures cover full cue framing.
+
+The **12-case shared-bar matrix passes**: WebGL2/WebGPU × day/night × 1600×900 high, 390×844 low and 844×390 low. [Receipt](evidence/bar-matrix.log.txt), [opened matrix](bars.jpg), [pixel/state readings](evidence/bars.json.gz). Minimum sampled pairwise fill/empty/outline contrast is **3.086:1**. Actual HP updates within one redraw; dimensions are **64×8 / 48×6**; camera anchors stay within two CSS pixels. Pristine bars stop just beyond 15 m, damaged bars remain, off-frustum/dead-by-explosion bars disappear, and same-id infection gains eligibility. Recoverable downing has an empty bar and recovery restores it. Separate occlusion and zoo scenes reset their own authored daytime lighting; the matrix's night label applies to the initial shared-bar scene, not those later fixtures.
+
+Opened the full-size WebGPU night phone frame: the pale outline, red fill and dark empty section remain crisp above the infected, with a visible gap to its head; the healthy civilian has no bar. In the occlusion pair the building hides both the infected and bar; the rotated camera reveals both. The zoo frame shows separate lion/gorilla/flamingo bars with half fill. The dedicated Alpha and elephant/zebra/flamingo phone probes remain part of the final E07 verification; the opt-in regular-runner matrix alone is not substituted for those actual archetypes.
+
 ## Named Checklist D review — E07-AC13
 
 Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, both WebGL2/WebGPU, high/low, real zoom **0.5 / 1 / 1.5**, with a second frame adding Brute/runner warnings. [Matrix](d-horde.jpg), [state receipts](evidence/horde.json.gz). The capture runner asserts the actual backend/tier, 60 infected before the warning additions and actual camera zoom; it scales the named camera pose rather than relabeling one fixed view.
@@ -69,7 +91,7 @@ Reason: this reconciles the nominal ground cue with the established physical-con
 
 | Criterion | Current evidence / remaining proof |
 | --- | --- |
-| E07-AC05 | Restored warnings repaired; all 14 timing/restore browser probes pass. Spatial controls and final capture review remain pending. |
+| E07-AC05 | Restored warnings repaired; all 14 timing/restore browser probes pass. Spatial controls pass except the literal zebra corridor proposal; final timing-capture framing review remains pending. |
 | E07-AC06 | Shared Alpha move proof and the desktop/phone, day/night, occlusion bar matrix remain pending. |
 | E07-AC13 | Named 60-runner golden-hour Checklist D passes all five items across both tiers/backends and three actual zooms; see matrix above. |
 | E07-AC19 | Zoo spatial/bar proof remains in progress. The nominal zebra-corridor wording has the proposed rewrite above; literal outside-corridor immunity is not met. |
@@ -78,3 +100,11 @@ Reason: this reconciles the nominal ground cue with the established physical-con
 | E28-AC12 | Six-mood Checklist G/reference review remains pending. |
 
 No criterion, threshold, difficulty or test is weakened. No proposed rewrite is adopted. Capture media retained here: two repair comparison sheets so far (limit twelve).
+
+## Current memory candidate (not yet accepted)
+
+Index-only crowd LOD simplification left unreferenced vertices in live/cached geometry. `compactCrowdGeometry` now removes only those vertices after final appearance packing. An exact remote audit of **20 shipped asset/tier cases** keeps every expanded indexed attribute hash and triangle count identical; raw packed channel types/normalization and group/draw/bounds contracts have dedicated regression coverage. The first audit saves 502,368/793,440 vertex bytes across the ten high/low LOD2 model samples; this is CPU geometry accounting, **not** a browser heap result.
+
+The larger candidate removes the prepared-cache's second CPU copy of finished vertex/index arrays. `cloneCrowdGeometry` shares immutable arrays through **independent BufferAttribute/geometry wrappers**, so scene GPU uploads/disposal, per-instance channels, bounds and metadata stay independently owned. The final audit also proves clone attribute equality, separate wrappers and shared array identity for all twenty cases. [Exact asset receipts](evidence/compact-bake-final.json), [remote static/regression receipt](evidence/compact-final2.log.txt). No animation, triangle, actor, particle or corpse is removed. A failed intermediate static check caught a typed morph-channel index; the corrected run passes. Browser heap, pixels and lifecycle acceptance are pending.
+
+The baseline E28 verifier additionally found fog-player contrast **2.9636:1 <3:1** on the repaired composite. Its opened image has a visible but washed courier against the night road. A hue-preserving 8% dense-fog figure gain after the night key is now under test; it leaves the ground/ring and gameplay unchanged. No passing contrast result is claimed yet.

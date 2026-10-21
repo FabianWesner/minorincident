@@ -31,7 +31,10 @@ try {
     await page.waitForFunction(() => !!window.__SCENE__);
     await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     const cdp = await context.newCDPSession(page);
-    for (const scenario of (process.env.HEAP_AUDIT_LIFECYCLE === '1' ? [] : ['light-lab', 'storm-street', 'L7', 'rocket', 'corgi-contact'])) {
+    const scenarios = ['light-lab', 'storm-street', 'L7', 'rocket', 'corgi-contact'];
+    const selected = process.env.HEAP_AUDIT_SCENARIOS?.split(',') ?? scenarios;
+    if (selected.some(s => !scenarios.includes(s))) throw Error('Unknown heap audit scenario');
+    for (const scenario of (process.env.HEAP_AUDIT_LIFECYCLE === '1' ? [] : selected)) {
       console.log(`${backend} ${quality} ${scenario}`);
       await page.evaluate(async ({ scenario, quality }) => {
         const a = window.__SS__!;
