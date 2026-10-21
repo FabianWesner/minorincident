@@ -60,3 +60,43 @@ elif sys.argv[1] == 'moves':
         json.dump(evidence, f, separators=(',', ':'))
 else:
     raise SystemExit('Use repairs or moves')
+
+if sys.argv[1] == 'bars':
+    root = Path('test-results/ac-close-shared')
+    rows = []
+    for backend in ['webgl2', 'webgpu']:
+        for night in [0, 1]:
+            folder = root / 'bars' / f'{backend}-{night}'
+            for width in [1600, 390, 844]:
+                label = f'{backend} {width} ' + ('night' if night else 'day')
+                rows.append([(folder / f'after-{width}.png', label + ' real HP'),
+                             (folder / f'occlusion-before-{width}.png', 'day: hidden behind building'),
+                             (folder / f'occlusion-after-{width}.png', 'day: camera reveals bar'),
+                             (folder / f'zoo-after-{width}.png', 'day: lion/gorilla/flamingo')])
+    actual = root / 'bars-final'
+    rows.append([(actual / 'alpha-before-1600.png', 'Actual Alpha 1600: full HP'),
+                 (actual / 'alpha-after-1600.png', 'Actual Alpha 1600: real damage')])
+    phone = Path('test-results/epics/E07/phone-bars')
+    for width in [390, 844]:
+        rows.append([(actual / f'alpha-before-{width}.png', f'Actual Alpha {width}: full HP'),
+                     (actual / f'alpha-after-{width}.png', f'Actual Alpha {width}: damaged'),
+                     (phone / f'elephant-{width}.png', f'Elephant {width}: 900/1200 HP'),
+                     (phone / f'zebra-flamingo-{width}.png', f'Zebra/flamingo {width}: real HP')])
+    # Preserve portrait detail rather than reducing a phone into a landscape tile.
+    heights = [225] * 13 + [844, 225]
+    result = Image.new('RGB', (1600, sum(h + 30 for h in heights)), '#111722')
+    draw = ImageDraw.Draw(result)
+    top = 0
+    manifest = []
+    for cells, height in zip(rows, heights):
+        for col, (path, label) in enumerate(cells):
+            frame = Image.open(path).convert('RGB')
+            frame.thumbnail((400, height), Image.Resampling.LANCZOS)
+            result.paste(frame, (col * 400 + (400 - frame.width) // 2, top))
+            draw.text((col * 400 + 4, top + height + 3), label, font=FONT, fill='white')
+            manifest.append({'path': str(path), 'label': label, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+        top += height + 30
+    result.save(DEST / 'bars.jpg', quality=92, subsampling=0)
+    proofs = {str(p): json.loads(p.read_text()) for p in [*actual.glob('alpha-proof-*.json'), *phone.glob('*.json')]}
+    with gzip.open(DEST / 'evidence/phone-bars-final.json.gz', 'wt') as f:
+        json.dump({'proofs': proofs, 'images': manifest}, f)

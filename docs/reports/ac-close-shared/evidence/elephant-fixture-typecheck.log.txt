@@ -1,0 +1,9 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.28.24.66:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 44s, 30459 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-72830-1792626575; queueing for a slot
+[runner] slot 0 acquired; load 1.21 3.32 6.57
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+[remote] done exit=0 (runner 2.28.24.66, sync 44s, remote total 59s)
