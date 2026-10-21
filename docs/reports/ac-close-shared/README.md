@@ -1,6 +1,6 @@
 # Shared acceptance closure — E07 / E27 / E28
 
-2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07/E27 verification is still running/pending; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
+2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07 verification is running; E27 is done; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
 
 | Partial AC | Current disposition |
 | --- | --- |
@@ -8,7 +8,7 @@
 | E07-AC06 | Alpha move/spatial controls and 12-case shared bar matrix pass; final actual Alpha/phone captures pending. |
 | E07-AC13 | Met: named 60-runner Checklist D, all five items. |
 | E07-AC19 | Proposed stampede-corridor rewrite below; remaining zoo move/bar proof awaits final run. |
-| E27-AC15 | Met visually: named H, all seven spots / seven items; final complete verify pending. |
+| E27-AC15 | Met/fixed: named H, all seven spots / seven items; full verify passes; E27 done. |
 | E28-AC10 | Real buffer repair + native storm/L5 proof; original legacy heap counter still fails. Proposed measurement clarification below; partial. |
 | E28-AC12 | Met: explicit six-mood G/reference signoff, 4/4 must +3/3 should. |
 
@@ -28,7 +28,7 @@ All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 S
 | --- | --- |
 | Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Receipt](evidence/units-corpses-final2.log.txt). |
 | E07 final | Pending. |
-| E27 final | Running. |
+| E27 final | **PASS**, typecheck/lint/build, **46 Node +41 functional browsers +2 quiet performance tests**. [Receipt](evidence/verify-E27-final.log.txt), [stage exits](evidence/verify-E27-final-checks.json); cold-blast p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**. |
 | E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
 
 The Alpha contact fixture was corrected to separate a courier-provoked Alpha from the unprovoked soldier-contact check; all original HP/knockdown/cooldown expectations stay. The hero-shadow fixture now submits 90 individual fixed-tick views and requires promotion blend 1 before sampling the unchanged shadow gate. The repeat move probe preserves authored radius (including 18 m Alpha roar) instead of passing a generic one-metre area. These are fixture corrections, not runtime difficulty changes.
@@ -81,7 +81,7 @@ This review supersedes the earlier incomplete physical-consequence signoff. I op
 | should | Flicker / embers / nearby lighting | PASS — night flames change shape at f60/90/180/600; sparks rise and warm pools light the pavement and porch/facade. |
 | should | Class intensity | PASS — grenade is a localized cool gray cloud; medium/car affect a few metres; mega lights a wide area, throws the corpse higher/farther, and leaves multiple fires. |
 
-**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification remains pending until its receipt is complete.
+**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification passes: 46 Node, 41 functional browser and two quiet performance tests.
 
 ## Final-source Checklist G review — 2026-10-22
 

@@ -93,5 +93,27 @@
     "build/worldLook-o3T_90Bf.js": "e6308d2c9948dd608032ff1f730d286346700d500a93e6fad197c55d692c60b5",
     "build/wreck-roofs-CFQIthKq.js": "a912d11472e6297500db09161cec443d7f1442631b65660a0eda05dea65839d0"
   },
-  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. E28/E27 production builds use this runtime; final E07 rebuild will be checked against these bundle hashes."
+  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. E28/E27 production builds use this runtime; final E07 rebuild will be checked against these bundle hashes.",
+  "unchangedMeasurementContracts": {
+    "tests/perf/collected-heap.ts": {
+      "sha256": "d0b625ea826d8c7a8b3068faaf7687aedf07f80450937f2f4048a529693835ea",
+      "identicalToBase": true
+    },
+    "src/core/Quality.ts": {
+      "sha256": "eb6d57ca270a5afcd87055a73e972e856cacb2e8a5ab2a2a5d80b4731eb80802",
+      "identicalToBase": true
+    },
+    "tests/perf/weather.spec.ts": {
+      "sha256": "85e42775ea51ff1917340870eec00ec820b470994cba8690cbf3b0401054b08d",
+      "identicalToBase": true
+    },
+    "tests/perf/l5-budgets.spec.ts": {
+      "sha256": "8a5f053f988d70525d9297b707713f1c6af1290cbab0db49c810787b209404d5",
+      "identicalToBase": true
+    },
+    "tests/perf/explosions.spec.ts": {
+      "sha256": "a868281f88da90f66cd1bb8db79ca8a65d9a5989e65328365787dd054b132477",
+      "identicalToBase": true
+    }
+  }
 }
