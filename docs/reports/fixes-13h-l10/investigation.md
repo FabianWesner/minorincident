@@ -18,7 +18,15 @@ The real-kill guard delivers Damage/VFX events to living actors, lets the produc
 
 ## #100 performance investigation
 
-Existing `tests/perf/l10-lod-residency.spec.ts` records frame durations alongside simulation, update, render, shader-build, residency, and population counters, but its thresholds and route do not yet establish the reported debug-start or automatic-continue spikes. No before profile for ticks 2965 or 0 was present in the current worktree report directories when this investigation began. Capture an instrumented reproduction through `tools/perf/quiet-run.sh` before changing load work; distinguish loading-card time from the first playable frame and retain the profile/counters for each spike.
+The API-only walk to `(755,13.6)` missed the trigger: seed 32 WebGL debug and L9 continue measured 23.2 / 24.3 ms maximum over 65 seconds. This is diagnostic evidence only, not proof of the requested real-play budget.
+
+The real device-input driver reproduces it under quiet-run, seed 1: 466.6 ms at tick 2965 `(755.29,13.74)`, then 349.9 ms at tick 3700. A second, bounded CPU replay reproduces 449.9 ms at tick 2957 `(755.16,13.81)`. The profile window contains Three.js node construction and WebGL `getProgramParameter`, with no samples in `ControlIntent.resolve`, `reachPath`, or `forPlayer`. An isolated Node probe of initial click candidates stayed below 5 ms. Navigation has not been changed. Render-object/material tracing is collecting the identity of the cold graph before changing warmup.
+
+The tick-0 report has a separate measurement defect: the real-input trace records a 2,650 ms L10 frame while `loading=true`, although the mission phase already says `playing`. The old playtest queue stored only `[ms,tick]` and classified it using the phase/level at later polling time. The corrected probe records loading/level/location at sampling time and clips the first interval at the actual card-close boundary. Its guard retains genuine 300 ms first playable frames and 870 ms later stalls; it does not discard those. A dedicated entry spec covers both backends and both entry routes, but still needs its final timing run.
+
+Current raw artifacts are under `test-results/fixes-13h-l10/entry/`, `real-input-before/`, and `real-input-before-profile/`; the latter contains the CPU profile and exact ground-click ledger. These are not yet the final committed evidence bundle.
+
+Intermediate validation: typecheck, lint, 12 focused guard tests and all 31 smoke cases passed. The full required remote command is still running. Final runtime profiling, visual review and validation of the hitch fix remain open.
 
 ## Completion evidence still required
 

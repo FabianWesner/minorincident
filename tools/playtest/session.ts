@@ -89,8 +89,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await cpu.send('Profiler.enable'); await cpu.send('Profiler.start');
     cpuStartedAt = await page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
-      const clicks: unknown[] = [];
+      const clicks: unknown[] = [], builds: unknown[] = [];
       (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks = clicks;
+      (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds = builds;
+      const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
+      g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+        onBuild?.(builder, object);
+        const draw = object as unknown as { object: import('three/webgpu').Mesh; material: import('three/webgpu').Material };
+        const path: string[] = []; let asset: string | undefined;
+        for (let node: import('three/webgpu').Object3D | null = draw.object; node; node = node.parent) { path.push(node.name || node.type); asset ??= node.userData.assetId; }
+        builds.push({ at: performance.now(), tick: g.world.tick, asset, path, material: draw.material.name });
+      };
       g.input.tap = (frame, scheme) => {
         previous?.(frame, scheme);
         if (frame.moveTarget) clicks.push({ tick: g.world.tick, position: { ...g.world.entities.get(1)!.transform }, target: { ...frame.moveTarget } });
@@ -532,6 +541,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const { profile } = await cpu.send('Profiler.stop');
     writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt })); await cpu.detach();
     writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
+    writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
   }
   await context.close();
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
