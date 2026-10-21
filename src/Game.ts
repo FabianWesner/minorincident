@@ -228,7 +228,7 @@ export class Game {
         return;
       }
       this.speculative = null;
-      if (!speculative && id === 'L8') this.view.freeze();
+      if (!speculative && id === 'L8') this.view.freeze(true);
       this.loading=true; this.restoredWhilePaused = false;
       try{
         const prepared = id === 'L8' && !opts?.source && !opts?.tier && (opts?.seed ?? 1) === 1 ? this.preparedL8 : null;
