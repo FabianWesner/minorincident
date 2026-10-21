@@ -181,7 +181,9 @@ export class LevelSixSubway {
     const wait=s.phase==='retreat'?s.waitFor:undefined,helped=wait&&wait.kind!=='rear'?this.w.entities.get(wait.id):undefined;
     if(wait?.kind==='fetch'&&helped)at('l6-help',helped.transform.x,helped.transform.z);
     if(wait?.kind==='rear')at('l6-help',(s.tailX??s.leaderX)-2,l6.tunnel.z);
-    m.state.marker=s.strayed?'l6-group':wait?.kind==='bring'?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
+    // A collected straggler walks behind the courier: lead them to the column's tail.
+    if(wait?.kind==='bring')at('l6-help',(s.tailX??s.leaderX)+1,l6.tunnel.z);
+    m.state.marker=s.strayed?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
   }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
@@ -256,7 +258,9 @@ export class LevelSixSubway {
     for(const r of live){const e=w.entities.get(r.id)!;
       if(r.injured&&!r.straggler&&tail-e.transform.x>15){r.straggler=true;w.events.emit({type:'l6.straggler',tick:t,id:r.id});this.say(r.id,l6InjuryLines.straggler);}
       if(r.straggler&&!r.rejoined&&!r.collected&&distance(e.transform,p)<=3){r.collected=true;this.say(1,l6InjuryLines.rejoin);w.events.emit({type:'l6.collected',tick:t,id:r.id});}
-      if(r.collected&&Math.abs(tail-e.transform.x)<5){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
+      // Playtest 10-21 (fists, 22 survivors): "Bring the injured survivor back to the group · 0 m" for 7 min with the courier on
+      // the group ring: the column is ~10 m long, so its centre is more than 5 m from the tail. Inside the column counts too.
+      if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<s.leaderX+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
       if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
     }
     this.guide(p);
