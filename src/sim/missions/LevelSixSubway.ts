@@ -216,7 +216,10 @@ export class LevelSixSubway {
     if(s.arrivals && t>=s.arrivals.nextAt){const a=s.arrivals;this.spawn(1,[a.door++%2],2);a.remaining--;a.nextAt=t+4;if(!a.remaining)delete s.arrivals;}
     if(s.phase==='fails'&&(t>=s.breach2At+900||s.survivors.filter(r=>r.status==='turned').length>=3))this.abandon();
     if(s.phase!=='retreat'&&s.phase!=='exit')return;
-    const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),tail=healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
+    // QA 10-21 #83: the rear is the walking column's (healthy walkers within columnM of the leader). One healthy survivor
+    // fighting far back made the whole group wait and sent the courier 70-80 m back through the horde, over and over.
+    const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),column=healthy.filter(e=>e.transform.x>=s.leaderX-l6.follow.columnM);
+    const tail=column.length?Math.min(...column.map(e=>e.transform.x)):healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
     const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);

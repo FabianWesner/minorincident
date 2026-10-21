@@ -2,7 +2,7 @@ import { l5Survivors } from './l5';
 /** E24 tuning in metres/seconds. The shelter falls on a seeded clock; losses never fail the mission. */
 export const l6 = {
   shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
-  follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5, strayM: 15, regroupM: 10, strayDwellS: 2, aheadM: 12 },
+  follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5, strayM: 15, regroupM: 10, strayDwellS: 2, aheadM: 12, columnM: 25 },
   infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210],
   /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
