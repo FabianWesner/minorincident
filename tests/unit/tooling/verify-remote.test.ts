@@ -22,4 +22,13 @@ test('E07 remote verification isolates timing on Hetzner, pulls evidence and kee
   expect(timing).toContain('--maxWorkers=1');
   const browser = commands.find(command => command.includes('playwright'))!;
   expect(browser.slice(0, 2)).toEqual(['sh', 'tools/e2e-lock.sh']);
+  expect(browser).toContain('--workers=1');
+  expect(browser).toContain('@perf');
+  const perf = commands.find(command => command.includes('tools/perf/quiet-run.sh'))!;
+  expect(perf).toContain('--workers=1');
+  expect(perf.find(part => part.includes('T-E07-physical-budget'))).toContain('@perf');
+  const staticCheck = commands.find(command => command.includes('npm run typecheck && npm run lint'))!;
+  expect(staticCheck.slice(0, 2)).toEqual(['sh', 'tools/remote/run.sh']);
+  const build = commands.find(command => command.includes('build'))!;
+  expect(build.slice(0, 2)).toEqual(['sh', 'tools/e2e-lock.sh']);
 });

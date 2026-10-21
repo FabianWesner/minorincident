@@ -84,7 +84,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 
   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }
 });
 
-test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
+test('T-E25-06 @E25 @E25-AC06 @E28-AC12 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
   test.setTimeout(180_000);
   await boot(page);
   const probe = await page.evaluate(async (spot) => {

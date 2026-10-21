@@ -30,7 +30,7 @@ for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 
     expect(impact.crowd?.nonInstancedMeshes).toBe(0); expect(impact.perf.drawCalls).toBeLessThanOrEqual(600); expect(impact.perf.triangles).toBeLessThanOrEqual(1_500_000);
   });
 }
-for (const quality of ['high', 'low'] as const) test(`T-E07-physical-budget-${quality} @E18-AC01 pooled physical markers and bars within E18 mixed horde`, async ({ page }) => {
+for (const quality of ['high', 'low'] as const) test(`T-E07-physical-budget-${quality} @E18-AC01 @perf pooled physical markers and bars within E18 mixed horde`, async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(`/?test=1&scenelab&renderer=webgl&quality=${quality}&audio=muted&profile=1&dpr=1`);
   await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
