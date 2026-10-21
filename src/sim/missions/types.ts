@@ -308,6 +308,9 @@ export interface L6State {
   strayed?: boolean;
   /** QA 10-21 #84: tick the distance first asked for the other `strayed` value (0 = agrees); flips only after `strayDwellS`. */
   strayFlipAt?: number;
+  /** QA 10-21 #83: why the group holds at a gate (`fetch`/`bring` an injured straggler by id, or cover the `rear`); `tailX` its last healthy walker. */
+  waitFor?: { kind: 'fetch' | 'bring' | 'rear'; id: number };
+  tailX?: number;
   arrivals?: { remaining: number; door: number; nextAt: number };
   infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
 }

@@ -4,6 +4,7 @@ import { followFrustum } from '../../tools/sim-runner/l3Bots';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l6, l6Doors } from '../../src/data/l6';
 import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
@@ -116,3 +117,20 @@ test('@E24 QA #84 the exit "Stay with the group" text switches once per real cha
   for (let i = 0; i < (l6.follow.strayDwellS + 1) * 60; i++) { put(w, nearest() + 2, 15); w.update(); sample(); }
   expect(heads).toEqual(['Bring the survivors into the night', 'Stay with the group', 'Bring the survivors into the night']);
 }, 240_000);
+
+// QA 10-21 #83 "L6 first service gate x~90 … survivors bunch west of the gate among infected and do not pass for 420 s twice".
+// A courier who never fights and only walks to the objective ring (like the playtest driver): the group held at a gate for an
+// injured straggler that could not be bitten (story-protected) but fled its biters into the tunnel wall for good, and the ring kept
+// pointing at the gate. Now the straggler limps to its protector and a held group names its reason, so the level finishes.
+test('@E24 QA #83 a ring-following, non-fighting courier gets the group through every gate to the exit', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!, p = w.entities.get(1)!;
+  for (let i = 0; i < 60 * 300 && m.state.phase !== 'result' && s.phase !== 'done'; i++) {
+    const a = markerAnchor(m) ?? p.transform, dx = a.x - p.transform.x, dz = a.z - p.transform.z, d = Math.hypot(dx, dz), k = d > .5 ? Math.min(1, 4 / 60 / d) : 0;
+    put(w, p.transform.x + dx * k, p.transform.z + dz * k); followFrustum(w); w.update();
+    if (s.paused && s.phase === 'retreat' && !s.strayed) expect(LevelSixSubway.text(m), `held at tick ${w.tick}`).not.toBeNull();
+  }
+  expect(['exit', 'done']).toContain(s.phase);
+  expect(s.survivors.some(r => r.status === 'out')).toBe(true);
+}, 600_000);

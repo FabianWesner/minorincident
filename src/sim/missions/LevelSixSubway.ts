@@ -165,7 +165,10 @@ export class LevelSixSubway {
       const wait=gate&&LevelSixSubway.gateWait(gate.x);
       at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM)),wait?.z??l6.tunnel.z);
     }
-    m.state.marker=s.strayed?'l6-group':s.phase==='retreat'?'l6-next':'night-exit';
+    const wait=s.phase==='retreat'?s.waitFor:undefined,helped=wait&&wait.kind!=='rear'?this.w.entities.get(wait.id):undefined;
+    if(wait?.kind==='fetch'&&helped)at('l6-help',helped.transform.x,helped.transform.z);
+    if(wait?.kind==='rear')at('l6-help',(s.tailX??s.leaderX)-2,l6.tunnel.z);
+    m.state.marker=s.strayed?'l6-group':wait?.kind==='bring'?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
   }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
@@ -216,7 +219,11 @@ export class LevelSixSubway {
     const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),tail=healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
     const hot=w.infected!.active.some(e=>e.health.current>0&&distance(e.transform,{x:tail,z:15})<20);
     const atGate=l6.gates.some(x=>Math.abs(s.leaderX-x)<2);
-    s.paused=atGate&&((hot&&distance(p,{x:tail,z:15})>12)||live.some(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4));
+    const rear=hot&&distance(p,{x:tail,z:15})>12,behind=live.find(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<tail-4);
+    s.paused=atGate&&(rear||!!behind);
+    // QA 10-21 #83: a paused group names its reason and the ring leads to it (an injured straggler to fetch, or the rear to cover).
+    s.waitFor=!s.paused?undefined:behind?{kind:behind.collected?'bring':'fetch',id:behind.id}:{kind:'rear',id:0};
+    s.tailX=tail;
     if(!s.paused){if(s.leaderZ<15)s.leaderZ=Math.min(15,s.leaderZ+2.2/60);else s.leaderX=Math.min(276,s.leaderX+2.2/60);}
     if(!s.injuryLineAt&&s.leaderX>34){s.injuryLineAt=t;this.say(1,l6InjuryLines.retreat);}
     for(const r of live){const e=w.entities.get(r.id)!;
@@ -273,7 +280,12 @@ export class LevelSixSubway {
   /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
   static text(mission: Pick<Mission,'state'> | null | undefined): string | null {
     const s=mission?.state.l6;
-    return s?.strayed&&(s.phase==='retreat'||s.phase==='exit')?'Stay with the group':null;
+    if(!s||(s.phase!=='retreat'&&s.phase!=='exit'))return null;
+    if(s.strayed)return 'Stay with the group';
+    const wait=s.phase==='retreat'?s.waitFor:undefined;
+    return wait?.kind==='fetch'?'The group waits: help the injured survivor who fell behind'
+      :wait?.kind==='bring'?'Bring the injured survivor back to the group'
+      :wait?.kind==='rear'?'The group waits: cover the rear from the infected':null;
   }
   /** Stand beyond and beside the 2.2 m opening, leaving both follower lanes clear. */
   static gateWait(x:number):Point{return {x:x+2.4,z:17.3};}
