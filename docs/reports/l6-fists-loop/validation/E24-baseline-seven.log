@@ -1,0 +1,200 @@
+
+Running 7 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (2.4m)
+  ✘  2 [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (5.8s)
+  ✘  3 [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (5.8s)
+  ✘  4 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death (12.4s)
+  ✘  5 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death (12.3s)
+  ✘  6 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death (12.4s)
+  ✘  7 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death (12.4s)
+
+
+  1) [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "result"
+    Received: "playing"
+
+      77 |
+      78 |   }
+    > 79 |   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+         |                                                                                     ^
+      80 |   const carriedArsenal=await page.evaluate(()=>{const w=window.__SS__!.getEntity(1)!.weapons!;return [...w.LEFT.rack,...w.RIGHT.rack].map(s=>s.id).sort();});
+      81 |   const exitCamera=await page.evaluate(async()=>{const a=window.__SS__!;a.camera.preset('D-SUBWAY/W0/l6-exit-night');await a.screenshotReady();return a.getState().render.camera;});await page.screenshot({path:`${out}/pair-northgate-l6.png`});
+      82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/L6.spec.ts:79:85
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    24
+
+      131 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      132 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 133 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){if(setup.bars.some(b=>x>=Math.floor(b.x-b.width/2-2)&&x<=Math.ceil(b.x+b.width/2+2)&&y>=Math.floor(b.y-b.height/2-2)&&y<=Math.ceil(b.y+b.height/2+2)))continue;const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^
+      134 | });
+      135 |
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/L6.spec.ts:133:913
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      131 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      132 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 133 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){if(setup.bars.some(b=>x>=Math.floor(b.x-b.width/2-2)&&x<=Math.ceil(b.x+b.width/2+2)&&y>=Math.floor(b.y-b.height/2-2)&&y<=Math.ceil(b.y+b.height/2+2)))continue;const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+      134 | });
+      135 |
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/L6.spec.ts:133:992
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-dc49a-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-dc49a-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-L6-T-E24-15-E24-dc49a-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "corridor"
+    Received: "rocket"
+
+      56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+      57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
+    > 58 |     expect(before.checkpoint).toBe(checkpoint);
+         |                               ^
+      59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });
+      60 |     const after = await page.evaluate(() => window.__SS__!.getState());
+      61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/l7-entry.spec.ts:58:31
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--5047d-pickup-and-checkpoint-death-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--5047d-pickup-and-checkpoint-death-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--5047d-pickup-and-checkpoint-death-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "corridor"
+    Received: "rocket"
+
+      56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+      57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
+    > 58 |     expect(before.checkpoint).toBe(checkpoint);
+         |                               ^
+      59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });
+      60 |     const after = await page.evaluate(() => window.__SS__!.getState());
+      61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/l7-entry.spec.ts:58:31
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--92571-pickup-and-checkpoint-death-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--92571-pickup-and-checkpoint-death-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--92571-pickup-and-checkpoint-death-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "corridor"
+    Received: "rocket"
+
+      56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+      57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
+    > 58 |     expect(before.checkpoint).toBe(checkpoint);
+         |                               ^
+      59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });
+      60 |     const after = await page.evaluate(() => window.__SS__!.getState());
+      61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/l7-entry.spec.ts:58:31
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--42307-pickup-and-checkpoint-death-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--42307-pickup-and-checkpoint-death-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--42307-pickup-and-checkpoint-death-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "corridor"
+    Received: "rocket"
+
+      56 |     if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+      57 |     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
+    > 58 |     expect(before.checkpoint).toBe(checkpoint);
+         |                               ^
+      59 |     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });
+      60 |     const after = await page.evaluate(() => window.__SS__!.getState());
+      61 |     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);
+        at /private/tmp/l6-main-ad4a8616/tests/e2e/levels/l7-entry.spec.ts:58:31
+
+    Error Context: test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--1f7ad-pickup-and-checkpoint-death-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--1f7ad-pickup-and-checkpoint-death-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4021/e2e-levels-l7-entry-T-E29--1f7ad-pickup-and-checkpoint-death-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs
+    [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow
+    [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow
+    [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death
+    [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death
+    [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death
+    [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death

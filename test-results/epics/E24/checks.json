@@ -32,11 +32,7 @@
     {
       "command": [
         "sh",
-        "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6",
-        "--pull",
-        "test-results/epics/E24/vitest.json",
-        "--",
+        "tools/sim-lock.sh",
         "npx",
         "vitest",
         "run",
@@ -62,20 +58,7 @@
         "@perf",
         "--workers=1"
       ],
-      "exitCode": 0
-    },
-    {
-      "command": [
-        "sh",
-        "tools/perf/quiet-run.sh",
-        "npx",
-        "playwright",
-        "test",
-        "tests/perf/l6-budgets.spec.ts",
-        "--project=chromium",
-        "--workers=1"
-      ],
-      "exitCode": 0
+      "exitCode": 1
     }
   ]
 }

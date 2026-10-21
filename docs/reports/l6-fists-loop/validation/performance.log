@@ -1,0 +1,21 @@
+22:07  up 73 days, 21 hrs, 4 users, load averages: 1.61 2.18 2.49
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 12 tests using 1 worker
+
+{"tier":"high","p50":5,"p95":7.300000000001091,"max":14.399999999999636,"survivors":26,"infected":40,"drawCalls":111,"triangles":459397,"lighting":{"lightFieldMs":0.20000076293945312,"lightPools":21,"lightCandidates":21,"shadowMaps":1,"heroLights":1,"heroShadow":1,"preset":"L6-subway"},"tasks":[]}
+  ✓   1 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › high › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight high (17.0s)
+{"tier":"low","p50":11.200000000000728,"p95":15.299999999999272,"max":48.29999999999927,"survivors":26,"infected":30,"drawCalls":57,"triangles":78048,"lighting":{"lightFieldMs":0.8000001907348633,"lightPools":16,"lightCandidates":16,"shadowMaps":0,"heroLights":0,"heroShadow":0,"preset":"L6-subway"},"tasks":[]}
+  ✓   2 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › low › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low (32.6s)
+  ✓   3 [chromium] › tests/perf/l6-budgets.spec.ts:24:1 › transitions high › T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame high (5.6s)
+  ✓   4 [chromium] › tests/perf/l6-budgets.spec.ts:24:1 › transitions low › T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame low (11.8s)
+  ✓   5 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl high debug=false (8.0s)
+  ✓   6 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl high debug=true (7.8s)
+  ✓   7 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl low debug=false (7.1s)
+  ✓   8 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl low debug=true (7.1s)
+  ✓   9 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu high debug=false (9.7s)
+  ✓  10 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu high debug=true (8.4s)
+  ✓  11 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu low debug=false (7.4s)
+  ✓  12 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu low debug=true (7.3s)
+
+  12 passed (2.3m)

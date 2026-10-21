@@ -28,18 +28,21 @@ L5 gameplay, horde caps, damage and movement speeds match main. The gate-panel Q
 
 ## Validation
 
-Final gate results are being collected:
+All four requested acceptance gates pass. The additional full E24 validation retains seven failures also reproduced on main:
 
 | Gate | Result |
 | --- | --- |
-| Typecheck, lint, production build | Pass on the final tree, recorded by the current E24 verification |
+| Typecheck, lint, production build | Pass on the final tree; [command records](validation/E24-checks.json) |
 | E24 simulation selection | 67 pass, zero failures; other tests are excluded by the existing E24 name filter |
 | Mac `tests/e2e/levels/l6-*.spec.ts`, workers 1 | 10/10 pass, 2.9 min; [log](validation/l6-browser.log), [JSON](validation/l6-browser.json) |
-| `npm run verify -- E24` | Pending |
-| Remote `npx vitest run tests/unit tests/levels --maxWorkers=4` | Pending |
+| `npm run verify -- E24` | 67 selected sim tests pass; browser 53 pass / 7 fail, exit 1. All seven failures also occur on main; [log](validation/verify-E24.log), [comparison](validation/E24-baseline-comparison.json) |
+| Remote `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4` | Exit 0: 414 files / 2,251 tests pass; 3 files / 11 tests retain their existing skips. [Full log](validation/remote-final.log) |
+| Native L6 performance and scream checks, workers 1 | 12/12 pass, 2.3 min, run separately after the broad browser failure; [log](validation/performance.log), [JSON](validation/performance.json) |
 | New L6 weapons-flow regressions | 12/12 pass on the final remote tree |
 
 The native Mac unit attempt passed 1,828 tests and failed the existing Linux runner cache-GC fixture: it invokes GNU `stat -c`, unavailable on macOS. The required Linux suite includes that fixture. Its native failure is preserved in the validation evidence; its assertions were retained.
+
+The seven additional E24 browser failures are: T-E24-17 remains in `playing`; the two T-E24-15 contrast cases fail the red-eye margin / living-subject checks; and four T-E29-16 L7 entry cases retain checkpoint `rocket` when expecting `corridor`. Running these exact cases on `56d7e7d16` reproduces the same seven assertion failures. Both test files are byte-identical between main and the final tree. [Main log](validation/E24-baseline-seven.log), [main results](validation/E24-baseline-seven.json), [final broad results](validation/E24-browser.json). No assertions or thresholds were changed to bypass these existing failures.
 
 The complete/newbie sims retain main's test bands and tuning: complete 180–300 s, newbie 195–300 s. Coverage is seed 1 and the three recorded real-input outcomes; the playthrough survivor counts are shown above.
 
@@ -50,7 +53,7 @@ The complete/newbie sims retain main's test bands and tuning: complete 180–300
 
 Final records: [complete](../../../test-results/epics/E24/complete-seed-1.json), [newbie](../../../test-results/epics/E24/newbie-seed-1.json). Horde caps remain high 60 / low 30; healthy/injured walking speeds remain 2.2/1.4 m/s. The existing sim assertions are retained.
 
-Commands use `E2E_PORT=4021`, `SCENE_PORT=4022`, `E2E_UNITS=1`, `E2E_ADMISSION_TIMEOUT_SECONDS=3600`; browser workers are 1 and Vitest workers at most 4. All commits remain on the lane branch. No baseline worktree was needed.
+Commands use `E2E_PORT=4021`, `SCENE_PORT=4022`, `E2E_UNITS=1`, `E2E_ADMISSION_TIMEOUT_SECONDS=3600`; browser workers are 1 and Vitest workers at most 4. All commits remain on the lane branch. The one temporary main-comparison worktree was removed after validation.
 
 ## Visual review
 
