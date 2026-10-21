@@ -54,7 +54,8 @@ export function look(): Eyes {
     enemies.sort((l, r) => l.d - r.d);
   }
   const weapons = p?.weapons ? (['LEFT', 'RIGHT'] as const).flatMap(side => p.weapons![side].rack.map(slot => slot.id)) : [];
-  const current = p?.weapons ? p.weapons[p.weapons.selectedSide].rack[p.weapons[p.weapons.selectedSide].index]?.id ?? null : null;
+  const selected = p?.weapons?.[p.weapons.selectedSide];
+  const current = selected ? (selected.index === -1 ? selected.unarmed : selected.rack[selected.index])?.id ?? null : null;
   const left = markerEl ? parseFloat(markerEl.style.left) : NaN, top = markerEl ? parseFloat(markerEl.style.top) : NaN;
   return {
     tick: a.tick(), level: m?.id ?? null, phase: m?.phase ?? null, step: active, checkpoint: m?.checkpoint ?? null,

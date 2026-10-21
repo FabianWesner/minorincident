@@ -515,7 +515,7 @@ export class Mission {
       const sequence = Math.max(checkpoint.combatSequence ?? 0, ...(entities.find(e => e.infected?.pursuit)?.infected?.megaRocketIds ?? []));
       this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id), sequence);
       Object.assign(this.world.combat.runner.loadout.state, saved);
-      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = slot[key] + delta; }
+      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.unarmed ? [...side.rack, side.unarmed] : side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = slot[key] + delta; }
       this.world.combat.projectiles.length = 0; this.world.combat.effects.zones.length = 0;
     }
     if (!live.weapons) this.world.combat?.clearLoadout();

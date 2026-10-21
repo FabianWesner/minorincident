@@ -4,6 +4,8 @@ import { newCampaign, preset, type CampaignSave, type Level } from '../../../src
 import { campaignLoadout } from '../../../src/sim/progression/apply';
 import { completeCampaignLevel } from '../../../src/sim/progression/carryover';
 import { decodeSave, validateSave } from '../../../src/sim/progression/Save';
+import { Loadout } from '../../../src/sim/combat/Loadout';
+import { emptyInput } from '../../../src/input/InputFrame';
 
 /**
  * P1 10-20 (PO, after finishing L5 on PROD): "now I am in L6, but I lost the shotgun.... that's bad". E24: "There is no new weapon. The
@@ -20,6 +22,17 @@ function start(level: Level): CampaignSave {
 }
 
 describe('weapon carry across level handovers', () => {
+  it('key 1 selects innate bare hands while leaving the carried arsenal unchanged', () => {
+    const save=preset('L8-default');
+    expect([...save.racks.LEFT,...save.racks.RIGHT]).not.toContain('weapon.fists');
+    expect([...save.racks.LEFT,...save.racks.RIGHT]).not.toContain('weapon.kick');
+    const live=campaignLoadout(save,8);
+    expect(live.LEFT).toEqual(save.racks.LEFT);
+    expect(live.size).toBeGreaterThanOrEqual(live.LEFT.length);
+    const input=new Loadout(live.LEFT,live.RIGHT,undefined,live.size);
+    input.input({...emptyInput(),selectedWeaponKey:1},1);
+    expect(input.current(input.state.selectedSide).id).toBe('weapon.fists');
+  });
   it.each([1, 2, 3, 4, 5, 6, 7, 8] as const)('finishing L%i with an extra picked-up firearm starts the next level with it, and the save reloads', level => {
     const save = start(level);
     // What the courier holds at the end: the level's racks plus one more firearm picked up in the level (Pickups grows the rack by one).
