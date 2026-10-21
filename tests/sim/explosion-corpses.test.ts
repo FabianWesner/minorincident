@@ -57,3 +57,26 @@ test('T-E27-corpse-cover @E27-AC15 full cover and the radius boundary protect re
   w.explosions!.blast('explosion.molotov', { x: -2, z: 0 }, { fires: false, damage: false });
   expect(w.entities.get(quiet)!.corpseBlast).toBeUndefined();
 });
+
+test('T-E27-corpse-flight-wall @E27-AC15 a launched body stops before a thin solid wall and settles without losing its identity', async () => {
+  const w = await world(), id = corpse(w, 2);
+  w.barricades!.spawn({ id: 'landing-wall', groupId: 'g', a: { x: 3, z: -2 }, b: { x: 3, z: 2 }, height: 2, initialHp: 1e6 });
+  w.explosions!.blast('explosion.propane', { x: 0, z: 0 }, { fires: false, damage: false });
+  const e = w.entities.get(id)!; expect(e.corpseBlast).toBeDefined();
+  step(w, 300);
+  expect(e.transform.x).toBeGreaterThan(2); expect(e.transform.x).toBeLessThanOrEqual(3 - .38);
+  expect(e.transform.y).toBeCloseTo(.7, 9); expect(e.corpseBlast).toBeUndefined(); expect(w.entities.get(id)).toBe(e);
+});
+
+test('T-E27-corpse-grab-handoff @E27-AC15 an explicit Alpha throw takes over a blast flight without competing motion owners', async () => {
+  const w = await world(); w.inspectionGhost = true;
+  const id = corpse(w, 2), source = w.infected!.spawn('infected.alpha', { x: 5.5, z: 0 }, { state: 'idle' });
+  w.explosions!.blast('explosion.propane', { x: 0, z: 0 }, { fires: false, damage: false });
+  expect(w.infected!.startSpecial(source, 'alpha.grab-throw', { id: 1, x: 0, z: 0 }, { x: 5.5, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+  step(w, 47); expect(w.entities.get(id)!.corpseBlast).toBeDefined();
+  expect(Math.hypot(w.entities.get(source)!.transform.x - w.entities.get(id)!.transform.x, w.entities.get(source)!.transform.z - w.entities.get(id)!.transform.z)).toBeLessThan(2);
+  step(w, 1);
+  const attack = w.entities.get(source)!.infected!.specialAttack!;
+  expect(attack.projectile).toMatchObject({ objectId: id, corpse: true }); expect(w.entities.get(id)!.corpseBlast).toBeUndefined();
+  step(w, 120); expect(w.entities.get(id)!.corpse).toBe(true); expect(w.entities.get(id)!.health.current).toBe(0);
+});

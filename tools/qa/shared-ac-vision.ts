@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Game } from '../../src/Game';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import { PNG } from 'pngjs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
 
 const mode = process.argv[2];
@@ -14,6 +15,8 @@ if (selectedTier !== undefined && selectedTier !== 'high' && selectedTier !== 'l
 const tiers: ('high' | 'low')[] = selectedTier ? [selectedTier] : ['high', 'low'];
 const collapseOnly = process.argv.includes('--collapse-only');
 const fireOnly = process.argv.includes('--fire-only');
+const carOnly = process.argv.includes('--car-only');
+const grenadeOnly = process.argv.includes('--grenade-only');
 const out = `test-results/ac-close-shared/${mode}`;
 mkdirSync(out, { recursive: true });
 const proof: unknown[] = [];
@@ -27,7 +30,10 @@ async function capture(s: SceneSession, name: string, extra: object = {}) {
       events: a.events().filter(e => ['explosion', 'vehicle.exploded', 'prop.destroyed', 'telegraph', 'infected.special'].includes(e.type)) };
   });
   const file = `${out}/${name}.png`;
-  await s.screenshot(file); proof.push({ file, ...extra, ...state });
+  const png = PNG.sync.read(await s.screenshot(file)), colors = new Set<number>();
+  for (let i = 0; i < png.data.length && colors.size <= 64; i += 4) colors.add((png.data[i] << 16) | (png.data[i + 1] << 8) | png.data[i + 2]);
+  assert.ok(colors.size > 64, `${name}: flat/blank capture contains no world detail`);
+  proof.push({ file, ...extra, ...state });
 }
 
 const blasts: SceneSpec = {
@@ -82,14 +88,19 @@ try {
           }
         } else {
           if (!collapseOnly) {
-          for (const kind of (fireOnly ? [] : ['medium', 'car', 'mega']) as ('medium' | 'car' | 'mega')[]) {
+          for (const kind of (fireOnly || grenadeOnly ? [] : ['medium', 'car', 'mega']) as ('medium' | 'car' | 'mega')[]) {
+            if (carOnly && kind !== 'car') continue;
             const scene: SceneSpec = { ...blasts, name: `blast-lab-${kind}`, vehicles: kind === 'car' ? [{ id: 'car', asset: 'vehicle.sedan', at: [0, 0], yaw: 25 }] : [],
+              // Keep the retained body outside the car's solid footprint; a
+              // body starting inside the hull correctly cannot fly through it.
+              actors: blasts.actors!.map(actor => kind === 'car' && actor.id === 'body' ? { ...actor, at: [2.5, 2.5] as [number, number] } : actor),
               script: [...blasts.script!, { frame: 5, effect: kind === 'car' ? { wreck: 'car' } : { blast: kind === 'medium' ? 'explosion.propane' : 'explosion.fuel-truck', at: [0, 0] } }] };
             await s.load(scene);
             let at = 0;
             const frames = kind === 'car' ? [0, 184, 186, 190, 200, 230, 360, 1080] : kind === 'mega' ? [0, 6, 20, 40, 46, 70, 220, 940] : [0, 6, 8, 12, 21, 46, 186, 906];
             for (const frame of frames) { await s.step(frame - at); at = frame; await capture(s, `${tier}-${kind}-f${frame}`, { fixture: scene.name, frame }); }
           }
+          if (carOnly) { assert.deepEqual(s.errors, []); continue; }
           const fire: SceneSpec = {
             name: 'fire-lab', ground: 'asphalt', size: 60, time: 'night', weather: 'wind', dof: false, seed: 7,
             props: [{ id: 'house', asset: 'bld.house-a', at: [0, -3], yaw: 0 }],
@@ -105,11 +116,12 @@ try {
               script: [{ frame: 0, actor: 'courier', do: { attack: 'target', side: 'RIGHT', seconds: .02 } }] }, [1, 90, 240, 840]],
             ['column', { ...fire, name: 'smoke-lab-column', props: [] }, [60, 180, 360, 600]],
           ] as [string, SceneSpec, number[]][]) {
+            if (grenadeOnly && name !== 'grenade') continue;
             await s.load(spec); let at = 0;
             for (const frame of frames) { await s.step(frame - at); at = frame; await capture(s, `${tier}-${name}-f${frame}`, { fixture: spec.name, frame }); }
           }
           }
-          if (fireOnly) continue;
+          if (fireOnly || grenadeOnly) { assert.deepEqual(s.errors, []); continue; }
           // Production L4 set piece, using the same ordinary objective setup as
           // T-E27-15, rather than replacing it with a generic lab explosion.
           await s.page.evaluate(async () => {
