@@ -7,18 +7,21 @@ export class RayCursor {
   private readonly ndc = new Vector2();
   private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
   private heightAt?: (x: number, z: number) => number;
+  private readonly elevated = new Plane(new Vector3(0, 1, 0), 0);
   readonly point = new Vector3();
   constructor(private readonly camera: Camera, private readonly element: HTMLElement) {}
   /** Fixed floor in flat scenes; lower-bound hint for height-field queries. */
   setGroundHeight(height: number): void { this.ground.constant = -height; }
   /** Retain the non-negative district height field; no mesh raycasts or scratch allocations. */
   setHeightField(heightAt: (x: number, z: number) => number): void { this.heightAt = heightAt; }
-  project(x: number, y: number): Vector3 | null {
+  /** With `height`, intersect that fixed plane (objective-ring click tests); otherwise resolve the walkable surface. */
+  project(x: number, y: number, height?: number): Vector3 | null {
     const rect = this.element.getBoundingClientRect();
     if (!rect.width || !rect.height) return null;
     this.ndc.set((x - rect.left) / rect.width * 2 - 1, 1 - (y - rect.top) / rect.height * 2);
     this.camera.updateMatrixWorld(); this.raycaster.setFromCamera(this.ndc, this.camera);
     const ray = this.raycaster.ray;
+    if (height !== undefined) { this.elevated.constant = -height; return ray.intersectPlane(this.elevated, this.point); }
     // District height fields are non-negative. Seed from the first surface on
     // the ray: a lower-plane hit can lie beyond a raised edge or a small plinth.
     if (this.heightAt) this.ground.constant = Math.max(0, this.ground.constant);

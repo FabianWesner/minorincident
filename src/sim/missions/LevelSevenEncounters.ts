@@ -117,6 +117,19 @@ export class LevelSevenEncounters {
     }
     const p = w.entities.get(1)!.transform;
     s.passageReady = s.finalReady && p.x <= l7Encounters.passage.x && Math.abs(p.z - l7Encounters.passage.z) < 7 && s.roster.every(r => r.status !== 'following' || r.passed);
+    const m=w.missions;
+    if(m?.state.steps.corridor?.status==='active'){
+      const entrances=['l7-corridor-east','l7-corridor-west'];
+      m.state.marker=entrances.reduce((a,b)=>distance(p,m.def.anchors[a])<=distance(p,m.def.anchors[b])?a:b);
+      const arrived=entrances.some(name=>{const a=m.def.anchors[name];return distance(p,a)<=a.radius;});
+      m.setState('corridor-group',arrived&&this.corridorGroup().missing.length===0);
+    }
+  }
+  /** Eighteen metres covers the three-column formation while requiring every living member to accompany the courier. */
+  corridorGroup(){
+    const p=this.world.entities.get(1)!.transform,live=this.state.roster.filter(r=>r.status==='following');
+    const missing=live.filter(r=>distance(this.world.entities.get(r.id)!.transform,p)>18);
+    return {total:live.length,near:live.length-missing.length,missing};
   }
   follower(e: EntitySnapshot): boolean {
     const r = this.state.roster.find(r => r.id === e.id);

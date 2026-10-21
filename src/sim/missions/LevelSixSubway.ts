@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -11,6 +12,7 @@ const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
 export class LevelSixSubway {
+  private readonly aroundCourier = new Map<number, Point>();
   constructor(private readonly mission: Mission) {}
   private get w() { return this.mission.world; }
   /** Nearest clear crowd point; `toward` breaks ties within a ring (a tunnel entry opens on the courier's side of its pier). */
@@ -153,7 +155,9 @@ export class LevelSixSubway {
       // Shelter leg: the group first walks onto the track at the leader's x. Tunnel leg: gates, then the platform.
       const route=[l6.tunnel.start,...l6.gates,anchors['exit-platform'].x];
       const next=route.find(x=>x>s.leaderX+1)??route[route.length-1];
-      at('l6-next',s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM),l6.tunnel.z);
+      const gate=s.gates.find(g=>!g.closedAt&&s.leaderZ>=l6.tunnel.z&&s.leaderX>=g.x-f.aheadM&&(s.leaderX<=g.x+3||walkers.some(({e})=>e.transform.x<=g.x+2)));
+      const wait=gate&&LevelSixSubway.gateWait(gate.x);
+      at('l6-next',wait?.x??(s.leaderZ<l6.tunnel.z?s.leaderX:Math.min(next,s.leaderX+f.aheadM)),wait?.z??l6.tunnel.z);
     }
     m.state.marker=s.strayed?'l6-group':s.phase==='retreat'?'l6-next':'night-exit';
   }
@@ -164,13 +168,31 @@ export class LevelSixSubway {
     if(r.routine==='guard'&&s.phase!=='shelter'&&e.civilian!.ally){const a=e.civilian!.ally;a.engaged=true;a.post={x:e.transform.x,z:e.transform.z};updateAlly(this.w,e,(from,to)=>this.w.infected!.nav.visible(from,to,0));}
     if(r.status==='shelter')return true;
     if(r.status!=='following')return false;
-    const live=this.living(),slot=Math.max(0,live.findIndex(q=>q.id===e.id));
-    const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-Math.floor(slot/3)*1.4,z:s.leaderZ+(slot%3-1)*1.2};
+    const live=this.living(),column=e.civilian!.survivor!.slot%3;
+    // Keep each survivor in the same lane as people leave. Compact that lane's queue without sending the remaining walkers across it.
+    const row=Math.max(0,live.filter(q=>this.w.entities.get(q.id)!.civilian!.survivor!.slot%3===column).findIndex(q=>q.id===e.id));
+    const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-row*1.4,z:s.leaderZ+(column-1)*1.2};
     // Keep the authored tunnel approach until this walker reaches the platform; then align with the escalator.
-    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(slot%3-1)*.75)};
+    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(column-1)*.725)};
+    // Three 0.7 m bodies share the 2.2 m mouth with 2.5 cm between bodies and each barrier.
     const reach=r.collected?1.8:.4;
     if(r.injured&&!r.collected&&s.leaderX<e.transform.x&&s.leaderX<25)return true;
-    if(distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,goal,r.injured?1.4:2.2,e.civilian!,reach);
+    let around=this.aroundCourier.get(e.id);
+    const p=this.w.entities.get(1)!,dx=goal.x-e.transform.x,dz=goal.z-e.transform.z,len2=dx*dx+dz*dz;
+    const opening=!r.collected&&Math.hypot(p.survivor!.velocity.x,p.survivor!.velocity.z)<.15&&s.gates.some(g=>!g.closedAt&&Math.abs(p.transform.x-g.x)<.75&&Math.abs(p.transform.z-15)<.8);
+    if(around&&(!opening||distance(e.transform,around)<.15)){this.aroundCourier.delete(e.id);around=undefined;}
+    const t=len2?((p.transform.x-e.transform.x)*dx+(p.transform.z-e.transform.z)*dz)/len2:0;
+    const clearance=actorRadius(e)+actorRadius(p)+.025;
+    if(opening&&!around&&distance(e.transform,p.transform)<2&&t>0&&t<1&&Math.hypot(e.transform.x+t*dx-p.transform.x,e.transform.z+t*dz-p.transform.z)<clearance){
+      const length=Math.sqrt(len2),side=e.transform.z>=p.transform.z?1:-1;
+      for(const sign of [side,-side]){
+        const candidate={x:p.transform.x-sign*dz/length*clearance,z:p.transform.z+sign*dx/length*clearance};
+        if(this.w.infected!.nav.clear(candidate.x,candidate.z,actorRadius(e),true)&&this.w.solids.clear({...candidate,y:e.transform.y},actorRadius(e),e.id)){
+          around=candidate;this.aroundCourier.set(e.id,around);break;
+        }
+      }
+    }
+    if(around||distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
   update():void {
@@ -219,7 +241,7 @@ export class LevelSixSubway {
     }
     if(t>=s.nextWave){s.nextWave=t+600;const sides=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>tail-35&&d.x<s.leaderX+35).map(x=>x.i);this.spawn(1,[...(tail<80?[0,1]:[]),...sides].length?[...(tail<80?[0,1]:[]),...sides]:[0,1],3);}
     if(!s.pushHintShown&&w.props?.items.some(q=>q.assetId==='prop.crates'&&q.awake&&distance(p,{x:q.pose.p[0],z:q.pose.p[2]})<2)){s.pushHintShown=true;this.say(1,'Push the glowing crates onto the line, then press E to brace the gate.');}
-    for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2),near=distance(p,{x:gate.x+1.4,z:15})<1.7;
+    for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2),near=distance(p,LevelSixSubway.gateWait(gate.x))<1.7;
       e.interactable!.label=gate.closedAt?'Brace service gate':'Close service gate';e.interactable!.enabled=false;
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
       if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
@@ -247,5 +269,12 @@ export class LevelSixSubway {
     const s=mission?.state.l6;
     return s?.strayed&&(s.phase==='retreat'||s.phase==='exit')?'Stay with the group':null;
   }
-  restore(delta:number):void {const s=this.s;for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;if(e.closedAt)e.closedAt+=delta;if(e.hitAt)e.hitAt+=delta;if(e.brokenAt)e.brokenAt+=delta;}if(s.arrivals)s.arrivals.nextAt+=delta;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
+  /** Stand beyond and beside the 2.2 m opening, leaving both follower lanes clear. */
+  static gateWait(x:number):Point{return {x:x+2.4,z:17.3};}
+  gateStatus(id:number):string {
+    const gate=this.s.gates.find(g=>g.id===id);if(!gate)return '';
+    const live=this.living(),through=live.filter(r=>this.w.entities.get(r.id)!.transform.x>gate.x+2).length;
+    return through<live.length?`Let everyone pass · ${through}/${live.length} through`:`${through}/${live.length} through · E to close the gate`;
+  }
+  restore(delta:number):void {this.aroundCourier.clear();const s=this.s;for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;if(e.closedAt)e.closedAt+=delta;if(e.hitAt)e.hitAt+=delta;if(e.brokenAt)e.brokenAt+=delta;}if(s.arrivals)s.arrivals.nextAt+=delta;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
 }

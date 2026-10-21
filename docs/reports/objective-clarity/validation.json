@@ -1,0 +1,204 @@
+{
+  "implementationCommit": "05f1d022e",
+  "merges": {
+    "l6Tunnel": "1cb6eab5a",
+    "p3UI": "90caec5d1"
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "browser": {
+    "startTime": "2026-10-21T01:25:36.831Z",
+    "duration": 164232.36,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browserCompatibility": {
+    "startTime": "2026-10-21T01:02:26.667Z",
+    "duration": 59850.369,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "l7ToL8Handover": {
+    "high": {
+      "quality": "high",
+      "incoming": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "carried": [
+        53,
+        57,
+        69,
+        63,
+        58,
+        52,
+        54,
+        51,
+        55,
+        56,
+        59,
+        68,
+        65,
+        64,
+        66,
+        60,
+        62,
+        61,
+        67,
+        74,
+        72,
+        70,
+        73,
+        71
+      ]
+    },
+    "low": {
+      "quality": "low",
+      "incoming": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "carried": [
+        53,
+        57,
+        63,
+        58,
+        54,
+        51,
+        52,
+        55,
+        56,
+        59,
+        60,
+        62,
+        64,
+        65,
+        61
+      ]
+    }
+  },
+  "L6Seed1": {
+    "complete-seed-1": {
+      "outcome": "complete",
+      "simSeconds": 265.05,
+      "rescued": 27,
+      "total": 29,
+      "deaths": 0,
+      "peak": 40,
+      "stragglers": 4,
+      "rejoined": 4
+    },
+    "newbie-seed-1": {
+      "outcome": "complete",
+      "simSeconds": 266.6333333333333,
+      "rescued": 13,
+      "total": 29,
+      "deaths": 0,
+      "peak": 47,
+      "stragglers": 4,
+      "rejoined": 4
+    }
+  },
+  "L10StandaloneCheckpoint": {
+    "baselineCommit": "93e1fbea8",
+    "baselinePassed": 1,
+    "finalPassed": 1
+  },
+  "remote": {
+    "remote-clean-final": {
+      "passed": 2163,
+      "failed": 0,
+      "skipped": 9,
+      "filesPassed": 395,
+      "filesFailed": 0,
+      "filesSkipped": 3,
+      "failedTests": []
+    },
+    "remote-assets-final": {
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "filesPassed": 1,
+      "filesFailed": 0,
+      "filesSkipped": 0,
+      "failedTests": []
+    },
+    "remote-final-scope": {
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0,
+      "filesPassed": 14,
+      "filesFailed": 0,
+      "filesSkipped": 0,
+      "failedTests": []
+    },
+    "remote-final-metro-group": {
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0,
+      "filesPassed": 10,
+      "filesFailed": 0,
+      "filesSkipped": 0,
+      "failedTests": []
+    },
+    "remote-l10-final": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 9,
+      "filesPassed": 1,
+      "filesFailed": 0,
+      "filesSkipped": 0,
+      "failedTests": []
+    }
+  },
+  "scopeNotes": {
+    "remote-clean-final": "complete tests/unit tests/levels on the final runtime, four workers",
+    "remote-assets-final": "complete assets/validate.test.ts in isolated remote slots",
+    "remote-final-scope": "L6 protection/campaign, L8 group transfers, L7 departure, controls and marker regressions",
+    "remote-final-metro-group": "final L5 code, including real corgi ingress from the left ring"
+  },
+  "limits": [
+    "Headless WebGL2/ANGLE Metal; manual WebGPU not run.",
+    "Browser coverage uses focused fixtures; continuous campaign checks run in simulation."
+  ]
+}

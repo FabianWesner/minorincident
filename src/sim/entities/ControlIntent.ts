@@ -36,8 +36,20 @@ export class ControlIntent {
       const click = nav?.clampPlayerTarget(requested, this.routeClearance) ?? requested;
       if (click.x !== requested.x || click.z !== requested.z) this.boundaryFeedback(click);
       else this.blockedMove = null;
-      const cell = nav?.nearestCell(click.x, click.z);
-      const point = nav ? nav.clear(click.x, click.z, survivor.radius) ? [click.x, click.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([click.x, click.z]) : this.world.districts?.nav.clamp([click.x, click.z]);
+      // A click inside a solid must become a reachable player-clearance cell. Using
+      // the crowd grid here can pick a cell that the courier capsule cannot enter.
+      const playerNav = nav?.forPlayer(this.routeClearance);
+      let point: [number, number] | undefined;
+      if (playerNav && !playerNav.clear(click.x, click.z, this.routeClearance)) {
+        const from = playerNav.startCell(player.transform, this.routeClearance), path: number[] = [];
+        if (from >= 0 && playerNav.reachPath(from, click, path)) {
+          const cell = path[path.length - 1] ?? from; point = [playerNav.x(cell), playerNav.z(cell)];
+        }
+      }
+      if (!point) {
+        const cell = playerNav?.nearestCell(click.x, click.z, this.routeClearance);
+        point = playerNav ? playerNav.clear(click.x, click.z, this.routeClearance) ? [click.x, click.z] : cell !== undefined && cell >= 0 ? [playerNav.x(cell), playerNav.z(cell)] : this.world.districts?.nav.clamp([click.x, click.z]) : this.world.districts?.nav.clamp([click.x, click.z]);
+      }
       this.moveTarget = point ? { x: point[0], z: point[1] } : { x: click.x, z: click.z }; this.attack = null;
     }
     // A ground click during the planted swing is a queued move, never another in-place attack.
