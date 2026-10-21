@@ -36,3 +36,10 @@ test('#99 moving away and back toward a static marker does not beat its previous
   p.update(sample(10,{distance:30}));
   expect(p.update(sample(32,{distance:25})).seconds).toBe(31);
 });
+
+test('#99 a visible checkpoint reposition starts a fresh movement observation', () => {
+  const p=new PlaytestProgress();p.update(sample(0,{player:{x:50,z:15},marker:{x:62,z:15}}));
+  p.update(sample(10,{player:{x:72,z:15},marker:{x:84,z:15}}));
+  expect(p.update(sample(10.1,{player:{x:2,z:15},marker:{x:14,z:15}})).reason).toBe('view-change');
+  for(let t=1;t<=35;t++) expect(p.update(sample(10.1+t,{player:{x:2+t*2.2,z:15},marker:{x:14+t*2.2,z:15}})).seconds).toBeLessThan(2);
+});
