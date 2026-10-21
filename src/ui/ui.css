@@ -243,6 +243,9 @@ body[data-ui-screen=pause] .menu-pause{max-width:min(640px,calc(100vw - 760px))}
 .level-transition{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at top,#35455b,#182333 75%);color:var(--ui-ink);font-family:system-ui,sans-serif;box-sizing:border-box}
 .level-transition[hidden]{display:none!important}
 .level-transition .menu-panel{box-sizing:border-box}
+.transition-status{display:flex;align-items:center;gap:8px}
+.transition-status::before{content:'';width:12px;height:12px;flex:none;border:2px solid #ffffff40;border-top-color:currentColor;border-radius:50%;animation:level-loading .8s linear infinite}
+@keyframes level-loading{to{transform:rotate(360deg)}}
 .level-transition progress{width:100%;height:18px;accent-color:var(--ui-warm);border:0;border-radius:9px;overflow:hidden;background:#35455b}
 .level-transition progress::-webkit-progress-bar{background:#35455b}
 .level-transition progress::-webkit-progress-value{background:var(--ui-warm);border-radius:9px}

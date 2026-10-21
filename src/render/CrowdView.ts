@@ -31,7 +31,7 @@ import { isOutbreakDistrict } from '../levels/districts/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
-import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
+import { bakeInfected, bakeInfectedAsync, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { loadGate } from '../assets/loadGate';
 import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
@@ -175,13 +175,17 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
-      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}${def.decay ? `.${def.decay}` : ''}:${lod}`), capacity = role === 'crow' ? 800 : 350;
+      const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}${def.decay ? `.${def.decay}` : ''}:${lod}`] as const;
+      const baked = this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args), capacity = role === 'crow' ? 800 : 350;
+      if (this.disposed) { baked.geometry.dispose(); return; }
+      if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       if (!healthy) markInfectedEyeCores(baked.geometry);
       baked.geometry.userData.crowdLod = lod;
       const alpha = asset === 'inf.alpha' || asset === 'inf.mega-alpha';
@@ -202,6 +206,7 @@ export class CrowdView extends Group {
         if (human) markCrowdAppearance(corpse, false);
         this.corpseGeometry.set(key, corpse);
       }
+      if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
       this.accessories?.registerSkull(asset, baked.geometry);

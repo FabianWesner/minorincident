@@ -20,7 +20,24 @@ export const framesPerClip = 24;
 const unplantedClips = /death|die|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
 const sole = new Vector3();
 /** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
-export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string): BakedCrowd {
+export function bakeInfected(...args: Parameters<typeof bakeInfectedSteps>): BakedCrowd {
+  const steps = bakeInfectedSteps(...args);
+  let step = steps.next();
+  while (!step.done) step = steps.next();
+  return step.value;
+}
+/** Same bake, paced behind a loading card. Keep each CPU slice short without
+ * changing any sampled frame, vertex, material or retained clip. */
+export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Parameters<typeof bakeInfectedSteps>): Promise<BakedCrowd> {
+  const steps = bakeInfectedSteps(...args);
+  let start = performance.now(), step = steps.next();
+  while (!step.done) {
+    if (performance.now() - start >= 8) { await pause(); start = performance.now(); }
+    step = steps.next();
+  }
+  return step.value;
+}
+function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string): Generator<void, BakedCrowd> {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -98,6 +115,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
           if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
         }
         for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
+        if ((frame + 1) % 6 === 0) yield;
       }
       action?.stop();
     }
@@ -105,6 +123,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     root.updateMatrixWorld(true);
   }
+  yield;
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   const transforms = template?.transforms ?? []; let meshIndex = 0;
   let shirtColor: import('three').Color | undefined;
@@ -150,7 +169,9 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });
+  yield;
   const geometry = mergeGeometries(geometries); if (!geometry) throw new Error('Infected geometry merge failed'); for (const source of geometries) source.dispose();
+  yield;
   // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
   // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
   const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'];
@@ -163,6 +184,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
     geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
     offset += attribute.itemSize;
+    yield;
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
