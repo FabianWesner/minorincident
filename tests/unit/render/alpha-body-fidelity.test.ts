@@ -7,14 +7,15 @@ import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
 import { AssetRegistry } from '../../../src/assets/registry';
 import { infectedDefinitions } from '../../../src/data/infected';
+import { alphaLookAssets } from '../../../src/data/alphaLooks';
 import { loadGate } from '../../../src/assets/loadGate';
 import { CrowdView } from '../../../src/render/CrowdView';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 
-for (const low of [false, true]) test(`PO #21 @E18 Alpha corpse retains its whole authored body (${low ? 'low' : 'high'})`, async () => {
+for (const asset of alphaLookAssets) for (const low of [false, true]) test(`PO #21/#93 @E18 ${asset} corpse retains its whole authored body (${low ? 'low' : 'high'})`, async () => {
   const world = new SimWorld(), crowd = new CrowdView(world, low);
-  const definition = infectedDefinitions.find(d => d.asset === 'inf.alpha')!;
+  const definition = { ...infectedDefinitions.find(d => d.asset === 'inf.alpha')!, id: asset, asset };
   const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation(async (id, lod) => {
     const asset = (manifest as AssetDef[]).find(a => a.id === id)!;
     const bytes = readFileSync(lod === 'lod0' ? asset.glb! : asset.lods![lod === 'lod2' ? 'lod2' : 'lod1']!);
