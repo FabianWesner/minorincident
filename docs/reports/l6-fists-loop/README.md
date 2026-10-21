@@ -33,6 +33,7 @@ Final gate results are being collected:
 | Gate | Result |
 | --- | --- |
 | Typecheck, lint, production build | Pass on the final tree, recorded by the current E24 verification |
+| E24 simulation selection | 67 pass, zero failures; other tests are excluded by the existing E24 name filter |
 | Mac `tests/e2e/levels/l6-*.spec.ts`, workers 1 | 10/10 pass, 2.9 min; [log](validation/l6-browser.log), [JSON](validation/l6-browser.json) |
 | `npm run verify -- E24` | Pending |
 | Remote `npx vitest run tests/unit tests/levels --maxWorkers=4` | Pending |
@@ -40,7 +41,14 @@ Final gate results are being collected:
 
 The native Mac unit attempt passed 1,828 tests and failed the existing Linux runner cache-GC fixture: it invokes GNU `stat -c`, unavailable on macOS. The required Linux suite includes that fixture. Its native failure is preserved in the validation evidence; its assertions were retained.
 
-The complete/newbie sims retain main's test bands and tuning. The final verification will refresh their seed-1 records. Coverage is seed 1 and the three recorded real-input outcomes; the playthrough survivor counts are shown above.
+The complete/newbie sims retain main's test bands and tuning: complete 180–300 s, newbie 195–300 s. Coverage is seed 1 and the three recorded real-input outcomes; the playthrough survivor counts are shown above.
+
+| Seed-1 sim | Main `56d7e7d16` | Final tree | Deaths, main/final | Peak infected, main/final |
+| --- | --- | --- | --- | --- |
+| Complete | 264.50 s, 27/29 out | 283.62 s, 23/29 out | 0/0 | 59/45 |
+| Newbie | 257.43 s, 12/29 out | 269.42 s, 18/29 out | 0/0 | 49/50 |
+
+Final records: [complete](../../../test-results/epics/E24/complete-seed-1.json), [newbie](../../../test-results/epics/E24/newbie-seed-1.json). Horde caps remain high 60 / low 30; healthy/injured walking speeds remain 2.2/1.4 m/s. The existing sim assertions are retained.
 
 Commands use `E2E_PORT=4021`, `SCENE_PORT=4022`, `E2E_UNITS=1`, `E2E_ADMISSION_TIMEOUT_SECONDS=3600`; browser workers are 1 and Vitest workers at most 4. All commits remain on the lane branch. No baseline worktree was needed.
 
