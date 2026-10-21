@@ -119,18 +119,36 @@ test('@E24 QA #84 the exit "Stay with the group" text switches once per real cha
 }, 240_000);
 
 // QA 10-21 #83 "L6 first service gate x~90 … survivors bunch west of the gate among infected and do not pass for 420 s twice".
-// A courier who never fights and only walks to the objective ring (like the playtest driver): the group held at a gate for an
-// injured straggler that could not be bitten (story-protected) but fled its biters into the tunnel wall for good, and the ring kept
-// pointing at the gate. Now the straggler limps to its protector and a held group names its reason, so the level finishes.
-test('@E24 QA #83 a ring-following, non-fighting courier gets the group through every gate to the exit', async () => {
+// Probe (non-fighting courier on the gate ring): the group held at the gate for an injured straggler that cannot be bitten
+// (story-protected) but fled its biters into the tunnel wall for good; the ring kept pointing at the gate; and one healthy
+// survivor fighting far back made the whole group wait as "the rear".
+test('@E24 QA #83 a protected straggler limps toward the group through its biters; the held group names it and the ring leads there', async () => {
   const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
   w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
-  const s = m.state.l6!, p = w.entities.get(1)!;
-  for (let i = 0; i < 60 * 300 && m.state.phase !== 'result' && s.phase !== 'done'; i++) {
-    const a = markerAnchor(m) ?? p.transform, dx = a.x - p.transform.x, dz = a.z - p.transform.z, d = Math.hypot(dx, dz), k = d > .5 ? Math.min(1, 4 / 60 / d) : 0;
-    put(w, p.transform.x + dx * k, p.transform.z + dz * k); followFrustum(w); w.update();
-    if (s.paused && s.phase === 'retreat' && !s.strayed) expect(LevelSixSubway.text(m), `held at tick ${w.tick}`).not.toBeNull();
-  }
-  expect(['exit', 'done']).toContain(s.phase);
-  expect(s.survivors.some(r => r.status === 'out')).toBe(true);
-}, 600_000);
+  const s = m.state.l6!; s.leaderX = 88; s.leaderZ = 15;
+  const live = s.survivors.filter(r => r.status === 'following');
+  const lame = live.find(r => r.injured)!, rest = live.filter(r => r !== lame);
+  rest.forEach((r, i) => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 86 - Math.floor(i / 3) * 1.4, z: 15 + (i % 3 - 1) * 1.2 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  const e = w.entities.get(lame.id)!; Object.assign(e.transform, { x: 60, z: 12.2 }); w.spatial.set(e.id, 60, 12.2); lame.straggler = true;
+  put(w, LevelSixSubway.gateWait(90).x, LevelSixSubway.gateWait(90).z);
+  for (const [x, z] of [[61.4, 12.6], [61.2, 11.8]]) w.infected!.spawn('infected.runner', { x, z });
+  w.update(); w.update();
+  expect(s.paused).toBe(true); expect(s.waitFor).toEqual({ kind: 'fetch', id: lame.id });
+  expect(m.state.marker).toBe('l6-help'); expect(LevelSixSubway.text(m)).toBe('The group waits: help the injured survivor who fell behind');
+  for (let i = 0; i < 8 * 60; i++) { put(w, LevelSixSubway.gateWait(90).x, LevelSixSubway.gateWait(90).z); w.update(); }
+  expect(e.transform.x, 'the straggler limps on toward the group instead of fleeing into the wall').toBeGreaterThan(66);
+  expect(Math.hypot(m.def.anchors['l6-help'].x - e.transform.x, m.def.anchors['l6-help'].z - e.transform.z)).toBeLessThan(1);
+}, 240_000);
+
+test('@E24 QA #83 a healthy survivor fighting far behind the column does not hold the group at the gate', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!; s.leaderX = 89; s.leaderZ = 15;
+  const live = s.survivors.filter(r => r.status === 'following' && !r.injured);
+  live.forEach((r, i) => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 87 - Math.floor(i / 3) * 1.4, z: 15 + (i % 3 - 1) * 1.2 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  for (const r of s.survivors.filter(r => r.injured)) r.status = 'dead';
+  const far = w.entities.get(live[live.length - 1].id)!; Object.assign(far.transform, { x: 20, z: 15 }); w.spatial.set(far.id, 20, 15);
+  w.infected!.spawn('infected.runner', { x: 22, z: 15 });
+  put(w, LevelSixSubway.gateWait(90).x, LevelSixSubway.gateWait(90).z); w.update();
+  expect(s.paused).toBe(false); expect(s.tailX).toBeGreaterThan(60);
+}, 240_000);

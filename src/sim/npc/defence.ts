@@ -76,7 +76,8 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
   const shielded = !!row && storyProtected(world, e) && toPlayer > 1;
   const goal = shielded ? { x: p.x + toPlayerX / toPlayer * 4, z: p.z + toPlayerZ / toPlayer * 4 } : { x: p.x + x / n * 4, z: p.z + z / n * 4 };
   const speed = injured ? 1.4 : c.l1?.fleeSpeed ?? 3.8;
-  if (!world.npcs!.move(e, goal, speed, c, .1)) world.npcs!.moveStep(e, awayX * speed / 60, awayZ * speed / 60);
+  const stepX = shielded ? toPlayerX / toPlayer : awayX, stepZ = shielded ? toPlayerZ / toPlayer : awayZ;
+  if (!world.npcs!.move(e, goal, speed, c, .1)) world.npcs!.moveStep(e, stepX * speed / 60, stepZ * speed / 60);
   world.spatial.set(e.id, p.x, p.z);
   return true;
 }
