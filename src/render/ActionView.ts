@@ -2,6 +2,7 @@ import { gunCarryElevation, gunHoldOffset, longGunHolds, mountedGunHold } from '
 import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
+import { heldActionScale } from './heldActionScale';
 import { catalog, action } from '../data/actions/catalog';
 import { l4 } from '../data/l4';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
@@ -244,7 +245,7 @@ export class ActionView extends Group {
         if (aiming && def.category === 'ranged') held.tilt = 0;
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
-      held.holder.scale.setScalar(inHand ? longGunHolds[def.viewAssetId]?.scale ?? 1 : 1);
+      held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
       held.holder.visible = !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
