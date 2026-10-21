@@ -105,8 +105,10 @@ export class L4Collapse {
     for (let k = 0; k < n; k++) {
       const at = flanks[k % flanks.length], id = this.h.emerge({ x: at.x + (k % 3 - 1) * .9, z: at.z + Math.floor(k / 3) * .9 }, true); if (!id) break;
       this.d.spawned++;
-      const to = targets.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[k % Math.min(3, targets.length)].transform;
-      world.infected!.rush(id, { x: to.x, z: to.z }, world.tick + ticks(20));
+      const target = targets.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[k % Math.min(3, targets.length)];
+      // A flank push attacks the line through the camp crowd. Retain its soldier
+      // focus as the crews retreat; ordinary sight and bite/rescue rules still apply.
+      world.infected!.press(id, target.id, world.tick + ticks(20));
     }
   }
   /** The armour beat: every infected near the tank goes for it, and a swarm comes up from the lake garden; `swarmedAt` once it is buried. */

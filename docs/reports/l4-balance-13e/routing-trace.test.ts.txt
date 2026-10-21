@@ -1,0 +1,46 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { test } from 'vitest';
+import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
+
+/** Opt-in routing evidence; no gameplay writes other than the existing idle-war courier god fixture. */
+for (const profile of ['idle', 'complete', 'newbie'] as const) test.skipIf(!process.env.L4_BALANCE_TRACE)(`L4 balance routing trace ${profile}`, async () => {
+  const seed = profile === 'idle' ? 2 : Number(process.env.L4_BALANCE_SEED ?? (profile === 'newbie' ? 1 : 3));
+  const { world: w, mission: m } = await loadL4(seed, process.env.L4_BALANCE_TIER === 'low' ? 'low' : 'high');
+  const s = m.state.l4!, samples: unknown[] = [], beats: unknown[] = [], mortality: { t: number; soldiers: number }[] = [], ring: unknown[] = [], hits: Record<string, number> = {};
+  const pos = (p: { x: number; z: number }) => [Math.round(p.x * 10) / 10, Math.round(p.z * 10) / 10];
+  w.events.on('infected.attack', e => {
+    if (e.type !== 'infected.attack') return;
+    const victim = w.entities.get(e.targetId);
+    const kind = victim?.civilian?.ally?.role ?? (e.targetId === 1 ? 'courier' : 'civilian');
+    const key = `${Math.floor((w.tick - s.turnAt) / 900) * 15}:${kind}`;
+    hits[key] = (hits[key] ?? 0) + 1;
+  });
+  w.events.on('l4.beat', e => { if (e.type === 'l4.beat') beats.push({ ...e, seconds: (e.tick - s.turnAt) / 60 }); });
+  try {
+    const report = runL4(w, m, profile, { seed, god: profile === 'idle', maxSeconds: 700, stopWhen: () => {
+      if (!s.turnAt) return false;
+      const t = (w.tick - s.turnAt) / 60;
+      if ((w.tick - s.turnAt) % 60 === 0) mortality.push({ t, soldiers: s.soldierIds.filter(id => { const e = w.entities.get(id)!; return e.civilian && !e.infection && e.health.current > 0; }).length });
+      if (w.tick % 60 === 0 && s.phase === 'war') {
+        const p = w.entities.get(1)!.transform;
+        const close = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.5);
+        if (close.length >= 4) ring.push({ t, player: pos(p), quadrants: new Set(close.map(e => Math.floor((Math.atan2(e.transform.z - p.z, e.transform.x - p.x) + Math.PI) / (Math.PI / 2)) % 4)).size, actors: close.map(e => ({ id: e.id, at: pos(e.transform), archetype: e.archetype, state: e.infected!.state, brain: structuredClone(e.infected!.l1) })) });
+      }
+      if ((w.tick - s.turnAt) % (s.phase === 'collapse' ? 300 : 900) === 0) {
+        const infected = w.infected!.active.filter(e => !e.hidden && e.health.current > 0);
+        samples.push({ t, phase: s.phase, player: pos(w.entities.get(1)!.transform),
+          soldiers: s.soldierIds.map(id => w.entities.get(id)!).filter(e => e.civilian && !e.infection && e.health.current > 0).map(e => ({ id: e.id, at: pos(e.transform), hp: e.health.current, post: e.civilian!.ally?.post, state: e.civilian!.state })),
+          infected: infected.map(e => ({ id: e.id, at: pos(e.transform), target: e.infected!.l1?.targetId ?? e.infected!.heardTargetId, mode: e.infected!.l1?.mode ?? e.infected!.state, goal: e.infected!.l1 ? [e.infected!.l1.goalX, e.infected!.l1.goalZ] : undefined, scripted: e.infected!.scripted })),
+          kills: { ...s.kills }, spawned: s.director.spawned, pending: s.pend,
+          groups: s.pendingDoor.filter(q => q.id > 0).map(q => ({ ...q, at: pos(w.entities.get(q.id)!.transform) })),
+          alphas: s.director.alphaJobs.map(j => ({ ...j, at: pos(w.entities.get(j.alphaId)!.transform), hp: w.entities.get(j.alphaId)!.health.current })),
+        });
+      }
+      return profile === 'idle' && t > 192;
+    } });
+    const label = process.env.L4_BALANCE_TRACE!;
+    const dir = 'docs/reports/l4-balance-13e/evidence'; mkdirSync(dir, { recursive: true });
+    writeFileSync(`${dir}/${label}-${profile}-${seed}.json`, JSON.stringify({ label, profile, seed, report, beats, hits, mortality, ring, samples }, null, 2) + '\n');
+    console.log(JSON.stringify({ label, profile, seed, report, beats, hits }));
+  } finally { w.dispose(); }
+}, 1_800_000);

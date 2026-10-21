@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-balance-13e -> 2.28.24.66:/srv/mi/ws/l4-balance-13e-d4ea4a
+[remote] cache-gc deleted:none
+[remote] sync 30s, 29575 files; job /srv/mi/jobs/l4-balance-13e-d4ea4a-74983-1792559463; queueing for a slot
+[runner] slot 0 acquired; load 1.83 2.11 1.19
+
+ RUN  v5.0.3 /srv/mi/jobs/l4-balance-13e-d4ea4a-74983-1792559463
+
+ ✓  functional  tests/levels/L4-collapse.test.ts (4 tests | 2 skipped) 133598ms
+   ✓ L4 collapse director (4)
+     ✓ T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 68567ms
+     ✓ T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier 65028ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 2 skipped (4)
+   Start at  05:11:35
+   Duration  137.70s (tests 97%, transform 2%)
+
+[remote] pulled test-results/epics/E22
+[remote] done exit=0 (runner 2.28.24.66, sync 30s, remote total 140s)

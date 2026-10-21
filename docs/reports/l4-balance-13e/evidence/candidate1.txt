@@ -1,0 +1,208 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-balance-13e -> 2.28.24.66:/srv/mi/ws/l4-balance-13e-d4ea4a
+[remote] cache-gc deleted: l8-continuity-2995f0
+[remote] sync 93s, 29547 files; job /srv/mi/jobs/l4-balance-13e-d4ea4a-73199-1792553112; queueing for a slot
+[runner] slot 0 acquired; load 1.11 1.35 2.83
+
+ RUN  v5.0.3 /srv/mi/jobs/l4-balance-13e-d4ea4a-73199-1792553112
+
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'high',
+  seconds: 92.96666666666667,
+  metres: 387.87203547440294,
+  routeMetres: 304,
+  walkingSeconds: 152,
+  engaged: 9,
+  perMinute: 5.808533524560774,
+  bins15s: [
+    0, 1, 4, 2,
+    0, 1, 2
+  ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -14.245420455932617,
+      z: 1.2538812160491943,
+      slots: 106,
+      groups: []
+    },
+    {
+      second: 15,
+      x: -4.542829990386963,
+      z: 36.495540618896484,
+      slots: 108,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 21.81261444091797,
+      z: 45.10153579711914,
+      slots: 110,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 48.36498260498047,
+      z: 9.320779800415039,
+      slots: 114,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: 33.309486389160156,
+      z: -37.24752426147461,
+      slots: 116,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -7.641343116760254,
+      z: -37.399810791015625,
+      slots: 118,
+      groups: [Array]
+    },
+    {
+      second: 90,
+      x: -74.80803680419922,
+      z: -39.82660675048828,
+      slots: 120,
+      groups: [Array]
+    }
+  ],
+  peak: 120,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.lineBreaks', t: 223.16666666666666 },
+    { type: 'objective:hold', t: 223.16666666666666 },
+    { type: 'l4.heliWithdrawn', t: 230.16666666666666 },
+    { type: 'l4.descended', t: 316.15 },
+    { type: 'objective:hide', t: 316.15 },
+    { type: 'l4.doorBarred', t: 317.76666666666665 },
+    { type: 'objective:bar', t: 317.76666666666665 },
+    { type: 'objective:wait', t: 324.76666666666665 }
+  ],
+  totalSeconds: 324.76666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'low',
+  seconds: 75.98333333333333,
+  metres: 329.3885902512995,
+  routeMetres: 305,
+  walkingSeconds: 152.5,
+  engaged: 7,
+  perMinute: 5.527527966659355,
+  bins15s: [ 1, 3, 1, 1, 1, 0 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -11.030715942382812,
+      z: 15.192641258239746,
+      slots: 51,
+      groups: [Array]
+    },
+    {
+      second: 15,
+      x: 23.691455841064453,
+      z: 45.07712173461914,
+      slots: 55,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 48.45109939575195,
+      z: 5.338526725769043,
+      slots: 57,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 40.38041687011719,
+      z: -37.31184387207031,
+      slots: 58,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: -14.070133209228516,
+      z: -37.39994812011719,
+      slots: 59,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -78.0658187866211,
+      z: -42.91069030761719,
+      slots: 60,
+      groups: [Array]
+    }
+  ],
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.lineBreaks', t: 223.16666666666666 },
+    { type: 'objective:hold', t: 223.16666666666666 },
+    { type: 'l4.heliWithdrawn', t: 230.16666666666666 },
+    { type: 'l4.descended', t: 299.1666666666667 },
+    { type: 'objective:hide', t: 299.1666666666667 },
+    { type: 'l4.doorBarred', t: 300.51666666666665 },
+    { type: 'objective:bar', t: 300.51666666666665 },
+    { type: 'objective:wait', t: 307.51666666666665 }
+  ],
+  totalSeconds: 307.51666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+ ❯  functional  tests/levels/L4-finale-pressure.test.ts (2 tests | 1 failed) 232468ms
+   × PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap 232459ms
+   ✓ PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven 6ms
+ ✓  functional  tests/levels/L4-respawn.test.ts (6 tests) 267581ms
+   ✓ L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint 171546ms
+   ✓ L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock 92764ms
+   ✓ L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires 1251ms
+   ✓ L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray 868ms
+   ✓ L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post 1141ms
+ ❯  functional  tests/levels/L4-collapse.test.ts (4 tests | 1 failed) 321698ms
+   ❯ L4 collapse director (4)
+     × T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 117490ms
+     ✓ T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier 91517ms
+     ✓ T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows 79418ms
+     ✓ T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps 33270ms
+stdout | tests/levels/l4-balance-diagnostic.test.ts > L4 balance routing trace idle
+{"label":"focus-rally","profile":"idle","seed":2,"report":{"profile":"idle","route":"auto","seed":2,"outcome":"timeout","simSeconds":224.83333333333334,"deaths":0,"kills":0,"knockdowns":0,"damage":0,"timeline":[{"type":"l4.convoyArrived","t":30.483333333333334},{"type":"objective:ride","t":30.483333333333334},{"type":"l4.gun","t":32.81666666666667},{"type":"l4.firstTurn","t":32.81666666666667},{"type":"objective:quartermaster","t":32.81666666666667},{"type":"l4.lineBreaks","t":222.83333333333334},{"type":"objective:hold","t":222.83333333333334}],"rideS":30.483333333333334,"controlBackS":0,"gunS":32.81666666666667,"turnAfterGunS":0,"turnAfterArrivalS":2.3333333333333335,"humansNear":9,"turnedIds":[145,147,149,151,153,155,157,159,161,163,165,167,169,171,173,175,177,179],"turnedWithin30":9,"maxConcurrent":106,"maxCharacters":127,"infectedAtT30":9,"infectedAtBreak":35,"killsAtBreak":1045,"soldiersAtTurn":20,"soldiersAtBreak":12,"soldiersAtCellar":0,"civiliansAtTurn":85,"breakCause":"beats","breakAfterS":190.01666666666668,"shots":{"tank":[4548,5093,5718,6264,6938,7646,8253,8940,9606,10138,10749,11311,11907,12584,13370],"heliBursts":210,"hmgBursts":70},"kills_":{"player":0,"soldiers":451,"armedCivilians":556,"unarmedCivilians":0,"heli":22,"tank":21,"other":6},"damageLive":{"fires":39,"burning":2,"glass":15,"scorch":19},"edges":[0,1,2,3,4,5],"deathsAt":[],"battleAfterBarred":0},"beats":[{"type":"l4.beat","tick":5690,"beat":"line-1","cause":"forced","soldiers":9,"inside":1,"seconds":62.016666666666666},{"type":"l4.beat","tick":9410,"beat":"nests","cause":"forced","soldiers":10,"inside":3,"seconds":124.01666666666667},{"type":"l4.beat","tick":12890,"beat":"armor","cause":"forced","soldiers":9,"inside":19,"seconds":182.01666666666668}],"hits":{"30:soldier":1,"60:soldier":2,"75:civilian":1,"75:soldier":3,"90:soldier":2,"90:civilian":1,"105:soldier":1,"120:soldier":6,"120:civilian":2,"135:civilian":7,"135:soldier":10,"150:soldier":2,"150:civilian":3,"165:civilian":13,"165:courier":1,"165:soldier":16,"180:civilian":9,"180:soldier":8,"180:courier":7}}
+
+ ✓  functional  tests/levels/L6-protection.test.ts (1 test) 56086ms
+   ✓ T-E24-09-evade @E24 @E24-AC09 a non-fighting courier evacuates at most thirty percent, with real casualties 56084ms
+stdout | tests/levels/l4-balance-diagnostic.test.ts > L4 balance routing trace complete
+{"label":"focus-rally","profile":"complete","seed":3,"report":{"profile":"complete","route":"auto","seed":3,"outcome":"complete","simSeconds":309.4166666666667,"deaths":0,"kills":0,"knockdowns":50,"damage":11,"timeline":[{"type":"l4.convoyArrived","t":30.483333333333334},{"type":"objective:ride","t":30.483333333333334},{"type":"l4.gun","t":32.81666666666667},{"type":"l4.firstTurn","t":32.81666666666667},{"type":"objective:quartermaster","t":32.81666666666667},{"type":"l4.lineBreaks","t":222.83333333333334},{"type":"objective:hold","t":222.83333333333334},{"type":"l4.heliWithdrawn","t":229.83333333333334},{"type":"l4.descended","t":301.1666666666667},{"type":"objective:hide","t":301.1666666666667},{"type":"l4.doorBarred","t":302.4166666666667},{"type":"objective:bar","t":302.4166666666667},{"type":"objective:wait","t":309.4166666666667}],"rideS":30.483333333333334,"controlBackS":0,"gunS":32.81666666666667,"turnAfterGunS":0,"turnAfterArrivalS":2.3333333333333335,"humansNear":9,"turnedIds":[146,148,150,152,154,156,158,160,162,164,166,168,170,172,174,176,178,180],"turnedWithin30":7,"maxConcurrent":120,"maxCharacters":126,"infectedAtT30":5,"infectedAtBreak":7,"killsAtBreak":1131,"soldiersAtTurn":20,"soldiersAtBreak":16,"soldiersAtCellar":15,"civiliansAtTurn":86,"breakCause":"beats","breakAfterS":190.01666666666668,"shots":{"tank":[4552,5225,5817,6365,6906,7586,8217,8746,9464,10154,10763,11373,11934,12573,13370],"heliBursts":180,"hmgBursts":78},"kills_":{"player":50,"soldiers":447,"armedCivilians":980,"unarmedCivilians":0,"heli":7,"tank":25,"other":5},"damageLive":{"fires":38,"burning":3,"glass":15,"scorch":20},"edges":[0,1,2,3,4,5],"deathsAt":[],"battleAfterBarred":5},"beats":[{"type":"l4.beat","tick":5690,"beat":"line-1","cause":"forced","soldiers":9,"inside":6,"seconds":62.016666666666666},{"type":"l4.beat","tick":9410,"beat":"nests","cause":"forced","soldiers":9,"inside":7,"seconds":124.01666666666667},{"type":"l4.beat","tick":12890,"beat":"armor","cause":"forced","soldiers":13,"inside":7,"seconds":182.01666666666668}],"hits":{"30:civilian":1,"60:civilian":2,"60:soldier":1,"75:soldier":8,"90:soldier":4,"105:soldier":1,"120:soldier":5,"150:civilian":1,"150:soldier":2,"165:soldier":6,"180:civilian":5,"180:soldier":10,"195:civilian":6,"210:civilian":10,"210:soldier":2,"225:civilian":22,"225:soldier":2,"225:courier":1,"240:civilian":9,"240:soldier":1,"255:civilian":2}}
+
+ ✓  functional  tests/levels/l4-balance-diagnostic.test.ts (2 tests) 181759ms
+   ✓ L4 balance routing trace idle 88469ms
+   ✓ L4 balance routing trace complete 93288ms
+[remote] interrupted; killing remote job
