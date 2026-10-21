@@ -34,3 +34,21 @@ Final playtest and suite results are recorded separately after completion; the c
 ### Pose-probe validity guard
 
 `CrowdFigureProbe` requires the presence of the `test` query key. `testApi=1` alone does not populate it. An initial candidate run with an empty enemy list was rejected after its result showed no combat; it is not completion evidence. The driver now uses `test=poses` to enable render observations while retaining the production clock, UI and prewarming paths (those check specifically for `test=1`). It fails immediately if L6 has no rendered-body observations. Per-level counts of actual player `combat.attack` events are saved in the run JSON, and the final audit requires fist attacks in the fists run and firearm attacks in both weapons runs.
+
+## Confirmed shelter-retry cause: global checkpoint guard
+
+The live trace in `gate-loop-live.json` establishes another regression, introduced by **`2f25c41f7`**. At tick 13543 the leader is at x147.5, the healthy tail is x122.5, and every injured survivor is east of x94. Gate 90 still has no checkpoint. At tick 14039 the group is held at gate 150 and the unrejoined injured survivors are at x112.6/x114.2; gate 90 still has no checkpoint. The next death restores the shelter and the entire first-gate fetch sequence.
+
+The condition used `!behind`, which means nobody may be behind the **current column**. It therefore withheld an earlier gate even when its stragglers had already crossed it. The fix checks for an unrejoined straggler **before the particular gate**. It preserves the healthy-column and living-majority requirements and the refusal to snapshot a straggler still west of that gate. It leaves the mid-tunnel checkpoint condition unchanged.
+
+The new level test, "stragglers beyond a passed gate retain its checkpoint through deaths instead of restarting the shelter fetch loop", uses fists, places the retreat beyond gate 90 with injured people lagging behind the later column, and kills the courier twice. Both retries must use gate 90; the injured survivors remain unrejoined and the retreat objective remains active. Before the fix it restores `abandon` instead. No god mode is used.
+
+| Controller revision | Death/respawn regression |
+| --- | --- |
+| `cd5ce5b31` (initial gate checkpoints) | pass |
+| `cbae916ad` (parent of the checkpoint guard) | pass |
+| `2f25c41f7` (first global guard) | fail: abandon instead of gate-90 |
+| `54e86bba2` (starting branch tip) | same failure |
+| Corrected guard plus real-column rejoin fix | all 12 weapons-flow level tests pass |
+
+This test checks the added gate-checkpoint behavior; main `56d7e7d16` predates those checkpoints. The separate rejoin regression above also passes on that main baseline. All existing gate-checkpoint assertions remain; the older test title now says "before that gate" to describe its unchanged fixture and expectations.
