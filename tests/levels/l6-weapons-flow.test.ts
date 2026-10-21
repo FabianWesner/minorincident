@@ -113,3 +113,19 @@ test('@E24 playtest a survivor who fled into the side rooms beside the tunnel mo
   for (let i = 0; i < 40 * 60; i++) { s.leaderX = 120; s.leaderZ = 15; w.update(); }
   expect(e.transform.x).toBeGreaterThan(90); expect(Math.abs(e.transform.z - l6.tunnel.z)).toBeLessThan(l6.tunnel.width / 2);
 }, 240_000);
+
+// Playtest 10-21 (fists, 22 survivors): "Bring the injured survivor back to the group · 0 m" held 7 min at gate 90.
+test('@E24 playtest a collected straggler brought into the middle of a long column rejoins; the bring ring leads to the tail', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following'), lame = live.find(r => r.injured)!;
+  const rest = live.filter(r => r !== lame).map(r => r.id);
+  s.leaderX = 89; s.leaderZ = 15; place(w, rest, 89);
+  const e = w.entities.get(lame.id)!; Object.assign(e.transform, { x: 60, z: 15 }); w.spatial.set(e.id, 60, 15); lame.straggler = true;
+  put(w, 61, 15); w.update(); w.update();
+  expect(lame.collected).toBe(true); expect(LevelSixSubway.text(m)).toBe('Bring the injured survivor back to the group');
+  expect(m.state.marker).toBe('l6-help'); expect(Math.abs(m.def.anchors['l6-help'].x - s.tailX!)).toBeLessThan(2);
+  // Courier and straggler stand in the middle of the column, more than 5 m ahead of its tail.
+  Object.assign(e.transform, { x: s.tailX! + 6, z: 15 }); w.spatial.set(e.id, e.transform.x, 15); put(w, s.tailX! + 7, 15); w.update();
+  expect(lame.rejoined).toBe(true);
+}, 240_000);
