@@ -13,7 +13,7 @@ try {
       const state = await session.page.evaluate(async () => {
         const a = window.__SS__!;
         await a.loadLevel('L7', { seed: 29, progression: 'L7-default' }); a.pause();
-        await a.loadLevel('L8', { seed: 29 }); a.missions.begin(); a.pause();
+        await a.loadLevel('L8'); a.missions.begin(); a.pause();
         await a.step(180); await a.screenshotReady();
         return { tick: a.tick(), perf: a.perf(), entities: a.query({}).map(e => ({ id: e.id, archetype: e.archetype, health: e.health, transform: e.transform, corpse: e.corpse })) };
       });
