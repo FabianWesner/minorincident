@@ -68,3 +68,9 @@ The Scene Lab gate composition also stages its leader at gate 90 rather than alr
 A candidate that applied the unarmed chest-click/retry policy to guns was discarded after repeated exit retries: a guard stayed near the shelter and the courier died while returning. That unfinished attempt is not acceptance evidence. The final driver retains the branch's original firearm policy: a single physical click 18 screen pixels above the target's ground projection, held until the target changes. Rendered-body and viewport checks remain mandatory. This armed-only branch does not change the unarmed crowd inputs.
 
 With that policy restored, the male seeded weapons run finishes in 283 wall seconds with zero deaths, zero skips and 293 actual machine-gun attacks. Its full record is in `weapons-male/`. This input comparison does not claim a separately isolated cause for the discarded guard's movement.
+
+### Armed close-crowd cover
+
+The restored gun-only policy completed the male case but the female case repeatedly died escorting the last injured survivor from gate 90 toward the column at gate 150. That unfinished attempt is excluded. The final driver uses the carried fire axe through the shipped J/LEFT binding when at least three rendered enemies are within 3 m, in short pulses while continuing toward the visible objective. The selected gun and its held-target policy remain available at range. This parallels the unarmed crowd cover inputs and changes no game simulation or weapon values.
+
+The female run on `f07cae179` finishes in 416 wall seconds with no deaths or skips, 38 actual machine-gun attacks and 95 axe attacks. It returns to the guard at the shelter, covers his retreat and brings him to the exit; the full record is in `weapons-female/`. All final acceptance cases are rerun with this common policy.
