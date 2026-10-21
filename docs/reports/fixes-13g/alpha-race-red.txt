@@ -1,0 +1,52 @@
+ ❯ |functional| tests/unit/render/alpha-body-fidelity.test.ts (16 tests | 16 failed) 428ms
+   × PO #21/#93 @E18 inf.alpha corpse retains its whole authored body (high) 54ms
+   × PO #21/#93 @E18 inf.alpha corpse retains its whole authored body (low) 33ms
+   × PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (high) 25ms
+   × PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (low) 33ms
+   × PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (high) 26ms
+   × PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (low) 20ms
+   × PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (high) 19ms
+   × PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (low) 17ms
+   × PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (high) 17ms
+   × PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (low) 18ms
+   × PO #21/#93 @E18 inf.mega-alpha corpse retains its whole authored body (high) 26ms
+   × PO #21/#93 @E18 inf.mega-alpha corpse retains its whole authored body (low) 27ms
+   × PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (high) 30ms
+   × PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (low) 28ms
+   × PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (high) 27ms
+   × PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (low) 27ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-worker corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-hoodie corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-fire corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.alpha-suit corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ashen corpse retains its whole authored body (low)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (high)
+ FAIL  |functional| tests/unit/render/alpha-body-fidelity.test.ts > PO #21/#93 @E18 inf.mega-alpha-ember corpse retains its whole authored body (low)
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/render/alpha-body-fidelity.test.ts:30:20
+     28|     await view.loadBatch(definition, 'lod2');
+     29|     const frozen = [...view.corpseGeometry.values()][0];
+     30|     expect(frozen).toBeDefined(); expect(frozen.index!.count).toBeGrea…
+       |                    ^
+     31|     expect(frozen.hasAttribute('_parts')).toBe(true);
+     32|     expect(prepare).toHaveBeenCalledWith(expect.any(String), frozen, e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  16 failed (16)
+   Start at  21:06:20
+   Duration  1.97s (transform 62%, tests 22%, import 15%)

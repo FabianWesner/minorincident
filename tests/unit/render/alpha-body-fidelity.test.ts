@@ -24,12 +24,15 @@ for (const asset of alphaLookAssets) for (const low of [false, true]) test(`PO #
   const prepare = vi.spyOn(StaticCorpses.prototype, 'prepare').mockImplementation(() => {});
   const view = crowd as unknown as { loadBatch(d: typeof definition, lod: 'lod0' | 'lod2'): Promise<void>; corpseGeometry: Map<string, BufferGeometry>; batches: Map<string, { mesh: { geometry: BufferGeometry } }> };
   try {
-    await view.loadBatch(definition, 'lod0');
-    const source = [...view.batches.values()][0].mesh.geometry, frozen = [...view.corpseGeometry.values()][0];
-    expect(frozen).toBeDefined(); expect(frozen.index!.count).toBe(source.index!.count);
+    // A distant death can settle before any living hero batch is requested.
+    await view.loadBatch(definition, 'lod2');
+    const frozen = [...view.corpseGeometry.values()][0];
+    expect(frozen).toBeDefined(); expect(frozen.index!.count).toBeGreaterThan(5000);
     expect(frozen.hasAttribute('_parts')).toBe(true);
     expect(prepare).toHaveBeenCalledWith(expect.any(String), frozen, expect.anything(), expect.anything(), expect.any(Number));
-    await view.loadBatch(definition, 'lod2');
+    await view.loadBatch(definition, 'lod0');
+    const source=[...view.batches.entries()].find(([key])=>key.endsWith(':lod0'))![1].mesh.geometry;
+    expect(frozen.index!.count).toBe(source.index!.count);
     expect([...view.corpseGeometry.values()][0]).toBe(frozen);
     // Unload while the batch waits for its loading-gate slot: the one suspension point every load takes, including a
     // cross-level cache hit that skips the bake and the LOD simplification.
