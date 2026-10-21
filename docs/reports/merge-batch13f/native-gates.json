@@ -1,0 +1,201 @@
+{
+  "load-final": {
+    "exit": 0,
+    "stats": {
+      "startTime": "2026-10-21T11:20:29.696Z",
+      "duration": 28956.955,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "perf/level-handover.spec.ts",
+        "title": "@perf level handovers final-webgpu-high-x1",
+        "status": "expected",
+        "errors": []
+      }
+    ]
+  },
+  "native-before": {
+    "exit": 1,
+    "stats": {
+      "startTime": "2026-10-21T11:42:18.974Z",
+      "duration": 144754.059,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "perf/l7-district.spec.ts",
+        "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district high fire and rocket stress",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-district.spec.ts",
+        "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress",
+        "status": "unexpected",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 33.3\nReceived:    33.79999999999927\n\n  122 |   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);\n  123 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 124 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n      |                           ^\n  125 |   expect(result.hitch).toBeLessThanOrEqual(50);\n  126 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  127 | });\n    at /private/tmp/mi-merge-batch13f-base/tests/perf/l7-district.spec.ts:124:27"
+        ]
+      },
+      {
+        "file": "perf/l7-encounters.spec.ts",
+        "title": "T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-encounters.spec.ts",
+        "title": "T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-rocket.spec.ts",
+        "title": "T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-rocket.spec.ts",
+        "title": "T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap",
+        "status": "unexpected",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 50\nReceived:    51.79999999999927\n\n  63 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  64 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 65 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  66 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  67 | });\n  68 |\n    at /private/tmp/mi-merge-batch13f-base/tests/perf/l7-rocket.spec.ts:65:27"
+        ]
+      }
+    ]
+  },
+  "native-final": {
+    "exit": 1,
+    "stats": {
+      "startTime": "2026-10-21T11:51:22.253Z",
+      "duration": 372652.58,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L8 webgl low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L6 webgl low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L5 webgl low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L8 webgl high",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L6 webgl high",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L5 webgl high",
+        "status": "unexpected",
+        "errors": [
+          "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 30\n\n- Array []\n+ Array [\n+   Object {\n+     \"builds\": 345,\n+     \"lighting\": Object {\n+       \"heroLights\": 0,\n+       \"heroShadow\": 0,\n+       \"lightCandidates\": 17,\n+       \"lightFieldMs\": 0.19999980926513672,\n+       \"lightPools\": 17,\n+       \"preset\": \"L5\",\n+       \"shadowMaps\": 1,\n+     },\n+     \"move\": Object {\n+       \"x\": -7.850462293418876e-17,\n+       \"z\": 1,\n+     },\n+     \"ms\": 100.10000000000036,\n+     \"position\": Object {\n+       \"x\": -46.46132278442383,\n+       \"y\": 0.8263516426086426,\n+       \"yaw\": -1.5707963267948968,\n+       \"z\": 35.430702209472656,\n+     },\n+     \"render\": 2.8000001907348633,\n+     \"sim\": 6.09999942779541,\n+     \"t\": 141,\n+     \"tick\": 9,\n+     \"update\": 1.6000003814697266,\n+   },\n+ ]\n\n  115 |     expect(result.perf.backend).toBe(backend);\n  116 |     expect(result.perf.quality.tier).toBe(quality);\n> 117 |     if (phase !== 'before') expect(result.over100).toEqual([]);\n      |                                                    ^\n  118 |     if (level === 'L6') expect(result.exitAt).toBeGreaterThan(0);\n  119 |     if (level === 'L5') expect(result.state.player!.transform.z).toBeGreaterThan(39.8);\n  120 |     if (level === 'L8') { expect(result.state.tick).toBeGreaterThan(120); expect(result.state.player!.transform.z).toBeLessThan(68); }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13f/tests/e2e/levels/campaign-hitches.spec.ts:117:52"
+        ]
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L8 webgpu low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L6 webgpu low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L5 webgpu low",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L8 webgpu high",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L6 webgpu high",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/campaign-hitches.spec.ts",
+        "title": "T-E18-campaign-hitch @E18 @perf L5 webgpu high",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-district.spec.ts",
+        "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district high fire and rocket stress",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-district.spec.ts",
+        "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress",
+        "status": "unexpected",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 33.3\nReceived:    33.5\n\n  122 |   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);\n  123 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 124 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n      |                           ^\n  125 |   expect(result.hitch).toBeLessThanOrEqual(50);\n  126 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  127 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13f/tests/perf/l7-district.spec.ts:124:27"
+        ]
+      },
+      {
+        "file": "perf/l7-encounters.spec.ts",
+        "title": "T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-encounters.spec.ts",
+        "title": "T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-rocket.spec.ts",
+        "title": "T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "perf/l7-rocket.spec.ts",
+        "title": "T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap",
+        "status": "unexpected",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 50\nReceived:    62.600000000000364\n\n  63 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  64 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 65 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  66 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  67 | });\n  68 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13f/tests/perf/l7-rocket.spec.ts:65:27"
+        ]
+      }
+    ]
+  }
+}

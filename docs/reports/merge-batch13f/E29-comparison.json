@@ -1,0 +1,109 @@
+{
+  "baselineCommit": "56d7e7d16",
+  "mergedCommit": "06360a7a7",
+  "baselineStats": {
+    "startTime": "2026-10-21T10:21:23.351Z",
+    "duration": 530861.8539999999,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 17,
+    "flaky": 0
+  },
+  "mergedStats": {
+    "startTime": "2026-10-21T11:10:29.825Z",
+    "duration": 566003.351,
+    "expected": 19,
+    "skipped": 0,
+    "unexpected": 17,
+    "flaky": 0
+  },
+  "newFailures": [],
+  "resolvedFailures": [],
+  "unchangedFailures": [
+    [
+      "e2e/levels/l7-entry.spec.ts",
+      "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death",
+      "chromium"
+    ],
+    [
+      "e2e/levels/l7-entry.spec.ts",
+      "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death",
+      "chromium"
+    ],
+    [
+      "e2e/levels/l7-entry.spec.ts",
+      "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death",
+      "chromium"
+    ],
+    [
+      "e2e/levels/l7-entry.spec.ts",
+      "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death",
+      "chromium"
+    ],
+    [
+      "e2e/levels/l7-real-input.spec.ts",
+      "T-E29-17-touch @E29-AC17 touch pickup and corridor checkpoint retain a bounded HUD",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z0.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z0.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z0.5",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1",
+      "chromium"
+    ],
+    [
+      "visual/l7-night.spec.ts",
+      "T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1.5",
+      "chromium"
+    ]
+  ]
+}
