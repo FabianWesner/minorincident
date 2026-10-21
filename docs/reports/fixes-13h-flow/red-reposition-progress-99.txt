@@ -1,0 +1,30 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-progress.test.ts (6 tests | 1 failed) 6ms
+   × #99 a visible checkpoint reposition starts a fresh movement observation 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-progress.test.ts > #99 a visible checkpoint reposition starts a fresh movement observation
+AssertionError: expected 'moving-marker' to be 'view-change' // Object.is equality
+
+Expected: "view-change"
+Received: "moving-marker"
+
+ ❯ tests/unit/playtest-progress.test.ts:43:80
+     41|   const p=new PlaytestProgress();p.update(sample(0,{player:{x:50,z:15}…
+     42|   p.update(sample(10,{player:{x:72,z:15},marker:{x:84,z:15}}));
+     43|   expect(p.update(sample(10.1,{player:{x:2,z:15},marker:{x:14,z:15}}))…
+       |                                                                                ^
+     44|   for(let t=1;t<=35;t++) expect(p.update(sample(10.1+t,{player:{x:2+t*…
+     45| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  01:19:30
+   Duration  102ms (transform 59%, tests 18%, import 15%, worker 7%)
+
