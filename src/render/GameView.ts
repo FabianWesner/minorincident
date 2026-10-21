@@ -128,17 +128,19 @@ export class GameView implements Lifecycle {
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
   background = false;
   private frozenFrame: HTMLCanvasElement | null = null;
+  private frozenUpdates = false;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
    * loads and warms up behind the menus/briefing; drawing is suspended until unfreeze(). */
-  freeze(): void {
+  freeze(keepUpdates = false): void {
     if (this.frozenFrame) return;
+    this.frozenUpdates = keepUpdates;
     const source = this.renderer.domElement, copy = document.createElement('canvas');
     copy.width = source.width; copy.height = source.height;
     copy.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none';
     try { this.update(1); copy.getContext('2d')?.drawImage(source, 0, 0); } catch { /* best effort */ }
     source.after(copy); this.frozenFrame = copy;
   }
-  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; if (!this.warming) this.update(1); }
+  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; this.frozenUpdates = false; if (!this.warming) this.update(1); }
   get frozen(): boolean { return this.frozenFrame !== null; }
   private loadingPresentedAt = -Infinity;
   /** Keep the compositor presenting during handover work. The frozen canvas
@@ -829,7 +831,7 @@ export class GameView implements Lifecycle {
   update(alpha = 1): void {
     this.vfx?.updateObstruction();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
-    if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
+    if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
     this.militaryPerimeter?.update();
     if (this.destination) {
