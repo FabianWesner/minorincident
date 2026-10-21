@@ -1,0 +1,495 @@
+{
+  "final-smoke": {
+    "commit": "06360a7a7",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "--grep",
+      "@smoke",
+      "--workers=1"
+    ],
+    "exit": 0,
+    "stats": {
+      "startTime": "2026-10-21T10:53:29.655Z",
+      "duration": 300741.33200000005,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "pixel-7",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "pixel-7-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "iphone-14",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "iphone-14-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/audio/smoke.spec.ts",
+        "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+        "project": "webkit",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/controls-playtest.spec.ts",
+        "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/crowd-drawn.spec.ts",
+        "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/crowd-drawn.spec.ts",
+        "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/crowd-feel.spec.ts",
+        "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/driving.spec.ts",
+        "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l4-boot.spec.ts",
+        "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/menus-mouse.spec.ts",
+        "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/save.spec.ts",
+        "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "pixel-7",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "pixel-7",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "pixel-7-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "pixel-7-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "iphone-14",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "iphone-14",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "iphone-14-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "iphone-14-landscape",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+        "project": "webkit",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/smoke.spec.ts",
+        "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+        "project": "webkit",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/webgpu-canvas.spec.ts",
+        "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/webgpu-level-transitions.spec.ts",
+        "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      }
+    ]
+  },
+  "final-levels": {
+    "commit": "06360a7a7",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "tests/e2e/levels/L1.spec.ts",
+      "tests/e2e/levels/L2.spec.ts",
+      "tests/e2e/levels/l5-finish.spec.ts",
+      "tests/e2e/levels/l6-headlamp-hitch.spec.ts",
+      "tests/e2e/levels/l6-quality-switch.spec.ts",
+      "tests/e2e/levels/l7-departure.spec.ts",
+      "tests/e2e/levels/l7-focus-load.spec.ts",
+      "tests/e2e/debug-locked-levels.spec.ts",
+      "tests/e2e/levels/objective-clarity.spec.ts",
+      "tests/e2e/weapon-keys.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "exit": 0,
+    "stats": {
+      "startTime": "2026-10-21T10:58:40.999Z",
+      "duration": 698216.385,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "file": "e2e/debug-locked-levels.spec.ts",
+        "title": "@E14 locked L8 from a fresh save starts with ?debug=1",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/debug-locked-levels.spec.ts",
+        "title": "@E14 locked L8 from a fresh save stays locked without debug",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/L1.spec.ts",
+        "title": "T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/L1.spec.ts",
+        "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/L1.spec.ts",
+        "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/L2.spec.ts",
+        "title": "T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/L2.spec.ts",
+        "title": "T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l5-finish.spec.ts",
+        "title": "@E23 @E23-AC15 P0 L5 finishes from the metro phase with held keyboard input, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l5-finish.spec.ts",
+        "title": "@E23 @E23-AC15 P0 L5 finishes from the metro phase with held keyboard input, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-headlamp-hitch.spec.ts",
+        "title": "T-E24-headlamp-hitch webgl2 high: no frame over 50 ms when the headlamp is picked up",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-headlamp-hitch.spec.ts",
+        "title": "T-E24-headlamp-hitch webgl2 low: no frame over 50 ms when the headlamp is picked up",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-quality-switch.spec.ts",
+        "title": "QA #82 webgl2 L6-shelter: runtime quality switches keep the 3D view and raise no error",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-quality-switch.spec.ts",
+        "title": "QA #82 webgl2 L6-tunnel: runtime quality switches keep the 3D view and raise no error",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-quality-switch.spec.ts",
+        "title": "QA #82 webgl2 L6-exit: runtime quality switches keep the 3D view and raise no error",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l6-quality-switch.spec.ts",
+        "title": "QA #82 webgl2 L1-street: runtime quality switches keep the 3D view and raise no error",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l7-departure.spec.ts",
+        "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l7-departure.spec.ts",
+        "title": "@E29-AC13 @E29-AC17 corridor retry boards a trapped straggler with real input, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l7-departure.spec.ts",
+        "title": "@E29-AC13 @E29-AC17 visible walled follower boards continuously at low quality and zoom 1.5",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/l7-focus-load.spec.ts",
+        "title": "@E29 P0 focus lost while L7 loads: the pause menu shows and Resume starts the level",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #1 first service gate with real input, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #3 Metro approach clicks at all zooms, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #6 western corridor keeps the group and bus hands it to L8, real input, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #1 first service gate with real input, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #3 Metro approach clicks at all zooms, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #6 western corridor keeps the group and bus hands it to L8, real input, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #2 a click on the fire bay ring ignores bodies; #9 raised diamond follows ground",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #4 #5 research and all search rings at gameplay zooms, high",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #4 #5 research and all search rings at gameplay zooms, low",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/levels/objective-clarity.spec.ts",
+        "title": "PO 10-21 #7 L3 tracker distance is to the fixed army objective in both HUDs",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/weapon-keys.spec.ts",
+        "title": "@E03 fixed weapon keys in L2 select bat/axe across racks and display every carried shortcut",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      },
+      {
+        "file": "e2e/weapon-keys.spec.ts",
+        "title": "@E03 weapon numbers are inert while driving or manning a mounted gun",
+        "project": "chromium",
+        "status": "expected",
+        "errors": []
+      }
+    ]
+  }
+}

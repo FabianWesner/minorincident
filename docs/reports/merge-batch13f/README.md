@@ -8,7 +8,7 @@ Merged `lane/edges-all` (`79c360e26`) and `lane/l8-continuity` (`3e1a11b5c`).
 
 Conflicts: `GameView` keeps survivor ring updates and passes story-shot state to both objective presentations. `ObjectiveMarker` keeps terrain-aware placement, depth-tested ring material and metro completion hiding, adding the cinematic/story suppression. `View.reset` keeps the rocket zoom-limit reset while optionally retaining the handover zoom. `Hud` retains the shared objective wording formatter and clears empty objective text. Both camera test additions are retained.
 
-Typecheck and lint pass. Remote unit/level sweep pending (immutable snapshot at `58a7e600c`).
+Typecheck and lint pass. Remote unit/level sweep: **2,247 passed / 11 skipped / 0 failed**, 415 passed files / 3 skipped, 49.7 min (immutable snapshot at `58a7e600c`). [Receipt](remote-suites.json), [full log](evidence/group-A.log.gz).
 
 ## Evidence procedure
 
@@ -58,4 +58,4 @@ The original level-load capture repeated with the numbered rack present on both 
 
 ## Gate progress
 
-Initial merged smoke: 31/31 pass (one worker to honor the one-browser rule). Final post-correction build/typecheck/lint pass. Final smoke/level/E29 pipeline and post-correction remote sweep are pending.
+Initial merged smoke: 31/31 pass (one worker to honor the one-browser rule). Final post-correction build/typecheck/lint pass. Final post-correction smoke: **31/31 pass**; requested level/browser specs: **31/31 pass**. E29 comparison and post-correction remote sweep are pending. [Browser receipts](gates.json).
