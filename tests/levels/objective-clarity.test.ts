@@ -1,0 +1,81 @@
+import { afterEach, expect, test, vi } from 'vitest';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { loadL6 } from '../../tools/sim-runner/l6Bots';
+import { loadL5 } from '../../tools/sim-runner/l5Bots';
+import { emptyInput } from '../../src/input/InputFrame';
+import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
+import { objectiveText } from '../../src/sim/missions/objectiveText';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+import type { Mission } from '../../src/sim/missions/Mission';
+let world: SimWorld | undefined;
+afterEach(()=>{world?.dispose();world=undefined;});
+const step=(w:SimWorld,n:number)=>{for(let i=0;i<n;i++)w.update();};
+const put=(w:SimWorld,id:number,x:number,z:number)=>{
+  const e=w.entities.get(id)!;
+  expect(w.solids.relocate(e,{x,z,y:w.districts!.groundHeight(x,z)+.7},'test.objective-clarity',2)).toBe(true);
+};
+test('PO 10-21 #1 followers walk around a stationary courier in the first gate, then close from beside the lane',async()=>{
+  const {world:w,mission:m}=await loadL6();world=w;w.combat!.damage.god=true;
+  m.completeObjective('shelter');m.completeObjective('stop');
+  for(const e of [...w.infected!.active])w.infected!.release(e);
+  const s=m.state.l6!,group=s.survivors.slice(0,2);
+  for(const r of s.survivors.slice(2)){r.status='out';w.entities.get(r.id)!.hidden=true;w.spatial.delete(r.id);}
+  s.leaderX=96;s.leaderZ=15;s.nextWave=1e9;s.entries=[];
+  group.forEach((r,i)=>{r.injured=false;put(w,r.id,88.2,14.5+i);});put(w,1,90,15);
+  expect(m.l6!.gateStatus(s.gates[0].id)).toBe('Let everyone pass · 0/2 through');
+  for(let i=0;i<1200&&group.some(r=>w.entities.get(r.id)!.transform.x<=92);i++)w.update();
+  expect(group.every(r=>w.entities.get(r.id)!.transform.x>92),JSON.stringify(group.map(r=>w.entities.get(r.id)!.transform))).toBe(true);
+  const wait=LevelSixSubway.gateWait(90);put(w,1,88.5,15);
+  const move=emptyInput();move.moveTarget=wait;move.cancelMove=true;move.pointerGround=true;w.applyInput(move,'mouse-only');step(w,1);w.applyInput(emptyInput(),'mouse-only');step(w,240);
+  expect(Math.hypot(w.entities.get(1)!.transform.x-wait.x,w.entities.get(1)!.transform.z-wait.z)).toBeLessThan(.2);
+  const dog=w.entities.values().find(e=>e.companion);if(dog)put(w,dog.id,95,15);
+  const f=emptyInput();f.interact=true;w.applyInput(f,'keyboard');step(w,65);
+  expect(s.gates[0].closedAt).toBeGreaterThan(0);
+  expect(wait.z-.65).toBeGreaterThan(16.1);
+},60_000);
+test('PO 10-21 #6 corridor arrival waits for the living group and identifies a missing survivor',async()=>{
+  const w=world=await loadLevel('L7',1),m=w.missions!,c=w.l7Encounters!;
+  c.state.started=true;w.combat!.damage.god=true;m.completeObjective('rocket');put(w,1,-30,50);step(w,2);
+  expect(m.state.steps.corridor.status).toBe('active');expect(m.state.checkpoint).toBe('rocket');
+  expect(objectiveText(m,'Bring the group to the evacuation corridor')).toMatch(/Group 0\/\d+ nearby · Waiting for/);
+  c.state.roster.forEach((r,i)=>put(w,r.id,-23+Math.floor(i/4),46+i%4));step(w,2);
+  expect(m.state.steps.corridor.status).toBe('completed');expect(m.state.checkpoint).toBe('corridor');
+  expect(c.state.roster.every(r=>r.status==='following')).toBe(true);
+},60_000);
+test('PO 10-21 #7 boarding the APC advances the objective immediately while preserving the group wait',async()=>{
+  const w=world=await loadLevel('L8',1),m=w.missions!,zoo=m.l8!;w.combat!.damage.god=true;
+  const ring=m.def.anchors.exit;expect(w.solids.clear({...ring,y:w.districts!.groundHeight(ring.x,ring.z)+.7},.65,undefined,false),'APC objective ring clears the solid hull').toBe(true);
+  zoo.advance();for(const e of [...w.infected!.active])w.infected!.release(e);zoo.state.nextWave=1e9;
+  const door=zoo.door();put(w,1,door.x,door.z);
+  const f=emptyInput();f.interact=true;w.applyInput(f,'keyboard');step(w,1);w.applyInput(emptyInput(),'keyboard');step(w,2);
+  expect(w.vehicles!.active).toBe(zoo.state.carId);expect(m.state.steps.escape.status).toBe('completed');
+  expect(m.state.steps.depart.status).toBe('active');expect(m.state.marker).toBeNull();
+  expect(objectiveText(m,'Wait for everyone to board the armored vehicle')).toMatch(/\d+\/\d+ aboard/);
+  expect(m.state.phase).toBe('playing');
+  step(w,60);expect(w.vehicles!.exit()).toBe(true);step(w,2);
+  expect(m.state.marker).toBe('exit');expect(objectiveText(m,'Wait for everyone to board the armored vehicle')).toContain('Return to the armored vehicle and board');
+},60_000);
+test('PO 10-21 #8 the Metro names its three-second dwell and failed corgi ingress',async()=>{
+  const {world:w,mission:m}=await loadL5(1);world=w;w.combat!.damage.god=true;
+  m.completeObjective('emerge');m.completeObjective('look');
+  const s=m.state.l5!,door=m.def.anchors['l5-metro-shutter'];
+  for(const e of [...w.infected!.active])w.infected!.release(e);
+  s.survivors.forEach((r,i)=>{r.status='following';const e=w.entities.get(r.id)!;e.hidden=false;e.civilian!.survivor!.mode='follow';put(w,r.id,door.x+(i%2? .4:-.4),door.z+1.4+Math.floor(i/2));});
+  const a=m.def.anchors['l5-metro-in'];put(w,1,a.x,a.z);
+  const ingress=vi.spyOn(w.npcs!.companion,'insideBeforeClosing').mockReturnValue(false);
+  step(w,1);expect(m.l5!.metroStatus()).toContain('3 s');
+  step(w,120);expect(m.l5!.metroStatus()).toContain('1 s');
+  step(w,60);
+  for(let i=0;i<1800&&m.l5!.metroStatus()!=='Waiting for the corgi';i++)w.update();
+  expect(s.survivors.every(r=>m.l5!.insideStation(w.entities.get(r.id)!.transform))).toBe(true);
+  expect(m.l5!.metroStatus()).toBe('Waiting for the corgi');expect(s.shutterAt).toBe(0);
+  ingress.mockReturnValue(true);step(w,1);expect(s.shutterAt).toBeGreaterThan(0);
+},60_000);
+test('PO 10-21 #8 L4 hold and L6 defence expose their simulation deadlines',()=>{
+  const m={def:{id:'L4'},state:{l4:{phase:'war',warAt:60,turnAt:60,director:{lines:[{},{},{}]}}},world:{tick:60}} as unknown as Mission;
+  expect(objectiveText(m,'Hold the plaza with the army')).toBe('Hold the plaza with the army · 3:10 remaining');
+  m.world.tick+=60;expect(objectiveText(m,'Hold the plaza with the army')).toContain('3:09');
+  const six={def:{id:'L6'},state:{l6:{phase:'fails',breach2At:60}},world:{tick:60}} as unknown as Mission;
+  expect(objectiveText(six,'Stop the infected')).toBe('Stop the infected · Retreat in 0:15');
+  six.world.tick+=60;expect(objectiveText(six,'Stop the infected')).toContain('0:14');
+});

@@ -23,15 +23,15 @@ beforeAll(() => {
     if (id === 'L6') for (const x of [90,150,210]) mission.anchors[`wait-${x}`] = { ...LevelSixSubway.gateWait(x), y: .6, radius: 1.7 };
     levels.push({ id, world, mission });
   }
-});
+},120_000);
 const triggerAnchors = (t: Trigger): string[] => 'anchor' in t ? [t.anchor] : 'triggers' in t ? t.triggers.flatMap(triggerAnchors) : [];
 const rings = (m: MissionDef): [string, Anchor][] => [...new Set([
   ...m.steps.filter(s=>s.waypoint!==false).flatMap(s=>[s.anchor,...triggerAnchors(s.complete)]),
-  ...Object.keys(m.anchors).filter(n=>n.startsWith('l5-ring-')||n.startsWith('wait-')),
+  ...Object.keys(m.anchors).filter(n=>n.startsWith('l5-ring-')||n.startsWith('wait-')||n==='l7-corridor-west'),
 ])].map(n=>[n,m.anchors[n]]);
 
 test('PO 10-21 #2 every objective trigger covers the complete drawn ring, all ten levels', () => {
-  for (const {id,mission} of levels) for (const [name,a] of rings(mission)) expect(a.radius,`${id}/${name}`).toBeGreaterThanOrEqual(objectiveRingRadius);
+  for (const {id,mission} of levels) for (const [name,a] of [...rings(mission),...mission.steps.map(s=>[s.anchor,mission.anchors[s.anchor]] as [string,Anchor])]) expect(a.radius,`${id}/${name}`).toBeGreaterThanOrEqual(objectiveRingRadius);
 });
 test('PO 10-21 #4 every objective ring clears shipped solid geometry at its ground height, all ten levels', () => {
   const overlaps: string[] = [];
@@ -57,7 +57,8 @@ test('PO 10-21 #5 each hidden L5 search spot has a visible marker at its reachab
   const keys=['dale','rosa','okafor','mia','sam'];
   const m={def,state:{l5:{phase:'search',survivors:keys.map(key=>({key,status:'hidden'}))}}} as unknown as Mission;
   const markers=searchAnchors(m);expect(markers).toHaveLength(5);
-  for(const a of markers)expect(world.nav.walkable([a.x,a.z])).toBe(true);
+  const exit=def.anchors['l5-out'],reachable=world.nav.flood([exit.x,exit.z]);
+  for(const a of markers)expect(reachable[world.nav.index(a.x,a.z)]).toBe(1);
   m.state.l5!.survivors[0].status='following';expect(searchAnchors(m)).toHaveLength(4);
   m.state.l5!.phase='shelter';expect(searchAnchors(m)).toEqual([]);
 });

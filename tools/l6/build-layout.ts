@@ -74,10 +74,10 @@ place('util.radio',-4,2+SZ,.6,0,'shelter-camp');
 for(let x=30;x<=246;x+=12) place('prop.emergency-light',x,12,3.2,Math.PI/2,'metro-emergency');
 for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8+SZ,3.2,Math.PI/2,'metro-emergency');
 // Paired barriers narrow each service gate to 2.2 m. Alternating piers break long sight lines every 24 m.
-// South barriers end at the drawn wall pier face (z 11.5, restored with the swapped boxes above): 2.65 m long
-// (scale .8833) from 11.5 to 14.15, so the gate opening (14.15-15.85) is unchanged.
+// Alternating barriers away from the service gates extend 2.65 m from the drawn wall pier face at z=11.5.
 const south = (x: number) => place('prop.jersey-barrier',x,12.825,.6,Math.PI/2,'metro-main',2.65/3);
-for(const x of l6.gates) { south(x); place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); }
+// Gate leaf spans z=13.9..16.1: leave that complete 2.2 m mouth open for the formation.
+for(const x of l6.gates) { place('prop.jersey-barrier',x,12.7,.6,Math.PI/2,'metro-main',2.4/3); place('prop.jersey-barrier',x,17.475,.6,Math.PI/2,'metro-main',2.75/3); }
 for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) { if(((x-42)/24)%2) place('prop.jersey-barrier',x,17.35,.6,Math.PI/2); else south(x); }
 // Gate crates stand on the drawn side walkways (top y .87, z 11.5-13.2 and 16.8-18.5), clear of the walking lane.
 for(const x of l6.gates) for(const z of [12.35,17.65]) place('prop.crates',x-3,z,.87,0,'self');
