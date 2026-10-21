@@ -372,11 +372,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
+    // Evidence only: advancing visible countdowns/counts and a new best distance
+    // count as progress. Walking away and back must not hide a navigation loop.
+    const visibleObjective=e.objective.replace(/ · [\d.]+\s?m\b/g, '');
+    const nearer=e.distance!==null&&e.distance<lastProgress.best-2;
+    if(visibleObjective!==visibleProgress.text||nearer) {
+      log({ visibleProgress: { tick:e.tick, text:visibleObjective, distance:e.distance, reason:visibleObjective!==visibleProgress.text?'hud-change':'nearer' } });
+      visibleProgress={text:visibleObjective,tick:e.tick,wall:Date.now()};
+    }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
-    // Evidence only: advancing visible countdowns/counts/distances are progress.
-    // Keep the driver's existing stuck ladder and movement decisions unchanged.
-    if(e.objective!==visibleProgress.text)visibleProgress={text:e.objective,tick:e.tick,wall:Date.now()};
     run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,Math.min((e.tick-visibleProgress.tick)/60,(Date.now()-visibleProgress.wall)/1000));
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
     lastHp = e.player?.hp ?? 0;
