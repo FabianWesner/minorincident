@@ -39,7 +39,7 @@ import { MotionPresentation, crowdTurnRate } from './characters/MotionPresentati
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
-import { alphaLook, alphaLooks } from '../data/alphaLooks';
+import { alphaLook, alphaLooks, alphaLookAssets } from '../data/alphaLooks';
 interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
@@ -187,7 +187,7 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
-      const alpha = asset === 'inf.alpha' || asset === 'inf.mega-alpha', capacity = role === 'crow' ? 800 : 350;
+      const alpha = alphaLookAssets.includes(asset), capacity = role === 'crow' ? 800 : 350;
       // Level handover (10-20): the finished batch geometry (baked, merged, simplified, packed, appearance-marked) is
       // immutable CPU data that depends only on the model, LOD and tier. Reusing it across levels skips ~1 s of main-thread
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
@@ -421,7 +421,7 @@ export class CrowdView extends Group {
       }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
       let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? this.nearIds.has(e.id) ? 'lod1' : 'lod2' : e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
-      if (heroes.has(e.id) || e.corpse && (def.asset === 'inf.alpha' || def.asset === 'inf.mega-alpha')) {
+      if (heroes.has(e.id) || e.corpse && alphaLookAssets.includes(def.asset)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
