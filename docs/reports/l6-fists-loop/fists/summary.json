@@ -1,0 +1,178 @@
+{
+  "mode": "campaign",
+  "quality": "low",
+  "heroine": "male",
+  "zoom": 1.5,
+  "levels": [
+    "L5",
+    "L6"
+  ],
+  "runs": [
+    {
+      "level": "L5",
+      "entry": "debug",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 340,
+      "simSeconds": 0,
+      "deaths": 1,
+      "assists": 0,
+      "attacks": {
+        "weapon.fists": 29,
+        "weapon.kick": 5
+      },
+      "weaponsStart": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "emerge",
+          "text": "Unbar the cellar door · 4 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7049999833106995
+          }
+        },
+        {
+          "id": "look",
+          "text": "Look for anyone still alive",
+          "tick": 829,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579
+          }
+        },
+        {
+          "id": "metro",
+          "text": "Lead the survivors down into the Metro · Survivors in 0/3 · 92 m",
+          "tick": 18046,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": {
+              "x": 37.485400000000006,
+              "y": 0.94,
+              "z": -48.44
+            },
+            "drawn": [
+              37.49,
+              0.94,
+              -48.44
+            ],
+            "playerY": 0.8500000238418579
+          }
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "entry": "debug",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 262,
+      "simSeconds": 254,
+      "deaths": 2,
+      "assists": 1,
+      "attacks": {
+        "weapon.fists": 55,
+        "weapon.kick": 29
+      },
+      "weaponsStart": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter · 0:34 remaining",
+          "tick": 10,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected · Retreat in 0:36",
+          "tick": 1997,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel · 15 m",
+          "tick": 4162,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 6,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              6,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night · 0/3 out · 33 m",
+          "tick": 13888,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.2699999809265137
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 12,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 12,
+    "P3": 0
+  }
+}
