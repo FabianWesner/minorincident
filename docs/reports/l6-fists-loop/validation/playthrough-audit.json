@@ -1,0 +1,106 @@
+{
+  "functionalTree": "d404c97da",
+  "cases": [
+    {
+      "case": "final-fists",
+      "seed": 1,
+      "character": "male",
+      "racks": {
+        "LEFT": [
+          "weapon.fists"
+        ],
+        "RIGHT": [
+          "weapon.kick"
+        ]
+      },
+      "upgrades": 0,
+      "runs": [
+        {
+          "level": "L5",
+          "finished": true,
+          "wallSeconds": 249,
+          "simSeconds": 0,
+          "deaths": 0,
+          "skipped": [],
+          "attacks": {
+            "weapon.fists": 38
+          }
+        },
+        {
+          "level": "L6",
+          "finished": true,
+          "wallSeconds": 349,
+          "simSeconds": 342,
+          "deaths": 2,
+          "skipped": [],
+          "attacks": {
+            "weapon.fists": 81,
+            "weapon.kick": 45
+          }
+        }
+      ]
+    },
+    {
+      "case": "final-weapons-male",
+      "seed": 1,
+      "character": "male",
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ]
+      },
+      "upgrades": 10,
+      "runs": [
+        {
+          "level": "L6",
+          "finished": true,
+          "wallSeconds": 221,
+          "simSeconds": 212,
+          "deaths": 0,
+          "skipped": [],
+          "attacks": {
+            "weapon.army-mg": 215,
+            "weapon.fire-axe": 11
+          }
+        }
+      ]
+    },
+    {
+      "case": "final-weapons-female",
+      "seed": 1,
+      "character": "female",
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ]
+      },
+      "upgrades": 10,
+      "runs": [
+        {
+          "level": "L6",
+          "finished": true,
+          "wallSeconds": 219,
+          "simSeconds": 210,
+          "deaths": 0,
+          "skipped": [],
+          "attacks": {
+            "weapon.army-mg": 226,
+            "weapon.fire-axe": 10
+          }
+        }
+      ]
+    }
+  ]
+}
