@@ -56,3 +56,9 @@ This test checks the added gate-checkpoint behavior; main `56d7e7d16` predates t
 ### Unarmed crowd inputs
 
 The valid stationary-target diagnostic stopped after 665 s with 8 deaths and 329 fist attacks; its `aborted-L6.json` records that unfinished run. In unarmed L6 crowds of at least three visible enemies within 3 m, the driver now uses the shipped K/right-hand kick in short pulses and continues following the visible objective between pulses. This crowd movement takes priority over backing away from just the nearest enemy. Individual fights retain target clicks and the smaller-fight low-health backoff. Keyboard attacks aim at the ground projection; target clicks aim at the rendered chest. The crowd policy only runs when the visible inventory contains fists/kick alone, so it does not change armed runs or L5's combat policy.
+
+## Gate-panel fixture corrections
+
+The broad E24 browser selection exposed stale QA staging, independently of the real-input runs. The open gate uses a 1.7 m stand zone around `(92.4,17.3)`, while the closed gate uses its repair zone around `(90,15)`. The old courier placement `(91.3,15)` was 2.55 m from the open stand zone and could not close it. The fixture now uses `(91.2,16.15)`, 1.662 m from both centres. All panel text, meter-count, viewport-bound, gate-health and frame assertions are unchanged.
+
+The Scene Lab gate composition also stages its leader at gate 90 rather than already beyond it, then advances one simulation tick after relocating the cast. This initializes frame-zero guidance for that staged column. The diagnostic probe observes the open panel at frame zero, a normal 60-tick closure, and the closed panel through the damage frames. These are QA compositions; they do not supply playthrough evidence or change production gate ranges.
