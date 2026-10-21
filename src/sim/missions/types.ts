@@ -306,6 +306,8 @@ export interface L6State {
   pushHintShown?: boolean;
   /** PO 10-20 #65: the courier drifted away from the walking group; the objective points back at it. */
   strayed?: boolean;
+  /** QA 10-21 #84: tick the distance first asked for the other `strayed` value (0 = agrees); flips only after `strayDwellS`. */
+  strayFlipAt?: number;
   arrivals?: { remaining: number; door: number; nextAt: number };
   infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
 }

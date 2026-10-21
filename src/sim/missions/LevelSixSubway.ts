@@ -143,9 +143,15 @@ export class LevelSixSubway {
   private guide(p:Point):void {
     const s=this.s,m=this.mission,anchors=m.def.anchors,f=l6.follow;
     const walkers=this.living().filter(r=>r.status==='following').map(r=>({r,e:this.w.entities.get(r.id)!})).filter(({e})=>!e.hidden);
-    if(!walkers.length){if(s.strayed){s.strayed=false;m.state.marker=s.phase==='exit'?'night-exit':'exit-platform';}return;}
+    if(!walkers.length){s.strayFlipAt=0;if(s.strayed){s.strayed=false;m.state.marker=s.phase==='exit'?'night-exit':'exit-platform';}return;}
     const near=Math.min(...walkers.map(({e})=>distance(e.transform,p)));
-    s.strayed=s.strayed?near>f.regroupM:near>f.strayM;
+    // QA 10-21 #84: "objective text flaps ... every 1-3 s (53 flips) while the group is 20-35 m behind". The nearest
+    // walker (fighting or fleeing infected) crosses the 10/15 m band in and out; the text changes only once the new
+    // reading has held for strayDwellS, so it switches once per real change.
+    s.strayed=!!s.strayed;const want=s.strayed?near>f.regroupM:near>f.strayM;
+    if(want===!!s.strayed)s.strayFlipAt=0;
+    else if(!s.strayFlipAt)s.strayFlipAt=this.w.tick;
+    if(s.strayFlipAt&&this.w.tick-s.strayFlipAt>=ticks(f.strayDwellS)){s.strayed=want;s.strayFlipAt=0;}
     // The group is its walking body; a straggler who fell behind is the courier's own errand.
     const core=walkers.filter(({r})=>!r.straggler||r.rejoined||r.collected),group=core.length?core:walkers;
     const gx=group.reduce((t,{e})=>t+e.transform.x,0)/group.length,gz=group.reduce((t,{e})=>t+e.transform.z,0)/group.length;
