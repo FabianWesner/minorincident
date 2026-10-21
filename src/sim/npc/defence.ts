@@ -73,7 +73,7 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
   const x = awayX + toPlayerX / toPlayer - back * awayX, z = awayZ + toPlayerZ / toPlayer - back * awayZ, n = Math.hypot(x, z);
   // QA 10-21 #83: an L6 injured straggler cannot be bitten (storyProtected), so fleeing from its biters only pinned it against the
   // tunnel wall for good while the group held at the gate. It limps to its protector instead (the group, or the courier once collected).
-  const shielded = !!row && storyProtected(world, e) && toPlayer > 1;
+  const shielded = !!row?.straggler && storyProtected(world, e) && toPlayer > 1;
   const goal = shielded ? { x: p.x + toPlayerX / toPlayer * 4, z: p.z + toPlayerZ / toPlayer * 4 } : { x: p.x + x / n * 4, z: p.z + z / n * 4 };
   const speed = injured ? 1.4 : c.l1?.fleeSpeed ?? 3.8;
   const stepX = shielded ? toPlayerX / toPlayer : awayX, stepZ = shielded ? toPlayerZ / toPlayer : awayZ;
