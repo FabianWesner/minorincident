@@ -130,6 +130,23 @@ test('@E24 playtest a collected straggler brought into the middle of a long colu
   expect(lame.rejoined).toBe(true);
 }, 240_000);
 
+test('@E24 a returned straggler rejoins the real column before the courier fetches the next one, even when the leader is held behind it', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following');
+  const injured = live.filter(r => r.injured), returned = injured[0];
+  // Combat can displace the walking column beyond a held leader. Another injured survivor still needs fetching,
+  // so the leader cannot catch up to the real group while the courier brings this survivor into its tail.
+  s.leaderX = 89; s.leaderZ = 15;
+  place(w, live.filter(r => !r.injured).map(r => r.id), 108);
+  for (const r of injured) { place(w, [r.id], r === returned ? 99 : 60); r.straggler = true; }
+  returned.collected = true; put(w, 100, 15); w.update();
+  expect(s.tailX).toBeGreaterThan(s.leaderX + l6.follow.rejoinM);
+  expect(returned.rejoined, 'back inside the real column; must not be dragged back into the horde on the next fetch').toBe(true);
+  expect(returned.collected).toBe(false);
+  expect(s.waitFor).toEqual({ kind: 'fetch', id: injured[1].id });
+}, 240_000);
+
 // Orchestrator 10-21 (fists playtest, male L5->L6): "help the injured survivor who fell behind" <-> "Bring the injured
 // survivor back" looped at gate 90: the gate checkpoint was taken with an injured straggler still far back, so every
 // respawn restored them there and the courier fetched them again through the horde.
