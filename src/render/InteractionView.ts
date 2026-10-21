@@ -110,6 +110,16 @@ export class InteractionView extends Group {
     for (const model of models) { this.prepareGate(model); model.visible = false; this.add(model); }
     return () => { for (const model of models) model.removeFromParent(); };
   }
+  /** L5's bus-side medkit changes from distant to close detail on approach. Warm the
+   * actual cached prototypes and cover pixels, so Metal finishes their first draw at load. */
+  async prewarmMedkits(at: Vector3): Promise<() => void> {
+    const entity = [...this.world.entities.iterate()].find(e => e.archetype === 'pickup.medkit');
+    if (!entity) return () => {};
+    const lods: AssetQuality[] = this.low ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2'];
+    const models = await Promise.all(lods.map(lod => this.create(entity, lod)));
+    models.forEach((model, i) => { model.position.copy(this.worldToLocal(at.clone())); model.position.x += i * .8; model.scale.multiplyScalar(4); model.visible = false; this.add(model); });
+    return () => { for (const model of models) model.removeFromParent(); };
+  }
   /** Asset readiness barrier used at load and screenshotReady, including dynamically spawned objects. */
   async synchronize(): Promise<void> {
     for (const e of this.world.entities.iterate()) {
