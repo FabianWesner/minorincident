@@ -8,7 +8,7 @@ export function levelEightMission(resolve: (district: DistrictId, name: string) 
     anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['breached', 'player-boarded', 'aboard'], counters: [],
     checkpoints: ['sanctuary', 'breach', 'escape-route'], cinematics: {},
     steps: [{ id: 'escape', type: 'custom', text: 'Bring the survivors to the armored vehicle and board', anchor: 'exit', waypoint: true,
-      start: { kind: 'state', key: 'breached', equals: true }, complete: { kind: 'state', key: 'player-boarded', equals: true }, fail: [] },
+      start: { kind: 'start' }, complete: { kind: 'state', key: 'player-boarded', equals: true }, fail: [] },
     { id: 'depart', type: 'custom', text: 'Wait for everyone to board the armored vehicle', anchor: 'exit', waypoint: false,
       start: { kind: 'objectives', ids: ['escape'], mode: 'all' }, complete: { kind: 'state', key: 'aboard', equals: true }, fail: [] }],
     finish: ['depart'], onStart: [], onComplete: [],

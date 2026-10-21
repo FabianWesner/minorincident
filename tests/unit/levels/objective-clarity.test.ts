@@ -62,3 +62,11 @@ test('PO 10-21 #5 each hidden L5 search spot has a visible marker at its reachab
   m.state.l5!.survivors[0].status='following';expect(searchAnchors(m)).toHaveLength(4);
   m.state.l5!.phase='shelter';expect(searchAnchors(m)).toEqual([]);
 });
+
+test('PO #90 L8 publishes its boarding objective and waypoint on the mission start frame', () => {
+  const mission=levels.find(l=>l.id==='L8')!.mission, escape=mission.steps.find(s=>s.id==='escape')!;
+  expect(escape.start).toEqual({kind:'start'});
+  expect(escape.text).toMatch(/survivors.*armored vehicle/i);
+  expect(escape.waypoint).toBe(true);
+  expect(mission.anchors[escape.anchor]).toBeDefined();
+});

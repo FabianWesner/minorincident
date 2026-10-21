@@ -160,3 +160,14 @@ export function preset(name:ProgressionPreset):CampaignSave {
   if(target===6)save.survivors=["dale","rosa","okafor","mia","sam"];
   return save;
 }
+
+/** A debug level-list start gets a structurally valid fixture at that level's normal campaign boundary. */
+export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSave {
+  let save:CampaignSave;
+  if(level===1) save=newCampaign(current?.character??'female',current?.seed??1);
+  else if(level===10) save=preset('L10-default');
+  else if(level===9) { save=preset('L8-default'); save.completedLevels=8; save.unlockedLevel=9; }
+  else save=preset(`L${level}-default` as ProgressionPreset);
+  if(current){save.character=current.character;save.seed=current.seed;save.settings=structuredClone(current.settings);}
+  return save;
+}
