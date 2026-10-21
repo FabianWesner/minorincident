@@ -12,7 +12,7 @@ All three cases below use the same final driver and game code, headless WebGL2 t
 | [Weapons, male](final-weapons-male/summary.json) | Seeded `L6-default`, menu Continue | 221 s | 0 | 0 | 215 machine gun, 11 axe | 11/29 |
 | [Weapons, female](final-weapons-female/summary.json) | Seeded `L6-default`, menu Continue | 219 s | 0 | 0 | 226 machine gun, 10 axe | 12/29 |
 
-The fists prelude completes L5 in 249 s, with zero deaths, zero skips and 38 fist attacks. Its L6 start save preserves the actual handover and its fists/kick racks; those racks also remain at the end. Both weapons saves use the game's Campaign API and the standard preset racks/upgrades. Each final folder contains its start save, complete log, issue list, summary and result screenshot; weapons folders also contain the seed record.
+The fists prelude completes L5 in 249 s, with zero deaths, zero skips and 38 fist attacks. Its L6 start save preserves the actual handover and its fists/kick racks; those racks also remain at the end. Both weapons saves use the game's Campaign API and the standard preset racks/upgrades. Each final folder contains its start save, complete log, issue list, summary and result screenshot; weapons folders also contain the seed record. The [provenance audit](validation/playthrough-audit.json) checks characters, seed, carried racks, combat events and empty skip lists for all three cases.
 
 `test=poses` enables rendered-body observations while retaining the production clock, UI and prewarming paths. The driver rejects missing render observations and records actual player `combat.attack` events. Inputs use keyboard/mouse, the HUD, rendered bodies, remembered visible positions and the existing navigation helper. The accepted logs contain no `skip-step` callback. Earlier input comparisons are retained in separate folders; the discarded empty-enemy probe supplies no acceptance evidence.
 
@@ -32,6 +32,7 @@ Final gate results are being collected:
 
 | Gate | Result |
 | --- | --- |
+| Typecheck, lint, production build | Pass on the final tree, recorded by the current E24 verification |
 | Mac `tests/e2e/levels/l6-*.spec.ts`, workers 1 | 10/10 pass, 2.9 min; [log](validation/l6-browser.log), [JSON](validation/l6-browser.json) |
 | `npm run verify -- E24` | Pending |
 | Remote `npx vitest run tests/unit tests/levels --maxWorkers=4` | Pending |
