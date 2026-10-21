@@ -11,7 +11,7 @@ export const compileLanes = 6;
 export const warmUpSize = 128;
 export const textureUploadBudget = 4 * 1024 * 1024;
 export type CompilePartitions = (() => void)[];
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -71,14 +71,17 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       performance.measure('Texture atlas upload', { start, end: performance.now() });
     }
     progress?.(0, 1);
-    const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
+    const lanes = cooperative ? 1 : compileLanes;
+    const partitions = Array.from({ length: lanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % lanes === lane; }); });
     // L3 compiles foreground WebGPU pipelines asynchronously before drawing. Synchronous
     // pipeline creation can stall later queue writes while Dawn compiles in the GPU
     // process. Disjoint lanes retain the real HDR context and all shadow variants.
     // Background node builds keep Three's cooperative yielding.
     const compilationStart = performance.now(), foregroundCompile = renderer.foregroundCompile;
     try {
-      renderer.foregroundCompile = !background;
+      // The L7 -> L8 card still owns the frame budget. Use Three's yielding
+      // node builds serially instead of stacking six complete graphs in a task.
+      renderer.foregroundCompile = !background && !cooperative;
       if (renderer.selectedBackend === 'webgl' || !background && budgetedWarmUp) await compile(partitions); else if (background) await compile([() => {}]);
     } finally { renderer.foregroundCompile = foregroundCompile; for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start: compilationStart, end: performance.now() });
@@ -87,7 +90,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
     // L3 WebGPU draws at most 64 leaves per frame behind the card, so cold atlases
     // do not accumulate in a single draw. WebGL retains its measured batching.
-    const chunk = background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : renderer.selectedBackend === 'webgpu' && budgetedWarmUp ? 64 : 1024, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
+    const chunk = cooperative ? 16 : background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : renderer.selectedBackend === 'webgpu' && budgetedWarmUp ? 64 : 1024, soloChunk = cooperative ? 8 : 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
     let completed = 1; progress?.(completed, total);
     if (pause) {
       for (let from = 0; from < leaves.length; from += chunk) {
