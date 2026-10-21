@@ -81,3 +81,9 @@ The complete handover window includes the loading card and ends only at a fully 
 The latest committed iteration prepares L8's default immutable layout/navigation behind L7's initial card, consumes it once, separates teardown/world/mission work with presented frames, and preserves the prior image while loading. Canvas submissions are capped at 60 per second. An initial uncapped presentation attempt saturated the GPU and was interrupted; it is not counted as completed coverage. The revised iteration is queued for measurement.
 
 Prepared versus fresh L8 construction matches complete sim/entity snapshots at 60-tick intervals over 600 ticks on each tier (**22 snapshots**). [Equivalence receipt](evidence/handover-equivalence.json). The eight-contact admission cache retains the same **518 spawn / 1,120 search / 14 snapshot / 418 corpse** equivalence proof. [Admission receipt](evidence/admission-equivalence.json).
+
+## Final visual repeat
+
+On source `9443470b8`, every actual L7 horde pair (12/12) and every L8 gameplay pair (4/4, tick 180) is exactly RGB-identical to the original build on both tiers and backends. Across the 24 L7 horde/rocket pairs, 20/24 are exact; the four differing high synthetic rocket captures contain 1–4 changed pixels, maximum channel delta 18. All 28 entity/health/transform/corpse censuses match. No pixels are masked or tolerated. [Final L7 counts](evidence/pixels-final.json), [final L8 counts](evidence/handover-pixels-final.json).
+
+An intermediate preserved-frame implementation skipped one normal initialization update and changed the courier's foot pose. That was corrected by preserving the original update/draw initialization behind the frozen image; the final L8 comparison above is exact.
