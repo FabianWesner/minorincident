@@ -67,7 +67,7 @@ The Scene Lab gate composition also stages its leader at gate 90 rather than alr
 
 A candidate that applied the unarmed chest-click/retry policy to guns was discarded after repeated exit retries: a guard stayed near the shelter and the courier died while returning. That unfinished attempt is not acceptance evidence. The final driver retains the branch's original firearm policy: a single physical click 18 screen pixels above the target's ground projection, held until the target changes. Rendered-body and viewport checks remain mandatory. This armed-only branch does not change the unarmed crowd inputs.
 
-With that policy restored, the male seeded weapons run finishes in 283 wall seconds with zero deaths, zero skips and 293 actual machine-gun attacks. Its full record is in `weapons-male/`. This input comparison does not claim a separately isolated cause for the discarded guard's movement.
+With that policy restored, the male seeded weapons run finishes in 283 wall seconds with zero deaths, zero skips and 293 actual machine-gun attacks. Its full record is in `weapons-male-held/`. This input comparison does not claim a separately isolated cause for the discarded guard's movement.
 
 ### Armed close-crowd cover
 
