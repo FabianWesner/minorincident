@@ -51,6 +51,8 @@ try {
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), perf: a.perf() };
   }, { tier });
+  assert.ok(result.kills.length > 0, 'the assault must produce real combat kill events');
+  assert.equal(result.bodies.length, result.kills.length, 'every real kill must remain a permanent body');
   const captures = [];
   for (const zoom of [.5, 1, 1.5]) {
     const state = await session.page.evaluate(async zoom => {
@@ -80,5 +82,6 @@ try {
     captures.push({ zoom, state, samples });
   }
   writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, captures, errors: session.errors }, null, 2));
+  assert.deepEqual(session.errors, []);
   console.log(JSON.stringify({ tier, backend: session.options.backend, kills: result.kills.length, bodies: result.bodies.length, captures, errors: session.errors }));
 } finally { await session.close(); stopServer(); }

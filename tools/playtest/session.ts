@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
+import type { Game } from '../../src/Game';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -84,7 +85,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
   const cpu = process.env.PLAYTEST_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
   let cpuStartedAt = 0;
-  if (cpu) { await cpu.send('Profiler.enable'); await cpu.send('Profiler.start'); cpuStartedAt = await page.evaluate(() => performance.now()); }
+  if (cpu) {
+    await cpu.send('Profiler.enable'); await cpu.send('Profiler.start');
+    cpuStartedAt = await page.evaluate(() => {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
+      const clicks: unknown[] = [];
+      (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks = clicks;
+      g.input.tap = (frame, scheme) => {
+        previous?.(frame, scheme);
+        if (frame.moveTarget) clicks.push({ tick: g.world.tick, position: { ...g.world.entities.get(1)!.transform }, target: { ...frame.moveTarget } });
+      };
+      return performance.now();
+    });
+  }
   await page.getByTestId('start-game').click({ timeout: 120_000 });
   await hold(500);
   const first = o.levels[0];
@@ -518,6 +531,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const cpuEndedAt = await page.evaluate(() => performance.now());
     const { profile } = await cpu.send('Profiler.stop');
     writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt })); await cpu.detach();
+    writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
   }
   await context.close();
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
