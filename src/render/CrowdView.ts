@@ -200,8 +200,8 @@ export class CrowdView extends Group {
         for (const name of prepared.clip.parts) if (!model.getObjectByName(name)) { const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint); }
         model.updateMatrixWorld(true);
         baked = { ...prepared, geometry: cloneBatchGeometry(prepared.geometry), shirtColor: prepared.shirtColor?.clone() };
-        if (prepared.corpse) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
-        if (prepared.corpseClip) this.corpseClips.set(key, prepared.corpseClip);
+        if (prepared.corpse && !this.corpseGeometry.has(key)) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
+        if (prepared.corpseClip && !this.corpseClips.has(key)) this.corpseClips.set(key, prepared.corpseClip);
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
         const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback] as const;
@@ -217,19 +217,28 @@ export class CrowdView extends Group {
       if (lod === 'lod2' && !fallback) {
         const dedicated = this.registry.definition(asset).corpseGlb;
         const intactDog = role === 'dog';
-        if (!alpha && (dedicated || intactDog)) {
+        if (dedicated || intactDog || alpha) {
           // Generated living LODs already lost thin shells. Further index-only
           // reduction made permanent bodies look like shards (PO #85). Dedicated
           // corpse meshes collapse each intact shell offline and keep their own rig.
-          const body = bakeInfected(await (dedicated ? this.registry.loadCorpse(asset, def.decay) : this.registry.loadAsset(asset, 'lod0', def.decay)) as Group, this.registry.definition(asset).animatedNodes);
-          deinterleaveGeometry(body.geometry);
-          const corpse = mergeVertices(body.geometry); body.geometry.dispose();
-          if (!healthy) markInfectedEyeCores(corpse);
-          if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
-          corpse.userData.crowdLod = lod;
-          corpse.userData.corpseSource = dedicated ?? this.registry.definition(asset).glb; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
-          packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
-          this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
+          // Dogs and Alphas retain their intact authored source instead.
+          const bodyModel = await (dedicated ? this.registry.loadCorpse(asset, def.decay) : this.registry.loadAsset(asset, 'lod0', def.decay)) as Group;
+          if (this.disposed) { baked.geometry.dispose(); return; }
+          // LOD0 and LOD2 can finish in either order. Both must retain the same
+          // intact source, including when a distant victim settles before a hero draw.
+          const existing = alpha ? this.corpseGeometry.get(key) : undefined;
+          if (existing) { createdCorpse = existing; corpseClip = this.corpseClips.get(key); }
+          else {
+            const body = bakeInfected(bodyModel, this.registry.definition(asset).animatedNodes);
+            deinterleaveGeometry(body.geometry);
+            const corpse = mergeVertices(body.geometry); body.geometry.dispose();
+            if (!healthy) markInfectedEyeCores(corpse);
+            if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
+            corpse.userData.crowdLod = lod;
+            corpse.userData.corpseSource = dedicated ?? this.registry.definition(asset).glb; corpseClip = body.clip; this.corpseClips.set(key, corpseClip);
+            packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+            this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
+          }
         }
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
         await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
@@ -242,9 +251,13 @@ export class CrowdView extends Group {
         }
       }
       if (alpha && lod === 'lod0') {
-        const corpse = baked.geometry.clone(); packCrowdParts(corpse);
-        if (human) markCrowdAppearance(corpse, false);
-        this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
+        if (!this.corpseGeometry.has(key)) {
+          const corpse = baked.geometry.clone(); packCrowdParts(corpse);
+          if (human) markCrowdAppearance(corpse, false);
+          corpse.userData.corpseSource = this.registry.definition(asset).glb;
+          this.corpseGeometry.set(key, corpse); this.corpseClips.set(key, baked.clip);
+        }
+        createdCorpse = this.corpseGeometry.get(key)!; corpseClip = this.corpseClips.get(key);
       }
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
@@ -328,8 +341,8 @@ export class CrowdView extends Group {
       // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
       // synchronously during play. Waiting for this batch also guarantees the
-      // simplified corpse geometry exists before the loading draw.
-      if (lod === (alpha ? 'lod0' : 'lod2')) {
+      // intact corpse geometry exists before the loading draw.
+      if (lod === 'lod2' || alpha && lod === 'lod0') {
         this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       }
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
