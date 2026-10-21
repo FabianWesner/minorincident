@@ -294,7 +294,9 @@ export class LevelSixSubway {
     // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. One survivor
     // left behind (fighting, stuck, an injured straggler) does not withhold it: they are restored where they were.
     // `abandon` stays the retry point for the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot.
-    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    // Not while an injured straggler is still out behind (`behind`): a snapshot with them far back made every respawn a
+    // new fetch through the horde from the gate (fists playtest 10-21: help <-> bring 41x at gate 90, 2 skips).
+    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behind){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}

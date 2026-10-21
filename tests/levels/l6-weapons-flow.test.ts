@@ -129,3 +129,20 @@ test('@E24 playtest a collected straggler brought into the middle of a long colu
   Object.assign(e.transform, { x: s.tailX! + 6, z: 15 }); w.spatial.set(e.id, e.transform.x, 15); put(w, s.tailX! + 7, 15); w.update();
   expect(lame.rejoined).toBe(true);
 }, 240_000);
+
+// Orchestrator 10-21 (fists playtest, male L5->L6): "help the injured survivor who fell behind" <-> "Bring the injured
+// survivor back" looped at gate 90: the gate checkpoint was taken with an injured straggler still far back, so every
+// respawn restored them there and the courier fetched them again through the horde.
+test('@E24 playtest the gate checkpoint waits until no injured straggler is out behind the group', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following'), lame = live.find(r => r.injured)!;
+  const rest = live.filter(r => r !== lame).map(r => r.id);
+  s.leaderX = 108; s.leaderZ = 15; place(w, rest, 106);
+  const e = w.entities.get(lame.id)!; Object.assign(e.transform, { x: 62, z: 15 }); w.spatial.set(e.id, 62, 15); lame.straggler = true;
+  put(w, 100, 15); w.update(); w.update();
+  expect(s.gates[0].passed).toBeFalsy(); expect(m.state.checkpoint).toBe('abandon');
+  // Brought back into the column: now the gate's checkpoint is taken, with them in it.
+  Object.assign(e.transform, { x: 100, z: 15 }); w.spatial.set(e.id, 100, 15); lame.collected = true; w.update(); w.update();
+  expect(lame.rejoined).toBe(true); expect(m.state.checkpoint).toBe('gate-90');
+}, 240_000);
