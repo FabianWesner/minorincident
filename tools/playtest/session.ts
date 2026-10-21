@@ -19,7 +19,7 @@ export interface SessionOptions {
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
-export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
+export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
 
 const hold = (ms: number) => new Promise(r => setTimeout(r, ms));
 const ranged = /pistol|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher/;
@@ -115,7 +115,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   const startLevel = async (e: Eyes) => {
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
-    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
+    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     await page.evaluate(() => {
       const observation = window as unknown as { __playtestAttacks: Record<string, number> };
       observation.__playtestAttacks = {};
@@ -372,6 +372,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
+    // Evidence only: use the existing stuck ladder's active-sim and wall-time clocks.
+    run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,Math.min(stuckSim,stuckWall));
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
