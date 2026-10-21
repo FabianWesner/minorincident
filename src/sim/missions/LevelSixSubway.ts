@@ -216,10 +216,12 @@ export class LevelSixSubway {
         }
       }
     }
-    // Playtest 10-21 (weapons runs): a survivor who fled the horde into the side rooms north of the tunnel mouth
-    // (x 30-40, z 20-30) stood there for good, because the route back to a goal far down the tunnel exceeds the route
-    // budget; the exit then never counted everyone out. Off the track, a refused route walks to the tunnel mouth first.
-    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach)&&!around&&Math.abs(e.transform.z-l6.tunnel.z)>l6.tunnel.width/2)
+    // Crowd-only lane edges keep the column on the track. A follower displaced
+    // onto a walkable side walkway uses the courier's route back across that edge.
+    const side=Math.abs(e.transform.z-l6.tunnel.z),onWalkway=(r.collected||r.rejoined)&&e.transform.x>=l6.tunnel.start&&side>1.8&&side<l6.tunnel.width/2+.4;
+    const nav=onWalkway?this.w.infected!.nav.forPlayer(actorRadius(e)):this.w.infected!.nav;
+    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&side>l6.tunnel.width/2)
+      // A side room's long route can exceed the steering budget: reach the mouth first.
       this.w.npcs!.move(e,{x:l6.tunnel.start,z:l6.tunnel.z},r.injured?1.4:2.2,e.civilian!,reach);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
