@@ -57,7 +57,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
   const safe = (x: number, y: number, e: Eyes) => ({ x: clamp(x, 260, e.view.w - 260), y: clamp(y, 120, e.view.h - 170) });
-  const clickGround = async (x: number, y: number) => { await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
+  const clickGround = async (x: number, y: number) => { await releaseAim(); await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
 
   // --- boot and menu ---
   const params = `testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
@@ -112,6 +112,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
+  let aimHeld: number | null = null;
+  const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
     // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
@@ -120,14 +122,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (unarmed ? undefined : e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => Math.hypot(a.x - b.x, a.z - b.z) < 2.5)));
-    if (!threat) { if (keysDown.has('Space')) await press([]); return false; }
+    if (!threat) { if (keysDown.has('Space')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
     if (threat.hp < seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);
     seen.last = now; shotAt.set(threat.id, seen);
     if (seen.ms > 8000) {
       // A target that takes no damage for 8 s is unreachable (behind a fence) or ignores hits: note it, walk on.
-      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp });
+      ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp }); await releaseAim();
       if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
       return false;
     }
@@ -135,6 +137,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await clickGround(s.x, s.y); lastClick = Date.now(); }
       return true;
     }
+    if (ranged.test(e.player?.current ?? '')) {
+      // Guns the PO's way: left-click the infected and hold. The click locks that target (the game aims at it and keeps
+      // firing while held); a new target is a new click. Space only fires along the facing cone (assist ±35°), which in
+      // the dark tunnel at z1.5 missed most of the time (QA 10-21 #87b: 69 enemy-unhittable events).
+      if (keysDown.has('Space')) await press([]);
+      if (aimHeld !== threat.id) {
+        await releaseAim();
+        await page.mouse.move(threat.screen.x, threat.screen.y - 18); await page.mouse.down(); aimHeld = threat.id;
+      }
+      return true;
+    }
+    await releaseAim();
     await page.mouse.move(threat.screen.x, threat.screen.y - 18);
     // Back off while low on health and a melee weapon would trade hits.
     const keys = ['Space'];
