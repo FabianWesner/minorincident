@@ -1,6 +1,9 @@
 /** Shared game framing; simulation uses these constants, never the rendered camera. */
 export const cameraFraming = { fovDeg: 25, radiusM: 19, polar: Math.PI * .30, portraitWidthM: 7 } as const;
 
+/** PO #67: serialized zoom must also accept the held launcher's wider follow view. */
+export const rocketZoomLimit = 2;
+
 /** Both target and shooter reach are shorter than the narrowest default ground width. */
 export const policeEngagementM = cameraFraming.portraitWidthM * .65;
 export const policeShotRangeM = cameraFraming.portraitWidthM - 1;
