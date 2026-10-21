@@ -28,6 +28,8 @@ export interface InfectedState {
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
   megaRocketIds?: number[];
+  /** Courier/companion hit memory, refreshed on damage. Archetype brains pursue the source; vision brains receive one hit-time move. */
+  provoked?: { id: number; until: number };
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;
