@@ -22,13 +22,13 @@ Criteria: [epic-07-infected-ai-and-hordes.md](../../../specs/epic-07-infected-ai
 | E07-AC10 | met | src/sim/ai/InfectedSystem.ts pool/release/settle; tests/sim/ai/director.test.ts T-E07-10/10b | — |
 | E07-AC11 | met | Fresh isolated Hetzner T-E07-11: 5 timing assertions passed, 0 failed; 200-infected sim p95 2.10 ms ≤4 ms (director, Alpha and physical fixtures); evidence/verification-summary.json and E07-verify.log. | — |
 | E07-AC12 | met | Fresh corrected quiet T-E07-12 passes: 200 active, ≤30 crowd draws, zero non-instanced meshes, exact fixed object count, offscreen culling, retained 200 corpses, empty reset and mixed archetypes. evidence/E07-render-perf.json and E07-mixed-render.json. | — |
-| E07-AC13 | partial | tests/perf/horde.spec.ts T-E07-13; src/render/CrowdView.ts; historical docs/reports/alpha-look/review.md; newer: [README.md](../ui-night/README.md), [audit.md](../merge-batch10/audit.md) | **M; browser** — Shading repaired; refresh and score horde-readability Checklist D on both tiers/backends/zooms. Generic night captures do not close this spot. |
+| E07-AC13 | met | Fresh 24-frame named `horde-readability` matrix: WebGL2/WebGPU × high/low × zoom 0.5/1/1.5, 60 runners plus separate warning frame. Explicit five-item [Checklist D review](../ac-close-shared/README.md#named-checklist-d-review--e07-ac13), [matrix](../ac-close-shared/d-horde.jpg), state/backend/zoom receipts retained. | — |
 | E07-AC14 | met | src/sim/ai/InfectedSystem.ts settle/release; src/sim/combat/Damage.ts downing/permanence; tests/sim/ai/specials.test.ts T-E07-14; tests/sim/combat/l5-shotgun.test.ts T-E23-12-kill | — |
 | E07-AC15 | met | src/sim/combat/Damage.ts; tests/sim/ai/specials.test.ts T-E07-15 | — |
 | E07-AC16 | met | src/sim/ai/InfectedSystem.ts animal pack/pounce; tests/sim/ai/animals.test.ts T-E07-16 | — |
 | E07-AC17 | met | src/sim/ai/InfectedSystem.ts perch/cling; tests/sim/ai/animals.test.ts T-E07-17/17b/17c | — |
 | E07-AC18 | met | src/sim/ai/Flock.ts; tests/sim/ai/animals.test.ts T-E07-18/18b/18c | — |
-| E07-AC19 | partial | src/sim/ai/InfectedSystem.ts; AlphaSupportMoves.ts; tests/sim/ai/zoo-s1.test.ts, zoo-s2.test.ts, zoo-s3.test.ts; tests/e2e/health-bars.spec.ts; tests/scenes/zoo-s1…s3 | **M; browser** — Close all ten zoo move cooldown/restore/boundary captures and shared bar matrix (AC05). |
+| E07-AC19 | partial | src/sim/ai/InfectedSystem.ts; AlphaSupportMoves.ts; tests/sim/ai/zoo-s1.test.ts, zoo-s2.test.ts, zoo-s3.test.ts; tests/e2e/health-bars.spec.ts; tests/scenes/zoo-s1…s3 | **M; browser** — Close all ten zoo move cooldown/restore/boundary captures and shared bar matrix (AC05). | <!-- Literal stampede corridor has a fresh proposed rewrite in ac-close-shared; not adopted. -->
 
 ## E22
 

@@ -40,7 +40,7 @@ for (const move of Object.keys(scenes) as InfectedSpecialMove[]) {
     const spec = readSpec(`tests/scenes/${scenes[move]}.json`);
     // The complete herd/elephant and locked corridor need the wide game-camera
     // zoom. The original close crops cut off the rear zebra and the courier.
-    if (move === 'zebra.stampede' || move === 'elephant.charge') spec.camera = { ...spec.camera, mode: 'game', zoom: .65 };
+    if (move === 'zebra.stampede' || move === 'elephant.charge') spec.camera = { ...spec.camera, mode: 'game', zoom: 1.5 };
     // Keep corpse/prop setup; invoke each special explicitly so the same fixture
     // can probe the scheduler's rejected and accepted start boundaries.
     spec.script = (spec.script ?? []).filter(row => 'actor' in row && (typeof row.do === 'string' || !('special' in row.do)));

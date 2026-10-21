@@ -97,7 +97,7 @@ for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [84
   });
 }
 for (const [tier, count] of [['high', 200], ['low', 100]] as const) {
-  test(`T-E07-bars-budget-${tier} @E07-AC12 @E18-AC01 pooled bar budget at ${count} infected`, async () => {
+  test(`T-E07-bars-budget-${tier} @E07-AC12 @E18-AC01 @perf pooled bar budget at ${count} infected`, async () => {
     test.setTimeout(180_000);
     const session = new SceneSession({ tier });
     const spec: SceneSpec = { name: `qa-health-bars-${count}`, size: 80, infectedCap: 200, ground: 'asphalt', seed: 7, barArchetypes: ['infected.runner'],
