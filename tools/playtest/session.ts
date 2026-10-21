@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
+import { assertRenderedBodies } from './startup';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -329,7 +330,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
-      if (e.level === 'L6' && !await page.evaluate(() => window.__SS__!.crowdFigures().some(f => f.drawn && f.joints))) throw new Error('L6 rendered-body observations are unavailable; combat playtest would be invalid');
+      if (e.level === 'L6') assertRenderedBodies(await page.evaluate(() => window.__SS__!.crowdFigures().map(f => ({ drawn: f.drawn, joints: f.joints }))));
       // Rack check at the first playing tick (the briefing can still show the previous rack).
       run.weaponsStart = e.player?.weapons ?? [];
       const lost = (prevWeapons ?? []).filter(w => !run!.weaponsStart.includes(w) && !/fists|kick|unarmed/.test(w));
