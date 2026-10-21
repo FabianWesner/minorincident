@@ -84,7 +84,11 @@ export function powerScore(save:CampaignSave):number {
     save.ownedActions.reduce((n,id)=>n+(catalog[id].category==='ability'?60:(catalog[id].tier+1)*20),0)+save.upgrades.filter(id=>upgrades[id].family==='perk').length*20);
 }
 export function gearTier(save:CampaignSave):GearTier {
-  const score=powerScore(save);return (score<240?0:score<400?1:score<500?2:score<640?3:4);
+  // The crash removes combat weapons, not the courier's earned clothing. Its existing
+  // loss history also keeps old saves and the standalone L10 preset on the same outfit tier.
+  const lost = save.crossingHandover?.lostWeapons;
+  const score=powerScore(lost ? { ...save, ownedActions: [...new Set([...save.ownedActions, ...lost])] } : save);
+  return (score<240?0:score<400?1:score<500?2:score<640?3:4);
 }
 export function beginRewards(save:CampaignSave,level:Level):void {
   if(save.pending||level!==save.completedLevels+1||level>5)throw new Error('Rewards unavailable');

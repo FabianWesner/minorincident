@@ -119,7 +119,7 @@ export class Telemetry implements TelemetrySink {
     try {
       this.recorder.begin(start.id, {
         seed: world.seed, tier: start.tier ?? null, campaign: start.campaign, quality: tier, qualityParam: this.game.params.get('quality'),
-        viewport: [innerWidth, innerHeight], coarse: matchMedia('(pointer: coarse)').matches, ui: this.game.ui.enabled, phase: this.prevPhase,
+        cameraZoom: this.game.view.view.getState().targetZoom, viewport: [innerWidth, innerHeight], coarse: matchMedia('(pointer: coarse)').matches, ui: this.game.ui.enabled, phase: this.prevPhase,
       }, id);
     } catch (error) { console.warn('Replay recording disabled for this attempt', error); }
     const events = world.events, stops: (() => void)[] = [];
