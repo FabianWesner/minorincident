@@ -12,6 +12,7 @@ try {
     if (entry !== 'debug' && entry !== 'continue') throw Error(`Unknown entry ${entry}`);
     const result = await measureL10Entry(session.page, origin, entry, backend, out);
     assert.ok(result.playableFrames > 100);
+    assert.ok(result.state!.transform.x > 800, 'recorded input must traverse both reported lamp boundaries');
     if (process.env.L10_ASSERT === '1') assert.ok(result.max <= 200, `${entry}: ${result.max} ms after loading`);
   }
   assert.deepEqual(session.errors, []);
