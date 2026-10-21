@@ -1,0 +1,7230 @@
+{
+  "before": [
+    {
+      "name": "webgl2-low-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-low-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-low-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 258
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 256
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 654
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 648
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 660
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 612
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1144
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1168
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 338
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 336
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0",
+            "count": 1,
+            "triangles": 650
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0",
+            "count": 1,
+            "triangles": 656
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0",
+            "count": 1,
+            "triangles": 664
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0",
+            "count": 1,
+            "triangles": 616
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0",
+            "count": 2,
+            "triangles": 1164
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0",
+            "count": 1,
+            "triangles": 1194
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    }
+  ],
+  "after": [
+    {
+      "name": "webgl2-low-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-low-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-low-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "low",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgl2-high-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgl",
+        "tier": "high",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-low-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "low",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 710
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 734
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1358
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1376
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z0.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 0.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z1",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 1,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    },
+    {
+      "name": "webgpu-high-corpses-z1.5",
+      "setup": {
+        "ids": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "tick": 2,
+        "bodies": [
+          {
+            "id": 70,
+            "asset": "inf.alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 0
+            }
+          },
+          {
+            "id": 71,
+            "asset": "inf.alpha-worker",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 1.2
+            }
+          },
+          {
+            "id": 72,
+            "asset": "inf.alpha-hoodie",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 2.4
+            }
+          },
+          {
+            "id": 73,
+            "asset": "inf.alpha-fire",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 3.5999999999999996
+            }
+          },
+          {
+            "id": 74,
+            "asset": "inf.alpha-suit",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -23,
+              "yaw": 4.8
+            }
+          },
+          {
+            "id": 75,
+            "asset": "inf.mega-alpha",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 6
+            }
+          },
+          {
+            "id": 76,
+            "asset": "inf.mega-alpha-ashen",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 7.199999999999999
+            }
+          },
+          {
+            "id": 77,
+            "asset": "inf.mega-alpha-ember",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 8.4
+            }
+          },
+          {
+            "id": 78,
+            "asset": "inf.common-worker",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 9.6
+            }
+          },
+          {
+            "id": 79,
+            "asset": "inf.jogger",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -19.2,
+              "yaw": 10.799999999999999
+            }
+          },
+          {
+            "id": 80,
+            "asset": "inf.cashier",
+            "at": {
+              "x": 3994,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 12
+            }
+          },
+          {
+            "id": 81,
+            "asset": "inf.delivery-driver",
+            "at": {
+              "x": 3997.8,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 13.2
+            }
+          },
+          {
+            "id": 82,
+            "asset": "inf.suburban-mom",
+            "at": {
+              "x": 4001.6,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 14.399999999999999
+            }
+          },
+          {
+            "id": 83,
+            "asset": "inf.bbq-dad",
+            "at": {
+              "x": 4005.4,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 15.6
+            }
+          },
+          {
+            "id": 84,
+            "asset": "inf.bathrobe-neighbor",
+            "at": {
+              "x": 4009.2,
+              "y": 0.7,
+              "z": -15.4,
+              "yaw": 16.8
+            }
+          },
+          {
+            "id": 85,
+            "asset": "inf.dog",
+            "at": {
+              "x": 3999,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 86,
+            "asset": "inf.dog.black",
+            "at": {
+              "x": 4001,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          },
+          {
+            "id": 87,
+            "asset": "inf.dog.cream",
+            "at": {
+              "x": 4003,
+              "y": 0.7,
+              "z": -25.5,
+              "yaw": 0.7
+            }
+          }
+        ]
+      },
+      "state": {
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 1.5,
+        "pages": [
+          {
+            "name": "corpses:inf.dog.black:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.dog.cream:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:infected.runner:death-back:0",
+            "count": 1,
+            "triangles": 708
+          },
+          {
+            "name": "corpses:inf.dog:death-back:0",
+            "count": 1,
+            "triangles": 4252
+          },
+          {
+            "name": "corpses:inf.jogger:death-back:0",
+            "count": 1,
+            "triangles": 940
+          },
+          {
+            "name": "corpses:inf.delivery-driver:death-back:0",
+            "count": 1,
+            "triangles": 719
+          },
+          {
+            "name": "corpses:inf.suburban-mom:death-back:0",
+            "count": 1,
+            "triangles": 724
+          },
+          {
+            "name": "corpses:inf.cashier:death-back:0",
+            "count": 1,
+            "triangles": 716
+          },
+          {
+            "name": "corpses:inf.bathrobe-neighbor:death-back:0",
+            "count": 1,
+            "triangles": 824
+          },
+          {
+            "name": "corpses:inf.alpha:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 740
+          },
+          {
+            "name": "corpses:inf.alpha-worker:death-back:0/99/-1",
+            "count": 1,
+            "triangles": 752
+          },
+          {
+            "name": "corpses:inf.alpha-hoodie:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 748
+          },
+          {
+            "name": "corpses:inf.alpha-fire:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 760
+          },
+          {
+            "name": "corpses:inf.alpha-suit:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 746
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ashen:death-back:0/99/-1",
+            "count": 2,
+            "triangles": 1660
+          },
+          {
+            "name": "corpses:inf.mega-alpha-ember:death-back:0/100/-1",
+            "count": 1,
+            "triangles": 1652
+          },
+          {
+            "name": "corpses:inf.bbq-dad:death-back:0:acc.hair-ponytail/100/-1",
+            "count": 1,
+            "triangles": 621
+          }
+        ],
+        "bodies": 18
+      }
+    }
+  ]
+}

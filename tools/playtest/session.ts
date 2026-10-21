@@ -31,6 +31,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const page = context.pages()[0] ?? await context.newPage();
   // tsx keeps function names with a __name helper; page-side functions need it defined.
   await page.addInitScript('window.__name = (f) => f; window.__playtestFrames = []; (() => { let last = 0; const f = (now) => { if (last && now - last > 200) window.__playtestFrames.push([now - last, window.__SS__ ? window.__SS__.tick() : -1]); last = now; requestAnimationFrame(f); }; requestAnimationFrame(f); })();');
+  if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') await page.addInitScript(`window.__playtestHandoverAudit = []; (() => {
+    let sawL7=false,start=null,done=false;
+    const visible=e=>!!e&&!e.hidden&&e.offsetParent!==null,q=id=>document.querySelector('[data-testid="'+id+'"]');
+    const frame=now=>{const g=window.__SCENE__?.game;
+      if(g?.world.scenario==='L7'&&g.world.missions?.state.phase==='playing') sawL7=true;
+      if(sawL7&&!done&&g?.world.scenario==='L8'&&!g.loading&&!g.clock.paused&&g.world.missions?.state.phase==='playing'){
+        start??=now;const text=q('objective-text')?.textContent??'',pin=visible(q('minimap-objective')),marker=visible(q('mission-marker'));
+        const sample={elapsedMs:now-start,tick:g.world.tick,text,pin,marker};
+        if(!window.__playtestHandoverAudit.length||text&&pin&&marker){window.__playtestHandoverAudit.push(sample);if(text&&pin&&marker)done=true;}
+      } requestAnimationFrame(frame);};requestAnimationFrame(frame);
+  })();`);
   const issues: Issue[] = [], runs: LevelRun[] = [], consoleSeen = new Set<string>();
   let eyes: Eyes | null = null;
   const capture = async (name: string): Promise<string> => {
@@ -97,6 +108,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let ring: { x: number; y: number; z: number } | null = null, ringKey = '';
 
   const startLevel = async (e: Eyes) => {
+    if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear();
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
@@ -380,6 +392,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await press([]).catch(() => undefined);
   writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
+  if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') writeFileSync(join(o.out,`handover-audit-${o.tag}.json`),JSON.stringify(await page.evaluate('window.__playtestHandoverAudit'),null,2));
   await context.close();
   return { runs, issues };
 }
