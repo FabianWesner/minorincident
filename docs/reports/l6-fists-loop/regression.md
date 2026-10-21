@@ -52,3 +52,7 @@ The new level test, "stragglers beyond a passed gate retain its checkpoint throu
 | Corrected guard plus real-column rejoin fix | all 12 weapons-flow level tests pass |
 
 This test checks the added gate-checkpoint behavior; main `56d7e7d16` predates those checkpoints. The separate rejoin regression above also passes on that main baseline. All existing gate-checkpoint assertions remain; the older test title now says "before that gate" to describe its unchanged fixture and expectations.
+
+### Unarmed crowd inputs
+
+The valid stationary-target diagnostic stopped after 665 s with 8 deaths and 329 fist attacks; its `aborted-L6.json` records that unfinished run. In unarmed L6 crowds of at least three visible enemies within 3 m, the driver now uses the shipped K/right-hand kick in short pulses and continues following the visible objective between pulses. This crowd movement takes priority over backing away from just the nearest enemy. Individual fights retain target clicks and the smaller-fight low-health backoff. Keyboard attacks aim at the ground projection; target clicks aim at the rendered chest. The crowd policy only runs when the visible inventory contains fists/kick alone, so it does not change armed runs or L5's combat policy.

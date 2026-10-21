@@ -124,7 +124,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
-  let aimHeld: number | null = null, lastAimClick = 0;
+  let aimHeld: number | null = null, lastAimClick = 0, lastCrowdKick = 0;
   const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
@@ -152,8 +152,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
+    if (e.level === 'L6' && e.player?.weapons.every(id => /fists|kick/.test(id)) && e.enemies.filter(b => b.d < 3).length >= 3) {
+      // Unarmed, keep covering the moving retreat instead of planting in a crowd. K is the shipped
+      // right-hand kick binding; one short kick makes space, then navigation follows the visible ring.
+      await releaseAim();
+      if (now - lastCrowdKick > 750) {
+        await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(180); await press([]);
+        lastCrowdKick = now; log({ crowdKick: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
+      }
+      return false;
+    }
     if (!ranged.test(e.player?.current ?? '') && e.player && e.player.hp < e.player.max * .3 && threat.d < 2) {
-      await releaseAim(); await page.mouse.move(threat.aim.x, threat.aim.y);
+      // A keyboard attack aims through the ground ray, unlike a target click on the drawn chest.
+      await releaseAim(); await page.mouse.move(threat.screen.x, threat.screen.y);
       await press(['Space', ...awayKeys(e, threat)]); return true;
     }
     await press([]);
