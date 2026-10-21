@@ -5,7 +5,7 @@ import { measureL10Entry } from './l10Entry';
 
 const out = process.env.L10_OUT ?? 'test-results/fixes-13h-l10/entry';
 const backend = process.env.L10_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
-const session = new SceneSession({ backend, tier: 'low', nativeFrameTiming: true });
+const session = new SceneSession({ backend, tier: 'low', viewport: { width: 1600, height: 900 }, nativeFrameTiming: true });
 try {
   await session.open();
   for (const entry of (process.env.L10_ENTRIES ?? 'debug,continue').split(',')) {

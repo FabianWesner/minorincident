@@ -25,20 +25,34 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
     await page.waitForFunction(() => { const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; loading: boolean } }).game; return g.world.scenario === 'L9' && !g.loading; });
   }
   const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Performance.enable');
   await cdp.send('Profiler.enable'); await cdp.send('Profiler.start');
-  await page.evaluate(() => {
-    const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; loading: boolean } }).game;
+  const { metrics } = await cdp.send('Performance.getMetrics');
+  const performanceNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
+  const performanceStartedAt = await page.evaluate(() => performance.now());
+  await page.evaluate(frames => {
+    const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; input: Game['input']; view: Game['view']; loading: boolean } }).game;
     const trace = window as unknown as { l10Trace: { at: number; dt: number; tick: number; loading: boolean; scenario: string | null; x: number; z: number; sim: number; update: number; render: number; builds: number }[]; l10TraceRunning: boolean; l10CardClosed?: number };
     trace.l10Trace = []; trace.l10TraceRunning = true;
     const transition = (g as unknown as { transition: { finish(): void } }).transition, finish = transition.finish;
-    transition.finish = function () { finish.call(this); if (g.world.scenario === 'L10') trace.l10CardClosed = performance.now(); };
+    transition.finish = function () {
+      if (g.world.scenario === 'L10') {
+        if (g.world.tick !== 0) throw Error(`Replay must begin at tick zero, got ${g.world.tick}`);
+        const a = window.__SS__!, rig = g.view.view;
+        a.cheats.god(true); rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
+        // Parse/install the fixture before the card closes, so transport and
+        // recording setup cannot become an artificial first playable stall.
+        g.input.recorder.play({ version: 1, level: 'L10', seed: 1, frames });
+      }
+      finish.call(this); if (g.world.scenario === 'L10') trace.l10CardClosed = performance.now();
+    };
     let last = performance.now();
     const sample = (now: number) => {
       const p = g.world.entities.get(1)?.transform, perf = window.__SS__!.perf();
       trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds }); last = now;
       if (trace.l10TraceRunning) requestAnimationFrame(sample);
     }; requestAnimationFrame(sample);
-  });
+  }, frames);
   if (entry === 'debug') await page.getByTestId('level-L10').click({ force: true });
   else {
     await page.evaluate(async () => {
@@ -50,12 +64,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
   }
   await page.waitForFunction(() => { const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; loading: boolean } }).game; return g.world.scenario === 'L10' && !g.loading; });
   console.log(`${entry}: L10 loaded`);
-  await page.evaluate(frames => {
-    const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, rig = g.view.view;
-    if (g.world.tick !== 0) throw Error(`Replay must begin at tick zero, got ${g.world.tick}`);
-    a.cheats.god(true); rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
-    g.input.recorder.play({ version: 1, level: 'L10', seed: 1, frames }); a.resume();
-  }, frames);
+  await page.evaluate(() => window.__SS__!.resume());
   await page.waitForFunction(ticks => window.__SS__!.tick() >= ticks, replay.ticks, { timeout: 120_000 });
   const result = await page.evaluate(() => {
     const trace = window as unknown as { l10Trace: { at: number; dt: number; tick: number; loading: boolean; scenario: string | null }[]; l10TraceRunning: boolean; l10CardClosed?: number }; trace.l10TraceRunning = false;
@@ -65,7 +74,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
     return { frames, cardClosed: trace.l10CardClosed, playableFrames: playable.length, max: Math.max(...ordered), p95: ordered[Math.ceil(ordered.length * .95) - 1], hitches: playable.filter(f => f.dt > 200), backend: window.__SS__!.perf().backend, state: window.__SS__!.getEntity(1), load: window.__SS__!.perf().loadTiming };
   });
   const { profile } = await cdp.send('Profiler.stop'); await cdp.detach();
-  writeFileSync(`${out}/${entry}-${backend}.cpuprofile`, JSON.stringify(profile));
+  writeFileSync(`${out}/${entry}-${backend}.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs, performanceStartedAt }));
   writeFileSync(`${out}/${entry}-${backend}.json`, JSON.stringify(result, null, 2));
   console.log(JSON.stringify({ entry, backend: result.backend, frames: result.playableFrames, max: result.max, p95: result.p95, hitches: result.hitches }));
   return result;

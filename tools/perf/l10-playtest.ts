@@ -14,5 +14,5 @@ try {
     if (!(await up())) throw Error('Vite did not start');
   }
   const out = process.env.L10_OUT ?? 'test-results/fixes-13h-l10/playtest';
-  await runSession({ origin, out, levels: ['L10'], entry: 'debug', quality: 'low', zoom: 1.5, heroine: 'female', profile: `${out}/profile`, levelMinutes: 20, sampleSeconds: Number(process.env.L10_SECONDS ?? 90), stopAfterLevel: false, tag: 'debug' });
+  await runSession({ origin, out, levels: ['L10'], entry: 'debug', quality: 'low', zoom: 1.5, heroine: 'female', profile: `${out}/profile`, levelMinutes: 20, sampleSeconds: Number(process.env.L10_SECONDS ?? 200), stopAfterLevel: false, tag: 'debug' });
 } finally { server?.kill(); }
