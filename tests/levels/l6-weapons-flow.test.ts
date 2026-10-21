@@ -161,7 +161,7 @@ test('@E24 a returned straggler rejoins the real column before the courier fetch
 // Orchestrator 10-21 (fists playtest, male L5->L6): "help the injured survivor who fell behind" <-> "Bring the injured
 // survivor back" looped at gate 90: the gate checkpoint was taken with an injured straggler still far back, so every
 // respawn restored them there and the courier fetched them again through the horde.
-test('@E24 playtest the gate checkpoint waits until no injured straggler is out behind the group', async () => {
+test('@E24 playtest the gate checkpoint waits until no injured straggler is before that gate', async () => {
   const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
   w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
   const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following'), lame = live.find(r => r.injured)!;
@@ -173,6 +173,33 @@ test('@E24 playtest the gate checkpoint waits until no injured straggler is out 
   // Brought back into the column: now the gate's checkpoint is taken, with them in it.
   Object.assign(e.transform, { x: 100, z: 15 }); w.spatial.set(e.id, 100, 15); lame.collected = true; w.update(); w.update();
   expect(lame.rejoined).toBe(true); expect(m.state.checkpoint).toBe('gate-90');
+}, 240_000);
+
+test('@E24 stragglers beyond a passed gate retain its checkpoint through deaths instead of restarting the shelter fetch loop', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.setLoadout(['weapon.fists'], ['weapon.kick']);
+  m.completeObjective('shelter'); m.completeObjective('stop'); w.update();
+  const s = m.state.l6!, live = s.survivors.filter(r => r.status === 'following');
+  const injured = live.filter(r => r.injured);
+  s.leaderX = 149; s.leaderZ = 15;
+  place(w, live.filter(r => !r.injured).map(r => r.id), 145);
+  // Live fists trace: the column reached gate 150 while every injured survivor had crossed gate 90,
+  // but some were still behind the column. The global `!behind` check withheld gate 90 as well.
+  injured.forEach((r, i) => { place(w, [r.id], 98 + i * 4); r.straggler = true; });
+  put(w, 145, 15); w.update(); w.update();
+  expect(s.paused).toBe(true);
+  const wait = LevelSixSubway.gateWait(90);
+  for (let retry = 0; retry < 2; retry++) {
+    w.player!.damage(w.entities.get(1)!.health.max, w.tick);
+    for (let i = 0; i < 400 && (w.entities.get(1)!.health.current <= 0 || m.state.phase !== 'playing'); i++) w.update();
+    const p = w.entities.get(1)!.transform;
+    expect(m.state.checkpoint, 'later stragglers must not erase the gate already passed by everyone').toBe('gate-90');
+    expect(Math.hypot(p.x - wait.x, p.z - wait.z), 'retry at the passed gate, not the shelter').toBeLessThan(3);
+    expect(m.state.l6!.survivors.filter(r => r.injured && !r.rejoined)).toHaveLength(injured.length);
+    expect(m.state.l6!.survivors.filter(r => r.injured).every(r => w.entities.get(r.id)!.transform.x > 92)).toBe(true);
+    expect(m.state.l6!.gates[1].passed).toBeFalsy();
+    expect(m.state.steps.retreat.status).toBe('active');
+  }
 }, 240_000);
 
 test('@E24 playtest the mid-tunnel checkpoint waits for the column when the courier runs ahead', async () => {

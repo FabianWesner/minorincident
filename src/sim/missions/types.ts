@@ -300,7 +300,7 @@ export interface L6State {
   leaderX:number; leaderZ:number; paused:boolean; flashlight:boolean; mainPower:boolean; emergency:boolean;
   exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean;
   survivors:{key:string;id:number;injured:boolean;routine:'guard'|'sit'|'talk'|'treat'|'rest'|'share';status:'shelter'|'following'|'dead'|'turned'|'out';straggler:boolean;collected:boolean;rejoined:boolean;hold:number}[];
-  /** `passed`: QA 10-21 #87, every living survivor went through; the gate's checkpoint was taken. */
+  /** `passed`: the walking column and a living majority went through, with no unrejoined straggler before this gate; its checkpoint was taken. */
   gates:{id:number;x:number;closedAt:number;hold:number;passed?:boolean}[];
   /** Tunnel entries. PO 10-20 #64: `switchId` is the hatch prompt; a closed hatch (`closedAt`) holds its arrivals, who bash it (`hits` left) until it breaks (`brokenAt`). */
   entries?: { door: number; warnedAt: number; remaining: number; nextAt: number; switchId?: number; closedAt?: number; hits?: number; hitAt?: number; brokenAt?: number }[];

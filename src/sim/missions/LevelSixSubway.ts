@@ -292,16 +292,19 @@ export class LevelSixSubway {
       if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
     // QA 10-21 #87: once the walking column (its healthy tail, #83) is through a gate, a death restarts there with the
-    // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. One survivor
-    // left behind (fighting, stuck, an injured straggler) does not withhold it: they are restored where they were.
+    // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. A healthy
+    // survivor left outside the walking column is restored where they were without withholding the checkpoint.
     // `abandon` stays the retry point for the shelter-to-first-gate leg. The respawn anchor is the gate's wait spot.
-    // Not while an injured straggler is still out behind (`behind`): a snapshot with them far back made every respawn a
-    // new fetch through the horde from the gate (fists playtest 10-21: help <-> bring 41x at gate 90, 2 skips).
+    // An injured straggler before this gate withholds its snapshot. Once they are through, falling behind the later
+    // column must not withhold the gate already passed (fists trace: everyone east of 94, leader at 148, retry at shelter).
     // Fists playtest 10-21 (after gate 150): with 2 left alive, one through and one 50 m back outside the column, the
     // checkpoint was taken; every respawn at 152 had the ring lead 40 m back to that survivor through the horde and the
     // courier died again (~30 s loop). More than half of the living group must be through as well.
     const through=(x:number)=>live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
-    for(const gate of s.gates)if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behind&&through(gate.x)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    for(const gate of s.gates){
+      const behindGate=live.some(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<=gate.x+2);
+      if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behindGate&&through(gate.x)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
+    }
     // Fists playtest 10-21: the courier ran ahead to x 150 with the group 25+ m behind and an injured straggler out at
     // x 125; every death restored that snapshot (horde between courier and group) and respawned at 152, ~18 s apart.
     // The chokepoint checkpoint is taken once the courier is there with the walking column and nobody is out behind.
