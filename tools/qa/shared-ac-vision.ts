@@ -41,7 +41,7 @@ const blasts: SceneSpec = {
     { id: 'cone', asset: 'prop.traffic-cone', at: [2, -1] },
     { id: 'bench', asset: 'prop.bench', at: [4, -3] },
   ],
-  camera: { mode: 'game', target: [0, 0], zoom: 1.15 },
+  camera: { mode: 'game', target: [0, 2], zoom: 1.5 },
   script: [{ frame: 0, actor: 'body', do: { corpse: true } }],
 };
 
