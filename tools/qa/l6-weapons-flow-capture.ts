@@ -21,15 +21,16 @@ try {
       for (const spot of ['held', 'respawn'] as const) {
         const info = await session.page.evaluate(async spot => {
           const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: { world: L6World } }).game.world, s = w.missions.state.l6;
-          const column = (x: number) => s.survivors.filter(r => r.status === 'following').forEach((r, i) => { const e = w.entities.get(r.id)!; e.transform.x = x - Math.floor(i / 3) * 1.4; e.transform.z = 15 + (i % 3 - 1) * 1.2; w.spatial.set(r.id, e.transform.x, e.transform.z); });
+          // No named closures in page code (tsx adds __name helpers the page does not have).
+          const ids: number[] = []; for (const r of s.survivors) if (r.status === 'following') ids.push(r.id);
           if (spot === 'held') {
             // QA #88: the group stays at the tunnel mouth while the scripted leader is already at gate 90.
             a.teleport(1, { x: 52, z: 15 });
-            for (let i = 0; i < 240; i++) { s.leaderX = 88; s.leaderZ = 15; column(50); await a.step(1); }
+            for (let i = 0; i < 240; i++) { s.leaderX = 88; s.leaderZ = 15; for (let k = 0; k < ids.length; k++) { const e = w.entities.get(ids[k])!; e.transform.x = 50 - Math.floor(k / 3) * 1.4; e.transform.z = 15 + (k % 3 - 1) * 1.2; w.spatial.set(ids[k], e.transform.x, e.transform.z); } await a.step(1); }
           } else {
             // QA #87: the group passes gate 90 -> checkpoint; the courier dies behind it and respawns at the gate.
             a.cheats.god(false); a.teleport(1, { x: 70, z: 15 });
-            for (let i = 0; i < 4; i++) { s.leaderX = 110; s.leaderZ = 15; column(108); await a.step(1); }
+            for (let i = 0; i < 4; i++) { s.leaderX = 110; s.leaderZ = 15; for (let k = 0; k < ids.length; k++) { const e = w.entities.get(ids[k])!; e.transform.x = 108 - Math.floor(k / 3) * 1.4; e.transform.z = 15 + (k % 3 - 1) * 1.2; w.spatial.set(ids[k], e.transform.x, e.transform.z); } await a.step(1); }
             a.survivor.damage(100000);
             for (let i = 0; i < 600 && (a.getEntity(1)!.health.current <= 0 || a.missions.state()?.phase !== 'playing'); i++) {
               await a.step(1);
