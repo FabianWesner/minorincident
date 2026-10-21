@@ -42,7 +42,8 @@ export function look(): Eyes {
     const near = a.query({ within: { x: p.transform.x, z: p.transform.z, r: 32 } });
     for (const e of near) {
       if (e.id === 1 || e.hidden) continue;
-      const ally = e.faction === 'survivor' || e.faction === 'escort' || !!e.companion || !!e.escort;
+      // L6's community keeps its civilian faction while following the retreat; these are visible human allies too.
+      const ally = e.faction === 'survivor' || e.faction === 'escort' || !!e.companion || !!e.escort || m?.id === 'L6' && !!e.civilian && e.faction !== 'infected';
       const enemy = e.faction === 'infected' && !e.emerging && !e.infectionRise;
       if (!ally && !enemy) continue;
       if (enemy && (e.corpse || e.health.current <= 0)) continue;
