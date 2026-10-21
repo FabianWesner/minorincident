@@ -185,6 +185,14 @@ export class LevelSixSubway {
     if(wait?.kind==='bring')at('l6-help',(s.tailX??s.leaderX)+1,l6.tunnel.z);
     m.state.marker=s.strayed?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
   }
+  /** Every movement mode must be able to bring a displaced follower off the walkable side floor. */
+  navigationFor(e:EntitySnapshot) {
+    const base=this.w.infected!.nav;
+    if(!this.s.survivors.some(r=>r.id===e.id&&r.status==='following'))return base;
+    const floor=base.forPlayer(actorRadius(e));
+    // Maintenance rooms extend beyond the courier floor; preserve their NPC route.
+    return floor.contains(e.transform.x,e.transform.z)?floor:base;
+  }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
@@ -219,10 +227,7 @@ export class LevelSixSubway {
     // Crowd-only lane edges keep the column on the track. A follower displaced
     // onto a walkable side walkway uses the courier's route back across that edge.
     const side=Math.abs(e.transform.z-l6.tunnel.z),baseNav=this.w.infected!.nav;
-    const floorNav=(r.collected||r.rejoined)&&side>1.8?baseNav.forPlayer(actorRadius(e)):baseNav;
-    // Fleeing NPCs may stand beyond the courier's authored floor; retain their
-    // existing maintenance-room route instead of applying the player floor mask there.
-    const returning=floorNav!==baseNav&&floorNav.contains(e.transform.x,e.transform.z),nav=returning?floorNav:baseNav;
+    const nav=this.navigationFor(e),returning=side>1.8&&nav!==baseNav;
     if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
       // A side room's long route can exceed the steering budget. Collected walkers
       // return to the nearby track; the unfetched group keeps its authored mouth approach.

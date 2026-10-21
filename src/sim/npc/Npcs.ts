@@ -26,7 +26,7 @@ export class Npcs {
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
-  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.infected!.nav): boolean {
+  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): boolean {
     const footprint = actorRadius(e);
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
@@ -71,7 +71,7 @@ export class Npcs {
     this.moveStep(e, vx / 60, vz / 60, nav);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
-  moveStep(e: EntitySnapshot, dx: number, dz: number, nav = this.world.infected!.nav): void {
+  moveStep(e: EntitySnapshot, dx: number, dz: number, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): void {
     if (e.passengerOf !== undefined || e.pendingAdmission) return;
     this.world.solids.wrote(e, 'npc.move');
     const x = e.transform.x, z = e.transform.z;
