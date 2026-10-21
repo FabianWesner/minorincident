@@ -2,9 +2,11 @@ import { l5Survivors } from './l5';
 /** E24 tuning in metres/seconds. The shelter falls on a seeded clock; losses never fail the mission. */
 export const l6 = {
   shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
-  follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5 },
+  follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5, strayM: 15, regroupM: 10, aheadM: 12 },
   infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
-  exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
+  exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210],
+  /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
+  hatch: { hits: 8, hitS: 1, promptM: 1.8, standM: .9 }, checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
 export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */

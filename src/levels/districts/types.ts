@@ -35,6 +35,8 @@ export interface PlacementTransform {
 export interface Aabb {
   /** Obstacle on an elevated route, retained by planar navigation despite its height. */
   navBlocker?: boolean;
+  /** Crowd/route navigation only: no physics collider, so the courier's body is never stopped by it (L6 walkway lane edges). */
+  navOnly?: boolean;
   min: [number, number, number];
   max: [number, number, number];
 }
