@@ -1,9 +1,31 @@
 import { test, expect } from 'vitest';
-import { BufferAttribute, BoxGeometry, Group, Mesh, Scene } from 'three/webgpu';
+import { BufferAttribute, BoxGeometry, Group, Mesh, Scene, type Material } from 'three/webgpu';
 import { DistrictAssets } from '../../../src/assets/DistrictAssets';
 import { staticBatchMaterial } from '../../../src/assets/staticBatch';
 import { Lighting } from '../../../src/render/Lighting';
 import { Materials } from '../../../src/render/Materials';
+
+test('district role sharing keeps cached graphs alive until the cache retires', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new DistrictAssets(materials);
+  const internal = assets as unknown as { share(root: Group): void; batchMaterialCache: Map<string, Material> };
+  const first = staticBatchMaterial(materials, false, true, false, false, false);
+  const borrowed = staticBatchMaterial(materials, false, true, true, false, false);
+  internal.batchMaterialCache.set('borrowed', borrowed);
+  let firstDisposals = 0, borrowedDisposals = 0;
+  first.addEventListener('dispose', () => firstDisposals++);
+  borrowed.addEventListener('dispose', () => borrowedDisposals++);
+  const geometry = new BoxGeometry(), root = new Group();
+  for (const [name, material] of [['static-body', first], ['roof', borrowed], ['static-body', borrowed]] as const) {
+    const mesh = new Mesh(geometry, material); mesh.name = name; root.add(mesh);
+  }
+  internal.share(root);
+  expect((root.children[1] as Mesh).material).toBe(borrowed);
+  expect((root.children[2] as Mesh).material).toBe(first);
+  expect(borrowedDisposals).toBe(0);
+  assets.dispose();
+  expect(firstDisposals).toBe(1); expect(borrowedDisposals).toBe(1);
+  geometry.dispose(); materials.dispose(); lighting.dispose();
+});
 
 test('T-E29-19-memory @E29-AC19 district cache drops unused RGB while preserving palette and figure color graphs', () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new DistrictAssets(materials);
