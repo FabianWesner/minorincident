@@ -1,0 +1,90 @@
+{
+  "level": "L6",
+  "seed": 1,
+  "runs": [
+    {
+      "rule": "Remove periodic re-press; keep hit-time director press, 12 s",
+      "completeSeconds": 264.73333333333335,
+      "newbieRescued": 14,
+      "total": 29,
+      "authoredPins": "6/6 green",
+      "note": "L3 diagnostic seed 3 officer share 11/24 (0.4583); see once.json."
+    },
+    {
+      "rule": "Plain hit-time move, 12 s; clear recycled hit memory",
+      "completeSeconds": 275.15,
+      "newbieRescued": 16,
+      "total": 29,
+      "rejected": "L6 complete exceeds 270 s"
+    },
+    {
+      "rule": "Plain hit-time move, 6 s; clear recycled hit memory",
+      "completeSeconds": 275.15,
+      "newbieRescued": 16,
+      "total": 29,
+      "rejected": "L6 complete exceeds 270 s"
+    },
+    {
+      "rule": "Refresh nearby existing investigation, 6 s; otherwise plain move",
+      "completeSeconds": 261.4166666666667,
+      "newbieRescued": 11,
+      "total": 29,
+      "rejected": "L6 newbie share 11/29 is below 0.4"
+    },
+    {
+      "rule": "Refresh nearby existing investigation, 12 s; otherwise plain move",
+      "completeSeconds": 261.4166666666667,
+      "newbieRescued": 11,
+      "total": 29,
+      "rejected": "L6 newbie share 11/29 is below 0.4; L3 handgun median is below 5 m",
+      "gunMedian": 4.627589704767172
+    },
+    {
+      "rule": "Single hit-time rush, 12 s; no periodic re-press or added shooter preference; clear recycled memory",
+      "completeSeconds": 264.73333333333335,
+      "newbieRescued": 16,
+      "total": 29,
+      "authoredPins": "6/6 green",
+      "commit": "f83754940"
+    },
+    {
+      "rule": "Preserve active director orders; skip forced rush when shooter is already noticed by sight or hearing",
+      "completeSeconds": 269.4166666666667,
+      "newbieRescued": 10,
+      "total": 29,
+      "rejected": "L6 newbie share 10/29 is below 0.4"
+    },
+    {
+      "rule": "Preserve director orders; skip forced rush for an already visible shooter",
+      "completeSeconds": 269.4166666666667,
+      "newbieRescued": 10,
+      "total": 29,
+      "rejected": "L6 newbie share 10/29 is below 0.4"
+    },
+    {
+      "rule": "Preserve first-hit commotion; skip duplicate movement for visible shooters",
+      "completeSeconds": 269.4166666666667,
+      "newbieRescued": 16,
+      "total": 29,
+      "l3DeathsBySeed": [
+        2,
+        3,
+        4
+      ],
+      "l3OfficerShareSeed3": 0.5869565217391305,
+      "l4CompleteSeed1": 242.95,
+      "authoredPins": "6/6 green",
+      "rejected": "No reduction in diagnostic out-of-band cases; increased L3 deaths and smaller L6 timing margin"
+    },
+    {
+      "rule": "One hit-time rush; preserve active director orders; clear recycled hit memory and focus",
+      "completeSeconds": 264.73333333333335,
+      "newbieRescued": 16,
+      "total": 29,
+      "authoredPins": "6/6 green",
+      "l4Finale": "both tiers pass",
+      "chosen": true,
+      "commit": "ddf17f389"
+    }
+  ]
+}

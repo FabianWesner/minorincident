@@ -18,9 +18,11 @@ import { loadLevel } from '../../tools/sim-runner/levels';
  * glued to the door, with infected and the firefighter below her"). Visual QA 13c: "the courier is drawn on top of firefighter 2"
  * and "at the game camera he is drawn on the zombie side of the leaf". Cause: a building blocker switched the courier into the
  * near-camera depth slice, so she drew over every nearer person and the closed leaf. These guards keep the placements honest
- * (bodies apart at the L2 start, inside the leaf on the visible floor in L1) and the slice off for buildings.
+ * (bodies apart, nobody parked between her and the camera, inside the leaf on the visible floor) and the slice off for buildings.
  */
 const HEAVY = 300_000;
+/** The game camera looks down from +X +Z (View.azimuth = PI / 4). */
+const toCamera = { x: Math.SQRT1_2, z: Math.SQRT1_2 };
 
 test('T-P1-FG the near-camera courier slice is only for the Mega boss and the L7 crowd, never for building blockers', () => {
   expect(courierForegroundWanted(false, Infinity)).toBe(false);
@@ -29,7 +31,7 @@ test('T-P1-FG the near-camera courier slice is only for the Mega boss and the L7
   expect(courierForegroundWanted(true, Infinity)).toBe(true);
 });
 
-test('T-P1-9 @l2start at the idle L2 start no firefighter or other NPC touches the idle courier', async () => {
+test('T-P1-9 @l2start at the idle L2 start no firefighter or other NPC touches the courier or stands between her and the game camera', async () => {
   const world = new SimWorld(); await world.init();
   try {
     const c = compositions.L2;
@@ -38,21 +40,21 @@ test('T-P1-9 @l2start at the idle L2 start no firefighter or other NPC touches t
     const mission = world.loadMission(resolveCampaignMission('L2', world.districts!)); mission.begin();
     const p = world.entities.get(1)!;
     expect(mission.state.l2!.crewIds.length).toBe(6);
-    let nearest = Infinity, nearestCrew = Infinity;
+    let nearest = Infinity, worstScreen = Infinity;
     // The whole calm phase the PO watched (ticks 66-1464), with the courier idle on her start.
     for (let tick = 0; tick < 1500; tick++) {
       world.update();
       for (const e of world.entities.iterate()) {
         if (e.id === 1 || e.hidden || e.health.current <= 0 || !(e.civilian || e.companion || e.infected)) continue;
-        const d = Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z);
-        nearest = Math.min(nearest, d);
-        if (mission.state.l2!.crewIds.includes(e.id)) nearestCrew = Math.min(nearestCrew, d);
+        const dx = e.transform.x - p.transform.x, dz = e.transform.z - p.transform.z;
+        nearest = Math.min(nearest, Math.hypot(dx, dz));
+        // Nearer the camera and within 3 m: the screen columns of the two bodies must not overlap (0.8 m apart across the view).
+        const along = dx * toCamera.x + dz * toCamera.z, across = Math.abs(dx * toCamera.z - dz * toCamera.x);
+        if (along > 0 && along < 3 && across < worstScreen) { worstScreen = across; if (process.env.P1_DEBUG) console.log(world.tick, e.id, e.archetype, e.transform.x.toFixed(2), e.transform.z.toFixed(2), along.toFixed(2), across.toFixed(2)); }
       }
     }
-    // Bodies stay apart; crew 2 stands 1.4 m in front of her toward the camera, so the picture must keep him in front
-    // (the courier-foreground gate in tests/scenes/catalog/fix-p1-l2-start-courier-crew.json).
     expect(nearest, 'closest NPC body to the idle courier (m)').toBeGreaterThanOrEqual(1);
-    expect(nearestCrew, 'closest firefighter to the idle courier (m)').toBeGreaterThanOrEqual(1.2);
+    expect(worstScreen, 'smallest across-view offset of an NPC between the courier and the camera (m)').toBeGreaterThanOrEqual(.8);
   } finally { world.dispose(); }
 }, HEAVY);
 
@@ -99,6 +101,7 @@ test('T-P1-26 L1 shutter: the courier ends inside the closed leaf, standing on t
       expect(Math.abs(feet - w.districts!.supportBelow(p.transform.x, p.transform.z, feet)), 'feet vs the sim bay floor (m)').toBeLessThanOrEqual(.03);
       for (const lod of lods) {
         const floor = drawnFloor(lod, p.transform.x, p.transform.z, feet + .5);
+        if (process.env.P1_DEBUG) console.log('floor', p.transform.x.toFixed(2), p.transform.z.toFixed(2), feet, floor, depth);
         expect(floor, 'a drawn floor below the courier').not.toBeNull();
         expect(Math.abs(feet - floor!), 'feet vs drawn bay floor (m)').toBeLessThanOrEqual(.03);
       }

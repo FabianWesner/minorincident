@@ -148,7 +148,7 @@ export const l2Anchors: Record<string, P> = {
   'l2-board': truckPoint(.3, 2.0),
   // Two benches on the apron (never inside the bay, PO 10-12), two seats each: bench x + the seat's hipX .31, bench z -/+ .5.
   'l2-bench-1': stationPoint(3.31, -1.4), 'l2-bench-2': stationPoint(3.31, -2.4), 'l2-bench-3': stationPoint(3.31, -3.9), 'l2-bench-4': stationPoint(3.31, -4.9),
-  'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
+  'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(3.0, .9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
   'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(5.4, -2.6),
   'l2-truck-stop': [-43.0, -32.0],
   'l2-market': [-55.6, -42.2],

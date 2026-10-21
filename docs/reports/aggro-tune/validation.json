@@ -1,0 +1,105 @@
+{
+  "full": {
+    "commit": "f83754940",
+    "files": 400,
+    "total": 2300,
+    "passed": 2288,
+    "failed": 1,
+    "skipped": 11,
+    "failedTests": [
+      {
+        "name": "PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap",
+        "message": "AssertionError: expected 2 to be greater than or equal to 3\n    at /srv/mi/jobs/aggro-tune-fbac5b-74344-1792531367/tests/levels/L4-finale-pressure.test.ts:69:49\n    at file:///srv/mi/jobs/aggro-tune-fbac5b-74344-1792531367/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      }
+    ]
+  },
+  "finalFocused": {
+    "commit": "ddf17f389",
+    "files": 13,
+    "total": 205,
+    "passed": 154,
+    "failed": 1,
+    "skipped": 50,
+    "failedTests": [
+      {
+        "name": "T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats",
+        "message": "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/tests/levels/l7-audit.test.ts:5:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/aggro-tune-fbac5b-41106-1792533678/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      }
+    ]
+  },
+  "isolatedL7": {
+    "commit": "ddf17f389",
+    "unchangedTimeoutMs": 300000,
+    "files": 1,
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "failedTests": []
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "scene": {
+    "pass": true,
+    "consoleErrors": 0,
+    "frames": 300,
+    "backend": "headless WebGL2 / Metal"
+  },
+  "primaryLevels": {
+    "commit": "ddf17f389",
+    "files": 9,
+    "total": 117,
+    "passed": 117,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 1158.3,
+    "command": "npx vitest run tests/levels/L1.test.ts tests/levels/L2.test.ts tests/levels/L3.test.ts tests/levels/L4.test.ts tests/levels/L5.test.ts tests/levels/L6.test.ts tests/levels/L8.test.ts tests/levels/L9-campaign.test.ts tests/levels/L10-campaign.test.ts --maxWorkers=4",
+    "results": [
+      {
+        "file": "L1.test.ts",
+        "status": "passed",
+        "passed": 19
+      },
+      {
+        "file": "L10-campaign.test.ts",
+        "status": "passed",
+        "passed": 1
+      },
+      {
+        "file": "L2.test.ts",
+        "status": "passed",
+        "passed": 16
+      },
+      {
+        "file": "L3.test.ts",
+        "status": "passed",
+        "passed": 21
+      },
+      {
+        "file": "L4.test.ts",
+        "status": "passed",
+        "passed": 23
+      },
+      {
+        "file": "L5.test.ts",
+        "status": "passed",
+        "passed": 15
+      },
+      {
+        "file": "L6.test.ts",
+        "status": "passed",
+        "passed": 11
+      },
+      {
+        "file": "L8.test.ts",
+        "status": "passed",
+        "passed": 10
+      },
+      {
+        "file": "L9-campaign.test.ts",
+        "status": "passed",
+        "passed": 1
+      }
+    ]
+  }
+}
