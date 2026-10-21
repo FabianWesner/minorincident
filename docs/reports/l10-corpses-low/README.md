@@ -1,6 +1,6 @@
 # Finding 85 — permanent corpse bodies at low quality
 
-Implementation: `c59e7e5bf`, based on `lane/merge-batch13f` (`f6bd521c3`). Visual review, invariants, and native frame-time comparison pass. The full remote suite is running; its final result will be recorded below.
+Implementation: `c59e7e5bf`, based on `lane/merge-batch13f` (`f6bd521c3`). **Complete.** Visual review, persistence/living-LOD invariants, native frame-time comparison, and the full required remote suite pass. All implementation and evidence are committed in this lane.
 
 ## Cause and production comparison
 
@@ -64,11 +64,11 @@ L10 low capture counters on both backends: **112 → 112 draws; 263,563 → 236,
 
 ## Validation
 
-- `npm run typecheck`: PASS.
-- `npm run lint`: PASS.
-- `npm run build`: PASS; final preview corpse file hashes match source.
+- `npm run typecheck`: [PASS](typecheck.log).
+- `npm run lint`: [PASS](lint.log).
+- `npm run build`: [PASS](build.log); final preview corpse file hashes match source.
 - Guard: `tests/unit/render/infected-corpse-surface.test.ts` covers all seven variants at both tiers, requires the dedicated corpse source, verifies retained major anatomical parts and rigid triangle ownership, and bounds mesh size. The existing prewarm guard now loads the actual dedicated body.
-- Required remote command: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: running on final implementation/assets.
+- Required remote command: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: **PASS, exit 0** on final implementation/assets: 417 files passed / 3 skipped, 2,271 tests passed / 9 skipped, 2,547.23 seconds. [Full remote log](remote-suite.log).
 
 ## Reproduce
 

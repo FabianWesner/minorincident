@@ -80,5 +80,16 @@
       "previewBuildMatches": true
     }
   ],
-  "allRecordedBodyTransformsAndInstanceCountsIdentical": true
+  "allRecordedBodyTransformsAndInstanceCountsIdentical": true,
+  "remoteSuite": {
+    "exit": 0,
+    "filesPassed": 417,
+    "filesSkipped": 3,
+    "testsPassed": 2271,
+    "testsSkipped": 9,
+    "durationSeconds": 2547.23,
+    "includesCorpseSurfaceCases": 14,
+    "includesCorpsePrewarmCases": 6
+  },
+  "frameTimeGate": "Aggregate median of six repeat p95 values unchanged: WebGL 3.5 ms, WebGPU 2.3 ms; all samples retained in performance-summary.json"
 }
