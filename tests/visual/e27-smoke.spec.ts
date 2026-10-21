@@ -60,7 +60,9 @@ test('T-E27-11 @E27 @E27-AC11 a night fire lights the lower column orange and a 
   for (let n = 0; n < 60; n += 5) {
     await page.evaluate(async () => { await window.__SCENE__!.step(5); await window.__SS__!.screenshotReady(); });
     const png = PNG.sync.read(await page.locator('canvas').screenshot());
-    const p = await page.evaluate(() => ({ tick: window.__SS__!.tick(), point: window.__SS__!.camera.project(0, 3, 0) }));
+    // The grenade/gas is a low cloud around the vehicle, not a tall fire column.
+    // Sample above the beacon inside that cloud; y=3 intermittently sampled air.
+    const p = await page.evaluate(() => ({ tick: window.__SS__!.tick(), point: window.__SS__!.camera.project(0, 2, 0) }));
     const on = Math.floor(p.tick / 30 + beaconId * 3.1) % 2 === 0;
     const background = backgrounds.get(on)!;
     if (n === 0) {

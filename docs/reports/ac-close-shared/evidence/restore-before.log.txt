@@ -1,0 +1,77 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 84s, 30328 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-32650-1792614707; queueing for a slot
+[runner] slot 0 acquired; load 0.38 0.16 0.59
+
+ RUN  v5.0.3 /srv/mi/jobs/ac-close-shared-fcfdcb-32650-1792614707
+
+ ❯  functional  tests/unit/vfx/special-restore.test.ts (14 tests | 14 failed) 502ms
+   × T-E07-restore-marker-alpha.charge @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 220ms
+   × T-E07-restore-marker-alpha.ground-slam @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 36ms
+   × T-E07-restore-marker-alpha.grab-throw @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 26ms
+   × T-E07-restore-marker-alpha.roar @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 30ms
+   × T-E07-restore-marker-lion.pounce @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 21ms
+   × T-E07-restore-marker-lion.flank @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 22ms
+   × T-E07-restore-marker-gorilla.roar @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 23ms
+   × T-E07-restore-marker-gorilla.pound @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 24ms
+   × T-E07-restore-marker-gorilla.grab-throw @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 22ms
+   × T-E07-restore-marker-elephant.charge @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 21ms
+   × T-E07-restore-marker-elephant.swipe @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 14ms
+   × T-E07-restore-marker-zebra.kick @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 12ms
+   × T-E07-restore-marker-zebra.stampede @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 17ms
+   × T-E07-restore-marker-flamingo.dive @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state 13ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-alpha.charge @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-alpha.ground-slam @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-alpha.grab-throw @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-alpha.roar @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-lion.pounce @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-lion.flank @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-gorilla.roar @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-gorilla.pound @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-gorilla.grab-throw @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-elephant.charge @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-elephant.swipe @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-zebra.kick @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-zebra.stampede @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+ FAIL   functional  tests/unit/vfx/special-restore.test.ts > T-E07-restore-marker-flamingo.dive @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/unit/vfx/special-restore.test.ts:31:21
+     29|       const hash = stateHash(w.getState()); fx.advance(0);
+     30|       const tells = fx.snapshot().telegraphs.filter(t => t.sourceId ==…
+     31|       expect(tells).toHaveLength(1); expect(tells[0].attackId).toBe(or…
+       |                     ^
+     32|       expect(stateHash(w.getState())).toBe(hash);
+     33|       // Repeated paused redraws neither duplicate nor consume the war…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  14 failed (14)
+   Start at  20:33:13
+   Duration  4.08s (transform 73%, import 14%, tests 13%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 84s, remote total 9s)
