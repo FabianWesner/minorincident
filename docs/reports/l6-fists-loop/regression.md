@@ -62,3 +62,9 @@ The valid stationary-target diagnostic stopped after 665 s with 8 deaths and 329
 The broad E24 browser selection exposed stale QA staging, independently of the real-input runs. The open gate uses a 1.7 m stand zone around `(92.4,17.3)`, while the closed gate uses its repair zone around `(90,15)`. The old courier placement `(91.3,15)` was 2.55 m from the open stand zone and could not close it. The fixture now uses `(91.2,16.15)`, 1.662 m from both centres. All panel text, meter-count, viewport-bound, gate-health and frame assertions are unchanged.
 
 The Scene Lab gate composition also stages its leader at gate 90 rather than already beyond it, then advances one simulation tick after relocating the cast. This initializes frame-zero guidance for that staged column. The diagnostic probe observes the open panel at frame zero, a normal 60-tick closure, and the closed panel through the damage frames. These are QA compositions; they do not supply playthrough evidence or change production gate ranges.
+
+### Keep the passing armed policy separate
+
+A candidate that applied the unarmed chest-click/retry policy to guns was discarded after repeated exit retries: a guard stayed near the shelter and the courier died while returning. That unfinished attempt is not acceptance evidence. The final driver retains the branch's original firearm policy: a single physical click 18 screen pixels above the target's ground projection, held until the target changes. Rendered-body and viewport checks remain mandatory. This armed-only branch does not change the unarmed crowd inputs.
+
+With that policy restored, the male seeded weapons run finishes in 283 wall seconds with zero deaths, zero skips and 293 actual machine-gun attacks. Its full record is in `weapons-male/`. This input comparison does not claim a separately isolated cause for the discarded guard's movement.
