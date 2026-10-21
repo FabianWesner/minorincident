@@ -6,8 +6,10 @@ import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number };
-// Only immutable CPU data lives here. Scenes own separate geometry; the cache owns no GPU resources.
-const bakedCrowds = new Map<string, BakedCrowd>();
+// Keep the expensive sampled animation atlas across loads. The source registry
+// already owns the model geometry; caching expanded triangle soup as well pins
+// another full vertex buffer after the scene has indexed/disposed its copy.
+const bakedCrowds = new Map<string, CrowdClip>();
 const bakedCrowdLimit = 64;
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
   'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
@@ -44,64 +46,65 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const cached = key && bakedCrowds.get(key);
   if (cached) {
     bakedCrowds.delete(key!); bakedCrowds.set(key!, cached); root.updateMatrixWorld(true);
-    return { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() };
   }
-  const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
-  const matrices = new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
-  let matrixOffset = 0;
-  // Standing and gait frames keep both soles on the floor (QA: infected feet 2-6 cm under the floor in the hunched
-  // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
-  // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
-  const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
-  const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
-  const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
-  // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
-  // hoof bounds together instead of moving a whole upper leg away from its shoulder.
-  const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
-  const hoofPoints = preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
-    const paw = root.getObjectByName(name); if (!paw) return [];
-    const points: { paw: Object3D; point: Vector3 }[] = [];
-    paw.traverse(node => {
-      if (!(node instanceof Mesh)) return;
-      const position = node.geometry.getAttribute('position');
-      for (let i = 0; i < position.count; i++) points.push({ paw, point: paw.worldToLocal(new Vector3().fromBufferAttribute(position, i).applyMatrix4(node.matrixWorld)) });
-    });
-    return points;
-  }) : [];
-  const lowestHoof = () => {
-    let bottom = Infinity;
-    for (const { paw, point } of hoofPoints) bottom = Math.min(bottom, sole.copy(point).applyMatrix4(paw.matrixWorld).y);
-    return bottom;
-  };
-  const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
+  const matrices = cached ? cached.matrices : new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
+  if (!cached) {
+    const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
+    let matrixOffset = 0;
+    // Standing and gait frames keep both soles on the floor (QA: infected feet 2-6 cm under the floor in the hunched
+    // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
+    // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
+    const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
+    const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
+    const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
+    // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
+    // hoof bounds together instead of moving a whole upper leg away from its shoulder.
+    const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
+    const hoofPoints = preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
+      const paw = root.getObjectByName(name); if (!paw) return [];
+      const points: { paw: Object3D; point: Vector3 }[] = [];
+      paw.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const position = node.geometry.getAttribute('position');
+        for (let i = 0; i < position.count; i++) points.push({ paw, point: paw.worldToLocal(new Vector3().fromBufferAttribute(position, i).applyMatrix4(node.matrixWorld)) });
+      });
+      return points;
+    }) : [];
+    const lowestHoof = () => {
+      let bottom = Infinity;
+      for (const { paw, point } of hoofPoints) bottom = Math.min(bottom, sole.copy(point).applyMatrix4(paw.matrixWorld).y);
+      return bottom;
+    };
+    const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
 
-  const mixer = new AnimationMixer(root);
-  for (const clip of clipNames) {
-    const embedded = root.animations.find(animation => animation.name === clip);
-    const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
-    if (action) { action.clampWhenFinished = true; action.reset().play(); }
-    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
-    const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
-    for (let frame = 0; frame < framesPerClip; frame++) {
-      for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
-      const t = frame / (framesPerClip - 1);
-      if (action) mixer.setTime(t * duration); else sampleClip(root, name, t * duration);
-      updateJoints();
-      if (hoofPoints.length && !unplantedClips.test(clip)) {
-        const deficit = hoofFloor - lowestHoof();
-        if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+    const mixer = new AnimationMixer(root);
+    for (const clip of clipNames) {
+      const embedded = root.animations.find(animation => animation.name === clip);
+      const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
+      if (action) { action.clampWhenFinished = true; action.reset().play(); }
+      const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+      const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
+      for (let frame = 0; frame < framesPerClip; frame++) {
+        for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
+        const t = frame / (framesPerClip - 1);
+        if (action) mixer.setTime(t * duration); else sampleClip(root, name, t * duration);
+        updateJoints();
+        if (hoofPoints.length && !unplantedClips.test(clip)) {
+          const deficit = hoofFloor - lowestHoof();
+          if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+        }
+        if (planted) {
+          const deficit = floor - lowestSole();
+          if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+        }
+        for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
       }
-      if (planted) {
-        const deficit = floor - lowestSole();
-        if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
-      }
-      for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
+      action?.stop();
     }
-    action?.stop();
+    mixer.uncacheRoot(root);
+    for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
+    root.updateMatrixWorld(true);
   }
-  mixer.uncacheRoot(root);
-  for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
-  root.updateMatrixWorld(true);
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   let shirtColor: import('three').Color | undefined;
   let doubleSided = false;
@@ -155,13 +158,13 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
     offset += attribute.itemSize;
   }
-  const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
+  const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
   if (key) {
-    bakedCrowds.set(key, { ...baked, geometry: geometry.clone(), shirtColor: shirtColor?.clone() });
+    bakedCrowds.set(key, clip);
     if (bakedCrowds.size > bakedCrowdLimit) {
       const oldest = bakedCrowds.keys().next().value!;
-      bakedCrowds.get(oldest)!.geometry.dispose(); bakedCrowds.delete(oldest);
+      bakedCrowds.delete(oldest);
     }
   }
   return baked;

@@ -1,0 +1,1007 @@
+[
+  {
+    "level": "L7",
+    "heap": {
+      "usedSize": 75416720,
+      "totalSize": 79314944,
+      "embedderHeapUsedSize": 2061296,
+      "backingStorageSize": 181451919
+    },
+    "perf": {
+      "l4": null,
+      "chunkResidency": null,
+      "terrain": null,
+      "infected": {
+        "count": 0,
+        "liveCount": 0,
+        "firstLiveId": null,
+        "available": 350
+      },
+      "effects": {
+        "obstruction": {
+          "remainingTicks": 0,
+          "opacity": 0
+        },
+        "shots": [],
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Off",
+        "quality": "low",
+        "flashReduction": true,
+        "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 512,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 30,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "blasts": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 120,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "nodeBuildMaterials": {},
+      "crowdPreparation": {
+        "workers": 8,
+        "submitted": 4,
+        "completed": 4,
+        "prebuilt": 4,
+        "failed": 0
+      },
+      "nodeBuilds": 284,
+      "profile": null,
+      "profileAssets": null,
+      "updateCpuMs": 0,
+      "renderCpuMs": 0,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 59.88023952095874,
+      "frameMs": 16.699999999999818,
+      "simMs": 0,
+      "simTicks": 0,
+      "simWorldMs": 0,
+      "simTickMs": 0,
+      "uiMs": 0,
+      "drawCalls": 66,
+      "triangles": 113973,
+      "geometries": 396,
+      "textures": 59,
+      "entities": 247,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 5.40000057220459,
+        "simMs": 172,
+        "viewMs": 2645.5
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 23,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 257000643,
+      "lighting": {
+        "lightFieldMs": 0,
+        "lightPools": 2,
+        "lightCandidates": 2,
+        "shadowMaps": 0,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L6"
+      }
+    },
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "renderer": {
+      "backend": "webgl",
+      "levelCacheReleases": 4,
+      "contextLost": false,
+      "renderTarget": null,
+      "memory": {
+        "attributes": 3079,
+        "attributesSize": 87377468,
+        "geometries": 396,
+        "indexAttributes": 351,
+        "indexAttributesSize": 3344172,
+        "indirectStorageAttributes": 0,
+        "indirectStorageAttributesSize": 0,
+        "programs": 133,
+        "programsSize": 993108,
+        "readbackBuffers": 0,
+        "readbackBuffersSize": 0,
+        "renderTargets": 11,
+        "storageAttributes": 0,
+        "storageAttributesSize": 0,
+        "textures": 59,
+        "texturesSize": 70360275,
+        "uniformBuffers": 901,
+        "uniformBuffersSize": 273872,
+        "total": 162348895
+      },
+      "render": {
+        "calls": 245,
+        "frameCalls": 9,
+        "drawCalls": 66,
+        "triangles": 113973,
+        "points": 0,
+        "lines": 0,
+        "timestamp": 0
+      },
+      "framebufferStatus": 36053
+    }
+  },
+  {
+    "level": "L1",
+    "heap": {
+      "usedSize": 73730552,
+      "totalSize": 76349440,
+      "embedderHeapUsedSize": 2624264,
+      "backingStorageSize": 339851173
+    },
+    "perf": {
+      "l4": null,
+      "chunkResidency": null,
+      "terrain": null,
+      "infected": {
+        "count": 0,
+        "liveCount": 0,
+        "firstLiveId": null,
+        "available": 350
+      },
+      "effects": {
+        "obstruction": {
+          "remainingTicks": 0,
+          "opacity": 0
+        },
+        "shots": [],
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Off",
+        "quality": "low",
+        "flashReduction": true,
+        "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 512,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 30,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "blasts": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 120,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "nodeBuildMaterials": {},
+      "crowdPreparation": {
+        "workers": 24,
+        "submitted": 24,
+        "completed": 24,
+        "prebuilt": 21,
+        "failed": 0
+      },
+      "nodeBuilds": 523,
+      "profile": null,
+      "profileAssets": null,
+      "updateCpuMs": 0,
+      "renderCpuMs": 0,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 59.88023952095874,
+      "frameMs": 16.699999999999818,
+      "simMs": 0,
+      "simTicks": 0,
+      "simWorldMs": 0,
+      "simTickMs": 0,
+      "uiMs": 0,
+      "drawCalls": 176,
+      "triangles": 257506,
+      "geometries": 565,
+      "textures": 47,
+      "entities": 677,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 13,
+        "simMs": 132.0999994277954,
+        "viewMs": 2047.9000005722046
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 40,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 413708273,
+      "lighting": {
+        "lightFieldMs": 0,
+        "lightPools": 0,
+        "lightCandidates": 0,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L1"
+      }
+    },
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "renderer": {
+      "backend": "webgl",
+      "levelCacheReleases": 6,
+      "contextLost": false,
+      "renderTarget": null,
+      "memory": {
+        "attributes": 4351,
+        "attributesSize": 225512044,
+        "geometries": 565,
+        "indexAttributes": 517,
+        "indexAttributesSize": 5397084,
+        "indirectStorageAttributes": 0,
+        "indirectStorageAttributesSize": 0,
+        "programs": 158,
+        "programsSize": 1171388,
+        "readbackBuffers": 0,
+        "readbackBuffersSize": 0,
+        "renderTargets": 14,
+        "storageAttributes": 0,
+        "storageAttributesSize": 0,
+        "textures": 47,
+        "texturesSize": 58206691,
+        "uniformBuffers": 1480,
+        "uniformBuffersSize": 330480,
+        "total": 290617687
+      },
+      "render": {
+        "calls": 463,
+        "frameCalls": 10,
+        "drawCalls": 176,
+        "triangles": 257506,
+        "points": 0,
+        "lines": 0,
+        "timestamp": 0
+      },
+      "framebufferStatus": 36053
+    }
+  },
+  {
+    "level": "L7",
+    "heap": {
+      "usedSize": 70476632,
+      "totalSize": 74596352,
+      "embedderHeapUsedSize": 2187712,
+      "backingStorageSize": 224704584
+    },
+    "perf": {
+      "l4": null,
+      "chunkResidency": null,
+      "terrain": null,
+      "infected": {
+        "count": 0,
+        "liveCount": 0,
+        "firstLiveId": null,
+        "available": 350
+      },
+      "effects": {
+        "obstruction": {
+          "remainingTicks": 0,
+          "opacity": 0
+        },
+        "shots": [],
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Off",
+        "quality": "low",
+        "flashReduction": true,
+        "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 512,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 30,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "blasts": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 120,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "nodeBuildMaterials": {},
+      "crowdPreparation": {
+        "workers": 24,
+        "submitted": 24,
+        "completed": 24,
+        "prebuilt": 21,
+        "failed": 0
+      },
+      "nodeBuilds": 788,
+      "profile": null,
+      "profileAssets": null,
+      "updateCpuMs": 0,
+      "renderCpuMs": 0,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 59.88023952095548,
+      "frameMs": 16.700000000000728,
+      "simMs": 0,
+      "simTicks": 0,
+      "simWorldMs": 0,
+      "simTickMs": 0,
+      "uiMs": 0,
+      "drawCalls": 66,
+      "triangles": 113973,
+      "geometries": 387,
+      "textures": 60,
+      "entities": 247,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 3.6000003814697266,
+        "simMs": 204.5,
+        "viewMs": 2013.6999998092651
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 57,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 295308252,
+      "lighting": {
+        "lightFieldMs": 0.19999980926513672,
+        "lightPools": 2,
+        "lightCandidates": 2,
+        "shadowMaps": 0,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L6"
+      }
+    },
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "renderer": {
+      "backend": "webgl",
+      "levelCacheReleases": 8,
+      "contextLost": false,
+      "renderTarget": null,
+      "memory": {
+        "attributes": 3566,
+        "attributesSize": 88743332,
+        "geometries": 387,
+        "indexAttributes": 351,
+        "indexAttributesSize": 3344172,
+        "indirectStorageAttributes": 0,
+        "indirectStorageAttributesSize": 0,
+        "programs": 129,
+        "programsSize": 980575,
+        "readbackBuffers": 0,
+        "readbackBuffersSize": 0,
+        "renderTargets": 12,
+        "storageAttributes": 0,
+        "storageAttributesSize": 0,
+        "textures": 60,
+        "texturesSize": 71048403,
+        "uniformBuffers": 883,
+        "uniformBuffersSize": 272320,
+        "total": 164388802
+      },
+      "render": {
+        "calls": 654,
+        "frameCalls": 9,
+        "drawCalls": 66,
+        "triangles": 113973,
+        "points": 0,
+        "lines": 0,
+        "timestamp": 0
+      },
+      "framebufferStatus": 36053
+    }
+  },
+  {
+    "level": "L1",
+    "heap": {
+      "usedSize": 74871628,
+      "totalSize": 78184448,
+      "embedderHeapUsedSize": 2804240,
+      "backingStorageSize": 339718083
+    },
+    "perf": {
+      "l4": null,
+      "chunkResidency": null,
+      "terrain": null,
+      "infected": {
+        "count": 0,
+        "liveCount": 0,
+        "firstLiveId": null,
+        "available": 350
+      },
+      "effects": {
+        "obstruction": {
+          "remainingTicks": 0,
+          "opacity": 0
+        },
+        "shots": [],
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Off",
+        "quality": "low",
+        "flashReduction": true,
+        "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 512,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 30,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "blasts": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 120,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "nodeBuildMaterials": {},
+      "crowdPreparation": {
+        "workers": 24,
+        "submitted": 24,
+        "completed": 24,
+        "prebuilt": 21,
+        "failed": 0
+      },
+      "nodeBuilds": 1024,
+      "profile": null,
+      "profileAssets": null,
+      "updateCpuMs": 0,
+      "renderCpuMs": 0,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 59.880239520962,
+      "frameMs": 16.69999999999891,
+      "simMs": 0,
+      "simTicks": 0,
+      "simWorldMs": 0,
+      "simTickMs": 0,
+      "uiMs": 0,
+      "drawCalls": 176,
+      "triangles": 257506,
+      "geometries": 556,
+      "textures": 47,
+      "entities": 677,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 7.300000190734863,
+        "simMs": 112.10000038146973,
+        "viewMs": 1739.6999998092651
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 74,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 414710763,
+      "lighting": {
+        "lightFieldMs": 0,
+        "lightPools": 0,
+        "lightCandidates": 0,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L1"
+      }
+    },
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "renderer": {
+      "backend": "webgl",
+      "levelCacheReleases": 10,
+      "contextLost": false,
+      "renderTarget": null,
+      "memory": {
+        "attributes": 4839,
+        "attributesSize": 226877988,
+        "geometries": 556,
+        "indexAttributes": 517,
+        "indexAttributesSize": 5397084,
+        "indirectStorageAttributes": 0,
+        "indirectStorageAttributesSize": 0,
+        "programs": 154,
+        "programsSize": 1158849,
+        "readbackBuffers": 0,
+        "readbackBuffersSize": 0,
+        "renderTargets": 14,
+        "storageAttributes": 0,
+        "storageAttributesSize": 0,
+        "textures": 47,
+        "texturesSize": 58206691,
+        "uniformBuffers": 1462,
+        "uniformBuffersSize": 328992,
+        "total": 291969604
+      },
+      "render": {
+        "calls": 855,
+        "frameCalls": 10,
+        "drawCalls": 176,
+        "triangles": 257506,
+        "points": 0,
+        "lines": 0,
+        "timestamp": 0
+      },
+      "framebufferStatus": 36053
+    }
+  },
+  {
+    "level": "L7",
+    "heap": {
+      "usedSize": 71589748,
+      "totalSize": 74596352,
+      "embedderHeapUsedSize": 2416176,
+      "backingStorageSize": 224704591
+    },
+    "perf": {
+      "l4": null,
+      "chunkResidency": null,
+      "terrain": null,
+      "infected": {
+        "count": 0,
+        "liveCount": 0,
+        "firstLiveId": null,
+        "available": 350
+      },
+      "effects": {
+        "obstruction": {
+          "remainingTicks": 0,
+          "opacity": 0
+        },
+        "shots": [],
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Off",
+        "quality": "low",
+        "flashReduction": true,
+        "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 512,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 30,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "blasts": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 120,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "nodeBuildMaterials": {},
+      "crowdPreparation": {
+        "workers": 24,
+        "submitted": 24,
+        "completed": 24,
+        "prebuilt": 21,
+        "failed": 0
+      },
+      "nodeBuilds": 1289,
+      "profile": null,
+      "profileAssets": null,
+      "updateCpuMs": 0,
+      "renderCpuMs": 0,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 59.880239520962,
+      "frameMs": 16.69999999999891,
+      "simMs": 0,
+      "simTicks": 0,
+      "simWorldMs": 0,
+      "simTickMs": 0,
+      "uiMs": 0,
+      "drawCalls": 66,
+      "triangles": 113973,
+      "geometries": 387,
+      "textures": 60,
+      "entities": 247,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 2.799999237060547,
+        "simMs": 180.9000005722046,
+        "viewMs": 1945.3999996185303
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 91,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 296415419,
+      "lighting": {
+        "lightFieldMs": 0.10000038146972656,
+        "lightPools": 2,
+        "lightCandidates": 2,
+        "shadowMaps": 0,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L6"
+      }
+    },
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "renderer": {
+      "backend": "webgl",
+      "levelCacheReleases": 12,
+      "contextLost": false,
+      "renderTarget": null,
+      "memory": {
+        "attributes": 4072,
+        "attributesSize": 90107068,
+        "geometries": 387,
+        "indexAttributes": 351,
+        "indexAttributesSize": 3344172,
+        "indirectStorageAttributes": 0,
+        "indirectStorageAttributesSize": 0,
+        "programs": 129,
+        "programsSize": 980581,
+        "readbackBuffers": 0,
+        "readbackBuffersSize": 0,
+        "renderTargets": 12,
+        "storageAttributes": 0,
+        "storageAttributesSize": 0,
+        "textures": 60,
+        "texturesSize": 71048403,
+        "uniformBuffers": 883,
+        "uniformBuffersSize": 272320,
+        "total": 165752544
+      },
+      "render": {
+        "calls": 1046,
+        "frameCalls": 9,
+        "drawCalls": 66,
+        "triangles": 113973,
+        "points": 0,
+        "lines": 0,
+        "timestamp": 0
+      },
+      "framebufferStatus": 36053
+    }
+  }
+]
