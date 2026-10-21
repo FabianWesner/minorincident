@@ -1,0 +1,94 @@
+[
+  {
+    "case": "lifecycle-webgl-high",
+    "loads": 5,
+    "heapMB": [
+      82.58274,
+      79.006048
+    ],
+    "geometries": [
+      397,
+      388
+    ],
+    "textures": [
+      66,
+      67
+    ],
+    "ratios": {
+      "heap": 0.9566895939756903,
+      "geometries": 0.9773299748110831,
+      "textures": 1.0151515151515151
+    },
+    "settingsPreserved": true,
+    "pass": true
+  },
+  {
+    "case": "lifecycle-webgl-low",
+    "loads": 5,
+    "heapMB": [
+      76.410524,
+      72.669088
+    ],
+    "geometries": [
+      396,
+      387
+    ],
+    "textures": [
+      59,
+      60
+    ],
+    "ratios": {
+      "heap": 0.9510350694624212,
+      "geometries": 0.9772727272727273,
+      "textures": 1.0169491525423728
+    },
+    "settingsPreserved": true,
+    "pass": true
+  },
+  {
+    "case": "lifecycle-webgpu-high",
+    "loads": 5,
+    "heapMB": [
+      79.706832,
+      76.404816
+    ],
+    "geometries": [
+      397,
+      388
+    ],
+    "textures": [
+      65,
+      66
+    ],
+    "ratios": {
+      "heap": 0.9585729865665719,
+      "geometries": 0.9773299748110831,
+      "textures": 1.0153846153846153
+    },
+    "settingsPreserved": true,
+    "pass": true
+  },
+  {
+    "case": "lifecycle-webgpu-low",
+    "loads": 5,
+    "heapMB": [
+      75.720524,
+      72.36912
+    ],
+    "geometries": [
+      396,
+      387
+    ],
+    "textures": [
+      58,
+      59
+    ],
+    "ratios": {
+      "heap": 0.9557398202896747,
+      "geometries": 0.9772727272727273,
+      "textures": 1.0172413793103448
+    },
+    "settingsPreserved": true,
+    "pass": true
+  }
+]
