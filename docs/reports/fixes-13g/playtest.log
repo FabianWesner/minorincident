@@ -1,0 +1,8 @@
+
+> playtest
+> tsx tools/playtest/play.ts --levels L7 --mode continue --entry debug --quality low --zoom 1.5 --level-minutes 25 --out test-results/fixes-13g-handover
+
+[P2] L7 t4478 (221.4,15.1) stuck-navigating: 20 s without objective progress (distance 253.8 m, no marker: false); HUD: ""
+[P2] L7 t14832 (103.9,14.9) stuck-navigating: 64 s without objective progress (distance 138.4 m, no marker: false); HUD: ""
+{"runs":[{"level":"L7","finished":true,"skipped":[],"wall":397}],"issues":2}
+playtest continue: 1/1 levels finished; issues {"P0":0,"P1":0,"P2":2,"P3":0} → /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13g/test-results/fixes-13g-handover

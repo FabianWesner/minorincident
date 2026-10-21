@@ -1,0 +1,77 @@
+{
+  "productCommit": "f63e02b2117054e23c0f72d094f9f743e66d5f3d",
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "build": {
+    "exitCode": 0
+  },
+  "debugMenu": {
+    "exitCode": 0,
+    "levelsLoaded": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "strictSaveAccepted": true,
+    "L9ResultFixtureAutomaticallyContinuesToL10": true,
+    "freshL10RealMovementAndKey1": true
+  },
+  "handover": {
+    "exitCode": 0,
+    "mode": "real input tools/playtest",
+    "fixture": "god mode for survival; no objective skips",
+    "from": "L7",
+    "to": "L8",
+    "objectivePinAndMinimapMarkerElapsedMs": 0,
+    "P0": 0,
+    "P1": 0,
+    "P2NavigationReports": 2
+  },
+  "smoke": {
+    "command": "E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4041 SCENE_PORT=4042 sh tools/e2e-lock.sh npx playwright test --grep @smoke --workers=1",
+    "exitCode": 0,
+    "passed": 31
+  },
+  "focusedBrowser": {
+    "exitCode": 0,
+    "passed": 4
+  },
+  "remoteSuite": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+    "status": "running"
+  },
+  "reviewedCaptureSheets": 8,
+  "captureMatrix": {
+    "zoom": [
+      0.5,
+      1,
+      1.5
+    ],
+    "quality": [
+      "high",
+      "low"
+    ],
+    "backend": [
+      "webgl2",
+      "webgpu"
+    ],
+    "bothSurvivorsForPipe": true,
+    "console": [
+      4002,
+      -27
+    ]
+  },
+  "baselineExpectedFailures": 19,
+  "additionalAlphaLoadOrderExpectedFailures": 16
+}
