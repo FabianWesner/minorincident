@@ -40,7 +40,13 @@ export class ControlIntent {
       // the crowd grid here can pick a cell that the courier capsule cannot enter.
       const playerNav = nav?.forPlayer(this.routeClearance);
       let point: [number, number] | undefined;
-      if (playerNav && !playerNav.clear(click.x, click.z, this.routeClearance)) {
+      // Merge 13e: a click on a crowd-grid blocker the player grid lacks (the L1 bicycle) still stops beside it, as before
+      // objective-clarity, when that neighbour is clear for the capsule (else the courier climbed onto the bike and E could not mount).
+      if (nav && playerNav && playerNav !== nav && !nav.clear(click.x, click.z, survivor.radius)) {
+        const cell = nav.nearestCell(click.x, click.z);
+        if (cell >= 0 && playerNav.clear(nav.x(cell), nav.z(cell), this.routeClearance)) point = [nav.x(cell), nav.z(cell)];
+      }
+      if (!point && playerNav && !playerNav.clear(click.x, click.z, this.routeClearance)) {
         const from = playerNav.startCell(player.transform, this.routeClearance), path: number[] = [];
         if (from >= 0 && playerNav.reachPath(from, click, path)) {
           const cell = path[path.length - 1] ?? from; point = [playerNav.x(cell), playerNav.z(cell)];
