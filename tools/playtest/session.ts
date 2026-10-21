@@ -17,7 +17,7 @@ export interface SessionOptions {
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
-export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; deaths: number; assists: number; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
+export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
 
 const hold = (ms: number) => new Promise(r => setTimeout(r, ms));
 const ranged = /pistol|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher/;
@@ -60,7 +60,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const clickGround = async (x: number, y: number) => { await releaseAim(); await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
 
   // --- boot and menu ---
-  const params = `testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
+  // The figure probe checks presence of `test`; production clock/UI/prewarming check `test=1`.
+  // Enable rendered-pose observations while retaining the production play path.
+  const params = `test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
@@ -97,7 +99,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let ring: { x: number; y: number; z: number } | null = null, ringKey = '';
 
   const startLevel = async (e: Eyes) => {
-    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
+    run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
+    await page.evaluate(() => {
+      const observation = window as unknown as { __playtestAttacks: Record<string, number> };
+      observation.__playtestAttacks = {};
+      const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+      world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
+    });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear();
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
@@ -108,6 +116,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     run.finished = true; run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
     const deaths = await page.evaluate(level => { const m = window.__SS__!.missions.state(); return m?.id === level ? m.stats.deaths : null; }, run.level);
     if (deaths !== null) run.deaths = deaths;
+    run.attacks = await page.evaluate(() => ({ ...(window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks }));
     run.weaponsEnd = e.player?.weapons ?? []; prevWeapons = run.weaponsEnd;
     log({ levelEnd: e.level, run }); await capture(`${e.level}-result`);
     writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
@@ -262,6 +271,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
+      if (e.level === 'L6' && !await page.evaluate(() => window.__SS__!.crowdFigures().some(f => f.drawn && f.joints))) throw new Error('L6 rendered-body observations are unavailable; combat playtest would be invalid');
       // Rack check at the first playing tick (the briefing can still show the previous rack).
       run.weaponsStart = e.player?.weapons ?? [];
       const lost = (prevWeapons ?? []).filter(w => !run!.weaponsStart.includes(w) && !/fists|kick|unarmed/.test(w));
