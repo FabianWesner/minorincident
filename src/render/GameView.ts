@@ -395,6 +395,7 @@ export class GameView implements Lifecycle {
     // boarding vehicle/ground that would otherwise hide its first fragments.
     const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
     const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
+    const restoreMedkits = this.world.scenario === 'L5' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -432,14 +433,6 @@ export class GameView implements Lifecycle {
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
-        // L6's scream changes from the shelter lights to the courier spot. Warm both
-        // light lists in the actual HDR target before the loading card is dismissed.
-        if (this.world.scenario === 'L6' && this.lighting) {
-          const spot = this.lighting.spot, sun = this.lighting.sun;
-          const wasSpot = spot.visible, wasSun = sun.visible;
-          try { spot.visible = true; sun.visible = false; await prepare(); }
-          finally { spot.visible = wasSpot; sun.visible = wasSun; }
-        }
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.
@@ -448,7 +441,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreMedkits?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -1037,7 +1030,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow), preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow && this.lighting!.sun.shadow.autoUpdate) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow && this.lighting!.spot.shadow.autoUpdate) : 0, heroLights: Number(this.lighting!.spot.visible && this.lighting!.spot.shadow.intensity > 0), heroShadow: Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow && this.lighting!.spot.shadow.autoUpdate), preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
