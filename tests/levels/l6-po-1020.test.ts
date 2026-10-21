@@ -152,3 +152,24 @@ test('@E24 QA #83 a healthy survivor fighting far behind the column does not hol
   put(w, LevelSixSubway.gateWait(90).x, LevelSixSubway.gateWait(90).z); w.update();
   expect(s.paused).toBe(false); expect(s.tailX).toBeGreaterThan(60);
 }, 240_000);
+
+for (const [x, z, y, gate] of [[192.7, 11.8, 1.57, 210], [59, 18.2, 1.3, 90]] as const)
+test(`@E24 #96 collected injured follower rejoins from raised walkway (${x}, ${z})`, async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!; s.leaderX = gate - 1; s.leaderZ = 15;
+  const injured = s.survivors.find(r => r.injured)!;
+  for (const [i, r] of s.survivors.filter(r => r.status === 'following' && r !== injured).entries()) {
+    const e = w.entities.get(r.id)!;
+    Object.assign(e.transform, { x: gate - 2, z: 15 + (i % 3 - 1) * .725 });
+    w.spatial.set(e.id, e.transform.x, e.transform.z);
+  }
+  injured.straggler = true; injured.collected = true;
+  const e = w.entities.get(injured.id)!;
+  Object.assign(e.transform, { x, y, z }); w.spatial.set(e.id, x, z);
+  for (let i = 0; i < 30 * 60 && !injured.rejoined; i++) {
+    put(w, LevelSixSubway.gateWait(gate).x, LevelSixSubway.gateWait(gate).z); w.update();
+  }
+  expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.stringify(e.transform)}`).toBe(true);
+  expect(e.transform.x).toBeGreaterThan(gate - 12);
+}, 240_000);
