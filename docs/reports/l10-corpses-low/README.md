@@ -1,6 +1,6 @@
 # Finding 85 — permanent corpse bodies at low quality
 
-Implementation: `c59e7e5bf`, based on `lane/merge-batch13f` (`f6bd521c3`). Visual review and invariants pass. Final native timing and the full remote suite are running; their results are recorded below when complete.
+Implementation: `c59e7e5bf`, based on `lane/merge-batch13f` (`f6bd521c3`). Visual review, invariants, and native frame-time comparison pass. The full remote suite is running; its final result will be recorded below.
 
 ## Cause and production comparison
 
@@ -49,14 +49,16 @@ The result is a coarse corpse LOD: small facial/sculpt details remain angular at
 
 ## L10 low frame-time comparison
 
-Native headless Chrome/Metal, uncapped RAF cadence, zoom 1, same fixed finale field, three repeats per backend. Each repeat warms for 1 second and records 5 seconds. Inspection runs the normal view update/render while simulation time stays fixed, keeping the body field identical. This measures the renderer/view cost of the corpse change; it is not a live-AI or phone performance certification.
+Native headless Chrome/Metal, uncapped RAF cadence, zoom 1, same fixed finale field, three repeats per backend in each of two runs (six total). Each repeat warms for 1 second and records 5 seconds. Inspection runs the normal view update/render while simulation time stays fixed, keeping the body field identical. This measures the renderer/view cost of the corpse change; it is not a live-AI or phone performance certification.
 
 Timing is admitted through `tools/perf/quiet-run.sh`, with all browser slots reserved, no competing headless Chrome or local Vitest, and load below 3. Each admitted run is below the 20-minute limit. Conditions and raw samples: [before conditions](perf-before-conditions.jsonl), [before samples](perf-before/evidence.json), [after conditions](perf-after-conditions.jsonl), [after samples](perf-after/evidence.json).
 
 | Backend | Before p95 repeats (ms) | After p95 repeats (ms) | Median p95 before → after |
 | --- | --- | --- | --- |
-| WebGL | 3.4 / 3.8 / 3.3 | pending | 3.4 → pending |
-| WebGPU | 2.3 / 2.2 / 2.3 | pending | 2.3 → pending |
+| WebGL | 3.4 / 3.8 / 3.3; 3.7 / 3.5 / 3.5 | 3.5 / 3.9 / 3.7; 3.3 / 3.3 / 3.5 | **3.5 → 3.5 ms** |
+| WebGPU | 2.3 / 2.2 / 2.3; 2.4 / 2.3 / 2.3 | 2.3 / 2.2 / 2.2; 2.4 / 2.4 / 2.3 | **2.3 → 2.3 ms** |
+
+The first separated run gave WebGL 3.4 → 3.7 ms and WebGPU 2.3 → 2.2 ms median p95. To resolve that mixed result, the second run measured baseline then fix consecutively under one exclusive reservation: WebGL 3.5 → 3.3 ms and WebGPU 2.3 → 2.4 ms. All repeats are retained above; the aggregate median p95 is unchanged on both backends. These sub-millisecond variations do not show a reproducible frame-time regression. [Paired conditions](perf-paired-conditions.jsonl), [paired baseline](perf-paired-before/evidence.json), [paired fix](perf-paired-after/evidence.json), and [aggregate](performance-summary.json).
 
 L10 low capture counters on both backends: **112 → 112 draws; 263,563 → 236,732 submitted triangles (−10.2%); 282 → 282 bodies**. No corpse removal or additional culling is used to obtain the reduction.
 
