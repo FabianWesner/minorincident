@@ -37,6 +37,9 @@ export class ReplayRun {
     game.clock.pause();
     const [w, h] = (meta.viewport as number[] | undefined) ?? [];
     if (w && h) game.view.view.resize(w, h);
+    // Older logs started at the former level default. New handovers retain player zoom.
+    const zoom = typeof meta.cameraZoom === 'number' && Number.isFinite(meta.cameraZoom) && meta.cameraZoom > 0 ? meta.cameraZoom : game.world.scenario === 'L10' ? game.campaign?.cureResume?.cameraZoom ?? 1 : 1;
+    game.view.view.zoom(Math.log(zoom / game.view.view.getState().targetZoom), true); game.view.advance(0);
     game.input.feed = run.feed;
     run.probe.attach(game.world);
     return run;

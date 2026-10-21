@@ -80,8 +80,10 @@ export class View {
     this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale;
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
-  reset(player: { x: number; z: number; y?: number }): void {
-    this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
+  reset(player: { x: number; z: number; y?: number }, preserveZoom = false): void {
+    this.encounterScale = this.epilogueScale = 1;
+    this.zoomRatio = this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], preserveZoom ? this.targetZoom : 1));
+    this.radius = this.defaultRadius * this.zoomRatio;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -106,7 +108,9 @@ export class View {
     if (!Number.isFinite(strength)) throw new RangeError('Roll strength must be finite');
     if (this.cameraShake) this.rollSpeed += Math.max(-1.5, Math.min(1.5, strength)) * .55;
   }
-  /** Scripted pull-backs own the framing: while one is active the player's zoom is neutral (it returns when the beat ends) and wheel/pinch cannot widen it. */
+  /** Guidance stays hidden through story framing and its blend back to play. */
+  get storyShot(): boolean { return this.blendTarget > 0 || this.blend > 0 || this.scripted || this.epilogueScale > 1; }
+  /** Scripted pull-backs temporarily neutralize player zoom and lock wheel/pinch. */
   private get scripted(): boolean { return this.encounterScale > 1.02 || this.pullWeight > 0 && this.epilogueScale === 1; }
   private scriptedAdjusted(zoom: number): number { return this.scripted ? 1 : zoom; }
   private readonly safeProbe = new Vector3();

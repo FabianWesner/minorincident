@@ -239,7 +239,7 @@ export class GameView implements Lifecycle {
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
     const player = this.world.entities.get(1);
-    this.view.reset(player?.transform ?? { x: 0, z: 0 });
+    this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
@@ -259,7 +259,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -894,7 +894,7 @@ export class GameView implements Lifecycle {
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
-    this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
+    this.marker?.update(this.view.storyShot); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight,this.view.storyShot);
     pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
     this.syncMountedGun();

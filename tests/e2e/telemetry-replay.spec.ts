@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
+import type { Game } from '../../src/Game';
 import type { Page } from '@playwright/test';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
@@ -125,4 +126,27 @@ test.describe('telemetry replay determinism', () => {
     expect(live.tick).toBeGreaterThan(3000);
     await replayAndCompare(page, live, recorded);
   });
+});
+
+
+test('T-TELEMETRY-4 a retained level zoom is recorded and restored independently of the current camera', async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.goto('/?test=1&scenelab=1&telemetry=record&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1');
+  await page.waitForFunction(() => Boolean(window.__SS__));
+  const recorded = await page.evaluate(async () => {
+    const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
+    await a.ready; a.pause(); game.view.view.zoom(Math.log(1.5), true);
+    await a.loadLevel('L1', { seed: 1 }); a.pause(); a.missions.begin();
+    await a.step(90);
+    return a.replay.recorded()!;
+  });
+  expect(recorded.samples).toBeGreaterThan(0);
+  const zooms = await page.evaluate(async chunks => {
+    const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
+    game.view.view.zoom(Math.log(.5 / game.view.view.getState().targetZoom), true);
+    const before = game.view.view.getState().targetZoom;
+    await a.replay.start(chunks);
+    return { before, after: game.view.view.getState().targetZoom };
+  }, recorded.chunks);
+  expect(zooms).toEqual({ before: .5, after: 1.5 });
 });
