@@ -74,3 +74,11 @@ With that policy restored, the male seeded weapons run finishes in 283 wall seco
 The restored gun-only policy completed the male case but the female case repeatedly died escorting the last injured survivor from gate 90 toward the column at gate 150. That unfinished attempt is excluded. The final driver uses the carried fire axe through the shipped J/LEFT binding when at least three rendered enemies are within 3 m, in short pulses while continuing toward the visible objective. The selected gun and its held-target policy remain available at range. This parallels the unarmed crowd cover inputs and changes no game simulation or weapon values.
 
 The female run on `f07cae179` finishes in 416 wall seconds with no deaths or skips, 38 actual machine-gun attacks and 95 axe attacks. It returns to the guard at the shelter, covers his retreat and brings him to the exit; the full record is in `weapons-female/`. All final acceptance cases are rerun with this common policy.
+
+### Visible escort pacing and civilian observations
+
+A later common-policy male run waited at the bring ring while the slower fetched person was out of view. The driver now remembers the fetch ring, identifies the nearby rendered human, and keeps within 4 m during the return. Losing sight sends it back to that person's last seen position. It does not read collected/injured/rejoined flags for this input decision.
+
+The first trace also revealed that `eyes.ts` omitted L6's civilians from the ally list: they retain civilian factions while following the retreat. The sensor now includes those visible human bodies in L6, with an explicit rendered-body flag for escort observations. The trace then identifies the correct person, id 15, and follows them from x64 to x80 before rejoining. J selects the axe, so the driver uses the shipped K/RIGHT input to return to the carried gun at range.
+
+On `d404c97da`, male weapons finishes in 221 wall seconds, no deaths or skips, with 215 machine-gun and 11 axe attacks; 11/29 people escape. `final-weapons-male/` contains this acceptance record. Earlier successful input comparisons remain separate from the final common-policy records.
