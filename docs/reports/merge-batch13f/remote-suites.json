@@ -24,5 +24,14 @@
     "skipped": 11,
     "failed": 4,
     "isolatedRetries": "All four pass: E17 asset, L9 prepared navigation, E01 static pipeline, E29 standalone L7 audit. No assertion/threshold changed."
+  },
+  "postHatFull": {
+    "commit": "06360a7a7",
+    "passed": 2252,
+    "skipped": 11,
+    "failed": 2,
+    "exit": 1,
+    "durationSeconds": 4335.32,
+    "failures": "E17 asset validation and L9 prepared navigation wall-clock timeouts; exact isolated retries pass."
   }
 }
