@@ -11,7 +11,7 @@ const backend = process.env.L7_PERF_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {
-  for (const tier of ['high', 'low'] as const) {
+  for (const tier of (process.env.L7_PERF_TIER ? [process.env.L7_PERF_TIER as 'high' | 'low'] : ['high', 'low'] as const)) {
     const session = new SceneSession({ backend, tier, phone: tier === 'low', nativeFrameTiming: true,
       viewport: tier === 'high' ? { width: 1600, height: 900 } : { width: 390, height: 844 }, query: { profile: '0', dpr: '1' } });
     try {
