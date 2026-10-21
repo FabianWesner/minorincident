@@ -39,3 +39,23 @@ for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-
     lighting.dispose();
   });
 }
+
+// QA 10-21 #82 "switching quality low -> high throws TypeError: Cannot read properties of null (reading 'depthTexture')
+// in the shadow update": a runtime castShadow flip disposes the ShadowNode that cached materials still update.
+for (const preset of ['L6-subway', 'L6', 'L1', 'L5'] as const) {
+  test(`@E24 QA #82 ${preset}: quality switches never flip castShadow; low L6 only zeroes the spot shadow`, () => {
+    const lighting = new Lighting(new Scene()); lighting.set(preset);
+    const headlamp = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 9, range: 18, angle: 48, flicker: 'none', shadow: 'hero', position: [1.5, 1.9, -2], direction: [1, -.3, 0] }), id: 'headlamp' };
+    const lists = new Set<string>(), l6 = preset === 'L6-subway' || preset === 'L6';
+    for (const [i, tier] of (['low', 'high', 'low', 'high', 'low'] as const).entries()) {
+      lighting.setQuality(tier); lighting.setHeroLight(i % 2 ? headlamp : null, { x: 1.5, y: .9, z: -2 }, i);
+      expect(lighting.sun.castShadow && lighting.spot.castShadow).toBe(true);
+      lists.add(`${lighting.sun.visible}/${lighting.spot.visible}`);
+      if (l6 && tier === 'low') { expect(lighting.spot.shadow.intensity).toBe(0); expect(lighting.spot.shadow.autoUpdate).toBe(false); }
+      if (preset === 'L6-subway' && tier === 'high') { expect(lighting.spot.shadow.intensity).toBe(1); expect(lighting.spot.shadow.autoUpdate).toBe(true); }
+    }
+    // Stable presets keep one light list through every switch (L1 still swaps sun <-> spot for hero pools).
+    if (preset !== 'L1') expect(lists.size).toBe(1);
+    lighting.dispose();
+  });
+}

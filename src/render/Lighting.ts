@@ -152,14 +152,14 @@ export class Lighting {
   }
   setQuality(tier: QualityTier): void {
     this.quality = tier; this.field.setQuality(tier);
-    this.spot.castShadow = !((this.preset === 'L6-subway' || this.preset === 'L6') && tier === 'low');
+    // PO 10-21 #82: never flip castShadow at runtime (see spotShadowOff); the low L6 tier only zeroes the spot shadow.
+    this.setShadowSource(this.spotSource);
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
-    this.spot.castShadow = !((name === 'L6-subway' || name === 'L6') && this.quality === 'low');
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = name === 'L6-subway'; this.sun.visible = !this.spot.visible;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
@@ -186,12 +186,23 @@ export class Lighting {
   /** Keep both night shadow graphs resident. A light-list change retires Three's render
    * objects (and their last-used programs), so compiling both lists at load is insufficient.
    * The inactive light contributes neither illumination nor shadow and does not redraw its map. */
+  /**
+   * PO 10-21 #82: L6 at low quality draws no spot shadow. This used to be `spot.castShadow = false`, but with the spot
+   * in the stable light list a quality switch flipped castShadow at runtime: three disposes the light's ShadowNode
+   * (shadowMap = null) while cached material graphs still run its updateBefore, so updateShadow threw on
+   * `shadowMap.depthTexture` every frame (WebGL2 view blank, WebGPU validation errors). castShadow stays true; the low
+   * tier only zeroes the shadow weight and stops refreshing the map, both plain uniforms/flags.
+   */
+  private spotShadowOff(): boolean { return (this.preset === 'L6-subway' || this.preset === 'L6') && this.quality === 'low'; }
+  private spotSource = false;
   private setShadowSource(spot: boolean): void {
+    this.spotSource = spot;
     const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo';
+    const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
-    this.spot.shadow.intensity = stable ? Number(spot) : 1;
+    this.spot.shadow.intensity = spotOff ? 0 : stable ? Number(spot) : 1;
     this.sun.shadow.intensity = stable ? Number(!spot) : 1;
-    this.spot.shadow.autoUpdate = !stable || spot; this.sun.shadow.autoUpdate = !stable || !spot;
+    this.spot.shadow.autoUpdate = !spotOff && (!stable || spot); this.sun.shadow.autoUpdate = !stable || !spot;
     // Draw each reserved map once at load, including the currently inactive source.
     if (stable) { if (!this.sun.shadow.map) this.sun.shadow.needsUpdate = true; if (!this.spot.shadow.map) this.spot.shadow.needsUpdate = true; }
     this.sun.intensity = spot ? 0 : this.intensity.value;
