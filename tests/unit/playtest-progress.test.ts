@@ -43,3 +43,14 @@ test('#99 a visible checkpoint reposition starts a fresh movement observation', 
   expect(p.update(sample(10.1,{player:{x:2,z:15},marker:{x:14,z:15}})).reason).toBe('view-change');
   for(let t=1;t<=35;t++) expect(p.update(sample(10.1+t,{player:{x:2+t*2.2,z:15},marker:{x:14+t*2.2,z:15}})).seconds).toBeLessThan(2);
 });
+
+test('#99 a cached pre-death ring cannot poison progress after the visible player respawns', () => {
+  const p=new PlaytestProgress();p.update(sample(0,{player:{x:83,z:15},marker:{x:92.4,z:17.3},distance:9.7}));
+  expect(p.update(sample(.1,{player:{x:2.1,z:-.3},marker:{x:92.4,z:17.3},distance:15.8})).reason).toBe('view-change');
+  p.update(sample(1,{player:{x:5.5,z:2.6},marker:{x:6,z:15},distance:12.4}));
+  p.update(sample(4,{player:{x:6,z:15},marker:{x:6,z:15},distance:0}));
+  for(let t=5;t<=45;t++) {
+    const x=6+(t-4)*2.2;
+    expect(p.update(sample(t,{player:{x,z:15},marker:{x:x+12,z:15},distance:12})).seconds).toBeLessThan(3);
+  }
+});
