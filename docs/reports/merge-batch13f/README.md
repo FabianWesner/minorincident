@@ -47,3 +47,15 @@ All four fixed-tick L7→L8 gameplay captures (WebGL2/WebGPU, high/low, tick 180
 The first 24-frame comparison has 16 exact pairs. A 1,026-pixel low-WebGPU settled horde difference affects two actors' planted poses; the unchanged pre-performance repeat reproduces exactly the same 1,026-pixel difference, while its simulation remains identical. Thus this horde difference is an existing render-history variation, not attributable to the performance merge. The unchanged repeat also changes 1,869/1,319/1,413 pixels in low-WebGL rocket frames, whereas those initial merged pairs were exact. Rocket hats show existing overlap/order variation; further ordering diagnosis is pending. All entity/health/transform/corpse snapshots match. Every pixel is counted without masks/tolerance.
 
 Initial crops were opened and inspected: the horde difference is around two bodies/feet beside the courier; the high rocket differences outline several cap/hat rims within the crowd. The blast flash, outward effect, crowd placement and ground remain visually unchanged. [Full comparisons](l7-initial-comparison.jpg), [crops](l7-initial-crops.png), [initial counts](l7-pixels.json), [unchanged control](l7-control-pixels.json).
+
+## Hat overlap correction and final visual review
+
+`06360a7a7` assigns accessory batches `renderOrder = 1`: coplanar cap/skull overlap no longer depends on asynchronous material creation order. Geometry, pose calculation, tier policy, capacities and performance optimizations are retained. A diagnostic applied that same order to the pre-performance build; it reduced the formerly 3,162/2,766/3,095-pixel WebGPU rocket differences to 3/75/3. With the product fix, final comparison is 0/74/2 pixels (maximum channel deltas 0/10/8); these residual differences are not visible in the opened side-by-side sheet. All comparison pixels are retained and counted; no image mask, tolerance or assertion was introduced.
+
+The final horde view matches the unchanged repeat's visible pose, including the two actors beside the courier; its difference from the first baseline is therefore pre-existing render-history variation. The courier, crowd density/clothing, hat silhouettes, flash, smoke and ground are retained. [Final opened review sheet](l7-final-review.png), [final ordered comparison](l7-final-order-pixels.json), [ordering diagnosis](l7-order-pixels.json). Strict RGB equality is not claimed for every frame: the nonzero counts and unchanged-build controls are reported explicitly.
+
+The original level-load capture repeated with the numbered rack present on both trees is **exactly identical for L7 and L8 high WebGPU, all 1,440,000 pixels**: [comparison](load-groupB-comparison.md). The earlier 0.28% uncertainty does not reproduce in this controlled comparison.
+
+## Gate progress
+
+Initial merged smoke: 31/31 pass (one worker to honor the one-browser rule). Final post-correction build/typecheck/lint pass. Final smoke/level/E29 pipeline and post-correction remote sweep are pending.
