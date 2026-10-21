@@ -15,5 +15,5 @@ trap 'kill $srv; rm -rf "$out/profile"' EXIT
 for i in $(seq 1 60); do curl -sf "http://127.0.0.1:$port" >/dev/null && break; sleep 1; done
 case "$kind" in weapons|fists) ;; *) echo "Expected weapons or fists" >&2; exit 64 ;; esac
 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/playtest/seed.ts "http://127.0.0.1:$port" "$out/profile" "$heroine" L6-default "$kind" > "$out/seed.json"
-npx tsx tools/playtest/play.ts --levels L6 --mode continue --entry continue --heroine "$heroine" --quality low --zoom 1.5 --level-minutes 20 --out "$out" --keep-profile
+npx tsx tools/playtest/play.ts --no-skip --levels L6 --mode continue --entry continue --heroine "$heroine" --quality low --zoom 1.5 --level-minutes 20 --out "$out" --keep-profile
 rm -rf "$out/profile"

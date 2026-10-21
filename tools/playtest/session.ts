@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies } from './startup';
+import { keepMovingWithFists } from './combat';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -16,7 +17,7 @@ import { assertRenderedBodies } from './startup';
 export interface SessionOptions {
   origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; heroine: 'female' | 'male';
   /** new: title → Start game → heroine → L1. continue: title → Start game → resume level (menu Continue). debug: level list with ?debug=1. */
-  entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string;
+  entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string; noSkip?: boolean;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -194,7 +195,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
-    if (e.level === 'L6' && e.player?.weapons.every(id => /fists|kick/.test(id)) && e.enemies.filter(b => b.d < 3).length >= 3) {
+    if (keepMovingWithFists(e.level,e.step,!!e.player?.weapons.every(id => /fists|kick/.test(id)),e.enemies.filter(b => b.d < 3).length)) {
       // Unarmed, keep covering the moving retreat instead of planting in a crowd. K is the shipped
       // right-hand kick binding; one short kick makes space, then navigation follows the visible ring.
       await releaseAim();
@@ -396,7 +397,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }
     if (Date.now() > levelDeadline() || stuckSim > 420) {
-      await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); skipping it with the debug objective cheat`);
+      await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
+      if(o.noSkip) { log({ abortedNoSkip:true, level:e.level, tick:e.tick, step:e.step }); break; }
       run.skipped.push(e.step ?? '?'); assist('skip-step', { step: e.step });
       await page.evaluate(id => window.__SS__!.cheats.completeObjective(id ?? undefined), e.step);
       wallStart = Math.max(wallStart, Date.now() - (o.levelMinutes - 4) * 60_000);
