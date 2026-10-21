@@ -31,7 +31,13 @@ for (const checkpoint of ['night-exit', 'rocket', 'corridor']) test(`T-E29-16-${
     put(w, pickup.transform.x, pickup.transform.z);
     const f = emptyInput(); f.interact = true; w.applyInput(f, 'keyboard'); step(w, 37); w.clearInput();
     expect(m!.state.checkpoint).toBe('rocket');
-    if (checkpoint === 'corridor') { put(w, -30, 47); step(w); }
+    if (checkpoint === 'corridor') {
+      for (const [i, r] of c.state.roster.entries()) if (r.status === 'following') {
+        const e = w.entities.get(r.id)!;
+        expect(w.solids.relocate(e, { x: -23 + Math.floor(i / 4), z: 46 + i % 4, y: .83 }, 'test.checkpoint.group', 2)).toBe(true);
+      }
+      put(w, -30, 47); step(w);
+    }
   }
   expect(m!.state.checkpoint).toBe(checkpoint);
   // Exercise the actual capture saved by the graph, not a fixture checkpoint or restoreSeams call.
@@ -77,6 +83,8 @@ test('T-E29-16-west @E29-AC16 west alley arrival records corridor and resumes a 
   const pickup = w.entities.values().find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
   put(w, pickup.transform.x, pickup.transform.z);
   const f = emptyInput(); f.interact = true; w.applyInput(f, 'keyboard'); step(w, 37); w.clearInput();
+  // A nearby tail permits the corridor checkpoint without boarding that survivor yet.
+  expect(w.solids.relocate(w.entities.get(straggler.id)!, { x: -60, z: 47, y: .83 }, 'test.checkpoint.tail', 2)).toBe(true);
   put(w, -70.5, 47.5); step(w);
   expect(m.state.checkpoint).toBe('corridor');
   const saved = JSON.parse(JSON.stringify(m.saveResume()));

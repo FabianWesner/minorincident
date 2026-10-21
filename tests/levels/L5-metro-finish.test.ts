@@ -42,6 +42,8 @@ test('@E23 @E23-AC15 P0 the Metro ring marks the arrival, the plinths beside the
   drive(w, 0, -1, 120);
   expect(m.l5!.insideStation(p.transform), JSON.stringify(p.transform)).toBe(true);
   expect(m.state.l5!.metroAt).toBeGreaterThan(0);
+  expect(m.l5!.metroStatus()).toMatch(/^Stay on the stairs · [1-3] s · Survivors in \d\/5$/);
+  w.clearInput();for(let i=0;i<180;i++)w.update();
   expect(m.l5!.metroStatus()).toMatch(/^Wait for the survivors · \d\/5 in$/);
   const marker = new ObjectiveMarker(w); marker.update(); expect(marker.visible).toBe(true);
   m.state.l5!.shutterAt = w.tick; marker.update();

@@ -40,7 +40,7 @@ export class ControlIntent {
       // the crowd grid here can pick a cell that the courier capsule cannot enter.
       const playerNav = nav?.forPlayer(this.routeClearance);
       let point: [number, number] | undefined;
-      if (playerNav && (!playerNav.clear(click.x, click.z, this.routeClearance) || !playerNav.visible(player.transform, click, this.routeClearance))) {
+      if (playerNav && !playerNav.clear(click.x, click.z, this.routeClearance)) {
         const from = playerNav.startCell(player.transform, this.routeClearance), path: number[] = [];
         if (from >= 0 && playerNav.reachPath(from, click, path)) {
           const cell = path[path.length - 1] ?? from; point = [playerNav.x(cell), playerNav.z(cell)];

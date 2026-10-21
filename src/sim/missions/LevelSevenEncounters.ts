@@ -117,7 +117,9 @@ export class LevelSevenEncounters {
     s.passageReady = s.finalReady && p.x <= l7Encounters.passage.x && Math.abs(p.z - l7Encounters.passage.z) < 7 && s.roster.every(r => r.status !== 'following' || r.passed);
     const m=w.missions;
     if(m?.state.steps.corridor?.status==='active'){
-      const arrived=['l7-corridor-east','l7-corridor-west'].some(name=>{const a=m.def.anchors[name];return distance(p,a)<=a.radius;});
+      const entrances=['l7-corridor-east','l7-corridor-west'];
+      m.state.marker=entrances.reduce((a,b)=>distance(p,m.def.anchors[a])<=distance(p,m.def.anchors[b])?a:b);
+      const arrived=entrances.some(name=>{const a=m.def.anchors[name];return distance(p,a)<=a.radius;});
       m.setState('corridor-group',arrived&&this.corridorGroup().missing.length===0);
     }
   }

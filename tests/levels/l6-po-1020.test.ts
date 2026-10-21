@@ -20,7 +20,7 @@ test('@E24 PO 10-20 #65 the retreat ring sits on the group\'s next waypoint; awa
   expect(LevelSixSubway.text(m)).toBeNull();
   // Tunnel leg: the next gate, never more than aheadM in front of the walking head.
   s.leaderZ = 15; s.leaderX = 84; w.update();
-  expect(m.def.anchors['l6-next'].x).toBeCloseTo(Math.min(90, s.leaderX + l6.follow.aheadM), 1);
+  expect(m.def.anchors['l6-next']).toMatchObject(LevelSixSubway.gateWait(90));
   s.leaderX = 70; w.update();
   expect(m.def.anchors['l6-next'].x).toBeCloseTo(s.leaderX + l6.follow.aheadM, 1);
   // Walk right, away from the group (PO: "the group of people is below me, but I walk right").
