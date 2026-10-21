@@ -153,7 +153,7 @@ export class Hud {
   }
   init(): void { document.querySelector('#game')!.append(this.root); }
   /** Reset subscriptions after EventBus.reset; old-level feedback cannot survive a load. */
-  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.prepared = false; this.preparedImages = []; this.root.hidden = true; }
+  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.prepared = false; this.preparedImages = []; this.root.hidden = true; text(this.trackerText, ''); text(this.survivorText, ''); text(this.cueText, ''); this.tracker.hidden = true; }
   /** Shape the real HUD during loading. Its layout survives the briefing;
    * Begin changes visibility without constructing the first text layout. */
   async prepare(): Promise<void> {
@@ -278,6 +278,7 @@ export class Hud {
     setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
+    if (!objective && !done) text(this.trackerText, '');
     if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${anchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);

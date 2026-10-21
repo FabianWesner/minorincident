@@ -16,6 +16,8 @@ export interface L7DepartureState {
   boarded: number[];
   /** Followers stepping through the door: id -> tick they started. */
   entering: Record<number, number>;
+  /** Visible stalled followers walk continuously through the obstruction before joining the door queue. */
+  assisting?: number[];
   lastEnterAt: number;
   startedAt: number;
   /** One second to read the final boarding confirmation before the shot. */
@@ -29,7 +31,7 @@ const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => M
  * L7-E2: boarding of the living survivors, the departure shot and the L8 handover. The bus is a set piece (kinematic, like
  * the L4 convoy) with a physics and navigation blocker while it waits. Boarding finishes only when every living follower has
  * stepped through the door. Boarding owns every follower, including distant stragglers. A stalled approach recovers
- * through a hidden queue transition after 20 seconds; no living survivor is discarded and there is no fail timer.
+ * after 20 seconds: offscreen followers use a hidden transition, visible followers a continuous step-through; no living survivor is discarded and there is no fail timer.
  * The player boards last, the shot runs `cfg.seconds`, and `level.completed` carries the boarded roster for L8.
  */
 export class LevelSevenDeparture {
@@ -39,7 +41,7 @@ export class LevelSevenDeparture {
   private blocker: number | undefined;
   private readonly from = new Map<number, { x: number; z: number }>();
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: { x: number; z: number } }>();
-  private readonly progress = new Map<number, { distance: number; at: number }>();
+  private readonly progress = new Map<number, { distance: number; at: number; repathed?: boolean }>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
   constructor(private readonly world: SimWorld) {}
@@ -116,6 +118,27 @@ export class LevelSevenDeparture {
     const d = Math.hypot(player.transform.x - this.boarding[0], player.transform.z - this.boarding[2]);
     if (s.phase === 'waiting' && d <= cfg.boardRadius) { s.phase = 'boarding'; this.progress.clear(); }
     else if (s.phase === 'boarding' && d > cfg.leaveRadius) { s.phase = 'waiting'; s.readyAt = null; this.progress.clear(); }
+    // Boarding owns this exceptional step-through just like the door crossing. Keep the figure
+    // visible and moving at its ordinary speed; never snap a trapped actor out of the camera.
+    for (const id of [...s.assisting ?? []]) {
+      const e = w.entities.get(id);
+      if (!e || e.health.current <= 0 || e.infected || e.infection || e.civilian?.state === 'finished') {
+        s.assisting = s.assisting!.filter(other => other !== id);
+        if (e) { delete e.passengerOf; w.solids.forget(e); }
+        continue;
+      }
+      const queue = this.queue(e.civilian!.survivor!.slot), remaining = distance(e.transform, queue);
+      if (remaining > .1) {
+        const step = Math.min(remaining, (w.l7Encounters!.state.roster.find(r => r.id === id)?.injured ? 1.4 : 3.8) / 60);
+        const dx = (queue.x - e.transform.x) / remaining, dz = (queue.z - e.transform.z) / remaining;
+        e.transform.x += dx * step; e.transform.z += dz * step; e.transform.yaw = -Math.atan2(dz, dx);
+        w.spatial.set(id, e.transform.x, e.transform.z);
+      } else if (w.tick - s.lastEnterAt >= cfg.gapTicks) {
+        s.assisting = s.assisting!.filter(other => other !== id);
+        s.lastEnterAt = w.tick; s.entering[id] = w.tick;
+        this.from.set(id, { x: e.transform.x, z: e.transform.z });
+      }
+    }
     // Survivors already stepping through the door finish even if the player steps back.
     for (const id of Object.keys(s.entering).map(Number)) {
       const e = w.entities.get(id), t = (w.tick - s.entering[id]) / cfg.enterTicks;
@@ -133,11 +156,11 @@ export class LevelSevenDeparture {
     if (s.phase !== 'boarding') return;
     const living = w.l7Encounters!.state.roster.filter(r => r.status === 'following');
     for (const r of living) {
-      if (s.boarded.includes(r.id) || r.id in s.entering) { this.progress.delete(r.id); continue; }
+      if (s.boarded.includes(r.id) || r.id in s.entering || s.assisting?.includes(r.id)) { this.progress.delete(r.id); continue; }
       const e = w.entities.get(r.id)!, queue = this.queue(e.civilian!.survivor!.slot), remaining = distance(e.transform, queue);
       const progress = this.progress.get(r.id);
       // Net progress toward the queue, not jitter or walking in circles.
-      if (!progress || remaining < progress.distance - .5) this.progress.set(r.id, { distance: remaining, at: w.tick });
+      if (!progress || remaining < progress.distance - .5) this.progress.set(r.id, { distance: remaining, at: w.tick, repathed: progress?.repathed });
       else if (w.tick - progress.at >= cfg.stallTicks && w.tick - s.lastEnterAt >= cfg.gapTicks) this.recover(e, queue);
     }
     if (living.every(r => s.boarded.includes(r.id)) && !Object.keys(s.entering).length) {
@@ -146,13 +169,26 @@ export class LevelSevenDeparture {
     } else s.readyAt = null;
   }
   private queue(slot: number) { return { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 }; }
-  /** Like the L5 corgi threshold recovery: hide the transition, retain the actor, validate the destination.
+  /** Offscreen and distant only: hide the transition, retain the actor, validate the destination.
    * The recovered follower still queues and crosses the door for the ordinary enterTicks before counting aboard. */
   private recover(e: EntitySnapshot, queue: { x: number; z: number }): void {
-    const w = this.world, s = this.state;
+    const w = this.world, s = this.state, c = e.civilian!;
+    const player = w.entities.get(1)!;
+    if (distance(e.transform, player.transform) <= 12 || !w.infected!.director.offscreen(e.transform, e.transform.y - .7)) {
+      // Retry navigation before escalating to the same bounded scripted motion used at the door.
+      c.path.length = 0; c.goal = -1; c.pathIndex = 0;
+      if (!this.progress.get(e.id)?.repathed && w.npcs!.move(e, queue, 3.8, c, .5, 6400)) {
+        this.progress.set(e.id, { distance: distance(e.transform, queue), at: w.tick, repathed: true });
+        return;
+      }
+      (s.assisting ??= []).push(e.id); e.passengerOf = s.busId;
+      delete e.locomotion; delete e.motion;
+      this.progress.delete(e.id); this.approaches.delete(e.id);
+      w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l7.survivor-assisted', actorId: e.id });
+      return;
+    }
     if (!w.solids.relocate(e, { ...queue, y: w.districts!.groundHeight(queue.x, queue.z) + .7 }, 'l7.boarding-recovery', 1)) return;
     e.hidden = true;
-    const c = e.civilian!;
     c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.pauseUntil = Number.MAX_SAFE_INTEGER;
     if (c.l1) c.l1.target = null;
     delete e.locomotion; delete e.motion;

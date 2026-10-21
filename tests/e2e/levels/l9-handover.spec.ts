@@ -7,10 +7,12 @@ for (const quality of ['high', 'low']) test(`T-E31-15-handover-browser @E31-AC14
   test.setTimeout(240_000); mkdirSync(dir, { recursive: true });
   if (quality === 'low') await page.setViewportSize({ width: 390, height: 844 });
   await boot(page, `${testUrl.replace('quality=high', `quality=${quality}`)}&scenelab=1&ui=1`);
-  const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; save.settings.quality = quality as 'high'|'low';
+  const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; save.settings.quality = quality as 'high'|'low'; save.character = quality === 'low' ? 'male' : 'female';
   await page.evaluate(async save => {
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
     game.campaign = save; await game.loadLevel('L9', { seed: 31 }); window.__SS__!.pause();
+    game.view.view.zoom(Math.log(1.5 / game.view.view.getState().targetZoom), true);
+    if (game.world.entities.get(1)!.survivor!.gearTier !== 4) throw new Error('Expected tier 4 before crash');
     const w = game.world, car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!;
     car.physics.body.setTranslation({ x: 470, y: 1, z: 0 }, true);
     w.entities.get(1)!.health.current = 1;
@@ -19,6 +21,9 @@ for (const quality of ['high', 'low']) test(`T-E31-15-handover-browser @E31-AC14
   await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
   await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
   const opening = await page.evaluate(() => ({ state: window.__SS__!.getState(), save: window.__SS__!.campaign.state() }));
+  expect(opening.state.render.camera.targetZoom).toBe(1.5);
+  expect(opening.state.player!.survivor).toMatchObject({ variant: save.character, gearTier: 4 });
+  expect(opening.state.render.character?.modelId).toBe(`char.courier-${save.character}.skin`);
   expect(opening.save!.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
   expect(opening.state.player!.weapons!.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
   expect(opening.state.player!.weapons!.RIGHT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
@@ -43,4 +48,7 @@ for (const quality of ['high', 'low']) test(`T-E31-15-handover-browser @E31-AC14
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(s => s.id))).toEqual(['weapon.fire-axe']);
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${dir}/${quality}-reload.png` });
+  expect(await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom)).toBe(1.5);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.survivor)).toMatchObject({ variant: save.character, gearTier: 4 });
+  expect(await page.evaluate(() => window.__SS__!.getState().render.character?.modelId)).toBe(`char.courier-${save.character}.skin`);
 });
