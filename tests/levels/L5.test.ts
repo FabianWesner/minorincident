@@ -279,12 +279,12 @@ describe('L5 Aftermath', () => {
     w.setInput({ interact: true }); step(w, 36); w.clearInput();
     expect(weapons()).toContain('weapon.shotgun'); m.restore('outside');
     expect(weapons()).not.toContain('weapon.shotgun');
-    expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup)).toHaveLength(1);
+    expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && !e.pickup.survivorOnly)).toHaveLength(1);
     w.setInput({ interact: true }); step(w, 36); w.clearInput();
     for (const id of l5.checkpoints) {
       m.checkpoint(id); m.restore(id); m.restore(id);
       expect(weapons().filter(id => id === 'weapon.shotgun')).toHaveLength(1);
-      expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup)).toHaveLength(0);
+      expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && !e.pickup.survivorOnly)).toHaveLength(0);
       expect(w.combat!.runner.loadout.current('RIGHT')).toMatchObject({ id: 'weapon.shotgun', magazine: 0, reloadUntil: 0 });
     }
   });

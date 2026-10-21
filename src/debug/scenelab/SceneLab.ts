@@ -234,7 +234,7 @@ export class SceneLab {
       if (!item) throw new Error(`Rotation fixture needs a pushable id: ${prop.id}`);
       world.props!.place(item, { p: [...item.pose.p], q: prop.rotation });
     }
-    if (spec.layout?.level === 'L1' || spec.layout?.level === 'L7' || spec.layout?.level === 'L3') world.scenario = spec.layout.level;
+    if (spec.layout?.level === 'L5' || spec.layout?.level === 'L1' || spec.layout?.level === 'L7' || spec.layout?.level === 'L3') world.scenario = spec.layout.level;
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     // Simulation ownership follows the authored actor/vehicle, independently of the shot camera.
     const focus = spec.actors?.find(a => a.kind === 'courier')?.at ?? spec.vehicles?.[0]?.at;
@@ -443,7 +443,8 @@ export class SceneLab {
           if (!Number.isFinite(hp) || hp < 0 || hp > e.health.max) throw new RangeError(`Invalid L5 fixture health for ${r.key}`);
           e.health.current = hp;
         }
-        Object.assign(e.transform, { x: player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z: player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0) }); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        const x = player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z = player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0);
+        if (!world.solids.relocate(e, { x, z, y: world.districts!.groundHeight(x, z) + .7, yaw: e.transform.yaw }, 'scene.l5-followers', 2)) throw new Error(`Cannot stage L5 follower ${r.key}`);
         this.actors.set(r.key, { id: r.key, kind: 'pedestrian', entity: r.id, spec: { id: r.key, kind: 'pedestrian' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       }
       if (spec.l5Aftermath.metroIngress) {
@@ -653,7 +654,9 @@ export class SceneLab {
         dog.transform.yaw = yaw;
       }
       if (a.floorY !== undefined) {
-        const e = world.entities.get(entity)!; e.transform.y = a.floorY + .7;
+        const e = world.entities.get(entity)!;
+        if (!world.solids.relocate(e, { x: at.x, z: at.z, y: a.floorY + (e.companion ? .3 : .7), yaw }, 'scene.deck')) throw new Error(`Cannot stage raised actor ${id}`);
+        if (entity === 1) { world.physics.playerBody!.setTranslation(e.transform, true); world.physics.playerBody!.setNextKinematicTranslation(e.transform); Object.assign(world.previousPlayer!, e.transform); }
         if (e.civilian) e.civilian.floorY = a.floorY;
       }
       if (a.supportFeet && world.entities.get(entity)?.civilian) world.entities.get(entity)!.civilian!.supportFeet = true;
@@ -1623,7 +1626,7 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      travelM: a.distanceM ?? 0, maxX: a.maxX ?? null, state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, health: e?.health.current ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
+      travelM: a.distanceM ?? 0, maxX: a.maxX ?? null, heldWeapon: e?.civilian?.ally?.actionId ?? e?.civilian?.ally?.weapon ?? null, targetId: e?.civilian?.ally?.targetId ?? null, state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, health: e?.health.current ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const appearance = [...this.actors.values()].map(a => ({ actor: a.id, looks: [...new Set(a.track.flatMap(f => f.appearance ? [f.appearance.key] : []))], corpseFrames: a.track.filter(f => f.appearance && f.corpse).length })).filter(a => a.looks.length);
     const visibleLooks = this.game.view.crowdFigures().filter(f => f.drawn && f.appearance && !this.world.entities.get(f.id)?.corpse && (this.world.entities.get(f.id)?.health.current ?? 0) > 0).sort((a,b) => a.id-b.id);
     const variety = Object.fromEntries((['infected', 'pedestrian'] as const).map(kind => [kind, crowdVariety(visibleLooks.filter(f => {

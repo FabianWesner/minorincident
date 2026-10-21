@@ -879,7 +879,7 @@ export class AudioService implements Lifecycle {
             // machine guns, the soldiers' rifles assault rifles; the tank's round has its own explosion beats.
             if (event.role === 'tank') return;
             const machine = event.weapon === 'hmg' || event.weapon === 'door-gun';
-            this.play(machine ? 'weapon.hmg' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
+            this.play(machine ? 'weapon.hmg' : event.weapon === 'shotgun' ? 'action.weapon.shotgun' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
             return;
         }
         if (event.type === 'infected.groan' || event.type === 'infected.recovered') {

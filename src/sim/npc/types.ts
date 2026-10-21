@@ -3,7 +3,7 @@ export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
 export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel'
   /** E22 weapons of soldiers and armed civilians (code art in RoutineProps, dropped when the bearer turns). */
-  | 'rifle' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar';
+  | 'rifle' | 'pistol' | 'shotgun' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar';
 /** Resolved layout anchors, in world metres. Durations and cursors use sim ticks and survive checkpoints. */
 export interface CivilianActivity {
   activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
@@ -33,12 +33,14 @@ export interface Civilian {
   gore: false; knockedUntil: number;
   /** Siren: walk to this kerb point and wait, then resume the existing routine. */
   vehicleYield?: { target: Point; until: number };
+  /** Direct attack/release reaction; persisted through checkpoints. */
+  dangerUntil?: number;
   panicReaction?: 'flee' | 'freeze';
   schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
   /** E20 §5.2 allied fighter: a live, biteable human who engages visible infected instead of fleeing (no immunity). */
   ally?: AllyState;
-  /** E23 survivor (Dale, Rosa, Okafor, Mia, Sam): hidden at a hiding place until found, then follows the player (unarmed, biteable like anyone). */
+  /** E23 survivor (Dale, Rosa, Okafor, Mia, Sam): hidden at a hiding place until found, then follows the player (biteable; may collect one ground firearm). */
   survivor?: SurvivorState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number;
     /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
@@ -52,7 +54,10 @@ export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM:
 export interface AllyState {
   role: 'firefighter' | 'officer' | 'soldier' | 'civilian';
   /** E22 allied fighters v3: what the shooter carries (audio/tracer look; `hmg` crews a nest), improvised melee of an armed civilian, and the flight timer of one that panics. */
-  weapon?: 'hmg' | 'rifle' | 'pistol' | 'hunting-rifle';
+  /** Original pickup identity, retained in campaign survivor snapshots. */
+  actionId?: string;
+  aimMoveAt?: number; aimMoveRestUntil?: number;
+  weapon?: 'hmg' | 'rifle' | 'pistol' | 'shotgun' | 'hunting-rifle';
   melee?: { damage: number; reachM: number; swingS: number };
   panicUntil?: number;
   /** v2 firearm (officers and soldiers from L3); without it officers keep the L2 v1 values. */

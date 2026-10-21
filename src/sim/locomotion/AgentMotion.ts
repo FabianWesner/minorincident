@@ -1,3 +1,4 @@
+import { l2 } from '../../data/l2';
 import { l5 } from '../../data/l5';
 import { FIXED_DT } from '../../core/Clock';
 import { SimPhase } from '../../core/EventBus';
@@ -33,12 +34,16 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
 /** Scripted story walks (L1 hand-overs) cross shop steps without the crowd foot solver's ground probe: support the body
  * on the highest ground under either foot (0.22 m fore and aft), so the trailing foot never sinks into the step edge. */
 function stepSupport(world: SimWorld, e: EntitySnapshot): number {
-  const d = world.districts!, x = e.transform.x, z = e.transform.z, stride = e.civilian?.supportFeet ? .4 : .22, fx = Math.cos(e.transform.yaw) * stride, fz = -Math.sin(e.transform.yaw) * stride;
-  return Math.max(d.groundHeight(x, z), d.groundHeight(x + fx, z + fz), d.groundHeight(x - fx, z - fz));
+  const d = world.districts!, x = e.transform.x, z = e.transform.z, stride = e.companion ? .55 : e.civilian?.supportFeet ? .4 : .22, fx = Math.cos(e.transform.yaw) * stride, fz = -Math.sin(e.transform.yaw) * stride;
+  const support = (px: number, pz: number) => e.companion ? d.groundBelow(px, pz, e.transform.y - .3) : d.groundHeight(px, pz);
+  const height = Math.max(support(x, z), support(x + fx, z + fz), support(x - fx, z - fz));
+  if (!e.companion) return height;
+  const sx = Math.sin(e.transform.yaw) * .18, sz = Math.cos(e.transform.yaw) * .18;
+  return Math.max(height, support(x + fx + sx, z + fz + sz), support(x + fx - sx, z + fz - sz), support(x - fx + sx, z - fz + sz), support(x - fx - sx, z - fz - sz));
 }
 /** Feet support is resolved before the final collision commit, and again after a contact correction. */
 export function groundAgent(world: SimWorld, e: EntitySnapshot): void {
-  if (world.districts && !e.infected && !e.survivor) e.transform.y = (e.companion ? .3 : .7) + (e.civilian?.floorY ?? ((e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
+  if (world.districts && !e.infected && !e.survivor) e.transform.y = (e.companion ? .3 : .7) + (e.civilian?.floorY ?? ((e.companion || e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
 }
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
@@ -84,12 +89,29 @@ export function installAgentMotion(world: SimWorld): void {
   }, SimPhase.cleanup + .5);
   // Facing is part of the long physical footprint and must precede the final contact transaction.
   world.events.on('sim.tick', () => {
-    for (const e of world.entities.iterate()) if (e.companion) {
+    for (const e of world.entities.iterate()) {
+      if (!e.companion) {
+        const c = e.civilian, ally = c?.ally, motion = e.locomotion;
+        // Followers and gunners can overwrite walking yaw with an aim/formation pose. Leave other controllers and passive nudges alone.
+        if (!c || c.pet || c.zooAnimal || e.infected || e.health.current <= 0) continue;
+        if (!c.survivor && !ally?.follow && !ally?.gun && ally?.role !== 'officer' && ally?.role !== 'soldier') continue;
+        if (motion?.updatedAt !== world.tick || Math.hypot(motion.vx, motion.vz) <= .12) { if (ally) delete ally.aimMoveAt; continue; }
+      }
       // A waiting Metro pet sidesteps for the queue while retaining the shaft-facing pose.
-      if (world.missions?.state.l5?.metroAt && !e.companion.following) continue;
+      if (e.companion && world.missions?.state.l5?.metroAt && !e.companion.following) continue;
       const p = previous.get(e.id); if (!p) continue;
       const dx = e.transform.x - p.x, dz = e.transform.z - p.z;
-      if (Math.hypot(dx, dz) / FIXED_DT <= .5) continue;
+      if (Math.hypot(dx, dz) / FIXED_DT <= (e.companion ? .5 : .12)) { if (e.civilian?.ally) delete e.civilian.ally.aimMoveAt; continue; }
+      const a = e.civilian?.ally, target = a && world.entities.get(a.targetId);
+      const aiming = !!a && !!target?.infected && target.health.current > 0 && !target.hidden && !target.infected.hidden && !target.infectionRise
+        && e.civilian?.story?.clip === 'shoot' && world.tick >= (a.reloadUntil ?? 0)
+        && Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) <= (a.gun?.rangeM ?? l2.allies.officer.rangeM + 4);
+      if (aiming && world.tick >= (a!.aimMoveRestUntil ?? 0)) {
+        a!.aimMoveAt ??= world.tick;
+        if (world.tick - a!.aimMoveAt < 120) continue;
+        a!.aimMoveRestUntil = world.tick + 30;
+      }
+      if (a && (!aiming || world.tick < (a.aimMoveRestUntil ?? 0))) delete a.aimMoveAt;
       const heading = -Math.atan2(dz, dx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
       if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
     }

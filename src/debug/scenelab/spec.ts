@@ -300,6 +300,10 @@ export interface Expectations {
   /** Actual travelled distance and maximum world X; seam fixtures must cross and return. */
   actorTravel?: Record<string, [number, number]>;
   actorMaxX?: Record<string, [number, number]>;
+  /** Exact carried gun and final human state; prevents a capture with no actual pickup/release from passing. */
+  actorWeapons?: Record<string, string>;
+  actorStates?: Record<string, string>;
+  actorInViewMin?: Record<string, number>;
   /** L10-S6 mounted minigun gates (`metrics.minigun`): rounds fired, peak heat (0..1), frames locked out, frames mounted. */
   minigunRoundsMin?: number; minigunHeatPeakMin?: number; minigunLockedFramesMin?: number; minigunMountedFramesMin?: number;
   /** Lowest feet height of the courier from the first mount on (m): on the finale deck about 3.08, a drop to the street fails it. */

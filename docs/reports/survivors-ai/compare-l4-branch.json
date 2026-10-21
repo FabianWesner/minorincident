@@ -1,0 +1,4105 @@
+[
+ {
+  "seed": 1,
+  "director": {
+   "lines": [
+    {
+     "id": "line-1",
+     "brokeAtS": 62,
+     "cause": "forced",
+     "pushes": 7
+    },
+    {
+     "id": "nests",
+     "brokeAtS": 124,
+     "cause": "forced",
+     "pushes": 5
+    },
+    {
+     "id": "armor",
+     "brokeAtS": 182,
+     "cause": "forced",
+     "pushes": 8
+    }
+   ],
+   "alphaJobs": [
+    {
+     "alphaId": 332,
+     "job": "west",
+     "stage": "done",
+     "startedAt": 3889
+    },
+    {
+     "alphaId": 409,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 5329
+    },
+    {
+     "alphaId": 412,
+     "job": "south",
+     "stage": "done",
+     "startedAt": 7009
+    },
+    {
+     "alphaId": 414,
+     "job": "north",
+     "stage": "done",
+     "startedAt": 7489
+    },
+    {
+     "alphaId": 416,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 7969
+    },
+    {
+     "alphaId": 420,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 9169
+    },
+    {
+     "alphaId": 422,
+     "job": "armor",
+     "stage": "charge",
+     "startedAt": 10249,
+     "hold": {
+      "x": -56.6,
+      "z": 6
+     }
+    },
+    {
+     "alphaId": 424,
+     "job": "armor",
+     "stage": "done",
+     "startedAt": 10849,
+     "hold": {
+      "x": 0.9,
+      "z": -23.3
+     }
+    }
+   ],
+   "knockdowns": 33,
+   "barricades": 3,
+   "turnedInside": 0,
+   "spawned": 37,
+   "cutOff": [
+    108,
+    109,
+    100
+   ],
+   "swarmedAt": 12890,
+   "fallBackAt": 13370,
+   "settled": 0,
+   "burnAt": 0,
+   "gapUntil": 15770,
+   "refugees": []
+  },
+  "lineBreakS": 190.01666666666668,
+  "soldiersAtTurn": 20,
+  "breakCause": "beats",
+  "breakAfterS": 190.01666666666668,
+  "killsAtBreak": 1122,
+  "kills": {
+   "player": 0,
+   "soldiers": 455,
+   "armedCivilians": 744,
+   "unarmedCivilians": 0,
+   "heli": 11,
+   "tank": 15,
+   "other": 6
+  },
+  "maxConcurrent": 106,
+  "maxCharacters": 132,
+  "events": [
+   {
+    "t": 0,
+    "type": "l4.firstTurn"
+   },
+   {
+    "t": 38.8,
+    "type": "barricade.broken",
+    "info": "l4-line-west"
+   },
+   {
+    "t": 41,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 62,
+    "type": "l4.beat",
+    "info": "line-1"
+   },
+   {
+    "t": 86.4,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 86.5,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 106.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 106.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 108.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 109.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 110.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 111.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 113.8,
+    "type": "barricade.broken",
+    "info": "l4-line-north"
+   },
+   {
+    "t": 115.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 121.7,
+    "type": "barricade.broken",
+    "info": "l4-line-south"
+   },
+   {
+    "t": 123.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 124,
+    "type": "l4.beat",
+    "info": "nests"
+   },
+   {
+    "t": 125.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 146.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 149.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 149.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 149.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 150.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 151.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 157.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 173.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 173.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 173.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 173.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 174.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 175.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 179,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 182,
+    "type": "l4.beat",
+    "info": "armor"
+   },
+   {
+    "t": 187.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 188.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 188.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 190,
+    "type": "l4.lineBreaks",
+    "info": "beats"
+   },
+   {
+    "t": 190.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 191.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 191.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 191.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 191.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 192.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 192.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 192.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 193,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 193.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 193.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 193.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 195.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 196.3,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 197.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 203.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 205.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 205.4,
+    "type": "alpha-knock",
+    "info": "alpha.grab-throw"
+   }
+  ],
+  "samples": [
+   {
+    "t": 0,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 18,
+    "inside": 18,
+    "director": 18,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 5,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 35,
+    "inside": 0,
+    "director": 63,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 10,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 19,
+    "inside": 0,
+    "director": 74,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 15,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 8,
+    "inside": 0,
+    "director": 76,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 20,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 6,
+    "inside": 1,
+    "director": 76,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 25,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 4,
+    "inside": 0,
+    "director": 76,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 30,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 5,
+    "inside": 0,
+    "director": 76,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 35,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 17,
+    "inside": 13,
+    "director": 92,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:charge@-42,12hp200:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 15,
+    "settled": 0
+   },
+   {
+    "t": 40,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 6,
+    "director": 99,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:tank@-30,7hp102:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 22,
+    "settled": 0
+   },
+   {
+    "t": 45,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 3,
+    "inside": 0,
+    "director": 98,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-30,7hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 22,
+    "settled": 0
+   },
+   {
+    "t": 50,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 4,
+    "inside": 0,
+    "director": 99,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-30,7hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 23,
+    "settled": 0
+   },
+   {
+    "t": 55,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 18,
+    "inside": 14,
+    "director": 99,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-30,7hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 60,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 3,
+    "inside": 0,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-30,7hp0:dead line:charge@-39,-25hp264:attracted",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 65,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 7,
+    "inside": 5,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-30,7hp129:chase line:slam@-36,-18hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 70,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 4,
+    "inside": 1,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,10hp0:dead line:slam@-36,-18hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 75,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 7,
+    "inside": 1,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,10hp0:dead line:slam@-36,-18hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 80,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 7,
+    "inside": 1,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,10hp0:dead line:slam@-36,-18hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 85,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 11,
+    "inside": 3,
+    "director": 101,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,9hp116:chase line:tank@-35,-16hp111:attracted south:walk@-7,40hp271:attracted",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 90,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 2,
+    "director": 101,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-35,-17hp0:dead south:walk@-20,38hp210:attracted",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 95,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 9,
+    "inside": 2,
+    "director": 102,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-35,-17hp0:dead south:walk@-20,38hp147:attracted north:walk@-28,-36hp300:attracted",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 100,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 8,
+    "inside": 2,
+    "director": 103,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-35,-17hp0:dead south:walk@-20,38hp82:attracted north:walk@-39,-28hp300:attracted line:charge@13,-3hp300:idle",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 105,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 16,
+    "inside": 6,
+    "director": 103,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp200:stagger line:done@-34,-17hp230:chase south:walk@-20,38hp0:dead north:charge@-39,-23hp300:attracted line:charge@8,9hp171:attracted",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 110,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 15,
+    "inside": 5,
+    "director": 103,
+    "alphaKnock": 7,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-31,-16hp89:attack south:walk@-20,38hp0:dead north:charge@-24,-21hp273:attracted line:charge@-4,9hp0:dead",
+    "tank": "hold",
+    "kd": 6,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 115,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 14,
+    "inside": 5,
+    "director": 103,
+    "alphaKnock": 9,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-31,-16hp0:dead south:charge@-20,38hp267:attracted north:tank@-19,-16hp133:attracted line:charge@-4,9hp0:dead",
+    "tank": "hold",
+    "kd": 8,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 120,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 13,
+    "inside": 2,
+    "director": 104,
+    "alphaKnock": 10,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-31,-16hp0:dead south:slam@-25,25hp148:attracted north:done@-19,-16hp0:dead line:charge@-4,9hp0:dead line:charge@-23,43hp300:idle",
+    "tank": "hold",
+    "kd": 9,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 125,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 12,
+    "inside": 3,
+    "director": 104,
+    "alphaKnock": 11,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-28,-3hp35:chase line:done@-31,-16hp0:dead south:done@-26,19hp13:chase north:done@-19,-16hp0:dead line:charge@-4,9hp0:dead line:charge@-24,28hp300:attracted",
+    "tank": "hold",
+    "kd": 10,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 130,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 16,
+    "inside": 3,
+    "director": 104,
+    "alphaKnock": 12,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-31,-16hp0:dead south:done@-26,17hp0:dead north:done@-19,-16hp0:dead line:slam@-9,13hp0:dead line:slam@-24,19hp152:attracted",
+    "tank": "hold",
+    "kd": 11,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 135,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 26,
+    "inside": 10,
+    "director": 104,
+    "alphaKnock": 12,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-31,-17hp300:stagger south:done@-26,17hp0:dead north:done@-19,-16hp5:chase line:slam@-9,13hp0:dead line:slam@-23,18hp0:dead",
+    "tank": "hold",
+    "kd": 11,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 140,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 19,
+    "inside": 5,
+    "director": 105,
+    "alphaKnock": 12,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-29,-17hp282:chase south:done@-26,16hp263:chase north:done@-19,-16hp0:dead line:slam@-9,13hp0:dead line:slam@-23,18hp0:dead armor:walk@-55,6hp190:attracted",
+    "tank": "hold",
+    "kd": 11,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 145,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 5,
+    "director": 105,
+    "alphaKnock": 12,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-28,-3hp0:dead line:done@-25,-17hp165:chase south:done@-21,15hp0:dead north:done@-19,-16hp0:dead line:slam@-9,13hp0:dead line:slam@-21,16hp152:attracted armor:walk@-56,6hp175:attracted",
+    "tank": "hold",
+    "kd": 11,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 150,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 24,
+    "inside": 12,
+    "director": 106,
+    "alphaKnock": 16,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-28,-17hp72:chase south:done@-21,15hp0:dead north:done@-19,-16hp0:dead line:slam@-10,13hp141:attack line:done@-19,13hp0:dead armor:charge@-56,6hp150:attracted armor:charge@1,-23hp285:attracted",
+    "tank": "hold",
+    "kd": 15,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 155,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 30,
+    "inside": 9,
+    "director": 106,
+    "alphaKnock": 18,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-26,-17hp49:chase south:done@-21,15hp0:dead north:done@-19,-16hp121:chase line:slam@-11,14hp0:dead line:done@-19,13hp0:dead armor:charge@-54,4hp20:attracted armor:charge@11,-17hp256:attracted",
+    "tank": "hold",
+    "kd": 17,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 160,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 22,
+    "inside": 3,
+    "director": 106,
+    "alphaKnock": 19,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-28,-17hp33:chase south:done@-21,15hp24:chase north:done@-15,-16hp6:chase line:slam@-11,14hp0:dead line:done@-19,13hp0:dead armor:charge@-54,-8hp20:attracted armor:charge@13,0hp256:attracted",
+    "tank": "hold",
+    "kd": 18,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 36,
+    "settled": 0
+   },
+   {
+    "t": 165,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 8,
+    "inside": 0,
+    "director": 106,
+    "alphaKnock": 19,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-25,-17hp0:dead south:done@-21,15hp0:dead north:done@-14,-16hp0:dead line:slam@-11,14hp0:dead line:done@-19,13hp0:dead armor:charge@-54,-8hp0:dead armor:charge@4,9hp127:attracted",
+    "tank": "hold",
+    "kd": 18,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 170,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 14,
+    "inside": 5,
+    "director": 106,
+    "alphaKnock": 19,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp105:chase line:done@-25,-17hp0:dead south:done@-21,15hp0:dead north:done@-14,-16hp0:dead line:slam@-11,14hp300:alerted line:done@-19,13hp185:chase armor:charge@-54,-8hp0:dead armor:charge@2,9hp0:dead",
+    "tank": "hold",
+    "kd": 18,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 175,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 16,
+    "inside": 5,
+    "director": 106,
+    "alphaKnock": 26,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-25,-17hp0:dead south:done@-21,15hp281:chase north:done@-14,-16hp0:dead line:slam@-10,13hp80:attack line:done@-10,11hp0:dead armor:charge@-54,-8hp0:dead armor:charge@2,9hp0:dead",
+    "tank": "hold",
+    "kd": 24,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 180,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 16,
+    "inside": 8,
+    "director": 106,
+    "alphaKnock": 28,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-25,-17hp255:chase south:done@-16,14hp0:dead north:done@-14,-16hp182:attack line:slam@-10,14hp0:dead line:done@-10,11hp0:dead armor:charge@-54,-8hp0:dead armor:charge@2,9hp0:dead",
+    "tank": "hold",
+    "kd": 26,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 185,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 15,
+    "inside": 1,
+    "director": 106,
+    "alphaKnock": 28,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-27,-1hp0:dead line:done@-30,-17hp216:chase south:done@-16,14hp0:dead north:done@-23,-16hp8:attack line:slam@-10,14hp0:dead line:done@-10,11hp0:dead armor:charge@-54,-8hp0:dead armor:done@3,9hp101:chase",
+    "tank": "silent",
+    "kd": 26,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 190,
+    "phase": "war",
+    "soldiers": 18,
+    "turnedSoldiers": 0,
+    "infected": 20,
+    "inside": 6,
+    "director": 106,
+    "alphaKnock": 36,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-27,-1hp261:stagger line:done@-27,-17hp211:chase south:done@-16,14hp0:dead north:done@-23,-16hp0:dead line:done@-12,14hp228:chase line:done@-10,11hp214:chase armor:charge@-54,-8hp0:dead armor:done@14,11hp59:chase",
+    "tank": "silent",
+    "kd": 33,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 195,
+    "phase": "collapse",
+    "soldiers": 14,
+    "turnedSoldiers": 0,
+    "infected": 27,
+    "inside": 10,
+    "director": 106,
+    "alphaKnock": 52,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-27,-2hp124:alerted line:done@-28,-18hp168:attack south:done@-16,14hp300:stagger north:done@-23,-16hp0:dead line:done@-11,15hp57:chase line:done@-10,14hp72:attack armor:charge@-54,-8hp0:dead armor:done@16,25hp45:attracted",
+    "tank": "silent",
+    "kd": 33,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 200,
+    "phase": "collapse",
+    "soldiers": 13,
+    "turnedSoldiers": 0,
+    "infected": 33,
+    "inside": 15,
+    "director": 106,
+    "alphaKnock": 55,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-34,1hp59:chase line:done@-43,-21hp168:chase south:done@-16,10hp300:chase north:done@-23,-16hp0:dead line:done@-5,13hp0:dead line:done@4,9hp19:alerted armor:charge@-54,-8hp0:dead armor:done@16,25hp45:idle",
+    "tank": "silent",
+    "kd": 33,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 205,
+    "phase": "collapse",
+    "soldiers": 13,
+    "turnedSoldiers": 0,
+    "infected": 35,
+    "inside": 21,
+    "director": 106,
+    "alphaKnock": 56,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-30,-0hp0:dead line:done@-39,-21hp168:chase south:done@-15,-2hp73:attack north:done@-23,-16hp300:chase line:done@-5,13hp0:dead line:done@5,9hp0:dead armor:charge@-54,-8hp0:dead armor:done@16,25hp45:attracted",
+    "tank": "silent",
+    "kd": 33,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 210,
+    "phase": "collapse",
+    "soldiers": 13,
+    "turnedSoldiers": 0,
+    "infected": 22,
+    "inside": 12,
+    "director": 106,
+    "alphaKnock": 58,
+    "lines": "line-1:9/9! nests:11/11! armor:16/16!",
+    "jobs": "west:done@-30,-0hp0:dead line:done@-28,-20hp168:chase south:done@-14,-1hp0:dead north:done@-18,-15hp300:chase line:done@-5,13hp0:dead line:done@5,9hp0:dead armor:charge@-54,-8hp0:dead armor:done@14,7hp40:attracted",
+    "tank": "silent",
+    "kd": 33,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   }
+  ]
+ },
+ {
+  "seed": 2,
+  "director": {
+   "lines": [
+    {
+     "id": "line-1",
+     "brokeAtS": 62,
+     "cause": "forced",
+     "pushes": 7
+    },
+    {
+     "id": "nests",
+     "brokeAtS": 124,
+     "cause": "forced",
+     "pushes": 5
+    },
+    {
+     "id": "armor",
+     "brokeAtS": 182,
+     "cause": "forced",
+     "pushes": 7
+    }
+   ],
+   "alphaJobs": [
+    {
+     "alphaId": 330,
+     "job": "west",
+     "stage": "done",
+     "startedAt": 3889
+    },
+    {
+     "alphaId": 387,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 5329
+    },
+    {
+     "alphaId": 393,
+     "job": "south",
+     "stage": "done",
+     "startedAt": 7009
+    },
+    {
+     "alphaId": 398,
+     "job": "north",
+     "stage": "done",
+     "startedAt": 7489
+    },
+    {
+     "alphaId": 402,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 7969
+    },
+    {
+     "alphaId": 437,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 9169
+    },
+    {
+     "alphaId": 442,
+     "job": "armor",
+     "stage": "slam",
+     "startedAt": 10249,
+     "hold": {
+      "x": -56.6,
+      "z": 6
+     }
+    },
+    {
+     "alphaId": 444,
+     "job": "armor",
+     "stage": "done",
+     "startedAt": 10849,
+     "hold": {
+      "x": 0.9,
+      "z": -23.3
+     }
+    }
+   ],
+   "knockdowns": 76,
+   "barricades": 3,
+   "turnedInside": 0,
+   "spawned": 42,
+   "cutOff": [
+    109,
+    104,
+    108
+   ],
+   "swarmedAt": 12890,
+   "fallBackAt": 13370,
+   "settled": 0,
+   "burnAt": 0,
+   "gapUntil": 15770,
+   "refugees": []
+  },
+  "lineBreakS": 190.01666666666668,
+  "soldiersAtTurn": 20,
+  "breakCause": "beats",
+  "breakAfterS": 190.01666666666668,
+  "killsAtBreak": 1005,
+  "kills": {
+   "player": 0,
+   "soldiers": 407,
+   "armedCivilians": 610,
+   "unarmedCivilians": 0,
+   "heli": 14,
+   "tank": 23,
+   "other": 7
+  },
+  "maxConcurrent": 106,
+  "maxCharacters": 127,
+  "events": [
+   {
+    "t": 0,
+    "type": "l4.firstTurn"
+   },
+   {
+    "t": 38.9,
+    "type": "barricade.broken",
+    "info": "l4-line-west"
+   },
+   {
+    "t": 41.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 60.3,
+    "type": "alpha-knock",
+    "info": "alpha.grab-throw"
+   },
+   {
+    "t": 62,
+    "type": "l4.beat",
+    "info": "line-1"
+   },
+   {
+    "t": 64.2,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 81.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 81.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 83,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 84,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 87.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 89.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 103,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 103,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 106.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 107.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 108.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 109.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 110.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 113.8,
+    "type": "barricade.broken",
+    "info": "l4-line-north"
+   },
+   {
+    "t": 115.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 117.9,
+    "type": "barricade.broken",
+    "info": "l4-line-south"
+   },
+   {
+    "t": 122.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 124,
+    "type": "l4.beat",
+    "info": "nests"
+   },
+   {
+    "t": 127,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 128.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 129,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 129.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 134.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 139,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 140.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 143,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 146.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 146.7,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 147.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 148.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 148.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 149.2,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 149.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 150.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 151.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 154.5,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 154.8,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 161.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 161.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 164.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 167.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 168.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 168.5,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 168.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 169.8,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 170.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 171.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 171.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 172.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 172.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 173.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 173.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 173.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 174.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 174.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 175.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 176.2,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 176.8,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 177.2,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 178.7,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 178.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 179.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 179.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 180.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 180.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 180.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 180.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 180.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 181.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 181.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 181.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 181.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 182,
+    "type": "l4.beat",
+    "info": "armor"
+   },
+   {
+    "t": 182.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 182.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 183.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 183.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 183.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 184.6,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 184.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 184.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 185,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 185.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 185.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 185.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 186,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 186.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 186.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 186.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 187,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 189.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 189.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 190,
+    "type": "l4.lineBreaks",
+    "info": "beats"
+   },
+   {
+    "t": 190.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 190.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 190.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 190.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 191.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 191.9,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 193,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 193.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 194,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 195,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 195,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 195.4,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 196,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 196.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 196.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 200.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   }
+  ],
+  "samples": [
+   {
+    "t": 0,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 18,
+    "inside": 18,
+    "director": 18,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 5,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 34,
+    "inside": 0,
+    "director": 63,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 10,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 18,
+    "inside": 0,
+    "director": 73,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 15,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 1,
+    "director": 77,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 20,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 9,
+    "inside": 0,
+    "director": 79,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 25,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 12,
+    "inside": 0,
+    "director": 79,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 30,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 9,
+    "inside": 0,
+    "director": 79,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 35,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 23,
+    "inside": 17,
+    "director": 96,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:charge@-42,12hp194:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 15,
+    "settled": 0
+   },
+   {
+    "t": 40,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 6,
+    "director": 99,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:slam@-30,7hp131:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 18,
+    "settled": 0
+   },
+   {
+    "t": 45,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 6,
+    "inside": 2,
+    "director": 99,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-29,6hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 18,
+    "settled": 0
+   },
+   {
+    "t": 50,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 12,
+    "inside": 5,
+    "director": 99,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-29,6hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 18,
+    "settled": 0
+   },
+   {
+    "t": 55,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 11,
+    "inside": 6,
+    "director": 99,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-29,6hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 60,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 6,
+    "inside": 1,
+    "director": 100,
+    "alphaKnock": 1,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:done@-29,6hp246:chase line:charge@-39,-22hp267:attracted",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 65,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 15,
+    "inside": 4,
+    "director": 95,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-30,7hp18:chase line:slam@-27,-16hp0:dead",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 70,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 14,
+    "inside": 4,
+    "director": 95,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-29,7hp0:dead line:slam@-27,-16hp0:dead",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 75,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 8,
+    "inside": 0,
+    "director": 94,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-29,7hp0:dead line:slam@-27,-16hp0:dead",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 80,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 13,
+    "inside": 2,
+    "director": 94,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-29,7hp0:dead line:slam@-27,-16hp214:chase",
+    "tank": "hold",
+    "kd": 3,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 85,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 17,
+    "inside": 3,
+    "director": 93,
+    "alphaKnock": 7,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-29,7hp291:stagger line:slam@-27,-16hp0:dead south:walk@-7,40hp266:attracted",
+    "tank": "hold",
+    "kd": 6,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 90,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 8,
+    "inside": 5,
+    "director": 93,
+    "alphaKnock": 9,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-28,8hp104:chase line:slam@-27,-16hp0:dead south:walk@-20,38hp191:attracted",
+    "tank": "hold",
+    "kd": 8,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 95,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 13,
+    "inside": 10,
+    "director": 92,
+    "alphaKnock": 9,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-22,8hp0:dead line:slam@-27,-16hp0:dead south:walk@-19,38hp0:dead north:walk@-28,-36hp225:attracted",
+    "tank": "hold",
+    "kd": 8,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 100,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 10,
+    "inside": 1,
+    "director": 93,
+    "alphaKnock": 9,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-22,8hp0:dead line:slam@-27,-16hp277:stagger south:walk@-19,38hp0:dead north:walk@-39,-28hp225:attracted line:charge@13,-3hp300:idle",
+    "tank": "hold",
+    "kd": 8,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 25,
+    "settled": 0
+   },
+   {
+    "t": 105,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 21,
+    "inside": 2,
+    "director": 101,
+    "alphaKnock": 11,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-22,8hp277:alerted line:slam@-30,-16hp129:alerted south:walk@-19,38hp0:dead north:charge@-39,-23hp220:attracted line:charge@8,9hp253:attracted",
+    "tank": "hold",
+    "kd": 9,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 35,
+    "settled": 0
+   },
+   {
+    "t": 110,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 32,
+    "inside": 9,
+    "director": 103,
+    "alphaKnock": 15,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-24,8hp0:dead line:slam@-31,-16hp50:attack south:charge@-19,38hp300:idle north:charge@-24,-21hp210:attracted line:slam@-8,9hp0:dead",
+    "tank": "hold",
+    "kd": 13,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 115,
+    "phase": "war",
+    "soldiers": 18,
+    "turnedSoldiers": 0,
+    "infected": 27,
+    "inside": 5,
+    "director": 102,
+    "alphaKnock": 16,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-24,8hp0:dead line:done@-22,-16hp45:alerted south:charge@-25,27hp227:attracted north:tank@-19,-16hp83:attracted line:slam@-8,9hp0:dead",
+    "tank": "hold",
+    "kd": 14,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 37,
+    "settled": 0
+   },
+   {
+    "t": 120,
+    "phase": "war",
+    "soldiers": 17,
+    "turnedSoldiers": 0,
+    "infected": 14,
+    "inside": 1,
+    "director": 104,
+    "alphaKnock": 17,
+    "lines": "line-1:9/9! nests:11/11 armor:6/6",
+    "jobs": "west:done@-24,8hp0:dead line:done@-19,-15hp0:dead south:tank@-26,19hp114:attracted north:done@-18,-15hp0:dead line:slam@-8,9hp0:dead line:charge@-23,43hp300:idle",
+    "tank": "hold",
+    "kd": 15,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 125,
+    "phase": "war",
+    "soldiers": 17,
+    "turnedSoldiers": 0,
+    "infected": 17,
+    "inside": 3,
+    "director": 104,
+    "alphaKnock": 18,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-24,8hp174:chase line:done@-19,-15hp0:dead south:done@-27,15hp0:dead north:done@-18,-15hp0:dead line:slam@-8,9hp224:attracted line:charge@-25,27hp242:attracted",
+    "tank": "hold",
+    "kd": 16,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 130,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 34,
+    "inside": 14,
+    "director": 104,
+    "alphaKnock": 22,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-23,7hp0:chase line:done@-19,-15hp0:dead south:done@-27,15hp0:dead north:done@-18,-15hp277:chase line:done@-10,11hp0:dead line:slam@-23,19hp221:attracted",
+    "tank": "hold",
+    "kd": 20,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 135,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 32,
+    "inside": 18,
+    "director": 104,
+    "alphaKnock": 23,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-23,7hp0:dead line:done@-19,-15hp0:dead south:done@-27,15hp261:stagger north:done@-15,-16hp187:chase line:done@-10,11hp0:dead line:tank@-19,15hp0:dead",
+    "tank": "hold",
+    "kd": 20,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 140,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 28,
+    "inside": 14,
+    "director": 105,
+    "alphaKnock": 24,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-23,7hp0:dead line:done@-19,-15hp286:chase south:done@-20,14hp101:chase north:done@-15,-9hp0:dead line:done@-10,11hp0:dead line:tank@-19,15hp0:dead armor:walk@-57,6hp300:idle",
+    "tank": "hold",
+    "kd": 20,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 145,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 20,
+    "inside": 13,
+    "director": 105,
+    "alphaKnock": 26,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-23,7hp173:chase line:done@-19,-11hp165:chase south:done@-17,14hp0:dead north:done@-15,-9hp0:dead line:done@-10,11hp0:dead line:tank@-19,15hp0:dead armor:walk@-55,6hp190:attracted",
+    "tank": "hold",
+    "kd": 22,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 150,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 29,
+    "inside": 19,
+    "director": 106,
+    "alphaKnock": 33,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-28,2hp19:chase line:done@-15,-11hp1:chase south:done@-17,14hp0:dead north:done@-15,-9hp0:dead line:done@-15,8hp0:dead line:done@-19,15hp296:chase armor:charge@-56,6hp190:attracted armor:charge@1,-23hp300:attracted",
+    "tank": "hold",
+    "kd": 27,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 155,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 23,
+    "inside": 11,
+    "director": 106,
+    "alphaKnock": 37,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-28,2hp0:dead line:done@-15,-12hp0:dead south:done@-17,14hp0:dead north:done@-15,-9hp0:dead line:done@-15,8hp0:dead line:done@-16,11hp0:dead armor:charge@-54,3hp190:attracted armor:charge@10,-20hp282:attracted",
+    "tank": "hold",
+    "kd": 31,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 160,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 0,
+    "infected": 15,
+    "inside": 6,
+    "director": 106,
+    "alphaKnock": 37,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-28,2hp0:dead line:done@-15,-12hp0:dead south:done@-17,14hp0:dead north:done@-15,-9hp146:chase line:done@-15,8hp0:dead line:done@-16,11hp0:dead armor:charge@-54,-9hp190:attracted armor:charge@12,-2hp282:attracted",
+    "tank": "hold",
+    "kd": 31,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 165,
+    "phase": "war",
+    "soldiers": 15,
+    "turnedSoldiers": 0,
+    "infected": 22,
+    "inside": 13,
+    "director": 106,
+    "alphaKnock": 40,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-28,2hp251:chase line:done@-15,-12hp0:dead south:done@-17,14hp142:chase north:done@-16,-9hp0:dead line:done@-15,8hp0:dead line:done@-16,11hp0:dead armor:charge@-53,-18hp80:attracted armor:charge@8,9hp265:attracted",
+    "tank": "hold",
+    "kd": 34,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 170,
+    "phase": "war",
+    "soldiers": 13,
+    "turnedSoldiers": 0,
+    "infected": 36,
+    "inside": 26,
+    "director": 106,
+    "alphaKnock": 45,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-27,-5hp215:alerted line:done@-15,-12hp282:stagger south:done@-11,14hp106:chase north:done@-16,-9hp0:dead line:done@-15,7hp151:chase line:done@-16,11hp300:alerted armor:charge@-41,-22hp65:attracted armor:slam@-10,13hp220:attracted",
+    "tank": "hold",
+    "kd": 39,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 175,
+    "phase": "war",
+    "soldiers": 13,
+    "turnedSoldiers": 0,
+    "infected": 54,
+    "inside": 28,
+    "director": 106,
+    "alphaKnock": 60,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-22,-3hp120:chase line:done@-15,-13hp231:chase south:done@-11,15hp69:chase north:done@-16,-9hp0:dead line:done@-20,8hp93:chase line:done@-15,10hp282:chase armor:charge@-25,-20hp9:attracted armor:charge@-10,14hp169:chase",
+    "tank": "hold",
+    "kd": 49,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 180,
+    "phase": "war",
+    "soldiers": 9,
+    "turnedSoldiers": 0,
+    "infected": 51,
+    "inside": 26,
+    "director": 102,
+    "alphaKnock": 73,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14",
+    "jobs": "west:done@-13,6hp71:chase line:done@-14,-14hp194:chase south:done@-10,17hp42:chase north:done@-16,-9hp228:chase line:done@-15,2hp75:chase line:done@-16,4hp255:attack armor:slam@-19,-16hp0:dead armor:slam@-10,21hp94:attack",
+    "tank": "hold",
+    "kd": 59,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 38,
+    "settled": 0
+   },
+   {
+    "t": 185,
+    "phase": "war",
+    "soldiers": 6,
+    "turnedSoldiers": 0,
+    "infected": 66,
+    "inside": 49,
+    "director": 106,
+    "alphaKnock": 90,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-17,2hp66:chase line:done@-15,-16hp171:attack south:done@-10,16hp6:chase north:done@-16,-5hp195:chase line:done@-18,-1hp54:attack line:done@-19,-2hp250:chase armor:slam@-19,-16hp0:dead armor:done@-10,21hp40:chase",
+    "tank": "silent",
+    "kd": 73,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   },
+   {
+    "t": 190,
+    "phase": "war",
+    "soldiers": 6,
+    "turnedSoldiers": 0,
+    "infected": 60,
+    "inside": 48,
+    "director": 106,
+    "alphaKnock": 101,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-17,-4hp39:chase line:done@-15,-16hp68:attack south:done@-10,16hp0:dead north:done@-15,-5hp164:chase line:done@-18,-7hp54:chase line:done@-20,-5hp245:chase armor:slam@-19,-16hp0:dead armor:done@-10,16hp0:dead",
+    "tank": "silent",
+    "kd": 76,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   },
+   {
+    "t": 195,
+    "phase": "collapse",
+    "soldiers": 5,
+    "turnedSoldiers": 0,
+    "infected": 59,
+    "inside": 17,
+    "director": 106,
+    "alphaKnock": 111,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-15,-9hp35:chase line:done@-18,-16hp17:attack south:done@-10,16hp0:dead north:done@-13,-7hp145:attack line:done@-14,-12hp54:attack line:done@-14,-7hp245:chase armor:slam@-19,-16hp0:dead armor:done@-10,16hp0:dead",
+    "tank": "silent",
+    "kd": 76,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   },
+   {
+    "t": 200,
+    "phase": "collapse",
+    "soldiers": 5,
+    "turnedSoldiers": 0,
+    "infected": 63,
+    "inside": 42,
+    "director": 106,
+    "alphaKnock": 117,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-19,-7hp35:chase line:done@-18,-16hp0:dead south:done@-10,16hp0:dead north:done@-11,-6hp127:chase line:done@-20,-9hp50:chase line:done@-17,-10hp245:chase armor:slam@-19,-13hp295:attracted armor:done@-10,16hp0:dead",
+    "tank": "silent",
+    "kd": 76,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   },
+   {
+    "t": 205,
+    "phase": "collapse",
+    "soldiers": 5,
+    "turnedSoldiers": 0,
+    "infected": 58,
+    "inside": 48,
+    "director": 106,
+    "alphaKnock": 118,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-20,-10hp35:chase line:done@-18,-16hp0:dead south:done@-10,16hp270:chase north:done@-11,-6hp102:chase line:done@-20,-8hp50:chase line:done@-18,-11hp245:alerted armor:slam@-17,-7hp295:attracted armor:done@-11,17hp300:stagger",
+    "tank": "silent",
+    "kd": 76,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   },
+   {
+    "t": 210,
+    "phase": "collapse",
+    "soldiers": 5,
+    "turnedSoldiers": 0,
+    "infected": 60,
+    "inside": 40,
+    "director": 106,
+    "alphaKnock": 118,
+    "lines": "line-1:9/9! nests:11/11! armor:14/14!",
+    "jobs": "west:done@-20,-2hp35:chase line:done@-18,-16hp0:dead south:done@1,24hp195:chase north:done@-11,-6hp77:chase line:done@-22,-0hp50:chase line:done@-17,-11hp245:chase armor:slam@-16,-6hp295:attracted armor:done@0,10hp300:chase",
+    "tank": "silent",
+    "kd": 76,
+    "bar": 3,
+    "turnedIn": 0,
+    "spawned": 42,
+    "settled": 0
+   }
+  ]
+ },
+ {
+  "seed": 3,
+  "director": {
+   "lines": [
+    {
+     "id": "line-1",
+     "brokeAtS": 62,
+     "cause": "forced",
+     "pushes": 7
+    },
+    {
+     "id": "nests",
+     "brokeAtS": 124,
+     "cause": "forced",
+     "pushes": 5
+    },
+    {
+     "id": "armor",
+     "brokeAtS": 182,
+     "cause": "forced",
+     "pushes": 8
+    }
+   ],
+   "alphaJobs": [
+    {
+     "alphaId": 332,
+     "job": "west",
+     "stage": "done",
+     "startedAt": 3889
+    },
+    {
+     "alphaId": 396,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 5329
+    },
+    {
+     "alphaId": 415,
+     "job": "south",
+     "stage": "done",
+     "startedAt": 7009
+    },
+    {
+     "alphaId": 416,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 7489
+    },
+    {
+     "alphaId": 424,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 7969
+    },
+    {
+     "alphaId": 458,
+     "job": "line",
+     "stage": "done",
+     "startedAt": 9169
+    },
+    {
+     "alphaId": 462,
+     "job": "armor",
+     "stage": "done",
+     "startedAt": 10249,
+     "hold": {
+      "x": -56.6,
+      "z": 6
+     }
+    },
+    {
+     "alphaId": 463,
+     "job": "armor",
+     "stage": "done",
+     "startedAt": 10849,
+     "hold": {
+      "x": 0.9,
+      "z": -23.3
+     }
+    }
+   ],
+   "knockdowns": 30,
+   "barricades": 2,
+   "turnedInside": 0,
+   "spawned": 49,
+   "cutOff": [
+    109,
+    106,
+    110
+   ],
+   "swarmedAt": 12890,
+   "fallBackAt": 13370,
+   "settled": 0,
+   "burnAt": 0,
+   "gapUntil": 15770,
+   "refugees": []
+  },
+  "lineBreakS": 190.01666666666668,
+  "soldiersAtTurn": 20,
+  "breakCause": "beats",
+  "breakAfterS": 190.01666666666668,
+  "killsAtBreak": 1138,
+  "kills": {
+   "player": 0,
+   "soldiers": 368,
+   "armedCivilians": 815,
+   "unarmedCivilians": 0,
+   "heli": 10,
+   "tank": 37,
+   "other": 5
+  },
+  "maxConcurrent": 106,
+  "maxCharacters": 125,
+  "events": [
+   {
+    "t": 0,
+    "type": "l4.firstTurn"
+   },
+   {
+    "t": 38.9,
+    "type": "barricade.broken",
+    "info": "l4-line-west"
+   },
+   {
+    "t": 62,
+    "type": "l4.beat",
+    "info": "line-1"
+   },
+   {
+    "t": 62.9,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 64.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 64.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 86.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 105.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 108.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 109.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 117.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 118.7,
+    "type": "barricade.broken",
+    "info": "l4-line-south"
+   },
+   {
+    "t": 121.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 124,
+    "type": "l4.beat",
+    "info": "nests"
+   },
+   {
+    "t": 126.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 126.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 128.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 129.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 130,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 130,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 130.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 131.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 131.4,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 132.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 143.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 152.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 152.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 152.7,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 154.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 155.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 158.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 159.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 159.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 172.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 174.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 174.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 175.1,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 175.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 175.6,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 176.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 177.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 177.6,
+    "type": "alpha-knock",
+    "info": "alpha.grab-throw"
+   },
+   {
+    "t": 179.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 180.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 180.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 182,
+    "type": "l4.beat",
+    "info": "armor"
+   },
+   {
+    "t": 182.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 185.5,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 186.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 187.1,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 187.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 187.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 188.7,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 188.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 189.3,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.8,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 189.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 190,
+    "type": "l4.lineBreaks",
+    "info": "beats"
+   },
+   {
+    "t": 192.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 193.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 193.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.3,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 194.7,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 194.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 195.1,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 195.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 196.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 196.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 196.4,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 196.6,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 197.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 197.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 198.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 198.5,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 199,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 199.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 199.8,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 199.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 200,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 200.6,
+    "type": "alpha-knock",
+    "info": "alpha.charge"
+   },
+   {
+    "t": 200.9,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 201,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 201.8,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 203,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 203.6,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 204.2,
+    "type": "alpha-knock",
+    "info": "alpha"
+   },
+   {
+    "t": 205.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 205.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 205.7,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 205.7,
+    "type": "alpha-knock",
+    "info": "alpha.grab-throw"
+   },
+   {
+    "t": 209.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   },
+   {
+    "t": 209.2,
+    "type": "alpha-knock",
+    "info": "alpha.ground-slam"
+   }
+  ],
+  "samples": [
+   {
+    "t": 0,
+    "phase": "war",
+    "soldiers": 20,
+    "turnedSoldiers": 0,
+    "infected": 18,
+    "inside": 18,
+    "director": 18,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 5,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 0,
+    "infected": 33,
+    "inside": 5,
+    "director": 56,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 10,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 19,
+    "inside": 1,
+    "director": 73,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 15,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 1,
+    "director": 77,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 20,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 1,
+    "director": 77,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "off",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 25,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 10,
+    "inside": 0,
+    "director": 77,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 30,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 2,
+    "inside": 0,
+    "director": 77,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 0,
+    "settled": 0
+   },
+   {
+    "t": 35,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 19,
+    "inside": 16,
+    "director": 93,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:charge@-42,12hp242:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 0,
+    "turnedIn": 0,
+    "spawned": 15,
+    "settled": 0
+   },
+   {
+    "t": 40,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 14,
+    "inside": 7,
+    "director": 99,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:slam@-30,7hp201:attracted",
+    "tank": "enter",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 21,
+    "settled": 0
+   },
+   {
+    "t": 45,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 4,
+    "inside": 0,
+    "director": 90,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:tank@-33,1hp0:dead",
+    "tank": "hold",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 21,
+    "settled": 0
+   },
+   {
+    "t": 50,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 2,
+    "director": 99,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:tank@-33,1hp0:dead",
+    "tank": "hold",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 30,
+    "settled": 0
+   },
+   {
+    "t": 55,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 1,
+    "director": 98,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:tank@-33,1hp0:dead",
+    "tank": "hold",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 30,
+    "settled": 0
+   },
+   {
+    "t": 60,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 6,
+    "inside": 3,
+    "director": 100,
+    "alphaKnock": 0,
+    "lines": "line-1:9/9 nests:2/2 armor:6/6",
+    "jobs": "west:tank@-33,1hp0:dead line:charge@-39,-22hp273:attracted",
+    "tank": "hold",
+    "kd": 0,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 65,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 8,
+    "inside": 1,
+    "director": 97,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-33,1hp113:chase line:tank@-31,-19hp33:attracted",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 70,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 6,
+    "inside": 3,
+    "director": 98,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-33,1hp0:dead line:done@-31,-19hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 75,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 4,
+    "inside": 1,
+    "director": 98,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-33,1hp0:dead line:done@-31,-19hp0:dead",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 80,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 5,
+    "inside": 0,
+    "director": 99,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-33,1hp0:dead line:done@-31,-19hp245:stagger",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 85,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 14,
+    "inside": 5,
+    "director": 89,
+    "alphaKnock": 3,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-33,1hp87:chase line:done@-19,-21hp37:chase south:walk@-7,40hp261:attracted",
+    "tank": "hold",
+    "kd": 1,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 90,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 4,
+    "inside": 0,
+    "director": 89,
+    "alphaKnock": 4,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-19,-20hp0:dead south:walk@-20,38hp185:attracted",
+    "tank": "hold",
+    "kd": 2,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 95,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 5,
+    "inside": 1,
+    "director": 90,
+    "alphaKnock": 4,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-19,-20hp0:dead south:walk@-20,38hp58:attracted north:walk@-28,-36hp300:attracted",
+    "tank": "hold",
+    "kd": 2,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 100,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 0,
+    "director": 91,
+    "alphaKnock": 4,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-19,-20hp0:dead south:walk@-20,38hp0:dead north:walk@-39,-28hp300:attracted line:charge@13,-3hp300:idle",
+    "tank": "hold",
+    "kd": 2,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 31,
+    "settled": 0
+   },
+   {
+    "t": 105,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 18,
+    "inside": 1,
+    "director": 101,
+    "alphaKnock": 4,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-19,-20hp134:chase south:walk@-20,38hp0:dead north:charge@-39,-23hp285:attracted line:charge@9,9hp286:attracted",
+    "tank": "hold",
+    "kd": 2,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 41,
+    "settled": 0
+   },
+   {
+    "t": 110,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 14,
+    "inside": 4,
+    "director": 103,
+    "alphaKnock": 7,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-17,-16hp6:chase south:walk@-20,38hp0:dead north:charge@-25,-21hp210:attracted line:slam@-6,9hp0:dead",
+    "tank": "hold",
+    "kd": 5,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 44,
+    "settled": 0
+   },
+   {
+    "t": 115,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 2,
+    "inside": 0,
+    "director": 103,
+    "alphaKnock": 7,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-16,-16hp0:dead south:charge@-24,30hp186:attracted north:slam@-19,-18hp0:dead line:slam@-6,9hp0:dead",
+    "tank": "hold",
+    "kd": 5,
+    "bar": 1,
+    "turnedIn": 0,
+    "spawned": 44,
+    "settled": 0
+   },
+   {
+    "t": 120,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 5,
+    "inside": 0,
+    "director": 104,
+    "alphaKnock": 8,
+    "lines": "line-1:9/9! nests:10/10 armor:6/6",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-16,-16hp0:dead south:slam@-26,19hp83:attracted north:slam@-19,-18hp0:dead line:slam@-6,9hp0:dead line:charge@-23,43hp300:idle",
+    "tank": "hold",
+    "kd": 6,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 125,
+    "phase": "war",
+    "soldiers": 19,
+    "turnedSoldiers": 1,
+    "infected": 11,
+    "inside": 1,
+    "director": 104,
+    "alphaKnock": 9,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-16,-16hp194:chase south:done@-26,17hp0:dead north:slam@-19,-18hp0:dead line:slam@-7,9hp0:dead line:charge@-24,26hp246:attracted",
+    "tank": "hold",
+    "kd": 7,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 130,
+    "phase": "war",
+    "soldiers": 18,
+    "turnedSoldiers": 1,
+    "infected": 10,
+    "inside": 4,
+    "director": 104,
+    "alphaKnock": 13,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp238:stagger line:done@-18,-16hp86:attack south:done@-26,17hp0:dead line:charge@-19,-17hp195:chase line:slam@-7,9hp0:dead line:slam@-26,19hp0:dead",
+    "tank": "hold",
+    "kd": 11,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 135,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 12,
+    "inside": 3,
+    "director": 104,
+    "alphaKnock": 19,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-14,-15hp2:chase south:done@-26,17hp0:dead line:slam@-15,-16hp195:attack line:slam@-7,9hp0:dead line:slam@-26,19hp0:dead",
+    "tank": "hold",
+    "kd": 17,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 140,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 16,
+    "inside": 7,
+    "director": 105,
+    "alphaKnock": 19,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-14,-15hp0:dead south:done@-23,15hp134:chase line:slam@-15,-11hp0:dead line:slam@-7,9hp153:attracted line:slam@-26,19hp0:dead armor:walk@-57,6hp300:idle",
+    "tank": "hold",
+    "kd": 17,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 145,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 8,
+    "inside": 1,
+    "director": 105,
+    "alphaKnock": 20,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp0:dead line:done@-14,-15hp0:dead south:done@-18,13hp0:dead line:slam@-15,-11hp0:dead line:slam@-8,9hp0:dead line:slam@-26,19hp296:attracted armor:walk@-57,6hp300:idle",
+    "tank": "hold",
+    "kd": 18,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 150,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 10,
+    "inside": 6,
+    "director": 102,
+    "alphaKnock": 20,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-30,-2hp269:stagger line:done@-14,-15hp0:dead south:done@-18,13hp0:dead line:slam@-15,-11hp227:attracted line:slam@-8,9hp0:dead line:tank@-19,13hp35:attracted armor:charge@-57,6hp300:attracted armor:charge@1,-23hp237:attracted",
+    "tank": "hold",
+    "kd": 18,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 45,
+    "settled": 0
+   },
+   {
+    "t": 155,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 27,
+    "inside": 10,
+    "director": 106,
+    "alphaKnock": 24,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-26,2hp35:attack line:done@-14,-14hp136:chase south:done@-18,13hp300:stagger line:tank@-14,-10hp0:dead line:slam@-8,9hp278:attracted line:tank@-19,13hp0:dead armor:charge@-54,3hp300:attracted armor:charge@11,-18hp237:attracted",
+    "tank": "hold",
+    "kd": 21,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 160,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 30,
+    "inside": 15,
+    "director": 106,
+    "alphaKnock": 28,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-26,2hp0:dead line:done@-15,-12hp0:dead south:done@-16,12hp0:dead line:tank@-14,-10hp0:dead line:tank@-10,11hp70:attracted line:tank@-19,13hp0:dead armor:charge@-53,-7hp185:attracted armor:charge@13,-0hp237:attracted",
+    "tank": "hold",
+    "kd": 25,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 165,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 13,
+    "inside": 3,
+    "director": 106,
+    "alphaKnock": 28,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-26,2hp0:dead line:done@-15,-12hp0:dead south:done@-16,12hp0:dead line:tank@-14,-10hp0:dead line:done@-10,11hp0:dead line:tank@-19,13hp0:dead armor:charge@-54,-13hp180:attracted armor:charge@13,3hp65:attracted",
+    "tank": "hold",
+    "kd": 25,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 170,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 3,
+    "inside": 0,
+    "director": 106,
+    "alphaKnock": 28,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-26,2hp0:dead line:done@-15,-12hp0:dead south:done@-16,12hp0:dead line:tank@-14,-10hp0:dead line:done@-10,11hp0:dead line:tank@-19,13hp0:dead armor:charge@-49,-23hp65:attracted armor:charge@13,3hp0:dead",
+    "tank": "hold",
+    "kd": 25,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 175,
+    "phase": "war",
+    "soldiers": 16,
+    "turnedSoldiers": 1,
+    "infected": 21,
+    "inside": 16,
+    "director": 106,
+    "alphaKnock": 31,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-26,2hp291:stagger line:done@-15,-12hp0:dead south:done@-15,13hp51:chase line:done@-17,-9hp34:chase line:done@-10,11hp0:dead line:done@-18,13hp120:attack armor:charge@-37,-16hp45:attracted armor:charge@13,3hp0:dead",
+    "tank": "hold",
+    "kd": 26,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 180,
+    "phase": "war",
+    "soldiers": 15,
+    "turnedSoldiers": 1,
+    "infected": 34,
+    "inside": 22,
+    "director": 106,
+    "alphaKnock": 38,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16",
+    "jobs": "west:done@-27,3hp211:alerted line:done@-15,-12hp223:chase south:done@-16,13hp0:dead line:done@-20,-8hp0:dead line:done@-10,11hp202:chase line:done@-18,13hp0:dead armor:charge@-33,-6hp45:attracted armor:charge@13,3hp0:dead",
+    "tank": "hold",
+    "kd": 28,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 185,
+    "phase": "war",
+    "soldiers": 15,
+    "turnedSoldiers": 1,
+    "infected": 28,
+    "inside": 22,
+    "director": 106,
+    "alphaKnock": 41,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-27,2hp85:alerted line:done@-15,-11hp105:chase south:done@-16,13hp0:dead line:done@-20,-8hp0:dead line:done@-10,10hp0:dead line:done@-18,13hp0:dead armor:done@-30,-3hp45:chase armor:charge@13,3hp0:dead",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 190,
+    "phase": "war",
+    "soldiers": 14,
+    "turnedSoldiers": 1,
+    "infected": 26,
+    "inside": 20,
+    "director": 106,
+    "alphaKnock": 52,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-34,-1hp85:alerted line:done@-15,-9hp0:dead south:done@-16,13hp285:chase line:done@-20,-8hp0:dead line:done@-10,10hp0:dead line:done@-18,13hp0:dead armor:done@-32,-3hp41:alerted armor:done@11,2hp218:chase",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 195,
+    "phase": "collapse",
+    "soldiers": 14,
+    "turnedSoldiers": 1,
+    "infected": 34,
+    "inside": 24,
+    "director": 106,
+    "alphaKnock": 59,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-35,-3hp36:attack line:done@-15,-9hp0:dead south:done@-17,14hp253:chase line:done@-15,-6hp146:chase line:done@-10,10hp0:dead line:done@-18,13hp288:chase armor:done@-33,-3hp26:chase armor:done@10,2hp34:chase",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 200,
+    "phase": "collapse",
+    "soldiers": 14,
+    "turnedSoldiers": 1,
+    "infected": 46,
+    "inside": 37,
+    "director": 106,
+    "alphaKnock": 74,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-35,0hp28:chase line:done@-15,-9hp0:dead south:done@-20,10hp241:chase line:done@-14,-5hp30:chase line:done@-9,7hp142:chase line:done@-18,8hp288:chase armor:done@-34,-1hp26:idle armor:done@10,2hp0:dead",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 205,
+    "phase": "collapse",
+    "soldiers": 13,
+    "turnedSoldiers": 1,
+    "infected": 33,
+    "inside": 23,
+    "director": 106,
+    "alphaKnock": 81,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-26,-1hp28:alerted line:done@-15,-9hp185:chase south:done@-20,4hp241:chase line:done@-14,-5hp0:dead line:done@-9,6hp0:dead line:done@-19,1hp246:chase armor:done@-24,-2hp26:chase armor:done@10,2hp0:dead",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   },
+   {
+    "t": 210,
+    "phase": "collapse",
+    "soldiers": 13,
+    "turnedSoldiers": 1,
+    "infected": 34,
+    "inside": 28,
+    "director": 106,
+    "alphaKnock": 87,
+    "lines": "line-1:9/9! nests:10/10! armor:16/16!",
+    "jobs": "west:done@-25,-1hp28:chase line:done@-15,-8hp0:dead south:done@-15,3hp236:chase line:done@-14,-5hp0:dead line:done@-9,6hp0:dead line:done@-18,1hp201:chase armor:done@-24,-2hp26:alerted armor:done@10,2hp278:alerted",
+    "tank": "silent",
+    "kd": 30,
+    "bar": 2,
+    "turnedIn": 0,
+    "spawned": 49,
+    "settled": 0
+   }
+  ]
+ }
+]

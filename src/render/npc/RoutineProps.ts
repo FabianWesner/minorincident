@@ -46,6 +46,7 @@ export class RoutineProps extends Group {
       // E22 weapons (code art, held at the right hand): long guns point along the forearm's forward axis, bats and pipes hang along the hand.
       rifle: [part(new BoxGeometry(.07, .09, .95), '#3b3f33', 0, -.02, .38), part(new BoxGeometry(.06, .14, .26), '#2b2d27', 0, -.06, -.1), part(new BoxGeometry(.045, .045, .3), '#1f2120', 0, .02, .75)],
       pistol: [part(new BoxGeometry(.045, .1, .06), '#2d2f33', 0, -.04, 0), part(new BoxGeometry(.05, .06, .2), '#3a3d42', 0, .02, .1)],
+      shotgun: [part(new BoxGeometry(.07, .09, .65), '#71513e', 0, -.025, .22), part(new BoxGeometry(.055, .055, .58), '#292537', 0, .025, .61), part(new BoxGeometry(.09, .08, .22), '#8e6742', 0, -.04, .46)],
       'hunting-rifle': [part(new BoxGeometry(.06, .08, .8), '#7a5535', 0, -.02, .3), part(new BoxGeometry(.04, .045, .5), '#2d2f33', 0, .01, .72), part(new BoxGeometry(.05, .05, .24), '#5f4328', 0, -.05, -.12)],
       pipe: [part(new CylinderGeometry(.028, .028, .85, 8), '#79808a', 0, -.3)],
       bat: [part(new CylinderGeometry(.045, .025, .85, 10), '#b98a55', 0, -.32), part(new CylinderGeometry(.03, .03, .08, 8), '#493d34', 0, .12)],
@@ -63,7 +64,7 @@ export class RoutineProps extends Group {
   held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
     this.place(prop, this.gripMatrix);
-    const muzzle = prop === 'pistol' ? [0, .02, .2] : prop === 'rifle' ? [0, .02, .9] : prop === 'hunting-rifle' ? [0, .01, .97] : null;
+    const muzzle = prop === 'pistol' ? [0, .02, .2] : prop === 'rifle' ? [0, .02, .9] : prop === 'shotgun' ? [0, .025, .9] : prop === 'hunting-rifle' ? [0, .01, .97] : null;
     if (muzzle) {
       const gun = this.gunPool[this.guns.length] ??= { entity, geometry: this.meshes.get(prop)!.geometry, matrix: new Matrix4(), muzzle: new Vector3() };
       gun.entity = entity; gun.geometry = this.meshes.get(prop)!.geometry; gun.matrix.copy(this.gripMatrix);

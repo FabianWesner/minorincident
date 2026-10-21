@@ -12,7 +12,7 @@ export const followerBarsAlwaysMax = 5;
 /** Larger groups (L6 tunnel crowd, L7's ~24 at the night exit, QA #37 "the ~24 bars are noise"): only hurt followers carry a bar,
  * and at most this many, the most hurt first. The HUD still lists the group; the bars point at who needs a medkit. */
 export const followerBarCap = 6;
-export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && e.health.current > 0 && !e.corpse;
+export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
   if (e.civilian?.survivor?.mode === 'follow') return isFollower(e) && (fullFollowers || e.health.current < e.health.max);

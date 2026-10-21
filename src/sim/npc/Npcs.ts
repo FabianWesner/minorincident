@@ -139,7 +139,14 @@ export class Npcs {
     for (const e of this.world.entities.iterate()) {
       if (e.infected && !e.corpse) { ai.pool.pop(); ai.active.push(e); }
       const c = e.civilian;
-      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.vehicleYield) c.vehicleYield.until += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
+      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted', 'dangerUntil'] as const) if (c[key]) c[key]! += delta; if (c.vehicleYield) c.vehicleYield.until += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
+      if (c?.ally) {
+        const a = c.ally;
+        for (const key of ['nextAttack', 'strikeAt', 'forceUntil', 'stepAfter', 'reloadUntil', 'flinchUntil', 'panicUntil', 'calloutAt', 'blockedAt', 'aimMoveAt', 'aimMoveRestUntil'] as const) if (a[key] !== undefined && a[key]! > 0) a[key]! += delta;
+        if (a.step) a.step.until += delta;
+        if (a.still) a.still.tick += delta;
+        if (a.follow?.breakoutUntil) a.follow.breakoutUntil += delta;
+      }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; if (e.companion.transitionUntil) e.companion.transitionUntil += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; if (e.escort.knockedUntil) e.escort.knockedUntil += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
