@@ -135,18 +135,33 @@ export class GameView implements Lifecycle {
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
   background = false;
   private frozenFrame: HTMLCanvasElement | null = null;
+  private frozenUpdates = false;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
    * loads and warms up behind the menus/briefing; drawing is suspended until unfreeze(). */
-  freeze(): void {
+  freeze(keepUpdates = false): void {
     if (this.frozenFrame) return;
+    this.frozenUpdates = keepUpdates;
     const source = this.renderer.domElement, copy = document.createElement('canvas');
     copy.width = source.width; copy.height = source.height;
     copy.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none';
     try { this.update(1); copy.getContext('2d')?.drawImage(source, 0, 0); } catch { /* best effort */ }
     source.after(copy); this.frozenFrame = copy;
   }
-  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; if (!this.warming) this.update(1); }
+  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; this.frozenUpdates = false; if (!this.warming) this.update(1); }
   get frozen(): boolean { return this.frozenFrame !== null; }
+  private loadingPresentedAt = -Infinity;
+  /** Keep the compositor presenting during handover work. The frozen canvas
+   * preserves the last picture while the opaque loading card covers it. A
+   * cheap canvas submission avoids Chrome's no-draw RAF pacing (~100 ms). */
+  presentLoading(): void {
+    if (!this.frozenFrame || this.background) return;
+    const now = performance.now();
+    if (now - this.loadingPresentedAt < 1000 / 60) return;
+    this.loadingPresentedAt = now;
+    const target = this.renderer.getRenderTarget();
+    try { this.renderer.setRenderTarget(null); this.renderer.clear(); }
+    finally { this.renderer.setRenderTarget(target); }
+  }
   private generation = 0;
   private npcs: NpcView | null = null;
   /** Scene Lab drives the same authored metro leaf as the L5 mission clock. */
@@ -245,6 +260,9 @@ export class GameView implements Lifecycle {
     this.camera.updateProjectionMatrix();
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
+    // Keep the handover's loading card responsive while the same assets parse
+    // and batches assemble; the full cast and all shader variants still load.
+    if (this.world.scenario === 'L8') loadGate.setPaced(true);
     const player = this.world.entities.get(1);
     this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
@@ -421,7 +439,7 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6');
+      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', this.world.scenario === 'L8');
       const prepare = async (): Promise<void> => {
         // L4's moving set pieces reveal the courier during combat. Warm both
         // graphs against every loading light/weather variant, before LOD swaps.
@@ -835,7 +853,7 @@ export class GameView implements Lifecycle {
   update(alpha = 1): void {
     this.vfx?.updateObstruction();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
-    if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
+    if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
     this.militaryPerimeter?.update();
     if (this.destination) {

@@ -5,7 +5,7 @@ import type { Lifecycle } from './Lifecycle';
 type FrameEvent = { tick: number; type: 'frame'; seconds: number };
 /** Browser-only frame source. Simulation receives elapsed seconds, never RAF IDs. */
 export class Ticker implements Lifecycle {
-  readonly events = new EventBus<FrameEvent>();
+  readonly events = new EventBus<FrameEvent>(event => ({ ...event }));
   private handle: number | null = null;
   private previous: number | null = null;
   private frames = 0;

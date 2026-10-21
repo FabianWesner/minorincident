@@ -1,4 +1,4 @@
-import { Box3, Mesh, Quaternion, Vector3, type Object3D } from 'three';
+import { Box3, Mesh, Quaternion, Vector3, type Matrix4, type Object3D } from 'three';
 
 /** Swinging paw clearance above the floor (m). */
 const swingLift = .04;
@@ -27,7 +27,14 @@ export class PawContacts {
       original.traverse(node => {
         if (!(node instanceof Mesh)) return;
         const positions = node.geometry.attributes.position, indices = node.geometry.index;
-        for (let i = 0; i < (indices?.count ?? positions.count); i++) vertices.push(original.worldToLocal(new Vector3().fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld)));
+        // Triangle indices repeat the same sole points. Retain each referenced
+        // vertex once; every later minimum still considers the identical set.
+        const seen = new Set<number>();
+        for (let i = 0; i < (indices?.count ?? positions.count); i++) {
+          const index = indices ? indices.getX(i) : i;
+          if (seen.has(index)) continue; seen.add(index);
+          vertices.push(original.worldToLocal(new Vector3().fromBufferAttribute(positions, index).applyMatrix4(node.matrixWorld)));
+        }
       });
       // Jointed legs (amb.dog/inf.dog: shoulder/hip -> fore-arm/shin -> paw) hang from a shoulder or hip joint: moving the leg
       // joint itself detaches the whole limb from the body (PO 10-19 "detached leg of dog"), so their pin is a swing about it.
@@ -65,11 +72,26 @@ export class PawContacts {
     if (!foot.turning) { foot.turned.copy(leg.quaternion); foot.kneeTurned.copy(knee.quaternion); foot.turning = true; }
     this.solve(foot, target);
     // The bent lower limb's own lowest vertex must stay on the floor (the rigid-leg dip check cannot see the knee bend).
-    let bottom = Infinity; for (const v of foot.kneeVertices) bottom = Math.min(bottom, this.offset.copy(v).applyMatrix4(knee.matrixWorld).y);
+    let bottom = this.lowest(foot.kneeVertices, knee.matrixWorld);
     if (bottom < floor) { target.y += floor - bottom; this.solve(foot, target); }
     // One re-solve can leave the bent toe a few mm low (the knee re-aims); a second settles it.
-    bottom = Infinity; for (const v of foot.kneeVertices) bottom = Math.min(bottom, this.offset.copy(v).applyMatrix4(knee.matrixWorld).y);
+    bottom = this.lowest(foot.kneeVertices, knee.matrixWorld);
     if (bottom < floor) { target.y += floor - bottom; this.solve(foot, target); }
+  }
+  /** Exact Y component of Vector3.applyMatrix4, without unused X/Z work or arrays. */
+  private lowest(vertices: readonly Vector3[], matrix: Matrix4): number {
+    const e = matrix.elements; let bottom = Infinity;
+    // Scene-graph transforms are affine. Their homogeneous divisor is exactly
+    // one for every sole vertex; retain the general path for other matrices.
+    if (e[3] === 0 && e[7] === 0 && e[11] === 0 && e[15] === 1) {
+      for (const { x, y, z } of vertices) bottom = Math.min(bottom, e[1] * x + e[5] * y + e[9] * z + e[13]);
+      return bottom;
+    }
+    for (const { x, y, z } of vertices) {
+      const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
+      bottom = Math.min(bottom, (e[1] * x + e[5] * y + e[9] * z + e[13]) * w);
+    }
+    return bottom;
   }
   private solve(foot: (typeof this.feet)[number], target: Vector3): void {
     const leg = foot.leg, knee = foot.knee!;
@@ -148,8 +170,7 @@ export class PawContacts {
       const clearance = swing > 0 ? swingLift * Math.min(1, Math.max(.4, swing / .1)) : 0;
       // Rotation changes which sole vertex is lowest. The bind-pose centre can
       // stay above the floor while the drawn toe penetrates it by several cm.
-      let bottom = Infinity;
-      for (const vertex of foot.vertices) bottom = Math.min(bottom, this.offset.copy(vertex).applyMatrix4(foot.leg.matrixWorld).y);
+      const bottom = this.lowest(foot.vertices, foot.leg.matrixWorld);
       this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
       const dip = this.origin.y + foot.sole + clearance - Math.min(bottom, this.point.y);
       if (dip > 0) {
@@ -186,7 +207,7 @@ export class PawContacts {
       if (grounded) {
         // A folded rear paw has a different lowest vertex from the bind pose.
         // Ground the drawn sole, retaining clearance during a settling step.
-        const bottom = Math.min(...foot.vertices.map(v => this.offset.copy(v).applyMatrix4(foot.leg.matrixWorld).y));
+        const bottom = this.lowest(foot.vertices, foot.leg.matrixWorld);
         desired.y = lifted + floor - bottom + Math.max(0, desired.y - sole);
       } else desired.y = Math.max(desired.y, lifted);
       const target = foot.leg.parent!.worldToLocal(desired);
@@ -194,8 +215,7 @@ export class PawContacts {
       foot.release.copy(foot.correction);
       foot.leg.position.add(foot.correction); foot.leg.updateWorldMatrix(false, true);
       if (!grounded) {
-        let bottom = Infinity;
-        for (const vertex of foot.vertices) bottom = Math.min(bottom, this.offset.copy(vertex).applyMatrix4(foot.leg.matrixWorld).y);
+        const bottom = this.lowest(foot.vertices, foot.leg.matrixWorld);
         const dip = sole + (foot.step >= 0 ? arc(foot.step) : 0) - bottom;
         if (dip > 0) {
           const parent = foot.leg.parent!, low = parent.worldToLocal(this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).clone());

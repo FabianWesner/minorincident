@@ -357,11 +357,32 @@ export class SolidRegistry {
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true, playerClearance = 0): Point | null {
     const nav = this.world.infected?.nav, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     let connected = false;
+    const blockers: { entity: EntitySnapshot; reach2: number }[] = [];
     const direction = { x: 0, z: 0 };
     const player = playerClearance ? this.world.entities.get(1) : undefined;
     const fits = (p: Point) => {
       if (playerClearance && player && ignoreId !== 1 && layers(p, player.transform) && Math.hypot(p.x - player.transform.x, p.z - player.transform.z) < playerClearance) return false;
-      if (navigation && nav && !nav.contains(p.x, p.z, radius) || !this.clear(p, radius, ignoreId)) return false;
+      if (navigation && nav && !nav.contains(p.x, p.z, radius)) return false;
+      // Adjacent admission probes often hit the same body. As in commit(), a
+      // previous contact is an exact rejection witness, never a free-space
+      // proof. Clear probes still run the complete registry query. Transaction
+      // and companion footprints retain their existing specialized checks.
+      for (let i = blockers.length - 1; i >= 0; i--) {
+        const { entity, reach2 } = blockers[i];
+        if ((p.x - entity.transform.x) ** 2 + (p.z - entity.transform.z) ** 2 < reach2) {
+          this.bodyConflict = true; this.bodyConflictId = entity.id; return false;
+        }
+      }
+      if (!this.clear(p, radius, ignoreId)) {
+        const blocker = this.bodyConflict ? this.world.entities.get(this.bodyConflictId) : undefined;
+        // All candidates in this synchronous search keep the anchor's height.
+        // Cache a few exact contact circles, checking their fixed masks once.
+        if (!this.committing && blocker && !e?.companion && !blocker.companion && actor(blocker) && !pairExempt(e, blocker) && layers(at, blocker.transform)) {
+          if (blockers.length === 8) blockers.shift();
+          blockers.push({ entity: blocker, reach2: (radius + actorRadius(blocker) - skin) ** 2 });
+        }
+        return false;
+      }
       if (!connected || p === at) return true;
       const dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
       if (!distance) return true;

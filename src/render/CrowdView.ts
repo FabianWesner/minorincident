@@ -19,7 +19,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
+import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -31,7 +31,7 @@ import { isOutbreakDistrict } from '../levels/districts/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
-import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
+import { bakeInfected, bakeInfectedAsync, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { loadGate } from '../assets/loadGate';
 import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
@@ -63,6 +63,7 @@ export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number; decay?: string }>();
   private readonly modelAliases = new Map<string, string>();
+  private readonly loadedModels = new Set<string>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
   private readonly visibility = new CrowdVisibility();
@@ -201,11 +202,15 @@ export class CrowdView extends Group {
         if (prepared.corpse) this.corpseGeometry.set(key, cloneBatchGeometry(prepared.corpse));
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
-        baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback);
+        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback] as const;
+        baked = this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
+        if (this.disposed) { baked.geometry.dispose(); return; }
+        if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
@@ -224,6 +229,7 @@ export class CrowdView extends Group {
         if (human) markCrowdAppearance(corpse, false);
         this.corpseGeometry.set(key, corpse); createdCorpse = corpse;
       }
+      if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
       if (preparedKey) {
         preparedBatches.set(preparedKey, { ...baked, geometry: cloneBatchGeometry(baked.geometry), shirtColor: baked.shirtColor?.clone(), corpse: createdCorpse ? cloneBatchGeometry(createdCorpse) : null });
@@ -270,7 +276,10 @@ export class CrowdView extends Group {
       const matrix = crowdBlendedMatrix(texture, parts.x, feedbackState.x, outgoing, weight);
       // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
       // pipeline), only the uniform values differ. Missing parts get -1 and never match.
-      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name));
+      // Rig part indices are immutable for this material. Upload them once;
+      // they need no per-object uniform scan in every crowd and shadow draw.
+      const rigParts = sharedUniformGroup('crowdParts');
+      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name)).setGroup(rigParts);
       let visible = part.equal(index('legL')).or(part.equal(index('shinL'))).or(part.equal(index('footL'))).select(feedbackState.y.oneMinus(), 1);
       const groups = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']];
       groups.forEach((names, bit) => {
@@ -298,6 +307,7 @@ export class CrowdView extends Group {
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      if (lod === 'lod1' || lod === 'lod2') this.loadedModels.add(key);
       // Ordinary deaths use the retained far surface; Alphas keep the authored body. Warm in
       // every combat scene so the first settled blast victims cannot link it
       // synchronously during play. Waiting for this batch also guarantees the
@@ -309,7 +319,7 @@ export class CrowdView extends Group {
   }
   private modelKey(id: string): string | undefined {
     const key = this.modelAliases.get(id);
-    return key && (this.batches.has(`${key}:lod1`) || this.batches.has(`${key}:lod2`)) ? key : undefined;
+    return key && this.loadedModels.has(key) ? key : undefined;
   }
   /** PO #23: an Alpha drawn with its default model takes one of the sibling looks, chosen by entity id (same rig and size). An explicit model override keeps its asset. */
   private alphaKey(key: string, e: { id: number; infected?: { model?: string; variant?: string } }): string {
@@ -493,8 +503,8 @@ export class CrowdView extends Group {
       }
     }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
-    if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
-    if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
+    if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
+    if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
   }
   /** Scene Lab probe: frozen corpses as drawn (feet position). */
   private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
@@ -564,6 +574,6 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.loadedModels.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
   }
 }

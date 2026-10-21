@@ -36,7 +36,6 @@ export class HealthBars extends Group {
   private readonly outlineGain = uniform(1);
   private readonly fillGain = uniform(1);
   private readonly bounds = new Box3();
-  private readonly screenBounds = new Box3();
   private readonly projection = new Matrix4();
   private readonly point = new Vector3();
   private readonly center = new Vector3();
@@ -75,6 +74,7 @@ export class HealthBars extends Group {
     const full = followers <= followerBarsAlwaysMax;
     let hurtLimit = Infinity, hurtLeft = followerBarCap;
     if (!full && this.hurt.length > followerBarCap) { this.hurt.sort(ascending); hurtLimit = this.hurt[followerBarCap - 1]; }
+    this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
     for (const e of this.world.entities.iterate()) {
       if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
       if (!full && e.civilian?.survivor?.mode === 'follow') { if (hurtLeft <= 0 || healthFraction(e.health.current, e.health.max) > hurtLimit) continue; hurtLeft--; }
@@ -85,9 +85,9 @@ export class HealthBars extends Group {
       this.bounds.getCenter(this.center);
       this.point.copy(this.center).project(camera);
       if (this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) continue;
-      this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-      pickBodies.bounds(e.id, this.screenBounds, this.projection);
-      const top = (1 - this.screenBounds.max.y) * height / 2;
+      const projectedTop = pickBodies.top(e.id, this.projection);
+      if (projectedTop === null) continue;
+      const top = (1 - projectedTop) * height / 2;
       let x = (this.point.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
       // A close Mega can extend above the frame while its body is visible. Keep its shared billboard readable.
       if (e.infected?.pursuit) {
@@ -118,7 +118,10 @@ export class HealthBars extends Group {
       }
       if (this.probing) this.probes.push({ id: e.id, fraction, x, y, width: size.width, height: size.height, gap: 2, anchor: this.center.toArray() });
     }
-    for (const layer of this.meshes) { layer.visible = layer.count > 0; if (layer.count) layer.instanceMatrix.needsUpdate = true; }
+    for (const layer of this.meshes) {
+      layer.visible = layer.count > 0;
+      if (layer.count) { layer.instanceMatrix.clearUpdateRanges(); layer.instanceMatrix.addUpdateRange(0, layer.count * 16); layer.instanceMatrix.needsUpdate = true; }
+    }
   }
   setCourierMask(mask?: Texture): void { this.courierMask.value = mask ?? this.unoccluded; }
   get count(): number { return this.meshes[0].count; }

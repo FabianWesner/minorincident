@@ -32,7 +32,8 @@ export class ContactShadows extends InstancedMesh {
       this.transform.setPosition(at.x, (this.world.districts?.groundHeight(at.x, at.z) ?? 0) + .022, at.z);
       this.setMatrixAt(this.count++, this.transform);
     }
-    this.visible = this.count > 0; if (this.count) this.instanceMatrix.needsUpdate = true;
+    this.visible = this.count > 0;
+    if (this.count) { this.instanceMatrix.clearUpdateRanges(); this.instanceMatrix.addUpdateRange(0, this.count * 16); this.instanceMatrix.needsUpdate = true; }
   }
   /** First footprints' world positions (x, z), for presentation tests. */
   getState() { return Array.from({ length: Math.min(this.count, 8) }, (_, i) => { this.getMatrixAt(i, this.transform); return [this.transform.elements[12], this.transform.elements[14]]; }); }
