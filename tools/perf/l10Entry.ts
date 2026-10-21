@@ -1,7 +1,17 @@
 /** Shared browser measurement for the L10 entry regression spec and CLI. */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import type { Page } from '@playwright/test';
 import type { Game } from '../../src/Game';
+import type { InputFrame } from '../../src/input/InputFrame';
+
+/** Device-input recording from the cold-graph reproduction, including both lamp boundaries. */
+const replay = JSON.parse(gunzipSync(readFileSync(new URL('../../tests/fixtures/perf/l10-real-input.json.gz', import.meta.url))).toString()) as { seed: number; ticks: number; inputs: { tick: number; frame: InputFrame }[] };
+const frames: InputFrame[] = []; let cursor = 0;
+for (let tick = 0; tick < replay.ticks; tick++) {
+  while (cursor + 1 < replay.inputs.length && replay.inputs[cursor + 1].tick <= tick) cursor++;
+  frames.push(replay.inputs[cursor].frame);
+}
 
 export async function measureL10Entry(page: Page, origin: string, entry: 'debug' | 'continue', backend: 'webgl2' | 'webgpu', out: string) {
   mkdirSync(out, { recursive: true }); page.setDefaultTimeout(180_000);
@@ -40,16 +50,17 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
   }
   await page.waitForFunction(() => { const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; loading: boolean } }).game; return g.world.scenario === 'L10' && !g.loading; });
   console.log(`${entry}: L10 loaded`);
-  await page.evaluate(() => {
+  await page.evaluate(frames => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, rig = g.view.view;
+    if (g.world.tick !== 0) throw Error(`Replay must begin at tick zero, got ${g.world.tick}`);
     a.cheats.god(true); rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
-    a.input.set({ moveTarget: { x: 755, z: 13.6 }, navigation: true, pointerGround: true }); a.resume();
-  });
-  await page.waitForTimeout(Number(process.env.L10_SECONDS ?? 65) * 1000);
+    g.input.recorder.play({ version: 1, level: 'L10', seed: 1, frames }); a.resume();
+  }, frames);
+  await page.waitForFunction(ticks => window.__SS__!.tick() >= ticks, replay.ticks, { timeout: 120_000 });
   const result = await page.evaluate(() => {
     const trace = window as unknown as { l10Trace: { at: number; dt: number; tick: number; loading: boolean; scenario: string | null }[]; l10TraceRunning: boolean; l10CardClosed?: number }; trace.l10TraceRunning = false;
     window.__SS__!.pause(); window.__SS__!.input.clear();
-    const frames = trace.l10Trace, playable = frames.filter(f => f.scenario === 'L10' && !f.loading && f.at >= trace.l10CardClosed!).map(f => ({ ...f, dt: Math.min(f.dt, f.at - trace.l10CardClosed!) }));
+    const frames = trace.l10Trace, playable = frames.filter(f => f.scenario === 'L10' && f.at >= trace.l10CardClosed!).map(f => ({ ...f, dt: Math.min(f.dt, f.at - trace.l10CardClosed!) }));
     const ordered = playable.map(f => f.dt).sort((a, b) => a - b);
     return { frames, cardClosed: trace.l10CardClosed, playableFrames: playable.length, max: Math.max(...ordered), p95: ordered[Math.ceil(ordered.length * .95) - 1], hitches: playable.filter(f => f.dt > 200), backend: window.__SS__!.perf().backend, state: window.__SS__!.getEntity(1), load: window.__SS__!.perf().loadTiming };
   });

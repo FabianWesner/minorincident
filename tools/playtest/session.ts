@@ -93,9 +93,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (navigationStart) cpuNavigationStartMs = navigationStart.value * 1000;
     cpuStartedAt = await page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
-      const clicks: unknown[] = [], builds: unknown[] = [];
+      const clicks: unknown[] = [], builds: unknown[] = [], inputs: unknown[] = [];
       (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks = clicks;
       (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds = builds;
+      (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs = inputs;
       const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
       g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
         onBuild?.(builder, object);
@@ -106,6 +107,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       };
       g.input.tap = (frame, scheme) => {
         previous?.(frame, scheme);
+        if (g.world.scenario === 'L10') inputs.push({ tick: g.world.tick, frame: structuredClone(frame) });
         if (frame.moveTarget) clicks.push({ tick: g.world.tick, position: { ...g.world.entities.get(1)!.transform }, target: { ...frame.moveTarget } });
       };
       return performance.now();
@@ -546,6 +548,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt, performanceNavigationStartMs: cpuNavigationStartMs })); await cpu.detach();
     writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
     writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
+    writeFileSync(join(o.out, `${o.tag}-inputs.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs)));
   }
   await context.close();
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
