@@ -1,0 +1,2166 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-corpses-low -> 94.130.181.173:/srv/mi/ws/l10-corpses-low-c773a1
+[remote] cache-gc deleted: merge-batch13f-6a383a
+[remote] sync 54s, 30307 files; job /srv/mi/jobs/l10-corpses-low-c773a1-83119-1792593565; queueing for a slot
+[runner] slot 0 acquired; load 0.73 0.23 0.97
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-corpses-low-c773a1-83119-1792593565
+
+ ✓  timing  tests/unit/progression/perf.test.ts (1 test) 250ms
+ ✓  functional  tests/levels/L5.test.ts (15 tests) 216802ms
+   ✓ L5 Aftermath (15)
+     ✓ T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor's death 20049ms
+     ✓ T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4 18827ms
+     ✓ T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3 20741ms
+     ✓ T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier's; 12-27 infected in ones and twos 7797ms
+     ✓ T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot 11940ms
+     ✓ T-E23-08 @E23 @E23-AC08 signs of life: a positional cue with a subtitle within 25 m of each hiding place, none beyond 30 m; no objective marker ever points at a survivor 4228ms
+     ✓ T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run 17686ms
+     ✓ T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person 37886ms
+     ✓ T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count 25320ms
+     ✓ T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal 826ms
+     ✓ T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication 1003ms
+     ✓ T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit 15070ms
+     ✓ T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist 2612ms
+     ✓ T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected) 13415ms
+     ✓ T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too 19399ms
+ ✓  functional  tests/unit/render/skin-pilot.test.ts (18 tests) 3591ms
+   ✓ courier female walks and runs on world-locked feet with a readable knee arc @E04 447ms
+   ✓ courier female turns with steps instead of pivoting or skating @E04 340ms
+   ✓ courier female chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04 577ms
+   ✓ courier male chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04 527ms
+ ✓  functional  tests/levels/L3-follow.test.ts (28 tests) 70036ms
+   ✓ L3 squad and checkpoint (28)
+     ✓ @E21 retry relief also covers a street segment first populated after the respawn 3624ms
+     ✓ @E21 a distant failed encounter keeps retry pursuit relief until the courier approaches, retaining every actor 1243ms
+     ✓ @E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn 2013ms
+     ✓ @E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot 1199ms
+     ✓ @E21 @E21-AC17 fatal bites at the infected cap retain a dead officer without blocking rescue or allied fire 1472ms
+     ✓ @E21 @E21-AC17 HMG post can fire down the approach and into the resting compound 1346ms
+     ✓ @E21 @E21-AC17 rescued officers at the compound edge stay inside after boom closure 3265ms
+     ✓ @E21 army compound is walkable before the rendezvous and does not finish while the courier rests 2520ms
+     ✓ @E21 @E21-AC17 arrival finishes with stalled officer 17095ms
+     ✓ @E21 @E21-AC17 arrival finishes with dead officer 2565ms
+     ✓ @E21 @E21-AC17 arrival finishes with turning officer 2799ms
+     ✓ @E21 @E21-AC17 arrival finishes with occupied boom 2382ms
+     ✓ closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane 1607ms
+     ✓ fallback recruits every living human officer, including the yard posts 1206ms
+     ✓ @E21 the Boulevard wreck passing line collects its existing sidewalk medkits 1808ms
+     ✓ @E21 the first Boulevard turn medkit is collected on the walking line 1422ms
+     ✓ @E21 the Boulevard corner medkit is collected on the walking line 1960ms
+     ✓ @E21 the last street turn medkit is collected on the walking line 1693ms
+     ✓ @E21 the bus passing-line end medkit is collected on the walking line 1531ms
+     ✓ @E21 the entry ramp medkit is collected on the walking line 1590ms
+     ✓ @E21 the upper ramp medkit is collected on the walking line 1354ms
+     ✓ @E21 the exit ramp medkit is collected on the walking line 1864ms
+     ✓ all three routes have sidewalk med packs within 40 m and reachable from the street 1202ms
+     ✓ boom waits for the last living officer; a dead officer cannot prevent closure 1340ms
+     ✓ living officers regroup on commerce instead of being marked separated 3132ms
+     ✓ living officers regroup on blvd instead of being marked separated 4264ms
+     ✓ living officers regroup on oak instead of being marked separated 2524ms
+ ✓  functional  tests/levels/L1.test.ts (19 tests) 537011ms
+   ✓ L1 v2 mission (19)
+     ✓ T-E19-01 @E19 @E19-AC01 mission graph is completable, no fail timer 1178ms
+     ✓ T-E19-02 @E19 @E19-AC02 complete bot finishes single seed, median 1:15-3:00 22988ms
+     ✓ T-E19-03 @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1 19418ms
+     ✓ T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting 9399ms
+     ✓ T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes 35964ms
+     ✓ T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=false 52080ms
+     ✓ T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=true 38384ms
+     ✓ T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity 8835ms
+     ✓ T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed 59136ms
+     ✓ T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout 12683ms
+     ✓ T-E19-05b @E19 grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit 69780ms
+     ✓ T-E19-respawn @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m 33520ms
+     ✓ T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart 19192ms
+     ✓ T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians 53780ms
+     ✓ T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied 7950ms
+     ✓ T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm 51456ms
+     ✓ T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat) 20042ms
+     ✓ T-E19-end @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped) 18947ms
+     ✓ T-E19-14 @E19 @E19-AC14 duel bot harness: 1 infected is beatable, 5 unarmed are lethal once lane G tuning lands 2278ms
+ ✓  functional  tests/unit/render/static-corpses.test.ts (14 tests) 949ms
+ ✓  functional  tests/unit/levels/l5-static.test.ts (9 tests) 400ms
+ ✓  functional  tests/levels/L5-encounters.test.ts (9 tests) 10164ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high 1440ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low 1036ms
+   ✓ @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal 808ms
+   ✓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience 663ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high 674ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low 740ms
+   ✓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return 1343ms
+   ✓ @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 1927ms
+   ✓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save 1526ms
+ ✓  functional  tests/unit/render/authored-animation.test.ts (17 tests) 4488ms
+   ✓ M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (source) 1564ms
+   ✓ M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (production) 1194ms
+   ✓ VQA-13 @E19 settled infected death poses contact the floor across delivered rigs 921ms
+ ✓  functional  tests/unit/levels/l3-static.test.ts (9 tests) 3905ms
+   ✓ L3 static (6)
+     ✓ T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart 1274ms
+     ✓ T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry 2567ms
+ ✓  functional  tests/levels/collision-placement.test.ts (18 tests) 13562ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 5951ms
+   ✓ NPC spawn admission leaves 0.8 m around a reserved player start 462ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 438ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 905ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 1533ms
+   ✓ L5 companion occupies its visible footprint and stays outside courier and reported solids 877ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 1096ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 1021ms
+   ✓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 481ms
+   ✓ the Metro lookout leaves an interior right-lane slot for the complete corgi capsule 763ms
+ ✓  functional  tests/levels/L2.test.ts (16 tests) 406628ms
+   ✓ L2 The Failed Rescue (16)
+     ✓ T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer 1718ms
+     ✓ T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band 29279ms
+     ✓ T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed 73929ms
+     ✓ T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time 4322ms
+     ✓ T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites 35359ms
+     ✓ T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity 12567ms
+     ✓ T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives 38645ms
+     ✓ T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes 1402ms
+     ✓ T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice 43384ms
+     ✓ T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3 28703ms
+     ✓ T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down 111864ms
+     ✓ T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons 25451ms
+ ✓  functional  tests/unit/render/pre-render.test.ts (17 tests) 74ms
+ ✓  functional  tests/levels/l5-po-1015.test.ts (7 tests) 44564ms
+   ✓ PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending 23196ms
+   ✓ PO #21 @E23 @E23-AC09 discovery is available from every reachable side within 2.5 m of each sound 2825ms
+   ✓ PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower reacts briefly and keeps following 2795ms
+   ✓ PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time 10548ms
+   ✓ PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots 772ms
+   ✓ PO #18 @E23 L4 records the doorway actually entered and carries it into L5 1720ms
+   ✓ PO #20b @E23 @E23-AC07 a visible player at 15 m is acquired beyond the former Alpha territory 2706ms
+ ✓  functional  tests/unit/layouts/d-grove.test.ts (11 tests) 799ms
+   ✓ D-GROVE layout (11)
+     ✓ T-E19-04 @E19 @E19-AC04 no overlapping solid props (colliders, 0.15 m tolerance) 373ms
+     ✓ T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9) 305ms
+ ✓  functional  tests/levels/L4-po-round.test.ts (5 tests) 173559ms
+   ✓ L4 PO round 10-13 (5)
+     ✓ T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks 19029ms
+     ✓ T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding 12764ms
+     ✓ T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 57701ms
+     ✓ T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 29094ms
+     ✓ T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold 54969ms
+ ✓  functional  tests/unit/assets/courier-bike.test.ts (4 tests) 6548ms
+   ✓ @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm) 6389ms
+ ✓  functional  tests/unit/telemetry/functions.test.ts (10 tests) 343ms
+ ✓  functional  tests/unit/render/view.test.ts (14 tests) 120ms
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Accessor (95)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Mesh (1), Primitive (4), Accessor (12)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Accessor (389)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Mesh (49), Primitive (49), Accessor (513)
+
+ ✓  functional  tests/unit/levels/l4-static.test.ts (11 tests) 9198ms
+   ✓ L4 static (11)
+     ✓ T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing 468ms
+     ✓ T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked 8058ms
+ ✓  functional  tests/unit/assets/optimize.test.ts (12 tests) 6680ms
+   ✓ T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side 645ms
+   ✓ T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.35–1.5x worker and elephant stays 3 m at every LOD 2911ms
+   ✓ T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD 1490ms
+   ✓ T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD 1458ms
+ ✓  functional  tests/unit/performance/nav-visibility.test.ts (7 tests) 383ms
+ ✓  functional  tests/unit/assets/mega-alpha-dog.test.ts (8 tests) 2748ms
+   ✓ T-L10-mega-alpha-lod0 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips 691ms
+   ✓ T-L10-mega-alpha-lod1 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips 369ms
+   ✓ T-L10-dog-assets-lod0 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 798ms
+   ✓ T-L10-dog-assets-lod1 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 389ms
+   ✓ T-L10-dog-assets-lod2 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips 322ms
+ ✓  functional  tests/unit/render/crowd-appearance.test.ts (8 tests) 3723ms
+   ✓ crowd appearance lod0: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01 2075ms
+   ✓ crowd appearance lod1: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01 671ms
+   ✓ crowd appearance lod2: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01 436ms
+ ✓  functional  tests/levels/L6.test.ts (12 tests) 52717ms
+   ✓ T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail 385ms
+   ✓ T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat 1173ms
+   ✓ T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps 2450ms
+   ✓ T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power 592ms
+   ✓ T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community 25177ms
+   ✓ T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection 332ms
+   ✓ T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds 550ms
+   ✓ T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band 21669ms
+ ✓  functional  tests/levels/l6-po-1020.test.ts (6 tests) 7753ms
+   ✓ @E24 PO 10-20 #65 the retreat ring sits on the group's next waypoint; away from the group it reads "Stay with the group" and moves onto the group 1553ms
+   ✓ @E24 PO 10-20 #64 a closed tunnel hatch holds its arrivals: telegraphed bashes, breaks after 8 s, then they come through 2060ms
+   ✓ @E24 PO 10-20 #63 the courier walks onto both drawn tunnel walkways (no invisible wall mid-walkway) 679ms
+   ✓ @E24 QA #84 the exit "Stay with the group" text switches once per real change, not with every distance wobble 2451ms
+   ✓ @E24 QA #83 a protected straggler limps toward the group through its biters; the held group names it and the ring leads there 872ms
+ ✓  functional  tests/unit/render/corgi-feet.test.ts (6 tests) 3247ms
+   ✓ moving corgi keeps the drawn toe vertices above its floor through turns and gait changes 780ms
+   ✓ corgi paws remain planted below the cadence cap in walk, trot and gallop @E07 383ms
+   ✓ corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07 878ms
+   ✓ corgi settles from spawn height, seats its visible rump/paws and resumes its bind leg scale @E08-AC10 828ms
+ ✓  functional  tests/unit/survivors-ai.test.ts (15 tests) 391ms
+stderr | tests/unit/render/npc.test.ts > @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading
+[assets] npc.civilian-man-b fell back to a PLACEHOLDER BOX (TypeError: Failed to parse URL from /assets/models/npc.civilian-man-b.glb). Never ship this.
+
+ ✓  functional  tests/unit/render/npc.test.ts (8 tests) 4641ms
+   ✓ @E18 phone civilians retain four full footwork slots and restore all desktop slots 326ms
+   ✓ @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading 2131ms
+   ✓ @transition prepared civilian geometry survives scene disposal without sharing instance attributes 2019ms
+ ✓  functional  tests/unit/render/courier-rig-v2.test.ts (11 tests) 3045ms
+   ✓ courier female skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it 394ms
+   ✓ courier female living layer is frozen-frame exact and deterministic across runs @E04 464ms
+   ✓ courier blinks every 2–6 s with the lids closed for about 0.1 s @E04 611ms
+ ✓  functional  tests/unit/levels/l7-district.test.ts (6 tests) 13280ms
+   ✓ T-E29-10-district @E29-AC10 heavier dressing, dead defenses and passable Northgate branches 314ms
+   ✓ T-E29-10-fires @E29-AC10 production district installs persistent fires and shared rocket hooks 1611ms
+   ✓ T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts 10828ms
+   ✓ T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it 308ms
+stdout | tests/levels/L8.test.ts > T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer
+{"seed":1,"time":89.36666666666666,"breach":60,"outlets":4,"animalTurns":[10395,10396],"alphas":4,"rescued":12}
+
+ ✓  functional  tests/levels/L8.test.ts (10 tests) 156994ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence 9087ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence 6483ms
+   ✓ T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans 43063ms
+   ✓ T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities 12549ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer 13199ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer 19884ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer 19706ms
+   ✓ T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape 8198ms
+   ✓ T-E30-06-calm-high @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task 12512ms
+   ✓ T-E30-06-calm-low @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task 12306ms
+ ✓  functional  tests/unit/progression/campaign.test.ts (15 tests) 601ms
+   ✓ campaign (10)
+     ✓ T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers 446ms
+ ✓  functional  tests/levels/L3.test.ts (21 tests) 927213ms
+   ✓ L3 The Police Collapse (21)
+     ✓ T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer 2686ms
+     ✓ T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band 136265ms
+     ✓ T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2 66323ms
+     ✓ T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition 71442ms
+     ✓ T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit 2434ms
+     ✓ T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back 6570ms
+     ✓ T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station 19488ms
+     ✓ T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them 52764ms
+     ✓ T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP 1447ms
+     ✓ T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression 89439ms
+     ✓ T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits 90514ms
+     ✓ T-E21-bots @E21 evade-only never attacks and still reaches the army zone 387833ms
+ ✓  functional  tests/unit/telemetry/client.test.ts (12 tests) 1271ms
+   ✓ replay recorder (3)
+     ✓ retries a failed chunk, then gives up without blocking later ones 1001ms
+ ✓  functional  tests/unit/render/terrain-streaming.test.ts (8 tests) 1342ms
+   ✓ T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse terrain preserve seam heights 1062ms
+ ✓  functional  tests/unit/tooling/scenelab.test.ts (14 tests) 3730ms
+   ✓ Scene Lab spec (8)
+     ✓ retains production L2 mission anchors and open market collision for its release scene 1401ms
+     ✓ loads L2 bridge and closure fixtures from the authored safe start before courier admission 2240ms
+ ✓  functional  tests/levels/survivors-ai.test.ts (7 tests) 7131ms
+   ✓ @E23 @E24 @E29 L5 street firearm is collected once and keeps its identity through save/reload, L6, L7 and L8 3216ms
+   ✓ @E08 @E23 wreck roof support keeps corgi paws above the bus, and the objective ring on the courier layer 878ms
+   ✓ @E08-AC02 L5 production formation/routine cannot swallow an attacked survivor reaction 996ms
+   ✓ @E08-AC02 L7 production formation/routine cannot swallow an attacked survivor reaction 870ms
+   ✓ @E08-AC02 L8 production formation/routine cannot swallow an attacked survivor reaction 660ms
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (18)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (56)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (7), Primitive (7), Accessor (77)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Primitive (2), Accessor (63)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (204)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (33), Primitive (33), Accessor (307)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Primitive (1), Accessor (59)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (260)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (32), Primitive (32), Accessor (358)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery keeps skin joints and morph animation channels on the geometry node
+prune: Removed types... Accessor (6)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery keeps skin joints and morph animation channels on the geometry node
+prune: Removed types... Skin (1), Accessor (5)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (3)
+
+ ✓  functional  tests/unit/assets/delivery.test.ts (7 tests) 1743ms
+   ✓ delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette 1576ms
+ ✓  functional  tests/levels/L4.test.ts (23 tests) 947361ms
+   ✓ L4 The Safe City Falls (23)
+     ✓ T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer 8029ms
+     ✓ T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band 86093ms
+     ✓ T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop 5728ms
+     ✓ T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts 11297ms
+     ✓ T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower) 66850ms
+     ✓ T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm 73626ms
+     ✓ T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold 821ms
+     ✓ T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune 18042ms
+     ✓ T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view 27268ms
+     ✓ T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing 32220ms
+     ✓ T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws 73344ms
+     ✓ T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run 72628ms
+     ✓ T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed 7132ms
+     ✓ T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break 5526ms
+     ✓ T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses 64417ms
+     ✓ T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too 133738ms
+     ✓ T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths 86779ms
+     ✓ T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed) 90194ms
+     ✓ T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 50411ms
+     ✓ T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 26585ms
+     ✓ T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage 1077ms
+     ✓ T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards 5043ms
+     ✓ T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy 510ms
+ ✓  functional  tests/unit/assets/static-batch-equivalence.test.ts (2 tests) 2217ms
+   ✓ optimized static batch attributes equal the reference loop @load 2210ms
+stdout | tests/unit/telemetry/codec.test.ts > input log codec > recording cost stays far below 0.1 ms per tick
+input log encode cost: 1.96 us per tick
+
+ ✓  functional  tests/unit/telemetry/codec.test.ts (8 tests) 2479ms
+   ✓ input log codec (8)
+     ✓ round-trips every InputFrame field exactly, including absent vs false vs null 475ms
+     ✓ cuts independent chunks (keyframe each) under the upload cap and decodes them in order 892ms
+     ✓ rejects a chunk gap and garbage 487ms
+     ✓ recording cost stays far below 0.1 ms per tick 407ms
+ ✓  functional  tests/unit/render/camera-jitter.test.ts (4 tests) 170ms
+ ✓  functional  tests/unit/render/l7-perf.test.ts (4 tests) 298ms
+ ✓  functional  tests/unit/assets/zebra.test.ts (4 tests) 1307ms
+   ✓ T-E07-01-zebra-asset-lod0 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig 804ms
+   ✓ T-E07-01-zebra-asset-lod1 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig 311ms
+ ✓  functional  tests/levels/l7-checkpoints.test.ts (5 tests) 9644ms
+   ✓ T-E29-16-night-exit @E29-AC16 production checkpoint restores after actual death 1924ms
+   ✓ T-E29-16-rocket @E29-AC16 production checkpoint restores after actual death 2457ms
+   ✓ T-E29-16-corridor @E29-AC16 production checkpoint restores after actual death 2301ms
+   ✓ T-E29-16-west @E29-AC16 west alley arrival records corridor and resumes a partially boarded bus 1886ms
+   ✓ T-E24-14-handover @E24-AC14 @E29-AC03 L6 reachability is disposed before L7 places its exit pickup 1075ms
+ ✓  functional  tests/unit/levels/l8-district.test.ts (6 tests) 2150ms
+   ✓ T-E30-05-district @E30-AC05 intact zoo facilities, named enclosures, public lights and service infrastructure 384ms
+   ✓ T-E30-06-sight @E30-AC06 shipped district registers perimeter as actual attack/sight cover 942ms
+ ✓  functional  tests/unit/assets/gun-pose.test.ts (11 tests) 548ms
+stdout | tests/unit/render/crowd-feet.test.ts > crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07
+[{"asset":"npc.civilian-man-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":1.8569929950456976,"afterCm":0.13757419470091503},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":2.0273044329703005,"afterCm":0.26587028315767364},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":12.448116255279686,"afterCm":0.11327046352896883},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":9.806923009769662,"afterCm":0.25941118928743956},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":2.0194144146919504,"afterCm":0.3578158447313593},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.29465786846351927,"afterCm":0.09604809945064159},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":5.752636603367249,"afterCm":0.18874959523004797},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":11.798327354957978,"afterCm":0.07911442111492506},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":10.264620459235259,"afterCm":0.18724213892107838},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":5.741426983167929,"afterCm":0.2813355073254288},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":15.408563850473364,"afterCm":0.1699677158610601},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":0.48173628823627734,"afterCm":0.3381826616803535},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":8.067541419217305,"afterCm":0.1590788697828497},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":3.6863527521918953,"afterCm":0.33121367284033987},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":0.48680447861846676,"afterCm":0.5079144603844108},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.36326975789034405,"afterCm":0.11530132259270039},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":4.380398097680477,"afterCm":0.23925904312618865},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.372625016804154,"afterCm":0.11790627749764136},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.096039974460982,"afterCm":0.2302997645168186},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":4.383559250593167,"afterCm":0.3619659767140931},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.2885414460686889,"afterCm":0.1197995337942584},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":5.914492510222649,"afterCm":0.2149053964432253},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":11.696583237604214,"afterCm":0.06400924683537598},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":10.229205549861694,"afterCm":0.22350018203070132},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":5.9091178132823226,"afterCm":0.24913452994173016},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":2.0902274670899237,"afterCm":0.08368498158902347},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":6.428372467088107,"afterCm":0.1542881012783254},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":9.815800370499002,"afterCm":0.0442677640941852},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":8.954629936860966,"afterCm":0.16799792771419597},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":6.420934674516938,"afterCm":0.20296917529379127},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.3635404117189859,"afterCm":0.059201444740252906},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":4.9502207162237335,"afterCm":0.11562591757090616},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":14.744287840249044,"afterCm":0.0642285011703381},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":12.266295627767434,"afterCm":0.13406881101360799},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":4.957920641478718,"afterCm":0.2503989760784516},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.254478288203292,"afterCm":0.04144101131817721},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":7.345151198456803,"afterCm":0.08099376816203052},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.08080348151266,"afterCm":0.044615558110816245},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.628786399349195,"afterCm":0.09451664229763958},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":7.3468650776122635,"afterCm":0.17796613075552797}]
+
+ ✓  functional  tests/unit/render/crowd-feet.test.ts (4 tests) 1909ms
+   ✓ crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07 1312ms
+   ✓ crowd footwork entering mid-run never produces a non-finite pose @E07 381ms
+ ✓  functional  tests/unit/assets/load-pipeline.test.ts (8 tests) 636ms
+   ✓ @load asset URLs carry content versions only when the build provides them 401ms
+ ✓  functional  tests/levels/ally-combat-feel.test.ts (2 tests) 21580ms
+   ✓ ally combat feel (2)
+     ✓ L4 war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up 14767ms
+     ✓ L3 station attack: the police move and fight in view of the idle courier 6811ms
+ ✓  functional  tests/unit/render/e25-windows.test.ts (5 tests) 571ms
+   ✓ T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD 451ms
+ ✓  functional  tests/unit/render/appearance-stable.test.ts (2 tests) 640ms
+   ✓ every human crowd model keeps its complete identity through poses, tiers, LODs and restore @E07 @E08 @E32 547ms
+ ✓  functional  tests/unit/sim/police-range.test.ts (18 tests) 230ms
+ ✓  functional  tests/unit/render/atmosphere.test.ts (8 tests) 60ms
+ ✓  functional  tests/unit/render/e25-lighting.test.ts (6 tests) 940ms
+   ✓ T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current 766ms
+ ✓  functional  tests/unit/levels/l2-static.test.ts (4 tests) 3704ms
+   ✓ T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, exactly one smoking vehicle, nothing post-apocalyptic 1353ms
+   ✓ T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market 1360ms
+   ✓ T-E20-doors @E20 PO 10-15 "no visible door": Grove Market has real glazed door leaves at its front and loading doorways, no collider of their own 989ms
+stdout | tests/unit/levels/l6-collider-visibility.test.ts > @E24 PO 10-20 #63 every L6 solid the courier can touch has drawn geometry within 0.3 m
+L6 colliders: 232 solid; invisible 0; bare faces 0
+
+
+ ✓  functional  tests/unit/levels/l6-collider-visibility.test.ts (1 test) 1179ms
+   ✓ @E24 PO 10-20 #63 every L6 solid the courier can touch has drawn geometry within 0.3 m 1177ms
+ ✓  functional  tests/unit/render/forecourt-seethrough.test.ts (2 tests) 35ms
+stdout | tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride
+bus jitter {
+  xz: 0.02935283116485625,
+  dv: 0.07646536552080274,
+  dr: 0.00554020155312962
+}
+
+ ✓  functional  tests/levels/L4-convoy.test.ts (4 tests) 23882ms
+   ✓ L4 convoy ride collisions (4)
+     ✓ T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic) 6004ms
+     ✓ T-E22-04f @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull 5703ms
+     ✓ T-E22-04e @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle 6701ms
+     ✓ T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride 5472ms
+ ✓  functional  tests/levels/L4-collapse.test.ts (4 tests) 207043ms
+   ✓ L4 collapse director (4)
+     ✓ T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 60607ms
+     ✓ T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier 62530ms
+     ✓ T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows 54865ms
+     ✓ T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps 29039ms
+ ✓  functional  tests/unit/assets/lod-fidelity.test.ts (238 tests) 59504ms
+   ✓ @E18 LOD fidelity veh.fire-engine 668ms
+   ✓ @E18 LOD fidelity veh.sedan-red 504ms
+   ✓ @E18 LOD fidelity veh.sedan-blue 399ms
+   ✓ @E18 LOD fidelity veh.sedan-white 498ms
+   ✓ @E18 LOD fidelity veh.school-bus 668ms
+   ✓ @E18 LOD fidelity veh.suv-dark 568ms
+   ✓ @E18 LOD fidelity veh.pickup-red 673ms
+   ✓ @E18 LOD fidelity veh.pickup-white 625ms
+   ✓ @E18 LOD fidelity veh.sedan-green 615ms
+   ✓ @E18 LOD fidelity veh.suv-green 630ms
+   ✓ @E18 LOD fidelity veh.police-sedan 669ms
+   ✓ @E18 LOD fidelity veh.police-suv 605ms
+   ✓ @E18 LOD fidelity veh.ambulance 665ms
+   ✓ @E18 LOD fidelity veh.jeep-red 665ms
+   ✓ @E18 LOD fidelity bld.house-a 819ms
+   ✓ @E18 LOD fidelity bld.house-b 649ms
+   ✓ @E18 LOD fidelity bld.house-c 859ms
+   ✓ @E18 LOD fidelity bld.safe-house 445ms
+   ✓ @E18 LOD fidelity bld.joes-diner 739ms
+   ✓ @E18 LOD fidelity bld.gas-station 770ms
+   ✓ @E18 LOD fidelity bld.maple-hardware 718ms
+   ✓ @E18 LOD fidelity bld.mainstreet-brick 789ms
+   ✓ @E18 LOD fidelity int.diner 1076ms
+   ✓ @E18 LOD fidelity bld.school-elementary 775ms
+   ✓ @E18 LOD fidelity int.gym-cafeteria 977ms
+   ✓ @E18 LOD fidelity int.supermarket 1099ms
+   ✓ @E18 LOD fidelity int.mini-mall 825ms
+   ✓ @E18 LOD fidelity int.food-court 948ms
+   ✓ @E18 LOD fidelity int.pharmacy-clinic 672ms
+   ✓ @E18 LOD fidelity bld.fire-station 635ms
+   ✓ @E18 LOD fidelity bld.hospital-exterior 811ms
+   ✓ @E18 LOD fidelity bld.gazebo 392ms
+   ✓ @E18 LOD fidelity bld.dugout 345ms
+   ✓ @E18 LOD fidelity kit.campground 365ms
+   ✓ @E18 LOD fidelity veh.courier-van 628ms
+   ✓ @E18 LOD fidelity veh.military-truck 574ms
+   ✓ @E18 LOD fidelity veh.box-truck 617ms
+   ✓ @E18 LOD fidelity veh.semi-trailer 566ms
+   ✓ @E18 LOD fidelity veh.helicopter 500ms
+   ✓ @E18 LOD fidelity veh.train-freight 623ms
+   ✓ @E18 LOD fidelity bld.river-bridge 473ms
+   ✓ @E18 LOD fidelity kit.river-terrain 306ms
+   ✓ @E18 LOD fidelity kit.rail-crossing 336ms
+   ✓ @E18 LOD fidelity bld.tunnel-portal 873ms
+   ✓ @E18 LOD fidelity bld.power-substation 439ms
+   ✓ @E18 LOD fidelity kit.highway-onramp 474ms
+   ✓ @E18 LOD fidelity bld.civic-center 1334ms
+   ✓ @E18 LOD fidelity veh.fuel-truck 786ms
+   ✓ @E18 LOD fidelity bld.school 864ms
+   ✓ @E18 LOD fidelity bld.gym 1222ms
+   ✓ @E18 LOD fidelity bld.supermarket 1046ms
+   ✓ @E18 LOD fidelity bld.pharmacy 810ms
+   ✓ @E18 LOD fidelity bld.hospital 892ms
+   ✓ @E18 LOD fidelity bld.substation 435ms
+   ✓ @E18 LOD fidelity bld.clinic-annex 1045ms
+   ✓ @E18 LOD fidelity bld.garage-detached 935ms
+   ✓ @E18 LOD fidelity bld.cafe-corner 925ms
+   ✓ @E18 LOD fidelity bld.courier-depot 1029ms
+   ✓ @E18 LOD fidelity bld.house-d 933ms
+   ✓ @E18 LOD fidelity bld.house-e 689ms
+   ✓ @E18 LOD fidelity bld.backdrop-houses 877ms
+ ✓  functional  tests/unit/render/civilian-grip.test.ts (18 tests) 9642ms
+   ✓ @E08 @E30-AC19 native man-a lod=0 fingers clear all routine props 1505ms
+   ✓ @E08 @E30-AC19 native man-b lod=0 fingers clear all routine props 1184ms
+   ✓ @E08 @E30-AC19 native woman-a lod=0 fingers clear all routine props 1064ms
+   ✓ @E08 @E30-AC19 native woman-b lod=0 fingers clear all routine props 1054ms
+   ✓ @E08 @E30-AC19 native elderly lod=0 fingers clear all routine props 1088ms
+   ✓ @E08 @E30-AC19 native man-a lod=1 fingers clear all routine props 477ms
+   ✓ @E08 @E30-AC19 native man-b lod=1 fingers clear all routine props 427ms
+   ✓ @E08 @E30-AC19 native woman-a lod=1 fingers clear all routine props 309ms
+   ✓ @E08 @E30-AC19 native elderly lod=1 fingers clear all routine props 356ms
+   ✓ @E08 woman-b holds the mug by the handle, upright, elbow bent, at chest/waist height 380ms
+ ✓  functional  tests/levels/courier-depth-p1.test.ts (3 tests) 6457ms
+   ✓ T-P1-9 @l2start at the idle L2 start no firefighter or other NPC touches the courier or stands between her and the game camera 4779ms
+   ✓ T-P1-26 L1 shutter: the courier ends inside the closed leaf, standing on the drawn bay floor of every station LOD 1673ms
+ ✓  functional  tests/unit/render/crowd-accessory-fit.test.ts (2 tests) 2458ms
+   ✓ ordinary infected accessories keep the authored reference proportions on their own skull @E07-AC13 @E08 2438ms
+stderr | tests/unit/assets/registry.test.ts > T-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs and contract nodes
+[assets] prop.test fell back to a PLACEHOLDER BOX (Error: 404). Never ship this.
+
+stderr | tests/unit/assets/registry.test.ts > T-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs and contract nodes
+[assets] prop.test fell back to a PLACEHOLDER BOX (status modeled). Never ship this.
+
+stdout | tests/unit/assets/registry.test.ts > T-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and still reject malformed geometry
+{"type":"asset.lod-fallback","id":"prop.test","lod":"lod2","reason":"dimensions"}
+
+ ✓  functional  tests/unit/assets/registry.test.ts (5 tests) 108ms
+ ✓  functional  tests/unit/audio/weapon-audio.test.ts (6 tests) 54692ms
+   ✓ offline loudness: shotgun >= 4 LU above the handgun, every weapon cue <= -1 dBTP 28071ms
+   ✓ class loudness order, firearms never quieter than a punch, and no over-driven class 26580ms
+ ✓  functional  tests/unit/tooling/l10-scene-catalog.test.ts (9 tests) 44ms
+ ✓  functional  tests/unit/render/night-accents.test.ts (4 tests) 3929ms
+   ✓ @E31 L9 night accents are part of the crossing light field only, and the farms/diner have power 3767ms
+ ↓  functional  tests/unit/tooling/e2e-lock.test.ts (7 tests | 7 skipped)
+ ✓  functional  tests/unit/levels/l9-district.test.ts (4 tests) 9764ms
+   ✓ T-E31-04 @E31-AC04 greybox extent, connected materially different routes and skyline 4764ms
+   ✓ T-E31-05-district @E31-AC05 open road departure/reentry, shortcut ratio and avoidable risk anchors 4416ms
+   ✓ T-E31-04-ground @E31-AC04 locally authored chunks have continuous road/off-road support 574ms
+ ✓  functional  tests/unit/performance/nav-reach-equivalence.test.ts (7 tests) 402ms
+ ✓  functional  tests/unit/audio/credits.test.ts (5 tests) 109ms
+ ✓  functional  tests/levels/L4-respawn.test.ts (6 tests) 173503ms
+   ✓ L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint 100438ms
+   ✓ L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock 71084ms
+   ✓ L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires 832ms
+   ✓ L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray 532ms
+   ✓ L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post 610ms
+ ✓  functional  tests/unit/data/l10-finale-anchors.test.ts (6 tests) 235ms
+ ✓  functional  tests/unit/core/foundation.test.ts (7 tests) 114ms
+ ✓  functional  tests/unit/assets/runtime-integration.test.ts (6 tests) 669ms
+   ✓ production runtime exports are integrated, while missing exports retain their status @E17-AC09 307ms
+ ✓  functional  tests/unit/assets/bus-hero.test.ts (6 tests) 1484ms
+   ✓ @bus-hero veh.evac-bus: no coplanar overlapping faces in any delivered tier or decay variant 593ms
+   ✓ @bus-hero veh.school-bus: no coplanar overlapping faces in any delivered tier 735ms
+ ✓  functional  tests/unit/vfx/tracers.test.ts (5 tests) 546ms
+GPU guard: WindowServer 60.1% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer -10.0% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer 0.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.0% / 10 s; 1 headless browsers + 2 requested; waiting
+ ✓  functional  tests/unit/render/e27-blasts.test.ts (5 tests) 151ms
+stdout | tests/levels/l7-departure.test.ts > @E29-AC13 @E29-AC16 corridor checkpoint with a trapped living follower finishes with the exact roster, high
+{"tier":"high","ticks":1837,"seconds":30.616666666666667,"boarded":24}
+
+stdout | tests/levels/l7-departure.test.ts > @E29-AC13 @E29-AC16 corridor checkpoint with a trapped living follower finishes with the exact roster, low
+{"tier":"low","ticks":1837,"seconds":30.616666666666667,"boarded":24}
+
+ ✓  functional  tests/levels/objective-clarity.test.ts (5 tests) 3915ms
+   ✓ PO 10-21 #1 followers walk around a stationary courier in the first gate, then close from beside the lane 897ms
+   ✓ PO 10-21 #6 corridor arrival waits for the living group and identifies a missing survivor 1100ms
+   ✓ PO 10-21 #7 boarding the APC advances the objective immediately while preserving the group wait 884ms
+   ✓ PO 10-21 #8 the Metro names its three-second dwell and failed corgi ingress 1030ms
+ ✓  functional  tests/unit/levels/l8-variants.test.ts (4 tests) 447ms
+   ✓ T-E30-07-outlets @E30-AC07 at least three occluded tunnel outlets, >= 20 m apart, inside the perimeter, on the path network 334ms
+ ✓  functional  tests/unit/render/roof-cutaway.test.ts (5 tests) 21ms
+ ✓  functional  tests/unit/tooling/gpu-offload.test.ts (8 tests) 8108ms
+   ✓ WindowServer admission uses the measured ten second CPU delta and a strict 60% threshold 935ms
+   ✓ external headless browser roots count toward the hard two-browser ceiling 442ms
+   ✓ owned browser batches enforce their timeout and preserve the child exit code 6351ms
+Scene output must be a worktree-relative path without ..
+ ✓  functional  tests/unit/ui-telegraphs.test.ts (6 tests) 286ms
+ ✓  functional  tests/unit/audio/pickup-fanfare.test.ts (5 tests) 1280ms
+   ✓ every fanfare has audio files, a synthesised body, and licence records for each recorded layer 1250ms
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.hedge","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stderr | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[assets] prop.hedge fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+ ✓  functional  tests/levels/l7-departure.test.ts (6 tests) 12151ms
+   ✓ @E29-AC13 @E29-AC16 corridor checkpoint with a trapped living follower finishes with the exact roster, high 3307ms
+   ✓ @E29-AC13 @E29-AC16 corridor checkpoint with a trapped living follower finishes with the exact roster, low 1774ms
+   ✓ @E29-AC13 @E29-AC16 nearby trapped follower walks aboard without a relocation or pop, high 1662ms
+   ✓ @E29-AC13 @E29-AC16 nearby trapped follower walks aboard without a relocation or pop, low 1447ms
+   ✓ @E29-AC13 @E29-AC16 visible beyond 12 m trapped follower walks aboard without a relocation or pop, high 2030ms
+   ✓ @E29-AC13 @E29-AC16 visible beyond 12 m trapped follower walks aboard without a relocation or pop, low 1930ms
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.street-tree","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stderr | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[assets] prop.street-tree fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.garden-bush-small","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stderr | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[assets] prop.garden-bush-small fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.street-tree-blossom","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stderr | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[assets] prop.street-tree-blossom fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.garden-bush","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stderr | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[assets] prop.garden-bush fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (8)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (6)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+ ✓  functional  tests/unit/assets/authored-lods.test.ts (3 tests) 308ms
+ ✓  functional  tests/unit/render/l1-grade.test.ts (4 tests) 1832ms
+   ✓ @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials 1816ms
+ ✓  functional  tests/unit/assets/validate.test.ts (17 tests) 212378ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 202490ms
+   ✓ distance cap for veh.test LODNaN cannot be relaxed by the manifest 605ms
+   ✓ distance cap for bld.house-test LODNaN cannot be relaxed by the manifest 2196ms
+   ✓ distance cap for bld.house-test LODNaN cannot be relaxed by the manifest 326ms
+   ✓ distance cap for house.test LODNaN cannot be relaxed by the manifest 344ms
+   ✓ distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest 2633ms
+   ✓ @E17-AC02 decay caps apply to variants without changing the integrated base budget 1926ms
+   ✓ @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits 1713ms
+ ✓  functional  tests/unit/render/texture-ranges.test.ts (5 tests) 86ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (50)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (200)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (292)
+
+ ✓  functional  tests/unit/levels/continuity.test.ts (5 tests) 8093ms
+   ✓ T-CONT-10 @continuity L2 layout carries the burned annex (decay twin, lights off) and the canon dressing; L1 stays intact 1609ms
+   ✓ T-CONT-11 @continuity the debris blocks nav cells in L2 but keeps the annex door, lab door and every objective reachable 3512ms
+   ✓ T-CONT-14 @continuity player-caused statics never land on an L2 set piece (bike on the truck route is dropped) 2967ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (6), Accessor (98)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (14), Primitive (23), Accessor (92)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (340)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (35), Primitive (39), Accessor (483)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (4), Accessor (69)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (8), Primitive (15), Accessor (60)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (260)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (26), Primitive (30), Accessor (366)
+
+ ✓  functional  tests/unit/assets/long-gun-aim.test.ts (8 tests) 363ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (50)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (200)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (292)
+
+ ✓  functional  tests/levels/L5-metro-finish.test.ts (2 tests) 3587ms
+   ✓ @E23 @E23-AC15 P0 the Metro ring marks the arrival, the plinths beside the landing cannot be walked on, the HUD says what is missing 2055ms
+   ✓ @E23 @E24 P1 finishing L5 holding the basement shotgun starts L6 with it, in session and after a reload from the menu 1531ms
+ ✓  functional  tests/unit/render/lod-policy.test.ts (9 tests) 12ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (6), Accessor (98)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (14), Primitive (23), Accessor (92)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (340)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (35), Primitive (39), Accessor (483)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (4), Accessor (69)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (8), Primitive (15), Accessor (60)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (260)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (26), Primitive (30), Accessor (366)
+
+ ✓  functional  tests/levels/l1-firefighter.test.ts (2 tests) 14232ms
+   ✓ T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival 12820ms
+   ✓ T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery) 1411ms
+ ✓  functional  tests/unit/audio/policies.test.ts (6 tests) 27ms
+ ✓  functional  tests/unit/tooling/l10-q2-scene-catalog.test.ts (6 tests) 18ms
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (103)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (14), Primitive (17), Accessor (68)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (188)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (23), Primitive (23), Accessor (302)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (98)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (9), Primitive (12), Accessor (48)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (188)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (23), Primitive (23), Accessor (302)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (71)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (2), Primitive (4), Accessor (16)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (136)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (15), Primitive (15), Accessor (207)
+
+ ✓  functional  tests/unit/vfx/events.test.ts (4 tests) 2896ms
+   ✓ T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings 2470ms
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 1
+convoy footprint audit {
+  seed: 1,
+  tier: 'high',
+  arrivedS: 30.483333333333334,
+  overlaps: 0,
+  first: []
+}
+
+ ✓  functional  tests/unit/assets/build.test.ts (5 tests) 22180ms
+   ✓ T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal 11225ms
+   ✓ T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate 2625ms
+   ✓ @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files 2109ms
+   ✓ @E17-AC02 commerce decay caps are enforced independently of the integrated base 6144ms
+ ✓  functional  tests/unit/assets/alpha-variants.test.ts (21 tests) 3249ms
+   ✓ alpha-looks @PO23 inf.alpha-worker LOD0: budgets within +10% of inf.alpha, same height, same rig, eyes kept 437ms
+   ✓ alpha-looks @PO23 inf.mega-alpha-ashen LOD0: budgets within +10% of inf.mega-alpha, same height, same rig, eyes kept 320ms
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 2
+convoy footprint audit {
+  seed: 2,
+  tier: 'high',
+  arrivedS: 30.483333333333334,
+  overlaps: 0,
+  first: []
+}
+
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 3
+convoy footprint audit {
+  seed: 3,
+  tier: 'high',
+  arrivedS: 30.483333333333334,
+  overlaps: 0,
+  first: []
+}
+
+ ✓  functional  tests/levels/story-bots.test.ts (5 tests) 46963ms
+   ✓ @E19 PO UAT story beats: complete bot still completes L1 (seed 1) 22935ms
+   ✓ @E19 PO UAT story beats: newbie bot still completes L1 (seed 1) 20991ms
+   ✓ @E19 PO UAT story beat locks input and any press skips it 412ms
+   ✓ @E19 PO story beat holds until its bubble has been read 765ms
+   ✓ @E19 @E19-AC22 fire-station invitation repeats without moving or protecting the player; entry alone completes 1856ms
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 1
+convoy footprint audit {
+  seed: 1,
+  tier: 'low',
+  arrivedS: 30.483333333333334,
+  overlaps: 0,
+  first: []
+}
+
+ ✓  functional  tests/levels/camera-sightline.test.ts (6 tests) 5102ms
+   ✓ objective anchors are not hidden behind tall buildings (fixed game camera) (6)
+     ✓ L2 1746ms
+     ✓ L3 1344ms
+     ✓ L4 713ms
+     ✓ L5 887ms
+ ✓  functional  tests/unit/layouts/districts.test.ts (4 tests) 518ms
+   ✓ T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within one metre 423ms
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 2
+convoy footprint audit { seed: 2, tier: 'low', arrivedS: 30.65, overlaps: 0, first: [] }
+
+ ✓  functional  tests/unit/vfx/lab-accident.test.ts (4 tests) 193ms
+ ✓  functional  tests/unit/render/infected-bake.test.ts (5 tests) 703ms
+   ✓ @transition crowd bake cache evicts old CPU templates at its fixed limit 348ms
+stdout | tests/levels/L4-perimeter.test.ts > @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate
+{"gate":"l4-plaza-1m","phase":"ride","sampled":722,"failures":0}
+{"gate":"l4-plaza-1m","phase":"plaza","sampled":650,"failures":0}
+{"gate":"l4-plaza-1m","phase":"hold/war","sampled":650,"failures":0}
+
+ ✓  functional  tests/levels/L4-perimeter.test.ts (1 test) 23594ms
+   ✓ @E22 PO16b visible perimeter holds courier at the reported south edge, all ground actors respect it and infected vault above it; one-metre plaza gate 23593ms
+ ✓  functional  tests/unit/audio/assets.test.ts (4 tests) 307ms
+stdout | tests/levels/l4-convoy-people.test.ts > T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 3
+convoy footprint audit {
+  seed: 3,
+  tier: 'low',
+  arrivedS: 30.483333333333334,
+  overlaps: 0,
+  first: []
+}
+
+ ✓  functional  tests/levels/l2-start.test.ts (7 tests) 10800ms
+   ✓ level start loadouts (no pickup owned before it is taken) (6)
+     ✓ T-L2START-L2 @l2start L2 starts without weapon.fire-axe from a loaded save 1981ms
+     ✓ T-L2START-L3 @l2start L3 starts without weapon.handgun from a loaded save 1606ms
+     ✓ T-L2START-L4 @l2start L4 starts without weapon.army-mg from a loaded save 986ms
+     ✓ T-L2START-L5 @l2start L5 starts without weapon.shotgun from a loaded save 825ms
+     ✓ T-L2START-L2-handover @l2start L2 from the L1 handover keeps the bat and has no axe 1667ms
+     ✓ T-L2START-L2-keep @l2start the L2 loaded-save start keeps the other racked weapons 1924ms
+   ✓ L2 station bench sitters (1)
+     ✓ T-L2START-seats @l2start sitters sit on the benches outside the building, hips on the seat anchor; off the seat they stand 1808ms
+ ✓  functional  tests/unit/health-bars.test.ts (5 tests) 10ms
+ ✓  functional  tests/levels/L3-bridge.test.ts (3 tests) 10030ms
+   ✓ @E21 L3 nav: no deck cell links to the lower road except along the authored ramps 2307ms
+   ✓ @E21 L3 sim: nobody leaves the deck through the ramp-to-span junctions, and the group crosses the whole bridge on the deck 5280ms
+   ✓ @E21 L3 safety net: a player stranded off the route for 3 s is faded out and put back on a cell that reaches the objective 2439ms
+ ✓  functional  tests/unit/render/vehicle-occlusion.test.ts (4 tests) 13ms
+ ✓  functional  tests/levels/l4-convoy-people.test.ts (10 tests) 52626ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 1 8912ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 2 8325ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 3 8431ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 1 4837ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 2 4573ms
+   ✓ T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 3 4604ms
+   ✓ T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, high 3892ms
+   ✓ T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, high 4025ms
+   ✓ T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, low 2647ms
+   ✓ T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, low 2377ms
+ ✓  functional  tests/unit/assets/cure-kits.test.ts (46 tests) 3732ms
+   ✓ T-L10-cure-kit-bld.cure-duplex-lod0 @L10 bld.cure-duplex: per-LOD triangle cap, <=4 materials, closed solids, z-fight clean, low-rise 530ms
+   ✓ T-L10-cure-kit-bld.cure-warehouse-lod0 @L10 bld.cure-warehouse: per-LOD triangle cap, <=4 materials, closed solids, z-fight clean, low-rise 673ms
+stdout | tests/unit/render/interior-cull.test.ts > @E18 footprints tag enclosed placements and reveal/inside transitions update before rendering
+interior visibility steady cost ms/building 0.0005931685999967158
+
+ ✓  functional  tests/unit/render/interior-cull.test.ts (2 tests) 28ms
+ ✓  functional  tests/unit/ai-provoked-memory.test.ts (5 tests) 229ms
+ ✓  functional  tests/unit/render/apc-damage.test.ts (4 tests) 839ms
+   ✓ T-E31-22-smoke @E31-AC22 @E31-AC19 moving floor APCs reuse the bounded E27 pool without fire 741ms
+ ✓  functional  tests/unit/vehicles.test.ts (3 tests) 843ms
+   ✓ T-E09-01 @E09-AC01 roster validates and every used asset has its complete vehicle node contract 420ms
+   ✓ T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps 409ms
+ ✓  functional  tests/levels/corpse-grounding.test.ts (3 tests) 5325ms
+   ✓ @l3-grounding L3 highway: dead infected settle onto the ramp, the deck, or the street past the deck edge 2420ms
+   ✓ @l3-grounding L3 highway: a live infected standing on the ramp (above the 2 m separation cut-off) stays on the ramp surface 1649ms
+   ✓ @l3-grounding L1 street: dead infected on pavement, sidewalk slabs and kerbs stand on the support (generic case) 1252ms
+ ✓  functional  tests/unit/render/l7-memory.test.ts (3 tests) 209ms
+ ✓  functional  tests/unit/render/occluder-footprint.test.ts (2 tests) 46ms
+ ✓  functional  tests/unit/performance/spatial-contact-cache.test.ts (7 tests) 3987ms
+   ✓ contact cache preserves horde state against unfiltered queries (mixed zoo: false) 1543ms
+   ✓ contact cache preserves horde state against unfiltered queries (mixed zoo: true) 2384ms
+ ✓  functional  tests/levels/continuity.test.ts (2 tests) 67485ms
+   ✓ L1 -> L2 world-state continuity (2)
+     ✓ T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover 63046ms
+     ✓ T-CONT-02S @continuity player-caused toys carry over: a pushed dumpster blocks its passage, a closed gate stays shut, the bike is parked 4437ms
+ ✓  functional  tests/unit/levels/building-shells.test.ts (5 tests) 158ms
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'high',
+  opening: 'direct',
+  seconds: 35.916666666666664,
+  streetEngaged: 6,
+  streetPerMinute: 10.023201856148493,
+  engaged: 25,
+  perMinute: 41.76334106728539,
+  bins15s: [ 13, 18, 14 ],
+  policeTargets: 15,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 120.8,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 62.75 }
+  ]
+}
+
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L1","completed":true,"time":111.46666666666667,"deaths":0,"blocker":null}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'low',
+  opening: 'direct',
+  seconds: 48.1,
+  streetEngaged: 8,
+  streetPerMinute: 9.97920997920998,
+  engaged: 25,
+  perMinute: 31.185031185031185,
+  bins15s: [ 13, 9, 16, 13 ],
+  policeTargets: 13,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 1,
+  deathsAt: [ '83s@-31,-5/escape' ],
+  totalSeconds: 134.55,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 62.75 }
+  ]
+}
+
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L2","completed":true,"time":172.13333333333333,"deaths":1,"blocker":null}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'high',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 0,
+  streetPerMinute: 0,
+  engaged: 22,
+  perMinute: 24.197983501374885,
+  bins15s: [ 14, 11, 7, 11 ],
+  policeTargets: 16,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 141.01666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 62.75 }
+  ]
+}
+
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'high',
+  seconds: 81.58333333333333,
+  metres: 344.24121941912057,
+  routeMetres: 305,
+  walkingSeconds: 152.5,
+  engaged: 15,
+  perMinute: 11.031664964249234,
+  bins15s: [ 2, 4, 3, 0, 5, 2 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -13.837695121765137,
+      z: 5.321822643280029,
+      slots: 108,
+      groups: [Array]
+    },
+    {
+      second: 15,
+      x: 5.784363746643066,
+      z: 45.346153259277344,
+      slots: 110,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 47.982295989990234,
+      z: 28.554302215576172,
+      slots: 114,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 43.21082305908203,
+      z: -35.980499267578125,
+      slots: 118,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: 9.594717025756836,
+      z: -37.39896011352539,
+      slots: 118,
+      groups: [Array]
+    },
+    {
+      second: 75,
+      x: -56.75155258178711,
+      z: -38.82518005371094,
+      slots: 120,
+      groups: [Array]
+    }
+  ],
+  peak: 120,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.lineBreaks', t: 223.16666666666666 },
+    { type: 'objective:hold', t: 223.16666666666666 },
+    { type: 'l4.heliWithdrawn', t: 230.16666666666666 },
+    { type: 'l4.descended', t: 304.76666666666665 },
+    { type: 'objective:hide', t: 304.76666666666665 },
+    { type: 'l4.doorBarred', t: 306.51666666666665 },
+    { type: 'objective:bar', t: 306.51666666666665 },
+    { type: 'objective:wait', t: 313.51666666666665 }
+  ],
+  totalSeconds: 313.51666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+ ✓  functional  tests/unit/levels/campaign-nav-preparation.test.ts (10 tests) 113510ms
+   ✓ L1: one campaign navigation bake matches the previous mask/rebake path 2720ms
+   ✓ L2: one campaign navigation bake matches the previous mask/rebake path 3716ms
+   ✓ L3: one campaign navigation bake matches the previous mask/rebake path 3413ms
+   ✓ L4: one campaign navigation bake matches the previous mask/rebake path 1388ms
+   ✓ L5: one campaign navigation bake matches the previous mask/rebake path 1749ms
+   ✓ L6: one campaign navigation bake matches the previous mask/rebake path 1154ms
+   ✓ L7: one campaign navigation bake matches the previous mask/rebake path 2671ms
+   ✓ L8: one campaign navigation bake matches the previous mask/rebake path 1472ms
+   ✓ L9: one campaign navigation bake matches the previous mask/rebake path 80738ms
+   ✓ L10: one campaign navigation bake matches the previous mask/rebake path 14485ms
+ ✓  functional  tests/unit/audio/l1-arc.test.ts (3 tests) 78ms
+ ✓  functional  tests/unit/assets/alpha.test.ts (4 tests) 1069ms
+   ✓ T-E07-01-alpha-asset-lod0 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation 679ms
+ ✓  functional  tests/unit/render/sit-pose.test.ts (2 tests) 80ms
+ ✓  functional  tests/unit/input/weapon-keys.test.ts (7 tests) 12ms
+ ✓  functional  tests/unit/layouts/w6.test.ts (3 tests) 70ms
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'low',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 1,
+  streetPerMinute: 1.0999083409715857,
+  engaged: 5,
+  perMinute: 5.499541704857929,
+  bins15s: [ 4, 2, 1, 0 ],
+  policeTargets: 4,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 136.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 62.75 }
+  ]
+}
+
+ ✓  functional  tests/levels/L2-finale-pressure.test.ts (2 tests) 109517ms
+   ✓ PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival 57299ms
+   ✓ PO #7b @E20 the arriving player sees police firing on a horde at the bridge 52216ms
+ ✓  functional  tests/unit/assets/long-gun-hold.test.ts (5 tests) 377ms
+ ✓  functional  tests/unit/audio/streaming.test.ts (4 tests) 13ms
+ ✓  functional  tests/unit/layouts/clipping.test.ts (2 tests) 1294ms
+   ✓ layout clipping guard (L1 + L2) (1)
+     ✓ @clipping D-GROVE: no hard static props interpenetrate 1089ms
+ ✓  functional  tests/unit/levels/l10-dressing.test.ts (3 tests) 12263ms
+   ✓ look-l10 dressing solids keep every gameplay clearance 1658ms
+   ✓ look-l10 dressing adds no placement-vs-solid pair 6502ms
+   ✓ look-l10 the critical route, detours and pursuit shortcuts stay walkable after dressing 4100ms
+ ✓  functional  tests/unit/assets/elephant.test.ts (4 tests) 1231ms
+   ✓ T-E07-01-elephant-asset-lod0 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets 520ms
+   ✓ T-E07-01-elephant-asset-lod1 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets 448ms
+ ✓  functional  tests/unit/render/seethrough.test.ts (4 tests) 14ms
+stdout | tests/levels/L2-boarding.test.ts > L2 one-attempt interactions > axe: one click on the rack picks it up (single seed)
+axe ticks 67
+
+stdout | tests/levels/L2-boarding.test.ts > L2 one-attempt interactions > truck: one click on the boarding ring boards after the required axe (single seed)
+board ticks 224
+
+ ✓  functional  tests/unit/levels/barrier-joints.test.ts (3 tests) 14571ms
+   ✓ continuous fence chains close their nominal-versus-physical panel seams to at most 2 cm 1974ms
+   ✓ all shipped district privacy-fence chains meet the same 2 cm joint limit 12466ms
+ ✓  functional  tests/levels/l5-po-2.test.ts (2 tests) 4074ms
+   ✓ PO #26 @E23 three followers at 99/60/30 percent: only the most injured reserves and walks to the medkit; unsafe medicine waits 2269ms
+   ✓ PO #25 @E07 @E23 an Alpha 5 m from the courier behind cover turns, roars and engages without sight; regular infected hear too 1803ms
+ ✓  functional  tests/unit/render/l6-light-list.test.ts (9 tests) 48ms
+ ✓  functional  tests/levels/L2-boarding.test.ts (5 tests) 33792ms
+   ✓ L2 one-attempt interactions (5)
+     ✓ a click into the crashed police car resolves to a reachable nav cell and moves 5086ms
+     ✓ axe can be taken at 5 s, immediately ringing the alarm, then board normally 2929ms
+     ✓ axe: one click on the rack picks it up (single seed) 1776ms
+     ✓ truck: one click on the boarding ring boards after the required axe (single seed) 2006ms
+     ✓ standing anywhere in a ring counts: hold at the edge, and E from the edge 21992ms
+stdout | tests/levels/L4-finale-pressure.test.ts > PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap
+L4 finale {
+  tier: 'low',
+  seconds: 74.33333333333333,
+  metres: 313.73664074631375,
+  routeMetres: 305,
+  walkingSeconds: 152.5,
+  engaged: 19,
+  perMinute: 15.336322869955158,
+  bins15s: [ 1, 5, 1, 9, 3 ],
+  streetSamples: [
+    {
+      second: 0,
+      x: -11.116644859313965,
+      z: 15.205204963684082,
+      slots: 49,
+      groups: [Array]
+    },
+    {
+      second: 15,
+      x: 23.69147491455078,
+      z: 45.077125549316406,
+      slots: 56,
+      groups: [Array]
+    },
+    {
+      second: 30,
+      x: 58.307640075683594,
+      z: 20.0496883392334,
+      slots: 57,
+      groups: [Array]
+    },
+    {
+      second: 45,
+      x: 41.4090576171875,
+      z: -36.646888732910156,
+      slots: 59,
+      groups: [Array]
+    },
+    {
+      second: 60,
+      x: -23.428014755249023,
+      z: -37.39739990234375,
+      slots: 60,
+      groups: [Array]
+    }
+  ],
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  timeline: [
+    { type: 'l4.convoyArrived', t: 30.483333333333334 },
+    { type: 'objective:ride', t: 30.483333333333334 },
+    { type: 'l4.gun', t: 33.016666666666666 },
+    { type: 'l4.firstTurn', t: 33.016666666666666 },
+    { type: 'objective:quartermaster', t: 33.016666666666666 },
+    { type: 'l4.lineBreaks', t: 223.16666666666666 },
+    { type: 'objective:hold', t: 223.16666666666666 },
+    { type: 'l4.heliWithdrawn', t: 230.16666666666666 },
+    { type: 'l4.descended', t: 297.51666666666665 },
+    { type: 'objective:hide', t: 297.51666666666665 },
+    { type: 'l4.doorBarred', t: 299.01666666666665 },
+    { type: 'objective:bar', t: 299.01666666666665 },
+    { type: 'objective:wait', t: 306.01666666666665 }
+  ],
+  totalSeconds: 306.01666666666665,
+  door: {
+    x: -79.29999999999998,
+    z: -45.2801,
+    radius: 1.4,
+    yaw: -1.5707963267948966
+  }
+}
+
+ ✓  functional  tests/levels/L4-finale-pressure.test.ts (2 tests) 145032ms
+   ✓ PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap 145029ms
+ ✓  functional  tests/unit/levels/l6-static.test.ts (4 tests) 205ms
+ ✓  functional  tests/levels/run-out.test.ts (3 tests) 6689ms
+   ✓ run-out after the final objective (3)
+     ✓ L2: with action the world runs 5 s, invulnerable, then the transition happens once 4947ms
+     ✓ L6: without action the level ends at once 723ms
+     ✓ L6: with action the world runs 5 s, invulnerable, then the transition happens once 1017ms
+ ✓  functional  tests/unit/render/crowd-baked-pose.test.ts (2 tests) 869ms
+   ✓ baked crowd band keeps continuous finite poses, stops pose uploads and resumes nearby footwork 510ms
+   ✓ blocked phone figures hold the complete world pose between solves and an action updates immediately 358ms
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L3","completed":true,"time":287.55,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/unit/levels/no-placeholder-assets.test.ts (5 tests) 3376ms
+   ✓ no placeholder art in any level (5)
+     ✓ L2: every placed asset and decay variant resolves to real geometry 1441ms
+     ✓ L3: every placed asset and decay variant resolves to real geometry 813ms
+     ✓ L4: every placed asset and decay variant resolves to real geometry 428ms
+     ✓ L5: every placed asset and decay variant resolves to real geometry 635ms
+ ✓  functional  tests/unit/levels/objective-clarity.test.ts (4 tests) 19489ms
+ ✓  functional  tests/unit/render/ground-field-cache.test.ts (3 tests) 47ms
+ ✓  functional  tests/unit/render/visual-polish.test.ts (6 tests) 66ms
+ ✓  functional  tests/unit/assets/dispersal-kit.test.ts (30 tests) 1617ms
+   ✓ T-L10-dispersal-kit.dispersal-fan-housing-lod0 @L10 kit.dispersal-fan-housing: per-LOD triangle cap, <=8 materials, <=300 KB, closed solids, z-fight clean, low-rise 339ms
+stdout | tests/levels/l1-forecourt.test.ts > PO #3/#4b @E19 high: 28 living infected, bounded forecourt attackers and bike reachable within 20 s
+PO forecourt stationary 20 s { maxAttackers: 3, total: 28 }
+PO bike escape seconds 2.8
+
+ ✓  functional  tests/levels/L3-route.test.ts (1 test) 14685ms
+   ✓ @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway 14684ms
+stdout | tests/levels/l1-forecourt.test.ts > PO #3/#4b @E19 low: 28 living infected, bounded forecourt attackers and bike reachable within 20 s
+PO forecourt stationary 20 s { maxAttackers: 3, total: 28 }
+PO bike escape seconds 2.8
+
+ ✓  functional  tests/levels/l1-forecourt.test.ts (3 tests) 14414ms
+   ✓ PO #3/#4b @E19 high: 28 living infected, bounded forecourt attackers and bike reachable within 20 s 7256ms
+   ✓ PO #3/#4b @E19 low: 28 living infected, bounded forecourt attackers and bike reachable within 20 s 5387ms
+   ✓ @E19 the forecourt preserves respawn clearance while other humans are visible 1768ms
+ ✓  functional  tests/unit/assets/civilian-bake.test.ts (6 tests) 4370ms
+   ✓ npc.civilian-man-a: worker transfer preserves all poses, geometry, rig transforms and gun aim 1495ms
+   ✓ npc.civilian-elderly: worker transfer preserves all poses, geometry, rig transforms and gun aim 1003ms
+   ✓ npc.national-guard: worker transfer preserves all poses, geometry, rig transforms and gun aim 850ms
+   ✓ npc.shelter-survivor.lying: worker transfer preserves all poses, geometry, rig transforms and gun aim 943ms
+ ✓  functional  tests/unit/audio/danger.test.ts (4 tests) 23ms
+ ✓  functional  tests/unit/audio/base-alarm.test.ts (4 tests) 144ms
+ ✓  functional  tests/unit/render/vehicle-glass.test.ts (6 tests) 181ms
+ ✓  functional  tests/unit/render/l1-look.test.ts (3 tests) 276ms
+ ✓  functional  tests/unit/vfx/contact-feedback.test.ts (4 tests) 243ms
+stdout | tests/levels/L2-escape-loop.test.ts > L2 escape death loop > a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)
+L2 retry density { initialScrum: 12, countsWithin25m: [ 18, 11, 4, 0 ] }
+
+ ✓  functional  tests/levels/L2-escape-loop.test.ts (2 tests) 52814ms
+   ✓ L2 escape death loop (2)
+     ✓ the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %) 20813ms
+     ✓ a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m) 31999ms
+ ✓  functional  tests/unit/levels/l4-vehicle-solids.test.ts (1 test) 46ms
+ ✓  functional  tests/unit/assets/civilian-bake-worker.test.ts (6 tests) 31ms
+ ✓  functional  tests/unit/levels/l10-district.test.ts (2 tests) 4318ms
+   ✓ T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pickup anchors agree 4031ms
+ ✓  functional  tests/levels/L4-battlefield-lifecycle.test.ts (6 tests) 21859ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (high, seed 1) @E22-AC12 @E22-AC14 5619ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (high, seed 2) @E22-AC12 @E22-AC14 4913ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (high, seed 3) @E22-AC12 @E22-AC14 4161ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (low, seed 1) @E22-AC12 @E22-AC14 2457ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (low, seed 2) @E22-AC12 @E22-AC14 2372ms
+   ✓ L4 war tank Alphas resume combat and bodies persist (low, seed 3) @E22-AC12 @E22-AC14 2336ms
+ ✓  functional  tests/unit/vfx/integration.test.ts (5 tests) 280ms
+ ✓  functional  tests/unit/performance/human-query.test.ts (2 tests) 33ms
+ ✓  functional  tests/unit/levels/layout-overlap.test.ts (8 tests) 11170ms
+   ✓ L2 additions on D-GROVE do not cut into any other placement (staticOverlapMax 0) 1621ms
+   ✓ L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0) 1160ms
+   ✓ L3 vehicles never sit inside a wall, barrier rail, fence, building or other solid (PO 10-12: wreck inside the bridge barrier) 2093ms
+   ✓ L1 vehicles never sit inside a solid (all tiers) 553ms
+   ✓ L2 vehicles never sit inside a solid (all tiers) 2171ms
+   ✓ L3 vehicles never sit inside a solid (all tiers) 1900ms
+   ✓ L4 vehicles never sit inside a solid (all tiers) 690ms
+   ✓ L5 vehicles never sit inside a solid (all tiers) 975ms
+stdout | tests/unit/render/crowd-footwork.test.ts > pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07
+┌─────────┬──────────────────────────┬──────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario             │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼──────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ 'npc.civilian-man-a@1'   │ 'walk 1.4 m/s'       │ 13       │ 0.21       │ 0              │ 11.1      │ 0.21        │ 0         │
+│ 1       │ 'npc.civilian-man-a@1'   │ 'walk turn 90°'      │ 13       │ 0.79       │ 0              │ 12.4      │ 7.34        │ 38.68     │
+│ 2       │ 'npc.civilian-man-a@1'   │ 'walk turn 180°'     │ 14       │ 2.24       │ 0.01           │ 17.6      │ 7.76        │ 41        │
+│ 3       │ 'npc.civilian-man-a@1'   │ 'turn in place 180°' │ 6        │ 0.15       │ 0              │ 5.9       │ 71.98       │ 180       │
+│ 4       │ 'npc.civilian-man-a@1'   │ 'start-stop'         │ 9        │ 0.47       │ 0              │ 12.8      │ 5.43        │ 0         │
+│ 5       │ 'npc.civilian-man-a@1'   │ 'flee 4 m/s'         │ 22       │ 0.08       │ 0              │ 13.6      │ 0.16        │ 0         │
+│ 6       │ 'npc.civilian-man-a@1'   │ 'flee turn 120°'     │ 22       │ 0.2        │ 0.02           │ 19        │ 1.66        │ 7.09      │
+│ 7       │ 'npc.civilian-man-a@1'   │ 'wander (seeded)'    │ 49       │ 2.18       │ 0.01           │ 25.2      │ 81.57       │ 146.81    │
+│ 8       │ 'npc.civilian-woman-a@1' │ 'walk 1.4 m/s'       │ 13       │ 0.13       │ 0              │ 12.8      │ 0.41        │ 0         │
+│ 9       │ 'npc.civilian-woman-a@1' │ 'walk turn 90°'      │ 14       │ 0.61       │ 0.01           │ 14.5      │ 7.45        │ 38.39     │
+│ 10      │ 'npc.civilian-woman-a@1' │ 'walk turn 180°'     │ 14       │ 1.54       │ 0.02           │ 12.7      │ 7.42        │ 38.39     │
+│ 11      │ 'npc.civilian-woman-a@1' │ 'turn in place 180°' │ 6        │ 0          │ 0              │ 6.7       │ 75.7        │ 180       │
+│ 12      │ 'npc.civilian-woman-a@1' │ 'start-stop'         │ 9        │ 0.36       │ 0              │ 16.1      │ 11.6        │ 0         │
+│ 13      │ 'npc.civilian-woman-a@1' │ 'flee 4 m/s'         │ 18       │ 0.19       │ 0              │ 18        │ 0.43        │ 0         │
+│ 14      │ 'npc.civilian-woman-a@1' │ 'flee turn 120°'     │ 18       │ 0.21       │ 0.03           │ 18        │ 2.11        │ 10.25     │
+│ 15      │ 'npc.civilian-woman-a@1' │ 'wander (seeded)'    │ 42       │ 1.38       │ 0.04           │ 25.9      │ 100.12      │ 146.81    │
+│ 16      │ 'npc.civilian-man-a@0.7' │ 'walk 1.4 m/s'       │ 16       │ 0.76       │ 0              │ 7.1       │ 0.13        │ 0         │
+│ 17      │ 'npc.civilian-man-a@0.7' │ 'walk turn 90°'      │ 16       │ 0.91       │ 0              │ 7.1       │ 5.9         │ 39.8      │
+│ 18      │ 'npc.civilian-man-a@0.7' │ 'walk turn 180°'     │ 17       │ 2.55       │ 0.01           │ 13.2      │ 4.89        │ 36.95     │
+│ 19      │ 'npc.civilian-man-a@0.7' │ 'turn in place 180°' │ 6        │ 0.1        │ 0              │ 4.2       │ 50.39       │ 180       │
+│ 20      │ 'npc.civilian-man-a@0.7' │ 'start-stop'         │ 12       │ 0.71       │ 0              │ 7.9       │ 17.75       │ 0         │
+│ 21      │ 'npc.civilian-man-a@0.7' │ 'flee 4 m/s'         │ 25       │ 0.13       │ 0              │ 12.4      │ 0.24        │ 0         │
+│ 22      │ 'npc.civilian-man-a@0.7' │ 'flee turn 120°'     │ 26       │ 0.85       │ 0.01           │ 13.2      │ 4.45        │ 12.57     │
+│ 23      │ 'npc.civilian-man-a@0.7' │ 'wander (seeded)'    │ 59       │ 1.93       │ 0.01           │ 18        │ 76.57       │ 146.81    │
+└─────────┴──────────────────────────┴──────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+stdout | tests/unit/render/crowd-footwork.test.ts > zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08
+┌─────────┬──────────────────────────┬─────────────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario                    │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼─────────────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ 'inf.common-worker.lod1' │ 'shamble 1 m/s (drag foot)' │ 12       │ 0.12       │ 0              │ 15.4      │ 0.16        │ 0         │
+│ 1       │ 'inf.common-worker.lod1' │ 'shamble turn 90°'          │ 14       │ 0.14       │ 0              │ 15.4      │ 5.65        │ 34.69     │
+│ 2       │ 'inf.common-worker.lod1' │ 'runner lurch 5.1 m/s'      │ 23       │ 0.17       │ 0              │ 15.3      │ 0.28        │ 0         │
+│ 3       │ 'inf.common-worker.lod1' │ 'runner turn 90°'           │ 23       │ 0.21       │ 0.01           │ 15.3      │ 5.11        │ 15.03     │
+│ 4       │ 'inf.common-worker.lod1' │ 'face target 150° (snap)'   │ 6        │ 0.07       │ 0              │ 10.4      │ 44.02       │ 118.51    │
+│ 5       │ 'inf.common-worker.lod1' │ 'lunge-grab attack'         │ 5        │ 0.86       │ 0              │ 2.5       │ 95.03       │ 1.75      │
+│ 6       │ 'inf.common-worker.lod1' │ 'wander (seeded)'           │ 48       │ 1.83       │ 0.01           │ 21.5      │ 71.14       │ 142.09    │
+│ 7       │ 'inf.common-worker.lod1' │ 'flinch x4 (fast clicks)'   │ 2        │ 0          │ 0              │ 0         │ 22.33       │ 1.81      │
+│ 8       │ 'npc.civilian-woman-b'   │ 'shamble 1 m/s (drag foot)' │ 12       │ 0.57       │ 0              │ 15.9      │ 0.4         │ 0         │
+│ 9       │ 'npc.civilian-woman-b'   │ 'shamble turn 90°'          │ 14       │ 0.57       │ 0              │ 15.9      │ 6.43        │ 32.63     │
+│ 10      │ 'npc.civilian-woman-b'   │ 'runner lurch 5.1 m/s'      │ 22       │ 0.14       │ 0              │ 18.1      │ 0.27        │ 0         │
+│ 11      │ 'npc.civilian-woman-b'   │ 'runner turn 90°'           │ 22       │ 0.15       │ 0.01           │ 18.1      │ 3.61        │ 18.67     │
+│ 12      │ 'npc.civilian-woman-b'   │ 'face target 150° (snap)'   │ 6        │ 0          │ 0              │ 6.7       │ 36.87       │ 124.19    │
+│ 13      │ 'npc.civilian-woman-b'   │ 'lunge-grab attack'         │ 2        │ 0.58       │ 0              │ 0.6       │ 100.51      │ 1.89      │
+│ 14      │ 'npc.civilian-woman-b'   │ 'wander (seeded)'           │ 48       │ 1.77       │ 0.01           │ 23.9      │ 69.62       │ 142.09    │
+│ 15      │ 'npc.civilian-woman-b'   │ 'flinch x4 (fast clicks)'   │ 2        │ 0          │ 0              │ 0         │ 28.53       │ 1.89      │
+└─────────┴──────────────────────────┴─────────────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ ✓  functional  tests/unit/render/crowd-footwork.test.ts (3 tests) 11309ms
+   ✓ pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07 7780ms
+   ✓ zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08 3524ms
+ ✓  functional  tests/unit/render/static-instance-attributes.test.ts (1 test) 38ms
+ ✓  functional  tests/unit/render/instanced-occlusion.test.ts (2 tests) 311ms
+ ✓  functional  tests/unit/motionlab/stage1.test.ts (4 tests) 323ms
+ ✓  functional  tests/unit/audio/mega-presentation.test.ts (5 tests) 8ms
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 1)
+G-RIDE-ROUTE 0.7166666666666667 2.5
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 2)
+G-RIDE-ROUTE 0.7166666666666667 2.5
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 3)
+G-RIDE-ROUTE 0.7166666666666667 2.5
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 4)
+G-RIDE-ROUTE 0.7166666666666667 2.5
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 5)
+G-RIDE-ROUTE 0.7166666666666667 2.5
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move on the bicycle reaches lab-gate around fences
+G-RIDE-ROUTE lab-gate 14.7 9.5 false
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move on the bicycle reaches garage-door around fences
+G-RIDE-ROUTE garage-door 16.0 4.0 true
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move on the bicycle reaches fire-bay-door around fences
+G-RIDE-ROUTE fire-bay-door 12.7 4.9 false
+
+ ✓  functional  tests/levels/l1-ride-input.test.ts (10 tests) 9603ms
+   ✓ E19 @E19 QA1-01 arriving at the depot counter on the bicycle without the parcel parks the bike; E picks up the parcel 1162ms
+   ✓ E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 1) 530ms
+   ✓ E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 2) 462ms
+   ✓ E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 3) 447ms
+   ✓ E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 4) 446ms
+   ✓ E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 5) 400ms
+   ✓ E19 @E19 QA1-02 click-to-move on the bicycle reaches lab-gate around fences 2188ms
+   ✓ E19 @E19 QA1-02 click-to-move on the bicycle reaches garage-door around fences 2065ms
+   ✓ E19 @E19 QA1-02 click-to-move on the bicycle reaches fire-bay-door around fences 1574ms
+   ✓ E19 @E19 QA1-02 click-to-move on the bicycle reaches carwash-start around fences 325ms
+ ✓  functional  tests/unit/tooling/verify-quiet.test.ts (4 tests) 2650ms
+   ✓ E26 CLI @E26 reserves quiet timing separately and retains functional/perf evidence 1323ms
+   ✓ E28 CLI @E28 reserves quiet timing separately and retains functional/perf evidence 541ms
+   ✓ @E26 @E28 a quiet timing failure keeps the verifier red and records its exit code 398ms
+   ✓ @E26 @E28 quiet admission refusal cannot reuse functional results or a previous GPU artifact 385ms
+ ✓  functional  tests/unit/tooling/seethrough-probe.test.ts (3 tests) 43ms
+ ✓  functional  tests/unit/assets/crowd.test.ts (1 test) 565ms
+   ✓ T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times 563ms
+ ✓  functional  tests/unit/render/roundhouse-pose.test.ts (1 test) 266ms
+ ✓  functional  tests/unit/render/pickup-visibility.test.ts (4 tests) 47ms
+ ✓  functional  tests/unit/render/l1-infection-overlay.test.ts (1 test) 2208ms
+   ✓ T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: own model batch, own tint, infection overlay 2207ms
+ ✓  functional  tests/levels/camera-route-framing.test.ts (10 tests) 38271ms
+   ✓ L1 authored waypoint sweep preserves player framing @camera-hotfix @E02 1505ms
+   ✓ L2 authored waypoint sweep preserves player framing @camera-hotfix @E02 2633ms
+   ✓ L3 authored waypoint sweep preserves player framing @camera-hotfix @E02 3144ms
+   ✓ L4 authored waypoint sweep preserves player framing @camera-hotfix @E02 @E22 1877ms
+   ✓ L5 authored waypoint sweep preserves player framing @camera-hotfix @E02 1703ms
+   ✓ L6 authored waypoint sweep preserves player framing @camera-hotfix @E02 361ms
+   ✓ L7 authored waypoint sweep preserves player framing @camera-hotfix @E02 1499ms
+   ✓ L8 authored waypoint sweep preserves player framing @camera-hotfix @E02 1110ms
+   ✓ L9 authored waypoint sweep preserves player framing @camera-hotfix @E02 9355ms
+   ✓ L10 authored waypoint sweep preserves player framing @camera-hotfix @E02 15081ms
+ ✓  functional  tests/unit/render/foliage.test.ts (3 tests) 117ms
+ ✓  functional  tests/unit/render/figure-height.test.ts (6 tests) 11656ms
+   ✓ every civilian, ally and infected skin has its age/species height in high lod0 @E08 @E18 4236ms
+   ✓ every civilian, ally and infected skin has its age/species height in high lod1 @E08 @E18 1014ms
+   ✓ every civilian, ally and infected skin has its age/species height in high lod2 @E08 @E18 750ms
+   ✓ every civilian, ally and infected skin has its age/species height in low lod0 @E08 @E18 3980ms
+   ✓ every civilian, ally and infected skin has its age/species height in low lod1 @E08 @E18 855ms
+   ✓ every civilian, ally and infected skin has its age/species height in low lod2 @E08 @E18 818ms
+ ✓  functional  tests/unit/render/crowd-topology.test.ts (1 test) 1293ms
+   ✓ common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07 1291ms
+ ✓  functional  tests/unit/render/footprints.test.ts (5 tests) 117ms
+ ✓  functional  tests/unit/assets/accessories.test.ts (4 tests) 87ms
+ ↓  functional  tests/levels/L4-probe.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/levels/story-protection.test.ts (6 tests) 5911ms
+   ✓ story protection L1 @E19 : every required actor resists bites, damage and collapse, then releases 664ms
+   ✓ story protection L2 @E20 : every required actor resists bites, damage and collapse, then releases 1937ms
+   ✓ story protection L3 @E21 : every required actor resists bites, damage and collapse, then releases 1492ms
+   ✓ story protection L4 @E22 : every required actor resists bites, damage and collapse, then releases 719ms
+   ✓ story protection L5 @E23 : every required actor resists bites, damage and collapse, then releases 915ms
+ ✓  functional  tests/unit/input/raised-floor.test.ts (5 tests) 9ms
+ ✓  functional  tests/levels/controls-content.test.ts (4 tests) 3327ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (high) 1256ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (low) 793ms
+   ✓ @E22 @E22-AC11 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm 631ms
+   ✓ @E22 @E22-AC13 first-line pressure can use concealed camp exits after the immediate pickup alarm 644ms
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L4","completed":true,"time":303.96666666666664,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/unit/render/infected-eyes.test.ts (14 tests) 2319ms
+   ✓ @E25 @E25-AC13 inf.common-worker lod1: body surfaces and red eye cores survive the low bake 351ms
+ ✓  functional  tests/unit/progression/aftermath.test.ts (3 tests) 89ms
+ ✓  functional  tests/unit/render/scripted-wheels.test.ts (4 tests) 43ms
+ ✓  functional  tests/levels/respawn-all-levels.test.ts (19 tests) 62486ms
+   ✓ death respawns exactly on the last reached checkpoint, every level (19)
+     ✓ L1 (start): back on the anchor, nothing within 9 m, grace, loadout kept 2112ms
+     ✓ L1 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1374ms
+     ✓ L2 (start): back on the anchor, nothing within 9 m, grace, loadout kept 2859ms
+     ✓ L2 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 2791ms
+     ✓ L3 (start): back on the anchor, nothing within 9 m, grace, loadout kept 2549ms
+     ✓ L3 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 2450ms
+     ✓ L4 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 2679ms
+     ✓ L5 (start): back on the anchor, nothing within 9 m, grace, loadout kept 1532ms
+     ✓ L5 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1754ms
+     ✓ L6 (start): back on the anchor, nothing within 9 m, grace, loadout kept 638ms
+     ✓ L6 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 466ms
+     ✓ L7 (start): back on the anchor, nothing within 9 m, grace, loadout kept 1485ms
+     ✓ L7 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1242ms
+     ✓ L8 (start): back on the anchor, nothing within 9 m, grace, loadout kept 1754ms
+     ✓ L8 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1624ms
+     ✓ L9 (start): back on the anchor, nothing within 9 m, grace, loadout kept 6246ms
+     ✓ L9 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 5908ms
+     ✓ L10 (start): back on the anchor, nothing within 9 m, grace, loadout kept 11378ms
+     ✓ L10 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 11645ms
+ ✓  functional  tests/unit/audio/ambience-guard.test.ts (3 tests) 81ms
+ ✓  functional  tests/unit/render/vehicle-occupant-matrices.test.ts (1 test) 326ms
+   ✓ seated contacts reuse current matrices with identical poses under translated, leaning and reflected cars 324ms
+ ✓  functional  tests/unit/render/civilian-staging.test.ts (6 tests) 95ms
+ ✓  functional  tests/unit/survivor.test.ts (3 tests) 175ms
+ ✓  functional  tests/unit/render/ik-matrix-reuse.test.ts (1 test) 186ms
+ ✓  functional  tests/unit/render/infected-corpse-surface.test.ts (14 tests) 2893ms
+   ✓ PO #85 @E32 @E07 inf.common-worker low chooses a closed corpse mesh instead of the living LOD 455ms
+ ✓  functional  tests/levels/l1-medkits.test.ts (1 test) 2075ms
+   ✓ T-E19-medkits @E19 L1 has 2-3 reachable med packs along the post-accident route; each heals 50 % once and stays taken after a respawn 2071ms
+ ✓  functional  tests/unit/levels/l5-footprints.test.ts (1 test) 715ms
+   ✓ T-E23-05c @E23 @E23-AC05 shipped W5 hero geometry retains a top-down footprint mask IoU >= 0.9 713ms
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L5","completed":true,"time":157.56666666666666,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/unit/render/vfx-hud-polish.test.ts (7 tests) 20ms
+ ✓  functional  tests/unit/render/footprint-uploads.test.ts (1 test) 256ms
+ ✓  functional  tests/unit/render/look-patch.test.ts (14 tests) 17ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L1","completed":true,"time":111.46666666666667,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/levels/L4-movement.test.ts (4 tests) 49140ms
+   ✓ @E22 L4 plaza permits mouse and direct movement on open plaza tiles 10275ms
+   ✓ @E22 L4 war permits mouse and direct movement on open plaza tiles 15356ms
+   ✓ @E22 L4 respawn permits mouse and direct movement on open plaza tiles 17095ms
+   ✓ @E22 a real L4 armory-table corner cannot trap an outward click 6412ms
+stdout | tests/unit/render/crowd-lod-geometry.test.ts > @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+{ before: 3782, after: 2946 }
+
+ ✓  functional  tests/unit/render/crowd-lod-geometry.test.ts (2 tests) 816ms
+   ✓ @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership 354ms
+   ✓ T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels 458ms
+ ✓  functional  tests/unit/render/texture-upload.test.ts (4 tests) 42ms
+ ✓  functional  tests/unit/assets/static-collision.test.ts (4 tests) 226ms
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L6","completed":true,"time":268.28333333333336,"deaths":0,"blocker":null}
+
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L2","completed":true,"time":172.13333333333333,"deaths":1,"blocker":null}
+
+ ✓  functional  tests/levels/respawn-checkpoint.test.ts (6 tests) 59918ms
+   ✓ respawn at the last reached checkpoint (6)
+     ✓ L1 seed 1: bat pickup, walk far away, die: back at the bat spot with the bat 16580ms
+     ✓ L1 seed 2: bat pickup, walk far away, die: back at the bat spot with the bat 14336ms
+     ✓ L1 seed 3: bat pickup, walk far away, die: back at the bat spot with the bat 12495ms
+     ✓ L1 seed 4: bat pickup, walk far away, die: back at the bat spot with the bat 12162ms
+     ✓ L1: before the bat only the start checkpoint exists 321ms
+     ✓ L2: taking the axe records a checkpoint; death before the doors respawns at the axe rack with the axe 4022ms
+ ✓  functional  tests/unit/combat/gun-raise.test.ts (5 tests) 8ms
+ ✓  functional  tests/unit/ui/survivor-radar.test.ts (1 test) 12ms
+ ✓  functional  tests/unit/performance/hit-query-grid.test.ts (1 test) 375ms
+   ✓ T-E22-20-cover-slabs @E22-AC20 ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls 373ms
+ ✓  functional  tests/unit/render/weather-materials.test.ts (3 tests) 58ms
+ ✓  functional  tests/levels/trap-pockets.test.ts (6 tests) 5859ms
+   ✓ @trap-pockets directed reachability (6)
+     ✓ L1: every cell the player can reach keeps an objective anchor reachable 620ms
+     ✓ L2: every cell the player can reach keeps an objective anchor reachable 1786ms
+     ✓ L3: every cell the player can reach keeps an objective anchor reachable 1619ms
+     ✓ L4: every cell the player can reach keeps an objective anchor reachable 830ms
+     ✓ L5: every cell the player can reach keeps an objective anchor reachable 786ms
+ ✓  functional  tests/unit/render/entity-assets-lod-materials.test.ts (1 test) 35ms
+ ✓  functional  tests/unit/input/rack-selection.test.ts (5 tests) 21ms
+ ✓  functional  tests/unit/levels/placement-clearance-cache.test.ts (3 tests) 587ms
+ ✓  functional  tests/unit/levels/placement-solids.test.ts (1 test) 58850ms
+   ✓ @E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline) 58848ms
+ ✓  functional  tests/unit/assets/living-adults.test.ts (2 tests) 2103ms
+   ✓ living adult shipped tiers obey the base draw ceiling and batch attachments 2003ms
+ ✓  functional  tests/unit/render/infected-resident-prewarm.test.ts (6 tests) 57ms
+ ✓  functional  tests/unit/tooling/prop-penetration.test.ts (3 tests) 79ms
+ ✓  functional  tests/unit/audio/registry.test.ts (3 tests) 15ms
+ ✓  functional  tests/unit/levels/l10-campus-corridor.test.ts (3 tests) 4035ms
+   ✓ T-E32-03-D3 @E32-AC03 @E32-AC15 @E32-AC28 campus and corridor story anchors and full route are walkable 4033ms
+ ✓  functional  tests/unit/render/crowd-instance-stream.test.ts (1 test) 77ms
+ ✓  functional  tests/levels/l5-district.test.ts (2 tests) 3588ms
+   ✓ T-E23-12d @E23 @E23-AC12 basement shotgun rests on the shelf within 3 m, can be reached from the aisle and disappears on collection 1328ms
+   ✓ T-E23-15d @E23 @E23-AC15 metro closure enables the matching passage collider at the end of the visible descent 2259ms
+ ✓  functional  tests/unit/tooling/night-read.test.ts (4 tests) 24ms
+ ✓  functional  tests/unit/render/catalog-motion.test.ts (6 tests) 586ms
+ ✓  functional  tests/unit/combat/minigun.test.ts (5 tests) 12ms
+ ✓  functional  tests/unit/input/click-pick.test.ts (3 tests) 8ms
+ ✓  functional  tests/unit/physics-preparation.test.ts (3 tests) 166ms
+ ✓  functional  tests/unit/levels/decoration-surface.test.ts (14 tests) 3092ms
+   ✓ @E19 D-GROVE: drawn decorations stand only on soil 1738ms
+   ✓ @E19 D-MAIN: drawn decorations stand only on soil 449ms
+   ✓ @E19 D-RES: drawn decorations stand only on soil 329ms
+   ✓ @E19 D-SHOP: drawn decorations stand only on soil 422ms
+ ✓  functional  tests/unit/ai/nav-visible-early.test.ts (1 test) 578ms
+   ✓ T-E22-20-nav @E22-AC20 early segment rejection preserves walls, masks, narrow corners and outward escapes 576ms
+ ✓  functional  tests/unit/performance/nav-bake.test.ts (6 tests) 431ms
+ ✓  functional  tests/unit/render/character-loading.test.ts (8 tests) 1399ms
+   ✓ selected female courier (high, direct) loads alone; a later menu choice joins one load and retains both rigs 431ms
+ ✓  functional  tests/unit/render/corpse-placement.test.ts (2 tests) 156ms
+ ✓  functional  tests/unit/render/alpha-body-fidelity.test.ts (2 tests) 842ms
+   ✓ PO #21 @E18 Alpha corpse retains its whole authored body (high) 587ms
+ ✓  functional  tests/unit/assets/static-bakes.test.ts (142 tests) 2740ms
+ ✓  functional  tests/unit/motionlab/skin.test.ts (2 tests) 677ms
+   ✓ motion lab crowd palettes yield finite landmarks and use one instanced mesh 492ms
+ ✓  functional  tests/unit/import-graph.test.ts (2 tests) 3328ms
+   ✓ T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies 2069ms
+   ✓ T-E01-03b @E01 @E01-AC03 lint rejects unseeded randomness, DOM and renderer imports 1256ms
+ ✓  functional  tests/levels/L4-alarm-allocation-parity.test.ts (1 test) 11335ms
+   ✓ T-E22-20-refuge @E22-AC20 allocation changes retain every alarm identity, look, target, event and RNG outcome 11333ms
+ ✓  functional  tests/unit/combat/loadout.test.ts (3 tests) 14ms
+ ✓  functional  tests/unit/render/rocket-ground.test.ts (1 test) 804ms
+   ✓ @E02-AC03 #67 L7 elevated paving covers the widest launcher view at the Northgate exit 803ms
+ ✓  functional  tests/unit/progression/weapon-carry.test.ts (8 tests) 22ms
+ ✓  functional  tests/unit/render/material-variants.test.ts (2 tests) 62ms
+ ✓  functional  tests/unit/audio/fight-music.test.ts (3 tests) 9ms
+ ✓  functional  tests/unit/render/pose-texture.test.ts (2 tests) 7ms
+ ✓  functional  tests/unit/render/infected-corpse-prewarm.test.ts (6 tests) 881ms
+   ✓ T-E27-14c @E27 @E18 blast-stress high prepares the actual LOD2 infected corpse before play 573ms
+ ✓  functional  tests/unit/render/crowd-register.test.ts (5 tests) 13ms
+ ✓  functional  tests/levels/ring-clearance.test.ts (2 tests) 3822ms
+   ✓ interaction rings are prop-free (2)
+     ✓ L2 (all rings, 1.2 m around each ring) 3282ms
+     ✓ L1 (all rings, 1.2 m around each ring) 537ms
+ ✓  functional  tests/unit/assets/production-gates.test.ts (3 tests) 259ms
+fatal: Needed a single revision
+ ✓  functional  tests/unit/progression/cure.test.ts (4 tests) 16ms
+ ✓  functional  tests/unit/render/crowd-arm-matrices.test.ts (1 test) 96ms
+ ✓  functional  tests/unit/setup.test.ts (3 tests) 1261ms
+   ✓ T-E01-previews @E01 dev server serves optional preview pages 1232ms
+ ✓  functional  tests/unit/missions/schema.test.ts (2 tests) 11ms
+ ✓  functional  tests/unit/render/crowd-gun-matrices.test.ts (3 tests) 421ms
+ ✓  functional  tests/unit/levels/l5-shutter.test.ts (1 test) 164ms
+ ✓  functional  tests/unit/layouts/d-grove-scaffold.test.ts (2 tests) 43ms
+ ✓  functional  tests/unit/levels/l2-roads.test.ts (2 tests) 3607ms
+   ✓ L2 starts with no loose furniture footprint in a driving lane, including inherited and dressed props 1275ms
+   ✓ L2 assembly rejects carried furniture on a road; gameplay/checkpoint restoration keeps a displaced pose 2330ms
+ ✓  functional  tests/unit/levels/l10-arena.test.ts (1 test) 4445ms
+   ✓ T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console 4443ms
+ ✓  functional  tests/unit/render/palette-cache-key.test.ts (2 tests) 37ms
+ ✓  functional  tests/unit/render/crowd-parent-inverses.test.ts (1 test) 125ms
+ ✓  functional  tests/unit/render/e25-hero.test.ts (2 tests) 230ms
+ ✓  functional  tests/unit/ai-provoked-aggro.test.ts (4 tests) 249ms
+ ✓  functional  tests/unit/assets/courier-skin-lod.test.ts (2 tests) 3861ms
+   ✓ @E18-AC01 female low skin preserves vertices, influences and the complete rig 1907ms
+   ✓ @E18-AC01 male low skin preserves vertices, influences and the complete rig 1953ms
+ ✓  functional  tests/unit/input/buttons.test.ts (3 tests) 7ms
+ ✓  functional  tests/unit/render/car-transition.test.ts (1 test) 110ms
+ ✓  functional  tests/unit/progression/next-level.test.ts (7 tests) 11ms
+ ✓  functional  tests/unit/render/instanced-ray.test.ts (2 tests) 123ms
+ ✓  functional  tests/unit/render/courier-gear-tiers.test.ts (6 tests) 48ms
+ ✓  functional  tests/unit/render/crowd-layer-matrices.test.ts (1 test) 147ms
+ ✓  functional  tests/unit/render/campaign-hitch-weather.test.ts (1 test) 346ms
+   ✓ @E18 @E28 L6 position-based exterior fog uses its loading graph and weather preserves an inactive sun 345ms
+ ✓  functional  tests/unit/ai/nav-pocket-memo.test.ts (1 test) 1401ms
+   ✓ T-E22-20-pocket @E22-AC20 a repeated unreachable A* returns what a fresh search returns, with the same visited pocket and sizes 1400ms
+ ✓  functional  tests/unit/data/actions.test.ts (3 tests) 23ms
+ ✓  functional  tests/levels/l6-navigation.test.ts (2 tests) 891ms
+   ✓ T-E24-17-route @E24-AC17 @E24-AC10 courier navigation stays in the authored tunnel around the first gate 438ms
+   ✓ T-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tunnel floor 452ms
+ ✓  functional  tests/unit/performance/quality.test.ts (4 tests) 20ms
+ ✓  functional  tests/unit/render/post-fx-streaming.test.ts (2 tests) 17ms
+ ✓  functional  tests/unit/data/explosions.test.ts (1 test) 22ms
+ ✓  functional  tests/unit/render/routine-props-pool.test.ts (2 tests) 34ms
+ ✓  functional  tests/unit/missions/house-emergence.test.ts (2 tests) 13ms
+ ✓  functional  tests/unit/render/civilian-surface-retention.test.ts (3 tests) 2048ms
+   ✓ PO #29 @E18 npc.civilian-man-a lod1 reduction retains each visible body surface 937ms
+   ✓ PO #29 @E18 npc.civilian-man-a lod2 reduction retains each visible body surface 528ms
+   ✓ PO #29 @E18 npc.national-guard lod1 reduction retains each visible body surface 581ms
+ ✓  functional  tests/unit/physics-prop-contract.test.ts (1 test) 311ms
+   ✓ T-E26-01 @E26 @E26-AC01 every movable prop GLB validates mass band, collider bounds, COM and explosion references 309ms
+ ✓  functional  tests/unit/render/transport.test.ts (2 tests) 204ms
+ ✓  functional  tests/unit/wreck-roofs.test.ts (2 tests) 104ms
+ ✓  functional  tests/unit/render/l6-power.test.ts (1 test) 13ms
+ ✓  functional  tests/unit/bot/l2-recovery.test.ts (7 tests) 8ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L3","completed":true,"time":287.55,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/unit/render/rocket-corpses.test.ts (1 test) 511ms
+   ✓ T-E29-19-corpses @E29-AC19 settled crowd bodies keep positions/colors/rig ownership with fewer triangles 510ms
+ ✓  functional  tests/unit/tooling/scenelab-paw.test.ts (2 tests) 11ms
+ ✓  functional  tests/unit/input/bindings.test.ts (3 tests) 8ms
+ ✓  functional  tests/unit/layouts/build.test.ts (1 test) 2607ms
+   ✓ T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal 2606ms
+ ✓  functional  tests/unit/audio/levelSoundtracks.test.ts (2 tests) 9ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L1: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L1","checkpoints":["start","accident","bat"],"declared":["accident","bat"]}
+
+ ✓  functional  tests/levels/L4-refuge-visible.test.ts (1 test) 27685ms
+   ✓ @E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1–L10 27683ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L2: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L2","checkpoints":["start","axe","doors","escape","cluster"],"declared":["axe","doors","escape","cluster"]}
+
+ ✓  functional  tests/levels/pickup-solids.test.ts (1 test) 21954ms
+   ✓ @pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses 21949ms
+ ✓  functional  tests/unit/data/player-text-dashes.test.ts (2 tests) 1177ms
+   ✓ player-facing text sources contain no em dashes or en dashes used as dashes 1175ms
+ ✓  functional  tests/unit/render/l10-lod-prefetch.test.ts (2 tests) 7ms
+ ✓  functional  tests/unit/render/crowd-sink.test.ts (7 tests) 1084ms
+ ✓  functional  tests/unit/vfx/cure-mist.test.ts (2 tests) 206ms
+ ✓  functional  tests/unit/render/cure-animal-death.test.ts (6 tests) 110ms
+ ✓  functional  tests/unit/audio/music-beats.test.ts (3 tests) 10ms
+ ✓  functional  tests/unit/render/crowd-store-matrices.test.ts (1 test) 130ms
+ ✓  functional  tests/unit/render/mounted-muzzle.test.ts (1 test) 8ms
+ ✓  functional  tests/unit/vfx/zoo-s2.test.ts (9 tests) 264ms
+ ✓  functional  tests/unit/render/spawn-silhouette.test.ts (1 test) 158ms
+ ✓  functional  tests/unit/assets/references.test.ts (2 tests) 94ms
+ ✓  functional  tests/unit/vfx/zoo-s3.test.ts (2 tests) 163ms
+ ✓  functional  tests/unit/levels/l10-alpha-contracts.test.ts (2 tests) 9ms
+ ✓  functional  tests/unit/render/crowd-visibility.test.ts (3 tests) 7ms
+ ✓  functional  tests/unit/audio/noise.test.ts (1 test) 121ms
+ ✓  functional  tests/unit/data/action-assets.test.ts (2 tests) 42ms
+ ✓  functional  tests/unit/vfx/pools.test.ts (3 tests) 74ms
+ ✓  functional  tests/unit/tooling/mega-visible-share.test.ts (1 test) 25ms
+ ✓  functional  tests/unit/levels/l10-platform-supports.test.ts (2 tests) 11ms
+ ✓  functional  tests/unit/traceability.test.ts (2 tests) 498ms
+   ✓ T-E01-traceability @E01 every active epic AC has a matching test tag 492ms
+ ✓  functional  tests/unit/render/level-geometry-retention.test.ts (1 test) 9ms
+ ✓  functional  tests/unit/audio/level-music-ids.test.ts (4 tests) 9ms
+ ✓  functional  tests/unit/layouts/crossval.test.ts (1 test) 657ms
+   ✓ T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav 655ms
+ ✓  functional  tests/unit/render/civilian-corpse-prewarm.test.ts (4 tests) 858ms
+   ✓ @E18 L4 high prewarms the actual settled-corpse band lod1 415ms
+ ✓  functional  tests/unit/render/reveal-material-cache.test.ts (1 test) 39ms
+ ✓  functional  tests/unit/tools/remote-cache-gc.test.ts (1 test) 73ms
+ ✓  functional  tests/unit/render/nested-scene-matrices.test.ts (2 tests) 8ms
+ ✓  functional  tests/unit/render/palette.test.ts (2 tests) 9ms
+ ✓  functional  tests/unit/render/interleaved-buffer-disposal.test.ts (1 test) 5ms
+ ✓  functional  tests/unit/render/inspection-camera.test.ts (2 tests) 248ms
+ ✓  functional  tests/unit/audio/acoustics.test.ts (3 tests) 5ms
+ ✓  functional  tests/unit/render/vehicle-matrix-reuse.test.ts (1 test) 84ms
+ ✓  functional  tests/unit/e2e-error-guard.test.ts (3 tests) 27ms
+ ✓  functional  tests/unit/performance/deviceEvidence.test.ts (2 tests) 7ms
+ ✓  functional  tests/unit/assets/prefetch-worker.test.ts (1 test) 308ms
+   ✓ gameplay prefetch uses one worker per level/tier and releases it after completion or error 307ms
+ ✓  functional  tests/levels/pickup-grounding.test.ts (10 tests) 20804ms
+   ✓ @pickup-grounding L1: every pickup is reachable from the route and rests on the support at its xz 656ms
+   ✓ @pickup-grounding L2: every pickup is reachable from the route and rests on the support at its xz 1746ms
+   ✓ @pickup-grounding L3: every pickup is reachable from the route and rests on the support at its xz 1471ms
+   ✓ @pickup-grounding L4: every pickup is reachable from the route and rests on the support at its xz 825ms
+   ✓ @pickup-grounding L5: every pickup is reachable from the route and rests on the support at its xz 1090ms
+   ✓ @pickup-grounding L7: every pickup is reachable from the route and rests on the support at its xz 1486ms
+   ✓ @pickup-grounding L8: every pickup is reachable from the route and rests on the support at its xz 539ms
+   ✓ @pickup-grounding L9: every pickup is reachable from the route and rests on the support at its xz 4610ms
+   ✓ @pickup-grounding L10: every pickup is reachable from the route and rests on the support at its xz 8210ms
+ ✓  functional  tests/unit/render/height-step-edges.test.ts (1 test) 6ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L4","completed":true,"time":303.96666666666664,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/levels/L4-barricade-prompts.test.ts (1 test) 5731ms
+   ✓ @E22 broken army lines stay destructible cover without a player rebuild interaction in war and collapse 5729ms
+ ✓  functional  tests/levels/l5-travel.test.ts (1 test) 4301ms
+   ✓ T-E23-17-travel @E23 @E23-AC17 one ground click routes from the Sam corner to Mia without repeated cancellation 4299ms
+ ✓  functional  tests/unit/data/checkpoint-names.test.ts (2 tests) 8ms
+ ✓  functional  tests/unit/vfx/blood-scale.test.ts (2 tests) 144ms
+ ✓  functional  tests/levels/L4-guidance.test.ts (1 test) 2775ms
+   ✓ @E22 the line break immediately names and marks the cellar and retains its escape checkpoint after death 2774ms
+ ✓  functional  tests/unit/performance/event-bus-cache.test.ts (1 test) 5ms
+ ✓  functional  tests/unit/render/civilian-material.test.ts (1 test) 30ms
+ ✓  functional  tests/unit/render/mounted-gun-warmup.test.ts (2 tests) 6ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L5","completed":true,"time":157.56666666666666,"deaths":0,"blocker":null}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L3: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L3","checkpoints":["start","armory","fallback","segment-2","segment-2b","segment-3","segment-3b"],"declared":["armory","fallback","segment-2","segment-2b","segment-3","segment-3b"]}
+
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L6","completed":true,"time":268.28333333333336,"deaths":0,"blocker":null}
+
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L7","completed":true,"time":597.25,"deaths":0,"blocker":null}
+
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L8","completed":true,"time":138.73333333333332,"deaths":0,"blocker":null}
+
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L9","completed":true,"time":128.11666666666667,"deaths":0,"blocker":null}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L4: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L4","checkpoints":["start","arrival","turn","line-1","nests","armor","line-break"],"declared":["arrival","turn","line-1","nests","armor","line-break"]}
+
+ ✓  functional  tests/unit/static.test.ts (1 test) 115736ms
+   ✓ T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings 115731ms
+ ✓  functional  tests/unit/progression/rocket-zoom-save.test.ts (1 test) 106ms
+stdout | tests/unit/tooling/verify-remote.test.ts > E07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally
+
+Verifying E07: npm run typecheck
+
+Verifying E07: npm run lint
+
+Verifying E07: npm run build
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/l10-corpses-low-c773a1-83119-1792593565 --pull test-results/epics/E07/vitest-timing.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/sim/ai/director.test.ts tests/sim/performance/alpha.test.ts tests/sim/performance/alpha-physical.test.ts -t T-E07-11 --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest-timing.json
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/l10-corpses-low-c773a1-83119-1792593565 --pull test-results/epics/E07/vitest.json -- npx vitest run -t ^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest.json
+
+Verifying E07: sh tools/e2e-lock.sh npx playwright test --grep @(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+ ✓  functional  tests/unit/tooling/verify-remote.test.ts (1 test) 51ms
+ ✓  functional  tests/unit/render/survivor-rings.test.ts (1 test) 14ms
+ ✓  functional  tests/unit/combat/events.test.ts (1 test) 268ms
+ ✓  functional  tests/unit/core/clone.test.ts (1 test) 58ms
+ ✓  functional  tests/unit/performance/nav-contact-index.test.ts (1 test) 161ms
+ ✓  functional  tests/unit/input/walk.test.ts (2 tests) 6ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L5: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L5","checkpoints":["start","outside","survivor-1","survivor-2","survivor-3","survivor-4","survivor-5"],"declared":["outside","survivor-1","survivor-2","survivor-3","survivor-4","survivor-5"]}
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L6: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L6","checkpoints":["shelter","start","abandon","mid-tunnel","exit-platform"],"declared":["shelter","abandon","mid-tunnel","exit-platform"]}
+
+ ✓  functional  tests/levels/L6-protection.test.ts (1 test) 48578ms
+   ✓ T-E24-09-evade @E24 @E24-AC09 a non-fighting courier evacuates at most thirty percent, with real casualties 48577ms
+ ✓  functional  tests/unit/render/rig-translation-matrices.test.ts (1 test) 129ms
+ ✓  functional  tests/levels/l6-side-entries.test.ts (1 test) 5105ms
+   ✓ @E24 PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier 5104ms
+ ✓  functional  tests/unit/assets/civilian-bake-build.test.ts (72 tests) 32218ms
+   ✓ npc.civilian-elderly:lod0: shipped bake exactly matches runtime preparation 1475ms
+   ✓ npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation 515ms
+   ✓ npc.civilian-elderly:lod2: shipped bake exactly matches runtime preparation 330ms
+   ✓ npc.civilian-man-a:lod0: shipped bake exactly matches runtime preparation 1168ms
+   ✓ npc.civilian-man-a:lod1: shipped bake exactly matches runtime preparation 533ms
+   ✓ npc.civilian-man-a:lod2: shipped bake exactly matches runtime preparation 381ms
+   ✓ npc.civilian-man-a.aftermath:lod0: shipped bake exactly matches runtime preparation 572ms
+   ✓ npc.civilian-man-a.aftermath:lod1: shipped bake exactly matches runtime preparation 411ms
+   ✓ npc.civilian-man-b:lod0: shipped bake exactly matches runtime preparation 1258ms
+   ✓ npc.civilian-man-b:lod1: shipped bake exactly matches runtime preparation 395ms
+   ✓ npc.civilian-man-b.aftermath:lod0: shipped bake exactly matches runtime preparation 504ms
+   ✓ npc.civilian-man-b.aftermath:lod1: shipped bake exactly matches runtime preparation 367ms
+   ✓ npc.civilian-woman-a:lod0: shipped bake exactly matches runtime preparation 1040ms
+   ✓ npc.civilian-woman-a:lod1: shipped bake exactly matches runtime preparation 408ms
+   ✓ npc.civilian-woman-b:lod0: shipped bake exactly matches runtime preparation 1045ms
+   ✓ npc.civilian-woman-b:lod1: shipped bake exactly matches runtime preparation 449ms
+   ✓ npc.civilian-woman-b.aftermath:lod0: shipped bake exactly matches runtime preparation 573ms
+   ✓ npc.civilian-woman-b.aftermath:lod1: shipped bake exactly matches runtime preparation 430ms
+   ✓ npc.dale.aftermath:lod0: shipped bake exactly matches runtime preparation 522ms
+   ✓ npc.dale.aftermath:lod1: shipped bake exactly matches runtime preparation 317ms
+   ✓ npc.depot-clerk:lod0: shipped bake exactly matches runtime preparation 860ms
+   ✓ npc.depot-clerk:lod1: shipped bake exactly matches runtime preparation 402ms
+   ✓ npc.firefighter-alive:lod0: shipped bake exactly matches runtime preparation 814ms
+   ✓ npc.lab-guard:lod0: shipped bake exactly matches runtime preparation 1046ms
+   ✓ npc.lab-guard:lod1: shipped bake exactly matches runtime preparation 422ms
+   ✓ npc.lab-tech-a:lod0: shipped bake exactly matches runtime preparation 757ms
+   ✓ npc.lab-tech-b:lod0: shipped bake exactly matches runtime preparation 811ms
+   ✓ npc.marcus.aftermath:lod0: shipped bake exactly matches runtime preparation 499ms
+   ✓ npc.marcus.aftermath:lod1: shipped bake exactly matches runtime preparation 409ms
+   ✓ npc.mia.aftermath:lod0: shipped bake exactly matches runtime preparation 795ms
+   ✓ npc.mr-okafor.aftermath:lod0: shipped bake exactly matches runtime preparation 695ms
+   ✓ npc.mr-okafor.aftermath:lod1: shipped bake exactly matches runtime preparation 505ms
+   ✓ npc.national-guard:lod0: shipped bake exactly matches runtime preparation 834ms
+   ✓ npc.national-guard:lod1: shipped bake exactly matches runtime preparation 385ms
+   ✓ npc.national-guard:lod2: shipped bake exactly matches runtime preparation 315ms
+   ✓ npc.police-officer:lod0: shipped bake exactly matches runtime preparation 652ms
+   ✓ npc.rosa.aftermath:lod0: shipped bake exactly matches runtime preparation 375ms
+   ✓ npc.sam.aftermath:lod0: shipped bake exactly matches runtime preparation 423ms
+   ✓ npc.shelter-survivor.bandaged:lod0: shipped bake exactly matches runtime preparation 511ms
+   ✓ npc.shelter-survivor.bandaged:lod1: shipped bake exactly matches runtime preparation 412ms
+   ✓ npc.shelter-survivor.lying:lod0: shipped bake exactly matches runtime preparation 498ms
+   ✓ npc.shelter-survivor.lying:lod1: shipped bake exactly matches runtime preparation 324ms
+   ✓ npc.shelter-survivor.sitting:lod0: shipped bake exactly matches runtime preparation 540ms
+   ✓ npc.shelter-survivor.sitting:lod1: shipped bake exactly matches runtime preparation 322ms
+ ✓  functional  tests/levels/L4-generator-pocket.test.ts (1 test) 1068ms
+   ✓ T-E22-po-41 @E22 no courier-sized dead-end alley remains between the west pallet run, the first tent and the light tower 1066ms
+ ✓  functional  tests/unit/stride-scale.test.ts (2 tests) 7ms
+ ✓  functional  tests/unit/assets/alpha-solid-near.test.ts (2 tests) 286ms
+ ✓  functional  tests/unit/tooling/l9-vehicle-camera.test.ts (1 test) 32ms
+ ✓  functional  tests/unit/render/terrain-bar-occlusion.test.ts (3 tests) 5ms
+ ✓  functional  tests/unit/render/interaction-marker.test.ts (1 test) 3ms
+ ✓  functional  tests/unit/render/perimeter-posts.test.ts (1 test) 73ms
+stdout | tests/levels/L10-campaign.test.ts > T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+{"level":"L10","completed":true,"time":1574.4166666666667,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/levels/L10-campaign.test.ts (1 test) 741945ms
+   ✓ T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers 741943ms
+ ✓  functional  tests/levels/l1-bench-exit.test.ts (1 test) 2026ms
+   ✓ PO #5 @E19 a toppled bench cannot close the garage fence gap, including checkpoint restore 2022ms
+ ✓  functional  tests/unit/layouts/visual-bounds.test.ts (1 test) 270ms
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (63)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (208)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (26), Primitive (26), Accessor (286)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (54)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (196)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (24), Primitive (24), Accessor (266)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (45)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (180)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (22), Primitive (22), Accessor (244)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+ ✓  functional  tests/unit/assets/commerce-pack.test.ts (1 test) 2591ms
+   ✓ @E17-AC01 packing a base delivers every declared decay and preserves native tiers 2590ms
+ ✓  functional  tests/unit/tooling/l7-runner-default.test.ts (2 tests) 4977ms
+   ✓ T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order 4970ms
+ ✓  functional  tests/unit/tooling/verify-e32-perf.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/render/crowd-models.test.ts (2 tests) 6ms
+ ✓  functional  tests/unit/render/highway-rail-joints.test.ts (1 test) 16ms
+ ✓  functional  tests/unit/combat/elevated-melee.test.ts (1 test) 7ms
+ ✓  functional  tests/unit/missions/marker-anchor.test.ts (2 tests) 7ms
+stdout | tests/levels/l5-po-2-balance.test.ts > PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned
+PO29 complete {"outcome":"complete","deaths":0,"rescued":5,"fates":{"dale":"sheltered","rosa":"sheltered","okafor":"sheltered","mia":"sheltered","sam":"sheltered"},"infectedAtStart":27}
+
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L7","completed":true,"time":597.25,"deaths":0,"blocker":null}
+
+stdout | tests/levels/l5-po-2-balance.test.ts > PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned
+PO29 newbie {"outcome":"complete","deaths":0,"rescued":5,"fates":{"dale":"sheltered","rosa":"sheltered","okafor":"sheltered","mia":"sheltered","sam":"sheltered"},"infectedAtStart":27}
+
+ ✓  functional  tests/levels/l5-po-2-balance.test.ts (1 test) 47525ms
+   ✓ PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned 47524ms
+ ✓  functional  tests/levels/L4-alarm-admission.test.ts (2 tests) 12366ms
+   ✓ T-E22-20-alarm @E22-AC20 high alarm actors have one final admission with their original IDs and full population 7818ms
+   ✓ T-E22-20-alarm @E22-AC20 low alarm actors have one final admission with their original IDs and full population 4546ms
+ ✓  functional  tests/unit/render/objective-marker.test.ts (1 test) 7ms
+ ✓  functional  tests/unit/performance/nav-capsule-corners.test.ts (2 tests) 16ms
+ ✓  functional  tests/unit/render/character-foreground.test.ts (1 test) 8ms
+ ✓  functional  tests/unit/motionlab/motion.test.ts (2 tests) 58ms
+ ✓  functional  tests/unit/performance/l4-spawn-room.test.ts (1 test) 45ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L8","completed":true,"time":138.73333333333332,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/levels/L10.test.ts (1 test) 132354ms
+   ✓ T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing 132352ms
+ ✓  functional  tests/unit/tooling/po-late-level-contracts.test.ts (1 test) 7ms
+ ✓  functional  tests/unit/render/environment-lifetime.test.ts (1 test) 22ms
+ ✓  functional  tests/levels/l6-headlamp.test.ts (1 test) 387ms
+   ✓ @E24 PO31 L6 start headlamp requires collection before its existing beam switches on and survives checkpoint restore 386ms
+ ✓  functional  tests/unit/performance/assets.test.ts (1 test) 22ms
+ ✓  functional  tests/unit/tooling/late-level-shared-coverage.test.ts (7 tests) 8ms
+ ✓  functional  tests/unit/performance/nav-player-mask.test.ts (1 test) 13ms
+ ✓  functional  tests/unit/tooling/late-level-scene-catalog.test.ts (1 test) 44ms
+ ✓  functional  tests/unit/render/overlay.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/render/e25-visibility.test.ts (2 tests) 8ms
+ ✓  functional  tests/unit/assets/action-view-assets.test.ts (1 test) 5ms
+ ✓  functional  tests/unit/render/corgi-scale.test.ts (1 test) 60ms
+ ✓  functional  tests/unit/tooling/scenelab-look.test.ts (1 test) 8ms
+stdout | tests/levels/L9-campaign.test.ts > T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+{"level":"L9","completed":true,"time":128.11666666666667,"deaths":0,"blocker":null}
+
+ ✓  functional  tests/levels/L9-campaign.test.ts (1 test) 593999ms
+   ✓ T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset 593997ms
+ ✓  functional  tests/unit/data/l2-glass.test.ts (2 tests) 14ms
+ ✓  functional  tests/unit/render/l3-boom.test.ts (1 test) 11ms
+ ✓  functional  tests/unit/ui/device-prompt.test.ts (9 tests) 6ms
+ ✓  functional  tests/unit/input/wheel.test.ts (1 test) 7ms
+ ✓  functional  tests/levels/L4-checkpoint-clone.test.ts (1 test) 38639ms
+   ✓ T-E22-20-clone-l4 @E22-AC20 L4 turn and line-break checkpoints equal the structuredClone snapshot, sharing included 38638ms
+ ✓  functional  tests/unit/missions/dialogue.test.ts (1 test) 22ms
+ ✓  functional  tests/unit/ui/health-theme.test.ts (1 test) 8ms
+ ✓  functional  tests/unit/render/civilian-residency.test.ts (1 test) 4ms
+ ↓  functional  tests/levels/L4-botprobe.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/unit/physics-metadata.test.ts (1 test) 185ms
+ ✓  functional  tests/unit/ui-settings.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/performance/gibs.test.ts (1 test) 135ms
+ ✓  functional  tests/unit/l5-shotgun.test.ts (1 test) 12ms
+ ✓  functional  tests/unit/render/l6-scream-debug.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/render/lod-residency.test.ts (1 test) 4ms
+ ✓  functional  tests/unit/ui-dom.test.ts (1 test) 4ms
+ ✓  functional  tests/unit/assets/army-boom.test.ts (1 test) 63ms
+ ✓  functional  tests/unit/ui/radar-layout.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/performance/layouts.test.ts (1 test) 73ms
+ ✓  functional  tests/unit/render/lod-pop-gate.test.ts (1 test) 11ms
+ ✓  functional  tests/unit/assets/png-pixels.test.ts (1 test) 12ms
+ ✓  functional  tests/unit/debug-physics.test.ts (1 test) 4ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L7: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L7","checkpoints":["night-exit","start","rocket","corridor"],"declared":["night-exit","rocket","corridor"]}
+
+ ✓  functional  tests/levels/collision-invariant.test.ts (11 tests) 28732ms
+   ✓ L1: committed actor occupancy stays valid, including stationary full audits 1713ms
+   ✓ L2: committed actor occupancy stays valid, including stationary full audits 2754ms
+   ✓ L3: committed actor occupancy stays valid, including stationary full audits 2145ms
+   ✓ L4: committed actor occupancy stays valid, including stationary full audits 2156ms
+   ✓ L5: committed actor occupancy stays valid, including stationary full audits 1365ms
+   ✓ L6: committed actor occupancy stays valid, including stationary full audits 596ms
+   ✓ L7: committed actor occupancy stays valid, including stationary full audits 1452ms
+   ✓ L8: committed actor occupancy stays valid, including stationary full audits 1073ms
+   ✓ L9: committed actor occupancy stays valid, including stationary full audits 4792ms
+   ✓ L10: committed actor occupancy stays valid, including stationary full audits 9441ms
+   ✓ L7: committed actor occupancy stays valid, including stationary full audits 1235ms
+ ✓  functional  tests/unit/tooling/headless-only.test.ts (1 test) 272ms
+ ✓  functional  tests/unit/render/view-uniform-groups.test.ts (1 test) 8ms
+ ✓  functional  tests/unit/render/startup-background.test.ts (2 tests) 4ms
+ ✓  functional  tests/unit/levels/l7-night.test.ts (1 test) 4ms
+ ✓  functional  tests/levels/l3-joint-navigation.test.ts (1 test) 2049ms
+   ✓ L3 closed bridge rail joints retain the full NPC route from span to east ramp 2046ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L8: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L8","checkpoints":["sanctuary","start","breach","escape-route"],"declared":["sanctuary","breach","escape-route"]}
+
+stdout | tests/unit/render/campaign-height-steps.test.ts > every campaign height step has rendered retaining geometry within 0.3 m
+L1: 821 segments (294.18 m), missing edge geometry within 0.3 m: 0 (0 m)
+L2: 952 segments (348.68 m), missing edge geometry within 0.3 m: 0 (0 m)
+L3: 2193 segments (884.39 m), missing edge geometry within 0.3 m: 0 (0 m)
+L4: 1055 segments (438.4 m), missing edge geometry within 0.3 m: 0 (0 m)
+L5: 1143 segments (478.93 m), missing edge geometry within 0.3 m: 0 (0 m)
+L6: 1664 segments (798.81 m), missing edge geometry within 0.3 m: 0 (0 m)
+L7: 1995 segments (900.99 m), missing edge geometry within 0.3 m: 0 (0 m)
+L8: 3521 segments (1161.66 m), missing edge geometry within 0.3 m: 0 (0 m)
+L9: 1832 segments (736.78 m), missing edge geometry within 0.3 m: 0 (0 m)
+L10: 1666 segments (798.06 m), missing edge geometry within 0.3 m: 0 (0 m)
+
+ ✓  functional  tests/unit/render/campaign-height-steps.test.ts (1 test) 21634ms
+   ✓ every campaign height step has rendered retaining geometry within 0.3 m 21632ms
+ ✓  functional  tests/unit/assets/window-glow-lod.test.ts (1 test) 1070ms
+   ✓ window glows stay in their windows in every LOD (1)
+     ✓ LOD1/LOD2 glow patches coincide with the LOD0 patches of every building 1068ms
+ ✓  functional  tests/unit/audio/l4-radio-mix.test.ts (1 test) 4ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L9: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L9","checkpoints":["crossing-start","start","outskirts-approach"],"declared":["crossing-start","outskirts-approach"]}
+
+ ✓  functional  tests/levels/l7-audit.test.ts (1 test) 169802ms
+   ✓ T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats 169800ms
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L10: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L10","checkpoints":["cure-crash","start","cure-residential","cure-industrial","cure-military","cure-research-entry","cure-research","cure-corridor","cure-complex","cure-disperse-ready"],"declared":["cure-crash","cure-residential","cure-industrial","cure-military","cure-research-entry","cure-corridor","cure-complex","cure-research","cure-disperse-ready"]}
+
+ ✓  functional  tests/levels/start-checkpoint-clearance.test.ts (10 tests) 694568ms
+   ✓ L1: every player start and reached checkpoint has no NPC within 0.8 m 22282ms
+   ✓ L2: every player start and reached checkpoint has no NPC within 0.8 m 31121ms
+   ✓ L3: every player start and reached checkpoint has no NPC within 0.8 m 79591ms
+   ✓ L4: every player start and reached checkpoint has no NPC within 0.8 m 102387ms
+   ✓ L5: every player start and reached checkpoint has no NPC within 0.8 m 18701ms
+   ✓ L6: every player start and reached checkpoint has no NPC within 0.8 m 27516ms
+   ✓ L7: every player start and reached checkpoint has no NPC within 0.8 m 218245ms
+   ✓ L8: every player start and reached checkpoint has no NPC within 0.8 m 34401ms
+   ✓ L9: every player start and reached checkpoint has no NPC within 0.8 m 15829ms
+   ✓ L10: every player start and reached checkpoint has no NPC within 0.8 m 144492ms
+ ✓  functional  tests/levels/L6-campaign.test.ts (2 tests) 468668ms
+   ✓ T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover 250779ms
+   ✓ T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover 217887ms
+
+ Test Files  417 passed | 3 skipped (420)
+      Tests  2271 passed | 9 skipped (2280)
+   Start at  14:40:22
+   Duration  2547.23s (tests 99%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 54s, remote total 2553s)
