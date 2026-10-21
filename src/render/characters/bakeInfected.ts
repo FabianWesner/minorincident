@@ -6,10 +6,10 @@ import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number };
-// Keep the expensive sampled animation atlas across loads. The source registry
-// already owns the model geometry; caching expanded triangle soup as well pins
-// another full vertex buffer after the scene has indexed/disposed its copy.
-const bakedCrowds = new Map<string, CrowdClip>();
+// Keep sampled animation and small bind transforms across loads. The source
+// registry already owns the geometry; cached expanded triangle soup otherwise
+// pins another vertex buffer after the scene indexes/disposes its own copy.
+const bakedCrowds = new Map<string, { clip: CrowdClip; transforms: Matrix4[] }>();
 const bakedCrowdLimit = 64;
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
   'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
@@ -43,9 +43,9 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     }
   };
   const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}` : undefined;
-  const cached = key && bakedCrowds.get(key);
-  if (cached) {
-    bakedCrowds.delete(key!); bakedCrowds.set(key!, cached); root.updateMatrixWorld(true);
+  const template = key ? bakedCrowds.get(key) : undefined, cached = template?.clip;
+  if (template) {
+    bakedCrowds.delete(key!); bakedCrowds.set(key!, template); root.updateMatrixWorld(true);
   }
   const matrices = cached ? cached.matrices : new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
   if (!cached) {
@@ -106,6 +106,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     root.updateMatrixWorld(true);
   }
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
+  const transforms = template?.transforms ?? []; let meshIndex = 0;
   let shirtColor: import('three').Color | undefined;
   let doubleSided = false;
   root.traverse((node) => {
@@ -115,7 +116,12 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     let owner: Object3D | null = node;
     while (owner && !parts.includes(owner)) owner = owner.parent;
     const part = parts.indexOf(owner ?? rig.root);
-    relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld);
+    // Reuse the exact first bake's double-precision bind transform. Sampling
+    // and restoring Euler clips can round a rest quaternion. The bind used
+    // for geometry must match the sampled atlas on subsequent loads.
+    const bind = transforms[meshIndex++];
+    if (bind) relative.copy(bind);
+    else { relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
     const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone();
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
     for (const name of ['position', 'normal']) {
@@ -161,7 +167,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
   if (key) {
-    bakedCrowds.set(key, clip);
+    bakedCrowds.set(key, { clip, transforms });
     if (bakedCrowds.size > bakedCrowdLimit) {
       const oldest = bakedCrowds.keys().next().value!;
       bakedCrowds.delete(oldest);

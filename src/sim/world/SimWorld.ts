@@ -61,7 +61,9 @@ export class SimWorld implements Lifecycle {
   inspectionGhost = false;
   readonly physics = new Physics();
   readonly solids = new SolidRegistry(this);
-  readonly events = new EventBus<GameEvent>();
+  // The fixed-tick record contains only type/tick. Keep every logged record,
+  // while avoiding structured serialization for this 60 Hz scalar variant.
+  readonly events = new EventBus<GameEvent>(event => event.type === 'sim.tick' ? { ...event } : structuredClone(event));
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
   districts: DistrictWorld | null = null;

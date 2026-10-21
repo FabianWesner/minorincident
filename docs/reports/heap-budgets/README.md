@@ -1,6 +1,28 @@
 # heap-budgets
 
-Base: `93e1fbea8` on `lane/heap-budgets`. Scope: E25-AC14, E28-AC10, E29-AC19 and E29-AC20. Verification is in progress; no epic status file is changed.
+Base: `93e1fbea8` on `lane/heap-budgets`. Scope: E25-AC14, E28-AC10, E29-AC19 and E29-AC20. Verification is in progress; no epic status file is changed. The latest source has a repeat queued; the measured first candidate below contains the geometry-cache fix and paw minimum optimization.
+
+## Before / after acceptance table
+
+Fresh baseline: **17/20 pass**. High/low values below use the unchanged acceptance fixtures. The first candidate also passes **17/20**; its three timing misses remain open. A subsequent candidate is pending admission. Historical raw figures from the sweep are not represented as comparable collected-heap baselines.
+
+| AC / workload | Fresh baseline high / low | First candidate high / low | Literal gate |
+| --- | --- | --- | --- |
+| E25-AC14 light-lab heap | 139.26 / 129.62 MB | 138.91 / 129.64 MB | ≤400 / 250 MB |
+| E25-AC14 night-street heap | 170.60 / 159.98 MB | 169.50 / 159.21 MB | ≤400 / 250 MB |
+| E28-AC10 storm heap | 112.78 / 112.32 MB | 112.71 / 112.29 MB | ≤400 / 250 MB |
+| E28-AC10 L5 ash heap | 112.87 / 93.77 MB | 112.67 / 93.47 MB | ≤400 / 250 MB; all authored peak counters |
+| E29-AC19 district heap | 92.20 / 85.50 MB | 91.79 / 85.30 MB | ≤400 / 250 MB |
+| E29-AC19 horde heap | 94.57 / 85.58 MB | 94.42 / 85.39 MB | ≤400 / 250 MB |
+| E29-AC19 rocket heap | 67.95 / 58.44 MB | 67.83 / 58.32 MB | ≤400 / 250 MB |
+| E29-AC19/20 district frame p95 | 11.7 / **33.7 ms** | 11.9 / **33.8 ms** | ≤16.7 / 33.3 ms |
+| E29-AC19/20 horde frame p95 | 10.8 / **34.3 ms** | 10.9 / **33.8 ms** | ≤16.7 / 33.3 ms |
+| E29-AC19 horde sim p95 | 2.0 / 4.6 ms | 2.1 / 4.6 ms | ≤4 / 6 ms |
+| E29-AC20 rocket maximum | 17.3 / **52.8 ms** | 25.6 / **52.8 ms** | ≤50 ms |
+| E29-AC20 five-load lifecycle | pass on both tiers/backends | pass, stock three-load check | heap/geometries/textures ≤110% of first load; settings retained |
+| E29-AC20 checkpoint / boarding / L8 transition | **unmeasured: admission exit 75** | pending admission | ≤50 ms desktop |
+
+[Baseline JSON and complete test receipt](evidence/perf-before). [First-candidate JSON and complete test receipt](evidence/final). L5 retains five followers, 18/12 infected, 13 fires and 37 corpses; ash particles are 1,750/525. Its maxima are 12.6/37.1 ms. Storm retains exactly 20,000/6,000 precipitation particles. L7 district retains 28 fires, seven blasts and 200/100 peak infected. The failures are low district p95, low horde p95 and low rocket maximum; all other assertions in this 20-case batch pass.
 
 ## Change and retainer evidence
 
@@ -8,9 +30,11 @@ The baseline already contains the earlier `perf-heap-w5` and renderer lifecycle 
 
 Fresh CDP heap snapshots found expanded infected geometry retained by the module-level `bakedCrowds` cache. The cache stores a full interleaved triangle-soup copy before `CrowdView` indexes and simplifies its separate scene copy. Light-lab's largest allocations include 5.57, 5.46 and 5.45 MB buffers rooted through this map. The map's asset/LOD/clip keys identify it independently of minified constructor names. The shortest path happens to enter the shared module context through the physics constructor; these are rendering cache allocations, not Rapier colliders.
 
-`bakeInfected` now caches the sampled `CrowdClip` only. Cache hits reuse the animation atlas and reconstruct the same geometry from the loaded source model during loading. The existing cache bound and eviction order are retained. No surface, LOD policy, actor population, particle count or persistent corpse is removed. Source geometry remains independently owned by the registry; scene geometries remain independent, including mutable appearance and index attributes.
+`bakeInfected` now caches the sampled `CrowdClip` and small bind matrices. Expanded geometry is not cached. The matrices preserve the exact first bake’s bind transform after Euler clip sampling/restoration. Cache hits reuse the animation atlas and reconstruct the same geometry from the loaded source model during loading. The existing cache bound and eviction order are retained. No surface, LOD policy, actor population, particle count or persistent corpse is removed. Source geometry remains independently owned by the registry; scene geometries remain independent, including mutable appearance and index attributes.
 
 Root paths and shallow allocation groups are in [light-lab-retainers.json](evidence/before/light-lab-retainers.json), [L7-retainers.json](evidence/before/L7-retainers.json), and [rocket-retainers.json](evidence/before/rocket-retainers.json). Root paths show reachability; they are not claimed as dominator retained sizes. The L7 snapshot also records large live district vertex buffers and pose palettes. No resource is called a leak solely because it is large.
+
+Raw snapshots are local generated artifacts in `test-results/heap-budgets/snapshots-before/`; the extracted root paths and [archive hashes/sizes](evidence/before/snapshots.json) are committed. The raw gzip archives total 173 MB and are excluded from Git.
 
 ## Measurement contract
 
@@ -47,3 +71,17 @@ sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWor
 ```
 
 Analyze a raw snapshot with `npx tsx tools/perf/heap-retainers.ts snapshot.heapsnapshot output.json`. Compare frames with `npx tsx tools/perf/heap-pixel-diff.ts before after diff`; every changed RGB pixel is counted, without alignment, masks, resizing or tolerance.
+
+## Intermediate diagnostics and validation
+
+The cache-only snapshot run in [after-cache](evidence/after-cache) removes **64.30/34.67 MB** of collected backing stores in WebGL light-lab, **34.92/34.79 MB** in storm, **35.62/35.01 MB** in L7 and **67.87/35.03 MB** in rocket. Scene buffer sizes and WebGL resource counts stay unchanged. One WebGPU L7 high comparison has different offscreen residency, so it is not used to quantify cache savings. Root-path summaries and archive hashes are retained for both snapshots.
+
+The first native CPU profiles are in [profile-before](evidence/profile-before) and [rocket-profile-paws](evidence/rocket-profile-paws). The low district profile identifies repeated corgi sole scans and crowd update work; the rocket profile includes loading, so loading costs are not attributed to its eight-second acceptance window. No profiler-instrumented timing is used as acceptance evidence.
+
+`PawContacts` keeps each referenced vertex once and computes the exact Y component of the same matrix transform for minima. This removes duplicate triangle-index work, unused X/Z calculations and temporary mapped arrays. All points, contact decisions and paw trajectories remain. The first candidate still fails the same three timing gates, so this optimization alone does not close E29.
+
+Current queued refinements reuse appearance resolution only between `CrowdAccessories.begin()` and `finish()`, retain a set of loaded model keys instead of constructing LOD strings repeatedly, and copy flat frame/fixed-tick log records without structured serialization. Nested event payloads retain deep copies and every record is retained under the unchanged ring policy. No test, measurement helper or threshold is changed.
+
+The first candidate/control comparison has **17/20 exactly identical RGB frames**, including all four corgi-contact backend/tier cases. Differences: WebGPU high light-lab 7 pixels (max channel error 2), WebGPU high rocket 5 (max 7), WebGL high rocket 3 (max 11). Original baseline versus repeat baseline independently differs in WebGL high rocket (9 pixels, max 11) and WebGPU low rocket (747, max 79). The latter reproduces the original low WebGPU rocket difference without a source change. All raw counts and amplified error images remain in [exact pixel evidence](evidence/final/pixels) and [baseline controls](evidence/final/baseline-repeat-pixels); no mask/tolerance is applied. **Exact pixel equality is not yet established for every frame.**
+
+Validation so far: typecheck, lint and production build pass. Full remote cache-only suite passes **2,145 tests / 390 files**, 11 tests / 3 files skipped. The focused paw/contact suite passes **16 tests / 5 files**. See [unit-cache.json](evidence/unit-cache.json) and [paw-units.json](evidence/paw-units.json). Full remote current-source unit/level run is pending. Full-epic `verify` commands have not run; the native batch selects the actual acceptance fixtures for these rows and does not certify other epic criteria.
