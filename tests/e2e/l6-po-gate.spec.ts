@@ -10,7 +10,8 @@ for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) t
     for (const [index, r] of survivors.entries()) a.teleport(r.id, { x: 105 + index * 1.1, z: 15 });
     const unstaged = survivors.filter(r => a.getEntity(r.id)!.transform.x < 100);
     if (unstaged.length) throw new Error(`Gate fixture left ${unstaged.length} survivors behind`);
-    a.teleport(1, { x: 91.3, z: 15 }); a.input.set({ interact: true }); await a.step(70); a.input.clear(); await a.step(60); await a.screenshotReady();
+    // Inside both the open gate's beside-the-track stand zone and its closed repair zone.
+    a.teleport(1, { x: 91.2, z: 16.15 }); a.input.set({ interact: true }); await a.step(70); a.input.clear(); await a.step(60); await a.screenshotReady();
   });
   const prompt = page.getByTestId('interaction-prompt');
   await expect(prompt).toContainText('Block the tunnel');
