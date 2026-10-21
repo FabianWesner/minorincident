@@ -168,11 +168,12 @@ test(`@E24 #96 collected injured follower rejoins from walkable position (${x}, 
   injured.straggler = true; injured.collected = true; injured.rejoined = false;
   const e = w.entities.get(injured.id)!;
   Object.assign(e.transform, { x, y, z }); w.spatial.set(e.id, x, z);
-  if(selfDefence){e.civilian!.dangerUntil=w.tick+seconds*60+1;e.civilian!.threat={x:x-1,z};}
+  if(selfDefence){e.civilian!.dangerUntil=w.tick+121;e.civilian!.threat={x:x-1,z};}
   for (let i = 0; i < seconds * 60; i++) {
     const before = { ...e.transform };
     put(w, LevelSixSubway.gateWait(gate).x, LevelSixSubway.gateWait(gate).z); w.update();
     expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).toBeLessThan(.25);
+    if(selfDefence&&i===119)expect(Math.hypot(e.transform.x-x,e.transform.z-z),'self-defence must also leave the walkway').toBeGreaterThan(1);
   }
   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.stringify(e.transform)}`).toBe(true);
   expect(e.transform.x).toBeGreaterThan(gate - 12);
