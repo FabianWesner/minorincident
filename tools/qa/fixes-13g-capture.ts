@@ -43,10 +43,11 @@ try {
           return {backend:a.perf().backend,tier:a.getState().render.quality,zoom:a.getState().render.camera.zoom,pages,bodies:a.query({}).filter(e=>e.corpse).length};
         },zoom);
         assert.equal(state.bodies,setup.bodies.length);assert.ok(Math.abs(state.zoom-zoom)<.001);
+        for(const page of state.pages)if(/^corpses:inf\.(alpha|mega-alpha)/.test(page.name))assert.ok(page.triangles>5000,`${page.name} must retain the authored body before a distant death freezes`);
         const name=`${backend}-${tier}-corpses-z${zoom}`;
         await session.page.screenshot({path:`${out}/${name}.jpg`,type:'jpeg',quality:92});rows.push({name,setup,state});writeFileSync(`${out}/evidence.json`,JSON.stringify(rows,null,2));console.log(`${name}: ${state.bodies} retained bodies`);
       }
-      if(process.env.FIXES_CORPSES_ONLY==='1') continue;
+      if(process.env.FIXES_CORPSES_ONLY==='1') { assert.deepEqual(session.errors,[]); continue; }
       await session.page.evaluate(()=>window.__SS__!.teleport(1,{x:4002,z:-27}));
       for(const heroine of ['female','male'] as const){
         await session.page.evaluate(async heroine=>{const a=window.__SS__!;a.survivor.select(heroine,4);a.setLoadout(['weapon.fire-axe'],['weapon.molotov','weapon.pipe-bomb']);await a.step(2);},heroine);

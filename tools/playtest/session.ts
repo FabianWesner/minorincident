@@ -1,4 +1,5 @@
 import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
@@ -39,7 +40,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if(sawL7&&!done&&g?.world.scenario==='L8'&&!g.loading&&!g.clock.paused&&g.world.missions?.state.phase==='playing'){
         start??=now;const text=q('objective-text')?.textContent??'',pin=visible(q('minimap-objective')),marker=visible(q('mission-marker'));
         const sample={elapsedMs:now-start,tick:g.world.tick,text,pin,marker};
-        if(!window.__playtestHandoverAudit.length||text&&pin&&marker){window.__playtestHandoverAudit.push(sample);if(text&&pin&&marker)done=true;}
+        const ready=text.includes('armored vehicle')&&pin&&marker;
+        if(!window.__playtestHandoverAudit.length||ready){window.__playtestHandoverAudit.push(sample);if(ready)done=true;}
       } requestAnimationFrame(frame);};requestAnimationFrame(frame);
   })();`);
   const issues: Issue[] = [], runs: LevelRun[] = [], consoleSeen = new Set<string>();
@@ -233,7 +235,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!run && e.level && !o.levels.includes(e.level)) { if (Date.now() - bootWall > 600_000) break; await hold(300); continue; }
     if (e.level && e.level !== lastLevel && e.phase && e.phase !== 'result') {
       if (lastLevel && run && !run.finished) { log({ handoverWithoutResult: lastLevel }); await finishLevel({ ...e, level: lastLevel }); }
-      if (lastLevel && o.stopAfterLevel) { log({ handover: lastLevel, to: e.level }); break; }
+      if (lastLevel && o.stopAfterLevel) {
+        await press([]);
+        if(e.loading||e.phase==='briefing'){
+          if(!e.loading&&e.panel.button)await page.getByTestId('mission-button').click({timeout:5000}).catch(()=>undefined);
+          await hold(100);continue;
+        }
+        if(process.env.PLAYTEST_HANDOVER_AUDIT==='1')await page.waitForFunction('window.__playtestHandoverAudit?.some(s => s.text.includes("armored vehicle") && s.pin && s.marker)',null,{timeout:2500}).catch(()=>undefined);
+        log({ handover: lastLevel, to: e.level, firstPlayableTick:e.tick,objective:e.objective }); break;
+      }
       lastLevel = e.level; levelIndex = o.levels.indexOf(e.level);
       if (levelIndex < 0) { log({ beyondRange: e.level }); break; }
       await startLevel(e);
@@ -392,8 +402,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await press([]).catch(() => undefined);
   writeFileSync(join(o.out, `runs-${o.tag}.json`), JSON.stringify(runs, null, 2));
   writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
-  if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') writeFileSync(join(o.out,`handover-audit-${o.tag}.json`),JSON.stringify(await page.evaluate('window.__playtestHandoverAudit'),null,2));
+  let handoverReady=true;
+  if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') {
+    const audit=await page.evaluate('window.__playtestHandoverAudit') as {elapsedMs:number;text:string;pin:boolean;marker:boolean}[];
+    writeFileSync(join(o.out,`handover-audit-${o.tag}.json`),JSON.stringify(audit,null,2));
+    const ready=audit.find(s=>s.text.includes('armored vehicle')&&s.pin&&s.marker);
+    handoverReady=!!ready&&ready.elapsedMs<=2000;
+  }
   await context.close();
+  assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
 }
 
