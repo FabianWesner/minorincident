@@ -42,6 +42,15 @@ export class AssetRegistry {
     });
   }
   definition(id: string): AssetDef { const def = this.definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
+  /** Permanent bodies have an independent mesh budget and retain the original rig. */
+  async loadCorpse(id: string, decay?: string): Promise<Object3D> {
+    const def = this.definition(id);
+    if (!def.corpseGlb) throw new Error(`Missing corpse mesh ${id}`);
+    const key = `${id}:corpse:${decay ?? ''}`;
+    let pending = this.cache.get(key);
+    if (!pending) { pending = this.prototype(def, 'lod0', decay, def.corpseGlb); this.cache.set(key, pending); }
+    return (await pending).clone(true);
+  }
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
     const def = this.definition(id);
     // Abilities and UI entries deliberately have no geometry or placeholder.
