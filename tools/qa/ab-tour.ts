@@ -5,7 +5,7 @@ import type { InstancedGroup } from '../../src/render/InstancedGroup';
 
 export type Finding = 'depot-clerk' | 'lab-handover' | 'hats-glasses' | 'sitters-benches' | 'l3-gaps' | 'l4-tank';
 export interface TourStop {
-  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'glasses' | 'firestation' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall' | 'l10-research' | 'l10-defense';
+  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'glasses' | 'firestation' | 'l2-benches' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall' | 'l10-research' | 'l10-defense';
   checkpoint?: string; anchor?: string; target?: [number, number, number]; findings?: Finding[]; wait?: number;
 }
 export const tour: TourStop[] = [
@@ -17,7 +17,7 @@ export const tour: TourStop[] = [
   { id:'l1-park',level:'L1',title:'Park benches and pedestrian accessories',target:[-68,0,15],findings:['hats-glasses'] },
   { id:'l1-glasses',level:'L1',title:'Seeded pedestrian wearing glasses',setup:'glasses',findings:['hats-glasses'] },
   { id:'l1-firestation',level:'L1',title:'Fire station approach and firefighter',setup:'firestation',anchor:'fire-bay-door' },
-  { id:'l2-ride-start',level:'L2',title:'Ride start: bench sitters and accessories',anchor:'l2-bench-2',findings:['sitters-benches','hats-glasses'] },
+  { id:'l2-ride-start',level:'L2',title:'Ride start: bench sitters and accessories',setup:'l2-benches',anchor:'l2-bench-2',findings:['sitters-benches','hats-glasses'] },
   { id:'l3-ramp-west',level:'L3',title:'Raised corridor: western ramp/deck junction',checkpoint:'fallback',target:[167.5,5.7,0],findings:['l3-gaps'] },
   { id:'l3-ramp-east',level:'L3',title:'Raised corridor: eastern ramp/deck junction',checkpoint:'fallback',target:[179.5,5.7,0],findings:['l3-gaps'] },
   { id:'l3-army-pullback',level:'L3',title:'Army checkpoint: route ring during pull-back',checkpoint:'fallback',setup:'l3-finale' },
@@ -113,6 +113,11 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     await walkTo(g.world.missions!.def.anchors[name],stop.setup==='l7-bus'?3:1.2);
     if(stop.setup==='l7-rocket'){a.input.set({interact:true});await a.step(45);a.input.clear();}
   }
+  if(stop.setup==='l2-benches'){
+    const start=g.world.missions!.def.anchors['l2-start'];
+    // Walk off the station apron: remaining inside its broad bounds reveals the accidentally culled benches.
+    await walkTo({x:start.x+10,z:start.z},1.2);await a.step(300);
+  }
   if(stop.setup==='l6-gate'||stop.setup==='l6-finale') {
     a.bot.start('complete');await seek(()=>a.missions.state()!.l6!.leaderX>=(stop.setup==='l6-gate'?148:264),90000);a.bot.stop();a.input.clear();
   }
@@ -205,16 +210,16 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
 }
 
 /** The authored game rig (25 degree FOV, isometric polar/azimuth) looks around without relocating the player. */
-export async function readyFrame({target,zoom,ticks,injection,stopId}:{target:[number,number,number]|null;zoom:number;ticks:number;injection?:string;stopId:string}) {
+export async function readyFrame({target,zoom,ticks,injection,stopId,scriptedNpc}:{target:[number,number,number]|null;zoom:number;ticks:number;injection?:string;stopId:string;scriptedNpc?:number}) {
   const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;
   if(ticks) await a.step(ticks);
   // Opt-in fault fixtures run only on the local candidate. Fresh level loads isolate each stop.
   const mutations:unknown[]=[];
   const enabled=(name:string)=>injection===name||injection==='all';
   if(enabled('hide-npc')&&stopId==='l1-depot-contact'){
-    const id=a.missions.state()!.l1!.clerkId,e=g.world.entities.get(id!);
-    if(!e?.civilian?.story)throw new Error('Mutation requires the actual scripted depot clerk');
-    e.hidden=true;mutations.push({kind:'hide-npc',id,clip:e.civilian.story.clip});
+    const id=scriptedNpc,e=g.world.entities.get(id!);
+    if(!e?.civilian||!ticks&&!e.civilian.story)throw new Error('Mutation requires the actual scripted depot clerk');
+    e.hidden=true;mutations.push({kind:'hide-npc',id,clip:e.civilian.story?.clip});
   }
   if(enabled('hats')&&stopId==='l1-park'){
     g.view.scene.traverse(node=>{
@@ -249,6 +254,6 @@ export async function readyFrame({target,zoom,ticks,injection,stopId}:{target:[n
   }
   await a.screenshotReady();
   const focus=target??[a.getState().player!.transform.x,0,a.getState().player!.transform.z];
-  const actors=a.query({}).filter(e=>(!!e.civilian||e.archetype==='veh.tank')&&Math.hypot(e.transform.x-focus[0],e.transform.z-focus[2])<15).map(e=>({id:e.id,archetype:e.archetype,at:e.transform,hidden:e.hidden,model:e.civilian?.model,clip:e.civilian?.story?.clip,activity:e.civilian?.schedule?.[e.civilian.scheduleStep??0]?.activity}));
+  const actors=a.query({}).filter(e=>(!!e.civilian||e.archetype==='veh.tank')&&Math.hypot(e.transform.x-focus[0],e.transform.z-focus[2])<15).map(e=>({id:e.id,archetype:e.archetype,at:e.transform,hidden:e.hidden,model:e.civilian?.model,clip:e.civilian?.story?.clip,activity:e.civilian?.schedule?.[e.civilian.scheduleStep??0]?.activity,state:e.civilian?.state,activityUntil:e.civilian?.activityUntil,pauseUntil:e.civilian?.pauseUntil}));
   return {tick:a.tick(),mutations,backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
 }

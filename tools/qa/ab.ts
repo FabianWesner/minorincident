@@ -11,7 +11,7 @@ import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab
 import { perceptualDiff } from './ab-metrics';
 
 const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},stops:{type:'string'},help:{type:'boolean'}}});
-if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
+if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
 if(!values.candidate)throw new Error('--candidate <url|dist> is required');
 if(values.inject&&(!['hide-npc','hats','tank','bench','all'].includes(values.inject)||values.candidate!=='dist'))throw new Error('--inject requires candidate dist and hide-npc|hats|tank|bench|all');
 const threshold=Number(values.threshold),seed=Number(values.seed);
@@ -102,7 +102,7 @@ try{
           const proof=await page.evaluate(prepareStop,{stop,seed,save,zoom,driveRoute:crossing.routes.find(r=>r.id==='road')!.points,walkRoute});
           const frames:Awaited<ReturnType<typeof readyFrame>>[]=[],hashes:string[]=[];
           for(let frame=0;frame<6;frame++){
-            const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0,injection:side==='candidate'?values.inject:undefined,stopId:stop.id});
+            const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0,injection:side==='candidate'?values.inject:undefined,stopId:stop.id,scriptedNpc:proof.l1?.clerkId??undefined});
             if(state.backend!=='webgpu'||state.quality!=='low')throw new Error(`Expected WebGPU/low, got ${state.backend}/${state.quality}`);
             if(Math.abs(state.camera.targetZoom-zoom)>.001)throw new Error(`Requested zoom ${zoom}, got ${state.camera.targetZoom}`);
             if(pageErrors.length)throw new Error(`Browser error: ${pageErrors.join('; ')}`);
@@ -120,7 +120,7 @@ try{
             await sheet(scratch,id,images,still);
             rows.push({id,stop,zoom,score:Math.max(...results.map(r=>r.score)),globalChanged:Math.max(...results.map(r=>r.globalChanged)),frames:results,sheet:`${id}.jpg`,baseline:base,candidate:{proof,frames,hashes}});
             for(const lane of ['baseline','candidate'])for(let frame=0;frame<6;frame++)rmSync(resolve(raw,`${id}-${lane}-${frame}.png`));
-            report('running');console.log(`[score] ${id}: ${(rows.at(-1)!.score*100).toFixed(2)}%`);
+            report('running');console.log(`[score] ${id}: ${(Math.max(...results.map(r=>r.score))*100).toFixed(2)}%`);
           }
         }catch(error){errors.push({side,stop:id,message:error instanceof Error?error.message:String(error)});console.error(`[unmeasured] ${side} ${id}: ${errors.at(-1)!.message}`);report('running');}
       }
