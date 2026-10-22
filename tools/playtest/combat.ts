@@ -18,3 +18,11 @@ export function canCoverVisibleAllies(level: string | null, step: string | null,
 export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined, allyThreat: T | undefined): T | undefined {
   return unarmed ? allyThreat ?? nearby : nearby ?? allyThreat;
 }
+
+/** A defensive walking goal derived from visible courier, console and enemy positions. */
+export function finaleDodgeGoal(level: string | null, step: string | null, player: { x: number; z: number }, console: { x: number; z: number } | null, enemy: { x: number; z: number; d: number }): { x: number; z: number } | null {
+  if (level !== 'L10' || (step !== 'hold' && step !== 'mega') || !console || enemy.d > 12) return null;
+  const dx = player.x - console.x, dz = player.z - console.z;
+  const angle = Math.hypot(dx, dz) < 1 ? Math.atan2(player.z - enemy.z, player.x - enemy.x) : Math.atan2(dz, dx) + Math.PI / 4;
+  return { x: console.x + Math.cos(angle) * 12, z: console.z + Math.sin(angle) * 12 };
+}

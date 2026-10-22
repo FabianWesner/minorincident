@@ -10,7 +10,11 @@ export const cureChargeRadius = finale.holdRadius;
 export class LevelTenFinale {
   readonly cure: CureFront;
   readonly epilogue: LevelTenEpilogue;
-  constructor(private readonly mission: Mission) { this.cure = new CureFront(mission); this.epilogue = new LevelTenEpilogue(mission); }
+  constructor(private readonly mission: Mission) {
+    this.cure = new CureFront(mission); this.epilogue = new LevelTenEpilogue(mission);
+    const console = mission.def.anchors['cure-console'];
+    if (console) mission.def.anchors['cure-mega'] = { ...console };
+  }
   update(): void {
     const { world, state, def } = this.mission;
     if (state.states['cure-released']) { this.cure.update(); this.epilogue.update(); return; }
@@ -31,6 +35,15 @@ export class LevelTenFinale {
         state.counters['charge-ticks'] = Math.min(cureChargeTicks, state.counters['charge-ticks'] + 1);
       }
       state.states['charge-ready'] = state.counters['charge-ticks'] === cureChargeTicks;
+      if (state.states['charge-ready'] && boss?.alive()) {
+        // Stage the existing boss inside the authored finale arena after the
+        // charge. Its health, attacks and damage remain unchanged.
+        if (boss.distance() > 26) boss.stageNear(console, 24);
+      }
+    }
+    if (state.steps.mega.status === 'active' && boss?.alive()) {
+      const at = boss.entity()!.transform;
+      this.mission.def.anchors['cure-mega'] = { x: at.x, z: at.z, y: at.y, radius: 2 };
     }
     if (state.steps.release.status === 'active' && pressed && distance <= console.radius && state.states['charge-active']
       && state.counters['charge-ticks'] === cureChargeTicks && state.states['mega-dead']) {
@@ -45,10 +58,13 @@ export class LevelTenFinale {
 export function cureFinaleText(mission: Mission | null): string | null {
   if (!mission) return null;
   const { state, world, def } = mission;
-  if (def.id !== 'L10' || state.steps.hold.status !== 'active') return null;
+  if (def.id !== 'L10') return null;
+  if (state.steps.mega.status === 'active' && !state.states['mega-dead']) return 'Kill the Mega Alpha';
+  if (state.steps.hold.status !== 'active') return null;
   if (!state.states['charge-active']) return 'Activate the dispersal console';
+  if (state.states['charge-ready'] && !state.states['mega-dead']) return 'Kill the Mega Alpha';
   const at = def.anchors['cure-console'], player = world.entities.get(1)!;
   const progress = `${Math.floor(state.counters['charge-ticks'] / 60)}/60 s`;
   if (at && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) > cureChargeRadius) return `Back to the dispersal console · Charge paused · ${progress}`;
-  return state.states['charge-ready'] ? 'Kill the Mega Alpha · Charge 60/60 s' : `Defend the dispersal console · Charge ${progress}`;
+  return `Defend the dispersal console · Charge ${progress}`;
 }
