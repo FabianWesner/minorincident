@@ -67,6 +67,13 @@ epics-pipeline/load.log
 # Test artefacts (screenshots/videos are deleted after verification)
 /test-results/
 /playwright-report/
+/docs/reports/qa-ab/
+!/docs/reports/qa-ab/
+/docs/reports/qa-ab/*
+!/docs/reports/qa-ab/README.md
+!/docs/reports/qa-ab/*/
+/docs/reports/qa-ab/*/*
+!/docs/reports/qa-ab/*/summary.json
 # Per asset keep only the source script, exported models and its notes/review/report
 /assets/*/*
 !/assets/*/build.py
