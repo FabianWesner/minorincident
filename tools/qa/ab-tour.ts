@@ -252,7 +252,16 @@ export async function readyFrame({target,zoom,ticks,injection,stopId,scriptedNpc
     rig.inspectionPose={target,position:[target[0]+s*Math.sin(rig.azimuth),target[1]+Math.cos(rig.polar)*radius,target[2]+s*Math.cos(rig.azimuth)]};
     rig.inspectionGameLod=false;
   }
-  await a.screenshotReady();
+  // Present the tour camera before waiting: its first draw can request a different entity LOD.
+  // A single pre-camera ready() can finish while that replacement is still pending.
+  let previousAssets:string|undefined,settled=false;
+  for(let pass=0;pass<6;pass++){
+    g.view.update(1);await a.screenshotReady();
+    const assets=JSON.stringify(a.getState().render.entityAssets);
+    if(assets===previousAssets){settled=true;break;}
+    previousAssets=assets;
+  }
+  if(!settled)throw new Error('Visible entity LOD/pose did not settle after readiness');
   const presentationReset:number[]=[];
   if(stopId.startsWith('l10-')&&!ticks){
     if(new URL(location.href).searchParams.get('test')!=='1')throw new Error('Presentation normalization requires test mode');
@@ -263,13 +272,12 @@ export async function readyFrame({target,zoom,ticks,injection,stopId,scriptedNpc
       npcs.heroes.get(e.id)?.root.removeFromParent();npcs.heroes.delete(e.id);npcs.motion.delete(e.id);npcs.presentation.states.delete(e.id);presentationReset.push(e.id);
     }
   }
-  if(stopId.startsWith('l10-')){
-    // Ready may warm assets through extra view updates. Draw the normalized pose in a new node frame,
-    // then finish the GPU submission before Playwright reads the canvas.
-    g.view.renderer.nextNodeFrame();g.view.update(1);await g.view.renderer.finishWarmUp();
-  }
+  // Ready may warm assets through extra view updates. Draw this pose in a new node frame,
+  // then finish the GPU submission before Playwright reads the canvas (including static set pieces).
+  g.view.renderer.nextNodeFrame();g.view.update(1);await g.view.renderer.finishWarmUp();
   const focus=target??[a.getState().player!.transform.x,0,a.getState().player!.transform.z];
   const actors=a.query({}).filter(e=>(!!e.civilian||e.archetype==='veh.tank')&&Math.hypot(e.transform.x-focus[0],e.transform.z-focus[2])<15).map(e=>({id:e.id,archetype:e.archetype,at:e.transform,hidden:e.hidden,model:e.civilian?.model,clip:e.civilian?.story?.clip,activity:e.civilian?.schedule?.[e.civilian.scheduleStep??0]?.activity,state:e.civilian?.state,activityUntil:e.civilian?.activityUntil,pauseUntil:e.civilian?.pauseUntil}));
   const companions=a.query({}).filter(e=>e.companion).map(e=>({id:e.id,at:e.transform,motion:e.motion,state:e.companion!.state,clip:g.view.labProbes().npcs?.heroClip(e.id),pose:['body','head','legFL','legFR','legBL','legBR'].map(name=>{const node=g.view.labProbes().npcs?.heroRoot(e.id)?.getObjectByName(name);return{name,p:node?.position.toArray(),q:node?.quaternion.toArray()};})}));
-  return {tick:a.tick(),mutations,companions,presentationReset,backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
+  const render=a.getState().render;
+  return {tick:a.tick(),mutations,companions,presentationReset,backend:a.perf().backend,quality:render.quality,camera:render.camera,entityAssets:render.entityAssets,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
 }
