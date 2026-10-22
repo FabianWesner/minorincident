@@ -59,6 +59,21 @@
         "P2": 1,
         "P3": 0
       }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-walk-kick",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 13,
+        "P3": 0
+      },
+      "skipped": [],
+      "maxNoProgressSeconds": 9.063,
+      "reason": "Reached gate-150, then repeated deaths returning to the separated guard; stopped at the unmodified 20 minute driver cap. The current low-health policy fix was committed after this session started."
     }
-  ]
+  ],
+  "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"
 }
