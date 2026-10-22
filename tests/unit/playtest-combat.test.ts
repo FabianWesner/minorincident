@@ -58,3 +58,10 @@ test('#99 fists defend visible allies when the retreat HUD asks for rear cover',
   expect(canCoverVisibleAllies('L6','retreat',true,ally,'Cover the retreat through the tunnel · 4 m')).toBe(false);
   expect(canCoverVisibleAllies('L7','corridor',true,ally,'Stay with the group · 3 m')).toBe(false);
 });
+
+test('#99 fists still cover the visible trailing survivor when the exit HUD asks to stay with the group', () => {
+  const ally = { drawn: true, hp: 20, corpse: false };
+  expect(canCoverVisibleAllies('L6','exit',true,ally,'Stay with the group · 5 m')).toBe(true);
+  expect(canCoverVisibleAllies('L6','exit',true,{...ally,drawn:false},'Stay with the group · 5 m')).toBe(false);
+  expect(canCoverVisibleAllies('L6','exit',true,ally,'Bring the survivors into the night · 0/1 out · 15 m')).toBe(false);
+});
