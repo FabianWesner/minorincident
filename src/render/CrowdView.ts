@@ -43,6 +43,7 @@ import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
 import { alphaLook, alphaLooks, alphaLookAssets } from '../data/alphaLooks';
+import { cureEncounters, cureEncounterSlots } from '../levels/L10/encounters';
 interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
@@ -131,10 +132,12 @@ export class CrowdView extends Group {
     const allDefinitions = [...dogDefinitions, ...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
-    const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
+    const regularCrowd = this.world.scenario === 'L7' || this.world.scenario === 'L10' || this.world.scenario?.startsWith('perf-horde-');
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
+    // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook
+    // below). Only explicit infected model overrides need this view's NPC assets.
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
     for (const entity of this.world.entities.iterate()) {
       // A future pet turn or another seeded spawn may use any coat of the same dog rig.
@@ -146,11 +149,17 @@ export class CrowdView extends Group {
     }
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
-    const alphaLevel = this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7';
+    const alphaLevel = ['L4', 'L5', 'L7', 'L8', 'L10'].includes(this.world.scenario ?? '');
+    if (this.world.scenario === 'L10') {
+      // Include every future region/console encounter, not only the spawn chunk.
+      for (const group of cureEncounters) for (const slot of cureEncounterSlots(group, this.low ? 'low' : 'high')) l1Roles.add(slot.archetype);
+      for (const asset of alphaLooks['inf.mega-alpha']) l1Roles.add(asset);
+      l1Roles.add('inf.dog');
+    }
     if (alphaLevel)
       for (const def of allDefinitions) if (alphaLooks['inf.alpha'].includes(def.asset)) l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
-    const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
+    const definitions = grove || regularCrowd || this.world.scenario === 'L8' ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
       // Registrations must not remove the asset spelling used by model overrides.
       const independent = def.id.startsWith('healthy.') || dogCoat(def.id);
