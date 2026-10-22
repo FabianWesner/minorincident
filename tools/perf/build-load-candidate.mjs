@@ -2,7 +2,7 @@
 import { build } from 'vite';
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
-const files = ['src/Game.ts', 'src/render/GameView.ts', 'src/render/CrowdView.ts', 'src/render/PreRenderer.ts'];
+const files = ['src/Game.ts', 'src/render/GameView.ts', 'src/render/CrowdView.ts', 'src/render/PreRenderer.ts', 'src/render/characters/bakeInfected.ts', 'src/render/characters/mergeCrowdVertices.ts'];
 const sources = Object.fromEntries(files.map(file => [file, createHash('sha256').update(readFileSync(file)).digest('hex')]));
 const sourceHash = createHash('sha256').update(JSON.stringify(sources)).digest('hex');
 const outDir = process.env.LOAD_BUILD_OUT ?? 'test-results/load-stalls/population-candidate';

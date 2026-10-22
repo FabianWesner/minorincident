@@ -5,7 +5,7 @@ import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppe
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { SpatialHash } from '../sim/spatial/SpatialHash';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
-import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, registerCrowdModel } from './crowdModels';
 import { markInfectedEyeCores } from './characters/infectedEyes';
@@ -44,6 +44,7 @@ import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
 import { alphaLook, alphaLooks, alphaLookAssets } from '../data/alphaLooks';
 import { cureEncounters, cureEncounterSlots } from '../levels/L10/encounters';
+import { mergeCrowdVertices } from './characters/mergeCrowdVertices';
 interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InterleavedBufferAttribute; tint: InterleavedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 /** Simulation ticks a hit flash may last at most (Vfx pulses for 0.1 s = 6 ticks at 60 Hz). */
 export const hitFlashTicks = 8;
@@ -220,14 +221,14 @@ export class CrowdView extends Group {
         if (prepared.corpseClip && !this.corpseClips.has(key)) this.corpseClips.set(key, prepared.corpseClip);
       } else {
         // The finished geometry is cached below (preparedBatches), so the raw bake is not kept a second time.
-        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback] as const;
+        const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, undefined, true] as const;
         baked = this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
         if (this.disposed) { baked.geometry.dispose(); return; }
         if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
-      // Baking expands rigid parts to triangle soup. Index identical vertices before
-      // instanced attributes are attached: same surfaces, fewer animated vertices.
+      // Weld identical vertices before instanced attributes are attached, retaining
+      // the authored indices through the bake: same triangles and vertex values.
       deinterleaveGeometry(baked.geometry);
-      const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      const indexed = mergeCrowdVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
       if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
@@ -245,9 +246,9 @@ export class CrowdView extends Group {
           const existing = alpha ? this.corpseGeometry.get(key) : undefined;
           if (existing) { createdCorpse = existing; corpseClip = this.corpseClips.get(key); }
           else {
-            const body = bakeInfected(bodyModel, this.registry.definition(asset).animatedNodes);
+            const body = bakeInfected(bodyModel, this.registry.definition(asset).animatedNodes, false, undefined, undefined, true);
             deinterleaveGeometry(body.geometry);
-            const corpse = mergeVertices(body.geometry); body.geometry.dispose();
+            const corpse = mergeCrowdVertices(body.geometry); body.geometry.dispose();
             if (!healthy) markInfectedEyeCores(corpse);
             if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
             corpse.userData.crowdLod = lod;
