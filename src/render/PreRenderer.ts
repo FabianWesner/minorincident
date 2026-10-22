@@ -23,6 +23,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
   let index = 0, phase: 'compile' | 'waiting' | 'draw' = 'compile', instances = 1, error: unknown;
   const representative = <T>(object: Mesh | Sprite | LineSegments, count: number, run: () => T): T => {
     const visible = object.visible, culled = object.frustumCulled, position = object.position.clone();
+    const matrix = object.matrix.clone(), worldMatrix = object.matrixWorld.clone();
     const instanced = object instanceof InstancedMesh, originalCount = instanced ? object.count : 0;
     const matrices = instanced ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : [];
     const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -40,7 +41,8 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
     }
     try { return source(run); }
     finally {
-      object.visible = visible; object.frustumCulled = culled; object.position.copy(position); object.updateMatrix(); object.updateMatrixWorld(true);
+      object.visible = visible; object.frustumCulled = culled; object.position.copy(position);
+      object.matrix.copy(matrix); object.matrixWorld.copy(worldMatrix); object.matrixWorldNeedsUpdate = true;
       if (instanced) { object.count = originalCount; matrices.forEach((matrix, i) => object.setMatrixAt(i, matrix)); object.instanceMatrix.needsUpdate = true; }
     }
   };
