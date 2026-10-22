@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "updatedAt": "2026-10-22T21:48:55.228460+00:00",
+  "protocol": "Revised orchestrator validation: real PO fixes + isolated local faults + same-build controls",
+  "threshold": 0.02,
+  "objectiveMet": false,
+  "sensitivity": {
+    "detected": 7,
+    "total": 7,
+    "hitRate": 1,
+    "realFixes": {
+      "detected": 3,
+      "total": 3,
+      "report": "2026-10-22-prod-vs-po-fixes/summary.json"
+    },
+    "injectedFaults": {
+      "detected": 4,
+      "total": 4,
+      "report": "2026-10-22-mutations/summary.json"
+    },
+    "cases": [
+      {
+        "id": "depot-clerk",
+        "score": 0.15625,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Clerk remains visible while walking back through the depot door.",
+        "stops": [
+          "l1-depot-return-z1",
+          "l1-depot-return-z1.5"
+        ]
+      },
+      {
+        "id": "lab-handover",
+        "score": 0.8550347222222222,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Technician remains visible on the signing/return door lane.",
+        "stops": [
+          "l1-lab-return-z1",
+          "l1-lab-return-z1.5"
+        ]
+      },
+      {
+        "id": "sitters-benches",
+        "score": 0.7899305555555556,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Four seated civilians have their apron benches in the candidate; PROD benches are culled after the courier walks onto the street.",
+        "stops": [
+          "l2-ride-start-z1",
+          "l2-ride-start-z1.5"
+        ]
+      },
+      {
+        "id": "hide-npc",
+        "score": 0.9418402777777778,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Actual scripted depot clerk is absent during the package handover.",
+        "stops": [
+          "l1-depot-contact-z1.5",
+          "l1-depot-contact-z1"
+        ]
+      },
+      {
+        "id": "hats",
+        "score": 0.8528645833333334,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Existing hat geometry is visibly doubled while bodies and hair remain unchanged.",
+        "stops": [
+          "l1-park-z1",
+          "l1-park-z1.5"
+        ]
+      },
+      {
+        "id": "bench",
+        "score": 0.6714409722222222,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "One existing bench disappears beneath two seated civilians.",
+        "stops": [
+          "l2-ride-start-z1",
+          "l2-ride-start-z1.5"
+        ]
+      },
+      {
+        "id": "tank",
+        "score": 0.9696180555555556,
+        "aboveThreshold": true,
+        "visuallyConfirmed": true,
+        "evidence": "Actual scripted tank is displaced to (-13, 23) across the plaza boundary/wall.",
+        "stops": [
+          "l4-tank-hold-z1",
+          "l4-tank-hold-z1.5"
+        ]
+      }
+    ]
+  },
+  "controls": [
+    {
+      "report": "2026-10-22-local-self/summary.json",
+      "variants": 8,
+      "framePairs": 48,
+      "maxScore": 0,
+      "aboveThreshold": 0,
+      "imageBytes": 2272792,
+      "captureFrameFence": "prior capture protocol"
+    },
+    {
+      "report": "2026-10-22-l10-control/summary.json",
+      "variants": 4,
+      "framePairs": 24,
+      "maxScore": 0,
+      "aboveThreshold": 0,
+      "imageBytes": 611496,
+      "captureFrameFence": "prior capture protocol"
+    },
+    {
+      "report": "2026-10-22-l6-control/summary.json",
+      "variants": 2,
+      "framePairs": 12,
+      "maxScore": 0.004340277777777778,
+      "aboveThreshold": 0,
+      "imageBytes": 164039,
+      "captureFrameFence": "prior capture protocol"
+    },
+    {
+      "report": "2026-10-22-l4-control/summary.json",
+      "variants": 2,
+      "framePairs": 12,
+      "maxScore": 0,
+      "aboveThreshold": 0,
+      "imageBytes": 453429,
+      "captureFrameFence": "after-camera-and-stable-entity-lod"
+    }
+  ],
+  "pending": [
+    "Repeat the three sensitivity cases and four controlled faults with the final camera/LOD readiness fence.",
+    "Repeat the local same-build control with the final capture protocol.",
+    "Complete all 80 PROD same-build variants with zero above-threshold stops."
+  ],
+  "hold": {
+    "requestedBy": "orchestrator",
+    "condition": "Do not start new browser runs until load-stalls quiet-run.sh timing matrix finishes."
+  },
+  "notes": [
+    "Raw scores are unchanged; case confirmation is recorded by Codex visual inspection.",
+    "The earlier full replay had one first-frame L4 tank false positive; after settling camera-driven entity LOD, the focused L4 replay scores 0% in all 12 frame pairs. Full replay is pending.",
+    "L6 baseline dark-exit observation is documented separately; quiet A/B is not a claim that existing game behavior is correct."
+  ]
+}

@@ -28,7 +28,7 @@ Each stop has six captures at 0, 0.6, 1.2, 1.8, 2.4 and 3 seconds. Its JPEG shee
 
 ## Score and interpretation
 
-`pixelmatch` applies a perceptual color tolerance of .15 and suppresses antialias-only differences. The score is the greatest changed-pixel coverage in an overlapping 48×48 tile across the six paired frames. The default review threshold is 2%. Global changed coverage is also recorded. Local coverage prevents a vanished person or hat being diluted by the full 921,600-pixel viewport. The metric tests cover identical frames, a small missing actor, sparse particle noise and incompatible dimensions.
+`pixelmatch` applies a perceptual color tolerance of .15 and suppresses antialias-only differences. The score is the greatest changed-pixel coverage in an overlapping 48×48 tile across the six paired frames. The default review threshold is 2%. Global changed coverage is also recorded. Local coverage prevents a vanished person or hat being diluted by the full 921,600-pixel viewport. The metric tests cover identical frames, a small missing actor, sparse particle noise, viewport-edge actors and incompatible dimensions.
 
 A score requests visual review; it does not decide whether a change is intended, an improvement or a regression. The six PO categories report candidate coverage when a relevant, successfully captured stop exceeds the same threshold. A reviewer must confirm that the difference actually depicts that finding before counting a hit. Missing categories are explicitly unmeasured. Same-build controls must have **every** stop below threshold, including later motion frames.
 
@@ -49,7 +49,7 @@ The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the s
 
 This pair cannot demonstrate differences in defects already present in 13g. The orchestrator confirmed that the PO defects predate 13h and replaced the validation criterion: compare PROD with the fixes in `lane/po-regressions-1022`, then prove sensitivity with four isolated local mutations and a same-build control. The original scores above are retained as historical evidence.
 
-The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The revised all-level and local same-build controls are in progress.
+The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The revised all-level replay and final capture-protocol refresh are pending; see the [validation status](2026-10-22-validation/summary.json).
 
 Static checks pass: typecheck, lint, production build, and all 1,961 unit tests. The unit run exposed an existing GNU `stat` assumption in the remote-cache fixture; its fixture now supplies the Linux stat interface using the real temporary-file mtimes on macOS.
 
