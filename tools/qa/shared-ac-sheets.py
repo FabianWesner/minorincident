@@ -58,8 +58,8 @@ elif sys.argv[1] == 'moves':
             sheet(f'moves-{group}-{part}.jpg', rows)
     with gzip.open(DEST / 'evidence/move-boundaries.json.gz', 'wt') as f:
         json.dump(evidence, f, separators=(',', ':'))
-else:
-    raise SystemExit('Use repairs or moves')
+elif sys.argv[1] != 'bars':
+    raise SystemExit('Use repairs, moves or bars')
 
 if sys.argv[1] == 'bars':
     root = Path('test-results/ac-close-shared')
