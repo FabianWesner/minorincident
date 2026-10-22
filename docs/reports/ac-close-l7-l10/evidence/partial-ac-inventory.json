@@ -210,9 +210,16 @@
     },
     {
       "ac": "E31-AC08",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "`T-E31-08`, zero-no-repair sims; responsive actual input HUD cases.",
-      "requiredProof": "**M; browser** \u2014 Measure durability HUD \u22653:1 on desktop/phone, including zero-HP text and touch overlap, in current matrix."
+      "requiredProof": "**M; browser** \u2014 Measure durability HUD \u22653:1 on desktop/phone, including zero-HP text and touch overlap, in current matrix.",
+      "currentEvidence": [
+        "native-E31-functional.json.gz",
+        "native-E31-vitest.json.gz",
+        "native-E31-input-baseline-images.json"
+      ],
+      "review": "Fresh9 native HUD cases pass: one-frame/current-max/zero at3 viewport projects plus8 cumulative HP stages in both backends at all3projects, unchanged3:1 text/background gates and touch/Home clearance. Remote no-repair500/0HP cases pass. Opened desktop/portrait fullHP and zeroHP frames. Separate subtitle/audio overlap is real and remains under AC16/18, outside durability-specific geometry.",
+      "remaining": ""
     },
     {
       "ac": "E31-AC16",
@@ -280,6 +287,6 @@
       "reason": "Physical devices cannot be accessed here. Proposal awaits PO; emulation is not substituted for acceptance."
     }
   ],
-  "updatedAt": "2026-10-22T12:57:00Z",
+  "updatedAt": "2026-10-22T13:25:00Z",
   "metCount": 5
 }

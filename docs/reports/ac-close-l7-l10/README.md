@@ -2,16 +2,16 @@
 
 Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evidence/partial-ac-inventory.json) preserves every partial from the sweep. This is an ongoing audit; no pending row is accepted by this report.
 
-## Latest checkpoint — 13:14 UTC
+## Latest checkpoint — 13:25 UTC
 
-**5/31 starting partials are met:** E25-AC01/12/15 and E29-AC07/14. Every other starting partial remains open unless a later terminal receipt and explicit disposition below says otherwise. All five epic statuses stay **in-progress**. [Machine-readable31-row ledger](evidence/partial-ac-inventory.json).
+**6/31 starting partials are met:** E25-AC01/12/15, E29-AC07/14 and E31-AC08. Every other starting partial remains open unless a later terminal receipt and explicit disposition below says otherwise. All five epic statuses stay **in-progress**. [Machine-readable31-row ledger](evidence/partial-ac-inventory.json).
 
 | Epic | Full-verifier disposition | Current proof and material gaps |
 | --- | --- | --- |
 | E25 | exit1;50 native pass/6fail/1SSRskip | Separate quiet5/5 passes; shadow fixture subsequently passes85.884%. Night-readability/saturation, fullG, legacy-memory and SSR gates remain unresolved/proposed. |
 | E29 | exit1;133Node pass,73native pass/5fail | Alpha inheritance and corrected night continuity now met by targeted repeats. Skyline is reversed on all four configurations; complete input photos/scored review/performance remain open. |
 | E30 | first functional72pass/15fail; repeated158Node pass,96native pass/2fail | All36 player views pass (minimum3.097:1). Hidden legacy HUD fixture corrected. Real rotated-APC boarding defect fixed locally; focused6/6 remote regression passes, rebuilt native route replay pending. |
-| E31 | repeated124Node +2 isolated timing passes; native running | Original timing3.551/1.381ms passes; actual desktop routes reach L10 but fail strict3:1 player/navigation. Phone matrix in progress; native frames/hitches/retention pending. Real phones need PO devices. |
+| E31 | exit1; repeated124Node +2 isolated timing passes,67native pass/36fail | Durability AC08 met.28 actual routes reach L10 but fail strict3:1;8 landscape zoom fixtures fail before driving and have a corrected repeat queued. Native frames/hitches/retention pending. Real phones need PO devices. |
 | E32 | repeated246Node pass;88/88 native functional pass | Shared Alpha inheritance passes. All four native regular/Mega contracts pass; the new actual photo receipt still needs its focused capture. Whole seven-region/ending review, full input aggregate and native budgets/retention remain incomplete; phones need PO devices. |
 
 Proposed specification decisions remain **unadopted**: SSR release-extras placement; explicit collected-JS versus external/backing memory domains; physical-device ownership plus a separately labelled desktop proxy; nominal stampede cue versus capsule contact; accepted PO90's immediate zoo boarding goal versus old no-objective wording. None is silently substituted for a passing gate. Valid failed/unmeasured criteria have no proposed waiver. The remainder of this file is a chronological audit trail, including superseded experiments and their failures.
@@ -274,3 +274,21 @@ Opened the original gameplay mockup, zoo/animals sheet and highway/safe-zone she
 [Current probe typecheck/lint](evidence/current-probes-static.log.txt.gz) passes. The queued zoo collector now preserves the original daylight cases and adds the actual `L8-zoo` night preset: all five species × both tiers × day/night, before/after with identities/bars,20 cases. No normal-animal/bar or same-ID assertion was removed. [Canonical partial E30 review](../../../../test-results/epics/E30/review.md) records explicit checklist PASS/FAIL items, A5/D6/E4/G5 with C still unmeasured; this is a failed/incomplete vision review, not acceptance.
 
 The continuation receipt now verifies reporter freshness by modification time instead of deleting the preceding batch's global reporter; this preserves the preceding full verifier's post-lock copy and prevents stale JSON from being counted. Each child exit remains unchanged and is retained. No browser count, timeout or numeric gate changed.
+
+## E31-AC08 — met
+
+Fresh **9 native HUD cases pass**: `T-E31-08` current/max and one-frame zero-label checks across desktop, portrait and landscape; `T-E31-22-input` checks all8 HP thresholds, both backends and all3 projects with unchanged≥3:1 text-to-track/fill contrast and touch/Home clearance. Remote `T-E31-08-no-repair-500/0` both pass medkit/healing/elapsed-time controls. [Native receipt](evidence/native-E31-functional.json.gz), [named results](evidence/native-E31-functional-summary.json), [remote sim receipt](evidence/native-E31-vitest.json.gz). Opened full-resolution desktop and portrait healthy/zero-HUD frames and retained them in [the input sheet](native-inputs.jpg). Armor1000/1000 and Barely functional are legible, physically clear of touch controls and Home. The **separate mission-subtitle/audio-caption overlap** affects other review criteria and is not hidden by this durability acceptance.
+
+## E31 native baseline — 13:21 UTC
+
+Full `npm run verify -- E31` exits1 after **67 native pass /36 fail**,32.3minutes; original124 selected Node and2 timing tests pass. [Terminal log](evidence/verify-E31-repeat.log.txt.gz), [checks](evidence/native-E31-verifier-checks.json.gz), [all original input/audio/readability JSON](evidence/native-E31-input-baseline.json.gz), [284 original PNG hashes](evidence/native-E31-input-baseline-images.json).28 real keyboard/touch routes reach crash/crawl/L10; strict player/navigation failures remain.8 landscape nondefault-zoom cases fail before driving because the last mouse gesture at y400 is outside the390px screen, so wheel events never reach canvas and zoom remains1. Corrected only the gesture coordinates and queued all8 unchanged routes; original failure contexts are retained.
+
+Opened full portrait/landscape crawl and desktop impact images. The mission subtitle overlaps the sound-caption panel in both phone orientations; original Home/control tests do not cover caption-to-caption overlap. The focused courier probe now enables real captions and adds explicit overlap regression checks while retaining the courier3:1 gate. The impact image is heavily washed by the immediate blast; one frame does not prove its duration, so no temporal haze acceptance is claimed. These are explicit visual failures.
+
+L10's focused review batch ends **4 Alpha/model passes /4 region-collector failures**. The static Scene Lab game photo camera applies zoom through distance while reporting playerZoom1; the collector's0.5 player-zoom assertion was invalid for that static rig. Its replacement uses the real follow rig and keeps the exact0.5 assertion, loading each region once and changing only camera zoom at one simulation pose. A full4-configuration repeat is queued; the failed files remain under `test-results/epics/E32/current-review-first-failed`. This does not waive any region/vision criterion.
+
+### 13:29 UTC — day/night animals and caption correction
+
+The focused zoo collector passes **20/20**, preserving all five species × both tiers in daylight and the actual zoo night. Before/after PNGs and identity/bar snapshots are fresh; visual opening and scoring follow. Actual keyboard/phone APC replay has begun, so native boarding acceptance remains pending.
+
+The separate L9 candidate now also corrects the observed shared caption overlap: MissionUI observes the actual visible subtitle height and publishes its upper boundary; AudioService places sound captions above that boundary, preserving the existing minimum position when no subtitle is visible. Resize/text wrapping and observer cleanup are handled without per-frame layout reads. Portrait focused and landscape actual-route repeats include explicit caption-to-caption separation assertions, with all original3:1/input gates retained. The replacement remote artifact is building; neither caption nor courier correction is called met before native results.

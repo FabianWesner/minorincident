@@ -263,7 +263,7 @@ Criteria: [epic-31-level-9-the-crossing.md](../../../specs/epic-31-level-9-the-c
 | E31-AC05 | met | `T-E31-05-*` physics route/detour, shortcut distance/risk and avoidable groups. | — |
 | E31-AC06 | met | `T-E31-06/repeat/checkpoint/attack/07-hull`, actual stopped-hull browser case. | — |
 | E31-AC07 | met | `T-E31-07/surrounded/cancel/driver` and `07-browser`; windup, repeated attackers and reach exit. | — |
-| E31-AC08 | partial | `T-E31-08`, zero-no-repair sims; responsive actual input HUD cases. | **M; browser** — Measure durability HUD ≥3:1 on desktop/phone, including zero-HP text and touch overlap, in current matrix. |
+| E31-AC08 | met | Fresh9 native HUD cases pass: one-frame/current-max/zero across desktop/portrait/landscape; cumulative8 HP stages × both backends ×3 projects pass original≥3:1 and Home/touch clearance. Remote no-repair500/0HP pass. Opened full/zero desktop/portrait frames. [Proof](../ac-close-l7-l10/README.md#e31-ac08--met). | Separate mission/audio-caption overlap remains an AC16/18 review failure. |
 | E31-AC09 | met | `T-E31-09/controls/policy/ram/scope`, terrain-speed high/low, early/late-zero route cases; floor browser. | — |
 | E31-AC10 | met | `T-E31-10-bypass/fallback`, all-route zero cases and crash browser input; safe anchors/corgi. | — |
 | E31-AC11 | met | `T-E31-11` preserved/early≤20%/late≥80% on three routes and risky-vs-safe comparison. | — |

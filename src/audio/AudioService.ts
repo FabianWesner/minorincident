@@ -222,9 +222,9 @@ export class AudioService implements Lifecycle {
         this.captionElement.setAttribute('aria-live', 'polite');
         this.captionElement.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);color:#fff;background:#182333eb;padding:10px;border-radius:8px;font:16px sans-serif;pointer-events:none;white-space:pre-line';
         this.captionElement.hidden = true;
-        this.captionStyle.textContent = `[data-audio-captions]{bottom:104px;width:max-content;max-width:90vw;box-sizing:border-box}
-            @media(pointer:coarse){[data-audio-captions]{bottom:168px}}
-            @media(pointer:coarse) and (orientation:landscape){[data-audio-captions]{bottom:12px;max-width:calc(100vw - 360px)}}`;
+        this.captionStyle.textContent = `[data-audio-captions]{bottom:max(104px,var(--mission-caption-bottom,0px));width:max-content;max-width:90vw;box-sizing:border-box}
+            @media(pointer:coarse){[data-audio-captions]{bottom:max(168px,var(--mission-caption-bottom,0px))}}
+            @media(pointer:coarse) and (orientation:landscape){[data-audio-captions]{bottom:max(12px,var(--mission-caption-bottom,0px));max-width:calc(100vw - 360px)}}`;
         document.head.append(this.captionStyle);
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
