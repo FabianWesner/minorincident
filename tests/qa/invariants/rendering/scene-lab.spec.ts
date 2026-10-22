@@ -112,6 +112,7 @@ test('Scene Lab: scripted cast is submitted and drawn on both quality paths', as
         expect.soft(benches.length, `${tier}: seated NPCs in the PO camera must be drawn`).toBeGreaterThan(0);
         for (const seat of benches) expect.soft(seat.drawnSeat, `${tier}/NPC ${seat.id}: missing drawn bench ${seat.prop}`).toBe(true);
         const withBenches = PNG.sync.read(await session.page.screenshot());
+        const benchPixels: Record<number, number> = {};
         try {
           await session.page.evaluate(async () => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -133,10 +134,11 @@ test('Scene Lab: scripted cast is submitted and drawn on both quality paths', as
               const p = (y * withBenches.width + x) * 4;
               if (Math.abs(withBenches.data[p] - withoutBenches.data[p]) + Math.abs(withBenches.data[p + 1] - withoutBenches.data[p + 1]) + Math.abs(withBenches.data[p + 2] - withoutBenches.data[p + 2]) > 30) changed++;
             }
+            benchPixels[seat.id] = changed;
             expect.soft(changed, `${tier}/NPC ${seat.id}: bench has no visible body pixels`).toBeGreaterThanOrEqual(8);
           }
         } finally { await session.page.evaluate(() => (window as unknown as { __qaRestoreBenches?: () => void }).__qaRestoreBenches?.()); }
-        await info.attach(`seated-props-${tier}`, { body: JSON.stringify(benches, null, 2), contentType: 'application/json' });
+        await info.attach(`seated-props-${tier}`, { body: JSON.stringify({ benches, benchPixels }, null, 2), contentType: 'application/json' });
         expect.soft(session.errors, `${tier} Scene Lab errors`).toEqual([]);
       } finally { await session.close(); }
     }

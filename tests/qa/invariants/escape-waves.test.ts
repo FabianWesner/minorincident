@@ -8,9 +8,14 @@ for (const tier of ['high', 'low'] as const) test(`5 L2 escape ${tier}: every st
   try {
     const s = w.missions!.state.l2!, c = w.missions!.l2! as unknown as { spawnEscape(): void; emergePending(all?: boolean): void };
     w.combat!.damage.god = true; w.update(); c.spawnEscape();
-    // Leave all entrances out of the courier's admission exclusion. The real cap, emergence, rush and navigation stay live.
-    const player = w.entities.get(1)!; Object.assign(player.transform, { x: 85, z: 80 });
-    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    // Move between valid town approaches so every queued entrance gets a turn outside the exclusion radius.
+    // Never place the courier outside the authored walkable map merely to force admission.
+    const player = w.entities.get(1)!, nav = w.infected!.nav;
+    const viewpoints = [[70, 40], [70, -40], [-70, 40], [-70, -40]].map(([x, z]) => {
+      const cell = nav.nearestCell(x, z);
+      if (cell < 0) throw new Error(`No walkable escape-wave viewpoint near ${x},${z}`);
+      return { x: nav.x(cell), z: nav.z(cell) };
+    });
     const entries = s.pending as { id: number; home: { x: number; z: number } }[], admitted = new Set<number>(), reached = new Set<number>();
     const scale = tier === 'low' ? l2.escape.lowScale : 1;
     const expected = Math.ceil(l2.cluster.count * scale) + l2.escape.groups.reduce((n, [, , count]) => n + Math.ceil(count * scale), 0);
@@ -18,6 +23,12 @@ for (const tier of ['high', 'low'] as const) test(`5 L2 escape ${tier}: every st
     // Keep phase calm to isolate this quota from the later market-collapse alarm.
     s.phase = 'calm';
     for (let i = 0; i < 90 * 60 && reached.size < expected; i++) {
+      if (i % 1200 === 0) {
+        const at = viewpoints[Math.floor(i / 1200) % viewpoints.length];
+        Object.assign(player.transform, at, { y: w.districts!.groundHeight(at.x, at.z) + .7 });
+        w.spatial.set(1, at.x, at.z);
+        w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+      }
       followFrustum(w); c.emergePending(true);
       for (const q of entries) { const e = w.entities.get(q.id); if (e) e.health.current = e.health.max = 1_000_000; }
       w.update();
