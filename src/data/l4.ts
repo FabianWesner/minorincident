@@ -188,9 +188,9 @@ export const l4 = {
   },
   /** Section 5.5: military spectacle (sim-light, view-heavy). */
   tank: {
-    /** Enters at turn + enterAfterS from the army gate along Lakeshore, then north through the lake garden gap. */
+    /** Enters at turn + enterAfterS from the army gate along Lakeshore, then north through the lake garden gap. PO #116: the lane keeps clear of the parked cars (z 43.3) and the stop sits outside the military wall (z 22.5), never astride it. */
     enterAfterS: 22, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: 2.2,
-    path: [[-70, 43.9], [-26, 43.9], [-20, 37.9], [-20, 22]] as readonly P[],
+    path: [[-70, 47], [-26, 47], [-20, 41], [-20, 27.5]] as readonly P[],
   },
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
   /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
@@ -242,7 +242,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-brace': [0, 0],                  // replaced from the cellar placement
   'l4-fuel': [l4.fuelTruck.x, l4.fuelTruck.z],
   'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
-  'l4-tank-stop': [-20, 22],
+  'l4-tank-stop': [-20, 27.5],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],
   'photo-l4-first-turn': [-26, -4], 'photo-l4-war-line': [-22, 4], 'photo-l4-tank': [-18, 22], 'photo-l4-collapse': [4, -6], 'photo-l4-basement': [75, -4],
   'pair-plaza': [-17, 3], 'pair-harbor-street': [-10, -39], 'pair-metro-entrance': [57, -41], 'pair-kessler-lane': [68, 28.6],
