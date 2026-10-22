@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists } from '../../tools/playtest/combat';
+import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from '../../tools/playtest/combat';
 
 test('#99 one or two close infected must not plant the fists courier during the moving retreat', () => {
   expect(keepMovingWithFists('L6', 'retreat', true, 1)).toBe(true);
@@ -40,4 +40,12 @@ test('#99 fists ally cover requires a visible living actor', () => {
   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,drawn:false})).toBe(false);
   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,hp:0})).toBe(false);
   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,corpse:true})).toBe(false);
+});
+
+test('#99 fists cover the attacked ally before chasing a closer isolated infected', () => {
+  const nearby = { id: 1 }, attackingAlly = { id: 2 };
+  expect(prioritizeAllyThreat(true,nearby,attackingAlly)).toBe(attackingAlly);
+  expect(prioritizeAllyThreat(true,nearby,undefined)).toBe(nearby);
+  expect(prioritizeAllyThreat(true,undefined,attackingAlly)).toBe(attackingAlly);
+  expect(prioritizeAllyThreat(false,nearby,attackingAlly)).toBe(nearby);
 });

@@ -12,3 +12,9 @@ export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' {
 export function canCoverVisibleAllies(level: string | null, step: string | null, unarmed: boolean, ally: { drawn: boolean; hp: number; corpse: boolean }): boolean {
   return !unarmed || level === 'L6' && (step === 'shelter' || step === 'stop') && ally.drawn && ally.hp > 0 && !ally.corpse;
 }
+
+/** Choose between the courier's closest contact and a visible ally's attacker. */
+export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined, allyThreat: T | undefined): T | undefined {
+  void unarmed;
+  return nearby ?? allyThreat;
+}

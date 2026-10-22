@@ -1,0 +1,46 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow -> 2.28.24.66:/srv/mi/ws/fixes-13h-flow-8635c7
+[remote] cache-gc deleted:none
+[remote] sync 44s, 30488 files; job /srv/mi/jobs/fixes-13h-flow-8635c7-88861-1792635665; queueing for a slot
+[runner] slot 0 acquired; load 0.63 0.36 0.92
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-flow-8635c7-88861-1792635665[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 20[2mms[22m[39m
+   [32m✓[39m #99 one or two close infected must not plant the fists courier during the moving retreat[32m 3[2mms[22m[39m
+   [32m✓[39m #99 shelter defence and carried weapons retain their combat decisions[32m 0[2mms[22m[39m
+   [32m✓[39m #99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier[32m 1[2mms[22m[39m
+   [32m✓[39m #99 fists movement preserves the existing low-health kite policy[32m 0[2mms[22m[39m
+   [32m✓[39m #99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists ally cover requires a visible living actor[32m 0[2mms[22m[39m
+[31m   [31m×[31m #99 fists cover the attacked ally before chasing a closer isolated infected[39m[32m 13[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts[2m > [22m#99 fists cover the attacked ally before chasing a closer isolated infected
+[31m[1mAssertionError[22m: expected { id: 1 } to be { id: 2 } // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "id": 2,[39m
+[31m+   "id": 1,[39m
+[2m  }[22m
+
+[36m [2m❯[22m tests/unit/playtest-combat.test.ts:[2m47:59[22m[39m
+    [90m 45|[39m test('#99 fists cover the attacked ally before chasing a closer isolat…
+    [90m 46|[39m   const nearby = { id: 1 }, attackingAlly = { id: 2 };
+    [90m 47|[39m   expect(prioritizeAllyThreat(true,nearby,attackingAlly)).toBe(attacki…
+    [90m   |[39m                                                           [31m^[39m
+    [90m 48|[39m   expect(prioritizeAllyThreat(true,nearby,undefined)).toBe(nearby);
+    [90m 49|[39m   expect(prioritizeAllyThreat(true,undefined,attackingAlly)).toBe(atta…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 02:21:52
+[2m   Duration [22m 268ms[2m (transform 56%, tests 20%, import 18%, worker 7%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 44s, remote total 3s)
