@@ -109,6 +109,26 @@ try {
       });
       writeFileSync(`${out}/settled-shader.json`, JSON.stringify(shader, null, 2));
     }
+    if (timing && zoom === 1 && session.options.backend === 'webgpu' && process.env.L10_GPU_DIAGNOSTICS === '1') {
+      // Supplemental GPU timings follow all cadence/CPU samples, so query
+      // readback cannot alter the frame percentiles used for acceptance.
+      const gpu = await session.page.evaluate(async () => {
+        const g = (window.__SCENE__ as unknown as { game: Game }).game;
+        const backend = g.view.renderer.backend as unknown as { trackTimestamp: boolean; device: { features: { has(name: string): boolean } }; resolveTimestampsAsync(type: string): Promise<number | undefined> };
+        if (!backend.device.features.has('timestamp-query')) return { supported: false, samples: [] };
+        const was = backend.trackTimestamp, samples: number[] = []; backend.trackTimestamp = true;
+        try {
+          for (let i = 0; i < 90; i++) {
+            await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+            const ms = await backend.resolveTimestampsAsync('render');
+            if (ms !== undefined && i >= 10) samples.push(ms);
+          }
+        } finally { backend.trackTimestamp = was; }
+        samples.sort((a, b) => a - b);
+        return { supported: true, samples, median: samples[Math.floor(samples.length / 2)], p95: samples[Math.ceil(samples.length * .95) - 1] };
+      });
+      writeFileSync(`${out}/settled-gpu.json`, JSON.stringify(gpu, null, 2));
+    }
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
