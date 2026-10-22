@@ -1,6 +1,6 @@
 # Shared acceptance closure — E07 / E27 / E28
 
-2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final verification is refreshing on `df390443a` after correcting the crowd count and draw defects. The latest completed E07 verifier is red; the previous E27/E28 verifiers passed. E27 remains done; E07/E28 remain in progress for the two unadopted proposals.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
+2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **E07 now verifies green on `df390443a`; E27/E28 are refreshing their previously green verification on the same runtime. E27 is done; E07/E28 remain in progress for the two unadopted proposals.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
 
 [Final source/build hashes and unchanged measurement contracts](evidence/final-source.json).
 
@@ -8,7 +8,7 @@
 | --- | --- |
 | E07-AC05 | Met/fixed: all 14 timing/cooldown/restore probes and complete-boundary image review; 168 captures. The initially cropped roars were rejected and recaptured wider. |
 | E07-AC06 | Met: all four Alpha moves, spatial/restore controls, 12-case shared-bar matrix and actual Alpha desktop/phone HP captures reviewed. |
-| E07-AC12 | Met/fixed by native ownership/draw audit: exact pooled-page count, no unowned body/headwear nodes, 17 runner /30 mixed combined draws; final verifier refresh pending. |
+| E07-AC12 | Met/fixed: exact pooled-page count, no unowned body/headwear nodes, 17 runner /30 mixed combined draws; full E07 verifier and all five quiet cases pass. |
 | E07-AC13 | Met: named 60-runner Checklist D, all five items. |
 | E07-AC19 | Zoo timing/boundary/restore and actual phone-bar proof met; literal stampede width remains partial with the unadopted proposal below. |
 | E27-AC15 | Met/fixed: named H, all seven spots / seven items; full verify passes; E27 done. |
@@ -30,10 +30,10 @@ All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 S
 
 | Verification | Result |
 | --- | --- |
-| Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Final pause-window receipt](evidence/units-pause-final.log.txt). |
-| E07 final | **FAIL**, static/build, **373 Node +5 isolated timing +102 functional browsers pass; 4 quiet cases pass /1 fails** at the exact crowd object-count assertion. [Full receipt](evidence/verify-E07-object-failure.log.txt), [stage exits](evidence/verify-E07-object-failure-checks.json), lossless stage JSONs. |
-| E27 final | **PASS**, typecheck/lint/build, **46 Node +41 functional browsers +2 quiet performance tests**. [Receipt](evidence/verify-E27-final.log.txt), [stage exits](evidence/verify-E27-final-checks.json); cold-blast p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**. |
-| E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
+| Full remote units on final runtime | **1,867 passed /345 files**, nine skipped tests /one file. [Final runtime receipt](evidence/units-headwear-final.log.txt); optional FFmpeg/Linux lock exclusions are described below. |
+| E07 final | **PASS**, typecheck/lint/build, **377 Node +5 isolated timings +102 functional browsers +5 quiet tests**. [Full receipt](evidence/verify-E07-final.log.txt), [stage exits](evidence/verify-E07-final-checks.json), lossless stage JSONs. |
+| E27 previous accepted runtime; final refresh pending | **PASS**, typecheck/lint/build, **46 Node +41 functional browsers +2 quiet performance tests**. [Receipt](evidence/verify-E27-final.log.txt), [stage exits](evidence/verify-E27-final-checks.json); cold-blast p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**. |
+| E28 previous accepted runtime; final refresh pending | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
 
 The Alpha contact fixture was corrected to separate a courier-provoked Alpha from the unprovoked soldier-contact check; all original HP/knockdown/cooldown expectations stay. The hero-shadow fixture now submits 90 individual fixed-tick views and requires promotion blend 1 before sampling the unchanged shadow gate. The repeat move probe preserves authored radius (including 18 m Alpha roar) instead of passing a generic one-metre area. The merged Alpha scene now stages the retained throw body before the legal slam-recovery boundary, and records all four original special activations plus the three actual 30/25/30 HP hits. A later protected zero-damage slam remains in its complete journal. The authored elephant scene also contains a sedan in the charge corridor: the failed browser receipt records a broken 400 HP barricade and one 80 HP chassis hit, followed by no courier hit. The courier-impact probe now clears that vehicle; a separate admitted-chassis probe retains it and checks the barricade, impulse, single car hit and protected courier. These are fixture corrections, not runtime difficulty changes. [Original elephant receipt](evidence/elephant-charge-failure.json.gz).
 
@@ -71,7 +71,7 @@ Opened the full-size WebGPU night phone frame: the pale outline, red fill and da
 
 ## Named Checklist D review — E07-AC13
 
-Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, both WebGL2/WebGPU, high/low, real zoom **0.5 / 1 / 1.5**, with a second frame adding Brute/runner warnings. [Matrix](d-horde.jpg), [current state receipts](evidence/headwear-final-vision.json.gz), [24 image hashes](evidence/D-final-images.json). The capture runner asserts the actual backend/tier, 60 infected before the warning additions and actual camera zoom; it scales the named camera pose rather than relabeling one fixed view.
+Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, both WebGL2/WebGPU, high/low, real zoom **0.5 / 1 / 1.5**, with a second frame adding Brute/runner warnings. [Matrix](d-horde.jpg), [current state receipts](evidence/headwear-final-vision.json.gz), [24 image hashes](evidence/D-final-images.json). The capture runner records actual backend/tier and asserts 60 infected before warning additions plus actual camera zoom; the [state audit](evidence/D-backend-tier-validation.json) confirms every backend/tier and the 60/62 actor counts; it scales the named camera pose rather than relabeling one fixed view.
 
 | D item | Observed result across all twelve configurations |
 | --- | --- |
@@ -199,3 +199,7 @@ D remains **5/5** after opening the refreshed 24-frame matrix and full-size WebG
 H remains **4/4 must +3/3 should** after opening both refreshed seven-row sheets and full-size medium/mega flight, wind column, L4 chain and both late grenade frames. All six body peak/landing records match the previous receipt. The L4 fuel-truck sequencer emits its pump/canopy/tank stages at ticks **188/202/222** (offsets **0/14/34**); the sheet now selects early frames **0/2/6/15/40/120**, then 300/900 aftermath, rather than omitting the active mega window. The full-size f40 frame shows the orange/black mega fireball behind the street roofs; no building-collapse geometry claim is made. The grenade f840 frames retain courier, ring and dithered smoke on both tiers.
 
 Remote validation on the committed runtime: typecheck/lint, **27 focused render tests +build** ([receipt](evidence/headwear-inline-focused.log.txt)), then **1,867 full unit passes /345 files, nine skipped tests /one file** ([receipt](evidence/units-headwear-final.log.txt)). Seven skips are the pre-existing Linux/macOS lock exclusions; two optional FFmpeg loudness checks skipped on this runner, with those audio sources unchanged. The new all-epic verifiers remain in progress. The earlier dog-only verifier was cancelled through its owned remote launcher before browser admission when the broader headwear defect was found ([receipt](evidence/verify-E07-dog-superseded.log.txt), [stage exits](evidence/verify-E07-dog-superseded-checks.json)); it is not a passing verifier.
+
+All **168** move images from the final functional run are byte-identical to the fully reviewed set ([repeat hashes](evidence/move-final-repeat.json)); the fresh move journals are retained in `move-boundaries.json.gz`. All **ten** actual Alpha/zoo images are also byte-identical ([current runtime repeat](evidence/phone-bar-runtime-repeat.json)). This preserves the prior full-boundary/phone visual review on the final runtime, alongside the repeated gameplay/pixel assertions.
+
+**Final E07 verifier passes on `df390443a`: 377 selected Node tests, five isolated timings, 102 functional browser cases and five quiet native cases, with no browser skips, unexpected results or flaky retries.** The quiet T-E07-12 now verifies the exact object formula, combined body/headwear 30-draw cap, offscreen exclusion, retained 200 corpses, reset and mixed equality. The literal stampede corridor is still partial and its proposal remains unadopted.
