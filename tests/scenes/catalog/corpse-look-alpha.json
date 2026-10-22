@@ -1,0 +1,31 @@
+{
+ "name": "corpse-look-alpha",
+ "note": "P1-117 (PO 10-22 \"Alpha looks terrible\"): permanent corpses (front row) next to the same models alive (back row): Alpha base, Alpha suit, runner, dog. A corpse must read as the living model in its death pose: same silhouette, clothing, proportions; no convex blobs, slabs or shards. Run with --matrix for high/low at zoom 0.5 and 1.",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-6, 4], "state": "idle" },
+  { "id": "alpha-live", "kind": "infected", "archetype": "infected.alpha", "at": [-4, -3], "state": "idle", "look": { "model": "inf.alpha" } },
+  { "id": "suit-live", "kind": "infected", "archetype": "infected.alpha", "at": [-1, -3], "state": "idle", "look": { "model": "inf.alpha-suit" } },
+  { "id": "runner-live", "kind": "infected", "archetype": "infected.runner", "at": [2, -3], "state": "idle" },
+  { "id": "dog-live", "kind": "infected", "archetype": "infected.dog", "at": [4.5, -3], "state": "idle" },
+  { "id": "alpha-dead", "kind": "infected", "archetype": "infected.alpha", "at": [-4, 1.5], "state": "idle", "look": { "model": "inf.alpha" } },
+  { "id": "suit-dead", "kind": "infected", "archetype": "infected.alpha", "at": [-1, 1.5], "state": "idle", "look": { "model": "inf.alpha-suit" } },
+  { "id": "runner-dead", "kind": "infected", "archetype": "infected.runner", "at": [2, 1.5], "state": "idle" },
+  { "id": "dog-dead", "kind": "infected", "archetype": "infected.dog", "at": [4.5, 1.5], "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [-2.5, 0.4, 1.3], "zoom": 0.5 },
+ "frames": 82,
+ "shots": [80],
+ "sheet": 80,
+ "script": [
+  { "frame": 5, "actor": "alpha-dead", "do": { "corpse": true } },
+  { "frame": 5, "actor": "suit-dead", "do": { "corpse": true } },
+  { "frame": 5, "actor": "runner-dead", "do": { "corpse": true } },
+  { "frame": 5, "actor": "dog-dead", "do": { "corpse": true } }
+ ],
+ "expect": { "consoleErrors": 0 }
+}
