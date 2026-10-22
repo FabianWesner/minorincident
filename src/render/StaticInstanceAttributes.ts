@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, Matrix3, Matrix4, type InstancedMesh } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, type InstancedMesh } from 'three/webgpu';
 import { attribute, Fn, instanceColor, mat3, mat4, normalLocal, positionLocal, transformNormal } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 
@@ -17,11 +17,11 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
     material.positionNode = Fn(() => {
       const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
       positionLocal.assign(matrix.mul(positionLocal).xyz);
-      // Settled bodies change placement only on insertion/removal. Inverting
-      // this matrix per vertex penalizes every restored head, hand and leg.
-      normalLocal.assign(corpseNormals
-        ? mat3(attribute('_placementNormal0', 'vec3'), attribute('_placementNormal1', 'vec3'), attribute('_placementNormal2', 'vec3')).mul(normalLocal).normalize()
-        : transformNormal(normalLocal, matrix));
+      // Frozen body geometry already contains pose and scale. Both corpse
+      // callers place it with yaw and translation only; for a rotation its
+      // inverse-transpose is the rotation itself. Reuse the placement columns
+      // instead of fetching three additional per-instance normal attributes.
+      normalLocal.assign(corpseNormals ? mat3(matrix).mul(normalLocal).normalize() : transformNormal(normalLocal, matrix));
       instanceColor.assign(attribute('_placementColor', 'vec3'));
       return previous ?? positionLocal;
     })();
@@ -51,33 +51,13 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   geometry.groups = original.groups.map(group => ({ ...group })); geometry.drawRange = { ...original.drawRange };
   geometry.boundingBox = original.boundingBox?.clone() ?? null; geometry.boundingSphere = original.boundingSphere?.clone() ?? null;
   geometry.userData = { ...original.userData };
-  // Keep the normal columns in the existing placement buffer: an additional
-  // vertex buffer would exceed WebGPU's eight-buffer default on some layouts.
-  const matrix = new InstancedInterleavedBuffer(corpseNormals ? new Float32Array(mesh.instanceMatrix.count * 28) : mesh.instanceMatrix.array, corpseNormals ? 28 : 16, 1);
+  const matrix = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
   for (let i = 0; i < 4; i++) geometry.setAttribute(`_placement${i}`, new InterleavedBufferAttribute(matrix, 4, i * 4));
-  if (corpseNormals) for (let i = 0; i < 3; i++) geometry.setAttribute(`_placementNormal${i}`, new InterleavedBufferAttribute(matrix, 3, 16 + i * 4));
   geometry.setAttribute('_placementColor', mesh.instanceColor!);
-  const placement = corpseNormals ? new Matrix4() : null, normal = corpseNormals ? new Matrix3() : null;
-  let copiedVersion = -1;
   const before = mesh.onBeforeRender;
   mesh.onBeforeRender = function (...args) {
-    if (corpseNormals) {
-      if (copiedVersion !== mesh.instanceMatrix.version) {
-        // Loading draws one then two reserved bodies without editing matrices.
-        // Copy all reserved rows so that count-only changes use valid data too.
-        for (let i = 0; i < mesh.instanceMatrix.count; i++) {
-          const offset = i * 28;
-          for (let j = 0; j < 16; j++) matrix.array[offset + j] = mesh.instanceMatrix.array[i * 16 + j];
-          normal!.getNormalMatrix(placement!.fromArray(mesh.instanceMatrix.array, i * 16));
-          for (let col = 0; col < 3; col++) for (let row = 0; row < 3; row++) matrix.array[offset + 16 + col * 4 + row] = normal!.elements[col * 3 + row];
-        }
-        matrix.version = copiedVersion = mesh.instanceMatrix.version;
-        matrix.clearUpdateRanges(); mesh.instanceMatrix.clearUpdateRanges();
-      }
-    } else {
-      matrix.version = mesh.instanceMatrix.version;
-      matrix.clearUpdateRanges(); matrix.updateRanges.push(...mesh.instanceMatrix.updateRanges); mesh.instanceMatrix.clearUpdateRanges();
-    }
+    matrix.version = mesh.instanceMatrix.version;
+    matrix.clearUpdateRanges(); matrix.updateRanges.push(...mesh.instanceMatrix.updateRanges); mesh.instanceMatrix.clearUpdateRanges();
     before.apply(this, args);
   };
   mesh.geometry = geometry; mesh.material = material;

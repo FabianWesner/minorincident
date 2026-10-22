@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest';
+import { expect, test } from 'vitest';
 import { BoxGeometry, InstancedBufferAttribute, InstancedMesh, Matrix3, Matrix4, NodeBuilder, PerspectiveCamera, Scene, Vector3, WebGLCoordinateSystem } from 'three/webgpu';
 import { Lighting } from '../../../src/render/Lighting';
 import { Materials } from '../../../src/render/Materials';
@@ -13,25 +13,27 @@ function fixture(corpses = true) {
   return { scene, original, mesh, dispose };
 }
 
-test('PO #98 corpse placement precomputes the same inverse-transpose for scale and shear only when matrices change', () => {
-  const f = fixture(), matrices = [new Matrix4().makeRotationY(.7).scale(new Vector3(2, 3, .5)), new Matrix4().makeShear(.2, .1, .3, .1, -.1, .2), new Matrix4().makeScale(.5, 2, 4)];
-  const expected = matrices.map(m => new Matrix3().getNormalMatrix(m).elements.slice());
-  const inverse = vi.spyOn(Matrix3.prototype, 'getNormalMatrix');
+test('PO #98 rigid corpse normals reuse placement attributes and match inverse-transpose after yaw and translation', () => {
+  const f = fixture(), matrices = [new Matrix4().makeRotationY(.7).setPosition(4002, 0, -27), new Matrix4().makeRotationY(-2.4).setPosition(-12, 2, 35)];
   try {
-    matrices.slice(0, 2).forEach((m, i) => f.mesh.setMatrixAt(i, m)); f.mesh.instanceMatrix.needsUpdate = true; f.mesh.count = 1;
+    matrices.forEach((m, i) => f.mesh.setMatrixAt(i, m)); f.mesh.instanceMatrix.needsUpdate = true; f.mesh.count = 1;
     expect(staticInstanceAttributes(f.mesh)).toBe(true);
-    const attribute = f.mesh.geometry.getAttribute('_placementNormal0') as import('three').InterleavedBufferAttribute;
-    expect(attribute.data).toBe((f.mesh.geometry.getAttribute('_placement0') as import('three').InterleavedBufferAttribute).data);
-    expect(attribute.data.stride).toBe(28); expect(Object.keys(f.mesh.geometry.attributes).length).toBeLessThanOrEqual(16);
+    const attribute = f.mesh.geometry.getAttribute('_placement0') as import('three').InterleavedBufferAttribute;
+    expect(attribute.data.array).toBe(f.mesh.instanceMatrix.array);
+    expect(attribute.data.stride).toBe(16); expect(f.mesh.geometry.hasAttribute('_placementNormal0')).toBe(false);
     const render = () => f.mesh.onBeforeRender({} as never, f.scene, new PerspectiveCamera(), f.mesh.geometry, f.mesh.material as never, null as never);
-    const check = (index: number, normal: number[]) => normal.forEach((n, i) => expect(attribute.data.array[index * 28 + 16 + Math.floor(i / 3) * 4 + i % 3]).toBeCloseTo(n, 6));
-    render(); check(0, expected[0]); check(1, expected[1]); expect(inverse).toHaveBeenCalledTimes(2);
-    const version = attribute.data.version; f.mesh.count = 2; render(); expect(inverse).toHaveBeenCalledTimes(2); expect(attribute.data.version).toBe(version);
-    f.mesh.setMatrixAt(0, matrices[2]); f.mesh.instanceMatrix.needsUpdate = true; render(); check(0, expected[2]); expect(inverse).toHaveBeenCalledTimes(4);
+    render(); f.mesh.count = 2; render();
     expect(attribute.data.version).toBe(f.mesh.instanceMatrix.version);
-    expect(f.original.hasAttribute('_placementNormal0')).toBe(false);
+    for (let i = 0; i < 2; i++) {
+      const placed = new Matrix4().fromArray(attribute.data.array, i * 16);
+      expect(placed.elements).toEqual(new Matrix4().fromArray(f.mesh.instanceMatrix.array, i * 16).elements);
+      for (const normal of [new Vector3(1, 0, 0), new Vector3(1, 2, 3).normalize()]) {
+        const expected = normal.clone().applyMatrix3(new Matrix3().getNormalMatrix(placed)).normalize();
+        expect(normal.clone().transformDirection(placed).distanceTo(expected)).toBeLessThan(1e-6);
+      }
+    }
     expect(f.mesh.geometry.getAttribute('position').array).toBe(f.original.getAttribute('position').array);
-  } finally { inverse.mockRestore(); f.dispose(); }
+  } finally { f.dispose(); }
 });
 
 for (const corpses of [true, false]) test(`PO #98 ${corpses ? 'corpse' : 'ordinary static'} vertex graph ${corpses ? 'omits' : 'retains'} the matrix inverse`, () => {
