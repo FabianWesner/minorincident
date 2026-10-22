@@ -84,7 +84,7 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
     const state = w.missions!.state.l6!;
     state.breach1At = state.breach2At = Infinity;
     // Two at the first breach; eight staggered at the second; every authored maintenance entry has its own quota.
-    for (const [name, count, doors, wave] of [['breach-1', 2, [0], 1], ['breach-2', 8, [0, 1], 2], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
+    for (const [name, count, doors, wave] of [['breach-1', 2, [0], 1], ['breach-2', 8, [0, 1], 2], ['retreat-reinforcement', 1, [0, 1], 3], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
       for (const e of [...w.infected!.active]) w.infected!.release(e);
       if (wave === 4) {
         const door = l6Doors[doors[0]], p = w.entities.get(1)!;
@@ -97,7 +97,7 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
       const before = w.missions!.state.l6!.spawnLog.length;
       c.spawn(count, doors, wave);
       const ids = w.missions!.state.l6!.spawnLog.slice(before).map(q => q.id);
-      record(`L6/${name}`, count, ids, w, reach(w, ids, (_id, x, z) => wave <= 2 ? x >= -16 && x <= 260 && z >= -22 && z <= 20 : Math.abs(z - 15) <= 4));
+      record(`L6/${name}`, count, ids, w, reach(w, ids, (_id, x, z) => wave <= 3 ? x >= -16 && x <= 260 && z >= -22 && z <= 20 : Math.abs(z - 15) <= 4));
     }
   });
   await withWorld('L7', tier, w => {
@@ -119,10 +119,14 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
     for (let i = 0; i <= l7Encounters.streets.length; i++) {
       const group = i === 0 ? l7Encounters.finalGroup : l7Encounters.firstStreetGroup + i - 1;
       const expected = i === 0 ? (tier === 'low' ? 60 : 120) + 2 : (tier === 'low' ? 35 : 70) + (i <= 3 ? 1 : 0);
-      const ids = c.state.arrivals.filter(a => a.group === group).map(a => a.id);
+      const arrivals = c.state.arrivals.filter(a => a.group === group), ids = arrivals.map(a => a.id);
+      const home = i === 0 ? l7Encounters.horde : l7Encounters.streets[i - 1];
+      // These groups are authored idle at their destination: verify the admitted poses are in that area.
+      const atGoal = arrivals.filter(a => Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
       // Ledger entries are the actual admitted director arrivals; not the requested count.
-      receipt[`L7/group-${group}`] = { authored: expected, spawned: ids.length, admitted: ids.length };
+      receipt[`L7/group-${group}`] = { authored: expected, spawned: ids.length, admitted: ids.length, reached: atGoal };
       if (ids.length !== expected) errors.push(`L7/group-${group}: authored ${expected}, admitted ${ids.length}`);
+      if (atGoal !== expected) errors.push(`L7/group-${group}: authored ${expected}, admitted inside goal area ${atGoal}`);
     }
   });
   await withWorld('L8', tier, w => {

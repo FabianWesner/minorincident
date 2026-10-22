@@ -1,0 +1,33 @@
+# Invariant probe inventory
+
+All simulation probes use seed 1. `world.ts` loads production compositions, applies the level's campaign preset, selects quality before mission population, and starts the real mission. L9 uses the L8 transport preset. No game implementation is replaced by a synthetic level.
+
+| Requirement | Probe and independent expectation |
+|---|---|
+| Accessories | Every registered single-person NPC and regular infected model, LOD0/1/2, frail/average/athletic, every authored hat/glasses accessory. Source GLB vertices and manifest fits are compared with actual instance matrices and merged head geometry. Uniform eligibility follows production. Native glasses are checked in the civilian head mesh. Source dimensions are also checked against the manifest. |
+| Sitting | Every L1–L10 initial/campaign scene runs for 90 sim seconds on high and low. Every active sit schedule or `npc-sit` clip requires a live seat prop, its support footprint, and hip height within 20 cm. The L2 PO camera additionally requires submitted, non-placeholder benches and visible bench body pixels in an A/B with bench geometry suppressed. |
+| Scripted cast | The same all-level sweep follows initial and newly appearing story actors each tick until their story ends, they board, die or turn. Dedicated real controllers exercise the L1 depot pickup/return and technician handover/door return; late-scene probes cover the L1 firefighter invitation and L5 metro lookout reveal. Scene Lab checks clerk, technicians and firefighter drawing on both quality paths. Doorway interior occlusion is an authored entrance/exit, not an exterior despawn. |
+| Vehicles | SAT for each physical OBB against structural AABBs, including local shape offsets and vertical separation. L4 tank route at 25 cm and rotating hold at 15°; every convoy vehicle's full route and final stop; parked layout vehicles; L2 fire engine route; L7 bus departure; all levels' live initial vehicles; L8 bus/APC parking; L9 actual crash controller through approach/fall/impact. L1 dismounts use the real bicycle filter at the PO point, authored parking points and no-bike boundary samples at eight headings, also checking fence crossing. |
+| Waves | The authored batch inventory below uses actual entity IDs and admission/arrival ledgers. Moving waves must reach a level goal area in real fixed-tick updates. Damage is suppressed so a kill cannot mask a routing defect. Reached members can retire to free the real cap. Subsequent story cancellation is isolated where it would deliberately cancel the wave being measured. |
+| Objectives | Every step of every level runs its actual activation actions. Text must be nonempty; marker overrides/anchors must resolve; the actual ObjectiveMarker presentation rule must keep guidance visible through the 120-tick deadline, including L3's checkpoint pull-back. Authored HUD-only steps require text. |
+| Ground | Exposed walkable collider tops and drawn paving boundaries/centroids on every level; 0.5 m boundary samples; the two authored L3 S-ramps at 97 longitudinal positions × five lateral offsets, outside-rail phantom supports, and four authored joint wedges. Independent `highwayPoint` drawn height versus district support has a 20 cm limit. |
+| Loading | Ten real level-menu clicks on built dist and PROD, fresh contexts with progressed saves, WebGPU low. Begin is activated immediately; timing ends after two drawn gameplay RAFs with mission phase `playing`. Background streaming is not part of “playable.” A backend/tier fallback or missing measurement fails. The budget is baseline plus the smaller of 10% and 1 s. |
+
+Aggregate multi-person tableau GLBs (`npc.survivor-group[.aftermath]`) are not crowd variants; their individually registered members are included. Accessory tolerance is the fitted bounding-box diagonal / 1024 with a 2 mm numerical floor, derived from asset quantization and transform precision. This does not waive manifest scale checks.
+
+## Authored wave inventory
+
+| Level | Finite batch / alarm coverage |
+|---|---|
+| L1 | Five laboratory exits: actual IDs must be admitted and finish their emergence route. Ordinary outbreak house populations are not a finite authored wave. |
+| L2 | Market ambush, every authored escape street batch and the bridge cluster. Counts use `ambushDoors`, `escape.groups`, `cluster.count`, and the authored low-tier scale. |
+| L3 | Every `attack.waves` entry on both tiers, reaching the station yard. Later fallback cancellation and unrelated street population are isolated. |
+| L4 | First hold alarm, all ten `war.waveSize` entries, and one representative recurring collapse batch, both tiers. Goals use the authored hold/perimeter. Actual spawned/admitted/reached counts are logged separately. |
+| L5 | The controller explicitly authors sparse resident wanderers and no waves (`LevelFiveAftermath.spawnWanderers`). Covered by all-level state sweeps; no invented wave count. |
+| L6 | First breach, second breach quota, every maintenance entry, both tiers. Entry fixtures place the courier on the authored approach side before spawning; goal is the tunnel corridor. |
+| L7 | All five finite director groups on both tiers. These are authored stationary encounter populations; their actual admitted arrival ledger is checked, rather than inventing a pursuit wave. |
+| L8 | Every tunnel outlet's first breach and recurring reinforcement quota, both tiers, including the first four authored Alpha reinforcements. Actual emergence must finish near the outlet goal. |
+| L9 | Authored resident risk groups, no alarm/wave controller (`LevelNineEncounters`). All-level state/objective/ground/load and scripted vehicle checks still include L9. |
+| L10 | Console dispersal assault, regulars + dogs + Alphas from `cureEncounterSlots`, both tiers; all identities must reach the console area. Other region encounters are resident populations, not waves. |
+
+These are invariant fixtures, not completion bots: they select scene/phase starts directly and preserve the production behavior under measurement. They do not prove combat balance, animation aesthetics or full campaign completion. The separate PO and visual A/B gates remain required.
