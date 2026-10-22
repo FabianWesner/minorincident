@@ -6,6 +6,7 @@ import { Lighting } from '../../../src/render/Lighting';
 
 test('PO #100 warm slices wait for GPU linking and restore every visible body, instance and probe before play', async () => {
   const scene = new Scene(), lighting = new Lighting(scene); lighting.set('L10-night');
+  scene.clear(); // The guard owns two leaves; lighting's decorative beams are unrelated.
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial();
   const body = new InstancedMesh(geometry, material, 3), other = new Mesh(geometry, material);
   body.name = 'body'; body.count = 3; body.visible = false;
