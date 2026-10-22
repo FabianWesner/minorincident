@@ -18,6 +18,7 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   const rendered = runners.reduce((sum, batch) => sum + batch.instances, 0);
   expect(rendered).toBeGreaterThan(0); expect(rendered).toBeLessThan(200);
   expect(runners.filter(batch => batch.lod === 'lod0').reduce((n,b)=>n+b.instances,0)).toBe(8);
+  expect(proof.crowd.meshDrawCalls).toBe(proof.crowd.bodyMeshDrawCalls + proof.crowd.accessoryDrawCalls);
   expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0);
   expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 3 + proof.crowd.staticCorpsePages); // Exact batch/reservation + fixed group/cap/shadow + managed prewarmed corpse pages; no per-infected nodes.
   const offscreen = await page.evaluate(() => {
@@ -47,6 +48,8 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
     await api.step(0); await api.screenshotReady(); return api.getState();
   }, roles);
   expect(mixed.ai!.count).toBe(200); expect(mixed.render.crowd!.meshDrawCalls).toBeLessThanOrEqual(30); expect(mixed.render.crowd!.objects).toBe(proof.crowd.objects); expect(mixed.render.crowd!.nonInstancedMeshes).toBe(0);
+  expect(mixed.render.crowd!.meshDrawCalls).toBe(mixed.render.crowd!.bodyMeshDrawCalls + mixed.render.crowd!.accessoryDrawCalls);
+  expect(mixed.render.crowd!.accessoryDrawCalls).toBe(0);
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-archetypes.png' });
   writeFileSync('test-results/epics/E07/mixed-render.json', JSON.stringify(mixed.render.crowd, null, 2) + '\n');
 });

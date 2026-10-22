@@ -30,7 +30,7 @@ try {
       const nodes: { id: number; name: string; owner: string | null }[] = [];
       crowd.traverse(o => { if (o !== crowd) nodes.push({ id: o.id, name: o.name, owner: owned.get(o.id) ?? null }); });
       const offscreen = api.query({ kind: 'infected' }).find(e => e.transform.x === 50);
-      return { tick: api.tick(), ai: api.getState().ai, crowd: api.getState().render.crowd!, perf: { drawCalls: api.perf().drawCalls },
+      return { tick: api.tick(), ai: api.getState().ai, crowd: api.getState().render.crowd!, perf: { drawCalls: api.perf().drawCalls, profile: api.perf().profile, profileAssets: api.perf().profileAssets },
         actualBatches: crowd.batches.size, reservedSlots: crowd.heroSlots.size, pages, nodes,
         corpseState: crowd.staticCorpses.snapshot(), corpses: api.query({ kind: 'infected' }).filter(e => e.corpse).length,
         unowned: nodes.filter(o => !o.owner), offscreen: offscreen ? { projected: api.camera.project(offscreen.transform.x, offscreen.transform.y, offscreen.transform.z), drawn: api.crowdFigures().some(f => f.id === offscreen.id && f.drawn) } : null };
@@ -38,7 +38,12 @@ try {
     writeFileSync(`${out}/${label}.json`, JSON.stringify(result, null, 2) + '\n');
     return result;
   }
+  function combinedDraws(state: Awaited<ReturnType<typeof audit>>) {
+    const accessories = Object.entries(state.perf.profileAssets ?? {}).filter(([key]) => key.startsWith('view:other/crowd-accessories/')).reduce((sum, [,v]) => sum + v.drawCalls, 0);
+    return (state.perf.profile?.crowd?.drawCalls ?? 0) + accessories;
+  }
   const alive = await audit('alive');
+  assert.equal(alive.crowd.meshDrawCalls, combinedDraws(alive));
   assert.equal(alive.ai!.count, 200); assert.equal(alive.unowned.length, 0);
   assert.equal(alive.nodes.length, alive.actualBatches + alive.reservedSlots + 3 + alive.pages.length);
   assert.ok(alive.pages.every(page => page.count === 0 && page.instanced && page.capacity === 128));
@@ -56,7 +61,7 @@ try {
     api.spawn('infected.crow', { x: -8, z: -4 }); api.spawn('infected.crow', { x: 8, z: -4 });
     await api.step(0); await api.screenshotReady();
   }, infectedDefinitions.filter(def => def.id !== 'infected.crow').map(def => def.id));
-  const mixed = await audit('mixed'); assert.equal(mixed.ai!.count, 200); assert.equal(mixed.unowned.length, 0);
+  const mixed = await audit('mixed'); assert.equal(mixed.crowd.meshDrawCalls, combinedDraws(mixed)); assert.equal(mixed.ai!.count, 200); assert.equal(mixed.unowned.length, 0);
   assert.equal(mixed.nodes.length, mixed.actualBatches + mixed.reservedSlots + 3 + mixed.pages.length);
   assert.ok(mixed.crowd.meshDrawCalls <= 30); assert.equal(mixed.crowd.nonInstancedMeshes, 0);
   await session.screenshot(`${out}/mixed.png`);
