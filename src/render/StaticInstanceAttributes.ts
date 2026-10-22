@@ -53,9 +53,9 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   geometry.userData = { ...original.userData };
   // Keep the normal columns in the existing placement buffer: an additional
   // vertex buffer would exceed WebGPU's eight-buffer default on some layouts.
-  const matrix = new InstancedInterleavedBuffer(corpseNormals ? new Float32Array(mesh.instanceMatrix.count * 25) : mesh.instanceMatrix.array, corpseNormals ? 25 : 16, 1);
+  const matrix = new InstancedInterleavedBuffer(corpseNormals ? new Float32Array(mesh.instanceMatrix.count * 28) : mesh.instanceMatrix.array, corpseNormals ? 28 : 16, 1);
   for (let i = 0; i < 4; i++) geometry.setAttribute(`_placement${i}`, new InterleavedBufferAttribute(matrix, 4, i * 4));
-  if (corpseNormals) for (let i = 0; i < 3; i++) geometry.setAttribute(`_placementNormal${i}`, new InterleavedBufferAttribute(matrix, 3, 16 + i * 3));
+  if (corpseNormals) for (let i = 0; i < 3; i++) geometry.setAttribute(`_placementNormal${i}`, new InterleavedBufferAttribute(matrix, 3, 16 + i * 4));
   geometry.setAttribute('_placementColor', mesh.instanceColor!);
   const placement = corpseNormals ? new Matrix4() : null, normal = corpseNormals ? new Matrix3() : null;
   let copiedVersion = -1;
@@ -64,10 +64,10 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
     if (corpseNormals) {
       if (copiedVersion !== mesh.instanceMatrix.version) {
         for (let i = 0; i < mesh.count; i++) {
-          const offset = i * 25;
+          const offset = i * 28;
           for (let j = 0; j < 16; j++) matrix.array[offset + j] = mesh.instanceMatrix.array[i * 16 + j];
           normal!.getNormalMatrix(placement!.fromArray(mesh.instanceMatrix.array, i * 16));
-          matrix.array.set(normal!.elements, offset + 16);
+          for (let col = 0; col < 3; col++) for (let row = 0; row < 3; row++) matrix.array[offset + 16 + col * 4 + row] = normal!.elements[col * 3 + row];
         }
         matrix.version = copiedVersion = mesh.instanceMatrix.version;
         matrix.clearUpdateRanges(); mesh.instanceMatrix.clearUpdateRanges();
