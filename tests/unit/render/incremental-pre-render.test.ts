@@ -53,3 +53,12 @@ test('PO #100 cached warm graphs skip driver draws and a failed link releases th
   expect(mesh.matrix.elements.slice(12, 15)).toEqual([7, 8, 9]); expect(mesh.matrixWorld.elements.slice(12, 15)).toEqual([7, 8, 9]);
   geometry.dispose(); material.dispose();
 });
+
+test('PO #100 incremental warmup reuses loading-time layout deduplication without merging solo pools or capacities', () => {
+  const scene = new Scene(), geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(); material.userData.batchFeatures = 'static-fixture';
+  const a = new InstancedMesh(geometry, material, 2), b = new InstancedMesh(geometry, material, 2), c = new InstancedMesh(geometry, material, 3); scene.add(a, b, c);
+  const renderer = { info: { calls: 0 }, nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() }, camera = new PerspectiveCamera();
+  const queue = () => incrementalPreRender(renderer as unknown as Renderer, scene, camera, () => {}, async () => {}, run => run());
+  expect(queue().remaining).toBe(2); b.userData.preRenderSolo = true; expect(queue().remaining).toBe(3);
+  geometry.dispose(); material.dispose();
+});
