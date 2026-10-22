@@ -1,0 +1,63 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-startup.test.ts (2 tests | 2 failed) 7ms
+   × #99 fists seed persists only fists and kick while retaining campaign progress 5ms
+   × #99 an empty handover frame is valid; visible bodies still require rendered joints 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-startup.test.ts > #99 fists seed persists only fists and kick while retaining campaign progress
+AssertionError: expected { …(2) } to deeply equal { LEFT: [ 'weapon.fists' ], …(1) }
+
+- Expected
++ Received
+
+  {
+    "LEFT": [
+-     "weapon.fists",
++     "weapon.fire-axe",
++     "weapon.bat",
+    ],
+    "RIGHT": [
++     "weapon.army-mg",
++     "weapon.handgun",
+      "weapon.kick",
+    ],
+  }
+
+ ❯ tests/unit/playtest-startup.test.ts:7:22
+      5| test('#99 fists seed persists only fists and kick while retaining camp…
+      6|   const source = preset('L6-default'), save = playtestSave(source, 'ma…
+      7|   expect(save.racks).toEqual({ LEFT: ['weapon.fists'], RIGHT: ['weapon…
+       |                      ^
+      8|   expect(save.ownedActions).toEqual(['weapon.fists', 'weapon.kick']);
+      9|   expect(save.character).toBe('male');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/unit/playtest-startup.test.ts > #99 an empty handover frame is valid; visible bodies still require rendered joints
+AssertionError: expected [Function] to not throw an error but 'Error: L6 rendered-body observations …' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"Error: L6 rendered-body observations are unavailable; combat playtest would be invalid"
+
+ ❯ tests/unit/playtest-startup.test.ts:17:46
+     15|
+     16| test('#99 an empty handover frame is valid; visible bodies still requi…
+     17|   expect(() => assertRenderedBodies([])).not.toThrow();
+       |                                              ^
+     18|   expect(() => assertRenderedBodies([{ drawn: false }])).not.toThrow();
+     19|   expect(() => assertRenderedBodies([{ drawn: true, joints: {} }])).no…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  00:07:40
+   Duration  157ms (transform 75%, import 15%, tests 8%, worker 3%)
+

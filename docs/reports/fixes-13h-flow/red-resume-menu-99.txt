@@ -1,0 +1,41 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow -> 2.28.24.66:/srv/mi/ws/fixes-13h-flow-8635c7
+[remote] cache-gc deleted:none
+[remote] sync 27s, 30489 files; job /srv/mi/jobs/fixes-13h-flow-8635c7-94017-1792635904; queueing for a slot
+[runner] slot 0 acquired; load 0.96 0.75 0.96
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-flow-8635c7-94017-1792635904[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/playtest-startup.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 20[2mms[22m[39m
+   [32m✓[39m #99 fists seed persists only fists and kick while retaining campaign progress[32m 7[2mms[22m[39m
+   [32m✓[39m #99 an empty handover frame is valid; visible bodies still require rendered joints[32m 2[2mms[22m[39m
+   [32m✓[39m #99 the fists profile satisfies the real campaign save validator[32m 2[2mms[22m[39m
+[31m   [31m×[31m #99 the input driver resumes a visible pause menu during play[39m[32m 8[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/playtest-startup.test.ts[2m > [22m#99 the input driver resumes a visible pause menu during play
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m tests/unit/playtest-startup.test.ts:[2m33:44[22m[39m
+    [90m 31|[39m
+    [90m 32|[39m test('#99 the input driver resumes a visible pause menu during play', …
+    [90m 33|[39m   expect(shouldResumePause('pause',false)).toBe(true);
+    [90m   |[39m                                            [31m^[39m
+    [90m 34|[39m   expect(shouldResumePause('pause',true)).toBe(false);
+    [90m 35|[39m   expect(shouldResumePause(null,false)).toBe(false);
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 02:25:33
+[2m   Duration [22m 713ms[2m (transform 83%, import 12%, tests 4%, worker 1%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 27s, remote total 3s)

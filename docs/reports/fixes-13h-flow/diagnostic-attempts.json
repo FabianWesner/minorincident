@@ -1,0 +1,124 @@
+{
+  "note": "None is an acceptance result. Earlier attempts were terminated for diagnosis; final-nav stopped strictly on a false stale-marker observation. New observer replay maximum 5.299 seconds; a fresh completed run is still required.",
+  "browserQuietWindowUTC": {
+    "start": "2026-10-21T23:45:30Z",
+    "end": "2026-10-22T00:05:30Z"
+  },
+  "attempts": [
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 10,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-final",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 4,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-acceptance",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 20,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-verified",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-final-nav",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      }
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-walk-kick",
+      "accepted": false,
+      "completed": 0,
+      "severityCounts": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 13,
+        "P3": 0
+      },
+      "skipped": [],
+      "maxNoProgressSeconds": 9.063,
+      "reason": "Reached gate-150, then repeated deaths returning to the separated guard; stopped at the unmodified 20 minute driver cap. The current low-health policy fix was committed after this session started."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-ally-cover",
+      "sourceCommit": "34cbbf144",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 5.098,
+      "reason": "Interrupted after over ten minutes of repeated rear-guard return/death loops to preserve the allocated browser window. Shelter/stop ally cover alone was insufficient. No step was skipped; this is rejected diagnostic evidence."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-l7-l8-acceptance",
+      "sourceCommit": "34cbbf144",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "reason": "L7 tick stopped at 2988 while input loop continued; interrupted and rejected. Driver lacked visible pause-menu recovery. No objective advanced or step skipped."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-priority",
+      "driverCommit": "cbe2bebe7",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 7.666666666666667,
+      "reason": "Interrupted at the 02:50 UTC browser-window boundary. Courier had reached the injured-survivor return near x84 after rear-cover loops. No skip or game easing. HUD-requested rear-cover fix was made after the loaded session began."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-rear-cover",
+      "driverCommit": "9f72a640c",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 4.613,
+      "reachedExit": true,
+      "reason": "Reached exit then returned toward the remaining rear survivor. Interrupted to release the browser to waiting L10 quiet run and apply the red-first held-key fix. The loaded session predates 25ce48b88. No skip or game change."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-final-input",
+      "driverCommit": "490c01f9f",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 3.535,
+      "reason": "Repeated rear-survivor returns after gate-90. Reproduced keyboard strikes from 1.6 m, beyond shipped fist range, while a visibly attacked ally could be ignored during ordinary retreat instructions. Interrupted for the waiting L10 quiet run. Range fallback and attacked-ally handling were implemented after this session loaded."
+    }
+  ],
+  "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"
+}
