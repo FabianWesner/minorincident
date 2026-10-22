@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 }, { width: 844, height: 390 }]) {
-  for (const move of ['charge', 'ground-slam'] as const) test(`T-E07-06-${move}-${viewport.width} @E07-AC05 @E07-AC06 real Scene Lab telegraph, impact and hurt`, async ({ page }) => {
+  for (const move of ['charge', 'ground-slam'] as const) test(`T-E07-06-${move}-${viewport.width} @E07-AC05 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real Scene Lab telegraph, impact and hurt`, async ({ page }) => {
     test.setTimeout(120_000); await page.setViewportSize(viewport);
     const spec = JSON.parse(readFileSync(`tests/scenes/alpha-s2/qa-alpha-${move}.json`, 'utf8')) as SceneSpec;
     await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');

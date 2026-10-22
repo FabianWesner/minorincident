@@ -23,7 +23,7 @@ async function homeClear(page: Page) {
     if (b) expect(h.x < b.x + b.width && h.x + h.width > b.x && h.y < b.y + b.height && h.y + h.height > b.y, `Home overlaps ${id}`).toBe(false);
   }
 }
-for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) for (const hp of [1000, 0]) {
+for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1.5]) for (const hp of [1000, 0]) {
   test(`T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 ${backend} zoom=${zoom} HP=${hp}`, async ({ page, context }, info) => {
     test.setTimeout(300_000);
     const touch = info.project.name.startsWith('pixel'), quality = touch ? 'low' : 'high';
@@ -48,9 +48,9 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) 
     const carId = await page.evaluate(() => window.__SS__!.getState().l9!.carId);
     await expect(page.getByTestId('durability-label')).toHaveText(hp ? 'Armor 1000 / 1000' : 'Barely functional');
     await homeClear(page);
-    if (zoom === .5) {
+    if (zoom !== 1) {
       // Wheel notches change zoom by one step regardless of delta magnitude.
-      for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100);
+      for (let i = 0; i < 5; i++) await page.mouse.wheel(0, zoom < 1 ? -100 : 100);
       await tick(page, 60);
     }
     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);

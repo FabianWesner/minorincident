@@ -24,7 +24,9 @@
       "ac": "E25-AC14",
       "disposition": "pending",
       "baselineEvidence": "`tests/perf/e25-lighting.spec.ts`, `e25-light-lab.spec.ts`; light-field/shadow/hero counters exist.; newer: [perf-light-lab-high.json](../merge-batch10/perf/final/lighting/perf-light-lab-high.json), [perf-light-lab-low.json](../merge-batch10/perf/final/lighting/perf-light-lab-low.json), [native-final.log](../merge-batch10/evidence/native-final.log)",
-      "requiredProof": "**M; browser + quiet perf** \u2014 Native frame/light counters pass; raw uncollected light-lab heap is 775.60/571.06 MB versus E18 400/250. Close warmed/collected heap proof and reconcile the readings; stock lighting tests omit a heap assertion. Low p95 34.3 ms is diagnostic, not an additional E25 gate (low p50 passes)."
+      "requiredProof": "**M; browser + quiet perf** \u2014 Native frame/light counters pass; raw uncollected light-lab heap is 775.60/571.06 MB versus E18 400/250. Close warmed/collected heap proof and reconcile the readings; stock lighting tests omit a heap assertion. Low p95 34.3 ms is diagnostic, not an additional E25 gate (low p50 passes).",
+      "proposedRewrite": "Define E18 JS heap as warmed/collected CDP Runtime.usedSize in decimal MB at unchanged 400/250 caps; retain backingStorageSize, embedderHeapUsedSize and legacy usedJSHeapSize separately, apply retention to all domains and set a separately named total-buffer budget before total-memory acceptance.",
+      "reason": "Fresh native frame/counter gates pass with JS heap144.737/134.941 MB, but legacy after-GC747.052/659.460 MB includes backing602.198/524.402 MB; neither counter may silently replace the other. Proposal awaits PO; AC remains partial."
     },
     {
       "ac": "E25-AC15",
@@ -96,7 +98,12 @@
       "ac": "E30-AC05",
       "disposition": "pending",
       "baselineEvidence": "`T-E30-05-district/staff`, level high/low fixtures and L8 composition/healthy animals.; newer: [red-tests.md](../postmerge-10/red-tests.md)",
-      "requiredProof": "**M; browser** \u2014 Close sanctuary visual signoff; wave3-zoo-routines z1.5 clips two occupants on both tiers (reproduced on main)."
+      "requiredProof": "**M; browser** \u2014 Close sanctuary visual signoff; wave3-zoo-routines z1.5 clips two occupants on both tiers (reproduced on main).",
+      "currentEvidence": [
+        "zoo-high-wide.json.gz",
+        "zoo-low-wide.json.gz"
+      ],
+      "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending."
     },
     {
       "ac": "E30-AC10",
@@ -126,7 +133,12 @@
       "ac": "E30-AC19",
       "disposition": "pending",
       "baselineEvidence": "`T-E30-19` captures; `docs/reports/l8-level/visual-review.md` explicitly declines full epic vision acceptance.",
-      "requiredProof": "**M; browser** \u2014 Score full calm/outbreak/normal-to-infected/armored-escape A/C/D/E/G pairs \u22657; fix wide-zoom zoo clipping."
+      "requiredProof": "**M; browser** \u2014 Score full calm/outbreak/normal-to-infected/armored-escape A/C/D/E/G pairs \u22657; fix wide-zoom zoo clipping.",
+      "currentEvidence": [
+        "zoo-high-wide.json.gz",
+        "zoo-low-wide.json.gz"
+      ],
+      "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending."
     },
     {
       "ac": "E30-AC20",

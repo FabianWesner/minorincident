@@ -11,19 +11,26 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
     await boot(page, `/?test=1&scenelab=1&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
     await page.evaluate(async quality => {
       const a = window.__SS__!;
-      await a.loadLevel('L7', { seed: 29, progression: 'L7-default' }); a.pause(); a.settings.set({ quality });
+      await a.loadLevel('L7', { seed: 29, progression: 'L7-default' }); a.pause(); a.missions.begin(); a.settings.set({ quality });
       // Isolate the production shot. Boarding/roster continuity is exercised by
       // T-E29-13-board and the continuous real-input route, without this setup.
       const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
-      w.l7Departure!.state.phase = 'departing'; w.l7Departure!.state.startedAt = w.tick;
+      const departure = w.l7Departure!;
+      a.teleport(1, { x: -70.5, z: 47.5 }); a.camera.follow();
+      (window.__SCENE__ as unknown as { game: Game }).game.view.view.reset(a.getEntity(1)!.transform);
+      for (const r of w.l7Encounters!.state.roster.filter(r => r.status === 'following')) {
+        const e = w.entities.get(r.id)!; e.hidden = true; e.passengerOf = departure.state.busId; w.spatial.delete(e.id);
+        departure.state.boarded.push(e.id);
+      }
+      (departure as unknown as { depart(): void }).depart();
     }, quality);
     const frames = [];
-    for (const [name, elapsed] of [['start', 1], ['end', l7Departure.fadeAtSeconds * 60 - 1]] as const) {
+    for (const [name, elapsed] of [['start', 0], ['end', l7Departure.fadeAtSeconds * 60 - 1]] as const) {
       const state = await page.evaluate(async elapsed => {
         const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
-        // Render exact cinematic times without advancing unrelated combat or
-        // allowing the later automatic handover to replace the city frame.
-        w.tick = w.l7Departure!.state.startedAt + elapsed; w.l7Departure!.update();
+        // Advance the real fixed-tick camera blend/drive, stopping before the
+        // fade and automatic handover. No scene tick or bus pose is overwritten.
+        while (w.tick - w.l7Departure!.state.startedAt < elapsed) await a.step(1);
         a.settings.set({ idPass: false }); await a.screenshotReady();
         return { tick: w.tick, elapsed, fade: w.l7Departure!.fading, bus: { ...w.entities.get(w.l7Departure!.state.busId)!.transform }, camera: a.getState().render.camera, backend: a.getState().render.backend, quality: a.getState().render.quality };
       }, elapsed);

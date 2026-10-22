@@ -8,7 +8,7 @@ import { lightPalette } from '../data/lights';
 
 type Mode = 'field' | 'dynamic' | 'clustered';
 export interface LightingSpikeResult {
-  mode: Mode; lights: number; backend: string; timestampQuery: boolean;
+  mode: Mode; lights: number; backend: string; backendConstructor: string; timestampQuery: boolean;
   samples: { submitMs: number; completedMs: number; renderGpuMs: number | null; computeGpuMs: number | null }[];
   counters: { draws: number; triangles: number; geometries: number; textures: number; field: ReturnType<LightField['snapshot']> | null };
 }
@@ -94,7 +94,7 @@ export function lightingSpike(): void {
         const start = performance.now(); draw(); const submitted = performance.now(); await finish();
         samples.push({ submitMs: submitted - start, completedMs: performance.now() - start, renderGpuMs: timestampQuery ? renderer.info.render.timestamp : null, computeGpuMs: timestampQuery && mode === 'clustered' ? renderer.info.compute.timestamp : null });
       }
-      return { mode, lights: count, backend: renderer.backend.constructor.name, timestampQuery, samples,
+      return { mode, lights: count, backend: (renderer.backend as unknown as { isWebGPUBackend?: boolean }).isWebGPUBackend ? 'WebGPUBackend' : 'WebGLBackend', backendConstructor: renderer.backend.constructor.name, timestampQuery, samples,
         counters: { draws: renderer.info.render.drawCalls, triangles: renderer.info.render.triangles, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, field: field?.snapshot() ?? null } };
     };
     draw(); await finish();
