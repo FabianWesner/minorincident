@@ -5,7 +5,7 @@
 | Checklist | Score /10 | Disposition |
 | --- | --- | --- |
 | A diorama | 5 | Sparse green/slate expanses and limited foliage/clutter do not match the warm, richly dressed target. |
-| C assets | unmeasured | Current complete normal/infected species pairs still queued; individual asset turnarounds unavailable. Original zoo concept sheet is opened, not claimed as a per-asset turnaround. |
+| C assets | 5 | Opened all40 day/night/tier before/after frames; identities match the zoo concept, but pale lion/gorilla edge facets and missing complete turnarounds prevent acceptance. |
 | D combat | 6 | Courier and bars read; mixed night threats/eyes and full ten-move in-level combination remain incomplete. |
 | E sanctuary/outbreak | 4 | Real calm group and internal breach exist; exact same-camera gate/lion/gorilla/yard outbreak pairs are missing. |
 | G lighting | 5 | Warm service lamp and clear courier contrast; full geometry/light-pool and threat readability review remains incomplete. |
@@ -58,3 +58,7 @@ Missing proof is a **FAIL** for signoff, never an inferred pass.
 - **PASS [should] script:** the cool sanctuary and warm practicals fit the night preset.
 
 The rotated APC boarding bug is separately reproduced and fixed locally, with6 focused remote passes and21 total L8/companion regressions; native completion remains pending. No score here closes AC05/10/15/18/19/20 or supplies missing §6 photos.
+
+## 13:45 supplement — animal review and boarding
+
+Opened all40 current day/night/tier species views (`zoo-current.jpg`) and full night lion, portrait gorilla and elephant frames; all20 conversion/bar tests pass. C recognition/layout/identity-policy **PASS**: mane, arms, trunk/tusks, stripes and pink wings remain recognizable; shapes remain adult/toy-like with no visible branding. C material separation and faceting **FAIL**: pale edge/fur facets dominate the night lion/gorilla, and complete hidden-side turnarounds remain absent. ScoreC5/10; the earlier unmeasured C checklist is superseded only by this bounded observation. Full fixed-camera sanctuary/outbreak review remains incomplete. Native keyboard and phone boarding both pass,12/12 survivors transferred in each; no whole AC18 acceptance because§6 photos/pairs are incomplete. Desktop and4 actual transition budgets pass; the unchanged4xCPU phone frame/sim gate fails38.7/8.3ms. Overall vision remains NOT ACCEPTED.
