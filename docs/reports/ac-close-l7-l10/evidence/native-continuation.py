@@ -7,13 +7,16 @@ def save(path,value):
     with gzip.open(path,'wt') as f: json.dump(value,f,indent=2)
 if sys.argv[1]=='--batch':
     target,name,encoded=sys.argv[2:]; command=json.loads(encoded)
-    reporter=ROOT/'test-results/playwright/results.json';reporter.unlink(missing_ok=True)
+    # Preserve the preceding verifier's reporter until it has copied its own
+    # receipt after releasing the serial lock. A stale reporter is never proof.
+    reporter=ROOT/'test-results/playwright/results.json'
     env=dict(os.environ,MI_ACCEPTANCE_SERIAL_HELD='1',E2E_PORT='4091',SCENE_PORT='4092',E2E_UNITS='1',E2E_ADMISSION_TIMEOUT_SECONDS='3600',PERF_CONDITIONS_LOG=str(OUT/'late-native-conditions.jsonl'))
     start=time.time()
     with open(OUT/f'native-{target}-{name}.log','w') as log:
         result=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,env=env)
-    receipt={'target':target,'batch':name,'command':command,'started':start,'finished':time.time(),'exitCode':result.returncode,'reporterPresent':reporter.is_file()}
-    if reporter.is_file():
+    fresh=reporter.is_file() and reporter.stat().st_mtime >= start
+    receipt={'target':target,'batch':name,'command':command,'started':start,'finished':time.time(),'exitCode':result.returncode,'reporterPresent':fresh}
+    if fresh:
         save(OUT/f'native-{target}-{name}-playwright.json.gz',json.loads(reporter.read_text()))
     save(OUT/f'native-{target}-{name}-receipt.json.gz',receipt)
     print(json.dumps(receipt),flush=True)
