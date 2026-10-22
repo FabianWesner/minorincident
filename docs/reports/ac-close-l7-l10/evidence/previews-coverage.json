@@ -1,0 +1,1329 @@
+{
+  "sourceCommit": "769d9f8ce",
+  "assets": 94,
+  "renders": 188,
+  "missing": [],
+  "scripts": {
+    "tools/blender/render_preview.py": "db3323f4440f95f767989a5937ebc5444739fc787e337d253cefe7bcb3947aac",
+    "tools/blender/light_preview.py": "422eee9f4661f6591542c4885cdf2e5fc13327b3526cb045ff16c881faa62be0",
+    "src/data/lightAnchors.json": "85246c2f0fa47ac8f912e50b84ec7528fa070a6b06b2f0cbce5341db762ab6a3"
+  },
+  "records": [
+    {
+      "asset": "bld.apartment-block-a",
+      "glb": "public/assets/models/bld.apartment-block-a.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.apartment-block-a-day.png",
+        "night": "bld.apartment-block-a-night.png"
+      },
+      "glbSha256": "a871ddb2ca85cdc2673efb359fcc598572d8c832da9ea1edd6446af19b1c268e",
+      "imageSha256": {
+        "day": "7c36e37a2d2e339fe183e866902c7db1f99622caea29bae114c8f8f2aaa4bf9b",
+        "night": "c68bacb21d77acc30255dff0f38e4014c2f26c723ee0b1d5517728dceeb3bd20"
+      }
+    },
+    {
+      "asset": "bld.apartment-block-b",
+      "glb": "public/assets/models/bld.apartment-block-b.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.apartment-block-b-day.png",
+        "night": "bld.apartment-block-b-night.png"
+      },
+      "glbSha256": "e109ada9775baa2652974b5869a27753d1c875645f32b0744b3cbf16e9eb2022",
+      "imageSha256": {
+        "day": "a00245a971460f92ab39179da97fcd2795e1052c55a5ab916ece2510217be63c",
+        "night": "291ef6e9b1e4610ec88583daea65729eaeb490e1ff1ceabdfdb2dc95886b0f82"
+      }
+    },
+    {
+      "asset": "bld.cafe-corner",
+      "glb": "public/assets/models/bld.cafe-corner.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "bld.cafe-corner-day.png",
+        "night": "bld.cafe-corner-night.png"
+      },
+      "glbSha256": "26373015a38fb1d1c2553b5077e816fda18012ed335c762a7c0c60f3f3fcefbb",
+      "imageSha256": {
+        "day": "44588468fb32e962a3533a5cb37007d48b17f09c1dfec0925b4202e4501c853d",
+        "night": "f387047f19f3f9aa2cee6cc6b7b4d03d60ca652ad70b67e60104bdc96d58f0b6"
+      }
+    },
+    {
+      "asset": "bld.church",
+      "glb": "public/assets/models/bld.church.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.church-day.png",
+        "night": "bld.church-night.png"
+      },
+      "glbSha256": "e1990a41ecb215411ceebb3b06f80da09fd5d132b6ea30fdd4409fb3b3ffd6a0",
+      "imageSha256": {
+        "day": "71732da6c4ce19666019a6a2dd3236c37f99609e7b7253e6f312c42d69c19b5a",
+        "night": "94b2dd237431688e556fa5ad331a7b9d8fa0ae7fd9f422936db0187fef349902"
+      }
+    },
+    {
+      "asset": "bld.civic-center",
+      "glb": "public/assets/models/bld.civic-center.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "bld.civic-center-day.png",
+        "night": "bld.civic-center-night.png"
+      },
+      "glbSha256": "ee282f3ebfef9e5f718f791332c70047d9f7a981d1c4721007bfb1fedb6ed408",
+      "imageSha256": {
+        "day": "ba584998826ca549c668994bb43b20509cb15b7115404dfe3bb7481d6e3ebfc7",
+        "night": "8a28380aef8513de7a25ec1f0653a8113b65c6d30f2c3ef9a8c5b96d25a07e7a"
+      }
+    },
+    {
+      "asset": "bld.clinic-annex",
+      "glb": "public/assets/models/bld.clinic-annex.glb",
+      "anchors": 7,
+      "renders": {
+        "day": "bld.clinic-annex-day.png",
+        "night": "bld.clinic-annex-night.png"
+      },
+      "glbSha256": "6c929e5d0d8aef863f81c5c88d8ac388a4f9b9468d84ce988de32dce0b534dd3",
+      "imageSha256": {
+        "day": "98a075c20568619faee801cd0b6db54f1c39ecd21135a35bb8ae5f3ba347815e",
+        "night": "0bd04ccf6b60b29dfa5d52e66a1f58d7888663a6c8263726d7a4d5c4225794a1"
+      }
+    },
+    {
+      "asset": "bld.courier-depot",
+      "glb": "public/assets/models/bld.courier-depot.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "bld.courier-depot-day.png",
+        "night": "bld.courier-depot-night.png"
+      },
+      "glbSha256": "55031eb7d9d84ab438c9595ff9e495207be10a6f486fe8e274c5d2ee71024e81",
+      "imageSha256": {
+        "day": "27ad2cc2b4472f7ea6b5980e17e5fb71ec418890925887fd6dc2f01d247f8912",
+        "night": "b4da2bd46855a275eab55f203a3bb8a1e3071055cc85ec541fc5662d643c2868"
+      }
+    },
+    {
+      "asset": "bld.fire-station",
+      "glb": "public/assets/models/bld.fire-station.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "bld.fire-station-day.png",
+        "night": "bld.fire-station-night.png"
+      },
+      "glbSha256": "dbca1eff5b7955bd352297c6ed046a5148088d40b7c3921d67bbc2a8fc87f059",
+      "imageSha256": {
+        "day": "5b529b61d7ab20ec6f3be95845c7d6305220af92bdf1ef14e2266604697410be",
+        "night": "4ba64410a8957488fca4a0ffa2e974771f6d3419e06b913d3e7fe6200691a1f6"
+      }
+    },
+    {
+      "asset": "bld.garage-detached",
+      "glb": "public/assets/models/bld.garage-detached.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "bld.garage-detached-day.png",
+        "night": "bld.garage-detached-night.png"
+      },
+      "glbSha256": "dcdf366fe61ff198af15fe8fdbeba268e47fd8dc2796632f27dc447c352427b7",
+      "imageSha256": {
+        "day": "efa390ba3aea4a2a00403c2080c24f178447cc4075900a10cc7e8036b50793a6",
+        "night": "d9ce5f37ad205dba20ed986a6b0f8eae95d2a0053e825cdb6f4faec3dca86cbf"
+      }
+    },
+    {
+      "asset": "bld.gas-station",
+      "glb": "public/assets/models/bld.gas-station.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "bld.gas-station-day.png",
+        "night": "bld.gas-station-night.png"
+      },
+      "glbSha256": "3f4ddd754bcca63a5c957b3b006cbf4cc3897af6a0498708c13b79ab6e8be1b7",
+      "imageSha256": {
+        "day": "69c5508551d60d5d168d1a43bcf600112e432523c09748aa925b9b3f8586de7f",
+        "night": "6805f020219d0e4d6687e45b9e37be6c34601e0b5ce9372db2f1b3506d39432f"
+      }
+    },
+    {
+      "asset": "bld.gazebo",
+      "glb": "public/assets/models/bld.gazebo.glb",
+      "anchors": 10,
+      "renders": {
+        "day": "bld.gazebo-day.png",
+        "night": "bld.gazebo-night.png"
+      },
+      "glbSha256": "34d5206b9c8633dd793415e571e5aa721f5791d73382a8d89c5648f84cff84c2",
+      "imageSha256": {
+        "day": "18f881989c86e8e4a11a4731f361de96a741e024ea7837b3ff12f1fbb0429dc8",
+        "night": "43e7378b22b45a71cc9b4f2e8ebbee6fd151cab2d8322af61c071145e5c00ab2"
+      }
+    },
+    {
+      "asset": "bld.gym",
+      "glb": "public/assets/models/bld.gym.glb",
+      "anchors": 5,
+      "renders": {
+        "day": "bld.gym-day.png",
+        "night": "bld.gym-night.png"
+      },
+      "glbSha256": "b2f41a10d5362edeb279a9313a43d32a5e768d497908c944c9dc7f932bef3632",
+      "imageSha256": {
+        "day": "fa13b30cc6bd50255c7d5ca8367100d39950c05c642b6d218fcfff4777f437c5",
+        "night": "0acb6b357294b53b3bf88c96dead28c749220a8fb046b0228285fa8459b13008"
+      }
+    },
+    {
+      "asset": "bld.helipad",
+      "glb": "public/assets/models/bld.helipad.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "bld.helipad-day.png",
+        "night": "bld.helipad-night.png"
+      },
+      "glbSha256": "c3c4980cf7b0661fd1f13007c6f7fc742197e493c3d5253fe9efda305dbad100",
+      "imageSha256": {
+        "day": "281fa2dc05ef3d30c5c450e7e90d99ddd6c648b8df6bf0df5842d43f3a233830",
+        "night": "e62ad5b026b9a3b90ba08ca3091cefd0814eeee302e5ee0723dab903b3f83cfa"
+      }
+    },
+    {
+      "asset": "bld.hospital-exterior",
+      "glb": "public/assets/models/bld.hospital-exterior.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "bld.hospital-exterior-day.png",
+        "night": "bld.hospital-exterior-night.png"
+      },
+      "glbSha256": "8ac485396a745efe59dd2a90a90b9d1d48c6cd813e3d112a5e88db408daf3b51",
+      "imageSha256": {
+        "day": "3bca81ed586c0ff612867f02ae67309c8531b2582da014c05d594fb8cf292af7",
+        "night": "ca3fb259017e211094fc0b646f8a0ddeba4d0a155583d2e39d5f6c72a024411f"
+      }
+    },
+    {
+      "asset": "bld.house-a",
+      "glb": "public/assets/models/bld.house-a.glb",
+      "anchors": 7,
+      "renders": {
+        "day": "bld.house-a-day.png",
+        "night": "bld.house-a-night.png"
+      },
+      "glbSha256": "eadf752e1cbef961122a9df35c5fdbfd1988a78ef4a0b1ffef5daa9c7424f36d",
+      "imageSha256": {
+        "day": "bbed53ca4d1c8dfa2f40d9902e0708400aa47801111204f2d51ac121fac35de3",
+        "night": "ef16af0fba96920b8658c346230336a61e6fd7b780aba2660ac11bd4b4957173"
+      }
+    },
+    {
+      "asset": "bld.house-b",
+      "glb": "public/assets/models/bld.house-b.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "bld.house-b-day.png",
+        "night": "bld.house-b-night.png"
+      },
+      "glbSha256": "7b4cf846d23185b46f9c42b5b4bb2f3d5f550c89c1adb053623274c0ac751ef6",
+      "imageSha256": {
+        "day": "9ca9f547a0fc5cb3072375c03afd0d2b937ddbd186ecd07bc0dfa762c8de22b4",
+        "night": "6b30b7b093a3b4a8af31335663cee2a3ac0680cda8c5421198da6ad7d47a76e8"
+      }
+    },
+    {
+      "asset": "bld.house-c",
+      "glb": "public/assets/models/bld.house-c.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.house-c-day.png",
+        "night": "bld.house-c-night.png"
+      },
+      "glbSha256": "a18227d1a35946962d1afb8d909b59ec0c4c0fdf2dc0f684e7a8ad3095301c2d",
+      "imageSha256": {
+        "day": "b357ea11de6c98ba990e4863df890a97da9cde530c9f1dd5b99474944a65e54d",
+        "night": "4193e7c87c54867ddceb26c6915966aa9e6ffcdbbf4b4016b464d0733102696e"
+      }
+    },
+    {
+      "asset": "bld.house-d",
+      "glb": "public/assets/models/bld.house-d.glb",
+      "anchors": 19,
+      "renders": {
+        "day": "bld.house-d-day.png",
+        "night": "bld.house-d-night.png"
+      },
+      "glbSha256": "4e05b84ff88efa2a42a66cba5bcff7345c260f37785ba191da8f0203d639f827",
+      "imageSha256": {
+        "day": "12ce2eed31e7bb5aec7dcd70f241e5ac759d2a3575dbc3c2a9212e56cf53bbbf",
+        "night": "7c34bf0f3978e655e3a0b30b9a0a754795ce690137688877c5b26b73b161f2bf"
+      }
+    },
+    {
+      "asset": "bld.house-e",
+      "glb": "public/assets/models/bld.house-e.glb",
+      "anchors": 7,
+      "renders": {
+        "day": "bld.house-e-day.png",
+        "night": "bld.house-e-night.png"
+      },
+      "glbSha256": "9da7dc2eda274b83ac9873da327054d729c6118b6ec4db349247ec356e92f2f9",
+      "imageSha256": {
+        "day": "aa171b0671a47611f5659e103505c18f67009a974a67abb1f2c046341a2cbd69",
+        "night": "8dc2a66038a5559a358e3d50b8a880de194e560741b1b749a52853156f37e1c1"
+      }
+    },
+    {
+      "asset": "bld.joes-diner",
+      "glb": "public/assets/models/bld.joes-diner.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.joes-diner-day.png",
+        "night": "bld.joes-diner-night.png"
+      },
+      "glbSha256": "691c724bc8e983375fc3a3f676caecf965d8f98008bfebb19fc63e34cf843987",
+      "imageSha256": {
+        "day": "090f1e1049c3dba72607499b06dfae3ebcae7efe5b848f4bec228dff899a812c",
+        "night": "0b5927234c7f0dfb5bd7b06ac27bceba9255540161fe3759ecf64351e98a8642"
+      }
+    },
+    {
+      "asset": "bld.kessler-hardware",
+      "glb": "public/assets/models/bld.kessler-hardware.glb",
+      "anchors": 5,
+      "renders": {
+        "day": "bld.kessler-hardware-day.png",
+        "night": "bld.kessler-hardware-night.png"
+      },
+      "glbSha256": "6b78ab8c02ac38bccba54ee58c6f9fe6fc2d639454e34d5f6456ca8036cdf008",
+      "imageSha256": {
+        "day": "9c0ec879fa7d439b36cd84542261664b2f24fabdad0a6309abb40e2d047e6ff8",
+        "night": "480eb65ca860e75bb6ae53e308878807004222f54f23459972563eb308db134f"
+      }
+    },
+    {
+      "asset": "bld.mainstreet-brick",
+      "glb": "public/assets/models/bld.mainstreet-brick.glb",
+      "anchors": 7,
+      "renders": {
+        "day": "bld.mainstreet-brick-day.png",
+        "night": "bld.mainstreet-brick-night.png"
+      },
+      "glbSha256": "b93408a55e7ef4ea40940fdef667a2dd7740d552178e45bc5cc4d4fe5ab3c1b6",
+      "imageSha256": {
+        "day": "d6e8e5685adf1648774255e4822de6814c4d5fe6f29e0a0ce739d92be7ad0c9d",
+        "night": "0987c21847b7a675eb2f5492ebee82980b19ce03003b92f32de4cb7a8bb28641"
+      }
+    },
+    {
+      "asset": "bld.maple-hardware",
+      "glb": "public/assets/models/bld.maple-hardware.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "bld.maple-hardware-day.png",
+        "night": "bld.maple-hardware-night.png"
+      },
+      "glbSha256": "71790cb0223d5d4a686b05bc8550de04acad54df5101931cfb3c65c66c1557cd",
+      "imageSha256": {
+        "day": "3d754851d314ae523edf1a721c8c13774020e7493c33a56c445128972a14e54e",
+        "night": "9aaf2e3649f90ae57cac77d4df0c33383f80193f620f902513943a8e62d90d8c"
+      }
+    },
+    {
+      "asset": "bld.metro-entrance",
+      "glb": "public/assets/models/bld.metro-entrance.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "bld.metro-entrance-day.png",
+        "night": "bld.metro-entrance-night.png"
+      },
+      "glbSha256": "f3c16653ef8781dd33c7d0b63730140ee0def4eac4791b77dc8d2b867c9bfc18",
+      "imageSha256": {
+        "day": "f1fef598f72cfce90080348a13a18ab44e3051db822aac11e2f522a554e4f455",
+        "night": "0722db47597407ae78ffe9f366b3c3f365d5f798c8417785c24e52e79853a4ae"
+      }
+    },
+    {
+      "asset": "bld.pharmacy",
+      "glb": "public/assets/models/bld.pharmacy.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.pharmacy-day.png",
+        "night": "bld.pharmacy-night.png"
+      },
+      "glbSha256": "6875c70a1f57be13fcaa2bfca22c2cb1641b63449a63c2ef2bb48fae640488a4",
+      "imageSha256": {
+        "day": "c37e700409cd93688d86d7e390a57438774ffe32a677eb04bba599f59f39eccf",
+        "night": "50c4a15400671f2b8a972f4f42c49eff3de19159b361eb85ba60e3b4f1406c3b"
+      }
+    },
+    {
+      "asset": "bld.restroom-block",
+      "glb": "public/assets/models/bld.restroom-block.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.restroom-block-day.png",
+        "night": "bld.restroom-block-night.png"
+      },
+      "glbSha256": "7a5e647e2afb67c2c78c12437aff4d23ecf24871141a56c5e8ef3449fe1a1fef",
+      "imageSha256": {
+        "day": "826157c0885aae57bccf54024a88faf8eb12841c1d9e6750df96ee854c9317fe",
+        "night": "ca06953649cb43628399ebfafc3f0f92a3084ea3e721007de464cfa0ce75ca6c"
+      }
+    },
+    {
+      "asset": "bld.river-bridge",
+      "glb": "public/assets/models/bld.river-bridge.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "bld.river-bridge-day.png",
+        "night": "bld.river-bridge-night.png"
+      },
+      "glbSha256": "4e3c64ffcc99e0a0633212242cd36f90ceea7e6c93ae33e7829fcf5d42523b8e",
+      "imageSha256": {
+        "day": "ab8438142a4a969dcd22eb26f108bf7af141d68911555ae7367802332aa2cfb8",
+        "night": "bb543f16bcfd64d676f3d34d431047f61e075df6d22e8c845bc8ff906ccc2d78"
+      }
+    },
+    {
+      "asset": "bld.safe-house",
+      "glb": "public/assets/models/bld.safe-house.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.safe-house-day.png",
+        "night": "bld.safe-house-night.png"
+      },
+      "glbSha256": "b2500d321ec5126bcc23bbc42c5ac5f9486e47b32dc5031be998b0f4fe98224f",
+      "imageSha256": {
+        "day": "2c6b229c714b7c105ad99a74fbd355d1cd587867cd73c7ab677570d087a6a093",
+        "night": "6300efae884571ca1f1c7b51c7c84e5369440e41eef0fe15dc74cd8ae0107202"
+      }
+    },
+    {
+      "asset": "bld.school-elementary",
+      "glb": "public/assets/models/bld.school-elementary.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.school-elementary-day.png",
+        "night": "bld.school-elementary-night.png"
+      },
+      "glbSha256": "d7902f5d371334ff2ace4bb103c562baa2a2d9388afaf9a086221ca0a34fec09",
+      "imageSha256": {
+        "day": "157f7691287bee5f8e2449f2c167fcfe2cc82478e2281ee566489106dd9ea2b6",
+        "night": "543a9915f41371964f2c10d8f07a55a1d0390e3efa645f8797801849e4a2fecf"
+      }
+    },
+    {
+      "asset": "bld.shed",
+      "glb": "public/assets/models/bld.shed.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.shed-day.png",
+        "night": "bld.shed-night.png"
+      },
+      "glbSha256": "bdb51d9b3549a1f2fe778c07f925875151b74e7e0fcb21b8419beb4984651a76",
+      "imageSha256": {
+        "day": "b624b4eb79aca07147120faf05456c329ab7f144a84e3fd59fccf31e6b2c6fb1",
+        "night": "5041e90b2b09756309aeedf8e53f9048f49c64c235e61574866df5dd73dac18b"
+      }
+    },
+    {
+      "asset": "bld.storefront-row",
+      "glb": "public/assets/models/bld.storefront-row.glb",
+      "anchors": 5,
+      "renders": {
+        "day": "bld.storefront-row-day.png",
+        "night": "bld.storefront-row-night.png"
+      },
+      "glbSha256": "d434ed4ed409386ebbdf38115ab69e6df7dd9d964924bef04610b2a737182b88",
+      "imageSha256": {
+        "day": "9c47098e21794797661ee617e76332e5a83a478ff8ca203b45d30b4b8b02479e",
+        "night": "db6c61632349d1492eadec495eec3bfaee8523f7d9a5c4ba3f12d0ecf5d291ce"
+      }
+    },
+    {
+      "asset": "bld.supermarket",
+      "glb": "public/assets/models/bld.supermarket.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "bld.supermarket-day.png",
+        "night": "bld.supermarket-night.png"
+      },
+      "glbSha256": "db14aae822c7bbaf7831e4d3be8bb2d4afdb4182a2908c4d1e5c3d80830b2ce8",
+      "imageSha256": {
+        "day": "f5dc3e5917cbadaef39077ddec3ebd578752a4930a6944995014fa0752528ca5",
+        "night": "e856e61d4625b226e9908bf7027fb792daa31ac53666366a9f4eec960cf43ec1"
+      }
+    },
+    {
+      "asset": "bld.town-hall",
+      "glb": "public/assets/models/bld.town-hall.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "bld.town-hall-day.png",
+        "night": "bld.town-hall-night.png"
+      },
+      "glbSha256": "ba64f57c861e135af8327b7c7414f26c16e4ffe1e5b2abc85a6bd247cd680ea8",
+      "imageSha256": {
+        "day": "929b78779580434290eb31ca506c3731fbecb2fe3f4e682edca4804e0a18be44",
+        "night": "42706fca0e10df82bbcb8d92fe45d81f46c7b51874cbc1b04027aff2a0d96b37"
+      }
+    },
+    {
+      "asset": "bld.tunnel-portal",
+      "glb": "public/assets/models/bld.tunnel-portal.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "bld.tunnel-portal-day.png",
+        "night": "bld.tunnel-portal-night.png"
+      },
+      "glbSha256": "390623fb96849779f79cf808e062b0999053de1b4bfa93431c67d7652903a60c",
+      "imageSha256": {
+        "day": "fcd628b274ee65950785a41eccd77df7f79ecc5e2cd3b955786893345267fde4",
+        "night": "b3e5d8bdc6f5374820d08388fd18b761f0f9e77b8b0ad147d2be078ac43412da"
+      }
+    },
+    {
+      "asset": "house.garage.half",
+      "glb": "public/assets/models/house.garage.half.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "house.garage.half-day.png",
+        "night": "house.garage.half-night.png"
+      },
+      "glbSha256": "2b75049234b89863deb3752421b79eedddbe5a76eeb07e42f7a40acec3d2c42d",
+      "imageSha256": {
+        "day": "6ad8096eb97381f0b1c6f57aad1525f7ff74c05776792f0527d856c2c537ed09",
+        "night": "d80b496c10ff49d852a6bd9b4489f836d084081c03ed52af38e5db7dc25f5774"
+      }
+    },
+    {
+      "asset": "house.garage.open",
+      "glb": "public/assets/models/house.garage.open.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "house.garage.open-day.png",
+        "night": "house.garage.open-night.png"
+      },
+      "glbSha256": "adb8d51568571de47f28fcec85ae82c3c7fb22177c26f77d6dd1af9b53cf10ef",
+      "imageSha256": {
+        "day": "01a442e9974455dee783122f8e8f012dfab7f4223ab557dddae5463478c7c69c",
+        "night": "e915b07fb751a365f0e35e8b5af532d2e52b94f6af497f01019c4c440a750927"
+      }
+    },
+    {
+      "asset": "int.basement-cellar",
+      "glb": "public/assets/models/int.basement-cellar.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "int.basement-cellar-day.png",
+        "night": "int.basement-cellar-night.png"
+      },
+      "glbSha256": "e1124381da1e3b5453636ae2f169cf089e2e6faf55d00170ffe817de19fd31eb",
+      "imageSha256": {
+        "day": "d51b59c9997e65d189785b68775e1b6c5f10d03526105c989c68e5914402c08b",
+        "night": "3de0d7e7fdce0ad30edc072159664f4c164b8ebdb2e51b44d0efa20952a5072e"
+      }
+    },
+    {
+      "asset": "int.diner",
+      "glb": "public/assets/models/int.diner.glb",
+      "anchors": 7,
+      "renders": {
+        "day": "int.diner-day.png",
+        "night": "int.diner-night.png"
+      },
+      "glbSha256": "e35520b01631adcfe74f379cf6dc2f81e098a110705746a422b6040d87f699d3",
+      "imageSha256": {
+        "day": "95f702edb0de302ed831634d143457649e891b268ce36f245654a7c6b4d1812d",
+        "night": "0b7bee2ce501de7ae54eacb89e8032484f6b231c3f7691e362e7d359c2eba089"
+      }
+    },
+    {
+      "asset": "int.fire-station-bay",
+      "glb": "public/assets/models/int.fire-station-bay.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "int.fire-station-bay-day.png",
+        "night": "int.fire-station-bay-night.png"
+      },
+      "glbSha256": "72cc402c51658a51344084067f8ea8f4da966cfb231c919998588d11cf58262d",
+      "imageSha256": {
+        "day": "b7305744b983452d8d7c157e7fea64c3f2ff3b8d31587cd89425e89d43dbec34",
+        "night": "2dd53c570f0c49fe1475fb18b97981c7607535bb602f348900c0ff0657408572"
+      }
+    },
+    {
+      "asset": "int.food-court",
+      "glb": "public/assets/models/int.food-court.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "int.food-court-day.png",
+        "night": "int.food-court-night.png"
+      },
+      "glbSha256": "8cc25390c250e9c9d2e389eefefc7f5f65d4ae0e5724bd18f3bd40efdd31ff7e",
+      "imageSha256": {
+        "day": "61f4bc0e7b37be98f02e28733f1b22ad142f3dd03e55da8004e70d975e1cd8e5",
+        "night": "48cbcda7271fe7e42a28d798bcc90eae5a518c5a517986effa1cf645e8017263"
+      }
+    },
+    {
+      "asset": "int.gym-cafeteria",
+      "glb": "public/assets/models/int.gym-cafeteria.glb",
+      "anchors": 5,
+      "renders": {
+        "day": "int.gym-cafeteria-day.png",
+        "night": "int.gym-cafeteria-night.png"
+      },
+      "glbSha256": "cc773a8bbdde993e225845cc9a6aec7e36ea5463739ba6fe1c470c813d1ab01b",
+      "imageSha256": {
+        "day": "9c1c374ebe9dcc64a5f76063890a6f0238135a92e3c0a07489e14995fd8d0dc2",
+        "night": "9203f147df7fa1ac579d4fd0874decf3c9eff51236d7a28edda5d444346c0578"
+      }
+    },
+    {
+      "asset": "int.metro-exit",
+      "glb": "public/assets/models/int.metro-exit.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "int.metro-exit-day.png",
+        "night": "int.metro-exit-night.png"
+      },
+      "glbSha256": "4fdc2e94f4daca8e092f26534f82b4c080e4a1239cd49899ee60be39acfb7b3b",
+      "imageSha256": {
+        "day": "8258aaf20cc49c4ced69efb66dded1e45f3cf801348cb8f0704dde8198867167",
+        "night": "c32c9c7b64fdf0edc6c02958e347940245c02384d5762ab1f20021fba9637930"
+      }
+    },
+    {
+      "asset": "int.metro-station",
+      "glb": "public/assets/models/int.metro-station.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "int.metro-station-day.png",
+        "night": "int.metro-station-night.png"
+      },
+      "glbSha256": "139046a930a3ac01763d1c89f4bfe4b6183fbf71115e61bac4b98322b463ab24",
+      "imageSha256": {
+        "day": "4185a6dadf3cc7c8e3a3d2aadd815c2097fa588dfff23eb980434d3125a3cd7e",
+        "night": "49939e3b624593e72014dbbcea08c08f9d5653d2d6e83026dc1c87039d41619d"
+      }
+    },
+    {
+      "asset": "int.mini-mall",
+      "glb": "public/assets/models/int.mini-mall.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "int.mini-mall-day.png",
+        "night": "int.mini-mall-night.png"
+      },
+      "glbSha256": "891b378376be113af82399687c7d289904c5e6a221b238a57c73ffd756750945",
+      "imageSha256": {
+        "day": "daebe91b9bd71ef46b355898e31a13dc610f93166b5ad14f7ffbbe28e6e557c5",
+        "night": "58a574ef78ed5f4dd40c292fa509bccfb425bf4e20576aeafad52f77f9c03d45"
+      }
+    },
+    {
+      "asset": "int.pharmacy-clinic",
+      "glb": "public/assets/models/int.pharmacy-clinic.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "int.pharmacy-clinic-day.png",
+        "night": "int.pharmacy-clinic-night.png"
+      },
+      "glbSha256": "7ddf32630da7be618d8c70250b8ed74e8091e56605b16b73d9b7bc9b7fb996d2",
+      "imageSha256": {
+        "day": "8161796c96dc9f4ea064bf74af241fc5591ac2e41e4f33722c8fab74d9d44d58",
+        "night": "fcf1cbcbf20d5c225615fadf2f18e064a6d0e9af8df165f12b1a6dd1bbe4fbb5"
+      }
+    },
+    {
+      "asset": "int.supermarket",
+      "glb": "public/assets/models/int.supermarket.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "int.supermarket-day.png",
+        "night": "int.supermarket-night.png"
+      },
+      "glbSha256": "0ae808ecc095e38f66cb88a03ac51b4a91d14f4a33131d593b284c312df98a05",
+      "imageSha256": {
+        "day": "560f1bba9337a2d55f370b21ccea73fbdd32646eba8d6256ac090c6f3c6cd536",
+        "night": "fb23d2f672c5765edc5a5b77f449f343979e6d23f06f0499e1542aca107e2ff5"
+      }
+    },
+    {
+      "asset": "kit.army-checkpoint",
+      "glb": "public/assets/models/kit.army-checkpoint.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "kit.army-checkpoint-day.png",
+        "night": "kit.army-checkpoint-night.png"
+      },
+      "glbSha256": "1103720d1f823ceb378170152bc4955c6dbb2fd3cfb7f4e1f9eaa1fd0ad81e9d",
+      "imageSha256": {
+        "day": "7f571e7216161153e16ba778cfd563448b31ea5075b47ac97d965eeda8c23b0f",
+        "night": "21233b377d429ed549d0ca9a9305f32113e14d887ca8726aaa3b2eaca0255981"
+      }
+    },
+    {
+      "asset": "kit.campground",
+      "glb": "public/assets/models/kit.campground.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "kit.campground-day.png",
+        "night": "kit.campground-night.png"
+      },
+      "glbSha256": "6ab2e016b27197f17725dfd0e09a60bab7125808dd4de5ad487bc4063e141f26",
+      "imageSha256": {
+        "day": "71090650f9479fa7c202407475757cecf8c41d6fc6491258e113de4893ae8fdb",
+        "night": "f9bce57084305c89eff606a3da80da4ede8476ee8f40e1058827c31be9173db2"
+      }
+    },
+    {
+      "asset": "kit.evac-camp",
+      "glb": "public/assets/models/kit.evac-camp.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "kit.evac-camp-day.png",
+        "night": "kit.evac-camp-night.png"
+      },
+      "glbSha256": "0b1f251baed70b7b2340eb764d620713e9d5a0b5c6e825ac68d15e6bfaa930ff",
+      "imageSha256": {
+        "day": "b35bed8ca2115c161a94e6ca7aef8b55db43d12e6c419cbe2e04084d94a775f5",
+        "night": "0b4ab85d7625f04f6c3fa2382a91db9a63adb1c9dc4a0d629f9c7a00929457de"
+      }
+    },
+    {
+      "asset": "kit.highway-onramp",
+      "glb": "public/assets/models/kit.highway-onramp.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "kit.highway-onramp-day.png",
+        "night": "kit.highway-onramp-night.png"
+      },
+      "glbSha256": "ee2f4f0cd95a46b5f05e85b54e9ac153563ec40b47bfcefa4651fd72c00b3943",
+      "imageSha256": {
+        "day": "ba7f7866902d580c99e5b6275d180fb8f9d1c267c2627a4d7ed31f95b84ff158",
+        "night": "c084043e37c2f576a4acd9b48bcff0be95164a58e17953b0b198a36991a371b6"
+      }
+    },
+    {
+      "asset": "kit.maintenance-corridor",
+      "glb": "public/assets/models/kit.maintenance-corridor.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "kit.maintenance-corridor-day.png",
+        "night": "kit.maintenance-corridor-night.png"
+      },
+      "glbSha256": "e3fc68fbd9798560c3de0027c01d7dba4da83ee83ad82f0a1d00fa042058e26d",
+      "imageSha256": {
+        "day": "882bc601e23d31346dfc684cd60253c134d970b818a82aa99d016b5abbc53bf3",
+        "night": "a508a10503b13a115e60f381c9cc46f61221b888aaa3781a3cc3849239d8d9a9"
+      }
+    },
+    {
+      "asset": "kit.metro-tunnel",
+      "glb": "public/assets/models/kit.metro-tunnel.glb",
+      "anchors": 3,
+      "renders": {
+        "day": "kit.metro-tunnel-day.png",
+        "night": "kit.metro-tunnel-night.png"
+      },
+      "glbSha256": "45b70a84728a1d50979f0318ddc6b8b6a8a3fa24042d2c62a34c02015ffc112e",
+      "imageSha256": {
+        "day": "feb402c90461bed89515b5ab1497e007804869a33c0264afcc362987b3e4f2c6",
+        "night": "08df161ccf0d62083bda1519d8d55e80e498a51190b37731ecfcded35ac02dd4"
+      }
+    },
+    {
+      "asset": "kit.police-checkpoint",
+      "glb": "public/assets/models/kit.police-checkpoint.glb",
+      "anchors": 10,
+      "renders": {
+        "day": "kit.police-checkpoint-day.png",
+        "night": "kit.police-checkpoint-night.png"
+      },
+      "glbSha256": "273ccc4fa16bcf2b21d30dc552832911ac6611913341c27120e6b210a17e40fc",
+      "imageSha256": {
+        "day": "3ebd1b64e6b60496fe6a75acede5f159f6a3e37feabc232fb0dadd6f2a318cb6",
+        "night": "06c168d7b291545817d11660b97e3c48559aa99aebfd0082b1c44871f23fac0d"
+      }
+    },
+    {
+      "asset": "kit.porch-stairs",
+      "glb": "public/assets/models/kit.porch-stairs.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "kit.porch-stairs-day.png",
+        "night": "kit.porch-stairs-night.png"
+      },
+      "glbSha256": "b93032a04dec188623eabb6e2cbb330ffb22ff0fb3e7a55b5d02067dafe7b298",
+      "imageSha256": {
+        "day": "6d6828a320336a5ddff34ad4973c15207ef4755b1833ae804ce4dd95f2179208",
+        "night": "000324ead50f78bd9994eba306e9c304b7d32827b18c0788c048590ee3decb4b"
+      }
+    },
+    {
+      "asset": "kit.rail-crossing",
+      "glb": "public/assets/models/kit.rail-crossing.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "kit.rail-crossing-day.png",
+        "night": "kit.rail-crossing-night.png"
+      },
+      "glbSha256": "e9197c14d4cb3f4dc534b356d37440a56913ef49315975db9087b676b6fc3f6e",
+      "imageSha256": {
+        "day": "19125ae7c387748c917038f70b37f72bd798e04da254e5b3f70390d41be0d392",
+        "night": "5af2b7993eee6f90843cb72e31b7a752d2203fbe777346c7774e12773d42bd46"
+      }
+    },
+    {
+      "asset": "kit.shelter-camp",
+      "glb": "public/assets/models/kit.shelter-camp.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "kit.shelter-camp-day.png",
+        "night": "kit.shelter-camp-night.png"
+      },
+      "glbSha256": "b3f0f010828f3c09836390ca0892bc0708dedd65673da5decccbc8f66cbfd505",
+      "imageSha256": {
+        "day": "4f26235ea9362f6afeb7cf935e08d43d35144fa6e6f51b5147f266f69248aae8",
+        "night": "e707dd6a842cfee0e9355479a2077d8e25b14b2c4cc27a57dc447c005115b7fb"
+      }
+    },
+    {
+      "asset": "prop.checkpoint-gate",
+      "glb": "public/assets/models/prop.checkpoint-gate.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.checkpoint-gate-day.png",
+        "night": "prop.checkpoint-gate-night.png"
+      },
+      "glbSha256": "43778fbffc08bbdd00371d0687d7d919059700556b139422c87d6a7eeff8e741",
+      "imageSha256": {
+        "day": "0efe3bd39343d9a252291431bf3ce69cddc232dc3e9e16e97e6685bb7109e676",
+        "night": "3b5bc67f7ad9cc28bf6b536b3b036b9f8b77eea534d36550876619fbb704b3d9"
+      }
+    },
+    {
+      "asset": "prop.emergency-light",
+      "glb": "public/assets/models/prop.emergency-light.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.emergency-light-day.png",
+        "night": "prop.emergency-light-night.png"
+      },
+      "glbSha256": "b6f10bb76e55aed95d917996116daa8e120c5458d7df664d62d1c48d41eeefcf",
+      "imageSha256": {
+        "day": "ccb9e8b3925b9a245d5735f20dffcaf7113e93b64d2560dcbc26d60cd7f1b3da",
+        "night": "57d19eb2987feda927b139cf38deba62f01391100ac991a4854507609561562e"
+      }
+    },
+    {
+      "asset": "prop.fluorescent-strip",
+      "glb": "public/assets/models/prop.fluorescent-strip.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.fluorescent-strip-day.png",
+        "night": "prop.fluorescent-strip-night.png"
+      },
+      "glbSha256": "d02a34dd1d1fc9fa1539a681b75bfd85df07a8ae140d16882c52123fe8989f42",
+      "imageSha256": {
+        "day": "a4a821ccf56523a047a3d188681e3b073173a063d29815343903dc7231461b33",
+        "night": "7ab39b1ae884bd308d1a6f5607b40a6ec588e4a52633869c8e0b77c76051f9b5"
+      }
+    },
+    {
+      "asset": "prop.gas-pump",
+      "glb": "public/assets/models/prop.gas-pump.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.gas-pump-day.png",
+        "night": "prop.gas-pump-night.png"
+      },
+      "glbSha256": "685aa1a397e514f2c7d4818bf1261cc98fddcbd5b3184f9ee78b983091eebe1c",
+      "imageSha256": {
+        "day": "4e6db44fa9eb371223d8f56fdb30e23805f89f3dc2fb29495fe3aaea1007d23a",
+        "night": "33a101aa09bfe4251f4f9fa45c5582129c63b3593990a5ea6b1c702faea91b8c"
+      }
+    },
+    {
+      "asset": "prop.jukebox",
+      "glb": "public/assets/models/prop.jukebox.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.jukebox-day.png",
+        "night": "prop.jukebox-night.png"
+      },
+      "glbSha256": "edb6463ddd9921854d462bffe3479fa8d3ace7a31c6de7612c71f20a101d3eba",
+      "imageSha256": {
+        "day": "b4d53639d9da012d10fb878940ab111132e733e7fe966a623f80199ede84a53f",
+        "night": "718b6590e02fe6f7bd204b9cc8f0231afdf5560cf4d2ec383228314a7cbcbd77"
+      }
+    },
+    {
+      "asset": "prop.light-tower",
+      "glb": "public/assets/models/prop.light-tower.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "prop.light-tower-day.png",
+        "night": "prop.light-tower-night.png"
+      },
+      "glbSha256": "737cd8dbe59ca40ccc8de9ce5507053ef8d9c1c78bf9cdd00e4d50532b928622",
+      "imageSha256": {
+        "day": "fd35c94ab62131698eb417f8dece63dcdec94eeb4494f535fca343ce5e7bdc81",
+        "night": "1d035fecfcb5ac70eed3d09e2fa3330a6396ef769c1fbff111ba5fed70306f32"
+      }
+    },
+    {
+      "asset": "prop.light-tower-trailer",
+      "glb": "public/assets/models/prop.light-tower-trailer.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "prop.light-tower-trailer-day.png",
+        "night": "prop.light-tower-trailer-night.png"
+      },
+      "glbSha256": "08b2379485a64aa6d6df8dd970cf90f4ffcf431bf91a978a56d996f1c302b1e6",
+      "imageSha256": {
+        "day": "914443946fad2903b2d7713dd57c7bc0352f671173373f655c8a17751a2d1062",
+        "night": "d766136262be55e90a15a9c77a23053b0d564d4620807a18509595553c688eea"
+      }
+    },
+    {
+      "asset": "prop.street-lamp",
+      "glb": "public/assets/models/prop.street-lamp.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.street-lamp-day.png",
+        "night": "prop.street-lamp-night.png"
+      },
+      "glbSha256": "398aa1d87c935e9ac051efb0b1eb29b70990176515a3c609e014db5ece7ece62",
+      "imageSha256": {
+        "day": "9484c04eeccde6b8f48e9a38152712b48436d00c9f4ee283f6ceb3bec32825de",
+        "night": "4eb8a9989c5f325ffdb9651a868956250629ee76afc94374e1c0ba8c4849e305"
+      }
+    },
+    {
+      "asset": "prop.vending-machine",
+      "glb": "public/assets/models/prop.vending-machine.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "prop.vending-machine-day.png",
+        "night": "prop.vending-machine-night.png"
+      },
+      "glbSha256": "c5d4953e4cd785ba3eb41a6f75d1d6b399b49535fba6b688e31f62032d163227",
+      "imageSha256": {
+        "day": "a214214518a5471e94ad1ea966563643ec1a9b66b8d8faab3f8160221aa0e42c",
+        "night": "d96a4bf60c45cbff1d565846d029c4577600a58d97a62b87acb24d0fae54ecab"
+      }
+    },
+    {
+      "asset": "thr.firecracker-lure",
+      "glb": "public/assets/models/thr.firecracker-lure.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "thr.firecracker-lure-day.png",
+        "night": "thr.firecracker-lure-night.png"
+      },
+      "glbSha256": "6fc0f3a78372a1dd368cb5bb13d028d3543d24d43c5474e2a8d4bea45c7a2299",
+      "imageSha256": {
+        "day": "1fc48ecafe58b0e41d0798b2cfa52620e5f3ec84eb83338f4dfbf58cdc8eb654",
+        "night": "908b88c0f6930bfa328411b4e26db41fab61ba07260aba23394c36e72f49d241"
+      }
+    },
+    {
+      "asset": "thr.molotov",
+      "glb": "public/assets/models/thr.molotov.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "thr.molotov-day.png",
+        "night": "thr.molotov-night.png"
+      },
+      "glbSha256": "175a5b4469b230e295bed2de7d9db973d4c89a86b7a80f89775bb9e7a84a9190",
+      "imageSha256": {
+        "day": "075be7b8b0b90267a4eeec28964fe379878d6d235496438e88c336fd66062167",
+        "night": "3d08df5fa674903f2d31b05a649c6b6e5b026103b419cd43fed64cc11031bec9"
+      }
+    },
+    {
+      "asset": "thr.pipe-bomb",
+      "glb": "public/assets/models/thr.pipe-bomb.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "thr.pipe-bomb-day.png",
+        "night": "thr.pipe-bomb-night.png"
+      },
+      "glbSha256": "812f3795f6ad8320b20c0d0ab25a2805f0536e21b45f00b7f807b344600c4b7b",
+      "imageSha256": {
+        "day": "a49b851bdd39e24ce6a1947fb230ea49816acb9b09df907d20a6eb80c49217cc",
+        "night": "a67cedba0b0af3723bb1f25de257a12d09bab43fa338a9434db41b767bd365bb"
+      }
+    },
+    {
+      "asset": "util.flashlight",
+      "glb": "public/assets/models/util.flashlight.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "util.flashlight-day.png",
+        "night": "util.flashlight-night.png"
+      },
+      "glbSha256": "c9870e42cc5fee140d49fe7681497f04f5ccf63619de77c13e507cfe76401271",
+      "imageSha256": {
+        "day": "700f8b1f9107779d0a9024af009dfe05a3e6b054663efa59901ee3725d5f8995",
+        "night": "ec04af4ca752f347e86f43e1d0e034909d809643d05c0a746e5017c1851913ef"
+      }
+    },
+    {
+      "asset": "veh.ambulance",
+      "glb": "public/assets/models/veh.ambulance.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "veh.ambulance-day.png",
+        "night": "veh.ambulance-night.png"
+      },
+      "glbSha256": "f57cb71098d6f217d5ec0265cbe3bd6004b782dc977d006132811170abe15072",
+      "imageSha256": {
+        "day": "f4f347fe045a90f145a10d61bb417eda2636be62e7bfe1a5846db9567c3684b1",
+        "night": "7f43a2b5ede5f06af958d53193cdb9631a54c01670cab2baa212787bb1bdfbd0"
+      }
+    },
+    {
+      "asset": "veh.box-truck",
+      "glb": "public/assets/models/veh.box-truck.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.box-truck-day.png",
+        "night": "veh.box-truck-night.png"
+      },
+      "glbSha256": "83b3dc5ed55d3c8a8f1206f12e3e26586af1aebdaf780aa3c398991a1f7e942e",
+      "imageSha256": {
+        "day": "a9f4d6c2d59eb1d69c90b9ff66fc09a3709bf15bdc382388a4d1fd17df4d60d3",
+        "night": "2eea116be8fb8cb3bb663c90bc2a7bad07dd91ccec7f004daaa49333adf668fb"
+      }
+    },
+    {
+      "asset": "veh.courier-bike",
+      "glb": "public/assets/models/veh.courier-bike.glb",
+      "anchors": 1,
+      "renders": {
+        "day": "veh.courier-bike-day.png",
+        "night": "veh.courier-bike-night.png"
+      },
+      "glbSha256": "ee6d5cdbf3ff40b8cef07a124268654be8b2a1034e2c175c69d7c749d5bb0535",
+      "imageSha256": {
+        "day": "42631fdd9160dac33b252c8404615fbfba7cb3a606e106f308dd83dfc5609ed8",
+        "night": "692c1ee482e00b9c21a4aa538cb12debfe700c3061288c2d13b6f945c5caa112"
+      }
+    },
+    {
+      "asset": "veh.courier-van",
+      "glb": "public/assets/models/veh.courier-van.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.courier-van-day.png",
+        "night": "veh.courier-van-night.png"
+      },
+      "glbSha256": "7bcfdc8b56f6a12e06db5c6a4b5ca557da3f3fb7ffdd4cff81127060f175d088",
+      "imageSha256": {
+        "day": "68e80a9d85b72b61b1d7e128e2c63f0acf394eb1ec73bab8c4c4dd5fd2f5f2fe",
+        "night": "a16caab4c27bfa993c6734451e7125bc416a5bda670d84b8777d1a2e50dab4ba"
+      }
+    },
+    {
+      "asset": "veh.evac-bus",
+      "glb": "public/assets/models/veh.evac-bus.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "veh.evac-bus-day.png",
+        "night": "veh.evac-bus-night.png"
+      },
+      "glbSha256": "086c981ee0c5b050e9023174ff14a1aa31007973a98e8bc7bca4797c0853743f",
+      "imageSha256": {
+        "day": "d2664fd795566722ca26783eb668f960a85ca0a5c0d31cdeeccfe955cafbb282",
+        "night": "a3bdc5438bce1ae86f1c710adfab101c95f875b684f65c711486f20f7609c163"
+      }
+    },
+    {
+      "asset": "veh.fuel-truck",
+      "glb": "public/assets/models/veh.fuel-truck.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.fuel-truck-day.png",
+        "night": "veh.fuel-truck-night.png"
+      },
+      "glbSha256": "fffa0b5040333bad47a453560ea99b2596e5f5b12e7bc23c4821ef76584a99b4",
+      "imageSha256": {
+        "day": "a92dc4cee507d5bc68dc507c837c495069f5c76ac02d0b1f957c0e93dc6a1b1c",
+        "night": "585ce80d2bcba0a5e74c552ddd87d7b42454a31632eaa46e976ca96382bf1d41"
+      }
+    },
+    {
+      "asset": "veh.helicopter",
+      "glb": "public/assets/models/veh.helicopter.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.helicopter-day.png",
+        "night": "veh.helicopter-night.png"
+      },
+      "glbSha256": "17f256444ce251af2fbb044a0ad5b9f94d95f8050d33cca7e171e77d004247ac",
+      "imageSha256": {
+        "day": "01c2b499dec926ea08928392cbda3ad25ca0f6f177bc72ae2c27f45108b01b7c",
+        "night": "69a3ac77019a69be5ab1e1a56e25bea2200254851115ac409be9f91da6665c24"
+      }
+    },
+    {
+      "asset": "veh.helicopter-military",
+      "glb": "public/assets/models/veh.helicopter-military.glb",
+      "anchors": 2,
+      "renders": {
+        "day": "veh.helicopter-military-day.png",
+        "night": "veh.helicopter-military-night.png"
+      },
+      "glbSha256": "a73ce14e6166551bbc1c7ba1dfd96228a8d88cfa8318d1dce1677171ba52bfe0",
+      "imageSha256": {
+        "day": "65f90020ff4b4638db31bef1978d88b2e8a959079de4cc6b1fa58359a6b05e56",
+        "night": "71c0caec58fed77484f71c09a97d629e48f51b8a51f61289000e0a0df551905a"
+      }
+    },
+    {
+      "asset": "veh.jeep-red",
+      "glb": "public/assets/models/veh.jeep-red.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.jeep-red-day.png",
+        "night": "veh.jeep-red-night.png"
+      },
+      "glbSha256": "6351929704a2a6044a4886d250c4aa3a77f9c98bf5297422209d2226226e254d",
+      "imageSha256": {
+        "day": "844e3717a55b86c1be287dcc24a52828263c4fd71b85f56093244baed5c939b6",
+        "night": "ff144d319c2ab8a43af66d5c14a2a97eb3f8dc0d49330277ea96acc8154bdbe6"
+      }
+    },
+    {
+      "asset": "veh.military-apc",
+      "glb": "public/assets/models/veh.military-apc.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.military-apc-day.png",
+        "night": "veh.military-apc-night.png"
+      },
+      "glbSha256": "4276fd38dac06b807ea505a1ae412e8ada4c1831353c49bb92e673b2fa8a007e",
+      "imageSha256": {
+        "day": "877ba0cfeffd447060b1d610160251a42248ffe491c6b81fbf6c24f860275908",
+        "night": "118119640d67294bee9f48ca7b1773af8de15a40fcb369b1f0cb6f9a3c542234"
+      }
+    },
+    {
+      "asset": "veh.military-truck",
+      "glb": "public/assets/models/veh.military-truck.glb",
+      "anchors": 5,
+      "renders": {
+        "day": "veh.military-truck-day.png",
+        "night": "veh.military-truck-night.png"
+      },
+      "glbSha256": "d571e3b1f777d301a16ba130e2598afdcd387fe5596115fdc039fd6d5abc7792",
+      "imageSha256": {
+        "day": "b63bf17ea90f2a559e137e6d0aec6cb23b9a5edf72037274131105b4fbfe0957",
+        "night": "d77fc3aca5a0c7e66d2ca947471781111a1e815af3bfe352ebb371289a291891"
+      }
+    },
+    {
+      "asset": "veh.pickup-red",
+      "glb": "public/assets/models/veh.pickup-red.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.pickup-red-day.png",
+        "night": "veh.pickup-red-night.png"
+      },
+      "glbSha256": "6303e6ea184eeb53e8c3e73522676de9f2dbd211d7ebd203b216022c8fddec3a",
+      "imageSha256": {
+        "day": "db2439f394500891711e5e5d23a719e05ca4dfa2c02d002e3d3f7fdd926a92f7",
+        "night": "e6f1f982881e4b21b9bbbacb101b6fb07679b5f96563392e6a15f8330a4a7ecb"
+      }
+    },
+    {
+      "asset": "veh.pickup-white",
+      "glb": "public/assets/models/veh.pickup-white.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.pickup-white-day.png",
+        "night": "veh.pickup-white-night.png"
+      },
+      "glbSha256": "cedef8650aaac86cf3cd2e4a947350109eb45a3f7596b5559d12d7678b6774fe",
+      "imageSha256": {
+        "day": "088b84b08f80269facb00d997756703a41d7d29ae34b1a6f04166b4b70ae724c",
+        "night": "b04e72b5ad347ccd33fd4b758b8b6853f19d37b3a64a17a8889b9045e2414099"
+      }
+    },
+    {
+      "asset": "veh.police-sedan",
+      "glb": "public/assets/models/veh.police-sedan.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "veh.police-sedan-day.png",
+        "night": "veh.police-sedan-night.png"
+      },
+      "glbSha256": "5a29fa4c3161c95239e9d335419fc8fc64e18a0281ad9b82221bf172a4834e63",
+      "imageSha256": {
+        "day": "8453a8bd784b8339482ab9919aa22c03812c6a741a3247ba04e8c5d361b69352",
+        "night": "cf1cf8d1e5526896fefc3d5021b1d4da16af833a09e32781f91b75dfb7b17cbd"
+      }
+    },
+    {
+      "asset": "veh.police-suv",
+      "glb": "public/assets/models/veh.police-suv.glb",
+      "anchors": 6,
+      "renders": {
+        "day": "veh.police-suv-day.png",
+        "night": "veh.police-suv-night.png"
+      },
+      "glbSha256": "ec02474bc652fbc55f59975b42ef978c0ace8ad0a2e2cae81d9526e27c4a4b30",
+      "imageSha256": {
+        "day": "e9fcbdc73b91a25f2434b879995a8062ce19d1fb05b9bfb038a1a691e6315b86",
+        "night": "8a14953c0a8f667bf5ec23e180074311976ba95bb74fcbedea6222857d5bc493"
+      }
+    },
+    {
+      "asset": "veh.school-bus",
+      "glb": "public/assets/models/veh.school-bus.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.school-bus-day.png",
+        "night": "veh.school-bus-night.png"
+      },
+      "glbSha256": "4a964523ace868e520073d56027df3283a42cf61b391cb7a30185c4d8f2c5731",
+      "imageSha256": {
+        "day": "eda2b99574f33090b89ae64c36d57e77d602f143e0dab65673b57f5936021d80",
+        "night": "af6603e5aa8af999939c4e06eba3dd340d4513c176a2780353b2cc3666330b60"
+      }
+    },
+    {
+      "asset": "veh.sedan-blue",
+      "glb": "public/assets/models/veh.sedan-blue.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.sedan-blue-day.png",
+        "night": "veh.sedan-blue-night.png"
+      },
+      "glbSha256": "6624c0cab0758043abb08d334eedc9e98efd749afbac8cb1a7efe95b3afd9cbf",
+      "imageSha256": {
+        "day": "4250780f0e1fcacda0634fdce59268c2b437fee103c5f3f80579ffc099f781fc",
+        "night": "3c494e99b7be7e0bcca334a015093dcb192e45367bdefd67204faad399d10928"
+      }
+    },
+    {
+      "asset": "veh.sedan-green",
+      "glb": "public/assets/models/veh.sedan-green.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.sedan-green-day.png",
+        "night": "veh.sedan-green-night.png"
+      },
+      "glbSha256": "64372914b11dd315cd653330cfad50f1f61cb9217a82de9c8b5daeeb87e8d7c1",
+      "imageSha256": {
+        "day": "b4b6cb842f9f0d40d8df07a3d162501fd1ec61960175ffdc43564c9944265dc3",
+        "night": "5bbdd8d0f815a344179e65d5194d298db1c6de351c67786622b53ccf29b88eb9"
+      }
+    },
+    {
+      "asset": "veh.sedan-red",
+      "glb": "public/assets/models/veh.sedan-red.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.sedan-red-day.png",
+        "night": "veh.sedan-red-night.png"
+      },
+      "glbSha256": "e0de63a3714004f013eb538f51301197804f66e23c0a8f35cd12bab31cbc9c6b",
+      "imageSha256": {
+        "day": "aaec311a00809929743371f98fabb8fdcad373a2b52b6ea87c8321bc86e5e42b",
+        "night": "42f70b608d7434fb8cfa7c9fb480393bc659925e10e565a7fd0c466386f766b6"
+      }
+    },
+    {
+      "asset": "veh.sedan-white",
+      "glb": "public/assets/models/veh.sedan-white.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.sedan-white-day.png",
+        "night": "veh.sedan-white-night.png"
+      },
+      "glbSha256": "768cf4bd65d3e99d2db8bc04c235bf125ae7b8c4cb0a8db2e5ec2619f3a4df04",
+      "imageSha256": {
+        "day": "6900539eb53194c858cf398a70c58b7796f322023c6880c94ed1a60a94eb63ab",
+        "night": "ec6d5e4c07ee7b83074a00601449bbf1130341b9b4536575ae51083fe18350f2"
+      }
+    },
+    {
+      "asset": "veh.semi-trailer",
+      "glb": "public/assets/models/veh.semi-trailer.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.semi-trailer-day.png",
+        "night": "veh.semi-trailer-night.png"
+      },
+      "glbSha256": "af338c67835a661dfb73e32913a92268d284669283843c6767bb74116f0a764a",
+      "imageSha256": {
+        "day": "c93cf8798d32a45ec566fd0da22ed5fb3720f9ac92150b076818cc2cf1db9e88",
+        "night": "c0e5fca4951915394af276e06cef03599c40adf7e8d40a372be2d6678dbe53ff"
+      }
+    },
+    {
+      "asset": "veh.suv-dark",
+      "glb": "public/assets/models/veh.suv-dark.glb",
+      "anchors": 8,
+      "renders": {
+        "day": "veh.suv-dark-day.png",
+        "night": "veh.suv-dark-night.png"
+      },
+      "glbSha256": "1b21b21713becfc86423ffd813aaf3cfc1c63065701feac9519ea12e4b4238c3",
+      "imageSha256": {
+        "day": "d5532c8adab9e685fc31bf258d707a8f95d5ac291b8230f5a791019302d9540c",
+        "night": "df2e6fe290b5f832dac3cd6299bfcc4782458e16e74df2592014d29f40b605ab"
+      }
+    },
+    {
+      "asset": "veh.suv-green",
+      "glb": "public/assets/models/veh.suv-green.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.suv-green-day.png",
+        "night": "veh.suv-green-night.png"
+      },
+      "glbSha256": "7aa8df85ee202ac12d5c472f4240b7ea2a6f1a5659541f6c18b1b4ba807b0a4f",
+      "imageSha256": {
+        "day": "c13183f60e426d5a3e8544088dd54977ce6ec22d17d497af9e92f389f50ff0bb",
+        "night": "e5fdb2b552ac91ce4ea0c264e9e4353eb60881f436f80b05d76e0c948ac87f99"
+      }
+    },
+    {
+      "asset": "veh.tank",
+      "glb": "public/assets/models/veh.tank.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.tank-day.png",
+        "night": "veh.tank-night.png"
+      },
+      "glbSha256": "229c951bd48c1b4bb4a6c37f8f4a68f5b9d1f20bf4076912785d0cfd03f29256",
+      "imageSha256": {
+        "day": "c5352cb555d199d38c8d7deadc7b32e5890df611dc0af3d60c9e857e9a76b888",
+        "night": "2b33f4624bcdfe0d39d33d1a83a4f774cf9943a78ff15f6cdcbe4fc384dbe275"
+      }
+    },
+    {
+      "asset": "veh.train-freight",
+      "glb": "public/assets/models/veh.train-freight.glb",
+      "anchors": 4,
+      "renders": {
+        "day": "veh.train-freight-day.png",
+        "night": "veh.train-freight-night.png"
+      },
+      "glbSha256": "b14241524bb4d7ec7c83215236f565f1160a10863ff6fc8f055c6977b07b396a",
+      "imageSha256": {
+        "day": "2c788a7f36092c3d370bad7217fdc1518e6013da9ff8552bf7d12e1530cc595e",
+        "night": "191638ffc94f1f377a92ff94ab883b8706699fa1e78a46bbf2dd38825fe1ad57"
+      }
+    }
+  ]
+}
