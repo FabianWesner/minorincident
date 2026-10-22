@@ -13,3 +13,6 @@
 - `evidence/matrix.sh` pairs before/after per configuration under ≤20-minute quiet reservations; each configuration includes a ten-second real-movement segment and every cold load records its first post-card frames. Budget/gate are in `docs/qa/regression-gate.md` and `tools/perf/cold-load-time.ts`.
 
 - Pose revision L1 acceptance is complete: all four configurations pass N=20, all medians improve, worst load 3.009 s, max recorded post-card frame 50.0 ms. L10/L8/L7/L4 acceptance remains in progress.
+- L10 WebGL2/high N=20 passes on the pose revision: median/p90/max 5.594/5.643/5.644 s (baseline 8.476/8.895/10.244 s); recorded post-card max 16.8 ms. No load budget was relaxed.
+- Pose revision full remote suite passes (exit 0, 2,446 tests; 443 files), with all seven runtime source hashes verified against the measured bundle. L10 WebGPU/high N=20 passes at 5.549/5.607/5.625 s median/p90/max.
+- All four L10 N=20 configurations pass on the pose revision. WebGPU low: 5.529/5.571/5.610 s median/p90/max. Worst of all 80 L10 cold loads: 5.676 s; every configuration median improves. L1+L10 acceptance complete (8/20 configurations); L8/L7/L4 remain.
