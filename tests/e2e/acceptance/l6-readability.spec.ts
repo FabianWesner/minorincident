@@ -26,7 +26,10 @@ for (const backend of backends) for (const tier of ['high', 'low'] as const) tes
         // The old offset static pose cropped the 3.6 m rear subject at the closest zoom.
         const rig = game.view.view, playerAt = a.getEntity(1)!.transform;
         rig.reset(playerAt); rig.zoom(Math.log(zoom), true); rig.update(playerAt, 0);
-        const id = a.spawn('infected.runner', { x: spot.x, z: spot.z - 1.4 }, { state: 'idle', yaw: -Math.PI / 4 });
+        // The landscape rig is vertically tighter; portrait is horizontally tighter.
+        // Keep both subjects separate and fully visible at their real closest zoom.
+        const subjectOffset = innerWidth < innerHeight ? { x: 0, z: -1.4 } : { x: 1.2, z: -.4 };
+        const id = a.spawn('infected.runner', { x: spot.x + subjectOffset.x, z: spot.z + subjectOffset.z }, { state: 'idle', yaw: -Math.PI / 4 });
         a.vfx.stepRender(.3); game.view.probeVisibility({ courier: false, crowd: false, bars: true }); await a.screenshotReady();
         const e = a.getEntity(id)!, p = a.getEntity(1)!.transform;
         const batches = (game.view as unknown as { crowd: { batches: Map<string, { mesh: import('three').InstancedMesh; state: import('three').InterleavedBufferAttribute; tint: import('three').InterleavedBufferAttribute; poses: import('../../../src/render/characters/CrowdPosePalette').CrowdPosePalette; probe: { figures: { id: number }[] } }> } }).crowd.batches;
@@ -53,10 +56,11 @@ for (const backend of backends) for (const tier of ['high', 'low'] as const) tes
           }
         }
         const bounds = (points: number[][]) => [Math.min(...points.map(p => p[0])), Math.min(...points.map(p => p[1])), Math.max(...points.map(p => p[0])), Math.max(...points.map(p => p[1]))];
-        return { id, alive: e.health.current > 0, body: bounds(body), eyes: bounds(eyes), triangles, bodyVertices: body.length, eyeVertices: eyes.length,
+        return { id, subjectOffset, alive: e.health.current > 0, body: bounds(body), eyes: bounds(eyes), triangles, bodyVertices: body.length, eyeVertices: eyes.length,
           ring: Array.from({ length: 16 }, (_, k) => a.camera.project(p.x + 2 * Math.cos(k * Math.PI / 8), p.y - .7, p.z + 2 * Math.sin(k * Math.PI / 8))),
           backend: a.perf().backend, tier: a.perf().quality.tier, lighting: a.perf().lighting, emergency: a.missions.state()!.l6!.emergency, flashlight: a.missions.state()!.l6!.flashlight };
       }, { spot, zoom });
+      writeFileSync(`${out}/setup.json`, JSON.stringify(setup, null, 2));
       expect(setup.alive).toBe(true); expect(setup.bodyVertices).toBeGreaterThan(0); expect(setup.eyeVertices).toBeGreaterThan(0);
       expect(setup.backend).toBe(backend); expect(setup.tier).toBe(tier); expect(setup.emergency).toBe(true); expect(setup.flashlight).toBe(true);
       for (const coordinate of [...setup.body, ...setup.eyes]) expect(Math.abs(coordinate), 'readability subject inside viewport').toBeLessThan(.99);
