@@ -62,7 +62,7 @@ const presets = {
     // gradeHighlight one step off L9's (#d6e2f2): the merged look-l10b/road-life preset had the same grade signature as L9 (@E25 atmosphere 2).
     look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d4e0f0', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#48527c', hazeAmount: 0, beamStrength: 2.4, dust: '#c8d8ff', leaf: '#7b838d', petal: '#5f6670', groundBreakup: .22, roadNeutral: .85 }, ambient: { leaf: 30, dust: 40, bird: 0, glow: 1.6 } },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
-  "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, lampInsects: true,
+  "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, lampInsects: true,
     look: { skyAmbient: '#9dbfce', groundAmbient: '#8d987c', vignette: .08, bloomStrength: .2, gradeShadow: '#3f7f86', gradeHighlight: '#ffd88a', gradeAmount: .75, gradeContrast: 1.05, gradeSaturation: 1.12, haze: '#3a6e58', hazeAmount: .42, hazeHeight: 4, beamStrength: 2.6, dust: '#c6ff66' }, ambient: { leaf: 0, dust: 45, bird: 0, glow: 3 } },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */
   night: { sun: '#8fa6ff', intensity: 0.2, polar: 0.7, azimuth: 2.4, shadow: '#2f2d55', sky: '#141c33', fog: '#26304d', fogNear: 42, fogFar: 115, practical: 1, rim: .45, aura: .5 },

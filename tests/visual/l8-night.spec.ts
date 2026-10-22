@@ -24,7 +24,7 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
         a.teleport(1, { x, z }); await a.step(1);
         const p = a.getEntity(1)!.transform, rig = game.view.view;
         a.camera.follow(); rig.reset(p); rig.zoom(Math.log(zoom), true); rig.update(p, 0); await a.screenshotReady();
-        return { tick: a.getState().tick, phase: a.getState().l8, camera: a.getState().render.camera, backend: a.perf().backend, tier: a.perf().quality.tier,
+        return { readabilityKey: (game.view as unknown as { lighting: import('../../src/render/Lighting').Lighting }).lighting.heroSurfaceFill.value, tick: a.getState().tick, phase: a.getState().l8, camera: a.getState().render.camera, backend: a.perf().backend, tier: a.perf().quality.tier,
           ring: Array.from({ length: 16 }, (_, i) => a.camera.project(p.x + 2 * Math.cos(i * Math.PI / 8), p.y - .7, p.z + 2 * Math.sin(i * Math.PI / 8))) };
       }, { name, x, z, zoom });
       const image = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/${name}.png` }));
