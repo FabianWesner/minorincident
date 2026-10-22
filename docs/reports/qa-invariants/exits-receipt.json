@@ -1,0 +1,13 @@
+{
+  "gameBaseline": "ba436b90a",
+  "probeRevision": "46c743520",
+  "runner": "94.130.181.173",
+  "job": "qa-invariants-38c23b-94409-1792702903",
+  "executionSeconds": 160.2,
+  "remoteSeconds": 167,
+  "syncSeconds": 65,
+  "selectedCase": "automatic regression invariants 3 scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits",
+  "physicalExitAssertionsPassed": true,
+  "status": "failed",
+  "failure": "AssertionError: actors invariant: 86 missing frames; cast {\"L1/high\":1,\"L1/low\":1,\"L2/high\":26,\"L2/low\":26,\"L3/high\":19,\"L3/low\":19,\"L4/high\":20,\"L4/low\":10,\"L5/high\":29,\"L5/low\":29,\"L6/high\":29,\"L6/low\":29,\"L7/high\":24,\"L7/low\":15,\"L8/high\":18,\"L8/low\":18,\"L9/high\":0,\"L9/low\":0,\"L10/high\":0,\"L10/low\":0}: expected [ \u2026(20) ] to deeply equal []"
+}
