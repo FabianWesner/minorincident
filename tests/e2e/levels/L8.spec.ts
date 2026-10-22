@@ -141,6 +141,8 @@ test.describe('phone escape input', () => {
       await stepZoo(page, Math.min(30, Math.max(2, Math.floor(obs.distance * 8))));
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     }
+    const final = await page.evaluate(() => window.__SS__!.getState());
+    mkdirSync(out, { recursive: true }); writeFileSync(`${out}/phone-escape-final.json`, JSON.stringify(final, null, 2));
     await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L9', undefined, { timeout: 120_000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/touch-l9-arrival.png` });

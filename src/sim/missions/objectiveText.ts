@@ -41,10 +41,17 @@ export function objectiveText(mission: Mission, fallback: string): string {
     const name = missing && (l5Survivors.find(s=>s.key===missing.key)?.name ?? `Survivor ${w.entities.get(missing.id)!.civilian!.survivor!.slot+1}`);
     return `${fallback} · Group ${group.near}/${group.total} nearby${name ? ` · Waiting for ${name}` : ''}`;
   }
-  if (mission.def.l8 && s.steps.depart?.status === 'active') {
-    const ids=mission.l8!.roster(),car=w.vehicles!.cars.get(mission.l8!.state.carId)!.entity.vehicle!;
-    const text=w.vehicles!.active===mission.l8!.state.carId?fallback:'Return to the armored vehicle and board';
-    return `${text} · ${ids.filter(id=>car.passengers?.some(p=>p.id===id&&p.phase==='seated')).length}/${ids.length} aboard`;
+  if (mission.def.l8) {
+    const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
+    if(seated&&!zoo.state.breachedAt)return `Wait for the breach · ${Math.max(0,Math.ceil((zoo.state.startedAt+3600-w.tick)/60))} s`;
+    if(s.steps.depart?.status==='active') {
+      const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
+      const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated'));
+      const names=missing.map(id=>{const e=w.entities.get(id)!;return e.companion?'Corgi':l5Survivors.find(s=>s.key===e.civilian?.survivor?.key)?.name??`Survivor ${(e.civilian?.survivor?.slot??0)+1}`;});
+      const text=seated?fallback:'Return to the armored vehicle and board';
+      const waiting=names.length?` · ${names.slice(0,2).join(', ')} missing${names.length>2?` (+${names.length-2} others)`:''}`:'';
+      return `${text} · ${ids.length-missing.length}/${ids.length} aboard${waiting}`;
+    }
   }
   return fallback;
 }

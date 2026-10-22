@@ -125,6 +125,10 @@ export class LevelEightZoo {
       this.mission.setState('breached', true); this.mission.checkpoint('breach');
       w.events.emit({ type: 'story.say', tick: t, id: 1, text: 'They are coming from the tunnels! Get to the armored vehicle!', position: w.entities.get(1)!.transform });
     }
+    const seated=this.w.vehicles!.active===s.carId;
+    this.mission.setState('player-boarded',seated);
+    if(seated)this.mission.state.marker=null;
+    else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
     if (!s.breachedAt) return;
     if (t >= s.nextWave) {
       s.nextWave = t + 240;
@@ -133,12 +137,15 @@ export class LevelEightZoo {
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
     Object.assign(this.mission.def.anchors.exit,this.boardingRing());
-    this.mission.setState('player-boarded',w.vehicles!.active===s.carId);
-    if(this.mission.state.steps.depart.status==='active')this.mission.state.marker=w.vehicles!.active===s.carId?null:'exit';
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
-    const group = this.roster(); for (const e of w.entities.iterate()) if (e.companion) group.push(e.id);
-    if (w.vehicles!.groupBoarded(s.carId, group)) this.mission.setState('aboard', true);
+    if (w.vehicles!.groupBoarded(s.carId, this.passengers())) this.mission.setState('aboard', true);
   }
+  /** Complete living boarding group, including companions shown in the HUD. */
+  passengers(): number[] {
+    return [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.roster()];
+  }
+  /** E30 departure starts only after the breach and the complete group has boarded. */
+  canDrive(): boolean { return !!this.state.breachedAt && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;

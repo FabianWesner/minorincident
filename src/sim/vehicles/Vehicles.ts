@@ -130,7 +130,9 @@ export class Vehicles {
       if (this.active !== car.entity.id) this.autopilot.get(car.entity.id)?.(drive, car.entity);
       // The floor vehicle has no voluntary exit: the interact input is ignored until the scripted crash.
       if (this.active === car.entity.id && frame.interact && !state.floor) this.exit(car);
-      if (this.operable(car) && this.active === car.entity.id) {
+      const zoo=this.world.missions?.l8;
+      const waitingForBoarding=zoo?.state.carId===car.entity.id&&!zoo.canDrive();
+      if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
           drive.steer = frame.drive?.steer ?? -frame.move.z;
