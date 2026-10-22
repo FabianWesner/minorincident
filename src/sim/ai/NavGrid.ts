@@ -48,7 +48,9 @@ export class NavGrid {
   private readonly open: Uint8Array;
   private readonly pathSeen: Uint32Array;
   private pathStamp = 0;
-  private readonly heap: { cell: number; score: number }[] = [];
+  // Interleaved cell/score pairs avoid an object allocation for every A* push
+  // when the alarm sends the crowd along fresh paths in the same tick.
+  private readonly heap: number[] = [];
   private readonly buckets = new Map<number, Map<number, Wall[]>>();
   private readonly routeBuckets = new Map<number, Map<number, Wall[]>>();
   private searchFrom = -1;
@@ -396,15 +398,24 @@ export class NavGrid {
     return next;
   }
   private push(cell: number, score: number): void {
-    const item = { cell, score }; let index = this.heap.length; this.heap.push(item);
-    while (index > 0) { const parent = (index - 1) >> 1; if (this.heap[parent].score <= score) break; this.heap[index] = this.heap[parent]; index = parent; }
-    this.heap[index] = item;
+    let index = this.heap.length; this.heap.push(cell, score);
+    while (index > 0) {
+      const parent = ((index - 2) >> 2) * 2;
+      if (this.heap[parent + 1] <= score) break;
+      this.heap[index] = this.heap[parent]; this.heap[index + 1] = this.heap[parent + 1]; index = parent;
+    }
+    this.heap[index] = cell; this.heap[index + 1] = score;
   }
   private pop(): number {
-    const cell = this.heap[0].cell, item = this.heap.pop()!;
+    const cell = this.heap[0], score = this.heap.pop()!, item = this.heap.pop()!;
     if (this.heap.length) { let index = 0;
-      while (index * 2 + 1 < this.heap.length) { let next = index * 2 + 1; if (next + 1 < this.heap.length && this.heap[next + 1].score < this.heap[next].score) next++; if (this.heap[next].score >= item.score) break; this.heap[index] = this.heap[next]; index = next; }
-      this.heap[index] = item;
+      while (index * 2 + 2 < this.heap.length) {
+        let next = index * 2 + 2;
+        if (next + 2 < this.heap.length && this.heap[next + 3] < this.heap[next + 1]) next += 2;
+        if (this.heap[next + 1] >= score) break;
+        this.heap[index] = this.heap[next]; this.heap[index + 1] = this.heap[next + 1]; index = next;
+      }
+      this.heap[index] = item; this.heap[index + 1] = score;
     }
     return cell;
   }

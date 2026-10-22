@@ -1,0 +1,11 @@
+{
+  "runner": "94.130.181.173",
+  "command": "npm run typecheck && npm run lint && npx vitest run tests/unit/performance/nav-heap-allocation.test.ts tests/unit/ai/nav-pocket-memo.test.ts tests/unit/performance/nav-reach-equivalence.test.ts tests/sim/ai/navigation.test.ts tests/levels/L4-alarm-allocation-parity.test.ts --maxWorkers=4 && npm run build",
+  "exit": 0,
+  "filesPassed": 5,
+  "testsPassed": 25,
+  "buildSeconds": 16.2,
+  "distIndexSha256": "2bce13cc4b97c35d0df9d2fa8deda6148b027f1f39f6e077263a03806d9731f2",
+  "navGridSha256": "9e4c5af494c86343f4bbaaf607fa944850ea8e9f839f3856ce3d1fb766fb6c94",
+  "note": "Production dist was built remotely and pulled before final native measurements; baseline worktree/dist remain unchanged."
+}
