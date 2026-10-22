@@ -12,6 +12,7 @@ for (const backend of ['webgl2', 'webgpu']) for (const tier of tiers) {
   for (const result of [before, after]) {
     assert.equal(result.bodies.length, result.kills.length);
     assert.deepEqual(result.errors, []);
+    assert.equal(result.profiledAssault, false, 'CPU-profiler runs are diagnostic, not cadence acceptance');
     assert.equal(result.nativePerformance.fromTick, 1);
     assert.equal(result.nativePerformance.toTick, 5551);
     assert.ok(result.nativePerformance.frames > 5000);
