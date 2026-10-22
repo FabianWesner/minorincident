@@ -193,17 +193,18 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const graded = float(1).toVar();
       const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
       if (!emissive && (mode & flags.hero)) {
+        // Underground uses the same local separation on low, where the flashlight has no shadow.
         // A soft contact shade separates the courier from the night road without
         // raising her highlights. Moving figures (including the corgi) keep their lighting.
         const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
-          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+          .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
         result.mulAssign(contact.mul(-.6).add(1));
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
           .mul(figureFillAmount.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
-          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+          .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
         result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
           // Hue-preserving albedo lift: scale RGB together so HSV hue/saturation stay authored
