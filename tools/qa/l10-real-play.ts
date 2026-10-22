@@ -69,10 +69,11 @@ try {
   for (const zoom of [.5, 1, 1.5]) {
     const state = await session.page.evaluate(async zoom => {
       const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game, rig = g.view.view, hero = g.world.entities.get(1)!.transform;
+      const light = (g.view as unknown as { lighting: { sun: { visible: boolean }; spot: { visible: boolean }; heroLight: string | null } }).lighting;
       a.inspect.enable(false);
       rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
       await a.step(1); await a.screenshotReady();
-      return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, corpses: a.query({}).filter(e => e.corpse).length };
+      return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, corpses: a.query({}).filter(e => e.corpse).length, lighting: { sun: light.sun.visible, spot: light.spot.visible, heroLight: light.heroLight } };
     }, zoom);
     assert.equal(state.backend, session.options.backend === 'webgl2' ? 'webgl' : 'webgpu');
     assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);

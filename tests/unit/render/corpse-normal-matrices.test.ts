@@ -22,9 +22,9 @@ test('PO #98 corpse placement precomputes the same inverse-transpose for scale a
     expect(staticInstanceAttributes(f.mesh)).toBe(true);
     const attribute = f.mesh.geometry.getAttribute('_placementNormal0') as import('three').InterleavedBufferAttribute;
     expect(attribute.data).toBe((f.mesh.geometry.getAttribute('_placement0') as import('three').InterleavedBufferAttribute).data);
-    expect(attribute.data.stride).toBe(25); expect(Object.keys(f.mesh.geometry.attributes).length).toBeLessThanOrEqual(16);
+    expect(attribute.data.stride).toBe(28); expect(Object.keys(f.mesh.geometry.attributes).length).toBeLessThanOrEqual(16);
     const render = () => f.mesh.onBeforeRender({} as never, f.scene, new PerspectiveCamera(), f.mesh.geometry, f.mesh.material as never, null as never);
-    const check = (index: number, normal: number[]) => normal.forEach((n, i) => expect(attribute.data.array[index * 25 + 16 + i]).toBeCloseTo(n, 6));
+    const check = (index: number, normal: number[]) => normal.forEach((n, i) => expect(attribute.data.array[index * 28 + 16 + Math.floor(i / 3) * 4 + i % 3]).toBeCloseTo(n, 6));
     render(); check(0, expected[0]); check(1, expected[1]); expect(inverse).toHaveBeenCalledTimes(2);
     const version = attribute.data.version; render(); expect(inverse).toHaveBeenCalledTimes(2); expect(attribute.data.version).toBe(version);
     f.mesh.setMatrixAt(0, matrices[2]); f.mesh.instanceMatrix.needsUpdate = true; render(); check(0, expected[2]); expect(inverse).toHaveBeenCalledTimes(4);
