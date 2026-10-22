@@ -157,16 +157,18 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const candidates = warmCandidates(leaves).filter(leaf => renderer.selectedBackend !== 'webgpu' || !leaf.userData.preRenderNeedsDepth);
     // Shared pose materials change their texture in onBeforeRender. Explicitly
     // warm every batch's atlas before compilation, rather than only the last binding.
-    // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.
-    if (renderer.selectedBackend === 'webgpu' && budgetedWarmUp && pause) {
+    // Upload before linking: a first texSubImage2D otherwise flushes queued native
+    // pipeline compilation and blocks the renderer. Live/background loading keeps
+    // its 4 MiB paint budget; cold foreground loading has an opaque card.
+    if (pause) {
       const textures = new Set<DataTexture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
       let bytes = 0;
       for (const texture of textures) {
         const size = texture.image.data?.byteLength ?? 0;
-        if (bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
+        if ((background || cooperative) && bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
         renderer.initTexture(texture); bytes += size;
       }
-      await pause();
+      if (textures.size && (background || cooperative)) await pause();
       performance.measure('Texture atlas upload', { start, end: performance.now() });
     }
     progress?.(0, 1);
