@@ -1,10 +1,10 @@
 # P1-107 scene-loading investigation — work in progress
 
-- Requested base branches integrated; baseline runtime `9698a393c`, source/build identity in `evidence/before-build.json`.
-- No runtime fix is verified yet. Quiet unprofiled L1 WebGPU low/high baselines now have 20 samples each (median/max 2.459/2.561 s and 2.485/2.593 s).
-- L1: 25 low WebGPU traces max 2.872 s; 20 low WebGL2 traces max 3.759 s. Five high traces per backend max 2.724 / 2.981 s. The original 10–16 s L1 stall has not recurred.
-- Later-level single samples: L7 low WebGPU/WebGL2 6.482/6.065 s; L10 8.981–9.466 s across four configurations. These do not establish quiet-run budget failures.
-- L10 low profile: ~4.8 s scene assembly (crowd baking/geometry), then ~2.7 s TSL generation; see `evidence/L10-low-{assembly,shaders}.txt` and retained raw profile/trace.
-- The quiet L1 WebGL2 baseline batch is running. L8 (reported 23–25 s) was added; 20-configuration before/after distributions and candidate gameplay checks remain outstanding.
-- The asynchronous foreground WebGPU experiment passes 18 targeted remote warm-up unit tests; baseline unit/level suite is running; final remote suite, smoke, gameplay-frame checks and the L10 #100 replay remain outstanding.
-- `tools/perf/cold-load-time.ts` records fresh-profile samples, optional traces and the load/frame/median gate; the budget is specified in `docs/qa/regression-gate.md`.
+- Baseline runtime `9698a393c`; build/source identity in `evidence/before-build.json`. Final performance acceptance is still outstanding.
+- Quiet L1 baseline, 20 fresh profiles/config: GPU low median/p90/max 2.459/2.511/2.561 s; high 2.485/2.559/2.593 s; GL low 2.642/2.719/2.743 s; high 2.627/2.686/2.773 s. Original 10–16 s L1 outlier has not recurred.
+- Quiet diagnostic L8 reproduces 24.490 s: 17.708 s scene assembly (17.256 s infected-crowd), 6.177 s warm-up; retained raw profile/trace in `evidence/diagnostic-L8/`.
+- L8 unnecessarily used the live-handover pacing on cold menu entry; L8/L10 also prepared unused catalogue creatures and duplicate pedestrian batches already drawn by CivilianCrowd.
+- Candidate keeps live L7→L8 pacing, uses foreground compilation for cold entry, and prepares every L10 future encounter, dog coat and Alpha/Mega look. Actual GPU driver draws/fences and alternate-light warm-up remain in place.
+- Targeted preparation tests: 23/23 local pass (previous 22-test candidate also passed remotely). Revised remote typecheck/lint/build and final full suite are running; browser admission is queued.
+- Baseline remote suite: 2,423 pass, 3 fail (stale lighting-preview HTML expectation now fixed; asset-validation and L9 navigation timeouts). Final full suite, smoke and L10 replay remain outstanding.
+- `evidence/matrix.sh` pairs before/after per configuration under ≤20-minute quiet reservations; candidate samples include ten seconds of real movement. Budget/gate are in `docs/qa/regression-gate.md` and `tools/perf/cold-load-time.ts`.
