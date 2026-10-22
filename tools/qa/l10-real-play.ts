@@ -17,7 +17,7 @@ try {
     const prior = g.view.renderer.debug.onNodeBuilderCreated;
     g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
       prior?.(builder, object);
-      if (object.material?.name === 'pal_asphalt') (window as unknown as { l10Shader: unknown }).l10Shader = builder;
+      if ((object as { material?: { name: string } }).material?.name === 'pal_asphalt') (window as unknown as { l10Shader: unknown }).l10Shader = builder;
     };
   });
   const result = await session.page.evaluate(async ({ tier }) => {
