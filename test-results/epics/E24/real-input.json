@@ -1,11 +1,11 @@
 {
   "result": {
-    "time": 275.05,
+    "time": 298,
     "kills": 0,
-    "knockdowns": 87,
-    "damage": 0,
+    "knockdowns": 82,
+    "damage": 30,
     "deaths": 0,
-    "rescued": 20,
+    "rescued": 18,
     "optionalObjectives": [],
     "survivors": [
       "shelter-0",
@@ -13,6 +13,7 @@
       "shelter-3",
       "shelter-4",
       "shelter-6",
+      "shelter-7",
       "shelter-8",
       "shelter-9",
       "shelter-11",
@@ -20,14 +21,11 @@
       "shelter-13",
       "shelter-14",
       "shelter-16",
+      "shelter-17",
       "shelter-18",
       "shelter-19",
-      "shelter-20",
-      "shelter-22",
-      "shelter-23",
-      "rosa",
-      "okafor",
-      "sam"
+      "shelter-21",
+      "rosa"
     ],
     "survivorsIn": 29,
     "escapedSurvivors": [
@@ -36,10 +34,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 262.9934681296883,
-          "z": 14.976295444007953,
+          "x": 262.99718520461573,
+          "z": 14.989304320986177,
           "y": 4.6,
-          "yaw": 3.0449656711232933
+          "yaw": 3.044918913921245
         },
         "health": {
           "current": 60,
@@ -69,8 +67,8 @@
             }
           ],
           "scheduleStep": 0,
-          "activityUntil": 49681,
-          "activityStarted": 13681,
+          "activityUntil": 49976,
+          "activityStarted": 13976,
           "lastTravelProgress": 0,
           "routine": "shop",
           "waypoints": [
@@ -700,10 +698,10 @@
             "repickAt": 0,
             "noticed": -1,
             "progressFrom": {
-              "x": 263.0068322009685,
-              "z": 14.979645588562327
+              "x": 263.01054722452824,
+              "z": 14.992662645755475
             },
-            "progressAt": 13620
+            "progressAt": 13915
           },
           "survivor": {
             "key": "shelter-0",
@@ -726,8 +724,8 @@
             "post": null,
             "hold": true,
             "targetId": 0,
-            "nextAttack": 3877,
-            "hits": 13,
+            "nextAttack": 4460,
+            "hits": 16,
             "forceUntil": 0,
             "gun": {
               "damage": 20,
@@ -741,18 +739,17 @@
             "strikeAt": 0,
             "lastHp": 60,
             "still": {
-              "x": 152.29994476819766,
-              "z": 14.274996933624497,
-              "tick": 10110
+              "x": 6.145208916960092,
+              "z": 3.432565953815205,
+              "tick": 4438
             },
-            "blockedAt": 10110,
-            "mag": 3,
+            "mag": 7,
             "burstN": 0,
-            "strikeTarget": 66,
-            "stepAfter": 3937,
-            "repoHits": 8,
-            "reloadUntil": 3708,
-            "calloutAt": 3624,
+            "strikeTarget": 58,
+            "stepAfter": 4537,
+            "repoHits": 16,
+            "reloadUntil": 3724,
+            "calloutAt": 3640,
             "baton": false
           },
           "hold": 2
@@ -782,7 +779,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 297.9124352005678
+          "distance": 297.51169417413894
         },
         "locomotion": {
           "vx": 0,
@@ -799,10 +796,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0235658208222,
-          "z": 15.725802805858498,
+          "x": 263.0091521276219,
+          "z": 15.723853247143335,
           "y": 4.6,
-          "yaw": -0.001992118685420192
+          "yaw": -0.0035747973585709275
         },
         "health": {
           "current": 60,
@@ -844,21 +841,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 70,
-          "entered": 10132,
-          "until": 10132,
+          "entered": 2756,
+          "until": 2756,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
-          "attacker": 102,
+          "attacker": 0,
           "threat": {
-            "x": 156.6465855244358,
-            "z": 16.100991095531093,
-            "y": 1.2999999999999998,
-            "yaw": 2.126382770899844
+            "x": 6.7725165032175125,
+            "z": -4.340595372769373,
+            "y": 1.300000011920929,
+            "yaw": 0.44801820565736955
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 24,
+          "pathIndex": 5,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -867,9 +864,8 @@
             "startleTicks": 25,
             "refuge": null,
             "target": null,
-            "repickAt": 10132,
-            "noticed": -1,
-            "graceUntil": 10192
+            "repickAt": 0,
+            "noticed": -1
           },
           "survivor": {
             "key": "shelter-2",
@@ -881,8 +877,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 10265,
-          "hold": 1
+          "dangerUntil": 3821,
+          "hold": 3
         },
         "combat": {
           "radius": 0.35,
@@ -909,7 +905,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 300.745780536517
+          "distance": 297.8951246635024
         },
         "locomotion": {
           "vx": 0,
@@ -926,10 +922,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0073384015417,
-          "z": 14.213312929767717,
+          "x": 263.00262209716493,
+          "z": 14.275961713644618,
           "y": 4.6,
-          "yaw": -0.02018756210762809
+          "yaw": 0.23945344331765223
         },
         "health": {
           "current": 60,
@@ -971,21 +967,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 46,
-          "entered": 3583,
-          "until": 3583,
+          "entered": 3643,
+          "until": 3643,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
-          "attacker": 68,
+          "attacker": 64,
           "threat": {
-            "x": 5.142226345473005,
-            "z": -4.009636181074364,
-            "y": 1.300000011920929,
-            "yaw": -1.211277857085472
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 4,
+          "pathIndex": 5,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -994,9 +990,9 @@
             "startleTicks": 48,
             "refuge": null,
             "target": null,
-            "repickAt": 3583,
+            "repickAt": 3643,
             "noticed": -1,
-            "graceUntil": 3643
+            "graceUntil": 3703
           },
           "survivor": {
             "key": "shelter-3",
@@ -1008,8 +1004,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3826,
-          "hold": 2
+          "dangerUntil": 13925,
+          "hold": 0
         },
         "combat": {
           "radius": 0.35,
@@ -1036,7 +1032,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 297.91015249831975
+          "distance": 301.9164290485655
         },
         "locomotion": {
           "vx": 0,
@@ -1053,10 +1049,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0171172407785,
-          "z": 14.999999758772157,
+          "x": 263.03485544160264,
+          "z": 14.999998252459056,
           "y": 4.6,
-          "yaw": -0.0000030000644869727233
+          "yaw": -0.0000022128214637511753
         },
         "health": {
           "current": 60,
@@ -1098,21 +1094,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 19,
-          "entered": 3722,
-          "until": 3722,
+          "entered": 3693,
+          "until": 3693,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
-          "attacker": 70,
+          "attacker": 58,
           "threat": {
-            "x": 156.6465855244358,
-            "z": 16.100991095531093,
-            "y": 1.2999999999999998,
-            "yaw": 2.126382770899844
+            "x": 7.173173727898232,
+            "z": -4.806934505492,
+            "y": 1.300000011920929,
+            "yaw": 0.7995630884180279
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 40,
+          "pathIndex": 0,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -1121,9 +1117,9 @@
             "startleTicks": 24,
             "refuge": null,
             "target": null,
-            "repickAt": 3722,
+            "repickAt": 3693,
             "noticed": -1,
-            "graceUntil": 3782
+            "graceUntil": 3753
           },
           "survivor": {
             "key": "shelter-4",
@@ -1135,8 +1131,7 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 10265,
-          "hold": 3
+          "dangerUntil": 3861
         },
         "combat": {
           "radius": 0.35,
@@ -1163,7 +1158,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 299.1384152639937
+          "distance": 295.04891838472884
         },
         "locomotion": {
           "vx": 0,
@@ -1180,10 +1175,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0014031866242,
-          "z": 14.291138101135337,
+          "x": 263.02771967992885,
+          "z": 13.719793698447498,
           "y": 4.6,
-          "yaw": 0.005583631664925525
+          "yaw": -0.13430453314195753
         },
         "health": {
           "current": 60,
@@ -1225,17 +1220,17 @@
           ],
           "waypoint": 0,
           "pauseUntil": 78,
-          "entered": 3450,
-          "until": 3450,
+          "entered": 3438,
+          "until": 3438,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 5.142226345473005,
-            "z": -4.009636181074364,
+            "x": 7.702864870889382,
+            "z": -8.218147722303366,
             "y": 1.300000011920929,
-            "yaw": -1.211277857085472
+            "yaw": -2.407976636443406
           },
           "path": [],
           "goal": -1,
@@ -1261,8 +1256,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3826,
-          "hold": 3
+          "dangerUntil": 3640,
+          "hold": 1
         },
         "combat": {
           "radius": 0.35,
@@ -1289,7 +1284,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 297.83767044804597
+          "distance": 294.05979026763004
         },
         "locomotion": {
           "vx": 0,
@@ -1306,10 +1301,137 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.017012852581,
-          "z": 15.710458423508694,
+          "x": 263.02658184834763,
+          "z": 14.999154388803333,
           "y": 4.6,
-          "yaw": -0.008138379317940377
+          "yaw": -0.0005058988863155926
+        },
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "civilian": {
+          "state": "flee",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "chat",
+              "anchor": "l6/talk",
+              "target": {
+                "x": 8.599999999999998,
+                "z": -11
+              },
+              "facing": {
+                "x": 5.599999999999998,
+                "z": -11
+              },
+              "ticks": 36000
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": 8.599999999999998,
+              "z": -11
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 39,
+          "entered": 3520,
+          "until": 3520,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 66,
+          "threat": {
+            "x": 7.699488536291663,
+            "z": -8.214580525336718,
+            "y": 1.300000011920929,
+            "yaw": -2.3036393490086047
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 1,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 2.2,
+            "fleeSpeed": 3.674653046950698,
+            "startleTicks": 37,
+            "refuge": null,
+            "target": null,
+            "repickAt": 3520,
+            "noticed": -1,
+            "graceUntil": 3580
+          },
+          "survivor": {
+            "key": "shelter-7",
+            "mode": "hidden",
+            "slot": 7,
+            "leader": 0,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0
+          },
+          "story": null,
+          "dangerUntil": 3660,
+          "hold": 1
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 17,
+        "appearance": {
+          "entityId": 17,
+          "asset": "npc.civilian-man-b.aftermath",
+          "tint": "#79865b",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 291.712295944107
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "hidden": true
+      },
+      {
+        "kind": "civilian",
+        "archetype": "npc.cashier",
+        "faction": "civilian",
+        "transform": {
+          "x": 263.01222019146155,
+          "z": 14.360044783672478,
+          "y": 4.6,
+          "yaw": 0.24511607339551186
         },
         "health": {
           "current": 60,
@@ -1351,21 +1473,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 24,
-          "entered": 10141,
-          "until": 10141,
+          "entered": 13772,
+          "until": 13772,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 156.6465855244358,
-            "z": 16.100991095531093,
-            "y": 1.2999999999999998,
-            "yaw": 2.126382770899844
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 21,
+          "pathIndex": 3,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -1388,7 +1510,7 @@
           },
           "story": null,
           "hold": 2,
-          "dangerUntil": 10265
+          "dangerUntil": 13910
         },
         "combat": {
           "radius": 0.35,
@@ -1415,7 +1537,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 287.11851554162655
+          "distance": 281.14204564833744
         },
         "locomotion": {
           "vx": 0,
@@ -1432,10 +1554,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0228686863316,
-          "z": 14.249582667929364,
+          "x": 263.01625657750316,
+          "z": 14.276185876894232,
           "y": 4.6,
-          "yaw": -0.008605915434934691
+          "yaw": -0.005952722436451541
         },
         "health": {
           "current": 60,
@@ -1484,10 +1606,10 @@
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 1.353302188146325,
-            "z": -5.772949820133606,
-            "y": 1.300000011920929,
-            "yaw": -1.2303041638275345
+            "x": 248.20312946869285,
+            "z": 13.764389652707331,
+            "y": 1.2999999999999998,
+            "yaw": -0.18156301191335625
           },
           "path": [],
           "goal": -1,
@@ -1513,8 +1635,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3791,
-          "hold": 1
+          "dangerUntil": 13693,
+          "hold": 0
         },
         "combat": {
           "radius": 0.35,
@@ -1541,7 +1663,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 295.0799438239133
+          "distance": 301.0984649417676
         },
         "locomotion": {
           "vx": 0,
@@ -1558,10 +1680,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.03509761236006,
-          "z": 15.74864422710322,
+          "x": 263.0447184249742,
+          "z": 14.861215490046822,
           "y": 4.6,
-          "yaw": 0.003927458672931234
+          "yaw": 0.2674636881565229
         },
         "health": {
           "current": 60,
@@ -1610,14 +1732,14 @@
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 5.142226345473005,
-            "z": -4.009636181074364,
-            "y": 1.300000011920929,
-            "yaw": -1.211277857085472
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 4,
+          "pathIndex": 5,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -1639,8 +1761,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3826,
-          "hold": 3
+          "dangerUntil": 13928,
+          "hold": 1
         },
         "combat": {
           "radius": 0.35,
@@ -1667,7 +1789,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 293.0023819771951
+          "distance": 300.4298119717197
         },
         "locomotion": {
           "vx": 0,
@@ -1684,10 +1806,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0056294518347,
-          "z": 14.270496345080058,
+          "x": 263.0257455002205,
+          "z": 15.433485951161993,
           "y": 4.6,
-          "yaw": 0.000039543292932890825
+          "yaw": 0.2529515784135863
         },
         "health": {
           "current": 60,
@@ -1729,17 +1851,17 @@
           ],
           "waypoint": 0,
           "pauseUntil": 54,
-          "entered": 3707,
-          "until": 3707,
+          "entered": 3549,
+          "until": 3549,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
-          "attacker": 58,
+          "attacker": 0,
           "threat": {
-            "x": 6.465312937706295,
-            "z": -4.525962621472075,
-            "y": 1.300000011920929,
-            "yaw": -2.017214349615288
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.5933962504521544
           },
           "path": [],
           "goal": -1,
@@ -1752,9 +1874,8 @@
             "startleTicks": 36,
             "refuge": null,
             "target": null,
-            "repickAt": 3707,
-            "noticed": -1,
-            "graceUntil": 3767
+            "repickAt": 0,
+            "noticed": -1
           },
           "survivor": {
             "key": "shelter-12",
@@ -1766,7 +1887,7 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3869,
+          "dangerUntil": 13970,
           "hold": 0
         },
         "combat": {
@@ -1794,7 +1915,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 296.3885590071579
+          "distance": 304.18254891911204
         },
         "locomotion": {
           "vx": 0,
@@ -1811,17 +1932,17 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.01794619519166,
-          "z": 14.996850888998956,
+          "x": 263.0294278056808,
+          "z": 12.577754999701456,
           "y": 4.6,
-          "yaw": 3.103585192763979
+          "yaw": 0.2256694406990538
         },
         "health": {
           "current": 60,
           "max": 60
         },
         "civilian": {
-          "state": "calm",
+          "state": "flee",
           "ambient": false,
           "adult": true,
           "pet": null,
@@ -1844,8 +1965,8 @@
             }
           ],
           "scheduleStep": 0,
-          "activityUntil": 49641,
-          "activityStarted": 13641,
+          "activityUntil": 0,
+          "activityStarted": 0,
           "lastTravelProgress": 0,
           "routine": "shop",
           "waypoints": [
@@ -1856,529 +1977,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 0,
-          "entered": 0,
-          "until": 0,
+          "entered": 4169,
+          "until": 4169,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 18.9,
-            "z": 5.6
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
-          "path": [
-            58190,
-            58189,
-            58188,
-            58187,
-            58186,
-            58185,
-            58184,
-            58183,
-            58182,
-            58181,
-            58180,
-            58179,
-            58178,
-            58177,
-            58176,
-            58175,
-            58174,
-            58173,
-            58172,
-            58171,
-            58170,
-            58169,
-            58168,
-            58167,
-            58166,
-            58165,
-            58164,
-            58163,
-            58162,
-            58161,
-            58160,
-            58159,
-            58158,
-            58157,
-            57517,
-            56877,
-            56237,
-            55597,
-            54957,
-            54317,
-            53677,
-            53037,
-            52397,
-            51757,
-            51756,
-            51755,
-            51754,
-            51753,
-            51752,
-            51751,
-            51750,
-            51749,
-            51748,
-            51747,
-            51746,
-            51745,
-            51744,
-            51743,
-            51742,
-            51741,
-            51740,
-            51739,
-            51738,
-            51737,
-            51736,
-            51735,
-            51734,
-            51733,
-            51732,
-            51731,
-            51730,
-            51729,
-            51728,
-            51727,
-            51726,
-            51725,
-            51724,
-            51723,
-            51722,
-            51721,
-            51720,
-            51719,
-            51718,
-            51717,
-            51716,
-            51715,
-            51714,
-            51713,
-            51712,
-            51711,
-            51710,
-            51709,
-            51708,
-            51707,
-            51706,
-            51705,
-            51704,
-            51703,
-            51702,
-            51701,
-            51700,
-            51699,
-            51698,
-            51697,
-            51696,
-            51695,
-            51694,
-            51693,
-            51692,
-            51691,
-            51690,
-            51689,
-            51688,
-            51687,
-            51686,
-            51685,
-            51684,
-            51683,
-            51682,
-            51681,
-            51680,
-            51679,
-            51678,
-            51677,
-            51676,
-            51675,
-            51674,
-            51673,
-            51672,
-            51671,
-            51670,
-            51669,
-            51668,
-            51667,
-            51666,
-            51665,
-            51664,
-            51663,
-            51662,
-            51661,
-            51660,
-            51659,
-            51658,
-            51018,
-            50378,
-            49738,
-            49098,
-            48458,
-            47818,
-            47178,
-            47177,
-            47176,
-            47175,
-            47174,
-            47173,
-            47172,
-            47171,
-            47170,
-            47169,
-            47168,
-            47167,
-            47166,
-            47165,
-            47164,
-            47163,
-            47162,
-            47161,
-            47160,
-            47159,
-            47158,
-            47157,
-            47156,
-            47155,
-            47154,
-            47153,
-            47152,
-            47151,
-            47150,
-            47149,
-            47148,
-            47147,
-            47146,
-            47145,
-            47144,
-            47143,
-            47142,
-            47141,
-            47140,
-            47139,
-            47138,
-            47137,
-            47136,
-            47135,
-            47134,
-            47133,
-            47132,
-            47131,
-            47130,
-            47129,
-            47128,
-            47127,
-            47126,
-            47125,
-            47124,
-            47123,
-            47122,
-            47121,
-            47120,
-            47119,
-            47118,
-            47117,
-            47116,
-            47115,
-            47114,
-            47113,
-            47112,
-            47111,
-            47110,
-            47109,
-            47108,
-            47107,
-            47106,
-            47105,
-            47104,
-            47103,
-            47102,
-            47101,
-            47100,
-            47099,
-            47098,
-            47097,
-            47096,
-            47095,
-            47094,
-            47093,
-            47092,
-            47091,
-            47090,
-            47089,
-            47088,
-            47087,
-            47086,
-            47085,
-            47084,
-            47083,
-            47082,
-            47081,
-            47080,
-            47079,
-            47078,
-            47077,
-            47076,
-            47075,
-            47074,
-            47073,
-            47072,
-            47071,
-            47070,
-            47069,
-            47068,
-            47067,
-            47066,
-            47065,
-            47064,
-            47063,
-            47062,
-            47061,
-            47060,
-            47059,
-            47058,
-            47057,
-            47056,
-            47055,
-            47054,
-            47053,
-            47052,
-            47051,
-            47050,
-            47049,
-            47048,
-            47047,
-            47046,
-            47045,
-            47044,
-            47043,
-            47042,
-            47041,
-            47040,
-            47039,
-            47038,
-            47037,
-            47036,
-            47035,
-            47034,
-            47033,
-            47032,
-            47031,
-            47030,
-            47029,
-            47028,
-            47027,
-            47026,
-            47025,
-            47024,
-            47023,
-            47022,
-            47021,
-            47020,
-            47019,
-            47018,
-            47017,
-            47016,
-            47015,
-            47014,
-            47013,
-            47012,
-            47011,
-            47010,
-            47009,
-            47008,
-            47007,
-            47006,
-            47005,
-            47004,
-            47003,
-            47002,
-            47001,
-            47000,
-            46999,
-            46998,
-            46997,
-            46996,
-            46995,
-            46994,
-            46993,
-            46992,
-            46991,
-            46990,
-            46989,
-            46988,
-            46987,
-            46986,
-            46985,
-            46984,
-            46983,
-            46982,
-            46981,
-            46980,
-            46979,
-            46978,
-            46977,
-            46976,
-            46975,
-            46974,
-            46973,
-            46972,
-            46971,
-            46970,
-            46969,
-            46968,
-            46967,
-            46966,
-            46965,
-            46964,
-            46963,
-            46962,
-            46961,
-            46960,
-            46959,
-            46958,
-            46957,
-            46956,
-            46955,
-            46954,
-            46953,
-            46952,
-            46951,
-            46950,
-            46949,
-            46948,
-            46947,
-            46946,
-            46945,
-            46944,
-            46943,
-            46942,
-            46941,
-            46940,
-            46939,
-            46938,
-            46937,
-            46936,
-            46935,
-            46934,
-            46933,
-            46932,
-            46931,
-            46930,
-            46929,
-            46928,
-            46927,
-            46926,
-            46925,
-            46924,
-            46923,
-            46922,
-            46921,
-            46920,
-            46919,
-            46918,
-            46917,
-            46916,
-            46915,
-            46914,
-            46913,
-            46912,
-            46911,
-            46910,
-            46909,
-            46908,
-            46907,
-            46906,
-            46905,
-            46904,
-            46903,
-            46902,
-            46901,
-            46900,
-            46899,
-            46898,
-            46897,
-            46896,
-            46895,
-            46894,
-            46893,
-            46892,
-            46891,
-            46890,
-            46889,
-            46888,
-            46887,
-            46886,
-            46885,
-            46884,
-            46883,
-            46882,
-            46881,
-            46880,
-            46879,
-            46878,
-            46877,
-            46876,
-            46875,
-            46874,
-            46873,
-            46872,
-            46871,
-            46870,
-            46869,
-            46868,
-            46867,
-            46866,
-            46865,
-            46864,
-            46863,
-            46862,
-            46861,
-            46860,
-            46859,
-            46858,
-            46857,
-            46856,
-            46855,
-            46854,
-            46853,
-            46852,
-            46851,
-            46850,
-            46849,
-            46848,
-            46847,
-            46846,
-            46845,
-            46844,
-            46843,
-            46842,
-            46841,
-            46840,
-            46839,
-            46838,
-            46837,
-            46836,
-            46835,
-            46834,
-            46833,
-            46832,
-            46831,
-            46830,
-            46829,
-            46828,
-            46827,
-            46826,
-            46825,
-            46824,
-            46823,
-            46822,
-            46821,
-            46181,
-            45541
-          ],
-          "goal": 45541,
-          "pathIndex": 48,
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -2388,12 +2001,7 @@
             "refuge": null,
             "target": null,
             "repickAt": 0,
-            "noticed": -1,
-            "progressFrom": {
-              "x": 263.03131330181697,
-              "z": 15.000185283641379
-            },
-            "progressAt": 13580
+            "noticed": -1
           },
           "survivor": {
             "key": "shelter-13",
@@ -2405,7 +2013,7 @@
             "foundAt": 0
           },
           "story": null,
-          "hold": 2
+          "dangerUntil": 13914
         },
         "combat": {
           "radius": 0.35,
@@ -2432,7 +2040,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 282.27465158466197
+          "distance": 288.0840451422338
         },
         "locomotion": {
           "vx": 0,
@@ -2449,10 +2057,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0170479272146,
-          "z": 15.401773957975228,
+          "x": 263.0447021782453,
+          "z": 18.417520832548128,
           "y": 4.6,
-          "yaw": -0.09249295374675653
+          "yaw": 0.30892469446701926
         },
         "health": {
           "current": 60,
@@ -2494,21 +2102,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 70,
-          "entered": 3469,
-          "until": 3469,
+          "entered": 3463,
+          "until": 3463,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 7.388835023324429,
-            "z": -8.27701717204837,
-            "y": 1.300000011920929,
-            "yaw": -2.387409850848611
+            "x": 260.819059917674,
+            "z": 19.059380249353275,
+            "y": 4.6,
+            "yaw": -6.030254685473577
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 4,
+          "pathIndex": 5,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -2530,8 +2138,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3612,
-          "hold": 2
+          "dangerUntil": 14480,
+          "hold": 1
         },
         "combat": {
           "radius": 0.35,
@@ -2558,7 +2166,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 294.9491124651848
+          "distance": 316.3398310712945
         },
         "locomotion": {
           "vx": 0,
@@ -2575,10 +2183,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0207168924317,
-          "z": 15.522655389367005,
+          "x": 263.0291662550569,
+          "z": 14.409964290637127,
           "y": 4.6,
-          "yaw": 0.10918732470180559
+          "yaw": 0.25997793064381847
         },
         "health": {
           "current": 60,
@@ -2620,17 +2228,17 @@
           ],
           "waypoint": 0,
           "pauseUntil": 68,
-          "entered": 3665,
-          "until": 3665,
+          "entered": 3814,
+          "until": 3814,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": -5.620201208959742,
-            "z": -6.14862079053899,
-            "y": 1.300000011920929,
-            "yaw": -1.0600370487399071
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
@@ -2656,7 +2264,7 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3820
+          "dangerUntil": 13941
         },
         "combat": {
           "radius": 0.35,
@@ -2683,7 +2291,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 294.08582798443035
+          "distance": 293.267949465078
         },
         "locomotion": {
           "vx": 0,
@@ -2700,10 +2308,136 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.04916545124905,
-          "z": 16.654615899301717,
+          "x": 263.024579528253,
+          "z": 16.64564636929685,
           "y": 4.6,
-          "yaw": -0.07264061011952419
+          "yaw": 0.23938520941977798
+        },
+        "health": {
+          "current": 60,
+          "max": 60
+        },
+        "civilian": {
+          "state": "flee",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b.aftermath",
+          "variant": "inf.cashier",
+          "schedule": [
+            {
+              "activity": "chat",
+              "anchor": "l6/talk",
+              "target": {
+                "x": -5.7,
+                "z": -6
+              },
+              "facing": {
+                "x": -8.7,
+                "z": -6
+              },
+              "ticks": 36000
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 0,
+          "activityStarted": 0,
+          "lastTravelProgress": 0,
+          "routine": "shop",
+          "waypoints": [
+            {
+              "x": -5.7,
+              "z": -6
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 88,
+          "entered": 3652,
+          "until": 3652,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 5,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 2.2,
+            "fleeSpeed": 3.81666218675673,
+            "startleTicks": 36,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1
+          },
+          "survivor": {
+            "key": "shelter-17",
+            "mode": "hidden",
+            "slot": 17,
+            "leader": 0,
+            "cover": false,
+            "waitAt": 0,
+            "foundAt": 0
+          },
+          "story": null,
+          "dangerUntil": 13941,
+          "hold": 3
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 27,
+        "appearance": {
+          "entityId": 27,
+          "asset": "npc.civilian-man-b.aftermath",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 296.816349294417
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "hidden": true
+      },
+      {
+        "kind": "civilian",
+        "archetype": "npc.cashier",
+        "faction": "civilian",
+        "transform": {
+          "x": 263.0291144415693,
+          "z": 9.164867675417385,
+          "y": 4.6,
+          "yaw": -0.10835262823417866
         },
         "health": {
           "current": 60,
@@ -2745,21 +2479,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 1,
-          "entered": 13279,
-          "until": 13279,
+          "entered": 4167,
+          "until": 4167,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 255.22710335222945,
-            "z": 14.312581403797342,
+            "x": 258.2199197062821,
+            "z": 16.940543975976713,
             "y": 4.6,
-            "yaw": -0.5092488696440435
+            "yaw": 0.36953503748068306
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 5,
+          "pathIndex": 8,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -2781,8 +2515,8 @@
             "foundAt": 0
           },
           "story": null,
-          "hold": 3,
-          "dangerUntil": 13694
+          "hold": 0,
+          "dangerUntil": 14014
         },
         "combat": {
           "radius": 0.35,
@@ -2809,7 +2543,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 289.51271894923264
+          "distance": 299.23212561264
         },
         "locomotion": {
           "vx": 0,
@@ -2826,10 +2560,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.03031296956436,
-          "z": 14.980087999333326,
+          "x": 263.0036305358486,
+          "z": 18.342796256427135,
           "y": 4.6,
-          "yaw": 0.013126056738168796
+          "yaw": 0.15839620829449033
         },
         "health": {
           "current": 60,
@@ -2871,17 +2605,17 @@
           ],
           "waypoint": 0,
           "pauseUntil": 88,
-          "entered": 3636,
-          "until": 3636,
+          "entered": 3593,
+          "until": 3593,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 1.353302188146325,
-            "z": -5.772949820133606,
-            "y": 1.300000011920929,
-            "yaw": -1.2303041638275345
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
+            "y": 4.6,
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
@@ -2907,7 +2641,7 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 3791
+          "dangerUntil": 13939
         },
         "combat": {
           "radius": 0.35,
@@ -2934,7 +2668,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 290.66648747772047
+          "distance": 293.0734500130716
         },
         "locomotion": {
           "vx": 0,
@@ -2951,10 +2685,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.01488230079076,
-          "z": 15.034905962845675,
+          "x": 263.0165065370749,
+          "z": 10.107388846452622,
           "y": 4.6,
-          "yaw": 0.009036510200060901
+          "yaw": -0.0828843171090744
         },
         "health": {
           "current": 60,
@@ -2966,19 +2700,19 @@
           "adult": true,
           "pet": null,
           "owner": null,
-          "model": "npc.shelter-survivor.bandaged",
+          "model": "npc.shelter-survivor.sitting",
           "variant": "inf.cashier",
           "schedule": [
             {
-              "activity": "look",
-              "anchor": "l6/share",
+              "activity": "sit",
+              "anchor": "l6/sit",
               "target": {
-                "x": 22,
-                "z": 8
+                "x": 3.5,
+                "z": -6
               },
               "facing": {
-                "x": 25,
-                "z": 8
+                "x": 0.5,
+                "z": -6
               },
               "ticks": 36000
             }
@@ -2990,50 +2724,51 @@
           "routine": "shop",
           "waypoints": [
             {
-              "x": 22,
-              "z": 8
+              "x": 3.5,
+              "z": -6
             }
           ],
           "waypoint": 0,
-          "pauseUntil": 32,
-          "entered": 4157,
-          "until": 4157,
+          "pauseUntil": 2,
+          "entered": 10457,
+          "until": 10457,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
-          "attacker": 0,
+          "attacker": 100,
           "threat": {
-            "x": 251.89958714379466,
-            "z": 13.123607567782463,
-            "y": 0.7,
-            "yaw": -1.8876286062889371
+            "x": 257.8312287591556,
+            "z": 17.151134742312735,
+            "y": 4.6,
+            "yaw": 0.5454328159969708
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 72,
+          "pathIndex": 10,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
-            "walkSpeed": 1.4,
-            "fleeSpeed": 3.6527784595265986,
-            "startleTicks": 42,
+            "walkSpeed": 2.2,
+            "fleeSpeed": 3.542511553503573,
+            "startleTicks": 38,
             "refuge": null,
             "target": null,
-            "repickAt": 0,
-            "noticed": -1
+            "repickAt": 10457,
+            "noticed": -1,
+            "graceUntil": 10517
           },
           "survivor": {
-            "key": "shelter-20",
+            "key": "shelter-21",
             "mode": "hidden",
-            "slot": 20,
+            "slot": 21,
             "leader": 0,
             "cover": false,
             "waitAt": 0,
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 15799,
-          "hold": 1
+          "dangerUntil": 13980,
+          "hold": 3
         },
         "combat": {
           "radius": 0.35,
@@ -3044,10 +2779,10 @@
           "damageMultiplier": 1,
           "statuses": []
         },
-        "id": 30,
+        "id": 31,
         "appearance": {
-          "entityId": 30,
-          "asset": "npc.shelter-survivor.bandaged",
+          "entityId": 31,
+          "asset": "npc.shelter-survivor.sitting",
           "tint": "#3178ac",
           "accessories": [],
           "handProp": null,
@@ -3060,7 +2795,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 272.3960275885975
+          "distance": 312.7512052505654
         },
         "locomotion": {
           "vx": 0,
@@ -3077,261 +2812,10 @@
         "archetype": "npc.cashier",
         "faction": "civilian",
         "transform": {
-          "x": 263.0364490921789,
-          "z": 14.870685491378332,
+          "x": 263.0249658196771,
+          "z": 23.00383275283341,
           "y": 4.6,
-          "yaw": -0.02822880429784732
-        },
-        "health": {
-          "current": 60,
-          "max": 60
-        },
-        "civilian": {
-          "state": "flee",
-          "ambient": false,
-          "adult": true,
-          "pet": null,
-          "owner": null,
-          "model": "npc.civilian-woman-b.aftermath",
-          "variant": "inf.cashier",
-          "schedule": [
-            {
-              "activity": "chat",
-              "anchor": "l6/talk",
-              "target": {
-                "x": 5.799999999999999,
-                "z": -6
-              },
-              "facing": {
-                "x": 8.799999999999999,
-                "z": -6
-              },
-              "ticks": 36000
-            }
-          ],
-          "scheduleStep": 0,
-          "activityUntil": 0,
-          "activityStarted": 0,
-          "lastTravelProgress": 0,
-          "routine": "shop",
-          "waypoints": [
-            {
-              "x": 5.799999999999999,
-              "z": -6
-            }
-          ],
-          "waypoint": 0,
-          "pauseUntil": 16,
-          "entered": 3489,
-          "until": 3489,
-          "downTicks": 0,
-          "eyesGlow": false,
-          "veins": 0,
-          "attacker": 0,
-          "threat": {
-            "x": 7.388835023324429,
-            "z": -8.27701717204837,
-            "y": 1.300000011920929,
-            "yaw": -2.387409850848611
-          },
-          "path": [],
-          "goal": -1,
-          "pathIndex": 0,
-          "gore": false,
-          "knockedUntil": 0,
-          "l1": {
-            "walkSpeed": 2.2,
-            "fleeSpeed": 3.295397372916341,
-            "startleTicks": 39,
-            "refuge": null,
-            "target": null,
-            "repickAt": 0,
-            "noticed": -1
-          },
-          "survivor": {
-            "key": "shelter-22",
-            "mode": "hidden",
-            "slot": 22,
-            "leader": 0,
-            "cover": false,
-            "waitAt": 0,
-            "foundAt": 0
-          },
-          "story": null,
-          "dangerUntil": 3612
-        },
-        "combat": {
-          "radius": 0.35,
-          "armor": 0,
-          "shield": false,
-          "staggerUntil": 0,
-          "attacking": false,
-          "damageMultiplier": 1,
-          "statuses": []
-        },
-        "id": 32,
-        "appearance": {
-          "entityId": 32,
-          "asset": "npc.civilian-woman-b.aftermath",
-          "tint": "#486e69",
-          "accessories": [],
-          "handProp": null,
-          "tier": "average"
-        },
-        "motion": {
-          "velocity": {
-            "x": 0,
-            "z": 0
-          },
-          "speed": 0,
-          "moving": false,
-          "distance": 295.14800917815865
-        },
-        "locomotion": {
-          "vx": 0,
-          "vz": 0,
-          "ax": 0,
-          "az": 0,
-          "omega": 0,
-          "updatedAt": -1
-        },
-        "hidden": true
-      },
-      {
-        "kind": "civilian",
-        "archetype": "npc.cashier",
-        "faction": "civilian",
-        "transform": {
-          "x": 263.00934434139725,
-          "z": 16.222351654142717,
-          "y": 4.6,
-          "yaw": -0.07388290972399712
-        },
-        "health": {
-          "current": 60,
-          "max": 60
-        },
-        "civilian": {
-          "state": "flee",
-          "ambient": false,
-          "adult": true,
-          "pet": null,
-          "owner": null,
-          "model": "npc.civilian-man-b.aftermath",
-          "variant": "inf.cashier",
-          "schedule": [
-            {
-              "activity": "look",
-              "anchor": "l6/treat",
-              "target": {
-                "x": 20.9,
-                "z": 5.6
-              },
-              "facing": {
-                "x": 17.9,
-                "z": 5.6
-              },
-              "ticks": 36000
-            }
-          ],
-          "scheduleStep": 0,
-          "activityUntil": 0,
-          "activityStarted": 0,
-          "lastTravelProgress": 0,
-          "routine": "shop",
-          "waypoints": [
-            {
-              "x": 20.9,
-              "z": 5.6
-            }
-          ],
-          "waypoint": 0,
-          "pauseUntil": 31,
-          "entered": 13288,
-          "until": 13288,
-          "downTicks": 0,
-          "eyesGlow": false,
-          "veins": 0,
-          "attacker": 0,
-          "threat": {
-            "x": 255.22710335222945,
-            "z": 14.312581403797342,
-            "y": 4.6,
-            "yaw": -0.5092488696440435
-          },
-          "path": [],
-          "goal": -1,
-          "pathIndex": 10,
-          "gore": false,
-          "knockedUntil": 0,
-          "l1": {
-            "walkSpeed": 2.2,
-            "fleeSpeed": 3.7225656107068064,
-            "startleTicks": 34,
-            "refuge": null,
-            "target": null,
-            "repickAt": 0,
-            "noticed": -1
-          },
-          "survivor": {
-            "key": "shelter-23",
-            "mode": "hidden",
-            "slot": 23,
-            "leader": 0,
-            "cover": false,
-            "waitAt": 0,
-            "foundAt": 0
-          },
-          "story": null,
-          "hold": 1,
-          "dangerUntil": 13706
-        },
-        "combat": {
-          "radius": 0.35,
-          "armor": 0,
-          "shield": false,
-          "staggerUntil": 0,
-          "attacking": false,
-          "damageMultiplier": 1,
-          "statuses": []
-        },
-        "id": 33,
-        "appearance": {
-          "entityId": 33,
-          "asset": "npc.civilian-man-b.aftermath",
-          "tint": "#e5d9b9",
-          "accessories": [],
-          "handProp": null,
-          "tier": "average"
-        },
-        "motion": {
-          "velocity": {
-            "x": 0,
-            "z": 0
-          },
-          "speed": 0,
-          "moving": false,
-          "distance": 291.0735439090733
-        },
-        "locomotion": {
-          "vx": 0,
-          "vz": 0,
-          "ax": 0,
-          "az": 0,
-          "omega": 0,
-          "updatedAt": -1
-        },
-        "hidden": true
-      },
-      {
-        "kind": "civilian",
-        "archetype": "npc.cashier",
-        "faction": "civilian",
-        "transform": {
-          "x": 263.0043347806459,
-          "z": 15.721772546381137,
-          "y": 4.6,
-          "yaw": -0.06341551427913708
+          "yaw": -0.21333370676370955
         },
         "health": {
           "current": 60,
@@ -3373,21 +2857,21 @@
           ],
           "waypoint": 0,
           "pauseUntil": 84,
-          "entered": 13264,
-          "until": 13264,
+          "entered": 10301,
+          "until": 10301,
           "downTicks": 0,
           "eyesGlow": false,
           "veins": 0,
           "attacker": 0,
           "threat": {
-            "x": 255.22710335222945,
-            "z": 14.312581403797342,
+            "x": 257.8201676988812,
+            "z": 17.156835461442725,
             "y": 4.6,
-            "yaw": -0.5092488696440435
+            "yaw": 0.3840376428732902
           },
           "path": [],
           "goal": -1,
-          "pathIndex": 0,
+          "pathIndex": 8,
           "gore": false,
           "knockedUntil": 0,
           "l1": {
@@ -3409,7 +2893,8 @@
             "foundAt": 0
           },
           "story": null,
-          "dangerUntil": 13697
+          "dangerUntil": 13930,
+          "hold": 1
         },
         "combat": {
           "radius": 0.35,
@@ -3436,258 +2921,7 @@
           },
           "speed": 0,
           "moving": false,
-          "distance": 291.0219335369952
-        },
-        "locomotion": {
-          "vx": 0,
-          "vz": 0,
-          "ax": 0,
-          "az": 0,
-          "omega": 0,
-          "updatedAt": -1
-        },
-        "hidden": true
-      },
-      {
-        "kind": "civilian",
-        "archetype": "npc.cashier",
-        "faction": "civilian",
-        "transform": {
-          "x": 263.0447361237277,
-          "z": 17.60676245965133,
-          "y": 4.6,
-          "yaw": -0.0934405971677669
-        },
-        "health": {
-          "current": 60,
-          "max": 60
-        },
-        "civilian": {
-          "state": "flee",
-          "ambient": false,
-          "adult": true,
-          "pet": null,
-          "owner": null,
-          "model": "npc.mr-okafor.aftermath",
-          "variant": "inf.cashier",
-          "schedule": [
-            {
-              "activity": "sit",
-              "anchor": "l6/sit",
-              "target": {
-                "x": -3.4000000000000004,
-                "z": -3.5
-              },
-              "facing": {
-                "x": -0.40000000000000036,
-                "z": -3.5
-              },
-              "ticks": 36000
-            }
-          ],
-          "scheduleStep": 0,
-          "activityUntil": 0,
-          "activityStarted": 0,
-          "lastTravelProgress": 0,
-          "routine": "shop",
-          "waypoints": [
-            {
-              "x": -3.4000000000000004,
-              "z": -3.5
-            }
-          ],
-          "waypoint": 0,
-          "pauseUntil": 41,
-          "entered": 12875,
-          "until": 12875,
-          "downTicks": 0,
-          "eyesGlow": false,
-          "veins": 0,
-          "attacker": 0,
-          "threat": {
-            "x": 255.22710335222945,
-            "z": 14.312581403797342,
-            "y": 4.6,
-            "yaw": -0.5092488696440435
-          },
-          "path": [],
-          "goal": -1,
-          "pathIndex": 6,
-          "gore": false,
-          "knockedUntil": 0,
-          "l1": {
-            "walkSpeed": 2.2,
-            "fleeSpeed": 3.8028789132833483,
-            "startleTicks": 44,
-            "refuge": null,
-            "target": null,
-            "repickAt": 0,
-            "noticed": -1
-          },
-          "survivor": {
-            "key": "okafor",
-            "mode": "hidden",
-            "slot": 26,
-            "leader": 0,
-            "cover": false,
-            "waitAt": 0,
-            "foundAt": 0
-          },
-          "story": null,
-          "hold": 2,
-          "dangerUntil": 13704
-        },
-        "combat": {
-          "radius": 0.35,
-          "armor": 0,
-          "shield": false,
-          "staggerUntil": 0,
-          "attacking": false,
-          "damageMultiplier": 1,
-          "statuses": []
-        },
-        "id": 36,
-        "appearance": {
-          "entityId": 36,
-          "asset": "npc.mr-okafor.aftermath",
-          "tint": "#968d78",
-          "accessories": [],
-          "handProp": null,
-          "tier": "average"
-        },
-        "motion": {
-          "velocity": {
-            "x": 0,
-            "z": 0
-          },
-          "speed": 0,
-          "moving": false,
-          "distance": 296.7952967628803
-        },
-        "locomotion": {
-          "vx": 0,
-          "vz": 0,
-          "ax": 0,
-          "az": 0,
-          "omega": 0,
-          "updatedAt": -1
-        },
-        "hidden": true
-      },
-      {
-        "kind": "civilian",
-        "archetype": "npc.cashier",
-        "faction": "civilian",
-        "transform": {
-          "x": 263.0481140646766,
-          "z": 17.54674867435391,
-          "y": 4.6,
-          "yaw": -0.09750491744802939
-        },
-        "health": {
-          "current": 60,
-          "max": 60
-        },
-        "civilian": {
-          "state": "flee",
-          "ambient": false,
-          "adult": true,
-          "pet": null,
-          "owner": null,
-          "model": "npc.sam.aftermath",
-          "variant": "inf.cashier",
-          "schedule": [
-            {
-              "activity": "look",
-              "anchor": "l6/treat",
-              "target": {
-                "x": 0.0999999999999992,
-                "z": -3.5
-              },
-              "facing": {
-                "x": 3.099999999999999,
-                "z": -3.5
-              },
-              "ticks": 36000
-            }
-          ],
-          "scheduleStep": 0,
-          "activityUntil": 0,
-          "activityStarted": 0,
-          "lastTravelProgress": 0,
-          "routine": "shop",
-          "waypoints": [
-            {
-              "x": 0.0999999999999992,
-              "z": -3.5
-            }
-          ],
-          "waypoint": 0,
-          "pauseUntil": 50,
-          "entered": 3670,
-          "until": 3670,
-          "downTicks": 0,
-          "eyesGlow": false,
-          "veins": 0,
-          "attacker": 0,
-          "threat": {
-            "x": 255.22710335222945,
-            "z": 14.312581403797342,
-            "y": 4.6,
-            "yaw": -0.5092488696440435
-          },
-          "path": [],
-          "goal": -1,
-          "pathIndex": 0,
-          "gore": false,
-          "knockedUntil": 0,
-          "l1": {
-            "walkSpeed": 2.2,
-            "fleeSpeed": 3.6351205930113792,
-            "startleTicks": 30,
-            "refuge": null,
-            "target": null,
-            "repickAt": 0,
-            "noticed": -1
-          },
-          "survivor": {
-            "key": "sam",
-            "mode": "hidden",
-            "slot": 28,
-            "leader": 0,
-            "cover": false,
-            "waitAt": 0,
-            "foundAt": 0
-          },
-          "story": null,
-          "dangerUntil": 13717
-        },
-        "combat": {
-          "radius": 0.35,
-          "armor": 0,
-          "shield": false,
-          "staggerUntil": 0,
-          "attacking": false,
-          "damageMultiplier": 1,
-          "statuses": []
-        },
-        "id": 38,
-        "appearance": {
-          "entityId": 38,
-          "asset": "npc.sam.aftermath",
-          "tint": "#d4ad32",
-          "accessories": [],
-          "handProp": null,
-          "tier": "average"
-        },
-        "motion": {
-          "velocity": {
-            "x": 0,
-            "z": 0
-          },
-          "speed": 0,
-          "moving": false,
-          "distance": 299.12555870813827
+          "distance": 295.6380020429872
         },
         "locomotion": {
           "vx": 0,
@@ -3714,57 +2948,57 @@
     "entries": [
       {
         "door": 2,
-        "warnedAt": 7362,
+        "warnedAt": 6456,
         "remaining": 0,
-        "nextAt": 8967,
+        "nextAt": 8571,
         "switchId": 42
       },
       {
         "door": 5,
-        "warnedAt": 8196,
+        "warnedAt": 6829,
         "remaining": 0,
-        "nextAt": 9891,
+        "nextAt": 9844,
         "switchId": 43
       },
       {
         "door": 3,
-        "warnedAt": 8990,
+        "warnedAt": 8722,
         "remaining": 0,
-        "nextAt": 10850,
+        "nextAt": 11182,
         "switchId": 44
       },
       {
         "door": 6,
-        "warnedAt": 9886,
+        "warnedAt": 10180,
         "remaining": 0,
-        "nextAt": 12886,
+        "nextAt": 13195,
         "switchId": 45
       },
       {
         "door": 4,
-        "warnedAt": 11462,
+        "warnedAt": 11763,
         "remaining": 0,
-        "nextAt": 14012,
+        "nextAt": 14373,
         "switchId": 46
       },
       {
         "door": 7,
-        "warnedAt": 12754,
+        "warnedAt": 13045,
         "remaining": 0,
-        "nextAt": 16355,
+        "nextAt": 17936,
         "switchId": 47,
-        "closedAt": 13709,
+        "closedAt": 14125,
         "hits": 0,
-        "hitAt": 14134,
-        "brokenAt": 14134
+        "hitAt": 14545,
+        "brokenAt": 14545
       }
     ],
     "phase": "done",
     "startAt": 0,
     "breach1At": 1992,
     "breach2At": 3253,
-    "abandonAt": 3746,
-    "nextWave": 16453,
+    "abandonAt": 4153,
+    "nextWave": 17953,
     "firstBang": true,
     "secondBang": true,
     "leaderX": 276,
@@ -3853,7 +3087,7 @@
         "id": 17,
         "injured": false,
         "routine": "talk",
-        "status": "turned",
+        "status": "out",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -3963,7 +3197,7 @@
         "id": 27,
         "injured": false,
         "routine": "talk",
-        "status": "turned",
+        "status": "out",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -3996,10 +3230,10 @@
         "id": 30,
         "injured": true,
         "routine": "share",
-        "status": "out",
+        "status": "turned",
         "straggler": true,
-        "collected": true,
-        "rejoined": false,
+        "collected": false,
+        "rejoined": true,
         "hold": 0
       },
       {
@@ -4007,7 +3241,7 @@
         "id": 31,
         "injured": false,
         "routine": "sit",
-        "status": "turned",
+        "status": "out",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -4018,7 +3252,7 @@
         "id": 32,
         "injured": false,
         "routine": "talk",
-        "status": "out",
+        "status": "turned",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -4029,7 +3263,7 @@
         "id": 33,
         "injured": false,
         "routine": "treat",
-        "status": "out",
+        "status": "turned",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -4062,7 +3296,7 @@
         "id": 36,
         "injured": false,
         "routine": "sit",
-        "status": "out",
+        "status": "turned",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -4084,7 +3318,7 @@
         "id": 38,
         "injured": false,
         "routine": "treat",
-        "status": "out",
+        "status": "turned",
         "straggler": false,
         "collected": false,
         "rejoined": false,
@@ -4095,21 +3329,21 @@
       {
         "id": 39,
         "x": 90,
-        "closedAt": 8869,
+        "closedAt": 8623,
         "hold": 0,
         "passed": true
       },
       {
         "id": 40,
         "x": 150,
-        "closedAt": 10860,
+        "closedAt": 11195,
         "hold": 0,
         "passed": true
       },
       {
         "id": 41,
         "x": 210,
-        "closedAt": 13506,
+        "closedAt": 13792,
         "hold": 0,
         "passed": true
       }
@@ -4125,7 +3359,8 @@
       66,
       68,
       70,
-      73,
+      72,
+      74,
       76,
       78,
       80,
@@ -4146,12 +3381,13 @@
       110,
       112,
       114,
-      117,
       120,
-      122,
       124,
-      128,
-      130
+      126,
+      129,
+      134,
+      136,
+      138
     ],
     "spawnLog": [
       {
@@ -4245,11 +3481,20 @@
         "offscreen": true
       },
       {
-        "id": 73,
+        "id": 72,
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 3853,
+        "tick": 4153,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 74,
+        "door": 0,
+        "x": -10,
+        "z": -19.4,
+        "tick": 4753,
         "wave": 3,
         "offscreen": true
       },
@@ -4258,7 +3503,7 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 4453,
+        "tick": 5353,
         "wave": 3,
         "offscreen": true
       },
@@ -4267,7 +3512,7 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 5053,
+        "tick": 5953,
         "wave": 3,
         "offscreen": true
       },
@@ -4276,7 +3521,7 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 5653,
+        "tick": 6553,
         "wave": 3,
         "offscreen": true
       },
@@ -4285,7 +3530,7 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 6253,
+        "tick": 7153,
         "wave": 3,
         "offscreen": true
       },
@@ -4294,17 +3539,17 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 6853,
+        "tick": 7753,
         "wave": 3,
         "offscreen": true
       },
       {
         "id": 86,
-        "door": 0,
-        "x": -10,
-        "z": -19.4,
-        "tick": 7453,
-        "wave": 3,
+        "door": 2,
+        "x": 54,
+        "z": 9.799999999999999,
+        "tick": 7851,
+        "wave": 4,
         "offscreen": true
       },
       {
@@ -4312,7 +3557,7 @@
         "door": 2,
         "x": 54,
         "z": 9.799999999999999,
-        "tick": 7482,
+        "tick": 8211,
         "wave": 4,
         "offscreen": true
       },
@@ -4321,16 +3566,16 @@
         "door": 3,
         "x": 126,
         "z": 9.799999999999999,
-        "tick": 8053,
+        "tick": 8353,
         "wave": 3,
         "offscreen": true
       },
       {
         "id": 92,
-        "door": 2,
-        "x": 54,
+        "door": 3,
+        "x": 126,
         "z": 9.799999999999999,
-        "tick": 8607,
+        "tick": 8842,
         "wave": 4,
         "offscreen": true
       },
@@ -4339,16 +3584,16 @@
         "door": 3,
         "x": 126,
         "z": 9.799999999999999,
-        "tick": 8653,
+        "tick": 8953,
         "wave": 3,
         "offscreen": true
       },
       {
         "id": 96,
-        "door": 3,
-        "x": 126,
-        "z": 9.799999999999999,
-        "tick": 9110,
+        "door": 5,
+        "x": 78.35355339059328,
+        "z": 17.04644660940673,
+        "tick": 9124,
         "wave": 4,
         "offscreen": true
       },
@@ -4357,26 +3602,26 @@
         "door": 5,
         "x": 78.35355339059328,
         "z": 17.04644660940673,
-        "tick": 9171,
+        "tick": 9484,
         "wave": 4,
         "offscreen": true
       },
       {
         "id": 100,
-        "door": 5,
-        "x": 78.35355339059328,
-        "z": 17.04644660940673,
-        "tick": 9531,
+        "door": 6,
+        "x": 161.07612046748872,
+        "z": 17.01731656763491,
+        "tick": 10300,
         "wave": 4,
         "offscreen": true
       },
       {
         "id": 102,
-        "door": 6,
-        "x": 161.07612046748872,
-        "z": 17.01731656763491,
-        "tick": 10006,
-        "wave": 4,
+        "door": 4,
+        "x": 198,
+        "z": 9.799999999999999,
+        "tick": 10753,
+        "wave": 3,
         "offscreen": true
       },
       {
@@ -4384,7 +3629,7 @@
         "door": 3,
         "x": 126,
         "z": 9.799999999999999,
-        "tick": 10490,
+        "tick": 10822,
         "wave": 4,
         "offscreen": true
       },
@@ -4393,7 +3638,7 @@
         "door": 4,
         "x": 198,
         "z": 9.799999999999999,
-        "tick": 11053,
+        "tick": 11353,
         "wave": 3,
         "offscreen": true
       },
@@ -4402,16 +3647,16 @@
         "door": 4,
         "x": 198,
         "z": 9.799999999999999,
-        "tick": 11582,
+        "tick": 11883,
         "wave": 4,
         "offscreen": true
       },
       {
         "id": 110,
         "door": 4,
-        "x": 198.75,
-        "z": 9.799999999999999,
-        "tick": 11653,
+        "x": 198,
+        "z": 10.049999999999999,
+        "tick": 11953,
         "wave": 3,
         "offscreen": true
       },
@@ -4420,7 +3665,7 @@
         "door": 6,
         "x": 162.92387953251128,
         "z": 17.01731656763491,
-        "tick": 12526,
+        "tick": 12835,
         "wave": 4,
         "offscreen": true
       },
@@ -4429,35 +3674,17 @@
         "door": 7,
         "x": 227.64644660940672,
         "z": 17.04644660940673,
-        "tick": 12874,
-        "wave": 4,
-        "offscreen": true
-      },
-      {
-        "id": 117,
-        "door": 4,
-        "x": 198,
-        "z": 9.799999999999999,
-        "tick": 13652,
+        "tick": 13165,
         "wave": 4,
         "offscreen": true
       },
       {
         "id": 120,
-        "door": 0,
-        "x": -10,
-        "z": -19.4,
-        "tick": 14053,
-        "wave": 3,
-        "offscreen": true
-      },
-      {
-        "id": 122,
-        "door": 0,
-        "x": -10,
-        "z": -19.4,
-        "tick": 14653,
-        "wave": 3,
+        "door": 4,
+        "x": 198,
+        "z": 9.799999999999999,
+        "tick": 14013,
+        "wave": 4,
         "offscreen": true
       },
       {
@@ -4465,25 +3692,52 @@
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 15253,
+        "tick": 14953,
         "wave": 3,
         "offscreen": true
       },
       {
-        "id": 128,
+        "id": 126,
         "door": 0,
         "x": -10,
         "z": -19.4,
-        "tick": 15853,
+        "tick": 15553,
         "wave": 3,
         "offscreen": true
       },
       {
-        "id": 130,
+        "id": 129,
+        "door": 0,
+        "x": -10,
+        "z": -19.4,
+        "tick": 16153,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 134,
+        "door": 0,
+        "x": -10,
+        "z": -19.4,
+        "tick": 16753,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 136,
+        "door": 0,
+        "x": -10,
+        "z": -19.4,
+        "tick": 17353,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 138,
         "door": 7,
         "x": 228.35355339059328,
         "z": 17.04644660940673,
-        "tick": 15995,
+        "tick": 17576,
         "wave": 4,
         "offscreen": true
       }
@@ -4491,17 +3745,17 @@
     "flashlight": true,
     "mainPower": false,
     "emergency": true,
-    "exitAt": 15973,
-    "gateAt": 16203,
-    "injuryLineAt": 4973,
-    "lastShot": 16143,
+    "exitAt": 17580,
+    "gateAt": 17580,
+    "injuryLineAt": 5380,
+    "lastShot": 17590,
     "mid": true,
     "platform": true,
     "say": {
       "id": 1,
       "text": "Lean on me. We will get you to the others.",
-      "at": 14022,
-      "until": 14292
+      "at": 6882,
+      "until": 7152
     },
     "waitFlipAt": 0,
     "tailX": 276,

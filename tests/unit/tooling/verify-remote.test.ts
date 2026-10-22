@@ -35,9 +35,9 @@ test('E07 remote verification isolates timing on Hetzner, pulls evidence and kee
 });
 
 for (const [epic, visualTitles] of [
-  ['E22', ['T-E22-ride-smooth-webgl-high @E22', 'T-E22-12-special-charge-high @E22-AC12', '@E22 no army-line rebuild prompts webgpu high zoom 1', '@E22 line-broken cellar guidance webgpu low zoom 0.5', '@E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high', 'T-E22-blank @E22 viewport webgpu', '@E22 L4 war: mouse WASD stick webgpu high zoom 1', 'T-E22-cellar-pos @E22']],
-  ['E23', ['T-E23-17 @E23 @E23-AC17', 'PO #21b @E23', 'PO #26 #28 @E23 survivor health and moving radar dots webgpu high zoom 1', 'T-fix-l5-start @E23', 'T-fix-l5-ingress @E23', 'T-E23-cellar-pos @E23']],
-  ['E24', ['T-E24-15-matrix @E24-AC15', 'T-E24-18-phone-panel @E24-AC18', 'T-E29-16-browser @E24-AC14', 'PO34 service gate explains the crate task with one bar webgpu high @E24', 'interaction panel stays inside @E24']],
+  ['E22', ['T-E22-ride-smooth-webgl-high @E22', 'T-E22-12-special-charge-high @E22-AC12', '@E22 no army-line rebuild prompts webgpu high zoom 1', '@E22 line-broken cellar guidance webgpu low zoom 0.5', '@E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high', 'T-E22-blank @E22 viewport webgpu', '@E22 L4 war: mouse WASD stick webgpu high zoom 1', 'T-E22-cellar-pos @E22', 'T-E02-webgpu-canvas @smoke @E02']],
+  ['E23', ['T-E23-17 @E23 @E23-AC17', 'PO #21b @E23', 'PO #26 #28 @E23 survivor health and moving radar dots webgpu high zoom 1', 'T-fix-l5-start @E23', 'T-fix-l5-ingress @E23', 'T-E23-cellar-pos @E23', 'T-E02-webgpu-game-canvas @smoke @E02']],
+  ['E24', ['T-E24-15-matrix @E24-AC15', 'T-E24-18-phone-panel @E24-AC18', 'T-E29-16-browser @E24-AC14', 'PO34 service gate explains the crate task with one bar webgpu high @E24', 'interaction panel stays inside @E24', 'T-E02-webgpu-level-transitions @smoke @E02']],
 ] as const) test(`${epic} remote verification keeps capture/pixel checks on one native browser`, async () => {
   process.argv = ['node', 'tools/verify.ts', epic];
   vi.stubEnv('MI_VERIFY_REMOTE_SIM', '1'); vi.stubEnv('MI_VERIFY_REMOTE_E2E', '1');
