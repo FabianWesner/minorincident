@@ -37,9 +37,12 @@ for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, '
   });
 }
 test('T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks', async () => {
+  const kickWorld = await arena(), kicked = spawn(kickWorld, 'alpha', 6, 0, 'idle');
+  kickWorld.combat!.damage.apply({ ...shot(kicked.id, 'weapon.kick', 20, 'melee'), knockdown: true, stagger: .5 });
+  expect(kicked.health.current).toBe(280); expect(kicked.combat!.reaction!.heavy).toBe(false); expect(kicked.infected!.recoverAt).toBe(-1);
+  expect(kicked.infected!.provoked?.id).toBe(1);
+  // Ordinary contact gets a fresh, unprovoked Alpha: a player kick correctly locks pursuit to its source.
   const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle');
-  w.combat!.damage.apply({ ...shot(e.id, 'weapon.kick', 20, 'melee'), knockdown: true, stagger: .5 });
-  expect(e.health.current).toBe(280); expect(e.combat!.reaction!.heavy).toBe(false); expect(e.infected!.recoverAt).toBe(-1);
   const soldier = w.entities.get(w.npcs!.civilians.spawn('officer', { x: 6.8, z: 0 }))!;
   soldier.civilian!.ally = allyState('soldier');
   e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
