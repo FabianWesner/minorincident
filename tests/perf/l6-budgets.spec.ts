@@ -31,7 +31,26 @@ if(tier==='low')test.use({viewport:{width:390,height:844},deviceScaleFactor:devi
 test(`T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame ${tier}`,async({page,context})=>{
   test.setTimeout(600_000);mkdirSync(dir,{recursive:true});if(tier==='low'){const cdp=await context.newCDPSession(page);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});}
   await page.goto(`/?test=1&renderer=${renderer}&quality=${tier}&audio=muted&dpr=${tier==='high'?1:1.5}`);await page.waitForFunction(()=>!!window.__SS__);
-  const proof=await page.evaluate(async()=>{const a=window.__SS__!;await a.ready;await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);const rows=[];for(const beat of ['breach2','abandon'] as const){const s=a.missions.state()!.l6!,target=beat==='breach2'?s.breach2At:s.breach2At+900;await a.step(Math.max(0,target-a.tick()-3));await a.screenshotReady();const frames:number[]=[];let previous=0;a.resume();while(a.tick()<target+30){const now=await new Promise<number>(resolve=>requestAnimationFrame(resolve));if(previous)frames.push(now-previous);previous=now;}a.pause();rows.push({beat,max:Math.max(...frames),frames,state:a.missions.state()!.l6!});}return rows;});writeFileSync(`${dir}/transitions-${tier}.json`,JSON.stringify(proof,null,2));for(const row of proof){expect(row.max).toBeLessThanOrEqual(50);expect(row.state.emergency).toBe(true);if(row.beat==='abandon')expect(row.state.abandonAt).toBeGreaterThan(0);}
+  const proof=await page.evaluate(async()=>{
+    const a=window.__SS__!;await a.ready;await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);
+    await a.step(Math.max(0,a.missions.state()!.l6!.breach2At-a.tick()-3));await a.screenshotReady();
+    const startTick=a.tick(),before=structuredClone(a.missions.state()!.l6!),frames:{fromTick:number;toTick:number;ms:number}[]=[];
+    let previous=await new Promise<number>(resolve=>requestAnimationFrame(resolve)),previousTick=startTick;const deadline=performance.now()+30_000;a.resume();
+    while(performance.now()<deadline){
+      const now=await new Promise<number>(resolve=>requestAnimationFrame(resolve)),tick=a.tick();
+      frames.push({fromTick:previousTick,toTick:tick,ms:now-previous});previous=now;previousTick=tick;
+      const s=a.missions.state()!.l6!;if(s.abandonAt>0&&tick>=s.abandonAt+30)break;
+    }
+    a.pause();const state=a.missions.state()!.l6!,events=a.events();
+    return(['breach2','abandon']as const).map(beat=>{
+      const event=events.find(e=>e.type===`l6.${beat}`),eventTick=event?.tick??null;
+      const window=eventTick===null?[]:frames.filter(f=>f.toTick>=eventTick-3&&f.fromTick<=eventTick+30);
+      return{beat,startTick,before,eventTick,captured:eventTick!==null&&eventTick>startTick&&eventTick<=previousTick,max:window.length?Math.max(...window.map(f=>f.ms)):null,frames:window,state};
+    });
+  });
+  writeFileSync(`${dir}/transitions-${tier}.json`,JSON.stringify(proof,null,2));
+  for(const row of proof){expect(row.before.emergency).toBe(false);expect(row.before.abandonAt).toBe(0);expect(row.captured,`${row.beat} event occurs inside the measured interval`).toBe(true);expect(row.frames.length).toBeGreaterThan(0);expect(row.max).not.toBeNull();expect(row.max!).toBeLessThanOrEqual(50);expect(row.state.emergency).toBe(true);if(row.beat==='abandon')expect(row.eventTick).toBe(row.state.abandonAt);}
+
 });
 
 });
