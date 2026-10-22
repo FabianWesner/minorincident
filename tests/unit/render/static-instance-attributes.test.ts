@@ -1,11 +1,37 @@
 import { expect, test, vi } from 'vitest';
 import { BoxGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PerspectiveCamera, Scene } from 'three/webgpu';
+import { positionLocal } from 'three/tsl';
 // @ts-expect-error Three's internal module has no declaration
 import RenderObjects from 'three/src/renderers/common/RenderObjects.js';
 import { Lighting } from '../../../src/render/Lighting';
 import { Materials } from '../../../src/render/Materials';
 import { staticInstanceAttributes } from '../../../src/render/StaticInstanceAttributes';
 import { installPaletteVariantCache } from '../../../src/render/Renderer';
+import type { PaletteMaterial } from '../../../src/render/PaletteMaterial';
+
+test('T-E22-20-static-transform @E22-AC20 equivalent material copies retain the warmed placement node', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), source = materials.get('sidewalk');
+  source.userData.batchFeatures = '0:0:0';
+  const copies = [source.frozenCopy(), source.frozenCopy(), source.frozenCopy(), source.frozenCopy()];
+  copies[2].userData.batchFeatures = 'corpses'; copies[3].positionNode = positionLocal.add(1);
+  const geometry = new BoxGeometry();
+  const meshes = copies.map(material => {
+    const mesh = new InstancedMesh(geometry, material, 2);
+    mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(6).fill(1), 3);
+    expect(staticInstanceAttributes(mesh)).toBe(true); return mesh;
+  });
+  try {
+    const [a, b, corpse, deformed] = meshes.map(mesh => mesh.material as PaletteMaterial);
+    expect(a.positionNode === b.positionNode, 'a new material owner must reuse the equivalent placement graph').toBe(true);
+    expect(a.customProgramCacheKey()).toBe(b.customProgramCacheKey());
+    expect(corpse.positionNode).not.toBe(a.positionNode); expect(deformed.positionNode).not.toBe(a.positionNode);
+    expect(meshes[0].geometry.getAttribute('_placement0')).not.toBe(meshes[1].geometry.getAttribute('_placement0'));
+  } finally {
+    for (const mesh of meshes) { mesh.geometry.dispose(); mesh.dispose(); }
+    for (const material of copies) material.dispose();
+    geometry.dispose(); materials.dispose(); lighting.dispose();
+  }
+});
 
 test('static batches share shader keys while keeping independent matrix/color buffers and counts', () => {
   const scene = new Scene(), lighting = new Lighting(scene), materials = new Materials(lighting), source = materials.get('sidewalk');
