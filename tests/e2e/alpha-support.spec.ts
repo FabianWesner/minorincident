@@ -12,6 +12,9 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
     const api = window.__SS__!, lab = window.__SCENE__!, id = lab.actors.get('alpha')!.entity;
     return { id, state: api.getState(), events: api.events() };
   });
+  const out = 'test-results/epics/E07/native-alpha'; mkdirSync(out, { recursive: true });
+  await page.locator('canvas').screenshot({ path: `${out}/${move}-warning.png` });
+  writeFileSync(`${out}/${move}-warning.json`, JSON.stringify(before, null, 2));
   const tell = before.events.find(e => e.type === 'telegraph' && e.sourceId === before.id && e.move === `alpha.${move}`);
   expect(tell).toMatchObject({ duration: .8 });
   const a = before.state.entities.find(e => e.id === before.id)!.infected!.specialAttack!;
@@ -19,12 +22,15 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
   expect(before.state.render.vfx?.telegraphs.some(t => t.attackId === a.attackId)).toBe(true);
   await page.evaluate(async () => { await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
   const after = await page.evaluate(() => window.__SS__!.getState());
+  await page.locator('canvas').screenshot({ path: `${out}/${move}-active.png` });
+  writeFileSync(`${out}/${move}-active.json`, JSON.stringify(after, null, 2));
   expect(after.render.vfx?.telegraphs.some(t => t.attackId === a.attackId)).toBe(false);
   const resolved = after.entities.find(e => e.id === before.id)!.infected!.specialAttack!;
   if (move === 'grab-throw') {
     expect(resolved.projectile).toBeDefined();
     await page.evaluate(async () => { await window.__SCENE__!.step(40); await window.__SCENE__!.ready(); });
     const impact = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));
+    await page.locator('canvas').screenshot({ path: `${out}/${move}-impact.png` });
     expect(impact.state.player!.health.current).toBe(70);
     expect(impact.events.filter(e => e.type === 'infected.attack' && e.attackId === a.attackId)).toHaveLength(1);
     expect(impact.state.entities.find(e => e.id === resolved.projectile!.objectId)).toMatchObject({ corpse: true, corpseThrown: true });
