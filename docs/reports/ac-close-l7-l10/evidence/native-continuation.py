@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Complete skipped native batches after a strict verifier exits; never erase failures."""
+import gzip,json,os,pathlib,subprocess,sys,time
+ROOT=pathlib.Path.cwd(); OUT=ROOT/'docs/reports/ac-close-l7-l10/evidence'
+SERIAL='/tmp/ac-close-l7-l10-browser.serial'
+def save(path,value):
+    with gzip.open(path,'wt') as f: json.dump(value,f,indent=2)
+if sys.argv[1]=='--batch':
+    target,name,encoded=sys.argv[2:]; command=json.loads(encoded)
+    reporter=ROOT/'test-results/playwright/results.json';reporter.unlink(missing_ok=True)
+    env=dict(os.environ,MI_ACCEPTANCE_SERIAL_HELD='1',E2E_PORT='4091',SCENE_PORT='4092',E2E_UNITS='1',E2E_ADMISSION_TIMEOUT_SECONDS='3600',PERF_CONDITIONS_LOG=str(OUT/'late-native-conditions.jsonl'))
+    start=time.time()
+    with open(OUT/f'native-{target}-{name}.log','w') as log:
+        result=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,env=env)
+    receipt={'target':target,'batch':name,'command':command,'started':start,'finished':time.time(),'exitCode':result.returncode,'reporterPresent':reporter.is_file()}
+    if reporter.is_file():
+        save(OUT/f'native-{target}-{name}-playwright.json.gz',json.loads(reporter.read_text()))
+    save(OUT/f'native-{target}-{name}-receipt.json.gz',receipt)
+    print(json.dumps(receipt),flush=True)
+    sys.exit(0) # audit all batches; each original exit remains in its receipt
+
+target,pid=sys.argv[1],int(sys.argv[2])
+while True:
+    try:os.kill(pid,0)
+    except ProcessLookupError:break
+    time.sleep(5)
+checks=json.loads((ROOT/f'test-results/epics/{target}/checks.json').read_text())
+save(OUT/f'native-{target}-verifier-checks.json.gz',checks)
+# Preserve the functional receipt before continuation workers reuse the global reporter.
+functional=ROOT/f'test-results/epics/{target}/playwright-functional.json'
+if functional.is_file():save(OUT/f'native-{target}-functional.json.gz',json.loads(functional.read_text()))
+pattern=f'^(?=.*(?:@(?:{target})(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)'
+# Same files and two reservation shards as tools/verify.ts; keep all original gates.
+files=sorted(p for p in (ROOT/'tests/perf').glob('*.spec.ts') if f'@{target}' in p.read_text())
+attempted=[c['command'] for c in checks['checks']]
+for spec in files:
+    for shard in [1,2]:
+        command=['sh','tools/perf/quiet-run.sh','npx','playwright','test',str(spec.relative_to(ROOT)),'--grep',pattern,f'--shard={shard}/2','--project=chromium','--workers=1']
+        # Compare semantic suite/shard membership, not regex spelling.
+        if any(str(spec.relative_to(ROOT)) in c and f'--shard={shard}/2' in c for c in attempted):continue
+        name=f'{spec.stem.removesuffix(".spec")}-s{shard}of2'
+        subprocess.run(['/usr/bin/lockf','-k',SERIAL,sys.executable,__file__,'--batch',target,name,json.dumps(command)],check=True)
+print(f'{target} native continuation terminal',flush=True)
