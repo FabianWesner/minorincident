@@ -78,6 +78,19 @@ try {
       frames.sort((a, b) => a - b);
       return { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1) };
     }));
+    if (timing && zoom === 1 && process.env.L10_PROFILE === '1') {
+      // Diagnose the same settled view after timing, keeping profiler overhead
+      // outside the cadence samples used for the before/after comparison.
+      const cdp = await session.page.context().newCDPSession(session.page);
+      await cdp.send('Performance.enable');
+      const { metrics } = await cdp.send('Performance.getMetrics');
+      const performanceNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
+      await cdp.send('Profiler.enable'); await cdp.send('Profiler.start');
+      await session.page.waitForTimeout(6000);
+      const { profile } = await cdp.send('Profiler.stop'); await cdp.detach();
+      writeFileSync(`${out}/settled.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs }));
+      writeFileSync(`${out}/settled-perf.json`, JSON.stringify(await session.page.evaluate(() => window.__SS__!.perf()), null, 2));
+    }
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
