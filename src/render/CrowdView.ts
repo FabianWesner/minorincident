@@ -22,7 +22,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup } from 'three/tsl';
+import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform, sharedUniformGroup, frontFacing } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -264,8 +264,13 @@ export class CrowdView extends Group {
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
-      const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       this.accessories?.registerSkull(asset, baked.geometry);
+      if (lod === 'lod2' && this.accessories && regularInfectedModels.some(id => id === asset)) {
+        await this.accessories.init();
+        if (this.disposed) { baked.geometry.dispose(); return; }
+        baked.geometry = this.accessories.livingSource(baked.geometry, asset, baked.clip.parts.indexOf('head'));
+      }
+      const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       const instanceData = new InstancedInterleavedBuffer(new Float32Array(capacity * 8), 8, 1).setUsage(StreamDrawUsage);
       const tint = new InterleavedBufferAttribute(instanceData, 4, 4);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
@@ -273,6 +278,10 @@ export class CrowdView extends Group {
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
+      const inlineAccessories = baked.geometry.userData.inlineAccessories === true;
+      const figureMask = inlineAccessories ? parts.w.mod(128).lessThan(8).select(1, 0) : undefined;
+      // Frozen sources keep their original untagged body/head pieces and shadow reception.
+      const shadowReceiver = inlineAccessories ? parts.w.greaterThanEqual(128).select(figureMask!.oneMinus(), 1) : undefined;
       // Two identical LOD1 dog surfaces differ only in their authored vertex colors.
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
@@ -286,8 +295,8 @@ export class CrowdView extends Group {
       // night-lit body at the 0.45 peak), easing off on pale swatches (bone, teeth) so they do not clip to white.
       // A flat white add (0.45 on every channel, then bloom) turned the dark Alpha into a grey-white mass; any
       // white constant still dominates its near-black albedo.
-      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))));
-      const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
+      const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z, figureMask, shadowReceiver) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
@@ -298,7 +307,7 @@ export class CrowdView extends Group {
       const pixel = screenCoordinate.xy.floor();
       const bayer2 = (p: typeof pixel) => p.x.mod(2).mul(2).add(p.y.mod(2).mul(3)).mod(4);
       const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
-      material.maskNode = opacity.greaterThan(threshold);
+      material.maskNode = inlineAccessories ? opacity.greaterThan(threshold).and(frontFacing.or(parts.w.mod(128).lessThan(8))) : opacity.greaterThan(threshold);
       material.depthTest = material.depthWrite = true;
       material.side = baked.doubleSided ? DoubleSide : FrontSide;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
@@ -320,7 +329,7 @@ export class CrowdView extends Group {
       const slot = lod === 'lod0' ? this.heroSlots.get(key) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity); mesh.userData.preRenderTextures = [texture];
       mesh.instanceMatrix.setUsage(StreamDrawUsage);
-      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
+      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.receiveShadow = inlineAccessories; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part transform order.
       const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
@@ -342,7 +351,7 @@ export class CrowdView extends Group {
       // synchronously during play. Waiting for this batch also guarantees the
       // simplified corpse geometry exists before the loading draw.
       if (lod === (alpha ? 'lod0' : 'lod2')) {
-        this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+        this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry.userData.inlineBody ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       }
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
@@ -496,7 +505,7 @@ export class CrowdView extends Group {
         if (e.corpse) {
           const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
           const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
-          const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry;
+          const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts, !batch.animal ? look : undefined);
           continue;
@@ -517,7 +526,7 @@ export class CrowdView extends Group {
         const layered = !crawling && (layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
         // Zoomed-out encounters retain planted feet inside the same 12 m action range; the footwork cap is unchanged.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style, true, this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1);
-        if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
+        if (!batch.animal && !batch.mesh.geometry.userData.inlineAccessories) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         const figure = batch.probe.figures.at(-1);
         if (figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
@@ -596,8 +605,9 @@ export class CrowdView extends Group {
   getState() {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
+    const accessoryDrawCalls = this.accessories?.infectedDrawCalls() ?? 0;
     // Legacy probe fields: warnings now live in render.vfx.telegraphs.
-    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, staticCorpsePages: this.staticCorpses.children.length, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
+    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws + accessoryDrawCalls, bodyMeshDrawCalls: draws, accessoryDrawCalls, objects, staticCorpsePages: this.staticCorpses.children.length, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
   }
   dispose(): void {
     this.disposed = true; this.staticCorpses.dispose();
