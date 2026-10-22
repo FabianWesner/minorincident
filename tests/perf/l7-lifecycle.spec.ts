@@ -41,7 +41,7 @@ for (const quality of ['high', 'low'] as const) test(`E24 warmed-cache diagnosti
     const a = window.__SS__!; await a.loadLevel('L6', { seed: 29, progression: 'L6-default' }); a.pause();
     a.settings.set({ quality });
   }, quality);
-  const cdp = await context.newCDPSession(page), readings = [];
+  const cdp = await context.newCDPSession(page), readings: { level: string; backend: string; tier: string; geometries: number; textures: number; heapBytes: number }[] = [];
   for (const level of ['L6', 'L1', 'L6', 'L1', 'L6', 'L1', 'L6'] as const) {
     if (readings.length) await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); }, level);
     await page.evaluate(async () => { const a = window.__SS__!; a.missions.begin(); a.pause(); for (let i = 0; i < 6; i++) await a.screenshotReady(); });

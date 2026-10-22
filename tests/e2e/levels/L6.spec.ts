@@ -53,6 +53,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
         })};
     });
     writeFileSync(`${out}/real-${name}-positions.json`,JSON.stringify(positions,null,2));
+    if(name==='l6-tunnel-retreat')expect(positions.followers.every(r=>Math.abs(r.head[0])<1&&Math.abs(r.head[1])<1&&r.head[2]<1),'all following adults stay inside the retreat photo').toBe(true);
     shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);
   };
   await step(30);await expect(page.locator('.story-bubble')).toContainText('Keep the wrap tight');await expect(page.locator('.story-bubble')).toBeVisible();await snap('l6-shelter-calm');await step(300);await expect(page.locator('.story-bubble')).toContainText('Please do not leave me behind');
