@@ -188,7 +188,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // The grade-level district ground outside the kit (y 0; every metro floor sits at 0.35 m or above) stays black.
         // The retreat column must read beyond the courier's cone as people,
         // retaining clothing/skin hues rather than disappearing into grey silhouettes.
-        const figureEmergency = surface.mul(float(.065).div(luminance(surface).max(.08))).mul(this.movingFigure);
+        const figureEmergency = surface.mul(float(.065).div(luminance(surface).max(.08)))
+          .mul(max(this.movingFigure, figureFillAmount.greaterThan(0).select(1, 0)));
         const emergency = max(surface.max(vec3(.05)).mul(lighting.subwayFill), figureEmergency)
           .mul(normalWorld.y.abs().mul(.45).add(.55)).mul(positionWorld.y.smoothstep(.15, .3));
         const dark = max(mix(vec3(luminance(result)).mul(.5).add(.012), result, colour), emergency);
@@ -203,13 +204,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
           .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
-        result.mulAssign(contact.mul(lighting.subwayDarkness.mul(-.3).sub(.6)).add(1));
+        result.mulAssign(contact.mul(lighting.subwayDarkness.mul(-.08).sub(.6)).add(1));
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
           .mul(figureFillAmount.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
           .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
-        result.mulAssign(crowded.mul(lighting.subwayDarkness.mul(-.2).sub(.55)).add(1));
+        result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
           // Hue-preserving albedo lift: scale RGB together so HSV hue/saturation stay authored
           // (auburn hair, teal/yellow outfit, peach skin) while dark swatches climb out of the night.
