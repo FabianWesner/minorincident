@@ -17,7 +17,7 @@ for (const quality of ['high', 'low'] as const) test(`T-E29-18 @E29-AC18 W5/W6 F
   });
   const images = new Map<string, PNG>(), poses = new Map<string, { position: number[]; target: number[] }>(), proof: unknown[] = [];
   for (const level of ['L5', 'L7'] as const) {
-    await page.evaluate(async ({ level, quality }) => { const a = window.__SS__!; await a.loadLevel(level, { seed: 29, progression: `${level}-default` }); a.pause(); a.settings.set({ quality }); }, { level, quality });
+    await page.evaluate(async ({ level, quality }) => { const a = window.__SS__!; await a.loadLevel(level, { seed: 29, progression: `${level}-default` }); a.pause(); a.settings.set({ quality }); a.missions.begin(); }, { level, quality });
     for (const point of points) {
       const camera = await page.evaluate(async p => {
         const a = window.__SS__!; a.teleport('player', p); a.camera.cinematic({ position: [p.x + 30, 38, p.z + 30], target: [p.x, .6, p.z] }, true); await a.screenshotReady();

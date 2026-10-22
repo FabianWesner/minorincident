@@ -14,6 +14,7 @@ import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { NoToneMapping, ColorManagement, Raycaster, Vector2 } from 'three/webgpu';
+import { attribute, Discard, Fn, vec4 } from 'three/tsl';
 import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -41,7 +42,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
-import { projectReveal, seeThrough } from './SeeThrough';
+import { projectReveal, seeThrough, seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -200,7 +201,8 @@ export class GameView implements Lifecycle {
   private windowMask=false;
   private foliageMask: boolean | 'crowns'=false;
   private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
-  private readonly foliageIdMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly occluderIdMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly skylineIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
@@ -208,7 +210,7 @@ export class GameView implements Lifecycle {
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
   private readonly projection = new Vector3();
-  private idPass = false;
+  private idPass: boolean | 'skyline' = false;
   private weatherPowerRevision = 0;
   private weatherProbeAsset: string | null = null;
   weatherMask(asset: string | null): void { this.weatherProbeAsset = asset; }
@@ -739,7 +741,7 @@ export class GameView implements Lifecycle {
     this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; interiorCullOff?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean | 'skyline'; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; interiorCullOff?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
@@ -1063,8 +1065,8 @@ export class GameView implements Lifecycle {
       this.scene.traverse((child) => {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
           if (this.infectedIdPass) {
+            const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
             let infected = false;
             for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.crowd) { infected = true; break; }
             let masks = this.infectedIdMasks.get(source);
@@ -1073,12 +1075,39 @@ export class GameView implements Lifecycle {
             masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
             if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
             child.material = masks[index];
-          } else if (!hero && source.name === 'pal_leaf-card-crown') {
-            if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
-            child.material = this.foliageIdMasks.get(source)!;
-          } else child.material = hero ? this.idPlayer : this.idBackground; }
+          } else {
+            const skyline = this.idPass === 'skyline';
+            if (skyline) {
+              // Count the visible city buildings, excluding ground, vegetation,
+              // vehicles and the bus. Keep production depth/placement below.
+              hero = false;
+              for (let node: import('three').Object3D | null = child; node; node = node.parent) {
+                if (node.name.startsWith('inst:bld.') || String(node.userData.assetId ?? '').startsWith('bld.')) { hero = true; break; }
+              }
+            }
+            const maskMaterial = (material: Material) => {
+              const source = material as PaletteMaterial;
+              const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
+              if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
+              if (!masks.has(source)) {
+                const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
+                // ID probes must retain the visible scene's placement transforms
+                // and holes: an opaque replacement truck otherwise hides a courier
+                // who is plainly visible through its production see-through disc.
+                const reveal = source.userData.seeThrough;
+                if (reveal) mask.outputNode = Fn(() => {
+                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+                  return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
+                })();
+                masks.set(source, mask);
+              }
+              return masks.get(source)!;
+            };
+            child.material = hero && !skyline ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material);
+          }
+        }
       });
-      this.idPlayer.depthTest = !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
+      this.idPlayer.depthTest = this.idPass === 'skyline' || !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
@@ -1116,7 +1145,9 @@ export class GameView implements Lifecycle {
     if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
-    lighting.subwayDarkness.value = metro || lighting.preset === 'L6-subway' ? 1 : 0;
+    // L6 keeps its mission state on the exterior apron after selecting the shared
+    // L6 night key. Only the underground preset owns the emergency-darkness grade.
+    lighting.subwayDarkness.value = lighting.preset === 'L6-subway' ? 1 : 0;
     this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
     lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
     const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;
@@ -1196,8 +1227,9 @@ export class GameView implements Lifecycle {
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
-    for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
     for (const masks of this.infectedIdMasks.values()) for (const material of masks) material?.dispose(); this.infectedIdMasks.clear(); this.infectedIdPass = false;
+    for (const material of this.occluderIdMasks.values()) material.dispose(); this.occluderIdMasks.clear();
+    for (const material of this.skylineIdMasks.values()) material.dispose(); this.skylineIdMasks.clear();
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }

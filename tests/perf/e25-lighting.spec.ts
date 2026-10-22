@@ -60,6 +60,7 @@ test.describe('Pixel 7 emulated low', () => {
     // baseline the light field must not degrade: night may cost at most 10% (or 1.5 ms) over the morning.
     // The absolute budget is recorded; on the shared, loaded Mac the morning baseline itself sits at the limit.
     expect(night.frameMsP50).toBeLessThanOrEqual(Math.max(morning.frameMsP50 * 1.1, morning.frameMsP50 + 1.5));
+    expect(night.frameMsP50).toBeLessThanOrEqual(qualityBudgets.low.frameMs);
     test.info().annotations.push({ type: 'low-budget', description: `p50 morning ${morning.frameMsP50.toFixed(1)} ms, night ${night.frameMsP50.toFixed(1)} ms (budget ${qualityBudgets.low.frameMs.toFixed(1)} ms)` });
     expect(night.lighting!.lightPools).toBeLessThanOrEqual(256); expect(night.lightFieldMsMean).toBeLessThan(2);
   });
