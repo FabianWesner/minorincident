@@ -16,10 +16,10 @@ The orchestrator explicitly authorized the E24-AC19 rewrite on 2026-10-22: the t
 | E22-AC20 | **Unmet:** final WebGPU high break204.7ms/four cold builds; low turn54.5ms/break54.8ms. | Native peak/caps and all specified beat maxima ≤50 ms, both tiers. |
 | E23-AC17 | **Met:** full corrected five-person real-input route, zero deaths/errors. | Ordinary cellar→Sam→Mia→all five→shutter route, photos and zero console errors. |
 | E23-AC18 | **Met:** four pairs plus actual group, scores7/8/8/7/7, all must and8/11 should. | All four recognizable safe/fallen pairs, vulnerable five-person group and sunset, each ≥7, no P0/P1. |
-| E23-AC19 | Final WebGPU both-tier peak/zoom and five-load retention pass; WebGL pending. | Both backends/tiers/zoom limits, original frame/counter/draw-regression budgets, warmed heap/GPU growth ≤10%. |
+| E23-AC19 | **Met:** both-backend/tier peak and three-zoom matrices plus original five-load retention pass. | Final WebGL p95 high8.6ms/low34.9ms, heap130.359/114.502MB; WebGPU and all four lifecycle receipts retained. Full verifier remains independently red. |
 | E24-AC15 | **Met:** final24-case backend/tier/zoom matrix passes, opened and described. | Player contrast ≥3:1, body-isolated brightest red eyes and tier-correct hero shadow at both spots across backends/tiers/zooms. |
 | E24-AC18 | **Red:** phone96 and v7 route pass, but actual named scores8/7/6/5; two must and5/9 should fail. | [Full seven-photo review](E24-review.md): closer retreat readability and sparse/muddy night yard need improvement; no criterion rewrite proposed. |
-| E24-AC19 | Approved population clarification passes final WebGPU stress/transitions; heap10.59%/11.98% remains red, WebGL pending. | High ≥40 / low 30 infected, ≥25 moving survivors, native tier budgets and ≤50 ms transitions; warmed retention ≤10%. |
+| E24-AC19 | **Red on retention; approved population clarification proved on both backends:** high40/low30 live infected,26 moving survivors, tier budgets and ≤50ms transitions pass. | Original heap growth WebGPU10.59%/11.98% and WebGL low10.58% exceeds10%; runtime fix assigned to separate perf lane. |
 
 ## Execution record
 
@@ -268,3 +268,21 @@ The primary quiet proof and later full-verifier quiet stages are now allowed to 
 ### 15:00 UTC — native route and shared GPU batch complete
 
 All **6/6** native cases pass in4.6min: the full actual-input L6 route and five shared WebGPU high/low canvas/game-camera/transition smokes. Archive `evidence/l6-route-v7-and-shared-gpu.{json,log}.gz` retains the complete current receipt. This resolves the hardware proof for the shared cases without rewriting their earlier remote software-device failures in full verifier records. The priority WebGL quiet batch is waiting for global admission; no performance measurement is claimed before its condition log begins.
+
+### 15:14 UTC — ordered quiet handoff to E31 D2
+
+The orchestrator pauses perf-l4-l6 browser work until16:05 and gives this six-case batch first, then E31 D2. After the primary `quiet-run` exits and releases **all global slots**, retain this lane's private lock while `/tmp/ac-close-l4-l6-verifier/handoff-to-E31` exists. Archive results before waiting; this prevents our later full-verifier browsers from taking E31's next turn. Only our private admission is held, never shared GPU slots. Remove the marker on E31 completion or during final owned-check cleanup.
+
+### 15:15 UTC — E23-AC19 met on both backends
+
+Both final WebGL peak cases pass unchanged, including all three zooms: high p50/p95/max**5.7/8.6/16.0ms**, sim1.4ms, collected heap130.359MB; low**19.2/34.9/46.4ms**, sim3.8ms,114.502MB. High baseline412draw/726506tri -> pair/follow356draw/702623tri; low268/288316 ->266/321565. Both have5followers,13fires,37retained bodies, and tier populations27/18infected. The WebGPU peaks already pass (p95high7.4/low34.7ms), as do all four original five-load heap/geometry/texture tests. Therefore **E23-AC19 is met**, bringing the partial closure total to7/10. E23 stays in-progress because the full verifier's current audio/remote screenshot failures and interrupted coverage remain unresolved.
+
+Opened final WebGL high/low follow images: the ruined plaza, scattered corpses, wrecks and5bar-marked followers are present under dense ash/haze; portrait crops the wide plaza. These are deliberately loaded performance views, **not** substitutes for the separately scored close group/pair vision review. Numeric counters establish the offscreen population and effects.
+
+### 15:17 UTC — six-case WebGL proof green; global slots released
+
+The final primary quiet batch completes **6/6pass in3.6min**, with fresh conditions/reporter/per-case JSON archived as `evidence/quiet-webgl-primary-*`. All global slots are released for the explicitly ordered E31 D2 turn; our subsequent full-verifier admissions remain blocked only by the private handoff marker.
+
+The **approved AC19 population rewrite is now proved on both actual backends and both tiers**. WebGL high/low both have26moving survivors and **40/30 living visible infected**, with25/22dead infected retained, emergency lights and collected headlamp active. High p50/p95/max**5.1/7.6/13.7ms**, sim1.6ms,69.575MB; low**12.2/16.0/49.8ms**, sim4.0ms,64.559MB. Actual breach2/abandon maxima are**18.1/18.1ms high** and**34.6/34.6ms low**, all≤50ms. All three zoom counter matrices and actual tier shadow gates pass. Original retention remains red (WebGPU+10.5898/+11.9797%; WebGL low+10.577%), so **E24-AC19 remains red overall**. No warmed-baseline rewrite is adopted.
+
+Opened both full final WebGL stress images and the complete [eight-view backend/tier perf sheet](l5-l6-final-perf-matrix.jpg). The bright courier/headlamp, warm rails, unarmed adults and red-eyed pursuers match between backends; portrait excludes most of the cohort, so counts come from the numeric living/moving assertions. The L5 performance images show deliberately dense ash/haze and clutter on both backends; their overlap/haze is explicitly not used as vision acceptance. Retained report captures total**11/12**.

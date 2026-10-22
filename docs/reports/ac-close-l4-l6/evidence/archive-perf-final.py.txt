@@ -24,3 +24,13 @@ for epic in ['E22','E23','E24']:
    if p.is_file() and p.stat().st_mtime>=start:shutil.copyfile(p,dest/p.name)
 (out/f'quiet-{tag}-archive-manifest.json').write_text(json.dumps({'backend':backend,'startedEpoch':start,'files':manifest},indent=2)+'\n')
 Path(f'/tmp/ac-close-l4-l6-verifier/archive-{tag}').unlink(missing_ok=True)
+
+# Orchestrator 2026-10-22: let E31 D2 take the next global quiet turn.
+# quiet-run has exited and released its slots before this archiver executes;
+# retaining only this lane's private lock blocks our own later browsers.
+if tag == 'webgl-primary':
+ import time
+ handoff=Path('/tmp/ac-close-l4-l6-verifier/handoff-to-E31')
+ if handoff.exists():
+  print('[ac-close] primary WebGL receipt archived; global slots released for E31 D2',flush=True)
+ while handoff.exists():time.sleep(2)
