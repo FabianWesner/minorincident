@@ -4,25 +4,31 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Game } from '../../src/Game';
-import { SceneSession, stopServer } from '../scenelab/session';
+import { SceneSession, stopServer, origin } from '../scenelab/session';
 
 const remote = process.platform !== 'darwin' && process.env.MI_REMOTE === '1' && process.env.E2E_UNITS === '1';
 if (process.env.MI_PERF_LOCK_HELD !== '1' && !remote) throw Error('Use quiet-run locally, or the single-browser remote wrapper');
 const selectedTier = process.env.L4_GRAPH_TIER ?? 'high';
 if (selectedTier !== 'high' && selectedTier !== 'low') throw Error('Invalid tier');
 const tier: 'high' | 'low' = selectedTier;
+const backend = process.env.L4_GRAPH_BACKEND ?? 'webgl2';
+if (backend !== 'webgl2' && backend !== 'webgpu') throw Error('Invalid backend');
 const out = process.env.L4_GRAPH_OUT ?? 'test-results/perf-l4-l6/l4-graphs';
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend: 'webgl2', tier, phone: tier === 'low', seed: 2, viewport: tier === 'low' ? { width: 390, height: 844 } : { width: 1600, height: 900 }, query: { loadProfile: '2', dpr: tier === 'high' ? '1' : '1.5' } });
+const session = new SceneSession({ backend, nativeFrameTiming: process.platform === 'darwin', tier, phone: tier === 'low', seed: 2, viewport: tier === 'low' ? { width: 390, height: 844 } : { width: 1600, height: 900 }, query: { loadProfile: '2', dpr: tier === 'high' ? '1' : '1.5' } });
 try {
+  if (await fetch(origin).then(() => true, () => false)) throw Error(`Scene preview port is already occupied: ${origin}`);
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
-  const trace = await session.page.evaluate(async ({ tier, full }: { tier: 'high' | 'low'; full: boolean }) => {
+  if (process.env.L4_GRAPH_LOAD_ONLY === '1' && tier === 'low') { const cdp = await session.page.context().newCDPSession(session.page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
+  const trace = await session.page.evaluate(async ({ tier, full, loadOnly }: { tier: 'high' | 'low'; full: boolean; loadOnly: boolean }) => {
     const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier });
     performance.clearMeasures(); const loadStarted = performance.now();
     await a.loadLevel('L4', { seed: 2, progression: 'L4-default' });
-    const loadMs = performance.now() - loadStarted, loadPhases = performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete');
+    const loadMs = performance.now() - loadStarted, loadPhases = performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })); a.pause();
+    if (loadOnly) return { diagnostic: true, loadingOnly: true, loadMs, loadPhases, backend: a.perf().backend, tier: a.perf().quality.tier };
+    a.missions.begin(); a.cheats.god(true); a.bot.start('complete');
     const builds: unknown[] = [], renderer = game.view.renderer, before = renderer.nodeBuilds;
     const onBuild = renderer.debug.onNodeBuilderCreated;
     const describe = (material: import('three').Material) => Object.fromEntries(Object.entries(material).filter(([key, value]) => !key.startsWith('_') && value?.isNode).map(([key, value]) => [key, { id: value.id, key: value.getCacheKey() }]));
@@ -49,7 +55,8 @@ try {
       }
       return { diagnostic: true, loadMs, loadPhases, backend: a.perf().backend, tier: a.perf().quality.tier, turnAt: a.missions.state()!.l4!.turnAt, newBuilds: renderer.nodeBuilds - before, builds, initialMaterials, materials: a.perf().nodeBuildMaterials };
     } finally { renderer.debug.onNodeBuilderCreated = onBuild; a.bot.stop(); }
-  }, { tier, full: process.env.L4_GRAPH_FULL === '1' });
+  }, { tier, full: process.env.L4_GRAPH_FULL === '1', loadOnly: process.env.L4_GRAPH_LOAD_ONLY === '1' });
+  if (trace.backend !== (backend === 'webgpu' ? 'webgpu' : 'webgl') || trace.tier !== tier) throw Error('Requested backend/tier was not selected');
   writeFileSync(`${out}/${tier}.json`, JSON.stringify(trace, null, 2));
   console.log(JSON.stringify(trace));
   if (session.errors.length) throw Error(session.errors.join('\n'));
