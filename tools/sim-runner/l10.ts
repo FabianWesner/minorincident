@@ -18,12 +18,15 @@ export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: nu
   for (let tick = 0; tick < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; tick++) {
     const f = emptyInput(), active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
     if (!active || player.health.current <= 0 || mission.state.phase === 'retry') break;
-    const anchor = mission.def.anchors[active.anchor], p = player.transform;
+    // Killing the boss used to share the hold objective. Retain that same
+    // console-centred combat policy after splitting it into the mega step.
+    const finale = active.id === 'hold' || active.id === 'mega';
+    const anchor = mission.def.anchors[active.id === 'mega' ? 'cure-console' : active.anchor], p = player.transform;
     const distance = (a: { x: number; z: number }) => Math.hypot(a.x - p.x, a.z - p.z);
     const released = !!mission.state.states['cure-released'];
     while (waypoint < route.length && distance({ x: route[waypoint][0], z: route[waypoint][1] }) < 2) waypoint++;
     let goal = anchor;
-    if (!released && active.id !== 'hold' && waypoint < route.length && route[waypoint][0] < anchor.x - 2) {
+    if (!released && !finale && waypoint < route.length && route[waypoint][0] < anchor.x - 2) {
       goal = { x: route[waypoint][0], z: route[waypoint][1], radius: 2 };
     }
     if (released) {
@@ -41,7 +44,7 @@ export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: nu
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z };
       f.right.held = true;
-      if (active.id === 'hold' && d < 10) {
+      if (finale && d < 10) {
         // Circle through the hold area so the solid pursuing crowd trails the
         // courier. Every step still uses ordinary navigation and movement input.
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
@@ -58,7 +61,7 @@ export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: nu
     const metres = Math.hypot(p.x - x, p.z - z); row.metres += metres; row.seconds += 1 / 60;
     // Exclusive categories sum to elapsed time; movement distance is recorded separately.
     if (released) row.epilogueSeconds += 1 / 60;
-    else if (active.id === 'hold') row.holdSeconds += 1 / 60;
+    else if (finale) row.holdSeconds += 1 / 60;
     else if (f.right.held) row.combatSeconds += 1 / 60;
     else if (f.interact) row.interactionSeconds += 1 / 60;
     else if (metres > .0001) row.travelSeconds += 1 / 60;

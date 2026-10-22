@@ -58,6 +58,11 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   a.lastHp = e.health.current;
   if (c.story?.clip === 'hurt' && tick >= (a.flinchUntil ?? 0)) c.story = null;
   if (tick < (a.flinchUntil ?? 0)) return true;
+  // The subway's walking formation owns a retreating guard's one movement
+  // intent, including its mouth/side-floor recovery. Pending shots and contact
+  // shoves keep their timing without repeatedly planting it behind the column.
+  const subwayRun = !!a.run && c.survivor?.mode === 'follow' && !!world.missions?.l6;
+  if (subwayRun && c.state !== 'grabbed') world.missions!.l6!.follower(e);
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
@@ -191,7 +196,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       if (!visible(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
       if (c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
-        if (a.run) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);
+        if (a.run && !subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);
         else if (follower && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform);
       }
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -203,7 +208,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const reloading = tick < (a.reloadUntil ?? 0);
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot' && !reloading) c.story = { clip: 'shoot', start: tick };
       // Every shooter fights on the move (PO 2026-10-13); scripted runs and the raised army deck keep their own movement.
-      if (shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
+      // A subway guard catching the column keeps shooting, but a firing-position
+      // backstep must not override its retreat movement. Contact shoves still run.
+      const columnRun = a.run && c.survivor?.mode === 'follow' && !!world.missions?.state.l6;
+      if (shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && (!columnRun || d <= pt.batonReachM) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach + (shooter ? .5 : 0) && tick >= a.nextAttack && world.combat) {
         // A person in the line of fire holds the shot (never a friendly-fire roll).
         // After a second of waiting the shooter sidesteps to clear it (nobody stands for long behind someone).
@@ -236,7 +244,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   }
   if (a.run) {
     if (Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) <= .35) { a.run = null; return true; }
-    npcs.move(e, a.run, a.runSpeed, c, .25, runBudget); return true;
+    if (!subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget); return true;
   }
   if (follower) return regroup(world, e, a, leader!.transform);
   // Disengaged fighters follow their routine; a held post (officers) is kept regardless.

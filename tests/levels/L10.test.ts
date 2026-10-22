@@ -14,5 +14,5 @@ test('T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ord
   expect(report.regions!.reduce((n, r) => n + r.epilogueSeconds, 0)).toBeCloseTo(150, 4);
   for (const r of report.regions!) expect(r.travelSeconds + r.combatSeconds + r.interactionSeconds + r.holdSeconds + r.epilogueSeconds + r.otherSeconds).toBeCloseTo(r.seconds, 4);
   expect(report.maxConcurrentInfected).toBeLessThanOrEqual(200);
-  expect(report.objectiveTimeline.map(e => e.id)).toEqual(['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor', 'dispersal-complex', 'install', 'hold', 'release', 'epilogue', 'credits']);
+  expect(report.objectiveTimeline.map(e => e.id)).toEqual(['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor', 'dispersal-complex', 'install', 'hold', 'mega', 'release', 'epilogue', 'credits']);
 }, 300_000);

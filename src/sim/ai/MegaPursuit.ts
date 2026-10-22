@@ -140,6 +140,24 @@ export class MegaPursuit {
     return id;
   }
 
+  /** Stage the living Mega Alpha near the finale console after its long approach.
+   * The arena and combat stats are unchanged; only its travel state is handed off. */
+  stageNear(at: { x: number; z: number }, distance = 9): void {
+    const e = this.entity(); if (!e || !this.alive()) return;
+    const player = this.world.entities.get(1)!.transform;
+    let dx = player.x - at.x, dz = player.z - at.z, len = Math.hypot(dx, dz);
+    if (len < .1) { dx = e.transform.x - at.x; dz = e.transform.z - at.z; len = Math.hypot(dx, dz); }
+    if (len < .1) { dx = 1; dz = 0; len = 1; }
+    const target = { x: at.x - dx / len * distance, z: at.z - dz / len * distance };
+    const place = this.clearNear(target, 12) ?? target;
+    e.transform.x = place.x; e.transform.z = place.z;
+    e.transform.y = .7 + (this.world.districts?.groundHeight(place.x, place.z) ?? 0);
+    if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
+    this.world.spatial.set(e.id, place.x, place.z);
+    Object.assign(this.state, { x: place.x, z: place.z, routeAt: -Infinity, route: [], passed: null });
+    this.path.path.length = 0; this.path.goal = -1;
+  }
+
   /** Per-tick bookkeeping before the AI phase: the introduction, death and the 2 Hz route refresh. */
   private tick(): void {
     const s = this.state, tick = this.world.tick;

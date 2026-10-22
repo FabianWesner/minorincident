@@ -1,4 +1,5 @@
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
+import { defendHuman } from '../../src/sim/npc/defence';
 import { loadL6 } from '../../tools/sim-runner/l6Bots';
 import { followFrustum } from '../../tools/sim-runner/l3Bots';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -6,7 +7,7 @@ import { l6, l6Doors } from '../../src/data/l6';
 import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
-afterEach(() => { world?.dispose(); world = undefined; });
+afterEach(() => { vi.restoreAllMocks(); world?.dispose(); world = undefined; });
 const put = (w: SimWorld, x: number, z: number) => { const p = w.entities.get(1)!; Object.assign(p.transform, { x, y: 1.3, z }); w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z); };
 
 test('@E24 PO 10-20 #65 the retreat ring sits on the group\'s next waypoint; away from the group it reads "Stay with the group" and moves onto the group', async () => {
@@ -190,3 +191,68 @@ test('@E24 #96 the uncollected second follower can leave the walkable raised edg
   expect(e.transform.x,JSON.stringify(e.transform)).toBeGreaterThan(78);
   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
 },240_000);
+
+test('@E24 #102 exit-platform waits for the living group and 15 deaths never restore a guard 150 m behind', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!, living = s.survivors.filter(r => r.status === 'following');
+  s.leaderX = 245; s.leaderZ = 15;
+  living.forEach((r, i) => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: i === 0 ? 115 : 242, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  put(w, 240, 15); w.update();
+  expect(s.platform).toBe(false); expect(m.state.checkpoint).not.toBe('exit-platform');
+  living.forEach(r => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 243, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  w.update();
+  expect(s.platform).toBe(true); expect(m.state.checkpoint).toBe('exit-platform');
+  for (let death = 0; death < 15; death++) {
+    w.tick += 180; w.player!.damage(1000, w.tick);
+    for (let i = 0; i < 400 && w.entities.get(1)!.health.current === 0; i++) w.update();
+    expect(w.entities.get(1)!.health.current, `death ${death + 1} respawns`).toBeGreaterThan(0);
+    const retry = m.state.l6!.survivors.filter(r => r.status === 'following');
+    expect(retry.length).toBeGreaterThan(0);
+    expect(retry.every(r => w.entities.get(r.id)!.transform.x > 240), `death ${death + 1} keeps the entire group at the exit`).toBe(true);
+  }
+}, 240_000);
+
+test('@E24 #102 a following guard does not re-engage its former posted ally role and stays with the tunnel column', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!, guard = s.survivors.find(r => r.routine === 'guard' && r.status === 'following')!;
+  s.leaderX = 120; s.leaderZ = 15;
+  for (const [i, r] of s.survivors.filter(r => r.status === 'following').entries()) {
+    const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 120 - i * .2, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z);
+  }
+  const e = w.entities.get(guard.id)!; Object.assign(e.transform, { x: 115, z: 15 }); w.spatial.set(e.id, 115, 15);
+  put(w, 120, 15);
+  w.update(); expect(e.civilian!.ally!.engaged).toBe(false);
+  for (let i = 1; i < 30 * 60; i++) w.update();
+  expect(Math.abs(e.transform.x - s.leaderX)).toBeLessThan(l6.follow.columnM);
+}, 240_000);
+
+test('@E24 #102 a guard catching up at x115 does not backstep away from its retreat order while shooting', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!; s.leaderX = 160; s.leaderZ = 15;
+  const row = s.survivors.find(r => r.routine === 'guard')!, e = w.entities.get(row.id)!;
+  Object.assign(e.transform, { x: 115, z: 15 }); w.spatial.set(e.id, 115, 15);
+  e.civilian!.ally!.step = { x: 113, z: 15, until: w.tick + 60 };
+  put(w, 115, 12); w.infected!.spawn('infected.runner', { x: 118, z: 15 });
+  const move = vi.spyOn(w.npcs!, 'move');
+  expect(defendHuman(w, e)).toBe(true);
+  expect(move.mock.calls.some(([, goal]) => goal.x === 160)).toBe(true);
+  expect(move.mock.calls.every(([, goal]) => goal.x >= 115)).toBe(true);
+}, 240_000);
+
+test('@E24 #102 a following guard keeps its ordinary 2.2 m/s retreat intent through a pending contact shove', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!; s.leaderX = 160; s.leaderZ = 15;
+  const row = s.survivors.find(r => r.routine === 'guard')!, e = w.entities.get(row.id)!;
+  Object.assign(e.transform, { x: 115, z: 15 }); w.spatial.set(e.id, 115, 15);
+  put(w, 115, 12);
+  const target = w.infected!.spawn('infected.runner', { x: 116, z: 15 });
+  e.civilian!.ally!.strikeAt = w.tick + 15; e.civilian!.ally!.strikeTarget = target;
+  const move = vi.spyOn(w.npcs!, 'move');
+  expect(defendHuman(w, e)).toBe(true);
+  expect(move.mock.calls.some(([, goal, speed]) => goal.x === 160 && speed === 2.2)).toBe(true);
+  expect(move.mock.calls.filter(([body]) => body.id === e.id)).toHaveLength(1);
+}, 240_000);
