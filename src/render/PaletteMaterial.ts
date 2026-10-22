@@ -132,9 +132,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       });
       // Distant fire glow (look.glowAmount; 0 except L9's burning city ahead): a warm fill that grows along the authored world
       // direction, strongest on surfaces turned towards it, with a slow breathing flicker. Uniform ALU only, no pass.
-      const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
-      const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
-      shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
+      If(look.glowAmount.greaterThan(0), () => {
+        const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
+        const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
+        shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
+      });
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.
@@ -168,7 +170,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
         result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
       }
-      if (!emissive) {
+      if (!emissive) If(lighting.subwayDarkness.greaterThan(0), () => {
         const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
         const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
         const cone = facing.smoothstep(.78, .92).mul(reach.smoothstep(18, 14)).mul(lighting.headlampOn);
@@ -182,7 +184,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const emergency = surface.max(vec3(.05)).mul(lighting.subwayFill).mul(normalWorld.y.abs().mul(.45).add(.55)).mul(positionWorld.y.smoothstep(.15, .3));
         const dark = max(mix(vec3(luminance(result)).mul(.5).add(.012), result, colour), emergency);
         result.assign(mix(result, dark, lighting.subwayDarkness));
-      }
+      });
       const graded = float(1).toVar();
       const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
       if (!emissive && (mode & flags.hero)) {
