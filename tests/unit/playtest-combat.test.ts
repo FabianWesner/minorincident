@@ -27,9 +27,17 @@ test('#99 fists movement preserves the existing low-health kite policy', () => {
 });
 
 test('#99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring', () => {
-  expect(canCoverVisibleAllies('L6','shelter',true)).toBe(true);
-  expect(canCoverVisibleAllies('L6','stop',true)).toBe(true);
-  expect(canCoverVisibleAllies('L6','retreat',true)).toBe(false);
-  expect(canCoverVisibleAllies('L7','corridor',true)).toBe(false);
-  expect(canCoverVisibleAllies('L6','retreat',false)).toBe(true);
+  const ally = { drawn: true, hp: 20, corpse: false };
+  expect(canCoverVisibleAllies('L6','shelter',true,ally)).toBe(true);
+  expect(canCoverVisibleAllies('L6','stop',true,ally)).toBe(true);
+  expect(canCoverVisibleAllies('L6','retreat',true,ally)).toBe(false);
+  expect(canCoverVisibleAllies('L7','corridor',true,ally)).toBe(false);
+  expect(canCoverVisibleAllies('L6','retreat',false,ally)).toBe(true);
+});
+
+test('#99 fists ally cover requires a visible living actor', () => {
+  const ally = { drawn: true, hp: 20, corpse: false };
+  expect(canCoverVisibleAllies('L6','shelter',true,{...ally,drawn:false})).toBe(false);
+  expect(canCoverVisibleAllies('L6','shelter',true,{...ally,hp:0})).toBe(false);
+  expect(canCoverVisibleAllies('L6','shelter',true,{...ally,corpse:true})).toBe(false);
 });

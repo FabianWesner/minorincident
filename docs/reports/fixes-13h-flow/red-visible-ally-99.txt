@@ -1,0 +1,43 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow -> 2.31.10.108:/srv/mi/ws/fixes-13h-flow-8635c7
+[remote] cache-gc deleted:none
+[remote] sync 59s, 30486 files; job /srv/mi/jobs/fixes-13h-flow-8635c7-51753-1792634099; queueing for a slot
+[runner] slot 1 acquired; load 5.13 3.93 2.74
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-flow-8635c7-51753-1792634099[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 23[2mms[22m[39m
+   [32m✓[39m #99 one or two close infected must not plant the fists courier during the moving retreat[32m 5[2mms[22m[39m
+   [32m✓[39m #99 shelter defence and carried weapons retain their combat decisions[32m 0[2mms[22m[39m
+   [32m✓[39m #99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists movement preserves the existing low-health kite policy[32m 0[2mms[22m[39m
+   [32m✓[39m #99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring[32m 0[2mms[22m[39m
+[31m   [31m×[31m #99 fists ally cover requires a visible living actor[39m[32m 16[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts[2m > [22m#99 fists ally cover requires a visible living actor
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m tests/unit/playtest-combat.test.ts:[2m40:76[22m[39m
+    [90m 38|[39m test('#99 fists ally cover requires a visible living actor', () => {
+    [90m 39|[39m   const ally = { drawn: true, hp: 20, corpse: false };
+    [90m 40|[39m   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,drawn:fals…
+    [90m   |[39m                                                                            [31m^[39m
+    [90m 41|[39m   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,hp:0})).to…
+    [90m 42|[39m   expect(canCoverVisibleAllies('L6','shelter',true,{...ally,corpse:tru…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 01:56:02
+[2m   Duration [22m 418ms[2m (transform 52%, import 22%, tests 19%, worker 7%)[22m
+
+[remote] done exit=1 (runner 2.31.10.108, sync 59s, remote total 7s)
