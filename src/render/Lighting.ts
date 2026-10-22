@@ -210,14 +210,12 @@ export class Lighting {
     this.sun.intensity = spot ? 0 : this.intensity.value;
     if (!spot && stable) this.spot.intensity = 0;
   }
-  /** Retain both L10 lamp variants in the render cache, then restore the
-   * gameplay source. Only one light participates in each actual draw. */
-  async warmShadowVariants(prepare: () => Promise<void>): Promise<void> {
+  /** Temporary compile/draw source. Restore immediately, including when the
+   * callback returns an asynchronous compilation or throws. */
+  withShadowSource<T>(spot: boolean, prepare: () => T): T {
     const source = this.spotSource;
-    try {
-      if (this.preset === 'L10-night') { this.setShadowSource(!source); await prepare(); }
-      this.setShadowSource(source); await prepare();
-    } finally { this.setShadowSource(source); }
+    try { this.setShadowSource(spot); return prepare(); }
+    finally { this.setShadowSource(source); }
   }
   /** The L5 gloom ramp (quantised to 0.5 % so a slow fade does not re-apply the look every frame). */
   setGloom(factor: number): void {
