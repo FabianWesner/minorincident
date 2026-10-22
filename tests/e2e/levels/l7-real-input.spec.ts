@@ -84,7 +84,16 @@ test.describe('L7 phone controls', () => {
     const out = 'test-results/epics/E29/real-input'; mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/phone-rocket.png` });
     // The desktop test owns the continuous cross-city route. This checkpoint
     // fixture isolates the same touch movement adapter at the corridor entrance.
-    await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: -23, z: 47 }); a.camera.follow(); await a.step(1); });
+    await page.evaluate(async () => {
+      const a = window.__SS__!, origin = a.getEntity(1)!.transform, target = { x: -23, z: 47 };
+      // Move the escort with this isolated touch fixture; the production reach
+      // objective still requires every living follower within eighteen metres.
+      for (const r of a.getState().l7!.roster.filter(r => r.status === 'following')) {
+        const p = a.getEntity(r.id)!.transform;
+        a.teleport(r.id, { x: p.x + target.x - origin.x, z: p.z + target.z - origin.z });
+      }
+      a.teleport('player', target); a.camera.follow(); await a.step(1);
+    });
     await move({ x: -31, z: 47 }, 1);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('corridor');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);

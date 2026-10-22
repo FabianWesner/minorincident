@@ -14,6 +14,7 @@ import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { NoToneMapping, ColorManagement, Raycaster, Vector2 } from 'three/webgpu';
+import { attribute, Discard, Fn, vec4 } from 'three/tsl';
 import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -41,7 +42,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
-import { projectReveal, seeThrough } from './SeeThrough';
+import { projectReveal, seeThrough, seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -196,7 +197,7 @@ export class GameView implements Lifecycle {
   private windowMask=false;
   private foliageMask: boolean | 'crowns'=false;
   private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
-  private readonly foliageIdMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly occluderIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
@@ -1048,9 +1049,20 @@ export class GameView implements Lifecycle {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
           const source = child.material as PaletteMaterial;
-          if (!hero && source.name === 'pal_leaf-card-crown') {
-            if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
-            child.material = this.foliageIdMasks.get(source)!;
+          if (!hero && (source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) {
+            if (!this.occluderIdMasks.has(source)) {
+              const mask = new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
+              // ID probes must retain the visible scene's placement transforms
+              // and holes: an opaque replacement truck otherwise hides a courier
+              // who is plainly visible through its production see-through disc.
+              const reveal = source.userData.seeThrough;
+              if (reveal) mask.outputNode = Fn(() => {
+                Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+                return vec4(0, 0, 0, 1);
+              })();
+              this.occluderIdMasks.set(source, mask);
+            }
+            child.material = this.occluderIdMasks.get(source)!;
           } else child.material = hero ? this.idPlayer : this.idBackground; }
       });
       this.idPlayer.depthTest = !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
@@ -1169,7 +1181,7 @@ export class GameView implements Lifecycle {
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
-    for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
+    for (const material of this.occluderIdMasks.values()) material.dispose(); this.occluderIdMasks.clear();
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }

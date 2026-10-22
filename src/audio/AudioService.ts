@@ -541,7 +541,7 @@ export class AudioService implements Lifecycle {
         const story = storyMusic(this.level, this.world.missions?.state);
         const band = this.world.megaPursuit?.band();
         const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.incident, complete: this.complete || input.complete || !!this.world.missions?.state.states['cure-released'] });
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.incident, complete: this.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);
