@@ -1,0 +1,43 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow -> 2.28.24.66:/srv/mi/ws/fixes-13h-flow-8635c7
+[remote] cache-gc deleted:none
+[remote] sync 50s, 30494 files; job /srv/mi/jobs/fixes-13h-flow-8635c7-36760-1792637901; queueing for a slot
+[runner] slot 0 acquired; load 0.62 1.24 1.50
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-flow-8635c7-36760-1792637901[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/playtest-input.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 61[2mms[22m[39m
+[31m   [31m×[31m #99 approaching a visible ally attacker releases held walking/attack keys before clicking[39m[32m 58[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/playtest-input.test.ts[2m > [22m#99 approaching a visible ally attacker releases held walking/attack keys before clicking
+[31m[1mAssertionError[22m: expected [ 'aim-up', 'move 640 360', …(2) ] to deeply equal [ 'keys-up', 'aim-up', …(3) ][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "keys-up",[39m
+[2m    "aim-up",[22m
+[2m    "move 640 360",[22m
+[2m    "mouse-down",[22m
+[2m    "mouse-up",[22m
+[2m  ][22m
+
+[36m [2m❯[22m tests/unit/playtest-input.test.ts:[2m15:17[22m[39m
+    [90m 13|[39m     },
+    [90m 14|[39m   }, 640, 360);
+    [90m 15|[39m   expect(calls).toEqual(['keys-up','aim-up','move 640 360','mouse-down…
+    [90m   |[39m                 [31m^[39m
+    [90m 16|[39m });
+    [90m 17|[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 02:59:14
+[2m   Duration [22m 346ms[2m (tests 44%, transform 39%, import 12%, worker 5%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 50s, remote total 6s)

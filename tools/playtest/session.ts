@@ -6,6 +6,7 @@ import { look, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
+import { clickGroundInput } from './input';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -73,7 +74,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
   const safe = (x: number, y: number, e: Eyes) => ({ x: clamp(x, 260, e.view.w - 260), y: clamp(y, 120, e.view.h - 170) });
-  const clickGround = async (x: number, y: number) => { await releaseAim(); await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
+  const clickGround = (x: number, y: number) => clickGroundInput({ releaseKeys: () => press([]), releaseAim, mouse: page.mouse }, x, y);
 
   // --- boot and menu ---
   // The figure probe checks presence of `test`; production clock/UI/prewarming check `test=1`.
