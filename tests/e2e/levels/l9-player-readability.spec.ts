@@ -8,7 +8,7 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
   test(`T-E31-16-current-player @E31-AC16 crawl courier and caption clearance ${backend} ${quality}`, async ({ page }) => {
     test.setTimeout(240_000);
     if (quality === 'low') await page.setViewportSize({ width: 390, height: 844 });
-    const out = `test-results/epics/E31/player-current/${backend}-${quality}`;
+    const out = `test-results/epics/E31/player-current-repeat/${backend}-${quality}`;
     mkdirSync(out, { recursive: true });
     await boot(page, `/?test=1&scenelab=1&ui=1&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
     await page.mouse.click(200, 400);
@@ -26,6 +26,9 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
       await page.keyboard.up('KeyW');
       expect(await page.evaluate(() => window.__SS__!.getState().l9!.phase)).toBe('approach');
       await page.evaluate(() => window.__SS__!.step(551));
+      // Fixed sim stepping does not age the renderer's impact flash. Match
+      // the existing real-input helper's one-second render-clock advance.
+      await page.evaluate(() => window.__SS__!.vfx.stepRender(1));
       expect(await page.evaluate(() => window.__SS__!.getState().player!.survivor!.scriptedClip)).toBe('crawl');
       for (const zoom of [1, .5, 1.5]) {
         await page.evaluate(async zoom => {
