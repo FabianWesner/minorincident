@@ -13,20 +13,29 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     await page.goto(`/?test=1&scenelab&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
     await page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
     await page.evaluate(() => window.__SS__!.ready);
-    for (const name of scenes) for (const zoom of [1, .5]) {
+    for (const name of scenes) {
       const spec = readSpec(`tests/scenes/catalog/l10-q1-${name}.json`);
-      const proof = await page.evaluate(async ({ spec, zoom }) => {
-        const lab = window.__SCENE__!, api = window.__SS__!;
-        await lab.load({ ...spec, camera: { ...spec.camera!, zoom } as typeof spec.camera });
-        await lab.step(spec.frames ?? 60); await lab.ready(); await api.screenshotReady();
-        return { state: api.getState(), perf: api.perf() };
-      }, { spec, zoom });
-      await page.locator('canvas').screenshot({ path: `${out}/${name}-z${zoom}.png` });
-      writeFileSync(`${out}/${name}-z${zoom}.json`, JSON.stringify(proof, null, 2));
-      expect(proof.perf.backend).toBe(backend);
-      expect(proof.state.render.quality).toBe(quality);
-      expect(proof.state.render.camera.zoom).toBeCloseTo(zoom, 2);
-      expect(proof.state.player).not.toBeNull();
+      await page.evaluate(async spec => {
+        const lab = window.__SCENE__!;
+        await lab.load({ ...spec, camera: { mode: 'follow', actor: 'courier', zoom: 1 } });
+        await lab.step(spec.frames ?? 60); await lab.ready();
+      }, spec);
+      // Same simulation pose at both zooms. Follow uses the real player rig;
+      // a static Scene Lab photo pose has no playerZoom value to assert.
+      for (const zoom of [1, .5]) {
+        const proof = await page.evaluate(async zoom => {
+          const lab = window.__SCENE__!, api = window.__SS__!;
+          lab.setCamera({ mode: 'follow', actor: 'courier', zoom });
+          await lab.ready(); await api.screenshotReady();
+          return { state: api.getState(), perf: api.perf() };
+        }, zoom);
+        await page.locator('canvas').screenshot({ path: `${out}/${name}-z${zoom}.png` });
+        writeFileSync(`${out}/${name}-z${zoom}.json`, JSON.stringify(proof, null, 2));
+        expect(proof.perf.backend).toBe(backend);
+        expect(proof.state.render.quality).toBe(quality);
+        expect(proof.state.render.camera.zoom).toBeCloseTo(zoom, 2);
+        expect(proof.state.player).not.toBeNull();
+      }
     }
     // The full input fixture clears the boss gate with killAll and captures after
     // the front has passed. Use the authored mixed-species scene to inspect the
@@ -34,7 +43,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     for (const zoom of [1, .5]) {
       const spec = readSpec('tests/scenes/catalog/l10-cure-mist.json');
       await page.evaluate(async ({ spec, zoom }) => {
-        await window.__SCENE__!.load({ ...spec, time: 'L10-night', camera: { ...spec.camera!, zoom } as typeof spec.camera });
+        await window.__SCENE__!.load({ ...spec, time: 'L10-night', camera: { mode: 'follow', actor: 'courier', zoom } });
         await window.__SCENE__!.ready();
       }, { spec, zoom });
       let previous = 0;
