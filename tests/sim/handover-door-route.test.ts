@@ -66,3 +66,75 @@ test('@E19 lab technician comes out of the annex door, signs and goes back in th
     check(world, 'bld.clinic-annex', track);
   } finally { world.dispose(); }
 }, 120_000);
+
+/**
+ * PO 2026-10-22 (verbatim): "The person came out of the shop and disappear in the moment it handedover the package.
+ * Previously the person was walking back and closing the door." A courier standing at the shopfront (closer than the
+ * apron edge) kept the clerk's scripted walk in contact admission, i.e. hidden, from the hand-over until half way back.
+ */
+test.each([[.9, 0], [1.2, 0], [1.2, .5], [1.2, -.5], [1.6, 0], [2.2, 0]] as const)('@E19 depot clerk stays visible through the hand-over and walks back in (courier %s m out, %s m lateral)', async (out, lateral) => {
+  const { world, mission } = await loadL1(1);
+  try {
+    const counter = mission.def.anchors['parcel-counter'], way = findDoorway(world, 'bld.courier-depot', counter)!, p = world.entities.get(1)!;
+    Object.assign(p.transform, { x: way.door.x + way.out.x * out - way.out.z * lateral, z: way.door.z + way.out.z * out + way.out.x * lateral });
+    world.physics.playerBody!.setTranslation(p.transform, true); world.update();
+    world.setInput({ interact: true }); world.update(); world.clearInput();
+    const l1 = mission.state.l1!, id = l1.clerkId!, stages: string[] = [];
+    expect(l1.beat?.id).toBe('pickup');
+    let firstSeen = -1, lastSeen = -1, gapAtGive = 0, hiddenOutside = 0;
+    const along = (q: P) => (q.x - way.door.x) * way.out.x + (q.z - way.door.z) * way.out.z;
+    for (let i = 0; i < 1200 && l1.clerkId; i++) {
+      const e = world.entities.get(id)!, clip = e.civilian?.story?.clip ?? '';
+      if (clip && stages.at(-1) !== clip) stages.push(clip);
+      if (clip === 'npc-give' && !gapAtGive) gapAtGive = Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z);
+      if (!e.hidden) { if (firstSeen < 0) firstSeen = i; lastSeen = i; }
+      // Outside the facade (past the door frame) the clerk is always drawn.
+      else if (firstSeen >= 0 && along(e.transform) > .3) hiddenOutside++;
+      world.update();
+    }
+    expect(stages).toEqual(['npc-carry', 'npc-give', 'npc-wave', 'npc-walk']);
+    expect(hiddenOutside).toBe(0);
+    expect(gapAtGive).toBeGreaterThanOrEqual(.95);
+    expect(lastSeen).toBeGreaterThan(firstSeen);
+    // Back inside: hidden again, the contact exemption is gone and the courier holds the parcel.
+    const clerk = world.entities.get(id)!;
+    expect(clerk.hidden).toBe(true); expect(clerk.contactExempt).toBeUndefined(); expect(l1.carrying).toBe(true);
+    expect(along(clerk.transform)).toBeLessThan(0);
+  } finally { world.dispose(); }
+}, 120_000);
+
+/**
+ * PO 2026-10-22 (verbatim): "Also the animation for the package handover at the labor was much better previsously."
+ * The annex door seal (dressing:annex-door-seal, 0.8 m deep in front of the door) kept the technician in contact
+ * admission: hidden until 1.2 m outside the open door, popping in 0.2 m before the meeting point and out again right
+ * after taking the box. On the authored door lane he is drawn walking out, signing and walking back in, without jumps.
+ */
+test.each([[66.36, -12.10], [66.4, -11.7]] as const)('@E19 lab technician walks visibly out of the annex door and back in (courier at %s, %s)', async (x, z) => {
+  const { world, mission } = await loadL1(1);
+  try {
+    startPickup(world, mission, { x: 0, z: 1.9 });
+    for (let i = 0; i < 1200 && mission.state.l1!.beat; i++) { world.setInput({ left: { down: true, held: false, up: false } }); world.update(); world.clearInput(); world.update(); }
+    const p = world.entities.get(1)!;
+    Object.assign(p.transform, { x, z }); world.physics.playerBody!.setTranslation(p.transform, true); world.update();
+    world.setInput({ interact: true }); world.update(); world.clearInput();
+    const l1 = mission.state.l1!, tech = world.entities.get(l1.techId)!, way = findDoorway(world, 'bld.clinic-annex', mission.def.anchors['lab-exit-front'])!;
+    expect(l1.phase).toBe('handover');
+    const along = (q: P) => (q.x - way.door.x) * way.out.x + (q.z - way.door.z) * way.out.z;
+    const stages: string[] = []; let hiddenOutside = 0, jump = 0, visibleOut = 0, last: P | null = null;
+    for (let i = 0; i < 1800 && !l1.delivered; i++) {
+      const clip = tech.civilian?.story?.clip ?? '';
+      if (clip && stages.at(-1) !== clip) stages.push(clip);
+      if (along(tech.transform) > .05) { if (tech.hidden) hiddenOutside++; else visibleOut++; }
+      if (last && !tech.hidden) jump = Math.max(jump, Math.hypot(tech.transform.x - last.x, tech.transform.z - last.z));
+      last = tech.hidden ? null : { x: tech.transform.x, z: tech.transform.z };
+      world.update();
+    }
+    expect(l1.delivered).toBe(true);
+    expect(stages).toEqual(['npc-walk', 'npc-glance', 'npc-sign', 'npc-carry']);
+    expect(hiddenOutside).toBe(0);
+    // Walks the 1.4 m lane out and back at 1.6 m/s, plus the glance/sign pause: well over a second in view.
+    expect(visibleOut).toBeGreaterThan(150);
+    expect(jump).toBeLessThan(.1);
+    expect(tech.doorLane).toBeUndefined();
+  } finally { world.dispose(); }
+}, 120_000);

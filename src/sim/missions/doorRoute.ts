@@ -19,6 +19,16 @@ export function findDoorway(world: SimWorld, assetId: string, near: P): Doorway 
 }
 
 /**
+ * The straight door lane of a door `route` (door plane to its first walkable point outside, index 2) for
+ * `EntitySnapshot.doorLane`. Door seals and porch colliders reach over it (the clinic annex seal covers the first
+ * 1.2 m): contact admission must neither hide nor push a scripted actor who visibly walks out of the open door.
+ */
+export function doorLaneOf(way: Doorway, route: readonly P[]): NonNullable<import('../world/types').EntitySnapshot['doorLane']> {
+  const end = route[2] ? (route[2].x - way.door.x) * way.out.x + (route[2].z - way.door.z) * way.out.z : way.apron;
+  return { x: way.door.x, z: way.door.z, ox: way.out.x, oz: way.out.z, half: way.width / 2, end: end + .05 };
+}
+
+/**
  * Walking route for a story actor who comes out of a building to someone and back: from behind the door, straight
  * through the door aperture (perpendicular to the facade), out past the sidewalk dressing to the first walkable point, then along
  * the navigation grid (string-pulled, clear of colliders and props) to `meet`. Walk it in reverse to go back in.
