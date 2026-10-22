@@ -6,7 +6,7 @@ test.use({ channel: 'chrome', headless: true, trace: 'off', launchOptions: { arg
 for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug', 'continue'] as const) {
   test(`PO #100 @E32 @perf ${backend} ${entry}: no frame over 200 ms after the loading card`, async ({ page, baseURL }) => {
     test.setTimeout(180_000);
-    const result = await measureL10Entry(page, baseURL!, entry, backend, 'test-results/fixes-13h-l10/entry-guard');
+    const result = await measureL10Entry(page, baseURL!, entry, backend, process.env.L10_ENTRY_OUT ?? 'test-results/fixes-13h-l10/entry-guard');
     expect(result.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
     expect(result.cardClosed).toBeGreaterThan(0);
     expect(result.frames.filter(f => f.scenario === 'L10' && f.at < result.cardClosed! && f.dt > 200).every(f => f.cardVisible), 'long loading intervals must actually be covered by the card').toBe(true);
@@ -19,6 +19,8 @@ for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug
     expect(play.every(f => f.sun !== f.spot), 'only the selected prewarmed source participates in a draw').toBe(true);
     expect(new Set(play.map(f => f.sun)).size, 'the replay must draw both cached light variants').toBe(2);
     expect(play.filter(f => f.tick > 2800).every(f => f.warmup === 0), 'alternate graphs must finish before the first lamp boundary').toBe(true);
+    const lampBuilds = play.slice(1).filter((f, i) => f.heroLight !== play[i].heroLight).map(f => f.builds - play[play.indexOf(f) - 1].builds);
+    expect(Math.max(0, ...lampBuilds), 'lamp changes must reuse the warmed scene graphs').toBeLessThan(20);
     expect(new Set(play.map(f => f.heroLight)).size, 'the replay must exercise lamp promotion').toBeGreaterThan(1);
     expect(result.max, JSON.stringify(result.hitches)).toBeLessThanOrEqual(200);
   });
