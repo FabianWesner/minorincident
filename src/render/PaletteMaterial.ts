@@ -124,7 +124,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       });
       // Night ground breakup (look.groundBreakup; 0 except L9): broad dry/damp patches and grit on upward faces, so open
       // moonlit fields and long lanes are not flat planes. Two world-space value-noise octaves, no texture.
-      If(look.groundBreakup.greaterThan(0), () => {
+      If(look.groundBreakup.greaterThan(0).and(normalWorld.y.greaterThan(.7)), () => {
         // look-l9b: biased towards darkening (damp/burnt patches); pale highlights are capped so the breakup never reads as
         // bright polygons on a night ground.
         const breakup = noise(positionWorld.xz.mul(.11)).mul(.6).add(noise(positionWorld.xz.mul(.8)).mul(.4)).sub(.5).mul(2).clamp(-1, .35);
@@ -156,10 +156,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const result = output.toVar();
       // Atmosphere 2: low camera-relative haze. Starts beyond the focus (the courier never hazes), thickest near the
       // ground so roofs and lamp heads stand out of it; emissive eyes/lamps skip it (threat readability).
-      if (!emissive) {
+      if (!emissive) If(look.hazeAmount.greaterThan(0), () => {
         const low = positionWorld.y.div(lighting.look.nodes.hazeHeight).clamp(0, 1).oneMinus().mul(.6).add(.4);
         result.assign(mix(result, lighting.look.nodes.haze, rangeFogFactor(lighting.hazeNear, lighting.hazeFar).mul(low).mul(lighting.look.nodes.hazeAmount)));
-      }
+      });
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
         const wet = weatherSurface.wetness.mul(normalWorld.y.max(0));
