@@ -23,6 +23,7 @@ function actor(e: EntitySnapshot): boolean {
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   if (!a) return false;
+  if (a.contactExempt === b.id || b.contactExempt === a.id) return true;
   const passenger = a.passengerOf, owner = a.attachedTo, other = b.attachedTo;
   return passenger !== undefined && passenger === b.passengerOf || owner !== undefined && (owner === b.id || owner === other) || other !== undefined && other === a.id;
 }
@@ -221,7 +222,9 @@ export class SolidRegistry {
     const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     const nav = e?.infected ? this.world.infected?.infectedNav : this.world.infected?.nav;
-    nav?.visitSolids(at.x, at.z, radius, (box, id) => {
+    // A scripted door walk crosses the door seal on its authored lane (in front of the door plane only).
+    const lane = e?.doorLane, along = lane ? (at.x - lane.x) * lane.ox + (at.z - lane.z) * lane.oz : 0;
+    if (!lane || along <= 0 || along > lane.end || Math.abs((at.x - lane.x) * -lane.oz + (at.z - lane.z) * lane.ox) >= lane.half) nav?.visitSolids(at.x, at.z, radius, (box, id) => {
       // Height rejects most nearby roofs/supports before any ownership lookup.
       if (!(box.y + box.halfY > bottom && box.y - box.halfY < top)) return;
       // L6 followers displaced onto a walkable side walkway must cross the crowd lane edge back to the column.
@@ -503,7 +506,7 @@ export class SolidRegistry {
       const radius = actorRadius(e);
       // Shapes and eligibility are stable during this final transaction. Reuse
       // their snapshot in the correction loops; full audits still read actors.
-      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
+      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined || e.contactExempt !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
       this.maxActor = Math.max(this.maxActor, e.companion ? radius + .4 : radius); this.bodies.push(e); this.live[e.id] = e;
       this.bodyIds.push(e.id);
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
