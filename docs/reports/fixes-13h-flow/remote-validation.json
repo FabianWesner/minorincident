@@ -75,5 +75,13 @@
     "checks": "22 playtest unit tests, typecheck and lint passed",
     "logSha256": "81f5bd0f9dbcaefb3c4459891f8fe921a2ff07f1e053affd40ec05bd108c64fe",
     "summary": "   Start at  03:17:14\n   Duration  1.52s (transform 73%, import 14%, tests 9%, worker 4%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 34s, remote total 100s)"
+  },
+  "final-eyes-combat-local": {
+    "checks": "25 playtest unit tests in five files, typecheck and lint passed",
+    "exit": 0,
+    "validatedUTC": "2026-10-22T03:46:51Z",
+    "command": "npx vitest run tests/unit/playtest-*.test.ts --maxWorkers=1 && npm run typecheck && npm run lint",
+    "redEvidence": "red-rendered-attack-99.txt: two rendered-pose observation assertions failed; 23 other tests passed",
+    "note": "The remote rendered-attack attempt was interrupted before tests began; red and final green were run locally. Attack targeting now reads the submitted render clip, not the simulation combat flag."
   }
 }

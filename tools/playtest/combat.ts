@@ -10,7 +10,7 @@ export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' {
 
 /** Unarmed cover follows the visible shelter or rear-cover request and living, drawn allies. */
 export function canCoverVisibleAllies(level: string | null, step: string | null, unarmed: boolean, ally: { drawn: boolean; hp: number; corpse: boolean; underAttack?: boolean }, objective = ''): boolean {
-  const coverRequested = step === 'shelter' || step === 'stop' || (step === 'retreat' || step === 'exit') && /cover the rear|Stay with the group/.test(objective);
+  const coverRequested = step === 'shelter' || step === 'stop' || (step === 'retreat' || step === 'exit') && (/cover the rear|Stay with the group/.test(objective) || ally.underAttack === true);
   return !unarmed || level === 'L6' && coverRequested && ally.drawn && ally.hp > 0 && !ally.corpse;
 }
 
