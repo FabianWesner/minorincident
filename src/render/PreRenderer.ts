@@ -22,7 +22,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
   });
   let index = 0, phase: 'compile' | 'waiting' | 'draw' = 'compile', instances = 1, error: unknown;
   const representative = <T>(object: Mesh | Sprite | LineSegments, count: number, run: () => T): T => {
-    const visible = object.visible, culled = object.frustumCulled, position = object.position.clone();
+    const visible = object.visible, culled = object.frustumCulled, automatic = object.matrixAutoUpdate;
     const matrix = object.matrix.clone(), worldMatrix = object.matrixWorld.clone();
     const instanced = object instanceof InstancedMesh, originalCount = instanced ? object.count : 0;
     const matrices = instanced ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : [];
@@ -37,11 +37,13 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
       if (!object.geometry.boundingSphere) object.geometry.computeBoundingSphere();
       const center = object.geometry.boundingSphere!.center.clone().applyMatrix4(object.matrix);
       const local = object.parent ? object.parent.worldToLocal(focus) : focus;
-      object.position.add(local.sub(center)); object.updateMatrix(); object.updateMatrixWorld(true);
+      object.matrixAutoUpdate = false;
+      object.matrix.elements[12] += local.x - center.x; object.matrix.elements[13] += local.y - center.y; object.matrix.elements[14] += local.z - center.z;
+      object.updateMatrixWorld(true);
     }
     try { return source(run); }
     finally {
-      object.visible = visible; object.frustumCulled = culled; object.position.copy(position);
+      object.visible = visible; object.frustumCulled = culled; object.matrixAutoUpdate = automatic;
       object.matrix.copy(matrix); object.matrixWorld.copy(worldMatrix); object.matrixWorldNeedsUpdate = true;
       if (instanced) { object.count = originalCount; matrices.forEach((matrix, i) => object.setMatrixAt(i, matrix)); object.instanceMatrix.needsUpdate = true; }
     }
