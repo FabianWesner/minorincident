@@ -9,7 +9,6 @@ import { AssetRegistry } from '../../../src/assets/registry';
 import { CrowdAccessories, bakedSkull } from '../../../src/render/characters/CrowdAccessories';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
 import { markCrowdAppearance, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
-import { coreCivilianModels } from '../../../src/data/npcs';
 import { regularInfectedModels } from '../../../src/data/crowdAppearance';
 import { characterNodes } from '../../../src/data/survivor';
 import { packCrowdParts } from '../../../src/assets/crowdParts';
@@ -24,7 +23,8 @@ async function asset(id: string, lod: Lod): Promise<Group> {
   if (!cache.has(key)) cache.set(key, (async () => {
     const def = manifest.find(a => a.id === id)!;
     const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
-    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const parsed = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), ''), { scene } = parsed;
+    scene.traverse(node => { const index = parsed.parser.associations.get(node)?.nodes; if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name; });
     scene.userData.assetId = id; return scene;
   })());
   return (await cache.get(key)!).clone(true);
@@ -55,9 +55,14 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     const reference = bakedSkull(referenceGeo)!;
     const ids = manifest.filter(a => a.category === 'accessory' && a.accessory && ['hat', 'glasses'].includes(a.accessory.slot)).map(a => a.id);
     expect(ids.length).toBeGreaterThan(0);
-    const models = [...new Set([...coreCivilianModels, ...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.civilian-') && a.id.endsWith('.aftermath')).map(a => a.id)])];
+    // Group tableaux contain several people; their individually registered members are the crowd variants.
+    const models = [...new Set([...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.') && !['npc.survivor-group', 'npc.survivor-group.aftermath'].includes(a.id)).map(a => a.id)])];
     const raw = new Map<string, Box3>();
     for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
+    for (const id of ids) {
+      const def = manifest.find(a => a.id === id)!, size = raw.get(`${id}/lod0`)!.getSize(new Vector3());
+      for (const axis of ['x', 'y', 'z'] as const) if (Math.abs(size[axis] - def.dimensions[axis]) > def.dimensions[axis] * def.dimensions.tolerance) errors.push(`${id}: GLB ${axis} extent ${size[axis]} exceeds authored ${def.dimensions[axis]} ±${def.dimensions.tolerance * 100}%`);
+    }
     // Independent source: vertices in the authored GLB head frame plus its per-model manifest fit.
     // Tolerance is the source LOD's measured extent / 1024 (quantization), with a 2 mm floating-point floor.
     let combinations = 0, eligible = 0;

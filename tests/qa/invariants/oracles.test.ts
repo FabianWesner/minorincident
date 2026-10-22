@@ -23,4 +23,10 @@ describe('invariant proof fixtures', () => {
     expect(oracle.load({ candidateMs: 21001, baselineMs: 20000 })).toBe(true);
     expect(oracle.load({ candidateMs: 1099, baselineMs: 1000 })).toBe(false);
   });
+  test('missing or non-finite measurements fail closed', () => {
+    expect(oracle.load({ candidateMs: NaN, baselineMs: 1000 })).toBe(true);
+    expect(oracle.load({ candidateMs: 1000, baselineMs: 0 })).toBe(true);
+    expect(oracle.ground({ drawnY: 0, simY: NaN })).toBe(true);
+    expect(oracle.objective({ markerVisible: true, visibleAtMs: NaN })).toBe(true);
+  });
 });

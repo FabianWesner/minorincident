@@ -7,11 +7,11 @@ import { l4, l4Edges, l4Route, l4RoutePose, l4ConvoyStations } from '../../../sr
 import { l7Departure } from '../../../src/data/l7';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { bicycleGeometry } from '../../../src/data/bicycleGeometry';
-import { seatAnchor } from '../../../src/sim/npc/seats';
+import { seatAnchor, seatSpecs, sitHipHeight } from '../../../src/sim/npc/seats';
 import { l4PerimeterWalls } from '../../../src/data/l4Perimeter';
 import { oracle, obbHitsAabb } from './oracles';
 import { markerAnchor } from '../../../src/sim/missions/markerAnchor';
-import { loadLevel } from '../../../tools/sim-runner/levels';
+import { loadLevel } from './world';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { highwayPoint } from '../../../src/levels/L3/highway';
 import { inside } from '../../../src/levels/districts/validate';
@@ -19,50 +19,67 @@ import { ObjectiveMarker } from '../../../src/render/ObjectiveMarker';
 import { objectiveText } from '../../../src/sim/missions/objectiveText';
 import { l2TruckPath } from '../../../src/data/l2';
 import { vehicleDef } from '../../../src/data/vehicles';
+import { findDoorway } from '../../../src/sim/missions/doorRoute';
 
 const layouts = new Map(readdirSync('public/assets/layouts').filter(x => x.endsWith('.layout.json')).map(x => [x.slice(0, -12), JSON.parse(readFileSync(`public/assets/layouts/${x}`, 'utf8')) as DistrictLayout]));
 
-function synthetic<T>(label: string, validate: (value: T) => string[]) {
-  return (value: T, expected: string[]) => expect(validate(value), label).toEqual(expected);
-}
-const seatErrors = synthetic<{ pose: string; seat?: { y: number }; actorY: number }>('sitting actor without a seat or at the wrong height', x => x.pose === 'sit' && (!x.seat || Math.abs(x.seat.y - x.actorY) > .2) ? ['seat invariant'] : []);
-const overlapErrors = synthetic<{ vehicle: [number, number]; solid: [number, number]; radius: number }[]>('vehicle OBB overlap fixture', entries => entries.filter(x => Math.hypot(x.vehicle[0] - x.solid[0], x.vehicle[1] - x.solid[1]) < x.radius).map(() => 'vehicle intersects solid'));
-const waveErrors = synthetic<{ expected: number; spawned: number }>('wave count fixture', x => x.expected === x.spawned ? [] : [`expected ${x.expected}, got ${x.spawned}`]);
-const groundErrors = synthetic<{ drawnY: number; simY: number }[]>('walkable surface fixture', samples => samples.filter(x => Math.abs(x.drawnY - x.simY) > .2).map(() => 'ground mismatch'));
-
-describe('automatic regression invariants', () => {
-  test('2 seated actors: every active sit schedule across L1–L10 has a seat support at sitting height', async () => {
-    const failures = new Set<string>();
-    for (const level of missionIds) {
-      const world = await loadLevel(level, 1);
+let morning: Promise<{ seats: string[]; actors: string[]; cast: Record<string, number> }> | undefined;
+function morningSweep() {
+  return morning ??= (async () => {
+    const failures = new Set<string>(), actorFailures = new Set<string>();
+    const cast: Record<string, number> = {};
+    for (const level of missionIds) for (const tier of ['high', 'low'] as const) {
+      const world = await loadLevel(level, 1, tier);
+      const tracked = new Map<number, { seen: boolean }>();
+      for (const e of world.entities.iterate()) if (e.civilian?.story) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
+      cast[`${level}/${tier}`] = tracked.size;
       const propById = new Map(world.props!.items.map(p => [p.id, p]));
       const placementById = new Map<string, DistrictLayout['placements'][number]>(world.districts!.districts.flatMap(d => d.layout.placements.map(p => [`${d.id}/${p.id}`, p] as const)));
       for (let i = 0; i < 90 * 60; i++) {
-        world.update(); if (i % 60) continue;
+        world.update();
+        for (const [id, watch] of tracked) {
+          const e = world.entities.get(id);
+          if (!e) { actorFailures.add(`${level}/${tier}: scripted actor ${id} removed before its exit`); continue; }
+          if (!e.civilian?.story || e.civilian.state === 'finished' || e.passengerOf !== undefined || e.corpse || e.infected) { tracked.delete(id); continue; }
+          if (watch.seen && oracle.actor({ inScriptedScene: true, exists: true, hidden: !!e.hidden })) actorFailures.add(`${level}/${tier}: scripted actor ${id} (${e.civilian.story.clip}) hidden mid-scene at tick ${world.tick}`);
+          if (!e.hidden && !e.pendingAdmission) watch.seen = true;
+        }
+        if (i % 60) continue;
         for (const e of world.entities.iterate()) {
           const c = e.civilian, action = c?.schedule?.[c.scheduleStep ?? 0];
-          if (action?.activity !== 'sit' || !c?.activityUntil) continue;
-          const prop = action.seatProp ? propById.get(action.seatProp) : undefined;
-          if (!prop || !['prop.bench', 'prop.lawn-chair-a', 'prop.lawn-chair-b'].includes(prop.assetId)) { if (oracle.seat({ sitting: true, hasSeat: false, supported: false })) failures.add(`${level}/${e.id}: no seat (${action.seatProp})`); }
+          if (!c) continue;
+          if (c.story && !tracked.has(e.id)) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
+          if (e.hidden || e.health.current <= 0 || !(c?.story?.clip === 'npc-sit' || action?.activity === 'sit' && c.activityUntil)) continue;
+          const target = action?.seat ?? e.transform;
+          const prop = action?.seatProp ? propById.get(action.seatProp) : world.props!.items.filter(p => seatSpecs[p.assetId] && Math.hypot(p.pose.p[0] - target.x, p.pose.p[2] - target.z) < 1.2).sort((a, b) => Math.hypot(a.pose.p[0] - target.x, a.pose.p[2] - target.z) - Math.hypot(b.pose.p[0] - target.x, b.pose.p[2] - target.z))[0];
+          if (!prop || !seatSpecs[prop.assetId] || !world.entities.get(prop.entityId) || process.env.QA_INVARIANTS_BREAK === 'seats') { if (oracle.seat({ sitting: true, hasSeat: false, supported: false })) failures.add(`${level}/${tier}/${e.id}: no seat (${action?.seatProp ?? c?.story?.clip})`); }
           else {
             const placement = placementById.get(prop.id);
             const yaw = 2 * Math.atan2(prop.pose.q[1], prop.pose.q[3]);
             const expected = placement && seatAnchor(prop.assetId, prop.pose.p, yaw, placement.scale);
-            const dx = action.seat ? action.seat.x - prop.pose.p[0] : Infinity, dz = action.seat ? action.seat.z - prop.pose.p[2] : Infinity;
+            const dx = target.x - prop.pose.p[0], dz = target.z - prop.pose.p[2];
             const localX = dx * Math.cos(yaw) - dz * Math.sin(yaw), localZ = dx * Math.sin(yaw) + dz * Math.cos(yaw);
             // Bench seats allow multiple people along their length; test against the actual support footprint, not only its center anchor.
-            const supported = !!expected && !!action.seat && Math.abs(localX - .33) <= .2 && Math.abs(localZ) <= .95 && Math.abs((action.seatLift ?? 0) - expected.lift) <= .2;
-            if (oracle.seat({ sitting: true, hasSeat: true, supported })) failures.add(`${level}/${e.id}: ${JSON.stringify({ asset: prop.assetId, seat: action.seat, localX, localZ, lift: action.seatLift, expected })}`);
+            const actualHipY = e.transform.y - .7 + (action?.seatLift ?? 0) + sitHipHeight;
+            const supported = !!expected && Math.abs(localX - seatSpecs[prop.assetId].hipX * placement!.scale[0]) <= .2 && Math.abs(localZ) <= .95 && Math.abs(actualHipY - expected.y) <= .2;
+            if (oracle.seat({ sitting: true, hasSeat: true, supported })) failures.add(`${level}/${tier}/${e.id}: ${JSON.stringify({ asset: prop.assetId, seat: target, localX, localZ, actualHipY, expected })}`);
           }
         }
       }
       world.dispose();
     }
-    expect([...failures], 'P1-112; seated NPCs need a supporting seat in every level').toEqual([]);
-    seatErrors({ pose: 'sit', actorY: 0, seat: undefined }, ['seat invariant']);
-  }, 240_000);
+    return { seats: [...failures], actors: [...actorFailures], cast };
+  })();
+}
+
+describe('automatic regression invariants', () => {
+  test('2 seated actors: every active sit/bench pose across L1–L10 and both quality tiers has seat support', async () => {
+    const result = await morningSweep();
+    expect(result.seats.slice(0, 20), `${result.seats.length} seat failures; P1-112`).toEqual([]);
+  }, 480_000);
 
   test('3 scripted actors: the depot clerk persists through handover and return-to-door exit', async () => {
+    const morning = await morningSweep();
     const world = await loadLevel('L1', 1), mission = world.missions!;
     // Run the same L1 story controller used by the depot trigger; it stays private in production.
     (mission as unknown as { l1: { story: { pickup(): void } } }).l1.story.pickup();
@@ -90,34 +107,40 @@ describe('automatic regression invariants', () => {
       state.carrying = true;
       Object.assign(player.transform, m.def.anchors['lab-door']);
       lab.physics.playerBody!.setTranslation(player.transform, true); lab.physics.playerBody!.setNextKinematicTranslation(player.transform);
-      const id = state.techId; let shown = false;
+      const id = state.techId, doorway = findDoorway(lab, 'bld.clinic-annex', m.def.anchors['lab-exit-front']); let shown = false;
       for (let i = 0; i < 120 * 60 && !state.delivered; i++) {
         lab.applyInput({ ...emptyInput(), interact: i === 0 }, 'keyboard'); lab.update();
         const actor = lab.entities.get(id);
         if (state.handoverAt && actor && !actor.pendingAdmission && !actor.hidden) shown = true;
-        if (shown && !state.delivered && oracle.actor({ inScriptedScene: true, exists: !!actor, hidden: !!actor?.hidden })) missing.add(`technician ${id} disappeared at tick ${lab.tick}`);
+        const outside = !doorway || !!actor && (actor.transform.x - doorway.door.x) * doorway.out.x + (actor.transform.z - doorway.door.z) * doorway.out.z > .05;
+        // Interior occlusion before emergence / after crossing back through the door is a scripted entrance/exit.
+        // A missing entity, or a hidden exterior actor during either walking leg or the handover, is a regression.
+        if (state.handoverAt && !state.delivered && (!actor || outside && actor.hidden)) missing.add(`technician ${id} disappeared at tick ${lab.tick}`);
       }
       expect(shown, 'technician visible during handover').toBe(true);
       expect(state.delivered, 'technician reaches scripted return/door exit').toBe(true);
-      expect([...missing].slice(0, 15), `actors invariant: ${missing.size} missing frames during a scripted scene`).toEqual([]);
+      expect([...morning.actors, ...missing].slice(0, 20), `actors invariant: ${morning.actors.length + missing.size} missing frames; cast ${JSON.stringify(morning.cast)}`).toEqual([]);
     } finally { lab.dispose(); }
-  }, 240_000);
+  }, 480_000);
 
   test('4 vehicles: scripted route and stop poses have no overlap with registered solids', async () => {
     const layout = layouts.get('D-FAIR')!, solids = layout.colliders.filter(c => !c.walkable && /^(bld\.|prop\.(?:.*fence|.*barrier)|l4-)/.test(c.id) && !c.id.includes('hedge')).map(c => ({ id: c.id, aabb: c.aabb }));
     for (const wall of l4PerimeterWalls) solids.push({ id: wall.id, aabb: { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] } });
-    const tank = physicsAssets['veh.tank'], shape = tank.boxes[0];
+    const tank = physicsAssets['veh.tank'];
     const samples: { id: string; x: number; z: number; yaw: number; box?: { min: number[]; max: number[] }; baseY?: number; vehicleId?: string }[] = [];
     for (let i = 1; i < l4.tank.path.length; i++) {
       const [x0, z0] = l4.tank.path[i - 1], [x1, z1] = l4.tank.path[i], length = Math.hypot(x1 - x0, z1 - z0), yaw = -Math.atan2(z1 - z0, x1 - x0);
       for (let d = 0; d <= length; d += .25) samples.push({ id: `tank-route-${i}-${d.toFixed(2)}`, x: x0 + (x1 - x0) * d / length, z: z0 + (z1 - z0) * d / length, yaw });
     }
-    const stop = l4.tank.path.at(-1)!; samples.push({ id: 'tank-stop', x: stop[0], z: stop[1], yaw: 0 });
+    const stop = l4.tank.path.at(-1)!;
+    // The hull turns while firing at the hold pose: check its full swept rotation as well as the approach tangent.
+    for (let a = 0; a < 24; a++) samples.push({ id: `tank-stop-${a}`, x: stop[0], z: stop[1], yaw: a * Math.PI / 12 });
     const route = l4Route(), stations = l4ConvoyStations(route.length);
     for (const [i, vehicle] of l4.convoy.vehicles.entries()) {
-      const box = physicsAssets[vehicle.asset as keyof typeof physicsAssets].boxes[0];
-      for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4RoutePose(route, s), box, baseY: .7 });
-      samples.push({ id: `convoy-${vehicle.id}-stop`, ...l4RoutePose(route, stations.end[i]), box, baseY: .7 });
+      for (const box of physicsAssets[vehicle.asset as keyof typeof physicsAssets].boxes) {
+        for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4RoutePose(route, s), box, baseY: .7 });
+        samples.push({ id: `convoy-${vehicle.id}-stop`, ...l4RoutePose(route, stations.end[i]), box, baseY: .7 });
+      }
     }
     for (const v of layout.placements.filter(p => p.assetId.startsWith('veh.'))) {
       const physical = physicsAssets[v.assetId as keyof typeof physicsAssets];
@@ -127,13 +150,15 @@ describe('automatic regression invariants', () => {
       }
     }
     const conflicts = new Set<string>();
-    for (const pose of samples) for (const solid of solids) {
+    for (const pose of samples) for (const solid of solids) for (const box of pose.box ? [pose.box] : tank.boxes) {
       if (pose.vehicleId === solid.id) continue;
       // Layout collision boxes are in district-local coordinates; tank route coordinates share D-FAIR origin.
-      const isTank = pose.id.startsWith('tank-'), box = pose.box ?? shape;
+      const isTank = pose.id.startsWith('tank-');
       const halfX = (box.max[0] - box.min[0]) / 2, halfZ = (box.max[2] - box.min[2]) / 2;
       const baseY = pose.baseY ?? (isTank ? .7 : 0), vertical = [box.min[1] + baseY, box.max[1] + baseY];
-      if (oracle.vehicle(obbHitsAabb(pose.x, pose.z, pose.yaw, halfX, halfZ, vertical[0], vertical[1], solid.aabb))) conflicts.add(`${pose.id.split('-').slice(0, 3).join('-')} overlaps ${solid.id}`);
+      const lx = pose.vehicleId ? 0 : (box.min[0] + box.max[0]) / 2, lz = pose.vehicleId ? 0 : (box.min[2] + box.max[2]) / 2;
+      const x = pose.x + Math.cos(pose.yaw) * lx + Math.sin(pose.yaw) * lz, z = pose.z - Math.sin(pose.yaw) * lx + Math.cos(pose.yaw) * lz;
+      if (oracle.vehicle(obbHitsAabb(x, z, pose.yaw, halfX, halfZ, vertical[0], vertical[1], solid.aabb))) conflicts.add(`${pose.id.split('-').slice(0, 3).join('-')} overlaps ${solid.id}`);
     }
     const world = await loadLevel('L1', 1);
     try {
@@ -142,8 +167,10 @@ describe('automatic regression invariants', () => {
       const points = [[-70.5, 46.99], ...world.vehicles!.bicycle.parkPoints.map(p => [p.x, p.z]), ...world.vehicles!.bicycle.noBikeZones.flatMap(zone => zone.polygon.map(p => [p.x, p.z]))];
       for (const [x, z] of points) for (let a = 0; a < 8; a++) {
         const heading = a * Math.PI / 4;
-        if (!world.infected!.nav.clear(x, z, .35, false, bike.id)) continue;
+        if (!world.infected!.nav.clear(x, z, .35, false, bike.id) || world.vehicles!.bicycle.inNoBikeZone({ x, z })) continue;
         Object.assign(player.transform, { x, z }); Object.assign(bike.bicycle!, { heading, mounted: true, lockUntil: 0 });
+        Object.assign(bike.transform, { x, z, y: world.districts!.pavingHeight(x, z), yaw: -heading });
+        Object.assign(world.vehicles!.bicycle as unknown as { lastOutside: { x: number; z: number }; mountedInPark: boolean }, { lastOutside: { x, z }, mountedInPark: false });
         world.vehicles!.bicycle.filter({ ...emptyInput(), interact: true });
         if (bike.bicycle!.mounted) { conflicts.add(`bike at ${x},${z}: dismount failed`); continue; }
         const p = bike.transform, centre = (bicycleGeometry.minX + bicycleGeometry.maxX) / 2;
@@ -173,7 +200,6 @@ describe('automatic regression invariants', () => {
       }
     } finally { l2world.dispose(); }
     expect([...conflicts].slice(0, 30), `vehicles invariant: route, stop and dismount intersections (${conflicts.size})`).toEqual([]);
-    overlapErrors([{ vehicle: [0, 0], solid: [0, 0], radius: 1 }], ['vehicle intersects solid']);
   });
 
   test('5 waves: L4 alarm authored wave count matches controller spawn tally and infected reach the hold area', async () => {
@@ -197,7 +223,6 @@ describe('automatic regression invariants', () => {
     const waveMismatches = authoredWaves.filter(({ wave, count }) => wave >= 0 && count !== Math.ceil(Math.ceil(l4.war.waveSize[Math.min(wave, l4.war.waveSize.length - 1)] * l4.war.waveScale) * l4.war.edgesPerWave / ring) * ring);
     expect(authoredWaves.length, 'L4 hold alarm emits authored waves').toBeGreaterThan(0);
     expect(waveMismatches, 'every emitted L4 alarm wave carries its authored count').toEqual([]);
-    waveErrors({ expected: 8, spawned: 1 }, ['expected 8, got 1']);
   }, 300_000);
 
   test('6 objectives: every mission step has a visible destination marker or explicit HUD-only rule', async () => {
@@ -277,10 +302,16 @@ describe('automatic regression invariants', () => {
             if (t > .06 && y > 1 && h > 1 && h > y - 1) errors.push(`${level}/${p.id}: phantom support outside rail t=${t.toFixed(2)} offset=${offset}`);
           }
         }
+        if (level === 'L3') {
+          // Authored tilted-rail/span joints from the L3 support regression: both sides of both joins.
+          for (const [x, z] of [[180.25, -.95], [166.75, .95], [180.9, -.5], [166.1, .5]]) {
+            const drawnY = 5.7, simY = world.districts!.groundHeight(x + district.origin[0], z + district.origin[1]);
+            if (oracle.ground({ drawnY, simY })) errors.push(`${level}: deck joint wedge (${x}, ${z}) walk=${simY.toFixed(2)} drawn=${drawnY}`);
+          }
+        }
       }
       world.dispose();
     }
     expect(errors.slice(0, 20), `${errors.length} walkable height errors`).toEqual([]);
-    groundErrors([{ drawnY: 1, simY: 0 }], ['ground mismatch']);
   }, 300_000);
 });

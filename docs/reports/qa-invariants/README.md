@@ -25,3 +25,9 @@ Implementation in progress. Game code and existing tests are unchanged. This lan
 | 8 Load time | One browser, built dist vs PROD, every level menu click through Begin to first drawn gameplay frame, WebGPU low; separate per-level receipts | Mac run is live under quiet-run; previous sandbox restrictions are resolved |
 
 `npm run qa:invariants` collects both sim and render failures; a red sim no longer skips the Mac measurements. No 13g receipt has been gathered yet. No deploy or merge into another lane was performed.
+
+## Expanded checkpoint receipt (19:34 UTC)
+
+Runner `94.130.181.173`, job `qa-invariants-38c23b-89418-1792697616`: **241.40 s**, 20 tests, 12 passed / 8 red. Log: `test-results/qa-invariants/remote-expanded.log`. This measured both quality tiers and found twelve L6 `npc-sit` actors without a seat, 86 exterior technician hidden frames, the tank route/rotating hold intersections, L3 marker suppression, and the ramp failures. The initial wave-census fixture also found count shortfalls; these are **not yet attributed to game bugs** because its first L3 implementation advanced only the clock. The revised fixture runs real sim movement to clear the mouths and records admitted/reached IDs. L4 alarm high admitted 18 but only 12 reached the hold area in its first receipt; low reached all 9. A further fixture correction now parks the convoy at its authored stops before testing the alarm, so that result needs a new receipt too.
+
+The latest implementation also covers every authored L4 wave-size entry and one collapse batch in isolation, native rendered bench submission at the L2 PO camera, the authored initial story cast in every level, and the individual registered crowd variants beyond the core civilian list. Validation and evidence for these additions are pending; no previous receipt is presented as proof of these new paths.
