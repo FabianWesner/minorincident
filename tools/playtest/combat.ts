@@ -4,6 +4,6 @@ export function keepMovingWithFists(level: string | null, step: string | null, f
 }
 
 /** Shipped hand binding to hold while walking toward the visible retreat ring. */
-export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' | null {
-  return nearbyEnemies < 3 ? 'KeyJ' : null;
+export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' {
+  return nearbyEnemies < 3 ? 'KeyJ' : 'KeyK';
 }
