@@ -1,5 +1,13 @@
 # E22–E24 acceptance closure — 2026-10-22
 
+## Final disposition — 15:56 UTC
+
+**Seven original partial ACs met; three measured red.** E22-04/12/19, E23-17/18/19 and E24-15 are met. E22-20 timing/cold builds and E24-19 original retention remain red, assigned to the separate perf lane. E24-18 remains red at8/7/6/5; the final camera experiment also failed one-death acceptance and was reverted. Approved high40/low30 stress clarification is applied and proved on both backends. No warmed-baseline or WebKit rewrite is adopted.
+
+Full verify final exits: **E22=143 (remaining stages cancelled/unmeasured), E23=143 (remote failures plus interrupted/unmeasured remainder), E24=75 (remote failures/native admission timeout; final quiet12/12green)**. None is a full verification pass. All three epic statuses remain **in-progress**. [Terminal logs/stage summary](evidence/final-run-summary.json). All owned checks are terminal; no private lock or4081 listener remains. Retained captures: **12/12**.
+
+Follow-up: fix the two assigned performance defects, improve L6 retreat/night composition and driver stability, rerun missing verifier stages, diagnose L5 audio900s timeout/remote screenshot placement and WebKit55ms continuity failure. Coherent AC18 and literal50ms/10% gates remain unchanged. Status and sweep ledger are updated.
+
 Starting source: `769d9f8ce`. Scope: ten partial criteria from the 2026-10-18 sweep. AC12 is now closed with current level and inherited shared proof; the remaining dispositions are recorded below. Historical green runs do not supersede later failures. All browser work is headless, one worker/session, on ports 4081/4082; native timing uses the shared quiet wrapper in reservations of at most twenty minutes. The orchestrator released the QA reservation early; all later work uses the shared admission guard and releases its slot between batches.
 
 ## Authorized specification clarification
@@ -16,10 +24,10 @@ The orchestrator explicitly authorized the E24-AC19 rewrite on 2026-10-22: the t
 | E22-AC20 | **Unmet:** final WebGPU high break204.7ms/four cold builds; low turn54.5ms/break54.8ms. | Native peak/caps and all specified beat maxima ≤50 ms, both tiers. |
 | E23-AC17 | **Met:** full corrected five-person real-input route, zero deaths/errors. | Ordinary cellar→Sam→Mia→all five→shutter route, photos and zero console errors. |
 | E23-AC18 | **Met:** four pairs plus actual group, scores7/8/8/7/7, all must and8/11 should. | All four recognizable safe/fallen pairs, vulnerable five-person group and sunset, each ≥7, no P0/P1. |
-| E23-AC19 | Final WebGPU both-tier peak/zoom and five-load retention pass; WebGL pending. | Both backends/tiers/zoom limits, original frame/counter/draw-regression budgets, warmed heap/GPU growth ≤10%. |
+| E23-AC19 | **Met:** both-backend/tier peak and three-zoom matrices plus original five-load retention pass. | Final WebGL p95 high8.6ms/low34.9ms, heap130.359/114.502MB; WebGPU and all four lifecycle receipts retained. Full verifier remains independently red. |
 | E24-AC15 | **Met:** final24-case backend/tier/zoom matrix passes, opened and described. | Player contrast ≥3:1, body-isolated brightest red eyes and tier-correct hero shadow at both spots across backends/tiers/zooms. |
-| E24-AC18 | Phone96 pass and v5 actual route pass; revised retreat/night capture review pending. | Seven-photo route, corrected retreat composition, calm/failure/retreat/night A/D/G scores ≥7 and phone gate prompt clear of HUD. |
-| E24-AC19 | Approved population clarification passes final WebGPU stress/transitions; heap10.59%/11.98% remains red, WebGL pending. | High ≥40 / low 30 infected, ≥25 moving survivors, native tier budgets and ≤50 ms transitions; warmed retention ≤10%. |
+| E24-AC18 | **Red:** phone96 and v7 route pass, but actual named scores8/7/6/5; two must and5/9 should fail. | [Full seven-photo review](E24-review.md): closer retreat readability and sparse/muddy night yard need improvement; no criterion rewrite proposed. |
+| E24-AC19 | **Red on retention; approved population clarification proved on both backends:** high40/low30 live infected,26 moving survivors, tier budgets and ≤50ms transitions pass. | Original heap growth WebGPU10.59%/11.98% and WebGL low10.58% exceeds10%; runtime fix assigned to separate perf lane. |
 
 ## Execution record
 
@@ -224,3 +232,95 @@ Use the same `trace:'off'` policy as the existing long L4 collapse and continuit
 E24's remote stage passes the WebGL-high/low PO34 gate cases, then both requested-WebGPU cases fail their unchanged final backend assertion: **expected`webgpu`, received`webgl`**. Their prompt text, unique progressbar and task checks had already passed. Retain both raw API traces and the cancelled verifier console log. The existing PO34 matrix did not enable headless WebGPU, and was missing from the native-capture split. Move **all four cases unchanged** into the native stage and explicitly enable the headless native backend in that fixture; add both PO34 and viewport-title regression assertions to the existing split test. No backend assertion, phone/task gate or timeout is removed. Stop the now-red old E24 verifier, confirm and terminate only its exact owned preview group3789353, and restart the **full** E24 verifier from static and79 Node tests onward. E23's trace-off replacement continues independently.
 
 An accidental empty archival manifest from a helper-name/marker glob collision was removed; the ephemeral selector now excludes its helper file and the helper was restored before any final quiet measurement. No measured result or earlier archive was lost.
+
+### 14:00 UTC — audit all native-only backend matrices before final reruns
+
+The broader split audit found L4's army-line prompts, cellar guidance, camera-hotfix, flat-viewport walks and mouse/WASD/stick matrices using native Metal/WebGPU flags in the remote selection; L5's eight PO26/28 health/radar cases had the same issue, with two camera-transition cases and the actual cellar-camera captures also missing from the native list. Move every such case to the native stage, retaining their assertions, seeds, backends, tiers and zooms. The existing routing unit now tests both positive native matching and actual exclusion by the remote regex, rather than only looking for a title token in the command string.
+
+The old E22 remote run also exposed a stale **bus-audio fixture**: engine/road/radio checks pass, but it waits101s for the alarm without completing the shipping quartermaster tutorial, leaving the mission correctly in`plaza`. Raw failure trace retained. Complete the tutorial in the existing cheated setup before the unchanged101s advance, retain the non-plaza/radio-fade assertions, and additionally require an actual positive first-turn tick. This fixes test progression; no mission timer or sound/difficulty value changes.
+
+Stop the superseded E22/E23 full attempts after preserving their logs and existing142/75 Node passes; confirm/terminate only owned preview group3794940. Fresh full reruns use the corrected stage split. In parallel with remote Node work, the standalone v6 actual-input L6 route runs under the same private browser lock and required shared E2E admission wrapper; its reporter is copied before releasing the private lock. No performance runtime defect is addressed here.
+
+### 14:06 UTC — v6 route passes; its retreat framing does not
+
+V6 completes the actual-input route in2.5min with **18/29 rescued (≥60%), zero deaths,30 total damage**, all three gates, all seven photos, straggler and L7 carryover. It fits **28/28 follower heads**, but the elevated70m-radius overview makes the courier's weapon too small and the group muddy; score **5/10, not accepted**. Retain the failed retreat PNG and its measured camera/positions. Move the review camera behind the courier and derive a closer radius from the actual live column span, preserving the elevated narrow-FOV three-quarter angle and the all-followers-in-frame assertion. V7 repeats the full real route, without modifying simulation/difficulty or teleporting the group. The restored authored wide night frame now again includes both burning wrecks and the above-ground fence/yard.
+
+The routing regression initially has8pass/1fail because its leftover **substring heuristic** treats a leading`@E22` as a literal command substring, whereas the selection correctly contains`@(?:E22)`. The new semantic assertions already test each entire title against both native and remote-exclusion regexes; remove only the obsolete substring heuristic and rerun both static checks and all9 tooling tests. Failed raw unit receipt retained.
+
+### 14:13 UTC — avoid holding the lane while awaiting a Mac slot
+
+Final source typecheck/lint and all **9 semantic routing tests pass** (52s sync,78s remote); raw result/log retained. The v7 first admission attempt had not started Playwright and was rescheduled without accepting its cancelled/stale reporter. Its new attempt uses temporary `native-admit.sh`: keep the existing shared E2E guard fully responsible for admission; after it admits a slot, try this lane's private lock nonblocking before actually starting Playwright. If a remote browser owns that lock, exit75 and release/retry the shared reservation. Native waits therefore hold no private lane lock, remote work may proceed during the wait, and **only one actual browser across all hosts** remains possible. Tests that actually start and fail are never retried by this helper. All guard/deadline flags remain unchanged; performance still waits outside the private lock until the three functional stages complete. The exact temporary helpers are retained as plain-text evidence.
+
+### 14:41 UTC — shared smoke failures remain explicit; final partial proofs prioritized
+
+The current E24 remote stage completes **13pass/6fail**. Five shared WebGPU smoke cases hit software-device failures (`GPUDevice.createBuffer`,36-byte buffer rejected; transition error`Instance dropped in popErrorScope`). They belong in the native selection just like the epic backend matrices; add`T-E02-webgpu` to all three native/exclusion patterns, and prove those semantic routes in the same9-test suite (all9 pass). The queued primary native batch now contains the corrected actual-input L6 route plus those **five unchanged shared GPU cases**. Existing full verifier processes had already constructed their old selection plan; their remote failures remain red, not silently converted to passes.
+
+The sixth remote failure is **WebKit S-11**, measured resume playhead drift **0.0551473923s >0.05s**. WebKit is installed; this is a real assertion failure, not a missing-browser error. Keep the nonvisual case remote and retain the50ms gate. Candidate rewrite for orchestrator consideration only: **“After resume, compare the playhead with the saved paused position plus measured playback time elapsed during async resume/unlock; continuity error remains≤50ms.”** Hypothesis: the old assertion counts legitimate advancement while awaiting`unlock()`; this needs timestamp instrumentation before deciding that the criterion is wrong. No rewrite or timing waiver is adopted.
+
+The announced1.024s offline-audio scheduling window was **not applied**: the trace-off full E23 audio attempt is now executing, and its actual result should establish whether a scheduler change is needed. Normal runtime source therefore remains`f0fb391fb`; no frame/heap/audio gameplay tuning is made.
+
+Prioritize the already-started v7 actual-route/GPU-smoke proof and a **six-case WebGL quiet batch (L5 peak high/low; L6 live40/30 stress and breach/abandon high/low)** before admitting further full-verifier browser stages. Running remote work finishes normally; later browser/build admissions wait outside all reservations. The quiet batch starts only if the actual route case passes; it archives fresh raw results under`quiet-webgl-primary-*`, then releases the priority markers. Full verification retains every original gate and remains red where its actual attempts failed. The15:00 user timebox is awaiting clarification; without an extension, stop and await owned-check cleanup, commit evidence/status, and report blocked rather than leave work running.
+
+### 14:55 UTC — final deadline and interrupted remote remainder
+
+The orchestrator explicitly permits already-started checks to finish and sets the final cutoff to **16:00 UTC**, with a final per-AC met/red/unmeasured report. The latest E22 Node selection passes again (142 cases,2,471s); E23 and E24 latest Node selections also pass. The trace-off E23 audio comparison still times out after900s, and its remote high-tier held-keyboard finish case fails after4.2min. To leave time for the outstanding actual-route camera and WebGL tier proofs, send SIGINT to the **exact owned remote Playwright PID3811193**, after verifying its private job cwd and executable. Preserve partial reporter/failures; its interrupted/unstarted cases are unmeasured, and the full verifier stays red. No runtime audio optimization or test assertion waiver is applied.
+
+The interrupted remote E23 stage returns a complete partial receipt: **1pass,2fail,1interrupted,20unstarted**, exit130,27min. The failing cases are the original900s audio comparison and high-tier held-keyboard finish; the low finish is interrupted and the remaining cases unmeasured. The native v7 route plus five shared WebGPU smokes actually starts at**14:54:09 UTC**. Raw latest Node and remote reporter JSONs are archived with `verify-latest-*` prefixes; historical green receipts do not replace these latest failures.
+
+### 14:58 UTC — final actual L6 route visually reviewed, criterion remains red
+
+V7 actual route passes in2.1min: **20/29 rescued, zero deaths/damage**, all7photos, three gates, straggler and exact L7 carryover. Opened **all seven full PNGs** and retained the [source-hashed sheet](l6-route-v7-reviewed.jpg). [E24-review.md](E24-review.md) records named scores**8/7/6/5**, A/D/G item dispositions, **two must failures and4/9 should passes**. The retreat improves to a true rear three-quarter overview with28/28 follower heads visible, but the player/MG remains small. The authored night exit includes both burning wrecks and fence, but sparse flat ground and broad purple haze fail the quality bar. **AC18 remains red**, despite the route and96-context phone fix. The criterion is coherent; no rewrite/waiver is proposed. Further composition work is required.
+
+The primary quiet proof and later full-verifier quiet stages are now allowed to reserve slots after their own functional prerequisites finish; remove the temporary `defer-perf` file. The primary route/quiet priority markers still block later own browser admissions until that six-case WebGL proof exits. This removes the earlier admission-only defer policy, not any test gate.
+
+### 15:00 UTC — native route and shared GPU batch complete
+
+All **6/6** native cases pass in4.6min: the full actual-input L6 route and five shared WebGPU high/low canvas/game-camera/transition smokes. Archive `evidence/l6-route-v7-and-shared-gpu.{json,log}.gz` retains the complete current receipt. This resolves the hardware proof for the shared cases without rewriting their earlier remote software-device failures in full verifier records. The priority WebGL quiet batch is waiting for global admission; no performance measurement is claimed before its condition log begins.
+
+### 15:14 UTC — ordered quiet handoff to E31 D2
+
+The orchestrator pauses perf-l4-l6 browser work until16:05 and gives this six-case batch first, then E31 D2. After the primary `quiet-run` exits and releases **all global slots**, retain this lane's private lock while `/tmp/ac-close-l4-l6-verifier/handoff-to-E31` exists. Archive results before waiting; this prevents our later full-verifier browsers from taking E31's next turn. Only our private admission is held, never shared GPU slots. Remove the marker on E31 completion or during final owned-check cleanup.
+
+### 15:15 UTC — E23-AC19 met on both backends
+
+Both final WebGL peak cases pass unchanged, including all three zooms: high p50/p95/max**5.7/8.6/16.0ms**, sim1.4ms, collected heap130.359MB; low**19.2/34.9/46.4ms**, sim3.8ms,114.502MB. High baseline412draw/726506tri -> pair/follow356draw/702623tri; low268/288316 ->266/321565. Both have5followers,13fires,37retained bodies, and tier populations27/18infected. The WebGPU peaks already pass (p95high7.4/low34.7ms), as do all four original five-load heap/geometry/texture tests. Therefore **E23-AC19 is met**, bringing the partial closure total to7/10. E23 stays in-progress because the full verifier's current audio/remote screenshot failures and interrupted coverage remain unresolved.
+
+Opened final WebGL high/low follow images: the ruined plaza, scattered corpses, wrecks and5bar-marked followers are present under dense ash/haze; portrait crops the wide plaza. These are deliberately loaded performance views, **not** substitutes for the separately scored close group/pair vision review. Numeric counters establish the offscreen population and effects.
+
+### 15:17 UTC — six-case WebGL proof green; global slots released
+
+The final primary quiet batch completes **6/6pass in3.6min**, with fresh conditions/reporter/per-case JSON archived as `evidence/quiet-webgl-primary-*`. All global slots are released for the explicitly ordered E31 D2 turn; our subsequent full-verifier admissions remain blocked only by the private handoff marker.
+
+The **approved AC19 population rewrite is now proved on both actual backends and both tiers**. WebGL high/low both have26moving survivors and **40/30 living visible infected**, with25/22dead infected retained, emergency lights and collected headlamp active. High p50/p95/max**5.1/7.6/13.7ms**, sim1.6ms,69.575MB; low**12.2/16.0/49.8ms**, sim4.0ms,64.559MB. Actual breach2/abandon maxima are**18.1/18.1ms high** and**34.6/34.6ms low**, all≤50ms. All three zoom counter matrices and actual tier shadow gates pass. Original retention remains red (WebGPU+10.5898/+11.9797%; WebGL low+10.577%), so **E24-AC19 remains red overall**. No warmed-baseline rewrite is adopted.
+
+Opened both full final WebGL stress images and the complete [eight-view backend/tier perf sheet](l5-l6-final-perf-matrix.jpg). The bright courier/headlamp, warm rails, unarmed adults and red-eyed pursuers match between backends; portrait excludes most of the cohort, so counts come from the numeric living/moving assertions. The L5 performance images show deliberately dense ash/haze and clutter on both backends; their overlap/haze is explicitly not used as vision acceptance. Retained report captures total**11/12**.
+
+### 15:23 UTC — admission timeout is unmeasured, not a green native result
+
+The full E24 native stage exhausts its original3600s admission limit while waiting for the priority proofs/E31 handoff; **no native test in that stage starts**, exit75. The verifier's unconditional reporter copy writes the preceding six-case quiet reporter into `playwright-headless.json`; **that file is stale for this stage and is not acceptance evidence**. Archive the misattributed copy explicitly and remove it from the final current-stage artifact set. The actual six-case quiet reporter remains valid in its own source-hashed manifest. Full E24 continues to its original quiet/cold-scream stage and remains red.
+
+One final photo-only real-route replay is queued after E31 D2: retain the all-followers-in-frame assertion, capture the real group once it naturally gathers near the gate, derive camera bounds from both ends of the living column, and target the raised night floor rather than y=0. All input/death/rescue/gate/handover assertions remain unchanged. V7 red review remains authoritative until the new images are actually opened/scored. Remote static checks for this test-only adjustment are running.
+
+The v8 photo-only test adjustment passes fresh remote typecheck and lint, exit0 (49s sync,98s remote); raw log retained. The browser replay is still unadmitted behind the ordered E31 handoff, and no new visual score is claimed.
+
+### 15:42 UTC — preserve ordered handoff and prepare final disposition
+
+Other lane receipts prove D2 WebGL low and WebGPU high terminal; its final WebGPU low log starts15:42. Keep our private barrier until that final command exits, preserving the orchestrator's ordered quiet turn. The final photo-only replay remains unmeasured meanwhile. E22/E23/E24 full verifier coverage is explicitly incomplete/red: only E22 static+Node have finished; E23 retains remote failures/interruption; E24 retains remote failures/native admission75. No epic is marked done. The machine-readable original-ten criterion summary and perf-lane handoff retain7met/3red plus the unmeasured v8 photo refinement.
+
+### 15:44 UTC — private barrier released on explicit instruction
+
+The orchestrator explicitly authorizes releasing our private barrier now and resuming queued stages as shared admission allows, retaining the16:00 cutoff. Remove `handoff-to-E31`; no global lock or other lane is bypassed. The final photo replay and remaining verifier stages resume serially.
+
+Repair the discovered stale-report bug for future E22/E23/E24 runs: clear the prior reporter before each native/quiet browser stage, copy only a reporter actually present afterward, and remove the stage destination when none was created. Add a semantic unit covering native admission75 with no new reporter; unchanged exit75 and missing evidence remain explicit. Fresh remote static and verifier-tooling checks are running. Already-loaded full verifier processes keep their original plans; stale copies from those attempts will still be identified in the final audit.
+
+The stale-reporter repair passes remote **typecheck, lint and10/10 verifier-tooling tests**, exit0 (50s sync,81s remote). New admission75 regression confirms no stale stage reporter is copied and the failure exit remains75. This strengthens evidence handling; no product assertion/threshold or gameplay value changes. Raw static/unit receipt is `evidence/final-reporter-guard.*.gz`.
+
+### 15:51 UTC — final photo attempt fails; restore proved v7 fixture
+
+V8 actually starts15:47:34 after the ordered D2 work, runs2.9min and **fails** the unchanged zero-player-death gate. Its final result records **18/29rescued (ratio passes), one death and186.57damage**; the intermediate post-checkpoint stats record9rescued, which is not the final result; preserve all raw journals/reporter under `l6-route-v8-failed-*`. All following heads fit the new retreat view, but the naturally stretched column makes that later overview **5/10**, worse than v7. Opened the new retreat and raised-floor night frames; the night yard remains flat/sparse/purple, **5/10**. The final [failed seven-view sheet](l6-route-v8-failed.jpg) is retained with exact source hashes; capture total12/12. No new vision/route pass is claimed.
+
+Restore the complete previously proved v7 photo logic from `5c11ef12b`, retaining its actual20/29 zero-death/damage route receipt and red8/7/6/5 visual review. This reverts only the unsuccessful camera/timing experiment; all route/death/rescue/gate and all-heads assertions remain strict. Runtime source remains the measured `f0fb391fb` tree. AC18 stays red and requires a real composition/driver follow-up; no obsolete/impossible criterion rewrite is proposed.
+
+### Final formal E24 quiet stage
+
+**12/12pass in3.0min**: original high/low stress, high/low breach/abandon, and8 cold-scream backend/tier/debug cases. Exact receipts: `verify-E24-final-quiet12.json.gz`, `quiet-webgl-E24-*` and E24 terminal log. Original retention remains red and native functional stage unmeasured. E22/E23 unadmitted remainder stopped15:54:20 by owned-group SIGTERM, terminal143. E24 naturally exits75 after green quiet stage. Final process audit: no owned verifier/helper, no private lock, no4081 listener.

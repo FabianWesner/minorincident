@@ -10,7 +10,7 @@
     "E23-AC18": "met",
     "E23-AC19": "met",
     "E24-AC15": "met",
-    "E24-AC18": "red; final photo repeat unmeasured",
+    "E24-AC18": "red; v7 scores8/7/6/5; v8 measured red (one death,18/29rescued), photo experiment reverted",
     "E24-AC19": "red on original retention; approved stress clarification proved both backends"
   },
   "epicStatuses": {
@@ -19,5 +19,13 @@
     "E24": "in-progress"
   },
   "performanceFixesOwnedBySeparateLane": true,
-  "alternateWarmBaselineAdopted": false
+  "alternateWarmBaselineAdopted": false,
+  "fullVerifyExitCodes": {
+    "E22": 143,
+    "E23": 143,
+    "E24": 75
+  },
+  "allOwnedChecksTerminal": true,
+  "retainedCaptures": 12,
+  "fullVerificationPassed": false
 }

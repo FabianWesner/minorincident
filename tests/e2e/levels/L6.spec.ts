@@ -37,15 +37,9 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
       if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);
       if(name==='l6-tunnel-retreat'){
         const s=a.missions.state()!.l6!,p=a.getState().player!.transform;
-        const xs=[p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)];
-        const front=Math.max(...xs),back=Math.min(...xs),x=(back+front)/2;
-        const radius=Math.max(24,(front-back+7)*.8/(2*Math.tan(25*Math.PI/360)*(innerWidth/innerHeight)));
+        const front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;
+        const radius=Math.max(32,(front-p.x+7)*.8/(2*Math.tan(25*Math.PI/360)*(innerWidth/innerHeight)));
         a.camera.cinematic({position:[x-radius*.6,.6+radius*.85,15+radius*.809],target:[x,.6,15]},true);
-      }
-      if(name==='l6-exit-night'){
-        // The raised exit floor is at 4.6m; the old y=0 target wastes the frame on the yard.
-        const p=a.getState().player!.transform,x=p.x+8,y=p.y-.6;
-        a.camera.cinematic({position:[x+22,y+27,42],target:[x,y,18]},true);
       }
       await a.screenshotReady();
     },name);
@@ -69,7 +63,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     if(obs.m.phase==='result'){if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');writeFileSync(`${out}/real-input.json`,JSON.stringify({result:obs.m.result,shots:[...shots],state:obs.s},null,2));break;}
     if(obs.s.phase==='first'&&obs.tick>obs.s.breach1At+120&&!shots.has('l6-first-breach'))await snap('l6-first-breach');
     if(obs.s.emergency&&obs.tick>obs.s.breach2At+120&&!shots.has('l6-shelter-fails'))await snap('l6-shelter-fails');
-    if(obs.p.x>143&&!shots.has('l6-tunnel-retreat'))await snap('l6-tunnel-retreat');
+    if(obs.p.x>107&&!shots.has('l6-tunnel-retreat'))await snap('l6-tunnel-retreat');
     if(obs.p.x>130&&!shots.has('l6-straggler'))await snap('l6-straggler');
     if(obs.p.x>143&&!shots.has('l6-chokepoint'))await snap('l6-chokepoint');
     if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');
