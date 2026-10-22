@@ -6,6 +6,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, rmdirSync, st
 import { basename, resolve } from 'node:path';
 import { debugCampaign, type Level } from '../../src/sim/progression/Campaign';
 import { crossing } from '../../src/levels/L9/district';
+import { cure } from '../../src/levels/L10/district';
 import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab-tour';
 import { perceptualDiff } from './ab-metrics';
 
@@ -78,6 +79,7 @@ try{
     try{
       const page=await context.newPage();page.setDefaultTimeout(180000);await page.addInitScript('globalThis.__name = fn => fn');
       const pageErrors:string[]=[];page.on('pageerror',error=>pageErrors.push(error.message));
+      page.on('console',message=>{if(message.text().startsWith('[qa-ab]'))console.log(message.text());});
       await page.goto(sourceUrl(sources[side]),{waitUntil:'domcontentloaded',timeout:120000});
       await page.waitForFunction(()=>!!window.__SS__&&!!window.__SCENE__,null,{timeout:120000});
       await page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();});
@@ -90,7 +92,13 @@ try{
         const {stop,zoom,id}=variant;console.log(`[${side}] ${id}: reaching ${stop.setup??stop.checkpoint??'start'}`);
         try{
           const save=debugCampaign(Number(stop.level.slice(1))<=4?10:Number(stop.level.slice(1)) as Level,null);save.settings.quality='low';save.seed=seed;
-          const proof=await page.evaluate(prepareStop,{stop,seed,save,zoom,driveRoute:crossing.routes.find(r=>r.id==='road')!.points});
+          let walkRoute:number[][]|undefined;
+          if(stop.level==='L10'&&stop.checkpoint){
+            const region=cure.regions.findIndex(r=>r.checkpoint===stop.checkpoint),target=cure.anchors[stop.checkpoint];
+            if(!target)throw new Error(`Missing authored L10 checkpoint anchor ${stop.checkpoint}`);
+            walkRoute=[...cure.regions.slice(0,region<0?cure.regions.length:region).flatMap(r=>r.route),target].map(p=>[...p]);
+          }
+          const proof=await page.evaluate(prepareStop,{stop,seed,save,zoom,driveRoute:crossing.routes.find(r=>r.id==='road')!.points,walkRoute});
           const frames:Awaited<ReturnType<typeof readyFrame>>[]=[],hashes:string[]=[];
           for(let frame=0;frame<6;frame++){
             const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0});
