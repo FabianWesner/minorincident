@@ -30,7 +30,7 @@ save(OUT/f'native-{target}-verifier-checks.json.gz',checks)
 functional=ROOT/f'test-results/epics/{target}/playwright-functional.json'
 if functional.is_file():save(OUT/f'native-{target}-functional.json.gz',json.loads(functional.read_text()))
 pattern=f'^(?=.*(?:@(?:{target})(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)'
-# Same files and two reservation shards as tools/verify.ts; keep all original gates.
+# Same files as tools/verify.ts; keep every original gate and any missing shard.
 files=sorted(p for p in (ROOT/'tests/perf').glob('*.spec.ts') if f'@{target}' in p.read_text())
 attempted=[c['command'] for c in checks['checks']]
 for spec in files:
