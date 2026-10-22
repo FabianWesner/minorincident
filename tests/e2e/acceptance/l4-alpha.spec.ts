@@ -9,6 +9,7 @@ test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enabl
 for (const tier of ['high', 'low'] as const) for (const move of ['charge', 'ground-slam', 'grab-throw', 'roar'] as const) {
   test(`T-E22-12-special-${move}-${tier} @E22-AC12 @E07-AC05 @E07-AC06 boundary, cooldown repeat and checkpoint captures ${backend}`, async ({ page }) => {
     test.setTimeout(300_000);
+    if (tier === 'low') await page.setViewportSize({ width: 390, height: 844 });
     const out = `test-results/ac-close/alpha/${backend}-${tier}-${move}`;
     mkdirSync(out, { recursive: true });
     const named = `tests/scenes/alpha-${move === 'charge' || move === 'ground-slam' ? 's2' : 's3'}/qa-alpha-${move}.json`;
@@ -51,14 +52,16 @@ for (const tier of ['high', 'low'] as const) for (const move of ['charge', 'grou
       await page.evaluate(() => window.__SS__!.screenshotReady());
       const state = await page.evaluate(() => {
         const a = window.__SS__!, lab = window.__SCENE__!;
-        return { tick: a.tick(), actors: [...lab.actors].map(([name, actor]) => ({ name, entity: a.getEntity(actor.entity) })), markers: a.getState().render.vfx?.telegraphs, events: a.events(), perf: a.perf() };
+        return { tick: a.tick(), actors: [...lab.actors].map(([name, actor]) => ({ name, entity: a.getEntity(actor.entity) })), markers: a.getState().render.vfx?.telegraphs, figures: a.crowdFigures(), events: a.events(), perf: a.perf() };
       });
-      await page.screenshot({ path: `${out}/${stage}.png` }); captures.push({ stage, ...state }); return state;
+      await page.screenshot({ path: `${out}/${stage}.png` }); captures.push({ stage, ...state }); writeFileSync(`${out}/captures.json`, JSON.stringify(captures, null, 2)); return state;
     };
     await capture('start');
     await page.evaluate(n => window.__SCENE__!.step(n), timing.windup - 1);
     const before = await capture('before-active');
     expect(before.actors.find(a => a.name === 'alpha')!.entity!.infected!.specialAttack!.stage).toBe('telegraph');
+    expect(before.markers?.some(t => t.attackId === setup.first.attackId)).toBe(true);
+    expect(before.figures.find(f => f.id === setup.source)?.drawn).toBe(true);
     expect(before.events.filter(e => e.type === 'combat.hit' && e.attackId === setup.first.attackId)).toHaveLength(0);
     await page.evaluate(() => window.__SCENE__!.step(1));
     const active = await capture('active');
