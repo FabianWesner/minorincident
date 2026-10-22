@@ -1,5 +1,9 @@
 import { mkdirSync } from 'node:fs';
 import { test, expect, boot } from './fixtures';
+// This matrix requires the requested native backend, including headless WebGPU.
+test.use({ headless: true, launchOptions: { args: process.platform === 'darwin'
+  ? ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist']
+  : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } });
 for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) test(`@E24 PO34 service gate explains the crate task with one bar ${backend} ${tier}`, async ({ page }) => {
   test.setTimeout(300_000);
   await boot(page, `/?test=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1`);
