@@ -30,6 +30,8 @@ Each stop has six captures at 0, 0.6, 1.2, 1.8, 2.4 and 3 seconds. Its JPEG shee
 
 `pixelmatch` applies a perceptual color tolerance of .15 and suppresses antialias-only differences. The score is the greatest changed-pixel coverage in an overlapping 48×48 tile across the six paired frames. The default review threshold is 2%. Global changed coverage is also recorded. Local coverage prevents a vanished person or hat being diluted by the full 921,600-pixel viewport. The metric tests cover identical frames, a small missing actor, sparse particle noise, viewport-edge actors and incompatible dimensions.
 
+At 48×48 pixels, the 2% threshold requires at least 47 perceptually changed pixels in one tile. It was retained throughout calibration: first-frame render noise was corrected in capture readiness rather than absorbed by a higher threshold. In the measured sensitivity runs below, the smallest confirmed case peak is 15.63% (depot return); the largest passing focused-control peak is 0.43% (L6). These margins describe the current evidence, while the complete all-level control remains pending.
+
 A score requests visual review; it does not decide whether a change is intended, an improvement or a regression. The six PO categories report candidate coverage when a relevant, successfully captured stop exceeds the same threshold. A reviewer must confirm that the difference actually depicts that finding before counting a hit. Missing categories are explicitly unmeasured. Same-build controls must have **every** stop below threshold, including later motion frames.
 
 ## Validation

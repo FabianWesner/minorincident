@@ -150,5 +150,13 @@
     "Raw scores are unchanged; case confirmation is recorded by Codex visual inspection.",
     "The earlier full replay had one first-frame L4 tank false positive; after settling camera-driven entity LOD, the focused L4 replay scores 0% in all 12 frame pairs. Full replay is pending.",
     "L6 baseline dark-exit observation is documented separately; quiet A/B is not a claim that existing game behavior is correct."
-  ]
+  ],
+  "thresholdEvidence": {
+    "tilePixels": 48,
+    "tileArea": 2304,
+    "minimumChangedPixelsToFlag": 47,
+    "smallestConfirmedCasePeak": 0.15625,
+    "largestPassingFocusedControlPeak": 0.004340277777777778,
+    "fullAllLevelControlPending": true
+  }
 }
