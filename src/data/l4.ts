@@ -43,6 +43,8 @@ export const l4 = {
    * barriers when it stops: "the gate closes behind the convoy"). A soldier calls her back when she leans on it (every `barkEveryS` at most).
    */
   perimeter: { x0: -35.6, x1: -9.2, z0: -17.4, z1: 22.5, barkM: 1.2, barkEveryS: 12, barrier: 'prop.jersey-barrier' },
+  /** PO #119: where civilians inside the perimeter shelter during the war (away from the wall and the street mouths; spread around each by the refuge rule). */
+  campShelters: [[-30, -12.5], [-30, 18.5], [-21, -12.5]] as readonly P[],
   /** Beat 2: free walk, the quartermaster issues the machine gun. */
   calm: {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
@@ -76,6 +78,8 @@ export const l4 = {
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12,
+    /** Downed infected allowed to keep their slot and get up; older ones are finished off so soldiers who re-down every riser cannot starve the waves (PO #118). */
+    downedSlots: 10,
     /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
     heap: { cellM: 4 },
     /** Seconds the streets keep emerging after the line break (collapse). */

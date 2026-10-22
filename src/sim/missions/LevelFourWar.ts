@@ -111,6 +111,11 @@ export class LevelFourWar {
     const refuges = [...edges, ...this.doors().map(d => ({ id: d.name, x: d.x, z: d.z }))];
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges, tier });
     world.npcs.civilians.outbreak = outbreak;
+    // PO #119 ("Why are all peds here?"): the solid perimeter cuts the camp off from every street refuge, so panicking civilians inside it
+    // ran at the wall and piled up with the soldiers. During the war they only flee to shelter spots inside the camp (spread by refugeSpot).
+    const per = l4.perimeter, within = (p: Point) => p.x > per.x0 && p.x < per.x1 && p.z > per.z0 && p.z < per.z1;
+    for (const [k, [x, z]] of l4.campShelters.entries()) if (!outbreak.refuges.some(r => r.id === `refuge-door-camp-${k + 1}`)) outbreak.refuges.push({ id: `refuge-door-camp-${k + 1}`, x, z });
+    outbreak.options.reachable = (from, r) => this.s.phase !== 'war' || within(from) === within(r);
     world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true; this.reserveSlots();
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
@@ -170,6 +175,17 @@ export class LevelFourWar {
       e.appearance!.origin = 'L3-bus';
       s.evacueeIds.push(id);
     }
+  }
+  /**
+   * PO #118 ("Zero Zombies"): the director's strict count keeps a slot for every downed infected, but the army re-downs each one as it
+   * gets up, so ~75 bodies pinned the war cap and no wave ever emerged. Beyond `downedSlots` the oldest downed bodies are finished off
+   * (they stay as corpses, PO 10-14) so their slots return to the waves.
+   */
+  private finishDowned(): void {
+    const ai = this.world.infected!, downed = ai.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0);
+    if (downed.length <= l4.war.downedSlots) return;
+    downed.sort((a, b) => a.infected!.deadAt - b.infected!.deadAt);
+    for (const e of downed.slice(0, downed.length - l4.war.downedSlots)) e.infected!.recoverAt = -1;
   }
   private alarmInfected(): number { return this.low ? l4.calm.alarmInfected.low : l4.calm.alarmInfected.high; }
   private queueSchedule(slot: readonly number[]): CivilianActivity[] {
@@ -624,7 +640,7 @@ export class LevelFourWar {
       world.events.emit({ type: 'l4.wave', tick, wave: w, count: collapse ? n * edges.length : Math.ceil(n * l4.war.edgesPerWave / ring) * ring, edges });
       if (collapse) { s.collapseWaves++; s.collapseWaveAt = tick + ticks(every); } else { s.wave++; s.waveAt = tick + ticks(every); }
     }
-    if (tick % 10 === 0) { if (s.phase === 'war') { this.flushGroups(); this.emergeInside(); } else this.flushEdges(); }
+    if (tick % 10 === 0) { this.finishDowned(); if (s.phase === 'war') { this.flushGroups(); this.emergeInside(); } else this.flushEdges(); }
   }
   /**
    * The war (PO 10-13): each street edge releases one small group (2-5, seeded) at a time from one of its emergence points in turn (street
