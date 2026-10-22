@@ -72,3 +72,12 @@ test('#99 fists use target-click approach outside punching reach instead of swin
   expect(keepMovingWithFists('L6','retreat',true,3,1,1.2)).toBe(true);
   expect(keepMovingWithFists('L6','retreat',true,1,1,1.2)).toBe(true);
 });
+
+test('#99 fists cover a rendered ally being hit during an ordinary retreat or exit instruction', () => {
+  const ally = { drawn: true, hp: 20, corpse: false, underAttack: true };
+  expect(canCoverVisibleAllies('L6','retreat',true,ally,'Cover the retreat through the tunnel · 5 m')).toBe(true);
+  expect(canCoverVisibleAllies('L6','exit',true,ally,'Bring the survivors into the night · 0/1 out · 15 m')).toBe(true);
+  expect(canCoverVisibleAllies('L6','retreat',true,{...ally,underAttack:false},'Cover the retreat through the tunnel · 5 m')).toBe(false);
+  expect(canCoverVisibleAllies('L6','retreat',true,{...ally,drawn:false},'Cover the retreat through the tunnel · 5 m')).toBe(false);
+  expect(canCoverVisibleAllies('L6','retreat',true,{...ally,hp:0},'Cover the retreat through the tunnel · 5 m')).toBe(false);
+});
