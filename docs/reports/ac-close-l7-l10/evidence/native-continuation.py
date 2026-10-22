@@ -22,12 +22,14 @@ if sys.argv[1]=='--batch':
     print(json.dumps(receipt),flush=True)
     sys.exit(0) # audit all batches; each original exit remains in its receipt
 
-target,pid=sys.argv[1],int(sys.argv[2])
-while True:
+resume=sys.argv[1]=='--resume'
+target,pid=(sys.argv[2],None) if resume else (sys.argv[1],int(sys.argv[2]))
+while pid is not None:
     try:os.kill(pid,0)
     except ProcessLookupError:break
     time.sleep(5)
-checks=json.loads((ROOT/f'test-results/epics/{target}/checks.json').read_text())
+checkfile=ROOT/f'test-results/epics/{target}/checks.json'
+checks=json.loads(checkfile.read_text()) if checkfile.is_file() else json.loads(gzip.open(OUT/f'native-{target}-verifier-checks.json.gz','rt').read())
 save(OUT/f'native-{target}-verifier-checks.json.gz',checks)
 # Preserve the functional receipt before continuation workers reuse the global reporter.
 functional=ROOT/f'test-results/epics/{target}/playwright-functional.json'
@@ -36,9 +38,16 @@ pattern=f'^(?=.*(?:@(?:{target})(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@per
 # Same files as tools/verify.ts; keep every original gate and any missing shard.
 files=sorted(p for p in (ROOT/'tests/perf').glob('*.spec.ts') if f'@{target}' in p.read_text())
 attempted=[c['command'] for c in checks['checks']]
+# Resume without repeating completed native continuation files. Interrupted,
+# timed-out or admission-only batches are never treated as completed proof.
+for path in OUT.glob(f'native-{target}-*-receipt.json.gz'):
+    receipt=json.loads(gzip.open(path,'rt').read())
+    if receipt.get('exitCode') in [0,1] and receipt.get('reporterPresent'):
+        attempted.append(receipt['command'])
 for spec in files:
     path=str(spec.relative_to(ROOT))
-    remaining=[shard for shard in [1,2] if not any(path in c and f'--shard={shard}/2' in c for c in attempted)]
+    full=any(path in c and not any(a.startswith('--shard=') for a in c) for c in attempted)
+    remaining=[] if full else [shard for shard in [1,2] if not any(path in c and f'--shard={shard}/2' in c for c in attempted)]
     # An untouched file fits one watchdog-bounded reservation; retain the
     # original missing shard when the verifier already attempted half a file.
     groups=[None] if remaining==[1,2] else remaining
