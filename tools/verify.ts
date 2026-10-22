@@ -27,13 +27,19 @@ const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-c
 const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
+// Remote validation also owns static checks/builds; only the native browser
+// consumes dist on this Mac. Keep this in sync with the shared acceptance lane.
+const buildCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
+  : ['E31', 'E32', 'E30', 'E18', 'E23', 'E25', 'E26', 'E27', 'E28'].includes(target)
+    ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'] : ['npm', 'run', 'build'];
 const commands: string[][] = [
-  ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
+  ...(process.env.MI_VERIFY_REMOTE_SIM === '1'
+    ? [['sh', 'tools/remote/run.sh', process.cwd(), '--', 'sh', '-c', 'npm run typecheck && npm run lint']]
+    : [['npm', 'run', 'typecheck'], ['npm', 'run', 'lint']]),
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  target === 'E31' || target === 'E32' || target === 'E30' || target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
-    ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
-    : ['npm', 'run', 'build'],
+  buildCommand,
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   ...(splitAlphaTiming ? [['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`, '--', 'bash', 'tools/remote/timing-isolated.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),

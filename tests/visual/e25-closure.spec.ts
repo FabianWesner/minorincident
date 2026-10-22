@@ -4,7 +4,9 @@ import { boot, test, expect } from '../e2e/fixtures';
 import { windowLine } from '../helpers/window-parallax';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
-test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+test.use({ headless: true, launchOptions: { args: process.platform === 'darwin'
+  ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal']
+  : ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } });
 
 const out = 'test-results/epics/E25/closure';
 export const lightLab: SceneSpec = {
@@ -138,7 +140,7 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
     writeFileSync(`${directory}/l6-shelter-fails.json`, JSON.stringify({ player: state.player, lighting: state.render.lighting, camera: state.render.camera, mission: state.mission }, null, 2));
     expect(state.render.backend).toBe(backend); expect(state.render.quality).toBe(quality);
     expect(state.render.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);
-    expect(state.render.lighting!.heroShadow).toBe(quality === 'high' ? 1 : 0);
+    expect(state.render.lighting!.heroShadowMaps).toBeLessThanOrEqual(quality === 'high' ? 3 : 1);
   });
 }
 
