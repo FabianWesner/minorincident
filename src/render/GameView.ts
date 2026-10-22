@@ -459,7 +459,8 @@ export class GameView implements Lifecycle {
             this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
-        } else await prepare();
+        } else if (this.lighting?.preset === 'L10-night') await this.lighting.warmShadowVariants(prepare);
+        else await prepare();
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.

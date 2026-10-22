@@ -22,6 +22,11 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
     // rather than applying a static shader key to captured buffer nodes.
     if (object.userData.staticInstanceAttributes) object.isInstancedMesh = !staticAttributes;
     if (material instanceof PaletteMaterial && material.outputNode) args[7] = `${args[7] ?? 'default'}:palette:${material.outputNode.id}`;
+    // PO #100: a lamp promotion changes Three's mutable LightsNode and retires
+    // its warmed render objects. Keep each prewarmed L10 source in its own
+    // existing pass cache, including background and non-palette materials.
+    const shadowVariant = (args[2] as Scene).userData.shadowVariant;
+    if (shadowVariant) args[7] = `${args[7] ?? 'default'}:shadow:${shadowVariant}`;
     const result = get.apply(this, args);
     if (staticAttributes) {
       const render = result as { staticInstanceKey?: boolean; initialCacheKey: number; getMaterialCacheKey(): number; getCacheKey(): number };
