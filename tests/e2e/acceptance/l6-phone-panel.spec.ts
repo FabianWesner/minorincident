@@ -21,13 +21,16 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 
           await expect(page.getByTestId('interaction-prompt')).toBeVisible();
           const proof = await page.evaluate(() => {
             const panel = document.querySelector<HTMLElement>('[data-testid="interaction-prompt"]')!, p = panel.getBoundingClientRect();
-            const obstacles = [...document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.hud-vitals,.hud-map,.hud-weapon-rack,.mission-subtitle,.story-bubble,[data-touch-action]')].flatMap(el => {
+            const obstacles = [...document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.hud-vitals,.hud-map,.hud-weather,.hud-weapon-rack,.mission-subtitle,.story-bubble,.onboarding,[data-touch-action],[data-testid="pause-button"],[data-testid="home-button"]')].flatMap(el => {
               const r = el.getBoundingClientRect(), style = getComputedStyle(el);
               if (!r.width || !r.height || style.visibility === 'hidden' || style.opacity === '0' || el.hidden) return [];
               const overlap = Math.max(0, Math.min(p.right, r.right) - Math.max(p.left, r.left)) * Math.max(0, Math.min(p.bottom, r.bottom) - Math.max(p.top, r.top));
               return [{ name: el.dataset.testid || el.className, rect: r.toJSON(), overlap }];
             });
-            const a = window.__SS__!;
+            const a = window.__SS__!, at = a.getEntity(1)!.transform, scale = innerWidth < innerHeight ? 1.25 : 1;
+            const points = [-.55 * scale, .55 * scale].flatMap(dx => [-.55 * scale, .55 * scale].flatMap(dz => [0, 1.9 * scale].map(dy => a.camera.project(at.x + dx, at.y - .7 + dy, at.z + dz))));
+            const body = { left: Math.min(...points.map(p => (p[0] + 1) * innerWidth / 2)), right: Math.max(...points.map(p => (p[0] + 1) * innerWidth / 2)), top: Math.min(...points.map(p => (1 - p[1]) * innerHeight / 2)), bottom: Math.max(...points.map(p => (1 - p[1]) * innerHeight / 2)) };
+            obstacles.push({ name: 'courier clearance', rect: body, overlap: Math.max(0, Math.min(p.right, body.right) - Math.max(p.left, body.left)) * Math.max(0, Math.min(p.bottom, body.bottom) - Math.max(p.top, body.top)) });
             return { panel: p.toJSON(), text: panel.innerText, touch: document.body.classList.contains('touch-ui'), obstacles, backend: a.perf().backend, tier: a.perf().quality.tier };
           });
           rows.push({ viewport, frame, zoom, ...proof });

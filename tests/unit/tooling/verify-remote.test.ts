@@ -26,8 +26,8 @@ test('E07 remote verification isolates timing on Hetzner, pulls evidence and kee
 
 for (const [epic, visualTitles] of [
   ['E22', ['T-E22-ride-smooth-webgl-high @E22', 'T-E22-12-special-charge-high @E22-AC12']],
-  ['E23', ['T-E23-17 @E23 @E23-AC17']],
-  ['E24', ['T-E24-15-matrix @E24-AC15', 'T-E24-18-phone-panel @E24-AC18']],
+  ['E23', ['T-E23-17 @E23 @E23-AC17', 'PO #21b @E23']],
+  ['E24', ['T-E24-15-matrix @E24-AC15', 'T-E24-18-phone-panel @E24-AC18', 'T-E29-16-browser @E24-AC14']],
 ] as const) test(`${epic} remote verification keeps capture/pixel checks on one native browser`, async () => {
   process.argv = ['node', 'tools/verify.ts', epic];
   vi.stubEnv('MI_VERIFY_REMOTE_SIM', '1'); vi.stubEnv('MI_VERIFY_REMOTE_E2E', '1');

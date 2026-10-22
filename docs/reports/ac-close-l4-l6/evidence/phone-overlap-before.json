@@ -1,0 +1,110 @@
+[
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 0,
+    "zoom": 0.5,
+    "panel": {
+      "x": 8,
+      "y": 8,
+      "width": 200,
+      "height": 101.578125,
+      "top": 8,
+      "right": 208,
+      "bottom": 109.578125,
+      "left": 8
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 9632
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 221.984375,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "high"
+  }
+]
