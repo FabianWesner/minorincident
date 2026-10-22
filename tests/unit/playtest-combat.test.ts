@@ -19,3 +19,9 @@ test('#99 a close crowd permits the shipped right-hand kick while walking, rathe
   expect(fistsRetreatAttack(3)).toBe('KeyK');
   expect(fistsRetreatAttack(14)).toBe('KeyK');
 });
+
+test('#99 fists movement preserves the existing low-health kite policy', () => {
+  expect(keepMovingWithFists('L6','retreat',true,1,.29)).toBe(false);
+  expect(keepMovingWithFists('L6','retreat',true,14,.2)).toBe(false);
+  expect(keepMovingWithFists('L6','retreat',true,1,.3)).toBe(true);
+});

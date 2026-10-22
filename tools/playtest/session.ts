@@ -196,7 +196,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // The PO clicks the visible infected and holds. Target input aims and approaches with the carried weapon;
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
-    if (keepMovingWithFists(e.level,e.step,!!e.player?.weapons.every(id => /fists|kick/.test(id)),e.enemies.filter(b => b.d < 3).length)) {
+    if (keepMovingWithFists(e.level,e.step,!!e.player?.weapons.every(id => /fists|kick/.test(id)),e.enemies.filter(b => b.d < 3).length,(e.player?.hp??1)/(e.player?.max??1))) {
       // Punch against one or two contacts; kick through a crowd while walking toward the visible ring.
       // Waiting for a fetched survivor keeps the courier beside that visible body.
       const contacts=e.enemies.filter(b=>b.d<3).length;
