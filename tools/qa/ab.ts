@@ -49,7 +49,7 @@ function report(status:'running'|'complete'|'failed'){
   writeFileSync(resolve(output,'summary.json'),JSON.stringify(summary,null,2));
   const cards=rows.map(r=>`<article><h2>${escape(r.stop.title)} · zoom ${r.zoom} · ${(r.score*100).toFixed(2)}% ${r.score>=threshold?'— REVIEW':'— quiet'}</h2><p>${escape(r.id)} · global change ${(r.globalChanged*100).toFixed(3)}%</p><a href="${r.sheet}"><img loading="lazy" src="${r.sheet}" alt="Baseline, candidate and diff; still plus six-frame motion strip"></a></article>`).join('\n');
   writeFileSync(resolve(output,'index.html'),`<!doctype html><html lang="en"><meta charset="utf-8"><title>Visual A/B ${escape(basename(output))}</title><style>body{font:15px system-ui;background:#17191c;color:#eee;margin:24px}article{padding:16px;margin:20px 0;background:#25282d}img{max-width:100%;width:960px}a{color:#a8d9ff}h2{font-size:18px}p{overflow-wrap:anywhere}</style><h1>Visual A/B · ${escape(status)}</h1><p>Baseline: ${escape(sources.baseline)}<br>Candidate: ${escape(sources.candidate)}<br>WebGPU · low · 1280×720 · DPR 1 · seed ${seed} · threshold ${(threshold*100).toFixed(2)}%</p><p>${rows.length}/${variants.length} stops measured; ${summary.aboveThreshold.length} require visual review. Scores flag change; a reviewer decides whether it is a regression.</p><p><a href="summary.json">JSON summary and setup evidence</a></p>${errors.map(e=>`<p>UNMEASURED: ${escape(e.side)} ${escape(e.stop)} — ${escape(e.message)}</p>`).join('')}${cards}</html>`);
-  if(imageBytes>30*1024*1024)throw new Error(`Report exceeds the 30 MB image budget: ${imageBytes}`);
+  if(imageBytes>30_000_000)throw new Error(`Report exceeds the 30 MB image budget: ${imageBytes}`);
   return summary;
 }
 async function sheet(page:Page,id:string,images:Buffer[][],still:number){
@@ -68,7 +68,7 @@ async function sheet(page:Page,id:string,images:Buffer[][],still:number){
       result=c.toDataURL('image/jpeg',.7);width-=64;
     }while(result.length*.75>cap&&width>=320);
     if(result.length*.75>cap)throw new Error('Unable to meet per-sheet image budget');return result.split(',')[1];
-  },{data,still,cap:Math.floor(29*1024*1024/variants.length)});
+  },{data,still,cap:Math.floor(29_000_000/variants.length)});
   writeFileSync(resolve(output,`${id}.jpg`),Buffer.from(encoded,'base64'));
 }
 try{
@@ -95,6 +95,7 @@ try{
           for(let frame=0;frame<6;frame++){
             const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0});
             if(state.backend!=='webgpu'||state.quality!=='low')throw new Error(`Expected WebGPU/low, got ${state.backend}/${state.quality}`);
+            if(Math.abs(state.camera.targetZoom-zoom)>.001)throw new Error(`Requested zoom ${zoom}, got ${state.camera.targetZoom}`);
             if(pageErrors.length)throw new Error(`Browser error: ${pageErrors.join('; ')}`);
             frames.push(state);const png=await page.screenshot({type:'png',animations:'disabled'});hashes.push(createHash('sha256').update(png).digest('hex'));writeFileSync(resolve(raw,`${id}-${side}-${frame}.png`),png);
           }
