@@ -14,8 +14,8 @@ Criteria: [epic-07-infected-ai-and-hordes.md](../../../specs/epic-07-infected-ai
 | E07-AC02 | met | src/sim/ai/Perception.ts: closeAwareness, hears; tests/sim/ai/navigation.test.ts T-E07-02; tests/levels/l5-po-2.test.ts PO #25 | — |
 | E07-AC03 | met | src/sim/ai/NavGrid.ts; DistrictNavigation.ts; tests/sim/ai/navigation.test.ts T-E07-03/03b/03c | — |
 | E07-AC04 | met | src/sim/ai/CharacterSeparation.ts; tests/sim/ai/navigation.test.ts T-E07-04 and larger-infected contact fixture | — |
-| E07-AC05 | partial | Current follow-up: all 14 restored warning markers reproduced missing and repaired; 30 focused remote VFX tests and all 14 timing/restore browser probes pass. [Repair/evidence](../ac-close-shared/README.md). src/sim/ai/InfectedSystem.ts special scheduler; tests/sim/ai/alpha.test.ts T-E07-05-scheduler/checkpoint; zoo-s1/s2/s3.test.ts; tests/scenes/alpha-s2, alpha-s3, zoo-s1…s3 | **M; browser** — Capture boundary, second activation/cooldown and restore for all 14 named moves; charge/slam still end at frame 150, gorilla pound at 100. |
-| E07-AC06 | partial | src/data/infected.ts alphaDamageMultiplier; InfectedSystem.ts; AlphaSupportMoves.ts; tests/sim/ai/alpha.test.ts T-E07-06-alpha-live-*; alpha-physical/alpha-support tests; src/render/HealthBars.ts | **M; browser** — Close AC05 move captures and shared bar phone/occlusion matrix; resistance and four moves are implemented. |
+| E07-AC05 | met / fixed | All 14 warning/activation/cooldown/real-checkpoint probes pass; opened 168-capture sheets and every boundary overview, including complete 18/20 m roar rings. Restored/paused warning rendering repaired. [Named review and journals](../ac-close-shared/README.md#all-14-move-warning-restore-and-cooldown-review--e07-ac050619). | — |
+| E07-AC06 | met | All four Alpha move timing/spatial/wall/restore controls; 12-case shared-bar matrix; actual Alpha 300→240 HP /1→0.8 fill at desktop and both low phone orientations. Opened complete move and phone captures. [Review/proofs](../ac-close-shared/README.md). | — |
 | E07-AC07 | met | src/sim/ai/SpawnDirector.ts safe/visible; tests/sim/ai/director.test.ts T-E07-07/07b; navigation.test.ts T-E07-07c | — |
 | E07-AC08 | met | src/sim/ai/SpawnDirector.ts queue; tests/sim/ai/director.test.ts T-E07-08/08b/08c | — |
 | E07-AC09 | met | src/sim/ai/SpawnDirector.ts migrations; tests/sim/ai/director.test.ts T-E07-09 | — |
@@ -28,7 +28,7 @@ Criteria: [epic-07-infected-ai-and-hordes.md](../../../specs/epic-07-infected-ai
 | E07-AC16 | met | src/sim/ai/InfectedSystem.ts animal pack/pounce; tests/sim/ai/animals.test.ts T-E07-16 | — |
 | E07-AC17 | met | src/sim/ai/InfectedSystem.ts perch/cling; tests/sim/ai/animals.test.ts T-E07-17/17b/17c | — |
 | E07-AC18 | met | src/sim/ai/Flock.ts; tests/sim/ai/animals.test.ts T-E07-18/18b/18c | — |
-| E07-AC19 | partial | src/sim/ai/InfectedSystem.ts; AlphaSupportMoves.ts; tests/sim/ai/zoo-s1.test.ts, zoo-s2.test.ts, zoo-s3.test.ts; tests/e2e/health-bars.spec.ts; tests/scenes/zoo-s1…s3 | **M; browser** — Close all ten zoo move cooldown/restore/boundary captures and shared bar matrix (AC05). | <!-- Literal stampede corridor has a fresh proposed rewrite in ac-close-shared; not adopted. -->
+| E07-AC19 | partial; proposed rewrite | All ten zoo timing/cooldown/restore and boundary captures reviewed; actual elephant/zebra/flamingo phone bars and shared lion/gorilla bars pass. Corrected clear-lane courier impact plus admitted sedan/barricade control pass. Literal zebra corridor fails (0.76 m outside nominal half-width still hit; 0.88 m control untouched). [Evidence and proposed rewrite](../ac-close-shared/README.md). | User decision on explicitly unadopted 1.5 m nominal cue /0.82 m physical-contact boundary proposal. No gameplay/test threshold changed. |
 
 ## E22
 
