@@ -14,17 +14,19 @@
       ],
       "review": "Opened all6 current WebGPU frames. Canonical decision keeps common field+shadowed spot; full counters/timing domains and unequal-output/stress clipping limitations recorded. Production code follows decision.",
       "result": "met",
-      "currentEvidenceSummary": "Quiet comparative WebGPU spike5/5; six frames inspected; production decision recorded."
+      "currentEvidenceSummary": "Quiet comparative WebGPU spike5/5; six frames inspected; production decision recorded.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E25-AC10",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E25-10` wet/dry pixel ratios on high/low; `LightField` reflection splats; `T-E25-10-SSR` remains fixme.; newer: [e25-deferred.spec.ts](../../../tests/visual/e25-deferred.spec.ts)",
       "requiredProof": "**L; browser + quiet perf** \u2014 Implement high-tier SSR reflected-car silhouette and ID overlap \u226530%; retain both-tier cheap wet streaks.",
       "proposedRewrite": "Keep both-tier wet streaks; move high-tier SSR reflected-car silhouette with unchanged\u226530% overlap to overview\u00a76 release-extras gate and require it before shipping SSR.",
       "reason": "Overview stages SSR after release closure; current implementation explicitly omits it. Proposal unadopted.",
       "result": "red",
-      "currentEvidenceSummary": "SSR silhouette/30% overlap absent. Release-extras placement rewrite proposed, unadopted."
+      "currentEvidenceSummary": "SSR silhouette/30% overlap absent. Release-extras placement rewrite proposed, unadopted.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E25-AC12",
@@ -37,17 +39,19 @@
       ],
       "review": "Opened both angles/off; depth stripe moves behind fixed mullions; off removes warm panes/spill. Shift43.091px, glow9.919, all emissives off.",
       "result": "met",
-      "currentEvidenceSummary": "Parallax43.091px; glow9.919; off0; current angle/on-off frames inspected."
+      "currentEvidenceSummary": "Parallax43.091px; glow9.919; off0; current angle/on-off frames inspected.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E25-AC14",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`tests/perf/e25-lighting.spec.ts`, `e25-light-lab.spec.ts`; light-field/shadow/hero counters exist.; newer: [perf-light-lab-high.json](../merge-batch10/perf/final/lighting/perf-light-lab-high.json), [perf-light-lab-low.json](../merge-batch10/perf/final/lighting/perf-light-lab-low.json), [native-final.log](../merge-batch10/evidence/native-final.log)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Native frame/light counters pass; raw uncollected light-lab heap is 775.60/571.06 MB versus E18 400/250. Close warmed/collected heap proof and reconcile the readings; stock lighting tests omit a heap assertion. Low p95 34.3 ms is diagnostic, not an additional E25 gate (low p50 passes).",
       "proposedRewrite": "Define E18 JS heap as warmed/collected CDP Runtime.usedSize in decimal MB at unchanged 400/250 caps; retain backingStorageSize, embedderHeapUsedSize and legacy usedJSHeapSize separately, apply retention to all domains and set a separately named total-buffer budget before total-memory acceptance.",
       "reason": "Fresh native frame/counter gates pass with JS heap144.737/134.941 MB, but legacy after-GC747.052/659.460 MB includes backing602.198/524.402 MB; neither counter may silently replace the other. Proposal awaits PO; AC remains partial.",
       "result": "red",
-      "currentEvidenceSummary": "JS144.737/134.941MB passes; legacy747.052/659.460 includes backing602.198/524.402MB. Memory-domain rewrite proposed, unadopted."
+      "currentEvidenceSummary": "JS144.737/134.941MB passes; legacy747.052/659.460 includes backing602.198/524.402MB. Memory-domain rewrite proposed, unadopted.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E25-AC15",
@@ -61,11 +65,12 @@
       ],
       "review": "Opened all four current Blender sheets and actual production night-on/off frames; 94/188 complete, five views non-placeholder, retained power zero-difference. References are not bundled on remote; this proof covers lighting previews, not asset-reference resemblance.",
       "result": "met",
-      "currentEvidenceSummary": "Current94 assets/188 previews, five-view production turntable and on/off pair inspected."
+      "currentEvidenceSummary": "Current94 assets/188 previews, five-view production turntable and on/off pair inspected.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E25-AC16",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E25-16` captures L2/L3/L4/L5/mall; trailer probes, existing review, current L6 headlamp code and PO captures.",
       "requiredProof": "**M; browser** \u2014 Create/reference named lighting keyframes and complete Checklist G for all seven required spots, including PO-dark L6.",
       "currentEvidence": [
@@ -74,7 +79,8 @@
       ],
       "review": "Seven G scores7/8/7/8/4/7/6; night player2.899<3 and saturation.949579<.95 remain red. Corrected shadow85.884% passes.",
       "result": "red",
-      "currentEvidenceSummary": "Seven G scores7/8/7/8/4/7/6; night player2.899<3 and saturation.949579<.95 remain red. Corrected shadow85.884% passes."
+      "currentEvidenceSummary": "Seven G scores7/8/7/8/4/7/6; night player2.899<3 and saturation.949579<.95 remain red. Corrected shadow85.884% passes.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC07",
@@ -88,16 +94,18 @@
         "verify-E29-first-vitest.json.gz"
       ],
       "review": "Opened current full sheet and full portrait/landscape grab-throw/roar plus charge/bar frames. Distinct rectangular charge/throw and circular slam/roar warnings remain readable; impacts and timed expiry asserted. Actual night bar is legible with outlined empty/fill segments.",
-      "result": "met"
+      "result": "met",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC13",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E29-13-board/wait/zero/35/handover/lane`; `LevelSevenDeparture.cameraPose/drive/finish`.; newer: [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json)",
       "requiredProof": "**M; browser** \u2014 Measure skyline frame area \u226525%\u2192\u226410% and complete departure pairs/roster proof; physical desktop bus\u2192L8 now passes.",
       "currentEvidenceSummary": "Skyline starts1.85\u20132.15%, ends32.19\u201332.40%; required\u226525\u2192\u226410. All four configurations reverse the gate.",
       "remaining": "**Real defect:** eastbound departure enters town; settled start camera looks west into fog. Ten camera-only diagnostics did not repair it. Preserve gates; fix the cinematic route/composition. [Current evidence](../ac-close-l7-l10/README.md#native-l7l8-diagnostics--0900-utc).",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC14",
@@ -112,56 +120,62 @@
         "continuity-world-frames.json.gz",
         "continuity-world-images.json"
       ],
-      "result": "met"
+      "result": "met",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC15",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`T-E29-15-bus` now verifies engine position/speed/cab updates and one stop before handover; shared `MusicDirector`/noise/caption systems remain.",
       "requiredProof": "**M; browser** \u2014 Record combat\u2192departure audio/captions and rocket/fire/bus mix/voice 32/16, focus/pause checks.",
       "currentEvidenceSummary": "Departure music regression/adapter passes; complete actual-route phase/mix/caption proof missing.",
       "remaining": "**Partial:** actual real-input cue/caption trace and full voice/mix/focus/pause integration remain. [Trace](../ac-close-l7-l10/evidence/departure-audio.json.gz).",
-      "result": "unmeasured"
+      "result": "unmeasured",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC17",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "Focused rocket input tests exist; no `tests/e2e/levels/L7.spec.ts` or E29-AC17 tag on audited main.; newer: [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json), [l7-real-input.spec.ts](../../../tests/e2e/levels/l7-real-input.spec.ts)",
       "requiredProof": "**M; browser** \u2014 Desktop through L8 and touch pickup/corridor pass; capture the remaining \u00a76 rocket-crowd/Alpha/plaza/corridor/boarding pairs with console guard.",
       "currentEvidenceSummary": "Actual input reachesL8 but all24followers die; complete rocket/Alpha/boarding photo pairs missing.",
       "remaining": "The observer transition is corrected and the current route reaches L8, but all24 followers die: boarding and final-horde-after photos remain missing and their strict assertions fail. Separate full-roster boarding fixtures pass; they do not prove this continuous route.",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC18",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "Existing l7-district/perf capture reviews cover destruction/horde/Northgate; no E29-AC18 test or complete scored ending review.; newer: [l7-pairs.spec.ts](../../../tests/visual/l7-pairs.spec.ts)",
       "requiredProof": "**M; browser** \u2014 Score new fixed W0/W5/W6/Northgate and rocket/horde/skyline pairs A/D/E/G/H \u22657 with all must items.",
       "currentEvidenceSummary": "Current A4/D6/E5/G4; H unmeasured and required pairs missing. Not accepted.",
       "remaining": "The W5 mission briefing is dismissed in current pairs. Scores remain A4/D6/E5/G4 with H unmeasured; W0/Northgate/followers/skyline and five-stage explosion coverage remain incomplete, and composition/decay/threat readability need repair.",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC19",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "Current native Metal run: **4 pass / 2 fail**. Low horde frame/sim p95 **33.7/6.9 ms** vs **33.3/6**; high rocket heap **420.17 MiB** vs 400. District high/low and high horde/low rocket pass. Rocket/district use legacy `perf().heapBytes`/MiB; horde uses CDP JS `usedSize`/MB, so the figures are not directly interchangeable.; newer: [native-results.json](../l7-entry/evidence/native-results.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Fix measured high horde frame18.1>16.7, low sim6.8>6 and rocket heaps425.53/268.25>400/250; repeat native cap sweep.",
       "result": "unmeasured",
       "currentEvidenceSummary": "Earlier horde frame18.1>16.7ms, low sim6.8>6, rocket425.53/268.25MB red; fresh native repeat unmeasured.",
-      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)"
+      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E29-AC20",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "Current low horde **33.7 ms** misses its 33.3 ms frame p95; other native L7 cases pass frame limits. No E29-AC20 fixture covers the full disposal/settings contract.; newer: [l7-lifecycle.spec.ts](../../../tests/perf/l7-lifecycle.spec.ts), [README.md](../l7-entry/README.md)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Run native peak/\u226450 ms transition-blast and \u226410% resource lifecycle/accessibility tests; latest complete epic performance gate is red.",
       "result": "unmeasured",
       "currentEvidenceSummary": "Previous whole performance gate red; fresh blast/transition\u226450ms and\u226410% lifecycle unmeasured.",
-      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)"
+      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC05",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`T-E30-05-district/staff`, level high/low fixtures and L8 composition/healthy animals.; newer: [red-tests.md](../postmerge-10/red-tests.md)",
       "requiredProof": "**M; browser** \u2014 Close sanctuary visual signoff; wave3-zoo-routines z1.5 clips two occupants on both tiers (reproduced on main).",
       "currentEvidence": [
@@ -171,21 +185,23 @@
       "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending.",
       "currentEvidenceSummary": "Both stale wide-zoom clipping rows now60/60frames with zero intersections; full sanctuary scored signoff missing.",
       "remaining": "**Partial:** the two stale clipping rows are closed; complete scored sanctuary signoff. [Review](../ac-close-l7-l10/README.md#0838-utc-checkpoint).",
-      "result": "unmeasured"
+      "result": "unmeasured",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC10",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "Shared `tests/sim/ai/zoo-s1/s2/s3.test.ts` and matching browser tests now selected by E30; shared Alpha suite too.",
       "requiredProof": "**M; browser** \u2014 Close E07 zoo move/bar visual contract and full in-level matrix. Global awareness request in audit C is superseded by explicit L5-only decision.",
       "proposedRewrite": "Stampede marks a nominal1.5m-wide corridor. Ordinary contact additionally uses zebra+human capsule radii+0.02m tolerance (0.82m standard fixture); each zebra/attack ID deals25HP once, target beyond both cue and contact boundary unaffected.",
       "reason": "Existing physical contact at0.76m and no contact0.88m conflict with point-centre interpretation of the cue. Narrowing damage would alter difficulty. Shared-source audit is recorded; proposal unadopted.",
       "result": "red",
-      "currentEvidenceSummary": "Shared bar/move proof inspected; stampede nominal1.5m versus physical contact~.82m needs explicit wording decision. Full in-level pairs incomplete."
+      "currentEvidenceSummary": "Shared bar/move proof inspected; stampede nominal1.5m versus physical contact~.82m needs explicit wording decision. Full in-level pairs incomplete.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC15",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E07-19-bars`, `T-E30-09-*-browser`, shared `health-bars.spec.ts`; L8 lighting preset.",
       "requiredProof": "**M; browser** \u2014 Measure whole-level player \u22653:1 and all infected bars/occlusion/phone/accessibility in required matrix.",
       "currentEvidenceSummary": "36/36 player views\u22653.096977:1; bars\u22653.0861 and40species frames inspected. Associated E18 phone4\u00d7CPU budgets fail38.7/8.3ms against33.3/6; complete accessibility matrix unmeasured.",
@@ -195,20 +211,22 @@
         "native-input-images.json"
       ],
       "review": "36/36 player views\u22653.096977:1; bars\u22653.0861 and40 species frames inspected. Complete accessibility matrix missing.",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC16",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`tests/unit/audio/music-beats.test.ts` L8 calm/breach selection; shared voice/noise/pause systems.",
       "requiredProof": "**M; browser** \u2014 Record calm\u2192breach\u2192battle\u2192engine audio/caption trace, pre-infection negative cues, voice caps/mix/focus.",
       "currentEvidenceSummary": "Phase resolver/pause/focus/voice-cap subchecks pass; whole real-input phase/mix/caption proof missing.",
       "remaining": "**Partial:** phase probe is explicitly a presentation adapter; real breach/escape and focus/pause integration remain separately required. [Traces](../ac-close-l7-l10/README.md#native-l7l8-diagnostics--0900-utc).",
-      "result": "unmeasured"
+      "result": "unmeasured",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC18",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`T-E30-18` now passes the full real-input keyboard\u2192L9 route after fixture corrections, with 12 rescued and the same healthy corgi aboard; original mobile ACTION test passes, with console guard/screenshots.",
       "requiredProof": "**M; browser** \u2014 Full route/touch escape passes historically; complete every \u00a76 pair/backend/tier/zoom with zero-error/HUD guard.",
       "currentEvidenceSummary": "Real APC bug fixed locally:21 remote regressions and native keyboard/touch12/12boarding pass. Complete nine\u00a76 photo spots/settings missing.",
@@ -219,11 +237,12 @@
         "rotated-door-complete.json.gz"
       ],
       "review": "Real APC bug fixed locally:21 remote regressions and native keyboard/touch12/12boarding pass. Complete nine\u00a76 photo spots/settings missing.",
-      "result": "unmeasured"
+      "result": "unmeasured",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC19",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E30-19` captures; `docs/reports/l8-level/visual-review.md` explicitly declines full epic vision acceptance.",
       "requiredProof": "**M; browser** \u2014 Score full calm/outbreak/normal-to-infected/armored-escape A/C/D/E/G pairs \u22657; fix wide-zoom zoo clipping.",
       "currentEvidence": [
@@ -232,11 +251,12 @@
       ],
       "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending.",
       "result": "red",
-      "currentEvidenceSummary": "Current A5/C5/D6/E4/G5; all40species frames inspected, night fur/material and whole sanctuary/threat/escape must items fail."
+      "currentEvidenceSummary": "Current A5/C5/D6/E4/G5; all40species frames inspected, night fur/material and whole sanctuary/threat/escape must items fail.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E30-AC20",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`tests/perf/l8-budgets.spec.ts` high/low/4\u00d7 phone; existing systems/district reports have native within-budget samples.",
       "requiredProof": "**M; browser + quiet perf** \u2014 Measure native mixed outbreak both tiers/backends, \u226450 ms breach/conversion and all light/prop/particle/voice/heap caps.",
       "currentEvidence": [
@@ -244,7 +264,8 @@
         "l8-native-perf-metrics.json.gz"
       ],
       "currentEvidenceSummary": "Desktop frame11.9/8.0ms, sim3.8/2.4 and four conversion probes\u226417.4ms pass;4\u00d7CPU phone proxy frame38.7>33.3 and sim8.3>6ms red.",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC08",
@@ -259,39 +280,43 @@
       "review": "Fresh9 native HUD cases pass: one-frame/current-max/zero at3 viewport projects plus8 cumulative HP stages in both backends at all3projects, unchanged3:1 text/background gates and touch/Home clearance. Remote no-repair500/0HP cases pass. Opened desktop/portrait fullHP and zeroHP frames. Separate subtitle/audio overlap is real and remains under AC16/18, outside durability-specific geometry.",
       "remaining": "",
       "result": "met",
-      "currentEvidenceSummary": "Nine native HUD cases and eightHPstages across projects pass3:1/bounds/Home/touch; no-repair regressions pass."
+      "currentEvidenceSummary": "Nine native HUD cases and eightHPstages across projects pass3:1/bounds/Home/touch; no-repair regressions pass.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC16",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`T-E31-16` night-read data, `22-engine/22-audio`, Q3 real driving captions and night-read catalog.",
       "requiredProof": "**M; browser** \u2014 Measure player/navigation \u22653:1 at floor/crawl and complete caption/voice/focus/pause proof; 2.0/2.5 scene gates are insufficient.",
       "result": "red",
-      "currentEvidenceSummary": "Final1.2fill22/24 courier views pass; desktop0HP/default2.718\u20132.722<3. Road/verge~1.98\u20132.02<3 or zero valid pairs. Caption separation12px passes."
+      "currentEvidenceSummary": "Final1.2fill22/24 courier views pass; desktop0HP/default2.718\u20132.722<3. Road/verge~1.98\u20132.02<3 or zero valid pairs. Caption separation12px passes.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC17",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`tests/e2e/levels/l9-browser-input.spec.ts`: real keyboard/touch healthy/floor, road departure, crash/crawl/axe; prior Q3 only partly executed.",
       "requiredProof": "**M; browser** \u2014 Finish current desktop/mobile route/backend/zoom matrix and all \u00a76 healthy/floor/crash/crawl/axe pairs under console guard.",
       "result": "unmeasured",
-      "currentEvidenceSummary": "All36 route combinations reachL10 across baseline28+corrected8landscape; complete\u00a76 route/ram/fork/outskirts/seam input pairs missing."
+      "currentEvidenceSummary": "All36 route combinations reachL10 across baseline28+corrected8landscape; complete\u00a76 route/ram/fork/outskirts/seam input pairs missing.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC18",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`docs/reports/l9-q3/review.md` scores scoped pairs 7\u20138/10; retirement/input caveats remain; no E31-AC18 tag.",
       "requiredProof": "**M; browser** \u2014 Score all required route/stage/crash pairs A/D/F/G \u22657; tag coverage and generic matrix passes are insufficient.",
       "result": "red",
-      "currentEvidenceSummary": "Current A5/D6/F6/G5; must failures and complete input pairs missing. ChecklistF wording proposal unadopted."
+      "currentEvidenceSummary": "Current A5/D6/F6/G5; must failures and complete input pairs missing. ChecklistF wording proposal unadopted.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC19",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "`tests/perf/l9-{dress,handover-budgets}.spec.ts`; `T-E31-19-S4`, streaming units; Q3 native six cases previously pass.; newer: [idle-crossing-200.json](../postmerge-10/evidence/idle-crossing-200.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%.",
-      "currentEvidenceSummary": "Corrected crash8/8red: cold-load max2747\u20133081ms; handover2/2passes. All four five-cycle retention cases complete/red: low JS peaks260.111/257.342MB>250; embedder growth21.36\u201323.86%>10%. JS/GPU drift\u22644.26%. Remaining dressed-route configs queued.",
-      "remaining": "Dressed high both backends15/15pass each. WebGL low7/15measured red (heap260.056\u2013265.817MB),8unmeasured after300s. WebGPU low running. Cold-load/retention/heap failures require repair; timing proposal unadopted.",
+      "currentEvidenceSummary": "Corrected crash8/8red: cold-load max2747\u20133081ms; handover2/2pass. Dressed high15/15pass per backend; low7/15 per backend timeout/red with JS up to265.817/262.028MB>250;16samples unmeasured. Four five-cycle retention cases red: low JS260.111/257.342MB, embedder growth21.36\u201323.86%.",
+      "remaining": "Measured hitch/absolute heap/embedder-retention failures require repair;16lowD2samples remain unmeasured after original300s limits. Timing-window proposal unadopted.",
       "result": "red",
       "currentEvidence": [
         "l9-crash-native-final-metrics.json.gz",
@@ -299,17 +324,19 @@
         "l9-retention-summary.json",
         "l9-retention-final.json.gz",
         "native-E31-retention-remaining-playwright.json.gz"
-      ]
+      ],
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E31-AC20",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "`T-E31-20` continuous seed-1 L1\u2192L9 campaign and armed-roster/continuity regressions.; newer: [final-vitest.json](../postmerge-10/evidence/final-vitest.json), [E31-campaign-seed-1.json](evidence/E31-campaign-seed-1.json)",
       "requiredProof": "**M; browser** \u2014 Continuous L1\u2192L9 passes; record physical iOS and Android crossing p50\u226530 fps. Emulation does not replace devices.",
       "proposedRewrite": "Retain the real iOS/Android\u226530fps p50 gate as PO-device acceptance with model/OS/browser/route/tier/sample duration/p50 evidence. While awaiting devices, record a separately labelled390\u00d7844/4\u00d7CPU desktop-emulation proxy at unchanged\u226530fps p50, without claiming it as the device result.",
       "reason": "Physical devices cannot be accessed here. Proposal awaits PO; emulation is not substituted for acceptance.",
       "result": "unmeasured",
-      "currentEvidenceSummary": "Real iOS/Android\u226530fps cannot be measured here; PO devices required. Separately labelled desktop proxy proposed, unadopted."
+      "currentEvidenceSummary": "Real iOS/Android\u226530fps cannot be measured here; PO devices required. Separately labelled desktop proxy proposed, unadopted.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E32-AC09",
@@ -326,42 +353,47 @@
         "verify-E32-repeat-vitest.json.gz"
       ],
       "review": "Regular fire-worker Alpha reads orange/helmeted; Mega reads dark blue/armoured with red accents and larger bar. Same nominal body height is confirmed by unchanged asset gates; the old scene metadata incorrectly claimed half height and is corrected without changing runtime or tests.",
-      "result": "met"
+      "result": "met",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E32-AC29",
-      "disposition": "pending",
+      "disposition": "unmeasured",
       "baselineEvidence": "No E32-AC29 test. Focused region/terminal/minigun/finale/epilogue browser tests exist; no complete mouse-only/touch acceptance aggregate.; newer: [l10-minigun-input.spec.ts](../../../tests/e2e/levels/l10-minigun-input.spec.ts), [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json), [selected-final-playwright.json](../postmerge-10/evidence/selected-final-playwright.json)",
       "requiredProof": "**M; browser** \u2014 Tagged checkpoint/carry/heat/charge/ending tests now exist; finish mouse-only/touch aggregate, all region/finale pairs and HUD non-overlap review.",
       "currentEvidenceSummary": "Keyboard/mouse-only/touch mounted-gun subchecks pass; whole seven-region carry/checkpoint/charge/release/ending input aggregate and photo pairs incomplete.",
-      "result": "unmeasured"
+      "result": "unmeasured",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E32-AC30",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "Q1/Q2/Q3/Q4 catalogs/reviews, same-size Alpha-look fixes and extensive backend sheets; catalog unit tags check fixtures, not whole-epic visual scores.; newer: [gate-final-matrix-index.json](../postmerge-10/evidence/gate-final-matrix-index.json), [QA.md](../postmerge-10/QA.md)",
       "requiredProof": "**M; browser** \u2014 Score all seven regions and ending A/C/D/F/G/H \u22657/all must; full matrix and corrected title/credits now pass but are not the scored review.",
       "result": "red",
-      "currentEvidenceSummary": "Final pose/radius-checked collector4/4passes;128source frames inspected. RegionA4/5/6/4/5/4/5; C6/D6/F6/G4; H unmeasured. Not accepted."
+      "currentEvidenceSummary": "Final pose/radius-checked collector4/4passes;128source frames inspected. RegionA4/5/6/4/5/4/5; C6/D6/F6/G4; H unmeasured. Not accepted.",
+      "originalSweepStatus": "partial"
     },
     {
       "ac": "E32-AC31",
-      "disposition": "pending",
+      "disposition": "red",
       "baselineEvidence": "Nine E32 native suites now selected after verifier fix; current isolated Mega-special 200-infected sim p95 **4.196 ms > 4 ms**, low tier passes; sim/LOD/cure counters and prior native samples do not erase this failure.; newer: [final-vitest.json](../postmerge-10/evidence/final-vitest.json)",
       "requiredProof": "**L; browser + quiet perf** \u2014 Complete native regions/assault/mist/pullout high/low caps, \u226450 ms transitions and five-cycle retention; physical iOS/Android \u226530 fps still required.",
-      "currentEvidenceSummary": "Alpha/dog2/2, arena8/8 and mixed-assault8/8pass (168/87infected). Campus8/8red: R6population70/46<80/50; recorded caps fit but remaining assertions do not execute. Later native files and real phones unmeasured.",
+      "currentEvidenceSummary": "Alpha/dog2/2, arena8/8, mixed-assault8/8 (168/87infected) and WebGL cure-mist4/4pass. Campus8/8red: R6population70/46<80/50; later assertions do not execute. District/pullout/finale/startup32cases and real phones unmeasured.",
       "remaining": "**Partial:** native caps/hitches/retention remain; physical iOS/Android need PO devices. Desktop emulation is proposed separately and not substituted. [Receipt](../ac-close-l7-l10/README.md#complete-selected-node-repeat--0900-utc).",
       "proposedRewrite": "Retain the real iOS/Android\u226530fps p50 gate as PO-device acceptance with model/OS/browser/route/tier/sample duration/p50 evidence. While awaiting devices, record a separately labelled390\u00d7844/4\u00d7CPU desktop-emulation proxy at unchanged\u226530fps p50, without claiming it as the device result.",
       "reason": "Physical devices cannot be accessed here. Proposal awaits PO; emulation is not substituted for acceptance.",
-      "result": "red"
+      "result": "red",
+      "originalSweepStatus": "partial"
     }
   ],
   "updatedAt": "2026-10-22T13:45:00Z",
   "metCount": 5,
-  "checkpointUTC": "2026-10-22 15:39",
+  "checkpointUTC": "2026-10-22T15:59:32.717578+00:00",
   "resultMeaning": {
     "met": "complete criterion evidenced",
     "red": "current measured gate failure or required feature absent; missing subchecks may also remain",
     "unmeasured": "criterion not fully evidenced; passing subchecks do not close it"
-  }
+  },
+  "allOwnedChecksTerminal": true
 }
