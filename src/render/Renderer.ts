@@ -1,9 +1,23 @@
 // Adapted from folio-2025 Rendering.js / Viewport.js by Bruno Simon (MIT), commit 41046b5.
-import { NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, type Object3D, type Camera, type Scene } from 'three/webgpu';
+import { MaterialNode, NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, type Object3D, type Camera, type Scene } from 'three/webgpu';
 
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
 import { PaletteMaterial } from './PaletteMaterial';
+
+// r186's module-level MaterialNode property cache keeps the last material in
+// each reference node, even after that material and its render objects retire.
+// Observe cache setup (not per-draw updates) so unload can release those owners
+// without replacing the shared property nodes or changing their shader keys.
+type MaterialPropertyReference = { reference: unknown };
+const materialReferences = new Set<MaterialPropertyReference>();
+const materialProperties = (MaterialNode as unknown as { prototype: { getCache(property: string, type: string): MaterialPropertyReference } }).prototype;
+const getMaterialProperty = materialProperties.getCache;
+materialProperties.getCache = function (property, type) {
+  const reference = getMaterialProperty.call(this, property, type);
+  materialReferences.add(reference); return reference;
+};
+
 type RenderObjects = { get(...args: unknown[]): unknown };
 const paletteVariantCaches = new WeakSet<RenderObjects>();
 /** Three r186 otherwise retires a warmed daylight graph when warming its fire graph.
@@ -257,6 +271,7 @@ export class Renderer extends WebGPURenderer {
     }
     const caches = this as unknown as { _objects: { dispose(): void } | null; _nodes: { dispose(): void } | null; _renderLists: { dispose(): void } | null; _renderContexts: { dispose(): void } | null };
     caches._objects?.dispose(); caches._nodes?.dispose(); caches._renderLists?.dispose(); caches._renderContexts?.dispose();
+    for (const reference of materialReferences) reference.reference = null;
     if (this.selectedBackend === 'webgl') {
       const backend = this.backend as unknown as { gl: WebGL2RenderingContext | null; vaoCache: Record<string, WebGLVertexArrayObject>; state: { setVertexState(vao: WebGLVertexArrayObject | null): void } | null };
       if (!backend.gl) return;

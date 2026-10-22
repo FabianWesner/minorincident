@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+function census(file) {
+ const h=JSON.parse(fs.readFileSync(file,'utf8')), m=h.snapshot.meta,nf=m.node_fields.length,ef=m.edge_fields.length,ni=Object.fromEntries(m.node_fields.map((k,i)=>[k,i])),ei=Object.fromEntries(m.edge_fields.map((k,i)=>[k,i])),nt=m.node_types[ni.type],et=m.edge_types[ei.type],count=h.nodes.length/nf,offset=new Uint32Array(count+1),parent=new Int32Array(count).fill(-1),edge=new Int32Array(count).fill(-1),queue=new Uint32Array(count);
+ for(let n=0;n<count;n++)offset[n+1]=offset[n]+h.nodes[n*nf+ni.edge_count]*ef;
+ let head=0,tail=1;parent[0]=0;
+ while(head<tail){const from=queue[head++];for(let e=offset[from];e<offset[from+1];e+=ef){if(et[h.edges[e+ei.type]]==='weak')continue;const to=h.edges[e+ei.to_node]/nf;if(parent[to]!==-1)continue;parent[to]=from;edge[to]=e;queue[tail++]=to;}}
+ const groups=new Map();
+ for(let n=0;n<count;n++){
+  const type=nt[h.nodes[n*nf+ni.type]],name=h.strings[h.nodes[n*nf+ni.name]];
+  if(!((type==='object'&&name==='Array')||(type==='array'&&name==='(object elements)')))continue;
+  const parts=[];let p=n;
+  while(p&&parent[p]!==-1){const e=edge[p],type=et[h.edges[e+ei.type]],key=h.edges[e+ei.name_or_index];if(type==='property'||type==='context')parts.push(h.strings[key]);else if(type==='element'){if(parts.at(-1)!=='[]')parts.push('[]');}else if(type==='internal'&&h.strings[key]==='table')parts.push('{}');p=parent[p];}
+  const route=parts.reverse().join('.'),g=groups.get(route)??{count:0,bytes:0,example:h.nodes[n*nf+ni.id]};g.count++;g.bytes+=h.nodes[n*nf+ni.self_size];groups.set(route,g);
+ }
+ return groups;
+}
+const first=census(process.argv[2]),last=census(process.argv[3]);
+const rows=[...new Set([...first.keys(),...last.keys()])].map(route=>({route,first:first.get(route),last:last.get(route),count:(last.get(route)?.count??0)-(first.get(route)?.count??0),bytes:(last.get(route)?.bytes??0)-(first.get(route)?.bytes??0)})).sort((a,b)=>b.count-a.count);
+fs.writeFileSync(process.argv[4],JSON.stringify(rows.filter(r=>r.count||r.bytes),null,2));
+console.log(JSON.stringify(rows.slice(0,30),null,2));

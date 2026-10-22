@@ -1,0 +1,18 @@
+{
+  "diagnostic": true,
+  "capped": true,
+  "sharedHost": true,
+  "frameBudgetClaim": false,
+  "toolSha256": "0e817e5b61543a4591d2f02c842b292d4ab88ab93d4c67b332f1f146c40ce8db",
+  "runs": {
+    "capped-warm-profile.json.gz": {
+      "builtRuntime": "e54658fc3",
+      "distIndexSha256": "9900a0c9938ee3f46088416266dab0b9a53164458f282bcc0f950fe0ba09eb68"
+    },
+    "capped-aim-profile.json.gz": {
+      "builtRuntime": "b47e00336",
+      "distIndexSha256": "af2fb5b96d2edd42b272b540a1a934432e32041d911708beef6dee6722c12a40"
+    }
+  },
+  "failedUncappedAttempt": "The browser policy rejected the attempted shared uncapped profile before launching a browser. It was not bypassed; the capped diagnostic uses SceneSession without nativeFrameTiming."
+}

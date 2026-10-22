@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+const h=JSON.parse(fs.readFileSync(process.argv[2],'utf8')),m=h.snapshot.meta,nf=m.node_fields.length,ef=m.edge_fields.length,ni=Object.fromEntries(m.node_fields.map((k,i)=>[k,i])),ei=Object.fromEntries(m.edge_fields.map((k,i)=>[k,i])),nt=m.node_types[ni.type],et=m.edge_types[ei.type],count=h.nodes.length/nf,offset=new Uint32Array(count+1),parent=new Int32Array(count).fill(-1),edge=new Int32Array(count).fill(-1),queue=new Uint32Array(count);
+for(let n=0;n<count;n++)offset[n+1]=offset[n]+h.nodes[n*nf+ni.edge_count]*ef;
+let head=0,tail=1;parent[0]=0;
+while(head<tail){const from=queue[head++];for(let e=offset[from];e<offset[from+1];e+=ef){if(et[h.edges[e+ei.type]]==='weak')continue;const to=h.edges[e+ei.to_node]/nf;if(parent[to]!==-1)continue;parent[to]=from;edge[to]=e;queue[tail++]=to;}}
+const name=n=>`${nt[h.nodes[n*nf+ni.type]]}:${h.strings[h.nodes[n*nf+ni.name]].slice(0,240)}#${h.nodes[n*nf+ni.id]}`;
+const rows=[];
+for(const targetId of process.argv.slice(3).map(Number)){
+ const target=h.nodes.findIndex((v,i)=>i%nf===ni.id&&v===targetId)/nf-ni.id/nf;if(!Number.isInteger(target)||target<0)throw Error('No target');
+ const path=[];let p=target;
+ while(p&&parent[p]!==-1){const e=edge[p],type=et[h.edges[e+ei.type]],key=h.edges[e+ei.name_or_index];path.push({from:name(parent[p]),edge:`${type}:${['element','hidden'].includes(type)?key:h.strings[key]}`,to:name(p)});p=parent[p];}
+ const properties=[];for(let e=offset[target];e<offset[target+1];e+=ef)if(et[h.edges[e+ei.type]]==='property')properties.push({name:h.strings[h.edges[e+ei.name_or_index]],value:name(h.edges[e+ei.to_node]/nf)});rows.push({targetId,path:path.reverse(),properties});
+}
+console.log(JSON.stringify(rows,null,2));

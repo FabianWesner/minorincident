@@ -1,0 +1,183 @@
+[
+  {
+    "targetId": 5014433,
+    "path": [
+      {
+        "from": "synthetic:#1",
+        "edge": "element:1",
+        "to": "synthetic:(GC roots)#3"
+      },
+      {
+        "from": "synthetic:(GC roots)#3",
+        "edge": "element:10",
+        "to": "synthetic:(Global handles)#23"
+      },
+      {
+        "from": "synthetic:(Global handles)#23",
+        "edge": "internal:8 / DevTools console",
+        "to": "object:InjectedScript#7393"
+      },
+      {
+        "from": "object:InjectedScript#7393",
+        "edge": "property:document",
+        "to": "native:HTMLDocument#697129"
+      },
+      {
+        "from": "native:HTMLDocument#697129",
+        "edge": "element:33",
+        "to": "native:ScriptedAnimationController#21314"
+      },
+      {
+        "from": "native:ScriptedAnimationController#21314",
+        "edge": "element:2",
+        "to": "native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#29392"
+      },
+      {
+        "from": "native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#29392",
+        "edge": "element:1",
+        "to": "native:V8FrameCallback#25278"
+      },
+      {
+        "from": "native:V8FrameCallback#25278",
+        "edge": "element:1",
+        "to": "native:V8FrameRequestCallback#24512"
+      },
+      {
+        "from": "native:V8FrameRequestCallback#24512",
+        "edge": "element:1",
+        "to": "closure:e#1574161"
+      },
+      {
+        "from": "closure:e#1574161",
+        "edge": "internal:context",
+        "to": "object:system / Context / scope @1574167#1574169"
+      },
+      {
+        "from": "object:system / Context / scope @1574167#1574169",
+        "edge": "internal:previous",
+        "to": "object:system / Context / scope @137443#261073"
+      },
+      {
+        "from": "object:system / Context / scope @137443#261073",
+        "edge": "context:xp",
+        "to": "object:Map#1251529"
+      },
+      {
+        "from": "object:Map#1251529",
+        "edge": "internal:table",
+        "to": "array:#4747713"
+      },
+      {
+        "from": "array:#4747713",
+        "edge": "internal:20",
+        "to": "object:tR#5014433"
+      }
+    ],
+    "properties": [
+      {
+        "name": "nodeType",
+        "value": "native:null#65"
+      },
+      {
+        "name": "updateType",
+        "value": "string:object#1687"
+      },
+      {
+        "name": "updateBeforeType",
+        "value": "string:none#669"
+      },
+      {
+        "name": "updateAfterType",
+        "value": "string:none#669"
+      },
+      {
+        "name": "version",
+        "value": "number:smi number#2907937"
+      },
+      {
+        "name": "name",
+        "value": "native:null#65"
+      },
+      {
+        "name": "global",
+        "value": "native:false#69"
+      },
+      {
+        "name": "parents",
+        "value": "native:false#69"
+      },
+      {
+        "name": "isNode",
+        "value": "native:true#67"
+      },
+      {
+        "name": "_beforeNodes",
+        "value": "native:null#65"
+      },
+      {
+        "name": "_cacheKey",
+        "value": "native:null#65"
+      },
+      {
+        "name": "_uuid",
+        "value": "native:null#65"
+      },
+      {
+        "name": "_cacheKeyVersion",
+        "value": "number:smi number#2907937"
+      },
+      {
+        "name": "id",
+        "value": "number:smi number#5014435"
+      },
+      {
+        "name": "stackTrace",
+        "value": "native:null#65"
+      },
+      {
+        "name": "property",
+        "value": "string:alphaTest#61053"
+      },
+      {
+        "name": "uniformType",
+        "value": "native:null#65"
+      },
+      {
+        "name": "object",
+        "value": "native:null#65"
+      },
+      {
+        "name": "count",
+        "value": "native:null#65"
+      },
+      {
+        "name": "properties",
+        "value": "object:Array#5014439"
+      },
+      {
+        "name": "reference",
+        "value": "object:be#3217199"
+      },
+      {
+        "name": "node",
+        "value": "object:mi#5014441"
+      },
+      {
+        "name": "group",
+        "value": "native:null#65"
+      },
+      {
+        "name": "material",
+        "value": "native:null#65"
+      },
+      {
+        "name": "isMaterialReferenceNode",
+        "value": "native:true#67"
+      },
+      {
+        "name": "__proto__",
+        "value": "object:Cl#2128303"
+      }
+    ]
+  }
+]

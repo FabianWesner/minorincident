@@ -1,0 +1,93 @@
+{
+  "diagnostic": true,
+  "runtimeBase": "4b410697f",
+  "runner": "94.130.181.173",
+  "backend": "webgl",
+  "tier": "low",
+  "first": {
+    "level": "L6",
+    "backend": "webgl",
+    "tier": "low",
+    "geometries": 283,
+    "textures": 70,
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "heap": {
+      "usedSize": 53818944,
+      "totalSize": 55963648,
+      "embedderHeapUsedSize": 1916104,
+      "backingStorageSize": 249133479
+    },
+    "loadAndSettleMs": 27158.163357999998
+  },
+  "fifth": {
+    "level": "L6",
+    "backend": "webgl",
+    "tier": "low",
+    "geometries": 274,
+    "textures": 71,
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "heap": {
+      "usedSize": 59784672,
+      "totalSize": 63041536,
+      "embedderHeapUsedSize": 2351800,
+      "backingStorageSize": 267167560
+    },
+    "loadAndSettleMs": 32975.783582000004
+  },
+  "heapGrowthPercent": 11.084810582682557,
+  "owner": "GameView.labWindows -> lab accident callbacks/meshes -> retired L1 lighting/materials",
+  "retiredOwnerArrayPaths": [
+    {
+      "route": "[].__SS__.pause.e.view.labWindows.shake.n.this.materials.lighting.field.statics.[].visibility.[]",
+      "last": {
+        "count": 69960,
+        "bytes": 1399200,
+        "example": 3043299
+      },
+      "count": 69960,
+      "bytes": 1399200
+    },
+    {
+      "route": "[].__SS__.pause.e.view.labWindows.shake.n.this.materials.lighting.field.statics.[].visibility",
+      "last": {
+        "count": 1060,
+        "bytes": 195040,
+        "example": 3005019
+      },
+      "count": 1060,
+      "bytes": 195040
+    },
+    {
+      "route": "[].__SS__.pause.e.view.labWindows.shake.n.this.materials.lighting.field.statics",
+      "last": {
+        "count": 2,
+        "bytes": 2144,
+        "example": 3215443
+      },
+      "count": 2,
+      "bytes": 2144
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "test-results/perf-l4-l6/heap/webgl-low-1.heapsnapshot",
+      "bytes": 131321160,
+      "sha256": "26d3c109e2e5b79ef63114240525f74c4ca1d07981d45af0670ab294c2a42f9a"
+    },
+    {
+      "path": "test-results/perf-l4-l6/heap/webgl-low-5.heapsnapshot",
+      "bytes": 141354064,
+      "sha256": "10e0a787bd37473c73dbbc344e9dda4af1ab8d1580fce5105f7678cd861eb107"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+import argparse, datetime, hashlib, json, os, pathlib, shutil, subprocess
+p=argparse.ArgumentParser()
+p.add_argument('--tree', required=True)
+p.add_argument('--out', required=True)
+p.add_argument('--only', default='l4-high,l4-low,l6-webgl,l6-webgpu,l4-load-high,l4-load-low')
+a=p.parse_args(); tree=pathlib.Path(a.tree).resolve(); out=pathlib.Path(a.out).resolve(); out.mkdir(parents=True, exist_ok=True)
+now=datetime.datetime.now(datetime.timezone.utc)
+if now < datetime.datetime(2026,10,22,16,5,tzinfo=datetime.timezone.utc):
+    raise SystemExit('Native quiet measurements are authorized only after 16:05 UTC')
+def git(*args): return subprocess.check_output(['git','-C',str(tree),*args]).decode().strip()
+def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+expected='e492dfa8ed52fc2e29a438bf1b22e571954947f14cc98ec5890c68c20785f08a' # Exact f0fb391fb handoff fixture
+assert sha(tree/'tests/perf/l7-lifecycle.spec.ts')==expected, 'Lifecycle fixture differs from handoff'
+assert subprocess.call(['git','-C',str(tree),'diff','--quiet','480b44e42','--','tests/perf/l4-budgets.spec.ts'])==0, 'L4 fixture changed'
+meta={'started':now.isoformat(),'commit':git('rev-parse','HEAD'),'matchedBase':'480b44e42','sourceTree':git('rev-parse','HEAD:src'),'sourceDiff':git('diff','HEAD','--','src'),'status':git('status','--short'),'files':{f:sha(tree/f) for f in ['src/render/GameView.ts','src/render/Renderer.ts','src/render/EntityAssets.ts','src/render/InteractionView.ts','src/render/StaticInstanceAttributes.ts','src/sim/ai/NavGrid.ts','src/sim/world/SimWorld.ts','src/sim/missions/l4AlarmWarmup.ts','src/render/vfx/labAccidentView.ts','tests/perf/l4-budgets.spec.ts','tests/perf/l7-lifecycle.spec.ts','dist/index.html']},'runs':[]}
+(out/'manifest.json').write_text(json.dumps(meta,indent=2)+'\n')
+jobs={'l4-high':('tests/perf/l4-budgets.spec.ts','high',{'E2E_RENDERER':'webgpu'}),'l4-low':('tests/perf/l4-budgets.spec.ts','low',{'E2E_RENDERER':'webgpu'}),'l6-webgl':('tests/perf/l7-lifecycle.spec.ts','L6',{'LIFECYCLE_BACKEND':'webgl'}),'l6-webgpu':('tests/perf/l7-lifecycle.spec.ts','L6',{'LIFECYCLE_BACKEND':'webgpu'})}
+for tier in ['high','low']:
+    jobs[f'l4-load-{tier}']=('',tier,{'L4_GRAPH_LOAD_ONLY':'1','L4_GRAPH_TIER':tier,'L4_GRAPH_BACKEND':'webgpu'})
+failed=False
+for name in a.only.split(','):
+    spec,grep,extra=jobs[name]; dest=out/name
+    if (dest/'run.log').exists(): raise SystemExit('Choose a fresh output directory; preserve previous receipts')
+    dest.mkdir(exist_ok=True)
+    env=os.environ.copy()
+    for key in ['L4_TIMING_KEYS','L4_CPU_PROFILE','L4_PERF_PROFILE','PHONE_PERF','MI_REMOTE']: env.pop(key,None)
+    env.update(E2E_PORT='4121',SCENE_PORT='4122',E2E_UNITS='1',E2E_ADMISSION_TIMEOUT_SECONDS='3600',PERF_CONDITIONS_LOG=str(dest/'conditions.jsonl'),L4_PERF_OUTPUT=str(dest/'proofs'),SCENE_SERVER='preview',L4_GRAPH_OUT=str(dest),**extra)
+    cmd=['sh','tools/perf/quiet-run.sh','npx','playwright','test',spec,'--project=chromium',f'--grep={grep}','--workers=1']
+    reporter=tree/'test-results/playwright/results.json'
+    reporter.unlink(missing_ok=True)
+    if name.startswith('l6'):
+        for f in (tree/'test-results/epics/E24').glob(f'lifecycle-L6-*-{extra["LIFECYCLE_BACKEND"]}.json'): f.unlink()
+    if name.startswith('l4-load'):
+        cmd=['sh','tools/perf/quiet-run.sh','npx','tsx','tools/perf/l4-cold-graphs.ts']
+    print(f'{datetime.datetime.now(datetime.timezone.utc).isoformat()} START {name}',flush=True)
+    with (dest/'run.log').open('w') as log: code=subprocess.call(cmd,cwd=tree,env=env,stdout=log,stderr=subprocess.STDOUT)
+    reporter=tree/'test-results/playwright/results.json'
+    if reporter.exists(): shutil.copy2(reporter,dest/'reporter.json')
+    if name.startswith('l6'):
+        for f in (tree/'test-results/epics/E24').glob(f'lifecycle-L6-*-{extra["LIFECYCLE_BACKEND"]}.json'): shutil.copy2(f,dest/f.name)
+    row={'name':name,'code':code,'finished':datetime.datetime.now(datetime.timezone.utc).isoformat(),'command':cmd}
+    meta['runs'].append(row);(out/'manifest.json').write_text(json.dumps(meta,indent=2)+'\n')
+    print(json.dumps(row),flush=True);failed|=bool(code)
+raise SystemExit(1 if failed else 0)
