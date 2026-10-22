@@ -2,19 +2,23 @@
 
 Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evidence/partial-ac-inventory.json) preserves every partial from the sweep. This is an ongoing audit; no pending row is accepted by this report.
 
-## Latest checkpoint — 14:52 UTC (extended native completion)
+## Final cutoff audit — 2026-10-22
 
-**7/31 starting partials met.** [Every AC: met/red/unmeasured](final-ac-status.md); [machine ledger](evidence/partial-ac-inventory.json). All five epics stay **in-progress**. Proposed rewrites remain unadopted. The user extended the final cutoff to16:00UTC; the completed14:40 interruption record remains historical evidence, not the final native outcome.
+**7met /15red /9unmeasured** across the31 starting partials. [Every AC and its evidence](final-ac-status.md). **All five epics remain in-progress; no full verifier is green. All owned checks are terminal.** Original failures, timeouts, interrupted verifiers and unadopted rewrite proposals are retained.
 
-| Epic | Full-verifier disposition | Current proof and material gaps |
-| --- | --- | --- |
-| E25 | exit1;50 native pass/6fail/1SSRskip | Separate quiet5/5; corrected shadow85.884% passes. AC01/12/15 met; SSR, memory-domain interpretation, night-readability/saturation and G remain open. |
-| E29 | exit1;133Node pass,73native pass/5fail | AC07/14 met; skyline reverses the required area trend, actual input loses24followers, scores below7. Fresh native performance repeat unmeasured. |
-| E30 | exit1;158Node,96functional pass/2fail;6perf pass/1fail | Both functional failures subsequentlyfixed2/2. Local rotated-APC fix transfers12/12 keyboard/touch. Phone4×CPU frame38.7/sim8.3ms fails; full input/photo/a11y/scored review incomplete. |
-| E31 | exit1;124Node+2timings,67native pass/36fail | AC08 met. All36 route combinations reachL10 across baseline28+corrected8. Final courier22/24 passes; strict road contrast remains~1.98. Corrected crash8/8 red from cold-load gaps. Remaining dressed-route/retention native cases continuing. |
-| E32 | interrupted143;246Node,88/88functional pass | AC09 met; Alpha/dog2/2 passes. Corrected pose/radius collector4/4passes;128frames inspected and scores below7. Formal arena repeat and remaining native files continuing; real phones need PO devices. |
+| Epic | Verifier and current native disposition |
+| --- | --- |
+| E25 | Full exit1:50native pass/6fail/1SSRskip; separate quiet5/5 and corrected shadow pass. AC01/12/15 met; SSR/memory interpretation/night-readability/saturation/G remain open. |
+| E29 | Full exit1:133Node,73native pass/5fail. AC07/14 met. Skyline/escort/scored review red; fresh native performance unmeasured, old red measurements explicitly historical. |
+| E30 | Full exit1:158Node,96functional pass/2fail,6perf pass/1fail. Both functional defects subsequently fixed2/2; local APC correction native12/12 keyboard/touch. Phone4×CPU38.7/8.3ms fails33.3/6. |
+| E31 | Full exit1:124Node+2timings,67native pass/36fail. AC08 met; all36 input routes reachL10. Native continuation: both high D2 matrices15/15pass, low7/15each before300s with heap>250;16samples unmeasured. Crash8red; handover2pass; retention4red. |
+| E32 | Original full verifier interrupted143 after246Node/88functional passes. AC09 met. Native Alpha/dog2pass, arena8pass, mixed assault8pass, WebGL mist4pass; campus8red from population70/46<80/50. Four deferred files32cases and real phones unmeasured. |
 
-No thresholds, gameplay difficulty or persistent corpses were changed. The remainder is a chronological audit trail, including superseded experiments and failures. Proposed decisions are recorded below with reasons; none constitutes a passing result.
+Final omissions: district budgets, epilogue pullout/retention, finale budgets and startup residency; [exact deferred commands/receipts](evidence/final-unmeasured-native.json). The native continuation exits normally after recording all four as unmeasured; it does not claim they passed. Current typecheck/lint/build and remote regression receipts remain linked below. Only `specs/status.json` changed under specs; no criterion/threshold, difficulty or persistent-corpse rule changed. No merge/deploy.
+
+Cure-mist4/4 passes at the full fixture cap. Opened the actual high/default frame: warm courier and orange corgi remain distinct among fallen humans, zebra, elephant and dog; a pale curved mist edge and bright console are visible. Dark shadows and ground dithering remain; this performance frame does not supersede the failed seven-region vision review. [All four raw measurements](evidence/l10-cure-native-metrics.json.gz), [original reporter](evidence/native-E32-l10-cure-mist-all-playwright.json.gz). Report captures remain12, with hashes in [the manifest](evidence/final-capture-manifest.json).
+
+Physical iOS/Android and the proposed SSR/memory/contact/timing/HUD/mist wording need PO action; proposals are unadopted. Valid red criteria need fixes and another evidence pass. The remainder is a chronological audit, including superseded experiments.
 
 ## Initial evidence (superseded where noted below)
 
@@ -360,3 +364,7 @@ WebGPU high completes15/15 region×zoom samples, native exit0 ([receipt](evidenc
 ## 15:42UTC — campus/corridor8/8red: population eligibility
 
 All backend/tier/zoom cases complete, exit1. [Receipt](evidence/native-E32-l10-campus-corridor-budgets-all-receipt.json.gz), [original reporter](evidence/native-E32-l10-campus-corridor-budgets-all-playwright.json.gz), [all seven-spot metrics per case](evidence/l10-campus-native-metrics.json.gz). The R6/x3317 resident depth peak is70high/46low, below the unchanged80/50 minima in every case. Recorded framep95≤5.5ms, simp95≤1.1ms and heaps fit their numerical caps (low≤249.000MB), but the test stops at population eligibility before later assertions. This does not establish performance at the demanded load. Cause (fixture setup versus residency/admission) is unresolved; no extra enemies, difficulty change or lower minimum is applied. AC31 is red, while its later native files/devices remain separately unmeasured.
+
+## 15:48UTC — E31 native continuation terminal
+
+Both high D2 backends pass15/15samples. Both4×CPU low cases hit the unchanged300s gate with7/15measured,8/15unmeasured each. All14measured low heaps fail250MB: WebGL260.056–265.817MB, WebGPU256.523–262.028MB. Measured low frame/sim limits pass; this cannot extrapolate to the16missing rows. [Final D2 summary](evidence/l9-dress-native-summary.json), [all44 measured rows](evidence/l9-dress-native-metrics.json.gz), [final WebGPU low receipt](evidence/native-E31-dress-remaining-webgpu-low-receipt.json.gz). The original full verifier remains exit1. Its native continuation is terminal: dressed2pass/2timeout-fail, handover2pass, corrected crash8fail, retention4fail; the last includes low absolute JS and all-domain embedder growth. No E31 acceptance is inferred from partial timings.

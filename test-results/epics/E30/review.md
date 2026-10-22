@@ -57,7 +57,7 @@ Missing proof is a **FAIL** for signoff, never an inferred pass.
 - **FAIL [should] reflections:** the seen pavement/vehicle views do not establish convincing wet/glass reflections.
 - **PASS [should] script:** the cool sanctuary and warm practicals fit the night preset.
 
-The rotated APC boarding bug is separately reproduced and fixed locally, with6 focused remote passes and21 total L8/companion regressions; native completion remains pending. No score here closes AC05/10/15/18/19/20 or supplies missing §6 photos.
+The rotated APC boarding bug is separately reproduced and fixed locally, with6 focused remote passes and21 total L8/companion regressions; native keyboard/touch completion is subsequently confirmed in the supplement below. No score here closes AC05/10/15/18/19/20 or supplies missing §6 photos.
 
 ## 13:45 supplement — animal review and boarding
 

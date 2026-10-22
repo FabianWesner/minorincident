@@ -1,6 +1,6 @@
 # Per-AC closure ledger
 
-Extended checkpoint14:52UTC; native continuation is still running. **7/31 met.** Red means a measured failure or absent required feature; unmeasured means incomplete whole-criterion proof. No proposed rewrite is adopted. All five epics remain in-progress.
+Final cutoff audit2026-10-22. **7met /15red /9unmeasured**,31starting partials. All owned checks are terminal; all five epics remain in-progress. Red means a current measured gate failure or absent feature. Unmeasured means incomplete whole-criterion proof; old red performance readings remain historical. No proposed rewrite is adopted.
 
 | AC | Result | Evidence and remaining requirement |
 | --- | --- | --- |
@@ -29,11 +29,11 @@ Extended checkpoint14:52UTC; native continuation is still running. **7/31 met.**
 | E31-AC16 | **red** | Final1.2fill22/24 courier views pass; desktop0HP/default2.718–2.722<3. Road/verge~1.98–2.02<3 or zero valid pairs. Caption separation12px passes. |
 | E31-AC17 | **unmeasured** | All36 route combinations reachL10 across baseline28+corrected8landscape; complete§6 route/ram/fork/outskirts/seam input pairs missing. |
 | E31-AC18 | **red** | Current A5/D6/F6/G5; must failures and complete input pairs missing. ChecklistF wording proposal unadopted. |
-| E31-AC19 | **red** | Corrected crash8/8red: cold-load max2747–3081ms; handover2/2passes. All four five-cycle retention cases complete/red: low JS peaks260.111/257.342MB>250; embedder growth21.36–23.86%>10%. JS/GPU drift≤4.26%. Remaining dressed-route configs queued. |
+| E31-AC19 | **red** | Corrected crash8/8red: cold-load max2747–3081ms; handover2/2pass. Dressed high15/15pass per backend; low7/15 per backend timeout/red with JS up to265.817/262.028MB>250;16samples unmeasured. Four five-cycle retention cases red: low JS260.111/257.342MB, embedder growth21.36–23.86%. |
 | E31-AC20 | **unmeasured** | Real iOS/Android≥30fps cannot be measured here; PO devices required. Separately labelled desktop proxy proposed, unadopted. |
 | E32-AC09 | **met** | Fresh inherited13move/6bar and4/4native regular/Mega cases; all4photos inspected. Three assetLOD same-height contracts pass. |
 | E32-AC29 | **unmeasured** | Keyboard/mouse-only/touch mounted-gun subchecks pass; whole seven-region carry/checkpoint/charge/release/ending input aggregate and photo pairs incomplete. |
 | E32-AC30 | **red** | Final pose/radius-checked collector4/4passes;128source frames inspected. RegionA4/5/6/4/5/4/5; C6/D6/F6/G4; H unmeasured. Not accepted. |
-| E32-AC31 | **red** | Alpha/dog2/2, arena8/8 and actual mixed-assault8/8pass (peaks168/87). Campus/corridor R6 eligibility fails70<80 in completed high cases despite passing measured frame/sim caps. Remaining native files and physical iOS/Android are unmeasured. |
+| E32-AC31 | **red** | Alpha/dog2/2, arena8/8, mixed-assault8/8 (168/87infected) and WebGL cure-mist4/4pass. Campus8/8red: R6population70/46<80/50; later assertions do not execute. District/pullout/finale/startup32cases and real phones unmeasured. |
 
-Source receipts, captures and unadopted rewrites: [audit report](README.md), [machine ledger](evidence/partial-ac-inventory.json). E30-AC13 (outside the31 starting partials) is restored met by the local APC fix and both native12/12 routes.
+E32 district, epilogue pullout, finale and startup residency:32cases unmeasured. E31 low D2:16samples unmeasured after unchanged300s limits. Real iOS/Android require PO devices. [Original receipts and audit](README.md); [machine ledger](evidence/partial-ac-inventory.json); [explicit native omissions](evidence/final-unmeasured-native.json). E30-AC13, outside these31, is restored met by the local APC fix:21remote regressions and native keyboard/touch12/12survivors transferred.

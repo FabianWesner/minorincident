@@ -113,15 +113,13 @@ Both epic statuses remain **in-progress** because the combined gate is red. E27'
 
 Final-source regression: **29/29 browser checks passed** (5.7 minutes), covering smoke across configured desktop/mobile/WebKit projects and production photo spots, night contrast and hero shadows. Raw report/log: E25 `closure/gates/browser-phone-fix.json` and `.log`. All **23/23 Scene Lab reruns passed**, zero console errors; every refreshed sheet was inspected and described in `review.md`. The selected sheets are byte-identical to the earlier fresh set; metrics and run metadata are refreshed. Final Scene Lab log: E25 `closure/gates/scene-lab-final.log`. Another 44 duplicate individual shots were deleted; `capture-selection.json` records both selections.
 
-## 2026-10-22 closure audit — extended native checkpoint
+## 2026-10-22 closure audit — final dispositions
 
-**Status: in-progress.** This report covers the starting partials assigned to this lane; no failed or unmeasured criterion is accepted.
-
-Comparative WebGPU spike, current94asset/188preview and powered-turntable proof, measured window parallax, honest memory-domain audit, current lighting references and failed vision review.
+**Status: in-progress.** Scope: this lane's starting partial ACs. No rewrite is adopted.
 
 Verifier: exit1:50native pass/6fail/1SSRskip; separate quiet5/5pass; corrected shadow passes.
 
-| AC | Result | Current proof / gap |
+| AC | Result | Evidence and remaining requirement |
 | --- | --- | --- |
 | E25-AC01 | met | Quiet comparative WebGPU spike5/5; six frames inspected; production decision recorded. |
 | E25-AC10 | red | SSR silhouette/30% overlap absent. Release-extras placement rewrite proposed, unadopted. |
@@ -130,4 +128,4 @@ Verifier: exit1:50native pass/6fail/1SSRskip; separate quiet5/5pass; corrected s
 | E25-AC15 | met | Current94 assets/188 previews, five-view production turntable and on/off pair inspected. |
 | E25-AC16 | red | Seven G scores7/8/7/8/4/7/6; night player2.899<3 and saturation.949579<.95 remain red. Corrected shadow85.884% passes. |
 
-[Full audit, receipts, inspected captures and unadopted rewrite proposals](../../../docs/reports/ac-close-l7-l10/README.md). [All31AC ledger](../../../docs/reports/ac-close-l7-l10/final-ac-status.md). All five epics remain in-progress. Thresholds, difficulty and persistent corpses are retained.
+[Full audit, original command receipts, inspected captures, failures and proposed rewrite wording/reasons](../../../docs/reports/ac-close-l7-l10/README.md). [31-AC final ledger](../../../docs/reports/ac-close-l7-l10/final-ac-status.md). E30-AC13 is additionally restored met: local rotated-APC fix,21remote regressions and native keyboard/touch12/12survivors transferred. No thresholds, gameplay difficulty or persistent corpses were changed. Physical iOS/Android require PO devices; emulation is not substituted.
