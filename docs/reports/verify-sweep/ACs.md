@@ -115,7 +115,7 @@ Criteria: [epic-25-lighting-shadows-reflections.md](../../../specs/epic-25-light
 
 | AC | 10-16 → now | Test / evidence | Remaining work |
 | --- | --- | --- | --- |
-| E25-AC01 | partial | `test-results/epics/E25/spike.md`; `T-E25-01` in `tests/visual/e25-closure.spec.ts`; production `src/render/Lighting.ts` follows field + promoted spotlight decision.; newer: [e25-deferred.spec.ts](../../../tests/visual/e25-deferred.spec.ts) | **M; browser + quiet perf** — Complete comparative WebGPU DynamicLighting/ClusteredLighting screenshots and counters; T-E25-01-GPU still fixme. |
+| E25-AC01 | met | Fresh native quiet WebGPU comparison: all6 configs/120samples pass; six frames inspected and canonical decision updated. Dynamic256 queuep95=781.3ms, clustered256=16.6ms; production retains field+shadowed spot. Photometric/timestamp limits explicit. [Report/evidence](../ac-close-l7-l10/README.md#e25-ac01--met). | — |
 | E25-AC02 | met | `T-E25-02/02b`, `tests/unit/render/e25-lighting.test.ts`; `tools/assets/lights.ts` validates tokens, intensity, ground intersection and emissive references against baked runtime table. | — |
 | E25-AC03 | met | `T-E25-03` pixel probes in `tests/visual/e25-closure.spec.ts`; visibility polygon regressions `T-E25-03u/03b`; `src/render/LightField.ts`. | — |
 | E25-AC04 | met | **S fixed:** `T-E25-04` now checks the same 69,825 screen pixels on actual WebGL/WebGPU, high and low; both cases pass. High relative difference 0.0005977%; low 0.0005845%. Captures opened and numerically compared; old fixme removed. | — |
