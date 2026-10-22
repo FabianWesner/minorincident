@@ -158,3 +158,8 @@ The final bounded 200-second debug playtest reaches at least **tick 11445, (1297
 
 
 Final smoke command `npx playwright test --grep @smoke --workers=1` passes **31/31 in 5.8 minutes**, including Chromium, mobile and WebKit smoke, both native rendering backends' crowd checks, corpse persistence, and WebGPU game cameras. The final matching-baseline/extended/smoke batch exits zero and releases its quiet reservation. Its expected-red baseline tests are preserved in the same log and are not counted as final failures. Smoke's two tracked E22 screenshot outputs are restored from their verified pre-test copies. The fresh full remote command is the only remaining running check.
+
+
+## Final completion
+
+The fresh exact requested full remote command exits zero: **427 files passed, 3 skipped; 2336 tests passed, 11 skipped**, 2339.04 seconds. Its sanitized log is `accepted-full-remote-green.log.gz`. Final `src`, `tests`, `tools`, `assets` and `public` trees match the remote snapshot `5e665de8e` exactly; only report/evidence commits followed. All check processes have been joined, the only owned temporary baseline worktree is removed, and the two generated tracked smoke screenshots are restored. Typecheck, lint, 71 focused tests, all eight real-assault comparisons, four fresh entry guards, matching loading-growth audit, bounded extended profile and 31 smoke cases are green. The authorized low p95 deltas remain explicitly recorded. No deployment or merge was performed.
