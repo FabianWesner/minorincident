@@ -1,4 +1,5 @@
 import { PNG } from 'pngjs';
+import { LevelSixSubway } from '../../../src/sim/missions/LevelSixSubway';
 import { l7Exit } from '../../../src/levels/L7/layout';
 import { compareWeapons } from '../../../src/data/weaponOrder';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -48,8 +49,10 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     }
     const gate=obs.s.abandonAt>0&&obs.s.gates.find(g=>!g.closedAt&&obs.p.x<g.x+11&&obs.friends.every(r=>r.at.x>g.x+2));
     const closing=gate&&(!plan.target||Math.hypot(plan.target.x-obs.p.x,plan.target.z-obs.p.z)>2.2);
-    const holdGate=closing&&Math.hypot(gate!.x+1.4-obs.p.x,15-obs.p.z)<1.2;
-    if(closing&&!obs.lamp)move=holdGate?{x:0,z:0}:{x:gate!.x+1.4-obs.p.x,z:15-obs.p.z};
+    // The shipped wait/brace point is beside the opening; the old centre-track point is outside its interaction radius.
+    const gateAt=gate&&LevelSixSubway.gateWait(gate.x);
+    const holdGate=closing&&Math.hypot(gateAt!.x-obs.p.x,gateAt!.z-obs.p.z)<1.2;
+    if(closing&&!obs.lamp)move=holdGate?{x:0,z:0}:{x:gateAt!.x-obs.p.x,z:gateAt!.z-obs.p.z};
     const attack=!obs.lamp&&!holdGate&&plan.target&&plan.frame.attackTarget;
     if(attack&&plan.frame.attackTarget!.side==='LEFT'&&Math.hypot(plan.target!.x-obs.p.x,plan.target!.z-obs.p.z)>1.8)move={x:plan.target!.x-obs.p.x,z:plan.target!.z-obs.p.z};
     await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);
