@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-22T14:55:04.175493+00:00",
+  "at": "2026-10-22T15:43:17.258688+00:00",
   "batches": [
     {
       "target": "E30",
@@ -408,6 +408,151 @@
         "expected": 8,
         "skipped": 0,
         "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "retention-remaining",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l9-lifecycle.spec.ts",
+        "--grep",
+        "T-E31-19-retention.*(webgl low|webgpu)",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792680809.2744498,
+      "finished": 1792681624.279337,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-retention-remaining-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T14:58:57.026Z",
+        "duration": 487220.072,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "dress-remaining-webgl-low",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l9-dress.spec.ts",
+        "--grep",
+        "T-E31-19-D2.*webgl low",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792681624.319196,
+      "finished": 1792682593.677681,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-dress-remaining-webgl-low-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T15:18:06.222Z",
+        "duration": 307400.392,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E32",
+      "batch": "l10-assault-budgets-all",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l10-assault-budgets.spec.ts",
+        "--grep",
+        "^(?=.*(?:@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792682593.706075,
+      "finished": 1792682877.627177,
+      "exitCode": 0,
+      "reporterPresent": true,
+      "receiptPath": "native-E32-l10-assault-budgets-all-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T15:24:25.117Z",
+        "duration": 212440.182,
+        "expected": 8,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "dress-remaining-webgpu-high",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l9-dress.spec.ts",
+        "--grep",
+        "T-E31-19-D2.*webgpu high",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792682877.668088,
+      "finished": 1792683195.0938308,
+      "exitCode": 0,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-dress-remaining-webgpu-high-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T15:29:09.233Z",
+        "duration": 245791.38100000002,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E32",
+      "batch": "l10-campus-corridor-budgets-all",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l10-campus-corridor-budgets.spec.ts",
+        "--grep",
+        "^(?=.*(?:@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792683195.121126,
+      "finished": 1792683662.337974,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E32-l10-campus-corridor-budgets-all-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T15:34:26.673Z",
+        "duration": 395583.39,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 8,
         "flaky": 0
       }
     }

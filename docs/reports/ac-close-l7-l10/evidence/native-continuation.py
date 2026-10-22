@@ -7,6 +7,14 @@ def save(path,value):
     with gzip.open(path,'wt') as f: json.dump(value,f,indent=2)
 if sys.argv[1]=='--batch':
     target,name,encoded=sys.argv[2:]; command=json.loads(encoded)
+    # The final user cutoff also applies to files still queued by a running
+    # continuation. Record those as unmeasured without admitting a browser.
+    stop=OUT/'native-final-admission-stop.json'
+    if stop.is_file():
+        receipt={'target':target,'batch':name,'command':command,'started':time.time(),'finished':time.time(),'exitCode':75,'reporterPresent':False,'unmeasured':True,'reason':json.loads(stop.read_text())}
+        save(OUT/f'native-{target}-{name}-receipt.json.gz',receipt)
+        print(json.dumps(receipt),flush=True)
+        sys.exit(0)
     # Preserve the preceding verifier's reporter until it has copied its own
     # receipt after releasing the serial lock. A stale reporter is never proof.
     reporter=ROOT/'test-results/playwright/results.json'
