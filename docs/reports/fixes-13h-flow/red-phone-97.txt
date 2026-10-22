@@ -1,0 +1,32 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:49:3 › #97 APC countdown and separate companion/Armor panels at every zoom, high (26.9s)
+  ✓  2 [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:49:3 › #97 APC countdown and separate companion/Armor panels at every zoom, low (25.0s)
+  ✘  3 [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:78:3 › phone landscape › #97 companion badge and Armor remain separate on phone landscape (24.5s)
+
+
+  1) [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:78:3 › phone landscape › #97 companion badge and Armor remain separate on phone landscape 
+
+    Error: {"companion":{"x":43,"y":88,"right":65,"bottom":110},"armor":{"x":682,"y":324,"right":832,"bottom":354},"objective":{"x":572,"y":275.59375,"right":832,"bottom":331.59375},"hud":"Wait for the breach · 59 s"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      41 |   expect(c.right <= a.x || a.right <= c.x || c.bottom + 4 <= a.y || a.bottom + 4 <= c.y, JSON.stringify(boxes)).toBe(true);
+      42 |   const o=boxes.objective;
+    > 43 |   expect(o.right<=a.x || a.right<=o.x || o.bottom+4<=a.y || a.bottom+4<=o.y, JSON.stringify(boxes)).toBe(true);
+         |                                                                                                     ^
+      44 |   expect(a.bottom).toBeLessThanOrEqual(page.viewportSize()!.height);
+      45 |   return boxes;
+      46 | }
+        at layout (/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow/tests/e2e/levels/fixes-13h-flow.spec.ts:43:101)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow/tests/e2e/levels/fixes-13h-flow.spec.ts:80:38
+
+    Error Context: test-results/playwright/run-4061/e2e-levels-fixes-13h-flow--05cfb-separate-on-phone-landscape-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:78:3 › phone landscape › #97 companion badge and Armor remain separate on phone landscape 
+  2 passed (1.3m)

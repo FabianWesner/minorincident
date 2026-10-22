@@ -81,3 +81,37 @@ test('PO 10-21 #8 L4 hold and L6 defence expose their simulation deadlines',()=>
   expect(objectiveText(six,'Stop the infected')).toBe('Stop the infected · Retreat in 0:15');
   six.world.tick+=60;expect(objectiveText(six,'Stop the infected')).toContain('0:14');
 });
+
+test('@E30 #97 early APC boarding shows the breach countdown and prevents driving away from waiting passengers', async () => {
+  const w = world = await loadLevel('L8', 1), m = w.missions!, zoo = m.l8!;
+  w.combat!.damage.god = true;
+  const door = zoo.door(); put(w, 1, door.x, door.z);
+  const enter = emptyInput(); enter.interact = true;
+  w.applyInput(enter, 'keyboard'); step(w, 1); w.clearInput(); step(w, 2);
+  expect(w.vehicles!.active).toBe(zoo.state.carId);
+  expect(objectiveText(m, 'Reach the armored vehicle and board')).toMatch(/^Wait for the breach · \d+ s$/);
+  expect(m.state.marker).toBeNull();
+  const car = w.entities.get(zoo.state.carId)!, start = { ...car.transform };
+  const drive = emptyInput(); drive.drive = { throttle: 1, steer: 0 }; w.applyInput(drive, 'keyboard'); step(w, 180);
+  expect(Math.hypot(car.transform.x - start.x, car.transform.z - start.z)).toBeLessThan(.25);
+  zoo.advance();
+  const dog = w.entities.values().find(e => e.companion)!;
+  put(w, dog.id, 0, 0);
+  // Board the humans as fixture setup, leaving the companion visibly missing.
+  for (const id of zoo.roster()) { put(w, id, zoo.door().x, zoo.door().z); expect(w.vehicles!.boardPassenger(zoo.state.carId, id)).toBe(true); }
+  step(w, 120);
+  expect(objectiveText(m, 'Wait for everyone to board the armored vehicle')).toContain('Corgi missing');
+  expect(objectiveText(m, 'Wait for everyone to board the armored vehicle')).not.toContain('0/0');
+  expect(Math.hypot(car.transform.x - start.x, car.transform.z - start.z)).toBeLessThan(.25);
+}, 60_000);
+
+test('@E30 #97 the missing corgi is counted even when no human passengers survive', async () => {
+  const w = world = await loadLevel('L8', 1), m = w.missions!, zoo = m.l8!;
+  w.combat!.damage.god = true; zoo.advance();
+  for (const id of zoo.roster()) w.entities.get(id)!.health.current = 0;
+  const dog = w.entities.values().find(e => e.companion)!; put(w, dog.id, 0, 0);
+  const door = zoo.door(); put(w, 1, door.x, door.z);
+  const enter = emptyInput(); enter.interact = true; w.applyInput(enter, 'keyboard'); step(w, 1); w.clearInput(); step(w, 2);
+  expect(m.state.steps.depart.status).toBe('active');
+  expect(objectiveText(m, 'Wait for everyone to board the armored vehicle')).toContain('0/1 aboard · Corgi missing');
+}, 60_000);

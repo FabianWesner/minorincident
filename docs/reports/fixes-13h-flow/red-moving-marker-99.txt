@@ -1,0 +1,26 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-progress.test.ts (5 tests | 1 failed) 3ms
+   × #99 following a moving visible ring is progress even when its distance stays 12 m 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-progress.test.ts > #99 following a moving visible ring is progress even when its distance stays 12 m
+AssertionError: expected 2 to be less than 2
+ ❯ tests/unit/playtest-progress.test.ts:10:28
+      8|   for(let t=1;t<=45;t++) {
+      9|     const result=p.update(sample(t,{player:{x:t*2.2,z:15},marker:{x:t*…
+     10|     expect(result.seconds).toBeLessThan(2);
+       |                            ^
+     11|   }
+     12| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  01:03:07
+   Duration  67ms (transform 62%, import 16%, tests 15%, worker 6%)
+

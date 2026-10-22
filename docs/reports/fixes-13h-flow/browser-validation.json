@@ -1,0 +1,30 @@
+{
+  "smoke": {
+    "passed": 31,
+    "failed": 0,
+    "skipped": 0,
+    "workers": 1,
+    "logSha256": "e11e36b8e214f712a13fb7dcaa7a45d8a4a9e29a97aa8fbae284e80706c91764",
+    "command": "E2E_PORT=4061 SCENE_PORT=4062 E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 sh tools/e2e-lock.sh npx playwright test --grep @smoke --workers=1"
+  },
+  "hud": {
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "capturesReviewed": 8,
+    "phoneCapturesReviewed": 2,
+    "zooms": [
+      0.5,
+      1,
+      1.5
+    ],
+    "quality": [
+      "high",
+      "low"
+    ]
+  }
+}

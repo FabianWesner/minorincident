@@ -1,0 +1,29 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:46:3 › #97 APC countdown and separate companion/Armor panels at every zoom, high (25.3s)
+
+
+  1) [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:46:3 › #97 APC countdown and separate companion/Armor panels at every zoom, high 
+
+    Error: {"companion":{"x":24,"y":174,"right":214.03125,"bottom":232},"armor":{"x":24,"y":204,"right":324,"bottom":244},"hud":"Wait for the breach · 60 s"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      38 |   });
+      39 |   const { companion: c, armor: a } = boxes;
+    > 40 |   expect(c.right <= a.x || a.right <= c.x || c.bottom + 4 <= a.y || a.bottom + 4 <= c.y, JSON.stringify(boxes)).toBe(true);
+         |                                                                                                                 ^
+      41 |   expect(a.bottom).toBeLessThanOrEqual(page.viewportSize()!.height);
+      42 |   return boxes;
+      43 | }
+        at layout (/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow/tests/e2e/levels/fixes-13h-flow.spec.ts:40:113)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow/tests/e2e/levels/fixes-13h-flow.spec.ts:50:28
+
+    Error Context: test-results/playwright/run-4061/e2e-levels-fixes-13h-flow--0fe2d-r-panels-at-every-zoom-high-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/fixes-13h-flow.spec.ts:46:3 › #97 APC countdown and separate companion/Armor panels at every zoom, high 

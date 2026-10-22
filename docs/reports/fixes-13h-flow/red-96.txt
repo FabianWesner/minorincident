@@ -1,0 +1,46 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/levels/l6-po-1020.test.ts (8 tests | 2 failed | 6 skipped) 1822ms
+   × @E24 #96 collected injured follower rejoins from raised walkway (192.7, 11.8) 1105ms
+   × @E24 #96 collected injured follower rejoins from raised walkway (59, 18.2) 716ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from raised walkway (192.7, 11.8)
+AssertionError: expected 8.227479503732559 to be less than 1.5
+ ❯ tests/levels/l6-po-1020.test.ts:177:38
+    175|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+    176|   expect(e.transform.x).toBeGreaterThan(gate - 12);
+    177|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+       |                                      ^
+    178| }, 240_000);
+    179|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from raised walkway (59, 18.2)
+AssertionError: follower moved from (59, 18.2): {"x":59,"z":18.160000095367433,"y":1.5700000143051147,"yaw":3.141592653589793}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/levels/l6-po-1020.test.ts:175:96
+    173|     expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).…
+    174|   }
+    175|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+       |                                                                                                ^
+    176|   expect(e.transform.x).toBeGreaterThan(gate - 12);
+    177|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 6 skipped (8)
+   Start at  00:07:27
+   Duration  3.35s (tests 55%, transform 37%, import 7%)
+

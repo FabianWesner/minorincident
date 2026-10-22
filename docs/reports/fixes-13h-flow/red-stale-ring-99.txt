@@ -1,0 +1,26 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-progress.test.ts (7 tests | 1 failed) 5ms
+   × #99 a cached pre-death ring cannot poison progress after the visible player respawns 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-progress.test.ts > #99 a cached pre-death ring cannot poison progress after the visible player respawns
+AssertionError: expected 3 to be less than 3
+ ❯ tests/unit/playtest-progress.test.ts:54:92
+     52|   for(let t=5;t<=45;t++) {
+     53|     const x=6+(t-4)*2.2;
+     54|     expect(p.update(sample(t,{player:{x,z:15},marker:{x:x+12,z:15},dis…
+       |                                                                                            ^
+     55|   }
+     56| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  01:46:15
+   Duration  95ms (transform 61%, import 17%, tests 15%, worker 7%)
+

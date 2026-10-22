@@ -1,0 +1,30 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/levels/objective-clarity.test.ts (7 tests | 1 failed | 6 skipped) 283ms
+   × @E30 #97 the missing corgi is counted even when no human passengers survive 282ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/objective-clarity.test.ts > @E30 #97 the missing corgi is counted even when no human passengers survive
+AssertionError: expected 'Wait for everyone to board the armore…' to contain '0/1 aboard · Corgi missing'
+
+Expected: "0/1 aboard · Corgi missing"
+Received: "Wait for everyone to board the armored vehicle · 0/0 aboard"
+
+ ❯ tests/levels/objective-clarity.test.ts:116:78
+    114|   const enter = emptyInput(); enter.interact = true; w.applyInput(ente…
+    115|   expect(m.state.steps.depart.status).toBe('active');
+    116|   expect(objectiveText(m, 'Wait for everyone to board the armored vehi…
+       |                                                                              ^
+    117| }, 60_000);
+    118|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  00:58:56
+   Duration  1.42s (transform 66%, tests 20%, import 13%)
+
