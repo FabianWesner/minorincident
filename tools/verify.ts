@@ -92,7 +92,7 @@ const commands: string[][] = [
         ? [
           ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--pull', 'test-results/playwright/results.json', '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1`],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--pull', `${output}/playwright-remote.json`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
               ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${l4VisualPattern}))`, '--project=chromium', '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1']]),
@@ -103,7 +103,7 @@ const commands: string[][] = [
         ? [
           ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
               ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', aftermathVisualPattern, '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
@@ -161,7 +161,7 @@ for (const [command, ...args] of commands) {
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
-  if ((target === 'E23' || target === 'E24') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.some(a=>a==='tests/perf/l5-budgets.spec.ts'||a==='tests/perf/l6-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
+  if (['E22', 'E23', 'E24'].includes(target) && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (auditBrowser) {
     const destination = `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`;
     if (existsSync('test-results/playwright/results.json')) copyFileSync('test-results/playwright/results.json', destination);
@@ -174,6 +174,6 @@ for (const [command, ...args] of commands) {
   if (result.error || result.status !== 0) {
     process.exitCode = result.status || 1;
     // Still record the native GPU gate when a browser criterion fails.
-    if (!['E18', 'E30'].includes(target) || !args.includes('playwright')) break;
+    if (!['E18', 'E22', 'E23', 'E24', 'E30'].includes(target) || !(args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) break;
   }
 }

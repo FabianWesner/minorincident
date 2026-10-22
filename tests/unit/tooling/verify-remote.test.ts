@@ -3,8 +3,8 @@ import { spawnSync } from 'node:child_process';
 
 vi.mock('node:child_process', () => ({ spawnSync: vi.fn(() => ({ status: 0 })) }));
 vi.mock('node:fs', async importOriginal => ({ ...await importOriginal<typeof import('node:fs')>(), mkdirSync: vi.fn(), writeFileSync: vi.fn(), copyFileSync: vi.fn() }));
-const originalArgv = process.argv;
-afterEach(() => { process.argv = originalArgv; vi.unstubAllEnvs(); vi.clearAllMocks(); vi.resetModules(); });
+const originalArgv = process.argv, originalExitCode = process.exitCode;
+afterEach(() => { process.argv = originalArgv; process.exitCode = originalExitCode; vi.unstubAllEnvs(); vi.clearAllMocks(); vi.resetModules(); });
 
 test('E07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally', async () => {
   process.argv = ['node', 'tools/verify.ts', 'E07'];
@@ -36,7 +36,7 @@ for (const [epic, visualTitles] of [
   const sims = commands.filter(command => command.includes('vitest'));
   expect(sims).toHaveLength(1); expect(sims[0].slice(0, 2)).toEqual(['sh', 'tools/remote/run.sh']);
   const remote = commands.find(command => command[1] === 'tools/remote/run.sh' && command.some(arg => arg.includes('npx playwright')))!;
-  expect(remote).toBeDefined(); expect(remote.some(arg => arg.includes('--workers=1'))).toBe(true);
+  expect(remote).toBeDefined(); expect(remote).toContain('E2E_UNITS=1'); expect(remote).toContain('E2E_ADMISSION_TIMEOUT_SECONDS=3600'); expect(remote.some(arg => arg.includes('sh tools/e2e-lock.sh npx playwright'))).toBe(true); expect(remote.some(arg => arg.includes('--workers=1'))).toBe(true);
   const native = commands.find(command => command[1] === 'tools/e2e-lock.sh' && command.includes('playwright'))!;
   expect(native).toContain('--workers=1');
   const pattern = new RegExp(native[native.indexOf('--grep') + 1]);
@@ -47,4 +47,16 @@ for (const [epic, visualTitles] of [
   }
   for (const browser of commands.filter(command => command.includes('playwright')))
     expect(browser).toContain('--workers=1');
+});
+
+test('E22 retains a remote browser failure and still records native visual/perf gates', async () => {
+  process.argv = ['node', 'tools/verify.ts', 'E22'];
+  vi.stubEnv('MI_VERIFY_REMOTE_SIM', '1'); vi.stubEnv('MI_VERIFY_REMOTE_E2E', '1');
+  for (let i = 0; i < 4; i++) vi.mocked(spawnSync).mockReturnValueOnce({ status: 0 } as ReturnType<typeof spawnSync>);
+  vi.mocked(spawnSync).mockReturnValueOnce({ status: 7 } as ReturnType<typeof spawnSync>);
+  await import('../../../tools/verify');
+  const commands = vi.mocked(spawnSync).mock.calls.map(([command, args]) => [command, ...args as string[]]);
+  expect(process.exitCode).toBe(7);
+  expect(commands.some(command => command[1] === 'tools/e2e-lock.sh' && command.includes('playwright'))).toBe(true);
+  if (process.platform === 'darwin') expect(commands.some(command => command[1] === 'tools/perf/quiet-run.sh')).toBe(true);
 });
