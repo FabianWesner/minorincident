@@ -76,3 +76,10 @@ The 200-second depth-safe incremental profile reaches tick 11601 at `(1312.7,24.
 Current candidate `aa657e830` skips cloud-shadow sine work at zero strength and derivative-based blood splats at zero coverage, retaining the exact positive-strength field/math. Typecheck, lint and 15 focused guards pass. The latest full remote suite is running. Native p95/entry/matrix/smoke evidence on this candidate is pending; browser timing is paused by orchestration until 02:50 UTC on October 22.
 
 The full requested remote command on depth-safe source `d8d8df2b4` completes green: **423 files passed, 3 skipped; 2,325 tests passed, 11 skipped**, 2,435.8 seconds. The sanitized log is `evidence/remote-depth-safe-green.log.gz`. The separate full run on the mask-optimization candidate is still pending.
+
+
+## Zero-strength shader work: paired candidate measurements
+
+The `aa657e830` quiet pair retains exact real-assault inputs and body transforms, with no browser errors. Low WebGL2 `[4.1,4.2,4.1]` → `[4.4,4.3,4.2]` ms; low WebGPU `[2.9,2.5,2.3]` → `[2.5,2.4,2.5]`. The median WebGL2 gap is reduced to 0.2 ms, but still fails the no-regression condition. The batch deliberately stops before high/entry captures. These manifests/profiles/shaders and quiet conditions are retained as `mask-candidate-*`; they are not final performance acceptance.
+
+Candidate `e818b94bb` additionally puts the existing L9 distant-fire and subway-grading computations behind their positive-strength uniform branches. Their active formulas and blending are unchanged, and no geometry/LOD/count/cap/visibility setting changes. Two TypeScript-AST guards retain those branch scopes. Fresh statics, focused guards, the full remote command, and the next quiet pair are queued. The baseline worktree remains unchanged in `src/` against `769d9f8ce`.
