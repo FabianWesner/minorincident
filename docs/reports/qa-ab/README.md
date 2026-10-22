@@ -49,9 +49,9 @@ The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the s
 
 This pair cannot demonstrate differences in defects already present in 13g. The orchestrator confirmed that the PO defects predate 13h and replaced the validation criterion: compare PROD with the fixes in `lane/po-regressions-1022`, then prove sensitivity with four isolated local mutations and a same-build control. The original scores above are retained as historical evidence.
 
-The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The expanded L1–L10 same-build control is still running.
+The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The revised all-level and local same-build controls are in progress.
 
-Static checks pass: typecheck, lint, production build, and all 1,960 unit tests. The unit run exposed an existing GNU `stat` assumption in the remote-cache fixture; its fixture now supplies the Linux stat interface using the real temporary-file mtimes on macOS.
+Static checks pass: typecheck, lint, production build, and all 1,961 unit tests. The unit run exposed an existing GNU `stat` assumption in the remote-cache fixture; its fixture now supplies the Linux stat interface using the real temporary-file mtimes on macOS.
 
 ## Revised validation protocol (2026-10-22)
 
@@ -67,4 +67,22 @@ npm run qa:ab -- --baseline https://minor-incident.com \
 
 `--inject` accepts `hide-npc`, `hats`, `tank`, `bench`, or `all`; it requires `--candidate dist`. It changes only the browser test session after normal campaign setup. Each fault has its own stop: hide the actual scripted depot clerk at `l1-depot-contact`, scale existing hat geometry 2× at `l1-park`, move the actual L4 tank to the plaza wall at `l4-tank-hold`, and remove the existing bench under its sitters at `l2-ride-start`. Other stops stay unmodified. The baseline is never mutated, fresh level loads isolate stops, and each frame records the applied fault. No production source or built asset is edited.
 
-The revised hit-rate denominator is seven cases: depot, lab and benches in the real fix comparison, plus four controlled faults. Each case must flag at least one of its relevant stop/zoom variants above the **unchanged 2% threshold**, and the sheet must depict the intended change. The same-build control must flag zero variants. Exit 0 means capture completed; the JSON review list and human inspection determine gate acceptance.
+The revised hit-rate denominator is seven cases: depot, lab and benches in the real fix comparison, plus four controlled faults. Each case must flag at least one of its relevant stop/zoom variants above the **unchanged 2% threshold**, and the sheet must depict the intended change. The same-build control must flag zero variants. Exit 0 means capture completed; the JSON review list and visual inspection determine gate acceptance.
+
+### Revised sensitivity results
+
+PROD `73bce8bc5` against the built, pinned `lane/po-regressions-1022` commit `dd9e4d73e` detected **3/3 real fix cases** ([summary](2026-10-22-prod-vs-po-fixes/summary.json), 18/18 variants, zero errors, 5.32 MB JPEG). The isolated local fault comparison used that same `dd9e4d73e` build on both sides and detected **4/4 faults at both zooms** ([summary](2026-10-22-mutations/summary.json), 8/8 variants, zero errors, 2.36 MB JPEG).
+
+| Case | Peak score | Result |
+| --- | ---: | --- |
+| Real depot clerk return | 15.63% | Detected |
+| Real lab handover/return | 85.50% | Detected |
+| Real seated civilians / missing benches | 78.99% | Detected |
+| Injected missing scripted clerk | 94.18% | Detected |
+| Injected hats scaled 2× | 85.29% | Detected |
+| Injected removed bench | 67.14% | Detected |
+| Injected tank displaced into plaza boundary | 96.96% | Detected |
+
+Combined sensitivity: **7/7 (100%)** at the unchanged 2% threshold. Codex inspected the seven relevant still/motion sheets; the JSON records that review separately from raw scores. The fixed-branch changes are intended improvements; A/B flags their visual differences without deciding their product acceptability. Initial bench calibration stayed inside the station reveal area and correctly found no change; the permanent tour now walks outside and waits for the actual `npc-sit` poses, exposing the culled seats.
+
+Same-build false-positive control results are pending.
