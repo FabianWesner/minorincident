@@ -1,6 +1,19 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status: candidate fixes and guards/types/lint are green. Final native and full remote gates are pending on the latest warm-up fixes. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
+Status at 17:42 UTC: **L4 low is strict green on `b47e00336`: turn 46.6 / tank 34.0 / break 48.3 ms, zero turn builds.** Its high/L6/loading matrix, final full remote gate and smoke are running or queued; the goal is not yet complete. The intermediate `e54658fc3` matrix below passes high/L6 but fails low. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
+
+## Matched quiet measurements
+
+| Measurement | Before (`480b44e42`) | Candidate (`e54658fc3`) |
+| --- | --- | --- |
+| L4 WebGPU high turn / tank / break | 54.4 / 10.8 / 99.7 ms; 4 turn builds | **44.1 / 10.7 / 20.5 ms; 0 builds** |
+| L4 WebGPU low turn / tank / break | 59.0 / 53.9 / 52.5 ms; 0 builds | **55.5 / 54.4 / 52.0 ms; 0 builds — fails** |
+| L6 WebGL high first-five heap | +9.31839% | **+4.32233%** |
+| L6 WebGL low first-five heap | +10.37747% | **+5.14393%** |
+| L6 WebGPU high first-five heap | +10.57250% | **+5.53893%** |
+| L6 WebGPU low first-five heap | +11.82659% | **+6.27945%** |
+
+Every completed native iteration is retained, including failures. The `e54658fc3` batch's unadmitted loading observations were canceled to prioritize the subsequent strict low run; no loading pass is claimed for it. Earlier `9a3b5e5d6` loading was 3,842.3 / 12,419.5 ms high/low versus matched baseline 4,013.7 / 13,236.9 ms. The final runtime still needs its own <=1 s loading comparison, full quiet matrix, full remote suite and smoke.
 
 ## Required evidence
 
@@ -25,8 +38,20 @@ Handoff before numbers: L4 WebGPU high turn48.5/tank15.3/break204.7 ms and four 
 | Interaction LOD feature graph | [interaction-lod-materials.test.ts](../../../tests/unit/render/interaction-lod-materials.test.ts) | `interaction-guard-red.log.gz` / `interaction-focused-green.log.gz` |
 | Rigid actor/collapse feature graph | [entity-assets-lod-materials.test.ts](../../../tests/unit/render/entity-assets-lod-materials.test.ts) | `collapse-guard-red.log.gz` / `graph-caches-focused-green.log.gz` |
 | Static placement graph identity | [static-instance-attributes.test.ts](../../../tests/unit/render/static-instance-attributes.test.ts) | `placement-guard-red.log.gz` / `placement-focused-green.log.gz` |
+| Numeric A* queue | [nav-heap-allocation.test.ts](../../../tests/unit/performance/nav-heap-allocation.test.ts) | `nav-heap-guard-red.log.gz` / `nav-heap-green-build.log.gz` |
+| Cached expansion coordinates | [nav-grid-expansion.test.ts](../../../tests/unit/performance/nav-grid-expansion.test.ts) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
+| Independent fast event copies | [world-event-copy.test.ts](../../../tests/unit/performance/world-event-copy.test.ts) | `cpu-guards-red.log.gz` / `cpu-ready-green-build.log.gz` |
+| Hidden actor reveal prewarm | [entity-assets-lod-materials.test.ts](../../../tests/unit/render/entity-assets-lod-materials.test.ts) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
+| Private alarm CPU warm-up | [l4-alarm-jit-warmup.test.ts](../../../tests/unit/performance/l4-alarm-jit-warmup.test.ts) | `warm-guards-red.log.gz` / `warm-green-build.log.gz` |
+| Gun aiming world matrix reads | [gun-aim-matrix-reuse.test.ts](../../../tests/unit/render/gun-aim-matrix-reuse.test.ts) | `aim-guard-red.log.gz` / `aim-guard-green-build.log.gz`; numerical oracle preserves full poses |
 
-Receipts above are in `evidence/`. All five guards also pass in `candidate-full-remote-95796.log.gz` (439 files / 2,411 tests passed). Runtime changes add no warm-up calls or passes; crowd, corpse, quality and fixture thresholds are unchanged.
+Receipts above are in `evidence/`. The first five guards also pass in `candidate-full-remote-95796.log.gz` (439 files / 2,411 tests passed). These initial runtime fixes add no warm-up calls or passes; crowd, corpse, quality and fixture thresholds are unchanged.
+
+The first five graph/owner fixes above add no warm-up calls or passes. The later private alarm change extends its existing scratch simulation from 30 to 90 ticks; its loading overhead remains a final gate. The capped `l4-alarm-cpu-profile.ts` diagnostic uses the ordinary browser lock alongside QA, with no uncapped flags or acceptance timing claim. It records unwrapped CPU samples and simulation ticks; the original uncapped acceptance fixture remains unchanged and exclusively quiet.
+
+Gun aiming used Three world getters immediately after refreshing the same parent chains. Direct reads of the refreshed matrices and the existing `LimbIK` ready flag reduce redundant ancestor refreshes from seven to two in the unheld pose. The new guard retains the original aiming solver as a numerical oracle across three real assets, three clips, phases/headings, nonuniform scale, and both ordinary/protracted two-handed grips. All seven focused cases in three files pass; types/lint/build pass. The strict low result and provenance are archived as `quiet-aim-low-*`.
+
+A scoped pedestrian appearance roster was also prototyped and passed its guards, but was removed when the aiming change closed strict low. `unadopted-batch-*` preserves that exploration's checks; its runtime and test edits are absent from the final candidate.
 
 ## Diagnostic setup
 
