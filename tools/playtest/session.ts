@@ -563,6 +563,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
     const far = ringDist !== null && ringDist > 25;
     const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
+    if (o.noSkip && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
+      // A raised marker can make repeated ground clicks stop on the stair edge.
+      // Project both visible positions onto the courier's current floor and
+      // walk toward the marker with physical keys, without reading navigation.
+      const points = await page.evaluate(({ p, goal }) => {
+        const a = window.__SS__!;
+        return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
+      }, { p: e.player, goal: ring });
+      const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+      await releaseAim(); await press(keys); await hold(700); await press([]);
+      log({ visibleMarkerUnstick: e.tick, keys }); continue;
+    }
     if (!o.noSkip && stalled && !atRing && ring && e.player) {
       if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
       const step = await page.evaluate(({ goal }) => {
