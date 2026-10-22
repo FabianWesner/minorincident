@@ -2,7 +2,7 @@
 
 Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evidence/partial-ac-inventory.json) preserves every partial from the sweep. This is an ongoing audit; no pending row is accepted by this report.
 
-## Latest checkpoint — 13:45 UTC
+## Latest checkpoint — 14:14 UTC
 
 **7/31 starting partials are met:** E25-AC01/12/15, E29-AC07/14, E31-AC08 and E32-AC09. Every other starting partial remains open unless a later terminal receipt and explicit disposition below says otherwise. All five epic statuses stay **in-progress**. [Machine-readable31-row ledger](evidence/partial-ac-inventory.json).
 
@@ -320,3 +320,23 @@ The new caption artifact passes remote typecheck/lint/build ([log](evidence/l9-c
 ### 13:49 UTC — all corrected landscape routes complete
 
 All8 corrected actual landscape routes reach L10 (both backends, both HP states, zoom.5/1.5), with no hard input/transition/console failure. Every courier contrast gate passes **3.038–4.509:1**, and every subtitle/audio-caption pair has **12px** clearance. The batch remains8fail because the unchanged strict navigation gate still fails: close framing yields no valid complete road/verge pairs, wide framing measures **1.981–1.987:1**. [Full native receipt](evidence/native-E31-landscape-input-repeat-playwright.json.gz), [raw repeat data](evidence/l9-landscape-repeat-data.json.gz), [new PNG hashes](evidence/l9-landscape-repeat-images.json). Both caption correction and this landscape courier submatrix now have genuine real-input confirmation; complete isolated desktop/portrait courier repeat remains queued. AC16/17/18 stay partial.
+
+## 14:14 UTC — current native failures and review
+
+[Canonical E31 review](../../../../test-results/epics/E31/review.md) scores **A5/D6/F6/G5**, NOT ACCEPTED. [Canonical E32 review](../../../../test-results/epics/E32/review.md) scores the seven regions **A4/5/6/4/5/4/5**, with C6/D6/F6/G4 and H unmeasured. Opened all seven default-camera originals in full resolution: R1 is a sparse junction, R2 has a red house/fence, R3 has warm lamp/firefighters/dogs, R4 is a crowded road without strong military identity, R5 cure backpack reads but research identity is weak, R6 repeats road/crowd around a fence/clutter edge, and R7 has a bright console/tower over broad slate floor. Near-black shadows, blue material compression and overlapping red rectangles fail must items. The complete default/mist/ending contact sheet uses the final twelfth capture slot. No source or numeric acceptance is derived from a resized sheet.
+
+The first radius-uncommitted0.5 region images are explicitly invalid; [their snapshots](evidence/l10-current-review-stale-radius.json.gz) and [hashes](evidence/l10-current-review-stale-radius-images.json) remain separate. A changed zoom target is insufficient: the collector now commits the camera presentation with `advance(0)`, asserts actual radius scaling and camera-to-target distance, and repeats the full4 configurations. No numeric gate is waived. Mist captures already advance simulation/render ticks and show expanding pale front, collapse and recovery motion across both backends/tiers. The epilogue killAll corpse mound is an acknowledged setup artifact; no persistent corpse was removed.
+
+The corrected isolated courier probe ends **2pass2fail**:22/24 views pass, but desktop0HP/default misses at **2.681788 /2.677844:1**. Phone minimum3.028407:1 passes. [Raw proof](evidence/l9-current-player-repeat-data.json.gz), [receipt](evidence/native-E31-current-player-repeat-playwright.json.gz). All caption rectangles clear12px. The low probe now uses actual touch/mobile context rather than a narrow mouse viewport. A final L9-only surface-fill1.2 candidate (from0.8) passes remote typecheck/lint/build ([log](evidence/l9-key12-build.log.txt.gz), [artifact hashes](evidence/l9-key12-build.json)); full24-view native confirmation is queued. Ground/road brightness, light counts and3:1 gate remain unchanged.
+
+The first8 crash timing cases all measure real L9 driving/approach/fall/impact/crawl/done, max **18.5–41.6ms**, but omit a campaign and therefore cannot invoke Game.handOver. [All original metrics](evidence/l9-crash-first-without-campaign.json.gz). The corrected fixture supplies the same campaign as the passing full input matrix. Current corrected cases reachL10 but capture **multi-second cold loading/warmup gaps**, including2774.5/3081.4ms; some35-second samples end before30 ready frames. These remain red/unmeasured under the original50ms/ready-frame assertions. The raw phase tags retain both playable and loading intervals; no large gap is deleted.
+
+### Additional proposed clarifications — unadopted
+
+| AC/subcheck | Proposed wording | Reason |
+| --- | --- | --- |
+| E31-AC19 cold handover timing | Keep≤50ms for playable L9 route/crash/crawl and playable L10 streaming. Retain the explicit cold loading-overlay interval separately (completion to first ready frame) and require a PO-named load budget; retain all raw frame gaps and30 ready frames. | Actual crash-only max41.6ms passes, while cold L10 shader/load gaps reach seconds. Current tests still apply50ms to the whole trace and remain red; no proposed window is silently adopted. |
+| E31-AC18 / E32-AC30 ChecklistF position wording | Use E14's approved two-side desktop rack and three-button touch safe areas, requiring legibility, selected-side identity and no HUD/caption/action overlap at both phone orientations/text scales. | The unconditional old mockup's bottom-centre slot-card wording does not describe E14's desktop/touch schemes. This is a wording proposal, not acceptance of remaining layout defects. |
+| E32-AC30 ChecklistH mist mapping | Apply blast flash/fireball/shockwave/debris/scorch checks to actual explosions; separately require visible cure-front growth, same-ID collapse/reversal, courier/threat clarity and survivor/ending continuity for mist. | Cure mist is not a fireball; actual rocket/explosion proof remains required wherever used. Current complete finale blast/ending vision proof is still missing. |
+
+Valid below7 visual scores, reverse L7 skyline, strict navigation/phone performance failures and missing input/photo/retention proof have **no proposed waiver**.

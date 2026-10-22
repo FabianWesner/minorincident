@@ -1,21 +1,26 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../e2e/fixtures';
+import { preset } from '../../src/sim/progression/Campaign';
 
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
 for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 'low'] as const) for (const hp of [1000, 0]) {
   test(`T-E31-19-crash-hitch @E31-AC19 @perf actual crash and L10 handover ${backend} ${tier} HP${hp}`, async ({ page }) => {
     test.setTimeout(120_000);
-    await boot(page, `/?test=1&scenelab&renderer=${backend}&quality=${tier}&audio=muted&dpr=1`);
+    await boot(page, `/?test=1&scenelab&ui=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1`);
     await page.mouse.click(200, 250);
-    await page.evaluate(async ({ tier, hp }) => {
+    const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; save.settings.quality = tier;
+    await page.evaluate(async ({ tier, hp, save }) => {
       const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+      // Match the existing successful real-input handover fixture: an actual
+      // campaign is required for Game.handOver to continue beyond L9.
+      game.campaign = save;
       await a.loadLevel('L9', { seed: 31 }); a.pause(); a.settings.set({ quality: tier, muted: false, captions: true }); await a.audio.unlock();
       const w = game.world, car = w.missions!.l9!.state.carId, anchor = w.missions!.def.anchors['crash-approach'];
       // Initial placement only: the normal driving trigger owns every subsequent
       // crash phase and the production campaign callback owns the L10 handover.
       a.teleport(car, { x: anchor.x - 12, z: anchor.z }); w.vehicles!.damage(car, 1000 - hp); w.vehicles!.rebuild();
       await a.step(1); a.camera.follow(); await a.screenshotReady();
-    }, { tier, hp });
+    }, { tier, hp, save });
     await page.keyboard.down('KeyW');
     const result = await page.evaluate(async () => {
       const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
@@ -40,7 +45,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 
         eventHitches: events.map(e => ({ ...e, maxMs: Math.max(...frames.filter(f => Math.abs(f.at - e.at) <= 250).map(f => f.ms)) })) };
     });
     await page.keyboard.up('KeyW');
-    const out = 'test-results/epics/E31/crash-hitches'; mkdirSync(out, { recursive: true });
+    const out = 'test-results/epics/E31/crash-hitches-repeat'; mkdirSync(out, { recursive: true });
     writeFileSync(`${out}/${backend}-${tier}-hp${hp}.json`, JSON.stringify(result, null, 2));
     expect.soft(result.backend).toBe(backend); expect.soft(result.quality).toBe(tier);
     expect.soft(result.scenario, 'the production callback must reach L10').toBe('L10');
