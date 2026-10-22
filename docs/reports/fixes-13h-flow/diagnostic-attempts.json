@@ -73,6 +73,15 @@
       "skipped": [],
       "maxNoProgressSeconds": 9.063,
       "reason": "Reached gate-150, then repeated deaths returning to the separated guard; stopped at the unmodified 20 minute driver cap. The current low-health policy fix was committed after this session started."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-ally-cover",
+      "sourceCommit": "34cbbf144",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 5.098,
+      "reason": "Interrupted after over ten minutes of repeated rear-guard return/death loops to preserve the allocated browser window. Shelter/stop ally cover alone was insufficient. No step was skipped; this is rejected diagnostic evidence."
     }
   ],
   "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"
