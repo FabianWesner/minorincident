@@ -1,10 +1,10 @@
-# Fixes 13h flow — acceptance pending
+# Fixes 13h flow — final handoff
 
-- #96: follower, self-defence and guard movement share the walkable-floor return route across actual lane edges; NPC maintenance-room routes remain available.
-- #97: early seating shows the breach countdown; E30 departure stays locked until breach plus all living passengers seated; missing names include Corgi.
-- #97 HUD: corgi/Armor/objective separation checked at zoom 0.5/1/1.5, desktop and phone landscape; eight reviewed high/low WebGL2/WebGPU captures retained.
-- #99: valid fists/kick-only equipped save retains earned ownership; an empty first rendered frame no longer aborts; strict input sessions cannot skip objectives.
-- Red-first evidence is committed for navigation, self-defence, boarding/counts, HUD/phone, seeded save validity, empty figures and driver observation/input fixes.
-- Local checks: typecheck/lint/build green; complete L6 bot exactly baseline (283.6 s, 23/29, no deaths, peak 45); newbie 275.6 s, 18/29, no deaths.
-- Remote: final full suite 2,329 passed (423 files, nine native skips), exit 0; unchanged timeout retries 41 passed; final L6 scope 63 passed; driver checks/typecheck/lint green.
-- Browser gates: female weapons and L7→L8 completed with no skips (max pauses 13.2/9.1/7.7 s); smoke 31/31 and HUD 6/6 green. Remaining: male fists and final cleanup.
+- #96: follower regressions at (192.7, 11.8, y 1.57) and (59, 18.2) are red-first and green; final L6 scope: 63 tests passed.
+- #97: APC departure locks until breach plus all living passengers, including Corgi; countdown/missing names fixed; eight HUD captures reviewed.
+- #99/current driver: seeded fists/kick and empty-frame startup fixed; eyes/combat committed as a22b015bf; 25 unit tests, typecheck and lint passed.
+- ONE final male fists run: UNFINISHED at the 20-minute level cap (20m30.386s total); 15 deaths, zero skips; maximum measured pause 12.99 s.
+- Stalls: driver target/escort limitations (112 timer signals, seven warnings, 16m22s exit loop and cap); game retry effects: 14 counter rollbacks. Every event/classification is in [the audit](male-fists-final.json).
+- Other browser gates passed: female weapons and L7→L8 with zero skips; HUD 6/6 (both backends, high/low, desktop/phone); smoke 31/31.
+- Full remote suite: 2,329 tests passed in 423 files, nine native skips, exit 0; unchanged timeout-file retries: 41 passed.
+- Requested honest handoff complete; original completed-male browser gate remains UNMET. Eight captures retained; no game easing, deploy or merge.
