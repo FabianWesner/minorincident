@@ -54,6 +54,7 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
+import { color } from 'three/tsl';
 import { InteractionView } from './InteractionView';
 import { MountedGunView } from './MountedGunView';
 import { EntityAssets } from './EntityAssets';
@@ -1070,6 +1071,7 @@ export class GameView implements Lifecycle {
             if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
             const index = infected ? 1 : 0;
             masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
+            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000'));
             child.material = masks[index];
           } else if (!hero && source.name === 'pal_leaf-card-crown') {
             if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));

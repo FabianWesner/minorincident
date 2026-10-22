@@ -9,7 +9,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E22-19-production @E22-AC19
   const out = `test-results/ac-close/l4-production/${backend}-${tier}`;
   mkdirSync(out, { recursive: true });
   await boot(page, `/?test=1&scenelab=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1&ui=1`);
-  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L4', { seed: 1, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
+  await page.evaluate(async tier => { const a = window.__SS__!; a.settings.set({ quality: tier }); await a.loadLevel('L4', { seed: 1, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); }, tier);
   const until = async (condition: string, limit = 1600) => {
     for (let i = 0; i < limit && !await page.evaluate(condition); i++) await page.evaluate(() => window.__SS__!.step(15));
     expect(await page.evaluate(condition), condition).toBe(true);
