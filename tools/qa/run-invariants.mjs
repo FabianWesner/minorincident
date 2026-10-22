@@ -15,6 +15,7 @@ async function run(stage, command, args) {
     child.on('exit', code => resolve(code ?? 1));
   });
   receipts.push({ stage, code, seconds: (Date.now() - start) / 1000, revision, log });
+  writeFileSync('test-results/qa-invariants/run.json', JSON.stringify(receipts, null, 2) + '\n');
   return code;
 }
 // A red sim check must not prevent the other invariants from being measured.

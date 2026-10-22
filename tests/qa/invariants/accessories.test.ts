@@ -15,12 +15,18 @@ import { packCrowdParts } from '../../../src/assets/crowdParts';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { oracle } from './oracles';
+import { loadCivilianSource } from '../../../src/assets/civilianSource';
+import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
 
 type Lod = 'lod0' | 'lod1' | 'lod2';
 const cache = new Map<string, Promise<Group>>();
 async function asset(id: string, lod: Lod): Promise<Group> {
   const key = `${id}/${lod}`;
   if (!cache.has(key)) cache.set(key, (async () => {
+    if (id.startsWith('npc.')) return loadCivilianSource(id, lod, async url => {
+      const bytes = readFileSync(`public${url}`);
+      return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+    });
     const def = manifest.find(a => a.id === id)!;
     const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
     const parsed = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), ''), { scene } = parsed;
@@ -41,6 +47,16 @@ async function authoredBounds(id: string, lod: Lod): Promise<Box3> {
   root.traverse(node => { if (node instanceof Mesh) result.union(bounds(node.geometry, inverse.clone().multiply(node.matrixWorld))); });
   return result;
 }
+function authoredSkull(root: Group) {
+  root.updateMatrixWorld(true); const head = root.getObjectByName('head'); if (!head) return null;
+  const inverse = head.matrixWorld.clone().invert(), box = new Box3(), point = new Vector3();
+  head.traverse(node => {
+    if (!(node instanceof Mesh) || Array.isArray(node.material) || !/skin/i.test(node.material.name)) return;
+    const p = node.geometry.getAttribute('position'), index = node.geometry.index, matrix = inverse.clone().multiply(node.matrixWorld);
+    for (let i = 0; i < (index?.count ?? p.count); i++) box.expandByPoint(point.fromBufferAttribute(p, index ? index.getX(i) : i).applyMatrix4(matrix));
+  });
+  return box.isEmpty() ? null : { size: box.getSize(new Vector3()), centre: box.getCenter(new Vector3()) };
+}
 
 test('1 accessories: actual head-local bounds and scale for every crowd model × LOD × appearance tier', async () => {
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => asset(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
@@ -49,6 +65,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
   try {
     await renderer.init();
     const referenceRoot = await asset('npc.civilian-man-a', 'lod1');
+    prepareCivilianRig(referenceRoot, 'npc.civilian-man-a');
     const referenceGeo = bakeInfected(referenceRoot, [], false, ['idle']).geometry;
     packCrowdParts(referenceGeo);
     markCrowdAppearance(referenceGeo, false);
@@ -67,10 +84,12 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     // Tolerance is the source LOD's measured extent / 1024 (quantization), with a 2 mm floating-point floor.
     let combinations = 0, eligible = 0;
     for (const model of models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
-      const root = await asset(model, lod), baked = bakeInfected(root, [], false, ['idle']);
+      const root = await asset(model, lod);
+      if (model.startsWith('npc.')) prepareCivilianRig(root, model);
+      const baked = bakeInfected(root, [], false, ['idle']);
       deinterleaveGeometry(baked.geometry); const geometry = mergeVertices(baked.geometry); packCrowdParts(geometry);
       markCrowdAppearance(geometry, model.startsWith('inf.'));
-      const skull = bakedSkull(geometry);
+      const registeredSkull = bakedSkull(geometry), skull = registeredSkull ?? authoredSkull(root);
       // Glasses are authored into these civilian heads, not separate acc.* models.
       // Their dark front-face vertices must remain on the face and owned by the head joint.
       if (/npc\.civilian-(woman-b|elderly)(\.aftermath)?$/.test(model)) {
@@ -105,7 +124,8 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
         const fit = def.accessory.fits[model.replace(/\.aftermath$/, '')] ?? def.accessory.fits['npc.civilian-man-a'];
         const expectedTransform = new Matrix4().makeScale(...fit.scale).setPosition(...fit.offset);
         if (!def.accessory.fits[model.replace(/\.aftermath$/, '')]) {
-          expect(skull, `${model}/${lod} skin skull`).toBeTruthy();
+          if (!skull) { errors.push(`${model}/${lod}: no authored head skin for accessory anchoring`); continue; }
+          if (!registeredSkull) errors.push(`${model}/${lod}: renderer cannot register the authored skin skull for ${id}`);
           const ratio = skull!.size.clone().divide(reference.size);
           expectedTransform.premultiply(new Matrix4().makeTranslation(...skull!.centre.toArray()).multiply(new Matrix4().makeScale(...ratio.toArray())).multiply(new Matrix4().makeTranslation(...reference.centre.clone().negate().toArray())));
         }
@@ -130,6 +150,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       geometry.dispose(); baked.geometry.dispose();
     }
     console.log(`[qa:invariants] accessories combinations=${combinations} eligible=${eligible}`);
-    expect(errors.slice(0, 15), `accessories invariant: ${errors.length} bad head bounds`).toEqual([]);
+    const distinct = [...new Set(errors)];
+    expect(distinct, `accessories invariant: ${distinct.length} bad head bounds across ${combinations} combinations`).toEqual([]);
   } finally { renderer.dispose(); vi.restoreAllMocks(); }
 }, 180_000);
