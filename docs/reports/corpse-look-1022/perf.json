@@ -1,0 +1,13 @@
+{
+  "method": "tools/perf/quiet-run.sh + tools/qa/l10-corpses.ts --timing, L10 cure-disperse-ready assault field, low, zoom 1, 3 repeats, production builds, paired within one reservation",
+  "bodies": { "low": 282, "high": 363, "pagesLow": 114 },
+  "p95ms": {
+    "webgl2": { "before_ba436b90a": [3.8, 3.4, 4.3], "after_prone": [3.4, 3.4, 4.1] },
+    "webgpu": { "before_ba436b90a": [3.3, 2.4, 2.5], "after_prone": [2.4, 2.3, 3.0] }
+  },
+  "rejectedExperiment_livingLod1ForAllRegularCorpses": {
+    "webgl2": { "current": [3.4, 3.4, 3.7], "lod1": [4.6, 4.6, 4.6] },
+    "corpseTrianglesLow": { "current": 229660, "lod1": 1314236 }
+  },
+  "alphaHitCorpseMatrix_webgpu": { "pass": 46, "total": 48, "failing": ["alpha-hit-corpse-worker@high-z1.5 lookHueDriftDeg 138.9 > 60", "alpha-hit-corpse-worker@low-z1.5 lookHueDriftDeg 143 > 60"] }
+}
