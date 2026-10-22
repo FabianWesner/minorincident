@@ -25,4 +25,4 @@ The candidate records the first post-card frames of all 20 loads and a ten-secon
 | L10 webgpu low | —/— | pending | pending | — | pending |
 | L10 webgpu high | —/— | pending | pending | — | pending |
 | L10 webgl2 low | —/— | pending | pending | — | pending |
-| L10 webgl2 high | —/— | pending | pending | — | pending |
+| L10 webgl2 high | 20/— | 8.476/8.895/10.244 | pending | — | pending |

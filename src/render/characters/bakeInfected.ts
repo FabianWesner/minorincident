@@ -2,7 +2,7 @@
 import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
-import { authoredClips, sampleClip, strideScale } from './clips';
+import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 import { compactCrowdGeometry } from './compactCrowdGeometry';
@@ -12,6 +12,9 @@ type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; s
 // pins another vertex buffer after the scene indexes/disposes its own copy.
 const bakedCrowds = new Map<string, { clip: CrowdClip; transforms: Matrix4[] }>();
 const bakedCrowdLimit = 64;
+// LODs with exactly the same rigid skeleton share geometry-independent samples
+// within a cold load. Grounded/death poses still sample each model's own bounds.
+const rigPoses = new Map<string, Map<string, Float32Array>>();
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
   'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
 export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-') && !clip.startsWith('dog-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
@@ -53,6 +56,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const required = new Set<Object3D>();
   for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
   const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
+  if (preserveIndices) root.updateMatrixWorld(true);
+  const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
+    ? JSON.stringify([crawlingRestPose, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
+  const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
+  if (poseKey) {
+    rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);
+    if (rigPoses.size > 8) rigPoses.delete(rigPoses.keys().next().value!);
+  }
   const updateJoints = () => {
     for (const node of joints) {
       if (node.matrixAutoUpdate) node.updateMatrix();
@@ -97,6 +108,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
 
     const mixer = new AnimationMixer(root);
     for (const clip of clipNames) {
+      const reusable = !groundClips.test(clip) && clip !== 'animal-death';
+      const shared = reusable ? sharedPoses?.get(clip) : undefined;
+      if (shared) { (matrices as Float32Array).set(shared, matrixOffset); matrixOffset += shared.length; continue; }
+      const clipStart = matrixOffset;
       const embedded = root.animations.find(animation => animation.name === clip);
       const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
       if (action) { action.clampWhenFinished = true; action.reset().play(); }
@@ -119,6 +134,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         if ((frame + 1) % 6 === 0) yield;
       }
       action?.stop();
+      if (reusable) sharedPoses?.set(clip, new Float32Array(matrices.slice(clipStart, matrixOffset)));
     }
     mixer.uncacheRoot(root);
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
