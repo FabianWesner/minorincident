@@ -1,7 +1,7 @@
 #cloud-config
 # Boot config for a fresh runner (no snapshot yet). __PUB__ is replaced by pool.py with ~/.ssh/mi-runner.pub.
 package_update: true
-packages: [git, rsync, curl, ca-certificates, unattended-upgrades, xz-utils, util-linux, build-essential, python3, libnss3, libnspr4, libatk1.0-0, libatk-bridge2.0-0, libatspi2.0-0, libx11-6, libxcomposite1, libxdamage1, libxext6, libxfixes3, libxrandr2, libgbm1, libdrm2, libxcb1, libxkbcommon0, libasound2t64, libcups2t64, libcairo2, libpango-1.0-0, fonts-liberation]
+packages: [git, rsync, ffmpeg, curl, ca-certificates, unattended-upgrades, xz-utils, util-linux, build-essential, python3, libnss3, libnspr4, libatk1.0-0, libatk-bridge2.0-0, libatspi2.0-0, libx11-6, libxcomposite1, libxdamage1, libxext6, libxfixes3, libxrandr2, libgbm1, libdrm2, libxcb1, libxkbcommon0, libasound2t64, libcups2t64, libcairo2, libpango-1.0-0, fonts-liberation]
 users:
   - name: runner
     shell: /bin/bash

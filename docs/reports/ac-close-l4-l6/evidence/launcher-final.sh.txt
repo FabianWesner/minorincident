@@ -1,0 +1,48 @@
+#!/bin/sh
+set -u
+for marker in /tmp/ac-close-l4-l6-verifier/archive-*; do
+  [ -f "$marker" ] || continue
+  [ "$marker" = /tmp/ac-close-l4-l6-verifier/archive-perf.py ] && continue
+  tag=${marker##*/archive-}
+  python3 /tmp/ac-close-l4-l6-verifier/archive-perf.py "$tag"
+done
+case " $* " in
+  *tools/perf/quiet-run.sh*)
+    if [ -z "${AC_PERF_ARCHIVE_TAG:-}" ]; then
+      case " $* " in
+        *tests/perf/l4-budgets.spec.ts*) epic=E22;;
+        *tests/perf/l5-budgets.spec.ts*) epic=E23;;
+        *tests/perf/l6-budgets.spec.ts*) epic=E24;;
+        *) epic=other;;
+      esac
+      export AC_PERF_ARCHIVE_TAG="${E2E_RENDERER:-webgl}-$epic"
+      export PERF_CONDITIONS_LOG="test-results/ac-close/quiet-$AC_PERF_ARCHIVE_TAG-conditions.jsonl"
+      unset L4_TIMING_KEYS L4_CPU_PROFILE
+    fi;;
+esac
+if [ -f /tmp/ac-close-l4-l6-verifier/needs-mask-proof ]; then
+  rm /tmp/ac-close-l4-l6-verifier/needs-mask-proof
+  printf '%s\n' '[ac-close fence] build and combined corrected functional proof before next queued batch' >&2
+  (
+    E2E_PORT=4081 SCENE_PORT=4082 E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 /bin/sh tools/e2e-lock.sh npx playwright test tests/e2e/levels/L6.spec.ts --grep 'T-E24-17' --project=chromium --workers=1
+    result=$?
+    cp test-results/playwright/results.json test-results/ac-close/corrected-route-v6-results.json
+    printf '%s\n' "$result" > /tmp/ac-close-corrected-route-v6.exit
+  ) > /tmp/ac-close-corrected-route-v6.log 2>&1
+fi
+printf '[ac-close fence] admitted at %s: %s\n' "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" "$*" >&2
+if [ -n "${AC_PERF_ARCHIVE_TAG:-}" ]; then touch /tmp/ac-close-l4-l6-verifier/archive-$AC_PERF_ARCHIVE_TAG; fi
+case " $* " in
+  *tests/perf/l7-lifecycle.spec.ts*) if [ "${E2E_RENDERER:-webgl}" = webgl ] && [ -z "${AC_PERF_ARCHIVE_TAG:-}" ]; then touch /tmp/ac-close-l4-l6-verifier/archive-webgl; fi;;
+esac
+if [ "${AC_PERF_ARCHIVE_TAG:-}" = webgl-core ]; then unset L4_TIMING_KEYS L4_CPU_PROFILE; fi
+if [ -n "${AC_RECEIPT_DEST:-}" ]; then
+  rm -f test-results/playwright/results.json
+  /bin/sh "$@"
+  result=$?
+  [ ! -f test-results/playwright/results.json ] || cp test-results/playwright/results.json "$AC_RECEIPT_DEST"
+  [ -z "${AC_RECEIPT_EXIT:-}" ] || printf '%s\n' "$result" > "$AC_RECEIPT_EXIT"
+  if [ ! -f /tmp/ac-close-l4-l6-verifier/primary-proof-hold ] && [ -f /tmp/ac-close-l4-l6-verifier/priority-receipt ] && [ "$AC_RECEIPT_DEST" = "$(cat /tmp/ac-close-l4-l6-verifier/priority-receipt)" ]; then rm -f /tmp/ac-close-l4-l6-verifier/priority-receipt; fi
+  exit "$result"
+fi
+exec /bin/sh "$@"

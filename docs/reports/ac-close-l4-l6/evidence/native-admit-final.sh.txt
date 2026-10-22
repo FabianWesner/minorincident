@@ -1,0 +1,11 @@
+#!/bin/sh
+set -u
+deadline=$(($(date +%s) + ${E2E_ADMISSION_TIMEOUT_SECONDS:-3600}))
+while [ "$(date +%s)" -lt "$deadline" ]; do
+  if [ -f /tmp/ac-close-l4-l6-verifier/priority-receipt ] && [ "${AC_RECEIPT_DEST:-}" != "$(cat /tmp/ac-close-l4-l6-verifier/priority-receipt)" ]; then sleep 2; continue; fi
+  MI_AC_NATIVE_TRY=1 /bin/sh "$@"
+  result=$?
+  [ "$result" = 75 ] || exit "$result"
+  sleep 2
+done
+exit 75

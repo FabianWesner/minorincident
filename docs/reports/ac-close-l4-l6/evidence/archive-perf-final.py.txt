@@ -1,0 +1,36 @@
+from pathlib import Path
+import datetime,gzip,json,shutil,sys
+tag=sys.argv[1];backend=tag.split('-')[0];root=Path.cwd();out=root/'docs/reports/ac-close-l4-l6/evidence';out.mkdir(exist_ok=True)
+conditions=root/f'test-results/ac-close/quiet-{tag}-conditions.jsonl'
+start=0
+if conditions.exists():
+ entries=[json.loads(line) for line in conditions.read_text().splitlines() if line.strip()]
+ if entries:start=datetime.datetime.fromisoformat(entries[-1]['at'].replace('Z','+00:00')).timestamp()
+paths=[root/'test-results/playwright/results.json',conditions]
+for epic in ['E22','E23','E24']:
+ paths.extend((root/f'test-results/epics/{epic}/perf').glob('*.json'))
+ paths.extend((root/f'test-results/epics/{epic}').glob(f'lifecycle-*-{backend}.json'))
+paths=[p for p in paths if start and p.exists() and p.stat().st_mtime>=start]
+manifest=[]
+for p in paths:
+ label='-'.join(p.relative_to(root).parts[2:]);name=f'quiet-{tag}-{label}.gz'
+ with p.open('rb') as i,gzip.open(out/name,'wb') as o:shutil.copyfileobj(i,o)
+ manifest.append({'path':str(p.relative_to(root)),'mtime':p.stat().st_mtime,'archive':name})
+for epic in ['E22','E23','E24']:
+ source=root/f'test-results/epics/{epic}/perf';dest=root/f'test-results/ac-close/quiet-{tag}/{epic}'
+ if start and source.exists():
+  dest.mkdir(parents=True,exist_ok=True)
+  for p in source.iterdir():
+   if p.is_file() and p.stat().st_mtime>=start:shutil.copyfile(p,dest/p.name)
+(out/f'quiet-{tag}-archive-manifest.json').write_text(json.dumps({'backend':backend,'startedEpoch':start,'files':manifest},indent=2)+'\n')
+Path(f'/tmp/ac-close-l4-l6-verifier/archive-{tag}').unlink(missing_ok=True)
+
+# Orchestrator 2026-10-22: let E31 D2 take the next global quiet turn.
+# quiet-run has exited and released its slots before this archiver executes;
+# retaining only this lane's private lock blocks our own later browsers.
+if tag == 'webgl-primary':
+ import time
+ handoff=Path('/tmp/ac-close-l4-l6-verifier/handoff-to-E31')
+ if handoff.exists():
+  print('[ac-close] primary WebGL receipt archived; global slots released for E31 D2',flush=True)
+ while handoff.exists():time.sleep(2)
