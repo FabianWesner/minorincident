@@ -8,26 +8,45 @@ Run instructions: [regression gate](../../qa/regression-gate.md). Detailed scene
 
 | # | Check | batch13i observation | Broken-fixture proof |
 |---|---|---|---|
-| 1 | Accessory anchors/scale | Completed 2,484 model × LOD × appearance-tier × accessory combinations (2,106 eligible). Red: 15 model/LOD pairs have no authored head skin: paramedic aftermath and the four individually registered survivor-group aftermath variants. The remaining measured fits/native glasses obey their head bounds. This is additional coverage, not a claim to reproduce the exact PO screenshot. | Hat attached to `hat` with a 40 cm head offset is rejected. |
-| 2 | Seat support | Red: six L6 `npc-sit` actors per quality tier have no seat, twelve distinct findings. This applies the requested strict seat rule, including floor-sitting clips. Native L2 bench submission and body-pixel checks run in Scene Lab. | Remove the seat under a sitting actor. |
-| 3 | Scripted actors | Depot clerk completes the return without a state-level disappearance. Red: lab technician is hidden outside the doorway for 86 frames during handover/return. Initial cast includes L2 (16), L5 (24) and L6 (29) per tier; late firefighter/lookout scenes have separate probes. | Hide an actor while its scripted scene is active. |
+| 1 | Accessory anchors/scale | Completed 2,484 model × LOD × appearance-tier × accessory combinations (2,106 eligible). Red: 15 model/LOD pairs have no authored head skin: paramedic aftermath and the four individually registered survivor-group aftermath variants. The remaining measured fits obey their head bounds; all 30 authored native-glasses head/LOD cases preserve their face vertices on the head at authored scale. This is additional coverage, not a claim to reproduce the exact PO screenshot. | Hat attached to `hat` with a 40 cm head offset is rejected. |
+| 2 | Seat support | Red: six L6 `npc-sit` actors per quality tier have no seat, twelve distinct findings. This applies the requested strict seat rule, including floor-sitting clips. Native L2 bench submission/body-pixel checks pass in Scene Lab on both tiers: 467/468 changed body pixels per bench when its geometry is suppressed. | Remove the seat under a sitting actor. |
+| 3 | Scripted actors | Depot clerk completes the return without a state-level disappearance. Red: lab technician is hidden outside the doorway for 86 frames during handover/return. The all-level watch includes poses, mission allies, survivor rosters and staff, including L3/L4 and L7/L8 cast without a pose clip; late firefighter/lookout scenes have separate probes. | Hide an actor while its scripted scene is active. |
 | 4 | Vehicles/solids | Red: 26 tank route/rotating-stop conflicts, including `prop.privacy-fence:45` and `l4-perimeter-1` (P1-116). L8 parked bus/APC and L9 crash poses pass the extended structural check. | Put a rotated OBB inside a structural AABB. |
 | 5 | Wave count/arrival | Red: L1 exits finish 3/5 emergence routes; market ambush admits 19/24 high and 9/12 low; three L6 entry sides fail tunnel arrival; L4 war waves have arrival shortfalls, collapse admits 6/9 high and 4/6 low. Both L4 first alarms pass (18/18 and 9/9); every L3 wave, L7 group, L8 outlet and L10 assault passes the revised count/goal fixture. These additional wave failures are not all attributed to a particular PO report. | Replace the authored 18-member arrival with one member. |
-| 6 | Objective visibility | Red: L3 checkpoint marker remains hidden at the 2 s deadline during the camera pull-back (P1-114). Every authored mission step is probed. | Hide the marker beyond the 2 s deadline. |
+| 6 | Objective visibility | Red: the shared story-shot rule hides active waypoint guidance beyond 2 s, including the L3 checkpoint (P1-114). Every step is checked normally and every waypoint step under a held 120-tick camera overlay. The overlay probes do not claim every step has an authored pull-back. | Hide the marker beyond the 2 s deadline. |
 | 7 | Ground | Red: 290 L3 height/phantom-support samples violate 20 cm (P1-113/113b class). Example: `kit.highway-onramp:991`, `t=.35`, lateral offset 1.1 m: sim 5.27 m versus drawn 5.07 m. | A 21 cm support/drawn-height mismatch. |
-| 8 | Load time | Ten built-dist/PROD timing cases run on the Mac with WebGPU low. Final receipt is recorded below when the quiet-run comparison completes. | 1,110 ms candidate versus 1,000 ms baseline exceeds 10%; a separate test proves the independent 1 s delta limit. |
+| 8 | Load time | All ten levels measured on Mac WebGPU low: nine pass; L8 is red at 24.662 s candidate versus 23.145 s PROD (+1.517 s), exceeding the 1 s delta budget. | 1,110 ms candidate versus 1,000 ms baseline exceeds 10%; a separate test proves the independent 1 s delta limit. |
 
 `npm run qa:invariants:proof` passed: **all eight selected fixture subprocesses exited 1 at their own invariant assertion**, while the proof driver exited 0. The normal fixture tests also prove the good twins pass. [Committed receipt](broken-fixtures.json). The fixtures prove the predicates reject their broken inputs; real level/asset and browser probes provide the integration coverage described above.
 
 ## Execution receipts
 
-- Full command checkpoint `5faea408a`: runner `2.31.10.108`, immutable job `qa-invariants-38c23b-57335-1792699634`, **421.38 s** Vitest execution, **433 s** remote total, **59 s** sync. **23 tests: 13 passed / 10 red**. No timeout. The command continued through a successful dist build (6.29 s) into Mac browser admission despite the sim failures.
-- The preceding expanded sweep on `94.130.181.173` finished in 258.88 s; the busier runner receipt above is still below the 15-minute remote budget. Queue/admission wait is reported separately. The remote command has an 840 s execution ceiling.
-- Extended all-level start/park/crash vehicle probe: runner `94.130.181.173`, job `qa-invariants-38c23b-72187-1792699769`, **33.44 s**, passed. It sampled 322 L9 poses, four L8 poses, and all initial live vehicles.
-- Complete inventory rerun `c41b19903`: runner `2.31.10.108`, job `qa-invariants-38c23b-92215-1792700261`, **357.21 s**, **27 tests: 16 passed / 11 red**. One of those reds was the new lookout fixture allowing a resident infection; the corrected visibility fixture isolates that valid combat exit and passes both tiers in 17.11 s on runner `2.28.24.66` (job `qa-invariants-38c23b-21281-1792700732`).
-- The corrected on-map escape viewpoints pass: **45/45 high, 23/23 low** admitted and reaching their authored street/cluster homes, runner `2.28.24.66`, job `qa-invariants-38c23b-98415-1792700403`, **16.79 s**. A final frozen-suite rerun and the Mac quiet-run comparison are pending. Raw logs and JSON live under `test-results/qa-invariants/`.
+- Final committed complete suite `46c743520`: runner `2.31.10.108`, job `qa-invariants-38c23b-4220-1792703296`, **325.14 s**, **27 tests: 17 passed / 10 red**, no timeout. Remote total **328 s**, sync **39 s**. [All assertion details](sim-receipt.json), [wave counts and unreached poses](wave-receipt.json). The same global camera-suppression rule is exposed in 39 waypoint overlay probes, including L3's actual checkpoint case. Normal activation is checked separately.
+- Final head-selection/native-glasses probe `46c743520`: runner `94.130.181.173`, job `qa-invariants-38c23b-99642-1792703104`, **19.47 s**. All 2,484 accessory combinations and 30 native head/LOD cases complete; only the same 15 missing head-skin pairs are red. Head and other pose joints have distinct transforms. [Asset receipt](accessory-receipt.json).
+- Physical-exit probe `46c743520`: runner `94.130.181.173`, job `qa-invariants-38c23b-94409-1792702903`, **160.20 s**. The clerk and technician physically reach their authored return points; the actor case is red only at the 86-frame visibility assertion. [Exit receipt](exits-receipt.json).
+- Mac quiet-run completed: **224.80 s** browser execution, **11 tests: 10 passed / 1 red** (L8 load budget). All ten loads have real WebGPU/low/playing/draw-call observations; Scene Lab cast and bench pixels pass on both tiers. The Mac stage took **1,073.15 s including admission**, using one browser. [Measurements and Scene Lab evidence](browser-receipt.json).
+- The full `npm run qa:invariants` command was exercised at checkpoint `5faea408a`: its busy-runner sim completed in **421.38 s** (433 s remote total, 59 s sync), the dist build passed in **6.29 s**, and it continued to the Mac measurements despite the sim reds. The final committed-suite receipt above validates the completed inventory. Even that busier remote execution is below 15 minutes. The remote command has an 840 s execution ceiling; queue/admission wait is reported separately.
+
+Raw logs and full framework JSON remain under `test-results/qa-invariants/`.
 
 Earlier provisional failures were corrected in the test fixtures: a stale bike dismount point, comparison against a buried lower slab, a clock-only L3 wave dispatch, an unparked convoy in the L4 alarm fixture, and premature/overlong load waits. Those discarded observations are not presented as game bugs.
+
+## Built dist versus PROD, WebGPU low
+
+Candidate bundle `index-BWZZRFZr.js`; PROD bundle `index-D4kxfJBx.js`. The budget is the smaller of 10% or 1 s above baseline. These are single cold-context observations under exclusive quiet-run admission.
+
+| Level | Candidate (s) | PROD (s) | Delta (s) | Result |
+|---|---:|---:|---:|---|
+| L1 | 2.518 | 2.631 | -0.113 | pass |
+| L2 | 3.111 | 3.078 | +0.033 | pass |
+| L3 | 3.531 | 3.712 | -0.181 | pass |
+| L4 | 3.761 | 4.244 | -0.483 | pass |
+| L5 | 4.763 | 5.094 | -0.331 | pass |
+| L6 | 2.916 | 3.315 | -0.399 | pass |
+| L7 | 3.962 | 4.160 | -0.198 | pass |
+| L8 | 24.662 | 23.145 | +1.517 | RED |
+| L9 | 9.161 | 9.728 | -0.567 | pass |
+| L10 | 9.033 | 9.366 | -0.333 | pass |
 
 ## Cheap 13g reproduction
 

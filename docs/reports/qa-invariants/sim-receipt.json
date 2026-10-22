@@ -1,0 +1,176 @@
+{
+  "gameBaseline": "ba436b90a",
+  "probeRevision": "46c743520",
+  "runner": "2.31.10.108",
+  "job": "qa-invariants-38c23b-4220-1792703296",
+  "executionSeconds": 325.14,
+  "remoteSeconds": 328,
+  "syncSeconds": 39,
+  "total": 27,
+  "passed": 17,
+  "failed": 10,
+  "assertions": [
+    {
+      "title": "1 accessories: actual head-local bounds and scale for every crowd model \u00d7 LOD \u00d7 appearance tier",
+      "status": "failed",
+      "durationMs": 20438.289569,
+      "failure": "AssertionError: accessories invariant: 15 bad head bounds across 2484 combinations: expected [ \u2026(15) ] to deeply equal []"
+    },
+    {
+      "title": "automatic regression invariants 2 seated actors: every active sit/bench pose across L1\u2013L10 and both quality tiers has seat support",
+      "status": "failed",
+      "durationMs": 189467.52437,
+      "failure": "AssertionError: 12 seat failures; P1-112: expected [ \u2026(12) ] to deeply equal []"
+    },
+    {
+      "title": "automatic regression invariants 3 scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits",
+      "status": "failed",
+      "durationMs": 17247.859975999978,
+      "failure": "AssertionError: actors invariant: 86 missing frames; cast {\"L1/high\":1,\"L1/low\":1,\"L2/high\":26,\"L2/low\":26,\"L3/high\":19,\"L3/low\":19,\"L4/high\":20,\"L4/low\":10,\"L5/high\":29,\"L5/low\":29,\"L6/high\":29,\"L6/low\":29,\"L7/high\":24,\"L7/low\":15,\"L8/high\":18,\"L8/low\":18,\"L9/high\":0,\"L9/low\":0,\"L10/high\":0,\"L10/low\":0}: expected [ \u2026(20) ] to deeply equal []"
+    },
+    {
+      "title": "automatic regression invariants 4 vehicles: scripted route and stop poses have no overlap with registered solids",
+      "status": "failed",
+      "durationMs": 5523.582267999998,
+      "failure": "AssertionError: vehicles invariant: route, stop and dismount intersections (26): expected [ \u2026(26) ] to deeply equal []"
+    },
+    {
+      "title": "automatic regression invariants 6 objectives: every mission step has a visible destination marker or explicit HUD-only rule",
+      "status": "failed",
+      "durationMs": 28198.995924999996,
+      "failure": "AssertionError: P1-114: objective routes and marker anchors must exist: expected [ \u2026(39) ] to deeply equal []"
+    },
+    {
+      "title": "automatic regression invariants 7 walkable ground: every authored raised walkable surface edge follows sim ground within 20 cm",
+      "status": "failed",
+      "durationMs": 29775.25538800002,
+      "failure": "AssertionError: 290 walkable height errors: expected [ \u2026(20) ] to deeply equal []"
+    },
+    {
+      "title": "5 L2 escape high: every street batch and bridge cluster admits its quota and reaches its authored home",
+      "status": "passed",
+      "durationMs": 2755.942382999994,
+      "failure": null
+    },
+    {
+      "title": "5 L2 escape low: every street batch and bridge cluster admits its quota and reaches its authored home",
+      "status": "passed",
+      "durationMs": 2397.770418,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture accessories",
+      "status": "passed",
+      "durationMs": 8.597094999997353,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture seats",
+      "status": "passed",
+      "durationMs": 0.35231900000508176,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture actors",
+      "status": "passed",
+      "durationMs": 0.3012529999978142,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture vehicles",
+      "status": "passed",
+      "durationMs": 0.44563400000333786,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture waves",
+      "status": "passed",
+      "durationMs": 6.409252999997989,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture objectives",
+      "status": "passed",
+      "durationMs": 0.2889209999993909,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture ground",
+      "status": "passed",
+      "durationMs": 0.27251000000251224,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures fixture load",
+      "status": "passed",
+      "durationMs": 0.24893499999598134,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures load rejects either budget independently",
+      "status": "passed",
+      "durationMs": 0.20277899999928195,
+      "failure": null
+    },
+    {
+      "title": "invariant proof fixtures missing or non-finite measurements fail closed",
+      "status": "passed",
+      "durationMs": 0.3507559999998193,
+      "failure": null
+    },
+    {
+      "title": "3 late scripted scenes low: firefighter invitation and metro lookout persist",
+      "status": "passed",
+      "durationMs": 5870.086141,
+      "failure": null
+    },
+    {
+      "title": "3 late scripted scenes high: firefighter invitation and metro lookout persist",
+      "status": "passed",
+      "durationMs": 4536.2465079999965,
+      "failure": null
+    },
+    {
+      "title": "4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted crash clear structural solids",
+      "status": "passed",
+      "durationMs": 18767.171327,
+      "failure": null
+    },
+    {
+      "title": "5 L4 high: every authored war wave and collapse batch spawns and reaches its goal area",
+      "status": "failed",
+      "durationMs": 213696.704644,
+      "failure": "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(9) ] to deeply equal []"
+    },
+    {
+      "title": "5 L4 low: every authored war wave and collapse batch spawns and reaches its goal area",
+      "status": "failed",
+      "durationMs": 107998.64026300001,
+      "failure": "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(7) ] to deeply equal []"
+    },
+    {
+      "title": "5 authored wave census high: L1, L2, L3, L6, L7, L8 and L10",
+      "status": "failed",
+      "durationMs": 57336.421860999995,
+      "failure": "AssertionError: waves invariant high: expected [ \u2026(6) ] to deeply equal []"
+    },
+    {
+      "title": "5 authored wave census low: L1, L2, L3, L6, L7, L8 and L10",
+      "status": "failed",
+      "durationMs": 38973.62624,
+      "failure": "AssertionError: waves invariant low: expected [ \u2026(6) ] to deeply equal []"
+    },
+    {
+      "title": "5 L4 alarm high: every authored identity is admitted and reaches the hold area",
+      "status": "passed",
+      "durationMs": 40253.83565699999,
+      "failure": null
+    },
+    {
+      "title": "5 L4 alarm low: every authored identity is admitted and reaches the hold area",
+      "status": "passed",
+      "durationMs": 16314.568476000015,
+      "failure": null
+    }
+  ]
+}

@@ -1,0 +1,446 @@
+{
+  "gameBaseline": "ba436b90a",
+  "renderProbeBlob": "7915d7d30ef29b26a2528e42896ddcca20367a51",
+  "configBlob": "2e2bb585611b26e0bcf0831ebb2e5159afedbe8f",
+  "headless": true,
+  "workers": 1,
+  "ports": [
+    4191,
+    4192
+  ],
+  "admission": "quiet-run: load < 3; no local Vitest or headless Chrome; exclusive configured browser capacity",
+  "stats": {
+    "startTime": "2026-10-22T20:29:45.279Z",
+    "duration": 224795.573,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "loads": [
+    {
+      "level": "L1",
+      "candidate": {
+        "ms": 2518.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 159,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 2631,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 159,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 2894.1
+    },
+    {
+      "level": "L2",
+      "candidate": {
+        "ms": 3110.699999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 205,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 3078,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 205,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 3385.8
+    },
+    {
+      "level": "L3",
+      "candidate": {
+        "ms": 3531.1000003814697,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 139,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 3711.800000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 139,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 4082.980000209808
+    },
+    {
+      "level": "L4",
+      "candidate": {
+        "ms": 3761.3999996185303,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 107,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 4244,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 107,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 4668.4
+    },
+    {
+      "level": "L5",
+      "candidate": {
+        "ms": 4762.700000762939,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 179,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 5093.89999961853,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 179,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 5603.289999580384
+    },
+    {
+      "level": "L6",
+      "candidate": {
+        "ms": 2916.0999994277954,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 3315.199999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 3646.7199997901917
+    },
+    {
+      "level": "L7",
+      "candidate": {
+        "ms": 3961.6000003814697,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 4160,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 4576
+    },
+    {
+      "level": "L8",
+      "candidate": {
+        "ms": 24661.900000572205,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 127,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 23145.39999961853,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 127,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 24145.39999961853
+    },
+    {
+      "level": "L9",
+      "candidate": {
+        "ms": 9160.89999961853,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 4,
+        "phase": "playing",
+        "drawCalls": 137,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 9728.099999427795,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 137,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 10700.909999370575
+    },
+    {
+      "level": "L10",
+      "candidate": {
+        "ms": 9033,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 129,
+        "bundle": "http://127.0.0.1:4191/build/index-BWZZRFZr.js"
+      },
+      "baseline": {
+        "ms": 9366.29999923706,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 4,
+        "phase": "playing",
+        "drawCalls": 129,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 10302.929999160766
+    }
+  ],
+  "scenes": {
+    "scripted-cast-low": {
+      "man-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "man-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "woman-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "woman-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "elderly": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "clerk": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "tech-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "tech-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "guard": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "firefighter": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      }
+    },
+    "seated-props-low": {
+      "benches": [
+        {
+          "id": 123,
+          "prop": "D-GROVE/l2-station-53",
+          "drawnSeat": true,
+          "rect": [
+            -72.2627558075122,
+            287.7327128631928,
+            68.75674671396965,
+            404.42038842895647
+          ]
+        },
+        {
+          "id": 124,
+          "prop": "D-GROVE/l2-station-53",
+          "drawnSeat": true,
+          "rect": [
+            -72.2627558075122,
+            287.7327128631928,
+            68.75674671396965,
+            404.42038842895647
+          ]
+        },
+        {
+          "id": 125,
+          "prop": "D-GROVE/l2-station-54",
+          "drawnSeat": true,
+          "rect": [
+            66.61087080296866,
+            233.2877766045671,
+            194.4837381704606,
+            342.42901327887046
+          ]
+        },
+        {
+          "id": 126,
+          "prop": "D-GROVE/l2-station-54",
+          "drawnSeat": true,
+          "rect": [
+            66.61087080296866,
+            233.2877766045671,
+            194.4837381704606,
+            342.42901327887046
+          ]
+        }
+      ],
+      "benchPixels": {
+        "123": 467,
+        "124": 467,
+        "125": 468,
+        "126": 468
+      }
+    },
+    "scripted-cast-high": {
+      "man-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "man-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "woman-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "woman-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "elderly": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "clerk": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "tech-a": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "tech-b": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "guard": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      },
+      "firefighter": {
+        "drawnFrames": 3,
+        "missedInViewFrames": 0
+      }
+    },
+    "seated-props-high": {
+      "benches": [
+        {
+          "id": 123,
+          "prop": "D-GROVE/l2-station-53",
+          "drawnSeat": true,
+          "rect": [
+            -72.2627558075122,
+            287.7327128631928,
+            68.75674671396965,
+            404.42038842895647
+          ]
+        },
+        {
+          "id": 124,
+          "prop": "D-GROVE/l2-station-53",
+          "drawnSeat": true,
+          "rect": [
+            -72.2627558075122,
+            287.7327128631928,
+            68.75674671396965,
+            404.42038842895647
+          ]
+        },
+        {
+          "id": 125,
+          "prop": "D-GROVE/l2-station-54",
+          "drawnSeat": true,
+          "rect": [
+            66.61087080296866,
+            233.2877766045671,
+            194.4837381704606,
+            342.42901327887046
+          ]
+        },
+        {
+          "id": 126,
+          "prop": "D-GROVE/l2-station-54",
+          "drawnSeat": true,
+          "rect": [
+            66.61087080296866,
+            233.2877766045671,
+            194.4837381704606,
+            342.42901327887046
+          ]
+        }
+      ],
+      "benchPixels": {
+        "123": 467,
+        "124": 467,
+        "125": 468,
+        "126": 468
+      }
+    }
+  }
+}
