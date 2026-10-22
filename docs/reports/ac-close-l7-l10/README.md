@@ -32,7 +32,7 @@ Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evi
 | E31-AC20 device subcheck | Retain the continuous campaign requirement. Track real iOS and Android crossing p50≥30 fps as PO-device acceptance; record model, OS/browser, route, tier, sample duration and p50. Until devices are supplied, retain a separately labelled 390×844 /4×CPU desktop-emulation proxy with the same ≥30 fps p50 target. | No physical phones are available to this lane. Emulation cannot establish real-device performance. The proxy is proposed, not substituted for acceptance; AC20 stays partial. |
 | E32-AC31 device subcheck | Retain every native frame/hitch/retention/cap gate. Track real iOS and Android region/assault/mist/pullout p50≥30 fps as PO-device acceptance, with the same device/run metadata; retain a separately labelled 390×844 /4×CPU desktop proxy while awaiting phones. | Same physical-device limitation. Native/desktop evidence will not be described as a physical-device pass; AC31 stays partial. |
 
-No criterion or threshold has been changed, and no epic is marked done while its acceptance evidence is incomplete. Browser work on this Mac is held until 09:15 UTC; subsequent runs use ports 4091/4092, one headless browser through the repository lock, and separate quiet reservations of at most twenty minutes.
+No criterion or threshold has been changed, and no epic is marked done while its acceptance evidence is incomplete. The orchestrator released the Opus browser hold at 08:44 UTC; subsequent runs use ports 4091/4092, one headless browser through the repository lock, and separate quiet reservations of at most twenty minutes.
 
 ## 08:03 UTC checkpoint
 
@@ -62,3 +62,33 @@ The minimal buffer repair passes typecheck/lint, **30 regressions**, and the shi
 - Added original and post-collection heap-counter readings to the existing helper, without changing its collection or threshold. E25's low night-street probe additionally enforces the existing absolute E18 p50 budget alongside its older relative comparison.
 
 The corresponding **low /zoom1.5 row also passes**, all intersection counts zero across 60 frames ([metrics](evidence/zoo-low-wide.json.gz), [terminal log](evidence/zoo-low-wide.log.txt.gz)). Opened the low sheet: the same six grounded silhouettes, staff colors and held props remain consistent with high. This closes the two specific stale clipping rows; it does not by itself close E30-AC05's sanctuary or AC19's scored outbreak/escape review.
+
+## First native E25 run — 08:50 UTC
+
+A short quiet reservation completed and released: **2 light-lab passes /1 spike-probe failure** ([receipt](evidence/e25-native-first.log.txt.gz), [quiet conditions](evidence/e25-native-conditions.jsonl)). Native high p95 **7.9 ms**, low p50/p95 **9.8/12.2 ms**; sim p95 **0.5/1.9 ms**, all original draw/triangle/light/beam caps pass. Opened both performance frames: the bright yellow trailer produces warm triangular pools and purple cast shadows; the fence blocks the wash; crowded figures/warnings remain visible. The phone frame crops the mast, so it is not a complete lighting-reference photo.
+
+[High reading](evidence/light-lab-high.json.gz) /[low](evidence/light-lab-low.json.gz) reconcile the counters: collected Runtime.usedSize is **144.737/134.941 decimal MB**, backing storage **602.198/524.402 MB**, and the legacy usedJSHeapSize counter **747.052/659.460 MB** after collection (before: **822.119/689.009 MB**). The legacy readings approximately include both usedSize and backing storage; collection does not make the backing buffers disappear. The tests pass their existing collected-JS-heap assertion, but the old legacy-based 400/250 reading remains red. AC14 is not accepted by silently replacing one counter with the other.
+
+The spike really creates a WebGPU backend but its production bundle renames the class to **B1**. Constructor.name is therefore an invalid identity probe. The failed first sample is retained ([data](evidence/spike-first.json.gz)); the probe now uses the backend's isWebGPUBackend flag and separately records its constructor string. A rebuilt repeat is pending.
+
+### Proposed E25-AC14 measurement clarification — awaiting PO decision
+
+“Measure the E18 **JS heap** as warmed, collected Runtime.getHeapUsage.usedSize in decimal MB (≤400/250), while retaining embedderHeapUsedSize, backingStorageSize and the legacy performance.memory reading beside it. Keep the five-cycle retention gate for JS heap, GPU resources and backing storage; set a separately named total CPU-buffer/working-set budget before accepting that total.” Reason: the inherited collected-JS test and the sweep's legacy counter measure different memory domains; their pass/fail results cannot be interchanged. This proposal changes no test or threshold here and is not adopted.
+
+## Complete selected Node repeat — 09:00 UTC
+
+**619 pass /0 fail**; 2,907 assertions are unselected/skipped, not additional acceptance passes. [Full result](evidence/selected-repeat.json.gz), [receipt](evidence/selected-repeat.log.txt.gz). Original numeric gates: L9 high/low **3.416/1.625 ms** ([200](evidence/residency-200.json.gz), [100](evidence/residency-100.json.gz)); L10 assault **3.702/2.021 ms**, peaks **168/87**, persistent Mega arrival **12.5 s** ([high](evidence/assault-high.json.gz), [low](evidence/assault-low.json.gz)). The complete run includes the corrected Alpha contact and restored warning regressions plus continuous campaign handovers. It does not establish native frames, visual scores or physical-device performance.
+
+The first lifecycle fixture compile rejected a nonexistent L9-default progression key; the test now uses the actual L9 default loader and explicit L10-default. Fresh typecheck/lint/build and the E32 verifier-selection regression pass ([receipt](evidence/probe-final-build-retry.log.txt.gz), [test](evidence/probe-final.json.gz)). Subsequent skyline setup tightening and verifier batching edits await the full verifier's static stage.
+
+## Native L7/L8 diagnostics — 09:00 UTC
+
+**4 passes /1 failure**, original thresholds retained ([receipt](evidence/native-diagnostics.json.gz)). The L7 current streaming score is combat→combat→aftermath→combat across waiting/boarding/departure/retry ([trace](evidence/departure-audio.json.gz)). Both L8 tiers pass actual streamed calm→tension→combat, no infected actor/animal telegraph during sanctuary, cab engine at 700 Hz lowpass, captioned pounce and saturated **32/16** voice caps ([high](evidence/zoo-audio-high.json.gz), [low](evidence/zoo-audio-low.json.gz)). These are explicitly adapter probes; the separate real-input tests own breach/boarding mechanics. Full focus/pause integration remains in the verifier smoke checks.
+
+The repaired L7 ID pass now measures the previously empty horde mask: **7,572 courier pixels**, **7.416:1**, 15 visible ring points, no clipped pixels or identity-color failures ([horde](evidence/l7-horde-native.json.gz), [rocket](evidence/l7-rocket-native.json.gz)). High WebGL2 /zoom1 is fresh and green; the remaining matrix is pending.
+
+**E29-AC13 skyline is a real defect:** actual first/last unfaded production frames measure **1.846%→32.204%**, opposite the required ≥25%→≤10% ([reading](evidence/skyline-before.json.gz)). Opened both frames: departure begins close to the bus/light tower, then shows more central-city facades as the eastbound bus enters town. The authored settled start camera actually points west into empty fog; candidate views confirm this ([diagnostic-only candidates](evidence/skyline-candidates.json.gz)). The candidate captures are not acceptance proof. The ordinary bus path/boarding can pass while this visual requirement fails; AC13 stays partial.
+
+## 09:22 UTC checkpoint
+
+The complete E25 verifier is running. Its remote static/build stages passed; the fresh native night-readability matrix is red, including high WebGL player contrast **2.899:1** and non-red brightest infected pixels. These failures remain open; the earlier ID-mask repair is not evidence that every lighting scene passes. Added inherited Alpha browser selection tags, all-special corpse recovery fixture provenance, the missing L9 zoom1.5 input cases, and a five-cycle L9/L10 retention probe; their fresh full verification is pending.

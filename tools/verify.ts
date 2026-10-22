@@ -152,7 +152,8 @@ const commands: string[][] = [
               ]
               : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
-            ...(target === 'E31' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1']] : []),
+            ...(target === 'E31' ? readdirSync('tests/perf').filter(file => file.endsWith('.spec.ts') && new RegExp(selection.pattern).test(readFileSync(`tests/perf/${file}`, 'utf8'))).sort().flatMap(file => [1, 2].map(shard =>
+              ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', `tests/perf/${file}`, '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, `--shard=${shard}/2`, '--project=chromium', '--workers=1'])) : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', 'tests/perf/l7-district.spec.ts', 'tests/perf/l7-encounters.spec.ts', '--project=chromium', '--workers=1']] : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-lifecycle.spec.ts', '--grep', '@E29-AC20', '--project=chromium', '--workers=1']] : []),
           ]
@@ -176,7 +177,7 @@ for (const [command, ...args] of commands) {
   }
   if (target === 'E30' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'perf' : args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
-  if (['E29', 'E32'].includes(target) && args.includes('playwright') && existsSync('test-results/playwright/results.json')) {
+  if (['E29', 'E31', 'E32'].includes(target) && args.includes('playwright') && existsSync('test-results/playwright/results.json')) {
     const batch = (args.find(arg => arg.startsWith('tests/perf/'))?.split('/').at(-1)?.replace('.spec.ts', '') ?? 'combined') + (args.find(arg => arg.startsWith('--shard='))?.replace('--shard=', '-s').replace('/', 'of') ?? '');
     copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? `perf-${batch}` : 'functional'}.json`);
   }
