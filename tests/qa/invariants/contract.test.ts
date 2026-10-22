@@ -20,8 +20,10 @@ import { objectiveText } from '../../../src/sim/missions/objectiveText';
 import { l2TruckPath } from '../../../src/data/l2';
 import { vehicleDef } from '../../../src/data/vehicles';
 import { findDoorway } from '../../../src/sim/missions/doorRoute';
+import type { EntitySnapshot } from '../../../src/sim/world/types';
 
 const layouts = new Map(readdirSync('public/assets/layouts').filter(x => x.endsWith('.layout.json')).map(x => [x.slice(0, -12), JSON.parse(readFileSync(`public/assets/layouts/${x}`, 'utf8')) as DistrictLayout]));
+const sceneActor = (e: EntitySnapshot) => !!(e.civilian?.story || e.civilian?.ally || e.civilian?.survivor || e.civilian?.routine === 'staff');
 
 let morning: Promise<{ seats: string[]; actors: string[]; cast: Record<string, number> }> | undefined;
 function morningSweep() {
@@ -31,7 +33,7 @@ function morningSweep() {
     for (const level of missionIds) for (const tier of ['high', 'low'] as const) {
       const world = await loadLevel(level, 1, tier);
       const tracked = new Map<number, { seen: boolean }>();
-      for (const e of world.entities.iterate()) if (e.civilian?.story) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
+      for (const e of world.entities.iterate()) if (sceneActor(e)) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
       cast[`${level}/${tier}`] = tracked.size;
       const propById = new Map(world.props!.items.map(p => [p.id, p]));
       const placementById = new Map<string, DistrictLayout['placements'][number]>(world.districts!.districts.flatMap(d => d.layout.placements.map(p => [`${d.id}/${p.id}`, p] as const)));
@@ -40,15 +42,15 @@ function morningSweep() {
         for (const [id, watch] of tracked) {
           const e = world.entities.get(id);
           if (!e) { actorFailures.add(`${level}/${tier}: scripted actor ${id} removed before its exit`); continue; }
-          if (!e.civilian?.story || e.civilian.state === 'finished' || e.passengerOf !== undefined || e.corpse || e.infected) { tracked.delete(id); continue; }
-          if (watch.seen && oracle.actor({ inScriptedScene: true, exists: true, hidden: !!e.hidden })) actorFailures.add(`${level}/${tier}: scripted actor ${id} (${e.civilian.story.clip}) hidden mid-scene at tick ${world.tick}`);
+          if (!e.civilian || e.health.current <= 0 || e.civilian.state === 'finished' || e.civilian.survivor?.mode === 'hidden' || e.passengerOf !== undefined || e.corpse || e.infected) { tracked.delete(id); continue; }
+          if (watch.seen && oracle.actor({ inScriptedScene: true, exists: true, hidden: !!e.hidden })) actorFailures.add(`${level}/${tier}: scripted actor ${id} (${e.civilian.story?.clip ?? e.civilian.ally?.role ?? 'cast'}) hidden mid-scene at tick ${world.tick}`);
           if (!e.hidden && !e.pendingAdmission) watch.seen = true;
         }
         if (i % 60) continue;
         for (const e of world.entities.iterate()) {
           const c = e.civilian, action = c?.schedule?.[c.scheduleStep ?? 0];
           if (!c) continue;
-          if (c.story && !tracked.has(e.id)) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
+          if (sceneActor(e) && !tracked.has(e.id)) tracked.set(e.id, { seen: !e.hidden && !e.pendingAdmission });
           if (e.hidden || e.health.current <= 0 || !(c?.story?.clip === 'npc-sit' || action?.activity === 'sit' && c.activityUntil)) continue;
           const target = action?.seat ?? e.transform;
           const prop = action?.seatProp ? propById.get(action.seatProp) : world.props!.items.filter(p => seatSpecs[p.assetId] && Math.hypot(p.pose.p[0] - target.x, p.pose.p[2] - target.z) < 1.2).sort((a, b) => Math.hypot(a.pose.p[0] - target.x, a.pose.p[2] - target.z) - Math.hypot(b.pose.p[0] - target.x, b.pose.p[2] - target.z))[0];
