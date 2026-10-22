@@ -23,21 +23,42 @@ test('T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes under
   const evidence=await page.evaluate(()=>({state:window.__SS__!.getState(),lighting:window.__SS__!.perf().lighting}));writeFileSync(`${out}/exit-weather.json`,JSON.stringify(evidence,null,2));await page.screenshot({path:`${out}/l6-exit-night.png`});expect(evidence.state.weather!.kind).toBe('fog');expect(evidence.state.weather!.rain).toBe(0);expect(evidence.state.weather!.flakes).toBe(0);expect(evidence.lighting!.preset).toBe('L6');expect(evidence.state.player!.transform.y).toBeGreaterThan(4.5);
 });
 test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs',async({page})=>{
-  test.setTimeout(1_200_000);mkdirSync(out,{recursive:true});await boot(page,`${testUrl}&ui=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
-  const shots=new Set<string>(),step=(n:number)=>page.evaluate(async n=>{
-    const a=window.__SS__!;
-    // Paused sim stepping does not age render effects. Retire the preceding
-    // frame's effects before the next input batch emits its current muzzle/tracers.
-    for(let elapsed=0;elapsed<n/60;elapsed+=.1)a.vfx.stepRender(Math.min(.1,n/60-elapsed));
-    await a.step(n);
-  },n);
+  test.setTimeout(1_200_000);mkdirSync(out,{recursive:true});await boot(page,`${testUrl}&ui=1&scenelab=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
+  const shots=new Set<string>(),step=(n:number)=>page.evaluate(n=>window.__SS__!.step(n),n);
   await page.evaluate(()=>{
     const game=(window.__SCENE__ as unknown as {game:import('../../../src/Game').Game})?.game;
     if(!game)return;
     const journal:unknown[]=[];(window as unknown as {l6PlayerEvents:unknown[]}).l6PlayerEvents=journal;
     for(const type of ['player.damaged','player.died'] as const)game.world.events.on(type,event=>journal.push({event,at:{...game.world.entities.get(1)!.transform}}));
   });
-  const snap=async(name:string)=>{await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);if(name==='l6-tunnel-retreat'){const s=a.missions.state()!.l6!,p=a.getState().player!.transform,front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;a.camera.cinematic({position:[x+34,40,49],target:[x,.6,15]},true);}await a.screenshotReady();},name);await page.screenshot({path:`${out}/real-${name}.png`});shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);};
+  const snap=async(name:string)=>{
+    await page.evaluate(async name=>{
+      const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);
+      if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);
+      if(name==='l6-tunnel-retreat'){
+        const s=a.missions.state()!.l6!,p=a.getState().player!.transform;
+        const front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;
+        const radius=Math.max(57,(front-p.x+5)/(2*Math.tan(25*Math.PI/360)*(innerWidth/innerHeight)));
+        a.camera.cinematic({position:[x,.6+radius*.588,15+radius*.809],target:[x,.6,15]},true);
+      }
+      if(name==='l6-exit-night'){
+        const p=a.getEntity(1)!.transform;
+        a.camera.cinematic({position:[p.x+22,p.y+24,p.z+22],target:[p.x,p.y-.7,p.z]},true);
+      }
+      await a.screenshotReady();
+    },name);
+    await page.screenshot({path:`${out}/real-${name}.png`});
+    const positions=await page.evaluate(()=>{
+      const a=window.__SS__!;
+      return{tick:a.getState().tick,camera:a.getState().render.camera,player:a.getEntity(1)!.transform,
+        followers:a.missions.state()!.l6!.survivors.filter(r=>r.status==='following').map(r=>{
+          const e=a.getEntity(r.id)!;
+          return{id:r.id,at:e.transform,health:e.health.current,head:a.camera.project(e.transform.x,e.transform.y+1.4,e.transform.z)};
+        })};
+    });
+    writeFileSync(`${out}/real-${name}-positions.json`,JSON.stringify(positions,null,2));
+    shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);
+  };
   await step(30);await expect(page.locator('.story-bubble')).toContainText('Keep the wrap tight');await expect(page.locator('.story-bubble')).toBeVisible();await snap('l6-shelter-calm');await step(300);await expect(page.locator('.story-bubble')).toContainText('Please do not leave me behind');
   for(let i=0;i<3500;i++){
     const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform})),close=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<2.5).map(e=>e.transform);const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<22).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];const lamp=all.find(e=>e.archetype==='pickup.headlamp'&&e.pickup&&'collected' in e.pickup&&!e.pickup.collected);return{tick:a.getState().tick,m,s,p,rightRack:a.getEntity(1)!.weapons!.RIGHT.rack.map(slot=>slot.id),leftRack:a.getEntity(1)!.weapons!.LEFT.rack.map(slot=>slot.id),lamp:lamp?.transform,friends,input:a.getState().input,controls:a.getState().controls,close,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
