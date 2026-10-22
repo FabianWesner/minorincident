@@ -11,8 +11,11 @@ The PO found 14 issues in L1–L4 on PROD 13h that every bot and the Opus QA had
    - wave spawn counts = authored counts;
    - the objective marker is visible within 2 s of every step start;
    - walkable height follows the drawn surface.
+   - Run the sim/asset checks on the remote runner and one headless, one-browser load-time comparison on the Mac. Set `QA_INVARIANTS_BASELINE` to override the default PROD URL. A load fails when it exceeds either the 10% or 1 s budget. The renderer check requires WebGPU low; it records and fails on a backend/tier fallback.
 2. **Visual A/B against PROD (`npm run qa:ab`).** Per level, a seeded camera tour at the PO's settings (low, zoom 1.5 and 1, WebGPU) through the scripted moments. It is rendered on the PROD build and on the candidate and diffed per frame. Opus judges only the changed frames: improvement, intended or regression.
 3. **PO-style QA.** The Opus QA plays L1–L4 at least, at close zoom, low quality and with a progressed save. It works through the PO checklist (docs/qa/po-checklist.md), which gets every PO finding added.
 4. **Process:**
    - cross-cutting render/crowd/corpse/prewarm changes need the all-level A/B before they merge;
    - no PROD deploy without green 1 + 2 and a GO from 3.
+
+Run `npm run qa:invariants`. The headless sim suite is also available as `npm run qa:invariants:sim` for local diagnosis; it is not a substitute for the remote gate. Browser admission is serialized through `tools/perf/quiet-run.sh` at port 4191, with Scene Lab reserved at 4192.
