@@ -126,3 +126,10 @@ The next candidate tests opaque depth ordering. Intact bodies cover more ground 
 
 
 The four production entry guards on rigid-normal source `5893caa68` also pass with no browser errors: WebGL2 debug/continue **30.0 / 35.8 ms**, WebGPU **28.1 / 29.1 ms**. Full traces/profiles and its rejected assault pair are preserved as `rigid-entry-*` / `rigid-assault-*`; counts and exact parity are in `rigid-assault-summary.json`. The depth-order candidate passes typecheck, lint and 74 focused tests. The optional assault CPU profiler also passes typecheck/lint and the two cadence-helper guards. It records an exact performance-clock assault window; acceptance explicitly rejects profiled runs.
+
+
+## Accepted policy and final source (orchestrator decision, October 22 05:44 UTC)
+
+The orchestrator explicitly authorizes accepting a residual low p95 increase of **≤0.5 ms on both backends**, prioritizing intact real-play corpses and removal of the 3.7–4.5-second stalls. The accepted source is the simpler rigid-normal implementation `5893caa68`: WebGL2 full-assault **5.0→5.2 ms (+0.2)**, WebGPU **3.4→3.8 ms (+0.4)**; settled medians improve **3.8→3.7 / 2.4→2.2 ms**. The ineffective opaque-depth experiment is removed; the final `src/` tree is byte-identical to `5893caa68`. The audit retains strict input/kill/body/camera/backend/quality/persistence checks, rejects profiled or pre-drained acceptance runs, and records the authorized tolerance explicitly. No further p95 tuning is planned.
+
+The already-running diagnostics complete on the depth-order experiment before its removal; they are attribution only. Final high-tier real-assault captures, matching production baselines, fresh four-entry checks and smoke remain required. A fresh full remote run will cover the accepted runtime plus the final measurement tools; the older full command still running on equivalent rigid-normal runtime remains historical coverage.
