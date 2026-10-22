@@ -22,6 +22,8 @@ import { palette } from '../../../src/data/palette';
 type Lod = 'lod0' | 'lod1' | 'lod2';
 // Authored glasses are native head meshes, including staff/quest characters. Aftermath variants inherit their source.
 const authoredGlasses = new Set(manifest.filter(a => a.id.startsWith('npc.') && existsSync(`assets/${a.id}/build.py`) && /glasses|spectacle/i.test(readFileSync(`assets/${a.id}/build.py`, 'utf8'))).map(a => a.id));
+// tools/blender/sslib/aftermath.py extracts Sam from survivor03_root (the authored glassesMan).
+authoredGlasses.add('npc.survivor-group.aftermath.sam');
 const spectacleColors = [new Color(palette.uiDark), new Color(palette.leather)];
 const cache = new Map<string, Promise<Group>>();
 async function asset(id: string, lod: Lod): Promise<Group> {
@@ -51,8 +53,8 @@ async function authoredBounds(id: string, lod: Lod): Promise<Box3> {
   root.traverse(node => { if (node instanceof Mesh) result.union(bounds(node.geometry, inverse.clone().multiply(node.matrixWorld))); });
   return result;
 }
-function authoredSkull(root: Group) {
-  root.updateMatrixWorld(true); const head = root.getObjectByName('head'); if (!head) return null;
+function authoredSkull(root: Group, headName = 'head') {
+  root.updateMatrixWorld(true); const head = root.getObjectByName(headName); if (!head) return null;
   const inverse = head.matrixWorld.clone().invert(), box = new Box3(), point = new Vector3();
   head.traverse(node => {
     if (!(node instanceof Mesh) || Array.isArray(node.material) || !/skin/i.test(node.material.name)) return;
@@ -105,6 +107,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
           prepareCivilianRig(source, model.replace(/\.aftermath$/, ''));
           glassSkull = authoredSkull(source);
         }
+        if (!glassSkull && model === 'npc.survivor-group.aftermath.sam') glassSkull = authoredSkull(await asset('npc.survivor-group', lod), 'survivor03_head');
         const headNode = root.getObjectByName('head')!; root.updateMatrixWorld(true);
         const inverse = headNode.matrixWorld.clone().invert(), spectacles = new Box3(), point = new Vector3(), authoredFace: Vector3[] = [];
         headNode.traverse(node => {

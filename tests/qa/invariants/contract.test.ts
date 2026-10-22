@@ -85,6 +85,7 @@ describe('automatic regression invariants', () => {
     const world = await loadLevel('L1', 1), mission = world.missions!;
     // Run the same L1 story controller used by the depot trigger; it stays private in production.
     (mission as unknown as { l1: { story: { pickup(): void } } }).l1.story.pickup();
+    const clerkId = mission.state.l1!.clerkId!, clerkHome = { ...mission.state.l1!.clerkRoute![0] };
     const missing = new Set<string>(); let seen = false;
     for (let i = 0; i < 180 * 60; i++) {
       world.update();
@@ -98,8 +99,12 @@ describe('automatic regression invariants', () => {
       }
       if (state?.beatsDone?.includes('pickup') && !state.beat) break;
     }
+    const clerkEnd = world.entities.get(clerkId), pickupDone = mission.state.l1!.beatsDone?.includes('pickup');
+    const returnedM = clerkEnd ? Math.hypot(clerkEnd.transform.x - clerkHome.x, clerkEnd.transform.z - clerkHome.z) : Infinity;
     world.dispose();
     expect(seen, 'P1-109: clerk becomes visible during the scripted exchange').toBe(true);
+    expect(pickupDone, 'clerk scene reaches its authored exit').toBe(true);
+    expect(returnedM, 'clerk physically returns to the depot before the scene ends').toBeLessThanOrEqual(.5);
     expect([...missing], 'P1-109: actor must remain until the scripted exit').toEqual([]);
     expect(mission.def.steps.length).toBeGreaterThan(0);
     const lab = await loadLevel('L1', 1);
@@ -121,6 +126,8 @@ describe('automatic regression invariants', () => {
       }
       expect(shown, 'technician visible during handover').toBe(true);
       expect(state.delivered, 'technician reaches scripted return/door exit').toBe(true);
+      const returned = lab.entities.get(id), home = m.def.anchors['lab-tech-spawn'];
+      expect(returned && Math.hypot(returned.transform.x - home.x, returned.transform.z - home.z), 'technician physically returns inside before handover ends').toBeLessThanOrEqual(.5);
       expect([...morning.actors, ...missing].slice(0, 20), `actors invariant: ${morning.actors.length + missing.size} missing frames; cast ${JSON.stringify(morning.cast)}`).toEqual([]);
     } finally { lab.dispose(); }
   }, 480_000);
