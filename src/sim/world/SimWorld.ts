@@ -1,4 +1,5 @@
 import { SolidRegistry } from './SolidRegistry';
+import { cloneData } from '../../core/clone';
 import { finaleGunPlacement } from '../../data/minigun';
 import { curePursuitRoute } from '../../levels/L10/district';
 import { installMegaPursuit } from '../ai/MegaPursuit';
@@ -63,7 +64,7 @@ export class SimWorld implements Lifecycle {
   readonly solids = new SolidRegistry(this);
   // The fixed-tick record contains only type/tick. Keep every logged record,
   // while avoiding structured serialization for this 60 Hz scalar variant.
-  readonly events = new EventBus<GameEvent>(event => event.type === 'sim.tick' ? { ...event } : structuredClone(event));
+  readonly events = new EventBus<GameEvent>(event => event.type === 'sim.tick' ? { ...event } : cloneData(event));
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
   districts: DistrictWorld | null = null;
