@@ -31,7 +31,7 @@ export default defineConfig({
     restoreMocks: true,
     projects: [
       { extends: true, test: { name: 'timing', include: timingFiles, fileParallelism: false, sequence: { groupOrder: 1 } } },
-      { extends: true, test: { name: 'functional', include: ['tests/unit/**/*.test.ts', 'tests/sim/**/*.test.ts', 'tests/levels/**/*.test.ts'], exclude: timingFiles, sequence: { groupOrder: 2 } } },
+      { extends: true, test: { name: 'functional', include: ['tests/unit/**/*.test.ts', 'tests/sim/**/*.test.ts', 'tests/levels/**/*.test.ts', 'tests/qa/invariants/**/*.test.ts'], exclude: timingFiles, sequence: { groupOrder: 2 } } },
     ],
   },
 });
