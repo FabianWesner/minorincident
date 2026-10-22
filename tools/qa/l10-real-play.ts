@@ -21,6 +21,16 @@ try {
       if ((object as { material?: { name: string } }).material?.name === 'pal_asphalt') (window as unknown as { l10Shader: unknown }).l10Shader = builder;
     };
   });
+  // Diagnostic only: acceptance runs keep this profiler disabled. Its exact
+  // normal-speed assault window is recorded below for CPU attribution.
+  const assaultProfiler = process.env.L10_ASSAULT_PROFILE === '1' ? await session.page.context().newCDPSession(session.page) : null;
+  let assaultNavigationStartMs = 0;
+  if (assaultProfiler) {
+    await assaultProfiler.send('Performance.enable');
+    const { metrics } = await assaultProfiler.send('Performance.getMetrics');
+    assaultNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
+    await assaultProfiler.send('Profiler.enable'); await assaultProfiler.send('Profiler.start');
+  }
   const result = await session.page.evaluate(async ({ tier, realTime }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
@@ -45,7 +55,7 @@ try {
       }
       return null;
     };
-    let nativePerformance: { frames: number; p95: number; max: number; durationMs: number; fromTick: number; toTick: number } | null = null;
+    let nativePerformance: { frames: number; p95: number; max: number; durationMs: number; startedAt: number; finishedAt: number; fromTick: number; toTick: number } | null = null;
     if (realTime) {
       // Drive ordinary inputs through the production feed at 60 simulation
       // ticks/s, rather than accelerating the assault with the stepping API.
@@ -75,7 +85,7 @@ try {
         await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
       } finally { running = false; g.clock.pause(); g.input.feed = null; g.world.update = update; }
       frames.sort((x, y) => x - y);
-      nativePerformance = { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1)!, durationMs: performance.now() - start, fromTick, toTick: a.tick() };
+      nativePerformance = { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1)!, durationMs: performance.now() - start, startedAt: start, finishedAt: performance.now(), fromTick, toTick: a.tick() };
     } else {
       for (let tick = 0; tick < 5400; tick += 6) {
         const input = attack(); if (input) a.input.set(input); else a.input.clear();
@@ -98,6 +108,10 @@ try {
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), nativePerformance, perf: a.perf() };
   }, { tier, realTime });
+  if (assaultProfiler) {
+    const { profile } = await assaultProfiler.send('Profiler.stop'); await assaultProfiler.detach();
+    writeFileSync(`${out}/assault.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs: assaultNavigationStartMs }));
+  }
   if (process.env.L10_CORPSE_ORDER !== undefined) await session.page.evaluate(order => {
     const g = (window.__SCENE__ as unknown as { game: Game }).game;
     g.view.scene.traverse(object => { if (object.name.startsWith('corpses:')) object.renderOrder = order; });
@@ -189,7 +203,7 @@ try {
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
-  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, renderOrderOverride: process.env.L10_CORPSE_ORDER, captures, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, profiledAssault: !!assaultProfiler, renderOrderOverride: process.env.L10_CORPSE_ORDER, captures, errors: session.errors }, null, 2));
   assert.deepEqual(session.errors, []);
   console.log(JSON.stringify({ tier, backend: session.options.backend, kills: result.kills.length, bodies: result.bodies.length, captures, errors: session.errors }));
 } finally { await session.close(); stopServer(); }
