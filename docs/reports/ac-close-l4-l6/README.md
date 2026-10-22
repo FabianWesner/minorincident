@@ -23,7 +23,7 @@ The orchestrator explicitly authorized the E24-AC19 rewrite on 2026-10-22: the t
 
 ## Execution record
 
-The first remote attempt was rejected by the workspace network sandbox before any job started (SSH `Operation not permitted`, wrapper exit 69). Network access was subsequently enabled; the selected current-tree unit/level run was launched again on runner `2.31.10.108`. Results are pending and no pass is claimed.
+The first remote attempt was rejected by the workspace network sandbox before any job started (SSH `Operation not permitted`, wrapper exit 69). After network access was enabled, the selected current-product unit/level run completed on runner `2.31.10.108`: **231 passed / zero failed / 2,084 excluded or skipped by the existing name filter**, exit 0, 1,929.42 seconds. This includes the continuous L1→L6 campaign with the real L5 handover and the frozen L5 balance assertions. It is a selected run, not the full unit suite. [Receipt](evidence/initial-node-summary.json), [raw JSON](evidence/initial-node.json.gz), [full log](evidence/initial-node.log.gz). The product source matches the starting commit; subsequent changes so far are documentation and acceptance instrumentation only.
 
 Opened historical images during triage: L4 boundary-refuge high war and low collapse; L6 pickup/closed-gate backend/tier sheet; L5 vehicle-travel five-person group. They expose the intended compositions but do not close the current-tree matrix or scored review.
 
@@ -37,3 +37,9 @@ Opened historical images during triage: L4 boundary-refuge high war and low coll
 - `MI_VERIFY_REMOTE_E2E=1` now splits E24 functional checks onto the runner as it already does for E23. Both use one local worker. Native visual/input/photo and quiet performance stages remain explicit.
 
 Typecheck and lint have passed during preparation. These new browser checks are not yet reported as executed or accepted.
+
+## Shared Alpha simulation proof
+
+The current-product four-file Alpha/physical/support/L4-systems run initially had 59 passes and one stale fixture failure: `T-E07-06-alpha-melee` kicked the Alpha with player 1 and then manually assigned the soldier as its target. The shipping hit-provocation rule correctly retains the attacker for twelve seconds, so this did not exercise ordinary soldier contact. The fixture now uses fresh arenas for kick resistance and unprovoked soldier contact, explicitly verifies the player provocation, and retains every HP, reaction, 72-tick knockdown and attack-interval assertion. **All 60 now pass**, remote runner `2.28.24.66`, 8.28 seconds, exit 0. No gameplay tuning changed. [Receipt](evidence/alpha-sim-summary.json), [before](evidence/alpha-sim-before.json.gz), [after](evidence/alpha-sim-fixed.json.gz), [log](evidence/alpha-sim-fixed.log.gz).
+
+The targeted remote `PO #21b` browser run exhausted its existing 300-second timeout in initial checkpoint reconstruction (`step(65)`), before any Sam→Mia route action. This is **not route acceptance evidence**. [Result](evidence/sam-mia-remote-before.json.gz), [log](evidence/sam-mia-remote-before.log.gz). A fresh native route is still required after 09:15 UTC.

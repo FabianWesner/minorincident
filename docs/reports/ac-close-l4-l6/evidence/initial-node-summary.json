@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "769d9f8ce",
+  "scope": "Selected tests/unit and tests/levels; production source unchanged by subsequent documentation/test-only commits",
+  "command": "npx vitest run tests/unit tests/levels -t '@E22|@E23|@E24|T-E22|T-E23|T-E24' --maxWorkers=4 --reporter=verbose --reporter=json --outputFile=test-results/ac-close-unit-level.json",
+  "runner": "2.31.10.108",
+  "exitCode": 0,
+  "passed": 231,
+  "failed": 0,
+  "excludedOrSkipped": 2084,
+  "durationSeconds": 1929.42
+}
