@@ -563,6 +563,8 @@ export class LevelFourWar {
       const e = world.entities.get(entry.id); if (!this.human(e) || e!.civilian!.ally || e!.civilian!.state === 'grabbed') continue;
       const gun = entry.weapon === 'pistol' ? c.pistol : entry.weapon === 'hunting-rifle' ? c.rifle : null, p = { x: e!.transform.x, z: e!.transform.z };
       e!.civilian!.state = 'calm';
+      // PO #115 ("What are they doing?"): a sheltered civilian still carried the cower story, so the armed survivor crouched with the gun in hand. Stand and aim.
+      e!.civilian!.story = null; e!.civilian!.schedule = [{ activity: 'look', anchor: 'l4/armed', target: p, ticks: 60 * 60 * 6 }]; e!.civilian!.scheduleStep = 0; e!.civilian!.activityUntil = 0;
       e!.civilian!.ally = { ...allyState('civilian', gun ? p : null, !!gun), engaged: true, runSpeed: 3.4, ...(gun ? { gun: { ...gun }, weapon: entry.weapon as 'pistol' | 'hunting-rifle', range: gun.rangeM } : { melee: { ...c.melee }, range: 8 }) };
       e!.health = { current: Math.max(e!.health.current, c.hp), max: c.hp }; e!.appearance!.handProp = entry.weapon; entry.armedAt = tick;
     }
