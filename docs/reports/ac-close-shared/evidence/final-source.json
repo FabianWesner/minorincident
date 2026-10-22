@@ -103,7 +103,7 @@
     "build/worldLook-o3T_90Bf.js": "e6308d2c9948dd608032ff1f730d286346700d500a93e6fad197c55d692c60b5",
     "build/wreck-roofs-CFQIthKq.js": "a912d11472e6297500db09161cec443d7f1442631b65660a0eda05dea65839d0"
   },
-  "notes": "Current runtime includes exact dog palette sharing and distant inline headwear at df390443a0c9eec98bfcd28bbe406a7c3dc4c5af. finalProduction identifies the successfully built runtime; full verifiers and refreshed visual signoff are pending. productionJavaScript and E07ProductionRepeat remain historical pre-batching receipts. Body+accessory draws are now counted together; all thresholds remain unchanged.",
+  "notes": "Final runtime df390443a includes exact dog palette sharing and distant inline headwear. All three full verifiers pass; final D/H/G and actual L5 images reviewed. finalProduction is the successful local production directory snapshot (including older chunks retained by rsync overlay), not a claim that every listed chunk is reachable. productionJavaScript and E07ProductionRepeat remain historical pre-batching receipts. Threshold hashes remain unchanged. E07/E28 proposals are unadopted; both stay in-progress.",
   "unchangedMeasurementContracts": {
     "tests/perf/collected-heap.ts": {
       "sha256": "d0b625ea826d8c7a8b3068faaf7687aedf07f80450937f2f4048a529693835ea",
@@ -211,5 +211,10 @@
       "build/prefetch.worker-BKE3iAF1.js": "303acc85296ab1e4f8c5e6ba9e02ff4f947de6edc518c51886de0cc59b13fe21",
       "assets/basis/basis_transcoder.js": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1"
     }
+  },
+  "finalVerification": {
+    "E07": "verify-E07-final-checks.json",
+    "E27": "verify-E27-headwear-final-checks.json",
+    "E28": "verify-E28-headwear-final-checks.json"
   }
 }

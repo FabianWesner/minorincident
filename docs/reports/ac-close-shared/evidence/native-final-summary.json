@@ -1,0 +1,114 @@
+{
+  "storm-high": {
+    "frameP95": 5.799999999999272,
+    "frameMax": 9.699999999998909,
+    "simP95": 0.20000076293945312,
+    "heapMB": 117.33672,
+    "heapAudit": {
+      "usedSize": 117336720,
+      "totalSize": 118652928,
+      "embedderHeapUsedSize": 1986936,
+      "backingStorageSize": 387035730
+    },
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "weather": {
+      "particles": 20000,
+      "flash": 0,
+      "rayDitherRadius": 6,
+      "wetness": 1,
+      "accumulation": 0,
+      "tracks": 0,
+      "trackPixels": 0
+    },
+    "wetness": 1,
+    "legacyHeapMiB": 557.8943557739258
+  },
+  "l5-high": {
+    "counts": {
+      "followers": 5,
+      "infected": 27,
+      "fires": 13,
+      "corpses": 37
+    },
+    "weather": {
+      "sim": {
+        "kind": "ash",
+        "flakes": 0.35,
+        "fog": 0.12
+      },
+      "render": {
+        "particles": 1750,
+        "flash": 0,
+        "rayDitherRadius": 6,
+        "wetness": 0,
+        "accumulation": 0.15263888888888713,
+        "tracks": 588,
+        "trackPixels": 2854
+      }
+    },
+    "heapMB": 130.194832,
+    "p50": 5.599999999998545,
+    "p95": 8.400000000001455,
+    "max": 14.400000000001455,
+    "pairDrawCalls": 356,
+    "pairTriangles": 702623,
+    "walkedM": 16.9842984746738,
+    "endLevel": "L5"
+  },
+  "storm-low": {
+    "frameP95": 6.899999999997817,
+    "frameMax": 9.299999999999272,
+    "simP95": 0.8000001907348633,
+    "heapMB": 116.778672,
+    "heapAudit": {
+      "usedSize": 116778672,
+      "totalSize": 118128640,
+      "embedderHeapUsedSize": 1975192,
+      "backingStorageSize": 374328341
+    },
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "weather": {
+      "particles": 6000,
+      "flash": 0,
+      "rayDitherRadius": 6,
+      "wetness": 1,
+      "accumulation": 0,
+      "tracks": 0,
+      "trackPixels": 0
+    },
+    "wetness": 1,
+    "legacyHeapMiB": 523.8176755905151
+  },
+  "l5-low": {
+    "counts": {
+      "followers": 5,
+      "infected": 18,
+      "fires": 13,
+      "corpses": 37
+    },
+    "weather": {
+      "sim": {
+        "kind": "ash",
+        "flakes": 0.35,
+        "fog": 0.12
+      },
+      "render": {
+        "particles": 525,
+        "flash": 0,
+        "rayDitherRadius": 6,
+        "wetness": 0,
+        "accumulation": 0.15263888888888713,
+        "tracks": 392,
+        "trackPixels": 4669
+      }
+    },
+    "heapMB": 114.354592,
+    "p50": 18.400000000001455,
+    "p95": 34.599999999998545,
+    "max": 43.80000000000291,
+    "pairDrawCalls": 266,
+    "pairTriangles": 321565,
+    "walkedM": 56.22526419476857,
+    "endLevel": "L5"
+  }
+}

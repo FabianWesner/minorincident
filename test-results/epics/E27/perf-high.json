@@ -1,8 +1,8 @@
 {
-  "frameP95": 8.699999999998909,
-  "frameMax": 13.700000000000728,
+  "frameP95": 7.300000000001091,
+  "frameMax": 168.89999999999964,
   "simP95": 0.6000003814697266,
-  "frames": 1342,
+  "frames": 1542,
   "maxPuffs": 400,
   "maxParticles": 2048,
   "blasts": [
@@ -15,16 +15,26 @@
   ],
   "initialInfected": 30,
   "infectedAlive": 11,
-  "spikes": [],
+  "spikes": [
+    {
+      "at": 92,
+      "ms": 95
+    },
+    {
+      "at": 2127,
+      "ms": 169
+    },
+    {
+      "at": 4549,
+      "ms": 109
+    }
+  ],
   "fires": 17,
   "perf": {
-    "l4": null,
     "chunkResidency": null,
     "terrain": null,
     "infected": {
       "count": 11,
-      "liveCount": 11,
-      "firstLiveId": 18,
       "available": 339
     },
     "effects": {
@@ -38,142 +48,60 @@
       "gore": "Full",
       "quality": "high",
       "flashReduction": false,
-      "time": 10.124700000000006,
+      "time": 10.076100000000027,
       "lastSpray": {
         "actionId": "explosion.gas-tanks",
         "direction": {
-          "x": -0.9883584369736205,
-          "z": -0.15214335366049375
+          "x": -0.9866106405770847,
+          "z": -0.16309335946038558
         },
-        "droplets": 48,
+        "droplets": 44,
         "chunks": 4,
         "gravity": 9.81
       },
       "surfaceSplats": 0,
       "pendingSplats": 0,
-      "particles": 862,
+      "particles": 848,
       "particleCap": 2048,
-      "decals": 600,
+      "decals": 511,
       "decalCap": 600,
       "gibs": 80,
       "gibCap": 80,
       "telegraphs": [
         {
-          "attackId": 56,
-          "slot": 55,
-          "kind": "lunge",
-          "spawned": 9.502499999999982,
-          "x": -0.2941663497403319,
-          "z": 6.562582141564671,
-          "angle": -2.232555428731793,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 9.852499999999981,
-          "sourceId": 25
-        },
-        {
-          "attackId": 57,
-          "slot": 56,
-          "kind": "lunge",
-          "spawned": 9.502499999999982,
-          "x": -0.860704017769018,
-          "z": 7.327876272470965,
-          "angle": -1.8370995275910944,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 9.852499999999981,
-          "sourceId": 26
-        },
-        {
           "attackId": 58,
           "slot": 57,
           "kind": "lunge",
-          "spawned": 9.502499999999982,
-          "x": -2.06472934611313,
-          "z": 6.861230296649809,
-          "angle": -1.2652144091499329,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 9.852499999999981,
-          "sourceId": 28
+          "spawned": 9.40430000000001,
+          "sourceId": 25
         },
         {
           "attackId": 59,
           "slot": 58,
           "kind": "lunge",
-          "spawned": 9.851599999999998,
-          "x": -0.5415379051370405,
-          "z": 5.767318205692722,
-          "angle": -2.4799510290677294,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.201599999999997,
-          "sourceId": 19
+          "spawned": 9.40430000000001,
+          "sourceId": 26
         },
         {
           "attackId": 60,
           "slot": 59,
           "kind": "lunge",
-          "spawned": 9.851599999999998,
-          "x": -2.552340351230441,
-          "z": 4.861275425596222,
-          "angle": 0.15786228312229522,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.201599999999997,
-          "sourceId": 21
+          "spawned": 9.754100000000017,
+          "sourceId": 22
         },
         {
           "attackId": 61,
           "slot": 60,
           "kind": "lunge",
-          "spawned": 9.851599999999998,
-          "x": -0.42986417747419736,
-          "z": 4.861354583341374,
-          "angle": 2.9826874534368217,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.201599999999997,
-          "sourceId": 22
+          "spawned": 9.767100000000017,
+          "sourceId": 21
         },
         {
           "attackId": 62,
           "slot": 61,
           "kind": "lunge",
-          "spawned": 9.851599999999998,
-          "x": -1.2829659893252832,
-          "z": 6.251818616098527,
-          "angle": -1.7366101982715598,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.201599999999997,
-          "sourceId": 24
-        },
-        {
-          "attackId": 63,
-          "slot": 62,
-          "kind": "lunge",
-          "spawned": 9.8873,
-          "x": -1.2518955028671144,
-          "z": 7.2117911353444795,
-          "angle": -1.6783161070669907,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.2373,
-          "sourceId": 20
-        },
-        {
-          "attackId": 64,
-          "slot": 63,
-          "kind": "lunge",
-          "spawned": 9.9702,
-          "x": -1.9680076842562395,
-          "z": 5.958299812355188,
-          "angle": -1.0926235481338453,
-          "shape": 3,
-          "radius": 2,
-          "resolves": 10.3202,
-          "sourceId": 29
+          "spawned": 9.817300000000019,
+          "sourceId": 30
         }
       ],
       "hitStop": {
@@ -195,8 +123,8 @@
         "fireballCap": 96,
         "chunks": 0,
         "chunkCap": 64,
-        "flames": 62,
-        "glows": 15,
+        "flames": 67,
+        "glows": 16,
         "vehicleSmokeColumns": 0,
         "columns": 24,
         "transientColumns": 6,
@@ -227,31 +155,31 @@
       "prebuilt": 24,
       "failed": 0
     },
-    "nodeBuilds": 309,
+    "nodeBuilds": 183,
     "profile": null,
     "profileAssets": null,
     "updateCpuMs": 0,
     "renderCpuMs": 0,
     "propUploads": 0,
-    "awakeProps": 0,
-    "fps": 192.3076923076654,
-    "frameMs": 5.200000000000728,
+    "awakeProps": 1,
+    "fps": 114.9425287356466,
+    "frameMs": 8.699999999998909,
     "simMs": 0,
     "simTicks": 0,
     "simWorldMs": 0,
     "simTickMs": 0,
     "uiMs": 0,
-    "drawCalls": 112,
-    "triangles": 482746,
-    "geometries": 389,
-    "textures": 153,
+    "drawCalls": 99,
+    "triangles": 473328,
+    "geometries": 231,
+    "textures": 38,
     "entities": 63,
     "backend": "webgl",
     "loadTiming": null,
     "quality": {
       "setting": "high",
       "tier": "high",
-      "p90Ms": 6.3,
+      "p90Ms": 5.2,
       "slowSeconds": 0,
       "budgets": {
         "frameMs": 16.7,
@@ -266,12 +194,12 @@
         "cullDistance": 60
       }
     },
-    "renderedFrames": 2016,
+    "renderedFrames": 2333,
     "contextLost": false,
     "paused": false,
-    "heapBytes": 735906886,
+    "heapBytes": 852435979,
     "lighting": {
-      "lightFieldMs": 0.09999942779541016,
+      "lightFieldMs": 0.19999980926513672,
       "lightPools": 18,
       "lightCandidates": 18,
       "shadowMaps": 1,

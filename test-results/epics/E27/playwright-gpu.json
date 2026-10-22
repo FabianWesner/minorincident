@@ -2,14 +2,14 @@
   "config": {
     "argv": [
       "/opt/homebrew/Cellar/node/26.0.0/bin/node",
-      "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/node_modules/.bin/playwright",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/node_modules/.bin/playwright",
       "test",
       "tests/perf/explosions.spec.ts",
       "--project=chromium",
       "--workers=1"
     ],
-    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/playwright.config.ts",
-    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -25,7 +25,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -33,7 +33,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -43,7 +43,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -51,22 +51,18 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts",
-          "**/home-button.spec.ts",
-          "**/menu-10-levels.spec.ts",
-          "**/apc-floor.spec.ts",
-          "**/l9-browser-input.spec.ts"
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -74,22 +70,18 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts",
-          "**/home-button.spec.ts",
-          "**/menu-10-levels.spec.ts",
-          "**/apc-floor.spec.ts",
-          "**/l9-browser-input.spec.ts"
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -97,7 +89,7 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -108,7 +100,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -116,7 +108,7 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -127,7 +119,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -135,7 +127,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -167,8 +159,8 @@
     "version": "1.63.0",
     "workers": 1,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 4051 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:4051",
+      "command": "npx vite preview --host 127.0.0.1 --port 3499 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3499",
       "reuseExistingServer": false,
       "timeout": 30000
     }
@@ -199,12 +191,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18508,
+                  "duration": 15286,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-22T04:12:03.740Z",
+                  "startTime": "2026-10-10T17:50:36.200Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -236,12 +228,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 29251,
+                  "duration": 22538,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-22T04:12:22.491Z",
+                  "startTime": "2026-10-10T17:50:52.072Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -259,8 +251,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-22T04:12:03.140Z",
-    "duration": 48700.717000000004,
+    "startTime": "2026-10-10T17:50:35.620Z",
+    "duration": 39055.895,
     "expected": 2,
     "skipped": 0,
     "unexpected": 0,

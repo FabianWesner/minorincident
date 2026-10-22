@@ -7,24 +7,22 @@
   "checks": [
     {
       "command": [
-        "sh",
-        "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
-        "--",
-        "sh",
-        "-c",
-        "npm run typecheck && npm run lint"
+        "npm",
+        "run",
+        "typecheck"
       ],
       "exitCode": 0
     },
     {
       "command": [
-        "sh",
-        "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
-        "--pull",
-        "dist",
-        "--",
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
         "npm",
         "run",
         "build"
@@ -34,13 +32,7 @@
     {
       "command": [
         "sh",
-        "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
-        "--pull",
-        "test-results/epics/E07/vitest-timing.json",
-        "--",
-        "bash",
-        "tools/remote/timing-isolated.sh",
+        "tools/sim-lock.sh",
         "npx",
         "vitest",
         "run",
@@ -60,7 +52,7 @@
       "command": [
         "sh",
         "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
         "--pull",
         "test-results/epics/E07/vitest.json",
         "--",
@@ -79,28 +71,31 @@
     {
       "command": [
         "sh",
-        "tools/e2e-lock.sh",
-        "npx",
-        "playwright",
-        "test",
-        "--grep",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
+        "--pull",
+        "test-results/playwright/results.json",
+        "--env",
+        "E2E_PORT=3492",
+        "--",
+        "sh",
+        "-c",
+        "npm run build && npx playwright test --grep \"$1\" --grep-invert \"$2\" --workers=1",
+        "sh",
         "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
-        "--grep-invert",
-        "@perf",
-        "--workers=1"
+        "alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13"
       ],
       "exitCode": 0
     },
     {
       "command": [
         "sh",
-        "tools/perf/quiet-run.sh",
+        "tools/e2e-lock.sh",
         "npx",
         "playwright",
         "test",
         "--grep",
-        "^(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)|T-E07-physical-budget))(?=.*@perf)",
-        "--project=chromium",
+        "^(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)|T-E07-physical-budget))(?=.*(?:alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13))",
         "--workers=1"
       ],
       "exitCode": 0
