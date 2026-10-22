@@ -96,7 +96,11 @@ test('T-Q120 death after charge-ready retries at the boss checkpoint with charge
     const console = m.def.anchors['cure-console']!;
     press(); press(); step(3600);
     expect(m.state.states['charge-ready']).toBe(true);
-    const staged = { ...w.entities.get(boss.state.id)!.transform }, full = w.entities.get(boss.state.id)!.health.max;
+    expect(m.state.steps.mega.status).toBe('active');
+    const staged = m.saveResume().checkpoint.entities.find(e => e.id === boss.state.id)!.transform;
+    const full = w.entities.get(boss.state.id)!.health.max;
+    let restoredPosition: typeof staged | undefined;
+    w.events.on('player.respawned', () => { restoredPosition = { ...w.entities.get(boss.state.id)!.transform }; }, SimPhase.cleanup);
     w.entities.get(boss.state.id)!.health.current = Math.ceil(full * .2);
     step();
     w.tick += 180; w.player!.damage(1000, w.tick);
@@ -105,7 +109,8 @@ test('T-Q120 death after charge-ready retries at the boss checkpoint with charge
     expect(m.state.counters['charge-ticks']).toBe(3600);
     expect(m.state.states['charge-active']).toBe(true);
     expect(w.entities.get(boss.state.id)!.health.current).toBe(full);
-    expect(Math.hypot(w.entities.get(boss.state.id)!.transform.x - staged.x, w.entities.get(boss.state.id)!.transform.z - staged.z)).toBeLessThanOrEqual(.1);
+    expect(restoredPosition).toEqual(staged);
+    expect(m.state.steps.mega.status).toBe('active');
     expect(Math.hypot(w.entities.get(1)!.transform.x - console.x, w.entities.get(1)!.transform.z - console.z)).toBeLessThanOrEqual(25);
   } finally { w.dispose(); }
 });
@@ -116,7 +121,9 @@ test('T-Q121 damage to the staged Mega Alpha during charge is cleared before the
     w.combat!.damage.god = true;
     press(); press(); step(3599);
     const entity = w.entities.get(boss.state.id)!;
-    entity.health.current = Math.ceil(entity.health.max * .2);
+    // Defence fire uses the normal damage path even before the boss objective.
+    for (let i = 0; i < 8; i++) w.combat!.damage.apply({ sourceId: 1, targetId: entity.id, attackId: 800 + i, actionId: 'weapon.rocket-launcher', direct: true, origin: { x: 0, z: 0 }, direction: { x: -1, z: 0 }, base: 1, multiplier: 1, type: 'explosive', stagger: 0, knockback: 0 });
+    expect(entity.health.current / entity.health.max).toBeCloseTo(.2);
     step();
     expect(m.state.states['charge-ready']).toBe(true);
     expect(entity.health.current / entity.health.max).toBe(1);
@@ -184,7 +191,7 @@ test('@E32 charge completion gives the live Mega Alpha a distinct objective mark
   } finally { w.dispose(); }
 });
 
-test('@E32 #101 a remote living boss joins the finale within 15 seconds with its remaining health intact @E32-AC22', async () => {
+test('@E32 #101 a remote living boss joins the finale within 15 seconds at full fight-start health @E32-AC22', async () => {
   const { w, m, boss, press, step } = await finale();
   try {
     w.combat!.damage.god = true; press(); press();
@@ -195,10 +202,10 @@ test('@E32 #101 a remote living boss joins the finale within 15 seconds with its
     step(3);
     expect(m.state.steps.mega.status).toBe('active');
     expect(boss.distance()).toBeLessThan(30);
-    expect(e.health.current).toBe(1280);
+    expect(e.health.current).toBe(e.health.max);
     step(15 * 60);
     expect(boss.distance()).toBeLessThanOrEqual(12);
-    expect(e.health.current).toBe(1280);
+    expect(e.health.current).toBe(e.health.max);
   } finally { w.dispose(); }
 });
 
