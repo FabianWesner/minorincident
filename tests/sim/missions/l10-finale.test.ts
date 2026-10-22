@@ -106,6 +106,22 @@ test('T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32
   } finally { w.dispose(); }
 });
 
+test.each([false, true])('@E32 #101 old combined charge/boss save retains its checkpoint (hold completed=%s) @E32-AC27', async completed => {
+  const { w, m, kill, press, step } = await finale();
+  try {
+    if (completed) { kill(); press(); press(); step(3602); }
+    const save = structuredClone(w.progression!.campaign!); save.cureResume = m.saveResume();
+    for (const snapshot of [save.cureResume.current, save.cureResume.checkpoint]) delete snapshot.state.steps.mega;
+    const decoded = decodeSave(JSON.stringify(save));
+    expect(decoded.status).toBe('ok');
+    if (decoded.status === 'ok') {
+      m.loadResume(decoded.save.cureResume!);
+      expect(m.state.checkpoint).toBe(completed ? 'cure-disperse-ready' : 'cure-complex');
+      expect(m.state.steps.mega.status).toBe(completed ? 'completed' : 'pending');
+    }
+  } finally { w.dispose(); }
+});
+
 
 test('T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22', async () => {
   const { w, m, boss, press, step, kill } = await finale();

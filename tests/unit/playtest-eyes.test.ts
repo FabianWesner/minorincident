@@ -49,3 +49,7 @@ test('#104 L7 driver regroups on visible survivors when it is more than 8 m from
   ])).toEqual({ x: 13, z: 2 });
   expect(visibleGroupTarget('L7', { x: 12, z: 2 }, [{ x: 13, z: 2, hp: 60, drawn: true, corpse: false }])).toBeNull();
 });
+
+test('#102 the fists driver covers visible L6 walkers instead of waiting ahead at the next ring', () => {
+  expect(visibleGroupTarget('L6', { x: 53, z: 15 }, [{ x: 43, z: 15, hp: 60, drawn: true, corpse: false }], 8, 'retreat')).toEqual({ x: 43, z: 15 });
+});
