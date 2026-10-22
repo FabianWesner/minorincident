@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "pending",
-  "updatedAt": "2026-10-22T21:48:55.228460+00:00",
+  "updatedAt": "2026-10-22T22:44:42.876798+00:00",
   "protocol": "Revised orchestrator validation: real PO fixes + isolated local faults + same-build controls",
   "threshold": 0.02,
   "objectiveMet": false,
@@ -144,7 +144,9 @@
   ],
   "hold": {
     "requestedBy": "orchestrator",
-    "condition": "Do not start new browser runs until load-stalls quiet-run.sh timing matrix finishes."
+    "condition": "Do not start new browser runs until the orchestrator explicitly releases the load-stalls timing hold.",
+    "expectedReleaseAt": "2026-10-23T01:05:00Z",
+    "nonBrowserWork": "complete and committed; final browser comparisons and audit remain pending"
   },
   "notes": [
     "Raw scores are unchanged; case confirmation is recorded by Codex visual inspection.",
