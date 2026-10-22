@@ -153,3 +153,18 @@ if sys.argv[1] == 'bars':
     proofs = {str(p): json.loads(p.read_text()) for p in [*actual.glob('alpha-proof-*.json'), *phone.glob('*.json')]}
     with gzip.open(DEST / 'evidence/phone-bars-final.json.gz', 'wt') as f:
         json.dump({'proofs': proofs, 'images': manifest}, f)
+elif sys.argv[1] == 'moods':
+    root = Path('test-results/epics/E28/visual')
+    rows = []
+    manifest = []
+    for backend in ['webgl', 'webgpu']:
+        for tier in ['high', 'low']:
+            row = []
+            for mood in ['clear', 'overcast', 'haze', 'thunderstorm', 'fog', 'snow']:
+                path = root / f'mood-{mood}-{backend}-{tier}.png'
+                label = f'{mood} | {backend} {tier}'
+                row.append((path, label))
+                manifest.append({'path': str(path), 'label': label, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+            rows.append(row)
+    sheet('g-moods.jpg', rows, 400, 225)
+    (DEST / 'evidence/G-final-images.json').write_text(json.dumps(manifest, indent=2) + '\n')
