@@ -12,7 +12,9 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
     printf '%s\n' 'Run quiet-run directly, without an outer e2e-lock (it owns the browser locks).' >&2
     exit 1
   fi
-  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + 1800))
+  export MI_PERF_ADMISSION_TIMEOUT_SECONDS="${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}"
+  case "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer' >&2; exit 2;; esac
+  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + MI_PERF_ADMISSION_TIMEOUT_SECONDS))
   slots="${E2E_SLOTS:-2}"
   case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
   # Cover the legacy four-slot range during rollout and explicit four-unit runs too.
@@ -42,11 +44,11 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
     if [ -s "$started" ] || [ "$rc" -ne 75 ]; then exit "$rc"; fi
     sleep 2
   done
-  echo 'Quiet-run: admission exceeded 30 minutes; report unmeasured coverage.' >&2
+  printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2
   exit 75
 fi
 while :; do
-  [ "$(date +%s)" -lt "$MI_PERF_WAIT_DEADLINE" ] || { echo 'Quiet-run: admission exceeded 30 minutes; report unmeasured coverage.' >&2; exit 75; }
+  [ "$(date +%s)" -lt "$MI_PERF_WAIT_DEADLINE" ] || { printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2; exit 75; }
   # Match executables, not scheduler summaries quoting previous process commands.
   # Also catch native Chrome's --headless flag.
   # A single Vitest worker can occupy a core while loadavg is still below 3.

@@ -9,6 +9,7 @@ for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug
     const result = await measureL10Entry(page, baseURL!, entry, backend, 'test-results/fixes-13h-l10/entry-guard');
     expect(result.backend).toBe(backend === 'webgl2' ? 'webgl' : 'webgpu');
     expect(result.cardClosed).toBeGreaterThan(0);
+    expect(result.frames.filter(f => f.scenario === 'L10' && f.at < result.cardClosed! && f.dt > 200).every(f => f.cardVisible), 'long loading intervals must actually be covered by the card').toBe(true);
     expect(result.playableFrames).toBeGreaterThan(100);
     // The recording crosses both reported cold-graph boundaries (755/14 and 790/25),
     // rather than stopping just before the first promotion as the old API walk did.

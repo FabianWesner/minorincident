@@ -61,7 +61,10 @@ test('uncapped probes fail closed outside quiet-run', async () => {
   }
 });
 test('quiet-run bounds its owned batch and remote browser setup only marks success after install', () => {
-  expect(readFileSync('tools/perf/quiet-run.sh', 'utf8')).toContain('--seconds 1195');
+  const quiet = readFileSync('tools/perf/quiet-run.sh', 'utf8');
+  expect(quiet).toContain('--seconds 1195');
+  expect(quiet).toContain('E2E_ADMISSION_TIMEOUT_SECONDS:-1800');
+  expect(quiet).toContain('+ MI_PERF_ADMISSION_TIMEOUT_SECONDS');
   const setup = readFileSync('tools/remote/browser-setup.sh', 'utf8');
   expect(setup.indexOf('touch "$marker"')).toBeGreaterThan(setup.indexOf('install chromium'));
   expect(setup).toContain('set -euo pipefail');
