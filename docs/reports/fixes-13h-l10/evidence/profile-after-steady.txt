@@ -1,0 +1,48 @@
+total 20000 ms
+
+self time by file:
+   13366  (idle)
+    2470  chunk-6RKLOYII.js?v=4774c148
+     669  chunk-FK4U4DKY.js?v=4774c148
+     647  (program)
+     571  NavGrid.ts
+     367  DistrictView.ts
+     175  (garbage collector)
+     144  bufferSubData
+     120  LightPower.ts
+     101  Renderer.ts
+      85  00bc1dde
+      70  GameView.ts
+      46  bindBuffer
+      45  LightField.ts
+      41  DistrictWorld.ts
+
+self time by function:
+   13366  (idle) :-1
+     647  (program) :-1
+     434  updateNode chunk-6RKLOYII.js?v=4774c148:27716
+     408  reachPath NavGrid.ts:598
+     299  _renderObjectDirect chunk-6RKLOYII.js?v=4774c148:32679
+     236  updateMatrixWorld chunk-FK4U4DKY.js?v=4774c148:7344
+     180  _update chunk-6RKLOYII.js?v=4774c148:16218
+     175  (garbage collector) :-1
+     152  cutBlockers DistrictView.ts:723
+     144  bufferSubData :-1
+     141  _projectObject chunk-6RKLOYII.js?v=4774c148:32328
+     119  isOn LightPower.ts:108
+     101  objects.get Renderer.ts:9
+      93  update chunk-6RKLOYII.js?v=4774c148:6384
+      92  neighbor NavGrid.ts:435
+      90  updateByType chunk-6RKLOYII.js?v=4774c148:33095
+      84  get value chunk-6RKLOYII.js?v=4774c148:5926
+      70  getMaterialCacheKey chunk-6RKLOYII.js?v=4774c148:14798
+      69  multiplyMatrices chunk-FK4U4DKY.js?v=4774c148:5624
+      68  draw chunk-6RKLOYII.js?v=4774c148:38682
+
+inclusive time (samples whose stack contains the function):
+    3225  render
+     563  simTick
+    4956  update
+       0  setUniforms
+    1592  updateForRender
+       0  updateForObject
