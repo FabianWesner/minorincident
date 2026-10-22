@@ -38,7 +38,10 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
       const infected = a.query({ kind: 'infected' });
       const enemy = infected.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 24 && a.input.visible(e.transform)).sort((a, b) => distance(a.transform) - distance(b.transform))[0];
       const alphaVisible = infected.some(e => e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && distance(e.transform) < 24 && a.input.visible(e.transform));
-      return { scenario: s.scenario, p, pickup: pickup?.transform, enemy: enemy?.transform, alphaVisible, exploded: a.events().some(e => e.type === 'explosion' && e.defId === 'explosion.rocket'), checkpoint: a.missions.state()?.checkpoint, l7: s.l7, bus: s.l7Departure, hp: s.player!.health.current };
+      const selected = s.player.weapons!.RIGHT, weapon = selected.rack[selected.index].id;
+      const rosterIds = s.l7!.roster.map(r => r.id);
+      const rosterHits = a.events().filter(e => e.type === 'combat.hit' && rosterIds.includes(e.targetId));
+      return { scenario: s.scenario, p, pickup: pickup?.transform, enemy: enemy?.transform, weapon, rosterHits, alphaVisible, exploded: a.events().some(e => e.type === 'explosion' && e.defId === 'explosion.rocket'), checkpoint: a.missions.state()?.checkpoint, l7: s.l7, bus: s.l7Departure, hp: s.player!.health.current };
     });
     if (!s) break;
     expect(s.hp).toBeGreaterThan(0);
