@@ -1,8 +1,8 @@
 {
   "base": "c867e392b",
-  "sourceCommit": "b4c06bb7365191340b1de55c761325837cb05fa4",
+  "sourceCommit": "9e5c4b0b10af132b21e19b4d9c2408de6fe48919",
   "sha256": {
-    "src/render/CrowdView.ts": "9be2888225d85533c422643e5b9e5538e3eec5cc70d31383e7d76ddd2eb11f49",
+    "src/render/CrowdView.ts": "4fa84b5689b80ce440b08443a24e3742ad8afe69d95fe9bc41cba9029454867e",
     "src/render/GameView.ts": "f870e3345a5e24a1082aaf6d723f9644a43d32d057637126a215ef87cdd78730",
     "src/render/PaletteMaterial.ts": "5109d552b22b1adcb8d26eab664329ef88522d73dd9e2f415c521bb1cbb3d230",
     "src/render/characters/StaticCorpses.ts": "89b3cc561320248b6b9e3620f9159db9d0945e96f0bdd27158a57eb4fee0eae7",
@@ -36,7 +36,10 @@
     "tools/qa/shared-ac-sheets.py": "877e51a131b85d2d578e515541a83fe794973e155d1f6b34473e369c2608bbd3",
     "tools/qa/shared-ac-vision.ts": "bf07cf1ca0377653c0cc74f9b79c9bb79749ec5d25fd7635755faae3e11c3763",
     "tools/qa/zebra-corridor.ts": "721466cdacdaebf02e9bbce27bc73123c03f48067b27698172a16e97399aafe4",
-    "tools/verify.ts": "e22200d9d3d10d867ae7872cdb46ad6fb21bfb38d1da09b1e6287f37ab9dfc95"
+    "tools/verify.ts": "e22200d9d3d10d867ae7872cdb46ad6fb21bfb38d1da09b1e6287f37ab9dfc95",
+    "src/render/characters/shareDogCoatPalette.ts": "e92b130e01f6278541e4b0fd6235221eb26260bce498655819e278517fef0046",
+    "tests/perf/horde.spec.ts": "04763e87d7cbede8d3862716c8dd10833a2711d18759eb4769e54d24dc0589c2",
+    "tests/unit/render/dog-coat-batching.test.ts": "3124bd660c7b66f875a6d4e0c7b1f8bedfb6137ae04d38ee15351934371cd2c8"
   },
   "productionJavaScript": {
     "assets/basis/basis_transcoder.js": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1",
@@ -95,7 +98,7 @@
     "build/worldLook-o3T_90Bf.js": "e6308d2c9948dd608032ff1f730d286346700d500a93e6fad197c55d692c60b5",
     "build/wreck-roofs-CFQIthKq.js": "a912d11472e6297500db09161cec443d7f1442631b65660a0eda05dea65839d0"
   },
-  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. Final E07 production JavaScript is byte-identical to E27 (55 files); E28 verification also used the unchanged committed runtime, without a separate E28 bundle-hash comparison. Final E07 includes the separated elephant fixtures and wider roar inspection camera.",
+  "notes": "Current source includes the dog-coat batching repair at 9e5c4b0b10af132b21e19b4d9c2408de6fe48919. productionJavaScript and E07ProductionRepeat describe the completed pre-dog E27 and E07 builds (55 identical JavaScript files); no separate E28 bundle comparison was made. Final post-dog verification is pending. Other repairs remain unchanged since c97d5ddb2; all numeric acceptance thresholds are unchanged.",
   "unchangedMeasurementContracts": {
     "tests/perf/collected-heap.ts": {
       "sha256": "d0b625ea826d8c7a8b3068faaf7687aedf07f80450937f2f4048a529693835ea",
@@ -124,6 +127,7 @@
     "notes": "Compared after the final gated E07 remote build/pull, including the elephant fixture split and wider roar inspection camera; before its Node/browser stages."
   },
   "supplementalDiagnostics": {
-    "tools/qa/horde-object-audit.ts": "0e30eee3012b629fdf6c18c43ac007c35557ed768f1bb21f08643eca646175f1"
+    "tools/qa/horde-object-audit.ts": "80807fbd4b08881beca40c93acd075f6f9c500c3c4a24a0a93abfd6b2155f5f6",
+    "tools/qa/dog-coat-capture.ts": "03cd512e2f82cae169bb33909fe0f7adf235bbae616e86792c5adac8c32335ec"
   }
 }
