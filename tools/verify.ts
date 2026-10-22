@@ -168,14 +168,13 @@ const commands: string[][] = [
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
   console.log(`\nVerifying ${target}: ${command} ${args.join(' ')}`);
-  const auditBrowser = ['E07', 'E25', 'E26', 'E27', 'E28'].includes(target) && args.includes('playwright');
+  const auditBrowser = ['E07', 'E22', 'E23', 'E24', 'E25', 'E26', 'E27', 'E28'].includes(target) && args.includes('playwright');
   if (auditBrowser) rmSync('test-results/playwright/results.json', { force: true });
   const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
   if (target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
-  if (['E22', 'E23', 'E24'].includes(target) && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (auditBrowser) {
     const destination = `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`;
     if (existsSync('test-results/playwright/results.json')) copyFileSync('test-results/playwright/results.json', destination);
