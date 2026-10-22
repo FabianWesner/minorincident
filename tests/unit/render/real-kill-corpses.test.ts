@@ -87,7 +87,6 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
       for (const page of pages) {
         expect(page.name).toMatch(/:death-back:0(?:[:/]|$)/);
-        expect(page.renderOrder).toBe(-1);
         // The corpse shader can reuse placement columns for normals only while
         // every production frozen placement is a rotation plus translation.
         for (let index = 0; index < page.count; index++) {

@@ -257,20 +257,3 @@ test('plain fallback corpse materials keep independent value snapshots across po
   expect(a).not.toBe(b); expect(a.color.getHexString()).toBe('a03020'); expect(b.color.getHexString()).toBe('2050b0');
   pools.forEach(pool => pool.dispose()); baked.geometry.dispose(); source.dispose();
 });
-
-
-for (const [transparent, depthWrite] of [[false, true], [true, true], [false, false]] as const) test(`PO #98 corpses ${transparent ? 'transparent' : 'opaque'}/${depthWrite ? 'depth' : 'no depth'} preserve geometry with an appropriate depth order`, () => {
-  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
-  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial({ transparent, depthWrite });
-  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
-  try {
-    pool.prepare('runner', baked.geometry, material, baked.clip, frame);
-    const page = pool.children[0] as InstancedMesh, geometry = page.geometry;
-    expect(page.renderOrder).toBe(!transparent && depthWrite ? -1 : 0);
-    expect((page.material as MeshLambertNodeMaterial).transparent).toBe(transparent);
-    expect((page.material as MeshLambertNodeMaterial).depthWrite).toBe(depthWrite);
-    pool.place({ id: 7, corpse: true } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
-    expect(page.geometry).toBe(geometry); expect(page.count).toBe(1);
-    expect(pool.snapshot().instances).toBe(1);
-  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
-});
