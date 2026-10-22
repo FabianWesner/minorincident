@@ -3,6 +3,9 @@ import { expect, test, type Browser } from '@playwright/test';
 import { newCampaign, preset, type ProgressionPreset } from '../../../../src/sim/progression/Campaign';
 import { oracle } from '../oracles';
 import { SceneSession, readSpec, stopServer } from '../../../../tools/scenelab/session';
+import type { Game } from '../../../../src/Game';
+import type { InstancedGroup } from '../../../../src/render/InstancedGroup';
+import type { Mesh } from 'three';
 
 const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://minor-incident.com';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
@@ -71,6 +74,28 @@ test('Scene Lab: scripted cast is submitted and drawn on both quality paths', as
         }
         expect.soft(Object.keys(metrics.actors)).toEqual(expect.arrayContaining(['clerk', 'tech-a', 'tech-b', 'firefighter']));
         await info.attach(`scripted-cast-${tier}`, { body: JSON.stringify(metrics, null, 2), contentType: 'application/json' });
+        const seated = readSpec('tests/scenes/catalog/fix-p1-l2-start-courier-crew.json');
+        seated.camera = { mode: 'game', target: [-67.05, 0, 32.39], zoom: 1.5 };
+        await session.load(seated); await session.ready(); await session.step(60);
+        const benches = await session.page.evaluate(() => {
+          const game = (window.__SCENE__ as unknown as { game: Game }).game, w = game.world;
+          const drawn = new Set(window.__SS__!.crowdFigures().filter(f => f.drawn).map(f => f.id));
+          const submissions: { x: number; y: number; z: number; placeholder: boolean }[] = [];
+          game.view.scene.traverse(node => {
+            if (node.name !== 'inst:prop.bench') return;
+            const group = node as InstancedGroup;
+            for (let parent = node; parent; parent = parent.parent!) if (!parent.visible) return;
+            if (!group.children.some(child => (child as Mesh).isMesh && (child as unknown as { count: number }).count > 0)) return;
+            for (const ref of group.references) { const p = ref.position.clone().applyMatrix4(group.matrixWorld); submissions.push({ x: p.x, y: p.y, z: p.z, placeholder: !!group.userData.placeholder }); }
+          });
+          return w.missions!.state.l2!.benchIds.filter(id => drawn.has(id)).map(id => {
+            const e = w.entities.get(id)!, a = e.civilian!.schedule![0], prop = w.props!.items.find(p => p.id === a.seatProp);
+            return { id, prop: prop?.id ?? null, drawnSeat: !!prop && submissions.some(p => !p.placeholder && Math.hypot(p.x - prop.pose.p[0], p.z - prop.pose.p[2]) < .05) };
+          });
+        });
+        expect.soft(benches.length, `${tier}: seated NPCs in the PO camera must be drawn`).toBeGreaterThan(0);
+        for (const seat of benches) expect.soft(seat.drawnSeat, `${tier}/NPC ${seat.id}: missing drawn bench ${seat.prop}`).toBe(true);
+        await info.attach(`seated-props-${tier}`, { body: JSON.stringify(benches, null, 2), contentType: 'application/json' });
         expect.soft(session.errors, `${tier} Scene Lab errors`).toEqual([]);
       } finally { await session.close(); }
     }
