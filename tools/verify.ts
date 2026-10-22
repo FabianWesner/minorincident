@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { selectionFor } from './verify-selection';
 
 const target = process.argv[2];
@@ -20,7 +20,7 @@ if (splitAlphaTiming || splitE18Timing || splitE31Timing) simArgs[3] = simPatter
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 // E32 includes wall-clock budgets: reserve the existing runner slots while those tests run.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh'] : []), 'npx', ...simArgs]
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh', 'sh', 'tools/perf/quiet-run.sh'] : []), 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E02-webgpu|no army-line rebuild prompts|line-broken cellar guidance|@camera-hotfix|T-E22-blank|L4 (?:plaza|war|respawn): mouse WASD stick|T-E22-cellar-pos|T-E22-ride-smooth|T-E22-12-special|T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
@@ -52,8 +52,7 @@ const commands: string[][] = [
   ...(splitE31Timing ? [[
     'sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`,
     '--pull', `${output}/residency-perf-200.json`, '--pull', `${output}/residency-perf-100.json`, '--',
-    'sh', '-c', 'case "$(readlink /proc/self/fd/9)" in *.0) exec flock /srv/mi/locks/slot.1 "$@";; *.1) flock -u 9 || exit 2; exec flock /srv/mi/locks/slot.0 flock /srv/mi/locks/slot.1 "$@";; *) exit 2;; esac',
-    'sh', 'npx', 'vitest', 'run', 'tests/sim/world/chunk-residency.test.ts', '-t', 'T-E31-19-S4', '--maxWorkers=1',
+    'bash', 'tools/remote/timing-isolated.sh', 'sh', 'tools/perf/quiet-run.sh', 'npx', 'vitest', 'run', 'tests/sim/world/chunk-residency.test.ts', '-t', 'T-E31-19-S4', '--maxWorkers=1',
     '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`,
   ]] : []),
   // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.
@@ -126,9 +125,9 @@ const commands: string[][] = [
         ]
       : target === 'E25'
         ? [
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E25-14', '--workers=1'],
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E25-14|@perf', '--workers=1'],
           // Lighting frame budgets (desktop high, throttled phone low) run alone on the native GPU.
-          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/e25-lighting.spec.ts', 'tests/perf/e25-light-lab.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/e25-lighting.spec.ts', 'tests/perf/e25-light-lab.spec.ts', 'tests/visual/e25-spike.spec.ts', '--project=chromium', '--workers=1'],
         ]
       : target === 'E27'
         ? [
@@ -143,8 +142,10 @@ const commands: string[][] = [
         : target === 'E32'
           ? [
             ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1'],
-            // Include assault, arena, mist, LOD residency and ending budgets too.
-            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1'],
+            // Discover every selected performance file and release the quiet
+            // reservation between files instead of holding one long matrix.
+            ...readdirSync('tests/perf').filter(file => file.endsWith('.spec.ts') && new RegExp(selection.pattern).test(readFileSync(`tests/perf/${file}`, 'utf8'))).sort().flatMap(file => [1, 2].map(shard =>
+              ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', `tests/perf/${file}`, '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, `--shard=${shard}/2`, '--project=chromium', '--workers=1'])),
           ]
         : target === 'E30'
           ? [
@@ -160,8 +161,10 @@ const commands: string[][] = [
               ]
               : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
-            ...(target === 'E31' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1']] : []),
+            ...(target === 'E31' ? readdirSync('tests/perf').filter(file => file.endsWith('.spec.ts') && new RegExp(selection.pattern).test(readFileSync(`tests/perf/${file}`, 'utf8'))).sort().flatMap(file => [1, 2].map(shard =>
+              ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', `tests/perf/${file}`, '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, `--shard=${shard}/2`, '--project=chromium', '--workers=1'])) : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', 'tests/perf/l7-district.spec.ts', 'tests/perf/l7-encounters.spec.ts', '--project=chromium', '--workers=1']] : []),
+            ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-lifecycle.spec.ts', '--grep', '@E29-AC20', '--project=chromium', '--workers=1']] : []),
           ]
         : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E26' || target === 'E28' ? ['--workers=1'] : [])]]),
 ];
@@ -182,6 +185,10 @@ for (const [command, ...args] of commands) {
   }
   if (target === 'E30' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'perf' : args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
+  if (['E29', 'E31', 'E32'].includes(target) && args.includes('playwright') && existsSync('test-results/playwright/results.json')) {
+    const batch = (args.find(arg => arg.startsWith('tests/perf/'))?.split('/').at(-1)?.replace('.spec.ts', '') ?? 'combined') + (args.find(arg => arg.startsWith('--shard='))?.replace('--shard=', '-s').replace('/', 'of') ?? '');
+    copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? `perf-${batch}` : 'functional'}.json`);
+  }
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) {

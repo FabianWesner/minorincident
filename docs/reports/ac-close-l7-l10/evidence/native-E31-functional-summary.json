@@ -1,0 +1,1950 @@
+[
+  {
+    "title": "T-E31-22-audio @E31-AC16 @E31-AC22 high snapshot stages own persistent engine voices and restore without transition cues",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-22-audio @E31-AC16 @E31-AC22 low snapshot stages own persistent engine voices and restore without transition cues",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-07-browser @E31-AC06 @E31-AC07 stopped hull attackers damage the APC; real driving ends attacks",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E30-14-browser T-E31-03-browser @E30-AC14 @E31-AC03 real APC enter, drive, both firing inputs and exit",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "webkit",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.015865765967356\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.317541294543437\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.016143182866778\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.977169895473273\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.3193294208170405\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.283338746308009\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9958640334616826\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2221353702043385\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.0230864053433244\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.200695256402219\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.0160176641996057\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.3159290799054784\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.016081439697474\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.991154731818974\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.319471177225408\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2826278343109783\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=1000",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9961235177560324\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2174782062121148\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=0",
+    "project": "chromium",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.0265273515960134\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2000261080877315\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgl cumulative HUD, audio and caption stages",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgpu cumulative HUD, audio and caption stages",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.1920910073891475\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.1879806351527296\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.218752455516067\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.211308214400773\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9859461473645985\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.202697054829924\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.021929674244604\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2025607435134793\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.1899301286043955\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.184999845297597\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.219775322056582\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.2126014367705893\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=1000",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9875652393148837\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.200513693455272\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=0",
+    "project": "pixel-7",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 133
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  131 |     await page.screenshot({ path: `${out}/${name}-crawl.png` });\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n> 133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n      |                                         ^\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:133:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.021867479361723\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.191532366971189\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgl cumulative HUD, audio and caption stages",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgpu cumulative HUD, audio and caption stages",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9963649643705876\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.3531437909498996\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9794902887622725\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.349500647706301\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m0.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await tick(page, 60);\n  56 |     }\n> 57 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n     |                                                                                      ^\n  58 |     await page.evaluate(() => window.__SS__!.screenshotReady());\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=0.5 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m0.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await tick(page, 60);\n  56 |     }\n> 57 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n     |                                                                                      ^\n  58 |     await page.evaluate(() => window.__SS__!.screenshotReady());\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m1.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await tick(page, 60);\n  56 |     }\n> 57 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n     |                                                                                      ^\n  58 |     await page.evaluate(() => window.__SS__!.screenshotReady());\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgl zoom=1.5 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m1.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await tick(page, 60);\n  56 |     }\n> 57 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n     |                                                                                      ^\n  58 |     await page.evaluate(() => window.__SS__!.screenshotReady());\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.996372631188321\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.3584960467886744\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 41,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n> 61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n     |                                         ^\n  62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:61:41"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 62
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[1mMatcher error\u001b[22m: \u001b[31mreceived\u001b[39m value must be a number or bigint\n\nReceived has value: \u001b[31mnull\u001b[39m\n\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n  61 |     expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 62 |     expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);\n     |                                       ^\n  63 |     const cdp = await context.newCDPSession(page);\n  64 |     const origin = { x: 90, y: page.viewportSize()!.height - 240 };\n  65 |     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:62:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 39,
+            "line": 134
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m1.9795344035567641\u001b[39m\n\n  132 |     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);\n  133 |     expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);\n> 134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n      |                                       ^\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n  136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n  137 |     await tick(page, 400);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:134:39"
+        },
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 43,
+            "line": 136
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.35710217185954\u001b[39m\n\n  134 |     expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);\n  135 |     expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);\n> 136 |     expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);\n      |                                           ^\n  137 |     await tick(page, 400);\n  138 |     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');\n  139 |     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:136:43"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m0.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await tick(page, 60);\n  56 |     }\n> 57 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n     |                                                                                      ^\n  58 |     await page.evaluate(() => window.__SS__!.screenshotReady());\n  59 |     await page.screenshot({ path: `${out}/${name}-start.png` });\n  60 |     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=0.5 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m0.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await page.mouse.move(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);\n  56 |       // Wheel notches change zoom by one step regardless of delta magnitude.\n> 57 |       for (let i = 0; i < 5; i++) await page.mouse.wheel(0, zoom < 1 ? -100 : 100);\n     |                                                                                    ^\n  58 |       await tick(page, 60);\n  59 |     }\n  60 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=1000",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m1.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await page.mouse.move(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);\n  56 |       // Wheel notches change zoom by one step regardless of delta magnitude.\n> 57 |       for (let i = 0; i < 5; i++) await page.mouse.wheel(0, zoom < 1 ? -100 : 100);\n     |                                                                                    ^\n  58 |       await tick(page, 60);\n  59 |     }\n  60 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 webgpu zoom=1.5 HP=0",
+    "project": "pixel-7-landscape",
+    "status": "unexpected",
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts",
+            "column": 86,
+            "line": 57
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m1.5\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\nExpected precision:    2\nExpected difference: < \u001b[32m0.005\u001b[39m\nReceived difference:   \u001b[31m0.5\u001b[39m\n\n  55 |       await page.mouse.move(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);\n  56 |       // Wheel notches change zoom by one step regardless of delta magnitude.\n> 57 |       for (let i = 0; i < 5; i++) await page.mouse.wheel(0, zoom < 1 ? -100 : 100);\n     |                                                                                    ^\n  58 |       await tick(page, 60);\n  59 |     }\n  60 |     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/e2e/levels/l9-browser-input.spec.ts:57:86"
+        }
+      ]
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgl cumulative HUD, audio and caption stages",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-22-input @E31-AC08 @E31-AC16 @E31-AC22 webgpu cumulative HUD, audio and caption stages",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/high/1000",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/high/0",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/low/1000",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/low/0",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/high/1000",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/high/0",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/low/1000",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/low/0",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-handover-browser @E31-AC14 @E31-AC15 high crash directly continues and reloads L10",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-15-handover-browser @E31-AC14 @E31-AC15 low crash directly continues and reloads L10",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 high zoom 1 unload/revisit keeps identities and support",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 high zoom 0.5 unload/revisit keeps identities and support",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 low zoom 1 unload/revisit keeps identities and support",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 low zoom 0.5 unload/revisit keeps identities and support",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgl z1 high bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgl z1 low bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgl z0.5 high bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgl z0.5 low bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgpu z1 high bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgpu z1 low bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgpu z0.5 high bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 webgpu z0.5 low bounded load/revisit and quality switch",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E31-12-delayed-S3-browser @E31-AC12 delayed terrain downloads keep sim/input progressing",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14-landscape",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "webkit",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "webkit",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  },
+  {
+    "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+    "project": "chromium",
+    "status": "expected",
+    "errors": [
+      []
+    ]
+  }
+]

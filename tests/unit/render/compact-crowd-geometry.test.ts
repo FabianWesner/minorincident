@@ -12,7 +12,7 @@ function expanded(g: BufferGeometry) {
   }));
 }
 
-test('@E28-AC10 compaction discards only unreferenced vertices and retains exact drawn attribute bytes', () => {
+test('@E28-AC10 @E25-AC14 @E29-AC19 compaction discards only unreferenced vertices and retains exact drawn attribute bytes', () => {
   const g = new BufferGeometry();
   g.setAttribute('position', new BufferAttribute(new Float32Array([99, 99, 99, 1, 2, 3, 4, 5, 6, 98, 98, 98, 7, 8, 9]), 3));
   g.setAttribute('color', new BufferAttribute(new Uint8Array([255, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]), 3, true));
@@ -35,7 +35,7 @@ test('@E28-AC10 compaction discards only unreferenced vertices and retains exact
   expect(g.index).toBe(index);
 });
 
-test('@E28-AC10 prepared crowd clones share immutable arrays with independent geometry and GPU wrappers', async () => {
+test('@E28-AC10 @E25-AC14 @E29-AC19 prepared crowd clones share immutable arrays with independent geometry and GPU wrappers', async () => {
   const { cloneCrowdGeometry } = await import('../../../src/render/characters/cloneCrowdGeometry');
   const source = new BufferGeometry();
   source.setAttribute('position', new BufferAttribute(new Float32Array([1, 2, 3, 4, 5, 6, 7, 8, 9]), 3));

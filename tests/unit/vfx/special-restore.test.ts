@@ -12,7 +12,8 @@ const mission: MissionDef = {
   finish: ['wait'], onStart: [], onComplete: [],
 };
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
-  test(`T-E07-restore-marker-${move} @E07-AC05 @E07-AC06 @E07-AC19 restored windup renders its locked warning without changing sim state`, async () => {
+  const inherited = infectedSpecialMoves[move].archetype === 'infected.alpha' ? '@E29-AC07 @E30-AC10 @E32-AC09' : '@E30-AC10';
+  test(`T-E07-restore-marker-${move} @E07-AC05 @E07-AC06 @E07-AC19 ${inherited} restored windup renders its locked warning without changing sim state`, async () => {
     const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 7); w.inspectionGhost = true;
     const m = w.loadMission(mission); m.begin();
     const timing = infectedSpecialMoves[move], id = w.infected!.spawn(timing.archetype, { x: 6, z: 0 }, { state: 'idle' });

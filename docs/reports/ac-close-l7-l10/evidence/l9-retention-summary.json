@@ -1,0 +1,58 @@
+[
+  {
+    "configuration": "webgpu-low",
+    "cycles": 5,
+    "readings": 6,
+    "jsBaselineMB": 253.60216,
+    "jsPeakMB": 257.342268,
+    "maxDriftPercent": {
+      "heapMB": 1.474793432358775,
+      "geometries": 0.0,
+      "textures": 4.25531914893617,
+      "backingStorageSize": 0.18207189926589004,
+      "embedderHeapUsedSize": 23.86248409159105
+    }
+  },
+  {
+    "configuration": "webgl-low",
+    "cycles": 5,
+    "readings": 6,
+    "jsBaselineMB": 256.400216,
+    "jsPeakMB": 260.110812,
+    "maxDriftPercent": {
+      "heapMB": 1.4471891084522368,
+      "geometries": 0.0,
+      "textures": 4.23728813559322,
+      "backingStorageSize": 0.037593415125357715,
+      "embedderHeapUsedSize": 22.631077584542307
+    }
+  },
+  {
+    "configuration": "webgpu-high",
+    "cycles": 5,
+    "readings": 6,
+    "jsBaselineMB": 258.024608,
+    "jsPeakMB": 261.100424,
+    "maxDriftPercent": {
+      "heapMB": 1.1920630453975827,
+      "geometries": 0.0,
+      "textures": 4.201680672268908,
+      "backingStorageSize": 0.19213901227333172,
+      "embedderHeapUsedSize": 22.38425171598674
+    }
+  },
+  {
+    "configuration": "webgl-high",
+    "cycles": 5,
+    "readings": 6,
+    "jsBaselineMB": 261.01576,
+    "jsPeakMB": 264.770204,
+    "maxDriftPercent": {
+      "heapMB": 1.4383974362314285,
+      "geometries": 0.0,
+      "textures": 4.184100418410042,
+      "backingStorageSize": 0.20532464904295372,
+      "embedderHeapUsedSize": 21.362592839202115
+    }
+  }
+]
