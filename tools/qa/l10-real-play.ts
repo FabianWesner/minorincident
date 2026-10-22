@@ -73,15 +73,23 @@ try {
       a.inspect.enable(false);
       rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
       await a.step(1); await a.screenshotReady();
-      return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, corpses: a.query({}).filter(e => e.corpse).length, lighting: { sun: light.sun.visible, spot: light.spot.visible, heroLight: light.heroLight } };
+      return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, corpses: a.query({}).filter(e => e.corpse).length, tick: a.tick(), lighting: { sun: light.sun.visible, spot: light.spot.visible, heroLight: light.heroLight } };
     }, zoom);
     assert.equal(state.backend, session.options.backend === 'webgl2' ? 'webgl' : 'webgpu');
     assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);
     assert.ok(Math.abs(Math.hypot(...state.camera.position.map((p, i) => p - state.camera.target[i])) - state.camera.radius) < .01, 'actual camera must match the requested zoom');
     const samples = [];
+    const savedClock = timing && zoom === 1 ? await session.page.evaluate(async () => {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game;
+      const saved = { paused: g.clock.paused, timeScale: g.clock.timeScale };
+      await g.view.renderer.finishWarmUp();
+      // Keep normal gameplay presentation and its camera, with a fixed world.
+      // Inspection adds its own pose, panel, picking and statistics updates.
+      g.clock.setTimeScale(0); g.clock.resume();
+      return saved;
+    }) : null;
     if (timing && zoom === 1) for (let repeat = 0; repeat < 3; repeat++) samples.push(await session.page.evaluate(async () => {
-      const a = window.__SS__!, frames: number[] = [];
-      a.inspect.enable(true, { courier: 'unchanged' }); a.inspect.timeScale(0);
+      const a = window.__SS__!, frames: number[] = [], tickBefore = a.tick();
       const start = performance.now(); let previous = 0;
       while (performance.now() - start < 6000) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
@@ -89,8 +97,13 @@ try {
         previous = now;
       }
       frames.sort((a, b) => a - b);
-      return { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1) };
+      return { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1), tickBefore, tickAfter: a.tick(), camera: a.getState().render.camera };
     }));
+    for (const sample of samples) {
+      assert.equal(sample.tickBefore, state.tick); assert.equal(sample.tickAfter, state.tick);
+      assert.ok(Math.abs(sample.camera.zoom - zoom) < .001);
+      assert.ok(Math.hypot(...sample.camera.position.map((p, i) => p - state.camera.position[i])) < .01, 'cadence samples must retain the captured gameplay camera');
+    }
     if (timing && zoom === 1 && process.env.L10_PROFILE === '1') {
       // Diagnose the same settled view after timing, keeping profiler overhead
       // outside the cadence samples used for the before/after comparison.
@@ -129,6 +142,11 @@ try {
       });
       writeFileSync(`${out}/settled-gpu.json`, JSON.stringify(gpu, null, 2));
     }
+    if (savedClock) await session.page.evaluate(async saved => {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game;
+      g.clock.setTimeScale(saved.timeScale); if (saved.paused) g.clock.pause(); else g.clock.resume();
+      await window.__SS__!.screenshotReady();
+    }, savedClock);
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
