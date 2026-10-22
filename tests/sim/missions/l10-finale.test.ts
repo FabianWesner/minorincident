@@ -52,7 +52,7 @@ test('T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit 
     // Menu/focus never call sim.update; rendering and querying state are clock-free.
     const tick = w.tick; for (let i = 0; i < 120; i++) w.getState(); expect(w.tick).toBe(tick);
     at(0); step(3479); expect(m.state.states['charge-ready']).toBe(false);
-    step(); expect(m.state.counters['charge-ticks']).toBe(3600); expect(m.state.steps.release.status).toBe('active');
+    step(2); expect(m.state.counters['charge-ticks']).toBe(3600); expect(m.state.steps.hold.status).toBe('completed'); expect(m.state.steps.mega.status).toBe('completed'); expect(m.state.steps.release.status).toBe('active');
     expect(m.state.states['cure-released']).toBe(false);
     at(3); press(); expect(m.state.states['cure-released']).toBe(false);
     at(0); press(); expect(m.state.states['cure-released']).toBe(true);
@@ -112,11 +112,25 @@ test('T-E32-22 living boss blocks at 60 s; held input cannot release after its d
   try {
     w.combat!.damage.god = true; press(); press();
     step(3600); expect(m.state.counters['charge-ticks']).toBe(3600);
-    expect(m.state.steps.hold.status).toBe('active'); expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
+    expect(m.state.steps.mega.status).toBe('active'); expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
     w.setInput({ interact: true }); step(); kill(); step();
     expect(boss.state.mode).toBe('dead'); expect(m.state.steps.release.status).toBe('active');
     expect(m.state.states['cure-released']).toBe(false);
     press(); expect(m.state.states['cure-released']).toBe(true);
+  } finally { w.dispose(); }
+});
+
+test('@E32 charge completion gives the live Mega Alpha a distinct objective marker before it is dead @E32-AC22', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true; press(); press(); step(3610);
+    expect(m.state.steps.hold.status).toBe('completed');
+    expect(m.state.steps.mega.status).toBe('active');
+    expect(m.state.marker).toBe('cure-mega');
+    step();
+    expect(m.def.anchors['cure-mega']).toMatchObject({ x: w.entities.get(boss.state.id)!.transform.x, z: w.entities.get(boss.state.id)!.transform.z });
+    expect(boss.distance()).toBeLessThan(30);
+    expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
   } finally { w.dispose(); }
 });
 

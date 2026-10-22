@@ -1,6 +1,6 @@
 import { actorRadius } from '../world/SolidRegistry';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
-import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
+import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
@@ -202,7 +202,8 @@ export class LevelSixSubway {
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
     if(r.status==='out'){this.w.spatial.delete(e.id);return true;}
-    if(r.routine==='guard'&&s.phase!=='shelter'&&e.civilian!.ally){const a=e.civilian!.ally;a.engaged=true;a.post={x:e.transform.x,z:e.transform.z};updateAlly(this.w,e,(from,to)=>this.w.infected!.nav.visible(from,to,0));}
+    // The former shelter guard is now part of the moving column. Re-engaging its
+    // stationary ally post here made it leave formation to fight tunnel infected.
     if(r.status==='shelter')return true;
     if(r.status!=='following')return false;
     const live=this.living(),column=e.civilian!.survivor!.slot%3;
@@ -325,7 +326,9 @@ export class LevelSixSubway {
     // x 125; every death restored that snapshot (horde between courier and group) and respawned at 152, ~18 s apart.
     // The chokepoint checkpoint is taken once the courier is there with the walking column and nobody is out behind.
     if(!s.mid&&p.x>=150&&tail>=p.x-l6.follow.columnM&&!behind&&through(p.x-l6.follow.columnM)){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
-    if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
+    const exitThrough=(x:number)=>live.length===0||live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
+    const exitBehind=live.some(r=>w.entities.get(r.id)!.transform.x<=240+2);
+    if(!s.platform&&p.x>=240&&!exitBehind&&exitThrough(240)){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
       if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
   }

@@ -2,7 +2,7 @@ import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
-import { look, type Body, type Eyes } from './eyes';
+import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
@@ -452,6 +452,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
+    // L7's retreat is an escort beat: use only people actually visible to the
+    // player and keep the courier with their walking group before following the
+    // next route marker. This avoids leading the column into a fresh horde.
+    if (e.player) {
+      const groupTarget = visibleGroupTarget(e.level, e.player, e.allies);
+      if (groupTarget) {
+        const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
+        const sp = safe(screen.x, screen.y, e); await clickGround(sp.x, sp.y); await hold(150); continue;
+      }
+    }
+
     if(o.noSkip&&observed.seconds>=30) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;
@@ -501,7 +512,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const g = await goalScreen(e);
     if (stuckSim > 60 && (atRing || !g) && Date.now() - lastE > 4000) { lastE = Date.now(); await press([]); await page.keyboard.down('KeyE'); await hold(1600); await page.keyboard.up('KeyE'); continue; }
     // Prompts near the objective (or naming it) get E; side prompts (push a dumpster) are ignored like a player would.
-    const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover/i.test(e.prompt));
+    const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover|console|activate/i.test(e.prompt));
     if (relevant && Date.now() - lastE > 2500) { lastE = Date.now(); log({ prompt: e.prompt, tick: e.tick }); await press([]); await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE'); continue; }
     if (!g && !e.marker?.visible) {
       // No ring/arrow: follow what the minimap shows (L5 "Search <place>" cue pin, or the active step's pin).
