@@ -32,7 +32,7 @@ export const tour: TourStop[] = [
   { id:'l6-start',level:'L6',title:'Subway: shelter start' },
   { id:'l6-gate',level:'L6',title:'Subway: gate at 150 m',checkpoint:'abandon',setup:'l6-gate' },
   { id:'l6-handover',level:'L6',title:'Subway: abandoned shelter',checkpoint:'abandon' },
-  { id:'l6-finale',level:'L6',title:'Subway: survivors emerge into the night',checkpoint:'abandon',setup:'l6-finale',anchor:'night-exit' },
+  { id:'l6-finale',level:'L6',title:'Subway: survivors emerge into the night',checkpoint:'abandon',setup:'l6-finale' },
   { id:'l7-start',level:'L7',title:'Ruined city: night exit' },
   { id:'l7-gate',level:'L7',title:'Ruined city: evacuation corridor',checkpoint:'rocket',setup:'l7-corridor',anchor:'l7-corridor-east' },
   { id:'l7-handover',level:'L7',title:'Ruined city: rocket handover',setup:'l7-rocket',anchor:'l7-rocket' },
@@ -119,7 +119,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     await walkTo({x:start.x+10,z:start.z},1.2);await a.step(300);
   }
   if(stop.setup==='l6-gate'||stop.setup==='l6-finale') {
-    a.bot.start('complete');await seek(()=>a.missions.state()!.l6!.leaderX>=(stop.setup==='l6-gate'?148:264),90000);a.bot.stop();a.input.clear();
+    a.bot.start('complete');await seek(()=>{const s=a.missions.state()!.l6!;return stop.setup==='l6-gate'?s.leaderX>=148:s.exitAt>0;},90000);a.bot.stop();a.input.clear();
   }
   if(stop.setup?.startsWith('l8-')) {
     await seek(()=>g.world.missions!.l8!.state.breachedAt>0,6000);
@@ -201,7 +201,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     l3:state.l3?{phase:state.l3.phase,finaleAt:state.l3.finaleAt}:null,
     l4:state.l4?{phase:state.l4.phase,turnAt:state.l4.turnAt,tankId:state.l4.tankId,tankPhase:state.l4.tankPhase}:null,
     l5:state.l5?{phase:state.l5.phase,found:state.l5.found,metroAt:state.l5.metroAt}:null,
-    l6:state.l6?{phase:state.l6.phase,leaderX:state.l6.leaderX,leaderZ:state.l6.leaderZ,platform:state.l6.platform}:null,
+    l6:state.l6?{phase:state.l6.phase,leaderX:state.l6.leaderX,leaderZ:state.l6.leaderZ,platform:state.l6.platform,exitAt:state.l6.exitAt}:null,
     l7:g.world.l7Departure?{phase:g.world.l7Departure.state.phase,boarded:g.world.l7Departure.state.boarded.length}:null,
     l8:g.world.missions?.l8?{breachedAt:g.world.missions.l8.state.breachedAt,escapeCheckpoint:g.world.missions.l8.state.escapeCheckpoint,boarded:g.world.vehicles!.active!==null}:null,
     l9:g.world.missions?.l9?{phase:g.world.missions.l9.state.phase,car:a.getEntity(g.world.missions.l9.state.carId)?.transform}:null,
