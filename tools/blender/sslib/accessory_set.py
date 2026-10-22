@@ -25,7 +25,7 @@ def pick(lod, a, b):
 def cap(lod):
     """Baseball cap: six panels (seam grooves, flat facets), top button, curved forward bill."""
     p = Piece(flat=True)
-    cols, rows = pick(lod, 12, 8), pick(lod, 4, 3)
+    cols, rows = pick(lod, 16, 8), pick(lod, 4, 3)
     shell(p, cols, rows, 0, 2 * math.pi, lambda u: 1.262 + .05 * math.cos(u), infl=.022, closed=True, seam=(2, .02))
     bill(p, 0, .62, 1.325, .09, .02, .022, cols=pick(lod, 3, 2))
     ball(p, (C.x, 0, C.z + A.R[2] + .022 + .006), .024, pick(lod, 5, 4), 2, .8)
@@ -34,7 +34,7 @@ def cap(lod):
 
 def beanie(lod):
     p = Piece()
-    cols, rows = pick(lod, 12, 8), pick(lod, 4, 3)
+    cols, rows = pick(lod, 16, 8), pick(lod, 4, 3)
     shell(p, cols, rows, 0, 2 * math.pi, table([(0, 1.285), (.9, 1.25), (1.4, 1.165), (2.6, 1.15), (math.pi, 1.15)]), infl=.036, closed=True)
     ball(p, (C.x, 0, C.z + A.R[2] + .03 + .02), .05, pick(lod, 6, 4), pick(lod, 3, 2), .9)
     return p, C
@@ -42,15 +42,15 @@ def beanie(lod):
 
 def sun_hat(lod):
     p = Piece()
-    n = pick(lod, 10, 6)
-    profile = [(.40, 1.225), (.33, 1.252), (.265, 1.262), (.27, 1.34), (.245, 1.43), (0, 1.462)]
-    lathe(p, profile, n, sx=.9, sy=1.0)
+    n = pick(lod, 16, 8)   # PO P1-115: round (was 10/6-sided), brim <= ~1.4x head width (was ~1.7x)
+    profile = [(.308, 1.232), (.262, 1.256), (.256, 1.335), (.232, 1.405), (.165, 1.447), (0, 1.462)]
+    lathe(p, profile, n, sx=.87, sy=1.0)
     return p, C
 
 
 def hard_hat(lod):
     p = Piece()
-    cols, rows = pick(lod, 10, 7), pick(lod, 3, 2)
+    cols, rows = pick(lod, 16, 8), pick(lod, 3, 2)
     shell(p, cols, rows, 0, 2 * math.pi, lambda u: 1.268 + .012 * math.cos(u), infl=.04, closed=True)
     bill(p, 0, .7, 1.28, .07, .015, .04, cols=pick(lod, 3, 2))
     path = [env_point(0, .8, (.04,) * 3), env_point(0, 1.38, (.055,) * 3), env_point(math.pi, 1.38, (.055,) * 3), env_point(math.pi, .8, (.04,) * 3)]
@@ -60,7 +60,7 @@ def hard_hat(lod):
 
 def flat_cap(lod):
     p = Piece()
-    cols, rows = pick(lod, 12, 8), pick(lod, 3, 2)
+    cols, rows = pick(lod, 16, 8), pick(lod, 3, 2)
     centre = Vector((-.012, 0, 1.275))
     shell(p, cols, rows, 0, 2 * math.pi, lambda u: 1.248 + .03 * math.cos(u), infl=.026, closed=True,
           centre=centre, radii=(.205, .225, .15))
@@ -70,9 +70,9 @@ def flat_cap(lod):
 
 def bucket(lod):
     p = Piece()
-    n = pick(lod, 10, 6)
-    profile = [(.34, 1.205), (.295, 1.236), (.262, 1.252), (.27, 1.34), (.25, 1.43), (0, 1.46)]
-    lathe(p, profile, n, sx=.9, sy=1.0)
+    n = pick(lod, 16, 8)   # PO P1-115: round, brim <= ~1.25x head width
+    profile = [(.284, 1.214), (.266, 1.236), (.254, 1.33), (.234, 1.408), (.15, 1.45), (0, 1.462)]
+    lathe(p, profile, n, sx=.87, sy=1.0)
     return p, C
 
 
