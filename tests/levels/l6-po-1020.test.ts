@@ -241,3 +241,18 @@ test('@E24 #102 a guard catching up at x115 does not backstep away from its retr
   expect(move.mock.calls.some(([, goal]) => goal.x === 160)).toBe(true);
   expect(move.mock.calls.every(([, goal]) => goal.x >= 115)).toBe(true);
 }, 240_000);
+
+test('@E24 #102 a following guard keeps its ordinary 2.2 m/s retreat intent through a pending contact shove', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!; s.leaderX = 160; s.leaderZ = 15;
+  const row = s.survivors.find(r => r.routine === 'guard')!, e = w.entities.get(row.id)!;
+  Object.assign(e.transform, { x: 115, z: 15 }); w.spatial.set(e.id, 115, 15);
+  put(w, 115, 12);
+  const target = w.infected!.spawn('infected.runner', { x: 116, z: 15 });
+  e.civilian!.ally!.strikeAt = w.tick + 15; e.civilian!.ally!.strikeTarget = target;
+  const move = vi.spyOn(w.npcs!, 'move');
+  expect(defendHuman(w, e)).toBe(true);
+  expect(move.mock.calls.some(([, goal, speed]) => goal.x === 160 && speed === 2.2)).toBe(true);
+  expect(move.mock.calls.filter(([body]) => body.id === e.id)).toHaveLength(1);
+}, 240_000);
