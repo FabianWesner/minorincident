@@ -40,7 +40,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const pulse = sin(time.mul(7.5).add(variant.x.mod(2).mul(9))).mul(.5).add(.5);
     const glow = eyeColor.mul(eye.mul(3).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(dirt))
       .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.equal(-1).select(1, 0)));
-    const material = shading?.shaded(base, glow, undefined, undefined, undefined, eye.mul(eyeGlow)) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
+    const material = shading?.shaded(base, glow, undefined, undefined, undefined, eye.mul(eyeGlow), undefined, undefined, eyeGlow.clamp(0, 1)) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
     if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
     material.side = doubleSided ? DoubleSide : FrontSide;
