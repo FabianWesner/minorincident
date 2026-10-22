@@ -3,7 +3,7 @@ import type { CampaignSave } from '../../src/sim/progression/Campaign';
 
 export type Finding = 'depot-clerk' | 'lab-handover' | 'hats-glasses' | 'sitters-benches' | 'l3-gaps' | 'l4-tank';
 export interface TourStop {
-  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'firestation' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall';
+  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'glasses' | 'firestation' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall';
   checkpoint?: string; anchor?: string; target?: [number, number, number]; findings?: Finding[]; wait?: number;
 }
 export const tour: TourStop[] = [
@@ -13,6 +13,7 @@ export const tour: TourStop[] = [
   { id:'l1-lab-return',level:'L1',title:'Lab: technician returns through the doors',setup:'lab-return',findings:['lab-handover'] },
   { id:'l1-bike-rack',level:'L1',title:'Bike rack and pedestrians',anchor:'lab-bike-rack',findings:['hats-glasses'] },
   { id:'l1-park',level:'L1',title:'Park benches and pedestrian accessories',target:[-68,0,15],findings:['hats-glasses'] },
+  { id:'l1-glasses',level:'L1',title:'Seeded pedestrian wearing glasses',setup:'glasses',findings:['hats-glasses'] },
   { id:'l1-firestation',level:'L1',title:'Fire station approach and firefighter',setup:'firestation',anchor:'fire-bay-door' },
   { id:'l2-ride-start',level:'L2',title:'Ride start: bench sitters and accessories',anchor:'l2-bench-2',findings:['sitters-benches','hats-glasses'] },
   { id:'l3-ramp-west',level:'L3',title:'Raised corridor: western ramp/deck junction',checkpoint:'fallback',target:[167.5,5.7,0],findings:['l3-gaps'] },
@@ -21,7 +22,7 @@ export const tour: TourStop[] = [
   { id:'l4-alarm',level:'L4',title:'Plaza: alarm wave and fleeing civilians',checkpoint:'arrival',setup:'l4-alarm',anchor:'l4-plaza' },
   { id:'l4-tank-enter',level:'L4',title:'Tank route through the barrier',checkpoint:'arrival',setup:'l4-tank-enter',target:[-20,0,35],findings:['l4-tank'] },
   { id:'l4-tank-hold',level:'L4',title:'Tank parked beside the plaza barrier',checkpoint:'arrival',setup:'l4-tank-hold',target:[-20,0,23],findings:['l4-tank'] },
-  { id:'l4-civilians',level:'L4',title:'Plaza hold: civilians at the wall',checkpoint:'arrival',anchor:'l4-plaza',wait:180 },
+  { id:'l4-civilians',level:'L4',title:'Plaza hold: alarm arrivals and civilians at the wall',checkpoint:'arrival',setup:'l4-alarm',anchor:'l4-plaza',wait:600 },
   { id:'l5-start',level:'L5',title:'Aftermath: cellar start' },
   { id:'l5-gate',level:'L5',title:'Aftermath: open cellar doorway',checkpoint:'outside',anchor:'l5-cellar-door' },
   { id:'l5-handover',level:'L5',title:'Aftermath: survivor joins the courier',checkpoint:'outside',setup:'l5-survivor' },
@@ -29,7 +30,7 @@ export const tour: TourStop[] = [
   { id:'l6-start',level:'L6',title:'Subway: shelter start' },
   { id:'l6-gate',level:'L6',title:'Subway: gate at 150 m',checkpoint:'abandon',setup:'l6-gate' },
   { id:'l6-handover',level:'L6',title:'Subway: abandoned shelter',checkpoint:'abandon' },
-  { id:'l6-finale',level:'L6',title:'Subway: exit platform',checkpoint:'abandon',setup:'l6-finale' },
+  { id:'l6-finale',level:'L6',title:'Subway: survivors emerge into the night',checkpoint:'abandon',setup:'l6-finale',anchor:'night-exit' },
   { id:'l7-start',level:'L7',title:'Ruined city: night exit' },
   { id:'l7-gate',level:'L7',title:'Ruined city: evacuation corridor',checkpoint:'rocket',setup:'l7-corridor',anchor:'l7-corridor-east' },
   { id:'l7-handover',level:'L7',title:'Ruined city: rocket handover',setup:'l7-rocket',anchor:'l7-rocket' },
@@ -106,7 +107,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
     if(stop.setup==='l7-rocket'){a.input.set({interact:true});await a.step(45);a.input.clear();}
   }
   if(stop.setup==='l6-gate'||stop.setup==='l6-finale') {
-    a.bot.start('complete');await seek(()=>a.missions.state()!.l6!.leaderX>=(stop.setup==='l6-gate'?148:246),90000);a.bot.stop();a.input.clear();
+    a.bot.start('complete');await seek(()=>a.missions.state()!.l6!.leaderX>=(stop.setup==='l6-gate'?148:264),90000);a.bot.stop();a.input.clear();
   }
   if(stop.setup?.startsWith('l8-')) {
     await seek(()=>g.world.missions!.l8!.state.breachedAt>0,6000);
@@ -115,15 +116,28 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
   }
   if(stop.setup?.startsWith('l9-')) {
     if(!driveRoute)throw new Error('L9 requires the authored road route');
-    let index=1;const started=a.tick();
-    while(g.world.missions!.l9!.state.phase==='driving') {
-      if(a.tick()-started>90000)throw new Error('L9 driving tour did not reach the outskirts');
+    // Match LevelNineBot's pure pursuit policy through the game's public replay input feed.
+    // Vehicles interpret these axes in keyboard mode; mouse-only mode expects clicked destinations.
+    let index=1;const started=a.tick(),frame=structuredClone(g.world.inputFrame);
+    const switchRadius=(i:number)=>{
+      const [a,b,c]=[driveRoute[i-1],driveRoute[i],driveRoute[i+1]];if(!c)return 6;
+      const turn=Math.atan2(c[1]-b[1],c[0]-b[0])-Math.atan2(b[1]-a[1],b[0]-a[0]);
+      return 6+10*Math.min(1,Math.abs(Math.atan2(Math.sin(turn),Math.cos(turn)))/(Math.PI/2));
+    };
+    g.input.feed={scheme:'keyboard',next:()=>{
+      if(g.world.missions!.l9!.state.phase!=='driving'){frame.drive={throttle:0,steer:0};return frame;}
       const p=a.getEntity(g.world.missions!.l9!.state.carId)!.transform;
-      while(index<driveRoute.length-1&&Math.hypot(driveRoute[index][0]-p.x,driveRoute[index][1]-p.z)<16)index++;
+      while(index<driveRoute.length-1&&Math.hypot(driveRoute[index][0]-p.x,driveRoute[index][1]-p.z)<switchRadius(index))index++;
       const want=-Math.atan2(driveRoute[index][1]-p.z,driveRoute[index][0]-p.x),delta=Math.atan2(Math.sin(want-p.yaw),Math.cos(want-p.yaw));
-      a.input.set({drive:{throttle:.7,steer:Math.max(-1,Math.min(1,delta*2))}});await a.step(30);
-    }
-    a.input.clear();
+      frame.drive={throttle:.7,steer:Math.max(-1,Math.min(1,delta*2))};return frame;
+    }};
+    try{
+      while(g.world.missions!.l9!.state.phase==='driving') {
+        const p=a.getEntity(g.world.missions!.l9!.state.carId)!.transform;
+        if(a.tick()-started>90000)throw new Error(`L9 driving tour did not reach the outskirts: ${JSON.stringify({car:p,waypoint:index})}`);
+        await a.step(60);
+      }
+    }finally{g.input.feed=null;a.input.clear();}
     if(stop.setup==='l9-fall')await seek(()=>g.world.missions!.l9!.state.phase==='fall',2000);
     if(stop.setup==='l9-crawl')await seek(()=>g.world.missions!.l9!.state.phase==='crawl',2000);
   }
@@ -141,11 +155,25 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
   if(stop.anchor&&!anchor) throw new Error(`Unknown tour anchor ${stop.level}/${stop.anchor}`);
   const target=stop.target??(anchor?[anchor.x,anchor.y??0,anchor.z] as [number,number,number]:null);
   const state=a.missions.state()!;
-  return {target,tick:a.tick(),scenario:a.getState().scenario,phase:state.phase,checkpoint:state.checkpoint,completed:state.completedObjectives,
+  let actorFocus:null|{id:number;accessory:string;model?:string}=null;
+  let cameraTarget=target;
+  if(stop.setup==='glasses'){
+    // Glasses are authored into these civilian GLBs; hats/hair use separate shared accessory assets.
+    const people=a.query({}).filter(e=>e.civilian&&!e.hidden);
+    const wearer=people.find(e=>['npc.civilian-elderly','npc.civilian-woman-b'].includes(e.civilian!.model??''));
+    if(!wearer)throw new Error('No existing glasses wearer in the seeded L1 population');
+    cameraTarget=[wearer.transform.x,Math.max(0,wearer.transform.y-.72),wearer.transform.z];actorFocus={id:wearer.id,accessory:'glasses',model:wearer.civilian!.model};
+  }
+  return {target:cameraTarget,actorFocus,tick:a.tick(),scenario:a.getState().scenario,phase:state.phase,checkpoint:state.checkpoint,completed:state.completedObjectives,
     l1:state.l1?{phase:state.l1.phase,carrying:state.l1.carrying,clerkId:state.l1.clerkId,techId:state.l1.techId,handoverAt:state.l1.handoverAt,beat:state.l1.beat?.id}:null,
     l2:state.l2?{phase:state.l2.phase,benchIds:state.l2.benchIds}:null,
     l3:state.l3?{phase:state.l3.phase,finaleAt:state.l3.finaleAt}:null,
     l4:state.l4?{phase:state.l4.phase,turnAt:state.l4.turnAt,tankId:state.l4.tankId,tankPhase:state.l4.tankPhase}:null,
+    l5:state.l5?{phase:state.l5.phase,found:state.l5.found,metroAt:state.l5.metroAt}:null,
+    l6:state.l6?{phase:state.l6.phase,leaderX:state.l6.leaderX,leaderZ:state.l6.leaderZ,platform:state.l6.platform}:null,
+    l7:g.world.l7Departure?{phase:g.world.l7Departure.state.phase,boarded:g.world.l7Departure.state.boarded.length}:null,
+    l8:g.world.missions?.l8?{breachedAt:g.world.missions.l8.state.breachedAt,escapeCheckpoint:g.world.missions.l8.state.escapeCheckpoint,boarded:g.world.vehicles?.active!==null}:null,
+    l9:g.world.missions?.l9?{phase:g.world.missions.l9.state.phase,car:a.getEntity(g.world.missions.l9.state.carId)?.transform}:null,
     campaign:{unlocked:a.campaign.state()?.unlockedLevel,completed:a.campaign.state()?.completedLevels,character:a.campaign.state()?.character},player:a.getState().player?.transform};
 }
 
