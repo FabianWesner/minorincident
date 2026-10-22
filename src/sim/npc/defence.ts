@@ -48,6 +48,7 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
       // A carried guard's old station post must not leash it underground forever.
       a.post = null; a.hold = true; delete a.follow;
       a.run = Math.hypot(e.transform.x - group.x, e.transform.z - group.z) > 5 ? { x: group.x, z: group.z } : null;
+      if (subway && a.run) a.step = undefined;
       a.runSpeed = injured ? 1.4 : subway ? 2.2 : 3.8;
     }
     return updateAlly(world, e, (from, to) => world.infected!.nav.visible(from, to, 0));

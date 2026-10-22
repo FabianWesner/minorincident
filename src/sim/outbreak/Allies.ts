@@ -203,7 +203,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const reloading = tick < (a.reloadUntil ?? 0);
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot' && !reloading) c.story = { clip: 'shoot', start: tick };
       // Every shooter fights on the move (PO 2026-10-13); scripted runs and the raised army deck keep their own movement.
-      if (shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
+      // A subway guard catching the column keeps shooting, but a firing-position
+      // backstep must not override its retreat movement. Contact shoves still run.
+      const columnRun = a.run && c.survivor?.mode === 'follow' && !!world.missions?.state.l6;
+      if (shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && (!columnRun || d <= pt.batonReachM) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach + (shooter ? .5 : 0) && tick >= a.nextAttack && world.combat) {
         // A person in the line of fire holds the shot (never a friendly-fire roll).
         // After a second of waiting the shooter sidesteps to clear it (nobody stands for long behind someone).
