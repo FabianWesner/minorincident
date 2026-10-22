@@ -6,18 +6,23 @@ export function highwayPoint(p: Placement, t: number, offset = 0): [number, numb
   return [p.position[0] + x * Math.cos(p.yaw) + z * Math.sin(p.yaw), p.position[1] + .7 + 5 * (1-t*t), p.position[2] - x * Math.sin(p.yaw) + z * Math.cos(p.yaw)];
 }
 /** Fine support strips and continuous jersey rails replace the old ground-level pier footprints on L3's traversed ramps. */
+const deckCells = 10;
+const cellIndex = (o0: number) => Math.round((o0 + 2.31) / (4.62 / deckCells));
 export function highwayColliders(p: Placement): StaticCollider[] {
   const result: StaticCollider[] = [];
   for (let i = 0; i < 120; i++) {
     const a = i / 120, b = (i+1) / 120;
-    for (const side of [0, -1, 1]) {
-      const offsets = side ? [side * 2.31, side * 2.88] : [-2.31, 2.31];
+    // The deck strip is cut across its width too: a tilted 4.62 m strip has an axis-aligned box of ~3.5 x 4.6 m, which held actors
+    // up to 1 m above the drawn road beside the S-curve (PO P1-113: courier on a phantom slab beside a dark void).
+    const cells: [number, number][] = Array.from({ length: deckCells }, (_, k) => [-2.31 + 4.62 * k / deckCells, -2.31 + 4.62 * (k + 1) / deckCells]);
+    for (const side of [0, -1, 1]) for (const [o0, o1] of side ? [[side * 2.31, side * 2.88] as [number, number]] : cells) {
+      const offsets = [o0, o1];
       const points = [a,b].flatMap(t => offsets.map(w => highwayPoint(p,t,w)));
       const box: Aabb = {min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};
       points.forEach(v => v.forEach((n,k) => { box.min[k]=Math.min(box.min[k],n); box.max[k]=Math.max(box.max[k],n); }));
       if(side) box.navBlocker = true;
       box.min[1] -= .5; box.max[1] += side ? .95 : 0;
-      result.push({id:`${p.id}/highway-${side}-${i}`,aabb:box,walkable:side===0,minTier:p.minTier,maxTier:p.maxTier});
+      result.push({id:`${p.id}/highway-${side}-${i}${side ? '' : `-${cellIndex(o0)}`}`,aabb:box,walkable:side===0,minTier:p.minTier,maxTier:p.maxTier});
     }
   }
   for (const joint of highwayJointSegments) {

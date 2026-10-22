@@ -134,6 +134,8 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     // The central elevated span and entry lips support every walker just like the ramp strips.
     layout.colliders.push({id:'l3-highway-deck',aabb:{min:[167.5,5.2,-2.31],max:[179.5,5.7,2.31]},walkable:true,minTier:0,maxTier:5});
+    // P1-113: the road ends of both ramps are tilted against the square span; the wedge beside each joint rail is filled (layout.py) and walkable.
+    for (const [x, z] of [[180.25, -.95], [166.75, .95]]) layout.colliders.push({id:`l3-highway-wedge-${x}`,aabb:{min:[x-.75,5.2,z-.95],max:[x+.75,5.7,z+.95]},walkable:true,minTier:0,maxTier:5});
     for (let i=0;i<14;i++) for (const x of [139.3+i*.3,207.7-i*.3]) layout.colliders.push({id:`l3-highway-lip-${x}`,aabb:{min:[x-.155,0,-2.31],max:[x+.155,(i+1)*.05,2.31]},walkable:true,minTier:0,maxTier:5});
     // PO 10-12: the ramp jersey rails stop at x 167.5 / 179.5 while the central span has none on the far side of each junction, leaving a
     // 1.3 m slot where actors stepped off the deck onto the lower road. Close each with a solid, nav-blocking rail at deck height.
