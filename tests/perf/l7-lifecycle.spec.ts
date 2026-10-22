@@ -29,3 +29,32 @@ for (const target of ['L5', 'L6', 'L7'] as const) for (const quality of ['high',
   for (const key of ['geometries', 'textures', 'heapBytes'] as const) expect(readings[4][key], key).toBeLessThanOrEqual(readings[0][key] * 1.1);
   await cdp.detach();
 });
+
+// Diagnostic for the proposed meaning of "warmed": preserve the original
+// first-five gates above, and separately measure five loads after both levels
+// have been visited once. This is not an adopted AC rewrite.
+for (const quality of ['high', 'low'] as const) test(`E24 warmed-cache diagnostic @perf ${quality} L6 seven-load cache audit`, async ({ page, context }) => {
+  test.setTimeout(300_000);
+  if (quality === 'low') await page.setViewportSize({ width: 390, height: 844 });
+  await boot(page, `/?test=1&renderer=${backend}&quality=${quality}&dpr=1&audio=muted`);
+  await page.evaluate(async quality => {
+    const a = window.__SS__!; await a.loadLevel('L6', { seed: 29, progression: 'L6-default' }); a.pause();
+    a.settings.set({ quality });
+  }, quality);
+  const cdp = await context.newCDPSession(page), readings = [];
+  for (const level of ['L6', 'L1', 'L6', 'L1', 'L6', 'L1', 'L6'] as const) {
+    if (readings.length) await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); }, level);
+    await page.evaluate(async () => { const a = window.__SS__!; a.missions.begin(); a.pause(); for (let i = 0; i < 6; i++) await a.screenshotReady(); });
+    await cdp.send('HeapProfiler.collectGarbage');
+    const heap = await cdp.send('Runtime.getHeapUsage');
+    const counters = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, geometries: p.geometries, textures: p.textures }; });
+    expect(counters.backend).toBe(backend); expect(counters.tier).toBe(quality);
+    readings.push({ level, ...counters, heapBytes: heap.usedSize });
+  }
+  const ratios = (from: number, to: number) => Object.fromEntries((['geometries', 'textures', 'heapBytes'] as const).map(key => [key, readings[to][key] / readings[from][key]]));
+  const proof = { readings, originalFirstFive: ratios(0, 4), proposedWarmedFive: ratios(2, 6), adoptedRewrite: false };
+  mkdirSync('test-results/epics/E24', { recursive: true });
+  writeFileSync(`test-results/epics/E24/lifecycle-L6-cache-audit-${quality}-${backend}.json`, JSON.stringify(proof, null, 2));
+  for (const key of ['geometries', 'textures', 'heapBytes'] as const) expect(readings[6][key], `diagnostic warmed ${key}`).toBeLessThanOrEqual(readings[2][key] * 1.1);
+  await cdp.detach();
+});

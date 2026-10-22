@@ -1,8 +1,2789 @@
 {
   "tier": "high",
+  "zoomMatrix": [
+    {
+      "zoom": 0.5,
+      "perf": {
+        "l4": null,
+        "chunkResidency": null,
+        "terrain": null,
+        "infected": {
+          "count": 27,
+          "liveCount": 27,
+          "firstLiveId": 84,
+          "available": 323
+        },
+        "effects": {
+          "obstruction": {
+            "remainingTicks": 0,
+            "opacity": 0
+          },
+          "shots": [],
+          "enabled": true,
+          "colorblind": false,
+          "gore": "Full",
+          "quality": "high",
+          "flashReduction": false,
+          "time": 0,
+          "lastSpray": {
+            "actionId": "",
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "droplets": 0,
+            "chunks": 0,
+            "gravity": 9.81
+          },
+          "surfaceSplats": 0,
+          "pendingSplats": 0,
+          "particles": 0,
+          "particleCap": 2048,
+          "decals": 0,
+          "decalCap": 600,
+          "gibs": 0,
+          "gibCap": 80,
+          "telegraphs": [],
+          "hitStop": {
+            "active": false,
+            "until": 0,
+            "started": 0,
+            "suppressed": 0
+          },
+          "flash": 0,
+          "blasts": {
+            "wind": {
+              "x": 0.55,
+              "z": 0.25
+            },
+            "blasts": 0,
+            "puffs": 0,
+            "puffCap": 400,
+            "fireballs": 0,
+            "fireballCap": 96,
+            "chunks": 0,
+            "chunkCap": 64,
+            "flames": 0,
+            "glows": 0,
+            "vehicleSmokeColumns": 0,
+            "columns": 0,
+            "transientColumns": 0,
+            "fireColumns": 0,
+            "columnShadows": 0,
+            "clouds": 0,
+            "scorch": 0,
+            "parts": 0,
+            "flash": 0,
+            "bulletTime": {
+              "scale": 1,
+              "remaining": 0,
+              "progress": 0
+            },
+            "slowMotion": true
+          },
+          "coverage": 0,
+          "detached": 0,
+          "dismemberedKills": 0,
+          "kills": 0,
+          "explosionRadius": 0
+        },
+        "nodeBuildMaterials": {},
+        "crowdPreparation": {
+          "workers": 8,
+          "submitted": 60,
+          "completed": 60,
+          "prebuilt": 60,
+          "failed": 0
+        },
+        "nodeBuilds": 364,
+        "profile": {
+          "other": {
+            "drawCalls": 134,
+            "triangles": 156945
+          },
+          "shadows": {
+            "drawCalls": 172,
+            "triangles": 288322
+          },
+          "buildings": {
+            "drawCalls": 17,
+            "triangles": 78951
+          },
+          "props": {
+            "drawCalls": 20,
+            "triangles": 71552
+          },
+          "crowd": {
+            "drawCalls": 13,
+            "triangles": 106853
+          }
+        },
+        "profileAssets": {
+          "view:other/Background.mesh/Background.mesh": {
+            "drawCalls": 1,
+            "triangles": 1984
+          },
+          "shadow:other/sunset-grove/Mesh": {
+            "drawCalls": 10,
+            "triangles": 576
+          },
+          "shadow:other/Group/mesh_0": {
+            "drawCalls": 10,
+            "triangles": 13780
+          },
+          "shadow:other/Group/mesh_0_1": {
+            "drawCalls": 7,
+            "triangles": 6756
+          },
+          "shadow:other/Group/mesh_0_2": {
+            "drawCalls": 7,
+            "triangles": 7192
+          },
+          "shadow:other/Group/mesh_0_3": {
+            "drawCalls": 7,
+            "triangles": 9196
+          },
+          "shadow:other/npcs/mesh_6": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_6_1": {
+            "drawCalls": 1,
+            "triangles": 330
+          },
+          "shadow:other/npcs/mesh_2": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_2_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_2_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_1_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_1_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_5": {
+            "drawCalls": 1,
+            "triangles": 226
+          },
+          "shadow:other/npcs/mesh_5_1": {
+            "drawCalls": 1,
+            "triangles": 270
+          },
+          "shadow:other/npcs/mesh_5_2": {
+            "drawCalls": 1,
+            "triangles": 276
+          },
+          "shadow:other/npcs/mesh_5_3": {
+            "drawCalls": 1,
+            "triangles": 48
+          },
+          "shadow:other/npcs/mesh_5_4": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_5_5": {
+            "drawCalls": 1,
+            "triangles": 368
+          },
+          "shadow:other/npcs/mesh_5_6": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_5_7": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/npcs/mesh_5_8": {
+            "drawCalls": 1,
+            "triangles": 70
+          },
+          "shadow:other/npcs/mesh_7": {
+            "drawCalls": 1,
+            "triangles": 660
+          },
+          "shadow:other/npcs/mesh_7_1": {
+            "drawCalls": 1,
+            "triangles": 702
+          },
+          "shadow:other/npcs/mesh_7_2": {
+            "drawCalls": 1,
+            "triangles": 64
+          },
+          "shadow:other/npcs/mesh_7_3": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_7_4": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "shadow:other/npcs/mesh_4": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_4_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_4_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_3": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_3_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_3_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_0": {
+            "drawCalls": 1,
+            "triangles": 444
+          },
+          "shadow:other/npcs/mesh_0_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_0_2": {
+            "drawCalls": 1,
+            "triangles": 320
+          },
+          "shadow:other/npcs/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 884
+          },
+          "shadow:other/npcs/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 268
+          },
+          "shadow:other/npcs/mesh_0_6": {
+            "drawCalls": 1,
+            "triangles": 108
+          },
+          "shadow:other/npcs/mesh_0_3": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/npcs/tongue-groove": {
+            "drawCalls": 1,
+            "triangles": 18
+          },
+          "shadow:other/interactions/static-body": {
+            "drawCalls": 7,
+            "triangles": 14332
+          },
+          "shadow:other/sunset-grove/daisy_3": {
+            "drawCalls": 1,
+            "triangles": 20
+          },
+          "shadow:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "shadow:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "shadow:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "shadow:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "shadow:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "shadow:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "shadow:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "shadow:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "shadow:other/Group/mesh_0_4": {
+            "drawCalls": 2,
+            "triangles": 2048
+          },
+          "shadow:other/Group/mesh_0_5": {
+            "drawCalls": 2,
+            "triangles": 1072
+          },
+          "shadow:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "shadow:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "shadow:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "shadow:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "shadow:bld.cafe-corner": {
+            "drawCalls": 2,
+            "triangles": 5724
+          },
+          "shadow:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "shadow:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "shadow:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "shadow:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "shadow:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "shadow:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "shadow:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "shadow:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "shadow:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "shadow:bld.pharmacy": {
+            "drawCalls": 4,
+            "triangles": 5898
+          },
+          "shadow:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "shadow:prop.street-lamp": {
+            "drawCalls": 1,
+            "triangles": 3804
+          },
+          "shadow:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "shadow:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "shadow:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "shadow:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "shadow:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "shadow:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "shadow:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "shadow:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "shadow:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "shadow:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "shadow:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "shadow:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "shadow:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "shadow:other/Group/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "shadow:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "shadow:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "shadow:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "shadow:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "shadow:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "shadow:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "shadow:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/Mesh": {
+            "drawCalls": 15,
+            "triangles": 5244
+          },
+          "view:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "view:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "view:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "view:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "view:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "view:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "view:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "view:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "view:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "view:other/Group/mesh_0": {
+            "drawCalls": 8,
+            "triangles": 10560
+          },
+          "view:other/Group/mesh_0_1": {
+            "drawCalls": 5,
+            "triangles": 4872
+          },
+          "view:other/Group/mesh_0_2": {
+            "drawCalls": 5,
+            "triangles": 5456
+          },
+          "view:other/Group/mesh_0_3": {
+            "drawCalls": 5,
+            "triangles": 7208
+          },
+          "view:bld.pharmacy": {
+            "drawCalls": 6,
+            "triangles": 6706
+          },
+          "view:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "view:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "view:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "view:bld.cafe-corner": {
+            "drawCalls": 4,
+            "triangles": 6268
+          },
+          "view:prop.street-lamp": {
+            "drawCalls": 2,
+            "triangles": 3900
+          },
+          "view:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "view:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "view:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "view:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "view:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "view:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "view:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "view:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "view:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "view:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "view:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "view:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "view:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "view:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "view:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "view:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "view:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "view:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "view:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "view:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "view:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "view:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "view:other/Group/Mesh": {
+            "drawCalls": 18,
+            "triangles": 8704
+          },
+          "view:other/sunset-grove/perimeter-posts": {
+            "drawCalls": 4,
+            "triangles": 3696
+          },
+          "view:other/sunset-grove/mesh_0": {
+            "drawCalls": 3,
+            "triangles": 8184
+          },
+          "view:other/sunset-grove/mesh_0_1": {
+            "drawCalls": 3,
+            "triangles": 2648
+          },
+          "view:other/sunset-grove/mesh_0_2": {
+            "drawCalls": 3,
+            "triangles": 3464
+          },
+          "view:other/sunset-grove/mesh_0_3": {
+            "drawCalls": 3,
+            "triangles": 1624
+          },
+          "view:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "view:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "view:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "view:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "view:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "view:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "view:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "view:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "view:other/interactions/static-body": {
+            "drawCalls": 3,
+            "triangles": 5916
+          },
+          "view:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "view:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/Group/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 1024
+          },
+          "view:other/Group/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 536
+          },
+          "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 43
+          },
+          "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 208
+          },
+          "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 56
+          },
+          "view:other/crowd-accessories/acc.hair-bun:lod1": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+            "drawCalls": 1,
+            "triangles": 96
+          },
+          "view:other/crowd-accessories/acc.hair-afro:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hat-bucket-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+            "drawCalls": 1,
+            "triangles": 72
+          },
+          "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/figure-contact-shadows/figure-contact-shadows": {
+            "drawCalls": 1,
+            "triangles": 138
+          },
+          "view:other/weather/Mesh": {
+            "drawCalls": 2,
+            "triangles": 7000
+          },
+          "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+            "drawCalls": 12,
+            "triangles": 12
+          },
+          "shadow:other/Render Pipeline/Render Pipeline": {
+            "drawCalls": 1,
+            "triangles": 1
+          },
+          "view:other/infected-health-bars/Mesh": {
+            "drawCalls": 3,
+            "triangles": 30
+          }
+        },
+        "updateCpuMs": 2.1000003814697266,
+        "renderCpuMs": 5,
+        "propUploads": 0,
+        "awakeProps": 0,
+        "fps": 75.75757575759246,
+        "frameMs": 13.19999999999709,
+        "simMs": 0,
+        "simTicks": 0,
+        "simWorldMs": 0,
+        "simTickMs": 0,
+        "uiMs": 0,
+        "drawCalls": 356,
+        "triangles": 702623,
+        "geometries": 600,
+        "textures": 134,
+        "entities": 328,
+        "backend": "webgpu",
+        "loadTiming": {
+          "dataMs": 22.199999809265137,
+          "simMs": 200.5999994277954,
+          "viewMs": 13194.20000076294
+        },
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "renderedFrames": 31,
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 1343845409,
+        "lighting": {
+          "lightFieldMs": 0.09999942779541016,
+          "lightPools": 12,
+          "lightCandidates": 12,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "L5"
+        }
+      }
+    },
+    {
+      "zoom": 1,
+      "perf": {
+        "l4": null,
+        "chunkResidency": null,
+        "terrain": null,
+        "infected": {
+          "count": 27,
+          "liveCount": 27,
+          "firstLiveId": 84,
+          "available": 323
+        },
+        "effects": {
+          "obstruction": {
+            "remainingTicks": 0,
+            "opacity": 0
+          },
+          "shots": [],
+          "enabled": true,
+          "colorblind": false,
+          "gore": "Full",
+          "quality": "high",
+          "flashReduction": false,
+          "time": 0,
+          "lastSpray": {
+            "actionId": "",
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "droplets": 0,
+            "chunks": 0,
+            "gravity": 9.81
+          },
+          "surfaceSplats": 0,
+          "pendingSplats": 0,
+          "particles": 0,
+          "particleCap": 2048,
+          "decals": 0,
+          "decalCap": 600,
+          "gibs": 0,
+          "gibCap": 80,
+          "telegraphs": [],
+          "hitStop": {
+            "active": false,
+            "until": 0,
+            "started": 0,
+            "suppressed": 0
+          },
+          "flash": 0,
+          "blasts": {
+            "wind": {
+              "x": 0.55,
+              "z": 0.25
+            },
+            "blasts": 0,
+            "puffs": 0,
+            "puffCap": 400,
+            "fireballs": 0,
+            "fireballCap": 96,
+            "chunks": 0,
+            "chunkCap": 64,
+            "flames": 0,
+            "glows": 0,
+            "vehicleSmokeColumns": 0,
+            "columns": 0,
+            "transientColumns": 0,
+            "fireColumns": 0,
+            "columnShadows": 0,
+            "clouds": 0,
+            "scorch": 0,
+            "parts": 0,
+            "flash": 0,
+            "bulletTime": {
+              "scale": 1,
+              "remaining": 0,
+              "progress": 0
+            },
+            "slowMotion": true
+          },
+          "coverage": 0,
+          "detached": 0,
+          "dismemberedKills": 0,
+          "kills": 0,
+          "explosionRadius": 0
+        },
+        "nodeBuildMaterials": {},
+        "crowdPreparation": {
+          "workers": 8,
+          "submitted": 60,
+          "completed": 60,
+          "prebuilt": 60,
+          "failed": 0
+        },
+        "nodeBuilds": 364,
+        "profile": {
+          "other": {
+            "drawCalls": 134,
+            "triangles": 156945
+          },
+          "shadows": {
+            "drawCalls": 172,
+            "triangles": 288322
+          },
+          "buildings": {
+            "drawCalls": 17,
+            "triangles": 78951
+          },
+          "props": {
+            "drawCalls": 20,
+            "triangles": 71552
+          },
+          "crowd": {
+            "drawCalls": 13,
+            "triangles": 106853
+          }
+        },
+        "profileAssets": {
+          "view:other/Background.mesh/Background.mesh": {
+            "drawCalls": 1,
+            "triangles": 1984
+          },
+          "shadow:other/sunset-grove/Mesh": {
+            "drawCalls": 10,
+            "triangles": 576
+          },
+          "shadow:other/Group/mesh_0": {
+            "drawCalls": 10,
+            "triangles": 13780
+          },
+          "shadow:other/Group/mesh_0_1": {
+            "drawCalls": 7,
+            "triangles": 6756
+          },
+          "shadow:other/Group/mesh_0_2": {
+            "drawCalls": 7,
+            "triangles": 7192
+          },
+          "shadow:other/Group/mesh_0_3": {
+            "drawCalls": 7,
+            "triangles": 9196
+          },
+          "shadow:other/npcs/mesh_6": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_6_1": {
+            "drawCalls": 1,
+            "triangles": 330
+          },
+          "shadow:other/npcs/mesh_2": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_2_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_2_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_1_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_1_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_5": {
+            "drawCalls": 1,
+            "triangles": 226
+          },
+          "shadow:other/npcs/mesh_5_1": {
+            "drawCalls": 1,
+            "triangles": 270
+          },
+          "shadow:other/npcs/mesh_5_2": {
+            "drawCalls": 1,
+            "triangles": 276
+          },
+          "shadow:other/npcs/mesh_5_3": {
+            "drawCalls": 1,
+            "triangles": 48
+          },
+          "shadow:other/npcs/mesh_5_4": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_5_5": {
+            "drawCalls": 1,
+            "triangles": 368
+          },
+          "shadow:other/npcs/mesh_5_6": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_5_7": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/npcs/mesh_5_8": {
+            "drawCalls": 1,
+            "triangles": 70
+          },
+          "shadow:other/npcs/mesh_7": {
+            "drawCalls": 1,
+            "triangles": 660
+          },
+          "shadow:other/npcs/mesh_7_1": {
+            "drawCalls": 1,
+            "triangles": 702
+          },
+          "shadow:other/npcs/mesh_7_2": {
+            "drawCalls": 1,
+            "triangles": 64
+          },
+          "shadow:other/npcs/mesh_7_3": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_7_4": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "shadow:other/npcs/mesh_4": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_4_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_4_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_3": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_3_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_3_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_0": {
+            "drawCalls": 1,
+            "triangles": 444
+          },
+          "shadow:other/npcs/mesh_0_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_0_2": {
+            "drawCalls": 1,
+            "triangles": 320
+          },
+          "shadow:other/npcs/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 884
+          },
+          "shadow:other/npcs/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 268
+          },
+          "shadow:other/npcs/mesh_0_6": {
+            "drawCalls": 1,
+            "triangles": 108
+          },
+          "shadow:other/npcs/mesh_0_3": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/npcs/tongue-groove": {
+            "drawCalls": 1,
+            "triangles": 18
+          },
+          "shadow:other/interactions/static-body": {
+            "drawCalls": 7,
+            "triangles": 14332
+          },
+          "shadow:other/sunset-grove/daisy_3": {
+            "drawCalls": 1,
+            "triangles": 20
+          },
+          "shadow:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "shadow:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "shadow:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "shadow:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "shadow:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "shadow:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "shadow:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "shadow:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "shadow:other/Group/mesh_0_4": {
+            "drawCalls": 2,
+            "triangles": 2048
+          },
+          "shadow:other/Group/mesh_0_5": {
+            "drawCalls": 2,
+            "triangles": 1072
+          },
+          "shadow:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "shadow:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "shadow:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "shadow:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "shadow:bld.cafe-corner": {
+            "drawCalls": 2,
+            "triangles": 5724
+          },
+          "shadow:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "shadow:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "shadow:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "shadow:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "shadow:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "shadow:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "shadow:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "shadow:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "shadow:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "shadow:bld.pharmacy": {
+            "drawCalls": 4,
+            "triangles": 5898
+          },
+          "shadow:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "shadow:prop.street-lamp": {
+            "drawCalls": 1,
+            "triangles": 3804
+          },
+          "shadow:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "shadow:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "shadow:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "shadow:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "shadow:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "shadow:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "shadow:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "shadow:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "shadow:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "shadow:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "shadow:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "shadow:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "shadow:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "shadow:other/Group/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "shadow:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "shadow:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "shadow:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "shadow:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "shadow:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "shadow:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "shadow:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/Mesh": {
+            "drawCalls": 15,
+            "triangles": 5244
+          },
+          "view:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "view:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "view:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "view:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "view:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "view:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "view:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "view:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "view:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "view:other/Group/mesh_0": {
+            "drawCalls": 8,
+            "triangles": 10560
+          },
+          "view:other/Group/mesh_0_1": {
+            "drawCalls": 5,
+            "triangles": 4872
+          },
+          "view:other/Group/mesh_0_2": {
+            "drawCalls": 5,
+            "triangles": 5456
+          },
+          "view:other/Group/mesh_0_3": {
+            "drawCalls": 5,
+            "triangles": 7208
+          },
+          "view:bld.pharmacy": {
+            "drawCalls": 6,
+            "triangles": 6706
+          },
+          "view:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "view:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "view:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "view:bld.cafe-corner": {
+            "drawCalls": 4,
+            "triangles": 6268
+          },
+          "view:prop.street-lamp": {
+            "drawCalls": 2,
+            "triangles": 3900
+          },
+          "view:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "view:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "view:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "view:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "view:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "view:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "view:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "view:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "view:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "view:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "view:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "view:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "view:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "view:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "view:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "view:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "view:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "view:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "view:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "view:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "view:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "view:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "view:other/Group/Mesh": {
+            "drawCalls": 18,
+            "triangles": 8704
+          },
+          "view:other/sunset-grove/perimeter-posts": {
+            "drawCalls": 4,
+            "triangles": 3696
+          },
+          "view:other/sunset-grove/mesh_0": {
+            "drawCalls": 3,
+            "triangles": 8184
+          },
+          "view:other/sunset-grove/mesh_0_1": {
+            "drawCalls": 3,
+            "triangles": 2648
+          },
+          "view:other/sunset-grove/mesh_0_2": {
+            "drawCalls": 3,
+            "triangles": 3464
+          },
+          "view:other/sunset-grove/mesh_0_3": {
+            "drawCalls": 3,
+            "triangles": 1624
+          },
+          "view:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "view:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "view:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "view:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "view:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "view:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "view:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "view:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "view:other/interactions/static-body": {
+            "drawCalls": 3,
+            "triangles": 5916
+          },
+          "view:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "view:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/Group/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 1024
+          },
+          "view:other/Group/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 536
+          },
+          "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 43
+          },
+          "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 208
+          },
+          "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 56
+          },
+          "view:other/crowd-accessories/acc.hair-bun:lod1": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+            "drawCalls": 1,
+            "triangles": 96
+          },
+          "view:other/crowd-accessories/acc.hair-afro:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hat-bucket-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+            "drawCalls": 1,
+            "triangles": 72
+          },
+          "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/figure-contact-shadows/figure-contact-shadows": {
+            "drawCalls": 1,
+            "triangles": 138
+          },
+          "view:other/weather/Mesh": {
+            "drawCalls": 2,
+            "triangles": 7000
+          },
+          "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+            "drawCalls": 12,
+            "triangles": 12
+          },
+          "shadow:other/Render Pipeline/Render Pipeline": {
+            "drawCalls": 1,
+            "triangles": 1
+          },
+          "view:other/infected-health-bars/Mesh": {
+            "drawCalls": 3,
+            "triangles": 30
+          }
+        },
+        "updateCpuMs": 1.5,
+        "renderCpuMs": 4.5,
+        "propUploads": 0,
+        "awakeProps": 0,
+        "fps": 156.24999999978684,
+        "frameMs": 6.400000000008731,
+        "simMs": 0,
+        "simTicks": 0,
+        "simWorldMs": 0,
+        "simTickMs": 0,
+        "uiMs": 0,
+        "drawCalls": 356,
+        "triangles": 702623,
+        "geometries": 600,
+        "textures": 134,
+        "entities": 328,
+        "backend": "webgpu",
+        "loadTiming": {
+          "dataMs": 22.199999809265137,
+          "simMs": 200.5999994277954,
+          "viewMs": 13194.20000076294
+        },
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "renderedFrames": 34,
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 1343845409,
+        "lighting": {
+          "lightFieldMs": 0,
+          "lightPools": 12,
+          "lightCandidates": 12,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "L5"
+        }
+      }
+    },
+    {
+      "zoom": 1.5,
+      "perf": {
+        "l4": null,
+        "chunkResidency": null,
+        "terrain": null,
+        "infected": {
+          "count": 27,
+          "liveCount": 27,
+          "firstLiveId": 84,
+          "available": 323
+        },
+        "effects": {
+          "obstruction": {
+            "remainingTicks": 0,
+            "opacity": 0
+          },
+          "shots": [],
+          "enabled": true,
+          "colorblind": false,
+          "gore": "Full",
+          "quality": "high",
+          "flashReduction": false,
+          "time": 0,
+          "lastSpray": {
+            "actionId": "",
+            "direction": {
+              "x": 1,
+              "z": 0
+            },
+            "droplets": 0,
+            "chunks": 0,
+            "gravity": 9.81
+          },
+          "surfaceSplats": 0,
+          "pendingSplats": 0,
+          "particles": 0,
+          "particleCap": 2048,
+          "decals": 0,
+          "decalCap": 600,
+          "gibs": 0,
+          "gibCap": 80,
+          "telegraphs": [],
+          "hitStop": {
+            "active": false,
+            "until": 0,
+            "started": 0,
+            "suppressed": 0
+          },
+          "flash": 0,
+          "blasts": {
+            "wind": {
+              "x": 0.55,
+              "z": 0.25
+            },
+            "blasts": 0,
+            "puffs": 0,
+            "puffCap": 400,
+            "fireballs": 0,
+            "fireballCap": 96,
+            "chunks": 0,
+            "chunkCap": 64,
+            "flames": 0,
+            "glows": 0,
+            "vehicleSmokeColumns": 0,
+            "columns": 0,
+            "transientColumns": 0,
+            "fireColumns": 0,
+            "columnShadows": 0,
+            "clouds": 0,
+            "scorch": 0,
+            "parts": 0,
+            "flash": 0,
+            "bulletTime": {
+              "scale": 1,
+              "remaining": 0,
+              "progress": 0
+            },
+            "slowMotion": true
+          },
+          "coverage": 0,
+          "detached": 0,
+          "dismemberedKills": 0,
+          "kills": 0,
+          "explosionRadius": 0
+        },
+        "nodeBuildMaterials": {},
+        "crowdPreparation": {
+          "workers": 8,
+          "submitted": 60,
+          "completed": 60,
+          "prebuilt": 60,
+          "failed": 0
+        },
+        "nodeBuilds": 364,
+        "profile": {
+          "other": {
+            "drawCalls": 134,
+            "triangles": 156945
+          },
+          "shadows": {
+            "drawCalls": 172,
+            "triangles": 288322
+          },
+          "buildings": {
+            "drawCalls": 17,
+            "triangles": 78951
+          },
+          "props": {
+            "drawCalls": 20,
+            "triangles": 71552
+          },
+          "crowd": {
+            "drawCalls": 13,
+            "triangles": 106853
+          }
+        },
+        "profileAssets": {
+          "view:other/Background.mesh/Background.mesh": {
+            "drawCalls": 1,
+            "triangles": 1984
+          },
+          "shadow:other/sunset-grove/Mesh": {
+            "drawCalls": 10,
+            "triangles": 576
+          },
+          "shadow:other/Group/mesh_0": {
+            "drawCalls": 10,
+            "triangles": 13780
+          },
+          "shadow:other/Group/mesh_0_1": {
+            "drawCalls": 7,
+            "triangles": 6756
+          },
+          "shadow:other/Group/mesh_0_2": {
+            "drawCalls": 7,
+            "triangles": 7192
+          },
+          "shadow:other/Group/mesh_0_3": {
+            "drawCalls": 7,
+            "triangles": 9196
+          },
+          "shadow:other/npcs/mesh_6": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_6_1": {
+            "drawCalls": 1,
+            "triangles": 330
+          },
+          "shadow:other/npcs/mesh_2": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_2_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_2_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_1_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_1_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_5": {
+            "drawCalls": 1,
+            "triangles": 226
+          },
+          "shadow:other/npcs/mesh_5_1": {
+            "drawCalls": 1,
+            "triangles": 270
+          },
+          "shadow:other/npcs/mesh_5_2": {
+            "drawCalls": 1,
+            "triangles": 276
+          },
+          "shadow:other/npcs/mesh_5_3": {
+            "drawCalls": 1,
+            "triangles": 48
+          },
+          "shadow:other/npcs/mesh_5_4": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_5_5": {
+            "drawCalls": 1,
+            "triangles": 368
+          },
+          "shadow:other/npcs/mesh_5_6": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_5_7": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/npcs/mesh_5_8": {
+            "drawCalls": 1,
+            "triangles": 70
+          },
+          "shadow:other/npcs/mesh_7": {
+            "drawCalls": 1,
+            "triangles": 660
+          },
+          "shadow:other/npcs/mesh_7_1": {
+            "drawCalls": 1,
+            "triangles": 702
+          },
+          "shadow:other/npcs/mesh_7_2": {
+            "drawCalls": 1,
+            "triangles": 64
+          },
+          "shadow:other/npcs/mesh_7_3": {
+            "drawCalls": 1,
+            "triangles": 180
+          },
+          "shadow:other/npcs/mesh_7_4": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "shadow:other/npcs/mesh_4": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_4_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_4_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_3": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_3_1": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/npcs/mesh_3_2": {
+            "drawCalls": 1,
+            "triangles": 186
+          },
+          "shadow:other/npcs/mesh_0": {
+            "drawCalls": 1,
+            "triangles": 444
+          },
+          "shadow:other/npcs/mesh_0_1": {
+            "drawCalls": 1,
+            "triangles": 42
+          },
+          "shadow:other/npcs/mesh_0_2": {
+            "drawCalls": 1,
+            "triangles": 320
+          },
+          "shadow:other/npcs/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 884
+          },
+          "shadow:other/npcs/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 268
+          },
+          "shadow:other/npcs/mesh_0_6": {
+            "drawCalls": 1,
+            "triangles": 108
+          },
+          "shadow:other/npcs/mesh_0_3": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/npcs/tongue-groove": {
+            "drawCalls": 1,
+            "triangles": 18
+          },
+          "shadow:other/interactions/static-body": {
+            "drawCalls": 7,
+            "triangles": 14332
+          },
+          "shadow:other/sunset-grove/daisy_3": {
+            "drawCalls": 1,
+            "triangles": 20
+          },
+          "shadow:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "shadow:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "shadow:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "shadow:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "shadow:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "shadow:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "shadow:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "shadow:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "shadow:other/Group/mesh_0_4": {
+            "drawCalls": 2,
+            "triangles": 2048
+          },
+          "shadow:other/Group/mesh_0_5": {
+            "drawCalls": 2,
+            "triangles": 1072
+          },
+          "shadow:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "shadow:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "shadow:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "shadow:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "shadow:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "shadow:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "shadow:bld.cafe-corner": {
+            "drawCalls": 2,
+            "triangles": 5724
+          },
+          "shadow:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "shadow:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "shadow:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "shadow:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "shadow:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "shadow:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "shadow:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "shadow:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "shadow:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "shadow:bld.pharmacy": {
+            "drawCalls": 4,
+            "triangles": 5898
+          },
+          "shadow:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "shadow:prop.street-lamp": {
+            "drawCalls": 1,
+            "triangles": 3804
+          },
+          "shadow:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "shadow:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "shadow:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "shadow:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "shadow:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "shadow:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "shadow:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "shadow:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "shadow:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "shadow:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "shadow:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "shadow:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "shadow:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "shadow:other/Group/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "shadow:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "shadow:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "shadow:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "shadow:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "shadow:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "shadow:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "shadow:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "shadow:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "shadow:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/Mesh": {
+            "drawCalls": 15,
+            "triangles": 5244
+          },
+          "view:other/sunset-grove/pal_uiDark": {
+            "drawCalls": 1,
+            "triangles": 380
+          },
+          "view:other/sunset-grove/pal_sidewalk": {
+            "drawCalls": 1,
+            "triangles": 1760
+          },
+          "view:other/sunset-grove/pal_grass": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/sunset-grove/pal_denim": {
+            "drawCalls": 1,
+            "triangles": 880
+          },
+          "view:bld.apartment-block-b": {
+            "drawCalls": 1,
+            "triangles": 17590
+          },
+          "view:bld.town-hall": {
+            "drawCalls": 1,
+            "triangles": 2709
+          },
+          "view:bld.apartment-block-a": {
+            "drawCalls": 1,
+            "triangles": 15485
+          },
+          "view:bld.church": {
+            "drawCalls": 1,
+            "triangles": 2953
+          },
+          "view:other/sunset-grove/gun": {
+            "drawCalls": 2,
+            "triangles": 640
+          },
+          "view:bld.storefront-row": {
+            "drawCalls": 1,
+            "triangles": 23184
+          },
+          "view:other/Group/mesh_0": {
+            "drawCalls": 8,
+            "triangles": 10560
+          },
+          "view:other/Group/mesh_0_1": {
+            "drawCalls": 5,
+            "triangles": 4872
+          },
+          "view:other/Group/mesh_0_2": {
+            "drawCalls": 5,
+            "triangles": 5456
+          },
+          "view:other/Group/mesh_0_3": {
+            "drawCalls": 5,
+            "triangles": 7208
+          },
+          "view:bld.pharmacy": {
+            "drawCalls": 6,
+            "triangles": 6706
+          },
+          "view:other/sunset-grove/pal_picketWhite": {
+            "drawCalls": 1,
+            "triangles": 9240
+          },
+          "view:other/sunset-grove/static-body": {
+            "drawCalls": 2,
+            "triangles": 2264
+          },
+          "view:other/sunset-grove/pal_asphalt": {
+            "drawCalls": 1,
+            "triangles": 264
+          },
+          "view:bld.cafe-corner": {
+            "drawCalls": 4,
+            "triangles": 6268
+          },
+          "view:prop.street-lamp": {
+            "drawCalls": 2,
+            "triangles": 3900
+          },
+          "view:veh.tank": {
+            "drawCalls": 1,
+            "triangles": 3082
+          },
+          "view:other/Group/mesh_1": {
+            "drawCalls": 3,
+            "triangles": 7014
+          },
+          "view:other/Group/mesh_1_1": {
+            "drawCalls": 3,
+            "triangles": 1848
+          },
+          "view:other/Group/mesh_1_2": {
+            "drawCalls": 3,
+            "triangles": 1924
+          },
+          "view:prop.street-tree-blossom": {
+            "drawCalls": 1,
+            "triangles": 1516
+          },
+          "view:bld.supermarket": {
+            "drawCalls": 2,
+            "triangles": 4056
+          },
+          "view:veh.military-truck": {
+            "drawCalls": 1,
+            "triangles": 7202
+          },
+          "view:prop.street-sign": {
+            "drawCalls": 1,
+            "triangles": 1752
+          },
+          "view:veh.school-bus": {
+            "drawCalls": 1,
+            "triangles": 11120
+          },
+          "view:veh.suv-dark": {
+            "drawCalls": 1,
+            "triangles": 3264
+          },
+          "view:veh.military-apc": {
+            "drawCalls": 1,
+            "triangles": 744
+          },
+          "view:veh.sedan-white": {
+            "drawCalls": 1,
+            "triangles": 1726
+          },
+          "view:prop.privacy-fence": {
+            "drawCalls": 1,
+            "triangles": 9576
+          },
+          "view:veh.sedan-red": {
+            "drawCalls": 1,
+            "triangles": 1568
+          },
+          "view:veh.pickup-red": {
+            "drawCalls": 1,
+            "triangles": 1666
+          },
+          "view:prop.trash-bin": {
+            "drawCalls": 1,
+            "triangles": 5112
+          },
+          "view:decay.fuel-truck-crater": {
+            "drawCalls": 1,
+            "triangles": 190
+          },
+          "view:prop.sandbag-pallet": {
+            "drawCalls": 1,
+            "triangles": 13014
+          },
+          "view:prop.bench": {
+            "drawCalls": 1,
+            "triangles": 2184
+          },
+          "view:other/npcs/Mesh": {
+            "drawCalls": 0,
+            "triangles": 0
+          },
+          "view:decay.dropped-belongings": {
+            "drawCalls": 1,
+            "triangles": 360
+          },
+          "view:decay.blown-sandbags": {
+            "drawCalls": 1,
+            "triangles": 1536
+          },
+          "view:other/Group/Mesh": {
+            "drawCalls": 18,
+            "triangles": 8704
+          },
+          "view:other/sunset-grove/perimeter-posts": {
+            "drawCalls": 4,
+            "triangles": 3696
+          },
+          "view:other/sunset-grove/mesh_0": {
+            "drawCalls": 3,
+            "triangles": 8184
+          },
+          "view:other/sunset-grove/mesh_0_1": {
+            "drawCalls": 3,
+            "triangles": 2648
+          },
+          "view:other/sunset-grove/mesh_0_2": {
+            "drawCalls": 3,
+            "triangles": 3464
+          },
+          "view:other/sunset-grove/mesh_0_3": {
+            "drawCalls": 3,
+            "triangles": 1624
+          },
+          "view:decay.broken-glass": {
+            "drawCalls": 1,
+            "triangles": 2040
+          },
+          "view:other/sunset-grove/pal_grass001": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass002": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass003": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass004": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_grass005": {
+            "drawCalls": 1,
+            "triangles": 44
+          },
+          "view:other/sunset-grove/pal_woodWarm": {
+            "drawCalls": 1,
+            "triangles": 220
+          },
+          "view:other/sunset-grove/pal_brick": {
+            "drawCalls": 1,
+            "triangles": 1496
+          },
+          "view:other/Group/mesh_1_3": {
+            "drawCalls": 2,
+            "triangles": 896
+          },
+          "view:other/Group/mesh_1_4": {
+            "drawCalls": 2,
+            "triangles": 2120
+          },
+          "view:other/Group/mesh_1_5": {
+            "drawCalls": 2,
+            "triangles": 72
+          },
+          "view:other/Group/courier-tier-gear": {
+            "drawCalls": 1,
+            "triangles": 872
+          },
+          "view:other/Group/courierSkin": {
+            "drawCalls": 1,
+            "triangles": 44620
+          },
+          "view:other/interactions/static-body": {
+            "drawCalls": 3,
+            "triangles": 5916
+          },
+          "view:other/sunset-grove/daisy_1": {
+            "drawCalls": 1,
+            "triangles": 100
+          },
+          "view:other/sunset-grove/daisy_2": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/daisy": {
+            "drawCalls": 1,
+            "triangles": 144
+          },
+          "view:other/sunset-grove/pal_hairChestnut": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/Group/mesh_0_4": {
+            "drawCalls": 1,
+            "triangles": 1024
+          },
+          "view:other/Group/mesh_0_5": {
+            "drawCalls": 1,
+            "triangles": 536
+          },
+          "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 43
+          },
+          "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 208
+          },
+          "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+            "drawCalls": 1,
+            "triangles": 56
+          },
+          "view:other/crowd-accessories/acc.hair-bun:lod1": {
+            "drawCalls": 1,
+            "triangles": 88
+          },
+          "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+            "drawCalls": 1,
+            "triangles": 96
+          },
+          "view:other/crowd-accessories/acc.hair-afro:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hat-bucket-hat:lod1": {
+            "drawCalls": 1,
+            "triangles": 216
+          },
+          "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+            "drawCalls": 1,
+            "triangles": 72
+          },
+          "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+            "drawCalls": 1,
+            "triangles": 24
+          },
+          "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+            "drawCalls": 1,
+            "triangles": 40
+          },
+          "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+            "drawCalls": 1,
+            "triangles": 176
+          },
+          "view:other/figure-contact-shadows/figure-contact-shadows": {
+            "drawCalls": 1,
+            "triangles": 138
+          },
+          "view:other/weather/Mesh": {
+            "drawCalls": 2,
+            "triangles": 7000
+          },
+          "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+            "drawCalls": 12,
+            "triangles": 12
+          },
+          "shadow:other/Render Pipeline/Render Pipeline": {
+            "drawCalls": 1,
+            "triangles": 1
+          },
+          "view:other/infected-health-bars/Mesh": {
+            "drawCalls": 3,
+            "triangles": 30
+          }
+        },
+        "updateCpuMs": 1.8000001907348633,
+        "renderCpuMs": 4.699999809265137,
+        "propUploads": 0,
+        "awakeProps": 0,
+        "fps": 153.84615384615384,
+        "frameMs": 6.5,
+        "simMs": 0,
+        "simTicks": 0,
+        "simWorldMs": 0,
+        "simTickMs": 0,
+        "uiMs": 0,
+        "drawCalls": 356,
+        "triangles": 702623,
+        "geometries": 600,
+        "textures": 134,
+        "entities": 328,
+        "backend": "webgpu",
+        "loadTiming": {
+          "dataMs": 22.199999809265137,
+          "simMs": 200.5999994277954,
+          "viewMs": 13194.20000076294
+        },
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "renderedFrames": 37,
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 1342319986,
+        "lighting": {
+          "lightFieldMs": 0.19999980926513672,
+          "lightPools": 12,
+          "lightCandidates": 12,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "L5"
+        }
+      }
+    }
+  ],
+  "simP95": 1.0999994277954102,
   "counts": {
     "followers": 5,
-    "infected": 18,
+    "infected": 27,
     "fires": 13,
     "corpses": 37
   },
@@ -18,39 +2799,46 @@
       "rayDitherRadius": 6,
       "wetness": 0,
       "accumulation": 0.15263888888888713,
-      "tracks": 447,
-      "trackPixels": 3096
+      "tracks": 588,
+      "trackPixels": 2854
     }
   },
-  "baselineDrawCalls": 240,
-  "baselineTriangles": 391826,
-  "pairDrawCalls": 214,
-  "pairTriangles": 469184,
-  "followDrawCalls": 217,
-  "followTriangles": 469456,
-  "p50": 5.19999999999709,
-  "p95": 7.400000000001455,
-  "max": 22.400000000001455,
+  "heapMB": 122.426836,
+  "heapAudit": {
+    "usedSize": 122426836,
+    "totalSize": 124878848,
+    "embedderHeapUsedSize": 3007728,
+    "backingStorageSize": 1124906345
+  },
+  "baselineDrawCalls": 412,
+  "baselineTriangles": 726506,
+  "pairDrawCalls": 356,
+  "pairTriangles": 702623,
+  "followDrawCalls": 356,
+  "followTriangles": 702623,
+  "p50": 4.80000000000291,
+  "p95": 7.399999999994179,
+  "max": 11,
   "pairProfile": {
     "other": {
-      "drawCalls": 79,
-      "triangles": 154658
+      "drawCalls": 134,
+      "triangles": 156945
     },
     "shadows": {
-      "drawCalls": 104,
-      "triangles": 149404
+      "drawCalls": 172,
+      "triangles": 288322
     },
     "buildings": {
-      "drawCalls": 4,
-      "triangles": 35507
+      "drawCalls": 17,
+      "triangles": 78951
     },
     "props": {
-      "drawCalls": 10,
-      "triangles": 26406
+      "drawCalls": 20,
+      "triangles": 71552
     },
     "crowd": {
-      "drawCalls": 17,
-      "triangles": 103209
+      "drawCalls": 13,
+      "triangles": 106853
     }
   },
   "pairAssets": {
@@ -59,240 +2847,56 @@
       "triangles": 1984
     },
     "shadow:other/sunset-grove/Mesh": {
-      "drawCalls": 8,
-      "triangles": 96
-    },
-    "shadow:other/interactions/static-body": {
-      "drawCalls": 4,
-      "triangles": 8020
-    },
-    "shadow:other/sunset-grove/daisy_3": {
-      "drawCalls": 1,
-      "triangles": 20
-    },
-    "shadow:other/sunset-grove/daisy_2": {
-      "drawCalls": 1,
-      "triangles": 144
-    },
-    "shadow:other/sunset-grove/daisy_1": {
-      "drawCalls": 1,
-      "triangles": 100
-    },
-    "shadow:other/sunset-grove/daisy": {
-      "drawCalls": 1,
-      "triangles": 144
-    },
-    "shadow:other/sunset-grove/pal_hairChestnut": {
-      "drawCalls": 1,
-      "triangles": 176
+      "drawCalls": 10,
+      "triangles": 576
     },
     "shadow:other/Group/mesh_0": {
-      "drawCalls": 2,
-      "triangles": 800
+      "drawCalls": 10,
+      "triangles": 13780
     },
-    "shadow:other/Group/mesh_1": {
-      "drawCalls": 2,
-      "triangles": 3003
+    "shadow:other/Group/mesh_0_1": {
+      "drawCalls": 7,
+      "triangles": 6756
     },
-    "shadow:other/Group/mesh_1_1": {
-      "drawCalls": 2,
-      "triangles": 644
+    "shadow:other/Group/mesh_0_2": {
+      "drawCalls": 7,
+      "triangles": 7192
     },
-    "shadow:other/Group/mesh_1_2": {
-      "drawCalls": 2,
-      "triangles": 838
+    "shadow:other/Group/mesh_0_3": {
+      "drawCalls": 7,
+      "triangles": 9196
     },
-    "shadow:other/Group/mesh_1_3": {
-      "drawCalls": 2,
-      "triangles": 2452
-    },
-    "shadow:other/Group/mesh_1_4": {
-      "drawCalls": 2,
-      "triangles": 2416
-    },
-    "shadow:other/Group/Mesh": {
-      "drawCalls": 8,
-      "triangles": 96
-    },
-    "shadow:other/Group/courierSkin": {
-      "drawCalls": 1,
-      "triangles": 44620
-    },
-    "shadow:other/Group/mesh_1_5": {
-      "drawCalls": 1,
-      "triangles": 36
-    },
-    "shadow:other/sunset-grove/pal_denim": {
-      "drawCalls": 1,
-      "triangles": 880
-    },
-    "shadow:other/sunset-grove/pal_sidewalk": {
-      "drawCalls": 1,
-      "triangles": 1100
-    },
-    "shadow:bld.apartment-block-b": {
-      "drawCalls": 1,
-      "triangles": 3592
-    },
-    "shadow:bld.church": {
-      "drawCalls": 1,
-      "triangles": 15335
-    },
-    "shadow:other/sunset-grove/pal_picketWhite": {
-      "drawCalls": 1,
-      "triangles": 9240
-    },
-    "shadow:other/sunset-grove/pal_asphalt": {
-      "drawCalls": 1,
-      "triangles": 264
-    },
-    "shadow:veh.school-bus": {
-      "drawCalls": 1,
-      "triangles": 5160
-    },
-    "shadow:veh.military-apc": {
-      "drawCalls": 1,
-      "triangles": 744
-    },
-    "shadow:veh.military-truck": {
-      "drawCalls": 1,
-      "triangles": 7202
-    },
-    "shadow:bld.storefront-row": {
-      "drawCalls": 1,
-      "triangles": 3892
-    },
-    "shadow:prop.bench": {
-      "drawCalls": 1,
-      "triangles": 1092
-    },
-    "shadow:other/npcs/Mesh": {
-      "drawCalls": 0,
-      "triangles": 0
-    },
-    "shadow:decay.broken-glass": {
-      "drawCalls": 1,
-      "triangles": 120
-    },
-    "shadow:prop.sandbag-pallet": {
-      "drawCalls": 1,
-      "triangles": 7230
-    },
-    "shadow:decay.blown-sandbags": {
-      "drawCalls": 1,
-      "triangles": 1344
-    },
-    "shadow:decay.dropped-belongings": {
-      "drawCalls": 1,
-      "triangles": 240
-    },
-    "shadow:other/sunset-grove/pal_grass": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_grass001": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_grass002": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_grass003": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_grass004": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_grass005": {
-      "drawCalls": 1,
-      "triangles": 44
-    },
-    "shadow:other/sunset-grove/pal_woodWarm": {
-      "drawCalls": 1,
-      "triangles": 220
-    },
-    "shadow:prop.hmg-nest": {
-      "drawCalls": 1,
-      "triangles": 192
-    },
-    "shadow:bld.town-hall": {
-      "drawCalls": 1,
-      "triangles": 12688
-    },
-    "shadow:veh.tank": {
-      "drawCalls": 1,
-      "triangles": 3082
-    },
-    "shadow:other/sunset-grove/pal_brick": {
-      "drawCalls": 1,
-      "triangles": 1496
-    },
-    "shadow:other/sunset-grove/pal_uiDark": {
-      "drawCalls": 1,
-      "triangles": 380
-    },
-    "shadow:other/npcs/mesh_0": {
-      "drawCalls": 1,
-      "triangles": 444
-    },
-    "shadow:other/npcs/mesh_0_1": {
+    "shadow:other/npcs/mesh_6": {
       "drawCalls": 1,
       "triangles": 42
     },
-    "shadow:other/npcs/mesh_0_2": {
+    "shadow:other/npcs/mesh_6_1": {
       "drawCalls": 1,
-      "triangles": 338
+      "triangles": 330
     },
-    "shadow:other/npcs/mesh_0_3": {
-      "drawCalls": 1,
-      "triangles": 100
-    },
-    "shadow:other/npcs/mesh_0_4": {
-      "drawCalls": 1,
-      "triangles": 884
-    },
-    "shadow:other/npcs/mesh_0_5": {
-      "drawCalls": 1,
-      "triangles": 268
-    },
-    "shadow:other/npcs/mesh_0_6": {
-      "drawCalls": 1,
-      "triangles": 108
-    },
-    "shadow:other/npcs/mesh_4": {
+    "shadow:other/npcs/mesh_2": {
       "drawCalls": 1,
       "triangles": 42
     },
-    "shadow:other/npcs/mesh_4_1": {
+    "shadow:other/npcs/mesh_2_1": {
       "drawCalls": 1,
       "triangles": 44
     },
-    "shadow:other/npcs/mesh_4_2": {
+    "shadow:other/npcs/mesh_2_2": {
       "drawCalls": 1,
       "triangles": 186
     },
-    "shadow:other/npcs/mesh_7": {
+    "shadow:other/npcs/mesh_1": {
       "drawCalls": 1,
-      "triangles": 660
+      "triangles": 42
     },
-    "shadow:other/npcs/mesh_7_1": {
+    "shadow:other/npcs/mesh_1_1": {
       "drawCalls": 1,
-      "triangles": 702
+      "triangles": 44
     },
-    "shadow:other/npcs/mesh_7_2": {
+    "shadow:other/npcs/mesh_1_2": {
       "drawCalls": 1,
-      "triangles": 64
-    },
-    "shadow:other/npcs/mesh_7_3": {
-      "drawCalls": 1,
-      "triangles": 180
-    },
-    "shadow:other/npcs/mesh_7_4": {
-      "drawCalls": 1,
-      "triangles": 24
+      "triangles": 186
     },
     "shadow:other/npcs/mesh_5": {
       "drawCalls": 1,
@@ -330,13 +2934,337 @@
       "drawCalls": 1,
       "triangles": 70
     },
-    "view:other/sunset-grove/Mesh": {
+    "shadow:other/npcs/mesh_7": {
+      "drawCalls": 1,
+      "triangles": 660
+    },
+    "shadow:other/npcs/mesh_7_1": {
+      "drawCalls": 1,
+      "triangles": 702
+    },
+    "shadow:other/npcs/mesh_7_2": {
+      "drawCalls": 1,
+      "triangles": 64
+    },
+    "shadow:other/npcs/mesh_7_3": {
+      "drawCalls": 1,
+      "triangles": 180
+    },
+    "shadow:other/npcs/mesh_7_4": {
+      "drawCalls": 1,
+      "triangles": 24
+    },
+    "shadow:other/npcs/mesh_4": {
+      "drawCalls": 1,
+      "triangles": 42
+    },
+    "shadow:other/npcs/mesh_4_1": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/npcs/mesh_4_2": {
+      "drawCalls": 1,
+      "triangles": 186
+    },
+    "shadow:other/npcs/mesh_3": {
+      "drawCalls": 1,
+      "triangles": 42
+    },
+    "shadow:other/npcs/mesh_3_1": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/npcs/mesh_3_2": {
+      "drawCalls": 1,
+      "triangles": 186
+    },
+    "shadow:other/npcs/mesh_0": {
+      "drawCalls": 1,
+      "triangles": 444
+    },
+    "shadow:other/npcs/mesh_0_1": {
+      "drawCalls": 1,
+      "triangles": 42
+    },
+    "shadow:other/npcs/mesh_0_2": {
+      "drawCalls": 1,
+      "triangles": 320
+    },
+    "shadow:other/npcs/mesh_0_4": {
+      "drawCalls": 1,
+      "triangles": 884
+    },
+    "shadow:other/npcs/mesh_0_5": {
+      "drawCalls": 1,
+      "triangles": 268
+    },
+    "shadow:other/npcs/mesh_0_6": {
+      "drawCalls": 1,
+      "triangles": 108
+    },
+    "shadow:other/npcs/mesh_0_3": {
+      "drawCalls": 1,
+      "triangles": 100
+    },
+    "shadow:other/npcs/tongue-groove": {
+      "drawCalls": 1,
+      "triangles": 18
+    },
+    "shadow:other/interactions/static-body": {
       "drawCalls": 7,
-      "triangles": 74
+      "triangles": 14332
+    },
+    "shadow:other/sunset-grove/daisy_3": {
+      "drawCalls": 1,
+      "triangles": 20
+    },
+    "shadow:other/Group/mesh_1": {
+      "drawCalls": 3,
+      "triangles": 7014
+    },
+    "shadow:other/Group/mesh_1_1": {
+      "drawCalls": 3,
+      "triangles": 1848
+    },
+    "shadow:other/Group/mesh_1_2": {
+      "drawCalls": 3,
+      "triangles": 1924
+    },
+    "shadow:other/Group/mesh_1_3": {
+      "drawCalls": 2,
+      "triangles": 896
+    },
+    "shadow:other/Group/mesh_1_4": {
+      "drawCalls": 2,
+      "triangles": 2120
+    },
+    "shadow:other/Group/mesh_1_5": {
+      "drawCalls": 2,
+      "triangles": 72
+    },
+    "shadow:other/sunset-grove/gun": {
+      "drawCalls": 2,
+      "triangles": 640
+    },
+    "shadow:other/sunset-grove/static-body": {
+      "drawCalls": 2,
+      "triangles": 2264
+    },
+    "shadow:other/Group/mesh_0_4": {
+      "drawCalls": 2,
+      "triangles": 2048
+    },
+    "shadow:other/Group/mesh_0_5": {
+      "drawCalls": 2,
+      "triangles": 1072
+    },
+    "shadow:other/sunset-grove/daisy_2": {
+      "drawCalls": 1,
+      "triangles": 144
+    },
+    "shadow:other/sunset-grove/daisy_1": {
+      "drawCalls": 1,
+      "triangles": 100
+    },
+    "shadow:other/sunset-grove/daisy": {
+      "drawCalls": 1,
+      "triangles": 144
+    },
+    "shadow:other/sunset-grove/pal_hairChestnut": {
+      "drawCalls": 1,
+      "triangles": 176
+    },
+    "shadow:other/Group/courierSkin": {
+      "drawCalls": 1,
+      "triangles": 44620
+    },
+    "shadow:other/Group/courier-tier-gear": {
+      "drawCalls": 1,
+      "triangles": 872
+    },
+    "shadow:other/sunset-grove/pal_denim": {
+      "drawCalls": 1,
+      "triangles": 880
+    },
+    "shadow:bld.cafe-corner": {
+      "drawCalls": 2,
+      "triangles": 5724
+    },
+    "shadow:bld.apartment-block-b": {
+      "drawCalls": 1,
+      "triangles": 17590
+    },
+    "shadow:bld.church": {
+      "drawCalls": 1,
+      "triangles": 2953
+    },
+    "shadow:other/sunset-grove/pal_picketWhite": {
+      "drawCalls": 1,
+      "triangles": 9240
+    },
+    "shadow:other/sunset-grove/pal_asphalt": {
+      "drawCalls": 1,
+      "triangles": 264
+    },
+    "shadow:veh.school-bus": {
+      "drawCalls": 1,
+      "triangles": 11120
+    },
+    "shadow:veh.military-apc": {
+      "drawCalls": 1,
+      "triangles": 744
+    },
+    "shadow:veh.military-truck": {
+      "drawCalls": 1,
+      "triangles": 7202
+    },
+    "shadow:veh.pickup-red": {
+      "drawCalls": 1,
+      "triangles": 1666
+    },
+    "shadow:bld.apartment-block-a": {
+      "drawCalls": 1,
+      "triangles": 15485
+    },
+    "shadow:bld.pharmacy": {
+      "drawCalls": 4,
+      "triangles": 5898
+    },
+    "shadow:prop.street-tree-blossom": {
+      "drawCalls": 1,
+      "triangles": 1516
+    },
+    "shadow:prop.street-lamp": {
+      "drawCalls": 1,
+      "triangles": 3804
+    },
+    "shadow:bld.supermarket": {
+      "drawCalls": 2,
+      "triangles": 4056
+    },
+    "shadow:prop.street-sign": {
+      "drawCalls": 1,
+      "triangles": 1752
+    },
+    "shadow:bld.storefront-row": {
+      "drawCalls": 1,
+      "triangles": 23184
+    },
+    "shadow:veh.suv-dark": {
+      "drawCalls": 1,
+      "triangles": 3264
+    },
+    "shadow:prop.privacy-fence": {
+      "drawCalls": 1,
+      "triangles": 9576
+    },
+    "shadow:prop.trash-bin": {
+      "drawCalls": 1,
+      "triangles": 5112
+    },
+    "shadow:veh.sedan-red": {
+      "drawCalls": 1,
+      "triangles": 1568
+    },
+    "shadow:prop.bench": {
+      "drawCalls": 1,
+      "triangles": 2184
+    },
+    "shadow:other/npcs/Mesh": {
+      "drawCalls": 0,
+      "triangles": 0
+    },
+    "shadow:decay.broken-glass": {
+      "drawCalls": 1,
+      "triangles": 2040
+    },
+    "shadow:veh.sedan-white": {
+      "drawCalls": 1,
+      "triangles": 1726
+    },
+    "shadow:prop.sandbag-pallet": {
+      "drawCalls": 1,
+      "triangles": 13014
+    },
+    "shadow:decay.blown-sandbags": {
+      "drawCalls": 1,
+      "triangles": 1536
+    },
+    "shadow:decay.dropped-belongings": {
+      "drawCalls": 1,
+      "triangles": 360
+    },
+    "shadow:other/Group/Mesh": {
+      "drawCalls": 0,
+      "triangles": 0
+    },
+    "shadow:other/sunset-grove/pal_grass001": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/sunset-grove/pal_grass002": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/sunset-grove/pal_grass003": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/sunset-grove/pal_grass004": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/sunset-grove/pal_grass005": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "shadow:other/sunset-grove/pal_woodWarm": {
+      "drawCalls": 1,
+      "triangles": 220
+    },
+    "shadow:bld.town-hall": {
+      "drawCalls": 1,
+      "triangles": 2709
+    },
+    "shadow:decay.fuel-truck-crater": {
+      "drawCalls": 1,
+      "triangles": 190
+    },
+    "shadow:veh.tank": {
+      "drawCalls": 1,
+      "triangles": 3082
+    },
+    "shadow:other/sunset-grove/pal_brick": {
+      "drawCalls": 1,
+      "triangles": 1496
+    },
+    "shadow:other/sunset-grove/pal_sidewalk": {
+      "drawCalls": 1,
+      "triangles": 1760
+    },
+    "shadow:other/sunset-grove/pal_uiDark": {
+      "drawCalls": 1,
+      "triangles": 380
+    },
+    "shadow:other/sunset-grove/pal_grass": {
+      "drawCalls": 1,
+      "triangles": 88
+    },
+    "view:other/sunset-grove/Mesh": {
+      "drawCalls": 15,
+      "triangles": 5244
     },
     "view:other/sunset-grove/pal_uiDark": {
       "drawCalls": 1,
       "triangles": 380
+    },
+    "view:other/sunset-grove/pal_sidewalk": {
+      "drawCalls": 1,
+      "triangles": 1760
+    },
+    "view:other/sunset-grove/pal_grass": {
+      "drawCalls": 1,
+      "triangles": 88
     },
     "view:other/sunset-grove/pal_denim": {
       "drawCalls": 1,
@@ -344,129 +3272,201 @@
     },
     "view:bld.apartment-block-b": {
       "drawCalls": 1,
-      "triangles": 3592
+      "triangles": 17590
     },
     "view:bld.town-hall": {
       "drawCalls": 1,
-      "triangles": 12688
+      "triangles": 2709
+    },
+    "view:bld.apartment-block-a": {
+      "drawCalls": 1,
+      "triangles": 15485
     },
     "view:bld.church": {
       "drawCalls": 1,
-      "triangles": 15335
+      "triangles": 2953
+    },
+    "view:other/sunset-grove/gun": {
+      "drawCalls": 2,
+      "triangles": 640
     },
     "view:bld.storefront-row": {
       "drawCalls": 1,
-      "triangles": 3892
+      "triangles": 23184
     },
-    "view:other/sunset-grove/pal_sidewalk": {
-      "drawCalls": 1,
-      "triangles": 1100
+    "view:other/Group/mesh_0": {
+      "drawCalls": 8,
+      "triangles": 10560
+    },
+    "view:other/Group/mesh_0_1": {
+      "drawCalls": 5,
+      "triangles": 4872
+    },
+    "view:other/Group/mesh_0_2": {
+      "drawCalls": 5,
+      "triangles": 5456
+    },
+    "view:other/Group/mesh_0_3": {
+      "drawCalls": 5,
+      "triangles": 7208
+    },
+    "view:bld.pharmacy": {
+      "drawCalls": 6,
+      "triangles": 6706
     },
     "view:other/sunset-grove/pal_picketWhite": {
       "drawCalls": 1,
       "triangles": 9240
     },
-    "view:veh.tank": {
-      "drawCalls": 1,
-      "triangles": 3082
+    "view:other/sunset-grove/static-body": {
+      "drawCalls": 2,
+      "triangles": 2264
     },
     "view:other/sunset-grove/pal_asphalt": {
       "drawCalls": 1,
       "triangles": 264
     },
+    "view:bld.cafe-corner": {
+      "drawCalls": 4,
+      "triangles": 6268
+    },
+    "view:prop.street-lamp": {
+      "drawCalls": 2,
+      "triangles": 3900
+    },
+    "view:veh.tank": {
+      "drawCalls": 1,
+      "triangles": 3082
+    },
+    "view:other/Group/mesh_1": {
+      "drawCalls": 3,
+      "triangles": 7014
+    },
+    "view:other/Group/mesh_1_1": {
+      "drawCalls": 3,
+      "triangles": 1848
+    },
+    "view:other/Group/mesh_1_2": {
+      "drawCalls": 3,
+      "triangles": 1924
+    },
+    "view:prop.street-tree-blossom": {
+      "drawCalls": 1,
+      "triangles": 1516
+    },
+    "view:bld.supermarket": {
+      "drawCalls": 2,
+      "triangles": 4056
+    },
     "view:veh.military-truck": {
       "drawCalls": 1,
       "triangles": 7202
     },
+    "view:prop.street-sign": {
+      "drawCalls": 1,
+      "triangles": 1752
+    },
     "view:veh.school-bus": {
       "drawCalls": 1,
-      "triangles": 5160
+      "triangles": 11120
+    },
+    "view:veh.suv-dark": {
+      "drawCalls": 1,
+      "triangles": 3264
     },
     "view:veh.military-apc": {
       "drawCalls": 1,
       "triangles": 744
     },
-    "view:prop.hmg-nest": {
+    "view:veh.sedan-white": {
       "drawCalls": 1,
-      "triangles": 192
+      "triangles": 1726
+    },
+    "view:prop.privacy-fence": {
+      "drawCalls": 1,
+      "triangles": 9576
+    },
+    "view:veh.sedan-red": {
+      "drawCalls": 1,
+      "triangles": 1568
+    },
+    "view:veh.pickup-red": {
+      "drawCalls": 1,
+      "triangles": 1666
+    },
+    "view:prop.trash-bin": {
+      "drawCalls": 1,
+      "triangles": 5112
+    },
+    "view:decay.fuel-truck-crater": {
+      "drawCalls": 1,
+      "triangles": 190
     },
     "view:prop.sandbag-pallet": {
       "drawCalls": 1,
-      "triangles": 7230
+      "triangles": 13014
     },
     "view:prop.bench": {
       "drawCalls": 1,
-      "triangles": 1092
-    },
-    "view:decay.blown-sandbags": {
-      "drawCalls": 1,
-      "triangles": 1344
-    },
-    "view:decay.dropped-belongings": {
-      "drawCalls": 1,
-      "triangles": 240
+      "triangles": 2184
     },
     "view:other/npcs/Mesh": {
       "drawCalls": 0,
       "triangles": 0
     },
-    "view:decay.broken-glass": {
+    "view:decay.dropped-belongings": {
       "drawCalls": 1,
-      "triangles": 120
+      "triangles": 360
     },
-    "view:other/sunset-grove/mesh_0": {
-      "drawCalls": 6,
-      "triangles": 24504
-    },
-    "view:other/sunset-grove/mesh_1": {
+    "view:decay.blown-sandbags": {
       "drawCalls": 1,
-      "triangles": 2997
-    },
-    "view:other/sunset-grove/mesh_1_1": {
-      "drawCalls": 1,
-      "triangles": 572
-    },
-    "view:other/sunset-grove/mesh_1_2": {
-      "drawCalls": 1,
-      "triangles": 270
-    },
-    "view:other/sunset-grove/mesh_1_3": {
-      "drawCalls": 1,
-      "triangles": 448
-    },
-    "view:other/sunset-grove/mesh_1_4": {
-      "drawCalls": 1,
-      "triangles": 1060
-    },
-    "view:other/sunset-grove/mesh_1_5": {
-      "drawCalls": 1,
-      "triangles": 36
-    },
-    "view:other/sunset-grove/mesh_0_1": {
-      "drawCalls": 5,
-      "triangles": 9644
-    },
-    "view:other/sunset-grove/mesh_0_2": {
-      "drawCalls": 5,
-      "triangles": 12260
-    },
-    "view:other/sunset-grove/mesh_0_3": {
-      "drawCalls": 5,
-      "triangles": 11892
-    },
-    "view:other/sunset-grove/mesh_0_4": {
-      "drawCalls": 1,
-      "triangles": 1024
-    },
-    "view:other/sunset-grove/mesh_0_5": {
-      "drawCalls": 1,
-      "triangles": 536
+      "triangles": 1536
     },
     "view:other/Group/Mesh": {
-      "drawCalls": 11,
-      "triangles": 7458
+      "drawCalls": 18,
+      "triangles": 8704
     },
-    "view:other/sunset-grove/pal_grass": {
+    "view:other/sunset-grove/perimeter-posts": {
+      "drawCalls": 4,
+      "triangles": 3696
+    },
+    "view:other/sunset-grove/mesh_0": {
+      "drawCalls": 3,
+      "triangles": 8184
+    },
+    "view:other/sunset-grove/mesh_0_1": {
+      "drawCalls": 3,
+      "triangles": 2648
+    },
+    "view:other/sunset-grove/mesh_0_2": {
+      "drawCalls": 3,
+      "triangles": 3464
+    },
+    "view:other/sunset-grove/mesh_0_3": {
+      "drawCalls": 3,
+      "triangles": 1624
+    },
+    "view:decay.broken-glass": {
+      "drawCalls": 1,
+      "triangles": 2040
+    },
+    "view:other/sunset-grove/pal_grass001": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "view:other/sunset-grove/pal_grass002": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "view:other/sunset-grove/pal_grass003": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "view:other/sunset-grove/pal_grass004": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "view:other/sunset-grove/pal_grass005": {
       "drawCalls": 1,
       "triangles": 44
     },
@@ -478,49 +3478,37 @@
       "drawCalls": 1,
       "triangles": 1496
     },
-    "view:other/Group/mesh_0": {
-      "drawCalls": 2,
-      "triangles": 800
-    },
-    "view:other/Group/mesh_1": {
-      "drawCalls": 2,
-      "triangles": 3003
-    },
-    "view:other/Group/mesh_1_1": {
-      "drawCalls": 2,
-      "triangles": 644
-    },
-    "view:other/Group/mesh_1_2": {
-      "drawCalls": 2,
-      "triangles": 838
-    },
     "view:other/Group/mesh_1_3": {
       "drawCalls": 2,
-      "triangles": 2452
+      "triangles": 896
     },
     "view:other/Group/mesh_1_4": {
       "drawCalls": 2,
-      "triangles": 2416
+      "triangles": 2120
     },
     "view:other/Group/mesh_1_5": {
+      "drawCalls": 2,
+      "triangles": 72
+    },
+    "view:other/Group/courier-tier-gear": {
       "drawCalls": 1,
-      "triangles": 36
+      "triangles": 872
     },
     "view:other/Group/courierSkin": {
       "drawCalls": 1,
       "triangles": 44620
     },
     "view:other/interactions/static-body": {
-      "drawCalls": 2,
-      "triangles": 3812
-    },
-    "view:other/sunset-grove/daisy_2": {
-      "drawCalls": 1,
-      "triangles": 144
+      "drawCalls": 3,
+      "triangles": 5916
     },
     "view:other/sunset-grove/daisy_1": {
       "drawCalls": 1,
       "triangles": 100
+    },
+    "view:other/sunset-grove/daisy_2": {
+      "drawCalls": 1,
+      "triangles": 144
     },
     "view:other/sunset-grove/daisy": {
       "drawCalls": 1,
@@ -530,9 +3518,65 @@
       "drawCalls": 1,
       "triangles": 176
     },
+    "view:other/Group/mesh_0_4": {
+      "drawCalls": 1,
+      "triangles": 1024
+    },
+    "view:other/Group/mesh_0_5": {
+      "drawCalls": 1,
+      "triangles": 536
+    },
+    "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 43
+    },
+    "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+      "drawCalls": 1,
+      "triangles": 208
+    },
+    "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+      "drawCalls": 1,
+      "triangles": 56
+    },
+    "view:other/crowd-accessories/acc.hair-bun:lod1": {
+      "drawCalls": 1,
+      "triangles": 88
+    },
+    "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 216
+    },
+    "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+      "drawCalls": 1,
+      "triangles": 96
+    },
+    "view:other/crowd-accessories/acc.hair-afro:lod1": {
+      "drawCalls": 1,
+      "triangles": 40
+    },
+    "view:other/crowd-accessories/acc.hat-bucket-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 216
+    },
+    "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+      "drawCalls": 1,
+      "triangles": 72
+    },
+    "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+      "drawCalls": 1,
+      "triangles": 24
+    },
+    "view:other/crowd-accessories/acc.hair-long-straight:lod1": {
+      "drawCalls": 1,
+      "triangles": 40
+    },
+    "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+      "drawCalls": 1,
+      "triangles": 176
+    },
     "view:other/figure-contact-shadows/figure-contact-shadows": {
       "drawCalls": 1,
-      "triangles": 90
+      "triangles": 138
     },
     "view:other/weather/Mesh": {
       "drawCalls": 2,
@@ -545,1531 +3589,1995 @@
     "shadow:other/Render Pipeline/Render Pipeline": {
       "drawCalls": 1,
       "triangles": 1
+    },
+    "view:other/infected-health-bars/Mesh": {
+      "drawCalls": 3,
+      "triangles": 30
     }
   },
   "followProfile": {
     "other": {
-      "drawCalls": 79,
-      "triangles": 154658
+      "drawCalls": 134,
+      "triangles": 156945
     },
     "shadows": {
-      "drawCalls": 107,
-      "triangles": 149676
+      "drawCalls": 172,
+      "triangles": 288322
     },
     "buildings": {
-      "drawCalls": 4,
-      "triangles": 35507
+      "drawCalls": 17,
+      "triangles": 78951
     },
     "props": {
-      "drawCalls": 10,
-      "triangles": 26406
+      "drawCalls": 20,
+      "triangles": 71552
     },
     "crowd": {
-      "drawCalls": 17,
-      "triangles": 103209
+      "drawCalls": 13,
+      "triangles": 106853
     }
   },
   "frames": [
-    6.799999999999272,
-    8.100000000002183,
-    6.19999999999709,
-    6.900000000001455,
-    6.700000000000728,
-    7.099999999998545,
-    6,
-    6.100000000002183,
-    7,
-    6.19999999999709,
-    5.600000000002183,
-    7.799999999999272,
-    5.900000000001455,
-    8.299999999999272,
-    6.599999999998545,
-    7,
-    7,
-    6.200000000000728,
-    6.700000000000728,
-    6.099999999998545,
-    6.799999999999272,
-    6.100000000002183,
-    5.399999999997817,
-    7.200000000000728,
-    5.600000000002183,
-    5.399999999997817,
-    6.900000000001455,
-    4.899999999997817,
-    5.900000000001455,
-    7.400000000001455,
-    5.19999999999709,
-    6.80000000000291,
-    5.599999999998545,
-    6,
-    7.299999999999272,
-    5.5,
-    5.5,
-    6.900000000001455,
-    5.299999999999272,
-    5.799999999999272,
-    7,
-    5.900000000001455,
-    7.099999999998545,
-    5.400000000001455,
-    5.299999999999272,
-    7,
-    6.099999999998545,
-    6.100000000002183,
-    10.799999999999272,
-    6.5,
-    9.799999999999272,
-    5.900000000001455,
+    9.60000000000582,
+    7.399999999994179,
+    8.10000000000582,
+    8.39999999999418,
+    8.200000000011642,
+    8.799999999988358,
     7.5,
-    6.200000000000728,
-    6.799999999999272,
-    8.899999999997817,
-    6.900000000001455,
-    5.200000000000728,
-    4.799999999999272,
-    8.099999999998545,
-    5.100000000002183,
-    5.599999999998545,
-    9.400000000001455,
-    7.200000000000728,
-    6.799999999999272,
-    5.299999999999272,
-    5.700000000000728,
-    6.799999999999272,
-    8.299999999999272,
-    8.5,
-    5.799999999999272,
-    7.200000000000728,
-    6.100000000002183,
-    7.799999999999272,
-    7.799999999999272,
-    5.900000000001455,
-    7.19999999999709,
-    4.900000000001455,
-    7.599999999998545,
-    6.5,
-    12.100000000002183,
-    16,
-    8.700000000000728,
-    5.799999999999272,
-    6.799999999999272,
-    7.400000000001455,
-    9.19999999999709,
-    15,
-    6.5,
-    5.30000000000291,
-    6.69999999999709,
-    5.5,
-    5.30000000000291,
-    6.19999999999709,
-    6.900000000001455,
-    6.400000000001455,
-    15,
-    15.399999999997817,
-    7.700000000000728,
-    5.700000000000728,
-    6.799999999999272,
-    13.799999999999272,
-    14.299999999999272,
-    6.5,
-    5.30000000000291,
-    5.19999999999709,
-    5.400000000001455,
-    5.200000000000728,
-    5,
-    5.5,
-    7.399999999997817,
-    5,
-    6.900000000001455,
-    4.700000000000728,
-    5.200000000000728,
-    6.599999999998545,
-    4.900000000001455,
-    4.599999999998545,
-    9.799999999999272,
-    6.400000000001455,
-    6.399999999997817,
-    5,
-    5.700000000000728,
-    7,
-    5.400000000001455,
-    4.299999999999272,
-    5.700000000000728,
-    5.5,
-    6,
-    6.399999999997817,
-    5.80000000000291,
-    6.399999999997817,
-    7.200000000000728,
-    4.900000000001455,
-    6.099999999998545,
-    6.200000000000728,
-    5.200000000000728,
-    6.19999999999709,
-    4.400000000001455,
-    6.099999999998545,
-    6.400000000001455,
-    4.299999999999272,
-    5.100000000002183,
-    6.899999999997817,
-    6.900000000001455,
-    4.099999999998545,
-    7.200000000000728,
-    4.700000000000728,
-    6.299999999999272,
-    5.400000000001455,
-    6.899999999997817,
-    5.299999999999272,
-    7.30000000000291,
-    4.69999999999709,
-    7.100000000002183,
-    4.099999999998545,
-    6.299999999999272,
-    5.5,
-    6.200000000000728,
-    4.299999999999272,
-    7.400000000001455,
-    3.7999999999992724,
-    5.100000000002183,
-    4.599999999998545,
-    6.299999999999272,
-    6.299999999999272,
-    7.900000000001455,
-    6.200000000000728,
-    4.599999999998545,
-    7.700000000000728,
-    4.599999999998545,
-    6.30000000000291,
-    10,
-    5.69999999999709,
-    6.700000000000728,
-    4.200000000000728,
-    5.200000000000728,
-    6.299999999999272,
-    5.099999999998545,
-    4.5,
-    6,
-    3.900000000001455,
-    5.799999999999272,
-    5.400000000001455,
-    6.399999999997817,
-    4.200000000000728,
-    7.799999999999272,
-    4.900000000001455,
-    6.5,
-    6.900000000001455,
-    5.5,
-    4,
-    7.299999999999272,
-    3.599999999998545,
-    5.799999999999272,
-    5.80000000000291,
-    6.19999999999709,
-    5.100000000002183,
-    7,
-    4.599999999998545,
-    5.400000000001455,
-    6.299999999999272,
-    6.200000000000728,
-    4.799999999999272,
-    7.400000000001455,
-    4.899999999997817,
-    6.299999999999272,
-    5.600000000002183,
-    6.099999999998545,
-    5.799999999999272,
-    5.5,
-    3.600000000002183,
-    5.599999999998545,
-    8.900000000001455,
-    5.399999999997817,
-    6,
-    4.900000000001455,
-    3.7999999999992724,
-    7.100000000002183,
-    3.599999999998545,
-    5.099999999998545,
-    4.600000000002183,
-    7,
-    4.799999999999272,
-    5.299999999999272,
-    8.600000000002183,
-    5.5,
-    8.19999999999709,
-    5.100000000002183,
-    5.299999999999272,
-    7.599999999998545,
-    5,
-    6.5,
-    4.700000000000728,
-    5,
-    5.5,
-    6.299999999999272,
-    5.400000000001455,
-    6.299999999999272,
-    5.100000000002183,
-    3.7999999999992724,
-    6.200000000000728,
-    6,
-    6.099999999998545,
-    6.599999999998545,
-    5.200000000000728,
-    3.7000000000007276,
-    5.099999999998545,
-    5.600000000002183,
-    5,
-    5.200000000000728,
-    17.899999999997817,
-    1.7000000000007276,
-    6.400000000001455,
-    3.6999999999970896,
-    4.900000000001455,
-    4.5,
-    7.200000000000728,
-    3.7000000000007276,
-    4.5,
-    6.5,
-    4.69999999999709,
-    3.900000000001455,
-    7.099999999998545,
-    3.8000000000029104,
-    5.19999999999709,
-    6,
-    6.600000000002183,
-    4.299999999999272,
-    6.299999999999272,
-    4.799999999999272,
-    4.400000000001455,
-    5.799999999999272,
-    3.400000000001455,
-    5.299999999999272,
-    4.799999999999272,
-    5.299999999999272,
-    4.80000000000291,
-    4.599999999998545,
-    5.799999999999272,
-    4.900000000001455,
-    4.700000000000728,
-    3.1999999999970896,
-    6.700000000000728,
-    4.700000000000728,
-    3,
-    5.5,
-    4.900000000001455,
-    4.799999999999272,
-    4.399999999997817,
-    6.100000000002183,
-    4.399999999997817,
-    2.900000000001455,
-    10,
-    1.0999999999985448,
-    4.700000000000728,
-    2.7999999999992724,
-    6.200000000000728,
-    4.900000000001455,
-    4.200000000000728,
-    5.5,
-    4.799999999999272,
-    5.299999999999272,
-    4.700000000000728,
-    5.799999999999272,
-    4.400000000001455,
-    4.899999999997817,
-    5.799999999999272,
-    3.900000000001455,
-    4.700000000000728,
-    6.099999999998545,
-    4.5,
-    3.7999999999992724,
-    5.400000000001455,
-    6.900000000001455,
-    5.799999999999272,
-    4.099999999998545,
-    6.200000000000728,
-    5.700000000000728,
-    3.7999999999992724,
-    6,
-    5.400000000001455,
-    5.899999999997817,
-    4.5,
-    5.100000000002183,
-    5.19999999999709,
-    6.5,
-    3.5,
-    5.600000000002183,
-    5,
-    6.099999999998545,
-    5.100000000002183,
-    4.69999999999709,
-    6.5,
-    4,
-    4.900000000001455,
-    11.299999999999272,
-    6,
-    7.299999999999272,
-    4,
-    5,
-    5.200000000000728,
-    4.700000000000728,
-    5.400000000001455,
-    9.899999999997817,
-    1,
-    5.799999999999272,
-    5.30000000000291,
-    6.19999999999709,
-    3.8000000000029104,
-    7,
-    4,
-    4.899999999997817,
-    7.600000000002183,
-    4.19999999999709,
-    6.100000000002183,
-    4.899999999997817,
-    5.30000000000291,
-    5.5,
-    3.7999999999992724,
-    6.799999999999272,
-    3.7000000000007276,
-    4.799999999999272,
-    7.099999999998545,
-    3.600000000002183,
-    4.799999999999272,
-    6,
-    5,
-    5.5,
-    6.299999999999272,
-    6,
-    3.7000000000007276,
-    6,
-    5.799999999999272,
-    4.200000000000728,
-    6.599999999998545,
-    3.3000000000029104,
-    4.5,
-    5.399999999997817,
-    6.299999999999272,
-    4.600000000002183,
-    4.899999999997817,
-    6,
-    5.30000000000291,
-    4.099999999998545,
-    5.900000000001455,
-    5.399999999997817,
-    4.200000000000728,
-    6.099999999998545,
-    6.200000000000728,
-    3.7000000000007276,
-    6.099999999998545,
-    5.600000000002183,
-    4.099999999998545,
-    5.100000000002183,
-    5.799999999999272,
-    5.200000000000728,
-    5,
-    5.899999999997817,
-    5.5,
-    3.100000000002183,
-    9.599999999998545,
-    2.400000000001455,
-    3.899999999997817,
-    6,
-    5.600000000002183,
-    3.399999999997817,
-    4.299999999999272,
-    6.30000000000291,
-    4.19999999999709,
-    5.80000000000291,
-    6.899999999997817,
-    3.5,
-    4.600000000002183,
-    5.599999999998545,
-    4,
-    5.599999999998545,
-    4.400000000001455,
-    6.099999999998545,
-    4.900000000001455,
-    4.400000000001455,
-    6.19999999999709,
-    5.900000000001455,
-    5.099999999998545,
-    6.80000000000291,
-    5.299999999999272,
-    3.7999999999992724,
-    6.700000000000728,
-    3.399999999997817,
-    6.400000000001455,
-    6.599999999998545,
-    4.600000000002183,
-    5.099999999998545,
-    6.5,
-    6,
-    4.400000000001455,
-    6.799999999999272,
-    4.5,
-    5.400000000001455,
-    5.5,
-    6.099999999998545,
-    3.7000000000007276,
-    6.5,
-    3.7000000000007276,
-    4.799999999999272,
-    4.5,
-    5.700000000000728,
-    4.799999999999272,
-    3.399999999997817,
+    10.900000000008731,
     7.80000000000291,
-    4.69999999999709,
-    4.700000000000728,
-    6,
-    4.5,
-    5.299999999999272,
-    4.600000000002183,
-    6.399999999997817,
-    4.400000000001455,
-    5.099999999998545,
-    7.400000000001455,
-    22.400000000001455,
-    13.899999999997817,
-    7.100000000002183,
-    6,
-    5,
-    5.399999999997817,
-    6.200000000000728,
-    4.799999999999272,
-    4.200000000000728,
-    6.099999999998545,
-    4.600000000002183,
-    4.5,
-    6.099999999998545,
-    4,
-    4.799999999999272,
-    4.5,
-    7.900000000001455,
-    5.799999999999272,
-    6.400000000001455,
-    3.899999999997817,
-    5.600000000002183,
-    3.899999999997817,
-    5.5,
-    5.30000000000291,
-    5,
-    6.19999999999709,
-    4.900000000001455,
-    4.799999999999272,
-    5.900000000001455,
-    4.799999999999272,
-    5.700000000000728,
-    6.099999999998545,
-    4.799999999999272,
-    4.5,
-    6.600000000002183,
-    4.099999999998545,
-    5.100000000002183,
-    5.599999999998545,
-    5.299999999999272,
-    3.100000000002183,
-    6.19999999999709,
-    5.400000000001455,
-    5.400000000001455,
-    3.099999999998545,
-    7,
-    3.5,
-    4.900000000001455,
-    4.599999999998545,
-    7.299999999999272,
-    4.200000000000728,
-    6.599999999998545,
-    4.700000000000728,
-    3.5,
-    5,
-    6.299999999999272,
-    5.600000000002183,
-    3.7000000000007276,
-    5.299999999999272,
-    4.399999999997817,
-    4.200000000000728,
-    4.799999999999272,
-    5.900000000001455,
-    5,
-    6,
-    5.700000000000728,
-    4.200000000000728,
-    4.399999999997817,
-    6.900000000001455,
-    4.700000000000728,
-    5.899999999997817,
-    5.200000000000728,
-    4.900000000001455,
-    5.099999999998545,
-    6.900000000001455,
-    4.799999999999272,
-    4.200000000000728,
-    7,
-    5.19999999999709,
-    4,
-    5.5,
-    5.700000000000728,
-    5.100000000002183,
-    4.299999999999272,
-    5.599999999998545,
-    5.299999999999272,
-    5.30000000000291,
-    5.899999999997817,
-    4.700000000000728,
-    4.700000000000728,
-    6.5,
-    5.799999999999272,
-    4.799999999999272,
-    7.700000000000728,
-    3.900000000001455,
-    4.799999999999272,
-    6.099999999998545,
-    4.799999999999272,
-    4.700000000000728,
-    7.200000000000728,
-    5.5,
-    6.099999999998545,
-    6.100000000002183,
-    6.099999999998545,
-    3.600000000002183,
-    6.299999999999272,
-    7.099999999998545,
-    4.100000000002183,
-    6.19999999999709,
-    5.5,
-    4.400000000001455,
-    6.299999999999272,
-    5.600000000002183,
-    4.69999999999709,
-    5.700000000000728,
-    5,
-    4.799999999999272,
-    6,
-    4.700000000000728,
-    5.600000000002183,
-    4.799999999999272,
-    6.099999999998545,
-    5,
-    4.5,
-    6.400000000001455,
-    4.200000000000728,
-    4.099999999998545,
-    6.099999999998545,
-    4.100000000002183,
-    4.899999999997817,
-    8.600000000002183,
-    4.399999999997817,
-    5.400000000001455,
-    5.599999999998545,
-    4.900000000001455,
-    5,
-    5.799999999999272,
-    4.600000000002183,
-    4.599999999998545,
-    4.400000000001455,
-    5.899999999997817,
-    4.700000000000728,
-    3.7999999999992724,
-    7.200000000000728,
-    4.299999999999272,
-    4.700000000000728,
-    5.900000000001455,
-    4.5,
-    5.099999999998545,
-    5,
-    5.900000000001455,
-    4.799999999999272,
-    5.5,
-    7.099999999998545,
-    4.700000000000728,
-    12.200000000000728,
-    0.5,
-    6,
-    4.200000000000728,
-    5.799999999999272,
-    3.5,
-    5.599999999998545,
-    4.700000000000728,
-    4.700000000000728,
-    4.099999999998545,
-    6,
-    5.400000000001455,
-    5.099999999998545,
-    5.299999999999272,
-    4.600000000002183,
-    5.200000000000728,
-    5,
-    5.599999999998545,
-    4.900000000001455,
-    4.599999999998545,
-    5.400000000001455,
-    4.5,
-    5,
-    6.399999999997817,
-    5,
-    4.200000000000728,
-    6.299999999999272,
-    4.600000000002183,
-    4.5,
-    4.099999999998545,
-    6.099999999998545,
-    5.30000000000291,
-    5,
-    5.19999999999709,
-    4.30000000000291,
-    4.899999999997817,
-    6.5,
-    3.900000000001455,
-    4.299999999999272,
-    4.799999999999272,
-    5,
-    6.700000000000728,
-    4.599999999998545,
-    6.30000000000291,
-    4.799999999999272,
-    5.700000000000728,
-    7.099999999998545,
-    3.599999999998545,
-    5.200000000000728,
-    6.799999999999272,
-    3.600000000002183,
-    4.700000000000728,
-    6.899999999997817,
-    3.900000000001455,
-    5.399999999997817,
-    3.400000000001455,
-    5.799999999999272,
-    5.200000000000728,
-    5.099999999998545,
-    6,
-    5,
-    4.700000000000728,
-    9,
-    1.4000000000014552,
-    5.099999999998545,
-    5.600000000002183,
-    5,
-    4.599999999998545,
-    4.299999999999272,
-    5.700000000000728,
-    4.400000000001455,
-    5.399999999997817,
-    6.100000000002183,
-    4.5,
-    4.399999999997817,
-    6.200000000000728,
-    5.299999999999272,
-    4.799999999999272,
-    6.100000000002183,
-    5,
-    5.799999999999272,
-    3.7000000000007276,
-    5.700000000000728,
-    5.5,
-    4.299999999999272,
-    5.799999999999272,
-    4.799999999999272,
-    4.400000000001455,
-    5.5,
-    4.700000000000728,
-    5.19999999999709,
-    4.400000000001455,
-    5.599999999998545,
-    4.400000000001455,
-    5.299999999999272,
-    6.299999999999272,
-    5,
-    5.30000000000291,
-    6.599999999998545,
-    5,
-    3.900000000001455,
-    5.099999999998545,
-    4.400000000001455,
-    4.899999999997817,
-    4.600000000002183,
-    5.399999999997817,
-    3.7000000000007276,
-    5.299999999999272,
-    6,
-    3.7999999999992724,
-    4.100000000002183,
-    6.700000000000728,
-    5.799999999999272,
-    4.700000000000728,
-    6.099999999998545,
-    5.099999999998545,
-    4.5,
-    3.5,
-    6.100000000002183,
-    5.200000000000728,
-    4.5,
-    6.399999999997817,
-    5,
-    5.100000000002183,
-    9.299999999999272,
-    1.0999999999985448,
-    4.400000000001455,
-    5.700000000000728,
-    3.899999999997817,
-    5.100000000002183,
-    3.399999999997817,
-    6.5,
-    2.7000000000007276,
-    4.599999999998545,
-    4.30000000000291,
-    5.899999999997817,
-    3.7999999999992724,
-    3.8000000000029104,
-    6.599999999998545,
-    4.099999999998545,
-    4.600000000002183,
-    4.299999999999272,
-    6.5,
-    4.700000000000728,
-    6.5,
-    7.099999999998545,
-    4.600000000002183,
-    5.599999999998545,
-    5.799999999999272,
-    4.5,
-    3.900000000001455,
-    6.599999999998545,
-    4.799999999999272,
-    5.100000000002183,
-    7.099999999998545,
-    3.7000000000007276,
-    4.5,
-    8.099999999998545,
-    4.700000000000728,
-    6.200000000000728,
-    5.5,
-    5.099999999998545,
-    5,
-    5.700000000000728,
-    4.5,
-    4.400000000001455,
-    4.200000000000728,
-    5.799999999999272,
-    4.399999999997817,
-    2.900000000001455,
-    6.200000000000728,
-    3.2000000000007276,
-    4,
-    4.5,
-    5.69999999999709,
-    4.400000000001455,
-    3.2999999999992724,
-    5.299999999999272,
-    5.700000000000728,
-    3.7999999999992724,
-    5.700000000000728,
-    5.600000000002183,
-    4.69999999999709,
-    4.900000000001455,
-    2.599999999998545,
-    6.80000000000291,
-    3.399999999997817,
-    5.200000000000728,
-    6.5,
-    4.200000000000728,
-    4.399999999997817,
     8.5,
-    2,
-    5,
-    3.600000000002183,
-    6.200000000000728,
-    3.399999999997817,
-    4.600000000002183,
-    6.19999999999709,
-    4,
-    4.700000000000728,
-    3,
-    8,
-    5.100000000002183,
-    5,
-    5.5,
-    4.5,
-    5.19999999999709,
-    5.5,
-    4.700000000000728,
-    4.700000000000728,
-    5.299999999999272,
-    5.799999999999272,
-    4.900000000001455,
-    4.599999999998545,
-    6.400000000001455,
-    3.7000000000007276,
-    4.299999999999272,
-    6.200000000000728,
-    4,
-    5,
-    4.599999999998545,
-    5.700000000000728,
-    4.5,
-    4,
-    6.5,
-    4.799999999999272,
-    5.5,
-    5.400000000001455,
-    5,
-    5.5,
-    4.599999999998545,
-    4.600000000002183,
-    4.399999999997817,
-    5.100000000002183,
-    6,
-    4.19999999999709,
-    4.400000000001455,
-    5.599999999998545,
-    4.600000000002183,
-    4.700000000000728,
-    5.19999999999709,
-    6.900000000001455,
-    5.099999999998545,
-    5.200000000000728,
-    6.200000000000728,
-    4.599999999998545,
-    4.600000000002183,
-    7.399999999997817,
-    4.100000000002183,
-    5.200000000000728,
-    5.69999999999709,
-    5.600000000002183,
-    3.5,
-    6.399999999997817,
-    3.5,
-    4.600000000002183,
-    4.299999999999272,
-    9.400000000001455,
-    2.2999999999992724,
-    5.399999999997817,
-    4.80000000000291,
-    4,
-    3.5,
-    6.69999999999709,
-    3.2000000000007276,
-    5.600000000002183,
-    4.69999999999709,
-    5.30000000000291,
-    5.299999999999272,
-    3.099999999998545,
-    6.299999999999272,
-    5.100000000002183,
-    3.5,
-    6,
-    3.7999999999992724,
-    4.5,
-    6.099999999998545,
-    5.600000000002183,
-    5.700000000000728,
-    5.19999999999709,
-    5.900000000001455,
-    5.299999999999272,
-    3.400000000001455,
-    6.299999999999272,
-    4.799999999999272,
-    3.400000000001455,
-    5.099999999998545,
-    5.900000000001455,
-    16.200000000000728,
-    5.5,
-    6.399999999997817,
-    6.400000000001455,
-    5.099999999998545,
-    3.5,
-    6.100000000002183,
-    4.799999999999272,
-    4.799999999999272,
-    5.400000000001455,
-    4.599999999998545,
-    5,
-    4.900000000001455,
-    5.69999999999709,
-    4.30000000000291,
-    5.399999999997817,
-    8.400000000001455,
-    4.399999999997817,
-    5.30000000000291,
-    6,
-    3.5,
-    5.599999999998545,
-    4.299999999999272,
-    4.700000000000728,
-    4.400000000001455,
-    5.899999999997817,
-    4.100000000002183,
-    4,
-    5,
-    6.899999999997817,
-    4.100000000002183,
-    4.799999999999272,
-    5.200000000000728,
-    5,
-    3.5,
-    6,
-    10.099999999998545,
-    1,
-    6.299999999999272,
-    4.400000000001455,
-    5.5,
-    3.399999999997817,
-    6.5,
-    4.80000000000291,
-    3.1999999999970896,
-    5.900000000001455,
-    3.900000000001455,
-    4.5,
-    6.299999999999272,
-    6.200000000000728,
-    6.299999999999272,
-    5.099999999998545,
-    6.799999999999272,
-    13.200000000000728,
-    8,
-    7.600000000002183,
-    5.899999999997817,
-    5.100000000002183,
-    5.599999999998545,
-    5.099999999998545,
-    4.900000000001455,
-    3.099999999998545,
-    6.600000000002183,
-    5.399999999997817,
-    5.600000000002183,
-    7.200000000000728,
-    5.399999999997817,
-    5.100000000002183,
-    6.799999999999272,
-    6,
-    5.399999999997817,
-    6.700000000000728,
-    4.600000000002183,
-    5.5,
-    4.299999999999272,
-    5,
-    5.399999999997817,
-    5.5,
-    5.200000000000728,
-    3.100000000002183,
-    7.399999999997817,
-    3.5,
-    5.200000000000728,
-    6,
-    4.900000000001455,
-    4.799999999999272,
-    6.099999999998545,
-    4.600000000002183,
-    4.19999999999709,
-    5,
-    6.400000000001455,
-    4.400000000001455,
-    4.599999999998545,
-    6,
-    4.599999999998545,
-    3.2000000000007276,
-    6.400000000001455,
-    4.700000000000728,
-    3.1999999999970896,
+    7.2999999999883585,
+    8.5,
+    7.7000000000116415,
+    8.099999999991269,
     7.30000000000291,
-    9.5,
-    2,
-    6.599999999998545,
-    3.900000000001455,
-    6,
-    4.599999999998545,
-    6.5,
-    4.700000000000728,
-    4.399999999997817,
-    6.5,
-    4.30000000000291,
-    5.5,
-    5.5,
-    4.899999999997817,
-    5.299999999999272,
-    5.600000000002183,
-    5.399999999997817,
-    4.30000000000291,
-    6.099999999998545,
-    4.400000000001455,
-    4.5,
-    6.19999999999709,
-    5.700000000000728,
-    5,
-    4.400000000001455,
-    5.799999999999272,
-    4.700000000000728,
-    3.099999999998545,
-    7.400000000001455,
-    4.700000000000728,
-    3.599999999998545,
-    5.599999999998545,
-    4,
-    5.5,
-    5.400000000001455,
-    4.700000000000728,
-    5.899999999997817,
-    3.100000000002183,
-    5.5,
-    5,
-    4.399999999997817,
-    4,
-    6.30000000000291,
-    4.399999999997817,
-    4.200000000000728,
-    6.5,
-    4.599999999998545,
-    4.100000000002183,
-    6.799999999999272,
-    6.299999999999272,
-    5.900000000001455,
-    5.399999999997817,
-    5.900000000001455,
-    4.900000000001455,
-    6,
-    5,
-    4.599999999998545,
-    3.099999999998545,
-    7,
-    3.400000000001455,
-    4.599999999998545,
-    6.200000000000728,
-    4.299999999999272,
-    4.600000000002183,
-    5.299999999999272,
-    6,
-    4.5,
-    4.900000000001455,
-    5.69999999999709,
-    4.900000000001455,
-    4.5,
-    10.099999999998545,
-    2.5,
-    4.200000000000728,
-    6.900000000001455,
-    5.399999999997817,
-    3.600000000002183,
-    7,
-    3.399999999997817,
-    5.100000000002183,
-    5.299999999999272,
-    5.099999999998545,
-    5.900000000001455,
-    3.400000000001455,
-    6.599999999998545,
-    5.299999999999272,
-    3.5,
-    7,
-    5,
-    3.5,
-    6.700000000000728,
-    4.299999999999272,
-    6,
-    4.700000000000728,
-    6.299999999999272,
-    4.900000000001455,
-    5.700000000000728,
-    5.099999999998545,
-    5.200000000000728,
-    2.899999999997817,
-    6.600000000002183,
-    3.2999999999992724,
-    4.5,
+    8.89999999999418,
+    7.7000000000116415,
+    7.899999999994179,
+    7.19999999999709,
+    9.30000000000291,
     7.5,
-    3.400000000001455,
-    4.599999999998545,
-    4.5,
-    5.799999999999272,
-    5.400000000001455,
-    5.099999999998545,
-    5.900000000001455,
-    4.299999999999272,
-    4.799999999999272,
-    6,
-    5.299999999999272,
-    5.200000000000728,
-    6.400000000001455,
-    5.899999999997817,
-    4.100000000002183,
-    6.700000000000728,
-    5.899999999997817,
-    4.5,
-    6.299999999999272,
-    5.100000000002183,
-    4.099999999998545,
-    5.700000000000728,
-    5.599999999998545,
-    4.5,
-    3.3000000000029104,
-    6.899999999997817,
-    5,
-    3.5,
-    6.100000000002183,
-    5.299999999999272,
-    3.5,
-    6.599999999998545,
-    5.299999999999272,
-    3.900000000001455,
-    4,
-    7.400000000001455,
-    6.399999999997817,
-    4.100000000002183,
-    6.299999999999272,
-    6.299999999999272,
-    3.7999999999992724,
-    11,
-    2.100000000002183,
-    5.5,
-    6.099999999998545,
-    5,
-    5.099999999998545,
-    5.80000000000291,
-    5.19999999999709,
-    4.200000000000728,
+    7.80000000000291,
+    6.899999999994179,
+    8.5,
+    7.900000000008731,
+    7.7999999999883585,
+    8.10000000000582,
     7,
-    6.100000000002183,
-    5.5,
-    7.399999999997817,
-    5.100000000002183,
-    6.399999999997817,
-    6.299999999999272,
-    5.80000000000291,
-    6.69999999999709,
-    4.80000000000291,
-    3.099999999998545,
-    7.299999999999272,
-    4.900000000001455,
-    3.899999999997817,
-    6.600000000002183,
-    4.200000000000728,
-    3.1999999999970896,
-    5.80000000000291,
-    5.899999999997817,
-    3.2999999999992724,
-    5.30000000000291,
-    6.899999999997817,
-    3.400000000001455,
-    4.899999999997817,
+    8,
+    7,
+    7.69999999999709,
+    6.600000000005821,
+    9.599999999991269,
+    7.400000000008731,
     7.5,
-    3.2000000000007276,
-    5.5,
-    5.299999999999272,
-    4.80000000000291,
-    5.399999999997817,
-    5.200000000000728,
-    5.200000000000728,
-    5.5,
-    4.5,
-    5.399999999997817,
-    5.200000000000728,
-    4.400000000001455,
-    8.399999999997817,
-    2.3000000000029104,
-    4.799999999999272,
-    3.099999999998545,
-    5.5,
-    5.200000000000728,
-    3.900000000001455,
-    6.69999999999709,
-    4.900000000001455,
-    5.299999999999272,
-    5.600000000002183,
-    6,
-    5.399999999997817,
-    6.299999999999272,
-    4.600000000002183,
-    4.5,
-    5.099999999998545,
-    5.299999999999272,
-    4.600000000002183,
-    3.5,
-    5.899999999997817,
-    5.200000000000728,
-    3.600000000002183,
-    5.899999999997817,
-    4.799999999999272,
-    4.30000000000291,
-    3.899999999997817,
-    6.799999999999272,
-    4.900000000001455,
-    4,
-    5.700000000000728,
-    4.700000000000728,
-    4.19999999999709,
-    3.100000000002183,
-    7.099999999998545,
-    4.799999999999272,
-    4.5,
-    5.400000000001455,
-    4.599999999998545,
-    4.700000000000728,
-    2.900000000001455,
-    6.899999999997817,
-    4.5,
-    4.700000000000728,
-    4.700000000000728,
-    5.099999999998545,
-    4.700000000000728,
-    4,
-    10.400000000001455,
-    0.8999999999978172,
     6.80000000000291,
-    4.299999999999272,
-    5.099999999998545,
-    4.600000000002183,
-    5.299999999999272,
-    4.599999999998545,
-    4.400000000001455,
     6.5,
-    4.099999999998545,
-    4.5,
-    4.5,
-    7.200000000000728,
-    5.299999999999272,
-    5.400000000001455,
-    5.899999999997817,
-    5.600000000002183,
-    5,
-    4.700000000000728,
-    4.799999999999272,
-    4.700000000000728,
-    5.099999999998545,
-    4.700000000000728,
-    4.599999999998545,
-    4.299999999999272,
-    6.200000000000728,
-    4.700000000000728,
-    4.299999999999272,
-    5,
-    5.100000000002183,
     5.5,
-    6,
-    4.5,
-    4.69999999999709,
-    4.900000000001455,
-    6.299999999999272,
-    5.100000000002183,
-    4.399999999997817,
-    6.100000000002183,
-    4.69999999999709,
-    5.600000000002183,
-    8.899999999997817,
-    1.5,
-    7,
-    3.3000000000029104,
-    4.899999999997817,
-    5,
-    4.900000000001455,
-    5.099999999998545,
-    5,
-    4.700000000000728,
-    5.099999999998545,
+    5.899999999994179,
+    6.899999999994179,
+    5.80000000000291,
+    5.100000000005821,
+    6.399999999994179,
     5.30000000000291,
-    4.69999999999709,
-    5.80000000000291,
-    4.69999999999709,
-    4.900000000001455,
-    5.700000000000728,
-    3.899999999997817,
-    5.100000000002183,
-    4.799999999999272,
-    5.900000000001455,
-    4.69999999999709,
-    5.80000000000291,
-    5.899999999997817,
-    5.200000000000728,
-    5.5,
-    5.099999999998545,
-    4.900000000001455,
+    5.30000000000291,
+    6.399999999994179,
+    5.100000000005821,
+    4.899999999994179,
+    8.30000000000291,
     6,
-    4.5,
-    4.900000000001455,
+    6.600000000005821,
+    5.599999999991269,
+    5.600000000005821,
+    7.19999999999709,
+    5.80000000000291,
+    5.80000000000291,
+    6.2999999999883585,
+    5.600000000005821,
     5,
-    4.69999999999709,
-    4.5,
-    4.700000000000728,
-    4.5,
-    5.700000000000728,
-    4.799999999999272,
-    4.200000000000728,
-    5.200000000000728,
-    4.599999999998545,
-    4.700000000000728,
-    4.5,
-    9,
-    2,
-    4.799999999999272,
-    5.600000000002183,
-    4.799999999999272,
-    4.700000000000728,
-    10.399999999997817,
-    5.200000000000728,
-    4.900000000001455,
-    5.69999999999709,
-    5.400000000001455,
-    4.900000000001455,
-    6.099999999998545,
-    5.599999999998545,
-    4.200000000000728,
     6,
-    5.200000000000728,
-    4.5,
-    6.099999999998545,
-    5.200000000000728,
-    3.600000000002183,
-    5.899999999997817,
-    4.900000000001455,
-    4.200000000000728,
+    4.899999999994179,
+    5.400000000008731,
+    5.899999999994179,
+    5.100000000005821,
+    5.30000000000291,
+    7.2999999999883585,
+    5.600000000005821,
+    6,
+    5.80000000000291,
     5.5,
-    6.69999999999709,
-    3.7000000000007276,
-    4.600000000002183,
-    5.899999999997817,
-    4.400000000001455,
-    6.399999999997817,
-    5.700000000000728,
-    5.600000000002183,
-    2.899999999997817,
-    7.100000000002183,
-    5.399999999997817,
-    3.5,
-    6.200000000000728,
-    5.200000000000728,
-    3.399999999997817,
-    3.900000000001455,
-    5.900000000001455,
-    3.899999999997817,
-    5.299999999999272,
-    4.900000000001455,
-    9.400000000001455,
-    0.6999999999970896,
+    5.69999999999709,
+    5.69999999999709,
+    4.900000000008731,
+    5.69999999999709,
+    4.69999999999709,
+    4.69999999999709,
+    4.600000000005821,
+    5.5,
+    4.399999999994179,
+    5.19999999999709,
+    5.30000000000291,
+    4.5,
+    4.5,
+    7.600000000005821,
+    4.80000000000291,
+    4.7999999999883585,
+    7.100000000005821,
+    5.19999999999709,
+    5.600000000005821,
+    6.80000000000291,
+    5.2999999999883585,
+    5.100000000005821,
+    8.10000000000582,
+    5.7999999999883585,
+    5.600000000005821,
+    6.899999999994179,
+    5.400000000008731,
+    6.19999999999709,
+    5.100000000005821,
+    5,
+    7.5,
+    4.69999999999709,
+    4.80000000000291,
+    5.599999999991269,
+    4.80000000000291,
+    4.80000000000291,
+    4.80000000000291,
+    5.69999999999709,
+    4.599999999991269,
+    5.100000000005821,
+    8.69999999999709,
+    1.6000000000058208,
+    5.899999999994179,
+    4.19999999999709,
+    4.5,
+    4.30000000000291,
+    4.600000000005821,
+    7.19999999999709,
+    5.100000000005821,
+    5.5,
+    7.5,
+    5.19999999999709,
+    5.80000000000291,
+    6,
+    4.69999999999709,
+    6.099999999991269,
+    5,
+    5,
+    4.5,
+    5.30000000000291,
+    4.5,
+    4.400000000008731,
+    5.399999999994179,
+    4.30000000000291,
+    4.80000000000291,
+    5.399999999994179,
+    4.899999999994179,
+    4.5,
+    4.80000000000291,
+    8.30000000000291,
+    4.5,
+    4.5,
+    5.19999999999709,
+    4.400000000008731,
+    6,
+    6.19999999999709,
+    4.80000000000291,
+    4.899999999994179,
+    5.600000000005821,
+    4.5,
+    5.099999999991269,
+    5.900000000008731,
+    4.899999999994179,
+    4.600000000005821,
+    4.69999999999709,
     6.30000000000291,
-    4.399999999997817,
-    4.900000000001455,
-    4,
-    5.399999999997817,
-    4.30000000000291,
-    3,
-    4.799999999999272,
-    6.899999999997817,
-    4.5,
-    2.900000000001455,
-    6.5,
-    2.900000000001455,
-    3.899999999997817,
-    4.900000000001455,
-    7.099999999998545,
-    3.400000000001455,
-    4.399999999997817,
-    4.900000000001455,
-    5.200000000000728,
-    3.899999999997817,
-    4.80000000000291,
-    6.399999999997817,
-    4.200000000000728,
-    4.700000000000728,
+    4.69999999999709,
     5,
-    5.299999999999272,
-    4.200000000000728,
-    4,
-    5.299999999999272,
-    4.599999999998545,
+    7.19999999999709,
+    4.600000000005821,
+    4.599999999991269,
     5.5,
-    4.700000000000728,
-    5.600000000002183,
-    4.899999999997817,
-    5.100000000002183,
+    4.30000000000291,
+    4.5,
+    5.399999999994179,
+    4.30000000000291,
+    4.5,
+    4.30000000000291,
+    5.600000000005821,
+    4.5,
+    4.5,
+    5.19999999999709,
+    4.30000000000291,
+    4.399999999994179,
+    4.5,
+    7.600000000005821,
+    5.5,
+    4.69999999999709,
+    8.69999999999709,
+    5.19999999999709,
+    5.30000000000291,
+    7.69999999999709,
+    6.5,
+    7.30000000000291,
+    5.30000000000291,
+    5.399999999994179,
     5.69999999999709,
+    4.80000000000291,
+    5.19999999999709,
+    5.7000000000116415,
+    4.5,
+    4.599999999991269,
+    5.5,
+    4.400000000008731,
+    4.19999999999709,
+    4.599999999991269,
+    7.100000000005821,
+    5.19999999999709,
+    5.400000000008731,
+    6,
+    5.399999999994179,
+    6.19999999999709,
+    8.400000000008731,
+    5.599999999991269,
+    9.5,
+    2.3000000000029104,
+    6.19999999999709,
+    5.600000000005821,
     5,
-    4.900000000001455,
-    5.900000000001455,
+    5,
+    6,
+    5.399999999994179,
+    5.80000000000291,
+    7.69999999999709,
+    5.100000000005821,
+    5.19999999999709,
+    5.899999999994179,
+    4.7000000000116415,
+    4.899999999994179,
+    5.600000000005821,
+    4.599999999991269,
+    4.80000000000291,
+    5.399999999994179,
+    4.900000000008731,
+    4.5,
+    5.69999999999709,
+    4.69999999999709,
+    4.5,
+    4.600000000005821,
+    6.099999999991269,
+    5.100000000005821,
+    5,
+    7.30000000000291,
+    4.599999999991269,
+    4.30000000000291,
+    5.69999999999709,
+    4.7000000000116415,
+    4.5,
+    5.19999999999709,
+    4.599999999991269,
+    4.5,
+    4.5,
+    5.30000000000291,
     4.69999999999709,
     4.80000000000291,
     5.5,
-    4.399999999997817,
-    4.600000000002183,
-    4.099999999998545,
-    5.099999999998545,
-    4.600000000002183,
-    4.599999999998545,
-    5.299999999999272,
-    4.400000000001455,
-    4.200000000000728,
-    4.5,
-    5,
-    4.899999999997817,
-    4.200000000000728,
-    15.900000000001455,
-    5.099999999998545,
-    6.299999999999272,
-    4.700000000000728,
-    4.299999999999272,
-    5.5,
-    4.5,
-    2.8000000000029104,
+    4.69999999999709,
+    4.900000000008731,
+    4.69999999999709,
     5.69999999999709,
-    5.100000000002183,
-    3.5,
-    3.899999999997817,
-    6,
-    2.8000000000029104,
-    5.399999999997817,
-    4.200000000000728,
-    6,
-    2.900000000001455,
-    5.599999999998545,
-    3.099999999998545,
-    5.30000000000291,
-    4.299999999999272,
-    5.200000000000728,
-    5.099999999998545,
-    4.700000000000728,
-    4.899999999997817,
-    3.3000000000029104,
-    5.299999999999272,
-    4.399999999997817,
+    5.400000000008731,
+    3.8999999999941792,
+    7.30000000000291,
+    4.599999999991269,
+    4.5,
     5.5,
-    5.700000000000728,
-    4.400000000001455,
-    4.799999999999272,
-    3.2000000000007276,
-    4.899999999997817,
+    4.400000000008731,
+    4.899999999994179,
+    5.5,
+    5.69999999999709,
+    4.7000000000116415,
+    4.69999999999709,
+    5.19999999999709,
+    4.80000000000291,
+    5,
+    5.69999999999709,
+    4.600000000005821,
+    4.69999999999709,
+    5.69999999999709,
+    5.100000000005821,
+    5,
+    5.399999999994179,
+    8.19999999999709,
+    5,
+    5.900000000008731,
+    5.099999999991269,
+    4.600000000005821,
+    5.5,
+    4.599999999991269,
+    4,
+    4.600000000005821,
+    5.399999999994179,
+    4.2000000000116415,
+    4.599999999991269,
+    5.69999999999709,
+    4.600000000005821,
+    4.899999999994179,
+    5.400000000008731,
+    6.5,
+    4.599999999991269,
+    4.7000000000116415,
+    7.399999999994179,
+    4.399999999994179,
+    4.30000000000291,
+    5.30000000000291,
+    4.19999999999709,
+    4.100000000005821,
+    5.5,
+    4.399999999994179,
+    5.69999999999709,
+    4.100000000005821,
+    5.399999999994179,
+    4.30000000000291,
+    4.100000000005821,
+    8.599999999991269,
+    1.7000000000116415,
+    4.399999999994179,
+    4.5,
+    5.19999999999709,
+    4.19999999999709,
+    4.5,
+    4.5,
+    6.80000000000291,
+    4.30000000000291,
+    4.399999999994179,
+    5.30000000000291,
+    4.600000000005821,
+    4.5,
+    6,
+    5.19999999999709,
+    4.69999999999709,
+    5.19999999999709,
+    4.7000000000116415,
+    4.099999999991269,
+    4.5,
+    5.600000000005821,
+    4,
+    4.30000000000291,
+    4.2999999999883585,
+    5.100000000005821,
+    4.5,
+    4.600000000005821,
+    7.2999999999883585,
+    4.7000000000116415,
+    4,
+    5.2999999999883585,
+    4.7000000000116415,
+    3.8999999999941792,
+    4.5,
+    5.399999999994179,
+    4.100000000005821,
+    4.600000000005821,
+    4.099999999991269,
+    6.100000000005821,
+    4.19999999999709,
+    4.100000000005821,
+    5.5,
+    5.19999999999709,
+    4.30000000000291,
+    5.5,
+    5,
+    4.69999999999709,
+    4.599999999991269,
+    6.100000000005821,
+    4.5,
+    4.100000000005821,
+    5.2999999999883585,
+    4.5,
     4.30000000000291,
     4.19999999999709,
-    5,
-    4.700000000000728,
-    4.900000000001455,
-    4.399999999997817,
-    5.100000000002183,
-    5.599999999998545,
-    5.200000000000728,
-    5.700000000000728,
-    4.200000000000728,
-    4.099999999998545,
-    4.099999999998545,
-    4.700000000000728,
-    4.400000000001455,
-    3.7000000000007276,
+    4.900000000008731,
+    4.30000000000291,
     4.19999999999709,
-    3.600000000002183,
-    4,
-    3.899999999997817,
-    4,
-    5.400000000001455,
-    5,
-    4.599999999998545,
-    6.100000000002183,
-    4.599999999998545,
-    4.400000000001455,
+    4.30000000000291,
+    5.19999999999709,
+    4.099999999991269,
+    4.400000000008731,
+    5.69999999999709,
+    4.100000000005821,
+    4.2999999999883585,
+    4.400000000008731,
+    5.69999999999709,
+    4.600000000005821,
+    4.19999999999709,
+    6.69999999999709,
+    4.19999999999709,
+    4.400000000008731,
+    4.19999999999709,
+    6.80000000000291,
+    4.899999999994179,
+    4.600000000005821,
+    5.69999999999709,
+    4.69999999999709,
+    4.69999999999709,
+    5.600000000005821,
+    4.30000000000291,
     4.5,
-    4.799999999999272,
-    4.299999999999272,
-    4.100000000002183,
-    5.899999999997817
+    4.399999999994179,
+    5.5,
+    4.30000000000291,
+    4.5,
+    5.30000000000291,
+    4.099999999991269,
+    4.69999999999709,
+    4.400000000008731,
+    7.399999999994179,
+    4.80000000000291,
+    5,
+    5.5,
+    4.5,
+    4.69999999999709,
+    5,
+    4.5,
+    4,
+    4.5,
+    5.400000000008731,
+    4.099999999991269,
+    4.5,
+    8.400000000008731,
+    2.7999999999883585,
+    4.7000000000116415,
+    4.899999999994179,
+    5.30000000000291,
+    4.5,
+    4.599999999991269,
+    6.2000000000116415,
+    4.399999999994179,
+    4.19999999999709,
+    5.19999999999709,
+    4.2000000000116415,
+    4.599999999991269,
+    4.30000000000291,
+    5.19999999999709,
+    4.19999999999709,
+    4.2000000000116415,
+    4.399999999994179,
+    5,
+    4.30000000000291,
+    4.399999999994179,
+    5.400000000008731,
+    4.599999999991269,
+    5.400000000008731,
+    4.7999999999883585,
+    5.5,
+    4.600000000005821,
+    4.399999999994179,
+    6.900000000008731,
+    4.30000000000291,
+    4.69999999999709,
+    5.399999999994179,
+    5.69999999999709,
+    5.100000000005821,
+    4.30000000000291,
+    5.599999999991269,
+    4.5,
+    4.400000000008731,
+    5.19999999999709,
+    4.30000000000291,
+    4.19999999999709,
+    4.19999999999709,
+    5.400000000008731,
+    5.099999999991269,
+    4.80000000000291,
+    5.19999999999709,
+    4.900000000008731,
+    4.7999999999883585,
+    7.30000000000291,
+    4.30000000000291,
+    5,
+    4.5,
+    5.5,
+    4.100000000005821,
+    4.399999999994179,
+    5.30000000000291,
+    4.399999999994179,
+    4.400000000008731,
+    4.099999999991269,
+    5.400000000008731,
+    4.2999999999883585,
+    4.30000000000291,
+    5,
+    4.600000000005821,
+    4.19999999999709,
+    5.69999999999709,
+    5.69999999999709,
+    5.400000000008731,
+    4.099999999991269,
+    11,
+    1.7000000000116415,
+    6.099999999991269,
+    4.400000000008731,
+    4.399999999994179,
+    5.19999999999709,
+    6.5,
+    5.19999999999709,
+    4.900000000008731,
+    5.5,
+    4.399999999994179,
+    4.69999999999709,
+    4.30000000000291,
+    5.400000000008731,
+    4.399999999994179,
+    4.5,
+    5.5,
+    4.399999999994179,
+    4.100000000005821,
+    4.5,
+    7,
+    4.600000000005821,
+    4,
+    5.2999999999883585,
+    4.2000000000116415,
+    5.399999999994179,
+    4.80000000000291,
+    5.899999999994179,
+    4.69999999999709,
+    4.80000000000291,
+    5.400000000008731,
+    4.599999999991269,
+    4.30000000000291,
+    6.19999999999709,
+    4.400000000008731,
+    4.5,
+    5.899999999994179,
+    4.80000000000291,
+    4.399999999994179,
+    4.400000000008731,
+    7.099999999991269,
+    4.5,
+    4.400000000008731,
+    5.399999999994179,
+    4.100000000005821,
+    4.2999999999883585,
+    4.80000000000291,
+    5,
+    4.400000000008731,
+    4.099999999991269,
+    5.30000000000291,
+    4,
+    4.69999999999709,
+    3.900000000008731,
+    5.399999999994179,
+    5.100000000005821,
+    5,
+    5.599999999991269,
+    4.600000000005821,
+    4.30000000000291,
+    4.5,
+    6.69999999999709,
+    4.399999999994179,
+    3.900000000008731,
+    5.2999999999883585,
+    3.900000000008731,
+    3.8999999999941792,
+    4.100000000005821,
+    5.30000000000291,
+    4,
+    4.099999999991269,
+    4,
+    5.5,
+    4.19999999999709,
+    4.400000000008731,
+    4.899999999994179,
+    4.30000000000291,
+    4.19999999999709,
+    3.900000000008731,
+    5.2999999999883585,
+    4.400000000008731,
+    4.19999999999709,
+    4.100000000005821,
+    6.899999999994179,
+    4.5,
+    4.100000000005821,
+    8.89999999999418,
+    3.8999999999941792,
+    5.100000000005821,
+    5.69999999999709,
+    5.100000000005821,
+    4.599999999991269,
+    5.7000000000116415,
+    4.399999999994179,
+    5,
+    4.600000000005821,
+    5.7999999999883585,
+    5.100000000005821,
+    4.899999999994179,
+    5.7000000000116415,
+    4.899999999994179,
+    5,
+    7.100000000005821,
+    4.69999999999709,
+    4.5,
+    5.30000000000291,
+    4.69999999999709,
+    4.599999999991269,
+    5.5,
+    4.400000000008731,
+    4.30000000000291,
+    4,
+    5.2999999999883585,
+    4,
+    4.900000000008731,
+    4.399999999994179,
+    5.19999999999709,
+    4,
+    4.30000000000291,
+    5.100000000005821,
+    4,
+    4.19999999999709,
+    4.100000000005821,
+    7,
+    4.099999999991269,
+    4.19999999999709,
+    5.100000000005821,
+    4.30000000000291,
+    4.19999999999709,
+    4.399999999994179,
+    5.900000000008731,
+    5.099999999991269,
+    4.5,
+    4.30000000000291,
+    5.600000000005821,
+    4.80000000000291,
+    4.19999999999709,
+    5.69999999999709,
+    4.399999999994179,
+    4.80000000000291,
+    8.80000000000291,
+    1.6999999999970896,
+    4.80000000000291,
+    4.69999999999709,
+    6.80000000000291,
+    5.100000000005821,
+    4.7999999999883585,
+    6.600000000005821,
+    4.899999999994179,
+    4.900000000008731,
+    5.399999999994179,
+    4.600000000005821,
+    4.099999999991269,
+    5.5,
+    5.100000000005821,
+    5.69999999999709,
+    4.19999999999709,
+    6.100000000005821,
+    4.399999999994179,
+    4.80000000000291,
+    5,
+    4.5,
+    4.400000000008731,
+    6.69999999999709,
+    4.19999999999709,
+    4.399999999994179,
+    4.100000000005821,
+    6,
+    4.30000000000291,
+    5,
+    6.399999999994179,
+    5.30000000000291,
+    4.69999999999709,
+    6.19999999999709,
+    5.2000000000116415,
+    4.099999999991269,
+    5.400000000008731,
+    4.099999999991269,
+    4.400000000008731,
+    4.099999999991269,
+    7.100000000005821,
+    5,
+    5,
+    6.69999999999709,
+    4.69999999999709,
+    4.69999999999709,
+    5.7000000000116415,
+    4.5,
+    4.899999999994179,
+    5.19999999999709,
+    7.100000000005821,
+    5.599999999991269,
+    6,
+    5.2000000000116415,
+    5,
+    6.19999999999709,
+    4.69999999999709,
+    4.69999999999709,
+    5.100000000005821,
+    5.69999999999709,
+    5.30000000000291,
+    5,
+    7.19999999999709,
+    4.80000000000291,
+    4.80000000000291,
+    5.899999999994179,
+    5,
+    4.69999999999709,
+    5.900000000008731,
+    4.5,
+    4.2999999999883585,
+    5.5,
+    4.600000000005821,
+    5.69999999999709,
+    5.400000000008731,
+    5.7999999999883585,
+    4.900000000008731,
+    4.899999999994179,
+    6,
+    5.5,
+    5.19999999999709,
+    6.900000000008731,
+    4.69999999999709,
+    5.100000000005821,
+    6,
+    5.19999999999709,
+    5.5,
+    5.099999999991269,
+    5,
+    4.80000000000291,
+    5.600000000005821,
+    4.899999999994179,
+    4.600000000005821,
+    5.899999999994179,
+    4.69999999999709,
+    4.80000000000291,
+    5.400000000008731,
+    5,
+    4.69999999999709,
+    4.899999999994179,
+    7.5,
+    4.600000000005821,
+    4.599999999991269,
+    8.80000000000291,
+    1.9000000000087311,
+    7,
+    5.19999999999709,
+    5.19999999999709,
+    4.5,
+    5.69999999999709,
+    4.69999999999709,
+    4.80000000000291,
+    5.5,
+    5.100000000005821,
+    4.599999999991269,
+    6,
+    4.80000000000291,
+    5.100000000005821,
+    4.899999999994179,
+    8,
+    4.69999999999709,
+    5.600000000005821,
+    4.5,
+    4.69999999999709,
+    4.400000000008731,
+    6.099999999991269,
+    4.69999999999709,
+    4.7000000000116415,
+    5.69999999999709,
+    4.599999999991269,
+    4.600000000005821,
+    4.899999999994179,
+    5.5,
+    4.900000000008731,
+    4.80000000000291,
+    5.69999999999709,
+    4.599999999991269,
+    4.600000000005821,
+    8.30000000000291,
+    4.899999999994179,
+    5.30000000000291,
+    5.399999999994179,
+    4.600000000005821,
+    4.5,
+    5.399999999994179,
+    4.900000000008731,
+    5.19999999999709,
+    5,
+    5.80000000000291,
+    4.899999999994179,
+    4.900000000008731,
+    5.5,
+    4.5,
+    4.69999999999709,
+    5.80000000000291,
+    5.099999999991269,
+    4.80000000000291,
+    7.80000000000291,
+    5,
+    4.899999999994179,
+    6,
+    5.19999999999709,
+    5.2000000000116415,
+    6,
+    5.19999999999709,
+    4.899999999994179,
+    6.100000000005821,
+    4.80000000000291,
+    4.7999999999883585,
+    7.7000000000116415,
+    5.19999999999709,
+    5.19999999999709,
+    6.5,
+    4.899999999994179,
+    4.600000000005821,
+    7.80000000000291,
+    4.80000000000291,
+    4.899999999994179,
+    5.30000000000291,
+    5,
+    4.399999999994179,
+    5.400000000008731,
+    4.599999999991269,
+    4.900000000008731,
+    4.5,
+    5.5,
+    4.5,
+    4.69999999999709,
+    5.599999999991269,
+    4.30000000000291,
+    4.69999999999709,
+    5.30000000000291,
+    6.19999999999709,
+    4.900000000008731,
+    4.599999999991269,
+    7.7000000000116415,
+    4.7999999999883585,
+    5.100000000005821,
+    5.899999999994179,
+    5.5,
+    5.7000000000116415,
+    5.899999999994179,
+    5,
+    5,
+    5.600000000005821,
+    5,
+    5.19999999999709,
+    5.899999999994179,
+    4.69999999999709,
+    5.2000000000116415,
+    5.2999999999883585,
+    5,
+    5.100000000005821,
+    4.899999999994179,
+    7.5,
+    4.7000000000116415,
+    6,
+    4.899999999994179,
+    5,
+    4.399999999994179,
+    5.5,
+    5,
+    4.5,
+    8.700000000011642,
+    2.5,
+    5.100000000005821,
+    6.099999999976717,
+    4.7000000000116415,
+    4.7999999999883585,
+    5.7000000000116415,
+    5.100000000005821,
+    4.7999999999883585,
+    8.10000000000582,
+    5.100000000005821,
+    5.199999999982538,
+    6.2000000000116415,
+    4.899999999994179,
+    4.600000000005821,
+    6,
+    4.600000000005821,
+    4.899999999994179,
+    4.600000000005821,
+    5.699999999982538,
+    4.600000000005821,
+    4.800000000017462,
+    6.2999999999883585,
+    5.2999999999883585,
+    4.5,
+    5.800000000017462,
+    5,
+    5.100000000005821,
+    7.2999999999883585,
+    5.100000000005821,
+    5,
+    5.399999999994179,
+    4.5,
+    5,
+    5.600000000005821,
+    5,
+    4.600000000005821,
+    5.099999999976717,
+    5.900000000023283,
+    4.899999999994179,
+    6.399999999994179,
+    6.2000000000116415,
+    5.5,
+    5.099999999976717,
+    6.600000000005821,
+    5.2000000000116415,
+    5,
+    7.600000000005821,
+    4.7999999999883585,
+    5.7999999999883585,
+    5,
+    5.2000000000116415,
+    5,
+    5.399999999994179,
+    5,
+    4.7000000000116415,
+    5.899999999994179,
+    4.7999999999883585,
+    5,
+    6.100000000005821,
+    5.100000000005821,
+    4.600000000005821,
+    6,
+    4.899999999994179,
+    4.5,
+    7.2000000000116415,
+    4.2999999999883585,
+    4.2999999999883585,
+    4.300000000017462,
+    6.5,
+    5.199999999982538,
+    5,
+    6.100000000005821,
+    4.899999999994179,
+    4.7000000000116415,
+    5.399999999994179,
+    4.7000000000116415,
+    4.699999999982538,
+    5.5,
+    4.2000000000116415,
+    4.5,
+    4.399999999994179,
+    6,
+    4.899999999994179,
+    4.300000000017462,
+    8.199999999982538,
+    4.400000000023283,
+    4.199999999982538,
+    5.2000000000116415,
+    4.2999999999883585,
+    5,
+    5.2000000000116415,
+    5.699999999982538,
+    4.300000000017462,
+    4.600000000005821,
+    5.5,
+    4.5,
+    4.5,
+    5.899999999994179,
+    4.7999999999883585,
+    5.899999999994179,
+    4.7000000000116415,
+    5.899999999994179,
+    4.800000000017462,
+    4.5,
+    7.599999999976717,
+    4.2000000000116415,
+    4.399999999994179,
+    5.600000000005821,
+    4.399999999994179,
+    4.7000000000116415,
+    5.5,
+    4.699999999982538,
+    4.600000000005821,
+    4.600000000005821,
+    5.899999999994179,
+    4.300000000017462,
+    4.2999999999883585,
+    5.5,
+    4.5,
+    4.399999999994179,
+    4.7000000000116415,
+    5.600000000005821,
+    4.599999999976717,
+    4.7000000000116415,
+    7.899999999994179,
+    4.899999999994179,
+    4.5,
+    5.2000000000116415,
+    4.399999999994179,
+    4.399999999994179,
+    6.7000000000116415,
+    5,
+    4.600000000005821,
+    5.600000000005821,
+    4.2999999999883585,
+    4.5,
+    4.5,
+    5.399999999994179,
+    4.300000000017462,
+    4.399999999994179,
+    4.199999999982538,
+    8.800000000017462,
+    2.1000000000058208,
+    8.799999999988358,
+    4.5,
+    4.100000000005821,
+    4.5,
+    5.2999999999883585,
+    4.7000000000116415,
+    4.600000000005821,
+    5.399999999994179,
+    4.600000000005821,
+    4.2999999999883585,
+    4.100000000005821,
+    5.2999999999883585,
+    4,
+    4.2000000000116415,
+    5.2999999999883585,
+    4.2000000000116415,
+    4.199999999982538,
+    5.300000000017462,
+    6.2999999999883585,
+    4.7000000000116415,
+    4.600000000005821,
+    7.2999999999883585,
+    4.2999999999883585,
+    4,
+    5.2000000000116415,
+    4.100000000005821,
+    4.2999999999883585,
+    4.7000000000116415,
+    5.7999999999883585,
+    4.5,
+    4.399999999994179,
+    4.2000000000116415,
+    5.2999999999883585,
+    3.900000000023283,
+    4.5,
+    5.399999999994179,
+    4.600000000005821,
+    4.599999999976717,
+    4.7000000000116415,
+    5.2000000000116415,
+    4.2999999999883585,
+    4.2999999999883585,
+    7.2000000000116415,
+    4,
+    4.2999999999883585,
+    3.900000000023283,
+    5,
+    4,
+    4.2999999999883585,
+    6.899999999994179,
+    4.800000000017462,
+    4.899999999994179,
+    4,
+    5.899999999994179,
+    4.5,
+    4.399999999994179,
+    5,
+    4.399999999994179,
+    4.300000000017462,
+    4.5,
+    4.7999999999883585,
+    4.300000000017462,
+    4,
+    6.899999999994179,
+    4.199999999982538,
+    4.2000000000116415,
+    4.2000000000116415,
+    5.2999999999883585,
+    4.2999999999883585,
+    4.600000000005821,
+    5,
+    4.399999999994179,
+    4.100000000005821,
+    4.5,
+    5.2000000000116415,
+    4.199999999982538,
+    4.100000000005821,
+    4,
+    5.100000000005821,
+    4,
+    4.100000000005821,
+    5.399999999994179,
+    6,
+    4.5,
+    4.600000000005821,
+    6.899999999994179,
+    4.2999999999883585,
+    4.400000000023283,
+    6.099999999976717,
+    5.100000000005821,
+    4.899999999994179,
+    5.2000000000116415,
+    4.5,
+    4.5,
+    5,
+    5.7999999999883585,
+    5.300000000017462,
+    4.5,
+    5.600000000005821,
+    4.199999999982538,
+    4.7000000000116415,
+    5.399999999994179,
+    4.7999999999883585,
+    4.5,
+    5.100000000005821,
+    7.2000000000116415,
+    5,
+    4.7999999999883585,
+    5.399999999994179,
+    4.2000000000116415,
+    4.600000000005821,
+    5.100000000005821,
+    4.5,
+    4.399999999994179,
+    5.899999999994179,
+    5.5,
+    4.399999999994179,
+    4.7000000000116415,
+    5.199999999982538,
+    4.5,
+    4.300000000017462,
+    5.100000000005821,
+    4.099999999976717,
+    4.5,
+    4,
+    7.5,
+    4.300000000017462,
+    4.600000000005821,
+    5.399999999994179,
+    4.600000000005821,
+    4.5,
+    4.599999999976717,
+    5.400000000023283,
+    4.699999999982538,
+    4.399999999994179,
+    5.600000000005821,
+    4.5,
+    4.7000000000116415,
+    4.5,
+    5.600000000005821,
+    4.399999999994179,
+    4.699999999982538,
+    4.900000000023283,
+    4.5,
+    4.199999999982538,
+    4.2000000000116415,
+    7.699999999982538,
+    5.2000000000116415,
+    4.399999999994179,
+    5.300000000017462,
+    4.199999999982538,
+    4.399999999994179,
+    8.400000000023283,
+    1.3999999999941792,
+    4.2999999999883585,
+    4.399999999994179,
+    5,
+    4.400000000023283,
+    4.099999999976717,
+    5.600000000005821,
+    4.800000000017462,
+    5.599999999976717,
+    4.900000000023283,
+    5.699999999982538,
+    4.800000000017462,
+    5.099999999976717,
+    7.300000000017462,
+    4.399999999994179,
+    4.100000000005821,
+    5.7999999999883585,
+    4.2000000000116415,
+    4.399999999994179,
+    3.7999999999883585,
+    6,
+    4,
+    4.5,
+    5.300000000017462,
+    4.5,
+    4.2999999999883585,
+    4.5,
+    6.399999999994179,
+    4.800000000017462,
+    4.899999999994179,
+    5.600000000005821,
+    4.399999999994179,
+    4.2000000000116415,
+    7,
+    4.199999999982538,
+    4.300000000017462,
+    4.099999999976717,
+    5.5,
+    4.2000000000116415,
+    4.5,
+    5.2000000000116415,
+    4.399999999994179,
+    4.100000000005821,
+    4.2999999999883585,
+    4.899999999994179,
+    4.300000000017462,
+    4,
+    4.199999999982538,
+    5,
+    4.100000000005821,
+    4,
+    4.2000000000116415,
+    5.199999999982538,
+    4,
+    4.100000000005821,
+    7.2999999999883585,
+    4.100000000005821,
+    4.300000000017462,
+    3.8999999999941792,
+    5.699999999982538,
+    5.600000000005821,
+    4.899999999994179,
+    5.400000000023283,
+    4.5,
+    4.199999999982538,
+    5.399999999994179,
+    4.400000000023283,
+    4.099999999976717,
+    3.900000000023283,
+    5.5,
+    4,
+    4.199999999982538,
+    3.8000000000174623,
+    5.2999999999883585,
+    4,
+    4.100000000005821,
+    4.2999999999883585,
+    7.2000000000116415,
+    4.100000000005821,
+    4.199999999982538,
+    4.800000000017462,
+    4.2999999999883585,
+    4,
+    4.2000000000116415,
+    6,
+    4.599999999976717,
+    4.400000000023283,
+    6.199999999982538,
+    4.399999999994179,
+    4.400000000023283,
+    4.399999999994179,
+    5.199999999982538,
+    4.100000000005821,
+    4.2000000000116415,
+    6.399999999994179,
+    4.7999999999883585,
+    4.7000000000116415,
+    4,
+    7.2000000000116415,
+    4.199999999982538,
+    4.800000000017462,
+    5.199999999982538,
+    4.600000000005821,
+    4.100000000005821,
+    5.699999999982538,
+    5.100000000005821,
+    5,
+    4.2000000000116415,
+    5.199999999982538,
+    4,
+    4.400000000023283,
+    4.7999999999883585,
+    4.2999999999883585,
+    4.400000000023283,
+    4.2999999999883585,
+    5.7000000000116415,
+    4.7999999999883585,
+    4.399999999994179,
+    7.100000000005821,
+    4.2999999999883585,
+    4.7000000000116415,
+    4.100000000005821,
+    5.199999999982538,
+    4,
+    4.5,
+    4.900000000023283,
+    5,
+    4.199999999982538,
+    4.2000000000116415,
+    5.100000000005821,
+    4.399999999994179,
+    4.2999999999883585,
+    4.399999999994179,
+    4.900000000023283,
+    4.2999999999883585,
+    4.100000000005821,
+    5.199999999982538,
+    4,
+    4.600000000005821,
+    4.300000000017462,
+    7,
+    4,
+    4.2999999999883585,
+    5,
+    4.2000000000116415,
+    3.8999999999941792,
+    4.2999999999883585,
+    4.800000000017462,
+    4.599999999976717,
+    4.300000000017462,
+    4.399999999994179,
+    5.100000000005821,
+    4.899999999994179,
+    4.899999999994179,
+    6.399999999994179,
+    4.7000000000116415,
+    4.7999999999883585,
+    4.400000000023283,
+    4.899999999994179,
+    4.5,
+    5.5,
+    7.899999999994179,
+    4.399999999994179,
+    4.800000000017462,
+    5.899999999994179,
+    4.899999999994179,
+    4.600000000005821,
+    5.600000000005821,
+    3.7999999999883585,
+    4.2999999999883585,
+    4,
+    5.2000000000116415,
+    3.7999999999883585,
+    4.2000000000116415,
+    3.8999999999941792,
+    5.100000000005821,
+    4.100000000005821,
+    4.100000000005821,
+    5,
+    4.099999999976717,
+    4.100000000005821,
+    4.600000000005821,
+    8,
+    4.5,
+    4.2999999999883585,
+    5.100000000005821,
+    4,
+    4,
+    4,
+    5.2000000000116415,
+    3.8999999999941792,
+    4.2000000000116415,
+    4.099999999976717,
+    6.800000000017462,
+    4.899999999994179,
+    4.399999999994179,
+    5.600000000005821,
+    4.100000000005821,
+    4.2999999999883585,
+    4.100000000005821,
+    5.399999999994179,
+    4.2000000000116415,
+    4.2999999999883585,
+    9.700000000011642,
+    4.699999999982538,
+    4.2000000000116415,
+    5.399999999994179,
+    4.100000000005821,
+    4.399999999994179,
+    4,
+    5.5,
+    3.7000000000116415,
+    4.2999999999883585,
+    5.100000000005821,
+    4.399999999994179,
+    4.100000000005821,
+    3.7999999999883585,
+    5.2000000000116415,
+    4,
+    4.2000000000116415,
+    3.8999999999941792,
+    5.2999999999883585,
+    4.800000000017462,
+    5.199999999982538,
+    4.399999999994179,
+    7.400000000023283,
+    4.099999999976717,
+    5.100000000005821,
+    3.8999999999941792,
+    4.2000000000116415,
+    4,
+    5.100000000005821,
+    4,
+    4.199999999982538,
+    4,
+    5.300000000017462,
+    4,
+    4.2999999999883585,
+    4.399999999994179,
+    5.300000000017462,
+    3.6999999999825377,
+    4.300000000017462,
+    4.2999999999883585,
+    5.100000000005821,
+    4.2999999999883585,
+    4.100000000005821,
+    7.7000000000116415,
+    3.8999999999941792,
+    4.399999999994179,
+    3.8999999999941792,
+    5.300000000017462,
+    4.899999999994179,
+    4.899999999994179,
+    5.5,
+    4.300000000017462,
+    4,
+    5.2999999999883585,
+    5.5,
+    4.7999999999883585,
+    4.300000000017462,
+    5.2999999999883585,
+    4.100000000005821,
+    4,
+    4.2000000000116415,
+    5.2999999999883585,
+    4.2999999999883585,
+    4.100000000005821,
+    7.899999999994179,
+    4.400000000023283,
+    4.199999999982538,
+    5.300000000017462,
+    4.2999999999883585,
+    4.100000000005821,
+    4.2999999999883585,
+    4.800000000017462,
+    4.2999999999883585,
+    4,
+    4.5,
+    5.100000000005821,
+    4.399999999994179,
+    4,
+    4.2000000000116415,
+    5.099999999976717,
+    3.900000000023283,
+    4.5,
+    4.099999999976717,
+    5.400000000023283,
+    4.099999999976717,
+    5.5,
+    6.2000000000116415,
+    4.7000000000116415,
+    4.399999999994179,
+    5.2999999999883585,
+    4.100000000005821,
+    4.399999999994179,
+    4.100000000005821,
+    5.2999999999883585,
+    4,
+    4.5,
+    3.900000000023283,
+    5.599999999976717,
+    4.600000000005821,
+    4.300000000017462,
+    5,
+    4,
+    4.199999999982538,
+    4,
+    5.2000000000116415,
+    3.8999999999941792,
+    4.5,
+    4.7999999999883585,
+    6.5,
+    4.2000000000116415,
+    4.600000000005821,
+    5,
+    4.399999999994179,
+    3.8999999999941792,
+    4.2000000000116415,
+    4.7999999999883585,
+    4.100000000005821,
+    4,
+    4.100000000005821,
+    5.699999999982538,
+    4,
+    4.300000000017462,
+    5.199999999982538,
+    4.7000000000116415,
+    4.5,
+    4.600000000005821,
+    5.5,
+    4.5,
+    4.2999999999883585,
+    6.800000000017462,
+    4.199999999982538,
+    4.300000000017462,
+    3.8999999999941792,
+    5.2999999999883585,
+    4.399999999994179,
+    4.400000000023283,
+    5.5,
+    4.599999999976717,
+    4.800000000017462,
+    4.2999999999883585,
+    4.899999999994179,
+    3.900000000023283,
+    4.199999999982538,
+    3.8000000000174623,
+    5.699999999982538,
+    4.100000000005821,
+    4.100000000005821,
+    4.7999999999883585,
+    4.100000000005821,
+    3.7999999999883585,
+    4.400000000023283,
+    5.899999999994179,
+    4.600000000005821,
+    5.399999999994179,
+    4.899999999994179,
+    5.7000000000116415,
+    4.699999999982538
+  ],
+  "simSteps": [
+    7.199999809265137,
+    1.1999998092651367,
+    0.8999996185302734,
+    1,
+    0.9000005722045898,
+    1,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.5,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6000003814697266,
+    0.5,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6000003814697266,
+    0.6999998092651367,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.5999994277954102,
+    1.5,
+    0.6999998092651367,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.7000007629394531,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6000003814697266,
+    0.8000001907348633,
+    0.6999998092651367,
+    1.3000001907348633,
+    1.3999996185302734,
+    1.0999994277954102,
+    1.1999998092651367,
+    1.1000003814697266,
+    1.0999994277954102,
+    0.8999996185302734,
+    0.8999996185302734,
+    1,
+    1,
+    1,
+    0.9000005722045898,
+    1,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.8000001907348633,
+    1,
+    0.6999998092651367,
+    1,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.6999998092651367,
+    1,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.7000007629394531,
+    0.8999996185302734,
+    0.8999996185302734,
+    1.1000003814697266,
+    1,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.8000001907348633,
+    1,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.7000007629394531,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.7999992370605469,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.7000007629394531,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.7000007629394531,
+    0.7000007629394531,
+    1.5,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    1,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.7999992370605469,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    1.7000007629394531,
+    1.1999998092651367,
+    1,
+    1,
+    0.9000005722045898,
+    0.9000005722045898,
+    1,
+    0.7999992370605469,
+    1,
+    1,
+    1.1000003814697266,
+    1,
+    1,
+    0.7999992370605469,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    1,
+    1.0999994277954102,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.9000005722045898,
+    0.7999992370605469,
+    0.8000001907348633,
+    1.0999994277954102,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8000001907348633,
+    1.0999994277954102,
+    1,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.6999998092651367,
+    1,
+    0.8000001907348633,
+    0.7000007629394531,
+    0.8000001907348633,
+    1,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.7000007629394531,
+    0.8000001907348633,
+    0.8000001907348633,
+    1.2000007629394531,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8999996185302734,
+    1.1999998092651367,
+    0.9000005722045898,
+    1,
+    1,
+    0.8000001907348633,
+    1,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8999996185302734,
+    1,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.7000007629394531,
+    0.7999992370605469,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.7000007629394531,
+    1,
+    0.7000007629394531,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    1.6000003814697266,
+    1,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    1.6000003814697266,
+    1,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    1,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.7000007629394531,
+    0.9000005722045898,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    1,
+    1,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.9000005722045898,
+    1.1999998092651367,
+    0.8000001907348633,
+    1,
+    0.8000001907348633,
+    0.8000001907348633,
+    1,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.6999998092651367,
+    1,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8000001907348633,
+    1,
+    0.9000005722045898,
+    0.8000001907348633,
+    1,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6000003814697266,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.6000003814697266,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.8000001907348633,
+    1.0999994277954102,
+    1.0999994277954102,
+    0.7999992370605469,
+    0.7000007629394531,
+    0.9000005722045898,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.7000007629394531,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8000001907348633,
+    1.5,
+    0.9000005722045898,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8999996185302734,
+    0.7999992370605469,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.8000001907348633,
+    0.9000005722045898,
+    1.6999998092651367,
+    1,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.7000007629394531,
+    0.5999994277954102,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.7000007629394531,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.6000003814697266,
+    0.7000007629394531,
+    0.6999998092651367,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8000001907348633,
+    0.6999998092651367,
+    0.7000007629394531,
+    0.8000001907348633,
+    0.7999992370605469,
+    0.7999992370605469,
+    0.8999996185302734,
+    0.6999998092651367,
+    0.8999996185302734,
+    0.9000005722045898,
+    0.7999992370605469,
+    0.7999992370605469,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.8000001907348633,
+    0.9000005722045898,
+    0.8999996185302734,
+    0.8000001907348633
   ],
   "hitches": [],
   "tasks": [],
+  "walkedM": 14.68429833460948,
   "endLevel": "L5",
   "end": {
     "id": "L5",
@@ -2099,13 +5607,9 @@
       "metro": {
         "status": "active",
         "started": 660,
-        "kills": [
-          85,
-          101,
-          99
-        ],
+        "kills": [],
         "events": {
-          "combat.kill:*": 3
+          "player.damaged:*": 1
         },
         "interaction": 0
       }
@@ -2120,8 +5624,10 @@
       "sheltered": false
     },
     "counters": {},
-    "gates": {},
-    "marker": "metro-entrance",
+    "gates": {
+      "l5-metro-shutter": true
+    },
+    "marker": "l5-metro-in",
     "checkpoint": "survivor-5",
     "tier": 5,
     "timeOfDay": null,
@@ -2129,10 +5635,10 @@
     "cinematic": null,
     "failure": null,
     "stats": {
-      "time": 21.166666666666668,
+      "time": 20.733333333333334,
       "kills": 0,
-      "knockdowns": 3,
-      "damage": 0,
+      "knockdowns": 0,
+      "damage": 10,
       "deaths": 0,
       "rescued": 0,
       "optionalObjectives": []
@@ -2150,7 +5656,7 @@
       "survivors": [
         {
           "key": "dale",
-          "id": 19,
+          "id": 28,
           "status": "following",
           "foundAt": 660,
           "cueAt": 0,
@@ -2159,16 +5665,16 @@
         },
         {
           "key": "rosa",
-          "id": 20,
+          "id": 29,
           "status": "following",
           "foundAt": 660,
-          "cueAt": 1020,
+          "cueAt": 0,
           "lostAt": 0,
           "hold": 0
         },
         {
           "key": "okafor",
-          "id": 21,
+          "id": 30,
           "status": "following",
           "foundAt": 660,
           "cueAt": 0,
@@ -2177,7 +5683,7 @@
         },
         {
           "key": "mia",
-          "id": 22,
+          "id": 31,
           "status": "following",
           "foundAt": 660,
           "cueAt": 0,
@@ -2186,55 +5692,81 @@
         },
         {
           "key": "sam",
-          "id": 23,
-          "status": "following",
+          "id": 32,
+          "status": "turned",
           "foundAt": 660,
           "cueAt": 0,
-          "lostAt": 0,
+          "lostAt": 942,
           "hold": 0
         }
       ],
       "found": 5,
-      "lookoutId": 24,
+      "lookoutId": 33,
+      "stationIds": [
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166
+      ],
       "infectedIds": [
-        75,
-        77,
-        79,
-        81,
-        83,
-        85,
-        87,
-        89,
-        91,
-        93,
-        95,
+        84,
+        86,
+        88,
+        90,
+        92,
+        94,
+        96,
         97,
         99,
         101,
         103,
-        105,
-        107,
-        109
+        104,
+        106,
+        108,
+        110,
+        112,
+        114,
+        116,
+        118,
+        120,
+        122,
+        124,
+        126,
+        128,
+        130,
+        132,
+        134
       ],
       "medkitIds": [
-        111,
-        112,
-        113,
-        114,
-        115,
-        116,
-        117
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142
       ],
       "corpseIds": [
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
         34,
         35,
         36,
@@ -2262,9 +5794,7 @@
         58,
         59,
         60,
-        61
-      ],
-      "fireIds": [
+        61,
         62,
         63,
         64,
@@ -2273,20 +5803,30 @@
         67,
         68,
         69,
-        70,
+        70
+      ],
+      "fireIds": [
         71,
         72,
         73,
-        74
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
       ],
       "gloom": 1,
       "cue": null,
-      "lastShot": {
-        "1": 937
-      },
+      "lastShot": {},
       "waitedAt": 0,
-      "infectedMax": 18,
-      "deadAtMetro": 0
+      "infectedMax": 28,
+      "deadAtMetro": 0,
+      "emergeFadeAt": 0
     }
   }
 }
