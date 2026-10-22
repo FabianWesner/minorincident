@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 2.31.10.108:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 41s, 30528 files; job /srv/mi/jobs/fixes-13h-l10-170603-40402-1792633679; queueing for a slot
+[runner] slot 1 acquired; load 4.68 3.73 2.17
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+ RUN  v5.0.3 /srv/mi/jobs/fixes-13h-l10-170603-40402-1792633679
+
+ ✓  functional  tests/unit/vfx/pools.test.ts (3 tests) 59ms
+ ✓  functional  tests/unit/render/incremental-pre-render.test.ts (4 tests) 36ms
+ ✓  functional  tests/unit/render/material-variants.test.ts (7 tests) 53ms
+
+ Test Files  3 passed (3)
+      Tests  14 passed (14)
+   Start at  01:50:04
+   Duration  698ms (transform 51%, import 37%, tests 11%, worker 1%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 41s, remote total 88s)

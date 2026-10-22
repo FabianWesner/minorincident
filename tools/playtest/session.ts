@@ -7,6 +7,8 @@ import { assertRenderedBodies, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput } from './input';
+import { frameInterval, installFrameProbe, type LongFrame } from './frames';
+import type { Game } from '../../src/Game';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -20,6 +22,8 @@ export interface SessionOptions {
   origin: string; out: string; levels: string[]; quality: 'low' | 'high'; zoom: number; heroine: 'female' | 'male';
   /** new: title → Start game → heroine → L1. continue: title → Start game → resume level (menu Continue). debug: level list with ?debug=1. */
   entry: 'new' | 'continue' | 'debug'; profile: string; levelMinutes: number; stopAfterLevel: boolean; tag: string; noSkip?: boolean;
+  /** Bounded diagnostic sample; finish without skipping an objective when time expires. */
+  sampleSeconds?: number;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -35,7 +39,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const context = await chromium.launchPersistentContext(resolve(o.profile), { headless: true, args, viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   const page = context.pages()[0] ?? await context.newPage();
   // tsx keeps function names with a __name helper; page-side functions need it defined.
-  await page.addInitScript('window.__name = (f) => f; window.__playtestFrames = []; (() => { let last = 0; const f = (now) => { if (last && now - last > 200) window.__playtestFrames.push([now - last, window.__SS__ ? window.__SS__.tick() : -1]); last = now; requestAnimationFrame(f); }; requestAnimationFrame(f); })();');
+  await page.addInitScript(`window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
   if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') await page.addInitScript(`window.__playtestHandoverAudit = []; (() => {
     let sawL7=false,start=null,done=false;
     const visible=e=>!!e&&!e.hidden&&e.offsetParent!==null,q=id=>document.querySelector('[data-testid="'+id+'"]');
@@ -55,8 +59,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     try { await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 }); } catch { /* page busy */ }
     return file;
   };
-  const issue = async (severity: Issue['severity'], kind: string, text: string, shot = true): Promise<Issue> => {
-    const e = eyes, item: Issue = { level: e?.level ?? '?', tick: e?.tick ?? -1, x: +(e?.player?.x ?? 0).toFixed(1), z: +(e?.player?.z ?? 0).toFixed(1), severity, kind, text, captures: [], step: e?.step ?? null, objective: e?.objective ?? '' };
+  const issue = async (severity: Issue['severity'], kind: string, text: string, shot = true, frame?: LongFrame): Promise<Issue> => {
+    const e = eyes, item: Issue = { level: frame?.level ?? e?.level ?? '?', tick: frame?.tick ?? e?.tick ?? -1, x: +(frame?.x ?? e?.player?.x ?? 0).toFixed(1), z: +(frame?.z ?? e?.player?.z ?? 0).toFixed(1), severity, kind, text, captures: [], step: frame ? null : e?.step ?? null, objective: frame ? '' : e?.objective ?? '' };
     if (shot) item.captures.push(await capture(`${item.level}-${item.tick}-${kind}`));
     issues.push(item); log({ issue: item }); console.log(`[${severity}] ${item.level} t${item.tick} (${item.x},${item.z}) ${kind}: ${text}`);
     writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
@@ -83,6 +87,36 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
+  const cpu = process.env.PLAYTEST_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
+  let cpuStartedAt = 0, cpuNavigationStartMs: number | undefined;
+  if (cpu) {
+    await cpu.send('Performance.enable');
+    await cpu.send('Profiler.enable'); await cpu.send('Profiler.start');
+    const { metrics } = await cpu.send('Performance.getMetrics');
+    const navigationStart = metrics.find(metric => metric.name === 'NavigationStart');
+    if (navigationStart) cpuNavigationStartMs = navigationStart.value * 1000;
+    cpuStartedAt = await page.evaluate(() => {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game, previous = g.input.tap;
+      const clicks: unknown[] = [], builds: unknown[] = [], inputs: unknown[] = [];
+      (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks = clicks;
+      (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds = builds;
+      (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs = inputs;
+      const onBuild = g.view.renderer.debug.onNodeBuilderCreated;
+      g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+        onBuild?.(builder, object);
+        const draw = object as unknown as { object: import('three/webgpu').Mesh; material: import('three/webgpu').Material };
+        const path: string[] = []; let asset: string | undefined;
+        for (let node: import('three/webgpu').Object3D | null = draw.object; node; node = node.parent) { path.push(node.name || node.type); asset ??= node.userData.assetId; }
+        builds.push({ at: performance.now(), tick: g.world.tick, asset, path, material: draw.material.name });
+      };
+      g.input.tap = (frame, scheme) => {
+        previous?.(frame, scheme);
+        if (g.world.scenario === 'L10') inputs.push({ tick: g.world.tick, frame: structuredClone(frame) });
+        if (frame.moveTarget) clicks.push({ tick: g.world.tick, position: { ...g.world.entities.get(1)!.transform }, target: { ...frame.moveTarget } });
+      };
+      return performance.now();
+    });
+  }
   await page.getByTestId('start-game').click({ timeout: 120_000 });
   await hold(500);
   const first = o.levels[0];
@@ -310,9 +344,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await hold(150); continue;
     }
     // Hitches: long frames during play only.
-    const frames = await page.evaluate(n => (window as unknown as { __playtestFrames: number[][] }).__playtestFrames.slice(n), frameCursor);
+    const frames = await page.evaluate(n => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames.slice(n), frameCursor);
     frameCursor += frames.length;
-    if (e.phase === 'playing' && run) for (const [ms, tick] of frames) if (ms > 200) { log({ hitch: ms, tick, level: e.level }); if (ms > 500) await issue(ms > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(ms)} ms at tick ${tick}`, false); }
+    for (const frame of frames) {
+      log({ frame });
+      if (frame.playMs > 200 && frame.level && o.levels.includes(frame.level)) {
+        log({ hitch: frame.playMs, rawFrameMs: frame.ms, tick: frame.tick, level: frame.level, x: frame.x, z: frame.z });
+        if (frame.playMs > 500) await issue(frame.playMs > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(frame.playMs)} ms at tick ${frame.tick}`, false, frame);
+      }
+    }
+    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) break;
 
     // The title screen loads L1 speculatively behind the menu: ignore levels outside the range until the first one starts.
     if (!run && e.level && !o.levels.includes(e.level)) { if (Date.now() - bootWall > 600_000) break; await hold(300); continue; }
@@ -541,6 +582,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     writeFileSync(join(o.out,`handover-audit-${o.tag}.json`),JSON.stringify(audit,null,2));
     const ready=audit.find(s=>s.text.includes('armored vehicle')&&s.pin&&s.marker);
     handoverReady=!!ready&&ready.elapsedMs<=2000;
+  }
+  if (cpu) {
+    const cpuEndedAt = await page.evaluate(() => performance.now());
+    const { profile } = await cpu.send('Profiler.stop');
+    writeFileSync(join(o.out, `${o.tag}.cpuprofile`), JSON.stringify({ ...profile, performanceStartedAt: cpuStartedAt, performanceEndedAt: cpuEndedAt, performanceNavigationStartMs: cpuNavigationStartMs })); await cpu.detach();
+    writeFileSync(join(o.out, `${o.tag}-clicks.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestClicks: unknown[] }).__playtestClicks), null, 2));
+    writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
+    writeFileSync(join(o.out, `${o.tag}-inputs.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs)));
   }
   await context.close();
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');

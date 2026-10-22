@@ -1,0 +1,95 @@
+ 3:39  up 74 days,  2:32, 4 users, load averages: 2.05 2.22 2.66
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 4 tests using 1 worker
+
+debug: L10 loaded
+{"entry":"debug","backend":"webgl","frames":18075,"max":31.600000000000364,"p95":6.100000000005821,"hitches":[]}
+  ✓  1 [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgl2 debug: no frame over 200 ms after the loading card (1.7m)
+continue: L10 loaded
+{"entry":"continue","backend":"webgl","frames":18018,"max":37.400000000001455,"p95":6.200000000004366,"hitches":[]}
+  ✓  2 [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgl2 continue: no frame over 200 ms after the loading card (1.8m)
+debug: L10 loaded
+{"entry":"debug","backend":"webgpu","frames":24483,"max":23.600000000000364,"p95":4.799999999999272,"hitches":[]}
+  ✘  3 [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu debug: no frame over 200 ms after the loading card (1.7m)
+continue: L10 loaded
+{"entry":"continue","backend":"webgpu","frames":22763,"max":30.299999999999272,"p95":5,"hitches":[]}
+  ✘  4 [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu continue: no frame over 200 ms after the loading card (1.8m)
+
+
+  1) [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu debug: no frame over 200 ms after the loading card 
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 12
+
+    - Array []
+    + Array [
+    +   "console.error: THREE.WebGPURenderer: Uncaptured WebGPU GPUValidationError: Sample count (1) of [Texture (unlabeled 1x1 px, TextureFormat::Depth24Plus)] doesn't match expectation (multisampled: 1).
+    +  - While validating entries[1] against { binding: 1, visibility: ShaderStage::Fragment, texture: {sampleType: TextureSampleType::Depth, viewDimension: TextureViewDimension::e2D, multisampled: 1} }.
+    +  - While validating [BindGroupDescriptor \"\"bindGroup_object\"\"] against [BindGroupLayout (unlabeled)]
+    +  - While calling [Device].CreateBindGroup([BindGroupDescriptor \"\"bindGroup_object\"\"]).
+    + ",
+    +   "console.error: THREE.WebGPURenderer: Uncaptured WebGPU GPUValidationError: Sample count (1) of [Texture (unlabeled 1x1 px, TextureFormat::Depth24Plus)] doesn't match expectation (multisampled: 1).
+    +  - While validating entries[1] against { binding: 1, visibility: ShaderStage::Fragment, texture: {sampleType: TextureSampleType::Depth, viewDimension: TextureViewDimension::e2D, multisampled: 1} }.
+    +  - While validating [BindGroupDescriptor \"\"bindGroup_object\"\"] against [BindGroupLayout (unlabeled)]
+    +  - While calling [Device].CreateBindGroup([BindGroupDescriptor \"\"bindGroup_object\"\"]).
+    + ",
+    + ]
+
+       at e2e/fixtures.ts:53
+
+      51 |     const guard = attachErrorGuard(page);
+      52 |     await use(); guard.dispose();
+    > 53 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      54 |   }, { auto: true }],
+      55 | });
+      56 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10/tests/e2e/fixtures.ts:53:81)
+
+    Error Context: test-results/playwright/run-4071/perf-l10-entry-hitches-PO--484cb-0-ms-after-the-loading-card-chromium/error-context.md
+
+  2) [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu continue: no frame over 200 ms after the loading card 
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 12
+
+    - Array []
+    + Array [
+    +   "console.error: THREE.WebGPURenderer: Uncaptured WebGPU GPUValidationError: Sample count (1) of [Texture (unlabeled 1x1 px, TextureFormat::Depth24Plus)] doesn't match expectation (multisampled: 1).
+    +  - While validating entries[1] against { binding: 1, visibility: ShaderStage::Fragment, texture: {sampleType: TextureSampleType::Depth, viewDimension: TextureViewDimension::e2D, multisampled: 1} }.
+    +  - While validating [BindGroupDescriptor \"\"bindGroup_object\"\"] against [BindGroupLayout (unlabeled)]
+    +  - While calling [Device].CreateBindGroup([BindGroupDescriptor \"\"bindGroup_object\"\"]).
+    + ",
+    +   "console.error: THREE.WebGPURenderer: Uncaptured WebGPU GPUValidationError: Sample count (1) of [Texture (unlabeled 1x1 px, TextureFormat::Depth24Plus)] doesn't match expectation (multisampled: 1).
+    +  - While validating entries[1] against { binding: 1, visibility: ShaderStage::Fragment, texture: {sampleType: TextureSampleType::Depth, viewDimension: TextureViewDimension::e2D, multisampled: 1} }.
+    +  - While validating [BindGroupDescriptor \"\"bindGroup_object\"\"] against [BindGroupLayout (unlabeled)]
+    +  - While calling [Device].CreateBindGroup([BindGroupDescriptor \"\"bindGroup_object\"\"]).
+    + ",
+    + ]
+
+       at e2e/fixtures.ts:53
+
+      51 |     const guard = attachErrorGuard(page);
+      52 |     await use(); guard.dispose();
+    > 53 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      54 |   }, { auto: true }],
+      55 | });
+      56 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10/tests/e2e/fixtures.ts:53:81)
+
+    Error Context: test-results/playwright/run-4071/perf-l10-entry-hitches-PO--628ba-0-ms-after-the-loading-card-chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu debug: no frame over 200 ms after the loading card 
+    [chromium] › tests/perf/l10-entry-hitches.spec.ts:7:3 › PO #100 @E32 @perf webgpu continue: no frame over 200 ms after the loading card 
+  2 passed (7.1m)

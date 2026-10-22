@@ -1,0 +1,409 @@
+[
+  {
+    "source": "entry-before-replay",
+    "case": "debug-webgl2",
+    "max": 3721.899999999994,
+    "p95": 5.599999999998545,
+    "load": {
+      "dataMs": 20.299999237060547,
+      "simMs": 2509.800000190735,
+      "viewMs": 6122.400000572205
+    },
+    "hitches": [
+      {
+        "at": 66407.2,
+        "dt": 3721.899999999994,
+        "tick": 2962,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 755.3528442382812,
+        "z": 13.92556381225586,
+        "sim": 0.8999996185302734,
+        "update": 1.9000005722045898,
+        "render": 8.199999809265137,
+        "builds": 725,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 70324.7,
+        "dt": 611.3000000000029,
+        "tick": 3163,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 760.316650390625,
+        "z": 18.637195587158203,
+        "sim": 1.1000003814697266,
+        "update": 1.5999994277954102,
+        "render": 3.3000001907348633,
+        "builds": 741,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 72962.3,
+        "dt": 349.6000000000058,
+        "tick": 3306,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 764.6665649414062,
+        "z": 22.69603157043457,
+        "sim": 0.6999998092651367,
+        "update": 1.6000003814697266,
+        "render": 7.399999618530273,
+        "builds": 786,
+        "heroLight": null,
+        "sun": true,
+        "spot": false
+      },
+      {
+        "at": 80410,
+        "dt": 918.3999999999942,
+        "tick": 3702,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 790.3806762695312,
+        "z": 24.916250228881836,
+        "sim": 0.8000001907348633,
+        "update": 1.0999994277954102,
+        "render": 7.300000190734863,
+        "builds": 853,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:553/light:lantern",
+        "sun": false,
+        "spot": true
+      }
+    ],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-before-replay",
+    "case": "continue-webgl2",
+    "max": 426.8000000000029,
+    "p95": 5.69999999999709,
+    "load": {
+      "dataMs": 20.799999237060547,
+      "simMs": 2531.2000007629395,
+      "viewMs": 6039.89999961853
+    },
+    "hitches": [
+      {
+        "at": 68290,
+        "dt": 426.8000000000029,
+        "tick": 2962,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 755.3528442382812,
+        "z": 13.92556381225586,
+        "sim": 1.5,
+        "update": 2.8000001907348633,
+        "render": 7.600000381469727,
+        "builds": 899,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 81036.7,
+        "dt": 383.59999999999127,
+        "tick": 3702,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 790.3804321289062,
+        "z": 24.916118621826172,
+        "sim": 1,
+        "update": 1.6999998092651367,
+        "render": 8.199999809265137,
+        "builds": 1020,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:553/light:lantern",
+        "sun": false,
+        "spot": true
+      }
+    ],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-before-replay",
+    "case": "debug-webgpu",
+    "max": 4485,
+    "p95": 4.399999999994179,
+    "load": {
+      "dataMs": 21.199999809265137,
+      "simMs": 2521.7000007629395,
+      "viewMs": 6376.699999809265
+    },
+    "hitches": [
+      {
+        "at": 79102.4,
+        "dt": 249.6999999999971,
+        "tick": 2962,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 755.3528442382812,
+        "z": 13.92556381225586,
+        "sim": 0.6000003814697266,
+        "update": 1.6999998092651367,
+        "render": 7.699999809265137,
+        "builds": 748,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 83867.4,
+        "dt": 4485,
+        "tick": 2984,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 756.0511474609375,
+        "z": 14.575973510742188,
+        "sim": 0.7000007629394531,
+        "update": 1.3000001907348633,
+        "render": 3.6000003814697266,
+        "builds": 753,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 96089.8,
+        "dt": 229.1999999999971,
+        "tick": 3702,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 790.3806762695312,
+        "z": 24.916250228881836,
+        "sim": 0.6999998092651367,
+        "update": 1,
+        "render": 7.700000762939453,
+        "builds": 876,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:553/light:lantern",
+        "sun": false,
+        "spot": true
+      }
+    ],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-before-replay",
+    "case": "continue-webgpu",
+    "max": 268.1000000000058,
+    "p95": 4.399999999994179,
+    "load": {
+      "dataMs": 20.600000381469727,
+      "simMs": 2553.5999994277954,
+      "viewMs": 6310.5
+    },
+    "hitches": [
+      {
+        "at": 99301.8,
+        "dt": 268.1000000000058,
+        "tick": 2962,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 755.3528442382812,
+        "z": 13.92556381225586,
+        "sim": 0.8999996185302734,
+        "update": 1.6000003814697266,
+        "render": 7.800000190734863,
+        "builds": 922,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:25/light:lantern",
+        "sun": false,
+        "spot": true
+      },
+      {
+        "at": 111821.9,
+        "dt": 230,
+        "tick": 3702,
+        "loading": false,
+        "cardVisible": false,
+        "scenario": "L10",
+        "x": 790.3804321289062,
+        "z": 24.916118621826172,
+        "sim": 0.6999998092651367,
+        "update": 1,
+        "render": 11.399999618530273,
+        "builds": 1041,
+        "heroLight": "D-CURE@0,0/prop.street-lamp:553/light:lantern",
+        "sun": false,
+        "spot": true
+      }
+    ],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-guard",
+    "case": "debug-webgl2",
+    "max": 125.09999999999127,
+    "p95": 5.5,
+    "load": {
+      "dataMs": 47.19999980926514,
+      "simMs": 2836.5999994277954,
+      "viewMs": 13489.70000076294
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-guard",
+    "case": "continue-webgl2",
+    "max": 24.5,
+    "p95": 5.900000000001455,
+    "load": {
+      "dataMs": 90.39999961853027,
+      "simMs": 2677.699999809265,
+      "viewMs": 8595.400000572205
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-guard",
+    "case": "debug-webgpu",
+    "max": 23.59999999999127,
+    "p95": 4.30000000000291,
+    "load": {
+      "dataMs": 43.70000076293945,
+      "simMs": 2657.0999994277954,
+      "viewMs": 15840.400000572205
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "entry-guard",
+    "case": "continue-webgpu",
+    "max": 23.79999999998836,
+    "p95": 4.5,
+    "load": {
+      "dataMs": 47.40000057220459,
+      "simMs": 2673.3999996185303,
+      "viewMs": 8454.10000038147
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "incremental-entry-guard",
+    "case": "debug-webgl2",
+    "max": 31.600000000000364,
+    "p95": 6.100000000005821,
+    "load": {
+      "dataMs": 43.60000038146973,
+      "simMs": 2629.300000190735,
+      "viewMs": 6062.39999961853
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "incremental-entry-guard",
+    "case": "continue-webgl2",
+    "max": 37.400000000001455,
+    "p95": 6.200000000004366,
+    "load": {
+      "dataMs": 52.69999980926514,
+      "simMs": 2674.3999996185303,
+      "viewMs": 6286.5
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "incremental-entry-guard",
+    "case": "debug-webgpu",
+    "max": 23.600000000000364,
+    "p95": 4.799999999999272,
+    "load": {
+      "dataMs": 40.40000057220459,
+      "simMs": 2646.8999996185303,
+      "viewMs": 6452
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9730224609375,
+      "y": 0.7049999833106995,
+      "z": 24.916250228881836,
+      "yaw": -7.850462293418876e-17
+    }
+  },
+  {
+    "source": "incremental-entry-guard",
+    "case": "continue-webgpu",
+    "max": 30.299999999999272,
+    "p95": 5,
+    "load": {
+      "dataMs": 49.80000019073486,
+      "simMs": 2677.5999994277954,
+      "viewMs": 6188.700000762939
+    },
+    "hitches": [],
+    "end": {
+      "x": 896.9727783203125,
+      "y": 0.7049999833106995,
+      "z": 24.916118621826172,
+      "yaw": -7.850462293418876e-17
+    }
+  }
+]

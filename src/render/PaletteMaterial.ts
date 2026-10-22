@@ -4,7 +4,7 @@ import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type 
 import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
-import { noise, surfaceDetail } from './SurfaceDetail';
+import { bloodSplatMask, cloudShadowMask, noise, surfaceDetail } from './SurfaceDetail';
 import { seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
@@ -61,20 +61,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Atmosphere 2: drifting cloud shadows on day levels (look.cloudShadow, 0 at night) join the sun shadow term,
       // so cloud patches take the authored shadow tint. Two crossed sines: ALU only, no texture fetch.
       const look = lighting.look.nodes, cloudUv = positionWorld.xz.div(look.cloudScale).mul(6.283).add(vec2(lighting.clock.mul(look.cloudSpeed).mul(.3), lighting.clock.mul(look.cloudSpeed).mul(.18)));
-      const cloudField = cloudUv.x.add(cloudUv.y.mul(.7).sin().mul(1.3)).sin().mul(cloudUv.y.mul(.9).add(cloudUv.x.mul(.6).add(1.7).sin().mul(1.1)).sin());
-      const cloud = cloudField.smoothstep(0, .55).mul(look.cloudShadow);
+      const cloud = cloudShadowMask({ strength: look.cloudShadow, point: cloudUv });
       const shadow = max(max(core, caughtShadow.oneMinus()), cloud).clamp(0, 1).mul(lighting.look.nodes.shadowIntensity);
       const bounce = normalWorld.y.negate().smoothstep(-.2, 1).mul(positionWorld.y.max(0).div(2).oneMinus().max(0).pow(2)).mul(lighting.look.nodes.bounceStrength);
       // A few soft-edged splats in part-local space follow the animated surface.
       // A fragment hash here turned even one kill into pixel noise on skin/hair.
-      const radius = this.bloodCoverage.clamp(0, 1).sqrt().mul(.09).add(.02);
-      const splat = (y: number, z: number, size: number) => {
-        const distance = positionGeometry.yz.sub(vec2(y, z)).mul(vec2(1, 1.3)).length();
-        // Keep the edge at least one pixel wide as the figure turns or zooms.
-        const edge = distance.fwidth().mul(1.5).max(.006);
-        return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
-      };
-      const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
+      const blood = bloodSplatMask({ coverage: this.bloodCoverage, point: positionGeometry.yz });
       // Build only the active surface sections; continuous strengths remain uniforms.
       const snow = float(0).toVar(), weatherBase = base.toVar(), puddle = float(0).toVar();
       if (mode & flags.accumulation) If(weatherSurface.accumulation.greaterThan(0), () => {
@@ -141,9 +133,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       });
       // Distant fire glow (look.glowAmount; 0 except L9's burning city ahead): a warm fill that grows along the authored world
       // direction, strongest on surfaces turned towards it, with a slow breathing flicker. Uniform ALU only, no pass.
-      const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
-      const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
-      shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
+      If(look.glowAmount.greaterThan(0), () => {
+        const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
+        const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
+        shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
+      });
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.
@@ -181,7 +175,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
         result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
       }
-      if (!emissive) {
+      if (!emissive) If(lighting.subwayDarkness.greaterThan(0), () => {
         const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
         const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
         const cone = facing.smoothstep(.78, .92).mul(reach.smoothstep(18, 14)).mul(lighting.headlampOn);
@@ -195,7 +189,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const emergency = surface.max(vec3(.05)).mul(lighting.subwayFill).mul(normalWorld.y.abs().mul(.45).add(.55)).mul(positionWorld.y.smoothstep(.15, .3));
         const dark = max(mix(vec3(luminance(result)).mul(.5).add(.012), result, colour), emergency);
         result.assign(mix(result, dark, lighting.subwayDarkness));
-      }
+      });
       const graded = float(1).toVar();
       const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
       if (!emissive && (mode & flags.hero)) {

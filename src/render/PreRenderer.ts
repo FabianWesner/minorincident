@@ -11,6 +11,110 @@ export const compileLanes = 6;
 export const warmUpSize = 128;
 export const textureUploadBudget = 4 * 1024 * 1024;
 export type CompilePartitions = (() => void)[];
+/** Same exact static layout needs one program/driver representative. */
+function warmCandidates<T extends Object3D>(leaves: T[]): T[] {
+  const seen = new Set<string>();
+  return leaves.filter(leaf => {
+    if (!(leaf instanceof InstancedMesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) || leaf.material.userData.batchFeatures === undefined || Object.keys(leaf.geometry.morphAttributes).length) return true;
+    const attributes = Object.keys(leaf.geometry.attributes).map(name => {
+      const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
+      return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
+    }).sort().join('|');
+    const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
+    if (seen.has(key)) return false; seen.add(key); return true;
+  });
+}
+/** Spread an alternate light graph across playable frames. Compilation captures
+ * one leaf synchronously, then waits for its asynchronous GPU link. New graphs
+ * execute the same HDR pass in isolated ordinary/instanced draws before use.
+ * Every temporary scene change is restored before the normal gameplay draw. */
+export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (root: Object3D) => Promise<void>, source: <T>(run: () => T) => T) {
+  let leaves: (Mesh | Sprite | LineSegments)[] = [];
+  scene.traverse(object => {
+    if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) && object.geometry.hasAttribute('position')) leaves.push(object);
+  });
+  leaves = warmCandidates(leaves);
+  let index = 0, phase: 'compile' | 'waiting' | 'draw' = 'compile', instances = 1, error: unknown;
+  const representative = <T>(object: Mesh | Sprite | LineSegments, count: number, run: () => T): T => {
+    const visible = object.visible, culled = object.frustumCulled, automatic = object.matrixAutoUpdate;
+    const matrix = object.matrix.clone(), worldMatrix = object.matrixWorld.clone();
+    const instanced = object instanceof InstancedMesh, originalCount = instanced ? object.count : 0;
+    const matrices = instanced ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : [];
+    const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
+    object.visible = true; object.frustumCulled = false;
+    if (instanced) {
+      object.count = count;
+      const local = object.worldToLocal(focus);
+      matrices.forEach((_, i) => object.setMatrixAt(i, new Matrix4().makeTranslation(local.x + i * .3, local.y, local.z)));
+      object.instanceMatrix.needsUpdate = true;
+    } else {
+      if (!object.geometry.boundingSphere) object.geometry.computeBoundingSphere();
+      const center = object.geometry.boundingSphere!.center.clone().applyMatrix4(object.matrix);
+      const local = object.parent ? object.parent.worldToLocal(focus) : focus;
+      object.matrixAutoUpdate = false;
+      object.matrix.elements[12] += local.x - center.x; object.matrix.elements[13] += local.y - center.y; object.matrix.elements[14] += local.z - center.z;
+      object.updateMatrixWorld(true);
+    }
+    try { return source(run); }
+    finally {
+      object.visible = visible; object.frustumCulled = culled; object.matrixAutoUpdate = automatic;
+      object.matrix.copy(matrix); object.matrixWorld.copy(worldMatrix); object.matrixWorldNeedsUpdate = true;
+      if (instanced) { object.count = originalCount; matrices.forEach((matrix, i) => object.setMatrixAt(i, matrix)); object.instanceMatrix.needsUpdate = true; }
+    }
+  };
+  return {
+    get done() { return index >= leaves.length; },
+    get remaining() { return leaves.length - index; },
+    cancel() { index = leaves.length; leaves.length = 0; },
+    step(): void {
+      if (error) { const failure = error; this.cancel(); throw failure; }
+      if (this.done || phase === 'waiting') return;
+      const object = leaves[index];
+      if (phase === 'compile') {
+        // Viewport depth copies acquire their multisampled texture during the
+        // actual HDR pass. Precompiling that binding would use its 1×1 fallback.
+        if (renderer.selectedBackend === 'webgpu' && object.userData.preRenderNeedsDepth) { phase = 'draw'; instances = 1; return; }
+        const before = renderer.nodeBuilds, foreground = renderer.foregroundCompile;
+        const background = scene.background, backgroundNode = scene.backgroundNode;
+        let pending: Promise<void>;
+        try {
+          // Capture this leaf's light graph before restoring the gameplay source.
+          // r186 caches the light hash by info.calls, but compileAsync does not
+          // advance it. It also queues the background before the requested leaf;
+          // omit that unrelated item so this leaf builds before the first await.
+          (renderer.info as unknown as { calls: number }).calls++;
+          scene.background = null; scene.backgroundNode = null;
+          renderer.foregroundCompile = true;
+          pending = representative(object, 1, () => compile(object));
+        } finally { renderer.foregroundCompile = foreground; scene.background = background; scene.backgroundNode = backgroundNode; }
+        const changed = renderer.nodeBuilds !== before; phase = 'waiting';
+        void pending.then(() => {
+          if (this.done) return;
+          if (changed) { phase = 'draw'; instances = 1; }
+          else { index++; phase = 'compile'; }
+        }, failure => { error = failure; });
+        return;
+      }
+      // Restrict casters as well as receivers, so a first spot draw cannot build
+      // the whole shadow scene at once. Groups retain the path to this leaf.
+      const visible: [Object3D, boolean][] = [], after = object.onAfterRender;
+      scene.traverse(node => {
+        if (node instanceof Light) return;
+        visible.push([node, node.visible]);
+        node.visible = node === object || !(node instanceof Mesh || node instanceof Sprite || node instanceof LineSegments);
+      });
+      object.onAfterRender = () => {}; // Warm-up draws are not visible-figure observations.
+      try {
+        renderer.nextNodeFrame(); representative(object, instances, render);
+      } finally {
+        for (const [node, wasVisible] of visible) node.visible = wasVisible;
+        object.onAfterRender = after; renderer.nextNodeFrame();
+      }
+      if (instances === 1 && object instanceof InstancedMesh && object.instanceMatrix.count > 1) instances = 2;
+      else { index++; phase = 'compile'; }
+    },
+  };
+}
 export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false, cooperative = false): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[]; position?: Vector3 }[] = [];
   scene.updateMatrixWorld(true);
@@ -47,15 +151,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Static batches share node graphs. Compile one representative of each exact
     // material/attribute/shadow/capacity variant; the draws below still upload and
     // execute every render object, including both instancing driver paths.
-    const seen = new Set<string>(), candidates = leaves.filter(leaf => {
-      if (!(leaf instanceof InstancedMesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) || leaf.material.userData.batchFeatures === undefined || Object.keys(leaf.geometry.morphAttributes).length) return true;
-      const attributes = Object.keys(leaf.geometry.attributes).map(name => {
-        const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
-        return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
-      }).sort().join('|');
-      const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
-      if (seen.has(key)) return false; seen.add(key); return true;
-    });
+    const candidates = warmCandidates(leaves);
     // Shared pose materials change their texture in onBeforeRender. Explicitly
     // warm every batch's atlas before compilation, rather than only the last binding.
     // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.

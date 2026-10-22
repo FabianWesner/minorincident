@@ -1,0 +1,46 @@
+total 2700 ms
+
+self time by file:
+    1106  validate.ts
+     716  NavGrid.ts
+     308  TrapRescue.ts
+     238  DistrictWorld.ts
+     119  (program)
+      53  (garbage collector)
+      41  HeightSteps.ts
+      36  staticCollision.ts
+      16  chunk-AH7NWAFQ.js?v=ff9afd0c
+      15  chunk-IXWWV5JO.js?v=ff9afd0c
+       8  fetch
+       5  ChunkResidency.ts
+       4  Environment.ts
+       4  getProgramParameter
+       4  Foliage.ts
+
+self time by function:
+    1087  insideXZ validate.ts:13
+     482  bakeNav NavGrid.ts:96
+     292  goalReach TrapRescue.ts:1
+     226  flood NavGrid.ts:74
+     123  groundHeight DistrictWorld.ts:163
+     119  (program) :-1
+     105  DistrictWorld DistrictWorld.ts:25
+      53  (garbage collector) :-1
+      27  (anonymous) HeightSteps.ts:22
+      20  inside validate.ts:10
+      17  (anonymous) staticCollision.ts:19
+      17  (anonymous) TrapRescue.ts:31
+      15  (anonymous) staticCollision.ts:25
+      15  heightSteps HeightSteps.ts:1
+       8  fetch :-1
+       8  groundKey DistrictWorld.ts:159
+       6  load chunk-IXWWV5JO.js?v=ff9afd0c:23733
+       5  (anonymous) NavGrid.ts:126
+       4  get Environment.ts:8
+       4  getProgramParameter :-1
+
+inclusive time (samples whose stack contains the function):
+       0  loadDistricts
+       0  loadLevel
+      10  init
+       6  build
