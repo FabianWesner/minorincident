@@ -15,9 +15,12 @@ const [origin, backend = 'webgpu', quality = 'low', count = '20', level = 'L1', 
 const out = process.env.LOAD_OUT ?? 'test-results/load-stalls';
 const diagnostic = process.env.LOAD_TRACE === '1';
 const gameplayMs = Number(process.env.LOAD_GAMEPLAY_MS ?? 0);
+const waits = menuWait.split(',').map(Number);
+assert.ok(waits.every(wait => Number.isFinite(wait) && wait >= 0), 'menu waits must be nonnegative milliseconds');
 mkdirSync(out, { recursive: true });
 const results: Record<string, unknown>[] = [];
 for (let run = 0; run < Number(count); run++) {
+  const wait = waits[run % waits.length];
   const label = `${level}-${backend}-${quality}-${run}`;
   const browser = await chromium.launch({ headless: true, args: [
     '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
@@ -90,10 +93,12 @@ for (let run = 0; run < Number(count); run++) {
     await page.getByTestId('start-game').click();
     if (level === 'L1') await page.getByTestId('character-female').click();
     await page.getByTestId(`level-${level}`).waitFor();
-    if (Number(menuWait)) await page.waitForTimeout(Number(menuWait));
+    if (wait) await page.waitForTimeout(wait);
     const cdp = diagnostic ? await page.context().newCDPSession(page) : null;
+    let performanceStartedAt = 0;
     if (cdp) {
       await cdp.send('Profiler.enable');
+      performanceStartedAt = await page.evaluate(() => performance.now());
       await cdp.send('Profiler.start');
       await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink.user_timing,gpu,disabled-by-default-gpu.service', transferMode: 'ReturnAsStream' });
     }
@@ -114,12 +119,12 @@ for (let run = 0; run < Number(count); run++) {
         measures: performance.getEntriesByType('measure').map(e => ({ name: e.name, at: e.startTime, ms: e.duration })),
         resources: performance.getEntriesByType('resource').filter(e => e.startTime + e.duration >= p.start).map(e => ({ name: new URL(e.name).pathname, at: e.startTime, ms: e.duration, bytes: e.transferSize })) };
     })()`);
-    const record = { origin, backend, quality, level, run, menuWait: Number(menuWait), diagnostic, gameplayMs, load: loadavg(), errors, ...result };
+    const record = { origin, backend, quality, level, run, menuWait: wait, diagnostic, gameplayMs, load: loadavg(), errors, ...result };
     results.push(record);
     writeFileSync(`${out}/${label}.json`, JSON.stringify(record));
     console.log(JSON.stringify({ ...record, frames: undefined, resources: undefined, tasks: undefined }));
     if (cdp) {
-      writeFileSync(`${out}/${label}.cpuprofile.gz`, gzipSync(JSON.stringify((await cdp.send('Profiler.stop')).profile)));
+      writeFileSync(`${out}/${label}.cpuprofile.gz`, gzipSync(JSON.stringify({ ...(await cdp.send('Profiler.stop')).profile, performanceStartedAt })));
       const complete = new Promise<string>(resolve => cdp.once('Tracing.tracingComplete', event => resolve(event.stream!)));
       await cdp.send('Tracing.end');
       const handle = await complete;
@@ -135,7 +140,7 @@ for (let run = 0; run < Number(count); run++) {
   } finally { await browser.close(); }
 }
 const sorted = results.map(result => result.ms as number).sort((a, b) => a - b);
-const summary = { origin, backend, quality, level, diagnostic, n: sorted.length, median: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2, p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
+const summary = { origin, backend, quality, level, diagnostic, menuWaits: waits, n: sorted.length, median: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2, p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
 writeFileSync(`${out}/${level}-${backend}-${quality}-summary.json`, JSON.stringify(summary, null, 2));
 console.log(JSON.stringify(summary));
 if (process.env.LOAD_ASSERT === '1') {
@@ -153,5 +158,6 @@ if (process.env.LOAD_ASSERT === '1') {
   assert.ok(process.env.LOAD_BASELINE, 'LOAD_BASELINE must name the baseline evidence directory');
   const before = JSON.parse(readFileSync(`${process.env.LOAD_BASELINE}/${level}-${backend}-${quality}-summary.json`, 'utf8'));
   assert.ok(before.n >= 20 && !before.diagnostic, 'baseline needs at least 20 unprofiled cold loads');
+  assert.deepEqual(summary.menuWaits, before.menuWaits, 'use the same menu wait schedule before and after');
   assert.ok(summary.median <= before.median, `median ${summary.median} ms > baseline ${before.median} ms`);
 }
