@@ -31,6 +31,8 @@ export interface OutbreakOptions {
   /** Named positions for anchor-only accident events (`l1.blast` at `lab-door`, ...). */
   anchors?: Record<string, Vec2>;
   tier?: 'high' | 'low';
+  /** A refuge a person cannot get to (L4: the solid military perimeter between them) is skipped when choosing where to flee. */
+  reachable?: (from: Vec2, refuge: Refuge) => boolean;
 }
 export interface PedestrianOptions {
   child?: boolean;
@@ -351,6 +353,7 @@ export class Outbreak {
     if (tick >= l1.repickAt || !l1.target) {
       let best: Refuge | null = null, score = Infinity;
       for (const r of this.refuges) {
+        if (this.options.reachable && !this.options.reachable(e.transform, r)) continue;
         const mine = Math.hypot(r.x - e.transform.x, r.z - e.transform.z), theirs = Math.hypot(r.x - c.threat.x, r.z - c.threat.z);
         const s = mine + (theirs < mine ? 60 + (mine - theirs) * 2 : 0);
         if (s < score) { score = s; best = r; }
