@@ -8,6 +8,20 @@ import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { PaletteMaterial } from '../../../src/render/PaletteMaterial';
 import type { AssetRegistry } from '../../../src/assets/registry';
 
+test('T-E22-20-hidden-prewarm @E22-AC20 focused reveal warm-up draws hidden mission actors and restores their visibility', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new EntityAssets({} as SimWorld, false, materials);
+  const model = new Group(), material = materials.fromVertexColors('static-colors').frozenCopy().seeThrough();
+  model.visible = false; model.position.set(1, 2, 3); assets.add(model);
+  const records = (assets as unknown as { records: Map<number, { model: Group; reveal: PaletteMaterial[] }> }).records;
+  records.set(5, { model, reveal: [material] });
+  try {
+    const restore = assets.prewarmReveal(new Vector3(40, 4, 10), false);
+    expect(model.visible, 'a hidden helicopter must draw both reveal graphs behind loading').toBe(true);
+    restore(); expect(model.visible).toBe(false); expect(model.position.toArray()).toEqual([1, 2, 3]);
+    expect(material.userData.seeThrough).toBe(true);
+  } finally { assets.dispose(); material.dispose(); materials.dispose(); lighting.dispose(); }
+});
+
 test('T-E22-20-collapse-materials @E22-AC20 late glass and crater assets borrow the warmed rigid actor graph', async () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), geometry = new BoxGeometry();
   const assets = new EntityAssets({} as SimWorld, false, materials);

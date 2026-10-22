@@ -22,6 +22,8 @@ export async function warmL4Alarm(composition: LevelComposition, layouts: readon
     mission.begin();
     mission.completeObjective('ride'); world.update();
     mission.completeObjective('quartermaster');
-    for (let i = 0; i < 30; i++) world.update();
+    // Exercise the crowd's active flight long enough to tier up its first paths,
+    // rather than ending after the initial half-second of the private alarm.
+    for (let i = 0; i < 90; i++) world.update();
   } finally { world.dispose(); }
 }

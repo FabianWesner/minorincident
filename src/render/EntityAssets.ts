@@ -138,16 +138,16 @@ export class EntityAssets extends Group {
   /** Compile the cutaway variant behind loading; restore each actor's current state. */
   prewarmReveal(at?: Vector3, enabled = true): () => void {
     const saved: [PaletteMaterial, boolean][] = [];
-    const positions: [Object3D, Vector3][] = [];
+    const positions: [Object3D, Vector3, boolean][] = [];
     for (const record of this.records.values()) {
-      if (at) { positions.push([record.model, record.model.position.clone()]); record.model.position.copy(this.worldToLocal(at.clone())); }
+      if (at) { positions.push([record.model, record.model.position.clone(), record.model.visible]); record.model.position.copy(this.worldToLocal(at.clone())); record.model.visible = true; }
       for (const material of record.reveal) {
         saved.push([material, material.userData.seeThrough === true]); material.seeThrough(enabled);
       }
     }
     return () => {
       for (const [material, previous] of saved) material.seeThrough(previous);
-      for (const [model, position] of positions) { model.position.copy(position); model.updateMatrixWorld(true); }
+      for (const [model, position, visible] of positions) { model.position.copy(position); model.visible = visible; model.updateMatrixWorld(true); }
     };
   }
   /** Scripted convoy vehicles and props use the same camera segments as physical cars. */
