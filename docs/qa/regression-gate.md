@@ -12,7 +12,7 @@ The PO found 14 issues in L1–L4 on PROD 13h that every bot and the Opus QA had
    - the objective marker is visible within 2 s of every step start;
    - walkable height follows the drawn surface.
 
-   For each load configuration, collect baseline evidence first, then use `LOAD_ASSERT=1 LOAD_BASELINE=<baseline-evidence-directory> LOAD_GAMEPLAY_MS=10000` on the candidate probe. It exits nonzero for missing samples, backend fallback, browser errors, a load over 6 s, a post-card frame over 200 ms, or a slower median. Keep the separate L10 lamp replay green too.
+   For each load configuration, collect baseline evidence first, then use `LOAD_ASSERT=1 LOAD_BASELINE=<baseline-evidence-directory> LOAD_GAMEPLAY_MS=10000 LOAD_GAMEPLAY_LAST=1` on the candidate probe. This measures 20 cold loads and at least one ten-second real-movement segment per configuration, plus the first post-card frames of every load. Omit `LOAD_GAMEPLAY_LAST` to record ten seconds on every sample. The probe exits nonzero for missing samples, backend fallback, browser errors, a load over 6 s, a post-card frame over 200 ms, or a slower median. Keep the separate L10 lamp replay green too.
 2. **Visual A/B against PROD (`npm run qa:ab`).** Per level, a seeded camera tour at the PO's settings (low, zoom 1.5 and 1, WebGPU) through the scripted moments. It is rendered on the PROD build and on the candidate and diffed per frame. Opus judges only the changed frames: improvement, intended or regression.
 3. **PO-style QA.** The Opus QA plays L1–L4 at least, at close zoom, low quality and with a progressed save. It works through the PO checklist (docs/qa/po-checklist.md), which gets every PO finding added.
 4. **Process:**

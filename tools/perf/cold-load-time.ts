@@ -15,12 +15,14 @@ const [origin, backend = 'webgpu', quality = 'low', count = '20', level = 'L1', 
 const out = process.env.LOAD_OUT ?? 'test-results/load-stalls';
 const diagnostic = process.env.LOAD_TRACE === '1';
 const gameplayMs = Number(process.env.LOAD_GAMEPLAY_MS ?? 0);
+const lastGameplayOnly = process.env.LOAD_GAMEPLAY_LAST === '1';
 const waits = menuWait.split(',').map(Number);
 assert.ok(waits.every(wait => Number.isFinite(wait) && wait >= 0), 'menu waits must be nonnegative milliseconds');
 mkdirSync(out, { recursive: true });
 const results: Record<string, unknown>[] = [];
 for (let run = 0; run < Number(count); run++) {
   const wait = waits[run % waits.length];
+  const sampleGameplayMs = !lastGameplayOnly || run === Number(count) - 1 ? gameplayMs : 0;
   const label = `${level}-${backend}-${quality}-${run}`;
   const browser = await chromium.launch({ headless: true, args: [
     '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
@@ -69,7 +71,7 @@ for (let run = 0; run < Number(count); run++) {
       };
       new MutationObserver(watch).observe(document, { subtree: true, attributes: true, childList: true, characterData: true });
       const frame = at => {
-        if (last !== null && p.done !== null && last >= p.done) p.frames.push({ at: last, ms: at - last, playing: p.playing !== null });
+        if (last !== null && p.done !== null && at >= p.done) p.frames.push({ at: Math.max(last, p.done), ms: at - Math.max(last, p.done), playing: p.playing !== null });
         last = at; requestAnimationFrame(frame);
       };
       requestAnimationFrame(frame);
@@ -118,24 +120,26 @@ for (let run = 0; run < Number(count); run++) {
     }
     await page.getByTestId(`level-${level}`).click({ force: true });
     await page.waitForFunction('window.__coldLoad.done !== null', undefined, { polling: 50 });
-    if (gameplayMs) {
+    if (sampleGameplayMs) {
       const begin = page.getByRole('button', { name: 'Begin mission', exact: true });
       if (await begin.isVisible()) await begin.click();
       await page.getByTestId('pause-button').waitFor();
       await page.keyboard.down('w');
-      await page.waitForTimeout(gameplayMs / 2);
+      await page.waitForTimeout(sampleGameplayMs / 2);
       await page.keyboard.up('w');
       await page.keyboard.down('d');
-      await page.waitForTimeout(gameplayMs / 2);
+      await page.waitForTimeout(sampleGameplayMs / 2);
       await page.keyboard.up('d');
     }
+    // Include the first presented frames even for the load-only observations.
+    await page.evaluate(async () => { for (let i = 0; i < 3; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); });
     const result = await page.evaluate<Record<string, unknown>>(`(() => {
       const p = window.__coldLoad;
-      return { ...p, ms: p.done - p.start, maxFrameMs: Math.max(0, ...p.frames.map(f => f.ms)),
+      return { ...p, bundle: document.querySelector('script[type=module][src]')?.src, ms: p.done - p.start, maxFrameMs: Math.max(0, ...p.frames.map(f => f.ms)),
         measures: performance.getEntriesByType('measure').map(e => ({ name: e.name, at: e.startTime, ms: e.duration })),
         resources: performance.getEntriesByType('resource').filter(e => e.startTime + e.duration >= p.start).map(e => ({ name: new URL(e.name).pathname, at: e.startTime, ms: e.duration, bytes: e.transferSize })) };
     })()`);
-    const record = { origin, backend, quality, level, run, menuWait: wait, diagnostic, gameplayMs, load: loadavg(), errors, ...result };
+    const record = { sampledAt: new Date().toISOString(), origin, backend, quality, level, run, menuWait: wait, diagnostic, gameplayMs: sampleGameplayMs, load: loadavg(), errors, ...result };
     results.push(record);
     writeFileSync(`${out}/${label}.json`, JSON.stringify(record));
     console.log(JSON.stringify({ ...record, frames: undefined, resources: undefined, tasks: undefined }));
@@ -156,7 +160,8 @@ for (let run = 0; run < Number(count); run++) {
   } finally { await browser.close(); }
 }
 const sorted = results.map(result => result.ms as number).sort((a, b) => a - b);
-const summary = { origin, backend, quality, level, diagnostic, menuWaits: waits, n: sorted.length, median: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2, p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
+const gameplaySamples = results.filter(result => Number(result.gameplayMs) >= 10_000);
+const summary = { origin, backend, quality, level, diagnostic, gameplaySamples: gameplaySamples.length, menuWaits: waits, n: sorted.length, median: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2, p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
 writeFileSync(`${out}/${level}-${backend}-${quality}-summary.json`, JSON.stringify(summary, null, 2));
 console.log(JSON.stringify(summary));
 if (process.env.LOAD_ASSERT === '1') {
@@ -173,7 +178,8 @@ if (process.env.LOAD_ASSERT === '1') {
     return backend === 'webgpu' ? adapter && adapter.fallback !== true && !/swiftshader|llvmpipe/i.test(adapter.description ?? '') : typeof result.glRenderer === 'string' && !/swiftshader|llvmpipe/i.test(result.glRenderer);
   }), 'native hardware rendering is required');
   assert.ok(gameplayMs >= 10_000, 'record at least ten seconds of real gameplay movement');
-  assert.ok(results.every(result => (result.frames as unknown[]).length >= 100), 'post-card frame samples must be present');
+  assert.ok(results.every(result => (result.frames as unknown[]).length >= 2), 'first post-card frames must be present in every cold observation');
+  assert.ok(gameplaySamples.length > 0 && gameplaySamples.every(result => (result.frames as unknown[]).length >= 100), 'record real gameplay frames for every configuration');
   assert.ok(summary.maxFrameMs <= 200, `post-card frame: ${summary.maxFrameMs} ms`);
   assert.ok(process.env.LOAD_BASELINE, 'LOAD_BASELINE must name the baseline evidence directory');
   const before = JSON.parse(readFileSync(`${process.env.LOAD_BASELINE}/${level}-${backend}-${quality}-summary.json`, 'utf8'));

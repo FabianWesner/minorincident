@@ -5,6 +5,6 @@
 - Quiet diagnostic L8 reproduces 24.490 s: 17.708 s scene assembly (17.256 s infected-crowd), 6.177 s warm-up; retained raw profile/trace in `evidence/diagnostic-L8/`.
 - L8 unnecessarily used the live-handover pacing on cold menu entry; L8/L10 also prepared unused catalogue creatures and duplicate pedestrian batches already drawn by CivilianCrowd.
 - Candidate keeps live L7→L8 pacing, uses foreground compilation for cold entry, and prepares every L10 future encounter, dog coat and Alpha/Mega look. Actual GPU driver draws/fences and alternate-light warm-up remain in place.
-- Targeted preparation tests: 23/23 local pass (previous 22-test candidate also passed remotely). Revised remote typecheck/lint/build and final full suite are running; browser admission is queued.
-- Baseline remote suite: 2,423 pass, 3 fail (stale lighting-preview HTML expectation now fixed; asset-validation and L9 navigation timeouts). Final full suite, smoke and L10 replay remain outstanding.
-- `evidence/matrix.sh` pairs before/after per configuration under ≤20-minute quiet reservations; candidate samples include ten seconds of real movement. Budget/gate are in `docs/qa/regression-gate.md` and `tools/perf/cold-load-time.ts`.
+- Candidate `d691d50a6`: 23/23 targeted remote tests, typecheck/lint/build, and all 31 smoke checks pass. Final full suite and quiet distributions/replay are running or queued.
+- Baseline remote suite: 2,423 pass, 3 fail (stale lighting-preview HTML expectation now fixed; asset-validation and L9 navigation timeouts). Final full suite and L10 replay remain outstanding; the final-run asset-validation file now passes (170 s).
+- `evidence/matrix.sh` pairs before/after per configuration under ≤20-minute quiet reservations; each configuration includes a ten-second real-movement segment and every cold load records its first post-card frames. Budget/gate are in `docs/qa/regression-gate.md` and `tools/perf/cold-load-time.ts`.
