@@ -131,6 +131,12 @@ export class LevelOneOutbreak {
   update(): void {
     const { world, state } = this.mission, l1 = state.l1; if (!l1) return;
     const tick = world.tick, player = world.entities.get(1)!, tech = world.entities.get(l1.techId);
+    // Do not rewrite a just-completed respawn's destination when the objective activates during death.
+    if (player.health.current > 0 && tick >= player.survivor!.invulnerableUntil && state.steps.weapon?.status === 'active' && state.checkpoint === 'accident') {
+      const bat = this.anchor('garage-bat'), cp = player.survivor!.checkpoint;
+      const retry = bat && world.solids.find({ x: bat.x, z: bat.z, y: player.transform.y }, .35, 1, 4);
+      if (bat && retry && Math.hypot(cp.x - bat.x, cp.z - bat.z) > 25) this.mission.checkpoint('accident', retry);
+    }
     this.story.update();
     // The technician is script-driven until he turns: ambient civilian logic (alarm, flee) must not move him.
     if (tech?.civilian) { tech.civilian.state = 'calm'; tech.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
