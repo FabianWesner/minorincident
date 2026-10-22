@@ -7,6 +7,8 @@ import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { loadavg } from 'node:os';
+import { preset } from '../../src/sim/progression/Campaign';
+import { SAVE_KEY, validateSave } from '../../src/sim/progression/Save';
 
 const [origin, backend = 'webgpu', quality = 'low', count = '20', level = 'L1', menuWait = '0'] = process.argv.slice(2);
 const out = process.env.LOAD_OUT ?? 'test-results/load-stalls';
@@ -56,10 +58,36 @@ for (let run = 0; run < Number(count); run++) {
       };
       requestAnimationFrame(frame);
     })();`);
-    const query = new URLSearchParams({ quality, audio: 'muted', dpr: '1', ...(level === 'L1' ? {} : { debug: '1' }), ...(backend === 'webgl2' ? { renderer: 'webgl' } : {}) });
+    if (diagnostic) await page.addInitScript(`(() => {
+      const wrap = (type, names) => {
+        if (!type) return;
+        for (const name of names) {
+          const original = type.prototype[name];
+          if (!original) continue;
+          type.prototype[name] = function(...args) {
+            const start = performance.now(), result = original.apply(this, args);
+            const mark = () => { if (performance.now() - start > 10) performance.measure(type.name + '.' + name, { start, end: performance.now() }); };
+            if (result instanceof Promise) result.then(mark, mark); else mark();
+            return result;
+          };
+        }
+      };
+      wrap(window.GPUDevice, ['createRenderPipeline', 'createRenderPipelineAsync', 'createShaderModule', 'createBuffer', 'createCommandEncoder']);
+      wrap(window.GPUQueue, ['writeTexture', 'writeBuffer', 'submit', 'onSubmittedWorkDone']);
+      wrap(window.WebGL2RenderingContext, ['getProgramParameter', 'texImage2D', 'texSubImage2D', 'clientWaitSync', 'linkProgram']);
+    })();`);
+    // Later levels use an unlocked campaign, with empty HTTP/GPU caches. This avoids
+    // an unrelated speculative L1 load in front of the selected level.
+    if (level !== 'L1') {
+      const save = preset(`${level}-default` as Parameters<typeof preset>[0]);
+      save.settings.quality = quality as 'low' | 'high';
+      if (!validateSave(save)) throw Error(`Invalid ${level} measurement campaign`);
+      await page.addInitScript(({ key, value }) => localStorage.setItem(key, value), { key: SAVE_KEY, value: JSON.stringify(save) });
+    }
+    const query = new URLSearchParams({ quality, audio: 'muted', dpr: '1', ...(backend === 'webgl2' ? { renderer: 'webgl' } : {}) });
     await page.goto(`${origin}/?${query}`);
     await page.getByTestId('start-game').click();
-    await page.getByTestId('character-female').click();
+    if (level === 'L1') await page.getByTestId('character-female').click();
     await page.getByTestId(`level-${level}`).waitFor();
     if (Number(menuWait)) await page.waitForTimeout(Number(menuWait));
     const cdp = diagnostic ? await page.context().newCDPSession(page) : null;
