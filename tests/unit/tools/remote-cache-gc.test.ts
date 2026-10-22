@@ -19,8 +19,11 @@ test('remote cache GC removes inactive caches while retaining current caches and
     const assignment = source.split('\n').find(line => line.startsWith('GC='))!
       .replaceAll('/srv/mi/ws', ws).replaceAll('/srv/mi/jobs', jobs).replaceAll('/proc/', `${proc}/`);
     const quote = source.split('\n').find(line => line.startsWith('sq()'))!;
+    // The runner shell uses GNU stat. Supply its mtime query on macOS while
+    // exercising the same cleanup script and real fixture timestamps.
+    const stat = process.platform === 'darwin' ? 'stat() { shift 2; command stat -f %m "$@"; }\n' : '';
     // Deterministic free space keeps this focused on stale-cache retention.
-    const shell = `df() { printf 'Filesystem blocks used available capacity mount\\nfixture 30000000 1000000 29000000 4%% /\\n'; }\n${quote}\nCACHE=$1\n${assignment}\neval "$GC"`;
+    const shell = `${stat}df() { printf 'Filesystem blocks used available capacity mount\\nfixture 30000000 1000000 29000000 4%% /\\n'; }\n${quote}\nCACHE=$1\n${assignment}\neval "$GC"`;
     execFileSync('sh', ['-c', shell, 'sh', current]);
     expect(existsSync(stale)).toBe(false);
     expect(existsSync(current)).toBe(true);
