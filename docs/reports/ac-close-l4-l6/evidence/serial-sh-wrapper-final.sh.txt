@@ -16,6 +16,7 @@ case "$1" in
   tools/remote/run.sh)
     case " $* " in
       *'npx playwright test'*|*'--pull dist'*)
+        while [ -f /tmp/ac-close-l4-l6-verifier/primary-proof-hold ]; do sleep 2; done
         export MI_AC_BROWSER_HELD=1
         exec /usr/bin/lockf -k /tmp/ac-close-l4-l6-browser.serial /bin/sh /tmp/ac-close-l4-l6-verifier/launch.sh "$@";;
     esac;;

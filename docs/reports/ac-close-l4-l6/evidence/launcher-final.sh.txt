@@ -42,6 +42,7 @@ if [ -n "${AC_RECEIPT_DEST:-}" ]; then
   result=$?
   [ ! -f test-results/playwright/results.json ] || cp test-results/playwright/results.json "$AC_RECEIPT_DEST"
   [ -z "${AC_RECEIPT_EXIT:-}" ] || printf '%s\n' "$result" > "$AC_RECEIPT_EXIT"
+  if [ ! -f /tmp/ac-close-l4-l6-verifier/primary-proof-hold ] && [ -f /tmp/ac-close-l4-l6-verifier/priority-receipt ] && [ "$AC_RECEIPT_DEST" = "$(cat /tmp/ac-close-l4-l6-verifier/priority-receipt)" ]; then rm -f /tmp/ac-close-l4-l6-verifier/priority-receipt; fi
   exit "$result"
 fi
 exec /bin/sh "$@"
