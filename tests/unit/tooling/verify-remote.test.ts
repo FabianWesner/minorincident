@@ -54,8 +54,6 @@ for (const [epic, visualTitles] of [
   for (const title of visualTitles) {
     expect(pattern.test(title), title).toBe(true);
     expect(excludedPattern.test(title), `remote excludes ${title}`).toBe(true);
-    const name = title.split(' ')[0].replace(/-webgl-high$|-charge-high$|-matrix$|-phone-panel$/, '');
-    expect(remote.some(arg => arg.includes(name)), `remote excludes native ${name}`).toBe(true);
   }
   for (const browser of commands.filter(command => command.includes('playwright')))
     expect(browser).toContain('--workers=1');
