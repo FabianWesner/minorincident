@@ -51,6 +51,10 @@ for (const tier of ['high', 'low'] as const) test(`5 L4 ${tier}: every authored 
       }
       const name = `L4/${tier}/${collapse ? 'collapse' : `war-${wave}`}`;
       console.log(`[qa:invariants] ${name}: authored=${expected} spawned=${ids.size} admitted=${admitted.size} reached=${reached.size}`);
+      if (reached.size !== ids.size) console.log(`[qa:invariants] ${name} unreached: ${JSON.stringify([...ids].filter(id => !reached.has(id)).map(id => {
+        const e = w.entities.get(id);
+        return { id, at: e?.transform, state: e?.infected?.state, pending: e?.pendingAdmission, emerging: e?.emerging, nearestGuardM: e && Math.min(...s.soldierIds.map(id => w.entities.get(id)).filter(e => !!e && e.health.current > 0).map(g => Math.hypot(g!.transform.x - e.transform.x, g!.transform.z - e.transform.z))) };
+      }))}`);
       if (ids.size !== expected || admitted.size !== expected || reached.size !== expected) errors.push(`${name}: authored ${expected}, spawned ${ids.size}, admitted ${admitted.size}, reached ${reached.size}`);
     }
     expect(errors, 'waves invariant: L4 authored count and goal arrival').toEqual([]);
