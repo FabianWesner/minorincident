@@ -7,7 +7,7 @@ import { test, expect, boot, testUrl } from '../fixtures';
 const out='test-results/epics/E24';
 test('T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights',async({page})=>{
   test.setTimeout(600_000);mkdirSync(out,{recursive:true});
-  await boot(page,`${testUrl}&ui=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
+  await boot(page,`${testUrl}&ui=1&scenelab=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
   for(const [name,ticks]of [['l6-shelter-calm',60],['l6-first-breach',34*60],['l6-shelter-fails',23*60]] as const){
     await page.evaluate(n=>window.__SS__!.step(n),ticks);await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);await a.screenshotReady();},name);
     await page.screenshot({path:`${out}/${name}.png`});
@@ -25,6 +25,12 @@ test('T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes under
 test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs',async({page})=>{
   test.setTimeout(1_200_000);mkdirSync(out,{recursive:true});await boot(page,`${testUrl}&ui=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
   const shots=new Set<string>(),step=(n:number)=>page.evaluate(n=>window.__SS__!.step(n),n);
+  await page.evaluate(()=>{
+    const game=(window.__SCENE__ as unknown as {game:import('../../../src/Game').Game})?.game;
+    if(!game)return;
+    const journal:unknown[]=[];(window as unknown as {l6PlayerEvents:unknown[]}).l6PlayerEvents=journal;
+    for(const type of ['player.damaged','player.died'] as const)game.world.events.on(type,event=>journal.push({event,at:{...game.world.entities.get(1)!.transform}}));
+  });
   const snap=async(name:string)=>{await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);if(name==='l6-tunnel-retreat'){const s=a.missions.state()!.l6!,p=a.getState().player!.transform,front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;a.camera.cinematic({position:[x+34,40,49],target:[x,.6,15]},true);}await a.screenshotReady();},name);await page.screenshot({path:`${out}/real-${name}.png`});shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);};
   await step(30);await expect(page.locator('.story-bubble')).toContainText('Keep the wrap tight');await expect(page.locator('.story-bubble')).toBeVisible();await snap('l6-shelter-calm');await step(300);await expect(page.locator('.story-bubble')).toContainText('Please do not leave me behind');
   for(let i=0;i<3500;i++){
@@ -76,10 +82,17 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
       }
       expect(await selected()).toBe(id);keys.push(right?'k':'j');
     }
-    for(const key of keys)await page.keyboard.down(key);await step(6);for(const key of keys)await page.keyboard.up(key);
+    // Preserve the planner's braking near short waypoints when translating its
+    // analog movement into physical keys; full-speed six-tick bursts overshoot stairs.
+    const movingTicks=Math.max(1,Math.round(6*Math.min(1,Math.hypot(move.x,move.z))));
+    for(const key of keys)await page.keyboard.down(key);await step(movingTicks);
+    for(const key of keys.filter(key=>['w','a','s','d'].includes(key)))await page.keyboard.up(key);
+    if(movingTicks<6)await step(6-movingTicks);
+    for(const key of keys)await page.keyboard.up(key);
 
   }
   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+  writeFileSync(`${out}/real-player-events.json`,JSON.stringify(await page.evaluate(()=>(window as unknown as {l6PlayerEvents?:unknown[]}).l6PlayerEvents??[]),null,2));
   const carriedArsenal=await page.evaluate(()=>{const w=window.__SS__!.getEntity(1)!.weapons!;return [...w.LEFT.rack,...w.RIGHT.rack].map(s=>s.id).sort();});
   const exitCamera=await page.evaluate(async()=>{const a=window.__SS__!;a.camera.preset('D-SUBWAY/W0/l6-exit-night');await a.screenshotReady();return a.getState().render.camera;});await page.screenshot({path:`${out}/pair-northgate-l6.png`});
   await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});

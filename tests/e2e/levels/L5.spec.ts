@@ -273,7 +273,11 @@ test.describe('L5 Aftermath in the browser', () => {
       for (const name of names) {
         // The courier stands at the anchor: the see-through fade keeps the buildings between her and the camera open, as in play.
         await page.evaluate(({ name, level, at }) => { const a = window.__SS__!; a.teleport(a.query({ kind: 'player' })[0].id, { x: at.x, z: at.z }); a.camera.preset(`D-FAIR/${level}/${name}`); }, { name, level, at: anchors[name] });
-        await page.evaluate(() => window.__SS__!.step(8)); await page.evaluate(() => window.__SS__!.screenshotReady());
+        await page.evaluate(() => window.__SS__!.step(8));
+        // Paused simulation does not advance the presentation clock. Let persistent
+        // flames and their smoke reach an ordinary visible state at this camera.
+        await page.evaluate(() => { for (let i = 0; i < 120; i++) window.__SS__!.vfx.stepRender(1 / 60); });
+        await page.evaluate(() => window.__SS__!.screenshotReady());
         out[name] = await page.screenshot();
       }
       return out;
