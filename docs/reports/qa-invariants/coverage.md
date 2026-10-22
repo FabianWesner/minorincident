@@ -24,7 +24,7 @@ Aggregate multi-person tableau GLBs (`npc.survivor-group[.aftermath]`) are not c
 | L3 | Every `attack.waves` entry on both tiers, reaching the station yard. Later fallback cancellation and unrelated street population are isolated. |
 | L4 | First hold alarm, all ten `war.waveSize` entries, and one representative recurring collapse batch, both tiers. Goals use the authored hold/perimeter. Actual spawned/admitted/reached counts are logged separately. |
 | L5 | The controller explicitly authors sparse resident wanderers and no waves (`LevelFiveAftermath.spawnWanderers`). Covered by all-level state sweeps; no invented wave count. |
-| L6 | First breach, second breach quota, every maintenance entry, both tiers. Entry fixtures place the courier on the authored approach side before spawning; goal is the tunnel corridor. |
+| L6 | First breach, second breach quota, a representative recurring retreat reinforcement, every maintenance entry, both tiers. Entry fixtures place the courier on the authored approach side before spawning; goal is the tunnel corridor. |
 | L7 | All five finite director groups on both tiers. These are authored stationary encounter populations; their actual admitted arrival ledger is checked, rather than inventing a pursuit wave. |
 | L8 | Every tunnel outlet's first breach and recurring reinforcement quota, both tiers, including the first four authored Alpha reinforcements. Actual emergence must finish near the outlet goal. |
 | L9 | Authored resident risk groups, no alarm/wave controller (`LevelNineEncounters`). All-level state/objective/ground/load and scripted vehicle checks still include L9. |

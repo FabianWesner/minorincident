@@ -23,6 +23,10 @@ for (const tier of ['low', 'high'] as const) test(`3 late scripted scenes ${tier
   const metro = await loadLevel('L5', 1, tier);
   try {
     const m = metro.missions!, s = m.state.l5!;
+    // Isolate the authored reveal lifecycle from a random resident biting the stationary lookout.
+    // Combat loss is a valid story exit and is covered by the campaign suites, not this visibility probe.
+    for (const e of [...metro.infected!.active]) metro.infected!.release(e);
+    metro.combat!.damage.god = true;
     // The production search completion reveals the hidden lookout; the initial-cast sweep cannot reach this beat.
     (m.l5! as unknown as { findAll(): void }).findAll();
     const id = s.lookoutId;
