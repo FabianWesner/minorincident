@@ -6,10 +6,10 @@
 
 | Partial AC | Current disposition |
 | --- | --- |
-| E07-AC05 | Restored/paused warning defect fixed; all 14 move timing probes passed; authored repeat radius passed; full-boundary review rejected the cropped 18/20 m roar overviews and awaits the widened inspection camera. |
-| E07-AC06 | Alpha move/spatial controls and 12-case shared bar matrix pass; final actual Alpha/phone captures pending. |
+| E07-AC05 | Met/fixed: all 14 timing/cooldown/restore probes and complete-boundary image review; 168 captures. The initially cropped roars were rejected and recaptured wider. |
+| E07-AC06 | Met: all four Alpha moves, spatial/restore controls, 12-case shared-bar matrix and actual Alpha desktop/phone HP captures reviewed. |
 | E07-AC13 | Met: named 60-runner Checklist D, all five items. |
-| E07-AC19 | Proposed stampede-corridor rewrite below; remaining zoo move/bar proof awaits final run. |
+| E07-AC19 | Zoo timing/boundary/restore and actual phone-bar proof met; literal stampede width remains partial with the unadopted proposal below. |
 | E27-AC15 | Met/fixed: named H, all seven spots / seven items; full verify passes; E27 done. |
 | E28-AC10 | Real buffer repair + native storm/L5 proof; original legacy heap counter still fails. Proposed measurement clarification below; partial. |
 | E28-AC12 | Met: explicit six-mood G/reference signoff, 4/4 must +3/3 should. |
@@ -35,6 +35,16 @@ All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 S
 | E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
 
 The Alpha contact fixture was corrected to separate a courier-provoked Alpha from the unprovoked soldier-contact check; all original HP/knockdown/cooldown expectations stay. The hero-shadow fixture now submits 90 individual fixed-tick views and requires promotion blend 1 before sampling the unchanged shadow gate. The repeat move probe preserves authored radius (including 18 m Alpha roar) instead of passing a generic one-metre area. The merged Alpha scene now stages the retained throw body before the legal slam-recovery boundary, and records all four original special activations plus the three actual 30/25/30 HP hits. A later protected zero-damage slam remains in its complete journal. The authored elephant scene also contains a sedan in the charge corridor: the failed browser receipt records a broken 400 HP barricade and one 80 HP chassis hit, followed by no courier hit. The courier-impact probe now clears that vehicle; a separate admitted-chassis probe retains it and checks the barricade, impulse, single car hit and protected courier. These are fixture corrections, not runtime difficulty changes. [Original elephant receipt](evidence/elephant-charge-failure.json.gz).
+
+## All 14 move warning, restore and cooldown review — E07-AC05/06/19
+
+Opened both seven-move timing sheets and every full-size boundary overview, including the recaptured complete **18 m Alpha /20 m gorilla roar** rings. [Alpha/lion/roar sheet](moves-a-1.jpg), [gorilla/elephant/zebra/flamingo sheet](moves-b-1.jpg), [14 state journals and 168 input image hashes](evidence/move-boundaries.json.gz). No warning image is graded or corrected. The wider camera is only an additional unchanged-tick inspection; every move also retains its authored gameplay view.
+
+The Alpha slam and gorilla pound are complete ground circles; the two roars are much larger complete rings. Charge/pounce/throw/flank warnings are directional corridors with chevrons; the lion flank points laterally away from the courier. The elephant charge shows its entire broad corridor, barricade and sedan; its swipe is a forward arc, while the zebra kick is a rear arc. All three actual zebras and their complete overlapping herd corridors fit; the flamingo flock has a distinct circular dive target. These observations concern warning visibility and framing; the literal stampede collision-width failure below is not signed off.
+
+For **every move**, the receipt checks the last warning tick, activation on the next exact sim tick, no premature activation, matching source/move/attack identity, and disappearance at activation. A real mission checkpoint restores the locked target/area with one tick remaining and an opaque visible warning; restored activation occurs exactly one tick later. A second checkpoint restores remaining cooldown after seven elapsed ticks. Starting one tick too early is rejected; the next legal windup preserves the authored radius and its activation occurs at the rebased cooldown expiry, with elapsed ticks minus those seven restored ticks equal to the unchanged authored cooldown. Both the restored windup and repeated warning are visible while paused. The full-size restored elephant swipe contains only its proper arc, matching its single state marker.
+
+The separately corrected obstacle probe passes alongside the original clear-lane impact expectation: **sedan 300→220 HP**, one 80 HP charge hit, ≥1 m actual chassis displacement, broken 400 HP barricade and courier **100 HP** behind the stopped charge. [Four focused checks](evidence/elephant-roar-final.log.txt), [actual chassis/state journal](evidence/elephant-chassis-final.json.gz). The complete verifier is still running; these visual/mechanical dispositions do not imply an overall green run yet.
 
 ## Spatial controls and shared bars — E07-AC05/06/19
 
