@@ -1,6 +1,6 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status at 18:12 UTC: **all final strict L4 and L6 checks pass on `b47e00336`**. Smoke is **31/31 green**, and final types/lint are green. Two quiet loading observations and the last L6 campaign file in the full remote suite remain; the goal is not yet complete. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
+Status at 18:16 UTC: **all final strict L4 and L6 checks pass on `b47e00336`**. Smoke is **31/31 green**, and final types/lint are green. The full remote suite passes **444 files / 2,421 tests** (the existing three files / nine tests remain skipped). Only two quiet loading observations remain; the goal is not yet complete. Matched base is `480b44e42`; the baseline worktree was removed after archiving its provenance and all before measurements to relieve disk pressure.
 
 ## Matched quiet measurements
 
