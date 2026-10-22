@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 for (const tier of ['high', 'low'] as const) for (const species of ['lion', 'gorilla', 'elephant', 'zebra', 'flamingo']) {
@@ -12,12 +12,16 @@ for (const tier of ['high', 'low'] as const) for (const species of ['lion', 'gor
     await page.evaluate(async s => { await window.__SS__!.ready; await window.__SCENE__!.load(s); await window.__SCENE__!.ready(); }, spec);
     const id = await page.evaluate(() => window.__SCENE__!.actors.get('animal')!.entity);
     const before = await page.evaluate(() => window.__SS__!.getState());
+    const out = 'test-results/epics/E30/animals-current'; mkdirSync(out, { recursive: true });
+    await page.locator('canvas').screenshot({ path: `${out}/${tier}-${species}-before.png` });
     expect(before.entities.find(e => e.id === id)!.civilian).toMatchObject({ zooAnimal: species, model: `amb.${species}` });
     expect(before.render.crowd!.batches.some(b => b.id === `healthy.${species}` && b.instances > 0 && b.source === 'glb')).toBe(true);
     expect(before.entities.find(e => e.id === id)!.infected).toBeUndefined();
     expect(before.render.healthBars!.bars.some(b => b.id === id)).toBe(false);
     await page.evaluate(async () => { await window.__SS__!.step(600); await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
     const after = await page.evaluate(() => window.__SS__!.getState());
+    await page.locator('canvas').screenshot({ path: `${out}/${tier}-${species}-after.png` });
+    writeFileSync(`${out}/${tier}-${species}.json`, JSON.stringify({ tier, species, id, before, after }, null, 2));
     expect(after.entities.filter(e => e.id === id)).toHaveLength(1);
     expect(after.entities.find(e => e.id === id)!.archetype).toBe(`infected.${species}`);
     expect(after.render.healthBars!.bars.find(b => b.id === id)).toMatchObject({ fraction: 1, width: tier === 'low' ? 48 : 64, height: tier === 'low' ? 6 : 8 });
