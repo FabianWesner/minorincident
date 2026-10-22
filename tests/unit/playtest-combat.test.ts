@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { fistsRetreatAttack, keepMovingWithFists } from '../../tools/playtest/combat';
+import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists } from '../../tools/playtest/combat';
 
 test('#99 one or two close infected must not plant the fists courier during the moving retreat', () => {
   expect(keepMovingWithFists('L6', 'retreat', true, 1)).toBe(true);
@@ -24,4 +24,12 @@ test('#99 fists movement preserves the existing low-health kite policy', () => {
   expect(keepMovingWithFists('L6','retreat',true,1,.29)).toBe(false);
   expect(keepMovingWithFists('L6','retreat',true,14,.2)).toBe(false);
   expect(keepMovingWithFists('L6','retreat',true,1,.3)).toBe(true);
+});
+
+test('#99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring', () => {
+  expect(canCoverVisibleAllies('L6','shelter',true)).toBe(true);
+  expect(canCoverVisibleAllies('L6','stop',true)).toBe(true);
+  expect(canCoverVisibleAllies('L6','retreat',true)).toBe(false);
+  expect(canCoverVisibleAllies('L7','corridor',true)).toBe(false);
+  expect(canCoverVisibleAllies('L6','retreat',false)).toBe(true);
 });
