@@ -156,12 +156,28 @@ test('@E18 WebGPU pose uploads yield within 4 MiB and finish before pipeline com
 });
 
 
-test('@E18 other WebGPU levels retain foreground compilation and draw batching', async () => {
+test('@E18 all foreground WebGPU levels compile asynchronously without changing driver draw coverage', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   const leaves = Array.from({ length: 130 }, () => new Mesh(geometry, material)); scene.add(...leaves);
   const compile = vi.fn(async () => {}), groups: number[] = [];
   const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
   await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(leaves.filter(leaf => leaf.visible).length); }, compile, async () => {});
-  expect(compile).not.toHaveBeenCalled(); expect(groups).toEqual([130, 130, 130]);
+  expect(compile).toHaveBeenCalledOnce(); expect(groups).toEqual([130, 130, 130]);
+  geometry.dispose(); material.dispose();
+});
+
+test('@E18 viewport-depth leaves build in the real HDR draw rather than compiling a fallback binding', async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const ordinary = new Mesh(geometry, material), depth = new Mesh(geometry, material); depth.userData.preRenderNeedsDepth = true;
+  scene.add(ordinary, depth);
+  let compiled = false, draws = 0;
+  const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => {
+    expect(compiled).toBe(true); expect(depth.visible).toBe(true); draws++;
+  }, async partitions => {
+    for (const apply of partitions) { apply(); expect(depth.visible).toBe(false); }
+    compiled = true;
+  }, async () => {});
+  expect(draws).toBe(3); expect(ordinary.visible).toBe(true); expect(depth.visible).toBe(true);
   geometry.dispose(); material.dispose();
 });

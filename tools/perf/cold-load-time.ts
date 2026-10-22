@@ -34,9 +34,21 @@ for (let run = 0; run < Number(count); run++) {
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
     await page.addInitScript(`(() => {
       window.__name = fn => fn;
-      const p = window.__coldLoad = { stages: [], tasks: [], frames: [], contexts: [], start: null, done: null, playing: null };
+      const p = window.__coldLoad = { stages: [], tasks: [], frames: [], contexts: [], adapter: null, glRenderer: null, start: null, done: null, playing: null };
+      if (navigator.gpu) {
+        const request = navigator.gpu.requestAdapter;
+        navigator.gpu.requestAdapter = function(...args) { return request.apply(this, args).then(adapter => {
+          if (adapter) { const info = adapter.info; p.adapter = { vendor: info?.vendor, architecture: info?.architecture, description: info?.description, fallback: adapter.isFallbackAdapter ?? info?.isFallbackAdapter }; }
+          return adapter;
+        }); };
+      }
       const context = HTMLCanvasElement.prototype.getContext;
-      HTMLCanvasElement.prototype.getContext = function(type, ...args) { const result = context.call(this, type, ...args); if (result && !p.contexts.includes(type)) p.contexts.push(type); return result; };
+      HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+        const result = context.call(this, type, ...args);
+        if (result && !p.contexts.includes(type)) p.contexts.push(type);
+        if (result && type === 'webgl2') { const extension = result.getExtension('WEBGL_debug_renderer_info'); if (extension) p.glRenderer = result.getParameter(extension.UNMASKED_RENDERER_WEBGL); }
+        return result;
+      };
       new PerformanceObserver(list => { for (const e of list.getEntries()) p.tasks.push({ at: e.startTime, ms: e.duration }); }).observe({ type: 'longtask', buffered: true });
       document.addEventListener('click', e => {
         if (e.target.closest('[data-testid="level-${level}"]')) p.start = performance.now();
@@ -100,12 +112,16 @@ for (let run = 0; run < Number(count); run++) {
       await cdp.send('Profiler.enable');
       performanceStartedAt = await page.evaluate(() => performance.now());
       await cdp.send('Profiler.start');
-      await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink.user_timing,gpu,disabled-by-default-gpu.service', transferMode: 'ReturnAsStream' });
+      const { categories } = await cdp.send('Tracing.getCategories');
+      writeFileSync(`${out}/trace-categories.json`, JSON.stringify(categories));
+      await cdp.send('Tracing.start', { categories: ['devtools.timeline', 'v8', 'blink.user_timing', ...categories.filter(name => /gpu|dawn/i.test(name))].join(','), transferMode: 'ReturnAsStream' });
     }
     await page.getByTestId(`level-${level}`).click({ force: true });
     await page.waitForFunction('window.__coldLoad.done !== null', undefined, { polling: 50 });
     if (gameplayMs) {
-      await page.getByRole('button', { name: 'Begin mission', exact: true }).click();
+      const begin = page.getByRole('button', { name: 'Begin mission', exact: true });
+      if (await begin.isVisible()) await begin.click();
+      await page.getByTestId('pause-button').waitFor();
       await page.keyboard.down('w');
       await page.waitForTimeout(gameplayMs / 2);
       await page.keyboard.up('w');
@@ -152,6 +168,10 @@ if (process.env.LOAD_ASSERT === '1') {
     const contexts = result.contexts as string[];
     return backend === 'webgpu' ? contexts.includes('webgpu') && !contexts.includes('webgl2') : contexts.includes('webgl2');
   }), 'requested rendering backend must be active');
+  assert.ok(results.every(result => {
+    const adapter = result.adapter as { fallback?: boolean; description?: string } | null;
+    return backend === 'webgpu' ? adapter && adapter.fallback !== true && !/swiftshader|llvmpipe/i.test(adapter.description ?? '') : typeof result.glRenderer === 'string' && !/swiftshader|llvmpipe/i.test(result.glRenderer);
+  }), 'native hardware rendering is required');
   assert.ok(gameplayMs >= 10_000, 'record at least ten seconds of real gameplay movement');
   assert.ok(results.every(result => (result.frames as unknown[]).length >= 100), 'post-card frame samples must be present');
   assert.ok(summary.maxFrameMs <= 200, `post-card frame: ${summary.maxFrameMs} ms`);
