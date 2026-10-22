@@ -53,7 +53,19 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('rocket');
   await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/rocket.png` });
   for (const checkpoint of ['rocket', 'corridor']) {
-    if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+    if (checkpoint === 'corridor') {
+      const group = await page.evaluate(async () => {
+        const a = window.__SS__!, roster = a.getState().l7!.roster;
+        // This is a checkpoint/restore fixture, not the full L7 route. Move the
+        // living cohort with the courier, matching l7-checkpoints.test.ts: the
+        // production corridor checkpoint requires every follower within 18 m.
+        for (const [i, r] of roster.entries()) if (r.status === 'following') a.teleport(r.id, { x: -23 + Math.floor(i / 4), z: 46 + i % 4 });
+        a.teleport(1, { x: -30, z: 47 }); await a.step(1);
+        const p = a.getEntity(1)!.transform;
+        return roster.filter(r => r.status === 'following').map(r => { const t = a.getEntity(r.id)!.transform; return { id: r.id, distance: Math.hypot(t.x - p.x, t.z - p.z) }; });
+      });
+      for (const member of group) expect(member.distance, `corridor fixture follower ${member.id}`).toBeLessThanOrEqual(18);
+    }
     const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
     expect(before.checkpoint).toBe(checkpoint);
     await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });

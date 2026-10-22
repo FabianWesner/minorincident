@@ -25,6 +25,8 @@ const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
 const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l6VisualPattern = 'T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const aftermathVisualPattern = target === 'E24' ? l6VisualPattern : l5VisualPattern;
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
 const commands: string[][] = [
@@ -99,10 +101,10 @@ const commands: string[][] = [
         ]
       : target === 'E23' || target === 'E24'
         ? [
-          ...(target === 'E23' && process.env.MI_VERIFY_REMOTE_E2E === '1'
+          ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l5VisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
-              ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', l5VisualPattern, '--workers=2'],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+              ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', aftermathVisualPattern, '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
           // Reserve all configured browser slots for the native GPU frame budgets.
