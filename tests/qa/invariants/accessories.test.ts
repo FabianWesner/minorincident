@@ -164,7 +164,8 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
         const expected = raw.get(`${id}/${lod}`)!.clone().applyMatrix4(expectedTransform);
         const tolerance = Math.max(.002, expected.getSize(new Vector3()).length() / 1024);
         const head = new Matrix4().makeRotationY(.43).setPosition(3, 1.4, -7), world = new Matrix4().makeRotationY(-.7).setPosition(11, .2, 9);
-        const poses = { clip: { parts: ['head'] }, part: (_f: number, _o: number, _w: number, _p: number, out: Matrix4) => out.copy(head) } as CrowdPosePalette;
+        const otherJoint = new Matrix4().makeRotationX(-.9).setPosition(-13, 4, 22);
+        const poses = { clip: { parts: [...characterNodes] }, part: (_f: number, _o: number, _w: number, part: number, out: Matrix4) => out.copy(part === characterNodes.indexOf('head') ? head : otherJoint) } as CrowdPosePalette;
         renderer.begin(); renderer.place(e, lod, poses, 0, [0, 1], world); renderer.finish();
         const mesh = renderer.children.find(m => m.name === `${id}:${lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh;
         const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
