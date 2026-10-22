@@ -36,6 +36,7 @@ import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/building
 import type { Materials } from "./Materials";
 import { anchorsFor, placedLightId } from '../data/placedLights';
 import { worldAssets } from "../assets/worldDefinitions";
+import { staticCollision } from "../assets/staticCollision";
 import manifest from "../assets/manifest.json" with { type: 'json' };
 import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
@@ -540,13 +541,15 @@ export class DistrictView extends Group {
     const props = [...this.lodBatches.filter(e => worldAssets[e.id].category === 'prop' && !worldAssets[e.id].foliage), ...this.dressingEntries.filter(e => (manifest as AssetDef[]).find(a => a.id === e.id)?.category === 'prop')];
     for (const entry of props) for (const ref of entry.refs) {
       const owner = this.interiorBuildings.find(b => {
-        const [c, s, x, z] = DistrictView.footFrame(b.entry, b.ref);
+        // PO #112 (L2 apron benches vanished under their sitters): the LOD0 bounds of a building include its open
+        // apron/forecourt slabs. Only the walled enclosure is an interior; fall back to the bounds without wall boxes.
+        const foot = DistrictView.enclosure(b.entry), [c, s, x, z] = DistrictView.footFrame({ foot, origin: b.entry.origin }, b.ref, false);
         // Require the complete prop footprint within the building, so doorstep/street furniture stays drawn.
         const [pc, ps, px, pz] = DistrictView.footFrame(entry, ref);
         for (const dx of [-entry.foot.hx, entry.foot.hx]) for (const dz of [-entry.foot.hz, entry.foot.hz]) {
           const wx = px + dx * ref.scale.x * pc + dz * ref.scale.z * ps - x;
           const wz = pz - dx * ref.scale.x * ps + dz * ref.scale.z * pc - z;
-          if (Math.abs((wx * c - wz * s) / b.ref.scale.x) >= b.entry.foot.hx - .2 || Math.abs((wx * s + wz * c) / b.ref.scale.z) >= b.entry.foot.hz - .2) return false;
+          if (Math.abs((wx * c - wz * s) / b.ref.scale.x) >= foot.hx - .2 || Math.abs((wx * s + wz * c) / b.ref.scale.z) >= foot.hz - .2) return false;
         }
         return ref.position.y >= b.ref.position.y && ref.position.y + entry.height * ref.scale.y < b.ref.position.y + b.entry.height * b.ref.scale.y;
       });
@@ -604,7 +607,27 @@ export class DistrictView extends Group {
     }
   }
   /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
-  private static footFrame(entry: Pick<LodBatch, 'foot' | 'origin'>, ref: Object3D): [number, number, number, number] {
+  private static readonly enclosures = new Map<string, LodBatch['foot']>();
+  /** Local footprint of a building's walls: the union of its collision boxes at least 2 m tall (slabs, steps and
+   * kerbs excluded). Buildings without wall boxes keep their LOD0 footprint. */
+  static enclosure(entry: Pick<LodBatch, 'foot' | 'id'>): LodBatch['foot'] {
+    let foot = this.enclosures.get(entry.id);
+    if (!foot) {
+      const walls = (staticCollision[entry.id]?.boxes ?? []).filter(b => b.max[1] - b.min[1] >= 2);
+      if (!walls.length) foot = entry.foot;
+      else {
+        const x0 = Math.min(...walls.map(b => b.min[0])), x1 = Math.max(...walls.map(b => b.max[0])), z0 = Math.min(...walls.map(b => b.min[2])), z1 = Math.max(...walls.map(b => b.max[2]));
+        foot = { cx: (x0 + x1) / 2, cz: (z0 + z1) / 2, hx: (x1 - x0) / 2, hz: (z1 - z0) / 2 };
+      }
+      this.enclosures.set(entry.id, foot);
+    }
+    return foot;
+  }
+  private static footFrame(entry: Pick<LodBatch, 'foot' | 'origin'>, ref: Object3D, cache = true): [number, number, number, number] {
+    if (!cache) {
+      const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
+      return [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
+    }
     const cached = this.footFrames.get(ref);
     // Placement geometry is static; pushed props invalidate by their actual transform.
     // Reuse the frame across the camera ray and all forty lens samples.
