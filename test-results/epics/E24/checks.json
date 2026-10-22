@@ -70,6 +70,19 @@
         "mkdir -p test-results/epics/E24 && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|PO34 service gate|T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1; status=$?; cp test-results/playwright/results.json test-results/epics/E24/playwright-remote.json; exit $status"
       ],
       "exitCode": 1
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "PO34 service gate|T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot",
+        "--workers=1"
+      ],
+      "exitCode": 75
     }
   ]
 }
