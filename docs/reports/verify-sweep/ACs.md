@@ -55,7 +55,7 @@ Criteria: [epic-22-level-4-the-safe-city-falls.md](../../../specs/epic-22-level-
 | E22-AC17 | met | LevelFourWar.respawn/campCheckpoint; tests/levels/L4.test.ts T-E22-17; L4-respawn/L4-battlefield-lifecycle tests | — |
 | E22-AC18 | met | Fresh T-E22-18 passed in 1.6 min: ordinary keyboard/mouse bus-to-cellar route, all photo spots/pair cameras, zero-console-error fixture. evidence/E22-verify.log; corrected cadence fixture is a separate check. | — |
 | E22-AC19 | met | [Production phase review](../ac-close-l4-l6/E22-review.md): safe 8/10, war 7/10, tank 8/10, collapse 8/10; opened full frames and L3 comparison plus current-base E07 high/low temporal VFX proofs. All must and 11/12 should items pass; no P0/P1. Actual campaign phase/tank/Alpha and both-tier capture assertions pass. | None. |
-| E22-AC20 | partial | [Strict final WebGPU proof](../ac-close-l4-l6/README.md), archived raw quiet reporter and per-tier JSON: ordinary peak budgets pass, but high turn48.5ms has4 cold builds and line-break204.7ms; low turn54.5ms / line-break54.8ms. | **M/B+Q** — Real timing/cold-build defects remain; unchanged50ms/zero-build gates fail. Unprofiled WebGL counterpart and formal verify pending; runtime fixes assigned by orchestrator to a separate perf lane. |
+| E22-AC20 | red | [Strict final WebGPU proof](../ac-close-l4-l6/README.md), archived raw quiet reporter and per-tier JSON: ordinary peak budgets pass, but high turn48.5ms has4 cold builds and line-break204.7ms; low turn54.5ms / line-break54.8ms. | **M/B+Q** — Real timing/cold-build defects remain; unchanged50ms/zero-build gates fail. Unprofiled WebGL counterpart and formal verify pending; runtime fixes assigned by orchestrator to a separate perf lane. |
 
 ## E23
 
@@ -76,7 +76,7 @@ Criteria: [epic-23-level-5-aftermath.md](../../../specs/epic-23-level-5-aftermat
 | E23-AC11 | met | LevelFiveAftermath.losses/result; T-E23-11; L5-encounters.test.ts turning-during-shutter | — |
 | E23-AC12 | met | src/data/actions/catalog.ts shotgun; LevelFiveAftermath.prepare; src/sim/combat/Damage.ts; tests/sim/combat/l5-shotgun.test.ts T-E23-12-kill/role/group; tests/e2e/levels/l5-shotgun.spec.ts | — |
 | E23-AC13 | met | src/data/timeOfDay.ts; LevelFiveAftermath.gloom; T-E23-13 | — |
-| E23-AC14 | met | src/audio/MusicDirector.ts L5 found trigger; tests/e2e/audio/l5.spec.ts T-E23-14a/14b fresh pass: −40.8 vs −14.1 LUFS, 26.7 LU contrast (evidence/E23-audio-l5-vs-war.json) | — |
+| E23-AC14 | met | src/audio/MusicDirector.ts L5 found trigger; tests/e2e/audio/l5.spec.ts T-E23-14a/14b historical pass: −40.8 vs −14.1 LUFS,26.7 LU contrast (evidence/E23-audio-l5-vs-war.json). Latest2026-10-22 remote14a passes;14b reaches its unchanged900s timeout before a current comparison result. [Raw current receipt](../ac-close-l4-l6/evidence/verify-latest-E23-remote.json.gz). | Current14b repeat is unmeasured, not a new LU pass; full E23 remains in-progress. |
 | E23-AC15 | met | LevelFiveAftermath.metro/ingress/shutter/sealEntrance/result; tests/levels/L5-encounters.test.ts; T-E23-15/15b | — |
 | E23-AC16 | met | LevelFiveAftermath.restore; T-E23-16/16-shotgun; L5-encounters.test.ts station checkpoint/transfer | — |
 | E23-AC17 | met | [Corrected native route](../ac-close-l4-l6/README.md): four-minute keyboard/mouse replay passes cellar→Rosa→Sam→Mia→Okafor→Dale→group photo→Metro shutter→L6. All five sheltered and handed over, all five cues heard, all nine photographs, zero deaths and zero console errors; frozen complete/newbie Node baseline remains green (75 tests). | None. |

@@ -294,3 +294,7 @@ The full E24 native stage exhausts its original3600s admission limit while waiti
 One final photo-only real-route replay is queued after E31 D2: retain the all-followers-in-frame assertion, capture the real group once it naturally gathers near the gate, derive camera bounds from both ends of the living column, and target the raised night floor rather than y=0. All input/death/rescue/gate/handover assertions remain unchanged. V7 red review remains authoritative until the new images are actually opened/scored. Remote static checks for this test-only adjustment are running.
 
 The v8 photo-only test adjustment passes fresh remote typecheck and lint, exit0 (49s sync,98s remote); raw log retained. The browser replay is still unadmitted behind the ordered E31 handoff, and no new visual score is claimed.
+
+### 15:42 UTC — preserve ordered handoff and prepare final disposition
+
+Other lane receipts prove D2 WebGL low and WebGPU high terminal; its final WebGPU low log starts15:42. Keep our private barrier until that final command exits, preserving the orchestrator's ordered quiet turn. The final photo-only replay remains unmeasured meanwhile. E22/E23/E24 full verifier coverage is explicitly incomplete/red: only E22 static+Node have finished; E23 retains remote failures/interruption; E24 retains remote failures/native admission75. No epic is marked done. The machine-readable original-ten criterion summary and perf-lane handoff retain7met/3red plus the unmeasured v8 photo refinement.
