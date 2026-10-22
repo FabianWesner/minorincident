@@ -41,12 +41,13 @@ test('PO #100 warm slices wait for GPU linking and restore every visible body, i
 
 test('PO #100 cached warm graphs skip driver draws and a failed link releases the queue', async () => {
   const scene = new Scene(), geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial();
-  const mesh = new Mesh(geometry, material); scene.add(mesh); scene.updateMatrixWorld(true);
+  const mesh = new Mesh(geometry, material); mesh.matrixAutoUpdate = false; mesh.matrix.makeTranslation(7, 8, 9); scene.add(mesh); scene.updateMatrixWorld(true);
   const camera = new PerspectiveCamera(), renderer = { nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() }, draw = vi.fn();
   const cached = incrementalPreRender(renderer as unknown as Renderer, scene, camera, draw, async () => {}, run => run());
   cached.step(); await Promise.resolve(); expect(cached.done).toBe(true); expect(draw).not.toHaveBeenCalled();
   const failed = incrementalPreRender(renderer as unknown as Renderer, scene, camera, draw, async () => { throw Error('link failed'); }, run => run());
   failed.step(); await Promise.resolve(); expect(() => failed.step()).toThrow('link failed'); expect(failed.done).toBe(true);
   expect(mesh.visible).toBe(true); expect(mesh.position.toArray()).toEqual([0, 0, 0]);
+  expect(mesh.matrix.elements.slice(12, 15)).toEqual([7, 8, 9]); expect(mesh.matrixWorld.elements.slice(12, 15)).toEqual([7, 8, 9]);
   geometry.dispose(); material.dispose();
 });
