@@ -1,14 +1,15 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import { interactionPrompt, look, visibleGroupTarget } from '../../tools/playtest/eyes';
+import { runInNewContext } from 'node:vm';
+import { look, visibleGroupTarget } from '../../tools/playtest/eyes';
 
 afterEach(() => vi.unstubAllGlobals());
 
-function renderedEnemy(clip: string, simulationAttacking: boolean) {
+function renderedEyes(clip: string, simulationAttacking: boolean, serialized = false, trackerText = '') {
   const player = { id: 1, kind: 'player', transform: { x: 0, y: 0, z: 0, yaw: 0 }, health: { current: 100, max: 100 } };
   const enemy = { id: 2, kind: 'infected', faction: 'infected', transform: { x: 1, y: 0, z: 0, yaw: 0 }, health: { current: 60, max: 60 }, combat: { attacking: simulationAttacking } };
   vi.stubGlobal('innerWidth',1280); vi.stubGlobal('innerHeight',720);
   vi.stubGlobal('document', {
-    querySelector: (selector: string) => selector === 'canvas' ? { getBoundingClientRect: () => ({ left: 0, top: 0, width: 1280, height: 720 }) } : null,
+    querySelector: (selector: string) => selector === 'canvas' ? { getBoundingClientRect: () => ({ left: 0, top: 0, width: 1280, height: 720 }) } : selector === '[data-testid="mission-tracker"]' ? { textContent: trackerText, hidden: false, offsetParent: {}, dataset: {} } : null,
     querySelectorAll: () => [],
   });
   vi.stubGlobal('window',{ __SS__: {
@@ -20,19 +21,24 @@ function renderedEnemy(clip: string, simulationAttacking: boolean) {
     input: { visible: () => true, project: () => ({ x: 640, y: 360 }) },
     camera: { project: () => [0,0,0] },
   } });
-  return look().enemies[0];
+  const eyes = serialized ? runInNewContext(`(${look.toString()})()`, { window, document, innerWidth, innerHeight, __name: (f: unknown) => f }) : look();
+  return eyes;
 }
 
+test('#104 browser observation remains self-contained when serialized by Playwright', () => {
+  expect(renderedEyes('shamble', false, true).enemies[0].id).toBe(2);
+});
+
 test('#99 ally-cover attack observation follows the submitted swing even when the simulation flag is off', () => {
-  expect(renderedEnemy('swing',false).attacking).toBe(true);
+  expect(renderedEyes('swing',false).enemies[0].attacking).toBe(true);
 });
 
 test('#99 an idle rendered figure supplies no attack observation even when the simulation flag is on', () => {
-  expect(renderedEnemy('shamble',true).attacking).toBe(false);
+  expect(renderedEyes('shamble',true).enemies[0].attacking).toBe(false);
 });
 
 test('#104 the driver sees the console E prompt when it is rendered in the mission tracker', () => {
-  expect(interactionPrompt('', 'Press E or tap the console action · Dispersal console')).toContain('Press E');
+  expect(renderedEyes('shamble', false, true, 'Press E or tap the console action · Dispersal console').prompt).toContain('Press E');
 });
 
 test('#104 L7 driver regroups on visible survivors when it is more than 8 m from their column', () => {

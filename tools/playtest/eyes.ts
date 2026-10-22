@@ -20,10 +20,6 @@ export interface Eyes {
   view: { w: number; h: number };
 }
 
-export function interactionPrompt(ringText: string, trackerText: string): string {
-  return ringText || (trackerText.includes('Press E or tap the console action') ? trackerText : '');
-}
-
 export function visibleGroupTarget(level: string | null, player: { x: number; z: number }, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean }[], leash = 8): { x: number; z: number } | null {
   if (level !== 'L7') return null;
   const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse);
@@ -40,6 +36,8 @@ export function look(): Eyes {
   const m = a.missions.state();
   const active = m ? Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0] ?? null : null;
   const tracker = q('mission-tracker');
+  const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
+  const trackerPrompt = shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
   const menu = [...document.querySelectorAll<HTMLElement>('[data-menu-screen]')].find(el => !el.hidden)?.dataset.menuScreen ?? null;
@@ -90,7 +88,7 @@ export function look(): Eyes {
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
-    prompt: interactionPrompt(shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '', q('mission-tracker')?.textContent ?? ''),
+    prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
