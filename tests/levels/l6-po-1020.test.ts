@@ -190,3 +190,31 @@ test('@E24 #96 the uncollected second follower can leave the walkable raised edg
   expect(e.transform.x,JSON.stringify(e.transform)).toBeGreaterThan(78);
   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
 },240_000);
+
+test('@E24 #102 exit-platform waits until no living group member is behind and most are through', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!, living = s.survivors.filter(r => r.status === 'following');
+  s.leaderX = 245; s.leaderZ = 15;
+  living.forEach((r, i) => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: i === 0 ? 115 : 242, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  put(w, 240, 15); w.update();
+  expect(s.platform).toBe(false); expect(m.state.checkpoint).not.toBe('exit-platform');
+  living.forEach(r => { const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 243, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z); });
+  w.update();
+  expect(s.platform).toBe(true); expect(m.state.checkpoint).toBe('exit-platform');
+}, 240_000);
+
+test('@E24 #102 a following guard does not re-engage its former posted ally role and stays with the tunnel column', async () => {
+  const { world: w, mission: m } = await loadL6(1, 'low'); world = w;
+  w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');
+  const s = m.state.l6!, guard = s.survivors.find(r => r.routine === 'guard' && r.status === 'following')!;
+  s.leaderX = 120; s.leaderZ = 15;
+  for (const [i, r] of s.survivors.filter(r => r.status === 'following').entries()) {
+    const e = w.entities.get(r.id)!; Object.assign(e.transform, { x: 120 - i * .2, z: 15 }); w.spatial.set(e.id, e.transform.x, e.transform.z);
+  }
+  const e = w.entities.get(guard.id)!; Object.assign(e.transform, { x: 115, z: 15 }); w.spatial.set(e.id, 115, 15);
+  put(w, 120, 15);
+  w.update(); expect(e.civilian!.ally!.engaged).toBe(false);
+  for (let i = 1; i < 30 * 60; i++) w.update();
+  expect(Math.abs(e.transform.x - s.leaderX)).toBeLessThan(l6.follow.columnM);
+}, 240_000);

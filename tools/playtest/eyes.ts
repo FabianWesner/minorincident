@@ -20,6 +20,18 @@ export interface Eyes {
   view: { w: number; h: number };
 }
 
+export function interactionPrompt(ringText: string, trackerText: string): string {
+  return ringText || (trackerText.includes('Press E or tap the console action') ? trackerText : '');
+}
+
+export function visibleGroupTarget(level: string | null, player: { x: number; z: number }, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean }[], leash = 8): { x: number; z: number } | null {
+  if (level !== 'L7') return null;
+  const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse);
+  if (!group.length) return null;
+  const centre = group.reduce((p, a) => ({ x: p.x + a.x / group.length, z: p.z + a.z / group.length }), { x: 0, z: 0 });
+  return Math.hypot(player.x - centre.x, player.z - centre.z) > leash ? centre : null;
+}
+
 /** Runs in the page. Keep it self-contained (no closures). */
 export function look(): Eyes {
   const a = window.__SS__!;
@@ -78,7 +90,7 @@ export function look(): Eyes {
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
-    prompt: shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '',
+    prompt: interactionPrompt(shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '', q('mission-tracker')?.textContent ?? ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
