@@ -1,0 +1,103 @@
+{
+  "recordedAt": "2026-10-22T11:22:08.444302+00:00",
+  "implementationCommit": "fd7640f5f62ae87d8ffd11cf62ce40121a48ff8f",
+  "remote": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+    "exitCode": 0,
+    "testsPassed": 2406,
+    "testsSkipped": 9,
+    "filesPassed": 437,
+    "filesSkipped": 3,
+    "log": "remote-final-green.log.gz"
+  },
+  "smoke": {
+    "command": "E2E_PORT=4111 SCENE_PORT=4112 E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 sh tools/e2e-lock.sh npx playwright test --grep @smoke --workers=1",
+    "exitCode": 0,
+    "passed": 31,
+    "log": "smoke.log.gz"
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "log": "typecheck.log.gz"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0,
+    "log": "lint.log.gz"
+  },
+  "l6RealInput": {
+    "male": true,
+    "seededFists": true,
+    "finished": true,
+    "steps": [
+      "shelter",
+      "stop",
+      "retreat",
+      "exit"
+    ],
+    "wallSeconds": 298,
+    "deaths": 1,
+    "skipped": [],
+    "assists": 0,
+    "attacks": {
+      "weapon.fists": 109,
+      "weapon.kick": 57
+    },
+    "weapons": [
+      "weapon.fists",
+      "weapon.kick"
+    ],
+    "realHandover": "L7",
+    "summary": "l6-fists-summary.json"
+  },
+  "l10RealInput": {
+    "entry": "debug",
+    "finished": false,
+    "creditsReached": false,
+    "observedSteps": [
+      "crash",
+      "residential-fringe",
+      "industrial-area",
+      "military-zone",
+      "research-campus",
+      "research",
+      "cure",
+      "research-exit",
+      "destroyed-corridor",
+      "dispersal-complex",
+      "install",
+      "hold",
+      "mega"
+    ],
+    "deaths": 0,
+    "skipped": [],
+    "assists": 0,
+    "healthAtAbort": 90,
+    "bossNearWithinSeconds": 5.85,
+    "bossObjectivePinVisible": true,
+    "failure": "No visible progress for 30.1 s; stopping without advancing the objective",
+    "exitCode": 1,
+    "approvedDriverLimitationFallback": true,
+    "furtherBrowserRunStarted": false,
+    "summary": "l10-final-summary.json"
+  },
+  "simulationCampaign": {
+    "levels": "L1-L10",
+    "creditsReached": true,
+    "l10Deaths": 0,
+    "proof": "remote-final-campaign-green.json"
+  },
+  "resources": {
+    "ownedBrowserRoots": [],
+    "preview4111Listening": false,
+    "allChecksFinished": true
+  },
+  "constraints": {
+    "gameSourceUnchangedSince": "5d12e3c9a008bbf0e5af0c33fd3e76f185cd4177",
+    "hordeDamageSpeedAlphaHealthTuningChanged": false,
+    "merged": false,
+    "deployed": false
+  },
+  "completionBasis": "The orchestrator explicitly allowed a remaining real-input L10 driver limitation after the 30-minute finale-dodge box; the simulation campaign to credits and next Opus QA cover that gate. Real-input credits were not reached."
+}
