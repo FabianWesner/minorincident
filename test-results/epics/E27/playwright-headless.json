@@ -2,7 +2,7 @@
   "config": {
     "argv": [
       "/opt/homebrew/Cellar/node/26.0.0/bin/node",
-      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/node_modules/.bin/playwright",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/node_modules/.bin/playwright",
       "test",
       "--grep",
       "@(?:E27)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
@@ -10,8 +10,8 @@
       "@perf",
       "--workers=1"
     ],
-    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/playwright.config.ts",
-    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -27,7 +27,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -35,7 +35,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -45,7 +45,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -53,18 +53,22 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts"
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -72,18 +76,22 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts"
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -91,7 +99,7 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -102,7 +110,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -110,7 +118,7 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -121,7 +129,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3499",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -129,7 +137,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -161,8 +169,8 @@
     "version": "1.63.0",
     "workers": 1,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3499 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3499",
+      "command": "npx vite preview --host 127.0.0.1 --port 4051 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4051",
       "reuseExistingServer": false,
       "timeout": 30000
     }
@@ -194,12 +202,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5907,
+                  "duration": 6325,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:29:20.147Z",
+                  "startTime": "2026-10-22T03:44:36.462Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -229,15 +237,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5761,
+                  "duration": 6137,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:50.549Z",
+                  "startTime": "2026-10-22T03:51:12.252Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -267,15 +275,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 6,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5875,
+                  "duration": 6089,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:57.469Z",
+                  "startTime": "2026-10-22T03:51:19.948Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -305,15 +313,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5948,
+                  "duration": 6124,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:04.495Z",
+                  "startTime": "2026-10-22T03:51:27.590Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -343,15 +351,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 8,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5799,
+                  "duration": 6127,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:11.677Z",
+                  "startTime": "2026-10-22T03:51:35.226Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -381,15 +389,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 9,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8475,
+                  "duration": 9395,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:18.714Z",
+                  "startTime": "2026-10-22T03:51:42.899Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -431,12 +439,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 30278,
+                  "duration": 18949,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:29:26.172Z",
+                  "startTime": "2026-10-22T03:44:42.993Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -476,12 +484,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 31012,
+                  "duration": 18738,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:32:32.876Z",
+                  "startTime": "2026-10-22T03:48:25.372Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -513,12 +521,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 25561,
+                  "duration": 18727,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:03.996Z",
+                  "startTime": "2026-10-22T03:48:44.189Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -558,12 +566,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4685,
+                  "duration": 6062,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:29.938Z",
+                  "startTime": "2026-10-22T03:49:03.276Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -603,12 +611,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3383,
+                  "duration": 5239,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:29:56.459Z",
+                  "startTime": "2026-10-22T03:45:01.953Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -648,12 +656,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5374,
+                  "duration": 6753,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:29:59.863Z",
+                  "startTime": "2026-10-22T03:45:07.210Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -685,12 +693,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 34879,
+                  "duration": 44153,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:30:05.243Z",
+                  "startTime": "2026-10-22T03:45:13.968Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -722,12 +730,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7680,
+                  "duration": 5960,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:30:40.134Z",
+                  "startTime": "2026-10-22T03:45:58.130Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -759,12 +767,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5027,
+                  "duration": 6814,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:30:47.819Z",
+                  "startTime": "2026-10-22T03:46:04.097Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -796,12 +804,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4658,
+                  "duration": 5446,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:30:52.854Z",
+                  "startTime": "2026-10-22T03:46:10.916Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -832,12 +840,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5004,
+                  "duration": 6342,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:30:57.517Z",
+                  "startTime": "2026-10-22T03:46:16.366Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -875,15 +883,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 3,
+                  "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 15230,
+                  "duration": 24172,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:34.974Z",
+                  "startTime": "2026-10-22T03:46:22.717Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -893,7 +901,7 @@
           ],
           "id": "91bae058919b3638343a-5ef68a1f589b66b3ebd2",
           "file": "e2e/levels/l4-boot.spec.ts",
-          "line": 6,
+          "line": 5,
           "column": 1
         }
       ]
@@ -924,12 +932,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 15376,
+                  "duration": 4242,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:02.533Z",
+                  "startTime": "2026-10-22T03:46:46.897Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -970,12 +978,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9467,
+                  "duration": 11374,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:17.944Z",
+                  "startTime": "2026-10-22T03:46:51.180Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -985,7 +993,7 @@
           ],
           "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
           "file": "e2e/save.spec.ts",
-          "line": 35,
+          "line": 76,
           "column": 1
         }
       ]
@@ -1014,12 +1022,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 436,
+                  "duration": 583,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:27.422Z",
+                  "startTime": "2026-10-22T03:47:02.565Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1029,7 +1037,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1050,12 +1058,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 457,
+                  "duration": 612,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:27.863Z",
+                  "startTime": "2026-10-22T03:47:03.152Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1065,7 +1073,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1083,15 +1091,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 388,
+                  "duration": 564,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:56.383Z",
+                  "startTime": "2026-10-22T03:51:18.472Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1101,7 +1109,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b47c75175263bbf2a151",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1119,15 +1127,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 432,
+                  "duration": 634,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:33:56.775Z",
+                  "startTime": "2026-10-22T03:51:19.040Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1137,7 +1145,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-606f9edef12ca51944a0",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1155,15 +1163,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 6,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 377,
+                  "duration": 571,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:03.419Z",
+                  "startTime": "2026-10-22T03:51:26.113Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1173,7 +1181,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-390c9a040de6fabcb378",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1191,15 +1199,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 6,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 429,
+                  "duration": 633,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:03.801Z",
+                  "startTime": "2026-10-22T03:51:26.689Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1209,7 +1217,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-0e569f350f7af79ee309",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1227,15 +1235,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 407,
+                  "duration": 530,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:10.525Z",
+                  "startTime": "2026-10-22T03:51:33.792Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1245,7 +1253,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-92ffd1bf0aed09418cc1",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1263,15 +1271,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 451,
+                  "duration": 636,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:10.938Z",
+                  "startTime": "2026-10-22T03:51:34.327Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1281,7 +1289,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-7af3753670183995ee55",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1299,15 +1307,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 8,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 407,
+                  "duration": 567,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:17.554Z",
+                  "startTime": "2026-10-22T03:51:41.427Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1317,7 +1325,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b87ee65b11d1f0642d6c",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1335,15 +1343,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 8,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 450,
+                  "duration": 636,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:17.966Z",
+                  "startTime": "2026-10-22T03:51:41.999Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1353,7 +1361,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-60f671c069b68bd6e8b3",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1371,15 +1379,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 9,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1525,
+                  "duration": 1672,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:27.431Z",
+                  "startTime": "2026-10-22T03:51:52.560Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1389,7 +1397,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-96d6d563eec8e62b3b00",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1407,15 +1415,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 9,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2573,
+                  "duration": 2762,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:34:28.965Z",
+                  "startTime": "2026-10-22T03:51:54.237Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1425,7 +1433,208 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-canvas.spec.ts",
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T03:49:09.703Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-baa1ba2a41384d7d1b97",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T03:49:21.447Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-e4ef32c76084759b386b",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T03:50:19.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-41b5266e0775c8ebbc36",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28805,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T03:50:31.095Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-8eac85643e3dcd3f500e",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-level-transitions.spec.ts",
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11463,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T03:51:00.376Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7be80d8c19c0387a2a29-3bd0f8a63eef8d53b837",
+          "file": "e2e/webgpu-level-transitions.spec.ts",
+          "line": 15,
           "column": 1
         }
       ]
@@ -1455,12 +1664,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18660,
+                  "duration": 28438,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:28.329Z",
+                  "startTime": "2026-10-22T03:47:03.772Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1500,12 +1709,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 17400,
+                  "duration": 20455,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:31:47.001Z",
+                  "startTime": "2026-10-22T03:47:32.218Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1545,12 +1754,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 21449,
+                  "duration": 26147,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:32:04.414Z",
+                  "startTime": "2026-10-22T03:47:52.685Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1582,12 +1791,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 6514,
+                  "duration": 6146,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T17:32:25.870Z",
+                  "startTime": "2026-10-22T03:48:18.842Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1597,7 +1806,7 @@
           ],
           "id": "32255e90b497b6b984e0-7b4a268a9f46ba763dae",
           "file": "visual/e27-smoke.spec.ts",
-          "line": 88,
+          "line": 90,
           "column": 1
         }
       ]
@@ -1605,9 +1814,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-10T17:29:18.272Z",
-    "duration": 313298.998,
-    "expected": 36,
+    "startTime": "2026-10-22T03:44:34.266Z",
+    "duration": 442770.217,
+    "expected": 41,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

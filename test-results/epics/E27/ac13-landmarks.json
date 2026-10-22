@@ -190,16 +190,19 @@
       "z": 0.25
     },
     "blasts": 0,
-    "puffs": 232,
+    "puffs": 222,
     "puffCap": 400,
     "fireballs": 0,
-    "fireballCap": 48,
-    "flames": 53,
-    "glows": 13,
+    "fireballCap": 96,
+    "chunks": 0,
+    "chunkCap": 64,
+    "flames": 37,
+    "glows": 9,
+    "vehicleSmokeColumns": 0,
     "columns": 13,
     "transientColumns": 0,
     "fireColumns": 13,
-    "columnShadows": 13,
+    "columnShadows": 12,
     "clouds": 0,
     "scorch": 0,
     "parts": 0,
@@ -966,9 +969,9 @@
       {
         "id": "D-FAIR@0,0/int.basement-cellar:216/light:bulb",
         "position": [
-          -79.2,
+          74.8,
           2.1,
-          5.2
+          -1.7999999999999998
         ],
         "group": "cellar",
         "broken": false,
@@ -977,9 +980,9 @@
       {
         "id": "D-FAIR@0,0/bld.apartment-block-b:217/light:entry",
         "position": [
-          -77.7,
+          67.58,
           3.35,
-          -46.010099999999994
+          40.010000000000005
         ],
         "group": "fairhaven-civic",
         "broken": false,
@@ -1560,9 +1563,9 @@
       {
         "id": "D-FAIR@0,0/bld.kessler-hardware:374/light:cellarDoorLamp",
         "position": [
-          69.6,
+          -79.29999999999998,
           3.1,
-          31.360000000000003
+          -46.9801
         ],
         "group": "kessler-lane",
         "broken": false,
@@ -1571,9 +1574,9 @@
       {
         "id": "D-FAIR@0,0/bld.kessler-hardware:374/light:shopWindowL",
         "position": [
-          65.7,
+          -75.39999999999999,
           1.95,
-          39.11000000000001
+          -54.7301
         ],
         "group": "kessler-hardware",
         "broken": false,
@@ -1582,9 +1585,9 @@
       {
         "id": "D-FAIR@0,0/bld.kessler-hardware:374/light:shopWindowR",
         "position": [
-          70.3,
+          -79.99999999999999,
           1.95,
-          39.11000000000001
+          -54.7301
         ],
         "group": "kessler-hardware",
         "broken": false,
@@ -1593,9 +1596,9 @@
       {
         "id": "D-FAIR@0,0/bld.kessler-hardware:374/light:signLamp1",
         "position": [
-          64.7,
+          -74.39999999999999,
           4.6,
-          39.46
+          -55.080099999999995
         ],
         "group": "kessler-hardware",
         "broken": false,
@@ -1604,9 +1607,9 @@
       {
         "id": "D-FAIR@0,0/bld.kessler-hardware:374/light:signLamp2",
         "position": [
-          71.3,
+          -80.99999999999999,
           4.6,
-          39.46
+          -55.080099999999995
         ],
         "group": "kessler-hardware",
         "broken": false,
@@ -2031,6 +2034,149 @@
         "emissive": 0
       },
       {
+        "id": "D-FAIR@0,0/bld.house-c:691/light:festoon",
+        "position": [
+          71.39999999999999,
+          2,
+          10.8
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-c:691/light:windows",
+        "position": [
+          70.16,
+          1.8399999999999999,
+          12.4
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:door_front",
+        "position": [
+          71.819,
+          1.77,
+          -25.79
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:lamp_porch",
+        "position": [
+          72.019,
+          2.08,
+          -26.39
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:window_front",
+        "position": [
+          71.784,
+          1.85,
+          -22.85
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:window_left",
+        "position": [
+          69.494,
+          1.85,
+          -20.735
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:window_rearL",
+        "position": [
+          67.15400000000001,
+          1.85,
+          -25.575
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:window_rearR",
+        "position": [
+          67.15400000000001,
+          1.85,
+          -22.675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.house-a:692/light:window_right",
+        "position": [
+          69.754,
+          1.85,
+          -27.265
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.shed:748/light:entrance",
+        "position": [
+          69.925,
+          1.6724999999999999,
+          -7.8425
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/bld.shed:748/light:window",
+        "position": [
+          68.38,
+          1.3275000000000001,
+          -8.675
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/prop.street-lamp:749/light:lantern",
+        "position": [
+          68,
+          3.18,
+          2.8
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 0
+      },
+      {
+        "id": "D-FAIR@0,0/prop.street-lamp:750/light:lantern",
+        "position": [
+          82.2,
+          3.18,
+          2.6
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 0
+      },
+      {
         "id": "D-FAIR@0,0/l5-cue-125/light:flashlight",
         "position": [
           -47.35934017804906,
@@ -2040,6 +2186,94 @@
         "group": "l5-cue",
         "broken": false,
         "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainHall0",
+        "position": [
+          37.7854,
+          3.95,
+          -84
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainHall12",
+        "position": [
+          49.7854,
+          3.95,
+          -84
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainHall-12",
+        "position": [
+          25.785400000000003,
+          3.95,
+          -84
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainPlatform0",
+        "position": [
+          37.7854,
+          4.05,
+          -64
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainPlatform12",
+        "position": [
+          49.7854,
+          4.05,
+          -64
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainPlatform24",
+        "position": [
+          61.7854,
+          4.05,
+          -64
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainPlatform-12",
+        "position": [
+          25.785400000000003,
+          4.05,
+          -64
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-FAIR@0,0/l5-station/light:mainPlatform-24",
+        "position": [
+          13.785400000000003,
+          4.05,
+          -64
+        ],
+        "group": "metro-main",
+        "broken": false,
+        "emissive": 1
       }
     ],
     "heroLights": 0,
@@ -2047,7 +2281,8 @@
     "promotionChanges": 0,
     "practicalEffects": {
       "beams": 0,
-      "reflections": 0
+      "reflections": 0,
+      "motes": 0
     },
     "shadowSize": 2048,
     "preset": "L5",
@@ -2057,22 +2292,22 @@
       0.16926702181514178
     ],
     "sunColor": "#ff7a38",
-    "sky": "#7a4a8a",
-    "fog": "#b0564c",
-    "fogNear": 45,
-    "fogFar": 125,
+    "sky": "#514366",
+    "fog": "#a66864",
+    "fogNear": 34,
+    "fogFar": 105,
     "intensity": 0.816,
-    "shadowColor": "87465f",
+    "shadowColor": "6e536e",
     "coreShadowEdges": [
       1,
       -0.25
     ],
-    "shadowRadius": 2,
+    "shadowRadius": 2.3,
     "normalBias": 0.08,
-    "shadowArea": 113,
+    "shadowArea": 75.25,
     "fogColors": [
-      "#7a4a8a",
-      "#b0564c"
+      "#544869",
+      "#a66864"
     ],
     "rim": 0.25,
     "fieldShadow": 0,
@@ -2085,16 +2320,16 @@
       "strength": 0.8,
       "resolution": 1024,
       "size": 80,
-      "statics": 166,
-      "litStatics": 1,
-      "candidates": 12,
-      "drawn": 12,
+      "statics": 308,
+      "litStatics": 11,
+      "candidates": 17,
+      "drawn": 17,
       "transients": 13,
       "capacity": 512,
-      "ms": 0.20000076293945312,
+      "ms": 0.19999980926513672,
       "center": [
-        5.15625,
-        9.453125
+        -33.4375,
+        -9.453125
       ]
     }
   }

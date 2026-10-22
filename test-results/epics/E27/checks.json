@@ -7,24 +7,24 @@
   "checks": [
     {
       "command": [
-        "npm",
-        "run",
-        "typecheck"
-      ],
-      "exitCode": 0
-    },
-    {
-      "command": [
-        "npm",
-        "run",
-        "lint"
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
+        "--",
+        "sh",
+        "-c",
+        "npm run typecheck && npm run lint"
       ],
       "exitCode": 0
     },
     {
       "command": [
         "sh",
-        "tools/e2e-lock.sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
+        "--pull",
+        "dist",
+        "--",
         "npm",
         "run",
         "build"
@@ -35,7 +35,7 @@
       "command": [
         "sh",
         "tools/remote/run.sh",
-        "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared",
         "--pull",
         "test-results/epics/E27/vitest.json",
         "--",
