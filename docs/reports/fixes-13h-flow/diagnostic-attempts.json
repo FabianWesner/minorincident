@@ -82,6 +82,14 @@
       "skipped": [],
       "maxNoProgressSeconds": 5.098,
       "reason": "Interrupted after over ten minutes of repeated rear-guard return/death loops to preserve the allocated browser window. Shelter/stop ally cover alone was insufficient. No step was skipped; this is rejected diagnostic evidence."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-l7-l8-acceptance",
+      "sourceCommit": "34cbbf144",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "reason": "L7 tick stopped at 2988 while input loop continued; interrupted and rejected. Driver lacked visible pause-menu recovery. No objective advanced or step skipped."
     }
   ],
   "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"
