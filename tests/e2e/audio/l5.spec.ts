@@ -5,6 +5,9 @@ import { loudness } from '../../../tools/audio/measure';
 import { l4 } from '../../../src/data/l4';
 
 /** E23-AC14: the silent city. No music before the first find, no battle layer ever, and a mix at least 18 LU below the L4 war phase. */
+// The complete war capture makes thousands of nonvisual RPCs. DOM tracing
+// repeatedly snapshots the paused HUD; retain cue JSON, WAVs and numeric receipts.
+test.use({ trace: 'off' });
 const root = 'test-results/epics/E23';
 async function render(page: import('@playwright/test').Page, request: AudioRenderRequest, name: string) {
     const result = await page.evaluate(req => window.__SS__!.audio.render(req), request), bytes = Buffer.from(result.wav, 'base64');
