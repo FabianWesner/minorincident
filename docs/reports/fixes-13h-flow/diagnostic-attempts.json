@@ -109,6 +109,15 @@
       "maxNoProgressSeconds": 4.613,
       "reachedExit": true,
       "reason": "Reached exit then returned toward the remaining rear survivor. Interrupted to release the browser to waiting L10 quiet run and apply the red-first held-key fix. The loaded session predates 25ce48b88. No skip or game change."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-final-input",
+      "driverCommit": "490c01f9f",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 3.535,
+      "reason": "Repeated rear-survivor returns after gate-90. Reproduced keyboard strikes from 1.6 m, beyond shipped fist range, while a visibly attacked ally could be ignored during ordinary retreat instructions. Interrupted for the waiting L10 quiet run. Range fallback and attacked-ally handling were implemented after this session loaded."
     }
   ],
   "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"
