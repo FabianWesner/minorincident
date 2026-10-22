@@ -1,3 +1,4 @@
+import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
@@ -94,6 +95,8 @@ export class CrowdView extends Group {
   /** Corpses persist until a level/checkpoint resets their sim IDs. */
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
+  private sharedDogCoats = false;
+  private readonly dogCoatTints = [new Color(0, 0, 0), new Color(1, 0, 0)];
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
@@ -178,6 +181,8 @@ export class CrowdView extends Group {
       const alpha = (alphaLooks['inf.alpha'].includes(def.asset) || alphaLooks['inf.mega-alpha'].includes(def.asset)) && (residents.has(this.modelAliases.get(def.id)!) || alphaLevel);
       return [...new Set(warmHero || alpha ? ['lod0' as const, ...lods] : lods)].map(lod => this.loadBatch(def, lod));
     }));
+    const dog = this.batches.get('inf.dog:lod1'), cream = this.batches.get('inf.dog.cream:lod1');
+    if (dog && cream) this.sharedDogCoats = shareDogCoatPalette(dog.mesh.geometry, cream.mesh.geometry, dog.poses.clip, cream.poses.clip);
     loadMeasure('view:infected-crowd', started);
     this.update();
   }
@@ -268,7 +273,11 @@ export class CrowdView extends Group {
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
-      const sourceColor = human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
+      // Two identical LOD1 dog surfaces differ only in their authored vertex colors.
+      // Keep a default attribute even in scenes that do not load the cream coat.
+      const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
+      if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
+      const sourceColor = dogPalette ? variant.x.mod(2).greaterThan(.5).select(attribute('_dogCream', 'vec3'), attribute('color', 'vec3')) : human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
       // Keep the infected eye swatch out of the lit albedo. A bounded red
       // emitter avoids the pink centres from luminance-normalized swatches.
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(sourceColor, vec3(0), parts.z);
@@ -402,6 +411,9 @@ export class CrowdView extends Group {
     // dense mixed hordes use LOD1 instead of adding an extra LOD0 draw for every near model.
     const heroRoles = new Set<string>(), heroDrawBudget = Math.max(0, 30 - 4 - this.rolePixels.size);
     for (const e of this.nearest) if (heroRoles.has(e.role) || heroRoles.size < heroDrawBudget) { heroes.add(e.id); heroRoles.add(e.role); }
+    // Dense mixed crowds trade a few dog triangles for one fewer draw, retaining
+    // both authored coats and the exact higher-detail LOD1 surfaces/poses.
+    const shareDogs = this.sharedDogCoats && heroDrawBudget === 0 && this.rolePixels.has('inf.dog') && this.rolePixels.has('inf.dog.cream');
     for (const e of this.figures) {
       if (e.health.current > 0 && this.corpses.delete(e.id)) this.corpseSpatial.delete(e.id);
       if (e.id === 1 || e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat) continue;
@@ -432,7 +444,8 @@ export class CrowdView extends Group {
         }
       }
       // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
-      const batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
+      let batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
+      if (shareDogs && !e.corpse && lod !== 'lod0' && (!this.low || lod === 'lod1') && (key === 'inf.dog' || key === 'inf.dog.cream')) batch = this.batches.get('inf.dog:lod1');
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 || e.civilian?.state === 'finished' ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: e.civilian?.entered ?? 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
@@ -464,7 +477,7 @@ export class CrowdView extends Group {
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
       const phase = clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
-      const tint = batch.animal ? batch.shirt : crowdShirt(e.id);
+      const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt) : e.transform;
       const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
@@ -584,7 +597,7 @@ export class CrowdView extends Group {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
     // Legacy probe fields: warnings now live in render.vfx.telegraphs.
-    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
+    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, staticCorpsePages: this.staticCorpses.children.length, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
   }
   dispose(): void {
     this.disposed = true; this.staticCorpses.dispose();

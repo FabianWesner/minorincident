@@ -14,8 +14,8 @@ try {
     for (let i = 0; i < 200; i++) api.spawn('infected.runner', i === 199 ? { x: 50, z: 50 } : { x: i % 20 * .8 - 8, z: Math.floor(i / 20) * .8 - 4 }, { state: 'chase' });
     await api.step(0); await api.screenshotReady();
   });
-  async function audit() {
-    return session.page.evaluate(() => {
+  async function audit(label: string) {
+    const result = await session.page.evaluate(() => {
       const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
       const crowd = (game.view as unknown as { crowd: Object3D & {
         batches: Map<string, { mesh: Object3D }>; heroSlots: Map<string, Object3D>;
@@ -25,7 +25,7 @@ try {
       for (const [key, batch] of crowd.batches) owned.set(batch.mesh.id, `batch:${key}`);
       for (const [key, mesh] of crowd.heroSlots) owned.set(mesh.id, `reserved:${key}`);
       owned.set(crowd.staticCorpses.id, 'corpse-group'); owned.set(crowd.caps.id, 'caps'); owned.set(crowd.shadows.id, 'shadows');
-      const pages = crowd.staticCorpses.children.map(o => ({ id: o.id, name: o.name, count: (o as InstancedMesh).count, instanced: (o as InstancedMesh).isInstancedMesh, parent: o.parent?.id }));
+      const pages = crowd.staticCorpses.children.map(o => ({ id: o.id, name: o.name, count: (o as InstancedMesh).count, instanced: o instanceof (crowd.caps.constructor as typeof InstancedMesh), instancedFlag: (o as InstancedMesh).isInstancedMesh, capacity: (o as InstancedMesh).instanceMatrix.count, parent: o.parent?.id }));
       for (const page of pages) owned.set(page.id, `corpse-page:${page.name}`);
       const nodes: { id: number; name: string; owner: string | null }[] = [];
       crowd.traverse(o => { if (o !== crowd) nodes.push({ id: o.id, name: o.name, owner: owned.get(o.id) ?? null }); });
@@ -35,18 +35,20 @@ try {
         corpseState: crowd.staticCorpses.snapshot(), corpses: api.query({ kind: 'infected' }).filter(e => e.corpse).length,
         unowned: nodes.filter(o => !o.owner), offscreen: offscreen ? { projected: api.camera.project(offscreen.transform.x, offscreen.transform.y, offscreen.transform.z), drawn: api.crowdFigures().some(f => f.id === offscreen.id && f.drawn) } : null };
     });
+    writeFileSync(`${out}/${label}.json`, JSON.stringify(result, null, 2) + '\n');
+    return result;
   }
-  const alive = await audit();
+  const alive = await audit('alive');
   assert.equal(alive.ai!.count, 200); assert.equal(alive.unowned.length, 0);
   assert.equal(alive.nodes.length, alive.actualBatches + alive.reservedSlots + 3 + alive.pages.length);
-  assert.ok(alive.pages.every(page => page.count === 0 && page.instanced));
+  assert.ok(alive.pages.every(page => page.count === 0 && page.instanced && page.capacity === 128));
   assert.ok(alive.crowd.meshDrawCalls <= 30); assert.equal(alive.crowd.nonInstancedMeshes, 0);
   assert.ok(Math.max(...alive.offscreen!.projected.map(Math.abs).slice(0, 2)) > 1.5); assert.equal(alive.offscreen!.drawn, false);
   await session.screenshot(`${out}/alive.png`);
   await session.page.evaluate(async () => { const api = window.__SS__!; api.cheats.killAll(); await api.step(121); await api.screenshotReady(); });
-  const settled = await audit(); assert.equal(settled.corpses, 200); assert.equal(settled.ai!.count, 0); assert.equal(settled.unowned.length, 0);
+  const settled = await audit('settled'); assert.equal(settled.corpses, 200); assert.equal(settled.ai!.count, 0); assert.equal(settled.unowned.length, 0);
   await session.page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('horde-arena'); api.pause(); await api.screenshotReady(); });
-  const empty = await audit(); const delta = alive.perf.drawCalls - empty.perf.drawCalls;
+  const empty = await audit('empty'); const delta = alive.perf.drawCalls - empty.perf.drawCalls;
   assert.ok(delta > 0 && delta <= 30);
   await session.page.evaluate(async roles => {
     const api = window.__SS__!;
@@ -54,7 +56,7 @@ try {
     api.spawn('infected.crow', { x: -8, z: -4 }); api.spawn('infected.crow', { x: 8, z: -4 });
     await api.step(0); await api.screenshotReady();
   }, infectedDefinitions.filter(def => def.id !== 'infected.crow').map(def => def.id));
-  const mixed = await audit(); assert.equal(mixed.ai!.count, 200); assert.equal(mixed.unowned.length, 0);
+  const mixed = await audit('mixed'); assert.equal(mixed.ai!.count, 200); assert.equal(mixed.unowned.length, 0);
   assert.equal(mixed.nodes.length, mixed.actualBatches + mixed.reservedSlots + 3 + mixed.pages.length);
   assert.ok(mixed.crowd.meshDrawCalls <= 30); assert.equal(mixed.crowd.nonInstancedMeshes, 0);
   await session.screenshot(`${out}/mixed.png`);
