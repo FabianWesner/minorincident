@@ -233,33 +233,52 @@ export class Bicycle {
     if (nav && (!nav.clear(x, z, survivor.radius + .1, false, this.id) || samples.some(p => !nav.clear(p.x, p.z, .05, false, this.id)))) return false;
     const districts = this.world.districts;
     if (districts && (pavement && !districts.districts.some(d => d.layout.surfaces.some(s => s.surface === 'tile' && samples.every(p => inside([p.x - d.origin[0], p.z - d.origin[1]], s.polygon)))) || samples.some(p => Math.abs(districts.pavingHeight(p.x, p.z) - ground) > .001))) return false;
+    return this.frameFree(x, z, heading, offset);
+  }
+  /** The toy-scale frame box (plus 3 cm) overlaps no Rapier solid. */
+  private frameFree(x: number, z: number, heading: number, offset = 0): boolean {
+    const fx = Math.cos(heading), fz = Math.sin(heading), ground = this.world.districts?.pavingHeight(x, z) ?? 0;
     const centre = (geometry.minX + geometry.maxX) / 2 + offset;
     const shape = new RAPIER.Cuboid((geometry.maxX - geometry.minX) / 2 + .03, geometry.height / 2, geometry.halfWidth + .03);
     return !this.world.physics.world!.intersectionWithShape({ x: x + fx * centre, y: ground + .01 + geometry.height / 2, z: z + fz * centre }, { x: 0, y: Math.sin(-heading / 2), z: 0, w: Math.cos(heading / 2) }, shape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!);
   }
   /** Search outward for a level, clear frame; wider rings reach pavement when dismounting in the street. */
-  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], mounted = false, pavement = true): Vec2 | null {
+  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], mounted = false, pavement = true, accept?: (spot: Vec2) => boolean): Vec2 | null {
     for (const radius of radii) for (let i = 0; i < 8; i++) {
       // left of the rider first, then right, behind, ahead
       const a = heading + Math.PI / 2 + [0, Math.PI, Math.PI / 2, -Math.PI / 2, Math.PI / 4, -Math.PI / 4, 3 * Math.PI / 4, -3 * Math.PI / 4][i];
       const x = px + Math.cos(a) * radius, z = pz + Math.sin(a) * radius;
-      if (this.clearAt(x, z, heading, mounted, pavement) && !this.inNoBikeZone({ x, z })) return { x, z };
+      if (this.clearAt(x, z, heading, mounted, pavement) && !this.inNoBikeZone({ x, z }) && this.reachable(px, pz, x, z) && (!accept || accept({ x, z }))) return { x, z };
     }
     return null;
   }
+  /**
+   * The spot is on the rider's side of every solid: no wall, fence or prop between her and it. A clear, level frame
+   * alone is not enough; a ring search 3 m out from the gravel strip south of the L1 fire station found free grass
+   * behind the 0.27 m privacy fence (PO 10-22: "the bike is now on the other side of the fence").
+   */
+  private reachable(px: number, pz: number, x: number, z: number): boolean {
+    const dx = x - px, dz = z - pz, d = Math.hypot(dx, dz), physics = this.world.physics.world;
+    if (d < .05 || !physics) return true;
+    const ground = this.world.districts?.pavingHeight(px, pz) ?? 0, dir = { x: dx / d, y: 0, z: dz / d };
+    const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | RAPIER.QueryFilterFlags.EXCLUDE_DYNAMIC | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC;
+    // Knee and handlebar height: kerbs and low lips stay crossable, fences, railings and walls do not.
+    return [.35, .9].every(h => !physics.castRay(new RAPIER.Ray({ x: px, y: ground + h, z: pz }, dir), d, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
+  }
   private parkingSpot(x: number, z: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], pavement = true): (Vec2 & { heading: number }) | null {
     for (const radius of radii) for (const direction of [heading, heading + Math.PI / 2]) {
-      const spot = this.clearSpot(x, z, direction, [radius], false, pavement);
-      if (spot) {
+      const fx = Math.cos(direction), fz = Math.sin(direction), margin = survivor.radius + .1;
+      // Every candidate on the ring is tried: rejecting the ring on its first clear spot pushed the search outward,
+      // past the nearest clear spots on the rider's side, until it reached ground behind a fence.
+      const spot = this.clearSpot(x, z, direction, [radius], false, pavement, candidate => {
         // Installing the parked frame's nav blocker must leave the dismounted rider a clear start.
         // A safe frame behind the rider can still overlap their capsule and trap every routed step.
-        const rider = this.world.entities.get(1)?.transform, fx = Math.cos(direction), fz = Math.sin(direction);
-        const margin = survivor.radius + .1;
-        if (rider && Math.abs(rider.x - spot.x - fx * .05) < Math.abs(fx) * .65 + .3 + margin
-          && Math.abs(rider.z - spot.z - fz * .05) < Math.abs(fz) * .65 + .3 + margin) continue;
-        if (this.sealsNoBikeEntrance(spot, direction, { x, z })) continue;
-        return { ...spot, heading: direction };
-      }
+        const rider = this.world.entities.get(1)?.transform;
+        if (rider && Math.abs(rider.x - candidate.x - fx * .05) < Math.abs(fx) * .65 + .3 + margin
+          && Math.abs(rider.z - candidate.z - fz * .05) < Math.abs(fz) * .65 + .3 + margin) return false;
+        return !this.sealsNoBikeEntrance(candidate, direction, { x, z });
+      });
+      if (spot) return { ...spot, heading: direction };
     }
     return null;
   }
@@ -302,7 +321,12 @@ export class Bicycle {
     delete player.riding;
     const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z;
     const spot = crash ? this.parkingSpot(x, z, b.heading, CRASH_RADII, false) ?? this.crashSpot(x, z, b.heading) : this.parkingSpot(x, z, b.heading) ?? this.parkingSpot(x, z, b.heading, CRASH_RADII, false);
-    const p = spot ?? { x, z, heading: b.heading };
+    // Last resort, exactly where she got off: turn the frame until it clears every solid. Kept on her old heading, a
+    // diagonal frame in the pocket between the fire-station curb and the fence poked through the fence and its push-out
+    // circles shoved the courier to the far side.
+    const turns = [0, Math.PI / 2, Math.PI / 4, -Math.PI / 4].map(t => b.heading + t);
+    const turned = spot ? null : turns.find(h => this.clearAt(x, z, h, false, false)) ?? turns.find(h => this.frameFree(x, z, h));
+    const p = spot ?? { x, z, heading: turned ?? b.heading };
     b.heading = p.heading; Object.assign(bike.transform, { x: p.x, z: p.z, y: this.world.districts?.pavingHeight(p.x, p.z) ?? 0, yaw: -b.heading });
     this.world.player!.locomotion.reset();
   }
@@ -311,7 +335,7 @@ export class Bicycle {
     const nav = this.world.infected?.nav;
     for (const radius of CRASH_RADII) for (let i = 0; i < 8; i++) {
       const a = heading + Math.PI / 2 + i * Math.PI / 4, px = x + Math.cos(a) * radius, pz = z + Math.sin(a) * radius;
-      if (!this.inNoBikeZone({ x: px, z: pz }) && (!nav || nav.clear(px, pz, .3, false, this.id))) return { x: px, z: pz, heading };
+      if (!this.inNoBikeZone({ x: px, z: pz }) && (!nav || nav.clear(px, pz, .3, false, this.id)) && this.reachable(x, z, px, pz)) return { x: px, z: pz, heading };
     }
     return null;
   }
