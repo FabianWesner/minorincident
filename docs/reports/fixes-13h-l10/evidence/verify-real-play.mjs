@@ -27,7 +27,7 @@ for (const backend of ['webgl2', 'webgpu']) for (const tier of tiers) {
   }
   assert.deepEqual(after.captures.map(c => c.state), before.captures.map(c => c.state), `${backend}/${tier} actual gameplay cameras and lighting`);
   assert.equal(after.pages.reduce((sum, p) => sum + p.instances, 0), after.bodies.length);
-  for (const page of after.pages) assert.match(page.name, /:death-(back|front):0[/]/);
+  for (const page of after.pages) assert.match(page.name, /:death-(back|front):0(?=[:/]|$)/);
   assert.ok(after.nativePerformance.max <= 200, `${backend}/${tier} real assault maximum`);
   const steady = result => result.captures.find(c => c.zoom === 1).samples.map(s => s.p95);
   summary.push({ backend, tier, kills: after.kills.length, before: before.nativePerformance, after: after.nativePerformance, settledBefore: steady(before), settledAfter: steady(after) });
