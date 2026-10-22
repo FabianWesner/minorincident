@@ -111,8 +111,8 @@ elif sys.argv[1] == 'vfx':
             rows.append(row)
         sheet(f'h-{tier}.jpg', rows, 420, 236)
     (DEST / 'evidence/H-final-images.json').write_text(json.dumps({'runtimeSource': 'df390443a', 'frames': manifest}, indent=2) + '\n')
-elif sys.argv[1] != 'bars':
-    raise SystemExit('Use repairs, moves, bars, horde or vfx')
+elif sys.argv[1] not in ['bars', 'moods']:
+    raise SystemExit('Use repairs, moves, bars, horde, vfx or moods')
 
 if sys.argv[1] == 'bars':
     root = Path('test-results/ac-close-shared')
@@ -166,5 +166,14 @@ elif sys.argv[1] == 'moods':
                 row.append((path, label))
                 manifest.append({'path': str(path), 'label': label, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
             rows.append(row)
+    extras = [
+        (root / 'mood-thunderstorm-flash-webgl-high.png', 'Scripted strike flash | GL2 high'),
+        (root / 'window-wall-occlusion.png', 'Facade occlusion | GL2 high'),
+        (Path('test-results/epics/E25/hero-shadow.png'), 'Settled colored hero shadow'),
+        (root / 'wet-reflections.png', 'Wet surface | rain lab'),
+    ]
+    rows.append(extras)
+    for path, label in extras:
+        manifest.append({'path': str(path), 'label': label, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
     sheet('g-moods.jpg', rows, 400, 225)
     (DEST / 'evidence/G-final-images.json').write_text(json.dumps(manifest, indent=2) + '\n')

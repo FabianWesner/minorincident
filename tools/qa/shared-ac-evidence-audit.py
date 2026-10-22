@@ -7,6 +7,7 @@ for p in ev.glob('*.json.gz'):json.loads(gzip.decompress(p.read_bytes()))
 moves=json.loads(gzip.decompress((ev/'move-boundaries.json.gz').read_bytes()));assert len(moves)==14 and sum(len(m['captures']) for m in moves)==168
 assert all(len(m['proof'])==11 and len(m['captures'])==12 and not m['consoleErrors'] for m in moves)
 bars=json.loads(gzip.decompress((ev/'phone-bars-final.json.gz').read_bytes()));assert len(bars['proofs'])==7 and len(bars['images'])==58
+g=json.loads((ev/'G-final-images.json').read_text());assert len(g)==28 and len({x['path'] for x in g})==28 and all(len(x['sha256'])==64 for x in g)
 assert len([p for p in root.rglob('*') if p.suffix.lower() in ['.png','.jpg','.jpeg','.webm','.mp4']])==12
 for doc in [root/'README.md',Path('docs/reports/verify-sweep/ACs.md'),Path('docs/reports/verify-sweep/README.md')]:
  for target in re.findall(r'\]\(([^)]+)\)',doc.read_text()):
