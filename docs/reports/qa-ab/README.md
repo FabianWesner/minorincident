@@ -55,7 +55,15 @@ Static checks pass: typecheck, lint, production build, and all 1,961 unit tests.
 
 ## Revised validation protocol (2026-10-22)
 
-Build `lane/po-regressions-1022` in an isolated checkout, then run:
+Build the pinned `lane/po-regressions-1022` snapshot in an isolated checkout (dependencies must already be installed in this worktree):
+
+```sh
+git worktree add --detach test-results/qa-ab-fixed-build dd9e4d73e
+ln -s "$PWD/node_modules" test-results/qa-ab-fixed-build/node_modules
+(cd test-results/qa-ab-fixed-build && npm run build)
+```
+
+Then run the comparisons, replacing `path/to/fixes/dist` with `test-results/qa-ab-fixed-build/dist`:
 
 ```sh
 npm run qa:ab -- --candidate dist --dist-dir path/to/fixes/dist --levels L1-L2
@@ -87,4 +95,4 @@ Combined sensitivity: **7/7 (100%)** at the unchanged 2% threshold. Codex inspec
 
 The [local fixed-build control](2026-10-22-local-self/summary.json) passed **8/8 variants with every score 0%, zero false positives and zero errors** (2.27 MB JPEG). It repeats all four mutation-targeted stops with injections disabled.
 
-The first extended L10 control reached the correct research and console states but exposed render-history noise in the corgi pose. Player/camera/mission ticks were identical. Before L10 captures, the runner now recreates the companion's view from its unchanged simulation actor, clearing presentation-only gait and cross-fade caches whose history depends on load/RAF cadence during the long batched walk. This normalization is guarded by `test=1`; it does not hide actors, alter their simulation or mask image pixels. A focused replay and the full all-level control are in progress.
+The first extended L10 control reached the correct research and console states but exposed render-history noise in the corgi pose. Player/camera/mission ticks were identical. After readiness has finished, the runner recreates the companion's view from its unchanged simulation actor, clearing presentation-only gait and cross-fade caches whose history depends on load/RAF cadence during the long batched walk. It then forces a fresh render-node frame and waits for the GPU submission. This normalization is guarded by `test=1`; it does not hide actors, alter their simulation or mask image pixels. The [focused L10 replay](2026-10-22-l10-control/summary.json) passed **4/4 variants, all 24 frame pairs scoring 0%, with zero errors**. The full 80-variant all-level control is in progress.

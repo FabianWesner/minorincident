@@ -195,17 +195,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     if(!wearer)throw new Error('No existing glasses wearer in the seeded L1 population');
     cameraTarget=[wearer.transform.x,Math.max(0,wearer.transform.y-.72),wearer.transform.z];actorFocus={id:wearer.id,accessory:'glasses',model:wearer.civilian!.model};
   }
-  const presentationReset:number[]=[];
-  if(stop.level==='L10'){
-    if(new URL(location.href).searchParams.get('test')!=='1')throw new Error('Presentation normalization requires test mode');
-    // A long batched walk samples the corgi animator at render cadence. Recreate only its view from the
-    // unchanged simulation actor so cross-fades and gait history do not depend on load/RAF timing.
-    const npcs=g.view.labProbes().npcs as unknown as {heroes:Map<number,{root:Object3D}>;motion:{delete(id:number):void};presentation:{states:Map<number,unknown>}}|null;
-    if(npcs)for(const e of g.world.entities.iterate())if(e.companion){
-      npcs.heroes.get(e.id)?.root.removeFromParent();npcs.heroes.delete(e.id);npcs.motion.delete(e.id);npcs.presentation.states.delete(e.id);presentationReset.push(e.id);
-    }
-  }
-  return {target:cameraTarget,actorFocus,presentationReset,tick:a.tick(),scenario:a.getState().scenario,phase:state.phase,checkpoint:state.checkpoint,completed:state.completedObjectives,
+  return {target:cameraTarget,actorFocus,tick:a.tick(),scenario:a.getState().scenario,phase:state.phase,checkpoint:state.checkpoint,completed:state.completedObjectives,
     l1:state.l1?{phase:state.l1.phase,carrying:state.l1.carrying,clerkId:state.l1.clerkId,techId:state.l1.techId,handoverAt:state.l1.handoverAt,beat:state.l1.beat?.id}:null,
     l2:state.l2?{phase:state.l2.phase,benchIds:state.l2.benchIds}:null,
     l3:state.l3?{phase:state.l3.phase,finaleAt:state.l3.finaleAt}:null,
@@ -263,8 +253,23 @@ export async function readyFrame({target,zoom,ticks,injection,stopId,scriptedNpc
     rig.inspectionGameLod=false;
   }
   await a.screenshotReady();
+  const presentationReset:number[]=[];
+  if(stopId.startsWith('l10-')&&!ticks){
+    if(new URL(location.href).searchParams.get('test')!=='1')throw new Error('Presentation normalization requires test mode');
+    // A long batched walk samples the corgi animator at render cadence. Recreate only its view from the
+    // unchanged simulation actor so cross-fades and gait history do not depend on load/RAF timing.
+    const npcs=g.view.labProbes().npcs as unknown as {heroes:Map<number,{root:Object3D}>;motion:{delete(id:number):void};presentation:{states:Map<number,unknown>}}|null;
+    if(npcs)for(const e of g.world.entities.iterate())if(e.companion){
+      npcs.heroes.get(e.id)?.root.removeFromParent();npcs.heroes.delete(e.id);npcs.motion.delete(e.id);npcs.presentation.states.delete(e.id);presentationReset.push(e.id);
+    }
+  }
+  if(stopId.startsWith('l10-')){
+    // Ready may warm assets through extra view updates. Draw the normalized pose in a new node frame,
+    // then finish the GPU submission before Playwright reads the canvas.
+    g.view.renderer.nextNodeFrame();g.view.update(1);await g.view.renderer.finishWarmUp();
+  }
   const focus=target??[a.getState().player!.transform.x,0,a.getState().player!.transform.z];
   const actors=a.query({}).filter(e=>(!!e.civilian||e.archetype==='veh.tank')&&Math.hypot(e.transform.x-focus[0],e.transform.z-focus[2])<15).map(e=>({id:e.id,archetype:e.archetype,at:e.transform,hidden:e.hidden,model:e.civilian?.model,clip:e.civilian?.story?.clip,activity:e.civilian?.schedule?.[e.civilian.scheduleStep??0]?.activity,state:e.civilian?.state,activityUntil:e.civilian?.activityUntil,pauseUntil:e.civilian?.pauseUntil}));
-  const companions=a.query({}).filter(e=>e.companion).map(e=>({id:e.id,at:e.transform,motion:e.motion,state:e.companion!.state,clip:g.view.labProbes().npcs?.heroClip(e.id)}));
-  return {tick:a.tick(),mutations,companions,backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
+  const companions=a.query({}).filter(e=>e.companion).map(e=>({id:e.id,at:e.transform,motion:e.motion,state:e.companion!.state,clip:g.view.labProbes().npcs?.heroClip(e.id),pose:['body','head','legFL','legFR','legBL','legBR'].map(name=>{const node=g.view.labProbes().npcs?.heroRoot(e.id)?.getObjectByName(name);return{name,p:node?.position.toArray(),q:node?.quaternion.toArray()};})}));
+  return {tick:a.tick(),mutations,companions,presentationReset,backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
 }
