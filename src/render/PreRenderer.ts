@@ -50,6 +50,7 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
   };
   return {
     get done() { return index >= leaves.length; },
+    get remaining() { return leaves.length - index; },
     cancel() { index = leaves.length; leaves.length = 0; },
     step(): void {
       if (error) { const failure = error; this.cancel(); throw failure; }
@@ -57,12 +58,18 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
       const object = leaves[index];
       if (phase === 'compile') {
         const before = renderer.nodeBuilds, foreground = renderer.foregroundCompile;
+        const background = scene.background, backgroundNode = scene.backgroundNode;
         let pending: Promise<void>;
         try {
           // Capture this leaf's light graph before restoring the gameplay source.
+          // r186 caches the light hash by info.calls, but compileAsync does not
+          // advance it. It also queues the background before the requested leaf;
+          // omit that unrelated item so this leaf builds before the first await.
+          (renderer.info as unknown as { calls: number }).calls++;
+          scene.background = null; scene.backgroundNode = null;
           renderer.foregroundCompile = true;
           pending = representative(object, 1, () => compile(object));
-        } finally { renderer.foregroundCompile = foreground; }
+        } finally { renderer.foregroundCompile = foreground; scene.background = background; scene.backgroundNode = backgroundNode; }
         const changed = renderer.nodeBuilds !== before; phase = 'waiting';
         void pending.then(() => {
           if (this.done) return;

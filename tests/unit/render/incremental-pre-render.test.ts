@@ -14,7 +14,7 @@ test('PO #100 warm slices wait for GPU linking and restore every visible body, i
   scene.add(body, other); scene.updateMatrixWorld(true);
   const original = [...body.instanceMatrix.array], probe = vi.fn(); body.onAfterRender = probe;
   const camera = new PerspectiveCamera(); camera.position.set(0, 3, 6); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
-  const renderer = { nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() };
+  const renderer = { info: { calls: 0 }, nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() };
   let finish!: () => void;
   const draw = vi.fn(() => {
     expect(scene.userData.shadowVariant).toBe('L10:spot'); expect(body.visible).toBe(true); expect(other.visible).toBe(false);
@@ -23,6 +23,7 @@ test('PO #100 warm slices wait for GPU linking and restore every visible body, i
   });
   const compile = vi.fn(root => {
     expect(root).toBe(body); expect(body.count).toBe(1); expect(renderer.foregroundCompile).toBe(true);
+    expect(renderer.info.calls).toBe(1); expect(scene.background).toBeNull(); expect(scene.backgroundNode).toBeNull();
     expect(scene.userData.shadowVariant).toBe('L10:spot'); renderer.nodeBuilds++;
     return new Promise<void>(resolve => { finish = resolve; });
   });
@@ -43,7 +44,7 @@ test('PO #100 warm slices wait for GPU linking and restore every visible body, i
 test('PO #100 cached warm graphs skip driver draws and a failed link releases the queue', async () => {
   const scene = new Scene(), geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial();
   const mesh = new Mesh(geometry, material); mesh.matrixAutoUpdate = false; mesh.matrix.makeTranslation(7, 8, 9); scene.add(mesh); scene.updateMatrixWorld(true);
-  const camera = new PerspectiveCamera(), renderer = { nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() }, draw = vi.fn();
+  const camera = new PerspectiveCamera(), renderer = { info: { calls: 0 }, nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() }, draw = vi.fn();
   const cached = incrementalPreRender(renderer as unknown as Renderer, scene, camera, draw, async () => {}, run => run());
   cached.step(); await Promise.resolve(); expect(cached.done).toBe(true); expect(draw).not.toHaveBeenCalled();
   const failed = incrementalPreRender(renderer as unknown as Renderer, scene, camera, draw, async () => { throw Error('link failed'); }, run => run());
