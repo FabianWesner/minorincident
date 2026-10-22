@@ -179,7 +179,7 @@ export class InfectedSystem {
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
     delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;

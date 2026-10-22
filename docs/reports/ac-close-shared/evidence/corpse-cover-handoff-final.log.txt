@@ -1,0 +1,38 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 94.130.181.173:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 37s, 30420 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120; queueing for a slot
+[runner] slot 0 acquired; load 0.82 1.30 1.43
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120[39m
+
+[90mstdout[2m | tests/unit/tooling/verify-remote.test.ts[2m > [22m[2mE07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally
+[22m[39m
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120 -- sh -c npm run typecheck && npm run lint
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120 --pull dist -- npm run build
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120 --pull test-results/epics/E07/vitest-timing.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/sim/ai/director.test.ts tests/sim/performance/alpha.test.ts tests/sim/performance/alpha-physical.test.ts -t T-E07-11 --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest-timing.json
+
+Verifying E07: sh tools/remote/run.sh /srv/mi/jobs/ac-close-shared-fcfdcb-16323-1792621120 --pull test-results/epics/E07/vitest.json -- npx vitest run -t ^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/vitest.json
+
+Verifying E07: sh tools/e2e-lock.sh npx playwright test --grep @(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --workers=1
+
+Verifying E07: sh tools/perf/quiet-run.sh npx playwright test --grep ^(?=.*(?:@(?:E07)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)|T-E07-physical-budget))(?=.*@perf) --project=chromium --workers=1
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/verify-remote.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/explosion-corpses.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 506[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 22:20:31
+[2m   Duration [22m 5.01s[2m (transform 77%, tests 12%, import 11%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 37s, remote total 82s)

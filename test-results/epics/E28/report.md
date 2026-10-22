@@ -1,0 +1,15 @@
+# E28 acceptance follow-up — 2026-10-22
+
+Source: `lane/ac-close-shared`, final runtime df390443a; refreshed G/native proof through this closure. Full receipts and retained images: `docs/reports/ac-close-shared/README.md`.
+
+- **Verify passes:** remote typecheck/lint/build, **28 selected Node tests**, **71 functional browser tests**, **6 quiet performance tests**. See `evidence/verify-E28-headwear-final.log.txt`, final checks and lossless result JSONs. Full remote units also pass 1,867 tests / 345 files (9 skipped tests / 1 file).
+- **AC12 met:** explicit Checklist G in `review.md`: 4/4 must, 3/3 should, six moods × two backends × two tiers, authorized interim references opened. Fog defect repaired at 3.0349:1; wet reflection bands broken by noise; settled lamp shadow 85.88% darker, hue 254.7°.
+- **AC10 real memory repair:** compact only unreferenced crowd vertices and share immutable prepared CPU arrays with independent GPU wrappers. Exact indexed attributes/triangles preserved in 20 asset/tier cases; same-view RGB pixels identical on both tiers. Quiet diagnostic backing-storage reduction 20.94 / 22.58 MB; this does not prove the old heap counter met its limit.
+- **AC10 native storm:** M4 Metal, full wetness, 20,000/6,000 particles. High/low frame p95 5.8/6.9 ms, max 9.7/9.3 ms, sim p95 0.200/0.800 ms; collected CDP JS heap 117.34/116.78 decimal MB. Native `perf.heapBytes` remains **557.89/523.82 MiB**, above the sweep's 400/250 comparisons; collected backing storage 387.04/374.33 decimal MB is retained separately. Do not infer original-counter closure from the green verifier.
+- **AC10 L5 peak authored ash:** actual pair-plaza high/phone low, flakes 0.35 (retained at the same peak through the later fog blend in `src/data/weather.ts`), 1,750/525 particles; five followers, 13 fires, 37 corpses, 27/18 infected. High p95/max 8.4/14.4 ms; phone p50/p95/max 18.4/34.6/43.8 ms at 4× CPU throttle (existing phone gate is p50 ≤33.3 ms and max ≤80 ms). Collected JS heap 130.19/114.35 MB; draw/triangle and +20% baseline caps pass. Walk remains in L5, >10 m; opened both actual pair-plaza images. No claim that phone p95 is ≤33.3 ms.
+
+## Proposed clarification for AC10 — not adopted
+
+“Use the E18 **JS heap** budget of 400/250 decimal MB, measured as CDP `Runtime.getHeapUsage.usedSize` after pausing, retiring completed-frame temporaries and three explicit collections. Record backing storage and legacy `performance.memory` separately, with units, before/after runtime identity, viewport and workload. Keep the frame, sim, particle, draw and triangle gates unchanged.”
+
+Reason: the pre-existing verifier already gates collected CDP JS heap, whereas the sweep compares legacy `perf.heapBytes` in MiB. Those are materially different counters; this lane did not change that helper or either threshold. A real buffer reduction is demonstrated, but the original counter **still fails**. This proposal resolves the inconsistent measurement contract only if the user accepts it; it is not asserted impossible to optimize the original counter further, and no rewrite is silently accepted. **E28 remains in-progress / AC10 partial.**

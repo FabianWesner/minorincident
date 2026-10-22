@@ -1,0 +1,57 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.28.24.66:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 53s, 30528 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-1911-1792636302; queueing for a slot
+[runner] slot 0 acquired; load 0.63 0.55 0.80
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+src/render/CrowdView.ts(309,82): error TS2345: Argument of type 'Node<"float">' is not assignable to parameter of type 'Bool'.
+  Type 'Node<"float">' is not assignable to type 'Node<"bool">'.
+    Type 'Node<"float">' is not assignable to type 'NodeExtensions<"bool">'.
+      The types returned by 'toArray(...)' are incompatible between these types.
+        Type 'ArrayNode<"float">' is not assignable to type 'ArrayNode<"bool">'.
+          Type 'ArrayNode<"float">' is not assignable to type 'NodeExtensions<"bool">'.
+            The types returned by 'label(...)' are incompatible between these types.
+              Type 'Node<"float">' is not assignable to type 'Node<"bool">'.
+                Type 'Node<"float">' is not assignable to type 'NumOrBoolExtensions<"bool">'.
+                  Types of property 'xx' are incompatible.
+                    Type 'Node<"vec2">' is not assignable to type 'Node<"bvec2">'.
+                      Type 'Node<"vec2">' is not assignable to type 'NodeExtensions<"bvec2">'.
+                        The types returned by 'toArray(...)' are incompatible between these types.
+                          Type 'ArrayNode<"vec2">' is not assignable to type 'ArrayNode<"bvec2">'.
+                            Type 'ArrayNode<"vec2">' is not assignable to type 'NumOrBoolVec2Extensions<"bool">'.
+                              Types of property 'xxy' are incompatible.
+                                Type 'Node<"vec3">' is not assignable to type 'Node<"bvec3">'.
+                                  Type 'Node<"vec3">' is not assignable to type 'NumOrBoolVec3Extensions<"bool">'.
+                                    Types of property 'setX' are incompatible.
+                                      Type '(value: NumOrBool<"float">) => Node<"vec3">' is not assignable to type '(value: NumOrBool<"bool">) => Node<"bvec3">'.
+                                        Types of parameters 'value' and 'value' are incompatible.
+                                          Type 'NumOrBool<"bool">' is not assignable to type 'NumOrBool<"float">'.
+                                            Type 'boolean' is not assignable to type 'NumOrBool<"float">'.
+src/render/CrowdView.ts(309,119): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(ifNode: number | Node<"float">, elseNode?: number | Node<"float"> | null | undefined): Node<"float">', gave the following error.
+    Argument of type 'FrontFacingNode' is not assignable to parameter of type 'number | Node<"float">'.
+      Type 'FrontFacingNode' is not assignable to type 'Node<"float">'.
+        Type 'FrontFacingNode' is not assignable to type 'NodeExtensions<"float">'.
+          The types returned by 'toArray(...)' are incompatible between these types.
+            Type 'ArrayNode<"bool">' is not assignable to type 'ArrayNode<"float">'.
+              Type 'ArrayNode<"bool">' is not assignable to type 'NodeExtensions<"float">'.
+                The types returned by 'toVar(...)' are incompatible between these types.
+                  Type 'VarNode<"bool", ArrayNode<"bool">>' is not assignable to type 'VarNode<"float", NodeExtensions<"float">>'.
+                    Type 'VarNode<"bool", ArrayNode<"bool">>' is not assignable to type 'NodeExtensions<"float">'.
+                      The types returned by 'toVarying(...)' are incompatible between these types.
+                        Type 'VaryingNode<"bool">' is not assignable to type 'VaryingNode<"float">'.
+                          Type 'VaryingNode<"bool">' is not assignable to type 'NodeExtensions<"float">'.
+                            The types returned by 'label(...)' are incompatible between these types.
+                              Type 'Node<"bool">' is not assignable to type 'Node<"float">'.
+                                Type 'Node<"bool">' is not assignable to type 'NumOrBoolExtensions<"float">'.
+                                  Types of property 'setX' are incompatible.
+                                    Type '(value: NumOrBool<"bool">) => Node<"bool">' is not assignable to type '(value: NumOrBool<"float">) => Node<"float">'.
+                                      Types of parameters 'value' and 'value' are incompatible.
+                                        Type 'NumOrBool<"float">' is not assignable to type 'NumOrBool<"bool">'.
+                                          Type 'number' is not assignable to type 'NumOrBool<"bool">'.
+  Overload 2 of 2, '(ifNode: Node<"bool">, elseNode?: Node<"bool"> | null | undefined): Node<"bool">', gave the following error.
+    Argument of type 'boolean' is not assignable to parameter of type 'Node<"bool">'.
+      Type 'boolean' is not assignable to type 'NodeClass<NodeClassEventMap>'.
+[remote] done exit=2 (runner 2.28.24.66, sync 53s, remote total 50s)

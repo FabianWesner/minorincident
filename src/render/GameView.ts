@@ -318,8 +318,10 @@ export class GameView implements Lifecycle {
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
         this.lookdev = new Lookdev(this.materials, this.occlusion, false); this.scene.add(this.lookdev);
-        this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
       }
+      // Isolated survivor labs use the production composite too: courier scene
+      // alpha carries grade protection and must be consumed before presentation.
+      this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
       this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', 'survivor', false, false, this.world.scenario === 'survivor' ? player?.survivor?.variant : undefined); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
@@ -851,7 +853,7 @@ export class GameView implements Lifecycle {
     return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
   }
   update(alpha = 1): void {
-    this.vfx?.updateObstruction();
+    this.vfx?.updateSpecialState();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;

@@ -1,5 +1,7 @@
 # E28 weather vision review
 
+**Current AC12: MET (2026-10-22).** Final-source Checklist G below supersedes the historical failure; AC10 remains partial, as recorded in `report.md`.
+
 **AC12: FAIL.** Automated scene loading is green, but it does not constitute vision approval.
 Reference inspected: `initial-drafts/weather-and-time-of-day-moods.png` (S25). I opened all nine final game-camera catalog sheets (frames 0, 60, 120), plus full-size fog-player, snow-tracks, wet-reflections and scripted-strike blackout frames.
 
@@ -38,3 +40,23 @@ Catalog gates: 9/9 passed, zero console errors; 47–52 draw calls and 201,568�
 1. Capture and review light-pool wall occlusion with the integrated E25 lighting scene.
 2. Add/review atmospheric golden-hour shafts without washing out courier visibility.
 3. Refine regular wet reflection stripes, pale fog fill and footprint stamps during the lighting/art pass.
+
+## Final-source Checklist G review — 2026-10-22
+
+This review supersedes the earlier AC12 failure above. I opened the fresh **24 six-mood frames** (WebGL2/WebGPU × high/low), the full-size storm and facade frames, and the settled hero-shadow frame. Retained matrix: `docs/reports/ac-close-shared/g-moods.jpg`. References opened: `initial-drafts/weather-and-time-of-day-moods.png` and `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`; `06` §7 permits these interim references while dedicated lighting keyframes are absent.
+
+| Priority | G item | Observed result |
+| --- | --- | --- |
+| must | Emissive glow and visible pools/spill | PASS — yellow windows, headlamps and streetlamp bloom; orange pools brighten nearby pavement and facade. |
+| must | Geometry / hero shadows | PASS — wall-facing window spill remains on the outside pavement; settled lamp casts separate courier, infected and prop shadows. The unchanged hero probe measures 85.88% darkening after promotion blend reaches 1. |
+| must | Colored, appropriate shadows | PASS — blue/purple shadows, long and crisp in haze, broader and subdued under overcast; hero shadow hue 254.7°, no black cutout. |
+| must | Night readability | PASS — courier cap, orange clothing and limbs remain distinct; gray/green infected silhouette and limbs separate from the dark blue street in storm, fog and snow. Dense-fog player contrast is 3.0349:1 over the unchanged 7,585-pixel mask. |
+| should | Beams / haze / glints | PASS — amber shafts cross the haze scene and window spill lights the storm haze; fog softens the distance without hiding the courier. The lightning frame is bright but characters and house remain legible. |
+| should | Reflections | PASS — storm pavement carries irregular, broken warm highlights under windows and lamp, with dark gaps; car paint/glass retain specular separation. Dry clear/overcast pavement has no wet streaks. |
+| should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
+
+**AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Final E28 verifier passes all 28 selected Node, 71 functional browser and six quiet performance tests. The original heap-counter discrepancy remains partial under AC10.
+
+## Final runtime G repeat — df390443a
+
+Opened the refreshed24-frame mood sheet and full-size WebGL2 high storm, facade occlusion, wet reflections and settled hero shadow. The sheet also retains the scripted strike flash and these lighting controls. All four must and three should items above remain PASS; fog contrast repeats3.0348645:1 over7585pixels, hero darkening85.884% /hue254.715 degrees. The admitted backends/tiers are asserted by each capture test. Current source hashes and28 selected image hashes: `docs/reports/ac-close-shared/evidence/G-final-images.json`; numeric results: `G-final-numeric.json.gz`. This is visual AC12 proof. Final AC10 native checks also pass; the original legacy counter still fails557.89/523.82MiB, leaving that criterion partial as recorded in report.md.

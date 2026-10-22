@@ -1,0 +1,18 @@
+[scene] starting vite dev on http://127.0.0.1:4052
+zebra.stampede-wall: pass
+[scene] starting vite dev on http://127.0.0.1:4052
+flamingo.dive-boundary: pass
+flamingo.dive-wall: pass
+[scene] starting vite dev on http://127.0.0.1:4052
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: RangeError: Tier must be W0…W6
+    at loadLayouts (http://127.0.0.1:4052/src/levels/layouts.ts:10:11)
+    at http://127.0.0.1:4052/src/Game.ts:329:84
+    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/shared-ac-vision.ts:107:24) {
+  log: []
+}
+
+Node.js v26.0.0
