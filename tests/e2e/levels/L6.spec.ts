@@ -38,12 +38,8 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
       if(name==='l6-tunnel-retreat'){
         const s=a.missions.state()!.l6!,p=a.getState().player!.transform;
         const front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;
-        const radius=Math.max(57,(front-p.x+5)/(2*Math.tan(25*Math.PI/360)*(innerWidth/innerHeight)));
-        a.camera.cinematic({position:[x,.6+radius*.588,15+radius*.809],target:[x,.6,15]},true);
-      }
-      if(name==='l6-exit-night'){
-        const p=a.getEntity(1)!.transform;
-        a.camera.cinematic({position:[p.x+22,p.y+24,p.z+22],target:[p.x,p.y-.7,p.z]},true);
+        const radius=Math.max(70,(front-p.x+7)/(2*Math.tan(25*Math.PI/360)*(innerWidth/innerHeight)));
+        a.camera.cinematic({position:[x+radius*.6,.6+radius*.85,15+radius*.809],target:[x,.6,15]},true);
       }
       await a.screenshotReady();
     },name);
