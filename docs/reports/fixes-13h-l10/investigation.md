@@ -10,7 +10,7 @@ Every frozen page has gore mask `31`: both arms, both legs, and the head are rem
 
 The explicit request for intact permanent corpses must be applied at settlement; transient death effects currently follow `specs/01-art-direction.md` §7 (explosions detach all limbs). Keep that distinction visible in the implementation report and prove the frozen silhouette with real combat events.
 
-## Implementation in progress
+## Implementation
 
 `CrowdView` now freezes complete, prewarmed bodies independently of the transient dismemberment mask. Live death/VFX feedback still records dismemberment; permanent pages retain full anatomy. This implements the explicit intact-corpse request over the older full-gore permanent-remnant behavior. The industrial encounter roster also contains firefighters: their corpse path now loads the intact authored source, alongside dogs and Alphas, instead of applying a second reduction to their living LOD. Living meshes, LOD selection, limits, corpse IDs and lifetime are unchanged.
 
@@ -32,7 +32,7 @@ The tick-0 report has a separate measurement defect: the real-input trace record
 
 Compressed baseline console manifests, the precise-clock CPU profile and material trace are committed in `evidence/`. `tests/fixtures/perf/l10-real-input.json.gz` contains the complete device-input recording, encoded as changes with exact tick numbers. The entry guard replays it through both lamp boundaries on both backends, after debug selection and the real L9 automatic-handover path (L9 completion is a declared fixture).
 
-Typecheck, lint, 24 focused guards, the stronger ten-case Mega/cure guard and all 31 final smoke cases passed. The fresh full remote command and final quiet timing/visual runs remain in progress.
+Typecheck, lint, 26 focused guards (including the ten-case Mega/cure guard) and all 31 final smoke cases passed. The fresh full remote command and recorded-input entry guard remain in progress.
 
 ## Completion evidence still required
 
@@ -41,3 +41,13 @@ Typecheck, lint, 24 focused guards, the stronger ten-case Mega/cure guard and al
 - Reproducible before/after hitch measurements, including the 600–870 ms samples if they reproduce; quiet-run L10-low p95 comparison.
 - Remote unit/levels command and headless `@smoke` run green.
 - Commit the completed evidence bundle and final review. One initial baseline capture is committed; the final comparison sheets will keep the report below ten captures.
+
+## Final matrix and extended after-profile (runtime `8e11cc330`)
+
+The four comparison sheets each contain native 1280×720 captures at zoom 0.5/1/1.5, before above after. I inspected all four: WebGL2/WebGPU agree; both tiers restore heads, hands, arms and legs, with full reclining outlines especially visible around the pile's edge at zoom 1/1.5. At zoom 0.5 the complete authored faceted anatomy is visible. High quality's 167-body center remains heavily overlapped; low retains 53 bodies. No body is hidden, faded or removed. `evidence/final-matrix-audit.json` verifies exact equality of inputs, kill events, body IDs/transforms and all camera states for each pair, with no browser errors.
+
+The final 200-second device-input after-profile reaches tick 11,455 / `(1297.6,24.9)` with no reported playable interval over 200 ms and no issues. The only graph-build batch ≥20 is tick zero (640 graphs behind loading); the earlier 81/59/54-graph playable rebuilds are absent. The log/profile/material/input ledgers and quiet conditions are retained as `evidence/profile-after-extended-*` and `final-visual-profile-conditions.jsonl`. This bounded run does not claim coverage of ticks 33,164 or 90,240.
+
+Final matrix p95 samples: low WebGL2 `[5.1,5.2,5.2]`, high `[4.3,4.2,4.2]`; low WebGPU `[2.4,2.4,2.4]`, high `[3.0,2.9,3.0]` ms. WebGPU improved over the list-only attempt, but WebGL2 remains above the earlier baseline. The no-regression requirement remains open; a paired low before/after run with CPU profiles outside the cadence samples is queued. These images prove anatomy, not a performance pass.
+
+The first entry-replay harness run was rejected: the menu's post-load `input.clear()` reset Recorder playback, leaving the hero at x=547. The x>800 guard caught it. The harness now uses the existing production telemetry feed across that menu release; it must still pass both lamp boundaries and both entries on each backend.
