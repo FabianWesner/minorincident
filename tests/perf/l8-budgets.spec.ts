@@ -1,8 +1,9 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { boot, expect, test } from '../e2e/fixtures';
-// The quiet gate may queue for a long time. Rebuild after acquiring its locks, before any page loads.
-test.beforeAll(() => { execFileSync('npm', ['run', 'build'], { stdio: 'inherit' }); });
+// Remote verify already built/pulled dist before native admission. Standalone
+// callers retain their existing rebuild; never rebuild locally in the remote lane.
+test.beforeAll(() => { if (process.env.MI_VERIFY_REMOTE_SIM !== '1') execFileSync('npm', ['run', 'build'], { stdio: 'inherit' }); });
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync', '--js-flags=--expose-gc', '--enable-precise-memory-info'] } });
 for (const profile of ['high', 'low', 'phone'] as const) test(`T-E30-budget @E30-AC20 @perf ${profile} mixed outbreak E18 budgets`, async ({ page, context }) => {
   test.setTimeout(240_000); const low = profile !== 'high', tier = low ? 'low' : 'high';
