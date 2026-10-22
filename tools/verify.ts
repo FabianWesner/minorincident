@@ -20,7 +20,7 @@ if (splitAlphaTiming || splitE18Timing || splitE31Timing) simArgs[3] = simPatter
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 // E32 includes wall-clock budgets: reserve the existing runner slots while those tests run.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh'] : []), 'npx', ...simArgs]
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh', 'sh', 'tools/perf/quiet-run.sh'] : []), 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
@@ -48,8 +48,7 @@ const commands: string[][] = [
   ...(splitE31Timing ? [[
     'sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`,
     '--pull', `${output}/residency-perf-200.json`, '--pull', `${output}/residency-perf-100.json`, '--',
-    'sh', '-c', 'case "$(readlink /proc/self/fd/9)" in *.0) exec flock /srv/mi/locks/slot.1 "$@";; *.1) flock -u 9 || exit 2; exec flock /srv/mi/locks/slot.0 flock /srv/mi/locks/slot.1 "$@";; *) exit 2;; esac',
-    'sh', 'npx', 'vitest', 'run', 'tests/sim/world/chunk-residency.test.ts', '-t', 'T-E31-19-S4', '--maxWorkers=1',
+    'bash', 'tools/remote/timing-isolated.sh', 'sh', 'tools/perf/quiet-run.sh', 'npx', 'vitest', 'run', 'tests/sim/world/chunk-residency.test.ts', '-t', 'T-E31-19-S4', '--maxWorkers=1',
     '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`,
   ]] : []),
   // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.

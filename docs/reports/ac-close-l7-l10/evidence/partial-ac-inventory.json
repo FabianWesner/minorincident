@@ -16,9 +16,14 @@
     },
     {
       "ac": "E25-AC12",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "`T-E25-12` measures normalized window boundary movement and on/off glow ratio; `T-E25-12s` checks all house LOD semantic channels. Fresh combined browser check fails before measurement: expected 200 front-window samples, received zero. Retained surfaces.json is stale and is not fresh evidence.",
-      "requiredProof": "**M; browser** \u2014 Repair/re-prove powered/unpowered interior windows and \u22654 px back-wall parallax; latest committed acceptance probe remains red."
+      "requiredProof": "**M; browser** \u2014 Repair/re-prove powered/unpowered interior windows and \u22654 px back-wall parallax; latest committed acceptance probe remains red.",
+      "currentEvidence": [
+        "windows.json.gz",
+        "window-images.json"
+      ],
+      "review": "Opened both angles/off; depth stripe moves behind fixed mullions; off removes warm panes/spill. Shift43.091px, glow9.919, all emissives off."
     },
     {
       "ac": "E25-AC14",
@@ -44,7 +49,12 @@
       "ac": "E25-AC16",
       "disposition": "pending",
       "baselineEvidence": "`T-E25-16` captures L2/L3/L4/L5/mall; trailer probes, existing review, current L6 headlamp code and PO captures.",
-      "requiredProof": "**M; browser** \u2014 Create/reference named lighting keyframes and complete Checklist G for all seven required spots, including PO-dark L6."
+      "requiredProof": "**M; browser** \u2014 Create/reference named lighting keyframes and complete Checklist G for all seven required spots, including PO-dark L6.",
+      "currentEvidence": [
+        "lighting-G-images.json",
+        "lighting-G-state.json.gz"
+      ],
+      "review": "All28 current seven-spot/backend/tier captures opened as sheet plus high full frames. Scores7/8/6/8/4/7/6; L3/L5/mall below7, missing courier framing in four pair views, independent hero-shadow red. G not accepted."
     },
     {
       "ac": "E29-AC07",
@@ -56,19 +66,25 @@
       "ac": "E29-AC13",
       "disposition": "pending",
       "baselineEvidence": "`T-E29-13-board/wait/zero/35/handover/lane`; `LevelSevenDeparture.cameraPose/drive/finish`.; newer: [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json)",
-      "requiredProof": "**M; browser** \u2014 Measure skyline frame area \u226525%\u2192\u226410% and complete departure pairs/roster proof; physical desktop bus\u2192L8 now passes."
+      "requiredProof": "**M; browser** \u2014 Measure skyline frame area \u226525%\u2192\u226410% and complete departure pairs/roster proof; physical desktop bus\u2192L8 now passes.",
+      "currentEvidenceSummary": "Fresh production-camera ID measurement **1.846%\u219232.204%**, opposite \u226525%\u2192\u226410%; boarding/handover simulation passes.",
+      "remaining": "**Real defect:** eastbound departure enters town; settled start camera looks west into fog. Ten camera-only diagnostics did not repair it. Preserve gates; fix the cinematic route/composition. [Current evidence](../ac-close-l7-l10/README.md#native-l7l8-diagnostics--0900-utc)."
     },
     {
       "ac": "E29-AC14",
       "disposition": "pending",
       "baselineEvidence": "L7 lighting/composition; `docs/reports/l7-district/capture-review.md`; warm fires, night preset and renderer caps.; newer: [l7-night.spec.ts](../../../tests/visual/l7-night.spec.ts), [real-input.json](../postmerge-10/evidence/l6-after-rng/real-input.json)",
-      "requiredProof": "**M; browser** \u2014 Run committed 3:1 rocket/horde contrast tests and verify L6 exit-light continuity both tiers/backends; API tags alone are insufficient."
+      "requiredProof": "**M; browser** \u2014 Run committed 3:1 rocket/horde contrast tests and verify L6 exit-light continuity both tiers/backends; API tags alone are insufficient.",
+      "currentEvidenceSummary": "Fresh native WebGL high /zoom1 rocket+horde probe passes; horde 7,572 courier pixels, **7.416:1**, no clipped/color-failure samples.",
+      "remaining": "**Partial:** run remaining tiers/backends/zooms and L6 exit continuity. [Receipt](../ac-close-l7-l10/evidence/l7-horde-native.json.gz)."
     },
     {
       "ac": "E29-AC15",
       "disposition": "pending",
       "baselineEvidence": "`T-E29-15-bus` now verifies engine position/speed/cab updates and one stop before handover; shared `MusicDirector`/noise/caption systems remain.",
-      "requiredProof": "**M; browser** \u2014 Record combat\u2192departure audio/captions and rocket/fire/bus mix/voice 32/16, focus/pause checks."
+      "requiredProof": "**M; browser** \u2014 Record combat\u2192departure audio/captions and rocket/fire/bus mix/voice 32/16, focus/pause checks.",
+      "currentEvidenceSummary": "Fixed departure intensity: current streamed decks combat\u2192combat\u2192aftermath\u2192combat pass across waiting/boarding/departure/retry. Engine/cab/noise unit coverage in fresh 619-pass selected repeat.",
+      "remaining": "**Partial:** actual real-input cue/caption trace and full voice/mix/focus/pause integration remain. [Trace](../ac-close-l7-l10/evidence/departure-audio.json.gz)."
     },
     {
       "ac": "E29-AC17",
@@ -103,13 +119,17 @@
         "zoo-high-wide.json.gz",
         "zoo-low-wide.json.gz"
       ],
-      "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending."
+      "progress": "Both originally failed zoom1.5 routine rows now have zero intersections over original60 frames and opened sheets. Sanctuary/outbreak/escape scoring still pending.",
+      "currentEvidenceSummary": "Fresh high/low zoom1.5 original 60-frame zoo rows both pass: all actor/static/held-prop/gun intersections zero. Opened both frame sheets; staff/visitor silhouettes grounded and props attached.",
+      "remaining": "**Partial:** the two stale clipping rows are closed; complete scored sanctuary signoff. [Review](../ac-close-l7-l10/README.md#0838-utc-checkpoint)."
     },
     {
       "ac": "E30-AC10",
       "disposition": "pending",
       "baselineEvidence": "Shared `tests/sim/ai/zoo-s1/s2/s3.test.ts` and matching browser tests now selected by E30; shared Alpha suite too.",
-      "requiredProof": "**M; browser** \u2014 Close E07 zoo move/bar visual contract and full in-level matrix. Global awareness request in audit C is superseded by explicit L5-only decision."
+      "requiredProof": "**M; browser** \u2014 Close E07 zoo move/bar visual contract and full in-level matrix. Global awareness request in audit C is superseded by explicit L5-only decision.",
+      "proposedRewrite": "Keep nominal1.5m ground corridor and explicitly include capsule radii+0.02m body contact; distinct zebra/attack IDs25HP once; beyond both boundaries unaffected.",
+      "reason": "Shared audit demonstrates literal outside-corridor hit at0.76m; current physical contact extends to0.82m. Changing damage behavior is prohibited. Proposal unadopted; current branch visual matrix still pending."
     },
     {
       "ac": "E30-AC15",
@@ -121,7 +141,9 @@
       "ac": "E30-AC16",
       "disposition": "pending",
       "baselineEvidence": "`tests/unit/audio/music-beats.test.ts` L8 calm/breach selection; shared voice/noise/pause systems.",
-      "requiredProof": "**M; browser** \u2014 Record calm\u2192breach\u2192battle\u2192engine audio/caption trace, pre-infection negative cues, voice caps/mix/focus."
+      "requiredProof": "**M; browser** \u2014 Record calm\u2192breach\u2192battle\u2192engine audio/caption trace, pre-infection negative cues, voice caps/mix/focus.",
+      "currentEvidenceSummary": "Fresh both-tier streamed calm\u2192tension\u2192combat, sanctuary negative cues, engine700Hz lowpass, captioned pounce and **32/16** saturated voice caps pass.",
+      "remaining": "**Partial:** phase probe is explicitly a presentation adapter; real breach/escape and focus/pause integration remain separately required. [Traces](../ac-close-l7-l10/README.md#native-l7l8-diagnostics--0900-utc)."
     },
     {
       "ac": "E30-AC18",
@@ -174,7 +196,9 @@
       "ac": "E31-AC19",
       "disposition": "pending",
       "baselineEvidence": "`tests/perf/l9-{dress,handover-budgets}.spec.ts`; `T-E31-19-S4`, streaming units; Q3 native six cases previously pass.; newer: [idle-crossing-200.json](../postmerge-10/evidence/idle-crossing-200.json)",
-      "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%."
+      "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%.",
+      "currentEvidenceSummary": "Fresh original isolated residency timing passes high/low **3.416/1.625 ms** at unchanged4ms gate; selected repeat619pass. Five-cycle browser retention fixture added, not yet measured.",
+      "remaining": "**Partial:** native route/floor/crash frames, \u226450ms hitches and warmed heap/GPU retention\u226410% remain. [Timing](../ac-close-l7-l10/evidence/residency-200.json.gz)."
     },
     {
       "ac": "E31-AC20",
@@ -204,7 +228,9 @@
       "ac": "E32-AC31",
       "disposition": "pending",
       "baselineEvidence": "Nine E32 native suites now selected after verifier fix; current isolated Mega-special 200-infected sim p95 **4.196 ms > 4 ms**, low tier passes; sim/LOD/cure counters and prior native samples do not erase this failure.; newer: [final-vitest.json](../postmerge-10/evidence/final-vitest.json)",
-      "requiredProof": "**L; browser + quiet perf** \u2014 Complete native regions/assault/mist/pullout high/low caps, \u226450 ms transitions and five-cycle retention; physical iOS/Android \u226530 fps still required."
+      "requiredProof": "**L; browser + quiet perf** \u2014 Complete native regions/assault/mist/pullout high/low caps, \u226450 ms transitions and five-cycle retention; physical iOS/Android \u226530 fps still required.",
+      "currentEvidenceSummary": "Fresh original isolated assault timing passes high/low **3.702/2.021 ms**, peaks168/87 and arrival12.5s; 619-pass selected repeat. Native budget discovery now includes every tagged perf file with released shard reservations.",
+      "remaining": "**Partial:** native caps/hitches/retention remain; physical iOS/Android need PO devices. Desktop emulation is proposed separately and not substituted. [Receipt](../ac-close-l7-l10/README.md#complete-selected-node-repeat--0900-utc)."
     }
   ]
 }

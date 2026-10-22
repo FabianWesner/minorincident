@@ -92,3 +92,29 @@ The repaired L7 ID pass now measures the previously empty horde mask: **7,572 co
 ## 09:22 UTC checkpoint
 
 The complete E25 verifier is running. Its remote static/build stages passed; the fresh native night-readability matrix is red, including high WebGL player contrast **2.899:1** and non-red brightest infected pixels. These failures remain open; the earlier ID-mask repair is not evidence that every lighting scene passes. Added inherited Alpha browser selection tags, all-special corpse recovery fixture provenance, the missing L9 zoom1.5 input cases, and a five-cycle L9/L10 retention probe; their fresh full verification is pending.
+
+### Inherited E30-AC10 stampede wording — proposed rewrite, not adopted
+
+The shared lane's fresh audit records a human at 0.76 m from the stampede centre taking 100→50 HP from two distinct zebras, while the 0.88 m control retains 100 HP ([positions/events](evidence/shared-zebra-corridor.json.gz), [receipt](evidence/shared-corridor-audit.log.txt.gz)). This is inherited shared-source evidence, not a newly executed current-branch browser result. The original 1.5 m-wide cue conflicts with the established capsule-contact boundary: zebra0.45 +human0.35 +tolerance0.02 =0.82m.
+
+Proposed wording: “The stampede marks a nominal 1.5 m-wide corridor. Ordinary body contact additionally uses the sum of the zebra and human capsule radii plus0.02m tolerance (0.82m in the standard human fixture). Each distinct zebra/attack id deals25HP once; a target beyond both the marked corridor and contact boundary is unaffected.” Reason: narrowing physical contact would change combat behavior, prohibited here. The existing test and production damage rule are unchanged. PO decision is required; the literal inherited criterion remains partial.
+
+## E25-AC12 — met
+
+The current native window test passes: measured room boundary shift **43.091px** (required≥4), on/off glow ratio **9.919** (required>4), and all lamp emissives off after power loss ([numeric receipt](evidence/windows.json.gz)). Opened both full-resolution angle frames and the off frame: the rear-wall/interior depth stripe moves behind the fixed mullions as the camera turns; off removes the warm panes and facade spill while retaining the house geometry and cool moon shading. [Three-frame comparison](windows.jpg), [unaltered source hashes](evidence/window-images.json). This is the existing WebGL material/parallax contract; it supplies no SSR proof.
+
+## E25-AC16 — current checklist G review (not accepted)
+
+All **28** current production captures exist: seven named spots ×WebGL2/WebGPU ×high/low. Opened the complete [four-column sheet](lighting-G.jpg), full-resolution WebGL/high L2/L3/L4/L5/mall/L6 frames, and the native light-lab frames. [Source image hashes](evidence/lighting-G-images.json), [camera/lighting state](evidence/lighting-G-state.json.gz). The concept references and exact image-generation prompts are in [the lighting keyframe README](../../../assets/_keyframes/lighting/README.md). They were generated from the written briefs without feeding current captures into the generator.
+
+| Spot | Current score /10 | Observed result and remaining must evidence |
+| --- | --- | --- |
+| light-lab | 7 | Four bright heads, fading warm beams, cool surroundings, fence cutoff, wet streaks and colored trailer shadow read on both backends. The tiny distant courier is insufficient for a full threat/readability signoff. |
+| l2-streets-w1 | 8 | Strong red/teal/yellow local color; soft cool tree/roof shadows on pale paving. The courier is outside this fixed pair view, so the scene alone does not establish the character must item. |
+| l3-grove-boulevard | 6 | Warm late-day key through haze, but road/vehicles are washed together and the courier is outside the fixed pair view. The independent current L3 contrast test also fails. |
+| l4-plaza-safe | 8 | Intact orderly camp, warm paving, long soft blue-purple shadows; high has stronger broad roof shade than low. No black shadow mass. Player-in-truck/camera staging does not supply an exposed player readability pair. |
+| pair-plaza in L5 | 4 | Actual peak ash makes a broad rose-gray wash; wreck/figure details recede and fire cores dominate. This does not match the reference's distinct warm edges/cool detail. Difficulty and weather are unchanged. |
+| l6-shelter-fails | 7 | Actual acquired headlamp gives a bounded warm forward pool; surroundings remain gray/dark, lanterns local, infected eyes red. High casts gate/character shadow, low retains unshadowed warm spill. |
+| mall-floor | 6 | Warm shop spill and dark cool room, readable furnishings and luminous fixtures. Polished-floor reflection streaks are not clearly visible; low omits much tile detail. No polished-floor signoff is claimed. |
+
+G is **not passed**: several scores are below7, four fixed pair views do not frame the courier, and the independent hero-shadow gate is red. These are genuine remaining evidence/art defects, not obsolete criteria; no rewrite is proposed to waive them.
