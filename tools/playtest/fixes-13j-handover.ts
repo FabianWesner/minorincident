@@ -16,6 +16,7 @@ export interface HandoverSample { attempt: number; second: number; tick: number;
  * All navigation, pickup and movement after it crosses physical browser input.
  */
 export async function heldHandoverProbe(page: Page, origin: string, fixture: HandoverFixture, sample?: (value: HandoverSample) => Promise<void>): Promise<HandoverSample[]> {
+  await page.addInitScript('window.__name = f => f');
   await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=low`);
   await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(() => window.__SS__!.ready);
@@ -35,17 +36,33 @@ export async function heldHandoverProbe(page: Page, origin: string, fixture: Han
     // Loading clears gameplay intents. The player next changes direction to collect
     // the nearby launcher, then holds A/W just as in the reported corridor leg.
     await page.keyboard.up('KeyW'); await page.keyboard.up('KeyA');
-    const rocket = await page.evaluate(() => {
+    await page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game;
       const rig = g.view.view;
       rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
       g.view.update(1);
-      return window.__SS__!.input.project(g.world.missions!.def.anchors['l7-rocket'], 'destination');
     });
-    await page.mouse.click(rocket.x, rocket.y);
-    await page.keyboard.down('KeyE');
-    await page.waitForFunction(() => window.__SS__!.missions.state()!.steps.rocket.status === 'completed', null, { timeout: 30_000 });
-    await page.keyboard.up('KeyE');
+    const walking = new Set<string>();
+    for (let frame = 0; frame < 120; frame++) {
+      const target = await page.evaluate(() => {
+        const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
+        const p = a.getEntity(1)!.transform, anchor = g.world.missions!.def.anchors['l7-rocket'];
+        const from = a.input.project(p, 'destination'), to = a.input.project(anchor, 'destination');
+        return { complete: a.missions.state()!.steps.rocket.status === 'completed', distance: Math.hypot(p.x - anchor.x, p.z - anchor.z), dx: to.x - from.x, dy: to.y - from.y };
+      });
+      if (target.complete) break;
+      const keys: string[] = [], length = Math.hypot(target.dx, target.dy) || 1;
+      if (target.distance > 1) {
+        if (target.dx / length > .38) keys.push('KeyD'); if (target.dx / length < -.38) keys.push('KeyA');
+        if (target.dy / length > .38) keys.push('KeyS'); if (target.dy / length < -.38) keys.push('KeyW');
+      }
+      for (const key of walking) if (!keys.includes(key)) { await page.keyboard.up(key); walking.delete(key); }
+      for (const key of keys) if (!walking.has(key)) { await page.keyboard.down(key); walking.add(key); }
+      if (target.distance <= 1.5) await page.keyboard.press('KeyE');
+      await page.waitForTimeout(250);
+    }
+    for (const key of walking) await page.keyboard.up(key);
+    assert.equal(await page.evaluate(() => window.__SS__!.missions.state()!.steps.rocket.status), 'completed', 'Physical movement and E must collect the launcher within 30 seconds');
     const start = await page.evaluate(() => ({ tick: window.__SS__!.tick(), at: window.__SS__!.getEntity(1)!.transform }));
     await page.keyboard.down('KeyA'); await page.keyboard.down('KeyW');
     let previous = start.tick;
@@ -75,13 +92,17 @@ if (process.argv[1]?.endsWith('fixes-13j-handover.ts')) {
   const out = resolve(destination); mkdirSync(out, { recursive: true });
   const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
   const browser = await chromium.launch({ headless: true, args });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     const result = await heldHandoverProbe(page, origin, readHandoverFixture(), async observation => {
       appendFileSync(resolve(out, 'observations.jsonl'), JSON.stringify(observation) + '\n');
       if ([15, 90].includes(observation.second)) await page.screenshot({ path: resolve(out, `handover-${observation.attempt}-${observation.second}s.png`) });
       console.log(JSON.stringify(observation));
     });
     writeFileSync(resolve(out, 'summary.json'), JSON.stringify(result, null, 2));
+  } catch (error) {
+    await page.screenshot({ path: resolve(out, 'failure.png') });
+    writeFileSync(resolve(out, 'failure.json'), JSON.stringify(await page.evaluate(() => ({ state: window.__SS__!.getState(), mission: window.__SS__!.missions.state() })), null, 2));
+    throw error;
   } finally { await browser.close(); }
 }
