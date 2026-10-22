@@ -10,8 +10,9 @@ export function perceptualDiff(aBuffer:Buffer,bBuffer:Buffer) {
   const stride=width+1,integral=new Uint32Array(stride*(height+1));
   for(let y=0;y<height;y++) {let sum=0;for(let x=0;x<width;x++){sum+=Number(mask.data[(y*width+x)*4+3]>0);integral[(y+1)*stride+x+1]=integral[y*stride+x+1]+sum;}}
   const tile=Math.min(48,width,height),step=Math.max(1,Math.floor(tile/2));
+  const origins=(length:number)=>[...new Set([...Array.from({length:Math.floor((length-tile)/step)+1},(_,i)=>i*step),length-tile])];
   let maximum=0,box={x:0,y:0,width:tile,height:tile};
-  for(let y=0;y<=height-tile;y+=step)for(let x=0;x<=width-tile;x+=step){
+  for(const y of origins(height))for(const x of origins(width)){
     const count=integral[(y+tile)*stride+x+tile]-integral[y*stride+x+tile]-integral[(y+tile)*stride+x]+integral[y*stride+x];
     if(count>maximum){maximum=count;box={x,y,width:tile,height:tile};}
   }

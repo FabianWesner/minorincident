@@ -70,7 +70,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     }
   };
   const l1=()=>a.missions.state()!.l1!;
-  // Walker uses this same public navigation steering; only ordinary input frames move the courier.
+  // Use the actual capsule clearance and player route workspace; only ordinary input frames move the courier.
   const walkTo=async(target:{x:number;z:number},stopM=1.2)=>{
     const initial=g.world.entities.get(1)!.transform;
     if(Math.hypot(initial.x-target.x,initial.z-target.z)<=stopM)return;
@@ -79,7 +79,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     g.input.feed={scheme:'keyboard',next:()=>{
       const p=g.world.entities.get(1)!.transform;
       if(Math.hypot(p.x-target.x,p.z-target.z)<=stopM){arrived=true;frame.move={x:0,z:0};return frame;}
-      const ok=g.world.infected!.nav.steer(p,target,route,.35,waypoint,Infinity,true);
+      const ok=g.world.infected!.nav.forPlayer(.35).steer(p,target,route,.35,waypoint,Infinity,true);
       if(!ok)throw new Error(`No connected walk route from ${p.x},${p.z} to ${target.x},${target.z}`);
       const dx=waypoint.x-p.x,dz=waypoint.z-p.z,d=Math.hypot(dx,dz)||1,speed=Math.min(1,d/1.2);
       frame.move={x:dx/d*speed,z:dz/d*speed};return frame;
@@ -155,6 +155,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     for(const [x,z] of walkRoute){console.log(`[qa-ab] ${stop.id}: walking to ${x},${z} at tick ${a.tick()}`);await walkTo({x,z},3);}
     const anchors=g.world.missions!.def.anchors;
     if(stop.setup==='l10-research'){
+      for(const [x,z] of [[2527,-5],[2527,45],[2707,45]])await walkTo({x,z},2);
       await walkTo(anchors['cure-terminal'],.8);a.input.set({interact:true});await a.step(45);a.input.clear();
       if(!a.missions.state()!.states['terminal-read'])throw new Error('Research recording was not reached');
       await walkTo(anchors['cure-canister'],.8);a.input.set({interact:true});await a.step(45);a.input.clear();
