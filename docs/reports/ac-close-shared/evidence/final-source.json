@@ -95,7 +95,7 @@
     "build/worldLook-o3T_90Bf.js": "e6308d2c9948dd608032ff1f730d286346700d500a93e6fad197c55d692c60b5",
     "build/wreck-roofs-CFQIthKq.js": "a912d11472e6297500db09161cec443d7f1442631b65660a0eda05dea65839d0"
   },
-  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. Final E07, E27 and E28 production JavaScript is byte-identical (55 files); final E07 includes the separated elephant fixtures and wider roar inspection camera.",
+  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. Final E07 production JavaScript is byte-identical to E27 (55 files); E28 verification also used the unchanged committed runtime, without a separate E28 bundle-hash comparison. Final E07 includes the separated elephant fixtures and wider roar inspection camera.",
   "unchangedMeasurementContracts": {
     "tests/perf/collected-heap.ts": {
       "sha256": "d0b625ea826d8c7a8b3068faaf7687aedf07f80450937f2f4048a529693835ea",

@@ -1,6 +1,6 @@
 # Shared acceptance closure — E07 / E27 / E28
 
-2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07 verification is running; E27 is done; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
+2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07 verification is red at the crowd object-count assertion; E27 is done; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
 
 [Final source/build hashes and unchanged measurement contracts](evidence/final-source.json).
 
@@ -8,6 +8,7 @@
 | --- | --- |
 | E07-AC05 | Met/fixed: all 14 timing/cooldown/restore probes and complete-boundary image review; 168 captures. The initially cropped roars were rejected and recaptured wider. |
 | E07-AC06 | Met: all four Alpha moves, spatial/restore controls, 12-case shared-bar matrix and actual Alpha desktop/phone HP captures reviewed. |
+| E07-AC12 | Partial: final verifier counts 185 objects versus the asserted 141. Source suggests 44 prewarmed empty corpse meshes; ownership diagnosis remains pending. |
 | E07-AC13 | Met: named 60-runner Checklist D, all five items. |
 | E07-AC19 | Zoo timing/boundary/restore and actual phone-bar proof met; literal stampede width remains partial with the unadopted proposal below. |
 | E27-AC15 | Met/fixed: named H, all seven spots / seven items; full verify passes; E27 done. |
@@ -30,7 +31,7 @@ All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 S
 | Verification | Result |
 | --- | --- |
 | Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Final pause-window receipt](evidence/units-pause-final.log.txt). |
-| E07 final | Pending. |
+| E07 final | **FAIL**, static/build, **373 Node +5 isolated timing +102 functional browsers pass; 4 quiet cases pass /1 fails** at the exact crowd object-count assertion. [Full receipt](evidence/verify-E07-object-failure.log.txt), [stage exits](evidence/verify-E07-object-failure-checks.json), lossless stage JSONs. |
 | E27 final | **PASS**, typecheck/lint/build, **46 Node +41 functional browsers +2 quiet performance tests**. [Receipt](evidence/verify-E27-final.log.txt), [stage exits](evidence/verify-E27-final-checks.json); cold-blast p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**. |
 | E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
 
@@ -44,7 +45,7 @@ The Alpha slam and gorilla pound are complete ground circles; the two roars are 
 
 For **every move**, the receipt checks the last warning tick, activation on the next exact sim tick, no premature activation, matching source/move/attack identity, and disappearance at activation. A real mission checkpoint restores the locked target/area with one tick remaining and an opaque visible warning; restored activation occurs exactly one tick later. A second checkpoint restores remaining cooldown after seven elapsed ticks. Starting one tick too early is rejected; the next legal windup preserves the authored radius and its activation occurs at the rebased cooldown expiry, with elapsed ticks minus those seven restored ticks equal to the unchanged authored cooldown. Both the restored windup and repeated warning are visible while paused. The full-size restored elephant swipe contains only its proper arc, matching its single state marker.
 
-The separately corrected obstacle probe passes alongside the original clear-lane impact expectation: **sedan 300→220 HP**, one 80 HP charge hit, ≥1 m actual chassis displacement, broken 400 HP barricade and courier **100 HP** behind the stopped charge. [Four focused checks](evidence/elephant-roar-final.log.txt), [actual chassis/state journal](evidence/elephant-chassis-final.json.gz). The complete verifier is still running; these visual/mechanical dispositions do not imply an overall green run yet.
+The separately corrected obstacle probe passes alongside the original clear-lane impact expectation: **sedan 300→220 HP**, one 80 HP charge hit, ≥1 m actual chassis displacement, broken 400 HP barricade and courier **100 HP** behind the stopped charge. [Four focused checks](evidence/elephant-roar-final.log.txt), [actual chassis/state journal](evidence/elephant-chassis-final.json.gz). The complete verifier passes all 102 functional cases, including these probes, but fails the separate quiet crowd object-count assertion described below.
 
 ## Spatial controls and shared bars — E07-AC05/06/19
 
@@ -66,7 +67,7 @@ Solid-cover cases pass for all damaging moves; the courier remains untouched beh
 
 The **12-case shared-bar matrix passes**: WebGL2/WebGPU × day/night × 1600×900 high, 390×844 low and 844×390 low. [Receipt](evidence/bar-matrix.log.txt), [opened matrix](bars.jpg), [pixel/state readings](evidence/bars.json.gz). Minimum sampled pairwise fill/empty/outline contrast is **3.086:1**. Actual HP updates within one redraw; dimensions are **64×8 / 48×6**; camera anchors stay within two CSS pixels. Pristine bars stop just beyond 15 m, damaged bars remain, off-frustum/dead-by-explosion bars disappear, and same-id infection gains eligibility. Recoverable downing has an empty bar and recovery restores it. Separate occlusion and zoo scenes reset their own authored daytime lighting; the matrix's night label applies to the initial shared-bar scene, not those later fixtures.
 
-Opened the full-size WebGPU night phone frame: the pale outline, red fill and dark empty section remain crisp above the infected, with a visible gap to its head; the healthy civilian has no bar. In the occlusion pair the building hides both the infected and bar; the rotated camera reveals both. The zoo frame shows separate lion/gorilla/flamingo bars with half fill. The dedicated actual-Alpha probes now pass at 1600×900 high and 390×844 /844×390 low: actual HP **300→240**, fill **1→0.8**, dimensions **64×8 /48×6**. Opened every damaged Alpha frame and both zoo landscape frames, alongside the earlier portrait zoo review. The complete bar remains visible even where the portrait crops part of the Alpha at the screen edge. Elephant **900/1200** and zebra three-quarter bars remain crisp above their models; the flamingos have separate full bars. [Actual archetype proofs and 58 input image hashes](evidence/phone-bars-final.json.gz). These captures passed in the 100-pass/one-elephant-fixture-failure run; full verification is repeated after that fixture correction and the browser quiet window.
+Opened the full-size WebGPU night phone frame: the pale outline, red fill and dark empty section remain crisp above the infected, with a visible gap to its head; the healthy civilian has no bar. In the occlusion pair the building hides both the infected and bar; the rotated camera reveals both. The zoo frame shows separate lion/gorilla/flamingo bars with half fill. The dedicated actual-Alpha probes now pass at 1600×900 high and 390×844 /844×390 low: actual HP **300→240**, fill **1→0.8**, dimensions **64×8 /48×6**. Opened every damaged Alpha frame and both zoo landscape frames, alongside the earlier portrait zoo review. The complete bar remains visible even where the portrait crops part of the Alpha at the screen edge. Elephant **900/1200** and zebra three-quarter bars remain crisp above their models; the flamingos have separate full bars. [Actual archetype proofs and 58 input image hashes](evidence/phone-bars-final.json.gz). All ten actual Alpha/zoo before/after images from the final 102-pass functional run are byte-identical to the opened captures ([repeat hashes](evidence/phone-bar-repeat.json)).
 
 ## Named Checklist D review — E07-AC13
 
@@ -164,3 +165,9 @@ The existing `zoo-s3.test.ts` comment, introduced by **2e4df83867** on 2026-10-1
 **Proposed wording, awaiting the user's decision:** “The stampede marks a nominal 1.5 m-wide corridor. Ordinary body contact additionally uses the sum of the zebra and human capsule radii plus 0.02 m contact tolerance (0.82 m in the standard human fixture). Each distinct zebra/attack id deals 25 HP once; a target beyond both the marked corridor and that contact boundary is unaffected.”
 
 Reason: this reconciles the nominal ground cue with the established physical-contact behavior. Narrowing collision to the centre corridor would change the current combat behavior, contrary to this task's no-difficulty-change constraint. The literal corridor criterion is **not marked met** by a green existing test.
+
+## E07-AC12 final object-count failure — diagnosis pending
+
+The final verifier passes all 102 functional browser cases, then quiet T-E07-12 fails before its offscreen/settled/mixed checks: **185 objects versus 138 reported batch entries +3 fixed objects =141**. The other four quiet checks pass. [Failure context](evidence/horde-object-failure.md), [decoded state](evidence/horde-object-failure.json.gz). This run supplies no fresh passing offscreen/settled/mixed proof.
+
+Source inspection finds `StaticCorpses.prepare()` deliberately creates zero-count instanced pages for shader warm-up; the existing unit `L6 prewarmed corpse pages stay empty until a real body joins` requires one such child and zero draws. `CrowdView.getState()` counts these descendants, while the assertion assumes an empty corpse group. Forty-four such pages could explain the difference, but a live ownership audit is still required. No assertion, counter or runtime has been changed to suppress the failure. Browser work is paused until 01:35 UTC at the orchestrator's request.
