@@ -50,7 +50,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     const gate=obs.s.abandonAt>0&&obs.s.gates.find(g=>!g.closedAt&&obs.p.x<g.x+11&&obs.friends.every(r=>r.at.x>g.x+2));
     const closing=gate&&(!plan.target||Math.hypot(plan.target.x-obs.p.x,plan.target.z-obs.p.z)>2.2);
     // The shipped wait/brace point is beside the opening; the old centre-track point is outside its interaction radius.
-    const gateAt=gate&&LevelSixSubway.gateWait(gate.x);
+    const gateAt=gate?LevelSixSubway.gateWait(gate.x):undefined;
     const holdGate=closing&&Math.hypot(gateAt!.x-obs.p.x,gateAt!.z-obs.p.z)<1.2;
     if(closing&&!obs.lamp)move=holdGate?{x:0,z:0}:{x:gateAt!.x-obs.p.x,z:gateAt!.z-obs.p.z};
     const attack=!obs.lamp&&!holdGate&&plan.target&&plan.frame.attackTarget;
