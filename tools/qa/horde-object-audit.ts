@@ -30,7 +30,7 @@ try {
       const nodes: { id: number; name: string; owner: string | null }[] = [];
       crowd.traverse(o => { if (o !== crowd) nodes.push({ id: o.id, name: o.name, owner: owned.get(o.id) ?? null }); });
       const offscreen = api.query({ kind: 'infected' }).find(e => e.transform.x === 50);
-      return { tick: api.tick(), ai: api.getState().ai, crowd: api.getState().render.crowd!, perf: api.perf(),
+      return { tick: api.tick(), ai: api.getState().ai, crowd: api.getState().render.crowd!, perf: { drawCalls: api.perf().drawCalls },
         actualBatches: crowd.batches.size, reservedSlots: crowd.heroSlots.size, pages, nodes,
         corpseState: crowd.staticCorpses.snapshot(), corpses: api.query({ kind: 'infected' }).filter(e => e.corpse).length,
         unowned: nodes.filter(o => !o.owner), offscreen: offscreen ? { projected: api.camera.project(offscreen.transform.x, offscreen.transform.y, offscreen.transform.z), drawn: api.crowdFigures().some(f => f.id === offscreen.id && f.drawn) } : null };
