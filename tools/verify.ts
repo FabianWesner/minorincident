@@ -25,7 +25,7 @@ const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E22-ride-smooth|T-E22-12-special|T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
 const l5VisualPattern = 'PO #21b|T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
-const l6VisualPattern = 'T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l6VisualPattern = 'T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const aftermathVisualPattern = target === 'E24' ? l6VisualPattern : l5VisualPattern;
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
@@ -33,17 +33,21 @@ const buildCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
   : target === 'E07' || ['E31', 'E32', 'E30', 'E18', 'E23', 'E25', 'E26', 'E27', 'E28'].includes(target)
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'] : ['npm', 'run', 'build'];
+const simBeforeBuild = ['E22', 'E23', 'E24'].includes(target);
 const commands: string[][] = [
   ...(process.env.MI_VERIFY_REMOTE_SIM === '1'
     ? [['sh', 'tools/remote/run.sh', process.cwd(), '--', 'sh', '-c', 'npm run typecheck && npm run lint']]
     : [['npm', 'run', 'typecheck'], ['npm', 'run', 'lint']]),
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  buildCommand,
+  ...(!simBeforeBuild ? [buildCommand] : []),
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   ...(splitAlphaTiming ? [['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`, '--', 'bash', 'tools/remote/timing-isolated.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
+  // These source-level sims do not consume dist. Run them before waiting for the
+  // shared preview build, so native browser admission cannot block remote units.
+  ...(simBeforeBuild ? [buildCommand] : []),
   // Reserve both existing runner slots in order; release slot 1 first so concurrent timing jobs cannot deadlock.
   ...(splitE31Timing ? [[
     'sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`,

@@ -1,0 +1,18 @@
+#!/bin/sh
+set -u
+if [ "${MI_AC_BROWSER_HELD:-}" = 1 ]; then exec /bin/sh "$@"; fi
+case "$1" in
+  tools/e2e-lock.sh|tools/perf/quiet-run.sh)
+    case " $* " in
+      *playwright*)
+        export MI_AC_BROWSER_HELD=1
+        exec /usr/bin/lockf -k /tmp/ac-close-l4-l6-browser.serial /bin/sh /tmp/ac-close-l4-l6-verifier/launch.sh "$@";;
+    esac;;
+  tools/remote/run.sh)
+    case " $* " in
+      *'npx playwright test'*|*'--pull dist'*)
+        export MI_AC_BROWSER_HELD=1
+        exec /usr/bin/lockf -k /tmp/ac-close-l4-l6-browser.serial /bin/sh /tmp/ac-close-l4-l6-verifier/launch.sh "$@";;
+    esac;;
+esac
+exec /bin/sh "$@"

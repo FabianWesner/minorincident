@@ -24,7 +24,13 @@ test('T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes under
 });
 test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs',async({page})=>{
   test.setTimeout(1_200_000);mkdirSync(out,{recursive:true});await boot(page,`${testUrl}&ui=1`);await page.evaluate(()=>window.__SS__!.loadLevel('L6',{seed:1,progression:'L6-default'}));await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());
-  const shots=new Set<string>(),step=(n:number)=>page.evaluate(n=>window.__SS__!.step(n),n);
+  const shots=new Set<string>(),step=(n:number)=>page.evaluate(async n=>{
+    const a=window.__SS__!;
+    // Paused sim stepping does not age render effects. Retire the preceding
+    // frame's effects before the next input batch emits its current muzzle/tracers.
+    for(let elapsed=0;elapsed<n/60;elapsed+=.1)a.vfx.stepRender(Math.min(.1,n/60-elapsed));
+    await a.step(n);
+  },n);
   await page.evaluate(()=>{
     const game=(window.__SCENE__ as unknown as {game:import('../../../src/Game').Game})?.game;
     if(!game)return;
