@@ -71,6 +71,9 @@ export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: C
       if (this.done || phase === 'waiting') return;
       const object = leaves[index];
       if (phase === 'compile') {
+        // Viewport depth copies acquire their multisampled texture during the
+        // actual HDR pass. Precompiling that binding would use its 1×1 fallback.
+        if (renderer.selectedBackend === 'webgpu' && object.userData.preRenderNeedsDepth) { phase = 'draw'; instances = 1; return; }
         const before = renderer.nodeBuilds, foreground = renderer.foregroundCompile;
         const background = scene.background, backgroundNode = scene.backgroundNode;
         let pending: Promise<void>;

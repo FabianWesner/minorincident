@@ -3,6 +3,7 @@ import { BoxGeometry, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, Persp
 import { incrementalPreRender } from '../../../src/render/PreRenderer';
 import type { Renderer } from '../../../src/render/Renderer';
 import { Lighting } from '../../../src/render/Lighting';
+import { FxPool } from '../../../src/render/vfx/FxPool';
 
 test('PO #100 warm slices wait for GPU linking and restore every visible body, instance and probe before play', async () => {
   const scene = new Scene(), lighting = new Lighting(scene); lighting.set('L10-night');
@@ -61,4 +62,14 @@ test('PO #100 incremental warmup reuses loading-time layout deduplication withou
   const queue = () => incrementalPreRender(renderer as unknown as Renderer, scene, camera, () => {}, async () => {}, run => run());
   expect(queue().remaining).toBe(2); b.userData.preRenderSolo = true; expect(queue().remaining).toBe(3);
   geometry.dispose(); material.dispose();
+});
+
+test('PO #100 WebGPU soft particles warm with actual HDR depth instead of compiling a single-sample placeholder', () => {
+  const scene = new Scene(), particles = new FxPool(4, 'particle'), ground = new FxPool(4, 'ground'); scene.add(particles.mesh);
+  expect(particles.mesh.userData.preRenderNeedsDepth).toBe(true); expect(ground.mesh.userData.preRenderNeedsDepth).toBe(false);
+  const renderer = { selectedBackend: 'webgpu', info: { calls: 0 }, nodeBuilds: 0, foregroundCompile: false, nextNodeFrame: vi.fn() }, compile = vi.fn(async () => {}), draw = vi.fn();
+  const queue = incrementalPreRender(renderer as unknown as Renderer, scene, new PerspectiveCamera(), draw, compile, run => run());
+  queue.step(); expect(compile).not.toHaveBeenCalled(); queue.step(); queue.step();
+  expect(draw).toHaveBeenCalledTimes(2); expect(queue.done).toBe(true);
+  particles.dispose(); ground.dispose();
 });
