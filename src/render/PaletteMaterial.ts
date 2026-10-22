@@ -38,7 +38,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; /** 0 healthy, 1 infected: keep underground body highlights below the red eyes. */ threat?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
@@ -240,6 +240,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // below 3:1. Keep a small, hue-preserving visibility margin on her figure
       // after the fog/night key, without lifting the surrounding ground ring.
       if (mode & flags.fog) result.mulAssign(float(1).add(this.heroFigure.mul(weatherSurface.fog.smoothstep(.4, .8)).mul(.08)));
+      if (nodes?.threat && nodes.emissiveOnly) {
+        // Warm headlamp highlights on pale hair used to outshine the bounded red emitter.
+        // Scale RGB together: preserve the infected's authored colours and keep healthy people unchanged.
+        const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.subwayDarkness);
+        result.mulAssign(mix(1, float(.1).div(luminance(result).max(.1)), body));
+      }
       result.addAssign(this.hitFlash);
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
