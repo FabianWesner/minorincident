@@ -1,12 +1,12 @@
 # Current acceptance — 2026-10-22
 
-**E27 done.** This final-source section supersedes older runtime/evidence claims below.
+**E27 done; final runtime df390443a verified.** This final-source section supersedes older runtime/evidence claims below.
 
-- Full verify: remote typecheck/lint/build, **46 selected Node tests**, **41 functional browsers**, **two quiet native Metal perf tests**, all pass. Full command/stage/result receipts: `docs/reports/ac-close-shared/evidence/verify-E27-final*`.
+- Full verify: remote typecheck/lint/build, **46 selected Node tests**, **41 functional browsers**, **two quiet native Metal perf tests**, all pass. Full command/stage/result receipts: `docs/reports/ac-close-shared/evidence/verify-E27-headwear-final*`.
 - AC15: all seven named spots, high/low; explicit H **4/4 must +3/3 should**, 102 final frame states/source-image hashes, opened final sheets and full-size flight/column/grenade frames. See final section in `review.md`.
 - Fixed retained-corpse impulse flight, cover/landing, original-id permanence and real checkpoint restoration; dedicated regressions pass. Frozen-page bounds/upload regression passes. No new contact damage/collider/brain or difficulty tuning.
 - AC11/12: low-cloud strobe probe measures 2.669×; fire lower/top luminance 2.62×, orange hue15.80°; repaired player contrast **2.173:1**, cloud coverage **30.58%**, unchanged thresholds.
-- Quiet stress: initial30 infected, actual mega/car/gas chain, 17 fires; high/low frame p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**, puffs+particles **2448/632**, within unchanged gates. Apple M4 Metal, low390×844/4× CPU throttle.
+- Quiet stress: initial30 infected, actual mega/car/gas chain, 17 fires; high/low frame p95 **8.7/13.5 ms**, max **13.7/29.8 ms**, sim p95 **0.6/2.0 ms**, puffs+particles **2448/632**, within unchanged gates. Apple M4 Metal, low390×844/4× CPU throttle.
 - Earlier blank grenade dev frame is a recorded failed capture; pinned production repeat passes both tiers and non-flat-image assertion. Concurrent edit is only a possible cause, not a proved diagnosis.
 - No E27 criterion rewrite is proposed. No deployment/merge. Retained report media stays within12 captures.
 
