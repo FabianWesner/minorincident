@@ -852,7 +852,7 @@ export class GameView implements Lifecycle {
     return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
   }
   update(alpha = 1): void {
-    this.vfx?.updateObstruction();
+    this.vfx?.updateSpecialState();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;

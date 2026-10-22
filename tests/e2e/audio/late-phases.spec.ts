@@ -13,7 +13,7 @@ test('T-E29-15-phase @E29-AC15 departure lowers combat music despite remaining t
   });
   const phases = [];
   for (const phase of ['waiting', 'boarding', 'departing', 'waiting'] as const) {
-    phases.push(await page.evaluate(async phase => {
+    await page.evaluate(async phase => {
       const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
       // Isolate the presentation phase while retaining a hostile intensity floor.
       // The departure route and boarding mechanics have their own real-input test.
@@ -21,8 +21,12 @@ test('T-E29-15-phase @E29-AC15 departure lowers combat music despite remaining t
       w.l7Departure!.state.startedAt = w.tick;
       a.audio.emit({ type: 'music.intensity', tick: a.tick(), alerted: 12, minimum: .5, damage: 0, phase: 'normal', vehicleSpeed: 0 });
       await a.step(6);
-      return { phase, music: a.audio.snapshot().music };
-    }, phase));
+    }, phase);
+    const expected = phase === 'departing' ? 'aftermath' : 'combat';
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.state), { timeout: 5000 }).toBe(expected);
+    const music = await page.evaluate(() => window.__SS__!.audio.snapshot().music);
+    expect(music.streamed.decks.some(d => d.state === expected && d.file === expected && !d.paused)).toBe(true);
+    phases.push({ phase, music });
   }
   const out = 'test-results/epics/E29/audio'; mkdirSync(out, { recursive: true });
   writeFileSync(`${out}/departure-phases.json`, JSON.stringify(phases, null, 2));
