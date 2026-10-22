@@ -16,7 +16,7 @@ const replay = JSON.parse(gunzipSync(readFileSync(new URL('../../tests/fixtures/
 const frames: InputFrame[] = []; let cursor = 0;
 for (let tick = 0; tick < replay.ticks; tick++) {
   while (cursor + 1 < replay.inputs.length && replay.inputs[cursor + 1].tick <= tick) cursor++;
-  frames.push(replay.inputs[cursor].frame);
+  frames.push(structuredClone(replay.inputs[cursor].frame));
 }
 
 export async function measureL10Entry(page: Page, origin: string, entry: 'debug' | 'continue', backend: 'webgl2' | 'webgpu', out: string) {
@@ -49,9 +49,16 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
         if (g.world.tick !== 0) throw Error(`Replay must begin at tick zero, got ${g.world.tick}`);
         const a = window.__SS__!, rig = g.view.view;
         a.cheats.god(true); rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
-        // Parse/install the fixture before the card closes, so transport and
-        // recording setup cannot become an artificial first playable stall.
-        g.input.recorder.play({ version: 1, level: 'L10', seed: 1, frames });
+        // The menu clears Recorder playback after loadLevel resolves. Use the
+        // production telemetry feed, which survives that UI input release.
+        // Install before the card closes to keep transport/setup out of play.
+        let cursor = 0;
+        const feed: NonNullable<Game['input']['feed']> = { scheme: 'mouse-only', next: () => {
+          const frame = frames[cursor++];
+          feed.scheme = frame?.drive ? frame.aimSource === 'pointer' ? 'mouse-keyboard' : 'keyboard' : 'mouse-only';
+          return frame ?? null;
+        } };
+        g.input.feed = feed;
       }
       finish.call(this); if (g.world.scenario === 'L10') trace.l10CardClosed = performance.now();
     };
@@ -80,6 +87,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
   const result = await page.evaluate(() => {
     const trace = window as unknown as { l10Trace: L10Frame[]; l10TraceRunning: boolean; l10CardClosed?: number }; trace.l10TraceRunning = false;
     window.__SS__!.pause(); window.__SS__!.input.clear();
+    (window.__SCENE__ as unknown as { game: Game }).game.input.feed = null;
     const frames = trace.l10Trace, playable = frames.filter(f => f.scenario === 'L10' && f.at >= trace.l10CardClosed!).map(f => ({ ...f, dt: Math.min(f.dt, f.at - trace.l10CardClosed!) }));
     const ordered = playable.map(f => f.dt).sort((a, b) => a - b);
     return { frames, cardClosed: trace.l10CardClosed, playableFrames: playable.length, max: Math.max(...ordered), p95: ordered[Math.ceil(ordered.length * .95) - 1], hitches: playable.filter(f => f.dt > 200), backend: window.__SS__!.perf().backend, state: window.__SS__!.getEntity(1), load: window.__SS__!.perf().loadTiming };
