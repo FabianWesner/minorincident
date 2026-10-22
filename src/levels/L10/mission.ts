@@ -23,6 +23,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   if (!crash) throw new Error('Missing mission anchor: cure-crash');
   const anchors: Record<string, Anchor> = { 'cure-crash': crash };
   for (const name of cureAnchorNames) { const at = resolve(name); if (at) anchors[name] = at; }
+  if (anchors['cure-console']) anchors['cure-mega'] = { ...anchors['cure-console'] };
   for (const name of ['epilogue-survivors', 'epilogue-walk', 'epilogue-camera-target']) { const at = resolve(name); if (at) anchors[name] = at; }
   // The final existing approach lane is a bounded collapse tableau, outside the release disc.
   const arrival = resolve('dispersal-horizon');
@@ -44,7 +45,8 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('destroyed-corridor', 'Carry the cure down the corridor and grab the rocket launcher', 'cure-corridor', spatial('cure-corridor', true), [{ kind: 'arsenal', add: ['weapon.rocket-launcher'], remove: [] }, { kind: 'checkpoint', id: 'cure-corridor' }], 'interact');
   step('dispersal-complex', 'Bring the cure to the dispersal complex', 'cure-complex', spatial('cure-complex'), [{ kind: 'checkpoint', id: 'cure-complex' }], 'reach');
   step('install', 'Install the cure in the dispersal device', 'cure-install', { kind: 'all', triggers: [flag('cure-carried'), spatial('cure-install', true)] }, [{ kind: 'state', key: 'cure-installed', value: true }, { kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }], 'interact');
-  step('hold', 'Charge the dispersal system and kill the Mega Alpha', 'cure-console', { kind: 'all', triggers: [flag('charge-active'), { kind: 'count', key: 'charge-ticks', atLeast: 3600 }, flag('charge-ready'), flag('mega-dead'), flag('cure-installed')] });
+  step('hold', 'Charge the dispersal system', 'cure-console', { kind: 'all', triggers: [flag('charge-active'), { kind: 'count', key: 'charge-ticks', atLeast: 3600 }, flag('charge-ready'), flag('cure-installed')] });
+  step('mega', 'Kill the Mega Alpha', 'cure-mega', flag('mega-dead'));
   step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'), [], 'interact');
   step('epilogue', 'Watch the cure spread', 'cure-console', flag('epilogue-finished'));
   step('credits', 'Minor Incident', 'cure-console', flag('credits-finished'));
