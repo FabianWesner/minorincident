@@ -26,6 +26,7 @@ export class LevelTenFinale {
     if (!console || player.health.current <= 0 || !state.states['cure-installed'] || state.states['cure-released']) return;
     const distance = Math.hypot(player.transform.x - console.x, player.transform.z - console.z);
     if (state.steps.hold.status === 'active') {
+      const wasReady = state.states['charge-ready'];
       if (!state.states['charge-active'] && pressed && distance <= console.radius) {
         state.states['charge-active'] = true;
         world.events.emit({ type: 'mission.signal', tick: world.tick, name: 'cure-assault-started' });
@@ -36,9 +37,17 @@ export class LevelTenFinale {
       }
       state.states['charge-ready'] = state.counters['charge-ticks'] === cureChargeTicks;
       if (state.states['charge-ready'] && boss?.alive()) {
-        // Stage the existing boss inside the authored finale arena after the
-        // charge. Its health, attacks and damage remain unchanged.
+        // Stage the existing boss inside the authored finale arena after the charge.
         if (boss.distance() > 26) boss.stageNear(console, 24);
+      }
+      if (state.states['charge-ready'] && !wasReady) {
+        // A boss retry keeps the completed charge and restores the staged boss at full health.
+        const entity = boss?.entity();
+        if (entity && entity.health.current > 0) {
+          entity.health.current = entity.health.max;
+          if (boss) boss.state.hp = boss.state.maxHp = entity.health.max;
+        }
+        this.mission.checkpoint('cure-disperse-ready', console);
       }
     }
     if (state.steps.mega.status === 'active' && boss?.alive()) {

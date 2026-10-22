@@ -70,6 +70,9 @@ export function look(): Eyes {
         aim = { x: rect.left + (ndc[0] + 1) / 2 * rect.width, y: rect.top + (1 - ndc[1]) / 2 * rect.height };
       }
       if (aim.x < 0 || aim.x >= view.w || aim.y < 44 || aim.y >= view.h) continue;
+      // The drawn chest may sit behind Home, Pause or a rack button. A mouse
+      // attack there activates the UI and can leave the driver holding WASD on the title menu.
+      if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="dialog"]')) continue;
       const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, drawn: figures.has(e.id), screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, attacking: /^(windup|swing|dog-lunge-bite|zebra-rear-kick)$/.test(figures.get(e.id)?.clip ?? '') };
