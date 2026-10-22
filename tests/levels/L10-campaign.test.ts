@@ -69,7 +69,7 @@ test('T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with r
     expect(save.completedLevels).toBe(10); expect(nextLevelAfter(10)).toBeNull();
     expect(save.results!.L10.time).toBe(reports[9].time);
     expect(reports[9].regions).toHaveLength(7);
-    expect(reports[9].objectiveTimeline.map(e => e.id)).toEqual(['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor', 'dispersal-complex', 'install', 'hold', 'release', 'epilogue', 'credits']);
+    expect(reports[9].objectiveTimeline.map(e => e.id)).toEqual(['crash', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'research', 'cure', 'research-exit', 'destroyed-corridor', 'dispersal-complex', 'install', 'hold', 'mega', 'release', 'epilogue', 'credits']);
   } finally {
     mkdirSync('test-results/epics/E32/Q4', { recursive: true });
     writeFileSync(out, JSON.stringify({ seed: 1, reports, save }, null, 2) + '\n');

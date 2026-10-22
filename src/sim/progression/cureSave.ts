@@ -47,6 +47,15 @@ export function migrateCureResume(raw: unknown): unknown {
     const states = checkpoint.state.states;
     if (states['charge-active'] === undefined) states['charge-active'] = false;
     if (states['console-held'] === undefined) states['console-held'] = false;
+    const steps = checkpoint.state.steps;
+    if (record(steps) && steps.mega === undefined && record(steps.hold)) {
+      // The former hold objective also required the boss's death. A completed
+      // old hold therefore already completed the new boss step.
+      const completed = steps.hold.status === 'completed';
+      steps.mega = { status: completed ? 'completed' : 'pending', started: 0, interaction: 0, kills: [], events: {} };
+      const objectives = checkpoint.state.completedObjectives;
+      if (completed && Array.isArray(objectives) && !objectives.includes('mega')) objectives.splice(objectives.indexOf('hold') + 1, 0, 'mega');
+    }
   }
   return copy;
 }
