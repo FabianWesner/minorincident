@@ -45,7 +45,7 @@ The specified snapshot is build `769d9f8ce` (13g), and PROD reports `73bce8bc5` 
 | L3 ramp gaps (P1-113/113b) | 0% | No | No |
 | L4 tank/barrier (P1-116) | 9.03% | Yes | No: Alpha warning ring differs |
 
-The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the same tank route, parked pose and barrier overlap in both builds; a red Alpha warning ring causes the flag. Both ramp gaps are also visible in the baseline and candidate. The depot return, lab handover, explicit glasses wearer, other accessories and sitters do not differ above the declared perceptual tolerance. Raw scores remain intact in the summary, with the visual review recorded separately under `validation`.
+The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the same tank route, parked pose and barrier overlap in both builds; a red Alpha warning ring causes the flag. Both ramp gaps are also visible in the baseline and candidate. The depot return, lab handover, explicit glasses wearer, other accessories and initial ride-start frames do not differ above the declared perceptual tolerance. This historical tour predates the street-side bench calibration below. Raw scores remain intact in the summary, with the visual review recorded separately under `validation`.
 
 This pair cannot demonstrate differences in defects already present in 13g. The orchestrator confirmed that the PO defects predate 13h and replaced the validation criterion: compare PROD with the fixes in `lane/po-regressions-1022`, then prove sensitivity with four isolated local mutations and a same-build control. The original scores above are retained as historical evidence.
 
@@ -85,4 +85,6 @@ PROD `73bce8bc5` against the built, pinned `lane/po-regressions-1022` commit `dd
 
 Combined sensitivity: **7/7 (100%)** at the unchanged 2% threshold. Codex inspected the seven relevant still/motion sheets; the JSON records that review separately from raw scores. The fixed-branch changes are intended improvements; A/B flags their visual differences without deciding their product acceptability. Initial bench calibration stayed inside the station reveal area and correctly found no change; the permanent tour now walks outside and waits for the actual `npc-sit` poses, exposing the culled seats.
 
-Same-build false-positive control results are pending.
+The [local fixed-build control](2026-10-22-local-self/summary.json) passed **8/8 variants with every score 0%, zero false positives and zero errors** (2.27 MB JPEG). It repeats all four mutation-targeted stops with injections disabled.
+
+The first extended L10 control reached the correct research and console states but exposed render-history noise in the corgi pose. Player/camera/mission ticks were identical. Before L10 captures, the runner now recreates the companion's view from its unchanged simulation actor, clearing presentation-only gait and cross-fade caches whose history depends on load/RAF cadence during the long batched walk. This normalization is guarded by `test=1`; it does not hide actors, alter their simulation or mask image pixels. A focused replay and the full all-level control are in progress.
