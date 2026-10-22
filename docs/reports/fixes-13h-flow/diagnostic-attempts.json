@@ -99,6 +99,16 @@
       "skipped": [],
       "maxNoProgressSeconds": 7.666666666666667,
       "reason": "Interrupted at the 02:50 UTC browser-window boundary. Courier had reached the injured-survivor return near x84 after rear-cover loops. No skip or game easing. HUD-requested rear-cover fix was made after the loaded session began."
+    },
+    {
+      "directory": "test-results/playtest/fixes-13h-fists-male-rear-cover",
+      "driverCommit": "9f72a640c",
+      "accepted": false,
+      "completed": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 4.613,
+      "reachedExit": true,
+      "reason": "Reached exit then returned toward the remaining rear survivor. Interrupted to release the browser to waiting L10 quiet run and apply the red-first held-key fix. The loaded session predates 25ce48b88. No skip or game change."
     }
   ],
   "quietRunHoldAfterUTC": "2026-10-22T00:26:34Z"

@@ -6,5 +6,5 @@
 - #99: valid fists/kick-only equipped save retains earned ownership; an empty first rendered frame no longer aborts; strict input sessions cannot skip objectives.
 - Red-first evidence is committed for navigation, self-defence, boarding/counts, HUD/phone, seeded save validity, empty figures and driver observation/input fixes.
 - Local checks: typecheck/lint/build green; complete L6 bot exactly baseline (283.6 s, 23/29, no deaths, peak 45); newbie 275.6 s, 18/29, no deaths.
-- Remote: initial full suite 2,302 passed + seven timeouts; unchanged serial retries 41 passed; final L6 scope 63 passed; final tooling 19 passed, typecheck/lint green. Final full serial run active.
-- Browser gates: female weapons and L7→L8 completed with no skips (max pauses 13.2/9.1/7.7 s); smoke 31/31 and HUD 6/6 green. Remaining: male fists, full remote result and final cleanup.
+- Remote: final full suite 2,329 passed (423 files, nine native skips), exit 0; unchanged timeout retries 41 passed; final L6 scope 63 passed; driver checks/typecheck/lint green.
+- Browser gates: female weapons and L7→L8 completed with no skips (max pauses 13.2/9.1/7.7 s); smoke 31/31 and HUD 6/6 green. Remaining: male fists and final cleanup.
