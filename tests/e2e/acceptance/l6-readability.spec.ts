@@ -61,6 +61,12 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/player-mask.png` }));
       await page.evaluate(async () => {
         const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
+        a.settings.set({ idPass: false }); game.view.probeInfectedMask(true); await a.screenshotReady();
+      });
+      const infectedMask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/infected-mask.png` }));
+      await page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.probeInfectedMask(false));
+      await page.evaluate(async () => {
+        const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
         a.settings.set({ idPass: false }); game.view.probeVisibility({ courier: false, crowd: true, bars: true }); await a.screenshotReady();
       });
       const background = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/without-crowd.png` }));
@@ -94,7 +100,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
         if (!pixels.has(y * image.width + x)) continue;
         const i = (y * image.width + x) * 4, rgb = [...image.data.subarray(i, i + 3)];
-        if (rgb.every((v, c) => v === background.data[i + c])) continue;
+        if (infectedMask.data[i] <= 240 || infectedMask.data[i + 1] >= 20 || infectedMask.data[i + 2] <= 240 || rgb.every((v, c) => v === background.data[i + c])) continue;
         bodyPixels++; const l = luminance(rgb); if (l > brightest.luminance) brightest = { x, y, rgb, luminance: l };
       }
       const eyeBox = [(setup.eyes[0] + 1) * image.width / 2, (1 - setup.eyes[3]) * image.height / 2, (setup.eyes[2] + 1) * image.width / 2, (1 - setup.eyes[1]) * image.height / 2];

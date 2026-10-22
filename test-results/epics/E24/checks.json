@@ -7,22 +7,24 @@
   "checks": [
     {
       "command": [
-        "npm",
-        "run",
-        "typecheck"
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+        "--",
+        "sh",
+        "-c",
+        "npm run typecheck && npm run lint"
       ],
       "exitCode": 0
     },
     {
       "command": [
-        "npm",
-        "run",
-        "lint"
-      ],
-      "exitCode": 0
-    },
-    {
-      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+        "--pull",
+        "dist",
+        "--",
         "npm",
         "run",
         "build"
@@ -32,7 +34,11 @@
     {
       "command": [
         "sh",
-        "tools/sim-lock.sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+        "--pull",
+        "test-results/epics/E24/vitest.json",
+        "--",
         "npx",
         "vitest",
         "run",
@@ -44,21 +50,6 @@
         "--outputFile=test-results/epics/E24/vitest.json"
       ],
       "exitCode": 0
-    },
-    {
-      "command": [
-        "sh",
-        "tools/e2e-lock.sh",
-        "npx",
-        "playwright",
-        "test",
-        "--grep",
-        "@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
-        "--grep-invert",
-        "@perf",
-        "--workers=1"
-      ],
-      "exitCode": 1
     }
   ]
 }

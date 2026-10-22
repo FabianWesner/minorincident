@@ -206,7 +206,15 @@ test.describe('L5 Aftermath in the browser', () => {
       for (let i = 0; i < 12 && !(await mission()).l5!.survivors.find(r => r.key === key && r.status !== 'hidden'); i++) { await interact(); await step(20); }
       expect((await mission()).l5!.survivors.find(r => r.key === key)!.status, key).not.toBe('hidden');
       const found = (await mission()).l5!.found;
-      await expect(page.getByTestId('survivors-found')).toContainText(found === 5 ? 'Survivors in' : `${found}/5`);
+      if (found === 5) {
+        // The metro objective owns the visible in-count; the old found-count span is hidden.
+        await expect(page.getByTestId('survivors-found')).toBeHidden();
+        await expect(page.getByTestId('objective-text')).toBeVisible();
+        await expect(page.getByTestId('objective-text')).toContainText('Survivors in 0/5');
+      } else {
+        await expect(page.getByTestId('survivors-found')).toBeVisible();
+        await expect(page.getByTestId('survivors-found')).toContainText(`${found}/5`);
+      }
       for (let guard = 0; guard < 40 && await fightNearby(18); guard++) { /* protect the newly found survivor */ }
       await regroup();
       writeFileSync(`${output}/real-input-after-${key}.json`, JSON.stringify(await mission(), null, 1));
