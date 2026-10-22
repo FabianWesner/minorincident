@@ -1,6 +1,6 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status: candidate fixes prepared. Matched base `480b44e42` is merged; the single baseline worktree is `/tmp/minorincident-perf-l4-l6-before`. Quiet browser work starts after 15:00 UTC on 2026-10-22.
+Status: candidate fixes prepared. Matched base `480b44e42` is merged; the single baseline worktree is `/tmp/minorincident-perf-l4-l6-before`. The matched high baseline is recorded; further browser work is held until 16:05 UTC on 2026-10-22.
 
 ## Required evidence
 
@@ -61,3 +61,5 @@ Final auxiliary turn trace (`95796daca`) confirms no new graphs after tick 1700;
 At 15:08 UTC, quiet-run admits the matched `480b44e42` high WebGPU baseline (host load 1.52; no other headless Chrome/local Vitest; all four slots held). The unchanged strict test reproduces **turn 54.4 ms / four builds, tank 10.8 ms, line break 99.7 ms**. War p95 is 9.4 ms and sim p95 2.4 ms; counts/budgets are in the complete JSON. Its raw reporter, frames, log and conditions are committed as `quiet-before-l4-high-*`.
 
 The orchestrator subsequently holds new browser runs until **16:05 UTC**, because acceptance lanes now end at 16:00. The queued low attempt gained admission while the hold was being coordinated and was interrupted; its log is explicitly excluded from measurements and it will be repeated after 16:05. The orchestration process and all browser processes belonging to this job are stopped. The amended wrapper enforces 16:05 at startup; first-window wrapper bytes remain in commit `ecfa9eb31`. The current full remote candidate suite continues alone after stopping superseded suites that encountered contention/timeouts.
+
+The CPU-only replay repeated with production `warmL4Alarm` reaches the same high/low beat ticks. Inclusive high turn/next-tick/line-break `SimWorld.update` costs are 18.740/34.667/29.234 ms, and low costs 6.807/11.474/10.979 ms on runner `94.130.181.173`. These are method-instrumented Node diagnostics, not native frame times or acceptance. Typecheck and lint pass in the same remote invocation; the full rows and command provenance are archived as `warmed-cpu-*`.
