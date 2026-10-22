@@ -26,8 +26,9 @@ test('T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete A
   // PO #90 (batch13g) deliberately exposes the boarding goal immediately.
   // Keep the sixty-second incident-free clock; the older no-objective assertion is obsolete.
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('exit');
-  await expect(page.locator('.mission-tracker')).toBeVisible();
-  await expect(page.locator('.mission-tracker')).toContainText('Bring the survivors to the armored vehicle');
+  // Full UI deliberately hides the legacy MissionUI tracker; assert the actual HUD.
+  await expect(page.locator('.hud-tracker')).toBeVisible();
+  await expect(page.locator('.hud-tracker')).toContainText('Bring the survivors to the armored vehicle');
   // The protected dog now travels through L7/L8; this must describe the real
   // follower rather than the obsolete phantom "awaiting rescue" prompt.
   const corgi = explored.entities.find(e => e.id === initialCorgi!.id)!;

@@ -34,10 +34,13 @@ pattern=f'^(?=.*(?:@(?:{target})(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@per
 files=sorted(p for p in (ROOT/'tests/perf').glob('*.spec.ts') if f'@{target}' in p.read_text())
 attempted=[c['command'] for c in checks['checks']]
 for spec in files:
-    for shard in [1,2]:
-        command=['sh','tools/perf/quiet-run.sh','npx','playwright','test',str(spec.relative_to(ROOT)),'--grep',pattern,f'--shard={shard}/2','--project=chromium','--workers=1']
-        # Compare semantic suite/shard membership, not regex spelling.
-        if any(str(spec.relative_to(ROOT)) in c and f'--shard={shard}/2' in c for c in attempted):continue
-        name=f'{spec.stem.removesuffix(".spec")}-s{shard}of2'
+    path=str(spec.relative_to(ROOT))
+    remaining=[shard for shard in [1,2] if not any(path in c and f'--shard={shard}/2' in c for c in attempted)]
+    # An untouched file fits one watchdog-bounded reservation; retain the
+    # original missing shard when the verifier already attempted half a file.
+    groups=[None] if remaining==[1,2] else remaining
+    for shard in groups:
+        command=['sh','tools/perf/quiet-run.sh','npx','playwright','test',path,'--grep',pattern]+([] if shard is None else [f'--shard={shard}/2'])+['--project=chromium','--workers=1']
+        name=f'{spec.stem.removesuffix(".spec")}-'+('all' if shard is None else f's{shard}of2')
         subprocess.run(['/usr/bin/lockf','-k',SERIAL,sys.executable,__file__,'--batch',target,name,json.dumps(command)],check=True)
 print(f'{target} native continuation terminal',flush=True)
