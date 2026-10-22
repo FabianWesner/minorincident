@@ -18,6 +18,7 @@ for (const backend of ['webgl2', 'webgpu'] as const) for (const entry of ['debug
     const play = result.frames.filter(f => f.scenario === 'L10' && f.at >= result.cardClosed!);
     expect(play.every(f => f.sun !== f.spot), 'only the selected prewarmed source participates in a draw').toBe(true);
     expect(new Set(play.map(f => f.sun)).size, 'the replay must draw both cached light variants').toBe(2);
+    expect(play.filter(f => f.tick > 2800).every(f => f.warmup === 0), 'alternate graphs must finish before the first lamp boundary').toBe(true);
     expect(new Set(play.map(f => f.heroLight)).size, 'the replay must exercise lamp promotion').toBeGreaterThan(1);
     expect(result.max, JSON.stringify(result.hitches)).toBeLessThanOrEqual(200);
   });

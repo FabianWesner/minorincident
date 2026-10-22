@@ -9,6 +9,7 @@ interface L10Frame {
   at: number; dt: number; tick: number; loading: boolean; cardVisible: boolean; scenario: string | null;
   x: number; z: number; sim: number; update: number; render: number; builds: number;
   heroLight?: string | null; sun?: boolean; spot?: boolean;
+  warmup: number;
 }
 
 /** Device-input recording from the cold-graph reproduction, including both lamp boundaries. */
@@ -67,7 +68,8 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
       const p = g.world.entities.get(1)?.transform, perf = window.__SS__!.perf();
       const light = (g.view as unknown as { lighting: { heroLight: string | null; sun: { visible: boolean }; spot: { visible: boolean } } | null }).lighting;
       trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, cardVisible: !card.hidden, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds,
-        heroLight: light?.heroLight, sun: light?.sun.visible, spot: light?.spot.visible }); last = now;
+        heroLight: light?.heroLight, sun: light?.sun.visible, spot: light?.spot.visible,
+        warmup: (g.view as unknown as { shadowWarmup?: { remaining: number } }).shadowWarmup?.remaining ?? 0 }); last = now;
       if (trace.l10TraceRunning) requestAnimationFrame(sample);
     }; requestAnimationFrame(sample);
   }, frames);
