@@ -1,0 +1,59 @@
+{
+  "diagnostic": true,
+  "runtimeCommit": "3e064e268",
+  "runner": "94.130.181.173",
+  "first": {
+    "level": "L6",
+    "backend": "webgl",
+    "tier": "low",
+    "geometries": 283,
+    "textures": 70,
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "heap": {
+      "usedSize": 53831616,
+      "totalSize": 55701504,
+      "embedderHeapUsedSize": 1973912,
+      "backingStorageSize": 249133628
+    },
+    "loadAndSettleMs": 32050.255897999996
+  },
+  "fifth": {
+    "level": "L6",
+    "backend": "webgl",
+    "tier": "low",
+    "geometries": 274,
+    "textures": 71,
+    "settings": {
+      "gore": "Off",
+      "quality": "low",
+      "flashReduction": true,
+      "cameraShake": false
+    },
+    "heap": {
+      "usedSize": 59013128,
+      "totalSize": 61992960,
+      "embedderHeapUsedSize": 2255896,
+      "backingStorageSize": 264283073
+    },
+    "loadAndSettleMs": 34894.44158500002
+  },
+  "heapGrowthPercent": 9.625406749817799,
+  "remainingOwner": "Three r186 MaterialNode._propertyCache[alphaTest].reference -> retired PaletteMaterial.outputFor -> L1 Lighting.field",
+  "snapshots": [
+    {
+      "path": "test-results/perf-l4-l6/heap-after/webgl-low-1.heapsnapshot",
+      "bytes": 130994929,
+      "sha256": "7799852b467b6d5b42447b530903b3c701514567114170304c223dc3487bdbca"
+    },
+    {
+      "path": "test-results/perf-l4-l6/heap-after/webgl-low-5.heapsnapshot",
+      "bytes": 139374492,
+      "sha256": "1b6f61e6219407a23161f1b80868c74c23f998ddfcfad32b6a2adadcd0266c3b"
+    }
+  ]
+}
