@@ -199,8 +199,9 @@ export class Barricades {
     for (const [e, wall, radius] of this.obstacles) {
       const wx = wall.x - ax, wz = wall.z - az;
       const projection = (wx * dx + wz * dz) / along;
+      if (projection <= 0 || projection >= 1) continue;
       const cross = Math.abs(wx * dz - wz * dx) / across;
-      if (projection <= 0 || projection >= 1 || cross > radius) continue;
+      if (cross > radius) continue;
       const cache = this.decisions.get(attacker.id);
       if (cache && cache.id === e.id && cache.until > this.world.tick && Math.hypot(cache.goalX - goal.x, cache.goalZ - goal.z) < 1) { if (cache.attack) return e; continue; }
       const nav = this.world.infected!.navigation.grid(attacker.transform);

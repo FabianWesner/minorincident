@@ -1,10 +1,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, test, expect } from '../fixtures';
 const root = 'test-results/epics/E16';
+const backgroundLevel = process.env.AUDIO_BACKGROUND_LEVEL;
 // File name deliberately participates in the existing Chromium/mobile/WebKit smoke projects.
-test('S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues', async ({ page }, info) => {
+test(`S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues${backgroundLevel ? ` in ${backgroundLevel}` : ''}`, async ({ page }, info) => {
     await boot(page);
     await page.mouse.click(200, 250);
+    if (backgroundLevel) await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.missions.begin(); a.pause(); }, backgroundLevel);
     await page.evaluate(async () => { const a = window.__SS__!; await a.audio.unlock(); a.input.clear(); });
     await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().state)).toBe('running');
     await page.waitForTimeout(350);
@@ -89,7 +91,7 @@ test('S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserv
             await page.keyboard.up('KeyW');
         }
     mkdirSync(root, { recursive: true });
-    writeFileSync(`${root}/background-${info.project.name}.json`, JSON.stringify(rows, null, 2) + '\n');
+    writeFileSync(`${root}/background-${backgroundLevel ? `${backgroundLevel}-` : ''}${info.project.name}.json`, JSON.stringify(rows, null, 2) + '\n');
 });
 test('T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend', async ({ page }, info) => {
     await boot(page);
