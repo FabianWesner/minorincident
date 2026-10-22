@@ -1,11 +1,13 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 import { cure } from '../../src/levels/L10/district';
+import type { Game } from '../../src/Game';
 
 /**
  * Q-120/Q-121 real-input regression probe. Run against the production preview under e2e-lock:
  *   tsx tools/playtest/fixes-13j-l10-retry.ts http://127.0.0.1:4181 test-results/playtest/fixes-13j-l10
- * The console interactions and post-respawn movement use physical keyboard input; testApi only sets up the checkpoint and forces the death.
+ * The console interactions and post-respawn movement use physical keyboard input.
+ * Setup advances the charge under god mode; live enemies cause the boss-step death on the real clock.
  */
 const [origin, out] = process.argv.slice(2);
 if (!origin || !out) throw new Error('Usage: fixes-13j-l10-retry.ts <origin> <outDir>');
@@ -16,7 +18,7 @@ const args = process.platform === 'darwin'
 const browser = await chromium.launch({ headless: true, args });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  await page.goto(`${origin}/?testApi=1&renderer=webgl&dpr=1&audio=muted&quality=low`);
+  await page.goto(`${origin}/?testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=low`);
   await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(async () => {
     const a = window.__SS__!;
@@ -37,13 +39,21 @@ try {
   });
   if (before.checkpoint !== 'cure-disperse-ready' || before.charge !== 3600 || !before.ready) throw new Error(`Charge did not reach the retry point: ${JSON.stringify(before)}`);
 
-  await page.evaluate(() => { const a = window.__SS__!; a.cheats.god(false); a.survivor.damage(1000); a.step(1); });
-  await page.evaluate(() => window.__SS__!.step(360));
+  await page.evaluate(() => {
+    const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
+    const evidence = window as unknown as { __retryDeath?: number; __retryRespawn?: number };
+    g.world.events.on('player.died', () => { evidence.__retryDeath = a.tick(); });
+    g.world.events.on('player.respawned', () => { evidence.__retryRespawn = a.tick(); a.pause(); }, 6);
+    a.cheats.god(false); a.resume();
+  });
+  await page.waitForFunction(() => (window as unknown as { __retryRespawn?: number }).__retryRespawn !== undefined, null, { timeout: 120_000 });
   const after = await page.evaluate(() => {
     const a = window.__SS__!, m = a.missions.state()!, boss = a.query({ kind: 'infected' }).find(e => e.infected?.pursuit)!;
-    return { tick: a.tick(), checkpoint: m.checkpoint, charge: m.counters['charge-ticks'], ready: m.states['charge-ready'], hp: boss.health.current, maxHp: boss.health.max, player: a.getState().player!.transform };
+    const evidence = window as unknown as { __retryDeath?: number; __retryRespawn?: number };
+    return { tick: a.tick(), diedAt: evidence.__retryDeath, respawnedAt: evidence.__retryRespawn, checkpoint: m.checkpoint, charge: m.counters['charge-ticks'], ready: m.states['charge-ready'], hp: boss.health.current, maxHp: boss.health.max, player: a.getState().player!.transform };
   });
-  await page.keyboard.down('w'); await page.evaluate(() => window.__SS__!.step(30)); await page.keyboard.up('w');
+  await page.keyboard.down('w'); await page.evaluate(() => window.__SS__!.resume()); await page.waitForTimeout(500); await page.keyboard.up('w');
+  await page.evaluate(() => window.__SS__!.pause());
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${out}/boss-retry.png` });
   writeFileSync(`${out}/boss-retry.json`, JSON.stringify({ before, after, movedTick: await page.evaluate(() => window.__SS__!.tick()) }, null, 2));
