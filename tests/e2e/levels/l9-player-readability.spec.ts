@@ -1,0 +1,43 @@
+import { mkdirSync } from 'node:fs';
+import { boot, expect, test } from '../fixtures';
+import { l9Readability } from '../../helpers/l9-readability';
+import type { Game } from '../../../src/Game';
+
+test.use({ launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']) {
+  test(`T-E31-16-current-player @E31-AC16 crawl courier ${backend} ${quality}`, async ({ page }) => {
+    test.setTimeout(240_000);
+    if (quality === 'low') await page.setViewportSize({ width: 390, height: 844 });
+    const out = `test-results/epics/E31/player-current/${backend}-${quality}`;
+    mkdirSync(out, { recursive: true });
+    await boot(page, `/?test=1&scenelab=1&ui=1&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
+    for (const hp of [1000, 0]) {
+      await page.evaluate(async hp => {
+        const a = window.__SS__!; await a.loadLevel('L9', { seed: 31 }); a.pause();
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!;
+        car.physics.body.setTranslation({ x: 455, y: 1, z: 0 }, true);
+        w.vehicles!.damage(car.entity.id, 1000 - hp); await a.step(1);
+      }, hp);
+      await page.keyboard.down('KeyW');
+      for (let i = 0; i < 12 && await page.evaluate(() => window.__SS__!.getState().l9!.phase === 'driving'); i++) await page.evaluate(() => window.__SS__!.step(60));
+      await page.keyboard.up('KeyW');
+      expect(await page.evaluate(() => window.__SS__!.getState().l9!.phase)).toBe('approach');
+      await page.evaluate(() => window.__SS__!.step(551));
+      expect(await page.evaluate(() => window.__SS__!.getState().player!.survivor!.scriptedClip)).toBe('crawl');
+      for (const zoom of [1, .5, 1.5]) {
+        await page.evaluate(async zoom => {
+          const game = (window.__SCENE__ as unknown as { game: Game }).game, view = game.view.view;
+          view.follow(); view.zoom(Math.log(zoom / view.getState().targetZoom), true); game.view.advance(0);
+          await window.__SS__!.screenshotReady();
+        }, zoom);
+        expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom)).toBeCloseTo(zoom, 2);
+        // Retain the unchanged strict road measurement too; this focused test
+        // only closes the courier subcheck, never the whole navigation AC.
+        const proof = await l9Readability(page, `${out}/hp${hp}-z${zoom}`, true);
+        expect.soft(proof.playerPixels).toBeGreaterThan(100);
+        expect.soft(proof.playerContrast).toBeGreaterThanOrEqual(3);
+      }
+    }
+  });
+}
