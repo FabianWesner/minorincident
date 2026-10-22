@@ -2,10 +2,10 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { boot, expect, test } from '../fixtures';
 
-const backend = process.env.L6_READABILITY_BACKEND === 'webgpu' ? 'webgpu' : 'webgl';
+const backends = process.env.L6_READABILITY_BACKEND === 'both' ? ['webgl', 'webgpu'] as const : [process.env.L6_READABILITY_BACKEND === 'webgpu' ? 'webgpu' : 'webgl'] as const;
 const luminance = (rgb: number[]) => rgb.map(v => v / 255 <= .04045 ? v / 255 / 12.92 : ((v / 255 + .055) / 1.055) ** 2.4).reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0);
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } });
-for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
+for (const backend of backends) for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   if (tier === 'low') test.use({ viewport: { width: 390, height: 844 } });
   for (const zoom of [.5, 1, 1.5]) for (const [name, spot] of [['l6-shelter-fails', { x: 0, z: -4 }], ['l6-tunnel-retreat', { x: 110, z: 15 }]] as const) {
     test(`T-E24-15-matrix @E24-AC15 ${name} ${backend} ${tier} z${zoom}: player contrast and isolated brightest-body eye`, async ({ page }) => {
