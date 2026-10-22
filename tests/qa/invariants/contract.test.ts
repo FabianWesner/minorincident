@@ -229,9 +229,9 @@ describe('automatic regression invariants', () => {
         if (step.waypoint !== false) {
           marker.update(false);
           if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
-          // A pull-back is presentation state, so it must not remove guidance while this objective is active.
-          // Hold it for the full 120-tick deadline to expose P1-114 rather than only checking anchor metadata.
-          for (let tick = 0; tick <= 120; tick++) { marker.update(id === 'L3' && step.id === 'checkpoint'); world.tick++; }
+          // A pull-back is presentation state, so it must not remove guidance while any waypoint objective is active.
+          // Apply the same 120-tick overlay to every step, including the known P1-114 checkpoint.
+          for (let tick = 0; tick <= 120; tick++) { marker.update(true); world.tick++; }
           if (!marker.visible || process.env.QA_INVARIANTS_BREAK === 'objectives') violations.push(`${id}/${step.id}: objective marker hidden beyond 2 s during camera pull-back`);
         }
       }
