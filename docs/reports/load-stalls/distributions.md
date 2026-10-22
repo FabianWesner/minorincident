@@ -6,10 +6,10 @@ The candidate records the first post-card frames of all 20 loads and a ten-secon
 
 | Configuration | N before/after | Before median/p90/max (s) | After median/p90/max (s) | Max post-card (ms) | Gate |
 | --- | ---: | --- | --- | ---: | --- |
-| L1 webgpu low | 20/— | 2.459/2.511/2.561 | pending | — | pending |
-| L1 webgpu high | 20/— | 2.485/2.559/2.592 | pending | — | pending |
-| L1 webgl2 low | 20/— | 2.642/2.719/2.743 | pending | — | pending |
-| L1 webgl2 high | 20/— | 2.627/2.686/2.773 | pending | — | pending |
+| L1 webgpu low | 20/20 | 2.459/2.511/2.561 | 2.328/2.360/2.364 | 50.0 | PASS |
+| L1 webgpu high | 20/20 | 2.485/2.559/2.592 | 2.344/2.361/2.393 | 50.0 | PASS |
+| L1 webgl2 low | 20/20 | 2.642/2.719/2.743 | 2.477/2.493/3.009 | 50.0 | PASS |
+| L1 webgl2 high | 20/20 | 2.627/2.686/2.773 | 2.477/2.509/2.526 | 49.9 | PASS |
 | L4 webgpu low | —/— | pending | pending | — | pending |
 | L4 webgpu high | —/— | pending | pending | — | pending |
 | L4 webgl2 low | —/— | pending | pending | — | pending |
