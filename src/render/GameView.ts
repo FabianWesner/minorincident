@@ -1048,8 +1048,9 @@ export class GameView implements Lifecycle {
       this.scene.traverse((child) => {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          const source = child.material as PaletteMaterial;
-          if (!hero && (source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) {
+          const maskMaterial = (material: Material) => {
+            const source = material as PaletteMaterial;
+            if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return this.idBackground;
             if (!this.occluderIdMasks.has(source)) {
               const mask = new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
               // ID probes must retain the visible scene's placement transforms
@@ -1062,8 +1063,9 @@ export class GameView implements Lifecycle {
               })();
               this.occluderIdMasks.set(source, mask);
             }
-            child.material = this.occluderIdMasks.get(source)!;
-          } else child.material = hero ? this.idPlayer : this.idBackground; }
+            return this.occluderIdMasks.get(source)!;
+          };
+          child.material = hero ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material); }
       });
       this.idPlayer.depthTest = !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);

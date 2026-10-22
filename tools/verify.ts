@@ -110,9 +110,9 @@ const commands: string[][] = [
         ]
       : target === 'E25'
         ? [
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E25-14', '--workers=1'],
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E25-14|@perf', '--workers=1'],
           // Lighting frame budgets (desktop high, throttled phone low) run alone on the native GPU.
-          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/e25-lighting.spec.ts', 'tests/perf/e25-light-lab.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/e25-lighting.spec.ts', 'tests/perf/e25-light-lab.spec.ts', 'tests/visual/e25-spike.spec.ts', '--project=chromium', '--workers=1'],
         ]
       : target === 'E27'
         ? [

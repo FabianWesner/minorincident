@@ -1,0 +1,31 @@
+{
+  "passed": 599,
+  "failed": 4,
+  "unselectedOrSkipped": 2907,
+  "failures": [
+    {
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "messages": [
+        "AssertionError: expected 4.545343000005232 to be less than or equal to 4\n    at /srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/tests/sim/levels/l10-assault.test.ts:60:17\n    at file:///srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "messages": [
+        "AssertionError: expected 4.87850299999991 to be less than or equal to 4\n    at /srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/tests/sim/world/chunk-residency.test.ts:87:71\n    at file:///srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "messages": [
+        "AssertionError: expected 100 to be 75 // Object.is equality\n    at /srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/tests/sim/ai/alpha.test.ts:49:46\n    at file:///srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "messages": [
+        "AssertionError: expected 4.536575000034645 to be less than or equal to 4\n    at /srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/tests/sim/levels/l10-campus-corridor.test.ts:59:89\n    at file:///srv/mi/jobs/ac-close-l7-l10-38cdfc-7664-1792651231/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}
