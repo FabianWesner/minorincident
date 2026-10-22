@@ -17,7 +17,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E22-19-production @E22-AC19
   };
   const snap = async (name: string) => {
     const [x, z] = l4Anchors[`photo-${name}`];
-    await page.evaluate(async ({ name, x, z }) => { const a = window.__SS__!; a.teleport(1, { x, z }); a.camera.preset(`D-FAIR/W0/${name}`); await a.screenshotReady(); }, { name, x, z });
+    await page.evaluate(async ({ name, x, z }) => { const a = window.__SS__!; a.teleport(1, { x, z }); a.camera.preset(`D-FAIR/W0/${name}`); for (let i = 0; i < (name === 'l4-tank' ? 1 : 30); i++) a.vfx.stepRender(1 / 60); await a.screenshotReady(); }, { name, x, z });
     await page.screenshot({ path: `${out}/${name}.png` });
     const proof = await page.evaluate(() => { const a = window.__SS__!; return { state: a.missions.state(), perf: a.perf(), camera: a.getState().render.camera, player: a.getEntity(1), figures: a.getState().render.crowd }; });
     writeFileSync(`${out}/${name}.json`, JSON.stringify(proof, null, 2));
