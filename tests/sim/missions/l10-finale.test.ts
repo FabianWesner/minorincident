@@ -134,6 +134,24 @@ test('@E32 charge completion gives the live Mega Alpha a distinct objective mark
   } finally { w.dispose(); }
 });
 
+test('@E32 #101 a remote living boss joins the finale within 15 seconds with its remaining health intact @E32-AC22', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true; press(); press();
+    const e = w.entities.get(boss.state.id)!;
+    e.transform.x = -3000; e.health.current = 1280;
+    boss.state.x = -3000; boss.state.routeAt = -Infinity;
+    m.state.counters['charge-ticks'] = 3599;
+    step(3);
+    expect(m.state.steps.mega.status).toBe('active');
+    expect(boss.distance()).toBeLessThan(30);
+    expect(e.health.current).toBe(1280);
+    step(15 * 60);
+    expect(boss.distance()).toBeLessThanOrEqual(12);
+    expect(e.health.current).toBe(1280);
+  } finally { w.dispose(); }
+});
+
 test('T-E32-20 early kill captured at ready remains dead after death @E32-AC20 @E32-AC22', async () => {
   const { w, m, boss, press, step, kill } = await finale();
   try {

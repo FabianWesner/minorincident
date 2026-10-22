@@ -191,6 +191,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const nearby = e.enemies.find(b => b.d < reach && ok(b));
     const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,{ drawn:a.drawn, hp:a.hp, corpse:a.corpse, underAttack:b.attacking },e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
     const threat = prioritizeAllyThreat(unarmed, nearby, allyThreat);
+    if (e.level === 'L6' && e.step === 'stop' && unarmed) {
+      const close = e.enemies.find(b => b.d < 5);
+      if (close) {
+        // With no route ring during the shelter defence, keep space from the
+        // visible crowd instead of standing at the spawn until it surrounds us.
+        await releaseAim();
+        const feet = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: close.x, z: close.z });
+        await page.mouse.move(feet.x, feet.y);
+        await press([...awayKeys(e, close), fistsRetreatAttack(e.enemies.filter(b => b.d < 3).length)]);
+        return true;
+      }
+    }
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
@@ -546,7 +558,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
     const far = ringDist !== null && ringDist > 25;
     const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
-    if (stalled && !atRing && ring && e.player) {
+    if (!o.noSkip && stalled && !atRing && ring && e.player) {
       if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
       const step = await page.evaluate(({ goal }) => {
         const lab = window.__SCENE__ as unknown as { game?: { world: { entities: Map<number, { transform: { x: number; z: number } }>; infected?: { nav: { steer(p: object, g: object, r: object, rad: number, out: { x: number; z: number }, budget: number, nearest: boolean): boolean } } } } } | undefined;
