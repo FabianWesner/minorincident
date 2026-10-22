@@ -464,18 +464,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
-    // L7's retreat is an escort beat: use only people actually visible to the
-    // player and keep the courier with their walking group before following the
-    // next route marker. This avoids leading the column into a fresh horde.
-    if (e.player) {
-      const groupTarget = visibleGroupTarget(e.level, e.player, e.allies);
-      if (groupTarget) {
-        const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
-        const sp = safe(screen.x, screen.y, e); await clickGround(sp.x, sp.y); await hold(150); continue;
-      }
-    }
-
-    if(o.noSkip&&observed.seconds>=30) {
+    const watchingEnding = e.level === 'L10' && /Watch the cure spread|Minor Incident/.test(e.objective);
+    if(o.noSkip&&observed.seconds>=30&&!watchingEnding) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;
     }
@@ -497,6 +487,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await hold(500); continue;
     }
 
+    // Cover visible walkers before advancing to the next retreat ring.
+    if (e.player) {
+      const groupTarget = visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
+      if (groupTarget) {
+        const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
+        const sp = safe(screen.x, screen.y, e); await clickGround(sp.x, sp.y); await hold(150); continue;
+      }
+    }
+    // The explicit console action takes priority over nearby combat. Charge and
+    // release require a fresh E press, which a held attack must not starve.
+    if (e.level === 'L10' && e.prompt.includes('console action') && Date.now() - lastE > 2500) {
+      lastE = Date.now(); await press([]); await releaseAim();
+      await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
+      log({ prompt: e.prompt, tick: e.tick }); continue;
+    }
     if (await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
 
@@ -515,7 +520,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
     }
 
-    if (stuckSim > 120 && stuckWall > 60 && !assistMode) {
+    if (!o.noSkip && stuckSim > 120 && stuckWall > 60 && !assistMode) {
       assistMode = true; run.assists++;
       const truth = await page.evaluate(() => { const a = window.__SS__!, m = a.missions.state()!; return { marker: m.marker, states: m.states, counters: m.counters, checkpoint: m.checkpoint }; });
       assist('state-locate', { why: `stuck ${Math.round(stuckSim)} s`, truth });

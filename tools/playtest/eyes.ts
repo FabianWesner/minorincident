@@ -20,9 +20,9 @@ export interface Eyes {
   view: { w: number; h: number };
 }
 
-export function visibleGroupTarget(level: string | null, player: { x: number; z: number }, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean }[], leash = 8): { x: number; z: number } | null {
-  if (level !== 'L7') return null;
-  const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse);
+export function visibleGroupTarget(level: string | null, player: { x: number; z: number }, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean; kind?: string }[], leash = 8, step?: string | null): { x: number; z: number } | null {
+  if (level !== 'L7' && !(level === 'L6' && (step === 'retreat' || step === 'exit'))) return null;
+  const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion');
   if (!group.length) return null;
   const centre = group.reduce((p, a) => ({ x: p.x + a.x / group.length, z: p.z + a.z / group.length }), { x: 0, z: 0 });
   return Math.hypot(player.x - centre.x, player.z - centre.z) > leash ? centre : null;
