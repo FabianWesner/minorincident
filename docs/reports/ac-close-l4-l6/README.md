@@ -298,3 +298,11 @@ The v8 photo-only test adjustment passes fresh remote typecheck and lint, exit0 
 ### 15:42 UTC — preserve ordered handoff and prepare final disposition
 
 Other lane receipts prove D2 WebGL low and WebGPU high terminal; its final WebGPU low log starts15:42. Keep our private barrier until that final command exits, preserving the orchestrator's ordered quiet turn. The final photo-only replay remains unmeasured meanwhile. E22/E23/E24 full verifier coverage is explicitly incomplete/red: only E22 static+Node have finished; E23 retains remote failures/interruption; E24 retains remote failures/native admission75. No epic is marked done. The machine-readable original-ten criterion summary and perf-lane handoff retain7met/3red plus the unmeasured v8 photo refinement.
+
+### 15:44 UTC — private barrier released on explicit instruction
+
+The orchestrator explicitly authorizes releasing our private barrier now and resuming queued stages as shared admission allows, retaining the16:00 cutoff. Remove `handoff-to-E31`; no global lock or other lane is bypassed. The final photo replay and remaining verifier stages resume serially.
+
+Repair the discovered stale-report bug for future E22/E23/E24 runs: clear the prior reporter before each native/quiet browser stage, copy only a reporter actually present afterward, and remove the stage destination when none was created. Add a semantic unit covering native admission75 with no new reporter; unchanged exit75 and missing evidence remain explicit. Fresh remote static and verifier-tooling checks are running. Already-loaded full verifier processes keep their original plans; stale copies from those attempts will still be identified in the final audit.
+
+The stale-reporter repair passes remote **typecheck, lint and10/10 verifier-tooling tests**, exit0 (50s sync,81s remote). New admission75 regression confirms no stale stage reporter is copied and the failure exit remains75. This strengthens evidence handling; no product assertion/threshold or gameplay value changes. Raw static/unit receipt is `evidence/final-reporter-guard.*.gz`.

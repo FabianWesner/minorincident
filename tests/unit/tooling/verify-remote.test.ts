@@ -1,8 +1,9 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
+import { copyFileSync, existsSync, rmSync } from 'node:fs';
 
 vi.mock('node:child_process', () => ({ spawnSync: vi.fn(() => ({ status: 0 })) }));
-vi.mock('node:fs', async importOriginal => ({ ...await importOriginal<typeof import('node:fs')>(), mkdirSync: vi.fn(), writeFileSync: vi.fn(), copyFileSync: vi.fn() }));
+vi.mock('node:fs', async importOriginal => ({ ...await importOriginal<typeof import('node:fs')>(), mkdirSync: vi.fn(), writeFileSync: vi.fn(), copyFileSync: vi.fn(), existsSync: vi.fn(() => false), rmSync: vi.fn() }));
 const originalArgv = process.argv, originalExitCode = process.exitCode;
 afterEach(() => { process.argv = originalArgv; process.exitCode = originalExitCode; vi.unstubAllEnvs(); vi.clearAllMocks(); vi.resetModules(); });
 
@@ -69,4 +70,18 @@ test('E22 retains a remote browser failure and still records native visual/perf 
   expect(process.exitCode).toBe(7);
   expect(commands.some(command => command[1] === 'tools/e2e-lock.sh' && command.includes('playwright'))).toBe(true);
   if (process.platform === 'darwin') expect(commands.some(command => command[1] === 'tools/perf/quiet-run.sh')).toBe(true);
+});
+
+
+test('E24 admission failure never copies an earlier browser reporter into current evidence', async () => {
+  process.argv = ['node', 'tools/verify.ts', 'E24'];
+  vi.stubEnv('MI_VERIFY_REMOTE_SIM', '1'); vi.stubEnv('MI_VERIFY_REMOTE_E2E', '1');
+  vi.mocked(existsSync).mockReturnValue(false);
+  for (let i = 0; i < 4; i++) vi.mocked(spawnSync).mockReturnValueOnce({ status: 0 } as ReturnType<typeof spawnSync>);
+  vi.mocked(spawnSync).mockReturnValueOnce({ status: 75 } as ReturnType<typeof spawnSync>);
+  await import('../../../tools/verify');
+  expect(process.exitCode).toBe(75);
+  expect(copyFileSync).not.toHaveBeenCalled();
+  expect(rmSync).toHaveBeenCalledWith('test-results/epics/E24/playwright-headless.json', { force: true });
+  expect(rmSync).toHaveBeenCalledWith('test-results/epics/E24/playwright-gpu.json', { force: true });
 });
