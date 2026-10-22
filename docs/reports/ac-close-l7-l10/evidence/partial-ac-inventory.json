@@ -249,7 +249,8 @@
       "ac": "E32-AC29",
       "disposition": "pending",
       "baselineEvidence": "No E32-AC29 test. Focused region/terminal/minigun/finale/epilogue browser tests exist; no complete mouse-only/touch acceptance aggregate.; newer: [l10-minigun-input.spec.ts](../../../tests/e2e/levels/l10-minigun-input.spec.ts), [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json), [selected-final-playwright.json](../postmerge-10/evidence/selected-final-playwright.json)",
-      "requiredProof": "**M; browser** \u2014 Tagged checkpoint/carry/heat/charge/ending tests now exist; finish mouse-only/touch aggregate, all region/finale pairs and HUD non-overlap review."
+      "requiredProof": "**M; browser** \u2014 Tagged checkpoint/carry/heat/charge/ending tests now exist; finish mouse-only/touch aggregate, all region/finale pairs and HUD non-overlap review.",
+      "currentEvidenceSummary": "Fresh full native E32 functional repeat88/88 passes, including three minigun input modes, checkpoint/terminal/carry, both-tier/backend/zoom finale and epilogue controls, all six live region boundaries, save/resume and WebGPU smoke. This does not supply the complete mouse-only/touch aggregate or all scored region pairs."
     },
     {
       "ac": "E32-AC30",
@@ -262,12 +263,12 @@
       "disposition": "pending",
       "baselineEvidence": "Nine E32 native suites now selected after verifier fix; current isolated Mega-special 200-infected sim p95 **4.196 ms > 4 ms**, low tier passes; sim/LOD/cure counters and prior native samples do not erase this failure.; newer: [final-vitest.json](../postmerge-10/evidence/final-vitest.json)",
       "requiredProof": "**L; browser + quiet perf** \u2014 Complete native regions/assault/mist/pullout high/low caps, \u226450 ms transitions and five-cycle retention; physical iOS/Android \u226530 fps still required.",
-      "currentEvidenceSummary": "Fresh original isolated assault timing passes high/low **3.702/2.021 ms**, peaks168/87 and arrival12.5s; 619-pass selected repeat. Native budget discovery now includes every tagged perf file with released shard reservations.",
+      "currentEvidenceSummary": "Fresh original isolated assault timing passes high/low **3.702/2.021 ms**, peaks168/87 and arrival12.5s; 619-pass selected repeat. Native budget discovery now includes every tagged perf file with released shard reservations. Full native functional repeat88/88 passes; native budgets are queued separately, including auditable continuation after a failed shard.",
       "remaining": "**Partial:** native caps/hitches/retention remain; physical iOS/Android need PO devices. Desktop emulation is proposed separately and not substituted. [Receipt](../ac-close-l7-l10/README.md#complete-selected-node-repeat--0900-utc).",
       "proposedRewrite": "Retain the real iOS/Android\u226530fps p50 gate as PO-device acceptance with model/OS/browser/route/tier/sample duration/p50 evidence. While awaiting devices, record a separately labelled390\u00d7844/4\u00d7CPU desktop-emulation proxy at unchanged\u226530fps p50, without claiming it as the device result.",
       "reason": "Physical devices cannot be accessed here. Proposal awaits PO; emulation is not substituted for acceptance."
     }
   ],
-  "updatedAt": "2026-10-22T11:57:00Z",
+  "updatedAt": "2026-10-22T12:12:00Z",
   "metCount": 5
 }
