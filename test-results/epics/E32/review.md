@@ -1,6 +1,6 @@
 # E32 current visual review — 2026-10-22
 
-**NOT ACCEPTED.** Opened all seven default-camera region frames in full resolution, both-tier/backend region and mixed-species mist sheets, the four live regular/Mega frames and representative actual epilogue inputs. References: original gameplay, zoo and highway/safe-zone sheets (`review-reference-images.json`). A first region repeat saved a changed zoom target without committing the camera radius; that0.5 portion is invalid and retained separately. A presentation-pose/radius-checked repeat is queued. Default-camera views and mist sequence are valid observations; neither proves all §6 region/finale input pairs.
+**NOT ACCEPTED.** Opened all seven default-camera region frames in full resolution, both-tier/backend region and mixed-species mist sheets, the four live regular/Mega frames and representative actual epilogue inputs. References: original gameplay, zoo and highway/safe-zone sheets (`review-reference-images.json`). A first region repeat saved a changed zoom target without committing the camera radius; that0.5 portion is invalid and retained separately. The corrected presentation-pose/radius-checked repeat passes4/4 configurations, providing56 valid region frames plus64 mist and8 earlier ending frames. Actual radius scaling and camera-to-target distance are asserted. These frames do not prove all §6 region/finale input pairs.
 
 | Region | A score /10 | Current observation |
 | --- | --- | --- |

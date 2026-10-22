@@ -2,19 +2,19 @@
 
 Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evidence/partial-ac-inventory.json) preserves every partial from the sweep. This is an ongoing audit; no pending row is accepted by this report.
 
-## Latest checkpoint — 14:14 UTC
+## Latest checkpoint — 14:52 UTC (extended native completion)
 
-**7/31 starting partials are met:** E25-AC01/12/15, E29-AC07/14, E31-AC08 and E32-AC09. Every other starting partial remains open unless a later terminal receipt and explicit disposition below says otherwise. All five epic statuses stay **in-progress**. [Machine-readable31-row ledger](evidence/partial-ac-inventory.json).
+**7/31 starting partials met.** [Every AC: met/red/unmeasured](final-ac-status.md); [machine ledger](evidence/partial-ac-inventory.json). All five epics stay **in-progress**. Proposed rewrites remain unadopted. The user extended the final cutoff to16:00UTC; the completed14:40 interruption record remains historical evidence, not the final native outcome.
 
 | Epic | Full-verifier disposition | Current proof and material gaps |
 | --- | --- | --- |
-| E25 | exit1;50 native pass/6fail/1SSRskip | Separate quiet5/5 passes; shadow fixture subsequently passes85.884%. Night-readability/saturation, fullG, legacy-memory and SSR gates remain unresolved/proposed. |
-| E29 | exit1;133Node pass,73native pass/5fail | Alpha inheritance and corrected night continuity now met by targeted repeats. Skyline is reversed on all four configurations; complete input photos/scored review/performance remain open. |
-| E30 | first functional72pass/15fail; repeated158Node pass,96native pass/2fail | All36 player views pass (minimum3.097:1). Hidden legacy HUD fixture corrected. Real rotated-APC boarding defect fixed locally; focused6/6 remote regression passes, rebuilt native route replay pending. |
-| E31 | exit1; repeated124Node +2 isolated timing passes,67native pass/36fail | Durability AC08 met.28 actual routes reach L10 but fail strict3:1;8 landscape zoom fixtures fail before driving and have a corrected repeat queued. Native frames/hitches/retention pending. Real phones need PO devices. |
-| E32 | repeated246Node pass;88/88 native functional pass | Shared Alpha inheritance passes. All four native regular/Mega contracts pass; the new actual photo receipt still needs its focused capture. Whole seven-region/ending review, full input aggregate and native budgets/retention remain incomplete; phones need PO devices. |
+| E25 | exit1;50 native pass/6fail/1SSRskip | Separate quiet5/5; corrected shadow85.884% passes. AC01/12/15 met; SSR, memory-domain interpretation, night-readability/saturation and G remain open. |
+| E29 | exit1;133Node pass,73native pass/5fail | AC07/14 met; skyline reverses the required area trend, actual input loses24followers, scores below7. Fresh native performance repeat unmeasured. |
+| E30 | exit1;158Node,96functional pass/2fail;6perf pass/1fail | Both functional failures subsequentlyfixed2/2. Local rotated-APC fix transfers12/12 keyboard/touch. Phone4×CPU frame38.7/sim8.3ms fails; full input/photo/a11y/scored review incomplete. |
+| E31 | exit1;124Node+2timings,67native pass/36fail | AC08 met. All36 route combinations reachL10 across baseline28+corrected8. Final courier22/24 passes; strict road contrast remains~1.98. Corrected crash8/8 red from cold-load gaps. Remaining dressed-route/retention native cases continuing. |
+| E32 | interrupted143;246Node,88/88functional pass | AC09 met; Alpha/dog2/2 passes. Corrected pose/radius collector4/4passes;128frames inspected and scores below7. Formal arena repeat and remaining native files continuing; real phones need PO devices. |
 
-Proposed specification decisions remain **unadopted**: SSR release-extras placement; explicit collected-JS versus external/backing memory domains; physical-device ownership plus a separately labelled desktop proxy; nominal stampede cue versus capsule contact; accepted PO90's immediate zoo boarding goal versus old no-objective wording. None is silently substituted for a passing gate. Valid failed/unmeasured criteria have no proposed waiver. The remainder of this file is a chronological audit trail, including superseded experiments and their failures.
+No thresholds, gameplay difficulty or persistent corpses were changed. The remainder is a chronological audit trail, including superseded experiments and failures. Proposed decisions are recorded below with reasons; none constitutes a passing result.
 
 ## Initial evidence (superseded where noted below)
 

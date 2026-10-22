@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-22T14:42:06.754421+00:00",
+  "at": "2026-10-22T14:55:04.175493+00:00",
   "batches": [
     {
       "target": "E30",
@@ -59,54 +59,6 @@
     },
     {
       "target": "E31",
-      "batch": "crash-hitches-repeat",
-      "command": [
-        "sh",
-        "tools/perf/quiet-run.sh",
-        "npx",
-        "playwright",
-        "test",
-        "tests/perf/l9-crash-hitches.spec.ts",
-        "--project=chromium",
-        "--workers=1"
-      ],
-      "started": 1792677729.738981,
-      "finished": 1792678441.890677,
-      "exitCode": 1,
-      "reporterPresent": true,
-      "receiptPath": "native-E31-crash-hitches-repeat-receipt.json.gz",
-      "stats": {
-        "startTime": "2026-10-22T14:03:57.239Z",
-        "duration": 604561.4210000001,
-        "expected": 0,
-        "skipped": 0,
-        "unexpected": 8,
-        "flaky": 0
-      }
-    },
-    {
-      "target": "E31",
-      "batch": "current-player-key12",
-      "command": [
-        "sh",
-        "docs/reports/ac-close-l7-l10/evidence/l9-key12-install-and-probe.sh"
-      ],
-      "started": 1792679549.2079449,
-      "finished": 1792679656.633302,
-      "exitCode": 1,
-      "reporterPresent": true,
-      "receiptPath": "native-E31-current-player-key12-receipt.json.gz",
-      "stats": {
-        "startTime": "2026-10-22T14:32:42.492Z",
-        "duration": 94123.439,
-        "expected": 2,
-        "skipped": 0,
-        "unexpected": 2,
-        "flaky": 0
-      }
-    },
-    {
-      "target": "E31",
       "batch": "current-player",
       "command": [
         "sh",
@@ -128,28 +80,30 @@
     },
     {
       "target": "E31",
-      "batch": "current-player-repeat",
+      "batch": "landscape-input-repeat",
       "command": [
         "sh",
         "tools/e2e-lock.sh",
         "npx",
         "playwright",
         "test",
-        "tests/e2e/levels/l9-player-readability.spec.ts",
-        "--project=chromium",
+        "tests/e2e/levels/l9-browser-input.spec.ts",
+        "--grep",
+        "T-E31-17-input.*zoom=(0[.]5|1[.]5)",
+        "--project=pixel-7-landscape",
         "--workers=1"
       ],
-      "started": 1792677617.80214,
-      "finished": 1792677729.6926332,
+      "started": 1792676452.189238,
+      "finished": 1792676801.666409,
       "exitCode": 1,
       "reporterPresent": true,
-      "receiptPath": "native-E31-current-player-repeat-receipt.json.gz",
+      "receiptPath": "native-E31-landscape-input-repeat-receipt.json.gz",
       "stats": {
-        "startTime": "2026-10-22T14:00:28.362Z",
-        "duration": 101296.525,
-        "expected": 2,
+        "startTime": "2026-10-22T13:41:02.738Z",
+        "duration": 338852.9,
+        "expected": 0,
         "skipped": 0,
-        "unexpected": 2,
+        "unexpected": 8,
         "flaky": 0
       }
     },
@@ -183,6 +137,117 @@
       }
     },
     {
+      "target": "E32",
+      "batch": "current-regions-repeat",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/e2e/levels/l10-review-captures.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792677262.3879302,
+      "finished": 1792677568.410634,
+      "exitCode": 0,
+      "reporterPresent": true,
+      "receiptPath": "native-E32-current-regions-repeat-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T13:54:32.969Z",
+        "duration": 295420.219,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E32",
+      "batch": "l10-alpha-contracts-s2of2",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l10-alpha-contracts.spec.ts",
+        "--grep",
+        "^(?=.*(?:@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+        "--shard=2/2",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792677568.4453728,
+      "finished": 1792677617.772798,
+      "exitCode": 0,
+      "reporterPresent": true,
+      "receiptPath": "native-E32-l10-alpha-contracts-s2of2-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T13:59:59.277Z",
+        "duration": 18468.732,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "current-player-repeat",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/e2e/levels/l9-player-readability.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792677617.80214,
+      "finished": 1792677729.6926332,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-current-player-repeat-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T14:00:28.362Z",
+        "duration": 101296.525,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "crash-hitches-repeat",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l9-crash-hitches.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792677729.738981,
+      "finished": 1792678441.890677,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-crash-hitches-repeat-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T14:03:57.239Z",
+        "duration": 604561.4210000001,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 8,
+        "flaky": 0
+      }
+    },
+    {
       "target": "E31",
       "batch": "l9-dress-all",
       "command": [
@@ -208,6 +273,54 @@
         "expected": 1,
         "skipped": 2,
         "unexpected": 1,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E32",
+      "batch": "current-regions-pose-repeat",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/e2e/levels/l10-review-captures.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "started": 1792679122.941938,
+      "finished": 1792679549.1782799,
+      "exitCode": 0,
+      "reporterPresent": true,
+      "receiptPath": "native-E32-current-regions-pose-repeat-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T14:27:34.879Z",
+        "duration": 294339.239,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "target": "E31",
+      "batch": "current-player-key12",
+      "command": [
+        "sh",
+        "docs/reports/ac-close-l7-l10/evidence/l9-key12-install-and-probe.sh"
+      ],
+      "started": 1792679549.2079449,
+      "finished": 1792679656.633302,
+      "exitCode": 1,
+      "reporterPresent": true,
+      "receiptPath": "native-E31-current-player-key12-receipt.json.gz",
+      "stats": {
+        "startTime": "2026-10-22T14:32:42.492Z",
+        "duration": 94123.439,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 2,
         "flaky": 0
       }
     },
@@ -270,113 +383,29 @@
       }
     },
     {
-      "target": "E31",
-      "batch": "landscape-input-repeat",
-      "command": [
-        "sh",
-        "tools/e2e-lock.sh",
-        "npx",
-        "playwright",
-        "test",
-        "tests/e2e/levels/l9-browser-input.spec.ts",
-        "--grep",
-        "T-E31-17-input.*zoom=(0[.]5|1[.]5)",
-        "--project=pixel-7-landscape",
-        "--workers=1"
-      ],
-      "started": 1792676452.189238,
-      "finished": 1792676801.666409,
-      "exitCode": 1,
-      "reporterPresent": true,
-      "receiptPath": "native-E31-landscape-input-repeat-receipt.json.gz",
-      "stats": {
-        "startTime": "2026-10-22T13:41:02.738Z",
-        "duration": 338852.9,
-        "expected": 0,
-        "skipped": 0,
-        "unexpected": 8,
-        "flaky": 0
-      }
-    },
-    {
       "target": "E32",
-      "batch": "current-regions-pose-repeat",
-      "command": [
-        "sh",
-        "tools/e2e-lock.sh",
-        "npx",
-        "playwright",
-        "test",
-        "tests/e2e/levels/l10-review-captures.spec.ts",
-        "--project=chromium",
-        "--workers=1"
-      ],
-      "started": 1792679122.941938,
-      "finished": 1792679549.1782799,
-      "exitCode": 0,
-      "reporterPresent": true,
-      "receiptPath": "native-E32-current-regions-pose-repeat-receipt.json.gz",
-      "stats": {
-        "startTime": "2026-10-22T14:27:34.879Z",
-        "duration": 294339.239,
-        "expected": 4,
-        "skipped": 0,
-        "unexpected": 0,
-        "flaky": 0
-      }
-    },
-    {
-      "target": "E32",
-      "batch": "current-regions-repeat",
-      "command": [
-        "sh",
-        "tools/e2e-lock.sh",
-        "npx",
-        "playwright",
-        "test",
-        "tests/e2e/levels/l10-review-captures.spec.ts",
-        "--project=chromium",
-        "--workers=1"
-      ],
-      "started": 1792677262.3879302,
-      "finished": 1792677568.410634,
-      "exitCode": 0,
-      "reporterPresent": true,
-      "receiptPath": "native-E32-current-regions-repeat-receipt.json.gz",
-      "stats": {
-        "startTime": "2026-10-22T13:54:32.969Z",
-        "duration": 295420.219,
-        "expected": 4,
-        "skipped": 0,
-        "unexpected": 0,
-        "flaky": 0
-      }
-    },
-    {
-      "target": "E32",
-      "batch": "l10-alpha-contracts-s2of2",
+      "batch": "l10-arena-budgets-all",
       "command": [
         "sh",
         "tools/perf/quiet-run.sh",
         "npx",
         "playwright",
         "test",
-        "tests/perf/l10-alpha-contracts.spec.ts",
+        "tests/perf/l10-arena-budgets.spec.ts",
         "--grep",
         "^(?=.*(?:@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
-        "--shard=2/2",
         "--project=chromium",
         "--workers=1"
       ],
-      "started": 1792677568.4453728,
-      "finished": 1792677617.772798,
+      "started": 1792680511.671286,
+      "finished": 1792680809.24175,
       "exitCode": 0,
       "reporterPresent": true,
-      "receiptPath": "native-E32-l10-alpha-contracts-s2of2-receipt.json.gz",
+      "receiptPath": "native-E32-l10-arena-budgets-all-receipt.json.gz",
       "stats": {
-        "startTime": "2026-10-22T13:59:59.277Z",
-        "duration": 18468.732,
-        "expected": 1,
+        "startTime": "2026-10-22T14:48:42.367Z",
+        "duration": 286804.714,
+        "expected": 8,
         "skipped": 0,
         "unexpected": 0,
         "flaky": 0
