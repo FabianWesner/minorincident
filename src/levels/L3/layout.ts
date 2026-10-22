@@ -141,7 +141,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // 1.3 m slot where actors stepped off the deck onto the lower road. Close each with a solid, nav-blocking rail at deck height.
     // Merge fix (batch13j): with the ramp deck cut into fine strips (P1-113) a sliver of ground-level cells opened between each ramp-foot lip
     // and the first jersey rail; the nav grid saw a 0.7 m drop there (L3-bridge "no deck cell links to the lower road"). Seal the slivers.
-    for (const [x0, x1, z0, z1] of [[143.4, 144.3, -1.05, -.45], [202.8, 203.7, .4, 1.1]]) layout.colliders.push({id:`l3-ramp-foot-seal-${x0}`,aabb:{min:[x0,0,z0],max:[x1,1.2,z1],navBlocker:true},minTier:0,maxTier:5});
+    for (const [x0, x1, z0, z1] of [[143.4, 144.3, -1.05, -.45], [202.8, 203.7, .4, 1.1]]) layout.colliders.push({id:`l3-ramp-foot-seal-${x0}`,aabb:{min:[x0,0,z0],max:[x1,1.2,z1],navBlocker:true,navOnly:true},minTier:0,maxTier:5});
     for (const [x0, x1, z0, z1] of [[163, 167.6, 1.6, 2.9], [179.4, 184, -2.9, -1.6]]) layout.colliders.push({id:`l3-highway-seal-${x0}`,aabb:{min:[x0,5.0,z0],max:[x1,6.7,z1],navBlocker:true},minTier:0,maxTier:5});
     for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
