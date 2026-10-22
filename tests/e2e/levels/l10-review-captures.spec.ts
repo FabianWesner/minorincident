@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../fixtures';
 import { readSpec } from '../../../tools/scenelab/session';
+import type { Game } from '../../../src/Game';
 
 // Evidence collection is not a scored vision pass. Review the saved game-camera pairs.
 test.use({ launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist'] } });
@@ -22,10 +23,13 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       }, spec);
       // Same simulation pose at both zooms. Follow uses the real player rig;
       // a static Scene Lab photo pose has no playerZoom value to assert.
+      let baseRadius = 0;
       for (const zoom of [1, .5]) {
         const proof = await page.evaluate(async zoom => {
           const lab = window.__SCENE__!, api = window.__SS__!;
           lab.setCamera({ mode: 'follow', actor: 'courier', zoom });
+          // Commit the presentation pose without advancing the simulation.
+          (lab as unknown as { game: Game }).game.view.advance(0);
           await lab.ready(); await api.screenshotReady();
           return { state: api.getState(), perf: api.perf() };
         }, zoom);
@@ -34,6 +38,10 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         expect(proof.perf.backend).toBe(backend);
         expect(proof.state.render.quality).toBe(quality);
         expect(proof.state.render.camera.zoom).toBeCloseTo(zoom, 2);
+        const camera = proof.state.render.camera;
+        if (zoom === 1) baseRadius = camera.radius;
+        expect(camera.radius).toBeCloseTo(baseRadius * zoom, 2);
+        expect(Math.hypot(...camera.position.map((p, i) => p - camera.target[i]))).toBeCloseTo(camera.radius, 2);
         expect(proof.state.player).not.toBeNull();
       }
     }
