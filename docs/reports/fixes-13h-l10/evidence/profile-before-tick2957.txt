@@ -1,0 +1,33 @@
+total 400 ms
+
+self time by file:
+     229  chunk-AH7NWAFQ.js?v=ff9afd0c
+     145  getProgramParameter
+      18  (garbage collector)
+       5  (program)
+       2  getUniformBlockIndex
+       1  LightField.ts
+       0  (idle)
+       0  chunk-IXWWV5JO.js?v=ff9afd0c
+       0  Lighting.ts
+       0  PracticalEffects.ts
+
+self time by function:
+     145  getProgramParameter :-1
+      63  build chunk-AH7NWAFQ.js?v=ff9afd0c:1597
+      18  (garbage collector) :-1
+      15  getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1255
+      12  build chunk-AH7NWAFQ.js?v=ff9afd0c:1899
+       9  generate chunk-AH7NWAFQ.js?v=ff9afd0c:3561
+       9  _getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1291
+       7  getDataFromNode chunk-AH7NWAFQ.js?v=ff9afd0c:26629
+       6  analyze chunk-AH7NWAFQ.js?v=ff9afd0c:1518
+       5  cyrb53 chunk-AH7NWAFQ.js?v=ff9afd0c:866
+       5  fn chunk-AH7NWAFQ.js?v=ff9afd0c:2466
+       5  addContext chunk-AH7NWAFQ.js?v=ff9afd0c:26021
+
+inclusive time (samples whose stack contains the function):
+     212  build
+     145  getProgramParameter
+       0  resolve
+       0  reachPath

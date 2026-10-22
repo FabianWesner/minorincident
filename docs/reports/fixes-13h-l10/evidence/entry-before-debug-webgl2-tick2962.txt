@@ -1,0 +1,46 @@
+total 3722 ms
+
+self time by file:
+    3404  getProgramParameter
+     266  chunk-AH7NWAFQ.js?v=ff9afd0c
+      40  (garbage collector)
+       3  (program)
+       2  getUniformBlockIndex
+       2  LightPower.ts
+       2  PaletteMaterial.ts
+       1  Renderer.ts
+       1  vertexAttribDivisor
+       1  PawContacts.ts
+       0  chunk-IXWWV5JO.js?v=ff9afd0c
+       0  Lighting.ts
+       0  LightField.ts
+
+self time by function:
+    3404  getProgramParameter :-1
+      40  (garbage collector) :-1
+      29  build chunk-AH7NWAFQ.js?v=ff9afd0c:1597
+      18  build chunk-AH7NWAFQ.js?v=ff9afd0c:1899
+      18  _getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1291
+      16  build chunk-AH7NWAFQ.js?v=ff9afd0c:2586
+      15  analyze chunk-AH7NWAFQ.js?v=ff9afd0c:1518
+       8  getNodeFromHash chunk-AH7NWAFQ.js?v=ff9afd0c:25985
+       8  setup chunk-AH7NWAFQ.js?v=ff9afd0c:1503
+       7  cyrb53 chunk-AH7NWAFQ.js?v=ff9afd0c:866
+       6  getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1255
+       6  fn chunk-AH7NWAFQ.js?v=ff9afd0c:2466
+       6  generateNodeType chunk-AH7NWAFQ.js?v=ff9afd0c:3519
+       6  getHash chunk-AH7NWAFQ.js?v=ff9afd0c:1362
+       5  setData chunk-AH7NWAFQ.js?v=ff9afd0c:25196
+       5  generate chunk-AH7NWAFQ.js?v=ff9afd0c:3833
+       5  generate chunk-AH7NWAFQ.js?v=ff9afd0c:3561
+       4  getNodeType chunk-AH7NWAFQ.js?v=ff9afd0c:1422
+       4  getData chunk-AH7NWAFQ.js?v=ff9afd0c:25183
+       4  getNodeProperties chunk-AH7NWAFQ.js?v=ff9afd0c:26660
+       4  getMaterialCacheKey chunk-AH7NWAFQ.js?v=ff9afd0c:14798
+       3  call chunk-AH7NWAFQ.js?v=ff9afd0c:2509
+
+inclusive time (samples whose stack contains the function):
+     237  build
+    3404  getProgramParameter
+       0  insideXZ
+       0  reachPath

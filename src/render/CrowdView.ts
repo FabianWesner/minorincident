@@ -223,12 +223,12 @@ export class CrowdView extends Group {
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
         const dedicated = this.registry.definition(asset).corpseGlb;
-        const intactDog = role === 'dog';
-        if (dedicated || intactDog || alpha) {
+        const intactSource = role === 'dog' || role === 'firefighter';
+        if (dedicated || intactSource || alpha) {
           // Generated living LODs already lost thin shells. Further index-only
           // reduction made permanent bodies look like shards (PO #85). Dedicated
           // corpse meshes collapse each intact shell offline and keep their own rig.
-          // Dogs and Alphas retain their intact authored source instead.
+          // Dogs, industrial firefighters and Alphas retain their intact authored source instead.
           const bodyModel = await (dedicated ? this.registry.loadCorpse(asset, def.decay) : this.registry.loadAsset(asset, 'lod0', def.decay)) as Group;
           if (this.disposed) { baked.geometry.dispose(); return; }
           // LOD0 and LOD2 can finish in either order. Both must retain the same
@@ -250,7 +250,7 @@ export class CrowdView extends Group {
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
         await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
         if (this.disposed) { baked.geometry.dispose(); return; }
-        if (!alpha && !dedicated && !intactDog) {
+        if (!alpha && !dedicated && !intactSource) {
           const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
           if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
           packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
@@ -517,11 +517,13 @@ export class CrowdView extends Group {
         this.transform.makeRotationY(presented.yaw + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? this.world.districts?.supportBelow(x, z, e.transform.y - .7) ?? 0 : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         if (e.corpse) {
-          const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
-          const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
+          // PO #98: permanent bodies retain the complete corpse silhouette.
+          // Real blast kills carry mask 31 from the transient dismemberment VFX;
+          // applying it here reduced the intact source to a coloured torso lump.
+          // Use the complete page warmed during load for every death cause.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
-          this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts, !batch.animal ? look : undefined);
+          this.staticCorpses.place(e, `${key}:${death}:0`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), [], !batch.animal ? look : undefined);
           continue;
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.

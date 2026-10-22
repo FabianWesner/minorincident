@@ -1,0 +1,84 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 2.28.24.66:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 34s, 30451 files; job /srv/mi/jobs/fixes-13h-l10-170603-6920-1792620691; queueing for a slot
+[runner] slot 0 acquired; load 1.09 0.45 0.58
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-l10-170603-6920-1792620691[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[33m 2020[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.runner bodies (low)[39m[33m 768[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.dog bodies (low)[39m[33m 329[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.alpha bodies (low)[39m[32m 274[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.runner bodies (high)[39m[32m 209[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.dog bodies (high)[39m[32m 188[2mms[22m[39m
+[31m   [31m×[31m PO #98 @E07 @E32 real kills retain intact frozen infected.alpha bodies (high)[39m[32m 249[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 6 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.runner bodies (low)
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.runner bodies (high)
+[31m[1mAssertionError[22m: expected 'corpses:infected.runner:death-back:31…' to match /:death-back:0(?:\/|$)/|$)[39m
+
+[32m- Expected:[39m
+/:death-back:0(?:\/|$)/
+
+[31m+ Received:[39m
+"corpses:infected.runner:death-back:31/0/0"
+
+[36m [2m❯[22m tests/unit/render/real-kill-corpses.test.ts:[2m61:27[22m[39m
+    [90m 59|[39m       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
+    [90m 60|[39m       for (const page of pages) {
+    [90m 61|[39m         expect(page.name).toMatch(/:death-back:0(?:\/|$)/);
+    [90m   |[39m                           [31m^[39m
+    [90m 62|[39m         const positions = page.geometry.getAttribute('position');
+    [90m 63|[39m         // A full reclining body spans well beyond the torso-only blas…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.dog bodies (low)
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.dog bodies (high)
+[31m[1mAssertionError[22m: expected 'corpses:inf.dog:death-back:31/0/0' to match /:death-back:0(?:\/|$)/|$)[39m
+
+[32m- Expected:[39m
+/:death-back:0(?:\/|$)/
+
+[31m+ Received:[39m
+"corpses:inf.dog:death-back:31/0/0"
+
+[36m [2m❯[22m tests/unit/render/real-kill-corpses.test.ts:[2m61:27[22m[39m
+    [90m 59|[39m       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
+    [90m 60|[39m       for (const page of pages) {
+    [90m 61|[39m         expect(page.name).toMatch(/:death-back:0(?:\/|$)/);
+    [90m   |[39m                           [31m^[39m
+    [90m 62|[39m         const positions = page.geometry.getAttribute('position');
+    [90m 63|[39m         // A full reclining body spans well beyond the torso-only blas…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.alpha bodies (low)
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts[2m > [22mPO #98 @E07 @E32 real kills retain intact frozen infected.alpha bodies (high)
+[31m[1mAssertionError[22m: expected 'corpses:inf.alpha:death-back:31/0/0' to match /:death-back:0(?:\/|$)/|$)[39m
+
+[32m- Expected:[39m
+/:death-back:0(?:\/|$)/
+
+[31m+ Received:[39m
+"corpses:inf.alpha:death-back:31/0/0"
+
+[36m [2m❯[22m tests/unit/render/real-kill-corpses.test.ts:[2m61:27[22m[39m
+    [90m 59|[39m       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
+    [90m 60|[39m       for (const page of pages) {
+    [90m 61|[39m         expect(page.name).toMatch(/:death-back:0(?:\/|$)/);
+    [90m   |[39m                           [31m^[39m
+    [90m 62|[39m         const positions = page.geometry.getAttribute('position');
+    [90m 63|[39m         // A full reclining body spans well beyond the torso-only blas…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[90m (6)[39m
+[2m   Start at [22m 22:12:09
+[2m   Duration [22m 7.63s[2m (transform 61%, tests 27%, import 12%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 34s, remote total 12s)

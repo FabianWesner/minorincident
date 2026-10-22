@@ -1,0 +1,28 @@
+{
+  "runtimeCommit": "5893caa68",
+  "fullRemoteSnapshotCommit": "5e665de8e",
+  "finalTreesMatchRemoteSnapshot": {
+    "src": "e7466273955083215614978e4dd28c25f3a682a1",
+    "tests": "9e29a6cdd9fddf0d3b0d82d6c67c0148547be5f2",
+    "tools": "5b56db9e5e2122ac87c70b1f758350df49055c44",
+    "assets": "93f90491ec57f91c5f78f366bb448bc18cd6fc01",
+    "public": "56db463d9d49efb7dae7f5c26b708cb9a9508ae6"
+  },
+  "remoteCommand": "sh tools/remote/run.sh $PWD -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+  "remoteJob": "fixes-13h-l10-170603-80671-1792648183",
+  "remoteExit": 0,
+  "remoteTestsPassed": 2336,
+  "remoteTestsSkipped": 11,
+  "remoteFilesPassed": 427,
+  "remoteFilesSkipped": 3,
+  "typecheck": "passed",
+  "lint": "passed",
+  "focusedTestsPassed": 71,
+  "entryGuardsPassed": 4,
+  "realAssaultComparisonsPassed": 8,
+  "smokeCommand": "npx playwright test --grep @smoke --workers=1",
+  "smokePassed": 31,
+  "reportCaptures": 5,
+  "allCheckProcessesJoined": true,
+  "baselineWorktreeRemoved": true
+}
