@@ -1,5 +1,5 @@
 import type { Node } from 'three/webgpu';
-import { Fn, cos, float, mix, positionWorld, sin, vec2 } from 'three/tsl';
+import { Fn, If, cos, float, max, mix, positionWorld, sin, vec2 } from 'three/tsl';
 import type { PaletteToken } from '../data/palette';
 import type { LookUniforms } from './LookUniforms';
 
@@ -8,6 +8,31 @@ const hash = Fn(([p]: [Node<'vec2'>]) => sin(p.dot(vec2(127.1, 311.7))).mul(4375
 export const noise = Fn(([p]: [Node<'vec2'>]) => {
   const cell = p.floor(), f = p.fract(), t = f.mul(f).mul(float(3).sub(f.mul(2)));
   return mix(mix(hash(cell), hash(cell.add(vec2(1, 0))), t.x), mix(hash(cell.add(vec2(0, 1))), hash(cell.add(vec2(1, 1))), t.x), t.y);
+});
+/** Night presets disable cloud shadows. Keep their three sine evaluations out
+ * of that draw while retaining the exact authored field when enabled. */
+export const cloudShadowMask = Fn(({ strength, point }: { strength: Node<'float'>; point: Node<'vec2'> }) => {
+  const cloud = float(0).toVar();
+  If(strength.greaterThan(0), () => {
+    const field = point.x.add(point.y.mul(.7).sin().mul(1.3)).sin().mul(point.y.mul(.9).add(point.x.mul(.6).add(1.7).sin().mul(1.1)).sin());
+    cloud.assign(field.smoothstep(0, .55).mul(strength));
+  });
+  return cloud;
+});
+/** Zero coverage is the common world/crowd case. Avoid computing three smooth
+ * derivative-based splats that would then be multiplied by zero. */
+export const bloodSplatMask = Fn(({ coverage, point }: { coverage: Node<'float'>; point: Node<'vec2'> }) => {
+  const blood = float(0).toVar();
+  If(coverage.greaterThan(0), () => {
+    const radius = coverage.clamp(0, 1).sqrt().mul(.09).add(.02);
+    const splat = (y: number, z: number, size: number) => {
+      const distance = point.sub(vec2(y, z)).mul(vec2(1, 1.3)).length();
+      const edge = distance.fwidth().mul(1.5).max(.006);
+      return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
+    };
+    blood.assign(max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)));
+  });
+  return blood;
 });
 export function surfaceDetail(token: PaletteToken, base: Node<'vec3'>, look: LookUniforms['nodes']): Node<'vec3'> {
   const p = positionWorld.xz;

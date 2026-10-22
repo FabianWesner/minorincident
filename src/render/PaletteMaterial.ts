@@ -4,7 +4,7 @@ import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type 
 import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
-import { noise, surfaceDetail } from './SurfaceDetail';
+import { bloodSplatMask, cloudShadowMask, noise, surfaceDetail } from './SurfaceDetail';
 import { seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
@@ -60,20 +60,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Atmosphere 2: drifting cloud shadows on day levels (look.cloudShadow, 0 at night) join the sun shadow term,
       // so cloud patches take the authored shadow tint. Two crossed sines: ALU only, no texture fetch.
       const look = lighting.look.nodes, cloudUv = positionWorld.xz.div(look.cloudScale).mul(6.283).add(vec2(lighting.clock.mul(look.cloudSpeed).mul(.3), lighting.clock.mul(look.cloudSpeed).mul(.18)));
-      const cloudField = cloudUv.x.add(cloudUv.y.mul(.7).sin().mul(1.3)).sin().mul(cloudUv.y.mul(.9).add(cloudUv.x.mul(.6).add(1.7).sin().mul(1.1)).sin());
-      const cloud = cloudField.smoothstep(0, .55).mul(look.cloudShadow);
+      const cloud = cloudShadowMask({ strength: look.cloudShadow, point: cloudUv });
       const shadow = max(max(core, caughtShadow.oneMinus()), cloud).clamp(0, 1).mul(lighting.look.nodes.shadowIntensity);
       const bounce = normalWorld.y.negate().smoothstep(-.2, 1).mul(positionWorld.y.max(0).div(2).oneMinus().max(0).pow(2)).mul(lighting.look.nodes.bounceStrength);
       // A few soft-edged splats in part-local space follow the animated surface.
       // A fragment hash here turned even one kill into pixel noise on skin/hair.
-      const radius = this.bloodCoverage.clamp(0, 1).sqrt().mul(.09).add(.02);
-      const splat = (y: number, z: number, size: number) => {
-        const distance = positionGeometry.yz.sub(vec2(y, z)).mul(vec2(1, 1.3)).length();
-        // Keep the edge at least one pixel wide as the figure turns or zooms.
-        const edge = distance.fwidth().mul(1.5).max(.006);
-        return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
-      };
-      const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
+      const blood = bloodSplatMask({ coverage: this.bloodCoverage, point: positionGeometry.yz });
       // Build only the active surface sections; continuous strengths remain uniforms.
       const snow = float(0).toVar(), weatherBase = base.toVar(), puddle = float(0).toVar();
       if (mode & flags.accumulation) If(weatherSurface.accumulation.greaterThan(0), () => {
