@@ -1,0 +1,260 @@
+{
+ "name": "ped-hats-glasses",
+ "note": "PO 10-22 #108/#115: hats and glasses on all five civilian models (sun hat, bucket hat, cap rows); glasses and eyes must stay under the brim on the face, hats anchored to the head at head scale.",
+ "ground": "sidewalk",
+ "size": 20,
+ "actors": [
+  {
+   "id": "p00",
+   "kind": "pedestrian",
+   "at": [
+    -3.0,
+    -1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "accessories": [
+     "acc.hat-sun-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p01",
+   "kind": "pedestrian",
+   "at": [
+    -1.5,
+    -1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "accessories": [
+     "acc.hat-sun-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p02",
+   "kind": "pedestrian",
+   "at": [
+    0.0,
+    -1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "accessories": [
+     "acc.hat-sun-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p03",
+   "kind": "pedestrian",
+   "at": [
+    1.5,
+    -1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "accessories": [
+     "acc.hat-sun-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p04",
+   "kind": "pedestrian",
+   "at": [
+    3.0,
+    -1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "accessories": [
+     "acc.hat-sun-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p10",
+   "kind": "pedestrian",
+   "at": [
+    -3.0,
+    0.0
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "accessories": [
+     "acc.hat-bucket-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p11",
+   "kind": "pedestrian",
+   "at": [
+    -1.5,
+    0.0
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "accessories": [
+     "acc.hat-bucket-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p12",
+   "kind": "pedestrian",
+   "at": [
+    0.0,
+    0.0
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "accessories": [
+     "acc.hat-bucket-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p13",
+   "kind": "pedestrian",
+   "at": [
+    1.5,
+    0.0
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "accessories": [
+     "acc.hat-bucket-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p14",
+   "kind": "pedestrian",
+   "at": [
+    3.0,
+    0.0
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "accessories": [
+     "acc.hat-bucket-hat"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p20",
+   "kind": "pedestrian",
+   "at": [
+    -3.0,
+    1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "accessories": [
+     "acc.hat-baseball-cap"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p21",
+   "kind": "pedestrian",
+   "at": [
+    -1.5,
+    1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "accessories": [
+     "acc.hat-baseball-cap"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p22",
+   "kind": "pedestrian",
+   "at": [
+    0.0,
+    1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "accessories": [
+     "acc.hat-baseball-cap"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p23",
+   "kind": "pedestrian",
+   "at": [
+    1.5,
+    1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "accessories": [
+     "acc.hat-baseball-cap"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "p24",
+   "kind": "pedestrian",
+   "at": [
+    3.0,
+    1.5
+   ],
+   "yaw": 20,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "accessories": [
+     "acc.hat-baseball-cap"
+    ]
+   },
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 0.5
+ },
+ "frames": 60,
+ "shots": [
+  30
+ ]
+}

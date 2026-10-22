@@ -1,0 +1,16 @@
+{
+ "name": "ped-hats-glasses-close",
+ "note": "PO 10-22 #108 close-up: the two spectacled civilians (woman-b, elderly) in a sun hat and a bucket hat, facing the camera. The frames must sit on the face below the brim, never on or through the hat.",
+ "ground": "sidewalk",
+ "size": 12,
+ "actors": [
+  { "id": "wb-sun", "kind": "pedestrian", "at": [-0.8, -0.6], "yaw": 90, "look": { "model": "npc.civilian-woman-b", "tint": "#6d5aa8", "accessories": ["acc.hat-sun-hat"] }, "state": "idle" },
+  { "id": "wb-bucket", "kind": "pedestrian", "at": [0.8, -0.6], "yaw": 90, "look": { "model": "npc.civilian-woman-b", "tint": "#6d5aa8", "accessories": ["acc.hat-bucket-hat"] }, "state": "idle" },
+  { "id": "el-sun", "kind": "pedestrian", "at": [-0.8, 0.8], "yaw": 90, "look": { "model": "npc.civilian-elderly", "tint": "#2f4858", "accessories": ["acc.hat-sun-hat"] }, "state": "idle" },
+  { "id": "el-cap", "kind": "pedestrian", "at": [0.8, 0.8], "yaw": 90, "look": { "model": "npc.civilian-elderly", "tint": "#2f4858", "accessories": ["acc.hat-baseball-cap"] }, "state": "idle" }
+ ],
+ "camera": { "mode": "close", "target": [0, 1.5, 0.1], "radius": 4.2, "azimuth": 90 },
+ "frames": 40,
+ "shots": [30],
+ "expect": { "consoleErrors": 0 }
+}

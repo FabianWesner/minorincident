@@ -24,6 +24,27 @@ export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: V
   for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === -1) bounds.expandByPoint(point.fromBufferAttribute(position, i));
   return bounds.isEmpty() ? null : { size: bounds.getSize(new Vector3()), centre: bounds.getCenter(new Vector3()) };
 }
+/** Head-local height of a spectacle frame: near-black neutral, untagged head vertices in front of the skull centre
+ * that reach the temples (eyes, brows and mouths stay inside the face). null without glasses. */
+export function glassesTop(geometry: BufferGeometry): number | null {
+  const skull = bakedSkull(geometry); if (!skull) return null;
+  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), color = geometry.getAttribute('color');
+  if (!color) return null;
+  const head = characterNodes.indexOf('head'), temple = skull.size.z / 2 * .75;
+  let top = -Infinity, temples = false;
+  for (let i = 0; i < parts.count; i++) {
+    if (parts.getX(i) !== head || parts.getY(i) !== 0 || parts.getW(i) % 128 >= 4 || position.getX(i) <= skull.centre.x) continue;
+    const r = color.getX(i), g = color.getY(i), b = color.getZ(i), max = Math.max(r, g, b);
+    if (max >= .05 || max - Math.min(r, g, b) >= .02) continue;
+    top = Math.max(top, position.getY(i)); if (Math.abs(position.getZ(i) - skull.centre.z) > temple) temples = true;
+  }
+  return temples ? top : null;
+}
+/** Authored head-local frame tops of the spectacled civilian bases (measured from the shipped LOD0 bakes; pinned
+ * against the GLBs by tests/unit/render/crowd-hat-glasses.test.ts). Runtime bakes recolour the frames, so this is data. */
+export const spectacleTops: Readonly<Record<string, number>> = { 'npc.civilian-woman-b': .2204, 'npc.civilian-elderly': .2088 };
+/** Gap between the frame top and the hat's lowest point (metres, head-local). */
+export const glassesClearance = .012;
 function authoredFit(fit: Fit, out: Matrix4): Matrix4 {
   return out.makeScale(...fit.scale as [number, number, number]).setPosition(...fit.offset as [number, number, number]);
 }
@@ -150,6 +171,11 @@ export class CrowdAccessories extends Group {
   }
   infectedDrawCalls(): number { return this.infectedBatches.size; }
   private fit(id: string, model: string): void {
+    this.authoredOrRetargeted(id, model);
+    const lift = this.glassesLift(id, model);
+    if (lift) this.fitTransform.premultiply(this.liftMatrix.makeTranslation(0, lift, 0));
+  }
+  private authoredOrRetargeted(id: string, model: string): void {
     const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
     if (authored) { authoredFit(authored, this.fitTransform); return; }
     const skull = this.fits.get(model);
@@ -158,6 +184,21 @@ export class CrowdAccessories extends Group {
     const reference = definitions.get(id)?.fits?.[referenceBase];
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
   }
+  /** PO 10-22 #108 "Glasses are on the hat": hats were fitted to the bare skull, so a brim sat below the frames of
+   * a spectacled head (civilian-woman-b, elderly) and the temples poked out through the crown. Seat such a hat with
+   * its lowest point just above the frames, the way people wear a hat over glasses. Cached per hat/model. */
+  private glassesLift(id: string, model: string): number {
+    const top = spectacleTops[model.replace(/\.aftermath$/, '')]; if (top === undefined || definitions.get(id)?.slot !== 'hat') return 0;
+    const key = `${id}/${model}`, cached = this.lifts.get(key); if (cached !== undefined) return cached;
+    // One lift for both LOD pieces, so a LOD change never moves the hat.
+    const meshes = [this.batches.get(`${id}:lod0`), this.batches.get(`${id}:lod1`)].filter(mesh => !!mesh); if (!meshes.length) return 0;
+    const point = new Vector3();
+    let bottom = Infinity;
+    for (const mesh of meshes) { const position = mesh.geometry.getAttribute('position'); for (let i = 0; i < position.count; i++) bottom = Math.min(bottom, point.fromBufferAttribute(position, i).applyMatrix4(this.fitTransform).y); }
+    const lift = Math.max(0, top + glassesClearance - bottom); this.lifts.set(key, lift); return lift;
+  }
+  private readonly lifts = new Map<string, number>();
+  private readonly liftMatrix = new Matrix4();
   private readonly referenceFit = new Matrix4();
   private headPiece(id: string, model: string, head: number, slot = 0): BufferGeometry {
     this.fit(id, model);

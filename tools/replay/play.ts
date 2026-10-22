@@ -19,7 +19,7 @@ import { encodeWebm, thumbnail } from '../scenelab/session';
  * one second before each death) and a WebM of a window of play, for QA agents. Wrap in `sh tools/e2e-lock.sh` (the npm script does).
  */
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
-  video: { type: 'string' }, shots: { type: 'string' }, fps: { type: 'string', default: '12' }, from: { type: 'string', default: '0' }, seconds: { type: 'string', default: '12' },
+  video: { type: 'string' }, shots: { type: 'string' }, ticks: { type: 'string' }, backend: { type: 'string', default: 'webgl2' }, fps: { type: 'string', default: '12' }, from: { type: 'string', default: '0' }, seconds: { type: 'string', default: '12' },
   save: { type: 'string' }, out: { type: 'string' }, summary: { type: 'string' }, base: { type: 'string', default: defaultBase },
 } });
 const source = positionals[0];
@@ -41,7 +41,8 @@ console.error(`replay ${bundle.id}: level ${meta.level}, seed ${meta.seed}, ${lo
 // --- server and browser ---
 const port = Number(process.env.REPLAY_PORT ?? 3342);
 if (port === 3300) throw new Error('Replay must not use the shared dev-server port 3300');
-const origin = `http://127.0.0.1:${port}`;
+/** REPLAY_ORIGIN: replay against a deployed build (e.g. a PROD snapshot) instead of a private server. */
+const origin = process.env.REPLAY_ORIGIN ?? `http://127.0.0.1:${port}`;
 let server: ChildProcess | null = null;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 if (!(await up())) {
@@ -50,13 +51,13 @@ if (!(await up())) {
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
   if (!(await up())) { server.kill(); throw new Error(`replay server did not start on ${port}`); }
 }
-const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+const args = values.backend === 'webgpu' ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 const browser = await chromium.launch({ headless: true, args });
 const files: string[] = [];
 let code = 0;
 try {
   const quality = meta.qualityParam === 'high' || meta.qualityParam === 'low' ? meta.qualityParam : meta.quality === 'low' ? 'low' : 'high';
-  const url = `${origin}/?test=1&renderer=webgl&dpr=1&audio=muted&quality=${quality}&seed=${meta.seed ?? 1}`;
+  const url = `${origin}/?test=1${values.backend === 'webgpu' ? '' : '&renderer=webgl'}&dpr=1&audio=muted&quality=${quality}&seed=${meta.seed ?? 1}`;
   const errors: string[] = [];
   /** One fresh page, level loaded, ready to feed samples. */
   const open = async () => {
@@ -79,11 +80,13 @@ try {
   const biasToSample = summary.samples - summary.ticks;
 
   // Pass 2: screenshots and video.
-  const nShots = Number(values.shots ?? 0), wantVideo = !!values.video;
+  const tickShots = (values.ticks ?? '').split(',').filter(Boolean).map(Number);
+  const nShots = Number(values.shots ?? 0) + tickShots.length, wantVideo = !!values.video;
   if (nShots > 0 || wantVideo) {
     page = await open();
     const targets: { sample: number; label: string }[] = [];
-    for (let i = 1; i <= nShots; i++) targets.push({ sample: Math.round(log.samples * i / (nShots + 1)), label: `p${i}` });
+    for (const t of tickShots) targets.push({ sample: t + biasToSample, label: `tick${t}` });
+    for (let i = 1; i <= nShots - tickShots.length; i++) targets.push({ sample: Math.round(log.samples * i / (nShots + 1)), label: `p${i}` });
     summary.deaths.slice(0, 6).forEach((d, i) => targets.push({ sample: Math.max(0, d.tick + biasToSample - 60), label: `death${i + 1}` }));
     summary.objectives.slice(0, 8).forEach(o => nShots > 0 && targets.push({ sample: o.completedTick + biasToSample, label: `done-${o.id}` }));
     targets.sort((a, b) => a.sample - b.sample);
@@ -96,6 +99,9 @@ try {
       let png = await page.screenshot({ type: 'png' });
       if (width > 1600) png = thumbnail(png, 1600);
       const file = `${out}/shot-t${String(tick).padStart(5, '0')}-${label}.png`; writeFileSync(file, png); files.push(file);
+      // QA: the entities around the courier in this frame (model, LOD, accessory) to name what a capture shows.
+      const near = await page.evaluate(() => { const p = window.__SS__!.getEntity(1)?.transform; return !p ? [] : window.__SS__!.query({ within: { x: p.x, z: p.z, r: 8 } }).filter(e => e.id !== 1).map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, civilian: e.civilian, appearance: e.appearance, infected: e.infected })); }).catch(() => []);
+      writeFileSync(file.replace(/\.png$/, '.figures.json'), JSON.stringify(near, null, 1));
     };
     let cursor = 0;
     while (cursor < log.samples && (pending.length || (wantVideo && cursor < videoTo))) {
