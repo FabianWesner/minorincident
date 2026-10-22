@@ -1,37 +1,27 @@
 # QA invariant sweep evidence
 
-Status: implementation in progress. The required `lane/batch13i` baseline has not yet been checked out. This worktree currently points to `0a548ca87` (`lane/qa-invariants`, regression-gate docs commit), so results below are diagnostic observations on that tree and must not be reported as batch13i or 13g evidence.
+Implementation in progress. Game code and existing tests are unchanged. This lane now has `lane/batch13i` (`ba436b90a`) as an ancestor; the original regression-gate docs and the first implementation checkpoint were rebased onto it once the environment permitted Git writes. Checkpoint: `ed209cddf`.
 
-## First diagnostic sweep
+## Receipts
 
-Command: `npx vitest run tests/qa/invariants/contract.test.ts --maxWorkers=1 --configLoader runner` (7 checks, seed 1). Elapsed: 31 seconds in the first run; 46 seconds in the subsequent full sim run.
+- `npm run qa:invariants:sim:remote` ran on runner `94.130.181.173`, immutable job `qa-invariants-38c23b-99380-1792695735`. The checkpoint suite finished in **227.36 s** (remote setup plus execution **241 s**, initial sync **102 s**). 13 tests passed, 2 failed.
+- That checkpoint's **vehicle red** was real: the L4 tank path intersects `prop.privacy-fence:44`, `prop.privacy-fence:45`, and `l4-perimeter-1`, including the final stop pose. This catches P1-116 on batch13i game code.
+- Its **three ground-center failures were not valid PO evidence**: lower slabs overlapped higher exposed paving/supports. The replacement compares the exposed top and additionally samples both authored S-ramps across their width using `highwayPoint`, following `lane/l3-road-gap`'s regression test without changing game code. The new probe reports 290 L3 deck/phantom-support violations on batch13i (P1-113/113b class), including `kit.highway-onramp:991`, `t=0.35`, lateral offset `1.1`, support `5.27 m`, drawn `5.07 m`.
+- `npm run qa:invariants:proof` executes one deliberately broken fixture per subprocess. All **8 subprocesses exited 1 at their invariant assertion**; the proof driver exited 0. JSON receipt: `test-results/qa-invariants/broken-fixtures.json`. The normal fixture suite also checks the good twins and budget boundaries.
+- The expanded accessory probe checks actual head instance matrices and inline merged geometry against source GLB bounds and authored fits: 1,296 model/LOD/tier combinations, 972 accessory-eligible combinations. Native civilian glasses are in the character GLB, so their head-relative face bounds are checked separately. The appearance tiers are frail/average/athletic; render quality paths are covered by the single Scene Lab spec.
+- `npm run build` passed after moving onto batch13i (8.23 s). Typecheck/lint and the expanded remote/render sweeps are being rerun.
 
-| Check | Evidence from current tree | PO mapping / disposition |
+## Coverage and remaining work
+
+| Check | Current coverage | Remaining receipt / work |
 |---|---|---|
-| Accessories | Passed asset manifest head attachment and per-rig fit bounds. | P1-108/P1-115; broken metadata assertion exists, deliberate red execution still to be recorded. |
-| Seated NPCs | Failed for L2 active sitters 127–130: a bench was found, but the oracle initially compared each sitter to the bench center. The authored seats spread along the bench; the oracle was changed to check the support footprint and authored height. | P1-112; corrected oracle needs rerun before interpreting this as a game bug. |
-| Scripted actors | Passed depot clerk existence for the entire pickup beat in the current tree. | P1-109; deliberate missing-actor fixture still to be recorded. |
-| Vehicles vs solids | Failed at `tank-route-2-0.00` against a registered solid; perimeter wall solids have now been added to the swept route check. | P1-116; exact overlap and rerun evidence pending. |
-| Waves | Initial check found no wave because it started at the convoy phase. It now enters the authored L4 alarm beat directly; that run produced >1 live infected reaching the hold area. A precise alarm count assertion has been added. | P1-118/P1-119; exact authored-count rerun pending. |
-| Objective visibility | All mission-step anchors resolved across L1–L10. | P1-114; this state-level anchor check is not yet proof of 2-second marker visibility or camera/story-shot visibility. |
-| Ground | Found three >20 cm center-height mismatches: D-CIVIC fire station (`0.53` vs `0.30`), D-GROVE fire station (`0.53` vs `0.30`), and D-SUBWAY `l6-0/fixed-33` (`0.55` vs `0.18`). | P1-113/113b class; route-specific L3 ramp evidence and false-positive review pending. |
-| Load time | Headless Playwright spec did not reach Playwright. `tools/perf/quiet-run.sh` remained in its Mac GPU guard; its `ps`/`pgrep` process sampling is denied by this sandbox (`Operation not permitted`). Ctrl-C cleanup hit the same denial while enumerating child processes. | P1-107; Mac/WebGPU low + PROD baseline receipt pending. |
+| 1 Accessory anchors | Source GLB head frames, authored fit scales, native glasses, instance and inline geometry, every crowd model × LOD × appearance tier | Expanded final run and Scene Lab draw receipt |
+| 2 Seated NPCs | Active seat schedules sampled each sim second across L1–L10, seed 1 and campaign presets; live prop support and sitting height | Check missing rendered bench case, not only sim props |
+| 3 Scripted actors | L1 clerk until walk-off, lab technician handover/return; actual cast submission in Scene Lab | Other authored scene lifecycles; technician hidden frames need scene-boundary review |
+| 4 Vehicles | SAT OBB against solids; L4 tank and five-vehicle convoy route/stop; L2 truck; L7 bus; bike dismount samples plus fence-crossing check | Expanded result and remaining APC routes |
+| 5 Waves | L4 alarm count, emitted wave counts, a reachability probe | Replace count-event-only evidence with admitted IDs reaching goals; extend authored wave inventory |
+| 6 Objectives | Every step L1–L10 through actual activation/onStart, objective text, ObjectiveMarker update, L3 pull-back deadline | Final expanded receipt; L3 camera suppression is now caught |
+| 7 Ground | All levels' exposed walkable support/paving routes; authored L3 ramp cross-sections and outside-rail samples | Final expanded receipt and joint-wedge samples |
+| 8 Load time | One browser, built dist vs PROD, every level menu click through Begin to first drawn gameplay frame, WebGPU low; separate per-level receipts | Mac run is live under quiet-run; previous sandbox restrictions are resolved |
 
-## Baseline receipts
-
-| Baseline | Result |
-|---|---|
-| batch13i (`ba436b90a`) | Not run. A checkout attempt failed because the shared git worktree metadata is outside this workspace's writable roots (`.git/worktrees/qa-invariants/index.lock`: `Operation not permitted`). |
-| 13g | Not run. |
-
-The remote receipt is also pending: `npm run qa:invariants:sim:remote` reached `tools/remote/pool.py`, but DNS/network resolution failed (`nodename nor servname provided`), so the runner selector returned `no runner available` before syncing or starting a remote job.
-
-## Latest sim evidence
-
-Command: `npm run qa:invariants:sim` (two Vitest files). Latest duration: 60.7 seconds. Thirteen tests passed and two checks were red. Seat poses were sampled every sim second across L1–L10 (seed 1, campaign-ready state). `npm run typecheck` passed after the final sim edits.
-
-- **P1-116 vehicle red:** OBB sweep identifies the tank route intersecting `prop.privacy-fence:44`, `prop.privacy-fence:45`, and `l4-perimeter-1`; this matches the PO's tank-through-barrier route. Horizontal and vertical extents are tested. Parked-vehicle poses use authored physics boxes and omit their own collider.
-- **Ground red:** raised walkable support mismatches: D-CIVIC fire station (`0.53` vs `0.30`), D-GROVE fire station (`0.53` vs `0.30`), and D-SUBWAY `l6-0/fixed-33` (`0.55` vs `0.18`). The L3 raised-road gap itself still needs a route-sample receipt.
-- **Green:** accessory metadata; active sit poses across all ten levels; L1 clerk persistence until the return-to-door exit; L4 alarm count matches the authored 18 high-tier arrivals, each emitted L4 wave count matches authored scaling, and infected reach the hold area; each mission step's marker activation resolves in its start tick across L1–L10; and all eight deliberately broken fixtures are caught.
-
-The sim contract checks run well under the 15-minute ceiling locally, but the required remote run failed before dispatch because DNS could not resolve the runner service. The rendering check is blocked before browser launch by sandbox-denied process enumeration inside `quiet-run.sh`. L3 route-specific ground evidence, batch13i/13g receipts, bus/APC and dismount vehicle routes, and commits remain pending. Git writes are blocked because `.git/worktrees/qa-invariants` is outside the writable roots; no commit was made.
+`npm run qa:invariants` collects both sim and render failures; a red sim no longer skips the Mac measurements. No 13g receipt has been gathered yet. No deploy or merge into another lane was performed.

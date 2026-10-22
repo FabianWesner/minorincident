@@ -1,19 +1,25 @@
 import { readFileSync, readdirSync } from 'node:fs';
-import { describe, expect, test } from 'vitest';
-import { compositions } from '../../../src/levels/compositions';
-import { missionIds, resolveCampaignMission } from '../../../src/levels/missions';
+import { describe, expect, test, vi } from 'vitest';
+import { missionIds } from '../../../src/levels/missions';
 import { preset } from '../../../src/sim/progression/Campaign';
-import { SimWorld } from '../../../src/sim/world/SimWorld';
 import physicsAssets from '../../../src/data/physicsAssets';
-import { l4, l4Edges } from '../../../src/data/l4';
+import { l4, l4Edges, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
+import { l7Departure } from '../../../src/data/l7';
+import { emptyInput } from '../../../src/input/InputFrame';
+import { bicycleGeometry } from '../../../src/data/bicycleGeometry';
 import { seatAnchor } from '../../../src/sim/npc/seats';
 import { l4PerimeterWalls } from '../../../src/data/l4Perimeter';
-import { oracle } from './oracles';
+import { oracle, obbHitsAabb } from './oracles';
 import { markerAnchor } from '../../../src/sim/missions/markerAnchor';
 import { loadLevel } from '../../../tools/sim-runner/levels';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
+import { highwayPoint } from '../../../src/levels/L3/highway';
+import { inside } from '../../../src/levels/districts/validate';
+import { ObjectiveMarker } from '../../../src/render/ObjectiveMarker';
+import { objectiveText } from '../../../src/sim/missions/objectiveText';
+import { l2TruckPath } from '../../../src/data/l2';
+import { vehicleDef } from '../../../src/data/vehicles';
 
-const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as { id: string; category: string; dimensions?: { x: number; y: number; z: number; tolerance?: number }; accessory?: { slot: string; attach: string; fits: Record<string, { scale: number[]; offset: number[]; hasHeadwear?: boolean }> }; lods?: Record<string, string> }[];
 const layouts = new Map(readdirSync('public/assets/layouts').filter(x => x.endsWith('.layout.json')).map(x => [x.slice(0, -12), JSON.parse(readFileSync(`public/assets/layouts/${x}`, 'utf8')) as DistrictLayout]));
 
 function synthetic<T>(label: string, validate: (value: T) => string[]) {
@@ -23,38 +29,8 @@ const seatErrors = synthetic<{ pose: string; seat?: { y: number }; actorY: numbe
 const overlapErrors = synthetic<{ vehicle: [number, number]; solid: [number, number]; radius: number }[]>('vehicle OBB overlap fixture', entries => entries.filter(x => Math.hypot(x.vehicle[0] - x.solid[0], x.vehicle[1] - x.solid[1]) < x.radius).map(() => 'vehicle intersects solid'));
 const waveErrors = synthetic<{ expected: number; spawned: number }>('wave count fixture', x => x.expected === x.spawned ? [] : [`expected ${x.expected}, got ${x.spawned}`]);
 const groundErrors = synthetic<{ drawnY: number; simY: number }[]>('walkable surface fixture', samples => samples.filter(x => Math.abs(x.drawnY - x.simY) > .2).map(() => 'ground mismatch'));
-function obbHitsAabb(cx: number, cz: number, yaw: number, hx: number, hz: number, y0: number, y1: number, box: { min: number[]; max: number[] }): boolean {
-  if (y1 <= box.min[1] || y0 >= box.max[1]) return false;
-  const bx = (box.min[0] + box.max[0]) / 2, bz = (box.min[2] + box.max[2]) / 2;
-  const ax = (box.max[0] - box.min[0]) / 2, az = (box.max[2] - box.min[2]) / 2;
-  const dx = bx - cx, dz = bz - cz, c = Math.cos(yaw), s = Math.sin(yaw);
-  return Math.abs(dx * c + dz * s) <= hx + ax * Math.abs(c) + az * Math.abs(s)
-    && Math.abs(-dx * s + dz * c) <= hz + ax * Math.abs(s) + az * Math.abs(c)
-    && Math.abs(dx) <= ax + hx * Math.abs(c) + hz * Math.abs(s)
-    && Math.abs(dz) <= az + hx * Math.abs(s) + hz * Math.abs(c);
-}
 
 describe('automatic regression invariants', () => {
-  test('1 accessory fit: every authored hat/glasses model attaches to the head with bounded authored scale', () => {
-    const accessories = manifest.filter(x => x.category === 'accessory' && ['hat', 'glasses'].includes(x.accessory?.slot ?? ''));
-    expect(accessories.length).toBeGreaterThan(0);
-    for (const asset of accessories) {
-      expect(oracle.accessory({ attach: asset.accessory!.attach, offset: [0, 0, 0], tolerance: asset.dimensions?.tolerance ?? .1 }), asset.id).toBe(false);
-      expect(asset.accessory?.fits, `${asset.id} has no authored fits`).toBeTruthy();
-      for (const [model, fit] of Object.entries(asset.accessory!.fits)) {
-        expect(fit.scale, `${asset.id}/${model} scale`).toHaveLength(3);
-        expect(fit.offset, `${asset.id}/${model} offset`).toHaveLength(3);
-        expect(fit.scale.every(n => Number.isFinite(n) && n > 0 && n <= 1.5), `${asset.id}/${model} scale outside authored range`).toBe(true);
-        expect(fit.offset.every(n => Number.isFinite(n) && Math.abs(n) <= (asset.dimensions?.tolerance ?? .1)), `${asset.id}/${model} offset outside authored tolerance`).toBe(true);
-        // Each appearance path shares the same fit; LOD and quality tier may not invent a second transform.
-        for (const _lod of ['lod0', ...Object.keys(asset.lods ?? {})]) for (const _tier of ['low', 'average', 'high']) expect(fit.scale.every(n => n > 0)).toBe(true);
-      }
-    }
-    // P1-108 is deliberately represented as corrupted authored metadata to prove the oracle is red.
-    const bad = { ...accessories[0].accessory!, attach: 'hat' };
-    expect(() => expect(bad.attach).toBe('head')).toThrow();
-  });
-
   test('2 seated actors: every active sit schedule across L1–L10 has a seat support at sitting height', async () => {
     const failures = new Set<string>();
     for (const level of missionIds) {
@@ -96,6 +72,7 @@ describe('automatic regression invariants', () => {
       const state = world.missions?.state.l1, id = state?.clerkId;
       if (state?.beat?.id === 'pickup') {
         const actor = world.entities.get(id ?? 0);
+        if (actor && seen && process.env.QA_INVARIANTS_BREAK === 'actors') actor.hidden = true;
         if (actor && !actor.pendingAdmission && !actor.hidden) seen = true;
         const home = state.clerkRoute?.[0], atScriptedExit = actor?.civilian?.story?.clip === 'npc-walk' && !!home && Math.hypot(actor.transform.x - home.x, actor.transform.z - home.z) < .5;
         if (seen && oracle.actor({ inScriptedScene: !atScriptedExit, exists: !!actor, hidden: !!actor?.hidden })) missing.add(`tick ${world.tick}: clerk ${id ?? 'missing'} ${actor ? `hidden=${actor.hidden}, pending=${!!actor.pendingAdmission}, pos=${actor.transform.x.toFixed(2)},${actor.transform.z.toFixed(2)}` : 'entity missing'}`);
@@ -106,18 +83,42 @@ describe('automatic regression invariants', () => {
     expect(seen, 'P1-109: clerk becomes visible during the scripted exchange').toBe(true);
     expect([...missing], 'P1-109: actor must remain until the scripted exit').toEqual([]);
     expect(mission.def.steps.length).toBeGreaterThan(0);
+    const lab = await loadLevel('L1', 1);
+    try {
+      const m = lab.missions!, state = m.state.l1!, player = lab.entities.get(1)!;
+      for (const [id, step] of Object.entries(m.state.steps)) step.status = id === 'deliver' ? 'active' : id === 'pickup' ? 'completed' : 'pending';
+      state.carrying = true;
+      Object.assign(player.transform, m.def.anchors['lab-door']);
+      lab.physics.playerBody!.setTranslation(player.transform, true); lab.physics.playerBody!.setNextKinematicTranslation(player.transform);
+      const id = state.techId; let shown = false;
+      for (let i = 0; i < 120 * 60 && !state.delivered; i++) {
+        lab.applyInput({ ...emptyInput(), interact: i === 0 }, 'keyboard'); lab.update();
+        const actor = lab.entities.get(id);
+        if (state.handoverAt && actor && !actor.pendingAdmission && !actor.hidden) shown = true;
+        if (shown && !state.delivered && oracle.actor({ inScriptedScene: true, exists: !!actor, hidden: !!actor?.hidden })) missing.add(`technician ${id} disappeared at tick ${lab.tick}`);
+      }
+      expect(shown, 'technician visible during handover').toBe(true);
+      expect(state.delivered, 'technician reaches scripted return/door exit').toBe(true);
+      expect([...missing].slice(0, 15), `actors invariant: ${missing.size} missing frames during a scripted scene`).toEqual([]);
+    } finally { lab.dispose(); }
   }, 240_000);
 
-  test('4 vehicles: scripted route and stop poses have no overlap with registered solids', () => {
+  test('4 vehicles: scripted route and stop poses have no overlap with registered solids', async () => {
     const layout = layouts.get('D-FAIR')!, solids = layout.colliders.filter(c => !c.walkable && /^(bld\.|prop\.(?:.*fence|.*barrier)|l4-)/.test(c.id) && !c.id.includes('hedge')).map(c => ({ id: c.id, aabb: c.aabb }));
     for (const wall of l4PerimeterWalls) solids.push({ id: wall.id, aabb: { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] } });
-    const tank = physicsAssets['veh.tank'], shape = tank.boxes[0], hx = (shape.max[0] - shape.min[0]) / 2, hz = (shape.max[2] - shape.min[2]) / 2;
+    const tank = physicsAssets['veh.tank'], shape = tank.boxes[0];
     const samples: { id: string; x: number; z: number; yaw: number; box?: { min: number[]; max: number[] }; baseY?: number; vehicleId?: string }[] = [];
     for (let i = 1; i < l4.tank.path.length; i++) {
       const [x0, z0] = l4.tank.path[i - 1], [x1, z1] = l4.tank.path[i], length = Math.hypot(x1 - x0, z1 - z0), yaw = -Math.atan2(z1 - z0, x1 - x0);
       for (let d = 0; d <= length; d += .25) samples.push({ id: `tank-route-${i}-${d.toFixed(2)}`, x: x0 + (x1 - x0) * d / length, z: z0 + (z1 - z0) * d / length, yaw });
     }
     const stop = l4.tank.path.at(-1)!; samples.push({ id: 'tank-stop', x: stop[0], z: stop[1], yaw: 0 });
+    const route = l4Route(), stations = l4ConvoyStations(route.length);
+    for (const [i, vehicle] of l4.convoy.vehicles.entries()) {
+      const box = physicsAssets[vehicle.asset as keyof typeof physicsAssets].boxes[0];
+      for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4RoutePose(route, s), box, baseY: .7 });
+      samples.push({ id: `convoy-${vehicle.id}-stop`, ...l4RoutePose(route, stations.end[i]), box, baseY: .7 });
+    }
     for (const v of layout.placements.filter(p => p.assetId.startsWith('veh.'))) {
       const physical = physicsAssets[v.assetId as keyof typeof physicsAssets];
       for (const [i, b] of physical?.boxes.entries() ?? []) {
@@ -134,7 +135,44 @@ describe('automatic regression invariants', () => {
       const baseY = pose.baseY ?? (isTank ? .7 : 0), vertical = [box.min[1] + baseY, box.max[1] + baseY];
       if (oracle.vehicle(obbHitsAabb(pose.x, pose.z, pose.yaw, halfX, halfZ, vertical[0], vertical[1], solid.aabb))) conflicts.add(`${pose.id.split('-').slice(0, 3).join('-')} overlaps ${solid.id}`);
     }
-    expect([...conflicts].slice(0, 20), `P1-116 tank route and hold intersections (${conflicts.size})`).toEqual([]);
+    const world = await loadLevel('L1', 1);
+    try {
+      const bike = world.vehicles!.bicycle.entity!, player = world.entities.get(1)!;
+      const obstacles = world.districts!.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable && /bld\.|fence|barrier/.test(c.id) && !/hedge/.test(c.id)).map(c => ({ id: c.id, aabb: { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] } })));
+      const points = [[-70.5, 46.99], ...world.vehicles!.bicycle.parkPoints.map(p => [p.x, p.z]), ...world.vehicles!.bicycle.noBikeZones.flatMap(zone => zone.polygon.map(p => [p.x, p.z]))];
+      for (const [x, z] of points) for (let a = 0; a < 8; a++) {
+        const heading = a * Math.PI / 4;
+        if (!world.infected!.nav.clear(x, z, .35, false, bike.id)) continue;
+        Object.assign(player.transform, { x, z }); Object.assign(bike.bicycle!, { heading, mounted: true, lockUntil: 0 });
+        world.vehicles!.bicycle.filter({ ...emptyInput(), interact: true });
+        if (bike.bicycle!.mounted) { conflicts.add(`bike at ${x},${z}: dismount failed`); continue; }
+        const p = bike.transform, centre = (bicycleGeometry.minX + bicycleGeometry.maxX) / 2;
+        for (const solid of obstacles) {
+          if (obbHitsAabb(p.x + Math.cos(p.yaw) * centre, p.z - Math.sin(p.yaw) * centre, p.yaw, (bicycleGeometry.maxX - bicycleGeometry.minX) / 2, bicycleGeometry.halfWidth, p.y, p.y + bicycleGeometry.height, solid.aabb)) conflicts.add(`bike park at ${x},${z}/${a} intersects ${solid.id}`);
+          if (/fence|barrier/.test(solid.id)) {
+            const dx = p.x - x, dz = p.z - z, length = Math.hypot(dx, dz);
+            if (length > .1 && obbHitsAabb((x + p.x) / 2, (z + p.z) / 2, -Math.atan2(dz, dx), length / 2, .001, .1, 1, solid.aabb)) conflicts.add(`bike park at ${x},${z}/${a} crossed ${solid.id}`);
+          }
+        }
+      }
+    } finally { world.dispose(); }
+    const l7world = await loadLevel('L7', 1);
+    try {
+      const box = physicsAssets['veh.evac-bus'].boxes[0];
+      for (const district of l7world.districts!.districts) for (const solid of district.decay.colliders.filter(c => !c.walkable && /bld\.|fence|barrier/.test(c.id) && !/hedge/.test(c.id))) {
+        const aabb = { min: [solid.aabb.min[0] + district.origin[0], solid.aabb.min[1], solid.aabb.min[2] + district.origin[1]], max: [solid.aabb.max[0] + district.origin[0], solid.aabb.max[1], solid.aabb.max[2] + district.origin[1]] };
+        for (let x = l7Departure.lane.fromX; x <= l7Departure.lane.toX; x += .25) if (obbHitsAabb(x, l7Departure.lane.z, 0, (box.max[0] - box.min[0]) / 2, (box.max[2] - box.min[2]) / 2, box.min[1] + .7, box.max[1] + .7, aabb)) { conflicts.add(`L7 bus route overlaps ${solid.id}`); break; }
+      }
+    } finally { l7world.dispose(); }
+    const l2world = await loadLevel('L2', 1);
+    try {
+      const truck = vehicleDef('vehicle.fire-engine'), shape = { min: [-truck.length / 2, -.3, -truck.width / 2], max: [truck.length / 2, .3, truck.width / 2] };
+      for (const district of l2world.districts!.districts) for (const solid of district.decay.colliders.filter(c => !c.walkable && /bld\.|fence|barrier/.test(c.id) && !/hedge/.test(c.id))) {
+        const aabb = { min: [solid.aabb.min[0] + district.origin[0], solid.aabb.min[1], solid.aabb.min[2] + district.origin[1]], max: [solid.aabb.max[0] + district.origin[0], solid.aabb.max[1], solid.aabb.max[2] + district.origin[1]] };
+        for (const p of l2TruckPath) if (obbHitsAabb(p.x, p.z, p.yaw, (shape.max[0] - shape.min[0]) / 2, (shape.max[2] - shape.min[2]) / 2, shape.min[1] + .7, shape.max[1] + .7, aabb)) { conflicts.add(`L2 truck route overlaps ${solid.id}`); break; }
+      }
+    } finally { l2world.dispose(); }
+    expect([...conflicts].slice(0, 30), `vehicles invariant: route, stop and dismount intersections (${conflicts.size})`).toEqual([]);
     overlapErrors([{ vehicle: [0, 0], solid: [0, 0], radius: 1 }], ['vehicle intersects solid']);
   });
 
@@ -166,19 +204,34 @@ describe('automatic regression invariants', () => {
     const violations: string[] = [];
     for (const id of missionIds) {
       const world = await loadLevel(id, 1), mission = world.missions!;
+      const marker = new ObjectiveMarker(world);
       for (const step of mission.def.steps) {
+        // Select this step independently; a convoy's initial lock is not the quartermaster/bar step's state.
+        world.storyLock = null;
         const state = mission.state.steps;
-        for (const def of mission.def.steps) state[def.id].status = def.id === step.id ? 'active' : 'completed';
+        for (const def of mission.def.steps) state[def.id].status = def.id === step.id ? 'pending' : 'completed';
         const controller = mission as unknown as { markerObjective: string | null; pendingMarker: string | null; activate(): void };
-        controller.markerObjective = null; controller.pendingMarker = null; controller.activate();
+        controller.markerObjective = null; controller.pendingMarker = null;
+        const start = vi.spyOn(mission as unknown as { satisfied(): boolean }, 'satisfied').mockReturnValue(true);
+        controller.activate(); start.mockRestore();
         const hasMarkerAnchor = !!mission.def.anchors[step.anchor];
         if (!hasMarkerAnchor) violations.push(`${id}/${step.id}: missing anchor`);
-        if (!step.text.trim()) violations.push(`${id}/${step.id}: missing objective text`);
-        const expectedMarker = step.waypoint === false ? null : step.anchor;
+        if (!objectiveText(mission, step.text).trim()) violations.push(`${id}/${step.id}: missing objective text`);
+        const override = step.onStart?.find(a => a.kind === 'marker');
+        const expectedMarker = override?.kind === 'marker' ? override.anchor : step.waypoint === false ? null : step.anchor;
         if (mission.state.marker !== expectedMarker) violations.push(`${id}/${step.id}: marker ${mission.state.marker} should be ${expectedMarker}`);
         const markerResolves = step.waypoint === false || !!markerAnchor(mission);
         if (oracle.objective({ markerVisible: markerResolves, visibleAtMs: 0 })) violations.push(`${id}/${step.id}: no state-visible waypoint in the start tick`);
+        if (step.waypoint !== false) {
+          marker.update(false);
+          if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
+          // A pull-back is presentation state, so it must not remove guidance while this objective is active.
+          // Hold it for the full 120-tick deadline to expose P1-114 rather than only checking anchor metadata.
+          for (let tick = 0; tick <= 120; tick++) marker.update(id === 'L3' && step.id === 'checkpoint');
+          if (!marker.visible || process.env.QA_INVARIANTS_BREAK === 'objectives') violations.push(`${id}/${step.id}: objective marker hidden beyond 2 s during camera pull-back`);
+        }
       }
+      marker.dispose();
       world.dispose();
     }
     expect(violations, 'P1-114: objective routes and marker anchors must exist').toEqual([]);
@@ -187,14 +240,43 @@ describe('automatic regression invariants', () => {
 
   test('7 walkable ground: every authored raised walkable surface edge follows sim ground within 20 cm', async () => {
     const errors: string[] = [];
-    for (const [districtId, layout] of layouts) {
-      const composition = compositions[districtId]; if (!composition) continue;
-      const world = new SimWorld(); await world.init(); world.loadComposition(composition, [layout], 1);
+    for (const level of missionIds) {
+      const world = await loadLevel(level, 1);
       for (const district of world.districts!.districts) for (const col of district.decay.colliders) {
-        if (!col.walkable || col.aabb.max[1] < .05) continue;
+        if (!col.walkable || col.aabb.max[1] < .05 || col.id.includes('/highway-')) continue;
         const x = (col.aabb.min[0] + col.aabb.max[0]) / 2 + district.origin[0], z = (col.aabb.min[2] + col.aabb.max[2]) / 2 + district.origin[1];
-        const simY = world.districts!.groundHeight(x, z), drawnY = col.aabb.max[1];
-        if (oracle.ground({ drawnY, simY })) errors.push(`${districtId}/${col.id}: ${simY.toFixed(2)} vs ${drawnY.toFixed(2)}`);
+        // Stacked paving/supports have one exposed top: the lower slab isn't the drawn walking surface.
+        const local = [x - district.origin[0], z - district.origin[1]] as [number, number];
+        const drawnY = Math.max(col.aabb.max[1], ...district.decay.colliders.filter(c => c.walkable && local[0] >= c.aabb.min[0] && local[0] <= c.aabb.max[0] && local[1] >= c.aabb.min[2] && local[1] <= c.aabb.max[2]).map(c => c.aabb.max[1]), ...district.layout.surfaces.filter(s => inside(local, s.polygon)).map(s => s.height ?? 0));
+        const simY = world.districts!.pavingHeight(x, z);
+        if (oracle.ground({ drawnY, simY })) errors.push(`${level}/${district.id}/${col.id}: ${simY.toFixed(2)} vs ${drawnY.toFixed(2)}`);
+      }
+      for (const district of world.districts!.districts) {
+        // Sample every drawn surface route: 0.5 m around its boundary and through its centroid.
+        for (const surface of district.layout.surfaces) for (let i = 0; i < surface.polygon.length; i++) {
+          const a = surface.polygon[i], b = surface.polygon[(i + 1) % surface.polygon.length], n = Math.max(1, Math.ceil(Math.hypot(a[0] - b[0], a[1] - b[1]) / .5));
+          const cx = surface.polygon.reduce((sum, p) => sum + p[0], 0) / surface.polygon.length, cz = surface.polygon.reduce((sum, p) => sum + p[1], 0) / surface.polygon.length;
+          for (let j = 0; j <= n; j++) {
+            const edgeX = a[0] + (b[0] - a[0]) * j / n, edgeZ = a[1] + (b[1] - a[1]) * j / n;
+            const x = edgeX + (cx - edgeX) * .01, z = edgeZ + (cz - edgeZ) * .01;
+            // A material surface on a bench/roof is not an authored walkable route.
+            if (!world.infected!.nav.clear(x + district.origin[0], z + district.origin[1], .2)) continue;
+            const expected = surface.height ?? 0, got = world.districts!.pavingHeight(x + district.origin[0], z + district.origin[1]);
+            if (got < expected - .2) errors.push(`${level}/${district.id}/${surface.surface}: unsupported drawn paving at ${x},${z}`);
+          }
+        }
+        // Nonplanar route geometry must use the authored deck equation, never its axis-aligned collider top.
+        for (const p of district.layout.placements.filter(p => p.assetId === 'kit.highway-onramp')) for (let i = 0; i <= 96; i++) {
+          const t = i / 96;
+          for (const offset of [-2.2, -1.1, 0, 1.1, 2.2]) {
+            const [x, drawnY, z] = highwayPoint(p, t, offset), simY = world.districts!.groundHeight(x + district.origin[0], z + district.origin[1]);
+            if (oracle.ground({ drawnY, simY })) errors.push(`${level}/${p.id}: deck t=${t.toFixed(2)} offset=${offset} walk=${simY.toFixed(2)} drawn=${drawnY.toFixed(2)}`);
+          }
+          for (const offset of [-4.5, -3.3, 3.3, 4.5]) {
+            const [x, y, z] = highwayPoint(p, t, offset), h = world.districts!.groundHeight(x + district.origin[0], z + district.origin[1]);
+            if (t > .06 && y > 1 && h > 1 && h > y - 1) errors.push(`${level}/${p.id}: phantom support outside rail t=${t.toFixed(2)} offset=${offset}`);
+          }
+        }
       }
       world.dispose();
     }
