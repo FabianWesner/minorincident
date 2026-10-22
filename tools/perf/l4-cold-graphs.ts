@@ -20,15 +20,20 @@ try {
   const trace = await session.page.evaluate(async ({ tier, full }: { tier: 'high' | 'low'; full: boolean }) => {
     const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier });
-    await a.loadLevel('L4', { seed: 2, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete');
+    performance.clearMeasures(); const loadStarted = performance.now();
+    await a.loadLevel('L4', { seed: 2, progression: 'L4-default' });
+    const loadMs = performance.now() - loadStarted, loadPhases = performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete');
     const builds: unknown[] = [], renderer = game.view.renderer, before = renderer.nodeBuilds;
     const onBuild = renderer.debug.onNodeBuilderCreated;
+    const describe = (material: import('three').Material) => Object.fromEntries(Object.entries(material).filter(([key, value]) => !key.startsWith('_') && value?.isNode).map(([key, value]) => [key, { id: value.id, key: value.getCacheKey() }]));
+    const initialMaterials: unknown[] = [];
+    game.view.scene.traverse(object => { if ('material' in object) for (const material of Array.isArray(object.material) ? object.material : [object.material]) initialMaterials.push({ object: object.name, material: material.name, id: material.id, program: material.customProgramCacheKey(), nodes: describe(material) }); });
     renderer.debug.onNodeBuilderCreated = (builder, value) => {
       onBuild?.(builder, value);
-      const draw = value as unknown as { object: import('three').Object3D & { count?: number; geometry?: import('three').BufferGeometry }; material: import('three').Material & { id: number; outputNode?: { id: number } }; getMaterialCacheKey(): number; getDynamicCacheKey(): number };
+      const draw = value as unknown as { object: import('three').Object3D & { count?: number; geometry?: import('three').BufferGeometry }; material: import('three').Material & { id: number; outputNode?: { id: number } }; getMaterialCacheKey(): number; getDynamicCacheKey(): number; getGeometryCacheKey(): string; context: { id: number } };
       const parents: string[] = [];
       for (let node: import('three').Object3D | null = draw.object; node; node = node.parent) parents.push(`${node.name || node.type}${node.userData.assetId ? `:${node.userData.assetId}` : ''}`);
-      builds.push({ tick: a.tick(), phase: a.missions.state()!.l4!.phase, object: draw.object.name, parents, material: draw.material.name || draw.material.type, materialId: draw.material.id, outputNode: draw.material.outputNode?.id, materialKey: draw.getMaterialCacheKey(), dynamicKey: draw.getDynamicCacheKey(), lightState: (game.view as unknown as { scene: import('three').Scene }).scene.userData.shadowVariant, weatherMode: (game.view as unknown as { lighting?: { weatherMode: number } }).lighting?.weatherMode, count: draw.object.count, attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, attribute]) => [name, attribute.itemSize])) });
+      builds.push({ tick: a.tick(), phase: a.missions.state()!.l4!.phase, object: draw.object.name, parents, material: draw.material.name || draw.material.type, materialId: draw.material.id, outputNode: draw.material.outputNode?.id, materialKey: draw.getMaterialCacheKey(), program: draw.material.customProgramCacheKey(), nodes: describe(draw.material), geometryKey: draw.getGeometryCacheKey(), context: draw.context.id, dynamicKey: draw.getDynamicCacheKey(), lightState: (game.view as unknown as { scene: import('three').Scene }).scene.userData.shadowVariant, weatherMode: (game.view as unknown as { lighting?: { weatherMode: number } }).lighting?.weatherMode, count: draw.object.count, attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, attribute]) => [name, attribute.itemSize])) });
     };
     try {
       for (let i = 0; i < 800 && a.missions.state()!.l4!.phase !== 'plaza'; i++) await a.step(15);
@@ -42,7 +47,7 @@ try {
         if (!a.missions.state()!.l4!.lineBreakAt) throw Error('The ordinary bot did not reach line break');
         await a.step(120); await a.screenshotReady();
       }
-      return { diagnostic: true, backend: a.perf().backend, tier: a.perf().quality.tier, turnAt: a.missions.state()!.l4!.turnAt, newBuilds: renderer.nodeBuilds - before, builds, materials: a.perf().nodeBuildMaterials };
+      return { diagnostic: true, loadMs, loadPhases, backend: a.perf().backend, tier: a.perf().quality.tier, turnAt: a.missions.state()!.l4!.turnAt, newBuilds: renderer.nodeBuilds - before, builds, initialMaterials, materials: a.perf().nodeBuildMaterials };
     } finally { renderer.debug.onNodeBuilderCreated = onBuild; a.bot.stop(); }
   }, { tier, full: process.env.L4_GRAPH_FULL === '1' });
   writeFileSync(`${out}/${tier}.json`, JSON.stringify(trace, null, 2));

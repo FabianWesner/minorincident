@@ -1,8 +1,21 @@
-import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, type InstancedMesh } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, type InstancedMesh, type Node } from 'three/webgpu';
 import { attribute, Fn, instanceColor, mat3, mat4, normalLocal, positionLocal, transformNormal } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 
 const materials = new WeakMap<PaletteMaterial, PaletteMaterial>();
+function placementPosition(previous: Node | null, corpseNormals: boolean): Node {
+  return Fn(() => {
+    const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
+    positionLocal.assign(matrix.mul(positionLocal).xyz);
+    // Frozen bodies use yaw/translation only; other static props retain inverse-transpose normals.
+    normalLocal.assign(corpseNormals ? mat3(matrix).mul(normalLocal).normalize() : transformNormal(normalLocal, matrix));
+    instanceColor.assign(attribute('_placementColor', 'vec3'));
+    return previous ?? positionLocal;
+  })();
+}
+// These graphs contain only per-draw attributes. A copied source material must
+// not create a fresh shader key when a streamed LOD borrows the same shading.
+const staticPosition = placementPosition(null, false), corpsePosition = placementPosition(null, true);
 /** Geometry attributes bind per draw. Unlike Three's captured instance buffer nodes,
  * these let identical static batches share a node build without sharing their data. */
 export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
@@ -13,18 +26,7 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   if (!material) {
     material = source.frozenCopy();
     if (source.userData.seeThrough === true) material.seeThrough('placement');
-    const previous = source.positionNode;
-    material.positionNode = Fn(() => {
-      const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
-      positionLocal.assign(matrix.mul(positionLocal).xyz);
-      // Frozen body geometry already contains pose and scale. Both corpse
-      // callers place it with yaw and translation only; for a rotation its
-      // inverse-transpose is the rotation itself. Reuse the placement columns
-      // instead of fetching three additional per-instance normal attributes.
-      normalLocal.assign(corpseNormals ? mat3(matrix).mul(normalLocal).normalize() : transformNormal(normalLocal, matrix));
-      instanceColor.assign(attribute('_placementColor', 'vec3'));
-      return previous ?? positionLocal;
-    })();
+    material.positionNode = source.positionNode ? placementPosition(source.positionNode, corpseNormals) : corpseNormals ? corpsePosition : staticPosition;
     const owned = material;
     source.addEventListener('dispose', () => owned.dispose()); materials.set(source, material);
   }
