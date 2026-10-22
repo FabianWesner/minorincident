@@ -1,3 +1,4 @@
+// Needs a build with BUILD_SPIKES=1 (the lighting spike page is not part of the production dist).
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from '../e2e/fixtures';
 

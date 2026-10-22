@@ -394,7 +394,7 @@ the ride spec runs both tiers, both backends and phone cadences; (4) metrics com
 
 ## Figure look gate (`look`)
 
-Top-level `look: { whiteShareMax, lumaRiseMax?, hueDriftMaxDeg?, minPixels? }` measures the crowd figures' own pixels at every sheet frame (the frame with vs without the crowd view, courier and HUD bars hidden): `lookWhiteShare` (pale unsaturated share), `lookLumaRise` (mean brightness / frame 0) and `lookHueDriftDeg` (saturation-weighted hue vs frame 0, the live look). Samples are in `metrics.json` `lookSamples`. Catalog: `alpha-hit-corpse-*` (every Alpha and Mega look shot down and lying; a hit flash must keep the figure's own colours and the body its look, see `docs/reports/alpha-white/`).
+Top-level `look: { whiteShareMax, lumaRiseMax?, hueDriftMaxDeg?, minPixels? }` measures the crowd figures' own pixels at every sheet frame (the frame with vs without the crowd view, courier and HUD bars hidden): `lookWhiteShare` (pale unsaturated share), `lookLumaRise` (mean brightness / frame 0) and `lookHueDriftDeg` (saturation-weighted hue vs frame 0, the live look; for near-grey looks with chroma < 0.12 on either side, e.g. a face-down worker, hue is unreliable so it compares absolute luma and chroma difference, scaled to degrees). Samples are in `metrics.json` `lookSamples`. Catalog: `alpha-hit-corpse-*` (every Alpha and Mega look shot down and lying; a hit flash must keep the figure's own colours and the body its look, see `docs/reports/alpha-white/`).
 
 ## L10 pursuit and cure catalog
 
