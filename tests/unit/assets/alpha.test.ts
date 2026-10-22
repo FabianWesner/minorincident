@@ -25,7 +25,7 @@ for (const [lod, budget] of [8000, 3000, 1000].entries()) {
     const validation = validateDocument(doc, def, statSync(path).size, lod);
     expect(validation.errors).toEqual([]);
     expect(validation.triangles).toBeLessThanOrEqual(budget);
-    expect(validation.materials).toBeLessThanOrEqual(4);
+    expect(validation.materials).toBeLessThanOrEqual(def.budget.materials);
     expect(validation.fileKB).toBeLessThanOrEqual(800);
     const alpha = await load(path), worker = await load(`public/assets/models/inf.common-worker${lod ? `.lod${lod}` : ''}.glb`);
     const bounds = (root: typeof alpha) => {
