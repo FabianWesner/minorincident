@@ -23,7 +23,11 @@ test('T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete A
   await page.keyboard.down('w'); await page.keyboard.down('d'); await step(120); await page.keyboard.up('w'); await page.keyboard.up('d');
   const explored = await page.evaluate(() => window.__SS__!.getState());
   expect(Math.hypot(explored.player!.transform.x - initial.x, explored.player!.transform.z - initial.z)).toBeGreaterThan(3);
-  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBeNull(); await expect(page.locator('.mission-tracker')).toBeHidden();
+  // PO #90 (batch13g) deliberately exposes the boarding goal immediately.
+  // Keep the sixty-second incident-free clock; the older no-objective assertion is obsolete.
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('exit');
+  await expect(page.locator('.mission-tracker')).toBeVisible();
+  await expect(page.locator('.mission-tracker')).toContainText('Bring the survivors to the armored vehicle');
   // The protected dog now travels through L7/L8; this must describe the real
   // follower rather than the obsolete phantom "awaiting rescue" prompt.
   const corgi = explored.entities.find(e => e.id === initialCorgi!.id)!;
@@ -33,7 +37,7 @@ test('T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete A
   expect(corgi.infected).toBeUndefined(); expect(corgi.infection).toBeUndefined();
   await expect(page.locator('.hud-companion')).toBeVisible();
   await expect(page.locator('.hud-companion')).toHaveText('Corgi · following');
-  await expect(page.locator('.hud-pin-objective')).toBeHidden(); await expect(page.locator('.hud-pin-home')).toBeHidden();
+  await expect(page.locator('.hud-pin-objective')).toBeVisible(); await expect(page.locator('.hud-pin-home')).toBeHidden();
   // The real Begin click can advance a few frames before pause reaches the page.
   // Measure the exact boundary from the live clock rather than assuming tick 120.
   const calmClock = await page.evaluate(() => { const s = window.__SS__!.getState(); return { tick: s.tick, start: s.l8!.startedAt }; });

@@ -89,7 +89,12 @@ test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the surviv
   await boot(page);
   const probe = await page.evaluate(async (spot) => {
     const a = window.__SS__!; await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
-    a.teleport('player', spot); a.camera.follow(); await a.step(90); await a.screenshotReady();
+    a.teleport('player', spot); a.camera.follow();
+    // A bulk sim step renders only once, beginning the new lamp's 0.3 s
+    // promotion on its final redraw. Submit the original ninety intermediate
+    // views as gameplay does (same fixture correction already present in13h).
+    for (let frame = 0; frame < 90; frame++) await a.step(1);
+    await a.screenshotReady();
     const lighting = a.getState().render.lighting!, p = a.getEntity(1)!.transform, d = lighting.shadowDirection as number[];
     const h = Math.hypot(d[0], d[2]), ax = -d[0] / h, az = -d[2] / h;
     // Behind: along the cast direction, past the feet. Beside: the same distance, perpendicular, still inside the pool.
@@ -98,6 +103,7 @@ test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the surviv
   const image = await shot(page, 'hero-shadow');
   const behind = patch(image, probe.behind, 4), beside = patch(image, probe.beside, 4);
   writeFileSync(`${out}/hero-shadow.json`, JSON.stringify({ ...probe, behindColor: behind, besideColor: beside, darker: 1 - behind.l / beside.l, hue: hue(behind.r, behind.g, behind.b) }, null, 2) + '\n');
+  expect(probe.lighting.promotionBlend).toBe(1);
   expect(probe.perf!.heroShadow).toBe(1); expect(probe.perf!.shadowMaps).toBe(1);
   expect(1 - behind.l / beside.l).toBeGreaterThanOrEqual(.35);
   const h = hue(behind.r, behind.g, behind.b); expect(h).toBeGreaterThanOrEqual(230); expect(h).toBeLessThanOrEqual(290);
