@@ -19,7 +19,7 @@ The snapshot's own `__SS__` campaign API and the existing Scene Lab camera bridg
 L9 uses the authored road and the existing keyboard replay feed with the `LevelNineBot` steering policy. L10 graph-prefix loading advances the quest while leaving the courier at the crash start, so its tour walks the authored roads to the military gate and research campus, collects the canister through normal interaction, and activates the dispersal defense at the console. The report records actual positions and controller stages.
 
 - L1: depot contact and return, lab signing and return, bike rack, park and fire station.
-- L2: ride start, bench sitters and accessories.
+- L2: ride start, bench sitters and accessories after walking off the apron. Staying inside the station's broad reveal footprint masks the culling defect, so the tour exercises the street-side view.
 - L3: both raised ramp/deck junctions and the actual army pull-back.
 - L4: alarm wave, entering/parked tank at the barrier, and plaza civilians.
 - L5–L10: start areas, gates, handovers and finales using campaign checkpoints and ordinary movement where a checkpoint cannot be reconstructed.
