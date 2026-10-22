@@ -211,10 +211,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if(now-lastCrowdKick>750){lastCrowdKick=now;log({fistsRetreat:e.tick,keys:approach,attack:walkingAttack,enemy:threat.id});}
         return true;
       }
-      // A brief right-hand kick clears a crowd or frees the gate interaction.
+      // At a waiting ring, use the same punch/kick choice and leave room for E.
       if (now - lastCrowdKick > 750) {
-        await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(180); await press([]);
-        lastCrowdKick = now; log({ crowdKick: e.tick, enemies: e.enemies.filter(b => b.d < 3).length });
+        const feet=await page.evaluate(at=>window.__SS__!.input.project(at,'destination'),{x:threat.x,z:threat.z});
+        await page.mouse.move(feet.x,feet.y); await press([walkingAttack]); await hold(400); await press([]);
+        lastCrowdKick = now; log({ fistsAtRing: e.tick, attack: walkingAttack, enemies: contacts });
       }
       await press([]);return false;
     }
