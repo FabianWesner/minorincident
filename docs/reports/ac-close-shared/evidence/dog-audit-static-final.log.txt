@@ -1,0 +1,13 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.28.24.66:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 47s, 30521 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-78105-1792635174; queueing for a slot
+[runner] slot 0 acquired; load 0.44 0.58 1.33
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+[remote] done exit=0 (runner 2.28.24.66, sync 47s, remote total 94s)

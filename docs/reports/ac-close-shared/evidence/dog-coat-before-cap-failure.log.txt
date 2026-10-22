@@ -1,0 +1,15 @@
+[scene] starting vite preview on http://127.0.0.1:4052
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: Infected concurrency cap reached
+    at eo.spawn (http://127.0.0.1:4052/build/install-CNTDGc4w.js:1:95765)
+    at Object.spawn (http://127.0.0.1:4052/build/testApi-DJy-AXFi.js:2:21380)
+    at eval (eval at evaluate (:311:30), <anonymous>:1:126)
+    at async <anonymous>:337:30
+    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/dog-coat-capture.ts:14:38) {
+  log: []
+}
+
+Node.js v26.0.0

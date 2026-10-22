@@ -24,6 +24,7 @@ def sheet(name, rows, width=320, height=180):
             result.paste(frame, (x + (width - frame.width) // 2, y))
             draw.text((x + 4, y + height + 3), label, font=FONT, fill='white')
     result.save(DEST / name, quality=92, subsampling=0)
+    return result
 
 
 if sys.argv[1] == 'repairs':
@@ -58,8 +59,60 @@ elif sys.argv[1] == 'moves':
             sheet(f'moves-{group}-{part}.jpg', rows)
     with gzip.open(DEST / 'evidence/move-boundaries.json.gz', 'wt') as f:
         json.dump(evidence, f, separators=(',', ':'))
+elif sys.argv[1] == 'horde':
+    root = Path('test-results/ac-close-shared/horde')
+    rows = []
+    manifest = []
+    for backend in ['webgl2', 'webgpu']:
+        for tier in ['high', 'low']:
+            row = []
+            for zoom in ['0.5', '1', '1.5']:
+                for suffix in ['', '-telegraphs']:
+                    path = root / f'{backend}-{tier}-z{zoom}{suffix}.png'
+                    label = f'{backend} {tier} z{zoom}' + (' + warnings' if suffix else ' 60 runners')
+                    row.append((path, label))
+                    manifest.append({'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'label': label})
+            rows.append(row)
+    matrix = sheet('d-horde.jpg', rows, 400, 225)
+    result = Image.new('RGB', (2400, matrix.height + 705), '#111722')
+    result.paste(matrix, (0, 0))
+    draw = ImageDraw.Draw(result)
+    dog_images = []
+    for col, label in enumerate(['before', 'after']):
+        path = Path(f'test-results/ac-close-shared/dog-coats/{label}.png')
+        frame = Image.open(path).convert('RGB').resize((1200, 675), Image.Resampling.LANCZOS)
+        result.paste(frame, (col * 1200, matrix.height))
+        caption = ('Palette before b4c06bb7: 3 authored dog batches' if label == 'before' else 'Palette after 9e5c4b0b: 2 batches, 0 changed RGB pixels') + ' (visual isolation only)'
+        draw.text((col * 1200 + 4, matrix.height + 678), caption, font=FONT, fill='white')
+        dog_images.append({'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'label': caption})
+    result.save(DEST / 'd-horde.jpg', quality=92, subsampling=0)
+    (DEST / 'evidence/D-final-images.json').write_text(json.dumps({'runtimeSource': 'df390443a', 'frames': manifest, 'dogPaletteProofAt': '9e5c4b0b1', 'dogFrames': dog_images}, indent=2) + '\n')
+elif sys.argv[1] == 'vfx':
+    root = Path('test-results/ac-close-shared/vfx')
+    phases = {
+        'medium': [0, 6, 8, 12, 21, 46, 186, 906],
+        'car': [0, 184, 186, 190, 200, 230, 360, 1080],
+        'mega': [0, 6, 20, 40, 46, 70, 220, 940],
+        'building-night': [60, 90, 180, 600],
+        'grenade': [1, 90, 240, 840],
+        'column': [60, 180, 360, 600],
+        'collapse': [0, 2, 6, 15, 40, 120, 300, 900],
+    }
+    manifest = []
+    for tier in ['high', 'low']:
+        rows = []
+        for name, frames in phases.items():
+            row = []
+            for frame in frames:
+                path = root / f'{tier}-{name}-f{frame}.png'
+                label = f'{tier} {name} f{frame}'
+                row.append((path, label))
+                manifest.append({'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'label': label})
+            rows.append(row)
+        sheet(f'h-{tier}.jpg', rows, 420, 236)
+    (DEST / 'evidence/H-final-images.json').write_text(json.dumps({'runtimeSource': 'df390443a', 'frames': manifest}, indent=2) + '\n')
 elif sys.argv[1] != 'bars':
-    raise SystemExit('Use repairs, moves or bars')
+    raise SystemExit('Use repairs, moves, bars, horde or vfx')
 
 if sys.argv[1] == 'bars':
     root = Path('test-results/ac-close-shared')

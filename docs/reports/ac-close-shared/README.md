@@ -1,6 +1,6 @@
 # Shared acceptance closure — E07 / E27 / E28
 
-2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final E07 verification is red at the crowd object-count assertion; E27 is done; E28 verifies green but remains partial under the original heap counter.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
+2026-10-22, base `c867e392b`, branch `lane/ac-close-shared`. This report supersedes the 2026-10-18 partial-AC evidence for the items below. **Final verification is refreshing on `df390443a` after correcting the crowd count and draw defects. The latest completed E07 verifier is red; the previous E27/E28 verifiers passed. E27 remains done; E07/E28 remain in progress for the two unadopted proposals.** No proposal is adopted, threshold loosened, gameplay difficulty changed, deployment or merge performed.
 
 [Final source/build hashes and unchanged measurement contracts](evidence/final-source.json).
 
@@ -8,7 +8,7 @@
 | --- | --- |
 | E07-AC05 | Met/fixed: all 14 timing/cooldown/restore probes and complete-boundary image review; 168 captures. The initially cropped roars were rejected and recaptured wider. |
 | E07-AC06 | Met: all four Alpha moves, spatial/restore controls, 12-case shared-bar matrix and actual Alpha desktop/phone HP captures reviewed. |
-| E07-AC12 | Partial: final verifier counts 185 objects versus the asserted 141. Read-only ownership audit confirms 44 empty pooled corpse pages and zero unowned nodes; the subsequently reached mixed case costs 31 draws against 30. Repair is in progress. |
+| E07-AC12 | Met/fixed by native ownership/draw audit: exact pooled-page count, no unowned body/headwear nodes, 17 runner /30 mixed combined draws; final verifier refresh pending. |
 | E07-AC13 | Met: named 60-runner Checklist D, all five items. |
 | E07-AC19 | Zoo timing/boundary/restore and actual phone-bar proof met; literal stampede width remains partial with the unadopted proposal below. |
 | E27-AC15 | Met/fixed: named H, all seven spots / seven items; full verify passes; E27 done. |
@@ -71,7 +71,7 @@ Opened the full-size WebGPU night phone frame: the pale outline, red fill and da
 
 ## Named Checklist D review — E07-AC13
 
-Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, both WebGL2/WebGPU, high/low, real zoom **0.5 / 1 / 1.5**, with a second frame adding Brute/runner warnings. [Matrix](d-horde.jpg), [state receipts](evidence/horde.json.gz). The capture runner asserts the actual backend/tier, 60 infected before the warning additions and actual camera zoom; it scales the named camera pose rather than relabeling one fixed view.
+Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, both WebGL2/WebGPU, high/low, real zoom **0.5 / 1 / 1.5**, with a second frame adding Brute/runner warnings. [Matrix](d-horde.jpg), [current state receipts](evidence/headwear-final-vision.json.gz), [24 image hashes](evidence/D-final-images.json). The capture runner asserts the actual backend/tier, 60 infected before the warning additions and actual camera zoom; it scales the named camera pose rather than relabeling one fixed view.
 
 | D item | Observed result across all twelve configurations |
 | --- | --- |
@@ -83,7 +83,7 @@ Reviewed the **24** named golden-hour `horde-readability` images: 60 runners, bo
 
 ## Final-source named H review — 2026-10-22
 
-This review supersedes the earlier incomplete physical-consequence signoff. I opened both final seven-row high/low frame sheets, plus full-size medium/mega flight, night wind column and the two late grenade frames. `docs/reports/ac-close-shared/h-high.jpg` and `h-low.jpg` retain all seven required spots; `evidence/vfx-final.json.gz` records 102 frame states and source-image SHA256s. Grenade frames use a pinned production preview after the earlier dev blank frame failed review; both tiers now pass an explicit non-flat-image assertion. A concurrent source edit is only a possible cause of the old blank, not a proved diagnosis.
+This review supersedes the earlier incomplete physical-consequence signoff. I opened both final seven-row high/low frame sheets, plus full-size medium/mega flight, night wind column and the two late grenade frames. `docs/reports/ac-close-shared/h-high.jpg` and `h-low.jpg` retain all seven required spots; `evidence/headwear-final-H.json.gz` records the refreshed 102 frame states and source-image SHA256s; [selected sheet inputs](evidence/H-final-images.json) identify all seven rows. Grenade frames use a pinned production preview after the earlier dev blank frame failed review; both tiers now pass an explicit non-flat-image assertion. A concurrent source edit is only a possible cause of the old blank, not a proved diagnosis.
 
 | Priority | H item | Observed result |
 | --- | --- | --- |
@@ -187,3 +187,15 @@ The corrected diagnostic reaches a **real mixed-budget failure: 30 nonempty mode
 Runtime commit `9e5c4b0b1` shares the default/cream dog **LOD1** draw only after exact positions, normals, part ownership, index order and clip matrices match. Authored cream vertex colors remain a separate immutable palette attribute. The actual-asset regression rejects incompatible LOD2 geometry, whose palette-sensitive simplification changes surfaces; no LOD2 equivalence is claimed. Dense high-tier crowds retain both coats using the more detailed shared LOD1 surface. Low tier shares only actors already selected for LOD1, preserving its near-detail cap. Corpses retain their original separate source meshes/materials. No actors, HP, attacks, RNG, thresholds or visible coat identities are removed.
 
 The exact object assertion now includes the independently exposed managed corpse-page count; it still accounts for every descendant rather than subtracting objects from the measured counter. The live/reset ownership audit independently enumerates batch/reservation/fixed/page nodes and finds no orphan. The 30-draw limit and fixed mixed-scene object equality remain unchanged. Remote typecheck/lint and **22 focused tests** passed before the final low-tier guard ([receipt](evidence/dog-coat-batching-remote.log.txt)); final full units, build, visual comparison and three epic verifiers are being repeated on the committed repair. [Geometry audit](evidence/dog-coat-geometry.json), [saved pre-repair production identity](evidence/dog-before-build.json).
+
+## Final batching repair and refreshed visual proof — `df390443a`
+
+The old fixed object formula omitted 44 deliberate empty corpse pages. The exact formula now includes managed pages while leaving the reported object count intact. A subsequent audit exposed a real 31-body-draw mixed case; compatible default/cream dog LOD1 palettes now share one draw, preserving every actor and coat. Profiling then exposed three separate distant headwear draws. Those now use their exact fitted geometry and palette selection inside the existing LOD2 body/pose batch, with per-vertex masks preserving their original lighting, shadow reception, side culling and hit-flash behavior. Original corpse source geometry remains separate. The public crowd counter now **includes** separate infected headwear draws. No threshold, damage, timer, population limit or difficulty changed.
+
+The independent [final ownership/profile audit](evidence/horde-object-audit-final.json.gz) passes: live runner **14 body +3 accessory =17 draws**; mixed **30 +0 =30 draws**, matching the actual renderer categories. Every stage has zero unowned nodes; primary live/reset graphs have 185 descendants including 44 empty 128-instance corpse pages, and the separate accessory graph has **24 fixed owned instanced nodes**. Offscreen exclusion, retained 200 corpses, reset draw delta **17**, and mixed object equality pass. [Receipt](evidence/headwear-object-ownership-final.log.txt).
+
+D remains **5/5** after opening the refreshed 24-frame matrix and full-size WebGPU/high close, WebGL2/low wide-warning, WebGL2/high normal and WebGPU/low warning samples. The courier's red/teal silhouette, pale faces/red eyes, separate warning outlines and yellow pickup rings remain readable. The 12 high-tier before/after frames differ by at most **351 /1,440,000 RGB pixels**, with maximum per-channel mean absolute difference **0.00018125 /255** ([comparison](evidence/headwear-high-rgb.json)). The saved palette-only dog comparison has **zero changed RGB pixels**, all three coats and complete paws framed ([proof](evidence/dog-coats-final.json.gz)); its visual isolation is explicitly recorded and supplies no performance claim.
+
+H remains **4/4 must +3/3 should** after opening both refreshed seven-row sheets and full-size medium/mega flight, wind column, L4 chain and both late grenade frames. All six body peak/landing records match the previous receipt. The L4 fuel-truck sequencer emits its pump/canopy/tank stages at ticks **188/202/222** (offsets **0/14/34**); the sheet now selects early frames **0/2/6/15/40/120**, then 300/900 aftermath, rather than omitting the active mega window. The full-size f40 frame shows the orange/black mega fireball behind the street roofs; no building-collapse geometry claim is made. The grenade f840 frames retain courier, ring and dithered smoke on both tiers.
+
+Remote validation on the committed runtime: typecheck/lint, **27 focused render tests +build** ([receipt](evidence/headwear-inline-focused.log.txt)), then **1,867 full unit passes /345 files, nine skipped tests /one file** ([receipt](evidence/units-headwear-final.log.txt)). Seven skips are the pre-existing Linux/macOS lock exclusions; two optional FFmpeg loudness checks skipped on this runner, with those audio sources unchanged. The new all-epic verifiers remain in progress. The earlier dog-only verifier was cancelled through its owned remote launcher before browser admission when the broader headwear defect was found ([receipt](evidence/verify-E07-dog-superseded.log.txt), [stage exits](evidence/verify-E07-dog-superseded-checks.json)); it is not a passing verifier.
