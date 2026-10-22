@@ -153,7 +153,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const reach = lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
-    const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (canCoverVisibleAllies(e.level,e.step,unarmed) ? e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => (!unarmed||a.drawn)&&Math.hypot(a.x - b.x, a.z - b.z) < 2.5)) : undefined);
+    const threat = e.enemies.find(b => b.d < reach && ok(b)) ?? (canCoverVisibleAllies(e.level,e.step,unarmed) ? e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => (!unarmed || a.drawn && a.hp > 0 && !a.corpse) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5)) : undefined);
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
