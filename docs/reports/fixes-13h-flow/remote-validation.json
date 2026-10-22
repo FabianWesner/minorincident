@@ -1,0 +1,21 @@
+{
+  "remote": {
+    "logSha256": "84432c61b842c97f4f967d96573673ade088268d5ced6a956f0a7d676ef5f57c",
+    "summary": "\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[7/7]\u23af\n\n\n Test Files  7 failed | 414 passed | 3 skipped (424)\n      Tests  7 failed | 2302 passed | 11 skipped (2320)\n   Start at  22:13:17\n   Duration  5774.90s (tests 99%, import 1%)\n\n[remote] done exit=1 (runner 2.28.24.66, sync 103s, remote total 5779s)"
+  },
+  "remote-retry": {
+    "logSha256": "94841d3b5fdbde0aae2b4930a36614ce5118fdc0d7074b96448956535f7450d5",
+    "summary": "\u2713  functional  tests/levels/l7-audit.test.ts (1 test) 184333ms\n   \u2713 T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats 184330ms\n\n Test Files  7 passed (7)\n      Tests  41 passed (41)\n   Start at  23:51:52\n   Duration  1615.53s (tests 100%)\n\n[remote] done exit=0 (runner 2.31.10.108, sync 88s, remote total 1619s)"
+  },
+  "remote-final-scope": {
+    "logSha256": "01073905f00ad28010ffd67f824e6c210a7fb7e8d19c88860266a4ec41f8071c",
+    "summary": "\u2713 T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover 290410ms\n   \u2713 T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover 292350ms\n\n Test Files  12 passed (12)\n      Tests  63 passed (63)\n   Start at  23:56:29\n   Duration  630.86s (tests 98%, transform 1%, import 1%)\n\n[remote] done exit=0 (runner 2.28.24.66, sync 65s, remote total 637s)"
+  },
+  "remote-final-tooling": {
+    "logSha256": "c12d1560778f7bb2190d8356b6e2d1d988f1b5a8ad1ac5e0c43106468ab07d39",
+    "summary": "\u2713  functional  tests/unit/playtest-startup.test.ts (3 tests) 13ms\n \u2713  functional  tests/unit/playtest-combat.test.ts (4 tests) 6ms\n\n Test Files  3 passed (3)\n      Tests  14 passed (14)\n   Start at  00:18:39\n   Duration  1.10s (transform 77%, import 16%, tests 4%, worker 2%)\n\n[remote] done exit=0 (runner 94.130.181.173, sync 100s, remote total 7s)"
+  },
+  "interpretation": "The requested full run had 2302 passes and seven timeouts. All seven files were rerun serially without changing limits or assertions: 41 passes. The final product L6 scope (including L5 handovers) passed 63 tests; final playtest tooling passed 14. Native pre-existing unit skips are unchanged. Real-input acceptance remains pending.",
+  "productCommit": "72ea6c267",
+  "toolingCommit": "e6f63d913"
+}
