@@ -6,6 +6,28 @@ import { Materials } from '../../../src/render/Materials';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { PaletteMaterial } from '../../../src/render/PaletteMaterial';
+import type { AssetRegistry } from '../../../src/assets/registry';
+
+test('T-E22-20-collapse-materials @E22-AC20 late glass and crater assets borrow the warmed rigid actor graph', async () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), geometry = new BoxGeometry();
+  const assets = new EntityAssets({} as SimWorld, false, materials);
+  const internal = assets as unknown as { registry: AssetRegistry; actorModel(id: string, lod: string): Promise<Group> };
+  vi.spyOn(internal.registry, 'definition').mockReturnValue({ lods: { lod1: {}, lod2: {} } } as ReturnType<AssetRegistry['definition']>);
+  vi.spyOn(internal.registry, 'loadAsset').mockImplementation(async id => {
+    const root = new Group(); root.userData.assetId = id;
+    root.add(new Mesh(geometry, materials.get('picketWhite'))); return root;
+  });
+  const material = (root: Group) => (root.getObjectByName('static-body') as Mesh).material as PaletteMaterial;
+  try {
+    const bus = material(await internal.actorModel('veh.evac-bus', 'lod2'));
+    for (const id of ['veh.evac-bus', 'decay.broken-glass', 'decay.fuel-truck-crater']) for (const lod of ['lod0', 'lod1', 'lod2']) {
+      const next = material(await internal.actorModel(id, lod));
+      expect(next === bus, `${id}/${lod} must borrow the warmed feature graph`).toBe(true);
+      expect(next.outputNode).toBe(bus.outputNode);
+    }
+    const disposed = vi.spyOn(bus, 'dispose'); assets.dispose(); expect(disposed).toHaveBeenCalledTimes(1);
+  } finally { geometry.dispose(); materials.dispose(); lighting.dispose(); }
+});
 
 test('T-E22-20-setpiece-materials @E22-AC20 @E18-AC05 actor LODs retain reveal graphs without sharing state between actors', async () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), geometry = new BoxGeometry();

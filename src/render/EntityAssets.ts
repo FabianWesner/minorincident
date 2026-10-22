@@ -32,6 +32,8 @@ export class EntityAssets extends Group {
   private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; copies: Map<PaletteMaterial, PaletteMaterial>; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
+  // L4's late glass/crater and actor LODs use the same static feature graphs.
+  private readonly materialGraphs = new Map<string, Material>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly materials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
@@ -55,7 +57,7 @@ export class EntityAssets extends Group {
       const wheelNames = /^veh\.(evac-bus|school-bus)$/.test(id) ? ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].filter(name => source.getObjectByName(name)) : [];
       source.userData.splitDoors = wheelNames;
       const radii = new Map(wheelNames.map(name => [name, new Box3().setFromObject(source.getObjectByName(name)!).getSize(new Vector3()).y / 2]));
-      const model = id === 'veh.helicopter-military' ? source as Group : staticBatch(source, true, this.shading); model.userData = { ...source.userData };
+      const model = id === 'veh.helicopter-military' ? source as Group : staticBatch(source, true, this.shading, false, this.materialGraphs); model.userData = { ...source.userData };
       model.traverse(node => { const name = node.userData.door as string | undefined; if (name && radii.has(name)) { node.name = name; node.userData.wheelRadius = radii.get(name); } });
       model.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.materials.add(node.material as Material); } });
       return model;
@@ -204,5 +206,5 @@ export class EntityAssets extends Group {
   getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
   dispose(): void { this.disposed = true; this.clear(); this.records.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.materials) material.dispose();
-    this.geometries.clear(); this.materials.clear(); this.prototypes.clear(); void this.registry.dispose(); }
+    this.geometries.clear(); this.materials.clear(); this.materialGraphs.clear(); this.prototypes.clear(); void this.registry.dispose(); }
 }
