@@ -1,10 +1,10 @@
 # E22–E24 acceptance closure — 2026-10-22
 
-Starting source: `769d9f8ce`. The ten partial criteria in the 2026-10-18 sweep remain unaccepted until the evidence below proves their full scope. Historical green runs do not supersede later failures. All browser work is headless, one worker/session, on ports 4081/4082; native timing uses the shared quiet wrapper in reservations of at most twenty minutes. The local browser remains reserved for the QA lane until 09:15 UTC.
+Starting source: `769d9f8ce`. Scope: ten partial criteria from the 2026-10-18 sweep. AC12 is now closed with current level and inherited shared proof; the remaining dispositions are recorded below. Historical green runs do not supersede later failures. All browser work is headless, one worker/session, on ports 4081/4082; native timing uses the shared quiet wrapper in reservations of at most twenty minutes. The orchestrator released the QA reservation early; all later work uses the shared admission guard and releases its slot between batches.
 
 ## Authorized specification clarification
 
-The orchestrator explicitly authorized the E24-AC19 rewrite on 2026-10-22: the tunnel stress fixture must have **at least 40 infected on high and the low-tier cap of 30 on low**, each within its own tier's E18 budgets. The criterion is marked `CLARIFIED 2026-10-22 (orchestrator)`. This resolves the conflict between the old literal 40-infected requirement on both tiers and E24-AC13's low cap of 30. Survivor count, effects, quality budgets and the 50 ms breach/abandon limit are retained. `tests/perf/l6-budgets.spec.ts` already asserts these distinct population floors; fresh execution is required before acceptance.
+The orchestrator explicitly authorized the E24-AC19 rewrite on 2026-10-22: the tunnel stress fixture must have **at least 40 infected on high and the low-tier cap of 30 on low**, each within its own tier's E18 budgets. The criterion is marked `CLARIFIED 2026-10-22 (orchestrator)`. This resolves the conflict between the old literal 40-infected requirement on both tiers and E24-AC13's low cap of 30. Survivor count, effects, quality budgets and the 50 ms breach/abandon limit are retained. `tests/perf/l6-budgets.spec.ts` already asserts these distinct population floors; The first native 13h WebGL stress and transition batch passes below; final-source/backend/retention closure is separate.
 
 ## Criterion ledger
 
@@ -36,7 +36,7 @@ Opened historical images during triage: L4 boundary-refuge high war and low coll
 - The L7-entry browser fixture previously teleported only the courier to its corridor checkpoint while leaving the cohort at Northgate. Production correctly requires every living follower within 18 m. The fixture now stages the cohort as the existing unit checkpoint test does, with an explicit distance assertion; all checkpoint, death/restore, roster and arsenal assertions are retained.
 - `MI_VERIFY_REMOTE_E2E=1` now splits E24 functional checks onto the runner as it already does for E23. Both use one local worker. Native visual/input/photo and quiet performance stages remain explicit.
 
-Typecheck and lint have passed during preparation. These new browser checks are not yet reported as executed or accepted.
+Typecheck and lint passed during preparation. The fresh browser outcomes below supersede that preparatory state; unmeasured cases remain pending.
 
 ## Shared Alpha simulation proof
 
@@ -118,3 +118,5 @@ The added pixel matrix's offset static camera also cropped the distant rear runn
 The apparent legacy Scene Lab plaza framing regression is already fixed in production: `l4PhotoSpots` uses the shared 50/40/50 overview; the old QA JSON still uses 20/24/20. The stale lab image is not used to fail or accept the production pair. Fresh production-preset recognition captures are required; no gameplay camera or specification scene is changed.
 
 All three merged-source Node selections have now completed green: **E22 142**, **E23 75**, **E24 79**, zero failures. Lossless receipts: `evidence/E22-node-13h.json.gz`, `E23-node-13h.json.gz`, `E24-node-13h.json.gz`. Browser stages remain queued serially. A green Node stage alone does not change epic status to done.
+
+Opened all six Harbor/Metro/Kessler legacy pair sheets and retained the first-frame [triage comparison](legacy-pairs-triage.jpg), with source SHA256s and exact crop rectangles. Harbor preserves the awnings, lamps and road grid while the van becomes a black wreck and shop facades break; Metro preserves its steps/railings, street lamp and facade shape while the shop/roof/window fabric breaks. Kessler preserves the same corner, fence and tree, but its damage cues are weaker (dark windows, dull vegetation and ash). The stale tight plaza does not include enough buildings for recognition. These observations guide the queued production-preset capture; this triage sheet is not a final AC18 score.

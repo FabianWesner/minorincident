@@ -64,10 +64,10 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/player-mask.png` }));
       await page.evaluate(async () => {
         const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
-        a.settings.set({ idPass: false }); game.view.probeInfectedMask(true); await a.screenshotReady();
+        a.settings.set({ idPass: false }); game.view.probeCrowdMask(true); await a.screenshotReady();
       });
       const infectedMask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/infected-mask.png` }));
-      await page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.probeInfectedMask(false));
+      await page.evaluate(() => (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.probeCrowdMask(false));
       await page.evaluate(async () => {
         const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
         a.settings.set({ idPass: false }); game.view.probeVisibility({ courier: false, crowd: true, bars: true }); await a.screenshotReady();
