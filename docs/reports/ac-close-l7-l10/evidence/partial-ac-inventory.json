@@ -288,9 +288,16 @@
       "disposition": "pending",
       "baselineEvidence": "`tests/perf/l9-{dress,handover-budgets}.spec.ts`; `T-E31-19-S4`, streaming units; Q3 native six cases previously pass.; newer: [idle-crossing-200.json](../postmerge-10/evidence/idle-crossing-200.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%.",
-      "currentEvidenceSummary": "Corrected crash8/8red with cold-load max2747\u20133081ms; two axe handover budgets pass. Remaining route/retention continuation running; original gates retained.",
-      "remaining": "Native route/floor/crash frames and added five-cycle retention are queued serially; exact stream/crash hitch coverage must be reported separately from steady frame p95. The priority browser batch is already released.",
-      "result": "red"
+      "currentEvidenceSummary": "Corrected crash8/8red: cold-load max2747\u20133081ms; handover2/2passes. All four five-cycle retention cases complete/red: low JS peaks260.111/257.342MB>250; embedder growth21.36\u201323.86%>10%. JS/GPU drift\u22644.26%. Remaining dressed-route configs queued.",
+      "remaining": "Dressed-route remaining configurations queued; measured hitch/heap/retention failures require repair. Timing-window proposal remains unadopted.",
+      "result": "red",
+      "currentEvidence": [
+        "l9-crash-native-final-metrics.json.gz",
+        "l9-handover-final.json.gz",
+        "l9-retention-summary.json",
+        "l9-retention-final.json.gz",
+        "native-E31-retention-remaining-playwright.json.gz"
+      ]
     },
     {
       "ac": "E31-AC20",
