@@ -1,0 +1,29 @@
+total 441 ms
+
+self time by file:
+     246  WeatherView-vedhtgUr.js
+     166  getProgramParameter
+      20  (garbage collector)
+       6  (program)
+       2  three.module-BnwdCej9.js
+       2  shaderSource
+       0  registry-C0aRjHzy.js
+       0  install-3Ce4KGLq.js
+
+self time by function:
+     166  getProgramParameter :-1
+      66  build WeatherView-vedhtgUr.js:7
+      20  (garbage collector) :-1
+      13  generate WeatherView-vedhtgUr.js:7
+      12  _getChildren WeatherView-vedhtgUr.js:7
+      12  o WeatherView-vedhtgUr.js:7
+       9  getChildren WeatherView-vedhtgUr.js:7
+       9  setData WeatherView-vedhtgUr.js:34
+       7  setHashNode WeatherView-vedhtgUr.js:34
+       7  getNodeProperties WeatherView-vedhtgUr.js:34
+       6  getNodeFromHash WeatherView-vedhtgUr.js:34
+       6  registerDeclaration WeatherView-vedhtgUr.js:34
+
+inclusive time (samples whose stack contains the function):
+     226  build
+     166  getProgramParameter
