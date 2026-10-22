@@ -82,14 +82,18 @@ for (const webgpu of [false, true]) for (const tier of ['high', 'low'] as const)
   for (const checkpoint of ['rocket', 'corridor']) {
     if (checkpoint === 'corridor') {
       const group = await page.evaluate(async () => {
-        const a = window.__SS__!, roster = a.getState().l7!.roster;
-        // This is a checkpoint/restore fixture, not the full L7 route. Move the
-        // living cohort with the courier, matching l7-checkpoints.test.ts: the
-        // production corridor checkpoint requires every follower within 18 m.
-        for (const [i, r] of roster.entries()) if (r.status === 'following') a.teleport(r.id, { x: -23 + Math.floor(i / 4), z: 46 + i % 4 });
-        a.teleport(1, { x: -30, z: 47 }); await a.step(1);
+        const a = window.__SS__!, origin = a.getEntity(1)!.transform, target = { x: -30, z: 47 };
+        // Checkpoint/restore fixture, not the full L7 route: move the whole living
+        // escort with the courier (the production corridor checkpoint requires every
+        // follower within 18 m); reaching the entrance alone leaves the objective at "rocket".
+        const following = a.getState().l7!.roster.filter(r => r.status === 'following');
+        for (const r of following) {
+          const p = a.getEntity(r.id)!.transform;
+          a.teleport(r.id, { x: p.x + target.x - origin.x, z: p.z + target.z - origin.z });
+        }
+        a.teleport(1, target); await a.step(1);
         const p = a.getEntity(1)!.transform;
-        return roster.filter(r => r.status === 'following').map(r => { const t = a.getEntity(r.id)!.transform; return { id: r.id, distance: Math.hypot(t.x - p.x, t.z - p.z) }; });
+        return following.map(r => { const t = a.getEntity(r.id)!.transform; return { id: r.id, distance: Math.hypot(t.x - p.x, t.z - p.z) }; });
       });
       for (const member of group) expect(member.distance, `corridor fixture follower ${member.id}`).toBeLessThanOrEqual(18);
     }
