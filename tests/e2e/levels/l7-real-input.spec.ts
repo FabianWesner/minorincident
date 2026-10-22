@@ -28,7 +28,11 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
   let crowdPose: Pose | undefined, hordePose: Pose | undefined, crowdAfter = false, alphaShot = false, plazaShot = false, boardingShot = false;
   for (let i = 0; i < 4000; i++) {
     const s = await page.evaluate(() => {
-      const a = window.__SS__!, s = a.getState(), p = s.player!.transform;
+      const a = window.__SS__!, s = a.getState();
+      // The ordinary campaign handover briefly unloads the retired L7 player.
+      // Finish observing this route before reading that absent entity.
+      if (s.scenario !== 'L7' || !s.player) return null;
+      const p = s.player.transform;
       const distance = (at: { x: number; z: number }) => Math.hypot(at.x - p.x, at.z - p.z);
       const pickup = a.query({}).find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
       const infected = a.query({ kind: 'infected' });
@@ -36,7 +40,7 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
       const alphaVisible = infected.some(e => e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && distance(e.transform) < 24 && a.input.visible(e.transform));
       return { scenario: s.scenario, p, pickup: pickup?.transform, enemy: enemy?.transform, alphaVisible, exploded: a.events().some(e => e.type === 'explosion' && e.defId === 'explosion.rocket'), checkpoint: a.missions.state()?.checkpoint, l7: s.l7, bus: s.l7Departure, hp: s.player!.health.current };
     });
-    if (s.scenario === 'L8') break;
+    if (!s) break;
     expect(s.hp).toBeGreaterThan(0);
     if (!s.pickup && !armed) { armed = true; await shot('rocket-pickup'); }
     if (s.checkpoint === 'corridor' && !corridor) { corridor = true; await shot('evacuation-corridor'); hordePose = await shot('final-horde-before'); }
@@ -72,6 +76,7 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
     await page.keyboard.up('k');
     if (i % 100 === 0) writeFileSync(`${out}/progress.json`, JSON.stringify({ i, index, state: s }, null, 2));
   }
+  await page.waitForFunction(() => { const s = window.__SS__!.getState(); return s.scenario === 'L8' && !!s.player; });
   expect(armed).toBe(true); expect(corridor).toBe(true); expect(fired).toBe(true);
   expect(crowdAfter).toBe(true); expect(alphaShot).toBe(true); expect(plazaShot).toBe(true); expect(boardingShot).toBe(true);
   expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L8');
