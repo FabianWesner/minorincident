@@ -12,7 +12,7 @@ const rows: unknown[] = [];
 try {
   for (const backend of (process.env.CORPSE_BACKENDS ?? 'webgl2,webgpu').split(',') as ('webgl2' | 'webgpu')[]) {
     for (const tier of (process.env.CORPSE_TIERS ?? (timing ? 'low' : 'low,high')).split(',') as ('low' | 'high')[]) {
-      const session = new SceneSession({ backend, tier, nativeFrameTiming: timing, query: timing ? { debug: 'true' } : {}, viewport: { width: 1280, height: 720 } });
+      const session = new SceneSession({ backend, tier, nativeFrameTiming: timing, query: { ...(timing ? { debug: 'true' } : {}), ...Object.fromEntries(new URLSearchParams(process.env.CORPSE_QUERY ?? '')) }, viewport: { width: 1280, height: 720 } });
       try {
         await session.open();
         await session.page.evaluate('globalThis.__name = fn => fn');

@@ -14,6 +14,7 @@ import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
 import { cloneCrowdGeometry } from './characters/cloneCrowdGeometry';
 import { crowdLod, canHoldCrowdPose } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
+import { proneDeath, proneReach } from './characters/proneDeath';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
@@ -214,6 +215,8 @@ export class CrowdView extends Group {
         const args = [model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback] as const;
         baked = this.world.scenario === 'L8' ? await bakeInfectedAsync(() => loadGate.wait(), ...args) : bakeInfected(...args);
         if (this.disposed) { baked.geometry.dispose(); return; }
+        // P1-117: Alphas fall onto their faces (live and frozen share the clip).
+        if (alpha) proneDeath(baked.clip);
         if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
@@ -237,6 +240,7 @@ export class CrowdView extends Group {
           if (existing) { createdCorpse = existing; corpseClip = this.corpseClips.get(key); }
           else {
             const body = bakeInfected(bodyModel, this.registry.definition(asset).animatedNodes);
+            if (alpha) proneDeath(body.clip);
             deinterleaveGeometry(body.geometry);
             const corpse = mergeVertices(body.geometry); body.geometry.dispose();
             if (!healthy) markInfectedEyeCores(corpse);
@@ -502,7 +506,7 @@ export class CrowdView extends Group {
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt) : e.transform;
+      const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : e.transform;
       const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
       const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
@@ -569,14 +573,16 @@ export class CrowdView extends Group {
   drawnCorpses(): { id: number; x: number; y: number; z: number }[] { const frozen = this.staticCorpses.drawn(), ids = new Set(frozen.map(c => c.id)); return [...frozen, ...[...this.deadFeet.values()].filter(c => !ids.has(c.id) && (this.world.entities.get(c.id)?.health.current ?? 1) <= 0)]; }
   /** Keep settled bodies on clear ground, giving each a readable footprint.
    * This is presentation only; damage and revive continue to use sim transforms. */
-  private corpsePosition(e: EntitySnapshot, deadAtTick: number) {
+  private corpsePosition(e: EntitySnapshot, deadAtTick: number, prone?: number) {
     if (e.corpseThrown) return e.transform;
     const deadAt = deadAtTick, previous = this.corpses.get(e.id);
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z) return previous;
     const pose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt };
     // The body lies ~0.9 m behind its hips (death poses fall backwards): that strip must be clear too, so a
     // corpse never lies through a fence or wall (PO #14).
-    const bx = -Math.cos(e.transform.yaw), bz = Math.sin(e.transform.yaw), nav = this.world.infected?.nav;
+    // Prone bodies (Alphas, P1-117) lie in front of their feet instead, and reach further.
+    const side = prone === undefined ? 1 : -Math.max(1, prone / .95);
+    const bx = -Math.cos(e.transform.yaw) * side, bz = Math.sin(e.transform.yaw) * side, nav = this.world.infected?.nav;
     // A body never lies half off the deck/ramp it died on: head and hips stay on the support the sim settled it on.
     const feet = e.transform.y - .7, districts = this.world.districts, level = (x: number, z: number) => !districts || Math.abs(districts.supportBelow(x, z, feet) - feet) <= .3;
     const separated = (x: number, z: number) => {
