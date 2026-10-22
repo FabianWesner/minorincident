@@ -12,6 +12,14 @@ const session = new SceneSession({ backend: process.env.L10_BACKEND === 'webgpu'
 try {
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
+  if (process.env.L10_PROFILE === '1') await session.page.evaluate(() => {
+    const g = (window.__SCENE__ as unknown as { game: Game }).game;
+    const prior = g.view.renderer.debug.onNodeBuilderCreated;
+    g.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+      prior?.(builder, object);
+      if (object.material?.name === 'pal_asphalt') (window as unknown as { l10Shader: unknown }).l10Shader = builder;
+    };
+  });
   const result = await session.page.evaluate(async ({ tier }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
@@ -90,6 +98,11 @@ try {
       const { profile } = await cdp.send('Profiler.stop'); await cdp.detach();
       writeFileSync(`${out}/settled.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs }));
       writeFileSync(`${out}/settled-perf.json`, JSON.stringify(await session.page.evaluate(() => window.__SS__!.perf()), null, 2));
+      const shader = await session.page.evaluate(() => {
+        const builder = (window as unknown as { l10Shader?: { vertexShader: string; fragmentShader: string } }).l10Shader;
+        return builder ? { vertex: builder.vertexShader, fragment: builder.fragmentShader } : null;
+      });
+      writeFileSync(`${out}/settled-shader.json`, JSON.stringify(shader, null, 2));
     }
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
