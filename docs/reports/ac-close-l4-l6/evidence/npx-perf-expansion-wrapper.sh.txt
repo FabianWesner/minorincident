@@ -1,0 +1,8 @@
+#!/bin/sh
+set -u
+if [ "${1:-}" = playwright ] && [ "${2:-}" = test ] && [ "${3:-}" = tests/perf/l4-budgets.spec.ts ] && [ -f /tmp/ac-close-l4-l6-verifier/combine-perf ]; then
+  rm /tmp/ac-close-l4-l6-verifier/combine-perf
+  shift 3
+  exec /opt/homebrew/bin/npx playwright test tests/perf/l4-budgets.spec.ts tests/perf/l5-budgets.spec.ts tests/perf/l6-budgets.spec.ts tests/perf/l7-lifecycle.spec.ts --grep 'E22|E23|E24' "$@"
+fi
+exec /opt/homebrew/bin/npx "$@"

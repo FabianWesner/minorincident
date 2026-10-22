@@ -1,7 +1,7 @@
 # Remote runner pool (Hetzner)
 
 The Mac is the bottleneck for heavy tests. `tools/remote/` runs a command for your worktree on Hetzner `cx33` servers
-(4 shared vCPU, 8 GB, Ubuntu 24.04, Node 26.0.0, Playwright Chromium + deps, 4 GB swap), named `mi-runner-1..4`,
+(4 shared vCPU, 8 GB, Ubuntu 24.04, Node 26.0.0, Playwright Chromium + deps, FFmpeg for the existing audio measurements, 4 GB swap), named `mi-runner-1..4`,
 all labelled `project=minor-incident`. Each runner has 2 job slots (like `sim-lock.sh`).
 
 Use the pool for CPU suites (unit, levels and sim; at most four Vitest workers). The deploy browser gate stays local with at most two GPU browsers. Remote SwiftShader browser runs are opt-in through `npm run scene:matrix:remote` and `npm run test:e2e:remote`; the full remote matrix is too slow for the gate. See [deploy gate](../qa/deploy-gate.md).

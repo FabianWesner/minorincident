@@ -54,6 +54,7 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
+import { color } from 'three/tsl';
 import { InteractionView } from './InteractionView';
 import { MountedGunView } from './MountedGunView';
 import { EntityAssets } from './EntityAssets';
@@ -95,6 +96,8 @@ export class GameView implements Lifecycle {
   private companionId = -1;
   private companionSearch = 0;
   private probeVisibilityPending = false;
+  private infectedIdPass = false;
+  private readonly infectedIdMasks = new Map<Material, MeshBasicNodeMaterial[]>();
   private solidCutProbeOff = false;
   private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
@@ -783,6 +786,8 @@ export class GameView implements Lifecycle {
     this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
+  /** Scene Lab: depth-tested CrowdView silhouette (including retained bodies), preserving the submitted instance/pose and accessory masks. */
+  probeCrowdMask(enabled: boolean): void { this.infectedIdPass = enabled; this.update(1); }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
@@ -1051,15 +1056,24 @@ export class GameView implements Lifecycle {
     } else if(this.windowMask&&this.districts){
       const backgroundNode=this.scene.backgroundNode;this.scene.backgroundNode=null;const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
       this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.backgroundNode=backgroundNode;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
-    } else if (this.idPass && (this.lookdev || this.character)) {
+    } else if ((this.idPass || this.infectedIdPass) && (this.lookdev || this.character)) {
       const backgroundNode = this.scene.backgroundNode; this.scene.backgroundNode = null;
       const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
       this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
       this.scene.traverse((child) => {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          const source = child.material as PaletteMaterial;
-          if (!hero && source.name === 'pal_leaf-card-crown') {
+          const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
+          if (this.infectedIdPass) {
+            let infected = false;
+            for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.crowd) { infected = true; break; }
+            let masks = this.infectedIdMasks.get(source);
+            if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
+            const index = infected ? 1 : 0;
+            masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
+            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
+            child.material = masks[index];
+          } else if (!hero && source.name === 'pal_leaf-card-crown') {
             if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
             child.material = this.foliageIdMasks.get(source)!;
           } else child.material = hero ? this.idPlayer : this.idBackground; }
@@ -1183,6 +1197,7 @@ export class GameView implements Lifecycle {
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
+    for (const masks of this.infectedIdMasks.values()) for (const material of masks) material?.dispose(); this.infectedIdMasks.clear(); this.infectedIdPass = false;
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }

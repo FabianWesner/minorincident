@@ -1,0 +1,25 @@
+#!/bin/sh
+set -u
+while [ ! -f /tmp/ac-close-corrected-route-v7.exit ]; do sleep 2; done
+python3 - <<'PY'
+import json,sys
+from pathlib import Path
+p=Path('test-results/ac-close/corrected-route-v7-results.json')
+def passed(suites):
+ for suite in suites:
+  for spec in suite.get('specs',[]):
+   if 'T-E24-17' in spec['title']:
+    return all(t['status']=='expected' and any(r['status']=='passed' for r in t['results']) for t in spec['tests'])
+  if passed(suite.get('suites',[])):return True
+ return False
+sys.exit(0 if p.exists() and passed(json.loads(p.read_text())['suites']) else 1)
+PY
+[ "$?" = 0 ] || exit 1
+export MI_AC_BROWSER_HELD=1
+exec /usr/bin/lockf -k /tmp/ac-close-l4-l6-browser.serial /bin/sh -c '
+  /bin/sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts tests/perf/l6-budgets.spec.ts --grep "E23|E24" --project=chromium --workers=1
+  proof_code=$?
+  python3 /tmp/ac-close-l4-l6-verifier/archive-perf.py webgl-primary
+  rm -f /tmp/ac-close-l4-l6-verifier/primary-proof-hold /tmp/ac-close-l4-l6-verifier/priority-receipt
+  exit "$proof_code"
+'

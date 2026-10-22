@@ -23,25 +23,31 @@ const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh'] : []), 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
-const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
-const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l4VisualPattern = 'T-E02-webgpu|no army-line rebuild prompts|line-broken cellar guidance|@camera-hotfix|T-E22-blank|L4 (?:plaza|war|respawn): mouse WASD stick|T-E22-cellar-pos|T-E22-ride-smooth|T-E22-12-special|T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
+const l5VisualPattern = 'T-E02-webgpu|PO #26 #28|T-fix-l5-start|T-fix-l5-ingress|T-E23-cellar-pos|PO #21b|T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l6VisualPattern = 'T-E02-webgpu|PO34 service gate|T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const aftermathVisualPattern = target === 'E24' ? l6VisualPattern : l5VisualPattern;
 const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
 const buildCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'dist', '--', 'npm', 'run', 'build']
   : target === 'E07' || ['E31', 'E32', 'E30', 'E18', 'E23', 'E25', 'E26', 'E27', 'E28'].includes(target)
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'] : ['npm', 'run', 'build'];
+const simBeforeBuild = ['E22', 'E23', 'E24'].includes(target);
 const commands: string[][] = [
   ...(process.env.MI_VERIFY_REMOTE_SIM === '1'
     ? [['sh', 'tools/remote/run.sh', process.cwd(), '--', 'sh', '-c', 'npm run typecheck && npm run lint']]
     : [['npm', 'run', 'typecheck'], ['npm', 'run', 'lint']]),
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  buildCommand,
+  ...(!simBeforeBuild ? [buildCommand] : []),
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   ...(splitAlphaTiming ? [['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`, '--', 'bash', 'tools/remote/timing-isolated.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
+  // These source-level sims do not consume dist. Run them before waiting for the
+  // shared preview build, so native browser admission cannot block remote units.
+  ...(simBeforeBuild ? [buildCommand] : []),
   // Reserve both existing runner slots in order; release slot 1 first so concurrent timing jobs cannot deadlock.
   ...(splitE31Timing ? [[
     'sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`,
@@ -100,7 +106,7 @@ const commands: string[][] = [
         ? [
           ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--pull', 'test-results/playwright/results.json', '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1`],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--pull', `${output}/playwright-remote.json`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l4VisualPattern}' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
               ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${l4VisualPattern}))`, '--project=chromium', '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1']]),
@@ -109,10 +115,10 @@ const commands: string[][] = [
         ]
       : target === 'E23' || target === 'E24'
         ? [
-          ...(target === 'E23' && process.env.MI_VERIFY_REMOTE_E2E === '1'
+          ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
             ? [
-              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--', 'sh', '-c', `mkdir -p ${output} && npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l5VisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
-              ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', l5VisualPattern, '--workers=2'],
+              ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3388}`, '--env', 'E2E_UNITS=1', '--env', 'E2E_ADMISSION_TIMEOUT_SECONDS=3600', '--', 'sh', '-c', `mkdir -p ${output} && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${aftermathVisualPattern}' --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+              ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', aftermathVisualPattern, '--workers=1'],
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
           // Reserve all configured browser slots for the native GPU frame budgets.
@@ -162,14 +168,13 @@ const commands: string[][] = [
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
   console.log(`\nVerifying ${target}: ${command} ${args.join(' ')}`);
-  const auditBrowser = ['E07', 'E25', 'E26', 'E27', 'E28'].includes(target) && args.includes('playwright');
+  const auditBrowser = ['E07', 'E22', 'E23', 'E24', 'E25', 'E26', 'E27', 'E28'].includes(target) && args.includes('playwright');
   if (auditBrowser) rmSync('test-results/playwright/results.json', { force: true });
   const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
   if (target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
-  if ((target === 'E23' || target === 'E24') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.some(a=>a==='tests/perf/l5-budgets.spec.ts'||a==='tests/perf/l6-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (auditBrowser) {
     const destination = `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`;
     if (existsSync('test-results/playwright/results.json')) copyFileSync('test-results/playwright/results.json', destination);
@@ -182,6 +187,6 @@ for (const [command, ...args] of commands) {
   if (result.error || result.status !== 0) {
     process.exitCode = result.status || 1;
     // Still record the native GPU gate when a browser criterion fails.
-    if (!['E18', 'E30'].includes(target) || !args.includes('playwright')) break;
+    if (!['E18', 'E22', 'E23', 'E24', 'E30'].includes(target) || !(args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) break;
   }
 }

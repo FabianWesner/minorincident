@@ -1,0 +1,228 @@
+{
+  "finishedAt": "2026-10-22T15:55:25.388270+00:00",
+  "allOwnedChecksTerminal": true,
+  "epicStatus": "in-progress",
+  "verify": {
+    "E22": {
+      "exitCode": 143,
+      "checks": [
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--",
+            "sh",
+            "-c",
+            "npm run typecheck && npm run lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "test-results/epics/E22/vitest.json",
+            "--",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E22/vitest.json"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "outcome": "incomplete/cancelled at final cutoff"
+    },
+    "E23": {
+      "exitCode": 143,
+      "checks": [
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--",
+            "sh",
+            "-c",
+            "npm run typecheck && npm run lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "test-results/epics/E23/vitest.json",
+            "--",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E23/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "dist",
+            "--",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "test-results/epics/E23/playwright-remote.json",
+            "--env",
+            "E2E_PORT=4081",
+            "--env",
+            "E2E_UNITS=1",
+            "--env",
+            "E2E_ADMISSION_TIMEOUT_SECONDS=3600",
+            "--",
+            "sh",
+            "-c",
+            "mkdir -p test-results/epics/E23 && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|PO #26 #28|T-fix-l5-start|T-fix-l5-ingress|T-E23-cellar-pos|PO #21b|T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1; status=$?; cp test-results/playwright/results.json test-results/epics/E23/playwright-remote.json; exit $status"
+          ],
+          "exitCode": 130
+        }
+      ],
+      "outcome": "incomplete/cancelled at final cutoff"
+    },
+    "E24": {
+      "exitCode": 75,
+      "checks": [
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--",
+            "sh",
+            "-c",
+            "npm run typecheck && npm run lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "test-results/epics/E24/vitest.json",
+            "--",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E24/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "dist",
+            "--",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l4-l6",
+            "--pull",
+            "test-results/epics/E24/playwright-remote.json",
+            "--env",
+            "E2E_PORT=4081",
+            "--env",
+            "E2E_UNITS=1",
+            "--env",
+            "E2E_ADMISSION_TIMEOUT_SECONDS=3600",
+            "--",
+            "sh",
+            "-c",
+            "mkdir -p test-results/epics/E24 && npm run build && sh tools/e2e-lock.sh npx playwright test --grep '@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|PO34 service gate|T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1; status=$?; cp test-results/playwright/results.json test-results/epics/E24/playwright-remote.json; exit $status"
+          ],
+          "exitCode": 1
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "PO34 service gate|T-E29-16-browser|T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|interaction panel stays inside|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot",
+            "--workers=1"
+          ],
+          "exitCode": 75
+        },
+        {
+          "command": [
+            "sh",
+            "tools/perf/quiet-run.sh",
+            "npx",
+            "playwright",
+            "test",
+            "tests/perf/l6-budgets.spec.ts",
+            "tests/perf/l6-po-scream.spec.ts",
+            "--project=chromium",
+            "--workers=1"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "outcome": "red/native admission75; final quiet12/12pass"
+    }
+  },
+  "staleReportersRemoved": [
+    "test-results/epics/E22/playwright-remote.json",
+    "test-results/epics/E23/playwright-headless.json",
+    "test-results/epics/E23/playwright-gpu.json"
+  ],
+  "originalPartialCounts": {
+    "met": 7,
+    "red": 3,
+    "unmeasured": 0
+  },
+  "finalV8": "measured failed; one death,18/29rescued; photo experiment reverted",
+  "sourceRuntimeTree": "15b65945695189c36f40a635b50ce4ef9d6b63d2"
+}

@@ -1,0 +1,15 @@
+#!/bin/sh
+if [ "${MI_AC_NATIVE_TRY:-}" = 1 ] && [ "${MI_AC_BROWSER_HELD:-}" != 1 ]; then
+  export MI_AC_BROWSER_HELD=1
+  exec /usr/bin/lockf -s -t 0 -k /tmp/ac-close-l4-l6-browser.serial /bin/sh /tmp/ac-close-l4-l6-verifier/launch.sh -c 'exec "$@"' sh /opt/homebrew/bin/npx "$@"
+fi
+set -u
+if [ "${1:-}" = playwright ] && [ "${2:-}" = test ] && [ "${3:-}" = tests/perf/l4-budgets.spec.ts ] && [ -f /tmp/ac-close-l4-l6-verifier/combine-perf ]; then
+  rm /tmp/ac-close-l4-l6-verifier/combine-perf
+  shift 3
+  exec /opt/homebrew/bin/npx playwright test tests/perf/l4-budgets.spec.ts tests/perf/l5-budgets.spec.ts tests/perf/l6-budgets.spec.ts tests/perf/l7-lifecycle.spec.ts --grep 'E22|E23|E24' "$@"
+fi
+if [ "${1:-}" = playwright ] && [ "${2:-}" = test ] && [ "${3:-}" = tests/perf/l4-budgets.spec.ts ] && [ "${E2E_RENDERER:-webgl}" = webgl ]; then
+  case " $* " in *tests/perf/l7-lifecycle.spec.ts*) export L4_TIMING_KEYS=1 L4_CPU_PROFILE=1;; esac
+fi
+exec /opt/homebrew/bin/npx "$@"

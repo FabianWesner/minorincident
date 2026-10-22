@@ -1,45 +1,633 @@
 [
   {
     "beat": "breach2",
-    "max": 32.399999999999636,
+    "startTick": 3250,
+    "before": {
+      "entries": [
+        {
+          "door": 2,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 42
+        },
+        {
+          "door": 5,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 43
+        },
+        {
+          "door": 3,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 44
+        },
+        {
+          "door": 6,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 45
+        },
+        {
+          "door": 4,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 46
+        },
+        {
+          "door": 7,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 47
+        }
+      ],
+      "phase": "first",
+      "startAt": 0,
+      "breach1At": 1992,
+      "breach2At": 3253,
+      "abandonAt": 0,
+      "nextWave": 3853,
+      "firstBang": true,
+      "secondBang": true,
+      "leaderX": 6,
+      "leaderZ": -2,
+      "paused": false,
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 10,
+          "injured": false,
+          "routine": "guard",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 11,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 12,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 13,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 14,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 15,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 16,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 17,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 18,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 19,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 20,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 21,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 22,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 23,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 24,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 25,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 26,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 27,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 28,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 29,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 30,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 31,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 33,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 34,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 35,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 36,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 37,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 38,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "gates": [
+        {
+          "id": 39,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 40,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 41,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "infectedIds": [
+        51,
+        53
+      ],
+      "spawnLog": [
+        {
+          "id": 51,
+          "door": 0,
+          "x": -10,
+          "z": -19.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 53,
+          "door": 0,
+          "x": -9.2,
+          "z": -19.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        }
+      ],
+      "flashlight": false,
+      "mainPower": true,
+      "emergency": false,
+      "exitAt": 0,
+      "gateAt": 0,
+      "injuryLineAt": 0,
+      "lastShot": 0,
+      "mid": false,
+      "platform": false,
+      "say": {
+        "id": 15,
+        "text": "It hurts to put weight on it. Please do not leave me behind.",
+        "at": 300,
+        "until": 570
+      }
+    },
+    "eventTick": 3253,
+    "captured": true,
+    "max": 33.69999999999891,
     "frames": [
-      22.19999999999891,
-      2.900000000001455,
-      16,
-      31.899999999999636,
-      32.399999999999636,
-      3.7000000000007276,
-      16,
-      11.399999999999636,
-      14.699999999998909,
-      17.100000000000364,
-      16.600000000000364,
-      15.200000000000728,
-      14.699999999998909,
-      13.399999999999636,
-      14.900000000001455,
-      14.299999999999272,
-      18.399999999999636,
-      14.5,
-      14.399999999999636,
-      13.400000000001455,
-      14.099999999998545,
-      12.800000000001091,
-      12.399999999999636,
-      10.399999999999636,
-      12.800000000001091,
-      14.399999999999636,
-      13.299999999999272,
-      10.600000000000364,
-      14.100000000000364,
-      13.399999999999636,
-      13,
-      10.5,
-      11.600000000000364,
-      12.5,
-      13.799999999999272,
-      11.700000000000728,
-      13.799999999999272
+      {
+        "fromTick": 3250,
+        "toTick": 3250,
+        "ms": 7.299999999999272
+      },
+      {
+        "fromTick": 3250,
+        "toTick": 3251,
+        "ms": 16.80000000000109
+      },
+      {
+        "fromTick": 3251,
+        "toTick": 3252,
+        "ms": 20
+      },
+      {
+        "fromTick": 3252,
+        "toTick": 3252,
+        "ms": 1.5
+      },
+      {
+        "fromTick": 3252,
+        "toTick": 3253,
+        "ms": 16.099999999998545
+      },
+      {
+        "fromTick": 3253,
+        "toTick": 3255,
+        "ms": 31.900000000001455
+      },
+      {
+        "fromTick": 3255,
+        "toTick": 3257,
+        "ms": 33.69999999999891
+      },
+      {
+        "fromTick": 3257,
+        "toTick": 3258,
+        "ms": 6.200000000000728
+      },
+      {
+        "fromTick": 3258,
+        "toTick": 3259,
+        "ms": 18.299999999999272
+      },
+      {
+        "fromTick": 3259,
+        "toTick": 3260,
+        "ms": 16.399999999999636
+      },
+      {
+        "fromTick": 3260,
+        "toTick": 3261,
+        "ms": 16.5
+      },
+      {
+        "fromTick": 3261,
+        "toTick": 3262,
+        "ms": 15.800000000001091
+      },
+      {
+        "fromTick": 3262,
+        "toTick": 3263,
+        "ms": 16.399999999999636
+      },
+      {
+        "fromTick": 3263,
+        "toTick": 3264,
+        "ms": 17.5
+      },
+      {
+        "fromTick": 3264,
+        "toTick": 3265,
+        "ms": 17.200000000000728
+      },
+      {
+        "fromTick": 3265,
+        "toTick": 3267,
+        "ms": 33.69999999999891
+      },
+      {
+        "fromTick": 3267,
+        "toTick": 3267,
+        "ms": 0.2000000000007276
+      },
+      {
+        "fromTick": 3267,
+        "toTick": 3268,
+        "ms": 18.600000000000364
+      },
+      {
+        "fromTick": 3268,
+        "toTick": 3269,
+        "ms": 14.099999999998545
+      },
+      {
+        "fromTick": 3269,
+        "toTick": 3269,
+        "ms": 13.900000000001455
+      },
+      {
+        "fromTick": 3269,
+        "toTick": 3270,
+        "ms": 15.699999999998909
+      },
+      {
+        "fromTick": 3270,
+        "toTick": 3271,
+        "ms": 12.600000000000364
+      },
+      {
+        "fromTick": 3271,
+        "toTick": 3272,
+        "ms": 14.600000000000364
+      },
+      {
+        "fromTick": 3272,
+        "toTick": 3273,
+        "ms": 14.100000000000364
+      },
+      {
+        "fromTick": 3273,
+        "toTick": 3274,
+        "ms": 12.799999999999272
+      },
+      {
+        "fromTick": 3274,
+        "toTick": 3274,
+        "ms": 13.799999999999272
+      },
+      {
+        "fromTick": 3274,
+        "toTick": 3275,
+        "ms": 13.400000000001455
+      },
+      {
+        "fromTick": 3275,
+        "toTick": 3276,
+        "ms": 10.599999999998545
+      },
+      {
+        "fromTick": 3276,
+        "toTick": 3277,
+        "ms": 14.5
+      },
+      {
+        "fromTick": 3277,
+        "toTick": 3278,
+        "ms": 13.5
+      },
+      {
+        "fromTick": 3278,
+        "toTick": 3278,
+        "ms": 13.600000000000364
+      },
+      {
+        "fromTick": 3278,
+        "toTick": 3279,
+        "ms": 13.200000000000728
+      },
+      {
+        "fromTick": 3279,
+        "toTick": 3280,
+        "ms": 9.600000000000364
+      },
+      {
+        "fromTick": 3280,
+        "toTick": 3281,
+        "ms": 13.899999999999636
+      },
+      {
+        "fromTick": 3281,
+        "toTick": 3281,
+        "ms": 13.799999999999272
+      },
+      {
+        "fromTick": 3281,
+        "toTick": 3282,
+        "ms": 14.399999999999636
+      },
+      {
+        "fromTick": 3282,
+        "toTick": 3283,
+        "ms": 11.400000000001455
+      }
     ],
     "state": {
       "entries": [
@@ -565,53 +1153,633 @@
   },
   {
     "beat": "abandon",
-    "max": 14.299999999999272,
+    "startTick": 3250,
+    "before": {
+      "entries": [
+        {
+          "door": 2,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 42
+        },
+        {
+          "door": 5,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 43
+        },
+        {
+          "door": 3,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 44
+        },
+        {
+          "door": 6,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 45
+        },
+        {
+          "door": 4,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 46
+        },
+        {
+          "door": 7,
+          "warnedAt": 0,
+          "remaining": 2,
+          "nextAt": 0,
+          "switchId": 47
+        }
+      ],
+      "phase": "first",
+      "startAt": 0,
+      "breach1At": 1992,
+      "breach2At": 3253,
+      "abandonAt": 0,
+      "nextWave": 3853,
+      "firstBang": true,
+      "secondBang": true,
+      "leaderX": 6,
+      "leaderZ": -2,
+      "paused": false,
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 10,
+          "injured": false,
+          "routine": "guard",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 11,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 12,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 13,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 14,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 15,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 16,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 17,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 18,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 19,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 20,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 21,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 22,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 23,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 24,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-15",
+          "id": 25,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-16",
+          "id": 26,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-17",
+          "id": 27,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-18",
+          "id": 28,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-19",
+          "id": 29,
+          "injured": false,
+          "routine": "rest",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-20",
+          "id": 30,
+          "injured": true,
+          "routine": "share",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-21",
+          "id": 31,
+          "injured": false,
+          "routine": "sit",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-22",
+          "id": 32,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-23",
+          "id": 33,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 34,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 35,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 36,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 37,
+          "injured": false,
+          "routine": "talk",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 38,
+          "injured": false,
+          "routine": "treat",
+          "status": "shelter",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "gates": [
+        {
+          "id": 39,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 40,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 41,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "infectedIds": [
+        51,
+        53
+      ],
+      "spawnLog": [
+        {
+          "id": 51,
+          "door": 0,
+          "x": -10,
+          "z": -19.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 53,
+          "door": 0,
+          "x": -9.2,
+          "z": -19.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        }
+      ],
+      "flashlight": false,
+      "mainPower": true,
+      "emergency": false,
+      "exitAt": 0,
+      "gateAt": 0,
+      "injuryLineAt": 0,
+      "lastShot": 0,
+      "mid": false,
+      "platform": false,
+      "say": {
+        "id": 15,
+        "text": "It hurts to put weight on it. Please do not leave me behind.",
+        "at": 300,
+        "until": 570
+      }
+    },
+    "eventTick": 3253,
+    "captured": true,
+    "max": 33.69999999999891,
     "frames": [
-      10.899999999999636,
-      10.899999999999636,
-      12.800000000001091,
-      12.199999999998909,
-      9.600000000000364,
-      12.700000000000728,
-      14.199999999998909,
-      10.800000000001091,
-      11.699999999998909,
-      13.300000000001091,
-      11.399999999999636,
-      10.200000000000728,
-      14.299999999999272,
-      13,
-      12.600000000000364,
-      11.100000000000364,
-      11,
-      12.5,
-      10.5,
-      12.399999999999636,
-      12.199999999998909,
-      13.600000000000364,
-      11.5,
-      12.300000000001091,
-      12.599999999998545,
-      13.400000000001455,
-      10.399999999999636,
-      13.5,
-      12.5,
-      13.299999999999272,
-      10.100000000000364,
-      13.299999999999272,
-      11.5,
-      10.800000000001091,
-      12,
-      13.600000000000364,
-      13.099999999998545,
-      11.100000000000364,
-      12,
-      12.399999999999636,
-      10.900000000001455,
-      12.399999999999636,
-      12.5,
-      12.299999999999272,
-      9.800000000001091
+      {
+        "fromTick": 3250,
+        "toTick": 3250,
+        "ms": 7.299999999999272
+      },
+      {
+        "fromTick": 3250,
+        "toTick": 3251,
+        "ms": 16.80000000000109
+      },
+      {
+        "fromTick": 3251,
+        "toTick": 3252,
+        "ms": 20
+      },
+      {
+        "fromTick": 3252,
+        "toTick": 3252,
+        "ms": 1.5
+      },
+      {
+        "fromTick": 3252,
+        "toTick": 3253,
+        "ms": 16.099999999998545
+      },
+      {
+        "fromTick": 3253,
+        "toTick": 3255,
+        "ms": 31.900000000001455
+      },
+      {
+        "fromTick": 3255,
+        "toTick": 3257,
+        "ms": 33.69999999999891
+      },
+      {
+        "fromTick": 3257,
+        "toTick": 3258,
+        "ms": 6.200000000000728
+      },
+      {
+        "fromTick": 3258,
+        "toTick": 3259,
+        "ms": 18.299999999999272
+      },
+      {
+        "fromTick": 3259,
+        "toTick": 3260,
+        "ms": 16.399999999999636
+      },
+      {
+        "fromTick": 3260,
+        "toTick": 3261,
+        "ms": 16.5
+      },
+      {
+        "fromTick": 3261,
+        "toTick": 3262,
+        "ms": 15.800000000001091
+      },
+      {
+        "fromTick": 3262,
+        "toTick": 3263,
+        "ms": 16.399999999999636
+      },
+      {
+        "fromTick": 3263,
+        "toTick": 3264,
+        "ms": 17.5
+      },
+      {
+        "fromTick": 3264,
+        "toTick": 3265,
+        "ms": 17.200000000000728
+      },
+      {
+        "fromTick": 3265,
+        "toTick": 3267,
+        "ms": 33.69999999999891
+      },
+      {
+        "fromTick": 3267,
+        "toTick": 3267,
+        "ms": 0.2000000000007276
+      },
+      {
+        "fromTick": 3267,
+        "toTick": 3268,
+        "ms": 18.600000000000364
+      },
+      {
+        "fromTick": 3268,
+        "toTick": 3269,
+        "ms": 14.099999999998545
+      },
+      {
+        "fromTick": 3269,
+        "toTick": 3269,
+        "ms": 13.900000000001455
+      },
+      {
+        "fromTick": 3269,
+        "toTick": 3270,
+        "ms": 15.699999999998909
+      },
+      {
+        "fromTick": 3270,
+        "toTick": 3271,
+        "ms": 12.600000000000364
+      },
+      {
+        "fromTick": 3271,
+        "toTick": 3272,
+        "ms": 14.600000000000364
+      },
+      {
+        "fromTick": 3272,
+        "toTick": 3273,
+        "ms": 14.100000000000364
+      },
+      {
+        "fromTick": 3273,
+        "toTick": 3274,
+        "ms": 12.799999999999272
+      },
+      {
+        "fromTick": 3274,
+        "toTick": 3274,
+        "ms": 13.799999999999272
+      },
+      {
+        "fromTick": 3274,
+        "toTick": 3275,
+        "ms": 13.400000000001455
+      },
+      {
+        "fromTick": 3275,
+        "toTick": 3276,
+        "ms": 10.599999999998545
+      },
+      {
+        "fromTick": 3276,
+        "toTick": 3277,
+        "ms": 14.5
+      },
+      {
+        "fromTick": 3277,
+        "toTick": 3278,
+        "ms": 13.5
+      },
+      {
+        "fromTick": 3278,
+        "toTick": 3278,
+        "ms": 13.600000000000364
+      },
+      {
+        "fromTick": 3278,
+        "toTick": 3279,
+        "ms": 13.200000000000728
+      },
+      {
+        "fromTick": 3279,
+        "toTick": 3280,
+        "ms": 9.600000000000364
+      },
+      {
+        "fromTick": 3280,
+        "toTick": 3281,
+        "ms": 13.899999999999636
+      },
+      {
+        "fromTick": 3281,
+        "toTick": 3281,
+        "ms": 13.799999999999272
+      },
+      {
+        "fromTick": 3281,
+        "toTick": 3282,
+        "ms": 14.399999999999636
+      },
+      {
+        "fromTick": 3282,
+        "toTick": 3283,
+        "ms": 11.400000000001455
+      }
     ],
     "state": {
       "entries": [
@@ -663,11 +1831,11 @@
       "breach1At": 1992,
       "breach2At": 3253,
       "abandonAt": 3253,
-      "nextWave": 4453,
+      "nextWave": 3853,
       "firstBang": true,
       "secondBang": true,
-      "leaderX": 23.123333333333175,
-      "leaderZ": 15,
+      "leaderX": 6,
+      "leaderZ": -0.8633333333333346,
       "paused": false,
       "survivors": [
         {
@@ -741,7 +1909,7 @@
           "id": 16,
           "injured": false,
           "routine": "sit",
-          "status": "turned",
+          "status": "following",
           "straggler": false,
           "collected": false,
           "rejoined": false,
@@ -752,7 +1920,7 @@
           "id": 17,
           "injured": false,
           "routine": "talk",
-          "status": "turned",
+          "status": "following",
           "straggler": false,
           "collected": false,
           "rejoined": false,
@@ -829,7 +1997,7 @@
           "id": 24,
           "injured": false,
           "routine": "rest",
-          "status": "turned",
+          "status": "following",
           "straggler": false,
           "collected": false,
           "rejoined": false,
@@ -1020,8 +2188,7 @@
         69,
         71,
         73,
-        75,
-        78
+        75
       ],
       "spawnLog": [
         {
@@ -1113,15 +2280,6 @@
           "tick": 3281,
           "wave": 2,
           "offscreen": true
-        },
-        {
-          "id": 78,
-          "door": 0,
-          "x": -10,
-          "z": -19.4,
-          "tick": 3853,
-          "wave": 3,
-          "offscreen": true
         }
       ],
       "flashlight": false,
@@ -1140,9 +2298,9 @@
         "until": 3523
       },
       "waitFlipAt": 0,
-      "tailX": 11.213368023572817,
+      "tailX": 2.58775677153881,
       "strayed": false,
-      "strayFlipAt": 4104
+      "strayFlipAt": 0
     }
   }
 ]

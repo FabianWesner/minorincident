@@ -51,6 +51,8 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
     await page.evaluate(() => window.__SS__!.pause());
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => window.__SS__!.resume());
+    const runtime = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier }; });
+    expect(runtime.backend).toBe(renderer); expect(runtime.tier).toBe(quality);
     // Past the shader/pipeline warm-up stalls, still inside the 20-35 s ride. The virtual clock advances one pattern step per
     // real frame, so a slower cadence runs the game faster than real time: wait the same game time (about 8 s at 60 Hz).
     const mean = steps.reduce((a, b) => a + b, 0) / steps.length;
@@ -80,7 +82,7 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
     const wheelSpinDeltaRad = samples[0].wheels.map((spin, i) => Math.abs(samples.at(-1)!.wheels[i] - spin));
     expect(wheelSpinDeltaRad).toHaveLength(4);
     for (const delta of wheelSpinDeltaRad) expect(delta, 'every bus wheel rolls during the ride').toBeGreaterThan(1);
-    const result = { playerBusIndex, wheelSpinDeltaRad, frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };
+    const result = { ...runtime, playerBusIndex, wheelSpinDeltaRad, frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };
     writeFileSync(`test-results/epics/E22/ride-smooth-${name}.json`, JSON.stringify({ ...result, samples: samples.map(s => ({ t: +s.t.toFixed(1), bus: s.bus.map(v => +v.toFixed(2)), apc: s.apc.map(v => +v.toFixed(2)) })) }));
     expect(samples.length).toBeGreaterThan(30);
     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);

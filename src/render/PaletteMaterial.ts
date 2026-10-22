@@ -38,7 +38,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; /** 0 healthy, 1 infected: keep underground body highlights below the red eyes. */ threat?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
@@ -186,24 +186,30 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // PO 10-20 #63 (walls, floor and edges unreadable outside the cone): a dim albedo-scaled emergency fill keeps
         // every surface's own colour; floors take more than walls so ledges, track bed and wall edges separate.
         // The grade-level district ground outside the kit (y 0; every metro floor sits at 0.35 m or above) stays black.
-        const emergency = surface.max(vec3(.05)).mul(lighting.subwayFill).mul(normalWorld.y.abs().mul(.45).add(.55)).mul(positionWorld.y.smoothstep(.15, .3));
+        // The retreat column must read beyond the courier's cone as people,
+        // retaining clothing/skin hues rather than disappearing into grey silhouettes.
+        const figureEmergency = surface.mul(float(.065).div(luminance(surface).max(.08)))
+          .mul(max(this.movingFigure, figureFillAmount.greaterThan(0).select(1, 0)));
+        const emergency = max(surface.max(vec3(.05)).mul(lighting.subwayFill), figureEmergency)
+          .mul(normalWorld.y.abs().mul(.45).add(.55)).mul(positionWorld.y.smoothstep(.15, .3));
         const dark = max(mix(vec3(luminance(result)).mul(.5).add(.012), result, colour), emergency);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       });
       const graded = float(1).toVar();
       const courierRead = this.heroFigure.mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
       if (!emissive && (mode & flags.hero)) {
+        // Underground uses the same local separation on low, where the flashlight has no shadow.
         // A soft contact shade separates the courier from the night road without
         // raising her highlights. Moving figures (including the corgi) keep their lighting.
         const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
-          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
-        result.mulAssign(contact.mul(-.6).add(1));
+          .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
+        result.mulAssign(contact.mul(lighting.subwayDarkness.mul(-.08).sub(.6)).add(1));
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
           .mul(figureFillAmount.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
-          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+          .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
         result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
           // Hue-preserving albedo lift: scale RGB together so HSV hue/saturation stay authored
@@ -239,6 +245,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // below 3:1. Keep a small, hue-preserving visibility margin on her figure
       // after the fog/night key, without lifting the surrounding ground ring.
       if (mode & flags.fog) result.mulAssign(float(1).add(this.heroFigure.mul(weatherSurface.fog.smoothstep(.4, .8)).mul(.08)));
+      if (nodes?.threat && nodes.emissiveOnly) {
+        // Warm headlamp highlights on pale hair used to outshine the bounded red emitter.
+        // Scale RGB together: preserve the infected's authored colours and keep healthy people unchanged.
+        const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.subwayDarkness);
+        result.mulAssign(mix(1, float(.1).div(luminance(result).max(.1)), body));
+      }
       result.addAssign(this.hitFlash);
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
@@ -282,6 +294,14 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       this._outputs.set(key, output);
     }
     this.outputNode = output; this.needsUpdate = true;
+  }
+  /** Diagnostic silhouettes must discard the same foreground fragments as the shipping material. */
+  probeMaskOutput(rgb: Node<'vec3'>): Node {
+    const reveal = this.userData.seeThrough ?? false;
+    return Fn(() => {
+      if (reveal) Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+      return vec4(rgb, this.fade);
+    })();
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
   seeThrough(enabled: boolean | 'boss' | 'placement' = true): this {
