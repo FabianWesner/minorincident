@@ -197,18 +197,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // on an unarmed rack it uses the fist chain even when the selected action is the kick. Space instead keeps
     // kicking along the facing cone, which left the fists campaign repeating L5 with no damage for eight seconds.
     if (keepMovingWithFists(e.level,e.step,!!e.player?.weapons.every(id => /fists|kick/.test(id)),e.enemies.filter(b => b.d < 3).length)) {
-      // Punch while walking toward the visible ring against one or two contacts.
+      // Punch against one or two contacts; kick through a crowd while walking toward the visible ring.
       // Waiting for a fetched survivor keeps the courier beside that visible body.
       const contacts=e.enemies.filter(b=>b.d<3).length;
       const escortId=escort?.id,escortNear=escortId===undefined||e.allies.some(b=>b.id===escortId&&b.drawn&&b.d<=4);
       const walkingAttack=fistsRetreatAttack(contacts);
-      const goal=walkingAttack&&escortNear&&(e.step==='retreat'||e.step==='exit')?await goalScreen(e):null;
+      const goal=escortNear&&(e.step==='retreat'||e.step==='exit')?await goalScreen(e):null;
       const approach=goal&&e.player&&ring&&Math.hypot(ring.x-e.player.x,ring.z-e.player.z)>1.5?wasdToward(e,goal.x,goal.y):[];
       await releaseAim();
       if(approach.length) {
         const feet=await page.evaluate(at=>window.__SS__!.input.project(at,'destination'),{x:threat.x,z:threat.z});
-        await page.mouse.move(feet.x,feet.y);await press([...approach,walkingAttack!]);
-        if(now-lastCrowdKick>750){lastCrowdKick=now;log({fistsRetreat:e.tick,keys:approach,enemy:threat.id});}
+        await page.mouse.move(feet.x,feet.y);await press([...approach,walkingAttack]);
+        if(now-lastCrowdKick>750){lastCrowdKick=now;log({fistsRetreat:e.tick,keys:approach,attack:walkingAttack,enemy:threat.id});}
         return true;
       }
       // A brief right-hand kick clears a crowd or frees the gate interaction.
