@@ -1,6 +1,6 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status: investigating. Baseline worktree starts at `4b410697f`; final matched measurements must use the announced batch 13i base. Quiet browser work starts after 15:00 UTC on 2026-10-22.
+Status: candidate fixes prepared. Matched base `480b44e42` is merged; the single baseline worktree is `/tmp/minorincident-perf-l4-l6-before`. Quiet browser work starts after 15:00 UTC on 2026-10-22.
 
 ## Required evidence
 
@@ -43,3 +43,5 @@ Renderer unload now clears the observed cached material references after retirin
 The auxiliary remote WebGL high trace sees a new `pal_static-colors` interaction graph after the alarm, in addition to streamed district graphs. InteractionView rebuilt equivalent feature graphs for each asset/LOD, unlike DistrictAssets. It now passes an owned graph cache to the existing `staticBatch` helper; its complete feature key preserves different surface/window/emissive inputs. A failing baseline identity guard now passes, verifies exactly one disposal of the shared material, and the four-file focused run passes five tests. Typecheck and lint pass. This is a candidate fix pending the authoritative native timing run. No LOD/count/quality or measurement changes and no additional warm-up were introduced.
 
 The original-base full remote suite passes 436 files / 2,393 tests (three files / nine cases skipped by the existing suite), with its complete log archived. The orchestrator announced matched base `480b44e42` (lane/batch13i); both native sides will use it.
+
+The lifecycle fixture is copied byte-for-byte from handoff runtime `f0fb391fb` because batch 13i still contains the older three-load L5/L7 fixture. Both matched trees use this exact five-load fixture with the original 10% assertions. This restores the handoff measurement; it does not adopt the later seven-load diagnostic.
