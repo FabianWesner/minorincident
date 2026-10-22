@@ -59,6 +59,10 @@ try {
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), perf: a.perf() };
   }, { tier });
+  if (process.env.L10_CORPSE_ORDER !== undefined) await session.page.evaluate(order => {
+    const g = (window.__SCENE__ as unknown as { game: Game }).game;
+    g.view.scene.traverse(object => { if (object.name.startsWith('corpses:')) object.renderOrder = order; });
+  }, Number(process.env.L10_CORPSE_ORDER));
   assert.ok(result.kills.length > 0, 'the assault must produce real combat kill events');
   assert.equal(result.bodies.length, result.kills.length, 'every real kill must remain a permanent body');
   const captures = [];
@@ -107,7 +111,7 @@ try {
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
-  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, captures, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, renderOrderOverride: process.env.L10_CORPSE_ORDER, captures, errors: session.errors }, null, 2));
   assert.deepEqual(session.errors, []);
   console.log(JSON.stringify({ tier, backend: session.options.backend, kills: result.kills.length, bodies: result.bodies.length, captures, errors: session.errors }));
 } finally { await session.close(); stopServer(); }
