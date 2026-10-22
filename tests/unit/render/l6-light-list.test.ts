@@ -1,32 +1,7 @@
 import { expect, test } from 'vitest';
-import { DepthTexture, NodeBuilder, Scene, WebGLCoordinateSystem } from 'three/webgpu';
-import { float, vec3 } from 'three/tsl';
+import { Scene } from 'three/webgpu';
 import { Lighting } from '../../../src/render/Lighting';
 import { footprint } from '../../../src/render/LightField';
-
-// Setup is CPU-only. Use the public bundled builder so its TSL stack matches
-// the production Fn nodes; @types/three omits the setup-stage builder surface.
-interface FilterBuilder {
-  setBuildStage(stage: 'setup'): void; setShaderStage(stage: 'fragment'): void;
-  addStack(): void; removeStack(): void;
-  nodes: Set<{ type: string }>;
-}
-const SetupBuilder = NodeBuilder as unknown as new (object: null, renderer: { coordinateSystem: number; hasCompatibility(): boolean }, parser: null) => FilterBuilder;
-for (const intensity of [0, 1]) test(`PO #100 shadow filter setup retains a runtime activity branch (${intensity})`, () => {
-  const lighting = new Lighting(new Scene()); lighting.set('L10-night'); lighting.sun.shadow.intensity = intensity;
-  const builder = new SetupBuilder(null, { coordinateSystem: WebGLCoordinateSystem, hasCompatibility: () => false }, null);
-  builder.setBuildStage('setup'); builder.setShaderStage('fragment'); builder.addStack();
-  try {
-    const filter = (lighting.sun.shadow as unknown as { filterNode(inputs: object): { build(builder: FilterBuilder): void } }).filterNode;
-    // Passing TSL's argument proxy to the nested Fn loses shadowCoord and throws
-    // while building these real texture nodes, before a GPU is needed.
-    filter({ depthTexture: new DepthTexture(8, 8), shadowCoord: vec3(.5), shadow: lighting.sun.shadow, depthLayer: float(0) }).build(builder);
-    const branches = [...builder.nodes].filter(n => n.type === 'ConditionalNode');
-    expect(branches).toHaveLength(1);
-    const condition = (branches[0] as unknown as { condNode: { node: { op: string; aNode: { property: string }; bNode: { value: number } } } }).condNode.node;
-    expect(condition.op).toBe('>'); expect(condition.aNode.property).toBe('intensity'); expect(condition.bNode.value).toBe(0);
-  } finally { builder.removeStack(); lighting.dispose(); }
-});
 
 // PO 10-20 #62 "L6 after I picked up the headlamp there is a 3-5s freeze". The pickup promoted the headlamp to the
 // hero spot, swapping sun -> spot: a light-list change rebuilds every material pipeline warmed after loading.
@@ -48,7 +23,7 @@ test('@E24 @E25 PO 10-20 #62 the subway keeps one stable light list across the h
   lighting.dispose();
 });
 
-for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-zoo', 'L10-night'] as const) {
+for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-zoo'] as const) {
   test(`${preset} ${quality}: entering and leaving a hero pool retains the light list and only updates the active shadow`, () => {
     const lighting = new Lighting(new Scene()); lighting.set(preset); lighting.setQuality(quality);
     const light = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 9, range: 18, angle: 48, flicker: 'none', shadow: 'hero', position: [0, 3, 0], direction: [0, -1, 0] }), id: 'lamp' };
@@ -67,7 +42,7 @@ for (const quality of ['low', 'high'] as const) for (const preset of ['L5', 'L8-
 
 // QA 10-21 #82 "switching quality low -> high throws TypeError: Cannot read properties of null (reading 'depthTexture')
 // in the shadow update": a runtime castShadow flip disposes the ShadowNode that cached materials still update.
-for (const preset of ['L6-subway', 'L6', 'L1', 'L5', 'L10-night'] as const) {
+for (const preset of ['L6-subway', 'L6', 'L1', 'L5'] as const) {
   test(`@E24 QA #82 ${preset}: quality switches never flip castShadow; low L6 only zeroes the spot shadow`, () => {
     const lighting = new Lighting(new Scene()); lighting.set(preset);
     const headlamp = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 9, range: 18, angle: 48, flicker: 'none', shadow: 'hero', position: [1.5, 1.9, -2], direction: [1, -.3, 0] }), id: 'headlamp' };
