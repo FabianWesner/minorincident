@@ -78,7 +78,7 @@ describe('automatic regression invariants', () => {
     expect(result.seats.slice(0, 20), `${result.seats.length} seat failures; P1-112`).toEqual([]);
   }, 480_000);
 
-  test('3 scripted actors: the depot clerk persists through handover and return-to-door exit', async () => {
+  test('3 scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits', async () => {
     const morning = await morningSweep();
     const world = await loadLevel('L1', 1), mission = world.missions!;
     // Run the same L1 story controller used by the depot trigger; it stays private in production.

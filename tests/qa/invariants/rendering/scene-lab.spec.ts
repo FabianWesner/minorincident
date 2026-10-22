@@ -6,6 +6,7 @@ import { SceneSession, readSpec, stopServer } from '../../../../tools/scenelab/s
 import type { Game } from '../../../../src/Game';
 import type { InstancedGroup } from '../../../../src/render/InstancedGroup';
 import type { Mesh } from 'three';
+import { PNG } from 'pngjs';
 
 const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://minor-incident.com';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
@@ -29,17 +30,26 @@ async function measure(browser: Browser, origin: string, level: typeof levels[nu
     await page.getByTestId(`level-${level}`).click();
     // A briefing is part of preparing the playable level. Activate Begin as soon as it is ready,
     // then stop the timer on the first drawn gameplay frame; no human reading delay is measured.
-    await page.waitForFunction(() => {
+    await page.waitForFunction(level => {
+      const cover = document.querySelector<HTMLElement>('[data-testid=level-transition]');
+      if (!cover?.hidden || window.__SS__?.getState().scenario !== level) return false;
       const begin = document.querySelector<HTMLElement>('[data-testid=mission-button]');
       const pause = document.querySelector<HTMLElement>('[data-testid=pause-button]');
       return !!begin && !begin.hidden && begin.getBoundingClientRect().height > 0 || !!pause && !pause.hidden && pause.getBoundingClientRect().height > 0;
-    }, undefined, { timeout: 180_000 });
+    }, level, { timeout: 180_000 });
     if (await page.getByTestId('mission-button').isVisible() && /Begin/.test(await page.getByTestId('mission-button').innerText())) await page.getByTestId('mission-button').click();
     await expect(page.getByTestId('pause-button')).toBeVisible({ timeout: 180_000 });
-    await page.evaluate(() => window.__SS__!.screenshotReady());
-    const result = await page.evaluate(start => ({ ms: performance.now() - start, backend: window.__SS__!.perf().backend, quality: window.__SS__!.perf().quality.tier, tick: window.__SS__!.tick() }), t0);
+    const result = await page.evaluate(async start => {
+      // Loading has presented its first frame. Two gameplay RAFs prove a live drawn frame without waiting for
+      // background chunk streaming (screenshotReady can wait forever while an L9/L10 world keeps streaming).
+      for (let i = 0; i < 2; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      const perf = window.__SS__!.perf();
+      return { ms: performance.now() - start, backend: perf.backend, quality: perf.quality.tier, tick: window.__SS__!.tick(), phase: window.__SS__!.missions.state()?.phase, drawCalls: perf.drawCalls, bundle: document.querySelector<HTMLScriptElement>('script[type=module][src]')?.src };
+    }, t0);
     expect(result.backend, `${level} requires WebGPU`).toBe('webgpu');
     expect(result.quality, `${level} requires low quality`).toBe('low');
+    expect(result.drawCalls, `${level} requires a drawn gameplay frame`).toBeGreaterThan(0);
+    expect(result.phase, `${level} requires playable mission state`).toBe('playing');
     return result;
   } finally { await context.close(); }
 }
@@ -90,11 +100,42 @@ test('Scene Lab: scripted cast is submitted and drawn on both quality paths', as
           });
           return w.missions!.state.l2!.benchIds.filter(id => drawn.has(id)).map(id => {
             const e = w.entities.get(id)!, a = e.civilian!.schedule![0], prop = w.props!.items.find(p => p.id === a.seatProp);
-            return { id, prop: prop?.id ?? null, drawnSeat: !!prop && submissions.some(p => !p.placeholder && Math.hypot(p.x - prop.pose.p[0], p.z - prop.pose.p[2]) < .05) };
+            const points: number[][] = [];
+            if (prop) for (const dx of [-1, 1]) for (const dy of [-1, 1]) for (const dz of [-1, 1]) {
+              const yaw = 2 * Math.atan2(prop.pose.q[1], prop.pose.q[3]), x = prop.center[0] + dx * prop.half[0], z = prop.center[2] + dz * prop.half[2];
+              const p = game.view.project(prop.pose.p[0] + Math.cos(yaw) * x + Math.sin(yaw) * z, prop.pose.p[1] + prop.center[1] + dy * prop.half[1], prop.pose.p[2] - Math.sin(yaw) * x + Math.cos(yaw) * z);
+              points.push([(p[0] + 1) * innerWidth / 2, (1 - p[1]) * innerHeight / 2]);
+            }
+            return { id, prop: prop?.id ?? null, drawnSeat: !!prop && submissions.some(p => !p.placeholder && Math.hypot(p.x - prop.pose.p[0], p.z - prop.pose.p[2]) < .05), rect: points.length ? [Math.min(...points.map(p => p[0])), Math.min(...points.map(p => p[1])), Math.max(...points.map(p => p[0])), Math.max(...points.map(p => p[1]))] : null };
           });
         });
         expect.soft(benches.length, `${tier}: seated NPCs in the PO camera must be drawn`).toBeGreaterThan(0);
         for (const seat of benches) expect.soft(seat.drawnSeat, `${tier}/NPC ${seat.id}: missing drawn bench ${seat.prop}`).toBe(true);
+        const withBenches = PNG.sync.read(await session.page.screenshot());
+        try {
+          await session.page.evaluate(async () => {
+            const game = (window.__SCENE__ as unknown as { game: Game }).game;
+            const changed: { mesh: Mesh; start: number; count: number }[] = [];
+            const used = new Set<string>();
+            game.view.scene.traverse(node => {
+              if (node.name !== 'inst:prop.bench') return;
+              node.traverse(child => { const mesh = child as Mesh; if (!mesh.isMesh || used.has(mesh.geometry.uuid)) return; used.add(mesh.geometry.uuid); const { start, count } = mesh.geometry.drawRange; changed.push({ mesh, start, count }); mesh.geometry.setDrawRange(0, 0); });
+            });
+            (window as unknown as { __qaRestoreBenches: () => void }).__qaRestoreBenches = () => { for (const { mesh, start, count } of changed) mesh.geometry.setDrawRange(start, count); game.view.update(1); };
+            game.view.update(1);
+            for (let i = 0; i < 2; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+          });
+          const withoutBenches = PNG.sync.read(await session.page.screenshot());
+          for (const seat of benches) if (seat.rect) {
+            const [x0, y0, x1, y1] = seat.rect; let changed = 0;
+            // The top half isolates the seat/back above its ground shadow; a live draw call alone cannot prove visible pixels.
+            for (let y = Math.max(0, Math.floor(y0)); y < Math.min(withBenches.height, Math.ceil((y0 + y1) / 2)); y++) for (let x = Math.max(0, Math.floor(x0)); x < Math.min(withBenches.width, Math.ceil(x1)); x++) {
+              const p = (y * withBenches.width + x) * 4;
+              if (Math.abs(withBenches.data[p] - withoutBenches.data[p]) + Math.abs(withBenches.data[p + 1] - withoutBenches.data[p + 1]) + Math.abs(withBenches.data[p + 2] - withoutBenches.data[p + 2]) > 30) changed++;
+            }
+            expect.soft(changed, `${tier}/NPC ${seat.id}: bench has no visible body pixels`).toBeGreaterThanOrEqual(8);
+          }
+        } finally { await session.page.evaluate(() => (window as unknown as { __qaRestoreBenches?: () => void }).__qaRestoreBenches?.()); }
         await info.attach(`seated-props-${tier}`, { body: JSON.stringify(benches, null, 2), contentType: 'application/json' });
         expect.soft(session.errors, `${tier} Scene Lab errors`).toEqual([]);
       } finally { await session.close(); }

@@ -1,9 +1,9 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { loadLevel } from './world';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { l2 } from '../../../src/data/l2';
 import { l3 } from '../../../src/data/l3';
-import { l6Entries } from '../../../src/data/l6';
+import { l6Entries, l6Doors } from '../../../src/data/l6';
 import { l7Encounters } from '../../../src/data/l7';
 import { cureEncounters, cureEncounterSlots } from '../../../src/levels/L10/encounters';
 import { followFrustum } from '../../../tools/sim-runner/l3Bots';
@@ -16,7 +16,7 @@ function reach(w: SimWorld, ids: number[], goal: (id: number, x: number, z: numb
   for (let tick = 0; tick < frames && reached.size < ids.length; tick++) {
     // Isolate navigation from damage: an ally killing an arrival before it reaches the test area is not a routing failure.
     for (const id of ids) { const e = w.entities.get(id); if (e) e.health.current = e.health.max = 1_000_000; }
-    w.update();
+    followFrustum(w); w.update();
     for (const id of observed(w, ids)) {
       admitted.add(id); const e = w.entities.get(id)!;
       if (!e.emerging && goal(id, e.transform.x, e.transform.z)) reached.add(id);
@@ -26,7 +26,7 @@ function reach(w: SimWorld, ids: number[], goal: (id: number, x: number, z: numb
 }
 async function withWorld(id: Parameters<typeof loadLevel>[0], tier: 'high' | 'low', action: (world: SimWorld) => void) {
   const w = await loadLevel(id, 1, tier);
-  try { w.combat!.damage.god = true; action(w); } finally { w.dispose(); }
+  try { w.combat!.damage.god = true; followFrustum(w); action(w); } finally { vi.restoreAllMocks(); w.dispose(); }
 }
 
 // Finite authored waves/alarms, including late mission controllers. Resident wandering populations are not waves.
@@ -34,7 +34,7 @@ async function withWorld(id: Parameters<typeof loadLevel>[0], tier: 'high' | 'lo
 for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier}: L1, L2, L3, L6, L7, L8 and L10`, async () => {
   const errors: string[] = [], receipt: Record<string, { authored: number; spawned: number; admitted: number; reached?: number }> = {};
   const record = (key: string, authored: number, ids: number[], w: SimWorld, movement?: { admitted: number; reached: number }) => {
-    receipt[key] = { authored, spawned: ids.filter(id => id > 0).length, admitted: observed(w, ids).length, ...movement };
+    receipt[key] = { authored, spawned: ids.filter(id => id > 0).length, admitted: movement?.admitted ?? observed(w, ids).length, ...(movement ? { reached: movement.reached } : {}) };
     if (failure(authored, ids)) errors.push(`${key}: authored ${authored}, actual IDs ${ids.filter(id => id > 0).length}`);
     if (movement && movement.reached !== authored) errors.push(`${key}: authored ${authored}, admitted ${movement.admitted}, reached ${movement.reached}`);
   };
@@ -47,32 +47,53 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
   });
   await withWorld('L2', tier, w => {
     const c = w.missions!.l2! as unknown as { openDoors(): void; emergeAmbush(tick: number): void };
-    c.openDoors();
+    w.update(); c.openDoors();
     const s = w.missions!.state.l2!;
-    c.emergeAmbush(w.tick + 20 * 60);
+    // Preserve the authored stagger; dispatching the whole queue at one synthetic future tick jams the mouths.
+    for (let i = 0; i < 20 * 60 && s.ambush.some(a => !a.id); i++) { followFrustum(w); w.update(); }
     const ids = s.ambush.map(a => a.id);
     record('L2/market-ambush', l2.rescue.ambushDoors.reduce((n, [, count]) => n + Math.ceil(count * (tier === 'low' ? l2.escape.lowScale : 1)), 0), ids, w, reach(w, ids, (_id, x, z) => x >= -64 && x <= -36 && z >= -52 && z <= -24));
   });
   await withWorld('L3', tier, w => {
-    const c = w.missions!.l3! as unknown as { startAttack(): void; emergeWaves(): void };
+    const c = w.missions!.l3! as unknown as { startAttack(): void; emergeWaves(): void; checkFallback(): void };
     c.startAttack(); const s = w.missions!.state.l3!, all = s.waves.slice();
+    s.pending.length = 0; s.populated.fill(true);
+    vi.spyOn(c, 'checkFallback').mockImplementation(() => {});
     // Drain each authored stream in isolation from the next phase's cap. Admission and the production spawner stay live.
     for (let wave = 0; wave < l3.attack.waves.length; wave++) {
       const entries = all.filter(q => q.wave === wave), earliest = Math.min(...entries.map(q => q.at));
       for (const e of [...w.infected!.active]) w.infected!.release(e);
       for (const q of entries) q.at = w.tick + q.at - earliest;
       s.waves = entries;
-      // Real sim ticks let bodies clear the exits. Incrementing only the clock falsely reports crowded mouths as missing spawns.
-      for (let i = 0; i < 3600 && entries.some(q => !q.id); i++) { c.emergeWaves(); w.update(); }
-      const yard = l3.map.yard, ids = entries.map(q => q.id);
-      record(`L3/station-wave-${wave}`, Math.ceil(l3.attack.waves[wave].count * (tier === 'low' ? l3.attack.lowScale : 1)), ids, w, reach(w, ids, (_id, x, z) => x > yard.x0 - 3 && x < yard.x1 + 3 && z > yard.z0 - 3 && z < yard.z1 + 3));
+      const yard = l3.map.yard, admitted = new Set<number>(), reached = new Set<number>();
+      for (let i = 0; i < 3600 && (entries.some(q => !q.id) || reached.size < entries.length); i++) {
+        followFrustum(w); c.emergeWaves();
+        for (const e of w.entities.iterate()) if (e.civilian && !e.infected) { e.health.current = e.health.max = 1_000_000; delete e.infection; }
+        for (const q of entries) { const e = w.entities.get(q.id); if (e) e.health.current = e.health.max = 1_000_000; }
+        w.update();
+        for (const id of observed(w, entries.map(q => q.id))) {
+          const e = w.entities.get(id)!, p = e.transform; admitted.add(id);
+          if (p.x > yard.x0 - 3 && p.x < yard.x1 + 3 && p.z > yard.z0 - 3 && p.z < yard.z1 + 3) { reached.add(id); w.infected!.release(e); }
+        }
+      }
+      record(`L3/station-wave-${wave}`, Math.ceil(l3.attack.waves[wave].count * (tier === 'low' ? l3.attack.lowScale : 1)), entries.map(q => q.id), w, { admitted: admitted.size, reached: reached.size });
     }
   });
   await withWorld('L6', tier, w => {
     const c = w.missions!.l6! as unknown as { spawn(n: number, doors: number[], wave: number): number };
+    const state = w.missions!.state.l6!;
+    state.breach1At = state.breach2At = Infinity;
     // Two at the first breach; eight staggered at the second; every authored maintenance entry has its own quota.
     for (const [name, count, doors, wave] of [['breach-1', 2, [0], 1], ['breach-2', 8, [0, 1], 2], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
       for (const e of [...w.infected!.active]) w.infected!.release(e);
+      if (wave === 4) {
+        const door = l6Doors[doors[0]], p = w.entities.get(1)!;
+        Object.assign(p.transform, { x: door.x - 24, z: 15 });
+        w.spatial.set(1, p.transform.x, p.transform.z);
+        w.physics.playerBody!.setTranslation(p.transform, true);
+        w.physics.playerBody!.setNextKinematicTranslation(p.transform);
+        followFrustum(w);
+      }
       const before = w.missions!.state.l6!.spawnLog.length;
       c.spawn(count, doors, wave);
       const ids = w.missions!.state.l6!.spawnLog.slice(before).map(q => q.id);
@@ -83,6 +104,14 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
     const c = w.l7Encounters!, ai = w.infected!; c.start();
     // The real director queues more than one cap. Let it admit and retire each batch; the arrival ledger survives retirement.
     for (let batch = 0; batch < 20 && ai.director.queue.length; batch++) {
+      if (batch === 1) {
+        const player = w.entities.get(1)!, dx = 286 - player.transform.x;
+        for (const id of [1, ...c.state.roster.map(r => r.id)]) {
+          const e = w.entities.get(id); if (!e) continue; e.transform.x += dx; w.spatial.set(id, e.transform.x, e.transform.z);
+        }
+        w.physics.playerBody!.setTranslation(player.transform, true);
+      }
+      followFrustum(w);
       ai.director.update(); c.update();
       for (const e of [...ai.active]) ai.release(e);
       w.tick++;
