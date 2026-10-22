@@ -199,7 +199,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const contact = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(4.5, .6)
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
           .mul(max(lighting.heroSurfaceFill.greaterThan(0).select(1, 0), lighting.subwayDarkness));
-        result.mulAssign(contact.mul(-.6).add(1));
+        result.mulAssign(contact.mul(lighting.subwayDarkness.mul(-.08).sub(.6)).add(1));
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
@@ -289,6 +289,14 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       this._outputs.set(key, output);
     }
     this.outputNode = output; this.needsUpdate = true;
+  }
+  /** Diagnostic silhouettes must discard the same foreground fragments as the shipping material. */
+  probeMaskOutput(rgb: Node<'vec3'>): Node {
+    const reveal = this.userData.seeThrough ?? false;
+    return Fn(() => {
+      if (reveal) Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+      return vec4(rgb, this.fade);
+    })();
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
   seeThrough(enabled: boolean | 'boss' | 'placement' = true): this {
