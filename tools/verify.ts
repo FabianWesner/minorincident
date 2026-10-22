@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { selectionFor } from './verify-selection';
 
 const target = process.argv[2];
@@ -133,8 +133,10 @@ const commands: string[][] = [
         : target === 'E32'
           ? [
             ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1'],
-            // Include assault, arena, mist, LOD residency and ending budgets too.
-            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1'],
+            // Discover every selected performance file and release the quiet
+            // reservation between files instead of holding one long matrix.
+            ...readdirSync('tests/perf').filter(file => file.endsWith('.spec.ts') && new RegExp(selection.pattern).test(readFileSync(`tests/perf/${file}`, 'utf8'))).sort().flatMap(file => [1, 2].map(shard =>
+              ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', `tests/perf/${file}`, '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, `--shard=${shard}/2`, '--project=chromium', '--workers=1'])),
           ]
         : target === 'E30'
           ? [
@@ -152,6 +154,7 @@ const commands: string[][] = [
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
             ...(target === 'E31' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1']] : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', 'tests/perf/l7-district.spec.ts', 'tests/perf/l7-encounters.spec.ts', '--project=chromium', '--workers=1']] : []),
+            ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-lifecycle.spec.ts', '--grep', '@E29-AC20', '--project=chromium', '--workers=1']] : []),
           ]
         : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E26' || target === 'E28' ? ['--workers=1'] : [])]]),
 ];
@@ -173,6 +176,10 @@ for (const [command, ...args] of commands) {
   }
   if (target === 'E30' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'perf' : args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
+  if (['E29', 'E32'].includes(target) && args.includes('playwright') && existsSync('test-results/playwright/results.json')) {
+    const batch = (args.find(arg => arg.startsWith('tests/perf/'))?.split('/').at(-1)?.replace('.spec.ts', '') ?? 'combined') + (args.find(arg => arg.startsWith('--shard='))?.replace('--shard=', '-s').replace('/', 'of') ?? '');
+    copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? `perf-${batch}` : 'functional'}.json`);
+  }
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) {

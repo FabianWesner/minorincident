@@ -6,11 +6,14 @@ export async function collectedHeap(page: Page, context: BrowserContext) {
   await page.evaluate(() => window.__SS__!.pause());
   const cdp = await context.newCDPSession(page);
   try {
+    const heapBeforeCollection = await cdp.send('Runtime.getHeapUsage');
+    const legacyHeapBeforeCollection = await page.evaluate(() => window.__SS__!.perf().heapBytes ?? null);
     for (let i = 0; i < 3; i++) {
       await cdp.send('HeapProfiler.collectGarbage');
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(resolve)));
     }
     const audit = await cdp.send('Runtime.getHeapUsage');
-    return { heapMB: audit.usedSize / 1_000_000, heapAudit: audit };
+    const legacyHeapAfterCollection = await page.evaluate(() => window.__SS__!.perf().heapBytes ?? null);
+    return { heapMB: audit.usedSize / 1_000_000, heapAudit: audit, heapBeforeCollection, legacyHeapBeforeCollection, legacyHeapAfterCollection };
   } finally { await cdp.detach(); }
 }
