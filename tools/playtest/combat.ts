@@ -7,3 +7,8 @@ export function keepMovingWithFists(level: string | null, step: string | null, f
 export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' {
   return nearbyEnemies < 3 ? 'KeyJ' : 'KeyK';
 }
+
+/** Visible allies under attack are an early shelter objective, including on an unarmed rack. */
+export function canCoverVisibleAllies(level: string | null, step: string | null, unarmed: boolean): boolean {
+  return !unarmed && !!(level || step);
+}
