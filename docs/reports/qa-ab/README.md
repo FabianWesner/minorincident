@@ -8,7 +8,7 @@ npm run qa:ab -- --baseline https://7d1aff32.minor-incident.pages.dev \
   --out docs/reports/qa-ab/2026-10-22-13g-vs-13h
 ```
 
-`--baseline` defaults to PROD. Both sides accept an HTTP(S) URL or `dist`; the latter starts a strict local production preview on 4201 and closes it afterward. `--levels` accepts `L1-L4`, `L1,L4,L10`, or their combination. The default covers L1–L10. `--stops substring` selects a tour stop for diagnosis; `--seed` defaults to 1; `--threshold` defaults to `.02`. Every run needs a fresh output directory; the default includes the date and time.
+`--baseline` defaults to PROD. Both sides accept an HTTP(S) URL or `dist`; the latter starts a strict local production preview on 4201 and closes it afterward. `--dist-dir path/to/dist` selects an already built candidate from an isolated checkout. `--levels` accepts `L1-L4`, `L1,L4,L10`, or their combination. The default covers L1–L10. `--stops substring,substring` selects tour stops for diagnosis; `--seed` defaults to 1; `--threshold` defaults to `.02`. Every run needs a fresh output directory; the default includes the date and time.
 
 The npm wrapper reserves one browser through `tools/e2e-lock.sh`, with `E2E_UNITS=1`, admission timeout 3600 s, E2E port 4201 and Scene port 4202. Chromium is always headless, using ANGLE Metal on macOS. The runner requires actual WebGPU and low quality; fallback is an unmeasured error. Both builds use 1280×720, DPR 1, the same seed, and both zoom 1.5 and zoom 1 at every stop. Simulation stays paused and advances exact ticks. Camera shake and VFX particles are disabled; weather uses the game's seeded simulation clock. Production game code is unchanged.
 
@@ -47,8 +47,24 @@ The specified snapshot is build `769d9f8ce` (13g), and PROD reports `73bce8bc5` 
 
 The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the same tank route, parked pose and barrier overlap in both builds; a red Alpha warning ring causes the flag. Both ramp gaps are also visible in the baseline and candidate. The depot return, lab handover, explicit glasses wearer, other accessories and sitters do not differ above the declared perceptual tolerance. Raw scores remain intact in the summary, with the visual review recorded separately under `validation`.
 
-The requested six-finding demonstration is therefore **not met** by this pair. An earlier known-good snapshot is needed to distinguish defects already present in 13g. A failing demonstration is not a passing regression gate.
+This pair cannot demonstrate differences in defects already present in 13g. The orchestrator confirmed that the PO defects predate 13h and replaced the validation criterion: compare PROD with the fixes in `lane/po-regressions-1022`, then prove sensitivity with four isolated local mutations and a same-build control. The original scores above are retained as historical evidence.
 
 The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The expanded L1–L10 same-build control is still running.
 
 Static checks pass: typecheck, lint, production build, and all 1,960 unit tests. The unit run exposed an existing GNU `stat` assumption in the remote-cache fixture; its fixture now supplies the Linux stat interface using the real temporary-file mtimes on macOS.
+
+## Revised validation protocol (2026-10-22)
+
+Build `lane/po-regressions-1022` in an isolated checkout, then run:
+
+```sh
+npm run qa:ab -- --candidate dist --dist-dir path/to/fixes/dist --levels L1-L2
+npm run qa:ab -- --baseline dist --candidate dist --dist-dir path/to/fixes/dist \
+  --levels L1-L4 --stops depot-contact,l1-park,ride-start,tank-hold --inject all
+npm run qa:ab -- --baseline https://minor-incident.com \
+  --candidate https://minor-incident.com --levels L1-L10
+```
+
+`--inject` accepts `hide-npc`, `hats`, `tank`, `bench`, or `all`; it requires `--candidate dist`. It changes only the browser test session after normal campaign setup. Each fault has its own stop: hide the actual scripted depot clerk at `l1-depot-contact`, scale existing hat geometry 2× at `l1-park`, move the actual L4 tank to the plaza wall at `l4-tank-hold`, and remove the existing bench under its sitters at `l2-ride-start`. Other stops stay unmodified. The baseline is never mutated, fresh level loads isolate stops, and each frame records the applied fault. No production source or built asset is edited.
+
+The revised hit-rate denominator is seven cases: depot, lab and benches in the real fix comparison, plus four controlled faults. Each case must flag at least one of its relevant stop/zoom variants above the **unchanged 2% threshold**, and the sheet must depict the intended change. The same-build control must flag zero variants. Exit 0 means capture completed; the JSON review list and human inspection determine gate acceptance.

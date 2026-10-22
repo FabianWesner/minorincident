@@ -10,9 +10,10 @@ import { cure } from '../../src/levels/L10/district';
 import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab-tour';
 import { perceptualDiff } from './ab-metrics';
 
-const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},stops:{type:'string'},help:{type:'boolean'}}});
-if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring]');process.exit(0);}
+const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},stops:{type:'string'},help:{type:'boolean'}}});
+if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
 if(!values.candidate)throw new Error('--candidate <url|dist> is required');
+if(values.inject&&(!['hide-npc','hats','tank','bench','all'].includes(values.inject)||values.candidate!=='dist'))throw new Error('--inject requires candidate dist and hide-npc|hats|tank|bench|all');
 const threshold=Number(values.threshold),seed=Number(values.seed);
 if(!Number.isFinite(threshold)||threshold<=0||threshold>1)throw new Error('--threshold must be a fraction between 0 and 1');
 if(!Number.isSafeInteger(seed)||seed<0)throw new Error('--seed must be a nonnegative integer');
@@ -21,7 +22,7 @@ const levels=[...new Set(values.levels!.split(',').flatMap(part=>{
   if(!match||Number(match[2]??match[1])<Number(match[1]))throw new Error(`Invalid level selection: ${part}`);
   return Array.from({length:Number(match[2]??match[1])-Number(match[1])+1},(_,i)=>`L${Number(match[1])+i}`);
 }))];
-const stops=tour.filter(s=>levels.includes(s.level)&&(!values.stops||s.id.includes(values.stops)));
+const stops=tour.filter(s=>levels.includes(s.level)&&(!values.stops||values.stops.split(',').some(part=>s.id.includes(part.trim()))));
 if(!stops.length)throw new Error('No matching tour stops');
 const sources={baseline:values.baseline!,candidate:values.candidate};
 for(const source of Object.values(sources))if(source!=='dist'&&!/^https?:\/\//.test(source))throw new Error(`Expected an HTTP(S) URL or dist: ${source}`);
@@ -35,8 +36,8 @@ type Row={id:string;stop:TourStop;zoom:number;score:number;globalChanged:number;
 const rows:Row[]=[];
 let server:Awaited<ReturnType<typeof preview>>|undefined;
 if(Object.values(sources).includes('dist')){
-  if(!existsSync('dist/index.html'))throw new Error('Build the local candidate first: npm run build');
-  server=await preview({configFile:false,preview:{host:'127.0.0.1',port:4201,strictPort:true}});
+  if(!existsSync(resolve(values['dist-dir']!,'index.html')))throw new Error('Build the local candidate first: npm run build');
+  server=await preview({configFile:false,build:{outDir:resolve(values['dist-dir']!)},preview:{host:'127.0.0.1',port:4201,strictPort:true}});
 }
 const browser=await chromium.launch({headless:true,args:process.platform==='darwin'?['--use-angle=metal','--enable-gpu','--enable-unsafe-webgpu','--ignore-gpu-blocklist']:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--enable-unsafe-webgpu','--ignore-gpu-blocklist']}).catch(async error=>{await server?.close();throw error;});
 function sourceUrl(source:string){const u=new URL(source==='dist'?'http://127.0.0.1:4201':source);for(const [key,value]of Object.entries({test:'1',scenelab:'1',profile:'1',dpr:'1',quality:'low',audio:'muted',preload:'0',seed:String(seed)}))u.searchParams.set(key,value);return u.toString();}
@@ -46,7 +47,7 @@ function report(status:'running'|'complete'|'failed'){
   const findingIds:Finding[]=['depot-clerk','lab-handover','hats-glasses','sitters-benches','l3-gaps','l4-tank'];
   const findings=findingIds.map(id=>{const relevant=rows.filter(r=>r.stop.findings?.includes(id));return{id,measured:relevant.length>0,score:Math.max(0,...relevant.map(r=>r.score)),aboveThreshold:relevant.some(r=>r.score>=threshold),stops:relevant.map(r=>r.id)};});
   const imageBytes=readdirSync(output).filter(p=>p.endsWith('.jpg')).reduce((n,p)=>n+statSync(resolve(output,p)).size,0);
-  const summary={schemaVersion:1,status,startedAt,finishedAt:status==='running'?null:new Date().toISOString(),sources,builds,settings:{backend:'webgpu',quality:'low',viewport:[1280,720],dpr:1,seed,zoom:[1.5,1],vfx:false,earlyLevelSave:'L10-default'},metric:{name:'maximum local perceptual changed coverage',tilePixels:48,colorThreshold:.15,frameOffsetsSeconds:[0,.6,1.2,1.8,2.4,3],threshold},expectedStops:variants.length,measuredStops:rows.length,imageBytes,aboveThreshold:rows.filter(r=>r.score>=threshold).map(r=>({id:r.id,score:r.score,sheet:r.sheet})),findings,categoryCoverage:{aboveThreshold:findings.filter(f=>f.aboveThreshold).length,measured:findings.filter(f=>f.measured).length,total:findings.length},errors,stops:rows};
+  const summary={schemaVersion:1,status,startedAt,finishedAt:status==='running'?null:new Date().toISOString(),sources,builds,localDist:Object.values(sources).includes('dist')?resolve(values['dist-dir']!):null,injection:values.inject??null,settings:{backend:'webgpu',quality:'low',viewport:[1280,720],dpr:1,seed,zoom:[1.5,1],vfx:false,earlyLevelSave:'L10-default'},metric:{name:'maximum local perceptual changed coverage',tilePixels:48,colorThreshold:.15,frameOffsetsSeconds:[0,.6,1.2,1.8,2.4,3],threshold},expectedStops:variants.length,measuredStops:rows.length,imageBytes,aboveThreshold:rows.filter(r=>r.score>=threshold).map(r=>({id:r.id,score:r.score,sheet:r.sheet})),findings,categoryCoverage:{aboveThreshold:findings.filter(f=>f.aboveThreshold).length,measured:findings.filter(f=>f.measured).length,total:findings.length},errors,stops:rows};
   writeFileSync(resolve(output,'summary.json'),JSON.stringify(summary,null,2));
   const cards=rows.map(r=>`<article><h2>${escape(r.stop.title)} · zoom ${r.zoom} · ${(r.score*100).toFixed(2)}% ${r.score>=threshold?'— REVIEW':'— quiet'}</h2><p>${escape(r.id)} · global change ${(r.globalChanged*100).toFixed(3)}%</p><a href="${r.sheet}"><img loading="lazy" src="${r.sheet}" alt="Baseline, candidate and diff; still plus six-frame motion strip"></a></article>`).join('\n');
   writeFileSync(resolve(output,'index.html'),`<!doctype html><html lang="en"><meta charset="utf-8"><title>Visual A/B ${escape(basename(output))}</title><style>body{font:15px system-ui;background:#17191c;color:#eee;margin:24px}article{padding:16px;margin:20px 0;background:#25282d}img{max-width:100%;width:960px}a{color:#a8d9ff}h2{font-size:18px}p{overflow-wrap:anywhere}</style><h1>Visual A/B · ${escape(status)}</h1><p>Baseline: ${escape(sources.baseline)}<br>Candidate: ${escape(sources.candidate)}<br>WebGPU · low · 1280×720 · DPR 1 · seed ${seed} · threshold ${(threshold*100).toFixed(2)}%</p><p>${rows.length}/${variants.length} stops measured; ${summary.aboveThreshold.length} require visual review. Scores flag change; a reviewer decides whether it is a regression.</p><p><a href="summary.json">JSON summary and setup evidence</a></p>${errors.map(e=>`<p>UNMEASURED: ${escape(e.side)} ${escape(e.stop)} — ${escape(e.message)}</p>`).join('')}${cards}</html>`);
@@ -101,7 +102,7 @@ try{
           const proof=await page.evaluate(prepareStop,{stop,seed,save,zoom,driveRoute:crossing.routes.find(r=>r.id==='road')!.points,walkRoute});
           const frames:Awaited<ReturnType<typeof readyFrame>>[]=[],hashes:string[]=[];
           for(let frame=0;frame<6;frame++){
-            const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0});
+            const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0,injection:side==='candidate'?values.inject:undefined,stopId:stop.id});
             if(state.backend!=='webgpu'||state.quality!=='low')throw new Error(`Expected WebGPU/low, got ${state.backend}/${state.quality}`);
             if(Math.abs(state.camera.targetZoom-zoom)>.001)throw new Error(`Requested zoom ${zoom}, got ${state.camera.targetZoom}`);
             if(pageErrors.length)throw new Error(`Browser error: ${pageErrors.join('; ')}`);
