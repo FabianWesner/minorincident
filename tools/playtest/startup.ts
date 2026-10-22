@@ -12,6 +12,5 @@ export function assertRenderedBodies(figures: { drawn: boolean; joints?: unknown
 
 /** The same visible Resume action a player uses after a foreground or Home pause. */
 export function shouldResumePause(menu: string | null, loading: boolean): boolean {
-  void menu; void loading;
-  return false;
+  return menu === 'pause' && !loading;
 }
