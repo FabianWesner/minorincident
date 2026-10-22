@@ -9,3 +9,14 @@ export const oracle = {
   ground: (state: { drawnY: number; simY: number }) => Math.abs(state.drawnY - state.simY) > .2,
   load: (state: { candidateMs: number; baselineMs: number }) => state.candidateMs > state.baselineMs + Math.min(1000, state.baselineMs * .1),
 };
+
+export function obbHitsAabb(cx: number, cz: number, yaw: number, hx: number, hz: number, y0: number, y1: number, box: { min: number[]; max: number[] }): boolean {
+  if (y1 <= box.min[1] || y0 >= box.max[1]) return false;
+  const bx = (box.min[0] + box.max[0]) / 2, bz = (box.min[2] + box.max[2]) / 2;
+  const ax = (box.max[0] - box.min[0]) / 2, az = (box.max[2] - box.min[2]) / 2;
+  const dx = bx - cx, dz = bz - cz, c = Math.cos(yaw), s = Math.sin(yaw);
+  return Math.abs(dx * c - dz * s) <= hx + ax * Math.abs(c) + az * Math.abs(s)
+    && Math.abs(dx * s + dz * c) <= hz + ax * Math.abs(s) + az * Math.abs(c)
+    && Math.abs(dx) <= ax + hx * Math.abs(c) + hz * Math.abs(s)
+    && Math.abs(dz) <= az + hx * Math.abs(s) + hz * Math.abs(c);
+}
