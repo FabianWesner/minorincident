@@ -1,0 +1,62 @@
+import pathlib,json,hashlib,subprocess,datetime,re
+root=pathlib.Path.cwd();work=root/'test-results/perf-l4-l6'
+def read(rel):return json.loads((work/rel).read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+base='480b44e42';runtime='b47e00336'
+expected={'l4':'6717f342241d9c39c5cb03c836e92d153623867c20a34683d41a281269162039','l6':'e492dfa8ed52fc2e29a438bf1b22e571954947f14cc98ec5890c68c20785f08a'}
+assert sha(root/'tests/perf/l4-budgets.spec.ts')==expected['l4']
+assert sha(root/'tests/perf/l7-lifecycle.spec.ts')==expected['l6']
+assert sha(root/'tools/perf/l4-cold-graphs.ts')==json.loads((root/'docs/reports/perf-l4-l6/evidence/baseline-removal-provenance.json').read_text())['loadingHelperSha256']
+tree=subprocess.check_output(['git','rev-parse','HEAD:src']).decode().strip()
+assert not subprocess.check_output(['git','diff','HEAD','--','src'])
+low=read('quiet-aim-low/manifest.json');rest=read('quiet-aim-rest/manifest.json');smoke=read('aim-smoke/manifest.json')
+for m in [low,rest,smoke]:
+ assert m['sourceTree']==tree and not m['sourceDiff']
+ assert m.get('files',{}).get('dist/index.html',m.get('distIndexSha256'))==sha(root/'dist/index.html')
+for m in [low,rest]:
+ assert all(row['code']==0 for row in m['runs'])
+assert {r['name'] for r in low['runs']+rest['runs']}=={'l4-low','l4-high','l6-webgl','l6-webgpu','l4-load-high','l4-load-low'}
+assert smoke['code']==0
+assert read('aim-smoke/reporter.json')['stats']['expected']==31
+assert read('aim-smoke/reporter.json')['stats']['unexpected']==0
+l4={}
+for tier,baseline,after in [('high','quiet-before/l4-high','quiet-aim-rest/l4-high'),('low','quiet-before-low2/l4-low','quiet-aim-low/l4-low')]:
+ b=read(f'{baseline}/proofs/l4-{tier}.json');a=read(f'{after}/proofs/l4-{tier}.json')
+ assert a['renderer']=='webgpu' and a['tier']==tier and a['turnBuilds']==0
+ assert all(a[key]<=50 for key in ['turnMaxMs','tankMaxMs','breakMaxMs'])
+ assert a['simP95']<=6
+ assert read(f'{after}/reporter.json')['stats']['expected']==1 and read(f'{after}/reporter.json')['stats']['unexpected']==0
+ def values(p):return {k:p[k] for k in ['turnMaxMs','tankMaxMs','breakMaxMs','turnBuilds','simP95','counts','warDrawCalls','collapseDrawCalls']}
+ l4[tier]={'before':values(b),'after':values(a),'beforeReceipt':baseline,'afterReceipt':after}
+l6={}
+for backend in ['webgl','webgpu']:
+ for tier in ['high','low']:
+  suffix=f'l6-{backend}/lifecycle-L6-{tier}-{backend}.json'
+  b=read('quiet-before-rest/'+suffix);a=read('quiet-aim-rest/'+suffix)
+  for rows in [b,a]:
+   assert len(rows)==5 and [r['level'] for r in rows]==['L6','L1','L6','L1','L6']
+   assert all(r['backend']==backend and r['tier']==tier for r in rows)
+  assert all(a[4][k]<=a[0][k]*1.1 for k in ['geometries','textures','heapBytes'])
+  def values(p):return {'first':p[0],'fifth':p[4],'heapRetentionPercent':(p[4]['heapBytes']/p[0]['heapBytes']-1)*100}
+  l6[f'{backend}-{tier}']={'before':values(b),'after':values(a),'beforeReceipt':'quiet-before-rest/'+suffix,'afterReceipt':'quiet-aim-rest/'+suffix}
+loading={}
+for tier in ['high','low']:
+ suffix=f'l4-load-{tier}/{tier}.json';b=read('quiet-before-rest/'+suffix);a=read('quiet-aim-rest/'+suffix)
+ assert a['backend']=='webgpu' and a['tier']==tier
+ delta=a['loadMs']-b['loadMs'];assert delta<=1000,(tier,delta)
+ loading[tier]={'beforeMs':b['loadMs'],'afterMs':a['loadMs'],'overheadMs':delta,'beforeReceipt':'quiet-before-rest/'+suffix,'afterReceipt':'quiet-aim-rest/'+suffix}
+conditions=[]
+for folder in ['quiet-aim-low','quiet-aim-rest']:
+ for f in (work/folder).rglob('conditions.jsonl'):
+  rows=[json.loads(line) for line in f.read_text().splitlines() if line]
+  assert rows
+  for c in rows:
+   assert c['load'][0]<3 and c['otherHeadlessChrome']==0 and c['localVitest']==0
+   assert c['browserSlots']==[0,1,2,3]
+  conditions.append({'path':str(f.relative_to(work)),'rows':rows})
+remote=json.loads((root/'docs/reports/perf-l4-l6/evidence/aim-full-remote-source.json').read_text());assert remote['sourceTree']==tree
+log=pathlib.Path('/tmp/perf-l4-l6-remote-aim-full.log').read_text();plain=re.sub(r'\x1b\[[0-9;]*m','',log)
+assert '[remote] done exit=0' in plain
+summary=plain[plain.rfind(' Test Files '):];assert 'failed' not in summary
+result={'status':'passed','at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'matchedBase':base,'runtime':runtime,'sourceTree':tree,'fixtureSha256':expected,'distIndexSha256':sha(root/'dist/index.html'),'l4':l4,'l6':l6,'loading':loading,'smoke':{'expected':31,'unexpected':0,'receipt':'aim-smoke'},'remote':{'sourceFiles':remote['verifiedAllFiles'],'summary':summary},'quietConditions':conditions}
+out=root/'docs/reports/perf-l4-l6/result.json';out.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='quietConditions'},indent=2))

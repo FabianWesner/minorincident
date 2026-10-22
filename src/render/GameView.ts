@@ -179,7 +179,7 @@ export class GameView implements Lifecycle {
   weather: WeatherView | null = null;
   vfx: Vfx | null = null;
   private labAccident: LabAccidentFx | null = null;
-  private labWindows: { prewarmWindows(): () => void } | null = null;
+  private labWindows: ReturnType<typeof labAccidentTargets> | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
@@ -1216,6 +1216,9 @@ export class GameView implements Lifecycle {
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
+    // The window callbacks retain L1's meshes and their loading closure. Leaving
+    // this owner alive after L1 pins the retired district through later levels.
+    this.labWindows?.dispose(); this.labWindows = null;
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;} if (this.survivorRings) { this.scene.remove(this.survivorRings); this.survivorRings.dispose(); this.survivorRings = null; }

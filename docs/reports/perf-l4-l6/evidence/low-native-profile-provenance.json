@@ -1,0 +1,33 @@
+{
+  "diagnostic": true,
+  "runtimeSource": "95796daca",
+  "acceptance": false,
+  "environment": {
+    "L4_TIMING_KEYS": "1",
+    "L4_CPU_PROFILE": "1",
+    "E2E_RENDERER": "webgpu",
+    "E2E_UNITS": "1",
+    "E2E_PORT": "4121",
+    "SCENE_PORT": "4122"
+  },
+  "command": "sh tools/perf/quiet-run.sh npx playwright test tests/perf/l4-budgets.spec.ts --project=chromium --grep=low --workers=1",
+  "exit": 1,
+  "files": {
+    "conditions.jsonl": "c7a7c6f703d3964c66d1e08ce4b39c28bc4de0531d4426b33c65f2cf076fd858",
+    "proofs/l4-low.json": "be5459003d41ea95e13584b6050d2aa4f1cbfa5100077b25b8e8bffae3d9b337",
+    "proofs/l4-low-profile.json": "5e7042659366db42b03fb4cae418faf5f59e7913deb9585ee1aa65496ba1aff3",
+    "run.log": "0f69f25d78cf09fe284fdc3da710d8cc7a14451005532696ca102ed69fc742b9"
+  },
+  "observations": {
+    "turnMaxMs": 46,
+    "tankMaxMs": 48.7,
+    "breakMaxMs": 57.3,
+    "turnBuilds": 0,
+    "turnTick": 1979,
+    "nextTick": 1980,
+    "nextTickSimMs": 24.7,
+    "nextTickOutbreakMs": 10.5,
+    "refugeSpotAllSampledMs": 0.892,
+    "note": "CPU sample alignment needs the 629810 us initial profiler delta; do not treat profileStartedAt as the first profiler timestamp. Navigation steer/pop/reachPath appear in the first alarm ticks; refuge selection is not the principal hotspot."
+  }
+}

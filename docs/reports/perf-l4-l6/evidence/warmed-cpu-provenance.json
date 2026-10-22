@@ -1,0 +1,16 @@
+{
+  "diagnostic": true,
+  "browser": false,
+  "runtimeSource": "95796daca",
+  "runner": "94.130.181.173",
+  "command": "npm run typecheck && npm run lint && npx tsx tools/perf/l4-beat-cpu.ts",
+  "environment": {
+    "L4_CPU_WARM": "1",
+    "L4_CPU_OUT": "test-results/perf-l4-l6/cpu-warmed"
+  },
+  "exit": 0,
+  "files": {
+    "high": "1c182095cf6d2169692f657a260f03bb3f5c9403f650a46c7577f0f7a0e940c0",
+    "low": "cf34ec322fabbe347451fa9eced08197d2836087f046de26a639008d59dd05a1"
+  }
+}

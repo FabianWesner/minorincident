@@ -47,6 +47,13 @@ export class GunAim {
   private readonly parentRotation = new Quaternion();
   private readonly torsoAngles = new Euler(0,0,0,'YXZ');
   private readonly pole = new Vector3(0, -1, 0);
+  private readonly worldPosition = new Vector3();
+  private readonly worldScale = new Vector3();
+  /** The caller has refreshed this chain; Three's world getters would walk
+   * every ancestor again for each shoulder, grip and head read. */
+  private worldQuaternion(node: Object3D, target: Quaternion): Quaternion {
+    node.matrixWorld.decompose(this.worldPosition, target, this.worldScale); return target;
+  }
   constructor(private readonly upper: Object3D, middle: Object3D, end: Object3D, private readonly torso?: Object3D, support?: [Object3D, Object3D, Object3D], private readonly sockets?: [Object3D, Object3D], private readonly head?: Object3D) {
     this.arm = new LimbIK(upper, middle, end);
     if (support) {
@@ -62,21 +69,22 @@ export class GunAim {
     if (hold) for (const node of this.shoulderFrames) node.quaternion.identity();
     if ((turnTorso || hold) && this.torso?.parent) {
       this.torso.updateWorldMatrix(true,true);
-      this.torsoAngles.setFromQuaternion(this.torso.getWorldQuaternion(this.torsoRotation),'YXZ');
+      this.torsoAngles.setFromQuaternion(this.worldQuaternion(this.torso, this.torsoRotation),'YXZ');
       // A bladed stance brings the support shoulder forward without stretching either arm.
       this.torsoAngles.y = -Math.atan2(direction.z,direction.x) - (hold?.stance ?? 0);
       if (hold) { this.torsoAngles.x = 0; this.torsoAngles.z = 0; }
       this.torsoRotation.setFromEuler(this.torsoAngles);
-      this.torso.parent.getWorldQuaternion(this.parentRotation).invert().multiply(this.torsoRotation);
+      this.worldQuaternion(this.torso.parent, this.parentRotation).invert().multiply(this.torsoRotation);
       this.torso.quaternion.copy(this.parentRotation); this.torso.updateWorldMatrix(false,true);
     }
     if (hold?.protract && this.supportArm) this.protract(direction, hold.protract);
     this.upper.updateWorldMatrix(true, true);
     this.direction.set(direction.x * Math.cos(elevation), Math.sin(elevation), direction.z * Math.cos(elevation)).normalize();
     const length = this.arm.middle.position.length() + this.arm.end.position.length();
-    const scale = this.upper.getWorldScale(this.scale).y;
+    this.upper.matrixWorld.decompose(this.worldPosition, this.parentRotation, this.scale);
+    const scale = this.scale.y;
     // 99.5% reach leaves a small natural elbow bend (< 10 degrees), below the shoulder.
-    this.upper.getWorldPosition(this.target).addScaledVector(this.direction, length * scale * (hold ? hold.reach - (.995 - reach) : reach));
+    this.target.setFromMatrixPosition(this.upper.matrixWorld).addScaledVector(this.direction, length * scale * (hold ? hold.reach - (.995 - reach) : reach));
     const offset = hold?.lateral ?? lateral;
     this.target.x -= direction.z * offset; this.target.z += direction.x * offset;
     if (hold) this.target.y -= hold.drop;
@@ -86,21 +94,21 @@ export class GunAim {
       this.gunAngles.set(0, -Math.atan2(direction.z, direction.x), elevation);
       this.rotation.setFromEuler(this.gunAngles).multiply(this.barrelFrame.setFromUnitVectors(barrelAxis, this.barrel));
     } else this.rotation.setFromUnitVectors(barrelAxis, this.direction);
-    this.arm.solve(this.target, this.pole, this.rotation);
+    this.arm.solve(this.target, this.pole, this.rotation, 1, true);
     if (hold && this.supportArm && this.sockets) {
       const [trigger, support] = this.sockets;
-      trigger.updateWorldMatrix(true, false);
       this.supportTarget.fromArray(hold.support).multiplyScalar(hold.scale).applyMatrix4(trigger.matrixWorld);
       this.contact.copy(this.supportTarget);
       this.supportRotation.copy(this.rotation).multiply(this.roll.setFromAxisAngle(barrelAxis, -Math.PI / 2));
       // Contact is the palm socket, rather than the wrist joint. Keep the palm
       // below the fore-end and the fingers outside its solid surface.
-      this.palmOffset.copy(support.position).multiply(this.supportArm.end.getWorldScale(this.scale)).applyQuaternion(this.supportRotation);
+      this.supportArm.end.matrixWorld.decompose(this.worldPosition, this.parentRotation, this.scale);
+      this.palmOffset.copy(support.position).multiply(this.scale).applyQuaternion(this.supportRotation);
       this.supportTarget.sub(this.palmOffset);
-      this.supportArm.solve(this.supportTarget, this.pole, this.supportRotation);
-      this.supportGap = support.getWorldPosition(this.actualContact).distanceTo(this.contact);
+      this.supportArm.solve(this.supportTarget, this.pole, this.supportRotation, 1, true);
+      this.supportGap = this.actualContact.setFromMatrixPosition(support.matrixWorld).distanceTo(this.contact);
       if (this.head?.parent) {
-        this.head.parent.getWorldQuaternion(this.parentRotation).invert();
+        this.worldQuaternion(this.head.parent, this.parentRotation).invert();
         this.gaze.setFromAxisAngle(this.up, -Math.atan2(direction.z, direction.x));
         this.head.quaternion.copy(this.parentRotation).multiply(this.gaze);
       }

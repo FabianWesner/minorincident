@@ -67,6 +67,8 @@ export class InteractionView extends Group {
   private readonly occluderMaterials = new Map<number, PaletteMaterial[]>();
   private readonly lods = new Map<number, AssetQuality>();
   private readonly prototypes = new Map<string, Promise<Group>>();
+  // As in DistrictAssets, equivalent asset/LOD features share the warmed graph.
+  private readonly materialGraphs = new Map<string, Material>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
@@ -272,7 +274,7 @@ export class InteractionView extends Group {
     const key = `${id}:${canonical}`;
       if (!this.prototypes.has(key)) this.prototypes.set(key, this.registry.loadAsset(id, canonical).then(source => {
         if (this.disposed) return source as Group;
-        const prototype = staticBatch(source, true, this.materials); prototype.userData = { ...source.userData };
+        const prototype = staticBatch(source, true, this.materials, false, this.materialGraphs); prototype.userData = { ...source.userData };
         prototype.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.batchMaterials.add(node.material as Material); } });
         return prototype;
       }));
@@ -461,7 +463,7 @@ export class InteractionView extends Group {
   dispose(): void {
     this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear(); this.lods.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
-    this.geometries.clear(); this.batchMaterials.clear(); this.prototypes.clear();
+    this.geometries.clear(); this.batchMaterials.clear(); this.materialGraphs.clear(); this.prototypes.clear();
     this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     this.gasGeometry.dispose(); this.gasMaterial.dispose();
     void this.registry.dispose();

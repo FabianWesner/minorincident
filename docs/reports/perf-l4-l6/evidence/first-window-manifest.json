@@ -1,0 +1,42 @@
+{
+  "started": "2026-10-22T15:00:11.136195+00:00",
+  "commit": "480b44e42efbed56344534cf346f24490b60fbcc",
+  "matchedBase": "480b44e42",
+  "status": "M tests/perf/l7-lifecycle.spec.ts\n?? tools/perf/l4-cold-graphs.ts\n?? tools/perf/l6-retention-profile.ts",
+  "files": {
+    "src/render/GameView.ts": "1b6d2126e7ac3ebcbe7120e2f99c681a64079ba078e0020d228e3725b64e9461",
+    "src/render/Renderer.ts": "2b5b6cf424d45cdefe99961d05a76ccab41d7cd267dfb5713493415ded51e48a",
+    "src/render/EntityAssets.ts": "51284905b164a01495dfd1eeed1531d4ccca621036d4bdb25e5bae27c7739d40",
+    "src/render/InteractionView.ts": "b39d9949e225303d3aca2199fdd60b571d967261c380f34a42548afbed5307db",
+    "src/render/vfx/labAccidentView.ts": "026080adcc9b299ad2b02c1484fde6124b492782636404f7afa656e13023e840",
+    "tests/perf/l4-budgets.spec.ts": "6717f342241d9c39c5cb03c836e92d153623867c20a34683d41a281269162039",
+    "tests/perf/l7-lifecycle.spec.ts": "e492dfa8ed52fc2e29a438bf1b22e571954947f14cc98ec5890c68c20785f08a",
+    "dist/index.html": "abf57b84d3b46cf284fdfe28e8f7071af3bd0c27e29a412f5d144d3e46af3004"
+  },
+  "runs": [
+    {
+      "name": "l4-high",
+      "code": 1,
+      "finished": "2026-10-22T15:11:25.041540+00:00",
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l4-budgets.spec.ts",
+        "--project=chromium",
+        "--grep=high",
+        "--workers=1"
+      ]
+    },
+    {
+      "name": "l4-low",
+      "code": 143,
+      "interrupted": true,
+      "reason": "Queued admission raced with the orchestrator hold; no completed measurement; repeat after 16:05 UTC",
+      "recordedAt": "2026-10-22T15:19:39.669531+00:00"
+    }
+  ],
+  "remainingCanceledForHold": true
+}
