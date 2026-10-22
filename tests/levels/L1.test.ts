@@ -87,6 +87,9 @@ describe('L1 v2 mission', () => {
     const bat = mission.def.anchors['garage-bat'];
     const cp = w.entities.get(1)!.survivor!.checkpoint;
     expect(Math.hypot(cp.x - bat.x, cp.z - bat.z)).toBeLessThanOrEqual(25);
+    const crowd = [[-1, -1], [1, -1], [-1, -2], [1, -2]].map(([x, z]) => w.infected!.spawn('infected.runner', { x: bat.x + x, z: bat.z + z }, { state: 'idle' }));
+    expect(crowd.every(id => id > 0)).toBe(true);
+    expect(w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - bat.x, e.transform.z - bat.z) < 8.5).length).toBeGreaterThanOrEqual(4);
     Object.assign(w.entities.get(1)!.transform, { x: bat.x - 40, z: bat.z });
     w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true);
     w.player!.damage(1000, w.tick);
