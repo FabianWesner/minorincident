@@ -4,7 +4,8 @@
  * Usage: tsx tools/perf/cold-load-time.ts <origin> <webgpu|webgl2> <low|high> [runs=20] [level=L1] [menuWait=0]
  */
 import { chromium } from '@playwright/test';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
 import { gzipSync } from 'node:zlib';
 import { loadavg } from 'node:os';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -134,6 +135,23 @@ for (let run = 0; run < Number(count); run++) {
   } finally { await browser.close(); }
 }
 const sorted = results.map(result => result.ms as number).sort((a, b) => a - b);
-const summary = { origin, backend, quality, level, diagnostic, n: sorted.length, median: sorted[Math.floor(sorted.length / 2)], p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
+const summary = { origin, backend, quality, level, diagnostic, n: sorted.length, median: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2, p90: sorted[Math.ceil(sorted.length * .9) - 1], max: sorted.at(-1), maxFrameMs: Math.max(...results.map(result => result.maxFrameMs as number)), errors: results.flatMap(result => result.errors as string[]) };
 writeFileSync(`${out}/${level}-${backend}-${quality}-summary.json`, JSON.stringify(summary, null, 2));
 console.log(JSON.stringify(summary));
+if (process.env.LOAD_ASSERT === '1') {
+  assert.equal(diagnostic, false, 'profiled samples are diagnostic only');
+  assert.ok(summary.n >= 20, 'at least 20 cold profiles per configuration');
+  assert.ok(summary.max! <= 6000, `worst cold load: ${summary.max} ms`);
+  assert.deepEqual(summary.errors, []);
+  assert.ok(results.every(result => {
+    const contexts = result.contexts as string[];
+    return backend === 'webgpu' ? contexts.includes('webgpu') && !contexts.includes('webgl2') : contexts.includes('webgl2');
+  }), 'requested rendering backend must be active');
+  assert.ok(gameplayMs >= 10_000, 'record at least ten seconds of real gameplay movement');
+  assert.ok(results.every(result => (result.frames as unknown[]).length >= 100), 'post-card frame samples must be present');
+  assert.ok(summary.maxFrameMs <= 200, `post-card frame: ${summary.maxFrameMs} ms`);
+  assert.ok(process.env.LOAD_BASELINE, 'LOAD_BASELINE must name the baseline evidence directory');
+  const before = JSON.parse(readFileSync(`${process.env.LOAD_BASELINE}/${level}-${backend}-${quality}-summary.json`, 'utf8'));
+  assert.ok(before.n >= 20 && !before.diagnostic, 'baseline needs at least 20 unprofiled cold loads');
+  assert.ok(summary.median <= before.median, `median ${summary.median} ms > baseline ${before.median} ms`);
+}
