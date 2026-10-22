@@ -39,3 +39,7 @@ Additional opened views: first-breach frames the service door and calm occupants
 | G should: scripted mood | PASS | Calm shelter -> failure -> confined escape -> exterior night transition is recognizable, with the night quality limitations recorded above. |
 
 **4/9 should pass; two must fail; two named scores below7. AC18 remains red.** No criterion rewrite is proposed: the criterion is coherent and the captured composition needs improvement. Follow-up: stage a readable closer retreat photo while retaining the full vulnerable group, and improve the authored Northgate night composition/material detail. Recheck all four named scores, all must and >=70% should. No visual or gameplay gate is waived.
+
+## Final failed experiment (v8)
+
+The later-group/raised-floor camera replay also ran and failed its unchanged zero-death gate. Opened its new retreat/night frames: scores5/10 and5/10; the stretched real column still forces a wide view and the night yard remains sparse/flat. Retain the [failed sheet](l6-route-v8-failed.jpg) and raw death/rescue journal. Revert that unsuccessful photo-only experiment to the already proved v7 fixture. This does not replace the v7 red8/7/6/5 review or claim a fresh pass.

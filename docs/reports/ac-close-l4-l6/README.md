@@ -1,5 +1,13 @@
 # E22–E24 acceptance closure — 2026-10-22
 
+## Final disposition — 15:56 UTC
+
+**Seven original partial ACs met; three measured red.** E22-04/12/19, E23-17/18/19 and E24-15 are met. E22-20 timing/cold builds and E24-19 original retention remain red, assigned to the separate perf lane. E24-18 remains red at8/7/6/5; the final camera experiment also failed one-death acceptance and was reverted. Approved high40/low30 stress clarification is applied and proved on both backends. No warmed-baseline or WebKit rewrite is adopted.
+
+Full verify final exits: **E22=143 (remaining stages cancelled/unmeasured), E23=143 (remote failures plus interrupted/unmeasured remainder), E24=75 (remote failures/native admission timeout; final quiet12/12green)**. None is a full verification pass. All three epic statuses remain **in-progress**. [Terminal logs/stage summary](evidence/final-run-summary.json). All owned checks are terminal; no private lock or4081 listener remains. Retained captures: **12/12**.
+
+Follow-up: fix the two assigned performance defects, improve L6 retreat/night composition and driver stability, rerun missing verifier stages, diagnose L5 audio900s timeout/remote screenshot placement and WebKit55ms continuity failure. Coherent AC18 and literal50ms/10% gates remain unchanged. Status and sweep ledger are updated.
+
 Starting source: `769d9f8ce`. Scope: ten partial criteria from the 2026-10-18 sweep. AC12 is now closed with current level and inherited shared proof; the remaining dispositions are recorded below. Historical green runs do not supersede later failures. All browser work is headless, one worker/session, on ports 4081/4082; native timing uses the shared quiet wrapper in reservations of at most twenty minutes. The orchestrator released the QA reservation early; all later work uses the shared admission guard and releases its slot between batches.
 
 ## Authorized specification clarification
@@ -306,3 +314,13 @@ The orchestrator explicitly authorizes releasing our private barrier now and res
 Repair the discovered stale-report bug for future E22/E23/E24 runs: clear the prior reporter before each native/quiet browser stage, copy only a reporter actually present afterward, and remove the stage destination when none was created. Add a semantic unit covering native admission75 with no new reporter; unchanged exit75 and missing evidence remain explicit. Fresh remote static and verifier-tooling checks are running. Already-loaded full verifier processes keep their original plans; stale copies from those attempts will still be identified in the final audit.
 
 The stale-reporter repair passes remote **typecheck, lint and10/10 verifier-tooling tests**, exit0 (50s sync,81s remote). New admission75 regression confirms no stale stage reporter is copied and the failure exit remains75. This strengthens evidence handling; no product assertion/threshold or gameplay value changes. Raw static/unit receipt is `evidence/final-reporter-guard.*.gz`.
+
+### 15:51 UTC — final photo attempt fails; restore proved v7 fixture
+
+V8 actually starts15:47:34 after the ordered D2 work, runs2.9min and **fails** the unchanged zero-player-death gate. Its final result records **18/29rescued (ratio passes), one death and186.57damage**; the intermediate post-checkpoint stats record9rescued, which is not the final result; preserve all raw journals/reporter under `l6-route-v8-failed-*`. All following heads fit the new retreat view, but the naturally stretched column makes that later overview **5/10**, worse than v7. Opened the new retreat and raised-floor night frames; the night yard remains flat/sparse/purple, **5/10**. The final [failed seven-view sheet](l6-route-v8-failed.jpg) is retained with exact source hashes; capture total12/12. No new vision/route pass is claimed.
+
+Restore the complete previously proved v7 photo logic from `5c11ef12b`, retaining its actual20/29 zero-death/damage route receipt and red8/7/6/5 visual review. This reverts only the unsuccessful camera/timing experiment; all route/death/rescue/gate and all-heads assertions remain strict. Runtime source remains the measured `f0fb391fb` tree. AC18 stays red and requires a real composition/driver follow-up; no obsolete/impossible criterion rewrite is proposed.
+
+### Final formal E24 quiet stage
+
+**12/12pass in3.0min**: original high/low stress, high/low breach/abandon, and8 cold-scream backend/tier/debug cases. Exact receipts: `verify-E24-final-quiet12.json.gz`, `quiet-webgl-E24-*` and E24 terminal log. Original retention remains red and native functional stage unmeasured. E22/E23 unadmitted remainder stopped15:54:20 by owned-group SIGTERM, terminal143. E24 naturally exits75 after green quiet stage. Final process audit: no owned verifier/helper, no private lock, no4081 listener.

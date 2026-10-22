@@ -83,6 +83,20 @@
         "--workers=1"
       ],
       "exitCode": 75
+    },
+    {
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l6-budgets.spec.ts",
+        "tests/perf/l6-po-scream.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": 0
     }
   ]
 }
