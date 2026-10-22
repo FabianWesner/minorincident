@@ -17,5 +17,10 @@
   },
   "interpretation": "The requested full run had 2302 passes and seven timeouts. All seven files were rerun serially without changing limits or assertions: 41 passes. The final product L6 scope (including L5 handovers) passed 63 tests; final playtest tooling passed 14. Native pre-existing unit skips are unchanged. Real-input acceptance remains pending.",
   "productCommit": "72ea6c267",
-  "toolingCommit": "e6f63d913"
+  "toolingCommit": "50c16dbbe",
+  "remote-driver-final": {
+    "logSha256": "6a2376331e6af322ce73edc479be19163969cbd5a8d148eb4cb9acd040552caf",
+    "checks": "14 playtest unit tests, typecheck and lint passed",
+    "summary": "> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.31.10.108, sync 37s, remote total 66s)"
+  }
 }
