@@ -18,7 +18,8 @@ export default defineConfig({
     assetsDir: 'build',
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
-      input: ['index.html', 'preview/index.html', 'preview/lighting-spike.html'],
+      // preview/lighting-spike.html is a dev/QA page: only built with BUILD_SPIKES=1 (tests/visual/e25-spike.spec.ts), never in the production dist.
+      input: ['index.html', 'preview/index.html', ...(process.env.BUILD_SPIKES ? ['preview/lighting-spike.html'] : [])],
       output: {
         manualChunks: (id) => id.includes('/@dimforge/rapier3d-compat/') ? 'rapier' : id.endsWith('/src/data/lightAnchors.json') ? 'light-anchors' : id.endsWith('/src/assets/wreckRoofs.ts') ? 'wreck-roofs' : id.endsWith('/src/render/characters/library.json') || id.endsWith('/src/render/characters/library.skin.json') ? 'character-clips' : undefined,
       },

@@ -5,6 +5,7 @@ import type { SceneSession } from './session';
  * and without the crowd (courier and HUD bars hidden in both), so only figure pixels (and their contact shadows)
  * differ. `whiteShare`: pale (luma > 175), unsaturated (< 0.2) share of those pixels: the hit-flash white mass.
  * `luma`: mean body luma (a flash or fallback white raises it against the live look).
+ * `chroma`: mean saturation-weighted value (HSV s*v, 0..1) over the figure pixels; below `LOW_CHROMA` hue is noise.
  * `hue`: saturation-weighted mean hue in degrees (null when nothing is saturated). */
 export function lookStats(withCrowd: ArrayLike<number>, withoutCrowd: ArrayLike<number>) {
   let pixels = 0, white = 0, luma = 0, sx = 0, sy = 0, weight = 0, r = 0, g = 0, b = 0;
@@ -19,10 +20,13 @@ export function lookStats(withCrowd: ArrayLike<number>, withoutCrowd: ArrayLike<
     const w = saturation * max / 255, angle = h * Math.PI / 3;
     sx += Math.cos(angle) * w; sy += Math.sin(angle) * w; weight += w;
   }
+  const chroma = pixels ? weight / pixels : 0;
   const hue = weight > 0 && Math.hypot(sx, sy) > 1e-6 ? (Math.atan2(sy, sx) * 180 / Math.PI + 360) % 360 : null;
-  return { pixels, luma: pixels ? luma / pixels : 0, whiteShare: pixels ? white / pixels : 0, hue, mean: pixels ? [r / pixels, g / pixels, b / pixels].map(v => Math.round(v)) : [0, 0, 0] };
+  return { pixels, luma: pixels ? luma / pixels : 0, whiteShare: pixels ? white / pixels : 0, hue, chroma, mean: pixels ? [r / pixels, g / pixels, b / pixels].map(v => Math.round(v)) : [0, 0, 0] };
 }
 
+/** Below this mean chroma a look is near-grey (e.g. a face-down worker): hue is undefined there. */
+export const LOW_CHROMA = .12;
 export const hueDistance = (a: number, b: number) => { const d = Math.abs(a - b) % 360; return d > 180 ? 360 - d : d; };
 
 export async function measureLook(session: SceneSession) {

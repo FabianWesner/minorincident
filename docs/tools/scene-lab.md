@@ -43,6 +43,7 @@ npm run scene -- specs/scenes/courier-turns.json --query skin=0   # extra game U
 
 - **Headless and locked.** It always runs headless and takes the shared e2e browser lock (`tools/e2e-lock.sh`), so it may wait for another lane first.
 - **Private server.** It starts its own Vite dev server on `SCENE_PORT` (default 3341, never 3300), so you always test the current sources. `SCENE_SERVER=preview` serves `dist/` instead.
+  Set `SCENE_DIST=/absolute/path/to/immutable-dist` with preview mode to keep a capture batch on a separate production build while work continues.
 - **Deterministic.** The seed comes from the spec (default 1), and the sim runs on fixed 60 Hz ticks. Every tick also renders one frame. Before advancing the next tick, Scene Lab waits for the previous tick's pending district LOD/terrain loads. Accelerated stepping otherwise consumes the two-second movement prefetch horizon before browser download/decode tasks can run. The game clock gives those tasks real time; this barrier gives the same requests time to finish without changing simulation inputs or LOD selection. It never repairs a frame already drawn: the zero stand-in gate still samples every tick, and missing prefetch fails on first entry. Use `tools/qa/lod-pop-probe.ts --realtime` to audit actual streaming at game speed; use `tools/qa/lod-standins-negative.ts` to prove the Scene Lab gate still detects missing prefetch.
 - **Outputs.** Each spec writes to `test-results/scenes/<name>[-webgpu][-low]/`:
   - `shot-NNNN.png`: the frame number after N ticks, taken once LOD0 streaming has settled.
@@ -236,6 +237,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `heldPropArmStraightMax` (mug/phone: shoulder-wrist distance over arm length; 1 is a hanging straight arm). Use 0.95.
 - `seeThroughLowPropsMax` (placements lower than an occluder, 1.1 m, drawn with the courier-hole cut material; `metrics.seeThrough.cutLowProps`). Use 0.
 - `seeThroughCutPixelsMax` / `seeThroughCutInsideMin` (PO 10-14 "buildings that are not in the way get transparent"): the end frame against the same frame with the solid-occluder cut forced off. Pixels that differ outside the hole disc around the courier (radius `solidRadius`, whole screen while a roof hugs the lens) are buildings or vehicles cut with nothing in the way: use 0. Inside the disc a real occluder must differ (`...InsideMin`). Result in `metrics.json` `seeThroughCut`; `metrics.seeThrough.occluders` names the placement that opened the hole. Scenes: `seethrough-open-sidewalk-l4`, `seethrough-behind-building-l4`.
+- Top-level `vehicleSilhouettes: ["<vehicle id>"]` measures every frame from 0 through `frames`, independently of sheet thinning. It compares the selected vehicle with its own unfaded body mask at the identical pose/camera, with its shadows disabled in all passes. Retained body coverage must be >= 60% when the camera segments do not hit the vehicle, or >= 30% when it blocks the player. Empty canvas reads fail; individual samples are saved in `metrics.json.vehicleSilhouettes`. Scenes: `apc-sedan-contact`, `seethrough-sedan-silhouette`, `seethrough-apc-*`.
 - `seeThroughOpenFramesMin` (frames the solid-occluder hole was open; a cutaway fixture must actually open it). `metrics.seeThrough` also reports `solidRadiusMax`.
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
@@ -389,6 +391,10 @@ Why each 10-13 report slipped through, and the rule now: (1) all visual QA ran a
 mug hold only in the standing unit test, the bus only at <= 1 tick per frame): metrics are per actor over every LOD band and
 the ride spec runs both tiers, both backends and phone cadences; (4) metrics compared against the same query that was wrong
 (corgi paw sink was measured against the sim floor that had the seam): the seam guard checks the support query itself.
+
+## Figure look gate (`look`)
+
+Top-level `look: { whiteShareMax, lumaRiseMax?, hueDriftMaxDeg?, minPixels? }` measures the crowd figures' own pixels at every sheet frame (the frame with vs without the crowd view, courier and HUD bars hidden): `lookWhiteShare` (pale unsaturated share), `lookLumaRise` (mean brightness / frame 0) and `lookHueDriftDeg` (saturation-weighted hue vs frame 0, the live look; for near-grey looks with chroma < 0.12 on either side, e.g. a face-down worker, hue is unreliable so it compares absolute luma and chroma difference, scaled to degrees). Samples are in `metrics.json` `lookSamples`. Catalog: `alpha-hit-corpse-*` (every Alpha and Mega look shot down and lying; a hit flash must keep the figure's own colours and the body its look, see `docs/reports/alpha-white/`).
 
 ## L10 pursuit and cure catalog
 
@@ -594,3 +600,5 @@ and credits gates require their actual UI to be visible.
 Trailing `--backend` / `--filter` options override the matrix script defaults.
 
 Evidence and remaining acceptance work: `docs/reports/l10-q2/README.md`.
+
+For bounded browser batches, `--matrix --tier high` and `--matrix --tier low` retain every matrix zoom while selecting one quality tier. Omitting `--tier` keeps the full high/low matrix. Release the browser slot between batches.

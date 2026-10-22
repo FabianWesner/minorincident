@@ -4,7 +4,7 @@ import { PNG } from 'pngjs';
 import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 import { canvasEdgeNoise } from './edge-noise';
-import { hueDistance, measureLook } from './look';
+import { hueDistance, LOW_CHROMA, measureLook } from './look';
 import { measureContrast, type ContrastResult } from './contrast';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
@@ -213,7 +213,14 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
       result.checks.push({ name: 'lookLumaRise', pass: rise <= spec.look.lumaRiseMax, value: +rise.toFixed(2), limit: spec.look.lumaRiseMax });
     }
     if (spec.look.hueDriftMaxDeg !== undefined) {
-      const live = seen.find(s => s.hue !== null)?.hue, drift = live == null ? Infinity : Math.max(...seen.map(s => s.hue === null ? Infinity : hueDistance(s.hue, live)));
+      // Hue is undefined for near-grey looks (face-down worker, chroma < LOW_CHROMA; measured: face-down worker at zoom 1.5 reads 0.11, hue jumps 18 to 244 while luma and chroma barely move): when the live look or the sample is
+      // that grey, compare lightness (absolute luma difference, 255 = 100 deg) and chroma (diff * 100 deg) instead.
+      // Coloured looks keep the plain hue distance against the unchanged limit.
+      const first = seen[0], live = seen.find(s => s.hue !== null)?.hue;
+      const drift = !first ? Infinity : Math.max(...seen.map(s => {
+        if (first.chroma < LOW_CHROMA || s.chroma < LOW_CHROMA) return Math.max(Math.abs(s.luma - first.luma) / 255 * 100, Math.abs(s.chroma - first.chroma) * 100);
+        return live == null || s.hue === null ? Infinity : hueDistance(s.hue, live);
+      }));
       result.checks.push({ name: 'lookHueDriftDeg', pass: drift <= spec.look.hueDriftMaxDeg, value: +drift.toFixed(1), limit: spec.look.hueDriftMaxDeg });
     }
   }
