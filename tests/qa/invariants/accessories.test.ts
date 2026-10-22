@@ -1,6 +1,6 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
-import { Box3, Matrix4, Mesh, Vector3, type BufferGeometry, type Group, type InstancedMesh } from 'three';
+import { Box3, Color, Matrix4, Mesh, Vector3, type BufferGeometry, type Group, type InstancedMesh, type MeshBasicMaterial } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -17,8 +17,12 @@ import type { CrowdPosePalette } from '../../../src/render/characters/CrowdPoseP
 import { oracle } from './oracles';
 import { loadCivilianSource } from '../../../src/assets/civilianSource';
 import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
+import { palette } from '../../../src/data/palette';
 
 type Lod = 'lod0' | 'lod1' | 'lod2';
+// Authored glasses are native head meshes, including staff/quest characters. Aftermath variants inherit their source.
+const authoredGlasses = new Set(manifest.filter(a => a.id.startsWith('npc.') && existsSync(`assets/${a.id}/build.py`) && /glasses|spectacle/i.test(readFileSync(`assets/${a.id}/build.py`, 'utf8'))).map(a => a.id));
+const spectacleColors = [new Color(palette.uiDark), new Color(palette.leather)];
 const cache = new Map<string, Promise<Group>>();
 async function asset(id: string, lod: Lod): Promise<Group> {
   const key = `${id}/${lod}`;
@@ -82,7 +86,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     }
     // Independent source: vertices in the authored GLB head frame plus its per-model manifest fit.
     // Tolerance is the source LOD's measured extent / 1024 (quantization), with a 2 mm floating-point floor.
-    let combinations = 0, eligible = 0;
+    let combinations = 0, eligible = 0, glassesHeads = 0;
     for (const model of models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
       const root = await asset(model, lod);
       if (model.startsWith('npc.')) prepareCivilianRig(root, model);
@@ -92,25 +96,53 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       const registeredSkull = bakedSkull(geometry), skull = registeredSkull ?? authoredSkull(root);
       // Glasses are authored into these civilian heads, not separate acc.* models.
       // Their dark front-face vertices must remain on the face and owned by the head joint.
-      if (/npc\.civilian-(woman-b|elderly)(\.aftermath)?$/.test(model)) {
+      if (authoredGlasses.has(model) || authoredGlasses.has(model.replace(/\.aftermath$/, ''))) {
+        glassesHeads++;
+        // Palette-folded aftermath heads retain the source rig/shape but no separate skin material.
+        let glassSkull = skull;
+        if (!glassSkull && model.endsWith('.aftermath')) {
+          const source = await asset(model.replace(/\.aftermath$/, ''), lod);
+          prepareCivilianRig(source, model.replace(/\.aftermath$/, ''));
+          glassSkull = authoredSkull(source);
+        }
         const headNode = root.getObjectByName('head')!; root.updateMatrixWorld(true);
-        const inverse = headNode.matrixWorld.clone().invert(), spectacles = new Box3(), point = new Vector3();
+        const inverse = headNode.matrixWorld.clone().invert(), spectacles = new Box3(), point = new Vector3(), authoredFace: Vector3[] = [];
         headNode.traverse(node => {
-          if (!(node instanceof Mesh) || Array.isArray(node.material) || !/pal_(leather|uiDark)$/.test(node.material.name)) return;
-          const position = node.geometry.getAttribute('position'), index = node.geometry.index, transform = inverse.clone().multiply(node.matrixWorld);
+          if (!(node instanceof Mesh) || Array.isArray(node.material)) return;
+          const material = node.material as MeshBasicMaterial, nativeDark = /pal_(leather|uiDark)$/.test(material.name);
+          const position = node.geometry.getAttribute('position'), index = node.geometry.index, colors = node.geometry.getAttribute('color'), transform = inverse.clone().multiply(node.matrixWorld), shade = new Color();
+          if (!nativeDark && !(material.vertexColors && colors)) return;
           for (let i = 0; i < (index?.count ?? position.count); i++) {
-            point.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(transform);
-            if (point.x > .02 && point.y > .04) spectacles.expandByPoint(point);
+            const vertex = index ? index.getX(i) : i;
+            // Aftermath authoring folds swatches into soot-tinted vertex colors under pal_picketWhite.
+            if (!nativeDark) {
+              shade.fromBufferAttribute(colors, vertex).multiply(material.color);
+              const dark = spectacleColors.some(swatch => {
+                const ratio = Math.max(shade.r, shade.g, shade.b) / Math.max(swatch.r, swatch.g, swatch.b);
+                return ratio >= .25 && ratio <= 1.05 && (['r', 'g', 'b'] as const).every(axis => Math.abs(shade[axis] - swatch[axis] * ratio) <= .003);
+              });
+              if (!dark) continue;
+            }
+            point.fromBufferAttribute(position, vertex).applyMatrix4(transform);
+            if (point.x > .02 && point.y > .04) { spectacles.expandByPoint(point); authoredFace.push(point.clone()); }
           }
         });
-        if (skull && !spectacles.isEmpty()) {
-          const top = skull.centre.y + skull.size.y / 2;
-          if (spectacles.getCenter(point).y > top + .02 || spectacles.min.y < skull.centre.y - skull.size.y / 2 - .02) errors.push(`${model}/${lod}: glasses outside skull face bounds`);
-          const parts = geometry.getAttribute('_parts'), positions = geometry.getAttribute('position'); let faceVertices = 0;
-          for (let i = 0; i < positions.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && spectacles.containsPoint(point.fromBufferAttribute(positions, i))) {
-            faceVertices++;
+        if (!glassSkull || spectacles.isEmpty()) errors.push(`${model}/${lod}: authored glasses need ${!glassSkull ? 'source head skin' : 'visible face geometry'}`);
+        else {
+          const top = glassSkull.centre.y + glassSkull.size.y / 2;
+          if (spectacles.getCenter(point).y > top + .02 || spectacles.min.y < glassSkull.centre.y - glassSkull.size.y / 2 - .02) errors.push(`${model}/${lod}: glasses outside skull face bounds`);
+          const parts = geometry.getAttribute('_parts'), positions = geometry.getAttribute('position'), epsilon = .002;
+          const headPoints = new Map<string, Vector3[]>(), cell = (p: Vector3) => p.toArray().map(n => Math.round(n / epsilon));
+          for (let i = 0; i < positions.count; i++) if (parts.getX(i) === characterNodes.indexOf('head')) {
+            const p = point.fromBufferAttribute(positions, i).clone(), key = cell(p).join(',');
+            if (!headPoints.has(key)) headPoints.set(key, []); headPoints.get(key)!.push(p);
           }
-          expect(faceVertices, `${model}/${lod}: native glasses face survives baking`).toBeGreaterThan(0);
+          const missing = authoredFace.filter(p => {
+            const [x, y, z] = cell(p);
+            for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) if (headPoints.get(`${x + dx},${y + dy},${z + dz}`)?.some(q => p.distanceToSquared(q) <= epsilon * epsilon)) return false;
+            return true;
+          }).length;
+          if (missing) errors.push(`${model}/${lod}: ${missing}/${authoredFace.length} native glasses vertices lost their authored head-part position/scale`);
         }
       }
       (renderer as unknown as { fits: Map<string, Matrix4> }).fits.delete(model); renderer.registerSkull(model, geometry);
@@ -149,7 +181,8 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       }
       geometry.dispose(); baked.geometry.dispose();
     }
-    console.log(`[qa:invariants] accessories combinations=${combinations} eligible=${eligible}`);
+    expect(glassesHeads, 'authored glasses inventory must not be empty').toBeGreaterThan(0);
+    console.log(`[qa:invariants] accessories combinations=${combinations} eligible=${eligible} nativeGlassesHeads=${glassesHeads}`);
     const distinct = [...new Set(errors)];
     expect(distinct, `accessories invariant: ${distinct.length} bad head bounds across ${combinations} combinations`).toEqual([]);
   } finally { renderer.dispose(); vi.restoreAllMocks(); }
