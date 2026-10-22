@@ -4,7 +4,7 @@
 
 The initial retained-civilian-look hypothesis was disproved by a production assault replay. Seed 32, `cure-disperse-ready`, console `(4002,-27)`, 5,400 ticks of ordinary rocket inputs (god mode only for survival): 53 combat kill events, 53 permanent bodies, **zero** bodies with retained civilian appearances. No actors were spawned by the driver and no HP was edited. The driver and exact input ledger are committed alongside this note.
 
-Every frozen page has gore mask `31`: both arms, both legs, and the head are removed. Their sources are the correct #93 meshes, but only 74–168 torso triangles remain for the regular variants. The capture reads as separated coloured torso lumps, not reclining people. The prior fixture set HP directly and therefore bypassed VFX kill events and the five-bit dismemberment mask. See `real-assault-before.json` and `real-assault-before.jpg`.
+Every frozen page has gore mask `31`: both arms, both legs, and the head are removed. Their sources are the correct #93 meshes, but only 74–168 torso triangles remain for the regular variants. The capture reads as separated coloured torso lumps, not reclining people. The prior fixture set HP directly and therefore bypassed VFX kill events and the five-bit dismemberment mask. See `real-assault-before.json.gz` and `real-assault-before.jpg`.
 
 `CivilianCrowd` has a separate retained-look corpse path. D-CURE has no civilian spawn volumes or civilian routes; the actual assault bodies carry infected model variants, not retained civilian appearances. That path does not explain this failure.
 
