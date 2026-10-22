@@ -15,6 +15,5 @@ export function canCoverVisibleAllies(level: string | null, step: string | null,
 
 /** Choose between the courier's closest contact and a visible ally's attacker. */
 export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined, allyThreat: T | undefined): T | undefined {
-  void unarmed;
-  return nearby ?? allyThreat;
+  return unarmed ? allyThreat ?? nearby : nearby ?? allyThreat;
 }
