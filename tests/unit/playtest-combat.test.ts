@@ -49,3 +49,12 @@ test('#99 fists cover the attacked ally before chasing a closer isolated infecte
   expect(prioritizeAllyThreat(true,undefined,attackingAlly)).toBe(attackingAlly);
   expect(prioritizeAllyThreat(false,nearby,attackingAlly)).toBe(nearby);
 });
+
+test('#99 fists defend visible allies when the retreat HUD asks for rear cover', () => {
+  const ally = { drawn: true, hp: 20, corpse: false };
+  expect(canCoverVisibleAllies('L6','retreat',true,ally,'The group waits: cover the rear from the infected · 4 m')).toBe(true);
+  expect(canCoverVisibleAllies('L6','retreat',true,ally,'Stay with the group · 3 m')).toBe(true);
+  expect(canCoverVisibleAllies('L6','retreat',true,{...ally,drawn:false},'Stay with the group · 3 m')).toBe(false);
+  expect(canCoverVisibleAllies('L6','retreat',true,ally,'Cover the retreat through the tunnel · 4 m')).toBe(false);
+  expect(canCoverVisibleAllies('L7','corridor',true,ally,'Stay with the group · 3 m')).toBe(false);
+});

@@ -154,7 +154,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const nearby = e.enemies.find(b => b.d < reach && ok(b));
-    const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,a) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
+    const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,a,e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
     const threat = prioritizeAllyThreat(unarmed, nearby, allyThreat);
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
