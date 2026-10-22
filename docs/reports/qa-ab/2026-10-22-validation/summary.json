@@ -158,5 +158,53 @@
     "smallestConfirmedCasePeak": 0.15625,
     "largestPassingFocusedControlPeak": 0.004340277777777778,
     "fullAllLevelControlPending": true
+  },
+  "nonBrowserAudit": {
+    "at": "2026-10-22T22:25:26.697069+00:00",
+    "readmeLinksValid": true,
+    "completedReportsHaveMatchingImageBudgets": true,
+    "rawReviewListsMatchThreshold": true,
+    "reports": [
+      {
+        "report": "2026-10-22-13g-vs-13h/summary.json",
+        "variants": 32,
+        "imageBytes": 8527181
+      },
+      {
+        "report": "2026-10-22-local-dist/summary.json",
+        "variants": 2,
+        "imageBytes": 640199
+      },
+      {
+        "report": "2026-10-22-prod-vs-po-fixes/summary.json",
+        "variants": 18,
+        "imageBytes": 5316838
+      },
+      {
+        "report": "2026-10-22-mutations/summary.json",
+        "variants": 8,
+        "imageBytes": 2361120
+      },
+      {
+        "report": "2026-10-22-local-self/summary.json",
+        "variants": 8,
+        "imageBytes": 2272792
+      },
+      {
+        "report": "2026-10-22-l10-control/summary.json",
+        "variants": 4,
+        "imageBytes": 611496
+      },
+      {
+        "report": "2026-10-22-l6-control/summary.json",
+        "variants": 2,
+        "imageBytes": 164039
+      },
+      {
+        "report": "2026-10-22-l4-control/summary.json",
+        "variants": 2,
+        "imageBytes": 453429
+      }
+    ]
   }
 }

@@ -1,5 +1,7 @@
 # Visual A/B regression review
 
+**Status: final replay pending.** The revised sensitivity runs detected 7/7 cases. Local and focused same-build controls pass; the final capture-protocol refresh and all-level control await the load-stalls browser hold. See the [validation summary](2026-10-22-validation/summary.json).
+
 ```sh
 npm run build
 npm run qa:ab -- --candidate dist --levels L1-L4
