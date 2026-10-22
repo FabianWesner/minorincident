@@ -11,6 +11,7 @@ const seed = Number(process.argv[2] ?? 1), seconds = Number(process.argv[3] ?? 1
 const world = new SimWorld(); await world.init();
 const c = compositions.L4, t0 = performance.now();
 world.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
+if (process.env.TIER === 'low') { world.infected!.director.setTier('low'); world.npcs!.setQuality('low'); }
 applyCampaign(world, preset('L4-default'));
 const m = world.loadMission(resolveCampaignMission('L4', world.districts!)); m.begin();
 console.log('load ms', Math.round(performance.now() - t0), 'warnings', world.districts!.warnings.length);
