@@ -29,7 +29,7 @@ All commands use `E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 E2E_PORT=4051 S
 
 | Verification | Result |
 | --- | --- |
-| Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Receipt](evidence/units-corpses-final2.log.txt). |
+| Full remote units on final runtime | **1,865 passed /343 files**, 7 skipped tests /1 file. [Final pause-window receipt](evidence/units-pause-final.log.txt). |
 | E07 final | Pending. |
 | E27 final | **PASS**, typecheck/lint/build, **46 Node +41 functional browsers +2 quiet performance tests**. [Receipt](evidence/verify-E27-final.log.txt), [stage exits](evidence/verify-E27-final-checks.json); cold-blast p95 **8.8/17.5 ms**, max **17.3/34.8 ms**, sim p95 **0.6/2.8 ms**. |
 | E28 final | **PASS**, typecheck/lint/build, **28 Node +71 functional browsers +6 quiet performance tests**. [Receipt](evidence/verify-E28-final.log.txt), [stage exits](evidence/verify-E28-final-checks.json), lossless result JSONs. |
