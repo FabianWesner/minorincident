@@ -6,7 +6,7 @@ import type { Game } from '../../src/Game';
 import type { InputFrame } from '../../src/input/InputFrame';
 
 interface L10Frame {
-  at: number; dt: number; tick: number; loading: boolean; scenario: string | null;
+  at: number; dt: number; tick: number; loading: boolean; cardVisible: boolean; scenario: string | null;
   x: number; z: number; sim: number; update: number; render: number; builds: number;
   heroLight?: string | null; sun?: boolean; spot?: boolean;
 }
@@ -40,9 +40,12 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
     const g = (window.__SCENE__ as unknown as { game: { world: Game['world']; input: Game['input']; view: Game['view']; loading: boolean } }).game;
     const trace = window as unknown as { l10Trace: L10Frame[]; l10TraceRunning: boolean; l10CardClosed?: number };
     trace.l10Trace = []; trace.l10TraceRunning = true;
+    const card = document.querySelector<HTMLElement>('[data-testid=level-transition]');
+    if (!card) throw Error('The production loading card is missing');
     const transition = (g as unknown as { transition: { finish(): void } }).transition, finish = transition.finish;
     transition.finish = function () {
       if (g.world.scenario === 'L10') {
+        if (card.hidden) throw Error('The loading card closed before L10 was ready');
         if (g.world.tick !== 0) throw Error(`Replay must begin at tick zero, got ${g.world.tick}`);
         const a = window.__SS__!, rig = g.view.view;
         a.cheats.god(true); rig.zoom(Math.log(1.5 / rig.getState().targetZoom), true);
@@ -56,7 +59,7 @@ export async function measureL10Entry(page: Page, origin: string, entry: 'debug'
     const sample = (now: number) => {
       const p = g.world.entities.get(1)?.transform, perf = window.__SS__!.perf();
       const light = (g.view as unknown as { lighting: { heroLight: string | null; sun: { visible: boolean }; spot: { visible: boolean } } | null }).lighting;
-      trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds,
+      trace.l10Trace.push({ at: now, dt: now - last, tick: g.world.tick, loading: g.loading, cardVisible: !card.hidden, scenario: g.world.scenario, x: p?.x ?? 0, z: p?.z ?? 0, sim: perf.simMs, update: perf.updateCpuMs, render: perf.renderCpuMs, builds: perf.nodeBuilds,
         heroLight: light?.heroLight, sun: light?.sun.visible, spot: light?.spot.visible }); last = now;
       if (trace.l10TraceRunning) requestAnimationFrame(sample);
     }; requestAnimationFrame(sample);
