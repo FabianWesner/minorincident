@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
 import { validateSave } from '../../src/sim/progression/Save';
-import { assertRenderedBodies, playtestSave } from '../../tools/playtest/startup';
+import { assertRenderedBodies, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
   const source = preset('L6-default'), save = playtestSave(source, 'male', 'fists');
@@ -27,4 +27,12 @@ test('#99 the fists profile satisfies the real campaign save validator', () => {
   const source = preset('L6-default');
   expect(validateSave(source)).toBe(true);
   expect(validateSave(playtestSave(source, 'male', 'fists'))).toBe(true);
+});
+
+test('#99 the input driver resumes a visible pause menu during play', () => {
+  expect(shouldResumePause('pause',false)).toBe(true);
+  expect(shouldResumePause('pause',true)).toBe(false);
+  expect(shouldResumePause(null,false)).toBe(false);
+  expect(shouldResumePause('title',false)).toBe(false);
+  expect(shouldResumePause('settings',false)).toBe(false);
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies } from './startup';
+import { assertRenderedBodies, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
 
@@ -302,6 +302,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   for (;;) {
     let e: Eyes;
     try { e = await see(); } catch (error) { log({ seeError: String(error) }); await hold(500); if (Date.now() - bootWall > 600_000 && !run) break; continue; }
+    if (run && shouldResumePause(e.menu,e.loading)) {
+      await press([]); await releaseAim();
+      await page.getByTestId('resume-game').click({ timeout: 5000 });
+      log({ resumedVisiblePause: true, level: e.level, tick: e.tick });
+      await hold(150); continue;
+    }
     // Hitches: long frames during play only.
     const frames = await page.evaluate(n => (window as unknown as { __playtestFrames: number[][] }).__playtestFrames.slice(n), frameCursor);
     frameCursor += frames.length;
@@ -395,7 +401,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
     }
     if(Date.now()-lastObservation>=1000) {
-      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp}:null,marker:ring,noProgressSeconds:observed.seconds}});
+      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp}:null,marker:ring,noProgressSeconds:observed.seconds}});
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
