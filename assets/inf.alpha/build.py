@@ -60,7 +60,7 @@ def build():
     k.loft('abdomen', 'torso', shirt, ab, N=10, jitter=.04)
     chest = [((.02, 0, .40), (.37, .28)), ((.0, 0, .56), (.47, .32)), ((-.04, 0, .74), (.47, .29)), ((-.07, 0, .88), (.32, .22))]
     k.loft('chest', 'torso', shirt, chest, N=8, jitter=.04)
-    k.blob('hump', 'torso', shirt, (-.19, 0, .70), (.37, .43, .27), sub=3, jitter=.06)
+    k.blob('hump', 'torso', shirt, (-.15, 0, .63), (.31, .41, .22), sub=3, jitter=.06)
     k.blob('trapezius', 'torso', skin, (-.04, 0, .90), (.26, .26, .17), sub=2, jitter=.05)
     # torn open shirt: a wedge of skin chest with the wound, flanked by collar flaps
     k.blob('chest_skin', 'torso', skin, (.29, 0, .60), (.10, .20, .26), sub=2, jitter=.05)
