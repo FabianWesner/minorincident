@@ -141,3 +141,12 @@ The completed full remote run on rigid-normal source passed **2,336 tests, 11 sk
 
 
 Final focused validation is green: typecheck, lint, and 71 tests. In the matching production baseline, the 441.3 ms first-lamp frame (64,717.5–65,158.8 ms) contains ~226 ms inclusive shader `build` and ~166 ms self time in `getProgramParameter`, confirming the same cold-graph cause found in the earlier 3.7–4.5 s debug-start runs. The exact window and readable summary are preserved with the raw profile.
+
+
+## Final real-play matrix and fresh entry guards
+
+The complete accepted matrix passes the audit: WebGL2/WebGPU × low/high × 0.5/1/1.5 zoom, before/after, with exact input events, actual kills, all body IDs/transforms, camera states and lighting. Low retains all 53 bodies and high all 167 bodies. Assault maxima after the fix are 38.1/39.1 ms low and 131.8/131.8 ms high (WebGL2/WebGPU). High assault p95 is 5.2→5.7 / 4.1→4.6 ms; the authorized low residual remains +0.2/+0.4 ms. All browser error lists are empty. Raw high manifests/profiles and the complete audit are archived as `accepted-assault-*`; the accepted low raw data remains the byte-identical `rigid-assault-*` set.
+
+I inspected all four refreshed contact sheets (24 native views, composed without rescaling). In both backends and tiers, the before row consists of faceted torso lumps without limbs or heads. The after row has complete reclining silhouettes: heads and faces, arms/hands, legs/feet, and the quadruped anatomy are visible, especially along the pile edge at zoom 1 and 1.5. Zoom 0.5 shows those details close up but crops much of the pile; high's 167 bodies overlap heavily in the center. The intended angular art style remains, and no count, corpse persistence or living detail was reduced. Both backends read consistently. Only five report captures are retained.
+
+Fresh final production entry guards pass **4/4** on the selected source: WebGL2 debug/continue **31.9 / 26.7 ms**, WebGPU **41.8 / 44.4 ms**, no intervals above 200 ms, no browser errors, full recorded route through tick 5131 and both lamp boundaries. Each guard also verifies exclusive sun/spot draws, completed alternate warming before tick 2800, and cached graph reuse at lamp changes. Matching WebGL2 loading growth is **214.9 / 222.5 ms**. WebGPU baseline comparison, final extended profile, smoke and the fresh full remote run are still pending.
