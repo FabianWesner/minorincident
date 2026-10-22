@@ -79,6 +79,25 @@ describe('L1 v2 mission', () => {
     expect(w.infected!.active.filter(e => e.health.current > 0).map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join('|')).not.toBe(before);
   }, HEAVY);
 
+  test('T-106 @E19 death during Find something to defend yourself respawns near the garage bat on a cleared approach', async () => {
+    const { world: w, mission } = await load(2);
+    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'active' });
+    w.update();
+    expect(mission.state.items).not.toContain('bat');
+    const bat = mission.def.anchors['garage-bat'];
+    const cp = w.entities.get(1)!.survivor!.checkpoint;
+    expect(Math.hypot(cp.x - bat.x, cp.z - bat.z)).toBeLessThanOrEqual(25);
+    Object.assign(w.entities.get(1)!.transform, { x: bat.x - 40, z: bat.z });
+    w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true);
+    w.player!.damage(1000, w.tick);
+    for (let i = 0; i < 400 && !w.events.events().some(e => e.type === 'player.respawned'); i++) w.update();
+    const player = w.entities.get(1)!;
+    expect(w.events.events().some(e => e.type === 'player.respawned')).toBe(true);
+    expect(Math.hypot(player.transform.x - bat.x, player.transform.z - bat.z)).toBeLessThanOrEqual(25);
+    const approachThreats = w.infected!.active.filter(e => e.health.current > 0 && !e.corpse && Math.hypot(e.transform.x - bat.x, e.transform.z - bat.z) < 8.5);
+    expect(approachThreats).toHaveLength(0);
+  }, HEAVY);
+
   test('T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes', async () => {
     const { world: w, mission } = await load(3); let attacks = 0;
     w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) attacks++; });
