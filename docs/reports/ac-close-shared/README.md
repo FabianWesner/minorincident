@@ -166,7 +166,7 @@ The existing `zoo-s3.test.ts` comment, introduced by **2e4df83867** on 2026-10-1
 
 Reason: this reconciles the nominal ground cue with the established physical-contact behavior. Narrowing collision to the centre corridor would change the current combat behavior, contrary to this task's no-difficulty-change constraint. The literal corridor criterion is **not marked met** by a green existing test.
 
-## E07-AC12 final object-count failure — diagnosis pending
+## Historical E07-AC12 object-count failure — resolved below
 
 The final verifier passes all 102 functional browser cases, then quiet T-E07-12 fails before its offscreen/settled/mixed checks: **185 objects versus 138 reported batch entries +3 fixed objects =141**. The other four quiet checks pass. [Failure context](evidence/horde-object-failure.md), [decoded state](evidence/horde-object-failure.json.gz). This run supplies no fresh passing offscreen/settled/mixed proof.
 
@@ -182,7 +182,7 @@ The final failure trace frame was opened without a new browser: a dense varied c
 
 The corrected diagnostic reaches a **real mixed-budget failure: 30 nonempty model batches +1 shadow =31 crowd draws** against the unchanged 30 cap ([receipt](evidence/object-audit-browser-mixed-failure.log.txt)). All nodes are owned; the literal no-per-infected-Object3D requirement passes. The 200 weighted AI units include two crow flocks with 40 rendered birds. The original verifier and diagnostic thresholds are unchanged. A geometry audit is investigating compatible dog-coat batching; no runtime change has yet been made for this failure.
 
-### Dog palette batching repair — committed, final verification pending
+### Historical dog palette batching repair — final result below
 
 Runtime commit `9e5c4b0b1` shares the default/cream dog **LOD1** draw only after exact positions, normals, part ownership, index order and clip matrices match. Authored cream vertex colors remain a separate immutable palette attribute. The actual-asset regression rejects incompatible LOD2 geometry, whose palette-sensitive simplification changes surfaces; no LOD2 equivalence is claimed. Dense high-tier crowds retain both coats using the more detailed shared LOD1 surface. Low tier shares only actors already selected for LOD1, preserving its near-detail cap. Corpses retain their original separate source meshes/materials. No actors, HP, attacks, RNG, thresholds or visible coat identities are removed.
 
@@ -198,7 +198,7 @@ D remains **5/5** after opening the refreshed 24-frame matrix and full-size WebG
 
 H remains **4/4 must +3/3 should** after opening both refreshed seven-row sheets and full-size medium/mega flight, wind column, L4 chain and both late grenade frames. All six body peak/landing records match the previous receipt. The L4 fuel-truck sequencer emits its pump/canopy/tank stages at ticks **188/202/222** (offsets **0/14/34**); the sheet now selects early frames **0/2/6/15/40/120**, then 300/900 aftermath, rather than omitting the active mega window. The full-size f40 frame shows the orange/black mega fireball behind the street roofs; no building-collapse geometry claim is made. The grenade f840 frames retain courier, ring and dithered smoke on both tiers.
 
-Remote validation on the committed runtime: typecheck/lint, **27 focused render tests +build** ([receipt](evidence/headwear-inline-focused.log.txt)), then **1,867 full unit passes /345 files, nine skipped tests /one file** ([receipt](evidence/units-headwear-final.log.txt)). Seven skips are the pre-existing Linux/macOS lock exclusions; two optional FFmpeg loudness checks skipped on this runner, with those audio sources unchanged. The new all-epic verifiers remain in progress. The earlier dog-only verifier was cancelled through its owned remote launcher before browser admission when the broader headwear defect was found ([receipt](evidence/verify-E07-dog-superseded.log.txt), [stage exits](evidence/verify-E07-dog-superseded-checks.json)); it is not a passing verifier.
+Remote validation on the committed runtime: typecheck/lint, **27 focused render tests +build** ([receipt](evidence/headwear-inline-focused.log.txt)), then **1,867 full unit passes /345 files, nine skipped tests /one file** ([receipt](evidence/units-headwear-final.log.txt)). Seven skips are the pre-existing Linux/macOS lock exclusions; two optional FFmpeg loudness checks skipped on this runner, with those audio sources unchanged. The final E07 verifier is green; E27/E28 are refreshing as recorded in the verification table. The earlier dog-only verifier was cancelled through its owned remote launcher before browser admission when the broader headwear defect was found ([receipt](evidence/verify-E07-dog-superseded.log.txt), [stage exits](evidence/verify-E07-dog-superseded-checks.json)); it is not a passing verifier.
 
 All **168** move images from the final functional run are byte-identical to the fully reviewed set ([repeat hashes](evidence/move-final-repeat.json)); the fresh move journals are retained in `move-boundaries.json.gz`. All **ten** actual Alpha/zoo images are also byte-identical ([current runtime repeat](evidence/phone-bar-runtime-repeat.json)). This preserves the prior full-boundary/phone visual review on the final runtime, alongside the repeated gameplay/pixel assertions.
 
