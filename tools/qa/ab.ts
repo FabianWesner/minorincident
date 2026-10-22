@@ -1,115 +1,122 @@
-import { chromium, type Browser, type Page } from '@playwright/test';
-import { PNG } from 'pngjs';
-import pixelmatch from 'pixelmatch';
+import { chromium, type Page } from '@playwright/test';
 import { preview } from 'vite';
-import { preset } from '../../src/sim/progression/Campaign';
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
-import { resolve } from 'node:path';
+import { parseArgs } from 'node:util';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, rmdirSync, statSync, writeFileSync } from 'node:fs';
+import { basename, resolve } from 'node:path';
+import { debugCampaign, type Level } from '../../src/sim/progression/Campaign';
+import { crossing } from '../../src/levels/L9/district';
+import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab-tour';
+import { perceptualDiff } from './ab-metrics';
 
-type Stop = { id: string; level: string; label: string; zoom: number; tick: number };
-const args = process.argv.slice(2);
-function arg(name: string, fallback?: string): string | undefined { const i = args.indexOf(name); return i < 0 ? fallback : args[i + 1]; }
-const baseline = arg('--baseline', 'https://minor-incident.com')!;
-const candidate = arg('--candidate');
-if (!candidate) throw new Error('Usage: npm run qa:ab -- --baseline <url> --candidate <url|dist> [--levels L1-L4]');
-const selected = (arg('--levels', 'L1-L10')!).split(',').flatMap(v => v.includes('-') && /^L\d+-L\d+$/.test(v) ? Array.from({ length: Number(v.split('-')[1].slice(1)) - Number(v.slice(1, v.indexOf('-L'))) + 1 }, (_, i) => `L${Number(v.slice(1, v.indexOf('-L'))) + i}`) : [v]).filter(v => /^L([1-9]|10)$/.test(v));
-const threshold = Number(arg('--threshold', '0.025'));
-const day = new Date().toISOString().slice(0, 10);
-const output = resolve('docs/reports/qa-ab', day);
-mkdirSync(output, { recursive: true });
-const tour: Record<string, [string, number][]> = {
-  L1: [['depot-handover', 0], ['bike-rack', 240], ['fire-station', 600], ['lab-handover', 960]],
-  L2: [['ride-start-benches', 0], ['ride-opening', 240], ['ride-middle', 600], ['ride-late', 960]],
-  L3: [['raised-corridor-ramps', 240], ['corridor-middle', 600], ['army-checkpoint-pullback', 960], ['checkpoint-late', 1200]],
-  L4: [['plaza-tank-hold', 0], ['barrier-approach', 240], ['alarm-wave', 600], ['civilians-hold', 960]],
-};
-for (let n = 5; n <= 10; n++) tour[`L${n}`] = [['start-area', 0], ['gate', 360], ['handover', 720], ['finale', 1080]];
-const stops: Stop[] = selected.flatMap(level => (tour[level] ?? []).map(([label, tick], i) => ({ id: `${level.toLowerCase()}-${String(i + 1).padStart(2, '0')}-${label}`, level, label, tick, zoom: i % 2 === 0 ? 1.5 : 1 })));
-
-function urlFor(base: string): string {
-  if (base === 'dist') base = `http://127.0.0.1:${process.env.E2E_PORT ?? '4201'}`;
-  const u = new URL(base); u.searchParams.set('testApi', '1'); u.searchParams.set('seed', '13'); u.searchParams.set('quality', 'low'); u.searchParams.set('dpr', '1'); u.searchParams.set('audio', 'muted'); return u.toString();
+const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},stops:{type:'string'},help:{type:'boolean'}}});
+if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring]');process.exit(0);}
+if(!values.candidate)throw new Error('--candidate <url|dist> is required');
+const threshold=Number(values.threshold),seed=Number(values.seed);
+if(!Number.isFinite(threshold)||threshold<=0||threshold>1)throw new Error('--threshold must be a fraction between 0 and 1');
+if(!Number.isSafeInteger(seed)||seed<0)throw new Error('--seed must be a nonnegative integer');
+const levels=[...new Set(values.levels!.split(',').flatMap(part=>{
+  const match=/^L(10|[1-9])(?:-L(10|[1-9]))?$/.exec(part.trim());
+  if(!match||Number(match[2]??match[1])<Number(match[1]))throw new Error(`Invalid level selection: ${part}`);
+  return Array.from({length:Number(match[2]??match[1])-Number(match[1])+1},(_,i)=>`L${Number(match[1])+i}`);
+}))];
+const stops=tour.filter(s=>levels.includes(s.level)&&(!values.stops||s.id.includes(values.stops)));
+if(!stops.length)throw new Error('No matching tour stops');
+const sources={baseline:values.baseline!,candidate:values.candidate};
+for(const source of Object.values(sources))if(source!=='dist'&&!/^https?:\/\//.test(source))throw new Error(`Expected an HTTP(S) URL or dist: ${source}`);
+const startedAt=new Date().toISOString(),output=resolve(values.out??`docs/reports/qa-ab/${startedAt.slice(0,10)}-${startedAt.slice(11,19).replaceAll(':','')}`);
+if(existsSync(resolve(output,'summary.json')))throw new Error(`Report already exists: ${output}. Choose a new --out.`);
+mkdirSync(output,{recursive:true});const raw=resolve('test-results/qa-ab',basename(output),'captures');mkdirSync(raw,{recursive:true});
+const variants=stops.flatMap(stop=>[1.5,1].map(zoom=>({stop,zoom,id:`${stop.id}-z${zoom}`})));
+const captures=new Map<string,{proof:Awaited<ReturnType<typeof prepareStop>>;frames:Awaited<ReturnType<typeof readyFrame>>[];hashes:string[]}>();
+const errors:{side:string;stop:string;message:string}[]=[],builds:Record<string,unknown>={};
+type Row={id:string;stop:TourStop;zoom:number;score:number;globalChanged:number;frames:{frame:number;seconds:number;score:number;globalChanged:number;box:{x:number;y:number;width:number;height:number}}[];sheet:string;baseline:unknown;candidate:unknown};
+const rows:Row[]=[];
+let server:Awaited<ReturnType<typeof preview>>|undefined;
+if(Object.values(sources).includes('dist')){
+  if(!existsSync('dist/index.html'))throw new Error('Build the local candidate first: npm run build');
+  server=await preview({configFile:false,preview:{host:'127.0.0.1',port:4201,strictPort:true}});
 }
-async function prepare(page: Page, base: string, level: string, stop?: Stop): Promise<void> {
-  await page.goto(urlFor(base), { waitUntil: 'domcontentloaded', timeout: 120_000 });
-  await page.waitForFunction(() => !!window.__SS__, { timeout: 120_000 });
-  const l9Save = level === 'L9' ? preset('L8-default') : null;
-  if (l9Save) { l9Save.completedLevels = 8; l9Save.unlockedLevel = 9; l9Save.settings.quality = 'low'; }
-  const checkpoint = level === 'L10' ? ({ 'gate': 'cure-industrial', 'handover': 'cure-research-entry', 'finale': 'cure-disperse-ready' } as Record<string, string>)[stop?.label ?? ''] : undefined;
-  await page.evaluate(async ({ levelId, save, checkpointId }) => {
-    const a = window.__SS__!; await a.ready;
-    if (save) a.campaign.restore(save);
-    await a.loadLevel(levelId, { seed: 13, ...(checkpointId ? { checkpoint: checkpointId } : {}), ...(['L1', 'L9'].includes(levelId) ? {} : { progression: `${levelId}-default` as 'L2-default' | 'L3-default' | 'L4-default' | 'L5-default' | 'L6-default' | 'L7-default' | 'L8-default' | 'L10-default' }) });
-    a.pause(); a.settings.set({ quality: 'low', cameraShake: false, bloom: false, cheapDof: false, vfx: false });
-    a.pause(); a.missions.begin(); a.cheats.god(true); a.camera.follow(); a.camera.zoom(1.5);
-    if (['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L8'].includes(levelId)) a.bot.start('complete');
-    await a.step(1); await a.screenshotReady();
-  }, { levelId: level, save: l9Save, checkpointId: checkpoint });
+const browser=await chromium.launch({headless:true,args:process.platform==='darwin'?['--use-angle=metal','--enable-gpu','--enable-unsafe-webgpu','--ignore-gpu-blocklist']:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--enable-unsafe-webgpu','--ignore-gpu-blocklist']}).catch(async error=>{await server?.close();throw error;});
+function sourceUrl(source:string){const u=new URL(source==='dist'?'http://127.0.0.1:4201':source);for(const [key,value]of Object.entries({test:'1',scenelab:'1',profile:'1',dpr:'1',quality:'low',audio:'muted',preload:'0',seed:String(seed)}))u.searchParams.set(key,value);return u.toString();}
+function escape(value:unknown){return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');}
+function report(status:'running'|'complete'|'failed'){
+  rows.sort((a,b)=>b.score-a.score);
+  const findingIds:Finding[]=['depot-clerk','lab-handover','hats-glasses','sitters-benches','l3-gaps','l4-tank'];
+  const findings=findingIds.map(id=>{const relevant=rows.filter(r=>r.stop.findings?.includes(id));return{id,measured:relevant.length>0,score:Math.max(0,...relevant.map(r=>r.score)),aboveThreshold:relevant.some(r=>r.score>=threshold),stops:relevant.map(r=>r.id)};});
+  const imageBytes=readdirSync(output).filter(p=>p.endsWith('.jpg')).reduce((n,p)=>n+statSync(resolve(output,p)).size,0);
+  const summary={schemaVersion:1,status,startedAt,finishedAt:status==='running'?null:new Date().toISOString(),sources,builds,settings:{backend:'webgpu',quality:'low',viewport:[1280,720],dpr:1,seed,zoom:[1.5,1],vfx:false,earlyLevelSave:'L10-default'},metric:{name:'maximum local perceptual changed coverage',tilePixels:48,colorThreshold:.15,frameOffsetsSeconds:[0,.6,1.2,1.8,2.4,3],threshold},expectedStops:variants.length,measuredStops:rows.length,imageBytes,aboveThreshold:rows.filter(r=>r.score>=threshold).map(r=>({id:r.id,score:r.score,sheet:r.sheet})),findings,categoryCoverage:{aboveThreshold:findings.filter(f=>f.aboveThreshold).length,measured:findings.filter(f=>f.measured).length,total:findings.length},errors,stops:rows};
+  writeFileSync(resolve(output,'summary.json'),JSON.stringify(summary,null,2));
+  const cards=rows.map(r=>`<article><h2>${escape(r.stop.title)} · zoom ${r.zoom} · ${(r.score*100).toFixed(2)}% ${r.score>=threshold?'— REVIEW':'— quiet'}</h2><p>${escape(r.id)} · global change ${(r.globalChanged*100).toFixed(3)}%</p><a href="${r.sheet}"><img loading="lazy" src="${r.sheet}" alt="Baseline, candidate and diff; still plus six-frame motion strip"></a></article>`).join('\n');
+  writeFileSync(resolve(output,'index.html'),`<!doctype html><html lang="en"><meta charset="utf-8"><title>Visual A/B ${escape(basename(output))}</title><style>body{font:15px system-ui;background:#17191c;color:#eee;margin:24px}article{padding:16px;margin:20px 0;background:#25282d}img{max-width:100%;width:960px}a{color:#a8d9ff}h2{font-size:18px}p{overflow-wrap:anywhere}</style><h1>Visual A/B · ${escape(status)}</h1><p>Baseline: ${escape(sources.baseline)}<br>Candidate: ${escape(sources.candidate)}<br>WebGPU · low · 1280×720 · DPR 1 · seed ${seed} · threshold ${(threshold*100).toFixed(2)}%</p><p>${rows.length}/${variants.length} stops measured; ${summary.aboveThreshold.length} require visual review. Scores flag change; a reviewer decides whether it is a regression.</p><p><a href="summary.json">JSON summary and setup evidence</a></p>${errors.map(e=>`<p>UNMEASURED: ${escape(e.side)} ${escape(e.stop)} — ${escape(e.message)}</p>`).join('')}${cards}</html>`);
+  if(imageBytes>30*1024*1024)throw new Error(`Report exceeds the 30 MB image budget: ${imageBytes}`);
+  return summary;
 }
-async function advance(page: Page, ticks: number, zoom: number): Promise<void> {
-  await page.evaluate(async ({ n, z }) => { const a = window.__SS__!; a.camera.zoom(z); a.resume(); await a.step(n); a.pause(); await a.screenshotReady(); }, { n: ticks, z: zoom });
-}
-function compare(aBuf: Buffer, bBuf: Buffer, diffPath: string): number {
-  const a = PNG.sync.read(aBuf), b = PNG.sync.read(bBuf);
-  if (a.width !== b.width || a.height !== b.height) throw new Error(`Frame size mismatch ${a.width}x${a.height} vs ${b.width}x${b.height}`);
-  const diff = new PNG({ width: a.width, height: a.height });
-  const count = pixelmatch(a.data, b.data, diff.data, a.width, a.height, { threshold: 0.12, includeAA: false, diffColor: [255, 24, 28], alpha: .7 });
-  writeFileSync(diffPath, PNG.sync.write(diff)); return count / (a.width * a.height);
-}
-function jpeg(path: string): void { execFileSync('/usr/bin/sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '70', path, '--out', path.replace(/\.png$/, '.jpg')], { stdio: 'ignore' }); }
-
-const browser: Browser = await chromium.launch({ headless: true, args: process.platform === 'darwin' ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'] });
-const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
-const rows: { stop: Stop; score: number; baseline: string; candidate: string; diff: string; strip: string[] }[] = [];
-const previewServer = candidate === 'dist' ? await preview({ preview: { host: '127.0.0.1', port: Number(process.env.E2E_PORT ?? 4201), strictPort: true } }) : null;
-try {
-  for (const level of selected) {
-    for (const side of ['baseline', 'candidate'] as const) {
-      await prepare(page, side === 'baseline' ? baseline : candidate, level);
-      const backend = await page.evaluate(() => window.__SS__!.getState().render.backend);
-      if (backend !== 'webgpu') throw new Error(`${side} ${level}: expected WebGPU, got ${backend}`);
-      let tick = 0;
-      for (const stop of stops.filter(s => s.level === level)) {
-        await advance(page, Math.max(0, stop.tick - tick), stop.zoom); tick = stop.tick;
-        const frames: Buffer[] = [];
-        for (let f = 0; f < 6; f++) { await advance(page, f === 0 ? 0 : 36, stop.zoom); frames.push(await page.screenshot({ type: 'png', animations: 'disabled' })); }
-        const stillPath = resolve(output, `${stop.id}-${side}.png`); writeFileSync(stillPath, frames[0]); jpeg(stillPath);
-        const stripPath = resolve(output, `${stop.id}-${side}-strip.png`);
-        // Six-frame strip rendered from the captured PNGs in a browser canvas.
-        const encoded = frames.map(b => b.toString('base64'));
-        await page.setContent('<html><body style="margin:0;background:#111;display:flex"></body></html>');
-        await page.evaluate(async images => { const body = document.body; for (const src of images) { const img = new Image(); img.src = `data:image/png;base64,${src}`; await img.decode(); img.style.width = '213px'; img.style.height = '120px'; body.append(img); } }, encoded);
-        const strip = await page.screenshot({ type: 'png' }); writeFileSync(stripPath, strip); jpeg(stripPath); rmSync(stripPath);
-        // Return to the game page for the next stop on the same tour.
-        await prepare(page, side === 'baseline' ? baseline : candidate, level, stop); tick = 0;
-        if (side === 'candidate') rows.push({ stop, score: 0, baseline: '', candidate: '', diff: '', strip: [`${stop.id}-baseline-strip.jpg`, `${stop.id}-candidate-strip.jpg`] });
+async function sheet(page:Page,id:string,images:Buffer[][],still:number){
+  const data=images.map(row=>row.map(b=>`data:image/png;base64,${b.toString('base64')}`));
+  const encoded=await page.evaluate(async({data,cap,still})=>{
+    const rows=await Promise.all(data.map(row=>Promise.all(row.map(src=>new Promise<HTMLImageElement>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;})))));
+    let width=640,result='';
+    do{
+      const height=Math.round(width*720/1280),smallWidth=width/2,smallHeight=Math.round(smallWidth*720/1280),label=23,c=document.createElement('canvas');c.width=width*3;c.height=label+height+3*(smallHeight+label);const g=c.getContext('2d')!;
+      g.fillStyle='#181a1e';g.fillRect(0,0,c.width,c.height);g.font='14px system-ui';g.fillStyle='#fff';['BASELINE','CANDIDATE','PERCEPTUAL DIFF'].forEach((s,i)=>g.fillText(`${s} / still t+${(still*.6).toFixed(1)} s`,i*width+6,16));
+      rows[still].forEach((img,j)=>g.drawImage(img,j*width,label,width,height));
+      for(let lane=0;lane<3;lane++){
+        const y=label+height+lane*(smallHeight+label);g.fillStyle='#fff';g.fillText(['BASELINE MOTION','CANDIDATE MOTION','DIFF MOTION'][lane],6,y+16);
+        rows.forEach((row,i)=>{g.drawImage(row[lane],i*smallWidth,y+label,smallWidth,smallHeight);g.fillStyle='rgba(0,0,0,.8)';g.fillRect(i*smallWidth,y+label,68,20);g.fillStyle='#fff';g.fillText(`+${(i*.6).toFixed(1)} s`,i*smallWidth+4,y+label+15);});
       }
-    }
-    // Per-stop artifacts are paired only after both builds have been captured.
-    for (const stop of stops.filter(s => s.level === level)) {
-      const aPath = resolve(output, `${stop.id}-baseline.png`), bPath = resolve(output, `${stop.id}-candidate.png`), dPath = resolve(output, `${stop.id}-diff.png`);
-      const score = compare(readFileSync(aPath), readFileSync(bPath), dPath); jpeg(dPath);
-      jpeg(aPath); jpeg(bPath);
-      rmSync(aPath); rmSync(bPath); rmSync(dPath);
-      const row = rows.find(r => r.stop.id === stop.id)!;
-      row.score = score; row.baseline = `${stop.id}-baseline.jpg`; row.candidate = `${stop.id}-candidate.jpg`; row.diff = `${stop.id}-diff.jpg`;
-    }
+      result=c.toDataURL('image/jpeg',.7);width-=64;
+    }while(result.length*.75>cap&&width>=320);
+    if(result.length*.75>cap)throw new Error('Unable to meet per-sheet image budget');return result.split(',')[1];
+  },{data,still,cap:Math.floor(29*1024*1024/variants.length)});
+  writeFileSync(resolve(output,`${id}.jpg`),Buffer.from(encoded,'base64'));
+}
+try{
+  report('running');
+  for(const side of ['baseline','candidate'] as const){
+    const context=await browser.newContext({viewport:{width:1280,height:720},deviceScaleFactor:1});
+    try{
+      const page=await context.newPage();page.setDefaultTimeout(180000);await page.addInitScript('globalThis.__name = fn => fn');
+      const pageErrors:string[]=[];page.on('pageerror',error=>pageErrors.push(error.message));
+      await page.goto(sourceUrl(sources[side]),{waitUntil:'domcontentloaded',timeout:120000});
+      await page.waitForFunction(()=>!!window.__SS__&&!!window.__SCENE__,null,{timeout:120000});
+      await page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();});
+      await page.addStyleTag({content:'#hud,.hud,.story-bubble,.mission-subtitle,[data-testid=mission-button],.telemetry-consent{visibility:hidden!important}'});
+      const build=await page.evaluate(()=>({api:window.__SS__!.version,scripts:Array.from(document.scripts).map(s=>s.src).filter(Boolean)}));
+      const entry=build.scripts.find(s=>/\/build\/index-/.test(s)),entryText=entry?await(await page.request.get(entry)).text():'';
+      builds[side]={...build,commit:/Build:\s*([0-9a-f]{7,40})/.exec(entryText)?.[1]??'unknown'};
+      const scratch=await context.newPage();
+      for(const variant of variants){
+        const {stop,zoom,id}=variant;console.log(`[${side}] ${id}: reaching ${stop.setup??stop.checkpoint??'start'}`);
+        try{
+          const save=debugCampaign(Number(stop.level.slice(1))<=4?10:Number(stop.level.slice(1)) as Level,null);save.settings.quality='low';save.seed=seed;
+          const proof=await page.evaluate(prepareStop,{stop,seed,save,zoom,driveRoute:crossing.routes.find(r=>r.id==='road')!.points});
+          const frames:Awaited<ReturnType<typeof readyFrame>>[]=[],hashes:string[]=[];
+          for(let frame=0;frame<6;frame++){
+            const state=await page.evaluate(readyFrame,{target:proof.target,zoom,ticks:frame?36:0});
+            if(state.backend!=='webgpu'||state.quality!=='low')throw new Error(`Expected WebGPU/low, got ${state.backend}/${state.quality}`);
+            if(pageErrors.length)throw new Error(`Browser error: ${pageErrors.join('; ')}`);
+            frames.push(state);const png=await page.screenshot({type:'png',animations:'disabled'});hashes.push(createHash('sha256').update(png).digest('hex'));writeFileSync(resolve(raw,`${id}-${side}-${frame}.png`),png);
+          }
+          captures.set(`${side}-${id}`,{proof,frames,hashes});
+          if(side==='candidate'){
+            const base=captures.get(`baseline-${id}`);if(!base)throw new Error('Baseline capture is missing');
+            const results:Row['frames']=[],images:Buffer[][]=[];
+            for(let frame=0;frame<6;frame++){
+              const aPath=resolve(raw,`${id}-baseline-${frame}.png`),bPath=resolve(raw,`${id}-candidate-${frame}.png`),a=readFileSync(aPath),b=readFileSync(bPath),diff=perceptualDiff(a,b);
+              results.push({frame,seconds:frame*.6,score:diff.score,globalChanged:diff.globalChanged,box:diff.box});images.push([a,b,diff.heatmap]);
+            }
+            const still=results.reduce((best,r)=>r.score>results[best].score?r.frame:best,0);
+            await sheet(scratch,id,images,still);
+            rows.push({id,stop,zoom,score:Math.max(...results.map(r=>r.score)),globalChanged:Math.max(...results.map(r=>r.globalChanged)),frames:results,sheet:`${id}.jpg`,baseline:base,candidate:{proof,frames,hashes}});
+            for(const lane of ['baseline','candidate'])for(let frame=0;frame<6;frame++)rmSync(resolve(raw,`${id}-${lane}-${frame}.png`));
+            report('running');console.log(`[score] ${id}: ${(rows.at(-1)!.score*100).toFixed(2)}%`);
+          }
+        }catch(error){errors.push({side,stop:id,message:error instanceof Error?error.message:String(error)});console.error(`[unmeasured] ${side} ${id}: ${errors.at(-1)!.message}`);report('running');}
+      }
+    }finally{await context.close();}
   }
-} finally { await browser.close(); await previewServer?.close(); }
-
-rows.sort((a, b) => b.score - a.score);
-const summary = { baseline, candidate, levels: selected, threshold, total: rows.length, aboveThreshold: rows.filter(r => r.score >= threshold).map(r => ({ id: r.stop.id, level: r.stop.level, label: r.stop.label, score: r.score })), stops: rows.map(r => ({ id: r.stop.id, level: r.stop.level, label: r.stop.label, tick: r.stop.tick, zoom: r.stop.zoom, score: r.score, aboveThreshold: r.score >= threshold })) };
-const findings = [
-  ['depot clerk returns and closes shop', ['l1-01-depot-handover']],
-  ['lab handover animation', ['l1-04-lab-handover']],
-  ['pedestrian hats and glasses', ['l1-02-bike-rack', 'l2-01-ride-start-benches']],
-  ['sitters have a bench', ['l2-01-ride-start-benches']],
-  ['L3 raised corridor gaps', ['l3-01-raised-corridor-ramps']],
-  ['L4 tank stays behind barrier', ['l4-01-plaza-tank-hold', 'l4-02-barrier-approach']],
-].map(([finding, ids]) => ({ finding, scoredStops: rows.filter(r => (ids as string[]).some(id => r.stop.id === id)).map(r => ({ id: r.stop.id, score: r.score, hit: r.score >= threshold })), hit: rows.some(r => (ids as string[]).includes(r.stop.id) && r.score >= threshold) }));
-Object.assign(summary, { findings, findingsHit: findings.filter(f => f.hit).length, findingsTotal: findings.length, hitRate: findings.length ? findings.filter(f => f.hit).length / findings.length : 0 });
-writeFileSync(resolve(output, 'summary.json'), JSON.stringify(summary, null, 2));
-const cards = rows.map(r => `<section><h2>${r.stop.id} — ${(r.score * 100).toFixed(2)}%</h2><div><figure><img src="${r.baseline}"><figcaption>Baseline</figcaption></figure><figure><img src="${r.candidate}"><figcaption>Candidate</figcaption></figure><figure><img src="${r.diff}"><figcaption>Diff heatmap</figcaption></figure></div><p>Motion strips: <a href="${r.strip[0]}">baseline</a> · <a href="${r.strip[1]}">candidate</a></p></section>`).join('\n');
-writeFileSync(resolve(output, 'index.html'), `<!doctype html><meta charset="utf-8"><title>QA A/B ${day}</title><style>body{font:14px system-ui;background:#171717;color:#eee;margin:24px}section{margin:24px 0;padding:12px;background:#252525}section div{display:flex;gap:8px}figure{margin:0}img{width:32vw;height:auto}figcaption{color:#aaa}</style><h1>QA A/B — ${day}</h1><p>Baseline: ${baseline} · Candidate: ${candidate} · Threshold: ${(threshold * 100).toFixed(2)}%</p>${cards}`);
-console.log(JSON.stringify({ report: output, total: rows.length, aboveThreshold: summary.aboveThreshold.length, top: rows.slice(0, 8).map(r => [r.stop.id, Number(r.score.toFixed(4))]) }, null, 2));
+  const summary=report(errors.length?'failed':'complete');console.log(JSON.stringify({report:output,status:summary.status,measured:summary.measuredStops,changed:summary.aboveThreshold.length,categoryCoverage:summary.categoryCoverage,imageBytes:summary.imageBytes},null,2));
+  if(errors.length)process.exitCode=2;
+}catch(error){errors.push({side:'runner',stop:'boot',message:error instanceof Error?error.message:String(error)});report('failed');throw error;}
+finally{await browser.close();await server?.close();if(existsSync(raw)&&readdirSync(raw).length===0)rmdirSync(raw);}
