@@ -31,3 +31,7 @@ CrowdView now retains indices, compacts unused source vertices before transforms
 ## Acceptance status
 
 The executable gate and complete per-configuration status are in [distributions.md](distributions.md). Diagnostic comparisons with fewer than 20 samples are excluded. Build hashes and quiet-run conditions are retained alongside raw observations. L10 replay evidence identifies its source build separately from the cold-load snapshots.
+
+Both snapshots use Vite's production preview on the same Mac (baseline port 4221, candidate port 4222), with the same public asset tree. The browser is Chromium headless shell 153.0.8010.12, revision 1243, on Apple M4/Metal, viewport 1600×900 and DPR 1. Each observation launches and closes its own browser/profile; it does not reuse HTTP storage or a previous game's JS caches. Later levels use a validated unlocked campaign save, then the real menu selection. This is a controlled local-delivery comparison; it does not measure WAN download latency.
+
+The existing L10 boundary guard additionally uses headless system Chrome 155.0.8059.86 with uncapped rendering. Both debug and saved-continue entries pass on WebGL2 and WebGPU: 84,720 playable frames, largest 28.1 ms, with both prewarmed light sources and actual lamp promotions exercised. See `evidence/l10-entry/` and the retained smoke report (31 passing checks).
