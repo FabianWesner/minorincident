@@ -9,7 +9,7 @@ export const noise = Fn(([p]: [Node<'vec2'>]) => {
   const cell = p.floor(), f = p.fract(), t = f.mul(f).mul(float(3).sub(f.mul(2)));
   return mix(mix(hash(cell), hash(cell.add(vec2(1, 0))), t.x), mix(hash(cell.add(vec2(0, 1))), hash(cell.add(vec2(1, 1))), t.x), t.y);
 });
-/** Night presets disable cloud shadows. Keep their three sine evaluations out
+/** Night presets disable cloud shadows. Keep the crossed sine field out
  * of that draw while retaining the exact authored field when enabled. */
 export const cloudShadowMask = Fn(({ strength, point }: { strength: Node<'float'>; point: Node<'vec2'> }) => {
   const cloud = float(0).toVar();
