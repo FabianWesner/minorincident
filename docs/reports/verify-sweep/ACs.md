@@ -47,7 +47,7 @@ Criteria: [epic-22-level-4-the-safe-city-falls.md](../../../specs/epic-22-level-
 | E22-AC09 | met | src/sim/outbreak/Allies.ts; LevelFourWar.armCivilians; tests/sim/npc/l4-systems.test.ts; T-E22-09 | — |
 | E22-AC10 | met | LevelFourWar.waves/flushEdges/emergeInside; src/data/l4.ts street mouths; T-E22-10 | — |
 | E22-AC11 | met | LevelFourWar military/tank/helicopter; tests/levels/L4.test.ts T-E22-11 | — |
-| E22-AC12 | partial | LevelFourWar.alphas; tests/levels/L4.test.ts T-E22-12-alphas-high/low and authored-gap; tests/sim/npc/l4-systems.test.ts | **M; browser** — Close inherited E07 four-move and phone/bar proof; count, line, resistance and damage mechanics remain covered. |
+| E22-AC12 | met | Current merged L4.test.ts: all 23 tests pass, including high/low Alpha counts, mouths/caps, ≥60 line losses and authored gap. Inherited current 13h [E07 four-move/bar proof](../ac-close-shared/README.md): 14 exact timing/restore/cooldown journals, all Alpha spatial/cover controls, 12-case shared bars and actual phone Alpha HP; sheets reopened in [this review](../ac-close-l4-l6/README.md). | Closed with current level mechanics and inherited shared visual proof. Full epic verification remains separate. |
 | E22-AC13 | met | LevelFourWar.checkLineBreak/lineBreak; tests/levels/L4-collapse.test.ts; T-E22-13-authored-gap | — |
 | E22-AC14 | met | LevelFourWar.burnCars/populateCollapse; T-E22-14; E07 corpse persistence | — |
 | E22-AC15 | met | LevelFourWar.descend/bar/cellarUpdate; src/data/l4.ts finale; tests/levels/L4-finale-pressure.test.ts PO17/17b; T-E22-15/15-carry | — |
