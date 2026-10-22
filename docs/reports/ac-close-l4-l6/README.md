@@ -262,3 +262,9 @@ The interrupted remote E23 stage returns a complete partial receipt: **1pass,2fa
 ### 14:58 UTC — final actual L6 route visually reviewed, criterion remains red
 
 V7 actual route passes in2.1min: **20/29 rescued, zero deaths/damage**, all7photos, three gates, straggler and exact L7 carryover. Opened **all seven full PNGs** and retained the [source-hashed sheet](l6-route-v7-reviewed.jpg). [E24-review.md](E24-review.md) records named scores**8/7/6/5**, A/D/G item dispositions, **two must failures and4/9 should passes**. The retreat improves to a true rear three-quarter overview with28/28 follower heads visible, but the player/MG remains small. The authored night exit includes both burning wrecks and fence, but sparse flat ground and broad purple haze fail the quality bar. **AC18 remains red**, despite the route and96-context phone fix. The criterion is coherent; no rewrite/waiver is proposed. Further composition work is required.
+
+The primary quiet proof and later full-verifier quiet stages are now allowed to reserve slots after their own functional prerequisites finish; remove the temporary `defer-perf` file. The primary route/quiet priority markers still block later own browser admissions until that six-case WebGL proof exits. This removes the earlier admission-only defer policy, not any test gate.
+
+### 15:00 UTC — native route and shared GPU batch complete
+
+All **6/6** native cases pass in4.6min: the full actual-input L6 route and five shared WebGPU high/low canvas/game-camera/transition smokes. Archive `evidence/l6-route-v7-and-shared-gpu.{json,log}.gz` retains the complete current receipt. This resolves the hardware proof for the shared cases without rewriting their earlier remote software-device failures in full verifier records. The priority WebGL quiet batch is waiting for global admission; no performance measurement is claimed before its condition log begins.
