@@ -47,6 +47,12 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   expect(spectacled.sort()).toEqual(Object.keys(spectacleTops).sort());
   for (const id of spectacled) expect(Math.abs(glassesTop(geometries.get(`${id}:lod0`)!)! - spectacleTops[id]), `${id} authored frame top`).toBeLessThan(.005);
   const reference = new Map(hats.map(hat => { const box = fitted('npc.civilian-man-a', 'lod0', hat), skull = bakedSkull(geometries.get('npc.civilian-man-a:lod0')!)!; return [hat, box.getSize(new Vector3()).z / skull.size.z]; }));
+  // PO 2026-10-22 P1-115 "What are they doing?": brim width relative to the head (lateral and fore-aft), every base and LOD.
+  const limit = (hat: string) => (hat.endsWith('sun-hat') ? 1.4 : hat.endsWith('bucket-hat') ? 1.3 : 1.15) + .03;
+  for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1'] as const) {
+    const skull = bakedSkull(geometries.get(`${id}:${lod}`)!)!;
+    for (const hat of hats) { const size = fitted(id, lod, hat).getSize(new Vector3()); expect(size.z / skull.size.z, `${id} ${lod} ${hat} brim/head`).toBeLessThan(limit(hat)); }
+  }
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
     const geometry = geometries.get(`${id}:${lod}`)!, skull = bakedSkull(geometry)!, frames = spectacleTops[id] ?? null;
     for (const hat of hats) {

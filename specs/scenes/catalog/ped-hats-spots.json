@@ -1,0 +1,17 @@
+{
+ "name": "ped-hats-spots",
+ "note": "PO P1-115 / P1-108 world spots: hatted civilians in the L4 plaza (-28.59, -16.78) at game zoom. Hats must read as hats (round brim at most ~1.4x head width), faces and glasses visible.",
+ "ground": "district",
+ "time": "L4",
+ "layout": { "level": "L4", "district": "D-FAIR","bbox": [[-42, -30], [-16, -6]] },
+ "actors": [
+  { "id": "a", "kind": "pedestrian", "at": [-28.59, -16.78], "yaw": 200, "look": { "model": "npc.civilian-woman-b", "accessories": ["acc.hat-sun-hat"] }, "state": "idle" },
+  { "id": "b", "kind": "pedestrian", "at": [-27.3, -16.2], "yaw": 160, "look": { "model": "npc.civilian-man-a", "accessories": ["acc.hat-bucket-hat"] }, "state": "idle" },
+  { "id": "c", "kind": "pedestrian", "at": [-29.9, -15.6], "yaw": 250, "look": { "model": "npc.civilian-elderly", "accessories": ["acc.hat-baseball-cap"] }, "state": "idle" },
+  { "id": "d", "kind": "pedestrian", "at": [-28.4, -14.9], "yaw": 90, "look": { "model": "npc.civilian-woman-a", "accessories": ["acc.hat-beanie"] }, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [-28.59, -16.78], "zoom": 0.5 },
+ "frames": 40,
+ "shots": [30],
+ "expect": { "consoleErrors": 0 }
+}
