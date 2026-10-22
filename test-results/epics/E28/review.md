@@ -56,3 +56,7 @@ This review supersedes the earlier AC12 failure above. I opened the fresh **24 s
 | should | Script mood | PASS — clear is cool and crisp; overcast softer/dimmer; haze amber with long purple shadows; storm dark blue with rain/warm practicals; fog blue with softened distance; snow cold night with flakes and gray coated upper surfaces. |
 
 **AC12 met: 4/4 must and 3/3 should.** All six moods are checked against the authorized reference, across both tiers/backends. These fixed scene reviews do not substitute for native storm/L5 performance evidence. Final E28 verifier passes all 28 selected Node, 71 functional browser and six quiet performance tests. The original heap-counter discrepancy remains partial under AC10.
+
+## Final runtime G repeat — df390443a
+
+Opened the refreshed24-frame mood sheet and full-size WebGL2 high storm, facade occlusion, wet reflections and settled hero shadow. The sheet also retains the scripted strike flash and these lighting controls. All four must and three should items above remain PASS; fog contrast repeats3.0348645:1 over7585pixels, hero darkening85.884% /hue254.715 degrees. The admitted backends/tiers are asserted by each capture test. Current source hashes and28 selected image hashes: `docs/reports/ac-close-shared/evidence/G-final-images.json`; numeric results: `G-final-numeric.json.gz`. This is visual AC12 proof; final AC10 native measurements remain pending.
