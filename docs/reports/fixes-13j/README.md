@@ -6,7 +6,7 @@ Base: `lane/batch13i` at `ba436b90a`. No deployment or merge.
 
 - **Q-120:** installation previously captured `cure-disperse-ready` before the charge. The first full-charge tick now replaces that snapshot after the existing boss staging, keeping the completed charge and restoring the boss at its captured position and full health. The exact restored transform is asserted at the respawn event. Boss damage, attack parameters and rocket requirements are unchanged.
 - **Q-121:** the normal damage path accepts hits before the `mega` objective. Eight direct rockets reproduce 20% HP during the charge; the fight-start transition now restores a living boss to full HP. The renderer uses `current / max`, with no inverted fill. A legitimate early kill retains the existing dead-boss behavior.
-- **Q-123:** a drawn chest can overlap Home or another interactive HUD control. The playtest observer previously returned that enemy, so the combat mouse click could activate Home and pause at the title while movement keys remained held. A controlled physical-input browser regression reproduced the visible title menu. The observer now excludes targets covered by interactive DOM controls. Normal Home navigation is preserved.
+- **Q-123:** a drawn chest can overlap Home or another interactive HUD control. The playtest observer previously returned that enemy, so the combat mouse click could activate Home and pause at the title while movement keys remained held. A controlled physical-input browser regression reproduced the visible title menu. The observer now excludes targets covered by interactive DOM controls. Normal Home navigation is preserved. This reproduces the title/pause symptom through the actual driver targeting path; the historical Q-123 input trace was unavailable, so it cannot uniquely identify the original click.
 - **#106:** when the active garage-bat objective has a retry anchor farther than 25 m, it moves that anchor to a clear point within 4 m of the bat. The existing shared respawn clears the surrounding threats. Existing respawn grace prevents rewriting the destination immediately after a death during objective activation. Fists and enemy combat tuning are unchanged.
 
 ## Red-first evidence
@@ -23,8 +23,8 @@ The strengthened [garage retry test](evidence/l1-crowded-retry.log.gz) places fo
 
 - `npm run typecheck` and `npm run lint`: pass.
 - `npm run test:unit -- --maxWorkers=4`: **1,974 passed**, 362 files. [Output](evidence/unit.log.gz).
-- Required remote unit/level command: running; final receipt pending.
-- Standalone real-input handovers: **3 × 90 seconds**, 54 samples, all playing with no title menu and advancing ticks. [Observations](evidence/held-summary.json). Current browser guard rerun pending.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: **2,416 passed**, 438 files; 9 existing skipped tests. [Output](evidence/remote.log.gz). The final targeted remote run passed **48/48**, including the subsequently strengthened crowded-bat regression and all finale/observer tests. [Output](evidence/remote-regressions.log.gz).
+- Standalone real-input handovers: **3 × 90 seconds**, 54 samples, all playing with no title menu and advancing ticks. [Observations](evidence/held-summary.json). Final browser guards also passed: **2/2**, including another three 90-second handovers and the real Home-button overlap. [Output](evidence/q123-browser.log.gz).
 - L10 real-input probe: enemy-caused death at tick **6120**, respawn at **6240**, charge **3600**, boss **3000/3000**. The first visible rendered Mega bar is **100%** at tick 3991; fresh W input moves the courier **0.354 m** after the retry. [Capture and state](evidence/boss-retry.json), [first sight](evidence/boss-first-sight.png), [retry](evidence/boss-retry.png).
 - Required `--grep @smoke --workers=1`: pending.
 
