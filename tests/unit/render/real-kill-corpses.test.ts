@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { expect, test, vi } from 'vitest';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import type { BufferGeometry, InstancedMesh } from 'three/webgpu';
+import { Matrix3, Matrix4, Vector3, type BufferGeometry, type InstancedMesh } from 'three/webgpu';
 import manifest from '../../../src/assets/manifest.json';
 import { AssetRegistry } from '../../../src/assets/registry';
 import { infectedDefinitions } from '../../../src/data/infected';
@@ -87,6 +87,16 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
       for (const page of pages) {
         expect(page.name).toMatch(/:death-back:0(?:[:/]|$)/);
+        // The corpse shader can reuse placement columns for normals only while
+        // every production frozen placement is a rotation plus translation.
+        for (let index = 0; index < page.count; index++) {
+          const placed = new Matrix4(); page.getMatrixAt(index, placed);
+          expect(new Matrix3().setFromMatrix4(placed).determinant()).toBeCloseTo(1, 5);
+          for (const normal of [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)]) {
+            const inverse = normal.clone().applyMatrix3(new Matrix3().getNormalMatrix(placed)).normalize();
+            expect(normal.transformDirection(placed).distanceTo(inverse)).toBeLessThan(1e-6);
+          }
+        }
         const positions = page.geometry.getAttribute('position');
         // A full reclining body spans well beyond the torso-only blast remnant.
         let min = Infinity, max = -Infinity;
