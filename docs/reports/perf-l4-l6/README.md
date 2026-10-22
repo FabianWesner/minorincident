@@ -1,6 +1,6 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status at 17:42 UTC: **L4 low is strict green on `b47e00336`: turn 46.6 / tank 34.0 / break 48.3 ms, zero turn builds.** Its high/L6/loading matrix, final full remote gate and smoke are running or queued; the goal is not yet complete. The intermediate `e54658fc3` matrix below passes high/L6 but fails low. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
+Status at 17:51 UTC: **L4 low is strict green on `b47e00336`: turn 46.6 / tank 34.0 / break 48.3 ms, zero turn builds.** Its smoke is **31/31 green**, and final types/lint are green. Its high/L6/loading matrix and final full remote gate are running or queued; the goal is not yet complete. The intermediate `e54658fc3` matrix below passes high/L6 but fails low. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
 
 ## Matched quiet measurements
 
