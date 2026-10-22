@@ -36,7 +36,7 @@ import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
 import { View, type CameraPose } from './View';
 import { Renderer } from './Renderer';
-import { preRender } from './PreRenderer';
+import { preRender, incrementalPreRender } from './PreRenderer';
 import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
@@ -129,6 +129,7 @@ export class GameView implements Lifecycle {
   private epiloguePrepared: object | null = null;
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
+  private shadowWarmup: ReturnType<typeof incrementalPreRender> | null = null;
   loadProgress?: (completed: number, total: number) => void;
   /** Speculative menu-time level load: keep the mission UI hidden until the player picks the level. */
   missionHidden = false;
@@ -459,8 +460,14 @@ export class GameView implements Lifecycle {
             this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
-        } else if (this.lighting?.preset === 'L10-night') await this.lighting.warmShadowVariants(prepare);
-        else await prepare();
+        } else await prepare();
+        if (this.lighting?.preset === 'L10-night') {
+          const lighting = this.lighting, spot = !lighting.spot.visible;
+          this.shadowWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
+            () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera),
+            root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
+            run => lighting.withShadowSource(spot, run));
+        }
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.
@@ -995,6 +1002,7 @@ export class GameView implements Lifecycle {
     // FRAME-updated nodes, such as the PostFx scene pass, would keep that earlier camera's image: draw this pose.
     if (this.view.consumeSnap()) this.renderer.nextNodeFrame();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
+    if (this.shadowWarmup) { this.shadowWarmup.step(); if (this.shadowWarmup.done) this.shadowWarmup = null; }
     this.renderer.info.reset(); this.renderedFrames++;
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
@@ -1135,6 +1143,7 @@ export class GameView implements Lifecycle {
   }
   async ready(): Promise<void> {
     await this.warming;
+    while (this.shadowWarmup) { await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); this.update(1); }
     await this.prepareCharacterVariant();
     // Once a test has begun the mission, snapshots/heap checks settle the same streamed
     // residency on every load. A briefing snapshot waits only for its visible assets.
@@ -1151,6 +1160,7 @@ export class GameView implements Lifecycle {
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
+    this.shadowWarmup?.cancel(); this.shadowWarmup = null;
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.epiloguePrepared = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;

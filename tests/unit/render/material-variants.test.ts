@@ -60,15 +60,16 @@ for (const retained of [false, true]) for (const palette of [false, true]) test(
   objects.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
 });
 
-test('PO #100 L10 warms both exclusive sources and restores the original source after errors', async () => {
+test('PO #100 L10 restores its source immediately across asynchronous work and errors', async () => {
   const scene = new Scene(), lighting = new Lighting(scene); lighting.set('L10-night');
-  const states: string[] = [];
-  await lighting.warmShadowVariants(async () => {
+  const pending = lighting.withShadowSource(true, async () => {
     expect(lighting.sun.visible !== lighting.spot.visible).toBe(true);
-    states.push(scene.userData.shadowVariant);
+    expect(scene.userData.shadowVariant).toBe('L10:spot');
+    await Promise.resolve();
+    expect(scene.userData.shadowVariant).toBe('L10:sun');
   });
-  expect(states).toEqual(['L10:spot', 'L10:sun']); expect(scene.userData.shadowVariant).toBe('L10:sun');
-  await expect(lighting.warmShadowVariants(async () => { throw Error('warmup failure'); })).rejects.toThrow('warmup failure');
+  expect(scene.userData.shadowVariant).toBe('L10:sun'); await pending;
+  expect(() => lighting.withShadowSource(true, () => { throw Error('warmup failure'); })).toThrow('warmup failure');
   expect(lighting.sun.visible).toBe(true); expect(lighting.spot.visible).toBe(false);
   expect(scene.userData.shadowVariant).toBe('L10:sun');
   lighting.set('L1'); expect(scene.userData.shadowVariant).toBeUndefined(); lighting.dispose();
