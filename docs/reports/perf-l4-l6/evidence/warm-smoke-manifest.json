@@ -1,0 +1,8 @@
+{
+  "builtRuntime": "e54658fc3",
+  "sourceTree": "7335e3c60d92c33923e92378abc09ea33c52e8e0",
+  "distIndexSha256": "9900a0c9938ee3f46088416266dab0b9a53164458f282bcc0f950fe0ba09eb68",
+  "finished": "2026-10-22T17:25:22.355817+00:00",
+  "command": "E2E_PORT=4121 SCENE_PORT=4122 E2E_UNITS=1 E2E_ADMISSION_TIMEOUT_SECONDS=3600 sh tools/e2e-lock.sh npx playwright test --grep @smoke --workers=1",
+  "result": "31 passed (4.9m)"
+}
