@@ -68,5 +68,23 @@
       "geometriesRatio": 0.9681978798586572,
       "texturesRatio": 1.0142857142857142
     }
-  ]
+  ],
+  "clarifiedL6Stress": {
+    "specMarker": "CLARIFIED 2026-10-22 (orchestrator)",
+    "verifiedBackends": [
+      "webgl",
+      "webgpu"
+    ],
+    "highLivingInfected": 40,
+    "lowLivingInfected": 30,
+    "movingSurvivors": 26,
+    "retainedBodiesHighLow": [
+      25,
+      22
+    ],
+    "thresholdsUnchanged": true,
+    "webglReporter": "quiet-webgl-primary-results.json.gz",
+    "webgpuReporter": "quiet-webgpu-results.json.gz",
+    "captureSheet": "../l5-l6-final-perf-matrix.jpg"
+  }
 }
