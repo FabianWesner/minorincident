@@ -1,0 +1,589 @@
+{
+  "status": "passed",
+  "at": "2026-10-22T18:23:19.984153+00:00",
+  "matchedBase": "480b44e42",
+  "runtime": "b47e00336",
+  "sourceTree": "ed96e9b38a7832486d5dcdbd46596cd0e16c33b4",
+  "fixtureSha256": {
+    "l4": "6717f342241d9c39c5cb03c836e92d153623867c20a34683d41a281269162039",
+    "l6": "e492dfa8ed52fc2e29a438bf1b22e571954947f14cc98ec5890c68c20785f08a"
+  },
+  "distIndexSha256": "af2fb5b96d2edd42b272b540a1a934432e32041d911708beef6dee6722c12a40",
+  "l4": {
+    "high": {
+      "before": {
+        "turnMaxMs": 54.39999999999418,
+        "tankMaxMs": 10.80000000000291,
+        "breakMaxMs": 99.70000000001164,
+        "turnBuilds": 4,
+        "simP95": 2.40000057220459,
+        "counts": {
+          "infected": 99,
+          "alphas": 2,
+          "alphasArrived": 5,
+          "turnS": 110.5,
+          "soldiersAtTurn": 20,
+          "soldiers": 19,
+          "civilians": 40
+        },
+        "warDrawCalls": 352,
+        "collapseDrawCalls": 317
+      },
+      "after": {
+        "turnMaxMs": 45.899999999999636,
+        "tankMaxMs": 11.10000000000582,
+        "breakMaxMs": 17.09999999999127,
+        "turnBuilds": 0,
+        "simP95": 2.5,
+        "counts": {
+          "infected": 99,
+          "alphas": 2,
+          "alphasArrived": 5,
+          "turnS": 110.5,
+          "soldiersAtTurn": 20,
+          "soldiers": 19,
+          "civilians": 40
+        },
+        "warDrawCalls": 352,
+        "collapseDrawCalls": 317
+      },
+      "beforeReceipt": "quiet-before/l4-high",
+      "afterReceipt": "quiet-aim-rest/l4-high"
+    },
+    "low": {
+      "before": {
+        "turnMaxMs": 59,
+        "tankMaxMs": 53.89999999999418,
+        "breakMaxMs": 52.5,
+        "turnBuilds": 0,
+        "simP95": 6.100000381469727,
+        "counts": {
+          "infected": 48,
+          "alphas": 6,
+          "alphasArrived": 6,
+          "turnS": 159.26666666666668,
+          "soldiersAtTurn": 10,
+          "soldiers": 9,
+          "civilians": 20
+        },
+        "warDrawCalls": 227,
+        "collapseDrawCalls": 232
+      },
+      "after": {
+        "turnMaxMs": 46.599999999998545,
+        "tankMaxMs": 34,
+        "breakMaxMs": 48.30000000000291,
+        "turnBuilds": 0,
+        "simP95": 5.299999237060547,
+        "counts": {
+          "infected": 48,
+          "alphas": 1,
+          "alphasArrived": 4,
+          "turnS": 136.5,
+          "soldiersAtTurn": 10,
+          "soldiers": 9,
+          "civilians": 20
+        },
+        "warDrawCalls": 224,
+        "collapseDrawCalls": 230
+      },
+      "beforeReceipt": "quiet-before-low2/l4-low",
+      "afterReceipt": "quiet-aim-low/l4-low"
+    }
+  },
+  "l6": {
+    "webgl-high": {
+      "before": {
+        "first": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "high",
+          "geometries": 307,
+          "textures": 91,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 58961752
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "high",
+          "geometries": 298,
+          "textures": 92,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 64456036
+        },
+        "heapRetentionPercent": 9.318386604251504
+      },
+      "after": {
+        "first": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "high",
+          "geometries": 307,
+          "textures": 91,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 59030640
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "high",
+          "geometries": 298,
+          "textures": 92,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 61390656
+        },
+        "heapRetentionPercent": 3.997950894654023
+      },
+      "beforeReceipt": "quiet-before-rest/l6-webgl/lifecycle-L6-high-webgl.json",
+      "afterReceipt": "quiet-aim-rest/l6-webgl/lifecycle-L6-high-webgl.json"
+    },
+    "webgl-low": {
+      "before": {
+        "first": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "low",
+          "geometries": 283,
+          "textures": 70,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 54217592
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "low",
+          "geometries": 274,
+          "textures": 71,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 59844008
+        },
+        "heapRetentionPercent": 10.377473053395647
+      },
+      "after": {
+        "first": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "low",
+          "geometries": 283,
+          "textures": 70,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 54169568
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgl",
+          "tier": "low",
+          "geometries": 274,
+          "textures": 71,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 57006100
+        },
+        "heapRetentionPercent": 5.236393984164689
+      },
+      "beforeReceipt": "quiet-before-rest/l6-webgl/lifecycle-L6-low-webgl.json",
+      "afterReceipt": "quiet-aim-rest/l6-webgl/lifecycle-L6-low-webgl.json"
+    },
+    "webgpu-high": {
+      "before": {
+        "first": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "high",
+          "geometries": 307,
+          "textures": 90,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 56478824
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "high",
+          "geometries": 298,
+          "textures": 91,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 62450048
+        },
+        "heapRetentionPercent": 10.572500588893273
+      },
+      "after": {
+        "first": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "high",
+          "geometries": 307,
+          "textures": 90,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 56513144
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "high",
+          "geometries": 298,
+          "textures": 91,
+          "settings": {
+            "gore": "Off",
+            "quality": "high",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 59544692
+        },
+        "heapRetentionPercent": 5.364323740331978
+      },
+      "beforeReceipt": "quiet-before-rest/l6-webgpu/lifecycle-L6-high-webgpu.json",
+      "afterReceipt": "quiet-aim-rest/l6-webgpu/lifecycle-L6-high-webgpu.json"
+    },
+    "webgpu-low": {
+      "before": {
+        "first": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "low",
+          "geometries": 283,
+          "textures": 69,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 51369244
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "low",
+          "geometries": 274,
+          "textures": 70,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 57444476
+        },
+        "heapRetentionPercent": 11.826594138702928
+      },
+      "after": {
+        "first": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "low",
+          "geometries": 283,
+          "textures": 69,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 51363380
+        },
+        "fifth": {
+          "level": "L6",
+          "backend": "webgpu",
+          "tier": "low",
+          "geometries": 274,
+          "textures": 70,
+          "settings": {
+            "gore": "Off",
+            "quality": "low",
+            "flashReduction": true,
+            "cameraShake": false
+          },
+          "heapBytes": 54585716
+        },
+        "heapRetentionPercent": 6.273605825784823
+      },
+      "beforeReceipt": "quiet-before-rest/l6-webgpu/lifecycle-L6-low-webgpu.json",
+      "afterReceipt": "quiet-aim-rest/l6-webgpu/lifecycle-L6-low-webgpu.json"
+    }
+  },
+  "loading": {
+    "high": {
+      "beforeMs": 4013.699999809265,
+      "afterMs": 4001.2000007629395,
+      "overheadMs": -12.499999046325684,
+      "beforeReceipt": "quiet-before-rest/l4-load-high/high.json",
+      "afterReceipt": "quiet-aim-rest/l4-load-high/high.json"
+    },
+    "low": {
+      "beforeMs": 13236.89999961853,
+      "afterMs": 13924.599999427795,
+      "overheadMs": 687.6999998092651,
+      "beforeReceipt": "quiet-before-rest/l4-load-low/low.json",
+      "afterReceipt": "quiet-aim-rest/l4-load-low/low.json"
+    }
+  },
+  "smoke": {
+    "expected": 31,
+    "unexpected": 0,
+    "receipt": "aim-smoke"
+  },
+  "remote": {
+    "sourceFiles": 527,
+    "summary": " Test Files  444 passed | 3 skipped (447)\n      Tests  2421 passed | 9 skipped (2430)\n   Start at  17:28:35\n   Duration  2644.66s (tests 98%, import 1%)\n\n[remote] done exit=0 (runner 94.130.181.173, sync 33s, remote total 2647s)\n"
+  },
+  "quietConditions": [
+    {
+      "path": "quiet-aim-low/l4-low/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T17:37:30.035Z",
+          "load": [
+            1.9365234375,
+            2.3251953125,
+            2.66943359375
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "playwright",
+            "test",
+            "tests/perf/l4-budgets.spec.ts",
+            "--project=chromium",
+            "--grep=low",
+            "--workers=1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "quiet-aim-rest/l4-load-low/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T18:22:36.595Z",
+          "load": [
+            2.86181640625,
+            4.70703125,
+            4.88818359375
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "tsx",
+            "tools/perf/l4-cold-graphs.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "quiet-aim-rest/l6-webgpu/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T18:10:01.884Z",
+          "load": [
+            2.9267578125,
+            4.35595703125,
+            4.01904296875
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "playwright",
+            "test",
+            "tests/perf/l7-lifecycle.spec.ts",
+            "--project=chromium",
+            "--grep=L6",
+            "--workers=1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "quiet-aim-rest/l4-high/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T17:50:08.137Z",
+          "load": [
+            2.36767578125,
+            2.78173828125,
+            2.79345703125
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "playwright",
+            "test",
+            "tests/perf/l4-budgets.spec.ts",
+            "--project=chromium",
+            "--grep=high",
+            "--workers=1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "quiet-aim-rest/l6-webgl/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T18:02:31.167Z",
+          "load": [
+            2.11279296875,
+            3.50830078125,
+            3.404296875
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "playwright",
+            "test",
+            "tests/perf/l7-lifecycle.spec.ts",
+            "--project=chromium",
+            "--grep=L6",
+            "--workers=1"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "quiet-aim-rest/l4-load-high/conditions.jsonl",
+      "rows": [
+        {
+          "at": "2026-10-22T18:20:20.212Z",
+          "load": [
+            2.35498046875,
+            5.318359375,
+            5.08935546875
+          ],
+          "otherHeadlessChrome": 0,
+          "localVitest": 0,
+          "browserSlots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "npx",
+            "tsx",
+            "tools/perf/l4-cold-graphs.ts"
+          ]
+        }
+      ]
+    }
+  ],
+  "diskCleanup": {
+    "at": "2026-10-22T18:15:11.193438+00:00",
+    "deletedUntrackedFiles": 16760,
+    "logicalBytesRemoved": 3577394422,
+    "allocatedBytesRemoved": 3611947008,
+    "preserved": "Tracked test-results files, active quiet-aim-rest, and small baseline/final JSON/log receipts needed for the report.",
+    "baselineRemovedWithGitWorktree": true,
+    "freeBeforeKiB": 6557100,
+    "freeAfterKiB": 14884408,
+    "observedFreeIncreaseGiB": 7.941539764404297
+  },
+  "baselineProvenance": {
+    "recordedAt": "2026-10-22T18:15:08.323995+00:00",
+    "baselinePath": "/private/tmp/minorincident-perf-l4-l6-before",
+    "commit": "480b44e42efbed56344534cf346f24490b60fbcc",
+    "sourceTree": "04a124e6dc76a0a3f566a000c7411458701e8e50",
+    "sourceDiff": "",
+    "loadingHelperSha256": "22fbe39d07973f9a4dee6408d8596baabb5a54d28ca20ac93aa5ba38aa2cc77c",
+    "loadingHelperMatchesFinal": true,
+    "distIndexSha256": "abf57b84d3b46cf284fdfe28e8f7071af3bd0c27e29a412f5d144d3e46af3004",
+    "reason": "All before measurements are complete and archived; remove baseline worktree to relieve disk pressure."
+  },
+  "evidenceDirectory": "evidence",
+  "runtimeCommit": "b47e0033680828c7782e8e112dabba5e3c2755bc",
+  "regressionReceipts": {
+    "remote": "evidence/aim-full-remote.log.gz",
+    "sourceVerification": "evidence/aim-full-remote-source.json",
+    "typesAndLint": "evidence/aim-final-types-lint.log.gz",
+    "smoke": "evidence/aim-smoke-reporter.json.gz"
+  }
+}
