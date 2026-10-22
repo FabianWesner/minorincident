@@ -2,7 +2,7 @@ import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianProp } from '../npc/types';
-import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
+import { doorLaneOf, doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
 import { allyState } from '../outbreak/Allies';
 import { l2 } from '../../data/l2';
 
@@ -19,6 +19,8 @@ export const storyLines: Record<string, string> = {
 /** PO: reading time per bubble, max(2.5 s, 1 s + 70 ms per character), in ticks. */
 export const readTicks = (text: string): number => Math.ceil(Math.max(2.5, 1 + .07 * [...text].length) * TICKS);
 /** Beat timing in ticks (deterministic; all from the mission tick). */
+/** Minimum courier-to-clerk distance at the hand-over (body radii 0.35 + 0.35 plus reach). */
+const handoverGapM = .95;
 const beat = { clerkWalkMs: 1.6, giveTicks: 54, contactTicks: 26, byeTicks: 40, garageTicks: 120, fireTriggerM: 14 };
 
 /**
@@ -93,6 +95,18 @@ export class L1Story {
       // apron props on the walk grid, to arm's length in front of the courier.
       const dx = way.door.x - player.transform.x, dz = way.door.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
       route = doorRoute(nav, way, { x: player.transform.x + dx / d * 1.05, z: player.transform.z + dz / d * 1.05 });
+      // PO 10-22 (clerk vanished at the hand-over): a courier hugging the shopfront is met at the apron edge, often closer
+      // than arm's length. Meet her beside the door instead when that keeps the hand-over gap.
+      const gap = (r: { x: number; z: number }[]) => { const m = r[r.length - 1]; return Math.hypot(m.x - player.transform.x, m.z - player.transform.z); };
+      if (gap(route) < handoverGapM) {
+        // Closest to arm's length wins; a meeting point beyond reach (> 1.6 m) is no hand-over.
+        let best: typeof route | null = null;
+        for (const side of [1, -1]) {
+          const beside = doorRoute(nav, way, { x: player.transform.x - way.out.z * side * 1.05, z: player.transform.z + way.out.x * side * 1.05 }), g = gap(beside);
+          if (g >= handoverGapM && g <= 1.6 && (!best || Math.abs(g - 1.05) < Math.abs(gap(best) - 1.05))) best = beside;
+        }
+        if (best) route = best;
+      }
     } else {
       // No depot placement (synthetic worlds): the old straight walk from behind the counter.
       const dx = counter.x - player.transform.x, dz = counter.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
@@ -103,6 +117,9 @@ export class L1Story {
     const home = route[0], meet = route[route.length - 1];
     const id = this.pedestrian(home, 'npc.depot-clerk', 'cashier', '#3f7f9a');
     this.l1.clerkId = id; this.l1.carrying = false; this.l1.clerkRoute = route;
+    // The scripted walk and the locked courier must never hide each other: contact admission ignores this one pair
+    // (before, a courier at the door kept the clerk pending, i.e. invisible, from the hand-over until half way back).
+    const clerk = this.world.entities.get(id); if (clerk) { clerk.contactExempt = 1; if (nav && way) clerk.doorLane = doorLaneOf(way, route); }
     this.start('pickup', id, way?.door ?? home);
     const b = this.l1.beat!; b.ax = home.x; b.az = home.z; b.mx = meet.x; b.mz = meet.z;
     this.say(id, 'pickup.clerk');
@@ -155,7 +172,7 @@ export class L1Story {
     else if (t < gone) {
       l1.carrying = true; this.release();
       walkTo(length - (t - back) / walk * length, false); this.present(clerk, 'npc-walk');
-    } else { clerk.hidden = true; delete clerk.pendingAdmission; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
+    } else { delete clerk.contactExempt; delete clerk.doorLane; clerk.hidden = true; delete clerk.pendingAdmission; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
   }
 
   /**

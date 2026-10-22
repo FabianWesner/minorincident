@@ -47,6 +47,11 @@ export interface EntitySnapshot {
   emerging?: boolean;
   /** Infected currently clinging to this vehicle entity. */
   attachedTo?: number;
+  /** Scripted story actor (L1 depot clerk): contact admission ignores this one body (the locked courier) while the beat runs. */
+  contactExempt?: number;
+  /** Scripted story actor walking a building door route: the straight lane in front of the door (door plane `x/z`,
+   * outward `ox/oz`, half width, outward length) where door seals/porch colliders neither hide nor push him. */
+  doorLane?: { x: number; z: number; ox: number; oz: number; half: number; end: number };
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
   ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;

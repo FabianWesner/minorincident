@@ -8,7 +8,7 @@ import type { EntitySnapshot } from '../world/types';
 import { L1Story } from './L1Story';
 import { doorExit, doorId, emergeResident, layoutHouseDoors, walkResidents } from '../outbreak/HouseEmergence';
 import { respawnAtCheckpoint } from './Respawn';
-import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
+import { doorLaneOf, doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
 
 const TICKS = 60;
 /** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
@@ -168,6 +168,9 @@ export class LevelOneOutbreak {
         // PO 2026-10-08: out through the annex door (the view swings both leaves open), around props on the walk grid, back the same way.
         l1.techRoute = way && nav ? [{ x: spawn.x, z: spawn.z }, ...doorRoute(nav, way, { x: l1.hx, z: l1.hz })] : [{ x: spawn.x, z: spawn.z }, { x: door.x, z: door.z }, { x: l1.hx, z: l1.hz }];
         const meet = l1.techRoute[l1.techRoute.length - 1]; l1.hx = meet.x; l1.hz = meet.z;
+        // PO 10-22 ("the animation for the package handover at the labor was much better previously"): the annex door
+        // seal kept him hidden until 1.2 m outside the open door and hid him again right after he took the box.
+        if (way && nav) tech.doorLane = doorLaneOf(way, l1.techRoute.slice(1));
         l1.handoverAt = tick; l1.phase = 'handover'; this.story.handoverStart(l1.techId, from);
       } else { this.place(tech, spawn.x, spawn.z, a); return; }
     }
@@ -189,7 +192,7 @@ export class LevelOneOutbreak {
     }
     else if (t < 2 * walkS + pauseS) { l1.carrying = false; this.story.handoverPose(tech, 'in'); pos = point(total - (t - walkS - pauseS) * story.techWalkMs); if (t - walkS - pauseS > .4) this.story.handoverEnd(undefined); }
     else {
-      this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech); l1.techRoute = null;
+      delete tech.doorLane; this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech); l1.techRoute = null;
       l1.delivered = true; l1.deliveredAt = tick; l1.phase = 'calm'; l1.carrying = false;
       // 4 to 6 s of nothing, then the accident: a fresh seeded stream, so a retry after death replays the same timing.
       const rng = new Rng(world.seed, 'l1-story');
