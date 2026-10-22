@@ -5,8 +5,8 @@ p.add_argument('--out', required=True)
 p.add_argument('--only', default='l4-high,l4-low,l6-webgl,l6-webgpu,l4-load-high,l4-load-low')
 a=p.parse_args(); tree=pathlib.Path(a.tree).resolve(); out=pathlib.Path(a.out).resolve(); out.mkdir(parents=True, exist_ok=True)
 now=datetime.datetime.now(datetime.timezone.utc)
-if now < datetime.datetime(2026,10,22,15,tzinfo=datetime.timezone.utc):
-    raise SystemExit('Native quiet measurements are authorized only after 15:00 UTC')
+if now < datetime.datetime(2026,10,22,16,5,tzinfo=datetime.timezone.utc):
+    raise SystemExit('Native quiet measurements are authorized only after 16:05 UTC')
 def git(*args): return subprocess.check_output(['git','-C',str(tree),*args]).decode().strip()
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 expected='e492dfa8ed52fc2e29a438bf1b22e571954947f14cc98ec5890c68c20785f08a' # Exact f0fb391fb handoff fixture
