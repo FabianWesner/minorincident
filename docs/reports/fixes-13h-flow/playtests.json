@@ -578,5 +578,22 @@
       },
       "logSha256": "bf0a041442db47c20a0dbe3829b3f8405ef402e3b4be8d65cda8ae78e275baac"
     }
-  ]
+  ],
+  "reportedFinalMaleAttempt": {
+    "name": "fixes-13h-fists-male-single-final",
+    "sourceCommit": "a22b015bf3670f9b9c1740c0742a869c96217eef",
+    "finished": false,
+    "accepted": false,
+    "skipped": [],
+    "deaths": 15,
+    "levelWallSeconds": 1199.941,
+    "attemptWallSeconds": 1230.386,
+    "maxNoProgressSeconds": 12.99,
+    "issues": {
+      "P0": 1,
+      "P2": 7
+    },
+    "audit": "male-fists-final.json",
+    "reason": "One final run per orchestrator instruction. Natural cap; original completed-male gate remains unmet."
+  }
 }
