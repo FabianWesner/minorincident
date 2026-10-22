@@ -360,6 +360,223 @@
         }
       ],
       "logSha256": "149e64fe4ec3470a1c0887f5a2bb5ba335a3b7a8cc424c47703ea76d49663811"
+    },
+    {
+      "name": "fixes-13h-l7-l8-resume",
+      "driverCommit": "cbe2bebe7",
+      "gameCommit": "72ea6c267",
+      "god": false,
+      "noSkip": true,
+      "resultCaptureReviewed": true,
+      "captureNote": "Result captures show automatic handover loading cards. Periodic L8 capture reviewed: seated APC with Wait for the breach countdown. Boarding completion confirmed by real L8-to-L9 handover.",
+      "earlySeatedWait": {
+        "tick": 1606,
+        "step": "depart",
+        "checkpoint": "sanctuary",
+        "menu": null,
+        "text": "Wait for the breach \u00b7 34 s",
+        "player": {
+          "x": 96,
+          "z": 74,
+          "hp": 100
+        },
+        "marker": null,
+        "noProgressSeconds": 0.131
+      },
+      "missingDogWait": {
+        "tick": 3620,
+        "step": "depart",
+        "checkpoint": "escape-route",
+        "menu": null,
+        "text": "Wait for everyone to board the armored vehicle \u00b7 0/1 aboard \u00b7 Corgi missing",
+        "player": {
+          "x": 96,
+          "z": 74,
+          "hp": 100
+        },
+        "marker": null,
+        "noProgressSeconds": 0.25
+      },
+      "handoverAudit": [
+        {
+          "elapsedMs": 0,
+          "tick": 0,
+          "text": "Bring the survivors to the armored vehicle and board \u00b7 97\u00a0m",
+          "pin": true,
+          "marker": true
+        }
+      ],
+      "summary": {
+        "mode": "campaign",
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L7",
+          "L8"
+        ],
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 227,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 9.05,
+            "deaths": 3,
+            "assists": 0,
+            "attacks": {
+              "weapon.handgun": 10,
+              "weapon.rocket-launcher": 30
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "",
+                "tick": 0,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "playerY": 4.6049999999999995
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+                "tick": 125,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082
+                }
+              },
+              {
+                "id": "departure",
+                "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+                "tick": 12373,
+                "marker": {
+                  "anchor": "l7-bus-boarding",
+                  "ring": {
+                    "x": -70.5,
+                    "y": 0,
+                    "z": 47.5
+                  },
+                  "drawn": [
+                    -70.5,
+                    0,
+                    47.5
+                  ],
+                  "playerY": 0.7200000286102295
+                }
+              }
+            ]
+          },
+          {
+            "level": "L8",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 91,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 7.7,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "escape",
+                "text": "Bring the survivors to the armored vehicle and board \u00b7 97\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "exit",
+                  "ring": {
+                    "x": 96.71,
+                    "y": 0,
+                    "z": 76.275
+                  },
+                  "drawn": [
+                    96.71,
+                    0.12,
+                    76.28
+                  ],
+                  "playerY": 0.8399999737739563
+                }
+              },
+              {
+                "id": "depart",
+                "text": "Wait for the breach \u00b7 34 s",
+                "tick": 1579,
+                "marker": {
+                  "anchor": "exit",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.9954345226287842
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "logSha256": "bf0a041442db47c20a0dbe3829b3f8405ef402e3b4be8d65cda8ae78e275baac"
     }
   ]
 }
