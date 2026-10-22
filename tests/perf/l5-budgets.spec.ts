@@ -1,3 +1,4 @@
+import { gameplayZoomCounters } from './gameplay-zoom-counters';
 import { collectedHeap } from './collected-heap';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
@@ -40,9 +41,10 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); await a.step(2); await a.screenshotReady(); });
     const follow = await page.evaluate(() => window.__SS__!.perf());
     await page.locator('canvas').screenshot({ path: `${dir}/l5-follow-${tier}.png`, scale: 'css' });
+    const zoomMatrix = await gameplayZoomCounters(page, tier, `${dir}/zoom-${renderer}-${tier}.json`);
     // A repeating walk with the group along Harbor Street, ordinary navigation inputs, real clock, rAF frame times.
     const measurement = await page.evaluate(async () => {
-      const a = window.__SS__!, out: number[] = [], hitches: unknown[] = [], tasks: unknown[] = [];
+      const a = window.__SS__!, out: number[] = [], simSteps: number[] = [], hitches: unknown[] = [], tasks: unknown[] = [];
       const observer = new PerformanceObserver(list => tasks.push(...list.getEntries().map(e => ({ start: e.startTime, duration: e.duration }))));
       observer.observe({ type: 'longtask', buffered: false });
       // A complete bot reaches L6 on slower phone samples. Keep ordinary navigation
@@ -53,21 +55,23 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       a.input.set({ moveTarget: route[destination], walk: true }); a.resume(); let previous = 0;
       for (let i = 0; i < 1500; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
+        const tickPerf = a.perf(); if (tickPerf.simTicks > 0) simSteps.push(tickPerf.simTickMs);
         const player = a.getEntity(1)!.transform;
         walkedM += Math.hypot(player.x - last.x, player.z - last.z); last = player;
         if (Math.hypot(player.x - route[destination].x, player.z - route[destination].z) < 1.5) { destination = 1 - destination; a.input.set({ moveTarget: route[destination], walk: true }); }
         if (previous && i > 2) { out.push(now - previous); if (now - previous > 40) hitches.push({ i, now, delta: now - previous, level: a.getState().scenario, phase: a.missions.state()?.phase, l5: a.missions.state()?.l5?.phase, perf: a.perf() }); } previous = now;
       }
-      a.pause(); observer.disconnect(); return { frames: out, hitches, tasks, walkedM, endLevel: a.getState().scenario, end: a.missions.state() };
+      a.pause(); observer.disconnect(); return { frames: out, simSteps, hitches, tasks, walkedM, endLevel: a.getState().scenario, end: a.missions.state() };
     });
     const heap = await collectedHeap(page, context);
     const frames = measurement.frames;
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
-    const proof = { tier, counts, weather, ...heap, baselineDrawCalls: baseline.drawCalls, baselineTriangles: baseline.triangles, pairDrawCalls: pair.drawCalls, pairTriangles: pair.triangles, followDrawCalls: follow.drawCalls, followTriangles: follow.triangles,
+    const proof = { tier, zoomMatrix, simP95: percentile(measurement.simSteps, .95), counts, weather, ...heap, baselineDrawCalls: baseline.drawCalls, baselineTriangles: baseline.triangles, pairDrawCalls: pair.drawCalls, pairTriangles: pair.triangles, followDrawCalls: follow.drawCalls, followTriangles: follow.triangles,
       p50: percentile(frames, .5), p95: percentile(frames, .95), max: Math.max(...frames) };
     writeFileSync(`${dir}/l5-${tier}.json`, JSON.stringify({ ...proof, pairProfile: pair.profile, pairAssets: pair.profileAssets, followProfile: follow.profile, ...measurement }, null, 2));
     console.log(JSON.stringify(proof));
     // A campaign handover must never turn an L5 frame sample into an L6 loading benchmark.
+    expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
     expect(heap.heapMB).toBeLessThanOrEqual(tier === 'high' ? 400 : 250);
     expect(measurement.endLevel).toBe('L5');
     expect(measurement.walkedM).toBeGreaterThan(10);

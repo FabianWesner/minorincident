@@ -23,7 +23,7 @@ const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh'] : []), 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
-const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
+const l4VisualPattern = 'T-E22-ride-smooth|T-E22-12-special|T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
 const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const l6VisualPattern = 'T-E24-17|T-E24-18|T-E24-15|T-E24-06-frustum|T-E24-exit-input|T-E28-L6|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
 const aftermathVisualPattern = target === 'E24' ? l6VisualPattern : l5VisualPattern;
