@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies } from './startup';
-import { keepMovingWithFists } from './combat';
+import { fistsRetreatAttack, keepMovingWithFists } from './combat';
 import { PlaytestProgress } from './progress';
 
 /**
@@ -201,12 +201,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // Waiting for a fetched survivor keeps the courier beside that visible body.
       const contacts=e.enemies.filter(b=>b.d<3).length;
       const escortId=escort?.id,escortNear=escortId===undefined||e.allies.some(b=>b.id===escortId&&b.drawn&&b.d<=4);
-      const goal=contacts<3&&escortNear&&(e.step==='retreat'||e.step==='exit')?await goalScreen(e):null;
+      const walkingAttack=fistsRetreatAttack(contacts);
+      const goal=walkingAttack&&escortNear&&(e.step==='retreat'||e.step==='exit')?await goalScreen(e):null;
       const approach=goal&&e.player&&ring&&Math.hypot(ring.x-e.player.x,ring.z-e.player.z)>1.5?wasdToward(e,goal.x,goal.y):[];
       await releaseAim();
       if(approach.length) {
         const feet=await page.evaluate(at=>window.__SS__!.input.project(at,'destination'),{x:threat.x,z:threat.z});
-        await page.mouse.move(feet.x,feet.y);await press([...approach,'KeyJ']);
+        await page.mouse.move(feet.x,feet.y);await press([...approach,walkingAttack!]);
         if(now-lastCrowdKick>750){lastCrowdKick=now;log({fistsRetreat:e.tick,keys:approach,enemy:threat.id});}
         return true;
       }
