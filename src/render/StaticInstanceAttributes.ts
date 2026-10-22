@@ -63,7 +63,9 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   mesh.onBeforeRender = function (...args) {
     if (corpseNormals) {
       if (copiedVersion !== mesh.instanceMatrix.version) {
-        for (let i = 0; i < mesh.count; i++) {
+        // Loading draws one then two reserved bodies without editing matrices.
+        // Copy all reserved rows so that count-only changes use valid data too.
+        for (let i = 0; i < mesh.instanceMatrix.count; i++) {
           const offset = i * 28;
           for (let j = 0; j < 16; j++) matrix.array[offset + j] = mesh.instanceMatrix.array[i * 16 + j];
           normal!.getNormalMatrix(placement!.fromArray(mesh.instanceMatrix.array, i * 16));
