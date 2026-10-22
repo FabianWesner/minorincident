@@ -8,6 +8,7 @@ const out = process.env.L10_OUT ?? 'test-results/fixes-13h-l10/probe';
 mkdirSync(out, { recursive: true });
 const tier: 'low' | 'high' = process.env.L10_TIER === 'high' ? 'high' : 'low';
 const timing = process.argv.includes('--timing');
+const realTime = process.argv.includes('--real-time');
 const session = new SceneSession({ backend: process.env.L10_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier, nativeFrameTiming: timing });
 try {
   await session.open();
@@ -20,7 +21,7 @@ try {
       if ((object as { material?: { name: string } }).material?.name === 'pal_asphalt') (window as unknown as { l10Shader: unknown }).l10Shader = builder;
     };
   });
-  const result = await session.page.evaluate(async ({ tier }) => {
+  const result = await session.page.evaluate(async ({ tier, realTime }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
     await a.loadLevel('L10', { seed: 32, checkpoint: 'cure-disperse-ready' });
@@ -32,7 +33,7 @@ try {
       const e = g.world.entities.get(event.targetId)!;
       kills.push({ ...event, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance });
     });
-    for (let tick = 0; tick < 5400; tick += 6) {
+    const attack = () => {
       const p = g.world.entities.get(1)!, threats = g.world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && !e.hidden && !e.infected?.hidden);
       threats.sort((x, y) => Math.hypot(x.transform.x - p.transform.x, x.transform.z - p.transform.z) - Math.hypot(y.transform.x - p.transform.x, y.transform.z - p.transform.z));
       const target = threats[0], rack = p.weapons!.RIGHT.rack, index = rack.findIndex(e => e.id === 'weapon.rocket-launcher');
@@ -40,11 +41,49 @@ try {
       if (target) {
         const dx = target.transform.x - p.transform.x, dz = target.transform.z - p.transform.z, distance = Math.hypot(dx, dz) || 1;
         const input = { selectedSlot: { side: 'RIGHT' as const, index }, aimSource: 'keyboard' as const, aim: { x: dx / distance, z: dz / distance }, aimPoint: { x: target.transform.x, z: target.transform.z }, right: { down: false, held: true, up: false } };
-        a.input.set(input); inputs.push({ tick: a.tick(), ...input });
-      } else a.input.clear();
-      await a.step(6);
+        inputs.push({ tick: a.tick(), ...input }); return input;
+      }
+      return null;
+    };
+    let nativePerformance: { frames: number; p95: number; max: number; durationMs: number; fromTick: number; toTick: number } | null = null;
+    if (realTime) {
+      // Drive ordinary inputs through the production feed at 60 simulation
+      // ticks/s, rather than accelerating the assault with the stepping API.
+      const fromTick = a.tick(), stopTick = fromTick + 5400 + 150;
+      const neutral = structuredClone(g.world.inputFrame), frames: number[] = [];
+      let current: ReturnType<typeof attack> = null, running = true;
+      const start = performance.now(); let previous = start;
+      const sample = (now: number) => {
+        if (now > start) frames.push(now - Math.max(previous, start)); previous = now;
+        if (running) requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+      const update = g.world.update;
+      const completed = new Promise<void>(resolve => {
+        g.world.update = function () {
+          update.call(this);
+          if (this.tick >= stopTick) { g.clock.pause(); running = false; resolve(); }
+        };
+      });
+      g.input.feed = { scheme: 'keyboard', next: () => {
+        if (g.world.tick < fromTick + 5400 && (g.world.tick - fromTick) % 6 === 0) current = attack();
+        if (g.world.tick >= fromTick + 5400) current = null;
+        return { ...structuredClone(neutral), ...(current ? structuredClone(current) : {}) };
+      } };
+      try {
+        g.clock.setTimeScale(1); g.clock.resume(); await completed;
+        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      } finally { running = false; g.clock.pause(); g.input.feed = null; g.world.update = update; }
+      frames.sort((x, y) => x - y);
+      nativePerformance = { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1)!, durationMs: performance.now() - start, fromTick, toTick: a.tick() };
+    } else {
+      for (let tick = 0; tick < 5400; tick += 6) {
+        const input = attack(); if (input) a.input.set(input); else a.input.clear();
+        await a.step(6);
+      }
+      a.input.clear(); await a.step(150);
     }
-    off(); a.input.clear(); await a.step(150);
+    off(); a.input.clear();
     // Paused stepping drives simulation, while VFX have their own render clock.
     // Let transient blast smoke/gibs expire so they cannot obscure the bodies.
     for (let seconds = 0; seconds < 35; seconds++) a.vfx.stepRender(1);
@@ -57,8 +96,8 @@ try {
       const m = o as import('three').InstancedMesh;
       if (m.name.startsWith('corpses:') && m.count) pages.push({ name: m.name, instances: m.count, vertices: m.geometry.getAttribute('position').count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, source: m.geometry.userData, precomputedNormals: m.geometry.hasAttribute('_placementNormal0') });
     });
-    return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), perf: a.perf() };
-  }, { tier });
+    return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), nativePerformance, perf: a.perf() };
+  }, { tier, realTime });
   if (process.env.L10_CORPSE_ORDER !== undefined) await session.page.evaluate(order => {
     const g = (window.__SCENE__ as unknown as { game: Game }).game;
     g.view.scene.traverse(object => { if (object.name.startsWith('corpses:')) object.renderOrder = order; });
