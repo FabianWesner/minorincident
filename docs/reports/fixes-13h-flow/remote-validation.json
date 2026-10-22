@@ -65,5 +65,10 @@
     "logSha256": "5873629d2aeee4af34b9d52285c7ee40b0aaaa9d638703fe20ece3438e3bea9c",
     "summary": " \u2713  functional  tests/unit/audio/l4-radio-mix.test.ts (1 test) 4ms\n\n Test Files  423 passed | 3 skipped (426)\n      Tests  2329 passed | 9 skipped (2338)\n   Start at  00:27:57\n   Duration  9342.96s (tests 98%, import 1%)",
     "note": "Serialized file execution avoids the observed contention timeouts; no test limits or assertions changed. Final driver-only additions validated separately."
+  },
+  "remote-exit-ally-cover-green": {
+    "checks": "21 playtest unit tests, typecheck and lint passed",
+    "logSha256": "d1cfe6bf1f988766283d9c2c5f22d8b0a10f9e06e7b999356546dc001610d059",
+    "summary": "   Start at  03:05:22\n   Duration  1.47s (transform 70%, import 17%, tests 10%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 37s, remote total 105s)"
   }
 }
