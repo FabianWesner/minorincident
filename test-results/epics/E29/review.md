@@ -6,7 +6,7 @@ The current review is **not accepted**. See the complete must-item table, image 
 
 - A4/10: broad gray/rose wash; tinted shadows, emissives and high-three-quarter framing pass, palette/readable density fail.
 - D6/10: courier identifiable, crowded threats insufficiently separated; complete telegraph and crowd-clearance proof missing.
-- E5/10: same landmarks align, but lighting dominates and additional W6 destruction does not clearly read; W5 briefing obscures scene.
+- E5/10: same landmarks align, but lighting dominates and additional W6 destruction does not clearly read; The corrected current W5 pair dismisses the briefing; decay separation remains insufficient.
 - G4/10: local pools and tinted shadows visible; complete hero geometry test unmeasured in these pairs and dark crowds/haze fail.
 - H unmeasured: a single before/after cannot establish five blast stages, noisy gradient and persistent physical consequence.
 

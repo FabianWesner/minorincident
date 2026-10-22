@@ -2,7 +2,21 @@
 
 Starting runtime: `769d9f8ce` (batch13g), 2026-10-22. The [31-row inventory](evidence/partial-ac-inventory.json) preserves every partial from the sweep. This is an ongoing audit; no pending row is accepted by this report.
 
-## Current evidence
+## Latest checkpoint — 11:38 UTC
+
+**5/31 starting partials are met:** E25-AC01/12/15 and E29-AC07/14. Every other starting partial remains open unless a later terminal receipt and explicit disposition below says otherwise. All five epic statuses stay **in-progress**. [Machine-readable31-row ledger](evidence/partial-ac-inventory.json).
+
+| Epic | Full-verifier disposition | Current proof and material gaps |
+| --- | --- | --- |
+| E25 | exit1;50 native pass/6fail/1SSRskip | Separate quiet5/5 passes; shadow fixture subsequently passes85.884%. Night-readability/saturation, fullG, legacy-memory and SSR gates remain unresolved/proposed. |
+| E29 | exit1;133Node pass,73native pass/5fail | Alpha inheritance and corrected night continuity now met by targeted repeats. Skyline is reversed on all four configurations; complete input photos/scored review/performance remain open. |
+| E30 | first functional72pass/15fail; repeated158Node pass, native queued | APC port static+15 focused passes. Latest source has the narrow wait/HUD correction and L8 readability key; full native confirmation remains pending. Original12 contrast misses and phone timeout are retained. |
+| E31 | repeated124Node +2 isolated timing passes; native held | Original timing3.551/1.381ms passes; strict navigation/player matrix, physical input, frames/hitches and five-cycle retention remain unmeasured. Real phones need PO devices. |
+| E32 | repeated246Node pass;88-case native functional running | Shared Alpha inheritance passes. Native regular/Mega contracts are passing so far; the new actual photo receipt still needs its focused capture. Whole seven-region/ending review, full input aggregate and native budgets/retention remain incomplete; phones need PO devices. |
+
+Proposed specification decisions remain **unadopted**: SSR release-extras placement; explicit collected-JS versus external/backing memory domains; physical-device ownership plus a separately labelled desktop proxy; nominal stampede cue versus capsule contact; accepted PO90's immediate zoo boarding goal versus old no-objective wording. None is silently substituted for a passing gate. Valid failed/unmeasured criteria have no proposed waiver. The remainder of this file is a chronological audit trail, including superseded experiments and their failures.
+
+## Initial evidence (superseded where noted below)
 
 - Typecheck and lint passed on the unchanged starting tree. Remote validation initially failed before dispatch with DNS resolution; the retry is running on `2.28.24.66`. Final command receipts will supersede this progress record.
 - Current Blender previews: **94 light-bearing assets /188 day/night renders**, zero missing assets. [Coverage and GLB/script/image SHA256 hashes](evidence/previews-coverage.json). Executed Blender 5.2.2 headless, two threads, using the production `render_preview.py --all-light-assets` path. No asset was modified.
@@ -218,3 +232,7 @@ After removing the exterior emergency-darkness leak, **8/8** actual entry/pickup
 Both sides now use nominal intensity0.38, identical moon direction/color, darkness0 and heroFill0.8. Raw actual0.304/0.3648 remains documented with authored cloud0.5/0.1; the comparison accounts for that weather attenuation, rather than altering weather or concealing the readings. The already executed24 rocket/horde samples retain6.630–7.732:1, zero color/clipping failures and original light caps. AC14 is met; the separate skyline and broader scored visual failures remain open.
 
 E32's full native functional stage is now admitted. E30 is queued behind its lane serial lock; E31 remains held. Future perf stages remain gated so slots can be released between batches.
+
+### Native continuation, 11:54 UTC
+
+The PO extended this lane to about14:40 UTC and prioritized completing E30/E31/E32 native runs with explicit failures. E32 has passed75/88 functional cases so far; E30 and E31 are queued serially behind it. Future quiet stages are held until functional batches release the browser; every quiet reservation remains bounded by the existing1195-second watchdog. Latest remote typecheck/lint and the continuity build both completed successfully. Refreshed the retained G sheet and its image/state provenance with the four latest mall frames, and refreshed the L7 comparison sheet with the briefing-free pairs and actual exit/entry frames. Opened both refreshed sheets: mall floor reflections and L7 destruction/threat separation remain below acceptance. Earlier failed L7 image hashes are preserved separately. The new Alpha/Mega PNG collector and unmuted L7 route setup still require execution; neither is counted as new acceptance evidence.

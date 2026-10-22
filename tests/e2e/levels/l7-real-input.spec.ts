@@ -8,7 +8,7 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
   test.setTimeout(1_200_000);
   const out = 'test-results/epics/E29/real-input'; mkdirSync(out, { recursive: true });
   await boot(page, '/?test=1&scenelab=1&renderer=webgl&ui=1&quality=high&audio=muted&dpr=1');
-  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 1, progression: 'L7-default' }); a.pause(); a.camera.follow(); a.settings.set({ captions: true }); await a.audio.unlock(); });
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 1, progression: 'L7-default' }); a.pause(); a.camera.follow(); a.settings.set({ captions: true, muted: false }); await a.audio.unlock(); });
   const step = (n: number) => page.evaluate(async n => { const a = window.__SS__!; if (a.getState().scenario === 'L7') { a.pause(); await a.step(n); } }, n);
   type Pose = { position: [number, number, number]; target: [number, number, number] };
   const captures: unknown[] = [];
