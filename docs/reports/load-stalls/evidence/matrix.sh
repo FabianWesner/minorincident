@@ -14,14 +14,9 @@ while IFS= read -r batch; do
   done
 done <<'BATCHES'
 L1:webgpu:high L1:webgpu:low L1:webgl2:high L1:webgl2:low
-L10:webgl2:high L10:webgl2:low
-L10:webgpu:high L10:webgpu:low
-L8:webgpu:high
-L8:webgpu:low
-L8:webgl2:high
-L8:webgl2:low
-L7:webgl2:high L7:webgl2:low
-L7:webgpu:high L7:webgpu:low
-L4:webgl2:high L4:webgl2:low
-L4:webgpu:high L4:webgpu:low
+L10:webgl2:high L10:webgl2:low L10:webgpu:high L10:webgpu:low
+L8:webgpu:high L8:webgpu:low
+L8:webgl2:high L8:webgl2:low
+L7:webgl2:high L7:webgl2:low L7:webgpu:high L7:webgpu:low
+L4:webgl2:high L4:webgl2:low L4:webgpu:high L4:webgpu:low
 BATCHES
