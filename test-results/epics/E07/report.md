@@ -1,5 +1,10 @@
 # E07 — Infected AI, Archetypes and Hordes
 
+## Current shared closure — 2026-10-22
+
+**E07 remains in-progress.** Named Checklist D is met; actual Alpha/zoo phone bars and all 14 timing/restore probes pass. Restored warning rendering is repaired. Final full-boundary review awaits wider 18/20 m roar captures. The latest complete functional run has **100 passes /1 failure**, traced to the authored sedan blocking a courier-impact fixture; separate clear-lane and admitted-chassis checks are committed for the rerun after the requested 20-minute browser pause. The literal zebra stampede corridor still fails and has an **unadopted proposed rewrite**; no damage, width, cooldown or difficulty was changed. [Current evidence/report](../../../docs/reports/ac-close-shared/README.md) supersedes older PASS claims for these subchecks.
+
+
 Final validation uses the frozen main base `b5dcd1c`, merged in `829f7b1`. No later main changes or asset registrations were adopted after the orchestrator’s stop instruction. The implementation and its evidence are committed separately.
 
 ## Built

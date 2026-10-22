@@ -1,5 +1,10 @@
 # E07 combat readability review
 
+## Current shared closure — 2026-10-22
+
+**E07 remains in-progress.** Named Checklist D is met; actual Alpha/zoo phone bars and all 14 timing/restore probes pass. Restored warning rendering is repaired. Final full-boundary review awaits wider 18/20 m roar captures. The latest complete functional run has **100 passes /1 failure**, traced to the authored sedan blocking a courier-impact fixture; separate clear-lane and admitted-chassis checks are committed for the rerun after the requested 20-minute browser pause. The literal zebra stampede corridor still fails and has an **unadopted proposed rewrite**; no damage, width, cooldown or difficulty was changed. [Current evidence/report](../../../docs/reports/ac-close-shared/README.md) supersedes older PASS claims for these subchecks.
+
+
 Reviewed 2026-10-06 at 1600×900, DPR 1, seed 1, paused tick 0, golden-hour lighting and bloom, pinned Chromium/SwiftShader WebGL2. Opened `horde-readability.png`, `telegraphs.png`, `bloated-windup.png`, `horde-archetypes.png`, `webgpu.png`, `compare/readability.png` and `compare/telegraphs.png` with the image viewer. Comparison sheets use the read-only main checkout's `initial-drafts/sunset-grove-combat-gameplay-mockup.png` on the left, with actual game captures in the remaining columns.
 
 Checklist D from `specs/90-test-concept.md` §7.1:
