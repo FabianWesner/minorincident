@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 2.31.10.108:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 61s, 30529 files; job /srv/mi/jobs/fixes-13h-l10-170603-73800-1792634953; queueing for a slot
+[runner] slot 1 acquired; load 5.55 5.16 4.23
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+ RUN  v5.0.3 /srv/mi/jobs/fixes-13h-l10-170603-73800-1792634953
+
+ ✓  functional  tests/unit/render/surface-mask-branches.test.ts (4 tests) 79ms
+ ✓  functional  tests/unit/render/incremental-pre-render.test.ts (4 tests) 82ms
+ ✓  functional  tests/unit/render/material-variants.test.ts (7 tests) 123ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  02:12:09
+   Duration  1.58s (transform 54%, import 35%, tests 10%, worker 1%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 61s, remote total 119s)
