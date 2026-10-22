@@ -2,7 +2,7 @@
 
 ## Current shared closure — 2026-10-22
 
-**E07 remains in-progress for the unadopted literal stampede-corridor proposal and a new crowd object-count failure (AC12).** AC05/06/13 are met: all 14 timing/cooldown/real-checkpoint journals and full boundary images reviewed (168 captures); actual Alpha/zoo desktop/phone bars and named Checklist D pass. Restored/paused warning rendering is fixed. The cropped large-roar overviews were rejected, widened and reviewed complete. Four focused clear-lane/chassis/roar checks now pass. The full E07 verifier passes 373 selected Node tests, five isolated timings and 102 functional browser cases, then fails the quiet crowd object count (185 versus 141); the other four quiet cases pass. Ownership diagnosis confirms 44 empty pooled corpse pages and no unowned nodes; a subsequent mixed scene fails 31 draws against the unchanged 30 cap. Repair is in progress. [Current evidence/report](../../../docs/reports/ac-close-shared/README.md) supersedes older PASS claims for the literal stampede width; no damage, cooldown or difficulty was changed.
+**Final runtime df390443a: E07 remains in-progress only for the unadopted literal stampede-corridor proposal.** Full verification passes typecheck/lint/build,377 selected Node tests,five isolated timings,102 functional browser cases and five quiet native tests. AC05/06/12/13 are met/fixed: all14 move journals/168 images, actual Alpha/zoo desktop/phone HP bars, exact pooled object graph, combined body/headwear≤30 draws and named D5/5. All168 move images and ten actual Alpha/zoo images are byte-identical to the reviewed set. [Current report](../../../docs/reports/ac-close-shared/README.md) supersedes historical PASS claims for literal stampede width; gameplay difficulty and thresholds are unchanged.
 
 
 Final validation uses the frozen main base `b5dcd1c`, merged in `829f7b1`. No later main changes or asset registrations were adopted after the orchestrator’s stop instruction. The implementation and its evidence are committed separately.
@@ -32,14 +32,14 @@ The final executed-tag mapping is recorded in `acceptance-coverage.json`.
 | E07-AC09 | T-E07-09 | PASS — `migration.json`: 150 arrivals within time tolerance; fan-out positions and subsequent outward movement. |
 | E07-AC10 | T-E07-10, 10b | PASS — `pooling.json`: 18,000 ticks with 150 living infected cycling through natural corpse-cap cleanup; stable object identity/counters and refreshed collision radii across recycled archetypes. |
 | E07-AC11 | T-E07-11 | PASS — `sim-perf.json`: 200 chasing infected; p95 below 4 ms after 120 warm-up ticks and 600 measured ticks. |
-| E07-AC12 | T-E07-12, bake, 12-native | PASS — `render-perf.json`, `mixed-render.json`, `webgpu.json`, `horde-200.png`, `horde-archetypes.png`, `webgpu.png`: fixed instanced scene graph, actual renderer draw delta, all-archetype crowd and native WebGPU. |
+| E07-AC12 | T-E07-12, bake, 12-native | PASS — final quiet verifier and independent ownership/profile audit: exact pooled-page count; no per-infected scene nodes;17 runner /30 mixed combined body/headwear draws; offscreen,200 retained corpses and reset/mixed controls pass. [Current proof](../../../docs/reports/ac-close-shared/evidence/horde-object-audit-final.json.gz). |
 | E07-AC13 | T-E07-13 | PASS — `horde-readability.png`, `player-mask.png`, `telegraphs.png`, `bloated-windup.png`, `compare/readability.png`, `review.md`: 60 golden-hour runners and Checklist D. |
 | E07-AC14 | T-E07-14 | PASS — `vitest.json`: corpse visible for 2,700 ticks, sinks then releases at 2,760; oldest-first cap of 100. |
 | E07-AC15 | T-E07-15 | PASS — `vitest.json`: surviving leg-targeted runner becomes speed-2 crawler behavior in Full/Reduced/Off with detachment only in Full. |
 | E07-AC16 | T-E07-16 | PASS — `vitest.json`: four dogs flank from at least 90° spread; 24-tick telegraph, 36-tick knockdown. |
 | E07-AC17 | T-E07-17, 17b | PASS — `vitest.json`: layout perch, hidden query/aim-assist exclusion beyond 5 m; leap/cling timer and attack/distance escape. |
 | E07-AC18 | T-E07-18, 18b, 18c | PASS — `vitest.json`: circling/dive waves, individual explosion/ray/shotgun damage, 300-tick scatter, weighted cap and dead-flock instance cleanup. |
-| E07-AC19 | T-E07-19a, 19b | PASS — `vitest.json`: nearest medium Rapier prop throw with actual momentum damage, sixfold barricade hit and 90-tick lion pin/two-attack escape. |
+| E07-AC19 | T-E07-19a,b and all zoo capture probes | PARTIAL — zoo timing/boundary/restore, actual phone bars, prop throw and pin controls pass; the nominal stampede outside-cue control still takes ordinary contact damage. Proposed cue/contact clarification remains unadopted; see current report. |
 
 ## Verification
 
