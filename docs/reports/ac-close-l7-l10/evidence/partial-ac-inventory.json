@@ -28,9 +28,15 @@
     },
     {
       "ac": "E25-AC15",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "`tools/blender/{render_preview,light_preview}.py` implements all-light-assets; retained `previews/coverage.json`: 91 assets, 182 renders, no missing contacts (historical source 4970fa9e); `T-E25-15` exercises production turntable night pair.",
-      "requiredProof": "**M; browser** \u2014 Regenerate/review current day/night Blender previews and night on/off turntable coverage; old 91-asset set omits gym, pharmacy and supermarket."
+      "requiredProof": "**M; browser** \u2014 Regenerate/review current day/night Blender previews and night on/off turntable coverage; old 91-asset set omits gym, pharmacy and supermarket.",
+      "currentEvidence": [
+        "previews-coverage.json",
+        "turntable-proof.json",
+        "turntable-tests.json.gz"
+      ],
+      "review": "Opened all four current Blender sheets and actual production night-on/off frames; 94/188 complete, five views non-placeholder, retained power zero-difference. References are not bundled on remote; this proof covers lighting previews, not asset-reference resemblance."
     },
     {
       "ac": "E25-AC16",

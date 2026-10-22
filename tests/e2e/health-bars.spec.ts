@@ -11,6 +11,27 @@ const night = process.env.HEALTH_BAR_NIGHT === '1';
 const backend = process.env.HEALTH_BAR_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const fixture = readSpec('tests/scenes/health-bars/shared.json');
 for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [844, 390, 'low']] as const) {
+  test(`T-E07-06-alpha-${width} @E07-AC06 @E29-AC07 @E32-AC09 Alpha bar follows actual HP at game camera ${tier}`, async () => {
+    test.setTimeout(180_000);
+    const session = new SceneSession({ backend, tier, viewport: { width, height } });
+    try {
+      await session.open();
+      await session.load({ name: 'alpha-bar', size: 40, ground: 'asphalt', dof: false, time: night ? 'L6' : 'L1',
+        actors: [{ id: 'courier', kind: 'courier', at: [0, 0], state: 'idle' }, { id: 'alpha', kind: 'infected', archetype: 'infected.alpha', at: [3, 0], state: 'idle' }],
+        camera: { mode: 'game', target: [0, 0] } });
+      const id = (await session.describe()).actors.find(a => a.id === 'alpha')!.entity;
+      const before = await session.page.evaluate(id => ({ hp: window.__SS__!.getEntity(id)!.health, bar: window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id) }), id);
+      expect(before.bar).toMatchObject({ fraction: 1, width: width === 1600 ? 64 : 48, height: width === 1600 ? 8 : 6 });
+      mkdirSync(output, { recursive: true }); await session.screenshot(`${output}/alpha-before-${width}.png`);
+      await session.page.evaluate(async () => { window.__SCENE__!.command('alpha', { hit: { amount: 60 } }); await window.__SS__!.step(0); });
+      const after = await session.page.evaluate(id => ({ hp: window.__SS__!.getEntity(id)!.health, bar: window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id) }), id);
+      expect(after.hp.current).toBeLessThan(before.hp.current);
+      expect(Math.abs(after.bar!.fraction - after.hp.current / after.hp.max)).toBeLessThanOrEqual(.01);
+      await session.screenshot(`${output}/alpha-after-${width}.png`);
+      expect(session.errors).toEqual([]);
+      writeFileSync(`${output}/alpha-proof-${width}.json`, JSON.stringify({ width, height, tier, backend, night, before, after }, null, 2));
+    } finally { await session.close(); stopServer(); }
+  });
   test(`T-E07-06-bars-${width} @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera ${tier}`, async () => {
     test.setTimeout(180_000);
     const session = new SceneSession({ backend, tier, viewport: { width, height } });
@@ -97,7 +118,7 @@ for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [84
   });
 }
 for (const [tier, count] of [['high', 200], ['low', 100]] as const) {
-  test(`T-E07-bars-budget-${tier} @E07-AC12 @E18-AC01 pooled bar budget at ${count} infected`, async () => {
+  test(`T-E07-bars-budget-${tier} @E07-AC12 @E18-AC01 @perf pooled bar budget at ${count} infected`, async () => {
     test.setTimeout(180_000);
     const session = new SceneSession({ tier });
     const spec: SceneSpec = { name: `qa-health-bars-${count}`, size: 80, infectedCap: 200, ground: 'asphalt', seed: 7, barArchetypes: ['infected.runner'],
