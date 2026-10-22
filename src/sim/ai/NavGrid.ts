@@ -519,13 +519,16 @@ export class NavGrid {
     let steps = 0, done = false;
     while (r.head < r.tail) {
       if (steps++ >= budget) return false;
-      const cell = queue[r.head++], d = (cell % this.width - r.tx) ** 2 + (Math.floor(cell / this.width) - r.tz) ** 2;
+      const cell = queue[r.head++], x = cell % this.width, z = Math.floor(cell / this.width), d = (x - r.tx) ** 2 + (z - r.tz) ** 2;
       if (d < r.bestD) { r.bestD = d; r.best = cell; }
       // A player click needs a clear final segment, even when its closest grid cell lies behind a chair corner.
       if (this.exactPlayerDestination && d < 16 && this.visible({ x: this.x(cell), z: this.z(cell) }, target, this.clearance)) { r.best = cell; done = true; break; }
       if (!this.exactPlayerDestination && d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
       if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
-      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && this.insidePlayerBounds(this.x(n), this.z(n), this.clearance)) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
+      for (let k = 0; k < 4; k++) {
+        const n = k === 0 ? x > 0 ? cell - 1 : -1 : k === 1 ? x + 1 < this.width ? cell + 1 : -1 : k === 2 ? z > 0 ? cell - this.width : -1 : z + 1 < this.depth ? cell + this.width : -1;
+        if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && (!this.playerBounds || this.insidePlayerBounds(this.x(n), this.z(n), this.clearance))) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; }
+      }
     }
     void done;
     // Repeated clicks behind the same fence must still make progress: when the closest reachable spot is where
@@ -648,7 +651,15 @@ export class NavGrid {
       if (best < 0) { this.searching = false; this.rememberPocket(); return false; }
       this.expansions++; this.searchSize++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
-      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
+      // Decode the expanded cell once; all four neighbors and their heuristic
+      // coordinates differ by one integer. Preserve the original L/R/U/D order.
+      const x = best % this.width, z = Math.floor(best / this.width);
+      for (let d = 0; d < 4; d++) {
+        const nx = x + (d === 0 ? -1 : d === 1 ? 1 : 0), nz = z + (d === 2 ? -1 : d === 3 ? 1 : 0);
+        if (nx < 0 || nx >= this.width || nz < 0 || nz >= this.depth) continue;
+        const n = nz * this.width + nx;
+        if (!this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(nx - tx) + Math.abs(nz - tz)) * 1.00001); }
+      }
     }
     return false;
   }
