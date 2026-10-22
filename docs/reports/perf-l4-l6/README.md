@@ -1,6 +1,6 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status: candidate fixes prepared. Matched base `480b44e42` is merged; the single baseline worktree is `/tmp/minorincident-perf-l4-l6-before`. The matched high baseline is recorded; further browser work is held until 16:05 UTC on 2026-10-22.
+Status: runtime fixes, guards, typecheck/lint and the full remote regression suite are green. Native strict and smoke gates remain pending. Matched base `480b44e42` is merged; the single baseline worktree is `/tmp/minorincident-perf-l4-l6-before`. The matched high baseline is recorded; further browser work is held until 16:05 UTC on 2026-10-22.
 
 ## Required evidence
 
@@ -15,6 +15,18 @@ Status: candidate fixes prepared. Matched base `480b44e42` is merged; the single
 | All work committed | Clean worktree, commit IDs, final evidence hashes |
 
 Handoff before numbers: L4 WebGPU high turn48.5/tank15.3/break204.7 ms and four turn builds; low turn54.5/tank33.6/break54.8 ms and zero turn builds. L6 first-five heap growth: WebGL high9.3041%/low10.5775%; WebGPU high10.5898%/low11.9797%. These are historical receipts until matched measurements are collected on this lane's final base.
+
+## Fix guards and regression receipts
+
+| Fix | Guard | Baseline red / candidate green |
+| --- | --- | --- |
+| Retired L1 window owner | [lab-window-retention.test.ts](../../../tests/unit/render/lab-window-retention.test.ts) | `lab-owner-guard-red.log.gz` / `lab-owner-focused-green.log.gz` |
+| Cached MaterialNode reference | [level-geometry-retention.test.ts](../../../tests/unit/render/level-geometry-retention.test.ts) | `material-reference-guard-red.log.gz` / `material-reference-focused-green.log.gz` |
+| Interaction LOD feature graph | [interaction-lod-materials.test.ts](../../../tests/unit/render/interaction-lod-materials.test.ts) | `interaction-guard-red.log.gz` / `interaction-focused-green.log.gz` |
+| Rigid actor/collapse feature graph | [entity-assets-lod-materials.test.ts](../../../tests/unit/render/entity-assets-lod-materials.test.ts) | `collapse-guard-red.log.gz` / `graph-caches-focused-green.log.gz` |
+| Static placement graph identity | [static-instance-attributes.test.ts](../../../tests/unit/render/static-instance-attributes.test.ts) | `placement-guard-red.log.gz` / `placement-focused-green.log.gz` |
+
+Receipts above are in `evidence/`. All five guards also pass in `candidate-full-remote-95796.log.gz` (439 files / 2,411 tests passed). Runtime changes add no warm-up calls or passes; crowd, corpse, quality and fixture thresholds are unchanged.
 
 ## Diagnostic setup
 
