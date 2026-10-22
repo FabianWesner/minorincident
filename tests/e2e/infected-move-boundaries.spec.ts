@@ -77,7 +77,7 @@ for (const move of Object.keys(scenes) as InfectedSpecialMove[]) {
       // Preserve the authored gameplay view and add an unchanged-tick wide
       // inspection of the complete boundary (especially the 18/20 m roars
       // and long charge corridors). Neither camera redraw consumes a sim tick.
-      await s.page.evaluate(({ x, z }) => window.__SCENE__!.setCamera({ mode: 'pose', position: [x + 30, 35, z + 40], target: [x, 0, z] }), initial.attack.area);
+      await s.page.evaluate(({ x, z }) => window.__SCENE__!.setCamera({ mode: 'pose', position: [x + 42, 49, z + 56], target: [x, 0, z] }), initial.attack.area);
       const overview = await shot('01-boundary-overview');
       expect(overview.tick).toBe(before.tick);
       expect(overview.markers.some(t => t.attackId === initial.attack.attackId && t.opacity === 1)).toBe(true);
