@@ -1,5 +1,7 @@
 import type { Game } from '../../src/Game';
 import type { CampaignSave } from '../../src/sim/progression/Campaign';
+import type { BufferGeometry, Object3D } from 'three/webgpu';
+import type { InstancedGroup } from '../../src/render/InstancedGroup';
 
 export type Finding = 'depot-clerk' | 'lab-handover' | 'hats-glasses' | 'sitters-benches' | 'l3-gaps' | 'l4-tank';
 export interface TourStop {
@@ -77,7 +79,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
     g.input.feed={scheme:'keyboard',next:()=>{
       const p=g.world.entities.get(1)!.transform;
       if(Math.hypot(p.x-target.x,p.z-target.z)<=stopM){arrived=true;frame.move={x:0,z:0};return frame;}
-      const ok=g.world.infected!.nav.steer(p,target,route,.45,waypoint,Infinity,true);
+      const ok=g.world.infected!.nav.steer(p,target,route,.35,waypoint,Infinity,true);
       if(!ok)throw new Error(`No connected walk route from ${p.x},${p.z} to ${target.x},${target.z}`);
       const dx=waypoint.x-p.x,dz=waypoint.z-p.z,d=Math.hypot(dx,dz)||1,speed=Math.min(1,d/1.2);
       frame.move={x:dx/d*speed,z:dz/d*speed};return frame;
@@ -107,6 +109,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
   }
   if(stop.setup?.startsWith('l7-')) {
     const name=stop.setup==='l7-rocket'?'l7-rocket':stop.setup==='l7-corridor'?'l7-corridor-east':'l7-bus-boarding';
+    if(stop.setup!=='l7-rocket')for(const [x,z] of [[245,16],[215,16],[175,16],[135,16],[88,16],[88,46],[76,46],[-30,47.5]])await walkTo({x,z},2);
     await walkTo(g.world.missions!.def.anchors[name],stop.setup==='l7-bus'?3:1.2);
     if(stop.setup==='l7-rocket'){a.input.set({interact:true});await a.step(45);a.input.clear();}
   }
@@ -201,9 +204,42 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
 }
 
 /** The authored game rig (25 degree FOV, isometric polar/azimuth) looks around without relocating the player. */
-export async function readyFrame({target,zoom,ticks}:{target:[number,number,number]|null;zoom:number;ticks:number}) {
+export async function readyFrame({target,zoom,ticks,injection,stopId}:{target:[number,number,number]|null;zoom:number;ticks:number;injection?:string;stopId:string}) {
   const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;
   if(ticks) await a.step(ticks);
+  // Opt-in fault fixtures run only on the local candidate. Fresh level loads isolate each stop.
+  const mutations:unknown[]=[];
+  const enabled=(name:string)=>injection===name||injection==='all';
+  if(enabled('hide-npc')&&stopId==='l1-depot-contact'){
+    const id=a.missions.state()!.l1!.clerkId,e=g.world.entities.get(id!);
+    if(!e?.civilian?.story)throw new Error('Mutation requires the actual scripted depot clerk');
+    e.hidden=true;mutations.push({kind:'hide-npc',id,clip:e.civilian.story.clip});
+  }
+  if(enabled('hats')&&stopId==='l1-park'){
+    g.view.scene.traverse(node=>{
+      if(!/^acc\.hat-.*:lod[01]$/.test(node.name))return;
+      const geometry=(node as unknown as {geometry:BufferGeometry}).geometry;
+      if(!geometry.userData.qaAbDouble){geometry.scale(2,2,2);geometry.userData.qaAbDouble=true;geometry.computeBoundingSphere();}
+      mutations.push({kind:'hats',mesh:node.name,scale:2});
+    });
+    if(!mutations.length)throw new Error('Mutation found no loaded hat geometry');
+  }
+  if(enabled('tank')&&stopId==='l4-tank-hold'){
+    const id=a.missions.state()!.l4!.tankId!,tank=g.world.entities.get(id);
+    if(!tank)throw new Error('Mutation requires the actual L4 tank');
+    Object.assign(tank.transform,{x:-13,z:23});
+    mutations.push({kind:'tank',id,at:{...tank.transform}});
+  }
+  if(enabled('bench')&&stopId==='l2-ride-start'){
+    type Entry={id:string;refs:Object3D[];origin:[number,number];hero:InstancedGroup;near:InstancedGroup;far:InstancedGroup};
+    const district=(g.view as unknown as {districts:{lodBatches:Entry[]}}).districts;
+    const at=g.world.missions!.def.anchors['l2-bench-2'];
+    const benches=district.lodBatches.filter(e=>e.id.includes('bench')).flatMap(entry=>entry.refs.map(ref=>({entry,ref,d:Math.hypot(ref.position.x+entry.origin[0]-at.x,ref.position.z+entry.origin[1]-at.z)}))).sort((a,b)=>a.d-b.d);
+    const selected=benches[0];if(!selected||selected.d>4)throw new Error('Mutation found no bench at the authored ride-start stop');
+    selected.ref.scale.setScalar(0);selected.ref.updateMatrix();selected.ref.updateMatrixWorld(true);
+    for(const batch of [selected.entry.hero,selected.entry.near,selected.entry.far])batch.update();
+    mutations.push({kind:'bench',asset:selected.entry.id,at:selected.ref.position.toArray(),removed:true});
+  }
   const rig=g.view.view;
   if(target) {
     const radius=19*zoom,s=Math.sin(rig.polar)*radius;
@@ -213,5 +249,5 @@ export async function readyFrame({target,zoom,ticks}:{target:[number,number,numb
   await a.screenshotReady();
   const focus=target??[a.getState().player!.transform.x,0,a.getState().player!.transform.z];
   const actors=a.query({}).filter(e=>(!!e.civilian||e.archetype==='veh.tank')&&Math.hypot(e.transform.x-focus[0],e.transform.z-focus[2])<15).map(e=>({id:e.id,archetype:e.archetype,at:e.transform,hidden:e.hidden,model:e.civilian?.model,clip:e.civilian?.story?.clip,activity:e.civilian?.schedule?.[e.civilian.scheduleStep??0]?.activity}));
-  return {tick:a.tick(),backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
+  return {tick:a.tick(),mutations,backend:a.perf().backend,quality:a.getState().render.quality,camera:a.getState().render.camera,actors,drawn:a.crowdFigures().filter(f=>f.drawn&&actors.some(e=>e.id===f.id)).map(f=>({id:f.id,lod:f.lod,clip:f.clip,accessory:f.appearance?.accessory}))};
 }
