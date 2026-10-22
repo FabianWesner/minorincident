@@ -6,7 +6,7 @@ import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
-import { clickGroundInput } from './input';
+import { clickGroundInput, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
 import type { Game } from '../../src/Game';
 
@@ -131,7 +131,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let visibleProgress = new PlaytestProgress(), lastObservation=0;
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
-  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
+  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
   const levelDeadline = () => wallStart + o.levelMinutes * 60_000;
@@ -490,6 +490,20 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Cover visible walkers before advancing to the next retreat ring.
     if (e.player) {
       const groupTarget = visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
+      if (e.level === 'L6' && e.step === 'exit' && ring && !e.enemies.some(b => b.d < 3)
+        && (!groupTarget || Math.hypot(groupTarget.x - ring.x, groupTarget.z - ring.z) < ringDist!)) {
+        // The exit is above two visible stair runs. Clipped ground clicks can
+        // lead into their gap; walk the visible bearing from the approach,
+        // retaining small lateral corrections instead of rounding to 45°.
+        const points = await page.evaluate(({ p, goal }) => {
+          const a = window.__SS__!;
+          return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
+        }, { p: e.player, goal: ring });
+        const keys = markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12);
+        await releaseAim(); await press(keys); await hold(180);
+        if (stairFrame % 12 === 1) log({ visibleStairWalk: e.tick, keys });
+        continue;
+      }
       if (groupTarget) {
         const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
         const sp = safe(screen.x, screen.y, e); await clickGround(sp.x, sp.y); await hold(150); continue;

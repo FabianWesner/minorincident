@@ -14,4 +14,11 @@
 - Focused L6 guard and ally defence regressions: 32 passed. Finale, save migration and playtest observation regressions: 24 passed.
 - Remote unit/level suite and real-input L10 run are active. These gates are not yet certified.
 - L6 male seeded fists remains unverified: v5 reached exit-platform but stalled on the raised stairs; v6 aborted at retreat with `No visible progress for 30.0 s; stopping without advancing the objective`. Its log shows a fast death/respawn retained an old movement reference, then falsely timed out while courier and marker advanced. No objectives were skipped.
-- The original 60-minute driver budget is exhausted; an extension has been requested before further driver edits.
+- The orchestrator granted 30 additional minutes, restricted to the raised exit stairs.
+
+## Raised exit investigation
+
+- The exit is reachable and readable: the captured view shows the stair runs, exit arrow and minimap pin. The physical movement probe crosses both runs at z=15 and z=17.3, reaching x284 at street height y4.62. Walking between the stairs at z=16.195 instead reproduces the exact failed position x255.045, y0.71. [Probe](evidence/exit-reachability.log.gz), [failed approach](evidence/exit-stairs-failed.jpg).
+- Driver cause: clipped ground clicks drifted into the gap, while rounded keyboard steering discarded the small lateral correction toward the marker. L6 exit steering now retains that correction using short physical key pulses toward the visible marker. No game geometry, navigation or marker was changed. [Red](evidence/stair-steering-red.log.gz), [green](evidence/stair-steering-green.log.gz). A fresh full male fists run is active.
+- L10 real input reached the charge console after every preceding objective, then failed with `No visible progress for 30.0 s; stopping without advancing the objective`. The visible E text is in HUD `objective-text`, while the attempted observation fix reads the separate `mission-tracker`. Permission to correct this within the restricted extension is pending.
+- Remote exposed a simulation-bot compatibility regression after the new `mega` objective: the existing console-centred fight/dodge policy still matched only `hold`. The same policy now covers both steps; assertions are unchanged. Verification is active.
