@@ -1,0 +1,30 @@
+total 918 ms
+
+self time by file:
+     668  getProgramParameter
+     225  chunk-AH7NWAFQ.js?v=ff9afd0c
+      14  (garbage collector)
+       5  (program)
+       2  createVertexArray
+       2  PracticalEffects.ts
+       2  Renderer.ts
+       1  chunk-IXWWV5JO.js?v=ff9afd0c
+       0  DistrictView.ts
+
+self time by function:
+     668  getProgramParameter :-1
+      34  build chunk-AH7NWAFQ.js?v=ff9afd0c:1597
+      21  build chunk-AH7NWAFQ.js?v=ff9afd0c:1899
+      14  (garbage collector) :-1
+      11  analyze chunk-AH7NWAFQ.js?v=ff9afd0c:1518
+       9  fn chunk-AH7NWAFQ.js?v=ff9afd0c:2466
+       7  getNodeFromHash chunk-AH7NWAFQ.js?v=ff9afd0c:25985
+       7  _getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1291
+       6  generateNodeType chunk-AH7NWAFQ.js?v=ff9afd0c:4403
+       6  setHashNode chunk-AH7NWAFQ.js?v=ff9afd0c:25851
+       6  build chunk-AH7NWAFQ.js?v=ff9afd0c:4413
+       6  addNode chunk-AH7NWAFQ.js?v=ff9afd0c:25859
+
+inclusive time (samples whose stack contains the function):
+     216  build
+     668  getProgramParameter

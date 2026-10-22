@@ -1,0 +1,87 @@
+{
+  "remote": {
+    "logSha256": "84432c61b842c97f4f967d96573673ade088268d5ced6a956f0a7d676ef5f57c",
+    "summary": "\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[7/7]\u23af\n\n\n Test Files  7 failed | 414 passed | 3 skipped (424)\n      Tests  7 failed | 2302 passed | 11 skipped (2320)\n   Start at  22:13:17\n   Duration  5774.90s (tests 99%, import 1%)\n\n[remote] done exit=1 (runner 2.28.24.66, sync 103s, remote total 5779s)"
+  },
+  "remote-retry": {
+    "logSha256": "94841d3b5fdbde0aae2b4930a36614ce5118fdc0d7074b96448956535f7450d5",
+    "summary": "\u2713  functional  tests/levels/l7-audit.test.ts (1 test) 184333ms\n   \u2713 T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats 184330ms\n\n Test Files  7 passed (7)\n      Tests  41 passed (41)\n   Start at  23:51:52\n   Duration  1615.53s (tests 100%)\n\n[remote] done exit=0 (runner 2.31.10.108, sync 88s, remote total 1619s)"
+  },
+  "remote-final-scope": {
+    "logSha256": "01073905f00ad28010ffd67f824e6c210a7fb7e8d19c88860266a4ec41f8071c",
+    "summary": "\u2713 T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover 290410ms\n   \u2713 T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover 292350ms\n\n Test Files  12 passed (12)\n      Tests  63 passed (63)\n   Start at  23:56:29\n   Duration  630.86s (tests 98%, transform 1%, import 1%)\n\n[remote] done exit=0 (runner 2.28.24.66, sync 65s, remote total 637s)"
+  },
+  "remote-final-tooling": {
+    "logSha256": "c12d1560778f7bb2190d8356b6e2d1d988f1b5a8ad1ac5e0c43106468ab07d39",
+    "summary": "\u2713  functional  tests/unit/playtest-startup.test.ts (3 tests) 13ms\n \u2713  functional  tests/unit/playtest-combat.test.ts (4 tests) 6ms\n\n Test Files  3 passed (3)\n      Tests  14 passed (14)\n   Start at  00:18:39\n   Duration  1.10s (transform 77%, import 16%, tests 4%, worker 2%)\n\n[remote] done exit=0 (runner 94.130.181.173, sync 100s, remote total 7s)"
+  },
+  "interpretation": "Requested maxWorkers=4 run initially had seven timeouts; unchanged serial retries passed all seven files. Final full serial suite passed 2329 tests in 423 files with exit 0 and 9 native skips. Final product is 72ea6c267; subsequent driver additions have separate green tooling/typecheck/lint checks.",
+  "productCommit": "72ea6c267",
+  "toolingCommit": "50c16dbbe",
+  "remote-driver-final": {
+    "logSha256": "6a2376331e6af322ce73edc479be19163969cbd5a8d148eb4cb9acd040552caf",
+    "checks": "14 playtest unit tests, typecheck and lint passed",
+    "summary": "> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.31.10.108, sync 37s, remote total 66s)"
+  },
+  "remote-shelter-cover-green": {
+    "logSha256": "04da2ca95f5484d7a6e3f49499cf9cece6fc3a6d0438da30bdf3d1667f0b75a1",
+    "checks": "15 playtest unit tests, typecheck and lint passed",
+    "summary": "   Start at  01:48:08\n   Duration  1.36s (transform 80%, import 13%, tests 4%, worker 2%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 51s, remote total 103s)"
+  },
+  "remote-visible-ally-green": {
+    "logSha256": "1efe5d6d809ea4a3cb825047656f2cdcf3db453270c2f09f87650380f218ddfc",
+    "checks": "16 playtest unit tests, typecheck and lint passed",
+    "summary": "   Start at  01:57:37\n   Duration  1.53s (transform 80%, import 13%, tests 5%, worker 2%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.31.10.108, sync 35s, remote total 116s)"
+  },
+  "remote-ally-priority-green": {
+    "checks": "17 playtest unit tests, typecheck and lint passed",
+    "logSha256": "3cfde4778e810dbb1f40966d28a96bb3b8f5662701ea5390418e0c648bc9f9e9",
+    "summary": "   Start at  02:22:54\n   Duration  1.13s (transform 76%, import 16%, tests 5%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 30s, remote total 97s)"
+  },
+  "remote-resume-menu-green": {
+    "checks": "18 playtest unit tests, typecheck and lint passed",
+    "logSha256": "e7843443d756f92603abd384daf4b56f5b36a8c4ce04b5e6f331ea7987491c85",
+    "summary": "   Start at  02:26:36\n   Duration  1.21s (transform 78%, import 15%, tests 5%, worker 2%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 23s, remote total 94s)"
+  },
+  "remote-retreat-ally-cover-green": {
+    "checks": "19 playtest unit tests, typecheck and lint passed",
+    "logSha256": "471baae858fb1521ae6f6b9a549f49a9b86a6aae5f87fa809e86779d96f3b726",
+    "summary": "   Start at  02:49:05\n   Duration  862ms (transform 76%, import 17%, tests 4%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.31.10.108, sync 24s, remote total 73s)"
+  },
+  "remote-ground-click-green": {
+    "checks": "20 playtest unit tests, typecheck and lint passed",
+    "logSha256": "a2e76274c223a6d71d91a5af2698afb9f4b430973a315384882bc525dd160d8a",
+    "summary": "   Start at  03:00:09\n   Duration  1.51s (transform 73%, import 15%, tests 9%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 31s, remote total 100s)"
+  },
+  "remote-final-full-serial": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4 --fileParallelism=false",
+    "runner": "94.130.181.173",
+    "job": "fixes-13h-flow-8635c7-41317-1792628826",
+    "exit": 0,
+    "sourceProduct": "72ea6c267",
+    "filesPassed": 423,
+    "testsPassed": 2329,
+    "nativeSkips": 9,
+    "logSha256": "5873629d2aeee4af34b9d52285c7ee40b0aaaa9d638703fe20ece3438e3bea9c",
+    "summary": " \u2713  functional  tests/unit/audio/l4-radio-mix.test.ts (1 test) 4ms\n\n Test Files  423 passed | 3 skipped (426)\n      Tests  2329 passed | 9 skipped (2338)\n   Start at  00:27:57\n   Duration  9342.96s (tests 98%, import 1%)",
+    "note": "Serialized file execution avoids the observed contention timeouts; no test limits or assertions changed. Final driver-only additions validated separately."
+  },
+  "remote-exit-ally-cover-green": {
+    "checks": "21 playtest unit tests, typecheck and lint passed",
+    "logSha256": "d1cfe6bf1f988766283d9c2c5f22d8b0a10f9e06e7b999356546dc001610d059",
+    "summary": "   Start at  03:05:22\n   Duration  1.47s (transform 70%, import 17%, tests 10%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 37s, remote total 105s)"
+  },
+  "remote-fists-approach-green": {
+    "checks": "22 playtest unit tests, typecheck and lint passed",
+    "logSha256": "81f5bd0f9dbcaefb3c4459891f8fe921a2ff07f1e053affd40ec05bd108c64fe",
+    "summary": "   Start at  03:17:14\n   Duration  1.52s (transform 73%, import 14%, tests 9%, worker 4%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 34s, remote total 100s)"
+  },
+  "final-eyes-combat-local": {
+    "checks": "25 playtest unit tests in five files, typecheck and lint passed",
+    "exit": 0,
+    "validatedUTC": "2026-10-22T03:46:51Z",
+    "command": "npx vitest run tests/unit/playtest-*.test.ts --maxWorkers=1 && npm run typecheck && npm run lint",
+    "redEvidence": "red-rendered-attack-99.txt: two rendered-pose observation assertions failed; 23 other tests passed",
+    "note": "The remote rendered-attack attempt was interrupted before tests began; red and final green were run locally. Attack targeting now reads the submitted render clip, not the simulation combat flag."
+  }
+}

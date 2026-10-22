@@ -455,13 +455,21 @@ export class Vfx extends Group {
       this.burst(x, ground + (kind === 'ash' ? 3 : smoke ? 1.7 : .5), z, effectColors[kind], sparkle ? 8 : fire ? 8 : 24, sparkle || kind === 'ash' ? .1 : fire ? .045 : radius * .6, smoke ? 4 : 1.2, smoke || fire ? -1 : sparkle ? 0 : .5, smoke ? particleShape.smoke : fire ? particleShape.spark : 0);
     }
   }
-  /** Read fixed-tick veil state on every rendered frame, including paused test stepping. */
-  updateObstruction(): void {
+  /** Read fixed-tick warnings/veil on every rendered frame, including paused redraws. */
+  updateSpecialState(): void {
     let remaining = 0;
     for (const e of this.world.infected?.active ?? []) {
       const a = e.infected?.specialAttack;
+      // Checkpoint/resume restores windups without replaying their consumed
+      // events. Read the locked attack and preserve its remaining sim ticks.
+      if (a?.stage === 'telegraph' && !this.tells.has(a.attackId)) {
+        this.receive({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: a.attackId,
+          special: a.move, move: a.move, duration: Math.max(0, (a.activeTick - this.world.tick) / 60),
+          startTick: a.startTick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target: a.target, area: a.area });
+      }
       if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
     }
+    this.prioritizeTelegraphs();
     this.obstruction.remainingTicks = Math.max(0, Math.min(48, remaining));
     this.obstruction.opacity = remaining > 0 && this.enabled ? (this.flashReduction ? .18 : .35) * Math.min(1, remaining / 12) : 0;
     if (this.featherVeil) this.featherVeil.style.opacity = String(this.obstruction.opacity);
@@ -497,7 +505,7 @@ export class Vfx extends Group {
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
-    this.updateObstruction();
+    this.updateSpecialState();
     for (const landing of this.landings) if (landing.at <= this.time) {
       if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, landing.y + .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
       landing.at = Infinity;

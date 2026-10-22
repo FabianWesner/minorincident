@@ -1,0 +1,52 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/levels/l6-po-1020.test.ts (13 tests | 3 failed | 6 skipped) 4430ms
+   × @E24 #96 collected injured follower rejoins from walkable position (192.7, 11.8), defence=true 87ms
+   × @E24 #96 collected injured follower rejoins from walkable position (59, 18.2), defence=true 91ms
+   × @E24 #96 the uncollected second follower can leave the walkable raised edge at (59, 18.2) 1430ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from walkable position (192.7, 11.8), defence=true
+AssertionError: self-defence must also leave the walkway: expected 0.06391103087592682 to be greater than 1
+ ❯ tests/levels/l6-po-1020.test.ts:176:124
+    174|     put(w, LevelSixSubway.gateWait(gate).x, LevelSixSubway.gateWait(ga…
+    175|     expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).…
+    176|     if(selfDefence&&i===119)expect(Math.hypot(e.transform.x-x,e.transf…
+       |                                                                                                                            ^
+    177|   }
+    178|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 collected injured follower rejoins from walkable position (59, 18.2), defence=true
+AssertionError: self-defence must also leave the walkway: expected 0.27239912768091956 to be greater than 1
+ ❯ tests/levels/l6-po-1020.test.ts:176:124
+    174|     put(w, LevelSixSubway.gateWait(gate).x, LevelSixSubway.gateWait(ga…
+    175|     expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).…
+    176|     if(selfDefence&&i===119)expect(Math.hypot(e.transform.x-x,e.transf…
+       |                                                                                                                            ^
+    177|   }
+    178|   expect(injured.rejoined, `follower moved from (${x}, ${z}): ${JSON.s…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  |functional| tests/levels/l6-po-1020.test.ts > @E24 #96 the uncollected second follower can leave the walkable raised edge at (59, 18.2)
+AssertionError: {"x":59,"z":18.160000095367433,"y":1.5700000143051147,"yaw":0}: expected 59 to be greater than 78
+ ❯ tests/levels/l6-po-1020.test.ts:190:53
+    188|   Object.assign(e.transform,{x:59,z:18.2,y:1.57});w.spatial.set(e.id,5…
+    189|   for(let i=0;i<30*60;i++){put(w,92.4,17.3);w.update();}
+    190|   expect(e.transform.x,JSON.stringify(e.transform)).toBeGreaterThan(78…
+       |                                                     ^
+    191|   expect(Math.abs(e.transform.z-15)).toBeLessThan(1.5);
+    192| },240_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 4 passed | 6 skipped (13)
+   Start at  01:34:07
+   Duration  5.42s (tests 82%, transform 15%, import 3%)
+

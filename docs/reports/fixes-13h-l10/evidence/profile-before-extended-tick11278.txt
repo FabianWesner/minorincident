@@ -1,0 +1,32 @@
+total 333 ms
+
+self time by file:
+     209  chunk-AH7NWAFQ.js?v=ff9afd0c
+     102  getProgramParameter
+      12  (garbage collector)
+       3  (program)
+       3  PaletteMaterial.ts
+       2  g.view.renderer.debug.onNodeBuilderCreated
+       1  bufferData
+       1  chunk-IXWWV5JO.js?v=ff9afd0c
+       0  (idle)
+
+self time by function:
+     102  getProgramParameter :-1
+      31  build chunk-AH7NWAFQ.js?v=ff9afd0c:1597
+      15  getDataFromNode chunk-AH7NWAFQ.js?v=ff9afd0c:26629
+      13  _getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1291
+      12  (garbage collector) :-1
+      11  analyze chunk-AH7NWAFQ.js?v=ff9afd0c:1518
+       9  generate chunk-AH7NWAFQ.js?v=ff9afd0c:3833
+       9  build chunk-AH7NWAFQ.js?v=ff9afd0c:1899
+       9  build chunk-AH7NWAFQ.js?v=ff9afd0c:2586
+       8  getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1255
+       6  generate chunk-AH7NWAFQ.js?v=ff9afd0c:3561
+       6  addContext chunk-AH7NWAFQ.js?v=ff9afd0c:26021
+
+inclusive time (samples whose stack contains the function):
+     198  build
+     102  getProgramParameter
+       0  resolve
+       0  reachPath

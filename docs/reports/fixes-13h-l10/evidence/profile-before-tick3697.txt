@@ -1,0 +1,33 @@
+total 333 ms
+
+self time by file:
+     192  chunk-AH7NWAFQ.js?v=ff9afd0c
+     110  getProgramParameter
+      18  (garbage collector)
+       4  (program)
+       3  getUniformBlockIndex
+       2  bufferSubData
+       2  shaderSource
+       1  g.view.renderer.debug.onNodeBuilderCreated
+       1  LightPower.ts
+       0  (idle)
+
+self time by function:
+     110  getProgramParameter :-1
+      44  build chunk-AH7NWAFQ.js?v=ff9afd0c:1597
+      19  _getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1291
+      18  (garbage collector) :-1
+      11  getChildren chunk-AH7NWAFQ.js?v=ff9afd0c:1255
+      10  build chunk-AH7NWAFQ.js?v=ff9afd0c:1899
+      10  analyze chunk-AH7NWAFQ.js?v=ff9afd0c:1518
+       7  getNodeType chunk-AH7NWAFQ.js?v=ff9afd0c:1422
+       6  getHash chunk-AH7NWAFQ.js?v=ff9afd0c:1362
+       6  getNodeFromHash chunk-AH7NWAFQ.js?v=ff9afd0c:25985
+       5  getShared chunk-AH7NWAFQ.js?v=ff9afd0c:1465
+       4  (program) :-1
+
+inclusive time (samples whose stack contains the function):
+     182  build
+     110  getProgramParameter
+       0  resolve
+       0  reachPath

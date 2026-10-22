@@ -1,0 +1,69 @@
+[remote] sync /private/tmp/minorincident-fixes-13h-l10-baseline -> 94.130.181.173:/srv/mi/ws/minorincident-fixes-13h-l10-baseline-c68108
+[remote] cache-gc deleted:none
+[remote] sync 115s, 30454 files; job /srv/mi/jobs/minorincident-fixes-13h-l10-baseline-c68108-14258-1792624950; queueing for a slot
+[runner] slot 0 acquired; load 5.52 4.58 3.00
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/minorincident-fixes-13h-l10-baseline-c68108-14258-1792624950[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts [2m([22m[2m12 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[32m 128[2mms[22m[39m
+   [32m✓[39m @E24 @E25 PO 10-20 #62 the subway keeps one stable light list across the headlamp pickup[32m 46[2mms[22m[39m
+   [32m✓[39m L5 low: entering and leaving a hero pool retains the light list and only updates the active shadow[32m 10[2mms[22m[39m
+   [32m✓[39m L8-zoo low: entering and leaving a hero pool retains the light list and only updates the active shadow[32m 4[2mms[22m[39m
+[31m   [31m×[31m L10-night low: entering and leaving a hero pool retains the light list and only updates the active shadow[39m[32m 10[2mms[22m[39m
+   [32m✓[39m L5 high: entering and leaving a hero pool retains the light list and only updates the active shadow[32m 3[2mms[22m[39m
+   [32m✓[39m L8-zoo high: entering and leaving a hero pool retains the light list and only updates the active shadow[32m 2[2mms[22m[39m
+[31m   [31m×[31m L10-night high: entering and leaving a hero pool retains the light list and only updates the active shadow[39m[32m 7[2mms[22m[39m
+   [32m✓[39m @E24 QA #82 L6-subway: quality switches never flip castShadow; low L6 only zeroes the spot shadow[32m 8[2mms[22m[39m
+   [32m✓[39m @E24 QA #82 L6: quality switches never flip castShadow; low L6 only zeroes the spot shadow[32m 6[2mms[22m[39m
+   [32m✓[39m @E24 QA #82 L1: quality switches never flip castShadow; low L6 only zeroes the spot shadow[32m 4[2mms[22m[39m
+   [32m✓[39m @E24 QA #82 L5: quality switches never flip castShadow; low L6 only zeroes the spot shadow[32m 5[2mms[22m[39m
+[31m   [31m×[31m @E24 QA #82 L10-night: quality switches never flip castShadow; low L6 only zeroes the spot shadow[39m[32m 19[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts[2m > [22mL10-night low: entering and leaving a hero pool retains the light list and only updates the active shadow
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts[2m > [22mL10-night high: entering and leaving a hero pool retains the light list and only updates the active shadow
+[31m[1mAssertionError[22m: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m tests/unit/render/l6-light-list.test.ts:[2m32:61[22m[39m
+    [90m 30|[39m     for (const [time, lamp, x] of [[0, null, 100], [2, light, 0], [4, …
+    [90m 31|[39m       lighting.setHeroLight(lamp, { x, y: 0, z: 0 }, time);
+    [90m 32|[39m       expect(lighting.sun.visible && lighting.spot.visible).toBe(true);
+    [90m   |[39m                                                             [31m^[39m
+    [90m 33|[39m       expect(lighting.sun.castShadow && lighting.spot.castShadow).toBe…
+    [90m 34|[39m       expect(Number(lighting.sun.shadow.autoUpdate) + Number(lighting.…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts[2m > [22m@E24 QA #82 L10-night: quality switches never flip castShadow; low L6 only zeroes the spot shadow
+[31m[1mAssertionError[22m: expected 2 to be 1 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 2[39m
+
+[36m [2m❯[22m tests/unit/render/l6-light-list.test.ts:[2m58:45[22m[39m
+    [90m 56|[39m     }
+    [90m 57|[39m     // Stable presets keep one light list through every switch (L1 sti…
+    [90m 58|[39m     if (preset !== 'L1') expect(lists.size).toBe(1);
+    [90m   |[39m                                             [31m^[39m
+    [90m 59|[39m     lighting.dispose();
+    [90m 60|[39m   });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m9 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 23:24:28
+[2m   Duration [22m 1.07s[2m (transform 55%, import 28%, tests 16%, worker 1%)[22m
+
+[remote] done exit=1 (runner 94.130.181.173, sync 115s, remote total 6s)

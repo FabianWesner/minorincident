@@ -1,0 +1,36 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/visual/e25-lighting.spec.ts:87:1 › T-E25-06 @E25 @E25-AC06 @E28-AC12 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black (9.9s)
+  ✓  2 [chromium] › tests/visual/weather.spec.ts:25:1 › T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring (7.4s)
+
+
+  1) [chromium] › tests/visual/e25-lighting.spec.ts:87:1 › T-E25-06 @E25 @E25-AC06 @E28-AC12 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    -0.0726531558625021
+
+      100 |   writeFileSync(`${out}/hero-shadow.json`, JSON.stringify({ ...probe, behindColor: behind, besideColor: beside, darker: 1 - behind.l / beside.l, hue: hue(behind.r, behind.g, behind.b) }, null, 2) + '\n');
+      101 |   expect(probe.perf!.heroShadow).toBe(1); expect(probe.perf!.shadowMaps).toBe(1);
+    > 102 |   expect(1 - behind.l / beside.l).toBeGreaterThanOrEqual(.35);
+          |                                   ^
+      103 |   const h = hue(behind.r, behind.g, behind.b); expect(h).toBeGreaterThanOrEqual(230); expect(h).toBeLessThanOrEqual(290);
+      104 | });
+      105 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/e25-lighting.spec.ts:102:35
+
+    Error Context: test-results/playwright/run-4051/visual-e25-lighting-T-E25--4926d-ide-it-and-tinted-not-black-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4051/visual-e25-lighting-T-E25--4926d-ide-it-and-tinted-not-black-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4051/visual-e25-lighting-T-E25--4926d-ide-it-and-tinted-not-black-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/visual/e25-lighting.spec.ts:87:1 › T-E25-06 @E25 @E25-AC06 @E28-AC12 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black 
+  1 passed (19.7s)

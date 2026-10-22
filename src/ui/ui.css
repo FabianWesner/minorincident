@@ -144,7 +144,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .full-ui.touch-ui [data-touch-action].is-selected{border-color:#ffcd79!important;box-shadow:0 0 0 2px #ffd47966,0 2px 4px #10182488}
 [data-touch-action] img{width:32px;height:32px;pointer-events:none}
 [data-touch-action] span{display:block;font-size:10px;line-height:10px;pointer-events:none}
-.touch-ui .hud-durability-panel{top:calc(var(--hud-top) + var(--hud-map-size) + 172px);bottom:auto;transform:none;left:auto;right:var(--hud-right);width:min(150px,38vw);padding:4px 5px;border-radius:12px}
+.touch-ui .hud-durability-panel{top:calc(var(--hud-top) + 132px);bottom:auto;transform:none;left:var(--hud-left);right:auto;width:min(172px,45vw);padding:4px 5px;border-radius:12px}
 .touch-ui .hud-heat-panel{top:calc(var(--hud-top) + var(--hud-map-size) + 172px);bottom:auto;transform:none;left:auto;right:var(--hud-right);width:min(170px,40vw);padding:4px 5px;border-radius:12px}
 .touch-ui .hud-heat .hud-bar{height:22px}.touch-ui .hud-heat .hud-bar-label{font-size:11px;line-height:18px}
 .touch-ui .hud-durability .hud-bar{height:22px}.touch-ui .hud-durability .hud-bar-label{font-size:11px;line-height:18px}
@@ -310,7 +310,7 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
 /* Debug tools get their own row above every game overlay, including letterboxing. */
 body.debug-tools{--debug-row:44px}
 body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]){--debug-row:320px}
-body.debug-tools :is(.hud-vitals,.hud-map,.hud-tracker,.hud-companion,.hud-survivor-vitals,.mission-tracker,.mission-minimap,.mission-toast,.onboarding){margin-top:var(--debug-row)}
+body.debug-tools :is(.hud-vitals,.hud-map,.hud-tracker,.hud-companion,.hud-durability-panel,.hud-survivor-vitals,.mission-tracker,.mission-minimap,.mission-toast,.onboarding){margin-top:var(--debug-row)}
 body.debug-tools:has([data-input-controls][open], [data-audio-controls][open]) .story-bubble{top:calc(var(--debug-row) + 12px)!important;transform:translate(-50%,0)!important}
 body.debug-tools.touch-ui [data-testid=pause-button]{margin-top:var(--debug-row)}
 body.debug-tools [data-input-hint]{display:none}

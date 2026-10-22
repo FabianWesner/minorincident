@@ -36,6 +36,8 @@ export class CrowdAccessories extends Group {
   private readonly batches = new Map<string, InstancedMesh>();
   private readonly headTransform = new Matrix4();
   private disposed = false;
+  private loading: Promise<void> | null = null;
+  private readonly infectedBatches = new Set<InstancedMesh>();
   // Identity is stable during a render; slot, hair masking and placement all
   // ask for it. End the cache with the frame so later sim/editor changes show.
   private resolvingFrame = false;
@@ -79,8 +81,8 @@ export class CrowdAccessories extends Group {
     void lod;
     const slot = this.slot(e); return !slot ? null : this.ids[slot - 1];
   }
-  async init(): Promise<void> {
-    await Promise.all(this.ids.flatMap(id => (['lod0', 'lod1'] as const).map(lod => this.load(id, lod))));
+  init(): Promise<void> {
+    return this.loading ??= Promise.all(this.ids.flatMap(id => (['lod0', 'lod1'] as const).map(lod => this.load(id, lod)))).then(() => undefined);
   }
   private async load(id: string, lod: 'lod0' | 'lod1'): Promise<void> {
     const material = this.shading?.shaded(attribute('color', 'vec3').mul(instanceColor)) ?? new MeshLambertNodeMaterial({ vertexColors: true });
@@ -132,7 +134,7 @@ export class CrowdAccessories extends Group {
     if (this.disposed) { geometry.dispose(); material.dispose(); mesh.dispose(); return; }
     this.batches.set(`${id}:${lod}`, mesh); this.add(mesh);
   }
-  begin(): void { this.frameLooks.clear(); this.resolvingFrame = true; for (const mesh of this.batches.values()) { mesh.count = 0; mesh.visible = false; } }
+  begin(): void { this.infectedBatches.clear(); this.frameLooks.clear(); this.resolvingFrame = true; for (const mesh of this.batches.values()) { mesh.count = 0; mesh.visible = false; } }
   place(e: EntitySnapshot, lod: AccessoryLod, poses: CrowdPosePalette, frame: number, blend: readonly number[], transform: Matrix4, hiddenHead = false): void {
     const slot = this.slot(e), head = poses.clip.parts.indexOf('head');
     if (!slot || head < 0 || hiddenHead || e.corpse) return;
@@ -144,7 +146,9 @@ export class CrowdAccessories extends Group {
     mesh.setMatrixAt(mesh.count, this.headTransform);
     mesh.setColorAt(mesh.count++, definitions.get(id)?.tint === 'hair' ? hairColors[crowdAppearance(e.id).hair] : crowdShirt(e.id + 503));
     mesh.visible = true;
+    if (e.faction === 'infected') this.infectedBatches.add(mesh);
   }
+  infectedDrawCalls(): number { return this.infectedBatches.size; }
   private fit(id: string, model: string): void {
     const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
     if (authored) { authoredFit(authored, this.fitTransform); return; }
@@ -155,18 +159,11 @@ export class CrowdAccessories extends Group {
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
   }
   private readonly referenceFit = new Matrix4();
-  /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
-  corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
-    const look = this.look(e);
-    if (!look.accessory || head < 0) return source;
-    const accessory = this.batches.get(`${look.accessory}:lod1`);
-    if (!accessory) return source;
-    const key = `${source.uuid}/${model}/${look.accessory}/${head}`;
-    const cached = this.corpseSources.get(key); if (cached) return cached;
-    this.fit(look.accessory, model);
+  private headPiece(id: string, model: string, head: number, slot = 0): BufferGeometry {
+    this.fit(id, model);
     // Render backends may pad colours/normals to vec4 in place. Read the semantic
     // channels from both sources rather than borrowing their GPU attribute layout.
-    const piece = new BufferGeometry(), original = accessory.geometry;
+    const piece = new BufferGeometry(), original = this.batches.get(`${id}:lod1`)!.geometry;
     for (const [name, size] of [['position', 3], ['normal', 3], ['color', 3]] as const) {
       const input = original.getAttribute(name); if (!input) continue;
       const values = new Float32Array(input.count * size);
@@ -176,8 +173,31 @@ export class CrowdAccessories extends Group {
     piece.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
     piece.applyMatrix4(this.fitTransform);
     const count = piece.getAttribute('position').count, parts = new Float32Array(count * 4);
-    for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 1] = definitions.get(look.accessory)?.tint === 'hair' ? -5 : -4; }
+    for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 3] = slot ? 128 + slot * 8 : 0; parts[i * 4 + 1] = definitions.get(id)?.tint === 'hair' ? -5 : -4; }
     piece.setAttribute('_parts', new BufferAttribute(parts, 4));
+    return piece;
+  }
+  /** Transfer source ownership to one body draw; each optional head piece retains its exact fitted geometry. */
+  livingSource(source: BufferGeometry, model: string, head: number): BufferGeometry {
+    if (head < 0 || !this.ids.every(id => this.batches.has(`${id}:lod1`))) return source;
+    const body = source.clone(), parts = body.getAttribute('_parts');
+    for (let i = 0; i < parts.count; i++) parts.setW(i, parts.getW(i) + 128);
+    const pieces = this.ids.map((id, i) => this.headPiece(id, model, head, i + 1));
+    const geometry = mergeGeometries([body, ...pieces])!;
+    body.dispose(); pieces.forEach(piece => piece.dispose());
+    geometry.userData = { ...source.userData, inlineAccessories: true, inlineBody: source };
+    geometry.addEventListener('dispose', () => source.dispose());
+    return geometry;
+  }
+  /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
+  corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
+    const look = this.look(e);
+    if (!look.accessory || head < 0) return source;
+    const accessory = this.batches.get(`${look.accessory}:lod1`);
+    if (!accessory) return source;
+    const key = `${source.uuid}/${model}/${look.accessory}/${head}`;
+    const cached = this.corpseSources.get(key); if (cached) return cached;
+    const piece = this.headPiece(look.accessory, model, head);
     // Keep the large live buffers shared. StaticCorpses reuses their frozen
     // body pose and merges only after the small head piece has been posed.
     const merged = new BufferGeometry();
@@ -196,5 +216,5 @@ export class CrowdAccessories extends Group {
     return { id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3,
       layout: { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 } };
   }); }
-  dispose(): void { this.resolvingFrame = false; this.frameLooks.clear(); this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) { (geometry.userData.corpseAccessory as BufferGeometry|undefined)?.dispose(); geometry.dispose(); } this.corpseSources.clear(); this.clear(); }
+  dispose(): void { this.infectedBatches.clear(); this.resolvingFrame = false; this.frameLooks.clear(); this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) { (geometry.userData.corpseAccessory as BufferGeometry|undefined)?.dispose(); geometry.dispose(); } this.corpseSources.clear(); this.clear(); }
 }

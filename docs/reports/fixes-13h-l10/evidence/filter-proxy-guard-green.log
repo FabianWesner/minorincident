@@ -1,0 +1,23 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 2.31.10.108:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 45s, 30485 files; job /srv/mi/jobs/fixes-13h-l10-170603-78476-1792626741; queueing for a slot
+[runner] slot 1 acquired; load 1.96 1.88 1.30
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-l10-170603-78476-1792626741[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 23:54:14
+[2m   Duration [22m 606ms[2m (transform 54%, import 31%, tests 14%, worker 1%)[22m
+
+[remote] done exit=0 (runner 2.31.10.108, sync 45s, remote total 69s)

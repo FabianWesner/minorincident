@@ -1,0 +1,48 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.28.24.66:/srv/mi/ws/ac-close-shared-fcfdcb
+[remote] cache-gc deleted:none
+[remote] sync 35s, 30402 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-91604-1792619732; queueing for a slot
+[runner] slot 0 acquired; load 0.56 0.53 1.01
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+{"first":{"tick":0,"alpha":{"x":6,"y":0.7,"z":0,"yaw":0},"soldier":{"x":7.05,"z":0,"y":0.7,"yaw":0},"health":{"current":100,"max":100},"brain":{"state":"chase","pathGrid":-1,"grabNextTick":0,"combo":0,"targetId":0,"activeUntil":0,"speed":3.8,"until":0,"cooldown":0,"attackId":0,"special":"alpha","hidden":false,"deadAt":-1,"recoverAt":-1,"downs":0,"revived":false,"reviveUsed":false,"legLost":false,"detached":false,"pack":0,"packIndex":0,"birds":0,"birdPositions":[8,3,0,4.52526255420235,3,1.3509809273125302,6.174850534037776,3,-1.9923421620662212,7.216878815834424,3,1.5872006639279763,4.0305727092532955,3,-0.3483620910232557,7.687509356605554,3,-1.0734580435996122,5.4807940524265915,3,1.9314308644122882,5.0781830963618,3,-1.7748953761185142,7.878643853537905,3,0.6860738091227874,4.151310465508256,3,0.763116639224111,6.847687828631293,3,-1.8114704924978389,6.598572551262274,3,1.9083267280199614,4.269574815995601,3,-1.0028103921297102,7.9533502647403065,3,-0.4294446917112558,4.849746403833118,3,1.6361285598953264,5.742971785690402,3,-1.9834153617053638,7.529302728435749,3,1.2888883445818622,4.001708214724886,3,0.08264345649834812,7.4176529949392975,3,-1.4107657445301254,5.907625828490947,3,1.9978656142088276],"birdAlive":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"scatterUntil":0,"variant":"infected.alpha","path":[],"pathIndex":0,"goal":-1,"dx":0,"dz":0,"grabHits":1,"grabUntil":0,"grabX":0,"grabZ":0,"perched":false,"heardTargetId":3,"provoked":{"id":1,"until":720},"specialCooldowns":{"alpha.charge":10000,"alpha.ground-slam":10000}},"civilian":{"state":"calm","ambient":false,"adult":true,"pet":null,"owner":null,"model":"npc.civilian-woman-a","variant":"inf.jogger","scheduleStep":0,"activityUntil":0,"activityStarted":0,"lastTravelProgress":0,"routine":"jog","waypoints":[{"x":6.8,"z":0},{"x":9.8,"z":0},{"x":9.8,"z":3},{"x":6.8,"z":3}],"waypoint":1,"pauseUntil":0,"entered":0,"until":0,"downTicks":0,"eyesGlow":false,"veins":0,"attacker":0,"threat":{"x":6.8,"z":0},"path":[],"goal":-1,"pathIndex":0,"gore":false,"knockedUntil":0,"ally":{"role":"soldier","engaged":false,"run":null,"runSpeed":3.8,"post":null,"hold":false,"targetId":0,"nextAttack":0,"hits":0,"forceUntil":0}}},"lastHp":100,"attacks":[]}
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-91604-1792619732[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 998[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/explosion-corpses.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 554[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-corpse-explosion.pipe-bomb @E27-AC02 @E27-AC15 retained body uses the exact outward/upward curve one tick later without damage or new rigid bodies[33m 334[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 21:57:46
+[2m   Duration [22m 5.05s[2m (transform 66%, tests 22%, import 13%)[22m
+
+[
+  {
+    "name": "storm-street-webgl-high.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  },
+  {
+    "name": "storm-street-webgl-low.png",
+    "width": 960,
+    "height": 600,
+    "changedPixels": 0,
+    "changedFraction": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0
+  }
+]
+[remote] pulled docs/reports/ac-close-shared/evidence/alpha-contact-before.json
+[remote] pulled docs/reports/ac-close-shared/evidence/heap-pixels.json
+[remote] done exit=0 (runner 2.28.24.66, sync 35s, remote total 109s)

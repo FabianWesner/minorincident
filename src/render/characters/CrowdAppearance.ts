@@ -141,5 +141,7 @@ export function crowdVariety(looks: readonly CrowdLook[]) {
 export function crowdHeadwearVisibility() {
   const parts = attribute('_parts', 'vec4');
   const covered = attribute('_variant', 'vec4').x.div(512).floor().mod(2).equal(1);
-  return parts.y.equal(-2).or(parts.w.greaterThanEqual(4)).and(covered).select(0, 1);
+  const flags = parts.w.mod(128), slot = flags.div(8).floor();
+  const selected = attribute('_variant', 'vec4').x.div(16).floor().mod(32);
+  return slot.greaterThan(0).select(slot.equal(selected).select(1, 0), parts.y.equal(-2).or(flags.greaterThanEqual(4)).and(covered).select(0, 1));
 }

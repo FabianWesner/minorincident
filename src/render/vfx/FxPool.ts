@@ -189,6 +189,7 @@ export class FxPool {
     })();
     // Empty particle draws still copy viewport depth; omit them until an effect spawns.
     this.mesh = new InstancedMesh(geometry, material, cap); this.mesh.frustumCulled = false; this.mesh.visible = false;
+    this.mesh.userData.preRenderNeedsDepth = mode === 'particle';
     this.mesh.renderOrder = mode === 'ground' ? 1 : 2;
     const identity = new Matrix4(); for (let i = 0; i < cap; i++) this.mesh.setMatrixAt(i, identity);
     this.expires = new Float64Array(cap);

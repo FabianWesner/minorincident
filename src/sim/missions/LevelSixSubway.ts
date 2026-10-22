@@ -185,6 +185,19 @@ export class LevelSixSubway {
     if(wait?.kind==='bring')at('l6-help',(s.tailX??s.leaderX)+1,l6.tunnel.z);
     m.state.marker=s.strayed?'l6-group':wait?'l6-help':s.phase==='retreat'?'l6-next':'night-exit';
   }
+  /** Every movement mode must be able to bring a displaced follower off the walkable side floor. */
+  navigationFor(e:EntitySnapshot) {
+    const base=this.w.infected!.nav,r=this.s.survivors.find(r=>r.id===e.id),radius=actorRadius(e);
+    if(r?.status!=='following'||e.transform.x<l6.tunnel.start||Math.abs(e.transform.z-l6.tunnel.z)<=1.8)return base;
+    // Keep ordinary formation/combat steering until a body actually touches or
+    // crosses an artificial lane edge. Collected walkers keep their return route.
+    const side=e.transform.z-l6.tunnel.z;
+    const acrossLane=base.walls.some(w=>(w as {navOnly?:boolean}).navOnly&&Math.abs(e.transform.x-w.x)<w.halfX+radius&&(w.z-l6.tunnel.z)*side>0&&Math.abs(side)>Math.abs(w.z-l6.tunnel.z)-w.halfZ-radius);
+    if(!r.collected&&!r.rejoined&&!acrossLane)return base;
+    const floor=base.forPlayer(radius);
+    // Maintenance rooms extend beyond the courier floor; preserve their NPC route.
+    return floor.contains(e.transform.x,e.transform.z)?floor:base;
+  }
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
@@ -216,11 +229,14 @@ export class LevelSixSubway {
         }
       }
     }
-    // Playtest 10-21 (weapons runs): a survivor who fled the horde into the side rooms north of the tunnel mouth
-    // (x 30-40, z 20-30) stood there for good, because the route back to a goal far down the tunnel exceeds the route
-    // budget; the exit then never counted everyone out. Off the track, a refused route walks to the tunnel mouth first.
-    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach)&&!around&&Math.abs(e.transform.z-l6.tunnel.z)>l6.tunnel.width/2)
-      this.w.npcs!.move(e,{x:l6.tunnel.start,z:l6.tunnel.z},r.injured?1.4:2.2,e.civilian!,reach);
+    // Crowd-only lane edges keep the column on the track. A follower displaced
+    // onto a walkable side walkway uses the courier's route back across that edge.
+    const side=Math.abs(e.transform.z-l6.tunnel.z),baseNav=this.w.infected!.nav;
+    const nav=this.navigationFor(e),returning=side>1.8&&nav!==baseNav;
+    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,r.injured?1.4:2.2,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
+      // A side room's long route can exceed the steering budget. Collected walkers
+      // return to the nearby track; the unfetched group keeps its authored mouth approach.
+      this.w.npcs!.move(e,{x:returning?Math.max(l6.tunnel.start,Math.min(e.transform.x,l6.tunnel.end)):l6.tunnel.start,z:l6.tunnel.z},r.injured?1.4:2.2,e.civilian!,reach,1600,nav);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
   update():void {
