@@ -47,5 +47,10 @@
     "checks": "19 playtest unit tests, typecheck and lint passed",
     "logSha256": "471baae858fb1521ae6f6b9a549f49a9b86a6aae5f87fa809e86779d96f3b726",
     "summary": "   Start at  02:49:05\n   Duration  862ms (transform 76%, import 17%, tests 4%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.31.10.108, sync 24s, remote total 73s)"
+  },
+  "remote-ground-click-green": {
+    "checks": "20 playtest unit tests, typecheck and lint passed",
+    "logSha256": "a2e76274c223a6d71d91a5af2698afb9f4b430973a315384882bc525dd160d8a",
+    "summary": "   Start at  03:00:09\n   Duration  1.51s (transform 73%, import 15%, tests 9%, worker 3%)\n\n\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n[remote] done exit=0 (runner 2.28.24.66, sync 31s, remote total 100s)"
   }
 }

@@ -6,6 +6,7 @@ interface GroundClickControls {
 
 /** A click-to-move command takes over from held keyboard movement and attack input. */
 export async function clickGroundInput(controls: GroundClickControls, x: number, y: number): Promise<void> {
+  await controls.releaseKeys();
   await controls.releaseAim();
   await controls.mouse.move(x, y); await controls.mouse.down();
   await new Promise(resolve => setTimeout(resolve, 40));
