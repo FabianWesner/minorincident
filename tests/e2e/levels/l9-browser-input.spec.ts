@@ -3,6 +3,7 @@ import type { Page } from '@playwright/test';
 import { boot, expect, test } from '../fixtures';
 import { tick as inputTick } from '../input-helpers';
 import { crossing } from '../../../src/levels/L9/district';
+import { l9Readability } from '../../helpers/l9-readability';
 import { Recorder } from '../../../src/input/Recorder';
 import { preset } from '../../../src/sim/progression/Campaign';
 import type { Game } from '../../../src/Game';
@@ -56,6 +57,9 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1
     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${out}/${name}-start.png` });
+    const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);
+    expect(floorRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect(floorRead.navigation).toBeGreaterThanOrEqual(3);
     const cdp = await context.newCDPSession(page);
     const origin = { x: 90, y: page.viewportSize()!.height - 240 };
     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {
@@ -125,6 +129,11 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1
     expect(await page.evaluate(() => window.__SS__!.getState().player!.survivor!.scriptedClip)).toBe('crawl');
     expect(await page.evaluate(() => window.__SS__!.audio.snapshot().cues.some(c => c.sourceId === 1 && c.cue.startsWith('footstep.survivor.')))).toBe(true);
     await page.screenshot({ path: `${out}/${name}-crawl.png` });
+    const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);
+    expect(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect(crawlRead.navigation).toBeGreaterThanOrEqual(3);
+    expect(crawlRead.playerPixels).toBeGreaterThan(100);
+    expect(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);
     await tick(page, 400);
     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
