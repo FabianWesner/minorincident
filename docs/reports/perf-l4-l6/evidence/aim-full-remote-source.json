@@ -534,5 +534,11 @@
   "sourceTree": "ed96e9b38a7832486d5dcdbd46596cd0e16c33b4",
   "sourceDiff": "",
   "verifiedAllFiles": 527,
-  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4"
+  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+  "fullSuiteRebuild": {
+    "verifiedAt": "2026-10-22T18:01:26.763545+00:00",
+    "remoteDistIndexSha256": "af2fb5b96d2edd42b272b540a1a934432e32041d911708beef6dee6722c12a40",
+    "localDistIndexSha256": "af2fb5b96d2edd42b272b540a1a934432e32041d911708beef6dee6722c12a40",
+    "matches": true
+  }
 }

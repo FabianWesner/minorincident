@@ -1,19 +1,19 @@
 # L4 strict WebGPU frames and L6 five-load retention
 
-Status at 17:51 UTC: **L4 low is strict green on `b47e00336`: turn 46.6 / tank 34.0 / break 48.3 ms, zero turn builds.** Its smoke is **31/31 green**, and final types/lint are green. Its high/L6/loading matrix and final full remote gate are running or queued; the goal is not yet complete. The intermediate `e54658fc3` matrix below passes high/L6 but fails low. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
+Status at 18:12 UTC: **all final strict L4 and L6 checks pass on `b47e00336`**. Smoke is **31/31 green**, and final types/lint are green. Two quiet loading observations and the last L6 campaign file in the full remote suite remain; the goal is not yet complete. Matched base is `480b44e42`; the sole baseline worktree is `/tmp/minorincident-perf-l4-l6-before`.
 
 ## Matched quiet measurements
 
-| Measurement | Before (`480b44e42`) | Candidate (`e54658fc3`) |
+| Measurement | Before (`480b44e42`) | Final runtime (`b47e00336`) |
 | --- | --- | --- |
-| L4 WebGPU high turn / tank / break | 54.4 / 10.8 / 99.7 ms; 4 turn builds | **44.1 / 10.7 / 20.5 ms; 0 builds** |
-| L4 WebGPU low turn / tank / break | 59.0 / 53.9 / 52.5 ms; 0 builds | **55.5 / 54.4 / 52.0 ms; 0 builds — fails** |
-| L6 WebGL high first-five heap | +9.31839% | **+4.32233%** |
-| L6 WebGL low first-five heap | +10.37747% | **+5.14393%** |
-| L6 WebGPU high first-five heap | +10.57250% | **+5.53893%** |
-| L6 WebGPU low first-five heap | +11.82659% | **+6.27945%** |
+| L4 WebGPU high turn / tank / break | 54.4 / 10.8 / 99.7 ms; 4 turn builds | **45.9 / 11.1 / 17.1 ms; 0 builds** |
+| L4 WebGPU low turn / tank / break | 59.0 / 53.9 / 52.5 ms; 0 builds | **46.6 / 34.0 / 48.3 ms; 0 builds** |
+| L6 WebGL high first-five heap | +9.31839% | **+3.99795%** |
+| L6 WebGL low first-five heap | +10.37747% | **+5.23639%** |
+| L6 WebGPU high first-five heap | +10.57250% | **+5.36432%** |
+| L6 WebGPU low first-five heap | +11.82659% | **+6.27361%** |
 
-Every completed native iteration is retained, including failures. The `e54658fc3` batch's unadmitted loading observations were canceled to prioritize the subsequent strict low run; no loading pass is claimed for it. Earlier `9a3b5e5d6` loading was 3,842.3 / 12,419.5 ms high/low versus matched baseline 4,013.7 / 13,236.9 ms. The final runtime still needs its own <=1 s loading comparison, full quiet matrix, full remote suite and smoke.
+Every completed native iteration is retained, including failures. Final core receipts are `quiet-aim-low-*` and `quiet-aim-rest-*`. The intermediate `e54658fc3` batch's unadmitted loading observations were canceled to prioritize strict low; no loading pass is claimed for it. Earlier `9a3b5e5d6` loading was 3,842.3 / 12,419.5 ms high/low versus matched baseline 4,013.7 / 13,236.9 ms. The final runtime's own <=1 s loading comparison and full remote completion remain pending.
 
 ## Required evidence
 
