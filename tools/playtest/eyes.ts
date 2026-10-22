@@ -36,8 +36,9 @@ export function look(): Eyes {
   const m = a.missions.state();
   const active = m ? Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0] ?? null : null;
   const tracker = q('mission-tracker');
+  const objective = q('objective-text');
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
-  const trackerPrompt = shown(tracker) ? tracker!.textContent ?? '' : '';
+  const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
   const menu = [...document.querySelectorAll<HTMLElement>('[data-menu-screen]')].find(el => !el.hidden)?.dataset.menuScreen ?? null;
