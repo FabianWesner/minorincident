@@ -19,12 +19,16 @@ for (const webgpu of [false, true]) for (const tier of ['high', 'low'] as const)
   const readLighting = () => page.evaluate(() => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;
     const light = (game.view as unknown as { lighting: import('../../../src/render/Lighting').Lighting }).lighting;
-    return { preset: light.preset, key: { intensity: light.intensity.value, color: light.color.value.toArray(), direction: light.direction.value.toArray(), subwayDarkness: light.subwayDarkness.value, heroSurfaceFill: light.heroSurfaceFill.value } };
+    const weather = { ...game.world.weather!.snapshot(), snow: game.world.weather!.snow };
+    // The two authored weather states have different cloud cover. Compare the
+    // rendered key at equal attenuation; retain actual intensity/weather too.
+    const attenuation = (1 - weather.clouds * .4) * (1 - weather.snow * .3);
+    return { preset: light.preset, actualIntensity: light.intensity.value, weather, key: { intensity: Number((light.intensity.value / attenuation).toFixed(10)), color: light.color.value.toArray(), direction: light.direction.value.toArray(), subwayDarkness: light.subwayDarkness.value, heroSurfaceFill: light.heroSurfaceFill.value } };
   });
-  // Capture the actual exterior before the result panel obscures the lighting.
+  // Keep the underground approach diagnostic separate from the post-trigger exterior key.
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${out}/l6-exit-before-handover.png` });
-  const exitLighting = await readLighting();
+  const approachLighting = await readLighting();
   await page.keyboard.down('s'); await page.keyboard.down('d'); await page.evaluate(() => window.__SS__!.step(100));
   await page.keyboard.up('s'); await page.keyboard.up('d');
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('result');
@@ -33,13 +37,24 @@ for (const webgpu of [false, true]) for (const tier of ['high', 'low'] as const)
     return { ids: a.missions.state()!.result!.escapedSurvivors!.map(e => e.id).sort((a,b) => a-b), weapons: [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id).sort() };
   });
   await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/l6-exit.png` });
+  const exitLighting = await readLighting();
+  // Read the actual canvas, excluding the DOM result panel, as the Scene Lab CLI does.
+  const exitWorld = await page.evaluate(async () => { await window.__SS__!.screenshotReady(); return document.querySelector('canvas')!.toDataURL('image/png'); });
+  writeFileSync(`${out}/l6-exit-world.png`, Buffer.from(exitWorld.split(',')[1], 'base64'));
+
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L7');
   await page.evaluate(async () => { const a = window.__SS__!; await a.screenshotReady(); a.pause(); a.camera.follow(); });
   const arrived = await page.evaluate(() => { const s = window.__SS__!.getState(); return { ids: s.l7!.roster.map(r => r.id).sort((a,b) => a-b), weapons: [...s.player!.weapons!.LEFT.rack, ...s.player!.weapons!.RIGHT.rack].map(s => s.id).sort() }; });
   expect(arrived).toEqual(carried);
   const entryLighting = await readLighting();
-  writeFileSync(`${out}/handover-lighting.json`, JSON.stringify({ exit: exitLighting, entry: entryLighting }, null, 2));
+  const entryWorld = await page.evaluate(async () => {
+    const a = window.__SS__!; a.camera.cinematic({ position: [285, 32.9, 39], target: [261, 3.9, 15] }, true);
+    await a.screenshotReady(); const png = document.querySelector('canvas')!.toDataURL('image/png'); a.camera.follow(); return png;
+  });
+  writeFileSync(`${out}/l7-entry-world.png`, Buffer.from(entryWorld.split(',')[1], 'base64'));
+
+  writeFileSync(`${out}/handover-lighting.json`, JSON.stringify({ approach: approachLighting, exit: exitLighting, entry: entryLighting }, null, 2));
   expect.soft(entryLighting.key, 'The exterior L6/L7 handover retains the actual night key and darkness').toEqual(exitLighting.key);
 
 

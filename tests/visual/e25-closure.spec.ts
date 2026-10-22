@@ -99,6 +99,18 @@ test('T-E25-01 @E25 @E25-AC01 headless WebGL tone-mapping comparison records the
 for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']) {
   const url = `/?test=1&scenelab&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`;
   const directory = `${out}/lighting-G-${backend}-${quality}`;
+  const mall: SceneSpec = { name: 'mall-floor', ground: 'asphalt', size: 30, time: 'night', dof: false, props: [{ asset: 'int.mini-mall', at: [0, 0] }], actors: [{ kind: 'courier', at: [0, 6] }], camera: { mode: 'pose', position: [10, 8, 14], target: [0, 1, 0] } };
+  test(`T-E25-16-mall @E25 @E25-AC16 mall reference exposes the real courier ${backend} ${quality}`, async ({ page }) => {
+    mkdirSync(directory, { recursive: true }); await scene(page, mall, url);
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.screenshotReady(); }, quality as 'high' | 'low');
+    await page.locator('canvas').screenshot({ path: `${directory}/mall-floor.png` });
+    await page.evaluate(async () => { const a = window.__SS__!; a.settings.set({ idPass: true }); await a.screenshotReady(); });
+    const mask = PNG.sync.read(await page.locator('canvas').screenshot()); let pixels = 0;
+    for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) pixels++;
+    writeFileSync(`${directory}/mall-floor.json`, JSON.stringify({ courierPixels: pixels, backend, quality, fixture: mall }, null, 2));
+    expect(pixels, 'The reference must frame an unoccluded real courier').toBeGreaterThan(200);
+  });
+
   test(`T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references ${backend} ${quality}`, async ({ page }) => {
     test.setTimeout(240_000); mkdirSync(directory, { recursive: true });
     await boot(page, url);
@@ -121,7 +133,7 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
       await page.locator('canvas').screenshot({ path: `${directory}/${spot}.png` });
       writeFileSync(`${directory}/${spot}.json`, JSON.stringify(await page.evaluate(() => ({ lighting: window.__SS__!.getState().render.lighting, camera: window.__SS__!.getState().render.camera })), null, 2));
     }
-    await scene(page, { name: 'mall-floor', ground: 'asphalt', size: 30, time: 'night', dof: false, props: [{ asset: 'int.mini-mall', at: [0, 0] }], actors: [{ kind: 'courier', at: [-4, 3] }], camera: { mode: 'pose', position: [10, 8, 14], target: [0, 1, 0] } }, url);
+    await scene(page, mall, url);
     await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.screenshotReady(); }, quality as 'high' | 'low');
     await page.locator('canvas').screenshot({ path: `${directory}/mall-floor.png` });
     expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(backend);

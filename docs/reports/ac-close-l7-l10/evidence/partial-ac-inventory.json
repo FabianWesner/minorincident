@@ -66,11 +66,16 @@
     },
     {
       "ac": "E29-AC07",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "`T-E29-07-rocket`; shared `T-E07-06-alpha-*`, scheduler/selection cases now selected by E29; shared health-bar code/tests.",
       "requiredProof": "**M; browser** \u2014 Close E07 move/bar phone proof. Remove old audit C request for global 6 m awareness: PO #25 is L5-only (audit A/orchestrator decision).",
-      "currentEvidenceSummary": "Fresh native9 move cases +6 day/night size cases pass; actual Alpha bar pixel minimum3.086 day/3.355 night; remote133 selection includes resistance/schedulers.",
-      "remaining": "New grab/throw and roar portrait/landscape cases pending."
+      "currentEvidenceSummary": "Fresh133-pass Node selection includes2 rockets/2 close shotgun/43MG, schedulers/cooldown restore. Native13 move cases cover all4 moves at1280/390/844 plus merged activation;6 Alpha bar cases at1600/390/844 day/night match300\u2192240HP. Minimum actual bar contrast3.086/3.355.",
+      "currentEvidence": [
+        "alpha-current.json.gz",
+        "alpha-bar-pixels.json",
+        "verify-E29-first-vitest.json.gz"
+      ],
+      "review": "Opened current full sheet and full portrait/landscape grab-throw/roar plus charge/bar frames. Distinct rectangular charge/throw and circular slam/roar warnings remain readable; impacts and timed expiry asserted. Actual night bar is legible with outlined empty/fill segments."
     },
     {
       "ac": "E29-AC13",
@@ -82,11 +87,17 @@
     },
     {
       "ac": "E29-AC14",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "L7 lighting/composition; `docs/reports/l7-district/capture-review.md`; warm fires, night preset and renderer caps.; newer: [l7-night.spec.ts](../../../tests/visual/l7-night.spec.ts), [real-input.json](../postmerge-10/evidence/l6-after-rng/real-input.json)",
       "requiredProof": "**M; browser** \u2014 Run committed 3:1 rocket/horde contrast tests and verify L6 exit-light continuity both tiers/backends; API tags alone are insufficient.",
-      "currentEvidenceSummary": "Fresh native WebGL high /zoom1 rocket+horde probe passes; horde 7,572 courier pixels, **7.416:1**, no clipped/color-failure samples.",
-      "remaining": "**Partial:** run remaining tiers/backends/zooms and L6 exit continuity. [Receipt](../ac-close-l7-l10/evidence/l7-horde-native.json.gz)."
+      "currentEvidenceSummary": "24 native rocket/horde measurements pass6.630\u20137.732:1, zero clipping/color failures; fixed exterior emergency-darkness leak. Eight actual entry/carry/pickup/retry cases and four clean same-camera world captures pass both backends/tiers. Night key/color/direction/fill match under recorded weather attenuation; raw intensities retained.",
+      "currentEvidence": [
+        "l7-night-matrix.json.gz",
+        "continuity-after.json.gz",
+        "continuity-after-keys.json.gz",
+        "continuity-world-frames.json.gz",
+        "continuity-world-images.json"
+      ]
     },
     {
       "ac": "E29-AC15",
@@ -215,8 +226,8 @@
       "disposition": "pending",
       "baselineEvidence": "`tests/perf/l9-{dress,handover-budgets}.spec.ts`; `T-E31-19-S4`, streaming units; Q3 native six cases previously pass.; newer: [idle-crossing-200.json](../postmerge-10/evidence/idle-crossing-200.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%.",
-      "currentEvidenceSummary": "Fresh original isolated residency timing passes high/low **3.416/1.625 ms** at unchanged4ms gate; selected repeat619pass. Five-cycle browser retention fixture added, not yet measured.",
-      "remaining": "**Partial:** native route/floor/crash frames, \u226450ms hitches and warmed heap/GPU retention\u226410% remain. [Timing](../ac-close-l7-l10/evidence/residency-200.json.gz)."
+      "currentEvidenceSummary": "Fresh full retry124 Node pass; isolated original high/low route timing passes3.551/1.381ms,200/100 infected.",
+      "remaining": "Native route/floor/crash frames/hitches and added five-cycle retention remain pending priority release."
     },
     {
       "ac": "E31-AC20",
