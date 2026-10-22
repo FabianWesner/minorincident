@@ -65,3 +65,10 @@ test('#99 fists still cover the visible trailing survivor when the exit HUD asks
   expect(canCoverVisibleAllies('L6','exit',true,{...ally,drawn:false},'Stay with the group · 5 m')).toBe(false);
   expect(canCoverVisibleAllies('L6','exit',true,ally,'Bring the survivors into the night · 0/1 out · 15 m')).toBe(false);
 });
+
+test('#99 fists use target-click approach outside punching reach instead of swinging from 1.6 m', () => {
+  expect(keepMovingWithFists('L6','retreat',true,3,1,1.6)).toBe(false);
+  expect(keepMovingWithFists('L6','retreat',true,3,1,1.4)).toBe(false);
+  expect(keepMovingWithFists('L6','retreat',true,3,1,1.2)).toBe(true);
+  expect(keepMovingWithFists('L6','retreat',true,1,1,1.2)).toBe(true);
+});
