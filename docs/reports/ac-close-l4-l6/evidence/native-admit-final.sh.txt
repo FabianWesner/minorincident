@@ -1,0 +1,10 @@
+#!/bin/sh
+set -u
+deadline=$(($(date +%s) + ${E2E_ADMISSION_TIMEOUT_SECONDS:-3600}))
+while [ "$(date +%s)" -lt "$deadline" ]; do
+  MI_AC_NATIVE_TRY=1 /bin/sh "$@"
+  result=$?
+  [ "$result" = 75 ] || exit "$result"
+  sleep 2
+done
+exit 75
