@@ -1,0 +1,365 @@
+{
+  "accepted": [
+    {
+      "name": "fixes-13h-weapons-female-acceptance",
+      "driverCommit": "34cbbf144",
+      "gameCommit": "72ea6c267",
+      "god": false,
+      "noSkip": true,
+      "resultCaptureReviewed": true,
+      "summary": {
+        "mode": "continue",
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 298,
+            "simSeconds": 290,
+            "maxNoProgressSeconds": 13.179,
+            "deaths": 1,
+            "assists": 1,
+            "attacks": {
+              "weapon.army-mg": 474,
+              "weapon.fire-axe": 36
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 0:34 remaining",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:37",
+                "tick": 1992,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "Cover the retreat through the tunnel \u00b7 19\u00a0m",
+                "tick": 3254,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 6,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    6,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.3200000524520874
+                }
+              },
+              {
+                "id": "exit",
+                "text": "Bring the survivors into the night \u00b7 0/5 out \u00b7 33\u00a0m",
+                "tick": 14737,
+                "marker": {
+                  "anchor": "night-exit",
+                  "ring": {
+                    "x": 273,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    273,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "assists": [
+        {
+          "t": "2026-10-22T02:16:22.167Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 4405,
+          "from": {
+            "x": 16.31513786315918,
+            "z": 9.26849365234375
+          },
+          "ring": {
+            "x": 41.76218147877874,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 26.62135311671451
+        },
+        {
+          "t": "2026-10-22T02:16:48.084Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 5960,
+          "from": {
+            "x": 89.47066497802734,
+            "z": 15.04903793334961
+          },
+          "ring": {
+            "x": 46.81440838023516,
+            "y": 0.6,
+            "z": 17.301829846026404
+          },
+          "distance": 42.739036351254796
+        },
+        {
+          "t": "2026-10-22T02:17:22.780Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 8043,
+          "from": {
+            "x": 87.88192749023438,
+            "z": 14.68198299407959
+          },
+          "ring": {
+            "x": 124.36642913696846,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 40.75115878843371
+        },
+        {
+          "t": "2026-10-22T02:17:23.139Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 8064,
+          "from": {
+            "x": 89.21188354492188,
+            "z": 14.68198299407959
+          },
+          "ring": {
+            "x": 129.40182527621607,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 40.19119992213317
+        },
+        {
+          "t": "2026-10-22T02:17:26.102Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 8242,
+          "from": {
+            "x": 97.9142074584961,
+            "z": 14.68198299407959
+          },
+          "ring": {
+            "x": 133.91181563742663,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 38.015605034684
+        },
+        {
+          "t": "2026-10-22T02:18:11.068Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 10940,
+          "from": {
+            "x": 147.60203552246094,
+            "z": 15.064384460449219
+          },
+          "ring": {
+            "x": 174.82941483152595,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 27.227455433779504
+        },
+        {
+          "t": "2026-10-22T02:18:11.433Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 10962,
+          "from": {
+            "x": 149.25196838378906,
+            "z": 15.064384460449219
+          },
+          "ring": {
+            "x": 174.82941483152595,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 26.38419017281155
+        },
+        {
+          "t": "2026-10-22T02:18:23.510Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 11675,
+          "from": {
+            "x": 164.36151123046875,
+            "z": 14.755563735961914
+          },
+          "ring": {
+            "x": 197.96198778382356,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 37.41392752125947
+        },
+        {
+          "t": "2026-10-22T02:18:47.145Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 13105,
+          "from": {
+            "x": 204.10284423828125,
+            "z": 15.519796371459961
+          },
+          "ring": {
+            "x": 231.67389968790843,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 28.093511512760127
+        },
+        {
+          "t": "2026-10-22T02:18:48.916Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 13211,
+          "from": {
+            "x": 210.06845092773438,
+            "z": 15.355217933654785
+          },
+          "ring": {
+            "x": 237.74746294601945,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 27.68129126483733
+        },
+        {
+          "t": "2026-10-22T02:18:49.281Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 13233,
+          "from": {
+            "x": 211.7183837890625,
+            "z": 15.355217933654785
+          },
+          "ring": {
+            "x": 237.74746294601945,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 2.0607712014172677
+        },
+        {
+          "t": "2026-10-22T02:19:01.498Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 13965,
+          "from": {
+            "x": 212.39999389648438,
+            "z": 17.299999237060547
+          },
+          "ring": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 14.830257073930092
+        },
+        {
+          "t": "2026-10-22T02:19:02.220Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 14009,
+          "from": {
+            "x": 215.3798828125,
+            "z": 17.299999237060547
+          },
+          "ring": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "distance": 13.481721471051735
+        },
+        {
+          "t": "2026-10-22T02:19:14.659Z",
+          "assist": "nav-follow",
+          "level": "L6",
+          "tick": 14737,
+          "from": {
+            "x": 240.16110229492188,
+            "z": 14.703225135803223
+          },
+          "ring": {
+            "x": 273,
+            "y": 3.9,
+            "z": 15
+          },
+          "distance": 32.840238698959
+        },
+        {
+          "t": "2026-10-22T02:19:48.583Z",
+          "assist": "nav-locate",
+          "level": "L6",
+          "tick": 16791,
+          "from": {
+            "x": 255.04505920410156,
+            "z": 13.969901084899902
+          },
+          "ring": {
+            "x": 273,
+            "y": 3.9,
+            "z": 15
+          },
+          "distance": 17.984465595594113
+        }
+      ],
+      "logSha256": "149e64fe4ec3470a1c0887f5a2bb5ba335a3b7a8cc424c47703ea76d49663811"
+    }
+  ]
+}
