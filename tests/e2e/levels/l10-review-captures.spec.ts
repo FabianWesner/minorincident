@@ -28,5 +28,28 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       expect(proof.state.render.camera.zoom).toBeCloseTo(zoom, 2);
       expect(proof.state.player).not.toBeNull();
     }
+    // The full input fixture clears the boss gate with killAll and captures after
+    // the front has passed. Use the authored mixed-species scene to inspect the
+    // actual expanding mist and collapse sequence without that setup artifact.
+    for (const zoom of [1, .5]) {
+      const spec = readSpec('tests/scenes/catalog/l10-cure-mist.json');
+      await page.evaluate(async ({ spec, zoom }) => {
+        await window.__SCENE__!.load({ ...spec, time: 'L10-night', camera: { ...spec.camera!, zoom } as typeof spec.camera });
+        await window.__SCENE__!.ready();
+      }, { spec, zoom });
+      let previous = 0;
+      for (const frame of spec.shots!) {
+        const proof = await page.evaluate(async ticks => {
+          const lab = window.__SCENE__!, api = window.__SS__!;
+          await lab.step(ticks); await lab.ready(); await api.screenshotReady();
+          return { state: api.getState(), perf: api.perf() };
+        }, frame - previous);
+        previous = frame;
+        await page.locator('canvas').screenshot({ path: `${out}/mist-z${zoom}-f${frame}.png` });
+        writeFileSync(`${out}/mist-z${zoom}-f${frame}.json`, JSON.stringify(proof, null, 2));
+        expect(proof.perf.backend).toBe(backend);
+        expect(proof.state.player!.health.current).toBeGreaterThan(0);
+      }
+    }
   });
 }
