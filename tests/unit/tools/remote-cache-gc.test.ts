@@ -19,8 +19,10 @@ test('remote cache GC removes inactive caches while retaining current caches and
     const assignment = source.split('\n').find(line => line.startsWith('GC='))!
       .replaceAll('/srv/mi/ws', ws).replaceAll('/srv/mi/jobs', jobs).replaceAll('/proc/', `${proc}/`);
     const quote = source.split('\n').find(line => line.startsWith('sq()'))!;
+    // The remote runs Linux; emulate its stat interface on macOS too, using the fixture's real mtimes.
+    const stat = `stat() { [ "$1" = -c ] && [ "$2" = %Y ] || return 2; node -e 'console.log(Math.floor(require("node:fs").statSync(process.argv[1]).mtimeMs / 1000))' "$3"; }`;
     // Deterministic free space keeps this focused on stale-cache retention.
-    const shell = `df() { printf 'Filesystem blocks used available capacity mount\\nfixture 30000000 1000000 29000000 4%% /\\n'; }\n${quote}\nCACHE=$1\n${assignment}\neval "$GC"`;
+    const shell = `df() { printf 'Filesystem blocks used available capacity mount\\nfixture 30000000 1000000 29000000 4%% /\\n'; }\n${stat}\n${quote}\nCACHE=$1\n${assignment}\neval "$GC"`;
     execFileSync('sh', ['-c', shell, 'sh', current]);
     expect(existsSync(stale)).toBe(false);
     expect(existsSync(current)).toBe(true);
