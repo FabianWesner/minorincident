@@ -1,5 +1,5 @@
 import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, type InstancedMesh } from 'three/webgpu';
-import { attribute, Fn, instanceColor, mat4, normalLocal, positionLocal, transformNormal } from 'three/tsl';
+import { attribute, Fn, instanceColor, mat3, mat4, normalLocal, positionLocal, transformNormal } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 
 const materials = new WeakMap<PaletteMaterial, PaletteMaterial>();
@@ -8,6 +8,7 @@ const materials = new WeakMap<PaletteMaterial, PaletteMaterial>();
 export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   const source = mesh.material;
   if (!(source instanceof PaletteMaterial) || source.userData.batchFeatures === undefined || Object.keys(mesh.geometry.morphAttributes).length) return false;
+  const corpseNormals = source.userData.batchFeatures === 'corpses';
   let material = materials.get(source);
   if (!material) {
     material = source.frozenCopy();
@@ -16,7 +17,11 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
     material.positionNode = Fn(() => {
       const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
       positionLocal.assign(matrix.mul(positionLocal).xyz);
-      normalLocal.assign(transformNormal(normalLocal, matrix));
+      // Frozen body geometry already contains pose and scale. Both corpse
+      // callers place it with yaw and translation only; for a rotation its
+      // inverse-transpose is the rotation itself. Reuse the placement columns
+      // instead of fetching three additional per-instance normal attributes.
+      normalLocal.assign(corpseNormals ? mat3(matrix).mul(normalLocal).normalize() : transformNormal(normalLocal, matrix));
       instanceColor.assign(attribute('_placementColor', 'vec3'));
       return previous ?? positionLocal;
     })();

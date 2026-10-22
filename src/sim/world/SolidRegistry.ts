@@ -224,8 +224,8 @@ export class SolidRegistry {
     nav?.visitSolids(at.x, at.z, radius, (box, id) => {
       // Height rejects most nearby roofs/supports before any ownership lookup.
       if (!(box.y + box.halfY > bottom && box.y - box.halfY < top)) return;
-      // Crowd lane edges (navOnly, L6) hold NPC bodies only; the courier and her companion walk the drawn walkways.
-      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion)) return;
+      // L6 followers displaced onto a walkable side walkway must cross the crowd lane edge back to the column.
+      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion || this.world.missions?.state.l6?.survivors.some(r => r.id === e?.id && r.status === 'following'))) return;
       // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;

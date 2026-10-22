@@ -1,0 +1,47 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow -> 2.28.24.66:/srv/mi/ws/fixes-13h-flow-8635c7
+[remote] cache-gc deleted:none
+[remote] sync 46s, 30496 files; job /srv/mi/jobs/fixes-13h-flow-8635c7-63994-1792638888; queueing for a slot
+[runner] slot 0 acquired; load 0.76 0.51 0.91
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-flow-8635c7-63994-1792638888[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts [2m([22m[2m10 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 16[2mms[22m[39m
+   [32m✓[39m #99 one or two close infected must not plant the fists courier during the moving retreat[32m 3[2mms[22m[39m
+   [32m✓[39m #99 shelter defence and carried weapons retain their combat decisions[32m 0[2mms[22m[39m
+   [32m✓[39m #99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists movement preserves the existing low-health kite policy[32m 0[2mms[22m[39m
+   [32m✓[39m #99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring[32m 1[2mms[22m[39m
+   [32m✓[39m #99 fists ally cover requires a visible living actor[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists cover the attacked ally before chasing a closer isolated infected[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists defend visible allies when the retreat HUD asks for rear cover[32m 0[2mms[22m[39m
+   [32m✓[39m #99 fists still cover the visible trailing survivor when the exit HUD asks to stay with the group[32m 0[2mms[22m[39m
+[31m   [31m×[31m #99 fists use target-click approach outside punching reach instead of swinging from 1.6 m[39m[32m 9[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/playtest-combat.test.ts[2m > [22m#99 fists use target-click approach outside punching reach instead of swinging from 1.6 m
+[31m[1mAssertionError[22m: expected true to be false // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+[36m [2m❯[22m tests/unit/playtest-combat.test.ts:[2m70:60[22m[39m
+    [90m 68|[39m
+    [90m 69|[39m test('#99 fists use target-click approach outside punching reach inste…
+    [90m 70|[39m   expect(keepMovingWithFists('L6','retreat',true,3,1,1.6)).toBe(false);
+    [90m   |[39m                                                            [31m^[39m
+    [90m 71|[39m   expect(keepMovingWithFists('L6','retreat',true,3,1,1.4)).toBe(false);
+    [90m 72|[39m   expect(keepMovingWithFists('L6','retreat',true,3,1,1.2)).toBe(true);
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m9 passed[39m[22m[90m (10)[39m
+[2m   Start at [22m 03:15:37
+[2m   Duration [22m 299ms[2m (transform 57%, import 19%, tests 15%, worker 9%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 46s, remote total 4s)

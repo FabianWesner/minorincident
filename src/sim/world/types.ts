@@ -7,10 +7,14 @@ export interface EntitySnapshot {
   id: number;
   /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
   pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean; colliderEnabled?: boolean; graceTicks?: number };
-  /** Settled persistent body: no brain, collision obstacle or physics updates. */
+  /** Persistent death pose: no brain or collision obstacle; only explicit
+   * throws and cosmetic blast flights move its retained transform. */
   corpse?: boolean;
   /** A retained death pose in flight; the crowd view follows its actual transform. */
   corpseThrown?: boolean;
+  /** Cosmetic fixed-step blast flight; no collider, brain, or contact damage.
+   * Relative delay and velocity survive checkpoints without tick rebasing. */
+  corpseBlast?: { delay: number; x: number; y: number; z: number };
   droppedProp?: import('../npc/types').CivilianProp;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
   locomotion?: import('../locomotion/MotionResponse').MotionResponse;

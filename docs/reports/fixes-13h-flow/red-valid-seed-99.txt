@@ -1,0 +1,33 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-startup.test.ts (3 tests | 1 failed) 5ms
+   × #99 the fists profile satisfies the real campaign save validator 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-startup.test.ts > #99 the fists profile satisfies the real campaign save validator
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/playtest-startup.test.ts:27:63
+     25|   const source = preset('L6-default');
+     26|   expect(validateSave(source)).toBe(true);
+     27|   expect(validateSave(playtestSave(source, 'male', 'fists'))).toBe(tru…
+       |                                                               ^
+     28| });
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:38:40
+   Duration  185ms (transform 81%, import 14%, tests 4%, worker 1%)
+

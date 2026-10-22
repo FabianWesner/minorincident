@@ -37,23 +37,26 @@ for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, '
   });
 }
 test('T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks', async () => {
-  const kickWorld = await arena(), kicked = spawn(kickWorld, 'alpha', 6, 0, 'idle');
-  kickWorld.combat!.damage.apply({ ...shot(kicked.id, 'weapon.kick', 20, 'melee'), knockdown: true, stagger: .5 });
-  expect(kicked.health.current).toBe(280); expect(kicked.combat!.reaction!.heavy).toBe(false); expect(kicked.infected!.recoverAt).toBe(-1);
-  expect(kicked.infected!.provoked?.id).toBe(1);
-  // Ordinary contact gets a fresh, unprovoked Alpha: a player kick correctly locks pursuit to its source.
   const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle');
-  const soldier = w.entities.get(w.npcs!.civilians.spawn('officer', { x: 6.8, z: 0 }))!;
-  soldier.civilian!.ally = allyState('soldier');
-  e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
-  e.combat!.staggerUntil = 0; e.infected!.heardTargetId = soldier.id; e.infected!.state = 'chase';
-  step(w, 1); const active = e.infected!.until;
-  step(w, active - w.tick - 1); expect(soldier.health.current).toBe(100);
-  step(w, 1); expect(soldier.health.current).toBe(75); expect(soldier.civilian!.knockedUntil - w.tick).toBe(72);
+  w.combat!.damage.apply({ ...shot(e.id, 'weapon.kick', 20, 'melee'), knockdown: true, stagger: .5 });
+  expect(e.health.current).toBe(280); expect(e.combat!.reaction!.heavy).toBe(false); expect(e.infected!.recoverAt).toBe(-1);
+  expect(e.infected!.provoked?.id).toBe(1);
+  // The kick correctly provokes the courier for 12 s. Use an independent,
+  // unprovoked Alpha for the ordinary soldier-contact contract, rather than
+  // overriding a noise target and expecting it to defeat that retaliation.
+  const contact = await arena(), alpha = spawn(contact, 'alpha', 6, 0, 'idle');
+  const soldier = contact.entities.get(contact.npcs!.civilians.spawn('officer', { x: 7.1, z: 0 }))!;
+  soldier.civilian!.ally = { ...allyState('soldier'), hold: true, post: { x: soldier.transform.x, z: soldier.transform.z }, nextAttack: 10000 };
+  alpha.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
+  alpha.infected!.heardTargetId = soldier.id; alpha.infected!.state = 'chase';
+  step(contact, 1); const active = alpha.infected!.until;
+  expect(active).toBeGreaterThan(contact.tick);
+  step(contact, active - contact.tick - 1); expect(soldier.health.current).toBe(100);
+  step(contact, 1); expect(soldier.health.current).toBe(75); expect(soldier.civilian!.knockedUntil - contact.tick).toBe(72);
   const saved = { ...soldier.transform };
-  expect(updateAlly(w, soldier, () => true)).toBe(true); expect(soldier.transform).toEqual(saved);
-  expect(e.infected!.cooldown).toBe(active + 30);
-  step(w, 60); expect(soldier.health.current).toBe(50);
+  expect(updateAlly(contact, soldier, () => true)).toBe(true); expect(soldier.transform).toEqual(saved);
+  expect(alpha.infected!.cooldown).toBe(active + 30);
+  step(contact, 60); expect(soldier.health.current).toBe(50);
 });
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
   test(`T-E07-05-scheduler-${move} @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state`, async () => {

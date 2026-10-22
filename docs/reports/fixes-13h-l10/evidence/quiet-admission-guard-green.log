@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 94.130.181.173:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 64s, 30487 files; job /srv/mi/jobs/fixes-13h-l10-170603-29337-1792628295; queueing for a slot
+[runner] slot 0 acquired; load 1.34 1.69 2.34
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-l10-170603-29337-1792628295[39m
+
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/tooling/e2e-lock.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+GPU guard: WindowServer 60.1% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer -10.0% / 10 s; 0 headless browsers + 1 requested; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer sample unavailable; waiting
+GPU guard: WindowServer 0.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.0% / 10 s; 1 headless browsers + 2 requested; waiting
+Scene output must be a worktree-relative path without ..
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/gpu-offload.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 7032[2mms[22m[39m
+   [33m[2m✓[22m[39m WindowServer admission uses the measured ten second CPU delta and a strict 60% threshold[33m 517[2mms[22m[39m
+   [33m[2m✓[22m[39m owned browser batches enforce their timeout and preserve the child exit code[33m 6159[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (2)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[2m | [22m[33m7 skipped[39m[90m (15)[39m
+[2m   Start at [22m 00:19:22
+[2m   Duration [22m 7.30s[2m (tests 97%, transform 2%, import 1%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 64s, remote total 12s)

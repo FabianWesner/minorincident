@@ -1,0 +1,34 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 94.130.181.173:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 37s, 30509 files; job /srv/mi/jobs/fixes-13h-l10-170603-98957-1792631326; queueing for a slot
+[runner] slot 1 acquired; load 1.90 1.45 1.28
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/fixes-13h-l10-170603-98957-1792631326[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l6-light-list.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 64[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/material-variants.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 119[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/playtest-frames.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-instance-attributes.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 804[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/real-kill-corpses.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 3588[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.common-worker bodies (low)[33m 577[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.alpha bodies (low)[33m 345[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.firefighter bodies (low)[33m 458[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.mega-alpha bodies (low)[33m 547[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.firefighter bodies (high)[33m 434[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #98 @E07 @E32 real kills retain intact frozen inf.mega-alpha bodies (high)[33m 497[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m6 passed[39m[22m[90m (6)[39m
+[2m      Tests [22m [1m[32m43 passed[39m[22m[90m (43)[39m
+[2m   Start at [22m 01:10:37
+[2m   Duration [22m 9.37s[2m (transform 47%, tests 36%, import 16%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 37s, remote total 85s)

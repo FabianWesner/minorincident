@@ -1,5 +1,7 @@
 # E27 vision review — checklist H
 
+**Current AC15: MET visually (2026-10-22).** Final-source named H review below supersedes the historical physical-consequence claim; full final verification passes (46 Node, 41 functional browsers, two quiet perf).
+
 Inspected 2026-10-10, headless Chrome / Metal WebGL2. Scene Lab fixtures use a fixed game angle (1.5× framing), and production L4 uses its authored `l4-collapse` photo spot. No L6 missions/data were changed. All twenty-three Scene Lab scenes completed with zero console errors; nine lighting presets and twelve effect scenes are described in the epic reports.
 
 | H item | Result | Inspected evidence / observation |
@@ -34,3 +36,19 @@ Checklist H: all four must items PASS (fixed-tick staged sequence; lifted car/de
 ## Final source refresh (`41b57aa2`, 2026-10-11)
 
 All twelve refreshed sheets were inspected: small/incendiary leave dark scorch as flames expire; medium/large sustain orange fire under gray smoke; mega starts with a bright spherical blast/ring then sustained fire and debris; toxic stays green. The car-wreck sequence bursts into separated panels and fire. Night house fire lights its surroundings; extinguisher replaces flame with a short pale plume; tear gas is white; smoke grenade expands then dissipates with its directional cue still visible. No new visual regression was observed relative to the earlier fresh review. Scene Lab checks validate this controlled scene set; they do not provide manual WebGPU parity or the missing E25 lighting reference review.
+
+## Final-source named H review — 2026-10-22
+
+This review supersedes the earlier incomplete physical-consequence signoff. I opened both final seven-row high/low frame sheets, plus full-size medium/mega flight, night wind column and the two late grenade frames. `docs/reports/ac-close-shared/h-high.jpg` and `h-low.jpg` retain all seven required spots; `evidence/vfx-final.json.gz` records 102 frame states and source-image SHA256s. Grenade frames use a pinned production preview after the earlier dev blank frame failed review; both tiers now pass an explicit non-flat-image assertion. A concurrent source edit is only a possible cause of the old blank, not a proved diagnosis.
+
+| Priority | H item | Observed result |
+| --- | --- | --- |
+| must | Staged blast | PASS — medium f6/8/12/21/46, car f186/190/200/230 and mega f6/20/40/70 separate flash, yellow-orange lobes, expanding pale ring, flying fragments and dark plume. Production L4 f6/40/186 repeats the authored sequence. |
+| must | Props / corpses / cars move; scorch stays | PASS — cart/cone displace, car lifts and panels fly; retained body id6 rises to y1.56 in medium and y10.72 in mega, then lands with its original id. Car body id7 rises to y1.47 and lands at (3.82,0.7,3.87); medium late position stays (1.95,0.7,3.90). Late black scorch and burning wreck remain. Cosmetic body flight is now implemented and checkpoint-tested; no combat collider/damage or corpse removal was added. |
+| must | Volumetric noisy hot-to-cold fireball | PASS — overlapping lobes have yellow hot centers, orange folded rims, holes and dark cool clouds; mega has a much broader ring and scattered persistent fires. |
+| must | Lit / wind-bent smoke; visible player | PASS — night house-front fire and separate column have rounded overlapping puffs drifting right; orange lower smoke/cooler top is quantified at 2.62× luminance. Actual thrown grenade cloud keeps the cap, face and orange clothing visible at f90/240/840, with the ground marker visible through the dither. At f840 the smoke has not fully expired; no fade-to-clear claim is made for that frame. |
+| should | Car jump / detached parts / burning wreck | PASS — raised body, separate dark panels and persistent charred burning chassis appear in order. |
+| should | Flicker / embers / nearby lighting | PASS — night flames change shape at f60/90/180/600; sparks rise and warm pools light the pavement and porch/facade. |
+| should | Class intensity | PASS — grenade is a localized cool gray cloud; medium/car affect a few metres; mega lights a wide area, throws the corpse higher/farther, and leaves multiple fires. |
+
+**AC15 met: 4/4 must and 3/3 should**, across medium/car/mega lab, night house-front building fire, actual smoke grenade, persistent wind column and production L4 `l4-collapse`. The house fire is a real fire hazard against the porch/facade, not a claim of a newly destroyed house mesh. Focused smoke/player regressions pass unchanged thresholds; full final E27 verification passes: 46 Node, 41 functional browser and two quiet performance tests.

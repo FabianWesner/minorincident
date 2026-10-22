@@ -1,0 +1,33 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/levels/objective-clarity.test.ts (6 tests | 1 failed | 5 skipped) 272ms
+   × @E30 #97 early APC boarding shows the breach countdown and prevents driving away from waiting passengers 271ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/objective-clarity.test.ts > @E30 #97 early APC boarding shows the breach countdown and prevents driving away from waiting passengers
+AssertionError: expected 'Reach the armored vehicle and board' to match /^Wait for the breach · \d+ s$/
+
+- Expected:
+/^Wait for the breach · \d+ s$/
+
++ Received:
+"Reach the armored vehicle and board"
+
+ ❯ tests/levels/objective-clarity.test.ts:92:67
+     90|   w.applyInput(enter, 'keyboard'); step(w, 1); w.clearInput(); step(w,…
+     91|   expect(w.vehicles!.active).toBe(zoo.state.carId);
+     92|   expect(objectiveText(m, 'Reach the armored vehicle and board')).toMa…
+       |                                                                   ^
+     93|   expect(m.state.marker).toBeNull();
+     94|   const car = w.entities.get(zoo.state.carId)!, start = { ...car.trans…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  00:05:05
+   Duration  1.63s (transform 69%, tests 17%, import 14%)
+

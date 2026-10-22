@@ -1,0 +1,19 @@
+[scene] starting vite preview on http://127.0.0.1:4052
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(mixed.crowd.meshDrawCalls <= 30)
+
+    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tools/qa/horde-object-audit.ts:61:10) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v26.0.0

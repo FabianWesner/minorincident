@@ -1,0 +1,13 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-l10 -> 94.130.181.173:/srv/mi/ws/fixes-13h-l10-170603
+[remote] cache-gc deleted:none
+[remote] sync 52s, 30488 files; job /srv/mi/jobs/fixes-13h-l10-170603-50431-1792629190; queueing for a slot
+[runner] slot 1 acquired; load 1.55 1.15 1.41
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+[remote] done exit=0 (runner 94.130.181.173, sync 52s, remote total 73s)

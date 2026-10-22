@@ -1,0 +1,33 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-combat.test.ts (3 tests | 1 failed) 4ms
+   × #99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-combat.test.ts > #99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier
+AssertionError: expected null to be 'KeyK' // Object.is equality
+
+- Expected:
+"KeyK"
+
++ Received:
+null
+
+ ❯ tests/unit/playtest-combat.test.ts:19:33
+     17|   expect(fistsRetreatAttack(1)).toBe('KeyJ');
+     18|   expect(fistsRetreatAttack(2)).toBe('KeyJ');
+     19|   expect(fistsRetreatAttack(3)).toBe('KeyK');
+       |                                 ^
+     20|   expect(fistsRetreatAttack(14)).toBe('KeyK');
+     21| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  02:00:57
+   Duration  128ms (transform 55%, import 19%, tests 14%, worker 11%)
+

@@ -1,0 +1,41 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/alpha-support.spec.ts:42:1 › T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all four moves in the merged Scene Lab (10.7s)
+
+
+  1) [chromium] › tests/e2e/alpha-support.spec.ts:42:1 › T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all four moves in the merged Scene Lab 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        30,
+        25,
+        30,
+    +   0,
+      ]
+
+      64 |   expect(observed.events.some(e => e.type === 'infected.roar-buff' && e.sourceId === observed.id && e.stage === 'active')).toBe(true);
+      65 |   const hits = observed.events.flatMap(e => e.type === 'combat.hit' && e.sourceId === observed.id && e.targetId === 1 && ['alpha.charge', 'alpha.ground-slam', 'infected.alpha.grab-throw'].includes(e.actionId) ? [e.amount] : []);
+    > 66 |   expect(hits).toEqual([30, 25, 30]);
+         |                ^
+      67 |   expect(observed.samples.find(s => s.frame === 350)!.player!.health.current).toBe(15);
+      68 | });
+      69 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/e2e/alpha-support.spec.ts:66:16
+
+    Error Context: test-results/playwright/run-4051/e2e-alpha-support-T-E07-06-c1c7c-ves-in-the-merged-Scene-Lab-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4051/e2e-alpha-support-T-E07-06-c1c7c-ves-in-the-merged-Scene-Lab-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4051/e2e-alpha-support-T-E07-06-c1c7c-ves-in-the-merged-Scene-Lab-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/alpha-support.spec.ts:42:1 › T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all four moves in the merged Scene Lab 

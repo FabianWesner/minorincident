@@ -84,18 +84,23 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 
   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }
 });
 
-test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
+test('T-E25-06 @E25 @E25-AC06 @E28-AC12 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
   test.setTimeout(180_000);
   await boot(page);
   const probe = await page.evaluate(async (spot) => {
     const a = window.__SS__!; await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
-    a.teleport('player', spot); a.camera.follow(); await a.step(90); await a.screenshotReady();
+    a.teleport('player', spot); a.camera.follow();
+    // Submit the intermediate views, as gameplay does: a bulk sim-only step
+    // first promotes this new lamp on the final redraw (crossfade still 0).
+    for (let frame = 0; frame < 90; frame++) await a.step(1);
+    await a.screenshotReady();
     const lighting = a.getState().render.lighting!, p = a.getEntity(1)!.transform, d = lighting.shadowDirection as number[];
     const h = Math.hypot(d[0], d[2]), ax = -d[0] / h, az = -d[2] / h;
     // Behind: along the cast direction, past the feet. Beside: the same distance, perpendicular, still inside the pool.
     return { lighting, perf: a.perf().lighting, behind: a.camera.project(p.x + ax * .9, .03, p.z + az * .9), beside: a.camera.project(p.x - az * .9, .03, p.z + ax * .9) };
   }, lampSpot);
   const image = await shot(page, 'hero-shadow');
+  expect(probe.lighting.promotionBlend).toBe(1);
   const behind = patch(image, probe.behind, 4), beside = patch(image, probe.beside, 4);
   writeFileSync(`${out}/hero-shadow.json`, JSON.stringify({ ...probe, behindColor: behind, besideColor: beside, darker: 1 - behind.l / beside.l, hue: hue(behind.r, behind.g, behind.b) }, null, 2) + '\n');
   expect(probe.perf!.heroShadow).toBe(1); expect(probe.perf!.shadowMaps).toBe(1);

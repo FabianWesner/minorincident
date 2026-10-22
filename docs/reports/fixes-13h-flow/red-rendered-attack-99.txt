@@ -1,0 +1,53 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13h-flow
+
+ ❯ |functional| tests/unit/playtest-eyes.test.ts (2 tests | 2 failed) 4ms
+   × #99 ally-cover attack observation follows the submitted swing even when the simulation flag is off 4ms
+   × #99 an idle rendered figure supplies no attack observation even when the simulation flag is on 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/playtest-eyes.test.ts > #99 ally-cover attack observation follows the submitted swing even when the simulation flag is off
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/playtest-eyes.test.ts:27:50
+     25|
+     26| test('#99 ally-cover attack observation follows the submitted swing ev…
+     27|   expect(renderedEnemy('swing',false).attacking).toBe(true);
+       |                                                  ^
+     28| });
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/unit/playtest-eyes.test.ts > #99 an idle rendered figure supplies no attack observation even when the simulation flag is on
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/unit/playtest-eyes.test.ts:31:51
+     29|
+     30| test('#99 an idle rendered figure supplies no attack observation even …
+     31|   expect(renderedEnemy('shamble',true).attacking).toBe(false);
+       |                                                   ^
+     32| });
+     33|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  2 failed | 23 passed (25)
+   Start at  05:45:17
+   Duration  499ms (transform 61%, tests 21%, import 15%, worker 3%)
+

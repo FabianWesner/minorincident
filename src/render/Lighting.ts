@@ -198,6 +198,8 @@ export class Lighting {
   private setShadowSource(spot: boolean): void {
     this.spotSource = spot;
     const stable = this.preset === 'L5' || this.preset === 'L6-subway' || this.preset === 'L6' || this.preset === 'L8-zoo';
+    if (this.preset === 'L10-night') this.scene.userData.shadowVariant = spot ? 'L10:spot' : 'L10:sun';
+    else delete this.scene.userData.shadowVariant;
     const spotOff = this.spotShadowOff();
     this.spot.visible = stable || spot; this.sun.visible = stable || !spot;
     this.spot.shadow.intensity = spotOff ? 0 : stable ? Number(spot) : 1;
@@ -207,6 +209,13 @@ export class Lighting {
     if (stable) { if (!this.sun.shadow.map) this.sun.shadow.needsUpdate = true; if (!this.spot.shadow.map) this.spot.shadow.needsUpdate = true; }
     this.sun.intensity = spot ? 0 : this.intensity.value;
     if (!spot && stable) this.spot.intensity = 0;
+  }
+  /** Temporary compile/draw source. Restore immediately, including when the
+   * callback returns an asynchronous compilation or throws. */
+  withShadowSource<T>(spot: boolean, prepare: () => T): T {
+    const source = this.spotSource;
+    try { this.setShadowSource(spot); return prepare(); }
+    finally { this.setShadowSource(source); }
   }
   /** The L5 gloom ramp (quantised to 0.5 % so a slow fade does not re-apply the look every frame). */
   setGloom(factor: number): void {

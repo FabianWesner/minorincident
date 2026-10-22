@@ -165,10 +165,10 @@ export class Blasts extends Group {
         // Dark (soot) puffs stay dense for most of their life and fade late, so a blast column reads as a solid dark plume.
         const dark = smoothstep(.16, .07, st.w).mul(st.z.greaterThanEqual(0).select(1, 0));
         const fade = age.div(.45).min(1).mul(mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark));
-        // Retain 30% in the 6 m player-ray tube, leaving headroom for antialiasing
+        // Retain 20% in the 6 m player-ray tube, leaving headroom for antialiasing
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-        nearRay.and(dither.greaterThanEqual(.3)).discard();
+        nearRay.and(dither.greaterThanEqual(.2)).discard();
         return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(.32, .97)).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
       })();
       this.puffs.renderOrder = 3;

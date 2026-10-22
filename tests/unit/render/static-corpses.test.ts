@@ -257,3 +257,22 @@ test('plain fallback corpse materials keep independent value snapshots across po
   expect(a).not.toBe(b); expect(a.color.getHexString()).toBe('a03020'); expect(b.color.getHexString()).toBe('2050b0');
   pools.forEach(pool => pool.dispose()); baked.geometry.dispose(); source.dispose();
 });
+
+test('@E27-AC15 moving corpse pages update bounds once and settled float32 poses stop uploading', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const records = new Map<number, EntitySnapshot>();
+  for (const id of [1, 2]) {
+    const e = { id, corpse: true, corpseThrown: true, transform: { x: id, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+    records.set(id, e); pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(id, 0, 0), new Color('white'), [0, 0, 0]);
+  }
+  const page = pool.children[0] as InstancedMesh, bounds = vi.spyOn(page, 'computeBoundingSphere');
+  try {
+    for (const e of records.values()) Object.assign(e.transform, { x: e.id + .123456789, y: 1.23456789, z: .987654321 });
+    pool.begin(id => records.get(id)); expect(bounds).toHaveBeenCalledTimes(1);
+    const version = page.instanceMatrix.version;
+    pool.begin(id => records.get(id));
+    expect(bounds).toHaveBeenCalledTimes(1); expect(page.instanceMatrix.version).toBe(version);
+    for (const p of pool.drawn()) expect(p.x).toBe(Math.fround(records.get(p.id)!.transform.x));
+  } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
+});
