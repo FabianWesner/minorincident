@@ -10,8 +10,8 @@ export function fistsRetreatAttack(nearbyEnemies: number): 'KeyJ' | 'KeyK' {
 
 /** Visible allies under attack are an early shelter objective, including on an unarmed rack. */
 export function canCoverVisibleAllies(level: string | null, step: string | null, unarmed: boolean, ally: { drawn: boolean; hp: number; corpse: boolean }, objective = ''): boolean {
-  void objective;
-  return !unarmed || level === 'L6' && (step === 'shelter' || step === 'stop') && ally.drawn && ally.hp > 0 && !ally.corpse;
+  const coverRequested = step === 'shelter' || step === 'stop' || step === 'retreat' && /cover the rear|Stay with the group/.test(objective);
+  return !unarmed || level === 'L6' && coverRequested && ally.drawn && ally.hp > 0 && !ally.corpse;
 }
 
 /** Choose between the courier's closest contact and a visible ally's attacker. */
