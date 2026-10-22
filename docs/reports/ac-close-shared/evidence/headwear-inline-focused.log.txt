@@ -1,0 +1,101 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared -> 2.31.10.108:/srv/mi/ws/ac-close-shared-fcfdcb
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 38s, 30533 files; job /srv/mi/jobs/ac-close-shared-fcfdcb-11634-1792636853; queueing for a slot
+[runner] slot 0 acquired; load 0.40 0.58 2.27
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/ac-close-shared-fcfdcb-11634-1792636853[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-inline-headwear.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 46[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 857[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-accessory-fit.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1691[2mms[22m[39m
+   [33m[2m✓[22m[39m ordinary infected accessories keep the authored reference proportions on their own skull @E07-AC13 @E08[33m 1677[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/infected-corpse-prewarm.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 544[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-14c @E27 @E18 blast-stress high prepares the actual LOD2 infected corpse before play[33m 366[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/dog-coat-batching.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1313[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a palette while incompatible LOD2 is rejected[33m 1311[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m27 passed[39m[22m[90m (27)[39m
+[2m   Start at [22m 02:42:35
+[2m   Duration [22m 5.19s[2m (transform 50%, tests 34%, import 16%)[22m
+
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+fatal: Needed a single revision
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 615 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mpreview/index.html                         [39m[1m[2m    1.65 kB[22m[1m[22m[2m │ gzip:     0.72 kB[22m
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m    2.74 kB[22m[1m[22m[2m │ gzip:     0.93 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianBakeData-CqQErnqb.js         [39m[1m[2m    3.68 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mBufferGeometryUtils-yPx07Xeq.js      [39m[1m[2m    6.88 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianBake.worker-DpHxTBQN.js      [39m[1m[2m    8.74 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-o4Hde_L7.js         [39m[1m[2m   57.53 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mthree.module-B-nHBglW.js             [39m[1m[2m  206.11 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianSource-C9cF59Hd.js           [39m[1m[2m  417.79 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-VXdx5NbI.wasm       [39m[1m[2m  527.33 kB[22m[1m[22m[2m │ gzip:   247.62 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mprefetch.worker-BKE3iAF1.js          [39m[1m[2m1,063.22 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mprepareCivilianGeometry-DPFqcafC.js  [39m[1m[2m2,021.40 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mrapier-C6GCbKVJ.wasm                 [39m[1m[2m3,082.10 kB[22m[1m[22m[2m │ gzip: 1,176.71 kB[22m
+[2mdist/[22m[2mbuild/[22m[35mindex-DJxwE0KP.css                   [39m[1m[2m   41.64 kB[22m[1m[22m[2m │ gzip:     8.83 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookViewpoints-BX-OEann.js           [39m[1m[2m    0.23 kB[22m[1m[22m[2m │ gzip:     0.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmodulepreload-polyfill-B5Qt9EMX.js   [39m[1m[2m    0.71 kB[22m[1m[22m[2m │ gzip:     0.40 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mpreload-helper-BlTxHScW.js           [39m[1m[2m    1.11 kB[22m[1m[22m[2m │ gzip:     0.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowdProbe-CPq0o8n4.js               [39m[1m[2m    1.35 kB[22m[1m[22m[2m │ gzip:     0.79 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcontrols-BD2KGrGS.js                 [39m[1m[2m    1.40 kB[22m[1m[22m[2m │ gzip:     0.75 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mworldLook-o3T_90Bf.js                [39m[1m[2m    1.96 kB[22m[1m[22m[2m │ gzip:     0.90 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowd-DBavBd1Y.js                    [39m[1m[2m    2.36 kB[22m[1m[22m[2m │ gzip:     1.28 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookPatch-BJ2Iw5hk.js                [39m[1m[2m    5.68 kB[22m[1m[22m[2m │ gzip:     2.88 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mprobe-CJwNKjN0.js                    [39m[1m[2m    7.55 kB[22m[1m[22m[2m │ gzip:     3.08 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmeleeCombos-CT2Tzkmh.js              [39m[1m[2m    9.60 kB[22m[1m[22m[2m │ gzip:     3.10 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-BJcIb15O.js                    [39m[1m[2m   12.17 kB[22m[1m[22m[2m │ gzip:     4.41 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mInspection-CuzLcXdL.js               [39m[1m[2m   12.84 kB[22m[1m[22m[2m │ gzip:     4.39 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mMotionLab-DnIrj8JS.js                [39m[1m[2m   20.03 kB[22m[1m[22m[2m │ gzip:     8.46 kB[22m
+[2mdist/[22m[2mbuild/[22m[36msurvivor-DvEZDBtv.js                 [39m[1m[2m   21.61 kB[22m[1m[22m[2m │ gzip:     8.88 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelSixSubway-Dz03zaex.js           [39m[1m[2m   24.12 kB[22m[1m[22m[2m │ gzip:     9.51 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelFiveBot-BVODOWSj.js             [39m[1m[2m   24.39 kB[22m[1m[22m[2m │ gzip:     6.57 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-l44Pv040.js                    [39m[1m[2m   27.23 kB[22m[1m[22m[2m │ gzip:     7.29 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mtestApi-BGweiuV-.js                  [39m[1m[2m   29.21 kB[22m[1m[22m[2m │ gzip:    11.00 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPhysics-BNGmJl9s.js                  [39m[1m[2m   70.68 kB[22m[1m[22m[2m │ gzip:    24.41 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPickups-Tak1IB7h.js                  [39m[1m[2m   80.48 kB[22m[1m[22m[2m │ gzip:    25.79 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlight-anchors-DQGCSUUw.js            [39m[1m[2m   90.38 kB[22m[1m[22m[2m │ gzip:     6.76 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mSceneLab-DndPjft-.js                 [39m[1m[2m  101.13 kB[22m[1m[22m[2m │ gzip:    34.86 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mDebug-C5mqunPp.js                    [39m[1m[2m  155.77 kB[22m[1m[22m[2m │ gzip:    33.05 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mregistry-DZnFh1bG.js                 [39m[1m[2m  202.39 kB[22m[1m[22m[2m │ gzip:    69.51 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mrapier-ykuY6d4E.js                   [39m[1m[2m  212.13 kB[22m[1m[22m[2m │ gzip:    36.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPropSystem-CDOwW37d.js               [39m[1m[2m  219.13 kB[22m[1m[22m[2m │ gzip:    66.36 kB[22m
+[2mdist/[22m[2mbuild/[22m[36ml6-CjHKelBO.js                       [39m[1m[2m  266.29 kB[22m[1m[22m[2m │ gzip:    80.59 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree.module-BnwdCej9.js             [39m[1m[2m  308.44 kB[22m[1m[22m[2m │ gzip:    83.33 kB[22m
+[2mdist/[22m[2mbuild/[22m[36minstall-CbEakeiJ.js                  [39m[1m[2m  487.65 kB[22m[1m[22m[2m │ gzip:   123.56 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mwreck-roofs-CFQIthKq.js              [39m[1m[2m  755.61 kB[22m[1m[22m[2m │ gzip:   251.69 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mWeatherView-CekQR4AU.js              [39m[1m[2m1,060.95 kB[22m[1m[22m[2m │ gzip:   233.70 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-D-PdE45J.js                    [39m[1m[2m1,284.39 kB[22m[1m[22m[2m │ gzip:   405.42 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcharacter-clips-CGKWtM3S.js          [39m[1m[2m1,939.70 kB[22m[1m[22m[2m │ gzip:   336.59 kB[22m
+[32m✓ built in 13.34s[39m
+[remote] pulled dist
+[remote] done exit=0 (runner 2.31.10.108, sync 38s, remote total 84s)

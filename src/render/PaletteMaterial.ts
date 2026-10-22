@@ -38,15 +38,16 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; /** Preserve separate figure/headwear lighting inside one draw. */ figureMask?: Node<'float'>; shadowReceiver?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
     // a different texture coordinate literal in every fragment program.
     const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).setGroup(this._uniformGroup).rgb : texture(palette, vec2(uniform((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2)).setGroup(this._uniformGroup), 0.5)).rgb);
     const base = !swatch && !vertexSwatches && !nodes && !emissive ? surfaceDetail(token, original, lighting.look.nodes) : original;
+    const figureRimAmount = this.figureRim.mul(nodes?.figureMask ?? 1), figureFillAmount = this.figureFill.mul(nodes?.figureMask ?? 1);
     const caughtShadow = float(1).toVar();
-    this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
+    this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(mix(1, shadow.r, nodes?.shadowReceiver ?? 1)); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
     this.outputFor = mode => Fn(() => {
       const flags = weatherMaterialFlags, probe = mode >> flags.probeShift;
       // Diagnostics use their own graph, rather than adding mask samplers to game shaders.
@@ -110,7 +111,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       if (mode & (flags.hero | flags.fog)) {
         heroMask.assign(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3)));
       }
-      const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim.add(lighting.heroSmokeRim.mul(this.heroFigure))));
+      const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, figureRimAmount)).mul(lighting.rim.add(lighting.heroSmokeRim.mul(this.heroFigure))));
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       // Preserve the established aura on other presets (including driven vehicles).
       const fillFigure = lighting.heroSurfaceFill.greaterThan(0).select(this.heroFigure, 1);
@@ -121,7 +122,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // their bright creases. Keep a continuous moonlit surface on figures,
       // including the dark swatches; ordinary world surfaces keep their albedo.
       // The corgi's moon bounce is a neutral lift of its own coat (PO #44): the blue rim tint turned its orange salmon and its white pink.
-      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(this.figureFill).mul(lighting.rim).mul(.9);
+      const figureFill = surface.max(vec3(.12)).mul(mix(lighting.rimColor, vec3(.6), this.companion)).mul(figureFillAmount).mul(lighting.rim).mul(.9);
       const heroSurfaceFill = surface.mul(lighting.heroFillColor).mul(this.heroFigure).mul(lighting.heroSurfaceFill).mul(normalWorld.y.mul(.3).add(.7));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(heroSurfaceFill).add(figureFill).add(rim).toVar();
       // Keep identity colours in the face/clothes; the camera-sized rim carries the silhouette.
@@ -169,7 +170,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
         const wet = weatherSurface.wetness.mul(normalWorld.y.max(0));
-        const streak = positionWorld.x.mul(4.1).add(positionWorld.z.mul(.7).sin().mul(1.8)).sin().abs().pow(12).mul(positionWorld.z.mul(1.3).sin().mul(.3).add(.7)).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
+        // Broken, unequal puddle glints rather than a continuous set of evenly
+        // spaced sine bands. World-space noise keeps them anchored as we move.
+        const phase = noise(positionWorld.xz.mul(.6)).mul(5).add(noise(positionWorld.xz.mul(2.4)).mul(1.1));
+        const breakup = noise(positionWorld.xz.mul(vec2(2.3, .45))).smoothstep(.3, .75);
+        const streak = positionWorld.x.mul(4.1).add(phase).sin().abs().pow(12).mul(breakup).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
         result.addAssign(streak);
       });
       if (mode & flags.fog) {
@@ -203,7 +208,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // The same local shade reaches the figures pressed around her (followers, corgi), so the
         // courier's own key light separates her from the crowd instead of a whitening lift.
         const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3.4, 1.6)
-          .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
+          .mul(figureFillAmount.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
           .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
         result.mulAssign(crowded.mul(-.55).add(1));
         If(courierRead.greaterThan(0), () => {
@@ -227,7 +232,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           // Other night presets (L5 dusk aura, practical pools): the aura and pools stack on her and the
           // survivors beside her. Scale RGB together so the brightest channel stays below clipping: the
           // hue and saturation survive instead of bleaching to white (QA #28).
-          If(max(this.heroFigure, this.figureFill.greaterThan(0).select(1, 0)).greaterThan(0), () => {
+          If(max(this.heroFigure, figureFillAmount.greaterThan(0).select(1, 0)).greaterThan(0), () => {
             const top = max(max(result.r, result.g), result.b);
             result.mulAssign(float(.86).div(top.max(.86)));
           });
@@ -236,6 +241,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           graded.assign(max(this.heroFigure, this.companion.mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0))).oneMinus());
         });
       }
+      // The final composite's shoulder lowered dense-fog courier contrast just
+      // below 3:1. Keep a small, hue-preserving visibility margin on her figure
+      // after the fog/night key, without lifting the surrounding ground ring.
+      if (mode & flags.fog) result.mulAssign(float(1).add(this.heroFigure.mul(weatherSurface.fog.smoothstep(.4, .8)).mul(.08)));
       result.addAssign(this.hitFlash);
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.

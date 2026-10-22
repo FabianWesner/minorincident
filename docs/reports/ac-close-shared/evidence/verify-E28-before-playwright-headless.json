@@ -1,0 +1,2958 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--grep-invert",
+      "@perf",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 4051 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4051",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/audio/smoke.spec.ts",
+      "file": "e2e/audio/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:31:14.787Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-97a3d61ff3acce718662",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6036,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:31.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-2dc10c72b0be464382db",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:38.994Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-15d01b5b0ba9e48f3f0d",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:46.652Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-581cfa9a47816c39bec7",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6099,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:54.333Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-11aea1404dff4487d786",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:41:01.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-eb40bc0a2fb51cb3189f",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19924,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:31:20.916Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd-drawn.spec.ts",
+      "file": "e2e/crowd-drawn.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:35.953Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-fa1d6210c12952f68cb1",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20397,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:57.051Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-e982f98dac5e1bfc9120",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd-feel.spec.ts",
+      "file": "e2e/crowd-feel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:38:17.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc9b9d343168502a2e67-353d355a22e51454dc56",
+          "file": "e2e/crowd-feel.spec.ts",
+          "line": 87,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/driving.spec.ts",
+      "file": "e2e/driving.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5635,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:31:40.855Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-6d653d77642b28f98199",
+          "file": "e2e/driving.spec.ts",
+          "line": 22,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-boot.spec.ts",
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+          "ok": true,
+          "tags": [
+            "E22",
+            "E22-AC18",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19046,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:31:46.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91bae058919b3638343a-5ef68a1f589b66b3ebd2",
+          "file": "e2e/levels/l4-boot.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L6.spec.ts",
+      "file": "e2e/levels/L6.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC01",
+            "E24",
+            "E24-AC14"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3644,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:05.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8acabee6798f4f7fce91-87581410baebcf1d9568",
+          "file": "e2e/levels/L6.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/menus-mouse.spec.ts",
+      "file": "e2e/menus-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC03",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4628,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:09.258Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "985816c1468952bd1927-cecdef361888236d9f37",
+          "file": "e2e/menus-mouse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/save.spec.ts",
+      "file": "e2e/save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "ok": true,
+          "tags": [
+            "E13",
+            "E13-AC05",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11399,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:13.917Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
+          "file": "e2e/save.spec.ts",
+          "line": 76,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:25.325Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:25.978Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 567,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:37.508Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b47c75175263bbf2a151",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 650,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:38.080Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-606f9edef12ca51944a0",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 550,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:45.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-390c9a040de6fabcb378",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 667,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:45.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-0e569f350f7af79ee309",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:52.851Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-92ffd1bf0aed09418cc1",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 669,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:53.402Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-7af3753670183995ee55",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:41:00.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b87ee65b11d1f0642d6c",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 653,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:41:01.067Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-60f671c069b68bd6e8b3",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:41:11.646Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-96d6d563eec8e62b3b00",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:41:13.346Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/weather.spec.ts",
+      "file": "e2e/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-01b @E28 @E28-AC01 browser and Node weather stream agree",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:26.871Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-5f7f569cccfb309201cb",
+          "file": "e2e/weather.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "T-E28-04b @E28 @E28-AC04 lightning flash reduction caps the visible flash",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:33.734Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-bc9a1ac6839894e5fc7e",
+          "file": "e2e/weather.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "T-E28-08b @E28 @E28-AC08 menus do not expose weather selection and debug override remains available",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:38.954Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-869251c1d4f1cfbe2459",
+          "file": "e2e/weather.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "T-E28-08c @E28 @E28-AC08 campaign level select keeps story weather",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3521,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:42.476Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-a346c22d956497a58c03",
+          "file": "e2e/weather.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "T-E28-09 @E28 @E28-AC09 offline snow/fog reverb decay shorter than clear",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:46.003Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-db3de47119f50bf63705",
+          "file": "e2e/weather.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E28-11 @E28 @E28-AC11 HUD labels current weather and precipitation dithers within 6m",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:48.102Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-cfa5d63476a448f0042d",
+          "file": "e2e/weather.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "T-E28-09b @E28 @E28-AC09 rain bed gain follows intensity and gust/thunder events reach cue log",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:32:52.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "004b9eb0f0cd99ab4c33-98bf33eaec8632a55947",
+          "file": "e2e/weather.spec.ts",
+          "line": 58,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-canvas.spec.ts",
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:38:24.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-baa1ba2a41384d7d1b97",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 62622,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:38:35.941Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-e4ef32c76084759b386b",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11398,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:39:38.574Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-41b5266e0775c8ebbc36",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28899,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:39:49.979Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-8eac85643e3dcd3f500e",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-level-transitions.spec.ts",
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11657,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:40:19.293Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7be80d8c19c0387a2a29-3bd0f8a63eef8d53b837",
+          "file": "e2e/webgpu-level-transitions.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/weather.spec.ts",
+      "file": "visual/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-03b @E28 @E28-AC03 @visual wet mask follows accumulated rain and has a dry state",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC03",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16798,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:03.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-a6725d1fa58be820c18e",
+          "file": "visual/weather.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring",
+          "ok": false,
+          "tags": [
+            "E28",
+            "E28-AC05",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9016,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.9636154798936727\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.9636154798936727\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/weather.spec.ts:33:136",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/weather.spec.ts",
+                      "column": 136,
+                      "line": 33
+                    },
+                    "snippet": "  31 |   const surroundings = ring.map(p => { const x = Math.round((p[0] + 1) / 2 * image.width), y = Math.round((1 - p[1]) / 2 * image.height); let s = 0, count = 0; for (let dz = -4; dz <= 4; dz++) for (let dx = -4; dx <= 4; dx++) { const i = ((y + dz) * image.width + x + dx) * 4; s += lum(image.data[i], image.data[i + 1], image.data[i + 2]); count++; } return s / count; });\n  32 |   const contrast = (sum / n + .05) / (surroundings.reduce((a, b) => a + b, 0) / surroundings.length + .05);\n> 33 |   writeFileSync(`${out}/fog-contrast.json`, JSON.stringify({ contrast, pixels: n })); expect(n).toBeGreaterThan(100); expect(contrast).toBeGreaterThanOrEqual(3);\n     |                                                                                                                                        ^\n  34 | });\n  35 | test('T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind', async ({ page }) => {\n  36 |   await lab(page, spec('wind')); await page.evaluate(() => window.__SCENE__!.step(119)); await shot(page, 'wind-smoke');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/weather.spec.ts",
+                        "column": 136,
+                        "line": 33
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.9636154798936727\u001b[39m\n\n  31 |   const surroundings = ring.map(p => { const x = Math.round((p[0] + 1) / 2 * image.width), y = Math.round((1 - p[1]) / 2 * image.height); let s = 0, count = 0; for (let dz = -4; dz <= 4; dz++) for (let dx = -4; dx <= 4; dx++) { const i = ((y + dz) * image.width + x + dx) * 4; s += lum(image.data[i], image.data[i + 1], image.data[i + 2]); count++; } return s / count; });\n  32 |   const contrast = (sum / n + .05) / (surroundings.reduce((a, b) => a + b, 0) / surroundings.length + .05);\n> 33 |   writeFileSync(`${out}/fog-contrast.json`, JSON.stringify({ contrast, pixels: n })); expect(n).toBeGreaterThan(100); expect(contrast).toBeGreaterThanOrEqual(3);\n     |                                                                                                                                        ^\n  34 | });\n  35 | test('T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind', async ({ page }) => {\n  36 |   await lab(page, spec('wind')); await page.evaluate(() => window.__SCENE__!.step(119)); await shot(page, 'wind-smoke');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/weather.spec.ts:33:136"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:20.008Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051/visual-weather-T-E28-05b-E-cacef-ast-3-1-against-the-2m-ring-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/test-results/playwright/run-4051/visual-weather-T-E28-05b-E-cacef-ast-3-1-against-the-2m-ring-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-shared/tests/visual/weather.spec.ts",
+                    "column": 136,
+                    "line": 33
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-a630c3c254f173a6d3df",
+          "file": "visual/weather.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC06",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9543,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:30.617Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-5e9432b657d3ad2814f0",
+          "file": "visual/weather.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=60% and track texels grow",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC07",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:40.246Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-850e23f663f7055ce264",
+          "file": "visual/weather.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7931,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:51.060Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-6617e7dda668ab824f2c",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10342,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:33:59.000Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-efac004e7ac9d27f8c72",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8169,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:09.349Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-1a5ba322b28c636198d7",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:17.525Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-181863d3a2718d537c10",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:29.410Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-636252855d86b52a8ee6",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8061,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:38.168Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-42f0ad87ff4a65d4d7bb",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6631,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:46.238Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-8ca6671fced5296f921e",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6726,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:52.876Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-ab6872ef6e82064c58b1",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6767,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:34:59.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-20fd35e1799fbe2ce8c1",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7588,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:06.381Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-13685c5f874d962e7179",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:13.975Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-26708f6e6f160a2b549c",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6907,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:20.824Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-c701425da6521f389386",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7873,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:27.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-ac8d1e2f9852f6be49ec",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12162,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:35.618Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-9073347a4473732be366",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7878,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:47.788Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-f2fd61aaf6cd56ba3a58",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:35:55.671Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-bc169bef1764dfcc8396",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11017,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:10.141Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-6e5fb800dbe3810c41c5",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:21.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-db3f4e65bb0486454b8b",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:29.981Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-5adfa7a4b4031154a5c0",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:36.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-aee49ac717ee7266211d",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:42.931Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-e0d1d540df8a5988f3cb",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:49.435Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-feb16c699b688718629a",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:36:56.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-df130fa7faa7cfa43be0",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:03.400Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-8ce3a4b3b9bdf81a46f4",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pixels",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC11",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6995,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:10.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-4d0232a0b6254ade6395",
+          "file": "visual/weather.spec.ts",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC04",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11851,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:17.036Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-eae05482c7ab7b730dd6",
+          "file": "visual/weather.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6638,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-21T21:37:28.893Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-cb34dc2ed797b5d60924",
+          "file": "visual/weather.spec.ts",
+          "line": 86,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-21T21:31:12.410Z",
+    "duration": 603707.371,
+    "expected": 69,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

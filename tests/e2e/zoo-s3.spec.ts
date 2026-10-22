@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 for (const [name, move, windup, hp] of [['zebra-kick', 'zebra.kick', 36, 180], ['zebra-stampede', 'zebra.stampede', 48, 180], ['flamingo-dive', 'flamingo.dive', 36, 15]] as const) {
@@ -48,4 +48,7 @@ for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-
   for (const id of ids) expect(await page.evaluate(id => window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id), id)).toMatchObject({ fraction: 1, width: 48, height: 6 });
   await page.evaluate(async () => { window.__SCENE__!.command('zebra', { hit: { amount: 45 } }); await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
   expect(await page.evaluate(id => window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id), ids[1])).toMatchObject({ fraction: .75, width: 48, height: 6 });
+  const out = 'test-results/epics/E07/phone-bars'; mkdirSync(out, { recursive: true });
+  await page.locator('canvas').screenshot({ path: `${out}/zebra-flamingo-${width}.png` });
+  writeFileSync(`${out}/zebra-flamingo-${width}.json`, JSON.stringify(await page.evaluate(ids => ({ entities: ids.map(id => window.__SS__!.getEntity(id)), bars: window.__SS__!.getState().render.healthBars }), ids), null, 2));
 });

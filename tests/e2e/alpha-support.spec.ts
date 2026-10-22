@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
@@ -46,11 +46,24 @@ test('T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all 
   await page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
   const observed = await page.evaluate(async s => {
     await window.__SS__!.ready; await window.__SCENE__!.load(s);
-    await window.__SCENE__!.step(900); await window.__SCENE__!.ready();
-    return { id: window.__SCENE__!.actors.get('alpha')!.entity, events: window.__SS__!.events() };
+    const lab = window.__SCENE__!, api = window.__SS__!, id = lab.actors.get('alpha')!.entity, samples = [];
+    let frame = 0;
+    for (const at of [190, 250, 260, 266, 267, 280, 300, 314, 322, 330, 350, 378, 440, 500, 548, 900]) {
+      await lab.step(at - frame); frame = at;
+      const body = lab.actors.get('body')?.entity;
+      samples.push({ frame, tick: api.tick(), source: structuredClone(api.getEntity(id)), player: structuredClone(api.getEntity(1)), body: body ? structuredClone(api.getEntity(body)) : null });
+    }
+    await lab.ready();
+    return { id, bodyId: lab.actors.get('body')!.entity, samples, events: api.events() };
   }, spec);
+  mkdirSync('test-results/epics/E07', { recursive: true });
+  writeFileSync('test-results/epics/E07/alpha-merged.json', JSON.stringify(observed, null, 2));
   const activations = observed.events.flatMap(e => e.type === 'infected.special' && e.sourceId === observed.id && e.stage === 'active' ? [e.move] : []);
   expect(new Set(activations)).toEqual(new Set(['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar']));
-  expect(observed.events.some(e => e.type === 'infected.prop-thrown' && e.sourceId === observed.id)).toBe(true);
+  expect(observed.events.some(e => e.type === 'infected.prop-thrown' && e.sourceId === observed.id && e.propId === observed.bodyId)).toBe(true);
   expect(observed.events.some(e => e.type === 'infected.roar-buff' && e.sourceId === observed.id && e.stage === 'active')).toBe(true);
+  // Before protection, all three authored impacts deal their full damage.
+  const hits = observed.events.flatMap(e => e.type === 'combat.hit' && e.tick < 350 && e.sourceId === observed.id && e.targetId === 1 && ['alpha.charge', 'alpha.ground-slam', 'infected.alpha.grab-throw'].includes(e.actionId) ? [e.amount] : []);
+  expect(hits).toEqual([30, 25, 30]);
+  expect(observed.samples.find(s => s.frame === 350)!.player!.health.current).toBe(15);
 });

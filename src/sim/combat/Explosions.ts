@@ -6,6 +6,7 @@ import { SimPhase } from '../../core/EventBus';
 import { blastDamage, explosionDef, type BlastClass, type ExplosionDef } from '../../data/explosions';
 import type { ExplosionBeat } from '../../data/audioEvents';
 import type { SimWorld } from '../world/SimWorld';
+import type { EntitySnapshot } from '../world/types';
 
 export interface BlastOptions {
   /** Entity credited with damage (hazard, car, thrower). Defaults to the player. */
@@ -142,6 +143,21 @@ export class Explosions {
     for (const piece of this.world.hazards?.debris.pieces ?? []) if (piece.until) this.push(d, at, r, piece.body);
     for (const car of this.world.vehicles?.cars.values() ?? []) this.push(d, at, r, car.physics.body);
     for (const part of this.parts) if (part.until) this.push(d, at, r, part.body);
+    // Retained death poses use the existing thrown-body presentation path.
+    // They have no colliders/brains and never deal contact damage. A 70 kg
+    // cosmetic body follows the same radial/upward impulse curve as the props.
+    const query = this.world.combat?.query, candidates = query ? this.candidates(query, at, r) : [];
+    if (d.impulse > 0) for (const e of this.world.entities.iterate()) {
+      if (!e.corpse || !e.infected || e.hidden || e.attachedTo !== undefined || !this.corpseClear(e, e.transform)) continue;
+      if (this.world.infected?.active.some(source => source.infected?.specialAttack?.projectile?.objectId === e.id && source.infected.specialAttack.stage === 'active')) continue;
+      const dx = e.transform.x - at.x, dz = e.transform.z - at.z, distance = Math.hypot(dx, dz);
+      const fade = Math.max(0, Math.min(1, (r - distance) / Math.max(1e-6, r - 1)));
+      if (!fade || query && !this.visible(query, candidates, at, e.transform, e.id)) continue;
+      const horizontal = 1 / d.upward, length = distance ? Math.hypot(horizontal, 1) : 1, speed = d.impulse * fade * massResponse(70);
+      const previous = e.corpseBlast;
+      e.corpseBlast = { delay: 1, x: (previous?.x ?? 0) + (distance ? dx / distance : 0) * horizontal / length * speed,
+        y: (previous?.y ?? 0) + speed / length, z: (previous?.z ?? 0) + (distance ? dz / distance : 0) * horizontal / length * speed };
+    }
   }
   private applyImpulses(): void {
     for (let i = this.pending.length - 1; i >= 0; i--) {
@@ -150,6 +166,26 @@ export class Explosions {
       if (p.body.isValid() && p.body.isEnabled()) p.body.applyImpulse(this.impulse, true);
       this.pending.splice(i, 1);
     }
+    for (const e of this.world.entities.iterate()) {
+      const flight = e.corpseBlast;
+      if (!flight) continue;
+      if (!e.corpse || e.hidden) { delete e.corpseBlast; continue; }
+      if (--flight.delay > 0) continue;
+      e.corpseThrown = true;
+      const next = { x: e.transform.x + flight.x / 60, y: e.transform.y + flight.y / 60 - 9.81 / 7200, z: e.transform.z + flight.z / 60 };
+      if (!this.corpseClear(e, next) || this.world.combat && !this.world.combat.query.visible(e.transform, next)) { next.x = e.transform.x; next.z = e.transform.z; flight.x = flight.z = 0; }
+      flight.y -= 9.81 / 60;
+      const floor = (this.world.districts?.supportBelow(next.x, next.z, Math.max(e.transform.y, next.y) - .7) ?? 0) + .7;
+      if (next.y <= floor && flight.y < 0) { next.y = floor; delete e.corpseBlast; }
+      Object.assign(e.transform, next);
+      this.world.spatial.set(e.id, next.x, next.z);
+    }
+  }
+  /** Match the frozen death pose's feet/head strip (CrowdView.corpsePosition).
+   * Conservatively stop before walls instead of settling a body through one. */
+  private corpseClear(e: EntitySnapshot, at: { x: number; z: number }): boolean {
+    const nav = this.world.infected?.nav;
+    return !nav || nav.clear(at.x, at.z, .38) && nav.clear(at.x - Math.cos(e.transform.yaw) * .9, at.z + Math.sin(e.transform.yaw) * .9, .38);
   }
   /** Doors and hood fly off the wreck as cosmetic bodies (pooled, never more than 12). */
   private detachParts(carId: number): void {
