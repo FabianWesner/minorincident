@@ -3,7 +3,7 @@ import type { CampaignSave } from '../../src/sim/progression/Campaign';
 
 export type Finding = 'depot-clerk' | 'lab-handover' | 'hats-glasses' | 'sitters-benches' | 'l3-gaps' | 'l4-tank';
 export interface TourStop {
-  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'glasses' | 'firestation' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall';
+  id: string; level: string; title: string; setup?: 'depot-contact' | 'depot-return' | 'lab-sign' | 'lab-return' | 'glasses' | 'firestation' | 'l3-finale' | 'l4-alarm' | 'l4-tank-enter' | 'l4-tank-hold' | 'l5-survivor' | 'l5-metro' | 'l6-gate' | 'l6-finale' | 'l7-rocket' | 'l7-corridor' | 'l7-bus' | 'l8-breach' | 'l8-escape' | 'l8-departure' | 'l9-approach' | 'l9-crawl' | 'l9-fall' | 'l10-research' | 'l10-defense';
   checkpoint?: string; anchor?: string; target?: [number, number, number]; findings?: Finding[]; wait?: number;
 }
 export const tour: TourStop[] = [
@@ -38,19 +38,19 @@ export const tour: TourStop[] = [
   { id:'l8-start',level:'L8',title:'Zoo: sanctuary start' },
   { id:'l8-gate',level:'L8',title:'Zoo: breached gate',setup:'l8-breach',anchor:'tunnel-outlet-1' },
   { id:'l8-handover',level:'L8',title:'Zoo: escape route handover',setup:'l8-escape',anchor:'exit' },
-  { id:'l8-finale',level:'L8',title:'Zoo: armored departure',setup:'l8-departure',anchor:'exit' },
+  { id:'l8-finale',level:'L8',title:'Zoo: APC boarding finale',setup:'l8-departure',anchor:'exit' },
   { id:'l9-start',level:'L9',title:'Crossing: transport start' },
   { id:'l9-gate',level:'L9',title:'Crossing: outskirts approach',setup:'l9-approach' },
   { id:'l9-handover',level:'L9',title:'Crossing: crawl clear of the wreck',setup:'l9-crawl' },
   { id:'l9-finale',level:'L9',title:'Crossing: bridge collapse',setup:'l9-fall' },
   { id:'l10-start',level:'L10',title:'Cure: crash start' },
   { id:'l10-gate',level:'L10',title:'Cure: military gate',checkpoint:'cure-military' },
-  { id:'l10-handover',level:'L10',title:'Cure: research handover',checkpoint:'cure-research-entry' },
-  { id:'l10-finale',level:'L10',title:'Cure: dispersal finale',checkpoint:'cure-disperse-ready' },
+  { id:'l10-handover',level:'L10',title:'Cure: research recording and canister pickup',checkpoint:'cure-research-entry',setup:'l10-research' },
+  { id:'l10-finale',level:'L10',title:'Cure: activated dispersal defense',checkpoint:'cure-disperse-ready',setup:'l10-defense' },
 ];
 
 /** Runs in the snapshot's own test harness. Only campaign APIs and ordinary bot inputs move actors. */
-export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop:TourStop; seed:number; save:CampaignSave|null; zoom:number; driveRoute?:readonly (readonly number[])[] }) {
+export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRoute }: { stop:TourStop; seed:number; save:CampaignSave|null; zoom:number; driveRoute?:readonly (readonly number[])[]; walkRoute?:readonly (readonly number[])[] }) {
   const a=window.__SS__!, g=(window.__SCENE__ as unknown as {game:Game}).game;
   await a.ready; a.pause();
   if(save) a.campaign.restore(save);
@@ -70,16 +70,20 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
   const l1=()=>a.missions.state()!.l1!;
   // Walker uses this same public navigation steering; only ordinary input frames move the courier.
   const walkTo=async(target:{x:number;z:number},stopM=1.2)=>{
-    const route={path:[] as number[],goal:-1,pathIndex:0},waypoint={x:0,z:0},started=a.tick();
-    while(true){
-      const p=a.getState().player!.transform;if(Math.hypot(p.x-target.x,p.z-target.z)<=stopM)break;
-      if(a.tick()-started>30000)throw new Error(`Walking tour did not reach ${target.x},${target.z}`);
+    const initial=g.world.entities.get(1)!.transform;
+    if(Math.hypot(initial.x-target.x,initial.z-target.z)<=stopM)return;
+    const route={path:[] as number[],goal:-1,pathIndex:0},waypoint={x:0,z:0},started=a.tick(),frame=structuredClone(g.world.inputFrame);
+    let arrived=false;
+    g.input.feed={scheme:'keyboard',next:()=>{
+      const p=g.world.entities.get(1)!.transform;
+      if(Math.hypot(p.x-target.x,p.z-target.z)<=stopM){arrived=true;frame.move={x:0,z:0};return frame;}
       const ok=g.world.infected!.nav.steer(p,target,route,.45,waypoint,Infinity,true);
-      if(!ok)throw new Error(`No connected walk route to ${target.x},${target.z}`);
+      if(!ok)throw new Error(`No connected walk route from ${p.x},${p.z} to ${target.x},${target.z}`);
       const dx=waypoint.x-p.x,dz=waypoint.z-p.z,d=Math.hypot(dx,dz)||1,speed=Math.min(1,d/1.2);
-      a.input.set({move:{x:dx/d*speed,z:dz/d*speed}});await a.step(6);
-    }
-    a.input.clear();
+      frame.move={x:dx/d*speed,z:dz/d*speed};return frame;
+    }};
+    try{while(!arrived){if(a.tick()-started>30000)throw new Error(`Walking tour did not reach ${target.x},${target.z}: ${JSON.stringify(g.world.entities.get(1)!.transform)}`);await a.step(stopM<=1?6:60);}}
+    finally{g.input.feed=null;a.input.clear();}
   };
   if(stop.setup?.startsWith('depot')||stop.setup?.startsWith('lab')) {
     a.bot.start('complete');
@@ -141,6 +145,24 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
     if(stop.setup==='l9-fall')await seek(()=>g.world.missions!.l9!.state.phase==='fall',2000);
     if(stop.setup==='l9-crawl')await seek(()=>g.world.missions!.l9!.state.phase==='crawl',2000);
   }
+  if(stop.level==='L10'&&stop.checkpoint){
+    // Graph-prefix loading reconstructs inventory/objectives, but does not move the courier to a later region.
+    // Walk the authored road instead of relabelling a crash-area frame as a military/research/finale frame.
+    if(!walkRoute?.length)throw new Error('L10 requires its authored campaign walk route');
+    for(const [x,z] of walkRoute){console.log(`[qa-ab] ${stop.id}: walking to ${x},${z} at tick ${a.tick()}`);await walkTo({x,z},3);}
+    const anchors=g.world.missions!.def.anchors;
+    if(stop.setup==='l10-research'){
+      await walkTo(anchors['cure-terminal'],.8);a.input.set({interact:true});await a.step(45);a.input.clear();
+      if(!a.missions.state()!.states['terminal-read'])throw new Error('Research recording was not reached');
+      await walkTo(anchors['cure-canister'],.8);a.input.set({interact:true});await a.step(45);a.input.clear();
+      if(!a.missions.state()!.states['cure-carried'])throw new Error('Cure canister was not collected');
+    }
+    if(stop.setup==='l10-defense'){
+      await walkTo(anchors['cure-console'],.8);a.input.set({interact:true});await a.step(1);a.input.clear();
+      if(!a.missions.state()!.states['charge-active'])throw new Error('Dispersal defense was not activated');
+      await a.step(120);
+    }
+  }
   if(stop.setup?.startsWith('l4-')) {
     a.missions.completeObjective('quartermaster');await a.step(1);
     if(stop.setup==='l4-alarm') await seek(()=>a.missions.state()!.l4!.turnAt>0,6000);
@@ -172,8 +194,9 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute }: { stop
     l5:state.l5?{phase:state.l5.phase,found:state.l5.found,metroAt:state.l5.metroAt}:null,
     l6:state.l6?{phase:state.l6.phase,leaderX:state.l6.leaderX,leaderZ:state.l6.leaderZ,platform:state.l6.platform}:null,
     l7:g.world.l7Departure?{phase:g.world.l7Departure.state.phase,boarded:g.world.l7Departure.state.boarded.length}:null,
-    l8:g.world.missions?.l8?{breachedAt:g.world.missions.l8.state.breachedAt,escapeCheckpoint:g.world.missions.l8.state.escapeCheckpoint,boarded:g.world.vehicles?.active!==null}:null,
+    l8:g.world.missions?.l8?{breachedAt:g.world.missions.l8.state.breachedAt,escapeCheckpoint:g.world.missions.l8.state.escapeCheckpoint,boarded:g.world.vehicles!.active!==null}:null,
     l9:g.world.missions?.l9?{phase:g.world.missions.l9.state.phase,car:a.getEntity(g.world.missions.l9.state.carId)?.transform}:null,
+    l10:stop.level==='L10'?{carried:state.states['cure-carried'],installed:state.states['cure-installed'],active:state.states['charge-active'],chargeTicks:state.counters['charge-ticks']}:null,
     campaign:{unlocked:a.campaign.state()?.unlockedLevel,completed:a.campaign.state()?.completedLevels,character:a.campaign.state()?.character},player:a.getState().player?.transform};
 }
 

@@ -16,6 +16,8 @@ The npm wrapper reserves one browser through `tools/e2e-lock.sh`, with `E2E_UNIT
 
 The snapshot's own `__SS__` campaign API and the existing Scene Lab camera bridge reach each stop. L1–L4 restore an unlocked L10 campaign fixture to exercise a progressed save. Later levels use their normal progressed campaign boundary. Authored checkpoint graph prefixes, ordinary bot inputs, navigation steering and vehicle inputs advance the game. Actors are never teleported or synthesized. A failed state predicate is reported as **unmeasured**, and the command exits 2.
 
+L9 uses the authored road and the existing keyboard replay feed with the `LevelNineBot` steering policy. L10 graph-prefix loading advances the quest while leaving the courier at the crash start, so its tour walks the authored roads to the military gate and research campus, collects the canister through normal interaction, and activates the dispersal defense at the console. The report records actual positions and controller stages.
+
 - L1: depot contact and return, lab signing and return, bike rack, park and fire station.
 - L2: ride start, bench sitters and accessories.
 - L3: both raised ramp/deck junctions and the actual army pull-back.
