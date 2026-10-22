@@ -89,6 +89,40 @@ test('T-E32-20/27 death restores ready boss/enemy/heat and zero charge; live sav
   } finally { w.dispose(); }
 });
 
+test('T-Q120 death after charge-ready retries at the boss checkpoint with charge retained and boss staged at full health', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true;
+    const console = m.def.anchors['cure-console']!;
+    press(); press(); step(3600);
+    expect(m.state.states['charge-ready']).toBe(true);
+    const staged = { ...w.entities.get(boss.state.id)!.transform }, full = w.entities.get(boss.state.id)!.health.max;
+    w.entities.get(boss.state.id)!.health.current = Math.ceil(full * .2);
+    step();
+    w.tick += 180; w.player!.damage(1000, w.tick);
+    for (let i = 0; i < 400 && w.entities.get(1)!.health.current === 0; i++) step();
+    expect(m.state.checkpoint).toBe('cure-disperse-ready');
+    expect(m.state.counters['charge-ticks']).toBe(3600);
+    expect(m.state.states['charge-active']).toBe(true);
+    expect(w.entities.get(boss.state.id)!.health.current).toBe(full);
+    expect(Math.hypot(w.entities.get(boss.state.id)!.transform.x - staged.x, w.entities.get(boss.state.id)!.transform.z - staged.z)).toBeLessThanOrEqual(.1);
+    expect(Math.hypot(w.entities.get(1)!.transform.x - console.x, w.entities.get(1)!.transform.z - console.z)).toBeLessThanOrEqual(25);
+  } finally { w.dispose(); }
+});
+
+test('T-Q121 damage to the staged Mega Alpha during charge is cleared before the fight and HP bar starts full', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true;
+    press(); press(); step(3599);
+    const entity = w.entities.get(boss.state.id)!;
+    entity.health.current = Math.ceil(entity.health.max * .2);
+    step();
+    expect(m.state.states['charge-ready']).toBe(true);
+    expect(entity.health.current / entity.health.max).toBe(1);
+  } finally { w.dispose(); }
+});
+
 
 test('T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32-AC16 @E32-AC27', async () => {
   const { w, m } = await finale();

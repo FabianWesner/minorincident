@@ -43,7 +43,11 @@ const fresh = (): L1State => ({
 export class LevelOneOutbreak {
   /** PO UAT story beats (clerk, technician, garage rack, fire station). */
   readonly story: L1Story;
-  constructor(private readonly mission: Mission) { this.story = new L1Story(mission); }
+  private lastRespawnTick = -1;
+  constructor(private readonly mission: Mission) {
+    this.story = new L1Story(mission);
+    mission.world.events.on('player.respawned', () => { this.lastRespawnTick = mission.world.tick; });
+  }
   private get l1(): L1State { return this.mission.state.l1!; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
 
@@ -131,6 +135,11 @@ export class LevelOneOutbreak {
   update(): void {
     const { world, state } = this.mission, l1 = state.l1; if (!l1) return;
     const tick = world.tick, player = world.entities.get(1)!, tech = world.entities.get(l1.techId);
+    if (player.health.current > 0 && tick - this.lastRespawnTick > 60 && state.steps.weapon?.status === 'active' && state.checkpoint === 'accident') {
+      const bat = this.anchor('garage-bat'), cp = player.survivor!.checkpoint;
+      const retry = bat && world.solids.find({ x: bat.x, z: bat.z - 8, y: player.transform.y }, .35, 1, 4);
+      if (bat && retry && Math.hypot(cp.x - bat.x, cp.z - bat.z) > 25) this.mission.checkpoint('accident', retry);
+    }
     this.story.update();
     // The technician is script-driven until he turns: ambient civilian logic (alarm, flee) must not move him.
     if (tech?.civilian) { tech.civilian.state = 'calm'; tech.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
