@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, shouldResumePause } from './startup';
-import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
+import { canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
@@ -131,6 +131,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let visibleProgress = new PlaytestProgress(), lastObservation=0;
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
+  let cureConsole: { x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
@@ -233,6 +234,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return true;
     }
     if (ranged.test(e.player?.current ?? '')) {
+      const defending = e.step === 'mega' || e.step === 'hold' && /Charge \d+\/60/.test(e.objective);
+      const dodge = e.player && finaleDodgeGoal(e.level, defending ? e.step : null, e.player, cureConsole, threat);
+      if (dodge && e.player) {
+        const points = await page.evaluate(({ p, goal, enemy }) => {
+          const a = window.__SS__!;
+          return [a.input.project(p, 'player'), a.input.project(goal, 'player'), a.input.project(enemy, 'destination')];
+        }, { p: e.player, goal: dodge, enemy: { x: threat.x, z: threat.z } });
+        await releaseAim(); await page.mouse.move(points[2].x, points[2].y);
+        const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+        await press([...keys, 'Space']);
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, keys, enemy: threat.id }); }
+        return true;
+      }
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
       // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
       if (keysDown.has('Space')) await press([]);
@@ -436,6 +450,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (Date.now() - lastRingRead > 2000 && !(e.marker === null || !e.marker.visible)) { lastRingRead = Date.now(); const r = await markerRing(); if (r) ring = r; }
     if (`${e.step}|${e.marker?.anchor}` !== ringKey) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; log({ marker: e.marker?.anchor, ring }); }
+    if (e.level === 'L10' && e.step === 'hold' && ring) cureConsole = { x: ring.x, z: ring.z };
     if (e.level === 'L6') {
       if (/help the injured survivor/.test(e.objective)) { fetchHint = await markerRing(); escort = null; }
       else if (/Bring the injured survivor/.test(e.objective) && !escort && fetchHint) {
