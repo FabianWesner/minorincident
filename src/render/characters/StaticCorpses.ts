@@ -220,6 +220,9 @@ export class StaticCorpses extends Group {
     // Placement lives in instance matrices. The page transform is permanently identity;
     // avoid composing it again for every retained spatial/appearance page each frame.
     mesh.matrixAutoUpdate = false;
+    // Intact silhouettes cover much more ground than blast remnants. Write
+    // their opaque depth first so the ground underneath needs no shading.
+    if (!frozen.material.transparent && frozen.material.depthWrite) mesh.renderOrder = -1;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => probe.draw();
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
