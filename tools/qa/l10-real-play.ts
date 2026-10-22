@@ -94,7 +94,7 @@ try {
     const pages: unknown[] = [];
     g.view.scene.traverse(o => {
       const m = o as import('three').InstancedMesh;
-      if (m.name.startsWith('corpses:') && m.count) pages.push({ name: m.name, instances: m.count, vertices: m.geometry.getAttribute('position').count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, source: m.geometry.userData, precomputedNormals: m.geometry.hasAttribute('_placementNormal0') });
+      if (m.name.startsWith('corpses:') && m.count) pages.push({ name: m.name, order: m.renderOrder, instances: m.count, vertices: m.geometry.getAttribute('position').count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, source: m.geometry.userData, precomputedNormals: m.geometry.hasAttribute('_placementNormal0') });
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), nativePerformance, perf: a.perf() };
   }, { tier, realTime });
