@@ -45,3 +45,11 @@ The current-product four-file Alpha/physical/support/L4-systems run initially ha
 The targeted remote `PO #21b` browser run exhausted its existing 300-second timeout in initial checkpoint reconstruction (`step(65)`), before any Sam→Mia route action. This is **not route acceptance evidence**. [Result](evidence/sam-mia-remote-before.json.gz), [log](evidence/sam-mia-remote-before.log.gz). A fresh native route is still required after 09:15 UTC.
 
 The full `npm run test:unit -- --maxWorkers=4` remote run also completed successfully on runner `94.130.181.173`: **1,871 passed, zero failed, seven existing pending**, 348.40 seconds, exit 0. [Receipt](evidence/full-unit-summary.json), [raw JSON](evidence/full-unit.json.gz), [log](evidence/full-unit.log.gz). This run includes the updated five-load policy and verification tooling's unit coverage; it does not execute their browser measurements.
+
+## Clarified L6 population preflight
+
+A remote Node test mirrors the shipping perf fixture's preparation, including the real complete bot, retained dead infected, staged followers, existing deficit fill and exact final thirty ticks. Both tiers pass: **26 moving adult survivors, high 40 / low 30 infected, emergency and headlamp active**, tick 8,124. This proves population feasibility, not native performance. [High](evidence/l6-population-high.json), [low](evidence/l6-population-low.json), [test](evidence/l6-population.json.gz), [log](evidence/l6-population.log.gz).
+
+Native L5/L6 budget instrumentation now checks the actual follow rig at 0.5× / 1× / 1.5× without advancing the paused peak population. It retains the original draw/triangle, awake-prop, hero-light, shadow-map, particle/gib/puff/chunk limits; native samples also retain per-step sim p95. L6 additionally records collected heap and requires the measurement to end in L6. These are additional gates, not accepted results. The query-gated camera test API gained an immediate zoom method solely for this matrix.
+
+The verifier now classifies corrected-bus pixel smoothness and the new Alpha captures as native visual checks. E22/E23/E24 split-selection regression checks pass remotely (four tooling tests total), preserving one native worker and remote functional/simulation commands. [Tooling result](evidence/verify-tooling.json.gz), [log](evidence/verify-tooling.log.gz).

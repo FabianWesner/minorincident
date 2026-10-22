@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { readSpec } from '../../../tools/scenelab/session';
 import { boot, expect, test } from '../fixtures';
 
-test.use({ isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
+test.use({ isMobile: true, hasTouch: true, deviceScaleFactor: 1, headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } });
 for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 'low'] as const) {
   test(`T-E24-18-phone-panel @E24-AC18 gate prompt clears the phone HUD ${backend} ${tier}`, async ({ page }) => {
     test.setTimeout(300_000);
