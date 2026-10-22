@@ -16,11 +16,11 @@ Extended checkpoint14:52UTC; native continuation is still running. **7/31 met.**
 | E29-AC15 | **unmeasured** | Departure music regression/adapter passes; complete actual-route phase/mix/caption proof missing. |
 | E29-AC17 | **red** | Actual input reachesL8 but all24followers die; complete rocket/Alpha/boarding photo pairs missing. |
 | E29-AC18 | **red** | Current A4/D6/E5/G4; H unmeasured and required pairs missing. Not accepted. |
-| E29-AC19 | **red** | Earlier horde frame18.1>16.7ms, low sim6.8>6, rocket425.53/268.25MB red; fresh native repeat unmeasured. |
-| E29-AC20 | **red** | Previous whole performance gate red; fresh blast/transition≤50ms and≤10% lifecycle unmeasured. |
+| E29-AC19 | **unmeasured** | Earlier horde frame18.1>16.7ms, low sim6.8>6, rocket425.53/268.25MB red; fresh native repeat unmeasured. |
+| E29-AC20 | **unmeasured** | Previous whole performance gate red; fresh blast/transition≤50ms and≤10% lifecycle unmeasured. |
 | E30-AC05 | **unmeasured** | Both stale wide-zoom clipping rows now60/60frames with zero intersections; full sanctuary scored signoff missing. |
 | E30-AC10 | **red** | Shared bar/move proof inspected; stampede nominal1.5m versus physical contact~.82m needs explicit wording decision. Full in-level pairs incomplete. |
-| E30-AC15 | **unmeasured** | 36/36 player views≥3.096977:1; bars≥3.0861 and40 species frames inspected. Complete accessibility matrix missing. |
+| E30-AC15 | **red** | 36/36 player views≥3.096977:1; bars≥3.0861 and40species frames inspected. Associated E18 phone4×CPU budgets fail38.7/8.3ms against33.3/6; complete accessibility matrix unmeasured. |
 | E30-AC16 | **unmeasured** | Phase resolver/pause/focus/voice-cap subchecks pass; whole real-input phase/mix/caption proof missing. |
 | E30-AC18 | **unmeasured** | Real APC bug fixed locally:21 remote regressions and native keyboard/touch12/12boarding pass. Complete nine§6 photo spots/settings missing. |
 | E30-AC19 | **red** | Current A5/C5/D6/E4/G5; all40species frames inspected, night fur/material and whole sanctuary/threat/escape must items fail. |
@@ -34,6 +34,6 @@ Extended checkpoint14:52UTC; native continuation is still running. **7/31 met.**
 | E32-AC09 | **met** | Fresh inherited13move/6bar and4/4native regular/Mega cases; all4photos inspected. Three assetLOD same-height contracts pass. |
 | E32-AC29 | **unmeasured** | Keyboard/mouse-only/touch mounted-gun subchecks pass; whole seven-region carry/checkpoint/charge/release/ending input aggregate and photo pairs incomplete. |
 | E32-AC30 | **red** | Final pose/radius-checked collector4/4passes;128source frames inspected. RegionA4/5/6/4/5/4/5; C6/D6/F6/G4; H unmeasured. Not accepted. |
-| E32-AC31 | **unmeasured** | Alpha/dog2/2 and initial arena8/8terminal pass; fresh formal arena repeat and remaining native suites running. Real iOS/Android remain unmeasured/PO-owned. |
+| E32-AC31 | **red** | Alpha/dog2/2, arena8/8 and actual mixed-assault8/8pass (peaks168/87). Campus/corridor R6 eligibility fails70<80 in completed high cases despite passing measured frame/sim caps. Remaining native files and physical iOS/Android are unmeasured. |
 
 Source receipts, captures and unadopted rewrites: [audit report](README.md), [machine ledger](evidence/partial-ac-inventory.json). E30-AC13 (outside the31 starting partials) is restored met by the local APC fix and both native12/12 routes.

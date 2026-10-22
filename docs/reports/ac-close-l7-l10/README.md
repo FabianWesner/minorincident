@@ -348,3 +348,15 @@ The remaining native batch completes3/3cases (all fail, exit1), supplementing th
 ## 15:24UTC — WebGL low dressed-route timeout, seven measured samples
 
 The original300s gate expires (native exit1); the final raw file contains **7/15** samples, including the last countryside/zoom0.5 sample written at termination. The eight remaining samples are **unmeasured**. All seven measured heaps fail250MB (260.056–265.817MB); framep95≤13.2ms and simp95≤2.9ms pass the33.3/6ms limits. [Raw rows](evidence/l9-dress-native-metrics.json.gz), [command receipt](evidence/native-E31-dress-remaining-webgl-low-receipt.json.gz), [original reporter](evidence/native-E31-dress-remaining-webgl-low-playwright.json.gz). No timeout increase or missing-row extrapolation.
+
+## 15:29UTC — L10 actual mixed assault,8/8pass
+
+The quiet native file completes all backend/tier/zoom cases, exit0. [Original receipt](evidence/native-E32-l10-assault-budgets-all-receipt.json.gz), [reporter](evidence/native-E32-l10-assault-budgets-all-playwright.json.gz), [all spot metrics](evidence/l10-assault-native-metrics.json.gz). Peaks168/87 infected meet the actual mixed-crowd gates; each of the three spot cameras asserts its actual zoom, all E18 frame/sim/draw/triangle/chunk/JS caps pass. The current arena file also passes8/8 but has0infected; these two scopes are not conflated. Whole AC31 is still unmeasured for its other native suites and real phones.
+
+## 15:34UTC — both high-tier dressed-route matrices pass
+
+WebGPU high completes15/15 region×zoom samples, native exit0 ([receipt](evidence/native-E31-dress-remaining-webgpu-high-receipt.json.gz), [reporter](evidence/native-E31-dress-remaining-webgpu-high-playwright.json.gz)). Combined with the earlier WebGL high15/15pass, both high backends are complete under original caps and200infected. WebGL low is7measured/red,8unmeasured after300s; WebGPU low remains queued. [All current rows](evidence/l9-dress-native-metrics.json.gz). AC19 remains red from low heap, retention and cold handover. AC15 of E30 is explicitly labelled red because its required associated E18 phone budget fails, although player/bar contrast passes; missing accessibility proof remains separately unmeasured.
+
+## 15:42UTC — campus/corridor8/8red: population eligibility
+
+All backend/tier/zoom cases complete, exit1. [Receipt](evidence/native-E32-l10-campus-corridor-budgets-all-receipt.json.gz), [original reporter](evidence/native-E32-l10-campus-corridor-budgets-all-playwright.json.gz), [all seven-spot metrics per case](evidence/l10-campus-native-metrics.json.gz). The R6/x3317 resident depth peak is70high/46low, below the unchanged80/50 minima in every case. Recorded framep95≤5.5ms, simp95≤1.1ms and heaps fit their numerical caps (low≤249.000MB), but the test stops at population eligibility before later assertions. This does not establish performance at the demanded load. Cause (fixture setup versus residency/admission) is unresolved; no extra enemies, difficulty change or lower minimum is applied. AC31 is red, while its later native files/devices remain separately unmeasured.

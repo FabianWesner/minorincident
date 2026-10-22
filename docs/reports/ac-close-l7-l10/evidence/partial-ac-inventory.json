@@ -146,16 +146,18 @@
       "disposition": "pending",
       "baselineEvidence": "Current native Metal run: **4 pass / 2 fail**. Low horde frame/sim p95 **33.7/6.9 ms** vs **33.3/6**; high rocket heap **420.17 MiB** vs 400. District high/low and high horde/low rocket pass. Rocket/district use legacy `perf().heapBytes`/MiB; horde uses CDP JS `usedSize`/MB, so the figures are not directly interchangeable.; newer: [native-results.json](../l7-entry/evidence/native-results.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Fix measured high horde frame18.1>16.7, low sim6.8>6 and rocket heaps425.53/268.25>400/250; repeat native cap sweep.",
-      "result": "red",
-      "currentEvidenceSummary": "Earlier horde frame18.1>16.7ms, low sim6.8>6, rocket425.53/268.25MB red; fresh native repeat unmeasured."
+      "result": "unmeasured",
+      "currentEvidenceSummary": "Earlier horde frame18.1>16.7ms, low sim6.8>6, rocket425.53/268.25MB red; fresh native repeat unmeasured.",
+      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)"
     },
     {
       "ac": "E29-AC20",
       "disposition": "pending",
       "baselineEvidence": "Current low horde **33.7 ms** misses its 33.3 ms frame p95; other native L7 cases pass frame limits. No E29-AC20 fixture covers the full disposal/settings contract.; newer: [l7-lifecycle.spec.ts](../../../tests/perf/l7-lifecycle.spec.ts), [README.md](../l7-entry/README.md)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Run native peak/\u226450 ms transition-blast and \u226410% resource lifecycle/accessibility tests; latest complete epic performance gate is red.",
-      "result": "red",
-      "currentEvidenceSummary": "Previous whole performance gate red; fresh blast/transition\u226450ms and\u226410% lifecycle unmeasured."
+      "result": "unmeasured",
+      "currentEvidenceSummary": "Previous whole performance gate red; fresh blast/transition\u226450ms and\u226410% lifecycle unmeasured.",
+      "lastMeasuredResult": "red (historical sweep; current native repeat not completed)"
     },
     {
       "ac": "E30-AC05",
@@ -186,14 +188,14 @@
       "disposition": "pending",
       "baselineEvidence": "`T-E07-19-bars`, `T-E30-09-*-browser`, shared `health-bars.spec.ts`; L8 lighting preset.",
       "requiredProof": "**M; browser** \u2014 Measure whole-level player \u22653:1 and all infected bars/occlusion/phone/accessibility in required matrix.",
-      "currentEvidenceSummary": "36/36 player views\u22653.096977:1; bars\u22653.0861 and40 species frames inspected. Complete accessibility matrix missing.",
+      "currentEvidenceSummary": "36/36 player views\u22653.096977:1; bars\u22653.0861 and40species frames inspected. Associated E18 phone4\u00d7CPU budgets fail38.7/8.3ms against33.3/6; complete accessibility matrix unmeasured.",
       "remaining": "All-species day/night photos now inspected; complete accessibility setting proof and E18 phone4xCPU budget remain open.",
       "currentEvidence": [
         "zoo-readability-after.json.gz",
         "native-input-images.json"
       ],
       "review": "36/36 player views\u22653.096977:1; bars\u22653.0861 and40 species frames inspected. Complete accessibility matrix missing.",
-      "result": "unmeasured"
+      "result": "red"
     },
     {
       "ac": "E30-AC16",
@@ -289,7 +291,7 @@
       "baselineEvidence": "`tests/perf/l9-{dress,handover-budgets}.spec.ts`; `T-E31-19-S4`, streaming units; Q3 native six cases previously pass.; newer: [idle-crossing-200.json](../postmerge-10/evidence/idle-crossing-200.json)",
       "requiredProof": "**M; browser + quiet perf** \u2014 Node residency timing now passes; finish live route/floor/crash high/low frames, \u226450 ms hitches and five warmed heap/GPU round trips \u226410%.",
       "currentEvidenceSummary": "Corrected crash8/8red: cold-load max2747\u20133081ms; handover2/2passes. All four five-cycle retention cases complete/red: low JS peaks260.111/257.342MB>250; embedder growth21.36\u201323.86%>10%. JS/GPU drift\u22644.26%. Remaining dressed-route configs queued.",
-      "remaining": "Dressed-route remaining configurations queued; measured hitch/heap/retention failures require repair. Timing-window proposal remains unadopted.",
+      "remaining": "Dressed high both backends15/15pass each. WebGL low7/15measured red (heap260.056\u2013265.817MB),8unmeasured after300s. WebGPU low running. Cold-load/retention/heap failures require repair; timing proposal unadopted.",
       "result": "red",
       "currentEvidence": [
         "l9-crash-native-final-metrics.json.gz",
@@ -347,19 +349,19 @@
       "disposition": "pending",
       "baselineEvidence": "Nine E32 native suites now selected after verifier fix; current isolated Mega-special 200-infected sim p95 **4.196 ms > 4 ms**, low tier passes; sim/LOD/cure counters and prior native samples do not erase this failure.; newer: [final-vitest.json](../postmerge-10/evidence/final-vitest.json)",
       "requiredProof": "**L; browser + quiet perf** \u2014 Complete native regions/assault/mist/pullout high/low caps, \u226450 ms transitions and five-cycle retention; physical iOS/Android \u226530 fps still required.",
-      "currentEvidenceSummary": "Alpha/dog2/2 and initial arena8/8terminal pass; fresh formal arena repeat and remaining native suites running. Real iOS/Android remain unmeasured/PO-owned.",
+      "currentEvidenceSummary": "Alpha/dog2/2, arena8/8 and mixed-assault8/8pass (168/87infected). Campus8/8red: R6population70/46<80/50; recorded caps fit but remaining assertions do not execute. Later native files and real phones unmeasured.",
       "remaining": "**Partial:** native caps/hitches/retention remain; physical iOS/Android need PO devices. Desktop emulation is proposed separately and not substituted. [Receipt](../ac-close-l7-l10/README.md#complete-selected-node-repeat--0900-utc).",
       "proposedRewrite": "Retain the real iOS/Android\u226530fps p50 gate as PO-device acceptance with model/OS/browser/route/tier/sample duration/p50 evidence. While awaiting devices, record a separately labelled390\u00d7844/4\u00d7CPU desktop-emulation proxy at unchanged\u226530fps p50, without claiming it as the device result.",
       "reason": "Physical devices cannot be accessed here. Proposal awaits PO; emulation is not substituted for acceptance.",
-      "result": "unmeasured"
+      "result": "red"
     }
   ],
   "updatedAt": "2026-10-22T13:45:00Z",
   "metCount": 5,
-  "checkpointUTC": "2026-10-22 14:52",
+  "checkpointUTC": "2026-10-22 15:39",
   "resultMeaning": {
     "met": "complete criterion evidenced",
-    "red": "measured failure or required feature absent; may also contain missing proof",
+    "red": "current measured gate failure or required feature absent; missing subchecks may also remain",
     "unmeasured": "criterion not fully evidenced; passing subchecks do not close it"
   }
 }
