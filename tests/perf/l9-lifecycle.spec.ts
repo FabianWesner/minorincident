@@ -27,9 +27,19 @@ for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']
       readings.push({ cycle, ...state, ...heap });
       writeFileSync(`${out}/${backend}-${quality}.json`, JSON.stringify({ warmup: 'one L9/L10/L9 trip before baseline', readings }, null, 2));
       expect(state.scenario).toBe('L9'); expect(state.backend).toBe(backend); expect(state.quality).toBe(quality);
-      expect(heap.heapMB).toBeLessThanOrEqual(quality === 'high' ? 400 : 250);
+      expect.soft(heap.heapMB).toBeLessThanOrEqual(quality === 'high' ? 400 : 250);
       for (const key of ['heapMB', 'geometries', 'textures'] as const)
-        expect(Math.abs(readings[cycle][key] - readings[0][key]) / Math.max(1, readings[0][key]), `cycle ${cycle} ${key}`).toBeLessThanOrEqual(.10);
+        expect.soft(Math.abs(readings[cycle][key] - readings[0][key]) / Math.max(1, readings[0][key]), `cycle ${cycle} ${key}`).toBeLessThanOrEqual(.10);
+      // Retention includes the other reported memory domains; none is hidden
+      // by passing only Runtime.usedSize. Soft gates retain all five readings.
+      for (const key of ['backingStorageSize', 'embedderHeapUsedSize'] as const) {
+        const initial = readings[0].heapAudit[key], current = heap.heapAudit[key];
+        expect.soft(typeof current, key).toBe('number');
+        if (typeof initial === 'number' && typeof current === 'number')
+          expect.soft(Math.abs(current - initial) / Math.max(1, initial), `cycle ${cycle} ${key}`).toBeLessThanOrEqual(.10);
+      }
+      if (heap.legacyHeapAfterCollection !== null && readings[0].legacyHeapAfterCollection !== null)
+        expect.soft(Math.abs(heap.legacyHeapAfterCollection - readings[0].legacyHeapAfterCollection) / Math.max(1, readings[0].legacyHeapAfterCollection), `cycle ${cycle} legacy heap`).toBeLessThanOrEqual(.10);
     }
     await page.screenshot({ path: `${out}/${backend}-${quality}.png` });
   });

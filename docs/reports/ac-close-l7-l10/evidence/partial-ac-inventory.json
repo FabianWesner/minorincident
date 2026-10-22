@@ -4,9 +4,15 @@
   "criteria": [
     {
       "ac": "E25-AC01",
-      "disposition": "pending",
+      "disposition": "met",
       "baselineEvidence": "`test-results/epics/E25/spike.md`; `T-E25-01` in `tests/visual/e25-closure.spec.ts`; production `src/render/Lighting.ts` follows field + promoted spotlight decision.; newer: [e25-deferred.spec.ts](../../../tests/visual/e25-deferred.spec.ts)",
-      "requiredProof": "**M; browser + quiet perf** \u2014 Complete comparative WebGPU DynamicLighting/ClusteredLighting screenshots and counters; T-E25-01-GPU still fixme."
+      "requiredProof": "**M; browser + quiet perf** \u2014 Complete comparative WebGPU DynamicLighting/ClusteredLighting screenshots and counters; T-E25-01-GPU still fixme.",
+      "currentEvidence": [
+        "spike-summary.json",
+        "spike-comparisons.json.gz",
+        "e25-native-repeat-result.json.gz"
+      ],
+      "review": "Opened all6 current WebGPU frames. Canonical decision keeps common field+shadowed spot; full counters/timing domains and unequal-output/stress clipping limitations recorded. Production code follows decision."
     },
     {
       "ac": "E25-AC10",

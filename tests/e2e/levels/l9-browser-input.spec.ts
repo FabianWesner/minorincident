@@ -58,8 +58,8 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${out}/${name}-start.png` });
     const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);
-    expect(floorRead.pairs.length).toBeGreaterThanOrEqual(3);
-    expect(floorRead.navigation).toBeGreaterThanOrEqual(3);
+    expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);
     const cdp = await context.newCDPSession(page);
     const origin = { x: 90, y: page.viewportSize()!.height - 240 };
     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {
@@ -130,10 +130,10 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1
     expect(await page.evaluate(() => window.__SS__!.audio.snapshot().cues.some(c => c.sourceId === 1 && c.cue.startsWith('footstep.survivor.')))).toBe(true);
     await page.screenshot({ path: `${out}/${name}-crawl.png` });
     const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);
-    expect(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);
-    expect(crawlRead.navigation).toBeGreaterThanOrEqual(3);
-    expect(crawlRead.playerPixels).toBeGreaterThan(100);
-    expect(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);
+    expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);
+    expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);
+    expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);
     await tick(page, 400);
     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
