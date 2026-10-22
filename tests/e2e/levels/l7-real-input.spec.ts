@@ -8,24 +8,50 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
   test.setTimeout(1_200_000);
   const out = 'test-results/epics/E29/real-input'; mkdirSync(out, { recursive: true });
   await boot(page, '/?test=1&scenelab=1&renderer=webgl&ui=1&quality=high&audio=muted&dpr=1');
-  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 1, progression: 'L7-default' }); a.pause(); a.camera.follow(); });
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 1, progression: 'L7-default' }); a.pause(); a.camera.follow(); a.settings.set({ captions: true, muted: false }); await a.audio.unlock(); });
   const step = (n: number) => page.evaluate(async n => { const a = window.__SS__!; if (a.getState().scenario === 'L7') { a.pause(); await a.step(n); } }, n);
-  const shot = async (name: string) => { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/${name}.png` }); };
+  type Pose = { position: [number, number, number]; target: [number, number, number] };
+  const captures: unknown[] = [];
+  const shot = async (name: string, pose?: Pose): Promise<Pose> => {
+    const state = await page.evaluate(async pose => {
+      const a = window.__SS__!; if (pose) a.camera.cinematic(pose, true); await a.screenshotReady();
+      return { tick: a.tick(), camera: a.getState().render.camera, scenario: a.getState().scenario, player: a.getEntity(1)!.transform, audio: a.audio.snapshot() };
+    }, pose);
+    await page.screenshot({ path: `${out}/${name}.png` }); captures.push({ name, ...state });
+    writeFileSync(`${out}/captures.json`, JSON.stringify(captures, null, 2));
+    if (pose) await page.evaluate(() => { const a = window.__SS__!; a.camera.follow(); const rig = (window.__SCENE__ as unknown as { game: Game }).game.view.view; rig.reset(a.getEntity(1)!.transform); });
+    return { position: state.camera.position as Pose['position'], target: state.camera.target as Pose['target'] };
+  };
   await shot('night-exit');
   const route = [{ x: 233, z: 15 }, { x: 173, z: 15 }, { x: 113, z: 15 }, { x: 88, z: 15 }, { x: 88, z: 46 }, { x: 30, z: 46 }, { x: -30, z: 46 }, { x: -70.5, z: 47.5 }];
   let index = 0, armed = false, corridor = false, fired = false;
+  let crowdPose: Pose | undefined, hordePose: Pose | undefined, crowdAfter = false, alphaShot = false, plazaShot = false, boardingShot = false;
   for (let i = 0; i < 4000; i++) {
     const s = await page.evaluate(() => {
-      const a = window.__SS__!, s = a.getState(), p = s.player!.transform;
+      const a = window.__SS__!, s = a.getState();
+      // The ordinary campaign handover briefly unloads the retired L7 player.
+      // Finish observing this route before reading that absent entity.
+      if (s.scenario !== 'L7' || !s.player) return null;
+      const p = s.player.transform;
       const distance = (at: { x: number; z: number }) => Math.hypot(at.x - p.x, at.z - p.z);
       const pickup = a.query({}).find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
-      const enemy = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 24 && a.input.visible(e.transform)).sort((a, b) => distance(a.transform) - distance(b.transform))[0];
-      return { scenario: s.scenario, p, pickup: pickup?.transform, enemy: enemy?.transform, checkpoint: a.missions.state()?.checkpoint, l7: s.l7, bus: s.l7Departure, hp: s.player!.health.current };
+      const infected = a.query({ kind: 'infected' });
+      const enemy = infected.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 24 && a.input.visible(e.transform)).sort((a, b) => distance(a.transform) - distance(b.transform))[0];
+      const alphaVisible = infected.some(e => e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && distance(e.transform) < 24 && a.input.visible(e.transform));
+      const selected = s.player.weapons!.RIGHT, weapon = selected.rack[selected.index].id;
+      const rosterIds = s.l7!.roster.map(r => r.id);
+      const rosterHits = a.events().filter(e => e.type === 'combat.hit' && rosterIds.includes(e.targetId));
+      return { scenario: s.scenario, p, pickup: pickup?.transform, enemy: enemy?.transform, weapon, rosterHits, alphaVisible, exploded: a.events().some(e => e.type === 'explosion' && e.defId === 'explosion.rocket'), checkpoint: a.missions.state()?.checkpoint, l7: s.l7, bus: s.l7Departure, hp: s.player!.health.current };
     });
-    if (s.scenario === 'L8') break;
+    if (!s) break;
     expect(s.hp).toBeGreaterThan(0);
     if (!s.pickup && !armed) { armed = true; await shot('rocket-pickup'); }
-    if (s.checkpoint === 'corridor' && !corridor) { corridor = true; await shot('final-horde-before'); }
+    if (s.checkpoint === 'corridor' && !corridor) { corridor = true; await shot('evacuation-corridor'); hordePose = await shot('final-horde-before'); }
+    if (armed && s.enemy && !crowdPose) crowdPose = await shot('rocket-crowd-before');
+    if (crowdPose && s.exploded && !crowdAfter) { await shot('rocket-crowd-after', crowdPose); crowdAfter = true; }
+    if (s.alphaVisible && !alphaShot) { await shot('alpha-line'); alphaShot = true; }
+    if (s.p.x < 8 && s.p.x > -15 && s.p.z > 40 && !plazaShot) { await shot('ruined-plaza'); plazaShot = true; }
+    if (s.bus?.phase === 'boarding' && !boardingShot) { if (hordePose) await shot('final-horde-after', hordePose); await shot('bus-boarding'); boardingShot = true; }
     if (s.bus?.phase === 'departing') { await shot('burning-skyline-start'); await step(420); await shot('burning-skyline-end'); await step(120); continue; }
     if (!s.pickup && index < route.length - 1 && Math.hypot(s.p.x - route[index].x, s.p.z - route[index].z) < 3) index++;
     const goal = s.pickup ?? route[index], dx = goal.x - s.p.x, dz = goal.z - s.p.z, d = Math.hypot(dx, dz);
@@ -53,7 +79,9 @@ test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and
     await page.keyboard.up('k');
     if (i % 100 === 0) writeFileSync(`${out}/progress.json`, JSON.stringify({ i, index, state: s }, null, 2));
   }
+  await page.waitForFunction(() => { const s = window.__SS__!.getState(); return s.scenario === 'L8' && !!s.player; });
   expect(armed).toBe(true); expect(corridor).toBe(true); expect(fired).toBe(true);
+  expect(crowdAfter).toBe(true); expect(alphaShot).toBe(true); expect(plazaShot).toBe(true); expect(boardingShot).toBe(true);
   expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L8');
   await shot('zoo-arrival');
 });
@@ -84,7 +112,16 @@ test.describe('L7 phone controls', () => {
     const out = 'test-results/epics/E29/real-input'; mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/phone-rocket.png` });
     // The desktop test owns the continuous cross-city route. This checkpoint
     // fixture isolates the same touch movement adapter at the corridor entrance.
-    await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: -23, z: 47 }); a.camera.follow(); await a.step(1); });
+    await page.evaluate(async () => {
+      const a = window.__SS__!, origin = a.getEntity(1)!.transform, target = { x: -23, z: 47 };
+      // Move the escort with this isolated touch fixture; the production reach
+      // objective still requires every living follower within eighteen metres.
+      for (const r of a.getState().l7!.roster.filter(r => r.status === 'following')) {
+        const p = a.getEntity(r.id)!.transform;
+        a.teleport(r.id, { x: p.x + target.x - origin.x, z: p.z + target.z - origin.z });
+      }
+      a.teleport('player', target); a.camera.follow(); await a.step(1);
+    });
     await move({ x: -31, z: 47 }, 1);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('corridor');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);

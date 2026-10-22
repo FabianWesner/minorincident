@@ -23,7 +23,7 @@ export type BarricadeEvent = { type: 'barricade.damaged'; tick: number; id: numb
 /** Coverage, brace/board/repair and blocker lifecycle. Uses E11 interactions and E07 damage/navigation. */
 export class Barricades {
   private readonly detour: number[] = [];
-  private readonly obstacles: [EntitySnapshot, CoverWall][] = [];
+  private readonly obstacles: [EntitySnapshot, CoverWall, number][] = [];
   private obstacleTick = -1;
   private readonly decisions = new Map<number, { until: number; id: number; attack: boolean; goalX: number; goalZ: number }>();
   constructor(private readonly world: SimWorld) {
@@ -184,14 +184,24 @@ export class Barricades {
   attackTarget(attacker: EntitySnapshot, goal: { x: number; z: number }): EntitySnapshot | undefined {
     if (this.obstacleTick !== this.world.tick) {
       this.obstacleTick = this.world.tick; this.obstacles.length = 0;
-      for (const e of this.world.entities.iterate()) if (e.barricade?.intact) this.obstacles.push([e, this.wall(e)]);
-      for (const [id, wall] of this.world.props?.navWalls ?? []) { const e = this.world.entities.get(id); if (e && e.health.current > 0) this.obstacles.push([e, wall]); }
+      for (const e of this.world.entities.iterate()) if (e.barricade?.intact) {
+        const wall = this.wall(e); this.obstacles.push([e, wall, Math.hypot(wall.halfX, wall.halfZ)]);
+      }
+      for (const [id, wall] of this.world.props?.navWalls ?? []) { const e = this.world.entities.get(id); if (e && e.health.current > 0) this.obstacles.push([e, wall, Math.hypot(wall.halfX, wall.halfZ)]); }
     }
-    for (const [e, wall] of this.obstacles) {
-      const dx = goal.x - attacker.transform.x, dz = goal.z - attacker.transform.z, length = Math.hypot(dx, dz);
-      const projection = ((wall.x - attacker.transform.x) * dx + (wall.z - attacker.transform.z) * dz) / Math.max(.01, length * length);
-      const cross = Math.abs((wall.x - attacker.transform.x) * dz - (wall.z - attacker.transform.z) * dx) / Math.max(.01, length);
-      if (projection <= 0 || projection >= 1 || cross > Math.hypot(wall.halfX, wall.halfZ)) continue;
+    if (!this.obstacles.length) return;
+    // The attack segment is constant across this scan, and wall radii are
+    // constant for the tick's obstacle list. Dense hordes used to recompute
+    // both hypotenuses for every attacker/obstacle pair.
+    const ax = attacker.transform.x, az = attacker.transform.z;
+    const dx = goal.x - ax, dz = goal.z - az, length = Math.hypot(dx, dz);
+    const along = Math.max(.01, length * length), across = Math.max(.01, length);
+    for (const [e, wall, radius] of this.obstacles) {
+      const wx = wall.x - ax, wz = wall.z - az;
+      const projection = (wx * dx + wz * dz) / along;
+      if (projection <= 0 || projection >= 1) continue;
+      const cross = Math.abs(wx * dz - wz * dx) / across;
+      if (cross > radius) continue;
       const cache = this.decisions.get(attacker.id);
       if (cache && cache.id === e.id && cache.until > this.world.tick && Math.hypot(cache.goalX - goal.x, cache.goalZ - goal.z) < 1) { if (cache.attack) return e; continue; }
       const nav = this.world.infected!.navigation.grid(attacker.transform);

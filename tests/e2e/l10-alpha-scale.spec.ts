@@ -26,5 +26,6 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T
   // PO #23: each Alpha family draws through one of its look batches (inf.alpha, inf.alpha-worker, ...; inf.mega-alpha, inf.mega-alpha-ashen, ...).
   for (const family of [/^inf\.alpha(-|$)/, /^inf\.mega-alpha(-|$)/]) expect(batches.some(b => family.test(b.id) && b.instances > 0 && b.source === 'glb')).toBe(true);
   mkdirSync('test-results/epics/E32/l10-alpha-contracts', { recursive: true });
+  await page.locator('canvas').screenshot({ path: `test-results/epics/E32/l10-alpha-contracts/scale-${tier}-${zoom}.png` });
   writeFileSync(`test-results/epics/E32/l10-alpha-contracts/scale-${tier}-${zoom}.json`, JSON.stringify(proof, null, 2));
 });

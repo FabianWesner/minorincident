@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 }, { width: 844, height: 390 }]) {
-  for (const move of ['charge', 'ground-slam'] as const) test(`T-E07-06-${move}-${viewport.width} @E07-AC05 @E07-AC06 real Scene Lab telegraph, impact and hurt`, async ({ page }) => {
+  for (const move of ['charge', 'ground-slam'] as const) test(`T-E07-06-${move}-${viewport.width} @E07-AC05 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real Scene Lab telegraph, impact and hurt`, async ({ page }) => {
     test.setTimeout(120_000); await page.setViewportSize(viewport);
     const spec = JSON.parse(readFileSync(`tests/scenes/alpha-s2/qa-alpha-${move}.json`, 'utf8')) as SceneSpec;
     await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
@@ -14,6 +14,8 @@ for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 
       const id = lab.actors.get('alpha')!.entity;
       return { source: api.getEntity(id)!, player: api.getEntity(1)!, telegraph: api.events().find(ev => ev.type === 'telegraph' && ev.sourceId === id), figures: api.crowdFigures().filter(f => f.id === id), markers: api.getState().render.vfx?.telegraphs };
     }, { spec, windup });
+    const out = 'test-results/epics/E07/native-alpha'; mkdirSync(out, { recursive: true });
+    await page.locator('canvas').screenshot({ path: `${out}/${move}-${viewport.width}-warning.png` });
     expect(before.source.infected!.specialAttack!.stage).toBe('telegraph'); expect(before.player.health.current).toBe(100);
     expect(before.telegraph).toMatchObject({ move: `alpha.${move}`, duration: windup / 60, area: { radius: move === 'charge' ? 1 : 4 } });
     expect(before.markers).toHaveLength(1);
@@ -23,6 +25,8 @@ for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 
       const id = lab.actors.get('alpha')!.entity;
       return { source: api.getEntity(id)!, player: api.getEntity(1)!, events: api.events(), perf: api.perf(), crowd: api.getState().render.crowd };
     });
+    await page.locator('canvas').screenshot({ path: `${out}/${move}-${viewport.width}-impact.png` });
+    writeFileSync(`${out}/${move}-${viewport.width}.json`, JSON.stringify({ before, impact }, null, 2));
     expect(impact.player.health.current).toBe(move === 'charge' ? 70 : 75);
     expect(impact.player.survivor?.knockdown).toBeDefined(); expect(['knockdown', 'get-up']).toContain(impact.player.survivor!.animation);
     expect(impact.events.filter(ev => ev.type === 'combat.hit' && ev.targetId === 1 && ev.actionId === `alpha.${move}`)).toHaveLength(1);

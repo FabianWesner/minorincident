@@ -1,0 +1,31 @@
+{
+  "branch": "lane/ac-close-shared",
+  "commit": "13be865d9b0f6fb21953bb317fb833bec36455ac",
+  "files": [
+    {
+      "path": "src/render/HealthBars.ts",
+      "current": "7da6e5fdec5a6e453d842d11f7c115e8a665b7ca",
+      "shared": "7da6e5fdec5a6e453d842d11f7c115e8a665b7ca",
+      "identical": true
+    },
+    {
+      "path": "src/render/vfx/Vfx.ts",
+      "current": "6ad0d4190d0871d98e75a8dc07192d4b72da5640",
+      "shared": "6ad0d4190d0871d98e75a8dc07192d4b72da5640",
+      "identical": true
+    },
+    {
+      "path": "src/render/characters/CrowdAppearance.ts",
+      "current": "91235bcb2b51a2fc34bf1c1202e7718349dbc770",
+      "shared": "0b18240520d2b015bba29ca266f2582e9450c474",
+      "identical": false
+    },
+    {
+      "path": "src/render/PaletteMaterial.ts",
+      "current": "cf3c9de178ebc3a2b7159694d2ffa56eaf117ff0",
+      "shared": "41e01737eec146f943a2a0f293b92998e7958e45",
+      "identical": false
+    }
+  ],
+  "note": "Evidence reuse audit; no acceptance based on changed-source images alone."
+}

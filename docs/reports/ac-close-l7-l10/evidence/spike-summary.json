@@ -1,0 +1,152 @@
+{
+  "samples": 120,
+  "warmup": 30,
+  "rows": [
+    {
+      "mode": "field",
+      "lights": 16,
+      "submitP95": 0.7,
+      "completedP95": 2.3,
+      "reportedRenderGpuP95": 1.4426,
+      "reportedComputeGpuP95": null,
+      "counters": {
+        "draws": 88,
+        "triangles": 173709,
+        "geometries": 48,
+        "textures": 7,
+        "field": {
+          "strength": 1,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 16,
+          "litStatics": 16,
+          "candidates": 16,
+          "drawn": 16,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0.10000038146972656,
+          "center": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "mode": "dynamic",
+      "lights": 16,
+      "submitP95": 0.6,
+      "completedP95": 4.8,
+      "reportedRenderGpuP95": 5.755,
+      "reportedComputeGpuP95": null,
+      "counters": {
+        "draws": 87,
+        "triangles": 173677,
+        "geometries": 47,
+        "textures": 5,
+        "field": null
+      }
+    },
+    {
+      "mode": "clustered",
+      "lights": 16,
+      "submitP95": 0.7,
+      "completedP95": 5.5,
+      "reportedRenderGpuP95": 5.7264,
+      "reportedComputeGpuP95": 0.1129,
+      "counters": {
+        "draws": 87,
+        "triangles": 173677,
+        "geometries": 47,
+        "textures": 7,
+        "field": null
+      }
+    },
+    {
+      "mode": "field",
+      "lights": 256,
+      "submitP95": 0.8,
+      "completedP95": 2.7,
+      "reportedRenderGpuP95": 2.4974,
+      "reportedComputeGpuP95": null,
+      "counters": {
+        "draws": 88,
+        "triangles": 174189,
+        "geometries": 48,
+        "textures": 7,
+        "field": {
+          "strength": 1,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 256,
+          "litStatics": 256,
+          "candidates": 256,
+          "drawn": 256,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0.09999942779541016,
+          "center": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "mode": "dynamic",
+      "lights": 256,
+      "submitP95": 3.1,
+      "completedP95": 781.3,
+      "reportedRenderGpuP95": 1555.4914,
+      "reportedComputeGpuP95": null,
+      "counters": {
+        "draws": 87,
+        "triangles": 173677,
+        "geometries": 47,
+        "textures": 5,
+        "field": null
+      }
+    },
+    {
+      "mode": "clustered",
+      "lights": 256,
+      "submitP95": 1.8,
+      "completedP95": 16.6,
+      "reportedRenderGpuP95": 27.067,
+      "reportedComputeGpuP95": 0.3817,
+      "counters": {
+        "draws": 87,
+        "triangles": 173677,
+        "geometries": 47,
+        "textures": 7,
+        "field": null
+      }
+    }
+  ],
+  "images": [
+    {
+      "path": "test-results/epics/E25/spike/field-16.png",
+      "sha256": "a39572aabe2d8aacc9f0a69151382b08a135268aa81f8e50711d1f5af83d663a"
+    },
+    {
+      "path": "test-results/epics/E25/spike/dynamic-16.png",
+      "sha256": "15d76f638392fab675d8f00ffd3dd82e10429cedf9bac9dd52b382376435c1fa"
+    },
+    {
+      "path": "test-results/epics/E25/spike/clustered-16.png",
+      "sha256": "8535ac442e97a86db8aebdfccc376379edd8df5c8683f8e4875322fa41547fde"
+    },
+    {
+      "path": "test-results/epics/E25/spike/field-256.png",
+      "sha256": "e14387863309b6d4b66d0b46bf0563d6c162991a2ebd1088d19e5a139e685aa4"
+    },
+    {
+      "path": "test-results/epics/E25/spike/dynamic-256.png",
+      "sha256": "3795f85d51dc0c3b9abaf5079b84538a75aca917eef81633ebc3fe048cc09b30"
+    },
+    {
+      "path": "test-results/epics/E25/spike/clustered-256.png",
+      "sha256": "c7448b630ba939d24ad40f840f4cedae825699b7d8a767be301dd77fd2be6033"
+    }
+  ]
+}

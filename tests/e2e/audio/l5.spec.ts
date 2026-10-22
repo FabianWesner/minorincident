@@ -1,10 +1,13 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { boot, test, expect } from '../fixtures';
+import { boot, test, expect, testUrl } from '../fixtures';
 import type { AudioRenderRequest } from '../../../src/debug/audioHarness';
 import { loudness } from '../../../tools/audio/measure';
 import { l4 } from '../../../src/data/l4';
 
 /** E23-AC14: the silent city. No music before the first find, no battle layer ever, and a mix at least 18 LU below the L4 war phase. */
+// The complete war capture makes thousands of nonvisual RPCs. DOM tracing
+// repeatedly snapshots the paused HUD; retain cue JSON, WAVs and numeric receipts.
+test.use({ trace: 'off' });
 const root = 'test-results/epics/E23';
 async function render(page: import('@playwright/test').Page, request: AudioRenderRequest, name: string) {
     const result = await page.evaluate(req => window.__SS__!.audio.render(req), request), bytes = Buffer.from(result.wav, 'base64');
@@ -48,12 +51,15 @@ test('T-E23-14a @E23 @E23-AC14 PO #19c zero music before survivor 1, current rec
 test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4\'s war phase (offline render of the production graph)', async ({ page }) => {
     test.setTimeout(900_000);
     mkdirSync(root, { recursive: true });
-    await boot(page); await page.mouse.click(200, 250);
+    await boot(page, `${testUrl}&scenelab=1`); await page.mouse.click(200, 250);
     const capture = async (level: 'L4' | 'L5'): Promise<AudioRenderRequest> => {
         await page.evaluate(async level => {
             const a = window.__SS__!; await a.loadLevel(level, { seed: 1, progression: level === 'L4' ? 'L4-default' : 'L5-default' });
             a.pause(); a.missions.begin(); a.cheats.god(true); await a.audio.unlock();
             if (level === 'L4') a.bot.start('complete'); else a.cheats.completeObjective('emerge');
+            // This gate measures audio, not pixels. Keep the complete production
+            // sim/cue window and live voice waits without drawing it in SwiftShader.
+            (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game.view.freeze();
         }, level);
         const cues: NonNullable<AudioRenderRequest['cues']> = [];
         let firstTurn = -1, lineBreak = -1, tick = 0;

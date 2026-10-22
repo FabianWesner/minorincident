@@ -1,0 +1,90 @@
+{
+  "decision": "2026-10-22 orchestrator: preserve these reds; runtime fixes assigned to separate perf lane",
+  "runtimeLastCommit": "f0fb391fb",
+  "runtimeSrcTree": "15b65945695189c36f40a635b50ce4ef9d6b63d2",
+  "runtimePublicTree": "56db463d9d49efb7dae7f5c26b708cb9a9508ae6",
+  "thresholdsUnchanged": true,
+  "alternateWarmBaselineAdopted": false,
+  "rows": [
+    {
+      "epic": "E22",
+      "ac": "AC20",
+      "backend": "webgpu",
+      "tier": "high",
+      "evidence": "quiet-webgpu-E22-perf-l4-high.json.gz",
+      "turnMaxMs": 48.5,
+      "turnBuilds": 4,
+      "tankMaxMs": 15.299999999988358,
+      "breakMaxMs": 204.70000000001164
+    },
+    {
+      "epic": "E22",
+      "ac": "AC20",
+      "backend": "webgpu",
+      "tier": "low",
+      "evidence": "quiet-webgpu-E22-perf-l4-low.json.gz",
+      "turnMaxMs": 54.5,
+      "turnBuilds": 0,
+      "tankMaxMs": 33.59999999999127,
+      "breakMaxMs": 54.80000000000291
+    },
+    {
+      "epic": "E24",
+      "ac": "AC19",
+      "backend": "webgpu",
+      "tier": "high",
+      "evidence": "quiet-webgpu-E24-lifecycle-L6-high-webgpu.json.gz",
+      "heapGrowthPercent": 10.589813348770981,
+      "geometriesRatio": 0.9706840390879479,
+      "texturesRatio": 1.011111111111111
+    },
+    {
+      "epic": "E24",
+      "ac": "AC19",
+      "backend": "webgpu",
+      "tier": "low",
+      "evidence": "quiet-webgpu-E24-lifecycle-L6-low-webgpu.json.gz",
+      "heapGrowthPercent": 11.97970606827663,
+      "geometriesRatio": 0.9681978798586572,
+      "texturesRatio": 1.0144927536231885
+    },
+    {
+      "epic": "E24",
+      "ac": "AC19",
+      "backend": "webgl",
+      "tier": "high",
+      "evidence": "quiet-webgl-life-E24-lifecycle-L6-high-webgl.json.gz",
+      "heapGrowthPercent": 9.304100471919696,
+      "geometriesRatio": 0.9706840390879479,
+      "texturesRatio": 1.010989010989011
+    },
+    {
+      "epic": "E24",
+      "ac": "AC19",
+      "backend": "webgl",
+      "tier": "low",
+      "evidence": "quiet-webgl-life-E24-lifecycle-L6-low-webgl.json.gz",
+      "heapGrowthPercent": 10.577481739861106,
+      "geometriesRatio": 0.9681978798586572,
+      "texturesRatio": 1.0142857142857142
+    }
+  ],
+  "clarifiedL6Stress": {
+    "specMarker": "CLARIFIED 2026-10-22 (orchestrator)",
+    "verifiedBackends": [
+      "webgl",
+      "webgpu"
+    ],
+    "highLivingInfected": 40,
+    "lowLivingInfected": 30,
+    "movingSurvivors": 26,
+    "retainedBodiesHighLow": [
+      25,
+      22
+    ],
+    "thresholdsUnchanged": true,
+    "webglReporter": "quiet-webgl-primary-results.json.gz",
+    "webgpuReporter": "quiet-webgpu-results.json.gz",
+    "captureSheet": "../l5-l6-final-perf-matrix.jpg"
+  }
+}

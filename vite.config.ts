@@ -18,7 +18,7 @@ export default defineConfig({
     assetsDir: 'build',
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
-      input: ['index.html', 'preview/index.html'],
+      input: ['index.html', 'preview/index.html', 'preview/lighting-spike.html'],
       output: {
         manualChunks: (id) => id.includes('/@dimforge/rapier3d-compat/') ? 'rapier' : id.endsWith('/src/data/lightAnchors.json') ? 'light-anchors' : id.endsWith('/src/assets/wreckRoofs.ts') ? 'wreck-roofs' : id.endsWith('/src/render/characters/library.json') || id.endsWith('/src/render/characters/library.skin.json') ? 'character-clips' : undefined,
       },

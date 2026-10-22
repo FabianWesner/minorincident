@@ -1,0 +1,4094 @@
+[
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 0,
+    "zoom": 0.5,
+    "panel": {
+      "x": 8,
+      "y": 494.8125,
+      "width": 200,
+      "height": 118.46875,
+      "top": 494.8125,
+      "right": 208,
+      "bottom": 613.28125,
+      "left": 8
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 221.984375,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": -44.80867243907122,
+          "right": 206.41920503012304,
+          "top": 110.23922327559187,
+          "bottom": 486.8218279401325
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 0,
+    "zoom": 1,
+    "panel": {
+      "x": 42.390625,
+      "y": 460.65625,
+      "width": 200,
+      "height": 118.46875,
+      "top": 460.65625,
+      "right": 242.390625,
+      "bottom": 579.125,
+      "left": 42.390625
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 221.984375,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 83.94940183402585,
+          "right": 200.28800537644176,
+          "top": 273.5913318044176,
+          "bottom": 452.67179506565645
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 0,
+    "zoom": 1.5,
+    "panel": {
+      "x": 60.234375,
+      "y": 450.078125,
+      "width": 200,
+      "height": 118.46875,
+      "top": 450.078125,
+      "right": 260.234375,
+      "bottom": 568.546875,
+      "left": 60.234375
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 221.984375,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 122.74471175896858,
+          "right": 198.44065100958633,
+          "top": 324.6168241161693,
+          "bottom": 442.0885565452312
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 61,
+    "zoom": 0.5,
+    "panel": {
+      "x": 8,
+      "y": 497.75,
+      "width": 200,
+      "height": 118.46875,
+      "top": 497.75,
+      "right": 208,
+      "bottom": 616.21875,
+      "left": 8
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": -73.078125,
+          "y": 85.34375,
+          "width": 308.71875,
+          "height": 94.0625,
+          "top": 85.34375,
+          "right": 235.640625,
+          "bottom": 179.40625,
+          "left": -73.078125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": -44.52200533145013,
+          "right": 206.4055545209733,
+          "top": 113.5663945242186,
+          "bottom": 489.75506999280526
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 61,
+    "zoom": 1,
+    "panel": {
+      "x": 42.390625,
+      "y": 462.078125,
+      "width": 200,
+      "height": 118.46875,
+      "top": 462.078125,
+      "right": 242.390625,
+      "bottom": 580.546875,
+      "left": 42.390625
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 18.328125,
+          "y": 190.65625,
+          "width": 247.78125,
+          "height": 118.75,
+          "top": 190.65625,
+          "right": 266.109375,
+          "bottom": 309.40625,
+          "left": 18.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 84.01091509257333,
+          "right": 200.28507623920797,
+          "top": 275.0878178572983,
+          "bottom": 454.0791205105033
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 61,
+    "zoom": 1.5,
+    "panel": {
+      "x": 60.234375,
+      "y": 451,
+      "width": 200,
+      "height": 118.46875,
+      "top": 451,
+      "right": 260.234375,
+      "bottom": 569.46875,
+      "left": 60.234375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 45.9375,
+          "y": 229.9375,
+          "width": 229.375,
+          "height": 118.75,
+          "top": 229.9375,
+          "right": 275.3125,
+          "bottom": 348.6875,
+          "left": 45.9375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 122.77075831178715,
+          "right": 198.43941072530495,
+          "top": 325.58087210719503,
+          "bottom": 443.01422828980117
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 81,
+    "zoom": 0.5,
+    "panel": {
+      "x": 8,
+      "y": 497.75,
+      "width": 200,
+      "height": 118.46875,
+      "top": 497.75,
+      "right": 208,
+      "bottom": 616.21875,
+      "left": 8
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": -73.078125,
+          "y": 85.34375,
+          "width": 308.71875,
+          "height": 94.0625,
+          "top": 85.34375,
+          "right": 235.640625,
+          "bottom": 179.40625,
+          "left": -73.078125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": -44.52200533145013,
+          "right": 206.4055545209733,
+          "top": 113.5663945242186,
+          "bottom": 489.75506999280526
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 81,
+    "zoom": 1,
+    "panel": {
+      "x": 42.390625,
+      "y": 462.078125,
+      "width": 200,
+      "height": 118.46875,
+      "top": 462.078125,
+      "right": 242.390625,
+      "bottom": 580.546875,
+      "left": 42.390625
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 18.328125,
+          "y": 190.65625,
+          "width": 247.78125,
+          "height": 118.75,
+          "top": 190.65625,
+          "right": 266.109375,
+          "bottom": 309.40625,
+          "left": 18.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 84.01091509257333,
+          "right": 200.28507623920797,
+          "top": 275.0878178572983,
+          "bottom": 454.0791205105033
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 81,
+    "zoom": 1.5,
+    "panel": {
+      "x": 60.234375,
+      "y": 451,
+      "width": 200,
+      "height": 118.46875,
+      "top": 451,
+      "right": 260.234375,
+      "bottom": 569.46875,
+      "left": 60.234375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 45.9375,
+          "y": 229.9375,
+          "width": 229.375,
+          "height": 118.75,
+          "top": 229.9375,
+          "right": 275.3125,
+          "bottom": 348.6875,
+          "left": 45.9375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 122.77075831178715,
+          "right": 198.43941072530495,
+          "top": 325.58087210719503,
+          "bottom": 443.01422828980117
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 106,
+    "zoom": 0.5,
+    "panel": {
+      "x": 8,
+      "y": 497.75,
+      "width": 200,
+      "height": 118.46875,
+      "top": 497.75,
+      "right": 208,
+      "bottom": 616.21875,
+      "left": 8
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": -73.078125,
+          "y": 85.34375,
+          "width": 308.71875,
+          "height": 94.0625,
+          "top": 85.34375,
+          "right": 235.640625,
+          "bottom": 179.40625,
+          "left": -73.078125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": -44.52200533145013,
+          "right": 206.4055545209733,
+          "top": 113.5663945242186,
+          "bottom": 489.75506999280526
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 106,
+    "zoom": 1,
+    "panel": {
+      "x": 42.390625,
+      "y": 462.078125,
+      "width": 200,
+      "height": 118.46875,
+      "top": 462.078125,
+      "right": 242.390625,
+      "bottom": 580.546875,
+      "left": 42.390625
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 18.328125,
+          "y": 190.65625,
+          "width": 247.78125,
+          "height": 118.75,
+          "top": 190.65625,
+          "right": 266.109375,
+          "bottom": 309.40625,
+          "left": 18.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 84.01091509257333,
+          "right": 200.28507623920797,
+          "top": 275.0878178572983,
+          "bottom": 454.0791205105033
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frame": 106,
+    "zoom": 1.5,
+    "panel": {
+      "x": 60.234375,
+      "y": 451,
+      "width": 200,
+      "height": 118.46875,
+      "top": 451,
+      "right": 260.234375,
+      "bottom": 569.46875,
+      "left": 60.234375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 214,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 270,
+          "bottom": 68,
+          "left": 214
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 45.9375,
+          "y": 229.9375,
+          "width": 229.375,
+          "height": 118.75,
+          "top": 229.9375,
+          "right": 275.3125,
+          "bottom": 348.6875,
+          "left": 45.9375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 282,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 378,
+          "bottom": 108,
+          "left": 282
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 296.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 363,
+          "bottom": 137.59375,
+          "left": 296.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 80,
+          "y": 143.59375,
+          "width": 298,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 378,
+          "bottom": 201.1875,
+          "left": 80
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 238,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 302,
+          "bottom": 832,
+          "left": 238
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 314,
+          "y": 692,
+          "width": 64,
+          "height": 64,
+          "top": 692,
+          "right": 378,
+          "bottom": 756,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 314,
+          "y": 768,
+          "width": 64,
+          "height": 64,
+          "top": 768,
+          "right": 378,
+          "bottom": 832,
+          "left": 314
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 122.77075831178715,
+          "right": 198.43941072530495,
+          "top": 325.58087210719503,
+          "bottom": 443.01422828980117
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 0,
+    "zoom": 0.5,
+    "panel": {
+      "x": 419.078125,
+      "y": 8,
+      "width": 228,
+      "height": 101.578125,
+      "top": 8,
+      "right": 647.078125,
+      "bottom": 109.578125,
+      "left": 419.078125
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 225.27875680868965,
+          "right": 411.08392237342065,
+          "top": -28.0119140755195,
+          "bottom": 240.3477046249271
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 0,
+    "zoom": 1,
+    "panel": {
+      "x": 424.828125,
+      "y": 8,
+      "width": 228,
+      "height": 101.578125,
+      "top": 8,
+      "right": 652.828125,
+      "bottom": 109.578125,
+      "left": 424.828125
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 335.6665699399493,
+          "right": 416.8302876765456,
+          "top": 92.64393528134829,
+          "bottom": 215.61363277671992
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 0,
+    "zoom": 1.5,
+    "panel": {
+      "x": 278.6875,
+      "y": 8,
+      "width": 228,
+      "height": 101.578125,
+      "top": 8,
+      "right": 506.6875,
+      "bottom": 109.578125,
+      "left": 278.6875
+    },
+    "text": "Block the tunnel\n29/29 through · ACTION to close the gate",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 366.6984081363447,
+          "right": 418.6131628316459,
+          "top": 128.5793916712962,
+          "bottom": 208.3384308653158
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 61,
+    "zoom": 0.5,
+    "panel": {
+      "x": 213.953125,
+      "y": 250.921875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 250.921875,
+      "right": 441.953125,
+      "bottom": 352.5,
+      "left": 213.953125
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 144.203125,
+          "y": -31.671875,
+          "width": 340,
+          "height": 94.0625,
+          "top": -31.671875,
+          "right": 484.203125,
+          "bottom": 62.390625,
+          "left": 144.203125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 201.1875,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 225.74453570971778,
+          "right": 411.10639812762577,
+          "top": -24.88188743997155,
+          "bottom": 242.937283487198
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 61,
+    "zoom": 1,
+    "panel": {
+      "x": 99.75,
+      "y": 103.765625,
+      "width": 228,
+      "height": 101.578125,
+      "top": 103.765625,
+      "right": 327.75,
+      "bottom": 205.34375,
+      "left": 99.75
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 205.46875,
+          "y": 1.703125,
+          "width": 340,
+          "height": 94.0625,
+          "top": 1.703125,
+          "right": 545.46875,
+          "bottom": 95.765625,
+          "left": 205.46875
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 201.1875,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 335.7563981355519,
+          "right": 416.83533411252125,
+          "top": 93.96118101605909,
+          "bottom": 216.81721765737487
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 61,
+    "zoom": 1.5,
+    "panel": {
+      "x": 130.734375,
+      "y": 139.71875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 139.71875,
+      "right": 358.734375,
+      "bottom": 241.296875,
+      "left": 130.734375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 222.328125,
+          "y": 37.65625,
+          "width": 340,
+          "height": 94.0625,
+          "top": 37.65625,
+          "right": 562.328125,
+          "bottom": 131.71875,
+          "left": 222.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 57.59375,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 201.1875,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 366.7352797719029,
+          "right": 418.6153294722437,
+          "top": 129.41107353862753,
+          "bottom": 209.12227358106523
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 81,
+    "zoom": 0.5,
+    "panel": {
+      "x": 213.953125,
+      "y": 250.921875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 250.921875,
+      "right": 441.953125,
+      "bottom": 352.5,
+      "left": 213.953125
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 144.203125,
+          "y": -31.671875,
+          "width": 340,
+          "height": 94.0625,
+          "top": -31.671875,
+          "right": 484.203125,
+          "bottom": 62.390625,
+          "left": 144.203125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 225.74453570971778,
+          "right": 411.10639812762577,
+          "top": -24.88188743997155,
+          "bottom": 242.937283487198
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 81,
+    "zoom": 1,
+    "panel": {
+      "x": 99.75,
+      "y": 103.765625,
+      "width": 228,
+      "height": 101.578125,
+      "top": 103.765625,
+      "right": 327.75,
+      "bottom": 205.34375,
+      "left": 99.75
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 205.46875,
+          "y": 1.703125,
+          "width": 340,
+          "height": 94.0625,
+          "top": 1.703125,
+          "right": 545.46875,
+          "bottom": 95.765625,
+          "left": 205.46875
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 335.7563981355519,
+          "right": 416.83533411252125,
+          "top": 93.96118101605909,
+          "bottom": 216.81721765737487
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 81,
+    "zoom": 1.5,
+    "panel": {
+      "x": 130.734375,
+      "y": 139.71875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 139.71875,
+      "right": 358.734375,
+      "bottom": 241.296875,
+      "left": 130.734375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 222.328125,
+          "y": 37.65625,
+          "width": 340,
+          "height": 94.0625,
+          "top": 37.65625,
+          "right": 562.328125,
+          "bottom": 131.71875,
+          "left": 222.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 366.7352797719029,
+          "right": 418.6153294722437,
+          "top": 129.41107353862753,
+          "bottom": 209.12227358106523
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 106,
+    "zoom": 0.5,
+    "panel": {
+      "x": 213.953125,
+      "y": 250.921875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 250.921875,
+      "right": 441.953125,
+      "bottom": 352.5,
+      "left": 213.953125
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 144.203125,
+          "y": -31.671875,
+          "width": 340,
+          "height": 94.0625,
+          "top": -31.671875,
+          "right": 484.203125,
+          "bottom": 62.390625,
+          "left": 144.203125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 225.74453570971778,
+          "right": 411.10639812762577,
+          "top": -24.88188743997155,
+          "bottom": 242.937283487198
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 106,
+    "zoom": 1,
+    "panel": {
+      "x": 99.75,
+      "y": 103.765625,
+      "width": 228,
+      "height": 101.578125,
+      "top": 103.765625,
+      "right": 327.75,
+      "bottom": 205.34375,
+      "left": 99.75
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 205.46875,
+          "y": 1.703125,
+          "width": 340,
+          "height": 94.0625,
+          "top": 1.703125,
+          "right": 545.46875,
+          "bottom": 95.765625,
+          "left": 205.46875
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 335.7563981355519,
+          "right": 416.83533411252125,
+          "top": 93.96118101605909,
+          "bottom": 216.81721765737487
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "frame": 106,
+    "zoom": 1.5,
+    "panel": {
+      "x": 130.734375,
+      "y": 139.71875,
+      "width": 228,
+      "height": 101.578125,
+      "top": 139.71875,
+      "right": 358.734375,
+      "bottom": 241.296875,
+      "left": 130.734375
+    },
+    "text": "Block the tunnel\nPush glowing crates onto the line · ACTION to brace",
+    "touch": true,
+    "obstacles": [
+      {
+        "name": "pause-button",
+        "rect": {
+          "x": 668,
+          "y": 12,
+          "width": 56,
+          "height": 56,
+          "top": 12,
+          "right": 724,
+          "bottom": 68,
+          "left": 668
+        },
+        "overlap": 0
+      },
+      {
+        "name": "home-button",
+        "rect": {
+          "x": 12,
+          "y": 76,
+          "width": 56,
+          "height": 56,
+          "top": 76,
+          "right": 68,
+          "bottom": 132,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "story-bubble",
+        "rect": {
+          "x": 222.328125,
+          "y": 37.65625,
+          "width": 340,
+          "height": 94.0625,
+          "top": 37.65625,
+          "right": 562.328125,
+          "bottom": 131.71875,
+          "left": 222.328125
+        },
+        "overlap": 0
+      },
+      {
+        "name": "vitals",
+        "rect": {
+          "x": 12,
+          "y": 12,
+          "width": 172,
+          "height": 56,
+          "top": 12,
+          "right": 184,
+          "bottom": 68,
+          "left": 12
+        },
+        "overlap": 0
+      },
+      {
+        "name": "minimap",
+        "rect": {
+          "x": 736,
+          "y": 12,
+          "width": 96,
+          "height": 96,
+          "top": 12,
+          "right": 832,
+          "bottom": 108,
+          "left": 736
+        },
+        "overlap": 0
+      },
+      {
+        "name": "weather-icon",
+        "rect": {
+          "x": 750.984375,
+          "y": 114,
+          "width": 66.015625,
+          "height": 23.59375,
+          "top": 114,
+          "right": 817,
+          "bottom": 137.59375,
+          "left": 750.984375
+        },
+        "overlap": 0
+      },
+      {
+        "name": "objective-tracker",
+        "rect": {
+          "x": 572,
+          "y": 143.59375,
+          "width": 260,
+          "height": 78.390625,
+          "top": 143.59375,
+          "right": 832,
+          "bottom": 221.984375,
+          "left": 572
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-left",
+        "rect": {
+          "x": 692,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 756,
+          "bottom": 378,
+          "left": 692
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-right",
+        "rect": {
+          "x": 768,
+          "y": 238,
+          "width": 64,
+          "height": 64,
+          "top": 238,
+          "right": 832,
+          "bottom": 302,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "touch-interact",
+        "rect": {
+          "x": 768,
+          "y": 314,
+          "width": 64,
+          "height": 64,
+          "top": 314,
+          "right": 832,
+          "bottom": 378,
+          "left": 768
+        },
+        "overlap": 0
+      },
+      {
+        "name": "courier clearance",
+        "rect": {
+          "left": 366.7352797719029,
+          "right": 418.6153294722437,
+          "top": 129.41107353862753,
+          "bottom": 209.12227358106523
+        },
+        "overlap": 0
+      }
+    ],
+    "backend": "webgl",
+    "tier": "low"
+  }
+]
