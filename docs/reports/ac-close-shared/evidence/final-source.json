@@ -1,6 +1,6 @@
 {
   "base": "c867e392b",
-  "sourceCommit": "fb7c0f85452fea4d3e4946b557f955634dee6ac2",
+  "sourceCommit": "b4c06bb7365191340b1de55c761325837cb05fa4",
   "sha256": {
     "src/render/CrowdView.ts": "9be2888225d85533c422643e5b9e5538e3eec5cc70d31383e7d76ddd2eb11f49",
     "src/render/GameView.ts": "f870e3345a5e24a1082aaf6d723f9644a43d32d057637126a215ef87cdd78730",
@@ -15,10 +15,12 @@
     "src/sim/combat/Explosions.ts": "b8bd193eda39a762aaafb0213b85d23063b3b62b48b7630719ab674aacfe31fa",
     "src/sim/world/types.ts": "9429ad800ef27d1ad274ea3767c837bb271aa971a13a02d95b3fda6b741ca3b0",
     "tests/e2e/alpha-physical.spec.ts": "0161d8246f9a74b060902662abe241889850b9fb3c3c0d40bcf62ab0bdcb3aba",
+    "tests/e2e/alpha-support.spec.ts": "cc5c5db611b71d44453ba0592c960ca261501f696ade9184070cbde779c80bba",
     "tests/e2e/health-bars.spec.ts": "1cb9446b40782d2d1cfa9b7e7dfc9f1f00a8b0e95e992daa3b659b7af268d700",
-    "tests/e2e/infected-move-boundaries.spec.ts": "a66a924b91f0fd148079a0905161d43bb92ed2dcabfb9e7ed1126c28d17b0753",
-    "tests/e2e/zoo-s2.spec.ts": "687732e3d984043f49a41685329f28353b33fdf754ddaac01b5649306b936838",
+    "tests/e2e/infected-move-boundaries.spec.ts": "42ad10e5851173b931f08a169d0cd90e233931cffa8e7bab438bf62a9b58c1ff",
+    "tests/e2e/zoo-s2.spec.ts": "b5cf97b0e0df198067179848bada0da3642f86ffd976c257f261e46014b1e8cb",
     "tests/e2e/zoo-s3.spec.ts": "58f72dec470d23aaa42526ee24a449e81b8de05b7e7e39fa2a43de5c36c4c509",
+    "tests/scenes/alpha-s3/qa-alpha-all-specials.json": "fac2864476c1a90137172603e53b9d57b8845a51d5a232752e68c7aa9f081129",
     "tests/sim/ai/alpha.test.ts": "2cc8649ebd7ed88bdee5ebb811e2d64990baf415f30d7b04373372554cb1bbf4",
     "tests/sim/explosion-corpses.test.ts": "1c390ae12c7a59fd5f738c664838cc38de3c74f9bf48008c24c0aa9056cc1175",
     "tests/unit/render/compact-crowd-geometry.test.ts": "6f2dbd7308c24a9711ab5d518729979bd64b78eb115c3ab4e1344e4460462b6f",
@@ -31,7 +33,7 @@
     "tools/perf/heap-audit.ts": "b396712b825b0be8bfb6b2a5cf7f51accab624cf2fad2be55b3e22a850d9e2ca",
     "tools/qa/alpha-contact.ts": "d2603319e421c489e6cf26be8cbdbc68caa5bec47e9162c9ec51a865ddb0ae34",
     "tools/qa/infected-spatial-controls.ts": "5e34e2f91c4a69f5438a8ecd0611b7410a60924efc35ae5b091520f313b2c846",
-    "tools/qa/shared-ac-sheets.py": "34426b23913339614587b4259f32d0859cb3dc4faaab85f6b51ed171c246492b",
+    "tools/qa/shared-ac-sheets.py": "877e51a131b85d2d578e515541a83fe794973e155d1f6b34473e369c2608bbd3",
     "tools/qa/shared-ac-vision.ts": "bf07cf1ca0377653c0cc74f9b79c9bb79749ec5d25fd7635755faae3e11c3763",
     "tools/qa/zebra-corridor.ts": "721466cdacdaebf02e9bbce27bc73123c03f48067b27698172a16e97399aafe4",
     "tools/verify.ts": "e22200d9d3d10d867ae7872cdb46ad6fb21bfb38d1da09b1e6287f37ab9dfc95"
@@ -93,7 +95,7 @@
     "build/worldLook-o3T_90Bf.js": "e6308d2c9948dd608032ff1f730d286346700d500a93e6fad197c55d692c60b5",
     "build/wreck-roofs-CFQIthKq.js": "a912d11472e6297500db09161cec443d7f1442631b65660a0eda05dea65839d0"
   },
-  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. E28/E27 production builds use this runtime; final E07 rebuild will be checked against these bundle hashes.",
+  "notes": "Runtime is unchanged since c97d5ddb2. Later source changes strengthen evidence/verifier fixtures. Final E07, E27 and E28 production JavaScript is byte-identical (55 files); final E07 includes the separated elephant fixtures and wider roar inspection camera.",
   "unchangedMeasurementContracts": {
     "tests/perf/collected-heap.ts": {
       "sha256": "d0b625ea826d8c7a8b3068faaf7687aedf07f80450937f2f4048a529693835ea",
@@ -115,5 +117,10 @@
       "sha256": "a868281f88da90f66cd1bb8db79ca8a65d9a5989e65328365787dd054b132477",
       "identicalToBase": true
     }
+  },
+  "E07ProductionRepeat": {
+    "sameJavaScriptAsE27": true,
+    "files": 55,
+    "notes": "Compared after the final gated E07 remote build/pull, including the elephant fixture split and wider roar inspection camera; before its Node/browser stages."
   }
 }
