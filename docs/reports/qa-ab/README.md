@@ -34,8 +34,21 @@ A score requests visual review; it does not decide whether a change is intended,
 
 ## Validation
 
-Browser validation is in progress. The specified snapshot is build `769d9f8ce` (13g), and PROD currently reports `73bce8bc5` (13h). The first complete natural-camera L1–L4 run measured 30 stop/zoom variants and 180 frame pairs. Two tank sheets exceeded 2%; the other five PO categories scored zero. This is **1/6 candidate categories (16.7%), 0/6 confirmed PO regressions**: visual inspection showed the same tank/barrier overlap in both builds, with warning/shading differences causing the flags. The depot return, lab handover, accessory, sitter and ramp comparisons did not demonstrate newly introduced defects.
+The specified snapshot is build `769d9f8ce` (13g), and PROD reports `73bce8bc5` (13h). The [L1–L4 comparison](2026-10-22-13g-vs-13h/summary.json) completed **32/32 stop/zoom variants, 192 frame pairs, zero setup errors**, with 8.53 MB of JPEG sheets. Its hit rate is **1/6 candidate categories (16.7%), 0/6 confirmed PO regressions**.
 
-The requested six-finding demonstration is therefore **not met** by this pair. An earlier known-good snapshot is needed to distinguish defects already present in 13g. Expanded same-build controls, the explicit glasses stop and local `dist` serving are being checked. A failing demonstration is not a passing regression gate.
+| PO finding | Maximum score | Category flagged | PO regression confirmed |
+| --- | ---: | --- | --- |
+| Depot clerk return (P1-109) | 0% | No | No |
+| Lab handover (P1-110) | 0% | No | No |
+| Hats/glasses (P1-108, P1-115) | 0% | No | No |
+| Sitters/benches (P1-112) | 0% | No | No |
+| L3 ramp gaps (P1-113/113b) | 0% | No | No |
+| L4 tank/barrier (P1-116) | 9.03% | Yes | No: Alpha warning ring differs |
+
+The sole changed sheet is `l4-tank-hold-z1.5.jpg`. Visual inspection shows the same tank route, parked pose and barrier overlap in both builds; a red Alpha warning ring causes the flag. Both ramp gaps are also visible in the baseline and candidate. The depot return, lab handover, explicit glasses wearer, other accessories and sitters do not differ above the declared perceptual tolerance. Raw scores remain intact in the summary, with the visual review recorded separately under `validation`.
+
+The requested six-finding demonstration is therefore **not met** by this pair. An earlier known-good snapshot is needed to distinguish defects already present in 13g. A failing demonstration is not a passing regression gate.
+
+The [local dist check](2026-10-22-local-dist/summary.json) passed at both zooms against the default PROD baseline: **2/2 captures, maximum score 0%, zero errors**. The preview served on 4201 and closed after the run. The expanded L1–L10 same-build control is still running.
 
 Static checks pass: typecheck, lint, production build, and all 1,960 unit tests. The unit run exposed an existing GNU `stat` assumption in the remote-cache fixture; its fixture now supplies the Linux stat interface using the real temporary-file mtimes on macOS.

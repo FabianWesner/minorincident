@@ -1,0 +1,5724 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "startedAt": "2026-10-22T20:02:49.214Z",
+  "finishedAt": "2026-10-22T20:03:11.347Z",
+  "sources": {
+    "baseline": "https://minor-incident.com",
+    "candidate": "dist"
+  },
+  "builds": {
+    "baseline": {
+      "api": "1.12.0",
+      "scripts": [
+        "https://minor-incident.com/build/index-D4kxfJBx.js"
+      ],
+      "commit": "73bce8bc5"
+    },
+    "candidate": {
+      "api": "1.12.0",
+      "scripts": [
+        "http://127.0.0.1:4201/build/index-BRCrfVs8.js"
+      ],
+      "commit": "74b15c907"
+    }
+  },
+  "settings": {
+    "backend": "webgpu",
+    "quality": "low",
+    "viewport": [
+      1280,
+      720
+    ],
+    "dpr": 1,
+    "seed": 1,
+    "zoom": [
+      1.5,
+      1
+    ],
+    "vfx": false,
+    "earlyLevelSave": "L10-default"
+  },
+  "metric": {
+    "name": "maximum local perceptual changed coverage",
+    "tilePixels": 48,
+    "colorThreshold": 0.15,
+    "frameOffsetsSeconds": [
+      0,
+      0.6,
+      1.2,
+      1.8,
+      2.4,
+      3
+    ],
+    "threshold": 0.02
+  },
+  "expectedStops": 2,
+  "measuredStops": 2,
+  "imageBytes": 640199,
+  "aboveThreshold": [],
+  "findings": [
+    {
+      "id": "depot-clerk",
+      "measured": false,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": []
+    },
+    {
+      "id": "lab-handover",
+      "measured": false,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": []
+    },
+    {
+      "id": "hats-glasses",
+      "measured": true,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": [
+        "l2-ride-start-z1.5",
+        "l2-ride-start-z1"
+      ]
+    },
+    {
+      "id": "sitters-benches",
+      "measured": true,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": [
+        "l2-ride-start-z1.5",
+        "l2-ride-start-z1"
+      ]
+    },
+    {
+      "id": "l3-gaps",
+      "measured": false,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": []
+    },
+    {
+      "id": "l4-tank",
+      "measured": false,
+      "score": 0,
+      "aboveThreshold": false,
+      "stops": []
+    }
+  ],
+  "categoryCoverage": {
+    "aboveThreshold": 0,
+    "measured": 2,
+    "total": 6
+  },
+  "errors": [],
+  "stops": [
+    {
+      "id": "l2-ride-start-z1.5",
+      "stop": {
+        "id": "l2-ride-start",
+        "level": "L2",
+        "title": "Ride start: bench sitters and accessories",
+        "anchor": "l2-bench-2",
+        "findings": [
+          "sitters-benches",
+          "hats-glasses"
+        ]
+      },
+      "zoom": 1.5,
+      "score": 0,
+      "globalChanged": 0,
+      "frames": [
+        {
+          "frame": 0,
+          "seconds": 0,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 1,
+          "seconds": 0.6,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 2,
+          "seconds": 1.2,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 3,
+          "seconds": 1.7999999999999998,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 4,
+          "seconds": 2.4,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 5,
+          "seconds": 3,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        }
+      ],
+      "sheet": "l2-ride-start-z1.5.jpg",
+      "baseline": {
+        "proof": {
+          "target": [
+            -73.69,
+            0,
+            40.1
+          ],
+          "actorFocus": null,
+          "tick": 0,
+          "scenario": "L2",
+          "phase": "playing",
+          "checkpoint": null,
+          "completed": [],
+          "l1": null,
+          "l2": {
+            "phase": "calm",
+            "benchIds": [
+              127,
+              128,
+              129,
+              130
+            ]
+          },
+          "l3": null,
+          "l4": null,
+          "l5": null,
+          "l6": null,
+          "l7": null,
+          "l8": null,
+          "l9": null,
+          "l10": null,
+          "campaign": {
+            "unlocked": 10,
+            "completed": 9,
+            "character": "female"
+          },
+          "player": {
+            "x": -73.2,
+            "y": 0.705,
+            "z": 45.2,
+            "yaw": 0.3205919885488634
+          }
+        },
+        "frames": [
+          {
+            "tick": 0,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.2,
+                0,
+                45.2
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.280104243089851
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 3.8833589780603015
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 1.0267047567742158
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 36,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989801952576,
+                0.3848562341769368,
+                45.20000076104832
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.5233589780603003
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0.14670475677421596
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 72,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776674143,
+                0.3995862205839258,
+                45.20000076293476
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -0.5903136334229154
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 4.078706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 2.9596969299424862
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0.05409827187701967
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.2686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 108,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611483,
+                0.39998869864416264,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 144,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611332,
+                0.3999996958429718,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 180,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611332,
+                0.39999999632737976,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          }
+        ],
+        "hashes": [
+          "45c588a81d6d336bf37c47c5e009ac8f0c7fc4de0d0d41583bff511a70851e97",
+          "0394a7a3945bebf4e7f142c71b4cea994eb7692a3ae5c7ee3556fd10b9b53e80",
+          "99126e7e98783724888920bda1b24f9c697d36b7333923c5ab7483958b68f19a",
+          "8e0ebb2fbce14919d40ef4ed032cd88d7cf8791e21e71b34276c65b02b70a6d6",
+          "63e7093fc937d80f563678145df9373af997ec651f09c74c8953d12d0b59a85d",
+          "5f7d9b18dae8287765314fe3300107d446b817f0f6a5c39fc5458413045fdf9f"
+        ]
+      },
+      "candidate": {
+        "proof": {
+          "target": [
+            -73.69,
+            0,
+            40.1
+          ],
+          "actorFocus": null,
+          "tick": 0,
+          "scenario": "L2",
+          "phase": "playing",
+          "checkpoint": null,
+          "completed": [],
+          "l1": null,
+          "l2": {
+            "phase": "calm",
+            "benchIds": [
+              127,
+              128,
+              129,
+              130
+            ]
+          },
+          "l3": null,
+          "l4": null,
+          "l5": null,
+          "l6": null,
+          "l7": null,
+          "l8": null,
+          "l9": null,
+          "l10": null,
+          "campaign": {
+            "unlocked": 10,
+            "completed": 9,
+            "character": "female"
+          },
+          "player": {
+            "x": -73.2,
+            "y": 0.705,
+            "z": 45.2,
+            "yaw": 0.3205919885488634
+          }
+        },
+        "frames": [
+          {
+            "tick": 0,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.2,
+                0,
+                45.2
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.280104243089851
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 3.8833589780603015
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 1.0267047567742158
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 36,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989801952576,
+                0.3848562341769368,
+                45.20000076104832
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.5233589780603003
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0.14670475677421596
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 72,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776674143,
+                0.3995862205839258,
+                45.20000076293476
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -0.5903136334229154
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 4.078706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 2.9596969299424862
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0.05409827187701967
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.2686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 108,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611483,
+                0.39998869864416264,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 144,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611332,
+                0.3999996958429718,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 180,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.19989776611332,
+                0.39999999632737976,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -57.38625001969599,
+                16.751879690335485,
+                56.403749980304006
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          }
+        ],
+        "hashes": [
+          "45c588a81d6d336bf37c47c5e009ac8f0c7fc4de0d0d41583bff511a70851e97",
+          "0394a7a3945bebf4e7f142c71b4cea994eb7692a3ae5c7ee3556fd10b9b53e80",
+          "99126e7e98783724888920bda1b24f9c697d36b7333923c5ab7483958b68f19a",
+          "8e0ebb2fbce14919d40ef4ed032cd88d7cf8791e21e71b34276c65b02b70a6d6",
+          "63e7093fc937d80f563678145df9373af997ec651f09c74c8953d12d0b59a85d",
+          "5f7d9b18dae8287765314fe3300107d446b817f0f6a5c39fc5458413045fdf9f"
+        ]
+      }
+    },
+    {
+      "id": "l2-ride-start-z1",
+      "stop": {
+        "id": "l2-ride-start",
+        "level": "L2",
+        "title": "Ride start: bench sitters and accessories",
+        "anchor": "l2-bench-2",
+        "findings": [
+          "sitters-benches",
+          "hats-glasses"
+        ]
+      },
+      "zoom": 1,
+      "score": 0,
+      "globalChanged": 0,
+      "frames": [
+        {
+          "frame": 0,
+          "seconds": 0,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 1,
+          "seconds": 0.6,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 2,
+          "seconds": 1.2,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 3,
+          "seconds": 1.7999999999999998,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 4,
+          "seconds": 2.4,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        },
+        {
+          "frame": 5,
+          "seconds": 3,
+          "score": 0,
+          "globalChanged": 0,
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 48,
+            "height": 48
+          }
+        }
+      ],
+      "sheet": "l2-ride-start-z1.jpg",
+      "baseline": {
+        "proof": {
+          "target": [
+            -73.69,
+            0,
+            40.1
+          ],
+          "actorFocus": null,
+          "tick": 0,
+          "scenario": "L2",
+          "phase": "playing",
+          "checkpoint": null,
+          "completed": [],
+          "l1": null,
+          "l2": {
+            "phase": "calm",
+            "benchIds": [
+              127,
+              128,
+              129,
+              130
+            ]
+          },
+          "l3": null,
+          "l4": null,
+          "l5": null,
+          "l6": null,
+          "l7": null,
+          "l8": null,
+          "l9": null,
+          "l10": null,
+          "campaign": {
+            "unlocked": 10,
+            "completed": 9,
+            "character": "female"
+          },
+          "player": {
+            "x": -73.2,
+            "y": 0.705,
+            "z": 45.2,
+            "yaw": 0.3205919885488634
+          }
+        },
+        "frames": [
+          {
+            "tick": 0,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.2,
+                0,
+                45.2
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.280104243089851
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 3.8833589780603015
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 1.0267047567742158
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 36,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989801952576,
+                0.3848562341769368,
+                45.20000076104832
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.5233589780603003
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0.14670475677421596
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 72,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776674143,
+                0.3995862205839258,
+                45.20000076293476
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -0.5903136334229154
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 4.078706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 2.9596969299424862
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0.05409827187701967
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.2686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 108,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611483,
+                0.39998869864416264,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 144,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611332,
+                0.3999996958429718,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 180,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611332,
+                0.39999999632737976,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          }
+        ],
+        "hashes": [
+          "66892e9a2d77af83ab39d6e976c41b08c20d1b86dd59d064640b51da0960e7ca",
+          "d7318b3bee6efae7063c374c7c30cd5a77d2d33a6779ab71466a84612aa041f0",
+          "75951a0fef927b381eb66b25bfe73398a6e004141a188fbc722428f5624b8a86",
+          "12d65dc8ac5b200a2d720cd40f47ee58eb2bc3d5a285c653095c5a6e1c79995e",
+          "ae1488d1ce2f836e8894418df11d2b9fe0834c5a3f30faab7e0b48b6ef6484c4",
+          "032e8dcf401da56a73c2d921b49ac29911f4835102e19230531c6bfe8592005c"
+        ]
+      },
+      "candidate": {
+        "proof": {
+          "target": [
+            -73.69,
+            0,
+            40.1
+          ],
+          "actorFocus": null,
+          "tick": 0,
+          "scenario": "L2",
+          "phase": "playing",
+          "checkpoint": null,
+          "completed": [],
+          "l1": null,
+          "l2": {
+            "phase": "calm",
+            "benchIds": [
+              127,
+              128,
+              129,
+              130
+            ]
+          },
+          "l3": null,
+          "l4": null,
+          "l5": null,
+          "l6": null,
+          "l7": null,
+          "l8": null,
+          "l9": null,
+          "l10": null,
+          "campaign": {
+            "unlocked": 10,
+            "completed": 9,
+            "character": "female"
+          },
+          "player": {
+            "x": -73.2,
+            "y": 0.705,
+            "z": 45.2,
+            "yaw": 0.3205919885488634
+          }
+        },
+        "frames": [
+          {
+            "tick": 0,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "focus": [
+                -73.2,
+                0,
+                45.2
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.280104243089851
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 3.8833589780603015
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 1.0267047567742158
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 36,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989801952576,
+                0.3848562341769368,
+                45.20000076104832
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": 0.2896863665770846
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 3.918706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 4.72888501727084
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.5233589780603003
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 3.759696929942487
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 1.57409827187702
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.6686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 4.192359957991417
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0.14670475677421596
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 72,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776674143,
+                0.3995862205839258,
+                45.20000076293476
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -0.5903136334229154
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 4.078706414308617
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 2.9596969299424862
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0.05409827187701967
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0.2686696213679926
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit-down",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 108,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611483,
+                0.39998869864416264,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 144,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611332,
+                0.3999996958429718,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          },
+          {
+            "tick": 180,
+            "backend": "webgpu",
+            "quality": "low",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "focus": [
+                -73.19989776611332,
+                0.39999999632737976,
+                45.20000076293943
+              ],
+              "target": [
+                -73.69,
+                0,
+                40.1
+              ],
+              "position": [
+                -62.820833346464,
+                11.16791979355699,
+                50.96916665353601
+              ],
+              "spot": null
+            },
+            "actors": [
+              {
+                "id": 121,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71,
+                  "z": 45.6,
+                  "y": 0.7,
+                  "yaw": -1.3734007669450132
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 122,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74,
+                  "z": 43.4,
+                  "y": 1.1,
+                  "yaw": 5.076367936894332
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 123,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -74.6,
+                  "z": 42.4,
+                  "y": 1.1,
+                  "yaw": 6.66369168429195
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 124,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -73.6,
+                  "z": 42,
+                  "y": 1.1,
+                  "yaw": 3.5220990307021576
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "chat"
+              },
+              {
+                "id": 125,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -65.2,
+                  "z": 41.2,
+                  "y": 0.7,
+                  "yaw": 2.2455372690184485
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "water"
+              },
+              {
+                "id": 126,
+                "archetype": "npc.firefighter",
+                "at": {
+                  "x": -71.6,
+                  "z": 39.9,
+                  "y": 1,
+                  "yaw": 0.8519663271732719
+                },
+                "model": "npc.firefighter-alive",
+                "activity": "look"
+              },
+              {
+                "id": 127,
+                "archetype": "npc.delivery-driver",
+                "at": {
+                  "x": -73.19,
+                  "z": 41.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-elderly",
+                "activity": "sit"
+              },
+              {
+                "id": 128,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 40.1,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-woman-b",
+                "activity": "sit"
+              },
+              {
+                "id": 129,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 38.6,
+                  "y": 1.1,
+                  "yaw": 6.283185307179586
+                },
+                "model": "npc.civilian-man-b",
+                "activity": "sit"
+              },
+              {
+                "id": 130,
+                "archetype": "npc.suburban-mom",
+                "at": {
+                  "x": -73.19,
+                  "z": 37.6,
+                  "y": 1.1,
+                  "yaw": 0
+                },
+                "model": "npc.civilian-man-a",
+                "activity": "sit"
+              }
+            ],
+            "drawn": [
+              {
+                "id": 130,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-flat-cap"
+              },
+              {
+                "id": 129,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hat-hard-hat"
+              },
+              {
+                "id": 128,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-ponytail"
+              },
+              {
+                "id": 127,
+                "lod": "lod1",
+                "clip": "npc-sit",
+                "accessory": "acc.hair-side-part"
+              },
+              {
+                "id": 121,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 122,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              },
+              {
+                "id": 123,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 124,
+                "lod": "lod1",
+                "clip": "npc-gesture",
+                "accessory": null
+              },
+              {
+                "id": 125,
+                "lod": "lod1",
+                "clip": "npc-water",
+                "accessory": null
+              },
+              {
+                "id": 126,
+                "lod": "lod1",
+                "clip": "npc-look-around",
+                "accessory": null
+              }
+            ]
+          }
+        ],
+        "hashes": [
+          "66892e9a2d77af83ab39d6e976c41b08c20d1b86dd59d064640b51da0960e7ca",
+          "d7318b3bee6efae7063c374c7c30cd5a77d2d33a6779ab71466a84612aa041f0",
+          "75951a0fef927b381eb66b25bfe73398a6e004141a188fbc722428f5624b8a86",
+          "12d65dc8ac5b200a2d720cd40f47ee58eb2bc3d5a285c653095c5a6e1c79995e",
+          "ae1488d1ce2f836e8894418df11d2b9fe0834c5a3f30faab7e0b48b6ef6484c4",
+          "032e8dcf401da56a73c2d921b49ac29911f4835102e19230531c6bfe8592005c"
+        ]
+      }
+    }
+  ]
+}
