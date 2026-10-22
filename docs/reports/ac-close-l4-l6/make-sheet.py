@@ -6,8 +6,9 @@ from PIL import Image, ImageDraw
 p = argparse.ArgumentParser()
 p.add_argument('output'); p.add_argument('inputs', nargs='+'); p.add_argument('--columns', type=int, default=4)
 p.add_argument('--cell-height', type=int, default=450)
+p.add_argument('--cell-width', type=int, default=400)
 p.add_argument('--scenelab-first', action='store_true', help='Use the first 320x180 cell of a 16:9 Scene Lab sheet')
-a = p.parse_args(); width, height, label = 400, a.cell_height, 35
+a = p.parse_args(); width, height, label = a.cell_width, a.cell_height, 35
 sheet = Image.new('RGB', (width * a.columns, (height + label) * ((len(a.inputs) + a.columns - 1) // a.columns)), '#101722')
 draw = ImageDraw.Draw(sheet); sources = []
 for i, entry in enumerate(a.inputs):
