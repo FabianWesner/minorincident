@@ -11,15 +11,29 @@ export const compileLanes = 6;
 export const warmUpSize = 128;
 export const textureUploadBudget = 4 * 1024 * 1024;
 export type CompilePartitions = (() => void)[];
+/** Same exact static layout needs one program/driver representative. */
+function warmCandidates<T extends Object3D>(leaves: T[]): T[] {
+  const seen = new Set<string>();
+  return leaves.filter(leaf => {
+    if (!(leaf instanceof InstancedMesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) || leaf.material.userData.batchFeatures === undefined || Object.keys(leaf.geometry.morphAttributes).length) return true;
+    const attributes = Object.keys(leaf.geometry.attributes).map(name => {
+      const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
+      return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
+    }).sort().join('|');
+    const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
+    if (seen.has(key)) return false; seen.add(key); return true;
+  });
+}
 /** Spread an alternate light graph across playable frames. Compilation captures
  * one leaf synchronously, then waits for its asynchronous GPU link. New graphs
  * execute the same HDR pass in isolated ordinary/instanced draws before use.
  * Every temporary scene change is restored before the normal gameplay draw. */
 export function incrementalPreRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (root: Object3D) => Promise<void>, source: <T>(run: () => T) => T) {
-  const leaves: (Mesh | Sprite | LineSegments)[] = [];
+  let leaves: (Mesh | Sprite | LineSegments)[] = [];
   scene.traverse(object => {
     if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) && object.geometry.hasAttribute('position')) leaves.push(object);
   });
+  leaves = warmCandidates(leaves);
   let index = 0, phase: 'compile' | 'waiting' | 'draw' = 'compile', instances = 1, error: unknown;
   const representative = <T>(object: Mesh | Sprite | LineSegments, count: number, run: () => T): T => {
     const visible = object.visible, culled = object.frustumCulled, automatic = object.matrixAutoUpdate;
@@ -134,15 +148,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Static batches share node graphs. Compile one representative of each exact
     // material/attribute/shadow/capacity variant; the draws below still upload and
     // execute every render object, including both instancing driver paths.
-    const seen = new Set<string>(), candidates = leaves.filter(leaf => {
-      if (!(leaf instanceof InstancedMesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) || leaf.material.userData.batchFeatures === undefined || Object.keys(leaf.geometry.morphAttributes).length) return true;
-      const attributes = Object.keys(leaf.geometry.attributes).map(name => {
-        const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
-        return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
-      }).sort().join('|');
-      const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
-      if (seen.has(key)) return false; seen.add(key); return true;
-    });
+    const candidates = warmCandidates(leaves);
     // Shared pose materials change their texture in onBeforeRender. Explicitly
     // warm every batch's atlas before compilation, rather than only the last binding.
     // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.
