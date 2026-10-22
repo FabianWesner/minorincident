@@ -14,6 +14,9 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
   if (paletteVariantCaches.has(objects)) return;
   paletteVariantCaches.add(objects);
   const get = objects.get;
+  // Draws normally reuse the same tuple. Keep its pass string with the material
+  // instead of allocating/rehashing palette and light suffixes on every draw.
+  const passKeys = new WeakMap<object, { pass: unknown; output: PaletteMaterial['outputNode']; shadow: unknown; key: string }>();
   objects.get = function (...args: unknown[]) {
     const object = args[0] as { count: number; isInstancedMesh?: boolean; userData: Record<string, unknown> };
     const material = args[1];
@@ -21,12 +24,22 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
     // Mask/id passes replace the material: preserve their original instancing
     // rather than applying a static shader key to captured buffer nodes.
     if (object.userData.staticInstanceAttributes) object.isInstancedMesh = !staticAttributes;
-    if (material instanceof PaletteMaterial && material.outputNode) args[7] = `${args[7] ?? 'default'}:palette:${material.outputNode.id}`;
     // PO #100: a lamp promotion changes Three's mutable LightsNode and retires
     // its warmed render objects. Keep each prewarmed L10 source in its own
     // existing pass cache, including background and non-palette materials.
     const shadowVariant = (args[2] as Scene).userData.shadowVariant;
-    if (shadowVariant) args[7] = `${args[7] ?? 'default'}:shadow:${shadowVariant}`;
+    const output = material instanceof PaletteMaterial ? material.outputNode : null;
+    if (output || shadowVariant) {
+      const pass = args[7] ?? 'default';
+      let saved = passKeys.get(material as object);
+      if (!saved || saved.pass !== pass || saved.output !== output || saved.shadow !== shadowVariant) {
+        let key = String(pass);
+        if (output) key += `:palette:${output.id}`;
+        if (shadowVariant) key += `:shadow:${shadowVariant}`;
+        saved = { pass, output, shadow: shadowVariant, key }; passKeys.set(material as object, saved);
+      }
+      args[7] = saved.key;
+    }
     const result = get.apply(this, args);
     if (staticAttributes) {
       const render = result as { staticInstanceKey?: boolean; initialCacheKey: number; getMaterialCacheKey(): number; getCacheKey(): number };

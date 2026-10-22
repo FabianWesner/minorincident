@@ -55,6 +55,11 @@ for (const retained of [false, true]) for (const palette of [false, true]) test(
       scene.userData.shadowVariant = 'L10:sun'; expect(draw().id).toBe(sun.id);
     }
     expect(objects._renderObjects.size).toBe(2); expect(nodes.delete).not.toHaveBeenCalled();
+    // Memoized strings must still distinguish the caller's pass, then return
+    // to the original source key without retiring either render object.
+    const reflection = objects.get(mesh, material, scene, camera, lights, context, null, 'reflection');
+    expect(reflection.id).not.toBe(sun.id); expect(draw().id).toBe(sun.id);
+    expect(objects._renderObjects.size).toBe(3);
   }
   material.dispose(); expect(objects._renderObjects.size).toBe(0);
   objects.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
