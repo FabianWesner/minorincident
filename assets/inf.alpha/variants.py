@@ -15,7 +15,7 @@ TARGETS = (5600, 2400, 760)
 I = Matrix.Identity(4)
 
 VARIANTS = {
-    'base': dict(skin='apronSage', shirt='sidewalk', tooth='shirt', pants='pantsDark', boots='shoe', extras='growth', targets=TARGETS),
+    'base': dict(skin='apronSage', shirt='sidewalk', pants='pantsDark', boots='shoe', extras='growth', targets=TARGETS),
     'worker': dict(skin='oliveLight', shirt='apronOlive', pants='shoe', boots='shoe', extras='worker', bald=True, targets=TARGETS),
     'hoodie': dict(skin='argyleGrey', shirt='tealDark', pants='pantsDark', boots='shoe', tooth='bone', extras='hoodie', bald=True, targets=TARGETS),
     'fire': dict(skin='leather', shirt='orange', pants='pantsDark', boots='shoe', tooth='bone', extras='fire', bald=True, targets=TARGETS),
