@@ -94,7 +94,7 @@ for (let run = 0; run < Number(count); run++) {
       wrap(window.GPUQueue, ['writeTexture', 'writeBuffer', 'submit', 'onSubmittedWorkDone']);
       wrap(window.WebGL2RenderingContext, ['getProgramParameter', 'texImage2D', 'texSubImage2D', 'clientWaitSync', 'linkProgram']);
     })();`);
-    // Later levels use an unlocked campaign, with empty HTTP/GPU caches. This avoids
+    // Later levels use an unlocked campaign in a fresh browser profile. This avoids
     // an unrelated speculative L1 load in front of the selected level.
     if (level !== 'L1') {
       const save = preset(`${level}-default` as Parameters<typeof preset>[0]);

@@ -22,5 +22,12 @@
   "hardware": "Apple M4, ANGLE Metal / native WebGPU Metal",
   "delivery": "Vite production preview on localhost; same public asset tree as baseline",
   "remoteJob": "/srv/mi/jobs/load-stalls-cb5cb2-29534-1792709247",
-  "remoteSourcesVerified": true
+  "remoteSourcesVerified": true,
+  "exitCode": 0,
+  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+  "durationSeconds": 2381.57,
+  "testFilesPassed": 443,
+  "testFilesSkipped": 3,
+  "testsPassed": 2446,
+  "testsSkipped": 9
 }
