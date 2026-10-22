@@ -186,4 +186,6 @@ if (process.env.LOAD_ASSERT === '1') {
   assert.ok(before.n >= 20 && !before.diagnostic, 'baseline needs at least 20 unprofiled cold loads');
   assert.deepEqual(summary.menuWaits, before.menuWaits, 'use the same menu wait schedule before and after');
   assert.ok(summary.median <= before.median, `median ${summary.median} ms > baseline ${before.median} ms`);
+  writeFileSync(`${out}/${level}-${backend}-${quality}-summary.json`, JSON.stringify({ ...summary, gate: 'PASS', baselineMedian: before.median }, null, 2));
+  console.log(JSON.stringify({ level, backend, quality, gate: 'PASS' }));
 }

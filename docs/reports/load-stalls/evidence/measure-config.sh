@@ -3,16 +3,12 @@ set -eu
 level=$1 backend=$2 quality=$3
 started=$(date +%s)
 if [ ! -f test-results/load-stalls/quick-candidate-passed ]; then
-  for variant in population upload; do
-    origin=http://127.0.0.1:4222
-    if [ "$variant" = upload ]; then origin="$origin/upload"; fi
-    for check_level in L8 L10; do
-      for check_backend in webgl2 webgpu; do
-        LOAD_OUT="docs/reports/load-stalls/evidence/diagnostic-quick/$variant" LOAD_TRACE=0 LOAD_GAMEPLAY_MS=0 npx tsx tools/perf/cold-load-time.ts "$origin" "$check_backend" low 3 "$check_level"
-      done
+  for check_backend in webgl2 webgpu; do
+    for check_quality in high low; do
+      LOAD_OUT=docs/reports/load-stalls/evidence/diagnostic-indexed LOAD_TRACE=0 LOAD_GAMEPLAY_MS=0 npx tsx tools/perf/cold-load-time.ts http://127.0.0.1:4222 "$check_backend" "$check_quality" 3 L10
     done
   done
-  # Compare both immutable snapshots before selecting the final matrix build.
+  # Review the indexed bake before starting its acceptance matrix.
   exit 86
 fi
 export LOAD_TRACE=0
