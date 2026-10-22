@@ -48,6 +48,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-07-render-${tier} @E32 
     return { frameP95: p95(frames), simP95: p95(sims), simSamples: sims.length, draws, triangles, gpu: ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : null };
   });
   const cdp = await context.newCDPSession(page); await cdp.send('HeapProfiler.collectGarbage'); const heap = await cdp.send('Runtime.getHeapUsage');
+  mkdirSync('test-results/epics/E32/l10-alpha-contracts', { recursive: true });
+  writeFileSync(`test-results/epics/E32/l10-alpha-contracts/render-${tier}.json`, JSON.stringify({ ...proof, timing, retainedHeapBytes: heap.usedSize }, null, 2));
   expect(timing.gpu).not.toMatch(/swiftshader|software|llvmpipe/i);
   expect(timing.simSamples).toBeGreaterThan(100);
   expect(timing.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
@@ -55,6 +57,4 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-07-render-${tier} @E32 
   expect(timing.draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300);
   expect(timing.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
   expect(heap.usedSize).toBeLessThanOrEqual((tier === 'high' ? 400 : 250) * 1_000_000);
-  mkdirSync('test-results/epics/E32/l10-alpha-contracts', { recursive: true });
-  writeFileSync(`test-results/epics/E32/l10-alpha-contracts/render-${tier}.json`, JSON.stringify({ ...proof, timing, retainedHeapBytes: heap.usedSize }, null, 2));
 });

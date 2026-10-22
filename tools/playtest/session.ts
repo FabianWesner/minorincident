@@ -2,11 +2,11 @@ import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { chromium } from '@playwright/test';
-import { look, type Body, type Eyes } from './eyes';
+import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, shouldResumePause } from './startup';
-import { canCoverVisibleAllies, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
+import { canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
-import { clickGroundInput } from './input';
+import { clickGroundInput, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
 import type { Game } from '../../src/Game';
 
@@ -131,7 +131,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let visibleProgress = new PlaytestProgress(), lastObservation=0;
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
-  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0;
+  let cureConsole: { x: number; z: number } | null = null;
+  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
   const levelDeadline = () => wallStart + o.levelMinutes * 60_000;
@@ -191,6 +192,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const nearby = e.enemies.find(b => b.d < reach && ok(b));
     const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,{ drawn:a.drawn, hp:a.hp, corpse:a.corpse, underAttack:b.attacking },e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
     const threat = prioritizeAllyThreat(unarmed, nearby, allyThreat);
+    if (e.level === 'L6' && e.step === 'stop' && unarmed) {
+      const close = e.enemies.find(b => b.d < 5);
+      if (close) {
+        // With no route ring during the shelter defence, keep space from the
+        // visible crowd instead of standing at the spawn until it surrounds us.
+        await releaseAim();
+        const feet = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: close.x, z: close.z });
+        await page.mouse.move(feet.x, feet.y);
+        await press([...awayKeys(e, close), fistsRetreatAttack(e.enemies.filter(b => b.d < 3).length)]);
+        return true;
+      }
+    }
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
@@ -221,6 +234,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return true;
     }
     if (ranged.test(e.player?.current ?? '')) {
+      const defending = e.step === 'mega' || e.step === 'hold' && /Charge \d+\/60/.test(e.objective);
+      const dodge = e.player && finaleDodgeGoal(e.level, defending ? e.step : null, e.player, cureConsole, threat);
+      if (dodge && e.player) {
+        const points = await page.evaluate(({ p, goal, enemy }) => {
+          const a = window.__SS__!;
+          return [a.input.project(p, 'player'), a.input.project(goal, 'player'), a.input.project(enemy, 'destination')];
+        }, { p: e.player, goal: dodge, enemy: { x: threat.x, z: threat.z } });
+        await releaseAim(); await page.mouse.move(points[2].x, points[2].y);
+        const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+        await press([...keys, 'Space']);
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, keys, enemy: threat.id }); }
+        return true;
+      }
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
       // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
       if (keysDown.has('Space')) await press([]);
@@ -419,11 +445,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           paused: s.paused, waitFor: s.waitFor, gates: s.gates, survivors: s.survivors.map(r => ({ ...r, transform: a.getEntity(r.id)?.transform })) };
       }) });
       lastProgress = { key, tick: e.tick, wall: Date.now(), best: e.distance ?? Infinity }; assistMode = false; unstickDir = 0; navAssist = false; navUntil = 0; navEpisodes = 0; lastPos = { x: e.player?.x ?? 0, z: e.player?.z ?? 0, wall: Date.now() };
-      if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; await hold(300); run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, drawn: await drawnRing(), playerY: e.player?.y } }); }
+      if (e.step && !run.steps.some(s => s.id === e.step)) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; await hold(300); run.steps.push({ id: e.step, text: e.objective, tick: e.tick, marker: { anchor: e.marker?.anchor ?? null, ring, drawn: await drawnRing(), playerY: e.player?.y, pinVisible: await page.getByTestId('minimap-objective').isVisible().catch(() => false) || await page.getByTestId(`mission-pin-${e.step}`).isVisible().catch(() => false) } }); }
       if (stuckLogged.size) bootWall = Date.now();
     }
     if (Date.now() - lastRingRead > 2000 && !(e.marker === null || !e.marker.visible)) { lastRingRead = Date.now(); const r = await markerRing(); if (r) ring = r; }
     if (`${e.step}|${e.marker?.anchor}` !== ringKey) { ring = await markerRing(); ringKey = `${e.step}|${e.marker?.anchor}`; log({ marker: e.marker?.anchor, ring }); }
+    if (e.level === 'L10' && e.step === 'hold' && ring) cureConsole = { x: ring.x, z: ring.z };
     if (e.level === 'L6') {
       if (/help the injured survivor/.test(e.objective)) { fetchHint = await markerRing(); escort = null; }
       else if (/Bring the injured survivor/.test(e.objective) && !escort && fetchHint) {
@@ -452,7 +479,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
-    if(o.noSkip&&observed.seconds>=30) {
+    const watchingEnding = e.level === 'L10' && /Watch the cure spread|Minor Incident/.test(e.objective);
+    if(o.noSkip&&observed.seconds>=30&&!watchingEnding) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;
     }
@@ -474,6 +502,35 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await hold(500); continue;
     }
 
+    // Cover visible walkers before advancing to the next retreat ring.
+    if (e.player) {
+      const groupTarget = visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
+      if (e.level === 'L6' && e.step === 'exit' && ring && !e.enemies.some(b => b.d < 3)
+        && (!groupTarget || Math.hypot(groupTarget.x - ring.x, groupTarget.z - ring.z) < ringDist!)) {
+        // The exit is above two visible stair runs. Clipped ground clicks can
+        // lead into their gap; walk the visible bearing from the approach,
+        // retaining small lateral corrections instead of rounding to 45°.
+        const points = await page.evaluate(({ p, goal }) => {
+          const a = window.__SS__!;
+          return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
+        }, { p: e.player, goal: ring });
+        const keys = markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12);
+        await releaseAim(); await press(keys); await hold(180);
+        if (stairFrame % 12 === 1) log({ visibleStairWalk: e.tick, keys });
+        continue;
+      }
+      if (groupTarget) {
+        const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
+        const sp = safe(screen.x, screen.y, e); await clickGround(sp.x, sp.y); await hold(150); continue;
+      }
+    }
+    // The explicit console action takes priority over nearby combat. Charge and
+    // release require a fresh E press, which a held attack must not starve.
+    if (e.level === 'L10' && e.prompt.includes('console action') && Date.now() - lastE > 2500) {
+      lastE = Date.now(); await press([]); await releaseAim();
+      await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
+      log({ prompt: e.prompt, tick: e.tick }); continue;
+    }
     if (await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
 
@@ -492,7 +549,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
     }
 
-    if (stuckSim > 120 && stuckWall > 60 && !assistMode) {
+    if (!o.noSkip && stuckSim > 120 && stuckWall > 60 && !assistMode) {
       assistMode = true; run.assists++;
       const truth = await page.evaluate(() => { const a = window.__SS__!, m = a.missions.state()!; return { marker: m.marker, states: m.states, counters: m.counters, checkpoint: m.checkpoint }; });
       assist('state-locate', { why: `stuck ${Math.round(stuckSim)} s`, truth });
@@ -501,7 +558,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const g = await goalScreen(e);
     if (stuckSim > 60 && (atRing || !g) && Date.now() - lastE > 4000) { lastE = Date.now(); await press([]); await page.keyboard.down('KeyE'); await hold(1600); await page.keyboard.up('KeyE'); continue; }
     // Prompts near the objective (or naming it) get E; side prompts (push a dumpster) are ignored like a player would.
-    const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover/i.test(e.prompt));
+    const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover|console|activate/i.test(e.prompt));
     if (relevant && Date.now() - lastE > 2500) { lastE = Date.now(); log({ prompt: e.prompt, tick: e.tick }); await press([]); await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE'); continue; }
     if (!g && !e.marker?.visible) {
       // No ring/arrow: follow what the minimap shows (L5 "Search <place>" cue pin, or the active step's pin).
@@ -535,7 +592,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
     const far = ringDist !== null && ringDist > 25;
     const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
-    if (stalled && !atRing && ring && e.player) {
+    if (o.noSkip && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
+      // A raised marker can make repeated ground clicks stop on the stair edge.
+      // Project both visible positions onto the courier's current floor and
+      // walk toward the marker with physical keys, without reading navigation.
+      const points = await page.evaluate(({ p, goal }) => {
+        const a = window.__SS__!;
+        return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
+      }, { p: e.player, goal: ring });
+      const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+      await releaseAim(); await press(keys); await hold(700); await press([]);
+      log({ visibleMarkerUnstick: e.tick, keys }); continue;
+    }
+    if (!o.noSkip && stalled && !atRing && ring && e.player) {
       if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
       const step = await page.evaluate(({ goal }) => {
         const lab = window.__SCENE__ as unknown as { game?: { world: { entities: Map<number, { transform: { x: number; z: number } }>; infected?: { nav: { steer(p: object, g: object, r: object, rad: number, out: { x: number; z: number }, budget: number, nearest: boolean): boolean } } } } } | undefined;

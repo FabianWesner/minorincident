@@ -2,16 +2,16 @@
   "config": {
     "argv": [
       "/opt/homebrew/Cellar/node/26.0.0/bin/node",
-      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/node_modules/.bin/playwright",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/node_modules/.bin/playwright",
       "test",
       "--grep",
       "@(?:E25)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
       "--grep-invert",
-      "T-E25-14",
+      "T-E25-14|@perf",
       "--workers=1"
     ],
-    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/playwright.config.ts",
-    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -27,7 +27,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -35,7 +35,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -45,7 +45,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -53,18 +53,22 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts"
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -72,18 +76,22 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
           "**/input-touch.spec.ts",
           "**/hud-touch.spec.ts",
-          "**/mobile-hud-layout.spec.ts"
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -91,7 +99,7 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -102,7 +110,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -110,7 +118,7 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
@@ -121,7 +129,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3498",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -129,7 +137,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -161,8 +169,8 @@
     "version": "1.63.0",
     "workers": 1,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3498 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3498",
+      "command": "npx vite preview --host 127.0.0.1 --port 4091 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4091",
       "reuseExistingServer": false,
       "timeout": 30000
     }
@@ -194,12 +202,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5808,
+                  "duration": 6017,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:43:14.450Z",
+                  "startTime": "2026-10-22T09:19:15.532Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -209,7 +217,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-97a3d61ff3acce718662",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -229,15 +237,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 11,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5931,
+                  "duration": 6175,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:43.576Z",
+                  "startTime": "2026-10-22T09:39:42.156Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -247,7 +255,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-2dc10c72b0be464382db",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -267,15 +275,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 12,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5933,
+                  "duration": 6101,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:50.885Z",
+                  "startTime": "2026-10-22T09:39:49.993Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -285,7 +293,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-15d01b5b0ba9e48f3f0d",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -305,15 +313,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5974,
+                  "duration": 6021,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:58.052Z",
+                  "startTime": "2026-10-22T09:39:57.688Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -323,7 +331,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-581cfa9a47816c39bec7",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -343,15 +351,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 14,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5984,
+                  "duration": 6157,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:05.290Z",
+                  "startTime": "2026-10-22T09:40:05.354Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -361,7 +369,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-11aea1404dff4487d786",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -381,15 +389,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 15,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8835,
+                  "duration": 9411,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:12.648Z",
+                  "startTime": "2026-10-22T09:40:13.124Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -399,7 +407,7 @@
           ],
           "id": "43c1ee6d7c8a5e5dfbfa-eb40bc0a2fb51cb3189f",
           "file": "e2e/audio/smoke.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         }
       ]
@@ -431,12 +439,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 31081,
+                  "duration": 19252,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:43:20.338Z",
+                  "startTime": "2026-10-22T09:19:21.630Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -473,15 +481,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 6,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 30156,
+                  "duration": 19278,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:24.815Z",
+                  "startTime": "2026-10-22T09:23:15.873Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -510,15 +518,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 6,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 26759,
+                  "duration": 18520,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:55.043Z",
+                  "startTime": "2026-10-22T09:23:35.248Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -555,15 +563,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 2,
+                  "workerIndex": 7,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4882,
+                  "duration": 6511,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:22.241Z",
+                  "startTime": "2026-10-22T09:23:54.139Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -603,12 +611,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3401,
+                  "duration": 5629,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:43:51.430Z",
+                  "startTime": "2026-10-22T09:19:40.895Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -646,15 +654,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 3,
+                  "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 15633,
+                  "duration": 23285,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:27.511Z",
+                  "startTime": "2026-10-22T09:19:46.532Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -664,7 +672,7 @@
           ],
           "id": "91bae058919b3638343a-5ef68a1f589b66b3ebd2",
           "file": "e2e/levels/l4-boot.spec.ts",
-          "line": 6,
+          "line": 5,
           "column": 1
         }
       ]
@@ -695,12 +703,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 14948,
+                  "duration": 4324,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:43:54.841Z",
+                  "startTime": "2026-10-22T09:20:09.825Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -741,12 +749,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9600,
+                  "duration": 11289,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:09.832Z",
+                  "startTime": "2026-10-22T09:20:14.197Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -756,7 +764,7 @@
           ],
           "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
           "file": "e2e/save.spec.ts",
-          "line": 35,
+          "line": 76,
           "column": 1
         }
       ]
@@ -785,12 +793,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 436,
+                  "duration": 584,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:19.444Z",
+                  "startTime": "2026-10-22T09:20:25.494Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -800,7 +808,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -821,12 +829,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 456,
+                  "duration": 612,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:19.886Z",
+                  "startTime": "2026-10-22T09:20:26.083Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -836,7 +844,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -854,15 +862,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 11,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 450,
+                  "duration": 576,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:49.603Z",
+                  "startTime": "2026-10-22T09:39:48.419Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -872,7 +880,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b47c75175263bbf2a151",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -890,15 +898,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 11,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 493,
+                  "duration": 705,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:50.059Z",
+                  "startTime": "2026-10-22T09:39:49.001Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -908,7 +916,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-606f9edef12ca51944a0",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -926,15 +934,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 12,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 375,
+                  "duration": 562,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:56.916Z",
+                  "startTime": "2026-10-22T09:39:56.172Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -944,7 +952,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-390c9a040de6fabcb378",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -962,15 +970,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 12,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 431,
+                  "duration": 670,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:55:57.295Z",
+                  "startTime": "2026-10-22T09:39:56.740Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -980,7 +988,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-0e569f350f7af79ee309",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -998,15 +1006,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 413,
+                  "duration": 560,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:04.100Z",
+                  "startTime": "2026-10-22T09:40:03.791Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1016,7 +1024,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-92ffd1bf0aed09418cc1",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1034,15 +1042,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 451,
+                  "duration": 706,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:04.518Z",
+                  "startTime": "2026-10-22T09:40:04.355Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1052,7 +1060,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-7af3753670183995ee55",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1070,15 +1078,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 14,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 435,
+                  "duration": 558,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:11.358Z",
+                  "startTime": "2026-10-22T09:40:11.593Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1088,7 +1096,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-b87ee65b11d1f0642d6c",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1106,15 +1114,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 14,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 493,
+                  "duration": 673,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:11.801Z",
+                  "startTime": "2026-10-22T09:40:12.156Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1124,7 +1132,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-60f671c069b68bd6e8b3",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
           "column": 1
         },
         {
@@ -1142,15 +1150,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 15,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1664,
+                  "duration": 1696,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:22.022Z",
+                  "startTime": "2026-10-22T09:40:23.395Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1160,7 +1168,7 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-96d6d563eec8e62b3b00",
           "file": "e2e/smoke.spec.ts",
-          "line": 3,
+          "line": 4,
           "column": 1
         },
         {
@@ -1178,15 +1186,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 15,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2700,
+                  "duration": 2797,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:56:23.701Z",
+                  "startTime": "2026-10-22T09:40:25.098Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1196,7 +1204,208 @@
           ],
           "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
           "file": "e2e/smoke.spec.ts",
-          "line": 12,
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-canvas.spec.ts",
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12143,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:24:01.018Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-baa1ba2a41384d7d1b97",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59051,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:24:13.243Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-e4ef32c76084759b386b",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:25:12.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-41b5266e0775c8ebbc36",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 26,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:25:24.982Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-8eac85643e3dcd3f500e",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 42,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-level-transitions.spec.ts",
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11741,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:25:55.099Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7be80d8c19c0387a2a29-3bd0f8a63eef8d53b837",
+          "file": "e2e/webgpu-level-transitions.spec.ts",
+          "line": 15,
           "column": 1
         }
       ]
@@ -1223,15 +1432,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5486,
+                  "duration": 7942,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:20.363Z",
+                  "startTime": "2026-10-22T09:26:39.649Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1241,7 +1450,7 @@
           ],
           "id": "04c96ecdbc5af3424834-3cdf795dc78b3a890071",
           "file": "visual/e25-closure.spec.ts",
-          "line": 22,
+          "line": 57,
           "column": 1
         },
         {
@@ -1260,15 +1469,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5031,
+                  "duration": 7319,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:25.856Z",
+                  "startTime": "2026-10-22T09:26:47.597Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1278,7 +1487,7 @@
           ],
           "id": "04c96ecdbc5af3424834-bfd1f805bc2e7854c0e8",
           "file": "visual/e25-closure.spec.ts",
-          "line": 31,
+          "line": 66,
           "column": 1
         },
         {
@@ -1297,15 +1506,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 17330,
+                  "duration": 23625,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:30.896Z",
+                  "startTime": "2026-10-22T09:26:54.931Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1315,11 +1524,11 @@
           ],
           "id": "04c96ecdbc5af3424834-3eddcee7340d8bf01d8b",
           "file": "visual/e25-closure.spec.ts",
-          "line": 52,
+          "line": 87,
           "column": 1
         },
         {
-          "title": "T-E25-16 @E25 @E25-AC16 production photo spots for the non-L6 lighting review",
+          "title": "T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references webgl high",
           "ok": true,
           "tags": [
             "E25",
@@ -1334,15 +1543,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 90548,
+                  "duration": 70623,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:44:48.232Z",
+                  "startTime": "2026-10-22T09:27:18.567Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1350,10 +1559,269 @@
               "status": "expected"
             }
           ],
-          "id": "04c96ecdbc5af3424834-4688d681605420633e65",
+          "id": "04c96ecdbc5af3424834-2843ebfb6b283fd0ae17",
           "file": "visual/e25-closure.spec.ts",
-          "line": 64,
-          "column": 1
+          "line": 102,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16-night @E25 @E25-AC16 trailer and PO-dark shelter/headlamp references webgl high",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13780,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:28:29.199Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-840c4d2e376d1dab2fa4",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 123,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references webgl low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22142,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:28:42.985Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-5e42d6ec79af456de865",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 102,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16-night @E25 @E25-AC16 trailer and PO-dark shelter/headlamp references webgl low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9777,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:29:05.132Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-3ba90cf07afd59db762f",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 123,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references webgpu high",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 82964,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:29:14.916Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-4c36b3c59f37598d0bc3",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 102,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16-night @E25 @E25-AC16 trailer and PO-dark shelter/headlamp references webgpu high",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16691,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:30:37.889Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-f9f9362ad7431570f579",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 123,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references webgpu low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21978,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:30:54.595Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-e9b465b9519fda7dfff2",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 102,
+          "column": 3
+        },
+        {
+          "title": "T-E25-16-night @E25 @E25-AC16 trailer and PO-dark shelter/headlamp references webgpu low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:31:16.585Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-7de1136279e589157529",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 123,
+          "column": 3
         },
         {
           "title": "T-E25-10 @E25 @E25-AC10 wet reflection splats exceed the dry surface on both tiers",
@@ -1371,15 +1839,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 18203,
+                  "duration": 29279,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:46:18.791Z",
+                  "startTime": "2026-10-22T09:31:26.837Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1389,7 +1857,7 @@
           ],
           "id": "04c96ecdbc5af3424834-198636d0ea1b9ae3f62e",
           "file": "visual/e25-closure.spec.ts",
-          "line": 83,
+          "line": 147,
           "column": 1
         },
         {
@@ -1409,15 +1877,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 26532,
+                  "duration": 36536,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:46:37.003Z",
+                  "startTime": "2026-10-22T09:31:56.124Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1427,7 +1895,7 @@
           ],
           "id": "04c96ecdbc5af3424834-0bf5c6bc84f47ca013ec",
           "file": "visual/e25-closure.spec.ts",
-          "line": 125,
+          "line": 168,
           "column": 1
         },
         {
@@ -1446,15 +1914,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5397,
+                  "duration": 7947,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:47:03.545Z",
+                  "startTime": "2026-10-22T09:32:32.673Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1464,7 +1932,7 @@
           ],
           "id": "04c96ecdbc5af3424834-61d20b3de24f7d253883",
           "file": "visual/e25-closure.spec.ts",
-          "line": 155,
+          "line": 202,
           "column": 1
         },
         {
@@ -1483,15 +1951,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1145,
+                  "duration": 2516,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:47:08.947Z",
+                  "startTime": "2026-10-22T09:32:40.628Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1501,7 +1969,7 @@
           ],
           "id": "04c96ecdbc5af3424834-6e0dc5344c982b3b61dc",
           "file": "visual/e25-closure.spec.ts",
-          "line": 170,
+          "line": 217,
           "column": 1
         },
         {
@@ -1520,15 +1988,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 414316,
+                  "duration": 418133,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:47:10.100Z",
+                  "startTime": "2026-10-22T09:32:43.156Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1538,8 +2006,92 @@
           ],
           "id": "04c96ecdbc5af3424834-6442c54e7151d6ded54c",
           "file": "visual/e25-closure.spec.ts",
-          "line": 176,
+          "line": 239,
           "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "actual backend pool parity",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 27,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E25-04 @E25 @E25-AC04 high identical trailer pool mask differs by at most ten percent",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC04"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-22T09:26:07.297Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04c96ecdbc5af3424834-b7c6822e49b2a891934e",
+              "file": "visual/e25-closure.spec.ts",
+              "line": 28,
+              "column": 42
+            },
+            {
+              "title": "T-E25-04 @E25 @E25-AC04 low identical trailer pool mask differs by at most ten percent",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC04"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15526,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-22T09:26:24.115Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04c96ecdbc5af3424834-adb0e929bb4d7ca0f222",
+              "file": "visual/e25-closure.spec.ts",
+              "line": 28,
+              "column": 42
+            }
+          ]
         }
       ]
     },
@@ -1550,11 +2102,11 @@
       "line": 0,
       "specs": [
         {
-          "title": "T-E25-01-GPU @E25 @E25-AC01 deferred: comparative ClusteredLighting/DynamicLighting WebGPU GPU timing (manual)",
+          "title": "T-E25-10-SSR @E25 @E25-AC10 deferred: SSR reflected car silhouette (release extras, specs/04 section 6)",
           "ok": true,
           "tags": [
             "E25",
-            "E25-AC01"
+            "E25-AC10"
           ],
           "tests": [
             {
@@ -1563,7 +2115,7 @@
                 {
                   "type": "fixme",
                   "location": {
-                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-deferred.spec.ts",
                     "line": 4,
                     "column": 6
                   }
@@ -1582,123 +2134,13 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:04.425Z",
+                  "startTime": "2026-10-22T09:20:26.699Z",
                   "annotations": [
                     {
                       "type": "fixme",
                       "location": {
-                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-deferred.spec.ts",
                         "line": 4,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "attachments": []
-                }
-              ],
-              "status": "skipped"
-            }
-          ],
-          "id": "be3e948a1f96bcb88f17-1606a52e385f4c7b64d1",
-          "file": "visual/e25-deferred.spec.ts",
-          "line": 4,
-          "column": 6
-        },
-        {
-          "title": "T-E25-04 @E25 @E25-AC04 deferred: WebGL2/WebGPU pool parity at one photo spot (WebGPU is checked manually)",
-          "ok": true,
-          "tags": [
-            "E25",
-            "E25-AC04"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [
-                {
-                  "type": "fixme",
-                  "location": {
-                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
-                    "line": 5,
-                    "column": 6
-                  }
-                }
-              ],
-              "expectedStatus": "skipped",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": -1,
-                  "parallelIndex": -1,
-                  "status": "skipped",
-                  "duration": 0,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-10T16:54:04.426Z",
-                  "annotations": [
-                    {
-                      "type": "fixme",
-                      "location": {
-                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
-                        "line": 5,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "attachments": []
-                }
-              ],
-              "status": "skipped"
-            }
-          ],
-          "id": "be3e948a1f96bcb88f17-830c76ea9181d5dcb776",
-          "file": "visual/e25-deferred.spec.ts",
-          "line": 5,
-          "column": 6
-        },
-        {
-          "title": "T-E25-10-SSR @E25 @E25-AC10 deferred: SSR reflected car silhouette (release extras, specs/04 section 6)",
-          "ok": true,
-          "tags": [
-            "E25",
-            "E25-AC10"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [
-                {
-                  "type": "fixme",
-                  "location": {
-                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
-                    "line": 6,
-                    "column": 6
-                  }
-                }
-              ],
-              "expectedStatus": "skipped",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": -1,
-                  "parallelIndex": -1,
-                  "status": "skipped",
-                  "duration": 0,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-10T16:54:04.426Z",
-                  "annotations": [
-                    {
-                      "type": "fixme",
-                      "location": {
-                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/visual/e25-deferred.spec.ts",
-                        "line": 6,
                         "column": 6
                       }
                     }
@@ -1711,7 +2153,7 @@
           ],
           "id": "be3e948a1f96bcb88f17-669d804348ac2781019f",
           "file": "visual/e25-deferred.spec.ts",
-          "line": 6,
+          "line": 4,
           "column": 6
         }
       ]
@@ -1741,12 +2183,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7918,
+                  "duration": 13971,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:04.437Z",
+                  "startTime": "2026-10-22T09:20:26.711Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1760,8 +2202,8 @@
           "column": 1
         },
         {
-          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels",
-          "ok": true,
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl high",
+          "ok": false,
           "tags": [
             "E25",
             "E25-AC13"
@@ -1777,28 +2219,279 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 5897,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 11381,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.898639280546548\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.898639280546548\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:82:20",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                      "column": 20,
+                      "line": 82
+                    },
+                    "snippet": "  80 |   writeFileSync(`${out}/night-readability-${backend}-${tier}.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\\n');\n  81 |   expect(n).toBeGreaterThan(800);\n> 82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n     |                    ^\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n  84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n  85 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                        "column": 20,
+                        "line": 82
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.898639280546548\u001b[39m\n\n  80 |   writeFileSync(`${out}/night-readability-${backend}-${tier}.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\\n');\n  81 |   expect(n).toBeGreaterThan(800);\n> 82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n     |                    ^\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n  84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n  85 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:82:20"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:12.374Z",
+                  "startTime": "2026-10-22T09:20:40.693Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--08fe6-brightest-pixels-webgl-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--08fe6-brightest-pixels-webgl-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                    "column": 20,
+                    "line": 82
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
-          "id": "9f82599f157bce570465-36e240f622935c9fc596",
+          "id": "9f82599f157bce570465-1156ddbd92bb5e69034a",
           "file": "visual/e25-lighting.spec.ts",
           "line": 43,
-          "column": 1
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl low",
+          "ok": false,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9756,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:84:68",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                      "column": 68,
+                      "line": 84
+                    },
+                    "snippet": "  82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n> 84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n     |                                                                    ^\n  85 | });\n  86 |\n  87 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                        "column": 68,
+                        "line": 84
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m\n\n  82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n> 84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n     |                                                                    ^\n  85 | });\n  86 |\n  87 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:84:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:20:53.738Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--5264b--brightest-pixels-webgl-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--5264b--brightest-pixels-webgl-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                    "column": 68,
+                    "line": 84
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9f82599f157bce570465-bc59bcde1cc23eb6dbce",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu high",
+          "ok": false,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13430,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.8969363526034035\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.8969363526034035\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:82:20",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                      "column": 20,
+                      "line": 82
+                    },
+                    "snippet": "  80 |   writeFileSync(`${out}/night-readability-${backend}-${tier}.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\\n');\n  81 |   expect(n).toBeGreaterThan(800);\n> 82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n     |                    ^\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n  84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n  85 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                        "column": 20,
+                        "line": 82
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2.8969363526034035\u001b[39m\n\n  80 |   writeFileSync(`${out}/night-readability-${backend}-${tier}.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\\n');\n  81 |   expect(n).toBeGreaterThan(800);\n> 82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n     |                    ^\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n  84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n  85 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:82:20"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:21:05.088Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--b73aa-rightest-pixels-webgpu-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--b73aa-rightest-pixels-webgpu-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                    "column": 20,
+                    "line": 82
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9f82599f157bce570465-32ce731152c9b063df19",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu low",
+          "ok": false,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9525,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:84:68",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                      "column": 68,
+                      "line": 84
+                    },
+                    "snippet": "  82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n> 84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n     |                                                                    ^\n  85 | });\n  86 |\n  87 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                        "column": 68,
+                        "line": 84
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m-50\u001b[39m\n\n  82 |   expect(contrast).toBeGreaterThanOrEqual(3);\n  83 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).\n> 84 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }\n     |                                                                    ^\n  85 | });\n  86 |\n  87 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:84:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:21:20.176Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--75e51-brightest-pixels-webgpu-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--75e51-brightest-pixels-webgpu-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                    "column": 68,
+                    "line": 84
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9f82599f157bce570465-85edf2a1dd8a16114d46",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
         },
         {
           "title": "T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black",
-          "ok": true,
+          "ok": false,
           "tags": [
             "E25",
             "E25-AC06"
@@ -1812,25 +2505,140 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 4,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 6001,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 8994,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.35\u001b[39m\nReceived:    \u001b[31m-0.0726531558625021\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.35\u001b[39m\nReceived:    \u001b[31m-0.0726531558625021\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:102:35",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                      "column": 35,
+                      "line": 102
+                    },
+                    "snippet": "  100 |   writeFileSync(`${out}/hero-shadow.json`, JSON.stringify({ ...probe, behindColor: behind, besideColor: beside, darker: 1 - behind.l / beside.l, hue: hue(behind.r, behind.g, behind.b) }, null, 2) + '\\n');\n  101 |   expect(probe.perf!.heroShadow).toBe(1); expect(probe.perf!.shadowMaps).toBe(1);\n> 102 |   expect(1 - behind.l / beside.l).toBeGreaterThanOrEqual(.35);\n      |                                   ^\n  103 |   const h = hue(behind.r, behind.g, behind.b); expect(h).toBeGreaterThanOrEqual(230); expect(h).toBeLessThanOrEqual(290);\n  104 | });\n  105 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                        "column": 35,
+                        "line": 102
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.35\u001b[39m\nReceived:    \u001b[31m-0.0726531558625021\u001b[39m\n\n  100 |   writeFileSync(`${out}/hero-shadow.json`, JSON.stringify({ ...probe, behindColor: behind, besideColor: beside, darker: 1 - behind.l / beside.l, hue: hue(behind.r, behind.g, behind.b) }, null, 2) + '\\n');\n  101 |   expect(probe.perf!.heroShadow).toBe(1); expect(probe.perf!.shadowMaps).toBe(1);\n> 102 |   expect(1 - behind.l / beside.l).toBeGreaterThanOrEqual(.35);\n      |                                   ^\n  103 |   const h = hue(behind.r, behind.g, behind.b); expect(h).toBeGreaterThanOrEqual(230); expect(h).toBeLessThanOrEqual(290);\n  104 | });\n  105 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts:102:35"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-10T16:54:18.277Z",
+                  "startTime": "2026-10-22T09:21:31.282Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--657a8-ide-it-and-tinted-not-black-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-e25-lighting-T-E25--657a8-ide-it-and-tinted-not-black-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/e25-lighting.spec.ts",
+                    "column": 35,
+                    "line": 102
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "9f82599f157bce570465-e37be2a8089fca292c8c",
           "file": "visual/e25-lighting.spec.ts",
-          "line": 84,
+          "line": 87,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/l3-contrast.spec.ts",
+      "file": "visual/l3-contrast.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "L3 courier retains contrast and colour through the authored haze-to-ash timeline @E25 @visual",
+          "ok": false,
+          "tags": [
+            "E25",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 91753,
+                  "error": {
+                    "message": "Error: close/start: retained daylight colour saturation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.95\u001b[39m\nReceived:    \u001b[31m0.9495790792881046\u001b[39m",
+                    "stack": "Error: close/start: retained daylight colour saturation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.95\u001b[39m\nReceived:    \u001b[31m0.9495790792881046\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/l3-contrast.spec.ts:71:116",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/l3-contrast.spec.ts",
+                      "column": 116,
+                      "line": 71
+                    },
+                    "snippet": "  69 |     // L2's brighter midday light is less saturated than L1. Keep L3 inside their daylight colour range.\n  70 |     const daylightSaturation = Math.min(baseline.saturation, report[`${camera}-L2`].saturation);\n> 71 |     expect.soft(actual.saturation / daylightSaturation, `${camera}/${state}: retained daylight colour saturation`).toBeGreaterThanOrEqual(.95);\n     |                                                                                                                    ^\n  72 |     expect.soft(actual.p5 - baseline.p5, `${camera}/${state}: dark colours must not turn milky`).toBeLessThanOrEqual(.025);\n  73 |   }\n  74 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/l3-contrast.spec.ts",
+                        "column": 116,
+                        "line": 71
+                      },
+                      "message": "Error: close/start: retained daylight colour saturation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.95\u001b[39m\nReceived:    \u001b[31m0.9495790792881046\u001b[39m\n\n  69 |     // L2's brighter midday light is less saturated than L1. Keep L3 inside their daylight colour range.\n  70 |     const daylightSaturation = Math.min(baseline.saturation, report[`${camera}-L2`].saturation);\n> 71 |     expect.soft(actual.saturation / daylightSaturation, `${camera}/${state}: retained daylight colour saturation`).toBeGreaterThanOrEqual(.95);\n     |                                                                                                                    ^\n  72 |     expect.soft(actual.p5 - baseline.p5, `${camera}/${state}: dark colours must not turn milky`).toBeLessThanOrEqual(.025);\n  73 |   }\n  74 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/l3-contrast.spec.ts:71:116"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T09:21:42.038Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-l3-contrast-L3-cour-e8953--to-ash-timeline-E25-visual-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/test-results/playwright/run-4091/visual-l3-contrast-L3-cour-e8953--to-ash-timeline-E25-visual-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/ac-close-l7-l10/tests/visual/l3-contrast.spec.ts",
+                    "column": 116,
+                    "line": 71
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "954d50121ee6581f2886-cb8496b262b5ae407502",
+          "file": "visual/l3-contrast.spec.ts",
+          "line": 24,
           "column": 1
         }
       ]
@@ -1838,11 +2646,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-10T16:43:13.038Z",
-    "duration": 793406.222,
-    "expected": 38,
-    "skipped": 3,
-    "unexpected": 0,
+    "startTime": "2026-10-22T09:19:10.448Z",
+    "duration": 1277477.43,
+    "expected": 50,
+    "skipped": 1,
+    "unexpected": 6,
     "flaky": 0
   }
 }

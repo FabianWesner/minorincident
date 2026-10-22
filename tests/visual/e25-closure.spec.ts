@@ -4,7 +4,9 @@ import { boot, test, expect } from '../e2e/fixtures';
 import { windowLine } from '../helpers/window-parallax';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
-test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+test.use({ headless: true, launchOptions: { args: process.platform === 'darwin'
+  ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal']
+  : ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] } });
 
 const out = 'test-results/epics/E25/closure';
 export const lightLab: SceneSpec = {
@@ -20,7 +22,7 @@ function patch(image: PNG, point: number[], radius = 4) {
   for (let y = cy - radius; y <= cy + radius; y++) for (let x = cx - radius; x <= cx + radius; x++) { const at = (y * image.width + x) * 4; sum += lum(image.data[at], image.data[at + 1], image.data[at + 2]); n++; }
   return sum / n;
 }
-async function scene(page: import('@playwright/test').Page, spec: SceneSpec) { await boot(page, '/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&dpr=1'); await page.evaluate(async spec => { await window.__SCENE__!.load(spec); await window.__SCENE__!.step(120); await window.__SS__!.screenshotReady(); }, spec); mkdirSync(out, { recursive: true }); }
+async function scene(page: import('@playwright/test').Page, spec: SceneSpec, url = '/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&dpr=1') { await boot(page, url); await page.evaluate(async spec => { await window.__SCENE__!.load(spec); await window.__SCENE__!.step(120); await window.__SS__!.screenshotReady(); }, spec); mkdirSync(out, { recursive: true }); }
 
 test.describe('actual backend pool parity', () => {
   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
@@ -94,24 +96,72 @@ test('T-E25-01 @E25 @E25-AC01 headless WebGL tone-mapping comparison records the
   expect(comparisons.every(item => item.backend === 'webgl')).toBe(true);
 });
 
-test('T-E25-16 @E25 @E25-AC16 production photo spots for the non-L6 lighting review', async ({ page }) => {
-  test.setTimeout(240_000);
-  await boot(page, '/?test=1&renderer=webgl&quality=high&audio=muted&dpr=1');
-  for (const [level, spot] of [['L2', 'l2-streets-w1'], ['L3', 'l3-grove-boulevard'], ['L4', 'l4-plaza-safe'], ['L5', 'pair-plaza']]) {
-    await page.evaluate(async ({ level, spot }) => {
-      const a = window.__SS__!; await a.loadLevel(level); a.cheats.god(true); a.missions.begin(); a.pause();
-      if (level === 'L5') { a.cheats.completeObjective('emerge'); await a.step(600); }
-      a.camera.preset(`${level === 'L2' ? 'D-GROVE/W1' : level === 'L3' ? 'D-CORRIDOR/W2' : level === 'L4' ? 'D-FAIR/W0' : 'D-FAIR/W5'}/${spot}`);
-      await a.step(90);
-      if (level === 'L5') for (let i = 0; i < 150; i++) a.vfx.stepRender(.1);
-      await a.screenshotReady();
-    }, { level, spot });
-    await page.locator('canvas').screenshot({ path: `${out}/${spot}.png` });
-    writeFileSync(`${out}/${spot}.json`, JSON.stringify(await page.evaluate(() => window.__SS__!.getState().render.lighting), null, 2));
-  }
-  await scene(page, { name: 'mall-floor', ground: 'asphalt', size: 30, time: 'night', dof: false, props: [{ asset: 'int.mini-mall', at: [0, 0] }], actors: [{ kind: 'courier', at: [0, 0] }], camera: { mode: 'pose', position: [10, 8, 14], target: [0, 1, 0] } });
-  await page.locator('canvas').screenshot({ path: `${out}/mall-floor.png` });
-});
+for (const backend of ['webgl', 'webgpu']) for (const quality of ['high', 'low']) {
+  const url = `/?test=1&scenelab&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`;
+  const directory = `${out}/lighting-G-${backend}-${quality}`;
+  const mall: SceneSpec = { name: 'mall-floor', ground: 'asphalt', size: 30, time: 'night', dof: false, props: [{ asset: 'int.mini-mall', at: [0, 0] }], actors: [{ kind: 'courier', at: [0, 6] }], camera: { mode: 'pose', position: [10, 8, 14], target: [0, 1, 0] } };
+  test(`T-E25-16-mall @E25 @E25-AC16 mall reference exposes the real courier ${backend} ${quality}`, async ({ page }) => {
+    mkdirSync(directory, { recursive: true }); await scene(page, mall, url);
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.screenshotReady(); }, quality as 'high' | 'low');
+    await page.locator('canvas').screenshot({ path: `${directory}/mall-floor.png` });
+    await page.evaluate(async () => { const a = window.__SS__!; a.settings.set({ idPass: true }); await a.screenshotReady(); });
+    const mask = PNG.sync.read(await page.locator('canvas').screenshot()); let pixels = 0;
+    for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) pixels++;
+    writeFileSync(`${directory}/mall-floor.json`, JSON.stringify({ courierPixels: pixels, backend, quality, fixture: mall }, null, 2));
+    expect(pixels, 'The reference must frame an unoccluded real courier').toBeGreaterThan(200);
+  });
+
+  test(`T-E25-16 @E25 @E25-AC16 production daylight, sunset and polished-floor references ${backend} ${quality}`, async ({ page }) => {
+    test.setTimeout(240_000); mkdirSync(directory, { recursive: true });
+    await boot(page, url);
+    for (const [level, spot] of [['L2', 'l2-streets-w1'], ['L3', 'l3-grove-boulevard'], ['L4', 'l4-plaza-safe'], ['L5', 'pair-plaza']]) {
+      await page.evaluate(async ({ level, spot, quality }) => {
+        const a = window.__SS__!; await a.loadLevel(level, level === 'L4' ? { checkpoint: 'arrival' } : undefined); a.settings.set({ quality }); a.cheats.god(true); a.missions.begin(); a.pause();
+        if (level === 'L5') { a.cheats.completeObjective('emerge'); await a.step(600); }
+        a.camera.preset(`${level === 'L2' ? 'D-GROVE/W1' : level === 'L3' ? 'D-CORRIDOR/W2' : level === 'L4' ? 'D-FAIR/W0' : 'D-FAIR/W5'}/${spot}`);
+        await a.step(90);
+        if (level === 'L5') for (let i = 0; i < 150; i++) a.vfx.stepRender(.1);
+        // These are lighting reference fixtures. Put the real courier on clear
+        // ground in the fixed photo view instead of leaving her at level entry.
+        const target = a.getState().render.camera.target;
+        const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+        const offset = [[0, 4], [4, 4], [-4, 4], [0, -4], [6, 0], [-6, 0]].find(([dx, dz]) => game.world.solids.clear({ x: target[0] + dx, z: target[2] + dz, y: game.world.districts!.groundHeight(target[0] + dx, target[2] + dz) + .75 }, .35, 1));
+        if (!offset) throw new Error('No clear courier point in reference camera');
+        a.teleport(1, { x: target[0] + offset[0], z: target[2] + offset[1] });
+        await a.screenshotReady();
+      }, { level, spot, quality: quality as 'high' | 'low' });
+      await page.locator('canvas').screenshot({ path: `${directory}/${spot}.png` });
+      writeFileSync(`${directory}/${spot}.json`, JSON.stringify(await page.evaluate(() => ({ lighting: window.__SS__!.getState().render.lighting, camera: window.__SS__!.getState().render.camera })), null, 2));
+    }
+    await scene(page, mall, url);
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.screenshotReady(); }, quality as 'high' | 'low');
+    await page.locator('canvas').screenshot({ path: `${directory}/mall-floor.png` });
+    expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(backend);
+    expect(await page.evaluate(() => window.__SS__!.getState().render.quality)).toBe(quality);
+  });
+  test(`T-E25-16-night @E25 @E25-AC16 trailer and PO-dark shelter/headlamp references ${backend} ${quality}`, async ({ page }) => {
+    test.setTimeout(240_000); mkdirSync(directory, { recursive: true });
+    await scene(page, { ...lightLab, weather: 'rain', weatherWarmup: 120, actors: [{ kind: 'courier', at: [0, 7] }, { kind: 'infected', at: [-3, 2], state: 'idle' }, { kind: 'infected', at: [-7, -1], state: 'idle' }] }, url);
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.screenshotReady(); }, quality as 'high' | 'low');
+    await page.locator('canvas').screenshot({ path: `${directory}/light-lab.png` });
+    await page.evaluate(async quality => {
+      const a = window.__SS__!;
+      await a.loadLevel('L6', { seed: 1, progression: 'L6-default' }); a.settings.set({ quality }); a.pause(); a.missions.begin(); a.cheats.god(true);
+      const lamp = a.query({}).find(e => e.archetype === 'pickup.headlamp')!;
+      a.teleport(1, lamp.transform); a.input.set({ interact: true }); await a.step(24); a.input.clear();
+      a.cheats.completeObjective('shelter'); a.cheats.completeObjective('stop');
+      a.teleport(1, { x: 0, z: -4 }); a.camera.preset('D-SUBWAY/W0/l6-shelter-fails'); await a.step(30);
+      for (let i = 0; i < 3; i++) a.spawn('infected.runner', { x: -7 - i * .8, z: -3.4 }, { state: 'idle', yaw: 0 });
+      a.vfx.stepRender(.3); await a.screenshotReady();
+    }, quality as 'high' | 'low');
+    await page.locator('canvas').screenshot({ path: `${directory}/l6-shelter-fails.png` });
+    const state = await page.evaluate(() => window.__SS__!.getState());
+    writeFileSync(`${directory}/l6-shelter-fails.json`, JSON.stringify({ player: state.player, lighting: state.render.lighting, camera: state.render.camera, mission: state.mission }, null, 2));
+    expect(state.render.backend).toBe(backend); expect(state.render.quality).toBe(quality);
+    expect(state.render.lighting!.heroLights).toBeLessThanOrEqual(quality === 'high' ? 8 : 3);
+    expect(state.render.lighting!.heroShadowMaps).toBeLessThanOrEqual(quality === 'high' ? 3 : 1);
+  });
+}
 
 test('T-E25-10 @E25 @E25-AC10 wet reflection splats exceed the dry surface on both tiers', async ({ page }) => {
   const lab: SceneSpec = { name: 'reflection-lab', ground: 'asphalt', size: 40, time: 'night', dof: false,

@@ -1,0 +1,14 @@
+#!/bin/sh
+set -u
+if [ -f /tmp/ac-close-l4-l6-verifier/needs-mask-proof ]; then
+  rm /tmp/ac-close-l4-l6-verifier/needs-mask-proof
+  printf '%s\n' '[ac-close fence] build and combined corrected functional proof before next queued batch' >&2
+  (
+    /bin/sh tools/remote/run.sh "$PWD" --pull dist -- npm run build && L6_READABILITY_BACKEND=both /bin/sh tools/e2e-lock.sh npx playwright test tests/e2e/acceptance/l6-readability.spec.ts tests/e2e/levels/L6.spec.ts --grep 'T-E24-15|T-E24-17' --project=chromium --workers=1
+    result=$?
+    cp test-results/playwright/results.json test-results/ac-close/corrected-pixels-v3-results.json
+    printf '%s\n' "$result" > /tmp/ac-close-corrected-pixels-v3.exit
+  ) > /tmp/ac-close-corrected-pixels-v3.log 2>&1
+fi
+printf '[ac-close fence] admitted at %s: %s\n' "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" "$*" >&2
+exec /bin/sh "$@"

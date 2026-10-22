@@ -35,6 +35,13 @@ export class MissionUI {
   private displayedMission: Mission | null = null;
   private phase = '';
   private active = '';
+  private readonly subtitleLayout: ResizeObserver;
+  /** Reserve the actual visible subtitle height, including wrapping/text scale. */
+  private readonly positionCaptions = (): void => {
+    const bounds = this.subtitle.getBoundingClientRect();
+    const bottom = !this.root.hidden && !this.subtitle.hidden && bounds.height ? Math.max(0, window.innerHeight - bounds.top + 12) : 0;
+    style(document.documentElement, '--mission-caption-bottom', `${bottom}px`);
+  };
   constructor(private readonly world: SimWorld, private readonly onChange: () => void) {
     for (const [name, element] of Object.entries({ root: this.root, tracker: this.tracker, subtitle: this.subtitle, toast: this.toast, marker: this.marker, map: this.map, panel: this.panel, heading: this.heading, detail: this.detail, button: this.button, result: this.result })) element.dataset.testid = `mission-${name}`;
     this.root.className = 'mission-ui'; this.root.hidden = true;
@@ -51,6 +58,9 @@ export class MissionUI {
     }
     this.panel.append(this.heading,this.detail,this.result,this.button);
     this.root.append(this.tracker,this.map,this.marker,this.subtitle,this.toast,this.panel); document.querySelector('#game')!.append(this.root);
+    this.subtitleLayout = new ResizeObserver(this.positionCaptions);
+    this.subtitleLayout.observe(this.subtitle);
+    window.addEventListener('resize', this.positionCaptions);
   }
   private readonly accept = (): void => {
     const mission=this.world.missions;if(!mission)return;
@@ -142,5 +152,5 @@ export class MissionUI {
     const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);
     return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · Rescued ${all.reduce((n,r)=>n+r.rescued,0)}`;
   }
-  dispose(): void {this.button.removeEventListener('click',this.accept);this.root.remove();}
+  dispose(): void {this.subtitleLayout.disconnect();window.removeEventListener('resize',this.positionCaptions);style(document.documentElement,'--mission-caption-bottom','0px');this.button.removeEventListener('click',this.accept);this.root.remove();}
 }

@@ -1,11 +1,11 @@
 {
   "morning": {
     "preset": "L1",
-    "frameMsP50": 25.799999999999272,
-    "frameMsP95": 32.900000000001455,
+    "frameMsP50": 20.799999999999272,
+    "frameMsP95": 32.099999999998545,
     "lightFieldMsMean": 0,
-    "drawCalls": 186,
-    "triangles": 293429,
+    "drawCalls": 192,
+    "triangles": 301472,
     "lighting": {
       "lightFieldMs": 0,
       "lightPools": 0,
@@ -21,8 +21,8 @@
       "strength": 0,
       "resolution": 512,
       "size": 60,
-      "statics": 555,
-      "litStatics": 555,
+      "statics": 530,
+      "litStatics": 530,
       "candidates": 0,
       "drawn": 0,
       "transients": 0,
@@ -36,15 +36,15 @@
   },
   "night": {
     "preset": "night",
-    "frameMsP50": 25.599999999998545,
-    "frameMsP95": 31.80000000000291,
-    "lightFieldMsMean": 0.3313333129882812,
-    "drawCalls": 184,
-    "triangles": 296361,
+    "frameMsP50": 21.80000000000291,
+    "frameMsP95": 27.89999999999418,
+    "lightFieldMsMean": 0.42516666730244956,
+    "drawCalls": 192,
+    "triangles": 300123,
     "lighting": {
-      "lightFieldMs": 0.10000038146972656,
-      "lightPools": 158,
-      "lightCandidates": 158,
+      "lightFieldMs": 1,
+      "lightPools": 157,
+      "lightCandidates": 157,
       "shadowMaps": 1,
       "heroLights": 0,
       "heroShadow": 0,
@@ -56,17 +56,32 @@
       "strength": 1,
       "resolution": 512,
       "size": 60,
-      "statics": 555,
-      "litStatics": 555,
-      "candidates": 158,
-      "drawn": 158,
+      "statics": 530,
+      "litStatics": 530,
+      "candidates": 157,
+      "drawn": 157,
       "transients": 0,
       "capacity": 256,
-      "ms": 0.10000038146972656,
+      "ms": 1,
       "center": [
         -11.953125,
         3.984375
       ]
-    }
+    },
+    "heapMB": 162.533132,
+    "heapAudit": {
+      "usedSize": 162533132,
+      "totalSize": 164446208,
+      "embedderHeapUsedSize": 3186224,
+      "backingStorageSize": 661326980
+    },
+    "heapBeforeCollection": {
+      "usedSize": 427798532,
+      "totalSize": 498827264,
+      "embedderHeapUsedSize": 6939944,
+      "backingStorageSize": 661699539
+    },
+    "legacyHeapBeforeCollection": 1089602979,
+    "legacyHeapAfterCollection": 823979016
   }
 }

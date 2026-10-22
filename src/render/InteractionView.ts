@@ -42,6 +42,24 @@ export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): b
     return !!anchor && Math.hypot(anchor.x - entity.transform.x, anchor.z - entity.transform.z) <= 0.75;
   });
 }
+type PromptRect = { left: number; top: number; right: number; bottom: number };
+/** Nearest free screen position; obstacle edges also cover narrow phone HUD gaps. */
+export function interactionPromptPosition(preferred: { x: number; y: number }, size: { width: number; height: number }, viewport: PromptRect, obstacles: readonly PromptRect[]): { x: number; y: number } {
+  const gap = 8, minX = viewport.left + gap, minY = viewport.top + gap;
+  const maxX = Math.max(minX, viewport.right - gap - size.width), maxY = Math.max(minY, viewport.bottom - gap - size.height);
+  const clampX = (x: number) => Math.max(minX, Math.min(maxX, x)), clampY = (y: number) => Math.max(minY, Math.min(maxY, y));
+  const origin = { x: clampX(preferred.x), y: clampY(preferred.y) };
+  const xs = new Set([origin.x, minX, maxX, ...obstacles.flatMap(r => [clampX(r.left - gap - size.width), clampX(r.right + gap)])]);
+  const ys = new Set([origin.y, minY, maxY, ...obstacles.flatMap(r => [clampY(r.top - gap - size.height), clampY(r.bottom + gap)])]);
+  let best = origin, leastOverlap = Infinity, nearest = Infinity;
+  for (const x of xs) for (const y of ys) {
+    const overlap = obstacles.reduce((sum, r) => sum + Math.max(0, Math.min(x + size.width, r.right + gap) - Math.max(x, r.left - gap)) * Math.max(0, Math.min(y + size.height, r.bottom + gap) - Math.max(y, r.top - gap)), 0);
+    const distance = (x - origin.x) ** 2 + (y - origin.y) ** 2;
+    if (overlap < leastOverlap || overlap === leastOverlap && distance < nearest) { best = { x, y }; leastOverlap = overlap; nearest = distance; }
+    if (overlap === 0 && distance === 0) return best;
+  }
+  return best;
+}
 /** Registry objects and a constant-contrast ring/DOM prompt. The sim never reads this view. */
 export class InteractionView extends Group {
   private readonly registry: AssetRegistry;
@@ -409,22 +427,29 @@ export class InteractionView extends Group {
       const left = viewport?.offsetLeft ?? 0, top = viewport?.offsetTop ?? 0;
       const right = left + (viewport?.width ?? innerWidth), bottom = top + (viewport?.height ?? innerHeight);
       const x = (this.projection.x + 1) * innerWidth / 2, y = (1 - this.projection.y) * innerHeight / 2;
-      this.panel.style.left = `${Math.max(left + 8 + width / 2, Math.min(right - 8 - width / 2, x))}px`;
-      let panelBottom = Math.max(top + 8 + height, Math.min(bottom - 8, y));
-      // Projected interactions can land on the phone's objective/roster. Move
-      // below visible story panels, keeping the same world-space anchor in X.
+      let position = { x: Math.max(left + 8, Math.min(right - 8 - width, x - width / 2)), y: Math.max(top + 8, Math.min(bottom - 8 - height, y - height)) };
       if (innerWidth <= 600 || document.body.classList.contains('touch-ui')) {
-        const panelLeft = parseFloat(this.panel.style.left) - width / 2;
-        const obstacles = document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.mission-subtitle,.story-bubble');
-        for (const obstacle of obstacles) {
-          if (obstacle.hidden || getComputedStyle(obstacle).visibility === 'hidden') continue;
-          const rect = obstacle.getBoundingClientRect();
-          if (rect.width && rect.height && panelLeft < rect.right + 8 && panelLeft + width > rect.left - 8 && panelBottom > rect.top - 8 && panelBottom - height < rect.bottom + 8) {
-            panelBottom = Math.min(bottom - 8, rect.bottom + 8 + height);
+        const obstacles: PromptRect[] = [...document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.hud-vitals,.hud-map,.hud-weather,.hud-weapon-rack,.mission-subtitle,.story-bubble,.onboarding,[data-touch-action],[data-testid="pause-button"],[data-testid="home-button"]')].flatMap(obstacle => {
+          const style = getComputedStyle(obstacle), rect = obstacle.getBoundingClientRect();
+          return obstacle.hidden || style.visibility === 'hidden' || style.opacity === '0' || !rect.width || !rect.height ? [] : [rect];
+        });
+        // Keep the courier clear too: moving below the HUD must not put a panel over her face.
+        // Use the same body clearance as GameView's world reveal, including the portrait scale.
+        const player = this.world.entities.get(1);
+        if (player && !player.hidden) {
+          const p = player.transform, scale = innerWidth < innerHeight ? 1.25 : 1, half = .55 * scale;
+          const body = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
+          for (const dx of [-half, half]) for (const dz of [-half, half]) for (const dy of [0, 1.9 * scale]) {
+            this.projection.set(p.x + dx, p.y - .7 + dy, p.z + dz).project(camera);
+            const px = (this.projection.x + 1) * innerWidth / 2, py = (1 - this.projection.y) * innerHeight / 2;
+            body.left = Math.min(body.left, px); body.right = Math.max(body.right, px); body.top = Math.min(body.top, py); body.bottom = Math.max(body.bottom, py);
           }
+          obstacles.push(body);
         }
+        position = interactionPromptPosition(position, { width, height }, { left, top, right, bottom }, obstacles);
       }
-      this.panel.style.top = `${panelBottom}px`;
+      this.panel.style.left = `${position.x + width / 2}px`;
+      this.panel.style.top = `${position.y + height}px`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {

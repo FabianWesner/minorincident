@@ -1,0 +1,112 @@
+[
+  {
+    "configuration": "webgpu-low",
+    "measuredSamples": 7,
+    "requiredSamples": 15,
+    "unmeasuredSamples": 8,
+    "frameP95Max": 12.300000000017462,
+    "simP95Max": 2.299999237060547,
+    "heapMBMin": 256.522656,
+    "heapMBMax": 262.028316,
+    "missingSamples": [
+      {
+        "region": "countryside",
+        "zoom": 1
+      },
+      {
+        "region": "countryside",
+        "zoom": 1.5
+      },
+      {
+        "region": "dry",
+        "zoom": 0.5
+      },
+      {
+        "region": "dry",
+        "zoom": 1
+      },
+      {
+        "region": "dry",
+        "zoom": 1.5
+      },
+      {
+        "region": "approach",
+        "zoom": 0.5
+      },
+      {
+        "region": "approach",
+        "zoom": 1
+      },
+      {
+        "region": "approach",
+        "zoom": 1.5
+      }
+    ]
+  },
+  {
+    "configuration": "webgl-low",
+    "measuredSamples": 7,
+    "requiredSamples": 15,
+    "unmeasuredSamples": 8,
+    "frameP95Max": 13.199999999982538,
+    "simP95Max": 2.8999996185302734,
+    "heapMBMin": 260.055968,
+    "heapMBMax": 265.816972,
+    "missingSamples": [
+      {
+        "region": "countryside",
+        "zoom": 1
+      },
+      {
+        "region": "countryside",
+        "zoom": 1.5
+      },
+      {
+        "region": "dry",
+        "zoom": 0.5
+      },
+      {
+        "region": "dry",
+        "zoom": 1
+      },
+      {
+        "region": "dry",
+        "zoom": 1.5
+      },
+      {
+        "region": "approach",
+        "zoom": 0.5
+      },
+      {
+        "region": "approach",
+        "zoom": 1
+      },
+      {
+        "region": "approach",
+        "zoom": 1.5
+      }
+    ]
+  },
+  {
+    "configuration": "webgpu-high",
+    "measuredSamples": 15,
+    "requiredSamples": 15,
+    "unmeasuredSamples": 0,
+    "frameP95Max": 4.700000000004366,
+    "simP95Max": 0.7000007629394531,
+    "heapMBMin": 268.5445,
+    "heapMBMax": 277.047188,
+    "missingSamples": []
+  },
+  {
+    "configuration": "webgl-high",
+    "measuredSamples": 15,
+    "requiredSamples": 15,
+    "unmeasuredSamples": 0,
+    "frameP95Max": 6.100000000005821,
+    "simP95Max": 1.1999998092651367,
+    "heapMBMin": 271.91342,
+    "heapMBMax": 280.796368,
+    "missingSamples": []
+  }
+]

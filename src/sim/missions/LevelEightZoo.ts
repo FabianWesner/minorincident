@@ -1,4 +1,9 @@
 import type { Mission } from './Mission';
+import { FIXED_DT } from '../../core/Clock';
+import { vehicleDef } from '../../data/vehicles';
+import { actorRadius } from '../world/SolidRegistry';
+import { faceMotion, motionResponse, respond } from '../locomotion/MotionResponse';
+import { Status } from '../combat/Status';
 import { spawnSetPiece } from './L4Spectacle';
 import type { EntitySnapshot } from '../world/types';
 import type { Point, ZooSpecies } from '../npc/types';
@@ -166,6 +171,54 @@ export class LevelEightZoo {
     const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
     return ids.filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
   }
+  /** The parked nav AABB encloses free space beside a rotated hull. Use the
+   * canonical physical sweep for the final clear approach, without changing
+   * capsule collision, movement response, speed or the actual boarding reach. */
+  private approachDoor(e: EntitySnapshot, door: Point, speed: number): boolean {
+    const w = this.w, radius = actorRadius(e);
+    let dx = door.x - e.transform.x, dz = door.z - e.transform.z, distance = Math.hypot(dx, dz), stop = .2;
+    if (distance <= stop) return false;
+    let direction = { x: dx / distance, z: dz / distance };
+    if (distance >= 3 || w.solids.sweep(e, direction, distance, radius, false, false) < distance - .001) {
+      // A follower already inside the conservative parked AABB cannot obtain
+      // any visible grid start. Walk to its nearest physically clear exterior,
+      // then let the ordinary route planner take over around the vehicle.
+      const car = w.entities.get(this.state.carId)!, p = car.transform, def = vehicleDef(car.archetype);
+      const c = Math.abs(Math.cos(p.yaw)), s = Math.abs(Math.sin(p.yaw));
+      const hx = c * def.length / 2 + s * def.width / 2, hz = s * def.length / 2 + c * def.width / 2;
+      if (Math.abs(e.transform.x - p.x) >= hx + radius || Math.abs(e.transform.z - p.z) >= hz + radius) return false;
+      // Existing contact commits permit up to2cm penetration. Project that
+      // shallow contact out before sweeping away; never shrink the capsule.
+      if (!w.solids.clear(e.transform, radius, e.id, false, 0)) w.solids.relocate(e, { ...e.transform }, 'l8.apc-door-contact', .02, false);
+      const margin = radius + .3;
+      const exits = [{ x: p.x - hx - margin, z: e.transform.z }, { x: p.x + hx + margin, z: e.transform.z }, { x: e.transform.x, z: p.z - hz - margin }, { x: e.transform.x, z: p.z + hz + margin }];
+      exits.sort((a, b) => Math.hypot(a.x - e.transform.x, a.z - e.transform.z) - Math.hypot(b.x - e.transform.x, b.z - e.transform.z));
+      const exit = exits.find(at => {
+        const x = at.x - e.transform.x, z = at.z - e.transform.z, length = Math.hypot(x, z);
+        return w.infected!.nav.clear(at.x, at.z, radius, true) && length > .05 && w.solids.sweep(e, { x: x / length, z: z / length }, length, radius, false, false) >= length - .001;
+      });
+      if (!exit) return false;
+      dx = exit.x - e.transform.x; dz = exit.z - e.transform.z; distance = Math.hypot(dx, dz); stop = .05;
+      direction = { x: dx / distance, z: dz / distance };
+    }
+    const state = e.locomotion ??= motionResponse();
+    if (state.updatedAt === w.tick) return true;
+    const velocity = Math.min(speed, Math.max(0, distance - stop) * 4) * Status.speed(e);
+    respond(state, direction.x * velocity, direction.z * velocity); state.updatedAt = w.tick;
+    const magnitude = Math.hypot(state.vx, state.vz);
+    if (magnitude > 0) {
+      const heading = { x: state.vx / magnitude, z: state.vz / magnitude };
+      // As with normal NPC movement, the shared commit resolves body contacts.
+      const step = w.solids.sweep(e, heading, magnitude * FIXED_DT, radius, false, false);
+      w.solids.wrote(e, 'l8.apc-door-approach');
+      e.transform.x += heading.x * step; e.transform.z += heading.z * step;
+      const actualX = heading.x * step / FIXED_DT, actualZ = heading.z * step / FIXED_DT;
+      if (Math.hypot(actualX - state.vx, actualZ - state.vz) > .05) { state.vx = actualX; state.vz = actualZ; state.ax = state.az = 0; }
+      e.transform.yaw = faceMotion(state, e.transform.yaw, actualX, actualZ);
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+    return true;
+  }
   follower(e: EntitySnapshot): boolean {
     const w = this.w, s = this.state, c = e.civilian!, p = w.entities.get(1)!;
     if (!s.breachedAt) return s.roster.includes(e.id);
@@ -177,7 +230,10 @@ export class LevelEightZoo {
     const goal = { x: p.transform.x - hx * back - hz * side, z: p.transform.z - hz * back + hx * side };
     const target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     if (boarding && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
-    else if (distance(e.transform, target) > (boarding ? .3 : 1)) w.npcs!.move(e, target, (c.l1?.walkSpeed ?? 2.2) <= 1.4 ? 1.4 : 3.8, c, boarding ? .2 : .8, 2400);
+    else if (distance(e.transform, target) > (boarding ? .3 : 1)) {
+      const speed = (c.l1?.walkSpeed ?? 2.2) <= 1.4 ? 1.4 : 3.8;
+      if (!boarding || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
+    }
     return true;
   }
   /** The seated group as a transfer payload; null when nobody is seated (only the debug objective cheat completes the escape unboarded). */

@@ -24,7 +24,9 @@ test('T-E22-bus-audio @E22 the L4 convoy has engine loops, the bus radio plays d
   // The outbreak alarm (first turn) ends the radio.
   await page.evaluate(() => { window.__SS__!.cheats.completeObjective('ride'); });
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('plaza');
-  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.step(60 * 101); a.resume(); }); // the latest first turn comes 100 s after the arrival
+  // The shipping first-turn clock is armed after the quartermaster tutorial.
+  await page.evaluate(async () => { const a = window.__SS__!; a.cheats.completeObjective('quartermaster'); a.pause(); await a.step(60 * 101); a.resume(); }); // the latest first turn follows the completed tutorial
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).not.toBe('plaza');
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.turnAt)).toBeGreaterThan(0);
   await expect.poll(() => page.evaluate(() => (window.__SS__!.audio.snapshot() as unknown as { music: { radio: { level: number } } }).music.radio.level), { timeout: 15_000 }).toBeLessThan(0.01);
 });

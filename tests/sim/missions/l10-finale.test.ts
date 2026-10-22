@@ -52,7 +52,7 @@ test('T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit 
     // Menu/focus never call sim.update; rendering and querying state are clock-free.
     const tick = w.tick; for (let i = 0; i < 120; i++) w.getState(); expect(w.tick).toBe(tick);
     at(0); step(3479); expect(m.state.states['charge-ready']).toBe(false);
-    step(); expect(m.state.counters['charge-ticks']).toBe(3600); expect(m.state.steps.release.status).toBe('active');
+    step(2); expect(m.state.counters['charge-ticks']).toBe(3600); expect(m.state.steps.hold.status).toBe('completed'); expect(m.state.steps.mega.status).toBe('completed'); expect(m.state.steps.release.status).toBe('active');
     expect(m.state.states['cure-released']).toBe(false);
     at(3); press(); expect(m.state.states['cure-released']).toBe(false);
     at(0); press(); expect(m.state.states['cure-released']).toBe(true);
@@ -106,17 +106,65 @@ test('T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32
   } finally { w.dispose(); }
 });
 
+test.each([false, true])('@E32 #101 old combined charge/boss save retains its checkpoint (hold completed=%s) @E32-AC27', async completed => {
+  const { w, m, kill, press, step } = await finale();
+  try {
+    if (completed) { kill(); press(); press(); step(3602); }
+    const save = structuredClone(w.progression!.campaign!); save.cureResume = m.saveResume();
+    for (const snapshot of [save.cureResume.current, save.cureResume.checkpoint]) delete snapshot.state.steps.mega;
+    const decoded = decodeSave(JSON.stringify(save));
+    expect(decoded.status).toBe('ok');
+    if (decoded.status === 'ok') {
+      m.loadResume(decoded.save.cureResume!);
+      expect(m.state.checkpoint).toBe(completed ? 'cure-disperse-ready' : 'cure-complex');
+      expect(m.state.steps.mega.status).toBe(completed ? 'completed' : 'pending');
+    }
+  } finally { w.dispose(); }
+});
+
 
 test('T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22', async () => {
   const { w, m, boss, press, step, kill } = await finale();
   try {
     w.combat!.damage.god = true; press(); press();
     step(3600); expect(m.state.counters['charge-ticks']).toBe(3600);
-    expect(m.state.steps.hold.status).toBe('active'); expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
+    expect(m.state.steps.mega.status).toBe('active'); expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
     w.setInput({ interact: true }); step(); kill(); step();
     expect(boss.state.mode).toBe('dead'); expect(m.state.steps.release.status).toBe('active');
     expect(m.state.states['cure-released']).toBe(false);
     press(); expect(m.state.states['cure-released']).toBe(true);
+  } finally { w.dispose(); }
+});
+
+test('@E32 charge completion gives the live Mega Alpha a distinct objective marker before it is dead @E32-AC22', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true; press(); press(); step(3610);
+    expect(m.state.steps.hold.status).toBe('completed');
+    expect(m.state.steps.mega.status).toBe('active');
+    expect(m.state.marker).toBe('cure-mega');
+    step();
+    expect(m.def.anchors['cure-mega']).toMatchObject({ x: w.entities.get(boss.state.id)!.transform.x, z: w.entities.get(boss.state.id)!.transform.z });
+    expect(boss.distance()).toBeLessThan(30);
+    expect(cureFinaleText(m)).toContain('Kill the Mega Alpha');
+  } finally { w.dispose(); }
+});
+
+test('@E32 #101 a remote living boss joins the finale within 15 seconds with its remaining health intact @E32-AC22', async () => {
+  const { w, m, boss, press, step } = await finale();
+  try {
+    w.combat!.damage.god = true; press(); press();
+    const e = w.entities.get(boss.state.id)!;
+    e.transform.x = -3000; e.health.current = 1280;
+    boss.state.x = -3000; boss.state.routeAt = -Infinity;
+    m.state.counters['charge-ticks'] = 3599;
+    step(3);
+    expect(m.state.steps.mega.status).toBe('active');
+    expect(boss.distance()).toBeLessThan(30);
+    expect(e.health.current).toBe(1280);
+    step(15 * 60);
+    expect(boss.distance()).toBeLessThanOrEqual(12);
+    expect(e.health.current).toBe(1280);
   } finally { w.dispose(); }
 });
 

@@ -2,7 +2,9 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
-for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-browser @E07-AC05 @E07-AC06 real scene wiring retains telegraph until activation`, async ({ page }) => {
+for (const [width, height] of [[1280, 720], [390, 844], [844, 390]] as const) test.describe(`Alpha support ${width}`, () => {
+  test.use({ viewport: { width, height } });
+  for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-browser @E07-AC05 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real scene wiring retains telegraph until activation`, async ({ page }) => {
   test.setTimeout(120_000);
   const spec = JSON.parse(readFileSync(`tests/scenes/alpha-s3/qa-alpha-${move}.json`, 'utf8')) as SceneSpec;
   await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
@@ -12,6 +14,9 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
     const api = window.__SS__!, lab = window.__SCENE__!, id = lab.actors.get('alpha')!.entity;
     return { id, state: api.getState(), events: api.events() };
   });
+  const out = 'test-results/epics/E07/native-alpha'; mkdirSync(out, { recursive: true });
+  await page.locator('canvas').screenshot({ path: `${out}/${move}-${width}-warning.png` });
+  writeFileSync(`${out}/${move}-${width}-warning.json`, JSON.stringify(before, null, 2));
   const tell = before.events.find(e => e.type === 'telegraph' && e.sourceId === before.id && e.move === `alpha.${move}`);
   expect(tell).toMatchObject({ duration: .8 });
   const a = before.state.entities.find(e => e.id === before.id)!.infected!.specialAttack!;
@@ -19,12 +24,15 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
   expect(before.state.render.vfx?.telegraphs.some(t => t.attackId === a.attackId)).toBe(true);
   await page.evaluate(async () => { await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
   const after = await page.evaluate(() => window.__SS__!.getState());
+  await page.locator('canvas').screenshot({ path: `${out}/${move}-${width}-active.png` });
+  writeFileSync(`${out}/${move}-${width}-active.json`, JSON.stringify(after, null, 2));
   expect(after.render.vfx?.telegraphs.some(t => t.attackId === a.attackId)).toBe(false);
   const resolved = after.entities.find(e => e.id === before.id)!.infected!.specialAttack!;
   if (move === 'grab-throw') {
     expect(resolved.projectile).toBeDefined();
     await page.evaluate(async () => { await window.__SCENE__!.step(40); await window.__SCENE__!.ready(); });
     const impact = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));
+    await page.locator('canvas').screenshot({ path: `${out}/${move}-${width}-impact.png` });
     expect(impact.state.player!.health.current).toBe(70);
     expect(impact.events.filter(e => e.type === 'infected.attack' && e.attackId === a.attackId)).toHaveLength(1);
     expect(impact.state.entities.find(e => e.id === resolved.projectile!.objectId)).toMatchObject({ corpse: true, corpseThrown: true });
@@ -37,9 +45,10 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
     const expired = await page.evaluate(() => window.__SS__!.getState());
     expect(expired.entities.find(e => e.id === regularId)!.infected!.roar).toBeUndefined();
   }
+  });
 });
 
-test('T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all four moves in the merged Scene Lab', async ({ page }) => {
+test('T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 one Alpha activates all four moves in the merged Scene Lab', async ({ page }) => {
   test.setTimeout(120_000);
   const spec = JSON.parse(readFileSync('tests/scenes/alpha-s3/qa-alpha-all-specials.json', 'utf8')) as SceneSpec;
   await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');

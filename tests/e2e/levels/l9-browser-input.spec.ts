@@ -3,6 +3,7 @@ import type { Page } from '@playwright/test';
 import { boot, expect, test } from '../fixtures';
 import { tick as inputTick } from '../input-helpers';
 import { crossing } from '../../../src/levels/L9/district';
+import { l9Readability } from '../../helpers/l9-readability';
 import { Recorder } from '../../../src/input/Recorder';
 import { preset } from '../../../src/sim/progression/Campaign';
 import type { Game } from '../../../src/Game';
@@ -23,7 +24,7 @@ async function homeClear(page: Page) {
     if (b) expect(h.x < b.x + b.width && h.x + h.width > b.x && h.y < b.y + b.height && h.y + h.height > b.y, `Home overlaps ${id}`).toBe(false);
   }
 }
-for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) for (const hp of [1000, 0]) {
+for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5, 1.5]) for (const hp of [1000, 0]) {
   test(`T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 ${backend} zoom=${zoom} HP=${hp}`, async ({ page, context }, info) => {
     test.setTimeout(300_000);
     const touch = info.project.name.startsWith('pixel'), quality = touch ? 'low' : 'high';
@@ -32,7 +33,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) 
     const name = `${info.project.name}-${backend}-z${zoom}-hp${hp}`;
     mkdirSync(out, { recursive: true });
     await boot(page, `/?test=1&scenelab=1&ui=1&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
-    await page.mouse.click(200, 400);
+    await page.mouse.click(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);
     const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; save.settings.quality = quality;
     await page.evaluate(async ({ save, hp }) => {
       const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -48,14 +49,20 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) 
     const carId = await page.evaluate(() => window.__SS__!.getState().l9!.carId);
     await expect(page.getByTestId('durability-label')).toHaveText(hp ? 'Armor 1000 / 1000' : 'Barely functional');
     await homeClear(page);
-    if (zoom === .5) {
+    if (zoom !== 1) {
+      // The last gesture must be inside the viewport: y=400 is outside the
+      // 390px landscape screen, so wheels at that cursor never reach canvas.
+      await page.mouse.move(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);
       // Wheel notches change zoom by one step regardless of delta magnitude.
-      for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100);
+      for (let i = 0; i < 5; i++) await page.mouse.wheel(0, zoom < 1 ? -100 : 100);
       await tick(page, 60);
     }
     expect(await page.evaluate(() => window.__SS__!.getState().render!.camera.zoom)).toBeCloseTo(zoom, 2);
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${out}/${name}-start.png` });
+    const floorRead = await l9Readability(page, `${out}/${name}-navigation`, false);
+    expect.soft(floorRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect.soft(floorRead.navigation).toBeGreaterThanOrEqual(3);
     const cdp = await context.newCDPSession(page);
     const origin = { x: 90, y: page.viewportSize()!.height - 240 };
     async function finger(type: 'touchStart' | 'touchMove' | 'touchEnd', x = origin.x, y = origin.y) {
@@ -124,7 +131,17 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) 
     await tick(page, 250);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.survivor!.scriptedClip)).toBe('crawl');
     expect(await page.evaluate(() => window.__SS__!.audio.snapshot().cues.some(c => c.sourceId === 1 && c.cue.startsWith('footstep.survivor.')))).toBe(true);
+    const subtitleBounds = await page.getByTestId('mission-subtitle').boundingBox();
+    const captionBounds = await page.locator('[data-audio-captions]').boundingBox();
+    writeFileSync(`${out}/${name}-caption-layout.json`, JSON.stringify({ subtitleBounds, captionBounds }, null, 2));
+    expect.soft(subtitleBounds).not.toBeNull(); expect.soft(captionBounds).not.toBeNull();
+    if (subtitleBounds && captionBounds) expect.soft(subtitleBounds.x < captionBounds.x + captionBounds.width && subtitleBounds.x + subtitleBounds.width > captionBounds.x && subtitleBounds.y < captionBounds.y + captionBounds.height && subtitleBounds.y + subtitleBounds.height > captionBounds.y, 'mission and sound captions must not overlap').toBe(false);
     await page.screenshot({ path: `${out}/${name}-crawl.png` });
+    const crawlRead = await l9Readability(page, `${out}/${name}-crawl-readability`, true);
+    expect.soft(crawlRead.pairs.length).toBeGreaterThanOrEqual(3);
+    expect.soft(crawlRead.navigation).toBeGreaterThanOrEqual(3);
+    expect.soft(crawlRead.playerPixels).toBeGreaterThan(100);
+    expect.soft(crawlRead.playerContrast).toBeGreaterThanOrEqual(3);
     await tick(page, 400);
     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
     await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
@@ -153,7 +170,7 @@ for (const backend of ['webgl', 'webgpu'] as const) test(`T-E31-22-input @E31-AC
   test.setTimeout(180_000);
   const quality = info.project.name.startsWith('pixel') ? 'low' : 'high';
   await boot(page, `/?test=1&scenelab=1&ui=1&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
-    await page.mouse.click(200, 400);
+    await page.mouse.click(page.viewportSize()!.width / 2, page.viewportSize()!.height / 2);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L9', { seed: 31 }); a.pause(); a.settings.set({ muted: false, captions: true }); await a.audio.unlock(); });
   mkdirSync(out, { recursive: true });
   let previous = 1000;
