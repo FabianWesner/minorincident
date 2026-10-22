@@ -20,4 +20,16 @@ Handoff before numbers: L4 WebGPU high turn48.5/tank15.3/break204.7 ms and four 
 
 `tools/perf/l6-retention-profile.ts` preserves the original five-load sequence and captures first/fifth heap snapshots. It labels output diagnostic because snapshots perturb allocation/GC; it cannot close acceptance. Compare new retained objects with `npx tsx tools/perf/heap-retainers.ts fifth.heapsnapshot diff.json first.heapsnapshot`.
 
-L4 already has optional `L4_TIMING_KEYS=1 L4_CPU_PROFILE=1` diagnostics in its original budget test. Formal timing remains unprofiled. L4's ordinary preset practical strength is0.12, so its normal hero-light update does not switch to the night spot; an unmeasured stable-night-list edit is not justified.
+The same auxiliary tool can run remotely on Linux with headless SwiftShader through `tools/e2e-lock.sh`; this uses no Mac GPU and provides no native timing evidence. `tools/perf/l4-beat-cpu.ts` also attributes the ordinary seeded bot's turn/line-break costs on the remote runner without a browser.
+
+L4 already has optional `L4_TIMING_KEYS=1 L4_CPU_PROFILE=1` diagnostics in its original budget test. Formal timing remains unprofiled. L4's ordinary preset practical strength is 0.12, so its normal hero-light update does not switch to the night spot; an unmeasured stable-night-list edit is not justified.
+
+## CPU-only baseline attribution
+
+The ordinary seed 2 bot replay on runner `94.130.181.173` reaches exactly the handoff's high turn 1969/break 13370 and low turn 1979/break 13380 ticks. In this diagnostic, the tick after the alarm spends 28.217 ms high / 7.042 ms low in `Outbreak.update`; turn checkpoint capture is 5.214 ms high, and line-break capture is 7.144 ms high / 3.052 ms low. These inclusive Node timings identify CPU work to trace; they neither explain the native 204.7 ms hitch nor prove a frame-budget pass. Raw method/tick rows and provenance are in `evidence/baseline-cpu-*`.
+
+## L6 owner fix
+
+The remote WebGL low diagnostic reproduces first-five heap growth from 53,818,944 to 59,784,672 bytes (+11.085%). The fifth snapshot reaches retired L1 resources through `GameView.labWindows`, which survives reset after the accident effects are disposed. Its callbacks retain the old loading closure and window meshes; the retained L1 light field alone contributes 69,960 visibility array/backing-array nodes (1,399,200 shallow bytes) plus its parent arrays. The path census, code/group comparison and snapshot hashes are preserved in `evidence/baseline-remote-heap-*`; these are reachability/shallow counts, not dominator retained sizes.
+
+Reset now disposes the window target's three private materials, clears its mesh set and drops `labWindows`, including when the accident effects already retired. The guard fails on the baseline's remaining owner reference and passes with the fix; all five focused window/accident tests pass. No prewarm is removed, no extra loading is introduced, and native acceptance plus the full regression gates remain pending.
