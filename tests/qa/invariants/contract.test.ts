@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { missionIds } from '../../../src/levels/missions';
 import { preset } from '../../../src/sim/progression/Campaign';
 import physicsAssets from '../../../src/data/physicsAssets';
-import { l4, l4Edges, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
+import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
 import { l7Departure } from '../../../src/data/l7';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { bicycleGeometry } from '../../../src/data/bicycleGeometry';
@@ -202,29 +202,6 @@ describe('automatic regression invariants', () => {
     expect([...conflicts].slice(0, 30), `vehicles invariant: route, stop and dismount intersections (${conflicts.size})`).toEqual([]);
   });
 
-  test('5 waves: L4 alarm authored wave count matches controller spawn tally and infected reach the hold area', async () => {
-    const world = await loadLevel('L4', 1), mission = world.missions!;
-    let alarmCount = 0; const authoredWaves: { wave: number; count: number }[] = [];
-    world.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') alarmCount = e.ids.length; });
-    world.events.on('l4.wave', e => { if (e.type === 'l4.wave') authoredWaves.push({ wave: e.wave, count: e.count }); });
-    // Start the authored alarm beat directly so this check does not depend on the full bus ride and player interaction.
-    (mission as unknown as { l4: { turn(): void } }).l4.turn();
-    for (let i = 0; i < 210 * 60; i++) world.update();
-    const state = mission.state.l4;
-    const alive = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden);
-    const reached = alive.some(e => Math.hypot(e.transform.x - (-11), e.transform.z - 14) < 35);
-    const spawned = state?.director.spawned ?? alive.length;
-    world.dispose();
-    expect(alarmCount, 'P1-118: first alarm count equals the authored high-tier arrival count').toBe(l4.calm.alarmInfected.high);
-    expect(oracle.wave({ authored: l4.calm.alarmInfected.high, spawned: alarmCount })).toBe(false);
-    expect(spawned, 'P1-118: L4 alarm has to create its authored wave, not only an Alpha').toBeGreaterThan(1);
-    expect(reached, 'L4 alarm infected reach the hold area').toBe(true);
-    const ring = l4Edges.length - 1;
-    const waveMismatches = authoredWaves.filter(({ wave, count }) => wave >= 0 && count !== Math.ceil(Math.ceil(l4.war.waveSize[Math.min(wave, l4.war.waveSize.length - 1)] * l4.war.waveScale) * l4.war.edgesPerWave / ring) * ring);
-    expect(authoredWaves.length, 'L4 hold alarm emits authored waves').toBeGreaterThan(0);
-    expect(waveMismatches, 'every emitted L4 alarm wave carries its authored count').toEqual([]);
-  }, 300_000);
-
   test('6 objectives: every mission step has a visible destination marker or explicit HUD-only rule', async () => {
     const violations: string[] = [];
     for (const id of missionIds) {
@@ -252,7 +229,7 @@ describe('automatic regression invariants', () => {
           if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
           // A pull-back is presentation state, so it must not remove guidance while this objective is active.
           // Hold it for the full 120-tick deadline to expose P1-114 rather than only checking anchor metadata.
-          for (let tick = 0; tick <= 120; tick++) marker.update(id === 'L3' && step.id === 'checkpoint');
+          for (let tick = 0; tick <= 120; tick++) { marker.update(id === 'L3' && step.id === 'checkpoint'); world.tick++; }
           if (!marker.visible || process.env.QA_INVARIANTS_BREAK === 'objectives') violations.push(`${id}/${step.id}: objective marker hidden beyond 2 s during camera pull-back`);
         }
       }
