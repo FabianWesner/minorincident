@@ -20,9 +20,12 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
         const lamp = a.query({}).find(e => e.archetype === 'pickup.headlamp')!;
         a.teleport(1, lamp.transform); a.input.set({ interact: true }); await a.step(24); a.input.clear();
         a.cheats.completeObjective('shelter'); a.cheats.completeObjective('stop'); a.teleport(1, spot);
-        window.__SCENE__!.setCamera({ mode: 'game', target: [spot.x - 1.5, spot.z - 1], zoom });
         await a.step(30);
-        const id = a.spawn('infected.runner', { x: spot.x - 3, z: spot.z - 2 }, { state: 'idle', yaw: -Math.PI / 4 });
+        // Use the shipping follow rig, including portrait framing, and a visible contact-distance threat.
+        // The old offset static pose cropped the 3.6 m rear subject at the closest zoom.
+        const rig = game.view.view, playerAt = a.getEntity(1)!.transform;
+        rig.reset(playerAt); rig.zoom(Math.log(zoom), true); rig.update(playerAt, 0);
+        const id = a.spawn('infected.runner', { x: spot.x + 1.4, z: spot.z - .6 }, { state: 'idle', yaw: -Math.PI / 4 });
         a.vfx.stepRender(.3); game.view.probeVisibility({ courier: false, crowd: false, bars: true }); await a.screenshotReady();
         const e = a.getEntity(id)!, p = a.getEntity(1)!.transform;
         const batches = (game.view as unknown as { crowd: { batches: Map<string, { mesh: import('three').InstancedMesh; state: import('three').InterleavedBufferAttribute; tint: import('three').InterleavedBufferAttribute; poses: import('../../../src/render/characters/CrowdPosePalette').CrowdPosePalette; probe: { figures: { id: number }[] } }> } }).crowd.batches;
