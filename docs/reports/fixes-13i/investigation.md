@@ -1,5 +1,7 @@
 # Fixes 13i — investigation and validation history
 
+Final result: the required full remote suite on **fd7640f5f** passed **2,406 / 9 skipped**, exit 0. Typecheck/lint and smoke 31/31 pass. L6 fists passes; L10 real-input credits remain the explicitly approved driver limitation. [Final validation](evidence/final-validation.json), [full final remote output](evidence/remote-final-green.log.gz). The chronological notes below retain earlier in-progress and failed-attempt findings.
+
 ## Implementation
 
 - #101: charging and killing the Mega Alpha are separate objective steps. The existing boss stages 24 m from the console when the charge finishes if it is distant, retaining its health and combat settings. The boss objective follows its position through the existing arrow, ring and minimap pin. Old saves with the combined objective migrate to the new steps.
