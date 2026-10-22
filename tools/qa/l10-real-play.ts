@@ -31,12 +31,14 @@ try {
     assaultNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
     await assaultProfiler.send('Profiler.enable'); await assaultProfiler.send('Profiler.start');
   }
-  const result = await session.page.evaluate(async ({ tier, realTime }) => {
+  const drainBeforeAssault = !!assaultProfiler && process.env.L10_DRAIN_BEFORE_ASSAULT === '1';
+  const result = await session.page.evaluate(async ({ tier, realTime, drainBeforeAssault }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
     await a.loadLevel('L10', { seed: 32, checkpoint: 'cure-disperse-ready' });
     a.pause(); a.cheats.god(true); a.teleport(1, { x: 4002, z: -27 });
     a.input.set({ interact: true }); await a.step(1); a.input.clear();
+    if (drainBeforeAssault) await a.screenshotReady();
     const kills: unknown[] = [], inputs: unknown[] = [];
     const off = g.world.events.on('combat.kill', event => {
       if (event.type !== 'combat.kill') return;
@@ -55,11 +57,13 @@ try {
       }
       return null;
     };
-    let nativePerformance: { frames: number; p95: number; max: number; durationMs: number; startedAt: number; finishedAt: number; fromTick: number; toTick: number } | null = null;
+    let nativePerformance: { frames: number; p95: number; max: number; durationMs: number; startedAt: number; finishedAt: number; fromTick: number; toTick: number; warmingAtStart: number; warmingAtEnd: number; windows: { startMs: number; endMs: number; frames: number; p95: number; max: number }[] } | null = null;
     if (realTime) {
       // Drive ordinary inputs through the production feed at 60 simulation
       // ticks/s, rather than accelerating the assault with the stepping API.
       const fromTick = a.tick(), stopTick = fromTick + 5400 + 150;
+      const warmRemaining = () => (g.view as unknown as { shadowWarmup?: { remaining: number } }).shadowWarmup?.remaining ?? 0;
+      const warmingAtStart = warmRemaining();
       const neutral = structuredClone(g.world.inputFrame), frames: number[] = [];
       let current: ReturnType<typeof attack> = null, running = true;
       const start = performance.now(); let previous = start;
@@ -84,8 +88,18 @@ try {
         g.clock.setTimeScale(1); g.clock.resume(); await completed;
         await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
       } finally { running = false; g.clock.pause(); g.input.feed = null; g.world.update = update; }
+      const finishedAt = performance.now(), phases = new Map<number, number[]>(); let elapsed = 0;
+      // Derive time windows after recording, without extra work in the RAF probe.
+      for (const dt of frames) {
+        elapsed += dt; const phase = Math.floor(elapsed / 15000);
+        let values = phases.get(phase); if (!values) { values = []; phases.set(phase, values); } values.push(dt);
+      }
+      const windows = [...phases].map(([phase, values]) => {
+        values.sort((a, b) => a - b);
+        return { startMs: phase * 15000, endMs: Math.min(elapsed, (phase + 1) * 15000), frames: values.length, p95: values[Math.ceil(values.length * .95) - 1], max: values.at(-1)! };
+      });
       frames.sort((x, y) => x - y);
-      nativePerformance = { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1)!, durationMs: performance.now() - start, startedAt: start, finishedAt: performance.now(), fromTick, toTick: a.tick() };
+      nativePerformance = { frames: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1)!, durationMs: finishedAt - start, startedAt: start, finishedAt, fromTick, toTick: a.tick(), warmingAtStart, warmingAtEnd: warmRemaining(), windows };
     } else {
       for (let tick = 0; tick < 5400; tick += 6) {
         const input = attack(); if (input) a.input.set(input); else a.input.clear();
@@ -107,7 +121,7 @@ try {
       if (m.name.startsWith('corpses:') && m.count) pages.push({ name: m.name, order: m.renderOrder, instances: m.count, vertices: m.geometry.getAttribute('position').count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3, source: m.geometry.userData, precomputedNormals: m.geometry.hasAttribute('_placementNormal0') });
     });
     return { kills, inputs, bodies: bodies.map(e => ({ id: e.id, archetype: e.archetype, variant: e.infected?.variant, model: e.infected?.model, appearance: e.appearance, at: e.transform })), sources, pages, tick: a.tick(), nativePerformance, perf: a.perf() };
-  }, { tier, realTime });
+  }, { tier, realTime, drainBeforeAssault });
   if (assaultProfiler) {
     const { profile } = await assaultProfiler.send('Profiler.stop'); await assaultProfiler.detach();
     writeFileSync(`${out}/assault.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs: assaultNavigationStartMs }));
@@ -203,7 +217,7 @@ try {
     await session.page.screenshot({ path: `${out}/z${zoom}.jpg`, type: 'jpeg', quality: 90 });
     captures.push({ zoom, state, samples });
   }
-  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, profiledAssault: !!assaultProfiler, renderOrderOverride: process.env.L10_CORPSE_ORDER, captures, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/evidence.json`, JSON.stringify({ ...result, profiledAssault: !!assaultProfiler, preDrainedAssault: drainBeforeAssault, renderOrderOverride: process.env.L10_CORPSE_ORDER, captures, errors: session.errors }, null, 2));
   assert.deepEqual(session.errors, []);
   console.log(JSON.stringify({ tier, backend: session.options.backend, kills: result.kills.length, bodies: result.bodies.length, captures, errors: session.errors }));
 } finally { await session.close(); stopServer(); }
