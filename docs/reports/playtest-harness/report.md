@@ -4,7 +4,7 @@ Campaign proof and final validation are still in progress. Changes are restricte
 
 ## Controls triage candidate: Space retargets a ground movement command
 
-Observed in **L10**, dispersal-console defence, **rocket launcher**, low quality, WebGPU, 1280 × 720, zoom target 1.5. This is a game-controls observation discovered during driver development; this lane does not change the game rule or input system.
+Observed in **L10**, dispersal-console defence, **rocket launcher**, WebGPU, 1280 × 720, zoom target 1.5. The probe requested Low, but its older driver did not pin the menu's quality setting; its exact effective tier was not recorded. This is a game-controls observation discovered during driver development; this lane does not change the game rule or input system.
 
 Reproduction setup: use the normal campaign finale with the launcher selected (number **7**), or prepare the diagnostic fixture with `tools/playtest/seed.ts <origin> <profile> female L10-default weapons cure-complex cure-install`, then resume L10 and activate the console. The fixture prepares the save; the following actions are real mouse/keyboard input.
 
@@ -17,7 +17,7 @@ Reproduction setup: use the normal campaign finale with the launcher selected (n
 
 **Actual:** the courier changes its movement destination toward the current mouse aim point, following the pointer back toward the horde despite LMB being released. During the diagnostic this defeated the retreat and led to repeated deaths. Do not conflate the tested order with “ground click, then first press Space”: the driver deliberately held Space *before* the click because pressing it afterwards cancels navigation through the existing input-token path.
 
-Evidence: `test-results/playtest/harness-finale-04/log-finale.jsonl`, notably the `visibleFinaleDodge` and `observation` entries around ticks 3000–3041. The attempted input sequence is preserved as `dodgeFireInput` in commit `a7870af62`; that strategy is being removed from the driver after the observed failure. The relevant existing input paths are `src/input/InputSystem.ts` (`token` cancels movement on an attack-key press; `pointerGround === 'move' && frame.left.held` refreshes the destination from `frame.aimPoint`). Space contributes to `frame.left.held` even when LMB is released.
+Evidence: `test-results/playtest/harness-finale-04/log-finale.jsonl`, notably the `visibleFinaleDodge` and `observation` entries around ticks 3000–3041. The attempted input sequence is preserved as `dodgeFireInput` in commit `a7870af62`; that strategy was removed from the driver after the observed failure. The relevant existing input paths are `src/input/InputSystem.ts` (`token` cancels movement on an attack-key press; `pointerGround === 'move' && frame.left.held` refreshes the destination from `frame.aimPoint`). Space contributes to `frame.left.held` even when LMB is released.
 
 The driver uses WASD while firing for the replacement policy, with alternate movement bearings when observed courier movement stalls. No controls fix is included here.
 
