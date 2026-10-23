@@ -197,7 +197,10 @@ export interface L4State {
    * PO 10-13 spread arrivals: per street edge the tick of its next small group and its next emergence point (cursor into its `l4Emergence`
    * points); the next group from inside the perimeter (tick, cursor into `l4Inside`); `origin` the emergence point index per emerged id.
    */
-  edgeNext: number[]; edgeCursor: number[]; insideAt: number; insideCursor: number; origin: Record<number, number>;
+  edgeNext: number[]; edgeCursor: number[]; insideAt: number; insideCursor: number; insidePending: number; origin: Record<number, number>;
+  /** Alarm infected still walking out through the reception tent flaps. */
+  tentDoors: import('../outbreak/HouseEmergence').HouseEmergence[];
+  alarmPending: number; alarmCursor: number;
   /** PO 10-13 perimeter: the jersey barriers that close the convoy gate (entity ids) and the next "stay inside" call. */
   gateIds: number[]; barkAt: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */

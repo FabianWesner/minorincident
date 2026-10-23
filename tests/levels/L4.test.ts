@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4CollapseGroups, l4Route, l4ConvoyStations } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -25,6 +25,12 @@ const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w
 const humans = (w: SimWorld) => [...w.entities.iterate()].filter(e => e.civilian && !e.infection && e.health.current > 0 && !e.hidden);
 
 describe('L4 The Safe City Falls', () => {
+  test('T-E22-20-offscreen-mouths @E22-AC20 all six authored outer mouths are walkable spawn sources', async () => {
+    const l = await loadL4(1, 'low'); world = l.world;
+    expect(l4OffscreenMouths.length).toBeGreaterThanOrEqual(6);
+    for (const mouth of l4OffscreenMouths) expect(l.world.infected!.nav.clear(mouth.at[0], mouth.at[1], .45), mouth.id).toBe(true);
+  });
+
   test('T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer', async () => {
     const l = await loadL4(1); world = l.world; const m = l.mission;
     expect(validateMission(m.def)).toEqual([]);
@@ -139,19 +145,20 @@ describe('L4 The Safe City Falls', () => {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
       step(w, 5 * 60);
-      const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type !== 'l4.firstTurn') return; turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { at.set(id, { x: w.entities.get(id)!.transform.x, z: w.entities.get(id)!.transform.z }); origins.add(w.entities.get(id)!.appearance!.origin); } });
+      const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type !== 'l4.firstTurn') return; turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { const entity = w.entities.get(id)!; at.set(id, { x: entity.transform.x, z: entity.transform.z }); origins.add(entity.appearance?.origin); } });
       l.mission.completeObjective('quartermaster');
       step(w, 60 * 60);
       expect(turns, `seed ${seed}`).toHaveLength(1);
       expect(turns[0].tick).toBe(s.gunAt);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
-      const sources = [...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
+      const tentDoors = [[-30.65, 11.15], [-26.8, 11.15], [-22.8, 11.15]] as const;
+      const sources = [...tentDoors, ...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
       for (const id of turns[0].ids) expect(sources.some(([x, z]) => dist(at.get(id)!, { x, z }) < 2), `new infected ${id} at an authored emergence point`).toBe(true);
       expect([...origins]).not.toContain('L3-bus');
       expect(turns[0].ids.every(id => !s.evacueeIds.includes(id) && !s.residentIds.includes(id))).toBe(true);
       const groups = new Map<number, number>();
       for (const id of turns[0].ids) groups.set(s.origin[id], (groups.get(s.origin[id]) ?? 0) + 1);
-      expect(Math.max(...groups.values()), 'alarm arrivals remain small groups per exit').toBeLessThanOrEqual(l4.war.group[1]);
+      expect(Math.max(...groups.values()), 'the alarm is split evenly among the three animated tent doors').toBeLessThanOrEqual(Math.ceil(l4.calm.alarmInfected.high / tentDoors.length));
       w.dispose();
     }
     // The camp remains calm while the player has not collected the gun.
@@ -180,12 +187,31 @@ describe('L4 The Safe City Falls', () => {
     for (const id of [...s.soldierIds, ...s.armed.map(a => a.id)]) { const e = w.entities.get(id)!; expect(e.survivor).toBeUndefined(); expect(e.companion).toBeUndefined(); expect(e.civilian!.l1!.graceUntil ?? 0).toBeLessThanOrEqual(w.tick); }
     while (s.phase === 'convoy') w.update();
     step(w, 5 * 60); l.mission.completeObjective('quartermaster');
-    const sources = new Set<number>(); w.events.on('ally.attack', e => { if (e.type === 'ally.attack') sources.add(e.sourceId); });
+    const sources = new Set<number>(), civilianShots: { from: { x: number; z: number }; to: { x: number; z: number }; id: number }[] = [], soldierAlphaShots = new Set<number>();
+    w.events.on('ally.attack', e => {
+      if (e.type !== 'ally.attack') return;
+      sources.add(e.sourceId);
+      const target = w.entities.get(e.targetId);
+      if (e.role === 'soldier' && target?.archetype === 'infected.alpha') soldierAlphaShots.add(e.sourceId);
+      if (e.role === 'civilian' && e.from && e.to) civilianShots.push({ from: e.from, to: e.to, id: e.sourceId });
+    });
     while (s.phase !== 'war') w.update();
+    // A street Alpha may still be walking toward the breach at this elapsed
+    // time. Put the focus-fire fixture inside the wall, in clear view of its
+    // nearest soldier, so this assertion measures target priority itself.
+    const guard = w.entities.get(s.soldierIds.find(id => w.entities.get(id)?.health.current)! )!;
+    const alphaId = w.infected!.spawn('infected.alpha', { x: guard.transform.x + 3, z: guard.transform.z }, { state: 'chase' });
+    w.entities.get(alphaId)!.health.current = 10_000;
     step(w, 60 * 60);
     const civilianShooters = s.armed.filter(a => sources.has(a.id)).length, soldierShooters = s.soldierIds.filter(id => sources.has(id)).length;
     record('ally-sources', { civilianShooters, soldierShooters, armed: s.armed.length });
     expect(soldierShooters).toBeGreaterThanOrEqual(3); expect(civilianShooters + s.kills.armedCivilians).toBeGreaterThanOrEqual(1);
+    expect(soldierAlphaShots.size, 'soldiers focus fire on an Alpha when it enters the wall').toBeGreaterThan(0);
+    expect(civilianShots.length).toBeGreaterThan(0);
+    for (const shot of civilianShots) {
+      const shelter = w.entities.get(shot.id)?.civilian?.l1?.haven;
+      expect(Math.min(Math.hypot(shot.to.x - shot.from.x, shot.to.z - shot.from.z), shelter ? Math.hypot(shot.to.x - shelter.x, shot.to.z - shelter.z) : Infinity), 'armed civilians defend only themselves or their shelter').toBeLessThanOrEqual(8);
+    }
     // At the infected cap a bite kills instead of turning (section 5.9); make room first so the test checks the turn itself.
     w.infected!.director.levelCap += 400;
     // A soldier bitten turns: same entity id, same model and tint, the rifle lies on the ground.

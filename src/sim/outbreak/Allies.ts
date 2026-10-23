@@ -73,6 +73,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
   const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
+  // L4 armed civilians protect their own patch or the real shelter they use;
+  // they do not leave the camp to hunt a distant street wave.
+  const civilianDefence = (target: EntitySnapshot) => {
+    if (a.role !== 'civilian' || !world.missions?.def.l4) return true;
+    const haven = c.l1?.haven;
+    return dist(target.transform, e.transform) <= 8 || !!haven && Math.hypot(target.transform.x - haven.x, target.transform.z - haven.z) <= 8;
+  };
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
   // Police keep the strict rule everywhere (PO 10-12: "Ideally the Zombies will win against police") and only shove off screen.
@@ -81,16 +88,16 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const onScreen = a.role === 'officer' || allyOnScreen(world, e.transform);
   const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
     || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM;
-  const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
+  const policeCanEngage = (target: EntitySnapshot) => !target.emerging && policeRule(target) && civilianDefence(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   // Hearing only controls civilian panic and forced work. An ordinary soldier
   // already fighting has no use for this extra line-of-sight scan.
   const audibleThreat = (a.role === 'civilian' || a.forceUntil > tick)
-    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
+    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
   if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
   if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
     let close = 0;
-    for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
+    for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
     if (close >= civ.panicInfected) {
       a.panicUntil = tick + ticks(civ.panicS); a.targetId = 0; a.strikeAt = 0; c.story = null;
       c.state = 'flee'; c.entered = tick; c.until = tick; if (c.l1) c.l1.repickAt = tick;
@@ -116,10 +123,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Engaged fighters already scan their targets below; only idle fighters and
   // followers considering regrouping consume the separate close-threat result.
   const closeThreat = (!a.engaged || follower)
-    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
+    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
-    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }

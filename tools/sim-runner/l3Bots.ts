@@ -46,11 +46,11 @@ const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.
 const camera = new PerspectiveCamera(25, 16 / 9, .1, 600), offset = new Vector3(), frustum = new Matrix4();
 /** The game camera's view volume (View.ts: 25 deg lens, radius 19, polar 0.30 pi, azimuth 45 deg, following the courier), so the
  * headless director spawns out of view exactly as it would in the browser (Game.simTick sets the same frustum). */
-export function followFrustum(world: SimWorld): void {
+export function followFrustum(world: SimWorld, zoom = 1): void {
   const p = world.entities.get(1)!.transform;
   const rescue = world.scenario === 'L3' && !!world.missions?.state.l3?.finaleAt && !world.missions.state.l3.barrierClosedAt && p.x >= 195;
   const x = p.x, z = p.z, y = Math.max(0, p.y - .72);
-  offset.setFromSphericalCoords(19 * (rescue ? 3.3 : l3AttackView(world) ? l3.attack.viewScale : 1), Math.PI * .3, Math.PI / 4);
+  offset.setFromSphericalCoords(19 * zoom * (rescue ? 3.3 : l3AttackView(world) ? l3.attack.viewScale : 1), Math.PI * .3, Math.PI / 4);
   camera.position.set(x + offset.x, y + offset.y, z + offset.z); camera.lookAt(x, y, z); camera.updateMatrixWorld(true);
   frustum.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
   world.infected?.director.setFrustum(frustum.elements, camera.position);

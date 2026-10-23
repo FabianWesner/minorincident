@@ -88,10 +88,10 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war groups of 1-2 also come out of the buildings inside the perimeter (tents, containers,
+     * and staggered. `inside`: during the war groups of 4-5 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 2.5, group: [2, 3] as P, minM: 9 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -124,13 +124,15 @@ export const l4 = {
       { id: 'nests', earliestS: 110, dueS: 124, pushS: 104 },
       { id: 'armor', earliestS: 170, dueS: 182, pushS: 150 },
     ] as readonly { id: 'line-1' | 'nests' | 'armor'; earliestS: number; dueS: number; pushS: number }[],
-    pushEveryS: 4, push: { high: 10, low: 5 }, frontWave: { high: 30, low: 15 }, standing: .5,
+    pushEveryS: 4, push: { high: 20, low: 5 }, frontWave: { high: 30, low: 15 }, standing: .5,
     /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
     refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
     alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
-    fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
+    // First fallback line runs past the courier toward the plaza centre; the
+    // second line (x=-16) remains deeper in camp.
+    fallback1: [[-18.8, -11.8], [-18.8, -8.5], [-18.8, -5.2], [-18.8, -1.9], [-18.8, 1.4], [-18.8, 4.7], [-18.8, 8], [-18.8, 11.3], [-18.8, 14.6]] as readonly P[],
     fallback2: [[-16, -10], [-16, -6.7], [-16, -3.4], [-16, 0], [-16, 3.3], [-16, 6.6], [-16, 10], [-16, -15.5], [-16, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
@@ -301,6 +303,11 @@ export const l4Edges: readonly { id: string; at: P }[] = [
  * mouth plus side streets and the doors of the shops and houses around the plaza (`door`: a building door, used from 12 m off the courier;
  * a street point from 24 m). An edge releases its small groups from these in turn, always out of view.
  */
+export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
+  { id: 'west-end', edge: 0, at: [-83, 5] }, { id: 'nw-alley-end', edge: 1, at: [-60, -60] },
+  { id: 'north-end', edge: 2, at: [-10, -60] }, { id: 'east-end', edge: 3, at: [80, 25] },
+  { id: 'southeast-end', edge: 4, at: [35, 60] }, { id: 'southwest-end', edge: 5, at: [-40, 60] },
+];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 0, at: [-56.6, 6] }, { edge: 0, at: [-57, -14] }, { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
   { edge: 1, at: [-39.2, -35] }, { edge: 1, at: [-40, -26] }, { edge: 1, at: [-46.9, -23], door: true }, { edge: 1, at: [-42, -15.5], door: true },
@@ -309,9 +316,18 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 4, at: [-5.5, 42.6] }, { edge: 4, at: [-14, 40] }, { edge: 4, at: [.9, 18.8], door: true }, { edge: 4, at: [-.1, 33.5], door: true },
   { edge: 5, at: [-23, 42.6] }, { edge: 5, at: [-36, 40] }, { edge: 5, at: [-44.9, 27.1], door: true },
   { edge: 6, at: [50.5, -37.4] },
+  // Outer street ends keep every edge eligible from every courier position in
+  // the camp. SpawnDirector still applies its live frustum + 6 m guard.
+  ...l4OffscreenMouths.map(({ edge, at }) => ({ edge, at })),
 ];
 /** Inside the perimeter (PO 10-13: "ALso from within buildings inside the army area"): behind the tents, the supply crates and the registration kit. */
-export const l4Inside: readonly P[] = [[-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6]];
+export const l4Inside: readonly P[] = [
+  [-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6],
+  // Rear camp edge, out of the zoom-1.5 player frame from the quartermaster.
+  // These are opportunistic off-screen exits; the director still rejects them
+  // whenever the courier moves far enough to see them.
+  [-33, 19], [-29, 20], [-25, 21],
+];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [
   { at: [-30, 43.3], yaw: 0, def: 'vehicle.sedan' }, { at: [-6, 43.3], yaw: 0, def: 'vehicle.suv' }, { at: [-38, -42.6], yaw: Math.PI, def: 'vehicle.pickup' },

@@ -144,6 +144,7 @@ describe('L4 PO round 10-13', () => {
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && s.alphaIds.includes(e.sourceId) && w.entities.get(e.targetId)?.civilian?.ally?.role === 'soldier') alphaReached.add(e.sourceId); });
     w.events.on('barricade.damaged', e => { if (e.type === 'barricade.damaged' && s.alphaIds.includes(e.sourceId)) alphaReached.add(e.sourceId); });
     let seen = 0, maxGroup = 0; const threats = new Set<number>();
+    w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') seen = e.ids.length; });
     const r = runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 480, stopWhen: mm => {
       const st = mm.state.l4!;
       // Not in bulk: what one emergence point releases at once (one tick) is a small group.

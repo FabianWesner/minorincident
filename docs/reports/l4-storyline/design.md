@@ -70,3 +70,21 @@ Census after (same command, seed 3, low, complete bot):
 | 3 | 8.2 / 12 | 7.2 / 14 | 8.5 | 2.0 → 1.6 |
 
 The breaches open at 46 s (west), 118 s (north) and 119 s (south). The visible change is the pile at the wire and the breach set piece. The number of infected inside the wall per minute is about the same as before, because the army and the armed civilians still kill most of them in the gap: kills are soldiers 140, armed civilians 207, player 78. The target of mean ≥ 6 from minute 1 is **not met**.
+
+## 6. Finish pass: authored sources and courier-side flood (2026-10-24)
+
+The review called out two remaining failures: groups could stall forever at an unusable mouth, and the breach flood collected at the gap instead of reaching the courier. Six outer street-end / alley mouths now pass a full courier-position sweep at zooms 0.5–1.5 with the six-metre camera guard; solid-building occlusion is accepted by the L4 spawn director. Pending groups retain their count and try the next eligible mouth. The alarm and recurring interior population use the reception tent door-walk emergence, so an in-frame body is staged behind a tent and walks out rather than appearing on pavement. After a breach opens, groups and live infected retarget the nearest living defender or courier. The first retreat line is physically placed past the courier toward the plaza centre.
+
+Latest seed-3, low, complete-bot census (`node --import tsx tools/sim-runner/l4-action-census.ts 3 low complete`):
+
+| minute after turn | inside perimeter mean / max | within 12 m mean | hold seconds with ≥1 within 12 m |
+| --- | ---: | ---: | ---: |
+| 0 | 5.2 / 26 | 1.4 | 71.7% |
+| 1 | 16.1 / 32 | 0.8 | 51.7% |
+| 2 | 12.8 / 35 | 3.3 | 96.7% |
+| 3 (11 s of hold) | 29.9 / 32 | 3.3 | 100% |
+| **whole hold** | — | — | **143 / 191 s = 74.9%** |
+
+At zoom 1.5 the census saw 51 infected enter the frame; all 51 were in the scripted tent-door emergence, and no street spawn popped into view. The origin ledger records 13 distinct street/interior sources in the PO spread test. The no-skip sim bot completed in 298.2 s with 0 deaths, max 57 concurrent infected / 78 characters; `waveScale` remains 3. The focused L4 regression set passed after the queue, escape-gap and cellar-mouth fixes.
+
+Validation limits in this sandbox: typecheck, lint and production build pass; the six `@smoke` sim tests pass. The exact remote unit/levels gate has no remote runner (DNS failure). The real-input playtest and visual smoke cannot bind 127.0.0.1:4431 (`listen EPERM`); `qa:invariants` render preflight also cannot inspect processes (`ps`/`pgrep` EPERM), so p95 versus PROD, captures and rendered invariants remain unmeasured. Commit is also unavailable because `.git/worktrees/.../index.lock` is denied. Do not mark E22 complete until those environment gates can run and the result is committed.

@@ -18,16 +18,17 @@ const inRing = (p: { x: number; z: number }) => { const r = l4.map.ring; return 
 interface Trace {
   beats: { beat: string; t: number; cause: string; soldiers: number; inside: number }[]; soldiers: { t: number; n: number }[]; fallBackRadio: number; breakT: number; cause: string; knockdowns: number; barricades: number; turnedAtTurn: number; tank: string; maxAlive: number;
   /** l4-collapse-2: line-1 size at the turn; infected on the escape street east of the ring (> 12 m from the courier) at "Fall back!" and 4 s later; the most drawn bodies in one 4 m square; attackers around the still courier (samples with >= 4 within 2.5 m: occupied 90-degree quadrants). */
-  line1Size: number; gapAtFallBack: number; gapAfter: number; heapMax: number; corpseLosses: number; ringSamples: number[]; pressMax: number;
+  line1Size: number; line1Fallback: number; firstBreach: number; gapAtFallBack: number; gapAfter: number; heapMax: number; corpseLosses: number; ringSamples: number[]; pressMax: number;
 }
 const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.escape.route; let best = Infinity; for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz))); best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t)); } return best; };
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean): Trace {
   const corpseIds = new Set<number>();
-  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
+  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
   const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
   w.events.on('l4.beat', e => { if (e.type === 'l4.beat') tr.beats.push({ beat: e.beat, t: t(e.tick), cause: e.cause, soldiers: e.soldiers, inside: e.inside }); });
+  w.events.on('barricade.broken', e => { if (e.type === 'barricade.broken' && e.groupId === 'l4-wall' && tr.firstBreach < 0) tr.firstBreach = t(e.tick); });
   w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') tr.turnedAtTurn = e.ids.length; });
   w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && e.id === 'L4.fallback') tr.fallBackRadio = t(e.tick); });
   runL4(w, m, 'idle', { seed, god: true, maxSeconds: 480, stopWhen: mm => {
@@ -37,6 +38,14 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
     if (st.turnAt && (w.tick - st.turnAt) % 60 === 0) tr.soldiers.push({ t: t(w.tick), n: st.soldierIds.filter(id => { const e = w.entities.get(id); return e?.civilian && !e.infection && e.health.current > 0; }).length });
     tr.maxAlive = Math.max(tr.maxAlive, w.infected!.active.filter(e => e.health.current > 0).length);
     if (st.turnAt && !tr.line1Size) tr.line1Size = st.director.lines[0].size;
+    const firstLine = st.director.lines[0];
+    if (firstLine.brokeAt && w.tick >= firstLine.brokeAt + 10 * 60 && !tr.line1Fallback) {
+      const posts = l4.director.fallback1.map(([x, z]) => ({ x, z }));
+      tr.line1Fallback = firstLine.soldierIds.filter(id => {
+        const e = w.entities.get(id);
+        return e?.health.current && posts.some(p => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 2.5);
+      }).length;
+    }
     if (st.lineBreakAt && w.tick === st.lineBreakAt) tr.gapAtFallBack = onStreet();
     if (st.lineBreakAt && w.tick === st.lineBreakAt + 240) tr.gapAfter = onStreet();
     if (st.turnAt && w.tick % 60 === 0) {
@@ -63,6 +72,7 @@ function beatsOnTime(tr: Trace): void {
   expect(tr.corpseLosses, 'corpses persist through the whole war').toBe(0);
   expect(tr.beats.map(b => b.beat)).toEqual(['line-1', 'nests', 'armor']);
   for (const [i, b] of tr.beats.entries()) {
+    if (i === 0) { expect(b.t, 'line 1 falls as soon as the first wall breach opens').toBeCloseTo(tr.firstBreach, 0); continue; }
     const def = l4.director.lines[i];
     expect(b.t, b.beat).toBeGreaterThanOrEqual(def.earliestS - .2); expect(b.t, b.beat).toBeLessThanOrEqual(def.dueS + .5);
   }
@@ -75,16 +85,18 @@ function beatsOnTime(tr: Trace): void {
 }
 
 describe('L4 collapse director', () => {
-  test('T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down', async () => {
+  test('T-E22-13-collapse @E22 @E22-AC13 idle courier: breach flood reaches line 1, soldiers physically fall back, then the three lines fall on their beats', async () => {
     const l = await loadL4(2); world = l.world;
     const tr = war(l.world, l.mission, 2, 'high', false);
     expect(tr.turnedAtTurn).toBeGreaterThanOrEqual(15); expect(tr.turnedAtTurn).toBeLessThanOrEqual(25);
     beatsOnTime(tr);
-    // A forced first-line deadline can precede its first casualty; the later mass loss remains required.
-    const atTurn = tr.soldiers[0].n, at = (s: number) => tr.soldiers.find(x => x.t >= s)?.n ?? 0;
-    expect(at(tr.beats[2].t)).toBeLessThan(atTurn * .5); expect(at(tr.beats[0].t)).toBeLessThanOrEqual(atTurn);
+    // The first wall breach now starts the physical fallback sequence. Measure
+    // the casualty bound at that new beat, rather than the old armor deadline.
+    // Keep the authored population bound strict: fewer than ten remain.
+    expect(tr.beats[0].soldiers).toBeLessThan(10); expect(tr.beats[0].soldiers).toBeLessThanOrEqual(tr.turnedAtTurn);
     expect(tr.barricades).toBeGreaterThanOrEqual(1); expect(tr.knockdowns).toBeGreaterThanOrEqual(1);
     expect(Math.max(...tr.beats.map(b => b.inside))).toBeGreaterThanOrEqual(5);
+    expect(tr.line1Fallback, 'surviving first-line soldiers reach the deeper second line after the breach').toBeGreaterThanOrEqual(4);
     expect(tr.maxAlive).toBeLessThanOrEqual(l4.war.caps.infected.high);
     void inRing;
   }, HEAVY);

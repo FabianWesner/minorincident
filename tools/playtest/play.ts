@@ -49,7 +49,7 @@ const runs: LevelRun[] = [], issues: Issue[] = [];
 let sessionsOk=true;
 const session = (options: SessionOptions): boolean => {
   // Each browser session takes one unit of the shared browser lock and releases it when it closes.
-  const result = spawnSync('sh', ['tools/e2e-lock.sh', process.execPath, resolve('node_modules/tsx/dist/cli.mjs'), 'tools/playtest/session.ts', JSON.stringify(options)], { stdio: 'inherit', env: { ...process.env, E2E_UNITS: '1' } });
+  const result = spawnSync('sh', ['tools/e2e-lock.sh', process.execPath, '--import', 'tsx', 'tools/playtest/session.ts', JSON.stringify(options)], { stdio: 'inherit', env: { ...process.env, E2E_UNITS: '1' } });
   for (const [file, list] of [[`runs-${options.tag}.json`, runs], [`issues-${options.tag}.json`, issues]] as const) {
     const path = join(out, file); if (existsSync(path)) (list as unknown[]).push(...JSON.parse(readFileSync(path, 'utf8')));
   }

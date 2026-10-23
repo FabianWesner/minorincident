@@ -1,4 +1,4 @@
-import { l4, l4Edges, l4Inside } from '../../data/l4';
+import { l4, l4Edges, l4Inside, l4OffscreenMouths } from '../../data/l4';
 import { l4BreachSides, l4BreachSite, l4Breaches, l4Wall, type L4BreachSide } from '../../data/l4Perimeter';
 import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
 import type { Mission } from './Mission';
@@ -49,6 +49,10 @@ export class L4Collapse {
   }
   health(i: number): number { const l = this.d.lines[i]; return l.size ? this.standing(l).length / l.size : 0; }
   current(): number { return this.d.lines.findIndex(l => !l.brokeAt); }
+  /** The wall opening is the physical line-1 fall beat; do not wait for the old casualty deadline. */
+  breachLine1(): void {
+    if (this.s.phase === 'war' && !this.d.lines[0].brokeAt) this.breakLine(0, 'forced');
+  }
   /** Share of the infected cap the war may fill now (grows with the beats; the full cap once the army falls back). */
   aliveShare(): number { const i = this.current(); return this.s.phase === 'war' && i >= 0 ? (this.h.low() ? D.aliveLow : D.alive)[i] : 1; }
 
@@ -100,13 +104,16 @@ export class L4Collapse {
     // a burst reaches the sandbags). When the camera covers them all, the nearest street mouths (always beyond the view).
     // The earlier pickup alarm can begin before the camp has settled. Keep the first
     // line pressure behind it using the same concealed camp exits as the alarm.
-    const origins = i === 0 ? [...D.flanks[i], ...l4Inside] : D.flanks[i];
-    let flanks = origins.map(pt).filter(p => (world.infected!.director.offscreen(p) || world.infected!.director.occluded(p)) && dist(p, player) >= 12);
+    const origins = [...D.flanks[i], ...(i === 0 ? l4Inside : []), ...l4OffscreenMouths.map(m => m.at)];
+    let flanks = origins.map(pt).map(p => this.h.snap(p, .45)).filter(p => world.infected!.nav.clear(p.x, p.z, .45)
+      && (world.infected!.director.offscreen(p) || world.infected!.director.occluded(p)) && dist(p, player) >= 12);
     if (!flanks.length) flanks = l4Edges.slice(0, 6).map(e => pt(e.at)).filter(p => world.infected!.director.offscreen(p) && dist(p, player) >= 20).sort((p, q) => dist(p, centre) - dist(q, centre)).slice(0, 2);
     if (!flanks.length || !targets.length) return;
     if (i === 0) flanks = [flanks.sort((p, q) => near(p) - near(q))[0]];
     for (let k = 0; k < n; k++) {
-      const at = flanks[k % flanks.length], id = this.h.emerge({ x: at.x + (k % 3 - 1) * .9, z: at.z + Math.floor(k / 3) * .9 }, true); if (!id) break;
+      const at = flanks[k % flanks.length], desired = { x: at.x + (k % 3 - 1) * .9, z: at.z + Math.floor(k / 3) * .9 };
+      const snapped = this.h.snap(desired, .45), spawnAt = world.infected!.nav.clear(snapped.x, snapped.z, .45) ? snapped : at;
+      const id = this.h.emerge(spawnAt, true); if (!id) break;
       this.d.spawned++;
       const target = targets.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[k % Math.min(3, targets.length)];
       // A flank push attacks the line through the camp crowd. Retain its soldier
