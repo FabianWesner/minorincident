@@ -194,6 +194,7 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (c.state === 'calm') this.shelterCower(e);
       if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {
@@ -212,7 +213,6 @@ export class Outbreak {
       if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.state === 'calm' && this.gunfire.length && (tick + e.id) % 6 === 3) this.hearGunfire(e);
-      if (c.state === 'calm' && (tick + e.id) % 30 === 0) this.shelterCower(e);
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {
         this.face(e, c.threat, .2);
@@ -238,6 +238,8 @@ export class Outbreak {
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.world.npcs!.civilians.release(c.attacker);
     if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
+    // PO Q-159: a sheltering cower ends when the person runs again.
+    if (state !== 'calm' && c.story?.clip === 'npc-cower' && !c.survivor) c.story = null;
     if (state === 'finished') e.health.current = 0;
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
