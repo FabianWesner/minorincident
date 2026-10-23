@@ -2,6 +2,23 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { l2 } from '../../src/data/l2';
 import { measureL2Route } from '../../tools/sim-runner/l2Route';
+import { loadL2, runL2 } from '../../tools/sim-runner/l2Bots';
+import { followFrustum } from '../../tools/sim-runner/l3Bots';
+
+test('PO 10-23 @E20 the first pocket exists before a courier waiting at the truck starts walking', async () => {
+  const { world, mission } = await loadL2(1, 'low');
+  try {
+    runL2(world, mission, 'idle', { maxSeconds: 90, stopWhen: () => {
+      followFrustum(world);
+      return !!mission.state.l2!.doorsOpenAt;
+    } });
+    const first = mission.state.l2!.pending.filter(q => q.door === 'l2-route-edge-1');
+    expect(first).toHaveLength(1);
+    expect(first[0].id).toBeGreaterThan(0); expect(first[0].seen).toBe(false);
+    const p = world.entities.get(1)!.transform;
+    expect(Math.hypot(first[0].x! - p.x, first[0].z! - p.z)).toBeGreaterThanOrEqual(18);
+  } finally { world.dispose(); }
+}, 120_000);
 
 for (const tier of ['high', 'low'] as const) test(`PO 10-23 @E20 ${tier}: market-to-bridge singles/pairs every 25–40 m, no three within 8 m, finish without skipping`, async () => {
   const r = await measureL2Route(tier);
