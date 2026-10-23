@@ -25,7 +25,7 @@ const shoot = async (name: string) => {
     await page.evaluate(async zoom => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game, view = game.view.view;
       view.follow(); view.zoom(Math.log(zoom / view.getState().targetZoom), true); game.view.advance(0);
-      await window.__SS__!.step(2); await window.__SS__!.screenshotReady();
+      await window.__SS__!.step(2); window.__SS__!.vfx.stepRender(1 / 30); await window.__SS__!.screenshotReady();
     }, zoom);
     await page.screenshot({ path: `${out}/${name}-z${zoom}.png` });
   }
@@ -38,7 +38,9 @@ const drive = async (x: number, z: number, ticks: number) => {
     car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
   }, { x, z });
   await page.keyboard.down('KeyW');
-  for (let t = 0; t < ticks; t += 30) await page.evaluate(() => window.__SS__!.step(30));
+  // Render time follows the sim (30 ticks = .5 s): Blasts refreshes the persistent fires at 4 Hz of render time, flames and
+  // light-field flicker run on it too. Without it the drive captures show no ambient fire at all.
+  for (let t = 0; t < ticks; t += 30) await page.evaluate(async () => { await window.__SS__!.step(30); window.__SS__!.vfx.stepRender(.5); });
   await page.keyboard.up('KeyW');
 };
 try {
@@ -59,7 +61,7 @@ try {
   await page.keyboard.up('KeyW');
   await page.evaluate(async () => { await window.__SS__!.step(551); window.__SS__!.vfx.stepRender(1); });
   await shoot('5-crash');
-  await page.evaluate(async () => { const a = window.__SS__!; for (let i = 0; i < 20 && a.getState().l9!.phase !== 'done'; i++) await a.step(60); a.teleport(1, { x: 540, z: 2 }); await a.step(30); });
+  await page.evaluate(async () => { const a = window.__SS__!; for (let i = 0; i < 20 && a.getState().l9!.phase !== 'done'; i++) { await a.step(60); a.vfx.stepRender(1); } a.teleport(1, { x: 540, z: 2 }); await a.step(30); });
   await shoot('6-arrival');
   const perf = await page.evaluate(() => window.__SS__!.perf());
   writeFileSync(`${out}/meta.json`, JSON.stringify({ origin, renderer, quality, backend: perf.backend, tier: perf.quality.tier, errors, where }, null, 2));
