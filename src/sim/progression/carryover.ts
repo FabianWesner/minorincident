@@ -14,7 +14,10 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   if (level === 9) { commitCrossingHandover(save, world); return; }
   if (level !== save.completedLevels + 1) return;
   const held = world.entities.get(1)?.weapons;
-  if (held) save.selectedAction = held[held.selectedSide].rack[held[held.selectedSide].index]?.id ?? 'weapon.fists';
+  if (held) {
+    const side = held.selectedSide === 'RIGHT' ? 'RIGHT' : 'LEFT', selected = held[side];
+    save.selectedAction = selected?.rack?.[selected.index]?.id ?? 'weapon.fists';
+  }
   const holding = held ? { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) } : null;
   // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
   if (level >= 6) {

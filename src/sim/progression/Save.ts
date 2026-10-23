@@ -25,6 +25,7 @@ function dropLegacyL3Weapons(raw:unknown):unknown {
   if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
   const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>legacyL3.has(id)?'weapon.handgun':id))]:ids;
   const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
+  if(typeof raw.selectedAction==='string'&&legacyL3.has(raw.selectedAction))out.selectedAction='weapon.handgun';
   if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;

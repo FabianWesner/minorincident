@@ -28,6 +28,7 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
 export function restoreSelectedAction(loadout:Loadout,save:CampaignSave):string {
   const entries=loadout.activeEntries();
   let selected=save.selectedAction;
+  if(!selected)return loadout.current(loadout.state.selectedSide).id;
   const entryFor=(id:string|undefined)=>entries.find(e=>e.id===id||weaponKey(e.id)!==undefined&&weaponKey(e.id)===weaponKey(id??''));
   if(!selected||!entryFor(selected)) {
     selected=save.ownedActions.map(id=>({id,key:weaponKey(id)})).filter((e):e is {id:string;key:number}=>e.key!==undefined).sort((a,b)=>b.key-a.key).find(e=>entryFor(e.id))?.id;
