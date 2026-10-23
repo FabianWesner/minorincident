@@ -1,9 +1,9 @@
 {
-  "status": "Running; not yet a completed campaign proof",
+  "status": "PASS: one unattended real-input L1 to credits campaign, all 50 steps completed, no skipped steps or deaths",
   "runtimeCommit": "6dc758170",
   "command": "E2E_PORT=4371 SCENE_PORT=4372 npm run build && E2E_PORT=4371 SCENE_PORT=4372 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/harness-campaign-06",
   "artifacts": "test-results/playtest/harness-campaign-06",
-  "asOf": "2026-10-23T18:34:29.312Z",
+  "asOf": "2026-10-23T18:52:26.574Z",
   "settings": [
     {
       "t": "2026-10-23T18:04:56.193Z",
@@ -388,7 +388,652 @@
         "weapon.fire-axe",
         "weapon.fire-axe"
       ]
+    },
+    {
+      "level": "L10",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 1145,
+      "simSeconds": 1142,
+      "maxNoProgressSeconds": 148.138,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.pistol": 14,
+        "weapon.rocket-launcher": 53
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ]
     }
   ],
-  "buildCommit": "ef2c4598a"
+  "buildCommit": "ef2c4598a",
+  "logStartedAt": "2026-10-23T18:04:56.193Z",
+  "session": {
+    "t": "2026-10-23T18:04:57.109Z",
+    "session": "campaign",
+    "entry": "new",
+    "levels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "quality": "low",
+    "heroine": "female"
+  },
+  "completedSteps": [
+    {
+      "level": "L1",
+      "tick": 8645,
+      "steps": [
+        {
+          "id": "pickup",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "deliver",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "weapon",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "firestation",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "tick": 5861,
+      "steps": [
+        {
+          "id": "axe",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "calm",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "board",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "doors",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bridge",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "tick": 10451,
+      "steps": [
+        {
+          "id": "armory",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "defend",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "checkpoint",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "tick": 15421,
+      "steps": [
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "quartermaster",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hide",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bar",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "wait",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "tick": 9560,
+      "steps": [
+        {
+          "id": "emerge",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "look",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "metro",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "tick": 15024,
+      "steps": [
+        {
+          "id": "shelter",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "stop",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "retreat",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "exit",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "tick": 19620,
+      "steps": [
+        {
+          "id": "rocket",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "departure",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "tick": 7895,
+      "steps": [
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "depart",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "tick": 6740,
+      "steps": [
+        {
+          "id": "approach",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "reach-outskirts",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "tick": 68539,
+      "steps": [
+        {
+          "id": "crash",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "residential-fringe",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "industrial-area",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "military-zone",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research-campus",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "cure",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research-exit",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "destroyed-corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "dispersal-complex",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "install",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "mega",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "release",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "epilogue",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "credits",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "bossHealthObservations": [
+    {
+      "time": "2026-10-23T18:49:06.147Z",
+      "tick": 56520,
+      "id": 187,
+      "hp": 3000,
+      "maxHp": 3000,
+      "distance": 12.541494523937455,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:07.246Z",
+      "tick": 56585,
+      "id": 187,
+      "hp": 2700,
+      "maxHp": 3000,
+      "distance": 12.77314355735354,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:10.414Z",
+      "tick": 56776,
+      "id": 187,
+      "hp": 2400,
+      "maxHp": 3000,
+      "distance": 10.75664216382056,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:11.531Z",
+      "tick": 56843,
+      "id": 187,
+      "hp": 2100,
+      "maxHp": 3000,
+      "distance": 9.581744246175322,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:13.716Z",
+      "tick": 56974,
+      "id": 187,
+      "hp": 1800,
+      "maxHp": 3000,
+      "distance": 10.180571921963939,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:23.378Z",
+      "tick": 57554,
+      "id": 187,
+      "hp": 900,
+      "maxHp": 3000,
+      "distance": 9.881210712706352,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:25.546Z",
+      "tick": 57684,
+      "id": 187,
+      "hp": 600,
+      "maxHp": 3000,
+      "distance": 5.33824744679584,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    },
+    {
+      "time": "2026-10-23T18:49:26.611Z",
+      "tick": 57748,
+      "id": 187,
+      "hp": 300,
+      "maxHp": 3000,
+      "distance": 10.421090543150735,
+      "weapon": "weapon.rocket-launcher",
+      "playerHp": 100
+    }
+  ],
+  "finalState": {
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5
+    },
+    "completedLevels": 10,
+    "crossingHandover": {
+      "applied": true,
+      "checkpoint": "cure-crash",
+      "lostWeapons": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb"
+      ]
+    },
+    "missionPhase": "progression",
+    "states": {
+      "charge-active": true,
+      "console-held": true,
+      "terminal-read": true,
+      "cure-carried": false,
+      "cure-installed": true,
+      "charge-ready": true,
+      "mega-dead": true,
+      "cure-released": true,
+      "epilogue-finished": true,
+      "credits-finished": true,
+      "anchor-unavailable": false
+    },
+    "epiloguePhase": "done"
+  },
+  "audit": {
+    "completedLevels": 10,
+    "completedSteps": 50,
+    "incompleteSteps": [],
+    "skippedSteps": [],
+    "deaths": 0,
+    "fixtureOrGodModeEntries": [],
+    "abortEntries": [],
+    "L10HiddenStateAssists": [],
+    "escortClearanceTriggered": false
+  },
+  "issues": [
+    {
+      "level": "L5",
+      "tick": 4118,
+      "x": -47.3,
+      "z": 39.8,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (undefined m); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L5-4118-stuck-at-ring.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 4139,
+      "x": -48.4,
+      "z": 39.8,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "21 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L5-4139-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 6821,
+      "x": 36.3,
+      "z": 47.7,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L5-6821-stuck-navigating.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L5",
+      "tick": 7085,
+      "x": 55.2,
+      "z": 43.8,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "24 s without objective progress standing at the ring (undefined m); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L5-7085-stuck-at-ring.jpg"
+      ],
+      "step": "look",
+      "objective": "Look for anyone still alive"
+    },
+    {
+      "level": "L7",
+      "tick": 9092,
+      "x": -30.2,
+      "z": 50,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (0.2 m); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L7-9092-stuck-at-ring.jpg"
+      ],
+      "step": "corridor",
+      "objective": "Bring the group to the evacuation corridor \u00b7 Group 0/2 nearby \u00b7 Waiting for Survivor 1 \u00b7 0\u00a0m"
+    },
+    {
+      "level": "L7",
+      "tick": 14517,
+      "x": -30.2,
+      "z": 50,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (0.2 m); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L7-14517-stuck-at-ring.jpg"
+      ],
+      "step": "corridor",
+      "objective": "Bring the group to the evacuation corridor \u00b7 Group 0/1 nearby \u00b7 Waiting for Survivor 1 \u00b7 0\u00a0m"
+    },
+    {
+      "level": "L7",
+      "tick": 18137,
+      "x": -70.5,
+      "z": 47.4,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (0.1 m); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L7-18137-stuck-at-ring.jpg"
+      ],
+      "step": "departure",
+      "objective": "Get everyone aboard the bus \u00b7 0\u00a0m"
+    },
+    {
+      "level": "L8",
+      "tick": 5310,
+      "x": 96,
+      "z": 74,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L8-5310-stuck-navigating.jpg"
+      ],
+      "step": "depart",
+      "objective": "Wait for everyone to board the armored vehicle \u00b7 1/2 aboard \u00b7 Survivor 1 missing"
+    },
+    {
+      "level": "L10",
+      "tick": 42117,
+      "x": 3314.9,
+      "z": -90.9,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 387.8 m, no marker: false); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L10-42117-stuck-navigating.jpg"
+      ],
+      "step": "dispersal-complex",
+      "objective": "Bring the cure to the dispersal complex \u00b7 388\u00a0m"
+    },
+    {
+      "level": "L10",
+      "tick": 59828,
+      "x": 4002.2,
+      "z": -27.1,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+      "captures": [
+        "captures/campaign-L10-59828-stuck-navigating.jpg"
+      ],
+      "step": "epilogue",
+      "objective": "Watch the cure spread"
+    }
+  ],
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 10,
+    "P3": 0
+  },
+  "sha256": {
+    "log-campaign.jsonl": "24a88ec2fa278e8db326abdeac98d7dbb230efe9c5e77ba36ae9f0ca7c3d5ba8",
+    "campaign-completion.json": "168a2718600a35667c3010a50af4b96ebbc2399e93468a50892022c38d03f3e3",
+    "summary.json": "5f6cdc10cd1f0691cdfae8e1ae1520969cad6e36f06d79ab1a2c108545847391",
+    "issues-campaign.json": "3f1c71a0d3afee1e605ec430e7527be11db7eff3c61ae7b2873a5ff77e5e7326",
+    "campaign-frames.json": "ed5d28414a1b0c26838c4fe0b6fb28c4db16d5d9db5f060fe5266115a3ced86d"
+  }
 }
