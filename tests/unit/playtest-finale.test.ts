@@ -1,5 +1,20 @@
 import { expect, test } from 'vitest';
-import { finaleDodgeGoal } from '../../tools/playtest/combat';
+import { campaignCombatWeapon, finaleDodgeGoal } from '../../tools/playtest/combat';
+
+test('L10 selects the recovered campaign arsenal instead of keeping the crash axe', () => {
+  const weapons = ['weapon.fire-axe'];
+  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.fire-axe');
+  weapons.push('weapon.handgun');
+  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.handgun');
+  weapons.push('weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L10', weapons, 4)).toBe('weapon.army-mg');
+  expect(campaignCombatWeapon('L7', weapons, 10)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L8', weapons, 10)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L6', weapons, 10)).toBeNull();
+  expect(campaignCombatWeapon('L10', [], 10)).toBeNull();
+  expect(campaignCombatWeapon('L10', ['weapon.fire-axe', 'weapon.pistol'], 10)).toBe('weapon.pistol');
+});
 
 test('L10 defence walks away from a visible approaching enemy instead of standing in the horde', () => {
   expect(finaleDodgeGoal('L10', 'hold', { x: 0, z: 0 }, { x: 0, z: 0 }, { x: 8, z: 0, d: 8 })).toEqual({ x: -12, z: expect.closeTo(0) });

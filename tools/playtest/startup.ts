@@ -19,3 +19,13 @@ export function shouldResumePause(menu: string | null, loading: boolean): boolea
 export function isMandatoryBossObjective(level: string | null, step: string | null): boolean {
   return level === 'L10' && step === 'mega';
 }
+
+/** A dead renderer must not hold an unattended driver forever inside evaluate(). */
+export async function observeWithin<T>(operation: Promise<T>, timeoutMs = 15_000): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([operation, new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`Playtest observation timed out after ${timeoutMs} ms; browser renderer is unresponsive`)), timeoutMs);
+    })]);
+  } finally { clearTimeout(timer); }
+}

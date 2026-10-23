@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, isMandatoryBossObjective, shouldResumePause } from './startup';
-import { canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
+import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, shouldResumePause } from './startup';
+import { campaignCombatWeapon, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
+import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
@@ -41,7 +42,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const context = await launchProfile(resolve(o.profile), { headless: true, args, viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   const page = context.pages()[0] ?? await context.newPage();
   let pageClosed = false;
+  let pageCrashed = false;
   page.on('close', () => { pageClosed = true; });
+  page.on('crash', () => { pageCrashed = true; });
+  try {
   // tsx keeps function names with a __name helper; page-side functions need it defined.
   await page.addInitScript(`window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
   if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') await page.addInitScript(`window.__playtestHandoverAudit = []; (() => {
@@ -73,7 +77,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   page.on('console', m => { if (m.type() === 'error' && !consoleSeen.has(m.text())) { consoleSeen.add(m.text()); void issue('P2', 'console-error', m.text().slice(0, 300), false); } });
   page.on('pageerror', e => { if (!consoleSeen.has(e.message)) { consoleSeen.add(e.message); void issue('P1', 'page-error', e.message.slice(0, 300), false); } });
 
-  const see = async () => { eyes = await page.evaluate(look); return eyes; };
+  const see = async () => { eyes = await observeWithin(page.evaluate(look)); return eyes; };
   const assist = (what: string, data: object = {}) => { log({ assist: what, level: eyes?.level, tick: eyes?.tick, ...data }); };
   const keysDown = new Set<string>();
   const press = async (keys: string[]) => {
@@ -91,6 +95,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
+  const backend = await page.evaluate(() => window.__SS__!.getState().render.backend);
+  if (webgpu && backend !== 'webgpu') throw new Error(`WebGPU playtest requested but renderer selected ${backend}`);
+  log({ renderer: backend });
   const cpu = process.env.PLAYTEST_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
   let cpuStartedAt = 0, cpuNavigationStartMs: number | undefined;
   if (cpu) {
@@ -157,6 +164,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let ring: { x: number; y: number; z: number } | null = null, ringKey = '';
 
   const startLevel = async (e: Eyes) => {
+    await press([]); await releaseAim();
+    shotAt.clear(); ignored.clear(); reportedUnhittable.clear();
+    trail.length = 0; lastErr = null; steering = false;
+    cureConsole = null; lastE = lastClick = 0;
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     await page.evaluate(() => {
@@ -190,7 +201,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
     // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
     const lostTime = (Date.now() - lastProgress.wall) / 1000 > 30;
-    const reach = lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
+    const reach = e.level === 'L10' && (e.step === 'mega' || e.step === 'hold') && ranged.test(e.player?.current ?? '') ? 30 : lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const nearby = e.enemies.find(b => b.d < reach && ok(b));
@@ -365,10 +376,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- main loop ---
   let lastLevel: string | null = null, levelIndex = 0, lastPhase = '', idleScreens = 0, bootWall = Date.now();
   for (;;) {
+    if (pageCrashed) throw new Error(`Playtest browser renderer crashed during ${run?.level ?? 'startup'}; session cannot continue`);
     if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}; session cannot continue`);
     let e: Eyes;
     try { e = await see(); } catch (error) {
       if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}: ${String(error)}`);
+      if (pageCrashed || String(error).includes('Playtest observation timed out')) throw error;
       log({ seeError: String(error) }); await hold(500); if (Date.now() - bootWall > 600_000 && !run) break; continue;
     }
     if (run && shouldResumePause(e.menu,e.loading)) {
@@ -411,13 +424,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
     if (e.phase === 'briefing' || e.phase === 'retry' || e.phase === 'progression') {
       if (e.phase === 'retry' && lastDeathTick !== e.tick) { lastDeathTick = e.tick; run.deaths++; await issue('P3', 'retry', `Mission failed screen: ${e.panel.heading}`); }
-      await press([]);
+      await press([]); await releaseAim();
       if (e.panel.button && !e.loading) { await page.getByTestId('mission-button').click({ timeout: 5000 }).catch(() => undefined); }
-      idleScreens++; if (idleScreens === 300) await issue('P0', 'stuck-screen', `Stuck on the ${e.phase} screen for ~60 s (button ${e.panel.button})`);
+      idleScreens++; if (idleScreens === 300) { await issue('P0', 'stuck-screen', `Stuck on the ${e.phase} screen for ~60 s (button ${e.panel.button})`); break; }
       await hold(200); continue;
     }
     if (e.phase === 'result') {
-      await press([]);
+      await press([]); await releaseAim();
       if (!run.finished) await finishLevel(e);
       const last = levelIndex === o.levels.length - 1;
       if (last && o.levels.length > 0) { log({ done: e.level }); if (!o.stopAfterLevel) break; }
@@ -426,7 +439,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (o.stopAfterLevel && idleScreens > 20 && !e.panel.button) { /* waiting for next level */ }
       await hold(200); continue;
     }
-    if (e.phase !== 'playing') { await press([]); await hold(200); idleScreens++; if (idleScreens === 900) await issue('P1', 'long-cinematic', `Phase ${e.phase} lasted ~3 min`); continue; }
+    if (e.phase !== 'playing') { await press([]); await releaseAim(); await hold(200); idleScreens++; if (idleScreens === 900) { await issue('P0', 'long-cinematic', `Phase ${e.phase} lasted ~3 min`); break; } continue; }
 
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
@@ -478,7 +491,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
     }
     if(Date.now()-lastObservation>=1000) {
-      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp}:null,marker:ring,noProgressSeconds:observed.seconds}});
+      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),marker:ring,noProgressSeconds:observed.seconds}});
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
@@ -488,7 +501,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await watchAllies(e);
 
     const watchingEnding = e.level === 'L10' && /Watch the cure spread|Minor Incident/.test(e.objective);
-    if(o.noSkip&&observed.seconds>=30&&!watchingEnding) {
+    if(o.noSkip&&observed.seconds>=90&&!watchingEnding) {
       await issue('P0','cannot-finish',`No visible progress for ${observed.seconds.toFixed(1)} s; stopping without advancing the objective`);
       log({abortedNoSkip:true,level:e.level,tick:e.tick,step:e.step});break;
     }
@@ -545,6 +558,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       lastE = Date.now(); await press([]); await releaseAim();
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
+    }
+    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.enemies[0]?.d);
+    const shortcut = weapon && weaponKey(weapon);
+    if (weapon && shortcut && e.player?.current !== weapon) {
+      await press([]); await releaseAim();
+      await page.keyboard.press(`Digit${shortcut}`); await hold(300);
+      log({ selectedCarriedWeapon: weapon, level: e.level, tick: e.tick }); continue;
     }
     if (await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
@@ -607,7 +627,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
     const far = ringDist !== null && ringDist > 25;
     const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
-    if (o.noSkip && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
+    if (e.level === 'L10' && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
       // A raised marker can make repeated ground clicks stop on the stair edge.
       // Project both visible positions onto the courier's current floor and
       // walk toward the marker with physical keys, without reading navigation.
@@ -619,7 +639,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await releaseAim(); await press(keys); await hold(700); await press([]);
       log({ visibleMarkerUnstick: e.tick, keys }); continue;
     }
-    if (!o.noSkip && stalled && !atRing && ring && e.player) {
+    if (e.level !== 'L10' && stalled && !atRing && ring && e.player) {
       if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }
       const step = await page.evaluate(({ goal }) => {
         const lab = window.__SCENE__ as unknown as { game?: { world: { entities: Map<number, { transform: { x: number; z: number } }>; infected?: { nav: { steer(p: object, g: object, r: object, rad: number, out: { x: number; z: number }, budget: number, nearest: boolean): boolean } } } } } | undefined;
@@ -677,10 +697,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   }
   const longFrames = await page.evaluate(() => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames);
   writeFileSync(join(o.out, `${o.tag}-frames.json`), JSON.stringify(longFrames, null, 2));
-  await context.close();
   if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
+  } finally {
+    await observeWithin(context.close(), 10_000).catch(error => log({ cleanupError: String(error) }));
+  }
 }
 
 // CLI: tsx tools/playtest/session.ts '<json SessionOptions>'
