@@ -1,4 +1,4 @@
-import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
+import { frozenToneNames, writeFrozenCrowdTones, writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
@@ -14,7 +14,7 @@ const CELL = 40;
 // graph too: copies per pool rebuilt identical shaders as new blast victims
 // settled. Pages still own their geometry and per-instance appearance buffers.
 const sharedFrozenMaterials = new WeakMap<PaletteMaterial, { material: PaletteMaterial; users: number }>();
-interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[] }
+interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; tones: InstancedBufferAttribute[]; probe: CrowdFigureProbe; keys: string[] }
 interface CorpseSurface { source: BufferGeometry; material: MeshLambertNodeMaterial; clip: CrowdClip; frame: number }
 interface DetailBody {
   e: EntitySnapshot; key: string; far: CorpseSurface; near: CorpseSurface; x: number; z: number; detailed: boolean;
@@ -100,6 +100,7 @@ export class StaticCorpses extends Group {
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
+    if (page.tones.length) { writeFrozenCrowdTones(page.tones, index, e.id); for (const tone of page.tones) tone.needsUpdate = true; }
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Cover every joining body's
     // final death vertices so culling cannot drop a visible body.
@@ -126,12 +127,13 @@ export class StaticCorpses extends Group {
     const { page, index } = slot, mesh = page.mesh, last = mesh.count - 1;
     if (index !== last) {
       mesh.getMatrixAt(last, this.moved); mesh.setMatrixAt(index, this.moved);
-      for (const attribute of [page.tint, page.overlay]) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
+      for (const attribute of [page.tint, page.overlay, ...page.tones]) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
       const moved = page.keys[last]; page.keys[index] = moved; this.slots.get(moved)!.index = index;
     }
     page.keys.length = last; mesh.count = last;
     const figure = page.probe.figures.findIndex(f => f.instanceKey === instanceKey); if (figure >= 0) page.probe.figures.splice(figure, 1);
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
+    for (const tone of page.tones) tone.needsUpdate = true;
     if (last > 0) mesh.computeBoundingSphere();
     return true;
   }
@@ -266,6 +268,7 @@ export class StaticCorpses extends Group {
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
+    if (material.userData.frozenCrowd) for (const name of frozenToneNames) geometry.setAttribute(name, new InstancedBufferAttribute(new Float32Array(128 * 3), 3));
     const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.name = `corpses:${key}`;
     if (frozen.material instanceof PaletteMaterial) {
       // Spatial/death/gore pages share the layout, while their matrices,
@@ -279,7 +282,8 @@ export class StaticCorpses extends Group {
     mesh.matrixAutoUpdate = false;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => probe.draw();
-    const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
+    const tones = material.userData.frozenCrowd ? frozenToneNames.map(name => mesh.geometry.getAttribute(name) as InstancedBufferAttribute) : [];
+    const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, tones, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
     return page;
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.filter(page => page.mesh.count > 0).length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }

@@ -10,11 +10,33 @@ import { installPaletteVariantCache } from '../../../src/render/Renderer';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
-import { resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
+import { frozenToneNames, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
+import { crowdAppearance, hairTones, infectedSkinTones, trouserTones, shirtTones } from '../../../src/data/crowdAppearance';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { RoutineProps } from '../../../src/render/npc/RoutineProps';
+
+test('frozen palette constants match the live palette exactly and survive page swap-removal within 16 vertex attributes', () => {
+  const scene = new Scene(), lighting = new Lighting(scene), materials = new Materials(lighting), material = materials.shaded(vec3(1));
+  material.userData.frozenCrowd = true;
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), records = new Map<number, EntitySnapshot>();
+  try {
+    for (const id of [7, 8]) {
+      const e = { id, corpse: true } as EntitySnapshot; records.set(id, e);
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    }
+    records.delete(7); pool.begin(id => records.get(id));
+    const page = pool.children[0] as InstancedMesh, look = crowdAppearance(8);
+    const expected = [hairTones[look.hair], infectedSkinTones[look.skin], trouserTones[look.trousers], shirtTones[crowdAppearance(8 + 503).shirt]];
+    expect(Object.keys(page.geometry.attributes)).toHaveLength(16);
+    for (const [i, name] of frozenToneNames.entries()) {
+      const attribute = page.geometry.getAttribute(name), values = new Color(expected[i]).toArray().map(Math.fround);
+      expect([attribute.getX(0), attribute.getY(0), attribute.getZ(0)]).toEqual(values);
+    }
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); materials.dispose(); lighting.dispose(); }
+});
 
 test('Q-124 settled bodies change detail after approach and retreat without losing pose, identity or appearance', () => {
   const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);

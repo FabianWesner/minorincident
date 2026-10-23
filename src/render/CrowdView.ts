@@ -327,6 +327,7 @@ export class CrowdView extends Group {
       // white constant still dominates its near-black albedo.
       const glow = emission.mul(parts.z).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
       const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      if (regularInfectedModels.some(id => id === asset)) material.userData.frozenCrowd = true;
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
