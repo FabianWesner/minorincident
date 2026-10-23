@@ -1,11 +1,11 @@
 {
-  "runtimeCommit": "ebb11dd8b",
-  "command": "E2E_PORT=4371 SCENE_PORT=4372 sh tools/remote/run.sh \"$PWD\" --pull test-results/playtest/remote-unit-zoom.json --env E2E_PORT=4371 --env SCENE_PORT=4372 -- timeout 1800 npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/playtest/remote-unit-zoom.json",
-  "rawReport": "test-results/playtest/remote-unit-zoom.json",
-  "sha256": "eda0cfbc4829d645fa6103a8ef31b299e2d4961e8940f6626b8762e142acc096",
+  "runtimeCommit": "6dc758170",
+  "command": "E2E_PORT=4371 SCENE_PORT=4372 sh tools/remote/run.sh \"$PWD\" --pull test-results/playtest/remote-unit-escort.json --env E2E_PORT=4371 --env SCENE_PORT=4372 -- timeout 1800 npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/playtest/remote-unit-escort.json",
+  "rawReport": "test-results/playtest/remote-unit-escort.json",
+  "sha256": "633673566303e3d77f4faa2981fcd6f82d63ae5ac4268da781895ee1a0631b39",
   "success": true,
   "tests": {
-    "numPassedTests": 2048,
+    "numPassedTests": 2050,
     "numFailedTests": 0,
     "numPendingTests": 7
   },
@@ -78,6 +78,14 @@
       "file": "unit/playtest-eyes.test.ts",
       "status": "passed",
       "assertions": [
+        {
+          "title": "a stalled escort ring is cleared along its visible travel direction and stays clear",
+          "status": "passed"
+        },
+        {
+          "title": "escort clearance needs a nearby drawn living human and never runs in the finale",
+          "status": "passed"
+        },
         {
           "title": "#104 browser observation remains self-contained when serialized by Playwright",
           "status": "passed"
