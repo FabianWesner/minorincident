@@ -222,9 +222,9 @@ export class SolidRegistry {
     const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     const nav = e?.infected ? this.world.infected?.infectedNav : this.world.infected?.nav;
-    // A scripted door walk crosses the door seal on its authored lane (in front of the door plane only).
+    // A scripted door walk crosses the open aperture on its bounded authored lane.
     const lane = e?.doorLane, along = lane ? (at.x - lane.x) * lane.ox + (at.z - lane.z) * lane.oz : 0;
-    if (!lane || along <= 0 || along > lane.end || Math.abs((at.x - lane.x) * -lane.oz + (at.z - lane.z) * lane.ox) >= lane.half) nav?.visitSolids(at.x, at.z, radius, (box, id) => {
+    if (!lane || along <= (lane.start ?? 0) || along > lane.end || Math.abs((at.x - lane.x) * -lane.oz + (at.z - lane.z) * lane.ox) >= lane.half) nav?.visitSolids(at.x, at.z, radius, (box, id) => {
       // Height rejects most nearby roofs/supports before any ownership lookup.
       if (!(box.y + box.halfY > bottom && box.y - box.halfY < top)) return;
       // L6 followers displaced onto a walkable side walkway must cross the crowd lane edge back to the column.

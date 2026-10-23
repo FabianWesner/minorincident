@@ -1,0 +1,107 @@
+{
+  "revision": "73bce8bc5",
+  "method": "git show; static source audit, not a claim that a PROD test suite was run",
+  "checks": [
+    {
+      "item": "objectives",
+      "path": "src/render/ObjectiveMarker.ts",
+      "blob": "3be5a8ce6613af1e7efc8ff281e617c5dfef257a",
+      "matched": [
+        {
+          "needle": "this.visible=!storyShot",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "seats",
+      "path": "src/sim/missions/LevelSixSubway.ts",
+      "blob": "ef4fd3ed44a9a452d93d66565ca19549df2e8fe6",
+      "matched": [
+        {
+          "needle": "routine==='sit'?'npc-sit'",
+          "present": true
+        },
+        {
+          "needle": "activity:routine==='talk'?'chat':routine==='sit'?'sit':'look'",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "L1 lab exits",
+      "path": "src/sim/outbreak/HouseEmergence.ts",
+      "blob": "3f723506805980c65680c1f1811820a2c540c312",
+      "matched": [
+        {
+          "needle": "if (w.leg < 0)",
+          "present": true
+        },
+        {
+          "needle": "place(world, house, e, s, s <= 0 ? lane",
+          "present": true
+        },
+        {
+          "needle": "world.solids.admit(e,",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "L2 market count",
+      "path": "src/sim/missions/LevelTwoRescue.ts",
+      "blob": "dd5765a92ca2757216360709439c4d3a9938b0de",
+      "matched": [
+        {
+          "needle": "a.id = id || -1",
+          "present": true
+        },
+        {
+          "needle": "if (!a || ai.director.count >= ai.director.cap",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "L6 north entries",
+      "path": "src/sim/missions/LevelSixSubway.ts",
+      "blob": "ef4fd3ed44a9a452d93d66565ca19549df2e8fe6",
+      "matched": [
+        {
+          "needle": "z:base.z-1.4",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "L4 assault goal",
+      "path": "src/sim/missions/LevelFourWar.ts",
+      "blob": "0d048df5e8d3512f18048dccb8467c6deeae9a31",
+      "matched": [
+        {
+          "needle": "x: to.x + (g - size / 2) * 1.5",
+          "present": true
+        },
+        {
+          "needle": "const at = this.spectacle.edgePoint(i);",
+          "present": true
+        }
+      ]
+    },
+    {
+      "item": "aftermath skull tagging",
+      "path": "src/render/characters/CrowdAppearance.ts",
+      "blob": "0b18240520d2b015bba29ca266f2582e9450c474",
+      "matched": [
+        {
+          "needle": "const swatches = Object.entries(palette)",
+          "present": true
+        },
+        {
+          "needle": "Math.abs(c.r-color.getX(i)) < .003",
+          "present": true
+        }
+      ]
+    }
+  ]
+}

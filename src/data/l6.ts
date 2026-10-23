@@ -8,6 +8,11 @@ export const l6 = {
   /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
   hatch: { hits: 8, hitS: 1, promptM: 1.8, standM: .9 }, checkpoints: ['shelter', 'abandon', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
+/** Benches for the shelter's sitting routine, including slots for carried L5 survivors. */
+export const l6ShelterSeats = Array.from({ length: Math.ceil((l6.shelter.high + l5Survivors.length - 1) / 5) }, (_, k) => {
+  const i = 1 + k * 5, yaw = i % 2 ? Math.PI : 0;
+  return { x: -8 + (i % 8) * 2.3 - Math.cos(yaw) * .33, z: -11 + Math.floor(i / 8) * 2.5, yaw };
+});
 export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */
 export const l6CastModels = [...new Set([...l6BreachModels, 'npc.marcus.aftermath', 'npc.shelter-survivor.bandaged', 'npc.shelter-survivor.lying', 'npc.shelter-survivor.sitting', 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', ...l5Survivors.map(s=>s.model)])];
