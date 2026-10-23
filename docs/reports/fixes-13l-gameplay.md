@@ -7,4 +7,4 @@
 - Q-140: Sam's ring moves to the visible bus side at z=50; zoom-1.5 pixel visibility rises from 34% to 83%, and click/E rescues Sam. [Proof](fixes-13l-gameplay/evidence/Q-140-green.json).
 - Q-141: boarding points to the nearest missing passenger on the minimap and names their distance. [Proof](fixes-13l-gameplay/evidence/Q-141-green.json).
 - Q-149: no invulnerability reproduced; real aimed axe, handgun, machine gun and shotgun each take a 60-HP infected at 1.1 m to 0 during the active console hold. [Proof](fixes-13l-gameplay/evidence/Q-149-input.json).
-- Validation so far: seven real-input checks, ten focused sim checks, 27 invariant sim checks, smoke (31 browser + six sim), build, typecheck and lint pass; final invariant rendering and remote unit/level results are pending.
+- Validation so far: seven real-input checks, ten focused sim checks, 27 invariant sim checks, remote unit/level (2508 passed, nine skipped), smoke (31 browser + six sim), build, typecheck and lint pass; final invariant rendering is pending.
