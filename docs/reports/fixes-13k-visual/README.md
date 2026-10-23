@@ -1,22 +1,37 @@
-# Q-124/125/126/127/129 · implementation and evidence in progress
+# Q-124/125/126/127/129 — implementation checkpoint
 
-Base: `bfff62015` (batch 13j). No deployment or merge.
+Base `bfff62015` (batch 13j). Work is not yet accepted: the near-band p95 gate and final validation remain outstanding. No deployment or merge.
 
-- Q-124: actual delivered Alpha boots exceeded 1 m above ground. The death presentation now settles the leg chain with unchanged segment lengths and levels the soles. Mega uses its authored side fall, exposing the head profile, arms and legs. Tests cover all eight delivered Alpha/Mega looks. The 65 cm absolute boot-top limit applies to the requested face-down Alphas; the side-lying Mega instead checks level soles and bounded boot thickness, since its upper hip lies above the lower one.
-- Regular infected corpses: prepared LOD1 frozen pages inside 8 m, retained to 10 m on retreat. Spatial queries inspect nearby bodies only; page swaps preserve IDs, transforms, tint and overlays and do not invalidate the animated membership list. No bodies or population counts are removed.
-- Q-125: infected bars require positive HP, including recoverable downed Alphas. The previous zero-HP/recovery-timer case failed before the eligibility fix.
-- Q-127: the low departure shot exposed cool sky rectangles where warm ground haze ended. A precompiled uniform blends the same haze into the backdrop during this shot. Camera and map bounds are unchanged. The first full-shot review still showed warm rectangles at the final frame; fully fogged surfaces now converge to the identical backdrop colour after height haze. A second matrix is pending.
-- Q-129: wedge top was 5.68 m against the 5.70 m span. Wedge top is now 5.71 m, closing the dark step. D-CORRIDOR base GLB and layout metadata rebuilt successfully.
-- Q-126: three cold, quiet production WebGPU/low/z1.5 reproductions cross the L1 reported street and trigger the L2 ride by physical keyboard input. Unchanged baseline maxima: L1 16.8/16.8/16.8 ms; L2 50.0/50.0/49.9 ms. CPU profiles and all frames retained in `test-results/fixes-13k/hitches-target-before-r2/`. The original 266/450 ms stalls have not reproduced under these conditions; candidate profiles and attribution remain required.
+## Changes and red-first evidence
 
-Focused regression suites: 45 passing tests. Earlier full unit run had 2,019 passing tests and six sandbox-dependent failures; rerun after the environment was unlocked is pending.
+- **Q-124:** shipped prone Alpha boots exceeded 1 m above ground. A two-bone lower-leg solve preserves segment lengths and levels the soles; the Mega uses its authored side fall. Tests cover all eight delivered Alpha/Mega looks. The 65 cm absolute boot-top assertion applies to prone Alphas; the side-lying Mega checks level soles and boot thickness because its upper hip rests above the lower hip. The delivered Alpha test failed before correction.
+- **Near corpses:** regular infected use frozen LOD1 pages inside 8 m, retaining them until 10 m on retreat. Spatial queries inspect nearby bodies only. Page switches retain identity, pose, tint, overlays, appearance, population and animated membership revision. The approach/retreat test failed against the old LOD2-only pool. Four backend/tier runtime cases retain one body through LOD 2/1/1/2/1.
+- **Q-125:** infected bars require positive HP, including recoverable downed Alphas. The old zero-HP/recovery case failed before the fix. Real shotgun damage removes the bar at the first zero-HP frame (53), through frame 240, on both backends and tiers. Living bars are also asserted present.
+- **Q-126:** quiet cold profiles cross the reported L1 delivery street with physical keys and start L2 boarding/ride with physical E. Baseline original 266/450 ms stalls did not reproduce. Profiles exposed first-use seated geometry/node programs around L2 ticks 282–284: `prewarmOccupants` selected only `transport` vehicles, but the fire engine has no such field. It now selects the mission truck ID and retains the actual warmed courier/crew rigs. The regression test failed first on disposable negative-ID prototypes, then on the real non-transport fire-engine definition. A trial escort warm-up did not remove L1's later head programs and was removed. Final profiles after the truck selection correction are pending.
+- **Q-127:** distance fog reached the cool background before the warm ground-height haze, exposing rectangular boundaries. During departure, the backdrop receives the same haze and fully fogged surfaces converge to that exact backdrop color after height haze. The graph is prepared during loading; camera/map bounds are unchanged. Baseline captures reproduce the cutoff; the final 48 frames were reviewed and have continuous coverage along the top edge.
+- **Q-129:** wedge top 5.68 m was below deck top 5.70 m. Wedge top is now 5.71 m. The authored-height assertion failed before correction. D-CORRIDOR base GLB and layout metadata were rebuilt. Both backend matrices show continuous concrete across the former seam.
 
-Outstanding: complete capture matrix and review; L10 paired quiet p95; candidate stall profiles; invariants; PROD A/B review; remote unit+level suites; smoke; final completion audit.
+## Capture review
 
-Performance checkpoint: the first quiet pair retained 282 corpses but regressed WebGL2 median p95 3.2 → 3.9 ms and WebGPU 2.2 → 2.6 ms. This is rejected. Frozen regular-corpse palette constants are now uploaded once per body instead of selecting 34 palette entries per vertex; the new identity/swap-removal test checks exact float32 constants and the WebGL2 16-attribute limit. Typecheck, lint and 26 focused tests pass; runtime and replacement timing remain pending.
+[Matrix WebGL2](captures/matrix/webgl2/index.md) / [matrix WebGPU](captures/matrix/webgpu/index.md): 36/36 combinations, Alpha/Mega/L3 × high/low × zoom 0.5/1/1.5, with four sampled frames each. All sheets inspected: low, flat Alpha boots; recognizable Mega side profile with separate head/arms/legs; continuous L3 deck junction, without flicker. A new matrix after packed-buffer changes is pending.
 
-Q-126 profile follow-up: L1 compiled the escort head (navy/khaki/uiDark) at tick 1935; L2 created seated courier/firefighter buffers and node programs at boarding ticks 39–40. Loading now includes the shared escort geometry/materials, and L2 retains the actual warmed courier/crew rigs for their actor IDs. The new retention test failed on discarded negative-ID prototypes before the fix. Original >200 ms stalls remain unreproduced; final cold profiles are still required.
+[L7 baseline](captures/l7-before/evidence.json) / [L7 final](captures/l7-final/evidence.json): both tiers and all three pre-shot zooms, candidate on both backends, frames 0/120/300/450. All twelve final sheets inspected. Zoom 0.5 starts close to the courier cab, zoom 1 shows the bus/street, zoom 1.5 shows the wider street. Every pull-back ends under continuous warm fog, with city silhouettes retained and no rectangular void. The cinematic blocks zoom changes while running, so each case sets zoom before departure and asserts it remains active. An earlier nominal-zoom matrix was rejected because input during the shot left all cases at zoom 1.
 
-Frozen palette buffer regression: the first runtime attempt exceeded WebGPU’s eight-buffer limit. A new layout assertion failed red (12 buffers, then 9 during the first interleave), and passes with 8 buffers/16 locations after interleaving tint, overlay and palette lanes. All exact identity values survive swap-removal. Initial WebGL2 runtime confirms bands 2/1/1/2/1 with one retained body and HP bars absent from the first zero-HP frame (53); full rerun pending.
+[Corpse runtime](captures/corpse-runtime/evidence.json) records the retained body and exact HP-bar lifecycle for four backend/tier cases.
 
-The committed matrix captures cover 36 combinations of Alpha/Mega/L3, two backends, two tiers and three zooms; all sheets were reviewed. Alpha soles are low and flat; Mega’s side profile separates the head and limbs; the deck join is continuous. Baseline L7 sheets retain the reproduced rectangular horizon cutoff for comparison.
+## Performance — acceptance still pending
+
+Identical L10 low permanent fields: **282 corpses**, including all seven regular infected looks; no population/count reductions. Quiet native uncapped Chrome, 1280×720, zoom 1, three six-second samples per backend.
+
+| Attempt | WebGL2 median p95 | WebGPU median p95 | Result |
+|---|---:|---:|---|
+| Baseline batch 13j | 3.2 ms | 2.2–2.3 ms | reference |
+| Initial near band | 3.9 ms | 2.6 ms | rejected |
+| Per-instance palette constants | 3.8 ms | 2.7 ms | rejected; removed |
+| Packed frozen normals/colors | pending | pending | not accepted yet |
+
+Dense-field CPU profiles attribute the added time to GPU backpressure in `drawElementsInstanced`, not palette selection. Frozen GPU buffers now use normalized 16-bit normals/colors, while CPU pose geometry, positions, index buffers, part ownership, triangle and instance counts remain exact. New tests failed before packing and bound component errors to 1/32767 for normals and 1/65535 for linear colors. HDR colors keep float storage. Final timing and visual checks are pending.
+
+## Validation status
+
+Typecheck, lint and 29 focused tests pass at this checkpoint. Remote unit/level suites are still running. Invariants, PROD L1–L4 A/B, smoke, final timing, profile attribution and completion audit remain outstanding.

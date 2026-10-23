@@ -3,6 +3,26 @@ import { attribute, Fn, instanceColor, mat3, mat4, normalLocal, positionLocal, t
 import { PaletteMaterial } from './PaletteMaterial';
 
 const materials = new WeakMap<PaletteMaterial, PaletteMaterial>();
+const packedNormals = new WeakMap<object, Int16Array>(), packedColors = new WeakMap<object, Uint16Array>();
+/** Frozen vertices keep float32 positions and exact topology. Their normals and linear
+ * colours use normalized 16-bit storage (errors <= 1/32767 and 1/65535 respectively).
+ * Four lanes also avoid WebGPU's vec3 padding on upload. HDR colours retain float storage. */
+function packedCorpseAttribute(name: string, input: BufferAttribute | InterleavedBufferAttribute): BufferAttribute | null {
+  if (name !== 'normal' && name !== 'color') return null;
+  const normal = name === 'normal', cache = normal ? packedNormals : packedColors;
+  let values = cache.get(input);
+  if (!values) {
+    if (!normal) for (let i = 0; i < input.count; i++) for (let c = 0; c < input.itemSize; c++) if (input.getComponent(i, c) < 0 || input.getComponent(i, c) > 1) return null;
+    values = normal ? new Int16Array(input.count * 4) : new Uint16Array(input.count * 4);
+    for (let i = 0; i < input.count; i++) for (let c = 0; c < 4; c++) {
+      const value = c < 3 || !normal && c < input.itemSize ? input.getComponent(i, c) : normal ? 0 : 1;
+      values[i * 4 + c] = Math.round(value * (normal ? 32767 : 65535));
+    }
+    if (normal) packedNormals.set(input, values as Int16Array); else packedColors.set(input, values as Uint16Array);
+  }
+  return new BufferAttribute(values, 4, true);
+}
+
 function placementPosition(previous: Node | null, corpseNormals: boolean): Node {
   return Fn(() => {
     const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
@@ -35,6 +55,8 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   // GPU buffers: retiring one LOD must not delete another LOD's live bindings.
   const buffers = new Map<InterleavedBuffer, InterleavedBuffer>();
   for (const [name, input] of Object.entries(original.attributes)) {
+    const packed = corpseNormals ? packedCorpseAttribute(name, input) : null;
+    if (packed) { geometry.setAttribute(name, packed); continue; }
     if ('isInterleavedBufferAttribute' in input) {
       let data = buffers.get(input.data);
       if (!data) {

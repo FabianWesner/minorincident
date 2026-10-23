@@ -12,7 +12,7 @@ test('L2 boarding reuses the actor rigs warmed during loading instead of loading
   const load = vi.spyOn(VehicleOccupant, 'load').mockImplementation(async (_registry, actorId) => {
     const copy = Object.assign(new Group(), { actorId, pose: vi.fn(), dispose: vi.fn() }); made.push(copy); return copy as unknown as VehicleOccupant;
   });
-  const view = { world: { missions: { state: { l2: { crewIds: [8] } } }, vehicles: { cars: new Map([[5, { entity: { id: 5 }, physics: { def: { transport: {} } } }]]) }, entities: { get: (id: number) => entities.find(e => e.id === id), iterate: () => entities } }, records: new Map([[5, { model }]]), occupants, registry: {}, materials: {} };
+  const view = { world: { missions: { state: { l2: { truckId: 5, crewIds: [8] } } }, vehicles: { cars: new Map([[5, { entity: { id: 5 }, physics: { def: {} } }]]) }, entities: { get: (id: number) => entities.find(e => e.id === id), iterate: () => entities } }, records: new Map([[5, { model }]]), occupants, registry: {}, materials: {} };
   const restore = await VehicleView.prototype.prewarmOccupants.call(view as unknown as VehicleView);
   expect(load.mock.calls.map(c => c[1])).toEqual([1, 8]);
   expect(made.every(copy => copy.parent === model && copy.pose.mock.calls[0][0] === seat)).toBe(true);
