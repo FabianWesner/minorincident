@@ -48,4 +48,5 @@ A living record, updated after every lane or experiment. Short entries with evid
   - merging many lanes before running the suite: a merge silently reverted a test list.
 - **Watch:**
   - disk: 6+ worktrees plus captures fill 200 GB quickly. Remove each worktree right after merging, check `git status` first, and stop on any uncommitted tracked file (10-22: two changes were lost that way);
-  - lanes leave captures in the shared scratchpad and can delete files there.
+  - lanes leave captures in the shared scratchpad and can delete files there;
+  - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
