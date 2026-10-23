@@ -1,3 +1,5 @@
+import { l6Doors, l6Entries } from '../data/l6';
+import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
 import { CrowdAccessories } from './characters/CrowdAccessories';
@@ -12,10 +14,12 @@ import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { NoToneMapping, ColorManagement, Raycaster, Vector2 } from 'three/webgpu';
+import { attribute, Discard, Fn, vec4 } from 'three/tsl';
 import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
+import { SurvivorRings } from './SurvivorRings';
 import { VehicleView } from './VehicleView';
 import { L2Props } from './L2Props';
 import { L3Props } from './L3Props';
@@ -25,20 +29,20 @@ import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
-import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
-import { View } from './View';
+import { View, type CameraPose } from './View';
 import { Renderer } from './Renderer';
-import { preRender } from './PreRenderer';
+import { preRender, incrementalPreRender } from './PreRenderer';
 import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
-import { seeThrough } from './SeeThrough';
+import { projectReveal, seeThrough, seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -51,6 +55,7 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
+import { color } from 'three/tsl';
 import { InteractionView } from './InteractionView';
 import { MountedGunView } from './MountedGunView';
 import { EntityAssets } from './EntityAssets';
@@ -61,6 +66,7 @@ import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
+import { courierForegroundWanted } from './courierForeground';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 /** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
@@ -75,14 +81,26 @@ export class GameView implements Lifecycle {
   readonly scene = Object.assign(new Scene(), { matrixAutoUpdate: false });
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
+  private survivorRings: SurvivorRings | null = null;
   private cinematicId: string | null = null;
   private departureShot = false;
   private storyFraming = false;
   private l5StationView = false;
+  private l5ClosingPose: CameraPose | null = null;
+  private readonly l5ClosingTarget = new Vector3();
   private l3AttackScale = 1;
-  private bossHole = 0;
+  private courierForeground = false;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
-  private probeHide = { courier: false, crowd: false };
+  private readonly revealSubject = new Box3();
+  private readonly revealVehicle = new Box3();
+  private readonly revealPet = new Box3();
+  private companionId = -1;
+  private companionSearch = 0;
+  private probeVisibilityPending = false;
+  private infectedIdPass = false;
+  private readonly infectedIdMasks = new Map<Material, MeshBasicNodeMaterial[]>();
+  private solidCutProbeOff = false;
+  private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -115,24 +133,40 @@ export class GameView implements Lifecycle {
   private epiloguePrepared: object | null = null;
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
+  private shadowWarmup: ReturnType<typeof incrementalPreRender> | null = null;
   loadProgress?: (completed: number, total: number) => void;
   /** Speculative menu-time level load: keep the mission UI hidden until the player picks the level. */
   missionHidden = false;
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
   background = false;
   private frozenFrame: HTMLCanvasElement | null = null;
+  private frozenUpdates = false;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
    * loads and warms up behind the menus/briefing; drawing is suspended until unfreeze(). */
-  freeze(): void {
+  freeze(keepUpdates = false): void {
     if (this.frozenFrame) return;
+    this.frozenUpdates = keepUpdates;
     const source = this.renderer.domElement, copy = document.createElement('canvas');
     copy.width = source.width; copy.height = source.height;
     copy.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none';
     try { this.update(1); copy.getContext('2d')?.drawImage(source, 0, 0); } catch { /* best effort */ }
     source.after(copy); this.frozenFrame = copy;
   }
-  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; if (!this.warming) this.update(1); }
+  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; this.frozenUpdates = false; if (!this.warming) this.update(1); }
   get frozen(): boolean { return this.frozenFrame !== null; }
+  private loadingPresentedAt = -Infinity;
+  /** Keep the compositor presenting during handover work. The frozen canvas
+   * preserves the last picture while the opaque loading card covers it. A
+   * cheap canvas submission avoids Chrome's no-draw RAF pacing (~100 ms). */
+  presentLoading(): void {
+    if (!this.frozenFrame || this.background) return;
+    const now = performance.now();
+    if (now - this.loadingPresentedAt < 1000 / 60) return;
+    this.loadingPresentedAt = now;
+    const target = this.renderer.getRenderTarget();
+    try { this.renderer.setRenderTarget(null); this.renderer.clear(); }
+    finally { this.renderer.setRenderTarget(target); }
+  }
   private generation = 0;
   private npcs: NpcView | null = null;
   /** Scene Lab drives the same authored metro leaf as the L5 mission clock. */
@@ -145,13 +179,14 @@ export class GameView implements Lifecycle {
   weather: WeatherView | null = null;
   vfx: Vfx | null = null;
   private labAccident: LabAccidentFx | null = null;
-  private labWindows: { prewarmWindows(): () => void } | null = null;
+  private labWindows: ReturnType<typeof labAccidentTargets> | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
   private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
   private destination: Mesh | null = null;
+  private militaryPerimeter: MilitaryPerimeter | null = null;
   private readonly bikeOrientation = new Quaternion();
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
@@ -166,7 +201,8 @@ export class GameView implements Lifecycle {
   private windowMask=false;
   private foliageMask: boolean | 'crowns'=false;
   private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
-  private readonly foliageIdMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly occluderIdMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly skylineIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
@@ -174,7 +210,7 @@ export class GameView implements Lifecycle {
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
   private readonly projection = new Vector3();
-  private idPass = false;
+  private idPass: boolean | 'skyline' = false;
   private weatherPowerRevision = 0;
   private weatherProbeAsset: string | null = null;
   weatherMask(asset: string | null): void { this.weatherProbeAsset = asset; }
@@ -230,8 +266,12 @@ export class GameView implements Lifecycle {
     this.camera.updateProjectionMatrix();
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
+    // A live L7 handover keeps its frame budget while assets and batches assemble.
+    // A cold menu load has no live scene to update: use the foreground policy.
+    const cooperative = this.world.scenario === 'L8' && this.frozenUpdates;
+    if (cooperative) loadGate.setPaced(true);
     const player = this.world.entities.get(1);
-    this.view.reset(player?.transform ?? { x: 0, z: 0 });
+    this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
@@ -251,7 +291,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -285,9 +325,11 @@ export class GameView implements Lifecycle {
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
         this.lookdev = new Lookdev(this.materials, this.occlusion, false); this.scene.add(this.lookdev);
-        this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
       }
-      this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'); this.scene.add(this.character);
+      // Isolated survivor labs use the production composite too: courier scene
+      // alpha carries grade protection and must be consumed before presentation.
+      this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
+      this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', 'survivor', false, false, this.world.scenario === 'survivor' ? player?.survivor?.variant : undefined); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)); this.materials = new Materials(this.lighting);
@@ -300,6 +342,7 @@ export class GameView implements Lifecycle {
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
     if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
+    if (this.world.missions?.state.l4) { this.militaryPerimeter = new MilitaryPerimeter(this.world); this.scene.add(this.militaryPerimeter); }
     if (player) {
       const material = new MeshBasicNodeMaterial({ color: '#64ffce', depthWrite: false, depthTest: false }); material.name = 'keep_moveMarker';
       this.destination = new Mesh(new RingGeometry(.22, .32, 32), material);
@@ -311,7 +354,7 @@ export class GameView implements Lifecycle {
     if (this.npcs) this.scene.add(this.npcs);
     if (this.entityAssets) this.scene.add(this.entityAssets);
     if (this.actions) { this.actions.update(); this.scene.add(this.actions); }
-    if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
+    if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); if (this.world.scenario === 'L5') { this.survivorRings = new SurvivorRings(this.world); this.scene.add(this.survivorRings); } }
     if (this.crowd) this.scene.add(this.crowd);
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
@@ -332,8 +375,11 @@ export class GameView implements Lifecycle {
             return this.actions.muzzle(new Vector3());
           }
           if (e?.civilian && this.npcs) {
-            const muzzle = this.npcs.shotMuzzle(id, direction);
-            return e.civilian.ally?.weapon === 'hmg' ? this.districts?.aimMachineGun(e.transform, direction) ?? muzzle : muzzle;
+            if (e.civilian.ally?.weapon === 'hmg') {
+              const mounted = this.districts?.aimMachineGun(e.transform, direction);
+              if (mounted) { this.npcs.aimGun(id, direction); return mounted; }
+            }
+            return this.npcs.shotMuzzle(id, direction);
           }
           return null; // Vehicle weapons carry their own authored event origin.
         },
@@ -358,7 +404,7 @@ export class GameView implements Lifecycle {
       this.frozenPose = survivor ? structuredClone(survivor) : null;
     }
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
-    if (this.params.has('debug')) {
+    if (this.params.get('debug') === 'physics') {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
     this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();
@@ -383,17 +429,36 @@ export class GameView implements Lifecycle {
     // boarding vehicle/ground that would otherwise hide its first fragments.
     const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
     const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
+    // Issued and racked weapons the courier is not holding yet: their held (courier-fill) materials.
+    const restoreHeld = this.actions?.prewarmHeld(this.camera.getWorldDirection(new Vector3()).multiplyScalar(10).add(this.camera.position));
+    const restoreMedkits = this.world.scenario === 'L5' ? await this.interactions?.prewarmMedkits(corgiFocus) : undefined;
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
       this.lighting?.update(this.view);
+      // Compile against the gameplay light list. In particular W6 low disables
+      // its city-wide moon pass here; warming with that sun still visible left
+      // hidden blast pools cold until the first rocket.
+      this.updateLights();
+      // PO 10-20 #62: the worn headlamp (and its emissive lens) first draws at the shelter pickup. Compile it here.
+      if (this.world.scenario === 'L6') this.character?.showHeadlamp(true);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3');
+      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
+      const prepare = async (): Promise<void> => {
+        // L4's moving set pieces reveal the courier during combat. Warm both
+        // graphs against every loading light/weather variant, before LOD swaps.
+        if (this.world.scenario === 'L4' && this.entityAssets) {
+          for (const enabled of [false, true]) {
+            const restoreReveal = this.entityAssets.prewarmReveal(focus, enabled);
+            try { await prepareVariant(); } finally { restoreReveal(); }
+          }
+        } else await prepareVariant();
+      };
       try {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.
@@ -404,6 +469,13 @@ export class GameView implements Lifecycle {
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
+        if (this.lighting?.preset === 'L10-night') {
+          const lighting = this.lighting, spot = !lighting.spot.visible;
+          this.shadowWarmup = incrementalPreRender(this.renderer, this.scene, this.camera,
+            () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera),
+            root => this.postFx ? this.postFx.compile(undefined, root) : this.renderer.compileAsync(root, this.camera, this.scene),
+            run => lighting.withShadowSource(spot, run));
+        }
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.
@@ -412,7 +484,7 @@ export class GameView implements Lifecycle {
           await this.renderer.finishWarmUp();
         }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); restoreMedkits?.(); if (this.world.scenario === 'L6') this.character?.showHeadlamp(!!this.world.missions?.state.l6?.flashlight); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -421,10 +493,12 @@ export class GameView implements Lifecycle {
       this.missionUI?.prepare();
       this.startPreparation();
     };
+    // Combat scenes can reveal pooled blast materials long after loading (including
+    // delayed secondary blasts). Warm their HDR/MSAA draws before accepting input.
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
     // L10 also reveals hidden movement/mission meshes on approach. Compile their
     // graphs behind the loading card, rather than linking cold WebGL programs in play.
-    const fullWarmUp = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || this.world.scenario === 'L10' || !!this.world.missions?.l9;
+    const fullWarmUp = !!this.vfx || this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || this.world.scenario === 'L10' || !!this.world.missions?.l9;
     if (fullWarmUp && this.background) {
       const generation = this.generation;
       this.warming = warm().then(() => {
@@ -433,14 +507,16 @@ export class GameView implements Lifecycle {
       void this.warming.catch(error => console.error(error));
       return;
     }
+    // Any scene with VFX takes the full warm-up on both backends (hidden blast/fireball/debris/puff/flame pools,
+    // and the PostFx heat-haze graph compile behind the loading card, WebGL programs and WebGPU pipelines alike).
     if (fullWarmUp) await warm();
-    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    else await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera));
     // The horizon's rocks enter the view well after departure. Warm every coarse
     // material in the gameplay HDR context before control, rather than linking
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
     const horizon = this.districts?.horizonForWarmup();
     if (horizon) await this.warmHidden(horizon);
-    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); finish();
+    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); restoreHeld?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -456,7 +532,7 @@ export class GameView implements Lifecycle {
   }
   private startActors(character: Promise<unknown>): Promise<unknown> {
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories); this.npcs.setQuality(this.quality); }
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch)); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = this.params.has('debug') || this.params.get('aimcone') === '1'; }
     if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
@@ -465,7 +541,7 @@ export class GameView implements Lifecycle {
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
-    return Promise.all([this.accessories.init(), this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
+    return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
    * nearest first, after the first playable frames. The load gate slices GLB parsing
@@ -496,12 +572,12 @@ export class GameView implements Lifecycle {
    * three collects the render list synchronously, then compiles and uploads asynchronously, yielding
    * between objects. The batch joins the scene afterwards. */
   private async warmHidden(batch: import('three/webgpu').Object3D): Promise<void> {
-    const parent = this.districts ?? this.scene, saved: [import('three/webgpu').Object3D, boolean][] = [];
+    const previousParent = batch.parent, parent = this.districts ?? this.scene, saved: [import('three/webgpu').Object3D, boolean][] = [];
     batch.traverse(object => { saved.push([object, object.frustumCulled]); object.frustumCulled = false; });
     parent.add(batch); batch.updateMatrixWorld(true);
     let compiling: Promise<void>;
     try { compiling = this.postFx ? this.postFx.compile(undefined, batch) : this.renderer.compileAsync(batch, this.camera, this.scene); }
-    finally { parent.remove(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
+    finally { parent.remove(batch); previousParent?.add(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
     await compiling;
   }
   /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
@@ -521,7 +597,9 @@ export class GameView implements Lifecycle {
       if (!this.shutter) {
         const ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
         const group = new Group(); group.position.set(door.x, ground, door.z);
-        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
+        // The courier waits 1.2 m behind the leaf: like a vehicle in front of her, it keeps a dithered silhouette inside her
+        // see-through disc (only fragments nearer the camera than she is), so she reads as inside the bay, behind the door (PO #26).
+        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')).seeThrough());
         shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
         // Face the shutter across the door -> trigger (inward) axis: the bay may open east or north.
         const inside = mission.def.anchors['fire-bay-trigger']; if (inside) group.rotation.y = Math.atan2(inside.x - door.x, inside.z - door.z);
@@ -536,7 +614,7 @@ export class GameView implements Lifecycle {
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
   /** Network-only extras wait until the first playable frames have been presented. */
-  get backgroundReady(): boolean { return this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25; }
+  get backgroundReady(): boolean { return this.world.missions?.state.phase !== 'briefing' && (this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25); }
   /** L10's required tiers must swap within its two-second walking prefetch horizon.
    * Other levels retain their startup admission; all swaps use the load gate. */
   private async swapSlot(): Promise<void> {
@@ -549,8 +627,11 @@ export class GameView implements Lifecycle {
   }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
+    this.entityAssets?.advance();
     const player = this.world.entities.get(1);
     if (player) {
+      const loadout = player.weapons && this.world.combat?.runner.loadout;
+      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
@@ -572,10 +653,21 @@ export class GameView implements Lifecycle {
         if (pose) this.view.preset('l5-station-arrival', pose);
       } else if (!showStation && this.l5StationView) {
         const pose = metro?.shutterAt && this.districts?.spots.get('D-FAIR/W5/l5-metro-doors');
-        if (pose) this.view.preset('l5-metro-closing', pose);
+        if (pose) { this.view.preset('l5-metro-closing', pose); this.l5ClosingPose = pose; this.l5ClosingTarget.fromArray(pose.target); }
         else this.view.follow();
       }
       this.l5StationView = showStation;
+      // PO #49: the closing shot frames the shutter, but the courier keeps walking down the stairs and left the frame (or sat
+      // behind the roof). Keep the same angle and distance, and slide the target onto her (80 %), so the doors stay in view behind her.
+      if (this.view.spot === 'l5-metro-closing' && this.l5ClosingPose) {
+        const base = this.l5ClosingPose, p = player.transform, k = 1 - Math.exp(-3 * seconds);
+        const follow = .8, feet = Math.max(0, p.y - .7);
+        this.l5ClosingTarget.x += (base.target[0] + (p.x - base.target[0]) * follow - this.l5ClosingTarget.x) * k;
+        this.l5ClosingTarget.y += (base.target[1] + (feet - base.target[1]) * follow - this.l5ClosingTarget.y) * k;
+        this.l5ClosingTarget.z += (base.target[2] + (p.z - base.target[2]) * follow - this.l5ClosingTarget.z) * k;
+        const t = this.l5ClosingTarget, dx = t.x - base.target[0], dy = t.y - base.target[1], dz = t.z - base.target[2];
+        this.view.cinematic({ position: [base.position[0] + dx, base.position[1] + dy, base.position[2] + dz], target: [t.x, t.y, t.z] });
+      } else this.l5ClosingPose = null;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
@@ -650,7 +742,7 @@ export class GameView implements Lifecycle {
     this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean | 'skyline'; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; interiorCullOff?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
@@ -667,31 +759,38 @@ export class GameView implements Lifecycle {
     if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
     if(patch.foliageMask!==undefined)this.foliageMask=patch.foliageMask;
     if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
+    if(patch.interiorCullOff!==undefined&&this.districts)this.districts.interiorCullOff=patch.interiorCullOff;
     if(patch.seeThroughReference!==undefined&&this.districts)this.districts.seeThroughReference=patch.seeThroughReference;
     if(patch.seeThroughOff!==undefined&&this.districts)this.districts.seeThroughOff=patch.seeThroughOff;
     if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
   }
-  /** Distance (m) from a point to the nearest living Mega Alpha (pursuit infected), Infinity when none. */
+  /** Keep the courier's full silhouette visible in L7's tightly packed following group/horde. */
+  private nearL7Crowd(at: { x: number; z: number }): boolean {
+    if (this.world.scenario !== 'L7') return false;
+    for (const e of this.world.entities.iterate()) {
+      if (e.id === 1 || e.hidden || e.health.current <= 0 || e.infected?.hidden || !(e.civilian || e.infected || e.escort)) continue;
+      const dx = e.transform.x - at.x, dz = e.transform.z - at.z;
+      if (dx * dx + dz * dz < 9) return true;
+    }
+    return false;
+  }
+  /** Distance (m) to the nearest living Mega Alpha, Infinity when none. */
   private megaDistance(at: { x: number; z: number }): number {
     let best = Infinity;
-    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
+    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && !e.infected.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
     return best;
   }
-  /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
-  private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? .2 : 0;   // Alpha-sized boss: a partial hole is enough (PO 10-15)
-    this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
-    seeThrough.bossStrength.value = this.bossHole;
-    const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
-    seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
-  }
+  /** Scene Lab reference: disable only solid discard, retaining placement eligibility and interior visibility. */
+  probeSolidCut(off: boolean): void { this.solidCutProbeOff = off; this.update(1); }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
-  probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
-    this.probeHide = { ...hide }; this.update(1);
+  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
+    this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
+  /** Scene Lab: depth-tested CrowdView silhouette (including retained bodies), preserving the submitted instance/pose and accessory masks. */
+  probeCrowdMask(enabled: boolean): void { this.infectedIdPass = enabled; this.update(1); }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
@@ -699,6 +798,26 @@ export class GameView implements Lifecycle {
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
   labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles, drawnCorpses: () => [...(this.crowd?.drawnCorpses() ?? []), ...(this.npcs?.drawnCorpses() ?? [])], drawnPickups: () => this.interactions?.drawnPickups() ?? [] }; }
+  private readonly heatPoint = new Vector3(); private readonly heatEdge = new Vector3(); private readonly heatRight = new Vector3();
+  /** High-tier heat haze: project the Blasts heat sources (fires, fresh blasts) to UV discs for the PostFx shimmer. */
+  private updateHeatHaze(postFx: PostFx): void {
+    if (!postFx.haze) return;
+    const sources = this.vfx?.visible ? this.vfx.blasts.heatSources() : [];
+    postFx.heatTime.value = this.vfx?.time ?? 0; postFx.heatAspect.value = this.camera.aspect;
+    this.heatRight.setFromMatrixColumn(this.camera.matrixWorld, 0);
+    let n = 0;
+    for (const s of sources) {
+      if (n >= postFx.heat.length) break;
+      this.heatPoint.set(s.x, s.y, s.z).project(this.camera);
+      if (this.heatPoint.z > 1 || Math.abs(this.heatPoint.x) > 1.4 || Math.abs(this.heatPoint.y) > 1.4) continue;
+      this.heatEdge.set(s.x, s.y, s.z).addScaledVector(this.heatRight, s.radius).project(this.camera);
+      // UV height units: half the NDC distance, scaled by aspect because NDC x spans the width.
+      const radius = Math.abs(this.heatEdge.x - this.heatPoint.x) * .5 * this.camera.aspect;
+      // Three's post quad UV has a top-left origin on both backends (GLSL flips render-target reads to match).
+      postFx.heat[n++].set(this.heatPoint.x * .5 + .5, .5 - this.heatPoint.y * .5, radius, s.strength);
+    }
+    for (let i = n; i < postFx.heat.length; i++) postFx.heat[i].w = 0;
+  }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
   renderProbe() {
     const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);
@@ -725,7 +844,7 @@ export class GameView implements Lifecycle {
       npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
-      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
+      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(), courierForeground: this.courierForeground, courierOccluder: this.districts?.occluderId ?? '',
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
   private syncMission(): void {
@@ -750,13 +869,18 @@ export class GameView implements Lifecycle {
     return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
   }
   update(alpha = 1): void {
-    this.vfx?.updateObstruction();
+    this.vfx?.updateSpecialState();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
-    if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
+    if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
+    this.militaryPerimeter?.update();
     if (this.destination) {
-      const target = this.world.controls.moveTarget; this.destination.visible = target != null;
-      if (target) this.destination.position.set(target.x, .12, target.z);
+      const blocked = this.world.controls.blockedMove, active = blocked && blocked.until > this.world.tick;
+      const target = active ? blocked.point : this.world.controls.moveTarget; this.destination.visible = target != null;
+      (this.destination.material as MeshBasicNodeMaterial).color.set(active ? '#ff704f' : '#64ffce');
+      this.destination.scale.setScalar(active ? 1.4 : 1);
+      // The cursor ray meets the ground at the courier's height (Game.ts setGroundHeight); the ring sits on that same ground, not at y 0 (PO 10-20 #68).
+      if (target) this.destination.position.set(target.x, (this.world.districts?.groundHeight(target.x, target.z) ?? 0) + .12, target.z);
     }
     const profileStart = this.renderer.profile ? performance.now() : 0;
     // The rig steps with the sim; render it between the last two tick poses like every other transform.
@@ -823,7 +947,10 @@ export class GameView implements Lifecycle {
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
-    this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
+    // P1-114: L3's pulled-back framing (station attack, army rescue) is gameplay, not a story shot; it used to hide the checkpoint ring
+    // and the route diamond for up to a minute ("There is no checkpoint for me to walk to"). The ring grows with the pull-back instead.
+    const markerShot = this.world.scenario === 'L3' ? false : this.view.storyShot;
+    this.marker?.update(markerShot, this.world.scenario === 'L3' ? this.view.encounterScale : 1); this.survivorRings?.update(this.view.storyShot); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight,markerShot);
     pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
     this.syncMountedGun();
@@ -841,22 +968,69 @@ export class GameView implements Lifecycle {
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
-    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
-    this.updateBossHole(current);
-    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
+    let subject: Box3 | undefined;
+    if (current) {
+      const feet = current.y - .7;
+      this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
+      this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
+      if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      const inVehicle = !!(this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle));
+      if (inVehicle) this.revealSubject.union(this.revealVehicle);
+      seeThrough.retain.value = inVehicle || this.revealSubject.max.x - this.revealSubject.min.x > 2 || this.revealSubject.max.z - this.revealSubject.min.z > 2 ? .35 : 0;
+      // PO #45: the see-through disc must clear the corgi next to her too, else its tail dissolves into occluder dots.
+      let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
+      if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
+      if (pet && !pet.hidden && Math.hypot(pet.transform.x - current.x, pet.transform.z - current.z) < 2.6) {
+        this.revealPet.min.set(pet.transform.x - .5, feet, pet.transform.z - .5); this.revealPet.max.set(pet.transform.x + .5, feet + .8, pet.transform.z + .5);
+        this.revealSubject.union(this.revealPet);
+      }
+      subject = this.revealSubject;
+    }
+    this.vehicles?.updateReveal(subject);
+    this.entityAssets?.updateReveal(subject);
+    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined, subject);
+    // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
+    if (!this.districts) {
+      seeThrough.cover.value = 0;
+      seeThrough.strength.value = subject ? 1 : 0;
+      if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
+    }
+    if (this.solidCutProbeOff) seeThrough.strength.value = 0;
+    // Reuse the foreground silhouette at the boss and in L7's close crowd. Building blockers no longer trigger it: their
+    // placement cut already clears the whole subject disc, and the near-camera depth slice drew the courier over every
+    // nearer person and prop (PO #9 L2 start: on top of firefighter "2"; #26 L1: in front of the closed bay leaf and the horde).
+    this.courierForeground = !!current && courierForegroundWanted(this.nearL7Crowd(current), this.megaDistance(current));
+    this.character?.setForeground(this.courierForeground);
+    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded, this.lighting?.preset === 'L6');
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const marketState = this.world.missions?.state.l2; if (marketState) this.districts?.marketDoors(marketState.doorsOpenAt > 0 && this.world.tick >= marketState.doorsOpenAt);
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
+    // A teleport snap can follow another render in the same browser frame (checkpoint/test teleports render at once).
+    // FRAME-updated nodes, such as the PostFx scene pass, would keep that earlier camera's image: draw this pose.
+    if (this.view.consumeSnap()) this.renderer.nextNodeFrame();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
+    if (this.shadowWarmup) { this.shadowWarmup.step(); if (this.shadowWarmup.done) this.shadowWarmup = null; }
     this.renderer.info.reset(); this.renderedFrames++;
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
+    if (this.probeVisibilityPending || this.probeHide.courier || this.probeHide.crowd || this.probeHide.environment) {
+      // The reference removes every possible foreground solid, including static kits and parked cars.
+      if (this.districts) this.districts.visible = !this.probeHide.environment;
+      if (this.npcs) this.npcs.visible = !this.probeHide.environment;
+      if (this.interactions) this.interactions.visible = !this.probeHide.environment;
+      if (this.fixtureProps) this.fixtureProps.visible = !this.probeHide.environment;
+      if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? this.probeHide.courier : this.probeHide.environment);
+      this.vehicles?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.entityAssets?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.probeVisibilityPending = false;
+    }
     if (this.weatherProbeAsset) {
       const saved = new Map<Mesh, boolean>(), background = this.scene.background, backgroundNode = this.scene.backgroundNode;
       this.scene.background = new Color(0); this.scene.backgroundNode = null;
@@ -888,31 +1062,68 @@ export class GameView implements Lifecycle {
     } else if(this.windowMask&&this.districts){
       const backgroundNode=this.scene.backgroundNode;this.scene.backgroundNode=null;const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
       this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.backgroundNode=backgroundNode;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
-    } else if (this.idPass && (this.lookdev || this.character)) {
+    } else if ((this.idPass || this.infectedIdPass) && (this.lookdev || this.character)) {
       const backgroundNode = this.scene.backgroundNode; this.scene.backgroundNode = null;
       const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
       this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
       this.scene.traverse((child) => {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          const source = child.material as PaletteMaterial;
-          if (!hero && source.name === 'pal_leaf-card-crown') {
-            if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
-            child.material = this.foliageIdMasks.get(source)!;
-          } else child.material = hero ? this.idPlayer : this.idBackground; }
+          if (this.infectedIdPass) {
+            const source = (Array.isArray(child.material) ? child.material[0] : child.material) as PaletteMaterial;
+            let infected = false;
+            for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.crowd) { infected = true; break; }
+            let masks = this.infectedIdMasks.get(source);
+            if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
+            const index = infected ? 1 : 0;
+            masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode });
+            if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
+            child.material = masks[index];
+          } else {
+            const skyline = this.idPass === 'skyline';
+            if (skyline) {
+              // Count the visible city buildings, excluding ground, vegetation,
+              // vehicles and the bus. Keep production depth/placement below.
+              hero = false;
+              for (let node: import('three').Object3D | null = child; node; node = node.parent) {
+                if (node.name.startsWith('inst:bld.') || String(node.userData.assetId ?? '').startsWith('bld.')) { hero = true; break; }
+              }
+            }
+            const maskMaterial = (material: Material) => {
+              const source = material as PaletteMaterial;
+              const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
+              if (!(source.positionNode || source.opacityNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
+              if (!masks.has(source)) {
+                const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode });
+                // ID probes must retain the visible scene's placement transforms
+                // and holes: an opaque replacement truck otherwise hides a courier
+                // who is plainly visible through its production see-through disc.
+                const reveal = source.userData.seeThrough;
+                if (reveal) mask.outputNode = Fn(() => {
+                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+                  return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
+                })();
+                masks.set(source, mask);
+              }
+              return masks.get(source)!;
+            };
+            child.material = hero && !skyline ? this.idPlayer : Array.isArray(child.material) ? child.material.map(maskMaterial) : maskMaterial(child.material);
+          }
+        }
       });
-      this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
+      this.idPlayer.depthTest = this.idPass === 'skyline' || !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
-    } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    } else if (this.postFx) { this.updateHeatHaze(this.postFx); this.postFx.render(); } else this.renderer.render(this.scene, this.camera);
     // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
-    if (this.healthBars?.count && !this.idPass && !this.windowMask && !this.foliageMask) {
+    if (this.healthBars?.count && !this.probeHide.bars && !this.idPass && !this.windowMask && !this.foliageMask) {
       this.renderBars();
     }
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
   private renderBars(): void {
+    this.healthBars?.setCourierMask(this.postFx?.sceneColor);
     const renderer = this.renderer, autoClear = renderer.autoClear, tone = renderer.toneMapping, color = renderer.outputColorSpace;
     try {
       // The material performs its own color conversion, like RenderPipeline's output quad.
@@ -926,7 +1137,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow && this.lighting!.sun.shadow.autoUpdate) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow && this.lighting!.spot.shadow.autoUpdate) : 0, heroLights: Number(this.lighting!.spot.visible && this.lighting!.spot.shadow.intensity > 0), heroShadow: Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow && this.lighting!.spot.shadow.autoUpdate), preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
@@ -938,6 +1149,13 @@ export class GameView implements Lifecycle {
     if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    // L6 keeps its mission state on the exterior apron after selecting the shared
+    // L6 night key. Only the underground preset owns the emergency-darkness grade.
+    lighting.subwayDarkness.value = lighting.preset === 'L6-subway' ? 1 : 0;
+    this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
+    lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
+    const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;
+    lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     lighting.setPlayerSmoke(!!hero && (this.world.combat?.effects.inSmoke(hero) ?? false));
     if (field.active) {
@@ -948,19 +1166,36 @@ export class GameView implements Lifecycle {
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
         field.push(flashlight);
       }
-      this.vehicles?.pushLights(field, aura);
+      if (metro && lighting.preset === 'L6-subway') for (const entry of l6Entries) {
+        const door = l6Doors[entry.door];
+        field.push(footprint({type:'point',color:entry.door%2?'light_neon_blue':'light_siren_red',intensity:2,range:2.3,flicker:'damaged',position:[door.x,2.4,door.z],direction:[0,-1,0]}));
+      }
+      const sam = this.world.missions?.state.l5?.survivors.find(r => r.key === 'sam');
+      const bus = this.world.missions?.def.anchors['l5-ring-sam'];
+      if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
+        field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
+      }
+      this.vehicles?.pushLights(field, aura, timeOfDayPresets[lighting.preset].headlightBeams ? (position, direction, length, angle, colour) => lighting.practicalEffects.pushBeam(position, direction, length, angle, colour) : undefined);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
-      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
+      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
     lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
     // still owns its one hero shadow map. Avoid a second city-wide moon pass.
     if (this.world.scenario === 'L7' && this.quality === 'low') lighting.sun.visible = false;
+    this.districts?.accents?.update(this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }
+  async prepareCharacterVariant(): Promise<void> {
+    if (this.world.scenario === 'L1' && this.missionHidden) return;
+    const variant = this.world.entities.get(1)?.survivor?.variant;
+    if (variant && this.character && await this.character.readyVariant(variant)) await this.warmHidden(this.character);
+  }
   async ready(): Promise<void> {
     await this.warming;
+    while (this.shadowWarmup) { await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); this.update(1); }
+    await this.prepareCharacterVariant();
     // Once a test has begun the mission, snapshots/heap checks settle the same streamed
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
@@ -972,20 +1207,26 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    this.solidCutProbeOff = false;
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
+    this.shadowWarmup?.cancel(); this.shadowWarmup = null;
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.epiloguePrepared = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
+    // The window callbacks retain L1's meshes and their loading closure. Leaving
+    // this owner alive after L1 pins the retired district through later levels.
+    this.labWindows?.dispose(); this.labWindows = null;
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
-    this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
+    this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;} if (this.survivorRings) { this.scene.remove(this.survivorRings); this.survivorRings.dispose(); this.survivorRings = null; }
     if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.mountedGunView) { this.scene.remove(this.mountedGunView); this.mountedGunView.dispose(); this.mountedGunView = null; }
+    if (this.militaryPerimeter) { this.militaryPerimeter.removeFromParent(); this.militaryPerimeter.dispose(); this.militaryPerimeter = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
@@ -993,7 +1234,9 @@ export class GameView implements Lifecycle {
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
-    for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
+    for (const masks of this.infectedIdMasks.values()) for (const material of masks) material?.dispose(); this.infectedIdMasks.clear(); this.infectedIdPass = false;
+    for (const material of this.occluderIdMasks.values()) material.dispose(); this.occluderIdMasks.clear();
+    for (const material of this.skylineIdMasks.values()) material.dispose(); this.skylineIdMasks.clear();
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
