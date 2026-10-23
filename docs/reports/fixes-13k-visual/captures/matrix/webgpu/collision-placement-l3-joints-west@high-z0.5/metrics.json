@@ -1,0 +1,992 @@
+{
+  "spec": "tests/scenes/catalog/collision-placement-l3-joints-west.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 36,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 1699,
+    "runMs": 698,
+    "sceneMs": 2397
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "collisionFailures",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "bodyOverlapMaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 2
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 32,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 175970,
+        "limit": 1500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 3249.8009672287735,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f12.varianceMin",
+        "pass": true,
+        "value": 3270.8716187499995,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f12.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f24.varianceMin",
+        "pass": true,
+        "value": 3291.74571025186,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f24.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f36.varianceMin",
+        "pass": true,
+        "value": 3322.7281534083304,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f36.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          100.728447265625,
+          72.27680772569444,
+          76.41320095486111
+        ],
+        "variance": 3249.8009672287735,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 12,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          100.83291666666666,
+          72.350576171875,
+          76.43205729166667
+        ],
+        "variance": 3270.8716187499995,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 24,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          100.92364908854167,
+          72.41558702256944,
+          76.46624891493056
+        ],
+        "variance": 3291.74571025186,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 36,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          101.1496408420139,
+          72.57664171006944,
+          76.52952039930555
+        ],
+        "variance": 3322.7281534083304,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "collision-placement-l3-joints-west",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "kit.highway-onramp:991",
+        "asset": "kit.highway-onramp",
+        "at": [
+          155.5,
+          0
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "prop.privacy-fence:996",
+        "asset": "prop.privacy-fence",
+        "at": [
+          141.65322580645162,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:997",
+        "asset": "prop.privacy-fence",
+        "at": [
+          144.21129032258062,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:998",
+        "asset": "prop.privacy-fence",
+        "at": [
+          146.76935483870966,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:999",
+        "asset": "prop.privacy-fence",
+        "at": [
+          149.3274193548387,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1000",
+        "asset": "prop.privacy-fence",
+        "at": [
+          151.88548387096773,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1001",
+        "asset": "prop.privacy-fence",
+        "at": [
+          154.44354838709677,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1002",
+        "asset": "prop.privacy-fence",
+        "at": [
+          157.0016129032258,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1003",
+        "asset": "prop.privacy-fence",
+        "at": [
+          159.55967741935484,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1004",
+        "asset": "prop.privacy-fence",
+        "at": [
+          162.11774193548388,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1005",
+        "asset": "prop.privacy-fence",
+        "at": [
+          164.6758064516129,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1006",
+        "asset": "prop.privacy-fence",
+        "at": [
+          167.23387096774192,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1007",
+        "asset": "prop.privacy-fence",
+        "at": [
+          169.79193548387096,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1008",
+        "asset": "prop.privacy-fence",
+        "at": [
+          172.35,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1009",
+        "asset": "prop.privacy-fence",
+        "at": [
+          174.90806451612903,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1010",
+        "asset": "prop.privacy-fence",
+        "at": [
+          177.46612903225807,
+          -10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1029",
+        "asset": "prop.privacy-fence",
+        "at": [
+          141.65322580645162,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1030",
+        "asset": "prop.privacy-fence",
+        "at": [
+          144.21129032258062,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1031",
+        "asset": "prop.privacy-fence",
+        "at": [
+          146.76935483870966,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1032",
+        "asset": "prop.privacy-fence",
+        "at": [
+          149.3274193548387,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1033",
+        "asset": "prop.privacy-fence",
+        "at": [
+          151.88548387096773,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1034",
+        "asset": "prop.privacy-fence",
+        "at": [
+          154.44354838709677,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1035",
+        "asset": "prop.privacy-fence",
+        "at": [
+          157.0016129032258,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1036",
+        "asset": "prop.privacy-fence",
+        "at": [
+          159.55967741935484,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1037",
+        "asset": "prop.privacy-fence",
+        "at": [
+          162.11774193548388,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1038",
+        "asset": "prop.privacy-fence",
+        "at": [
+          164.6758064516129,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1039",
+        "asset": "prop.privacy-fence",
+        "at": [
+          167.23387096774192,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1040",
+        "asset": "prop.privacy-fence",
+        "at": [
+          169.79193548387096,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1041",
+        "asset": "prop.privacy-fence",
+        "at": [
+          172.35,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1042",
+        "asset": "prop.privacy-fence",
+        "at": [
+          174.90806451612903,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1043",
+        "asset": "prop.privacy-fence",
+        "at": [
+          177.46612903225807,
+          10.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1094",
+        "asset": "prop.privacy-fence",
+        "at": [
+          144.32608695652175,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1095",
+        "asset": "prop.privacy-fence",
+        "at": [
+          146.97826086956522,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1096",
+        "asset": "prop.privacy-fence",
+        "at": [
+          149.6304347826087,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1097",
+        "asset": "prop.privacy-fence",
+        "at": [
+          152.2826086956522,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1098",
+        "asset": "prop.privacy-fence",
+        "at": [
+          154.93478260869566,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1099",
+        "asset": "prop.privacy-fence",
+        "at": [
+          157.58695652173913,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1100",
+        "asset": "prop.privacy-fence",
+        "at": [
+          160.2391304347826,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1101",
+        "asset": "prop.privacy-fence",
+        "at": [
+          162.8913043478261,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1102",
+        "asset": "prop.privacy-fence",
+        "at": [
+          165.54347826086956,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1103",
+        "asset": "prop.privacy-fence",
+        "at": [
+          168.19565217391303,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1104",
+        "asset": "prop.privacy-fence",
+        "at": [
+          170.84782608695653,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1105",
+        "asset": "prop.privacy-fence",
+        "at": [
+          173.5,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:1106",
+        "asset": "prop.privacy-fence",
+        "at": [
+          176.15217391304347,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-lamp:1118",
+        "asset": "prop.street-lamp",
+        "at": [
+          174,
+          -2.1
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l3-highway-edge-kit.highway-onramp:991--1-3",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          141.62067826989434,
+          -2.558699568063693
+        ],
+        "yawDeg": -12.3
+      },
+      {
+        "id": "l3-highway-edge-kit.highway-onramp:991--1-4",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          144.16944348986414,
+          -2.0040423017961766
+        ],
+        "yawDeg": -12.3
+      },
+      {
+        "id": "l3-highway-edge-kit.highway-onramp:991-1-3",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          140.4491521626321,
+          2.0733744600796156
+        ],
+        "yawDeg": 17.4
+      },
+      {
+        "id": "l3-highway-car",
+        "asset": "veh.sedan-blue",
+        "at": [
+          173,
+          1.1
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "collision-placement-l3-joints-west",
+    "frame": 36,
+    "tick": 36,
+    "backend": "webgpu",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 3,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 36,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 32,
+        "p95": 32,
+        "max": 32
+      },
+      "triangles": {
+        "p50": 175970,
+        "p95": 175970,
+        "max": 175970
+      },
+      "shadowDrawCalls": {
+        "p50": 30,
+        "p95": 30,
+        "max": 30
+      },
+      "shadowTriangles": {
+        "p50": 165855,
+        "p95": 165855,
+        "max": 165855
+      },
+      "stepMs": {
+        "p50": 1.3,
+        "p95": 1.8,
+        "max": 2.3
+      },
+      "lastFrame": {
+        "drawCalls": 32,
+        "triangles": 175970,
+        "shadowDrawCalls": 30,
+        "shadowTriangles": 165855,
+        "stepMs": 1,
+        "categories": {
+          "other": 24,
+          "shadows": 30,
+          "props": 8
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 36,
+      "solidRadiusMax": 0.438,
+      "occluders": [
+        "kit.highway-onramp@155.5,1.2"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "kit.highway-onramp@155.5,0.0"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          167.5,
+          0
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": 167.5,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 36,
+        "inViewFrames": 36,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 36
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            167.5,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 36,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.4,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 36,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "kit.highway-onramp:991": "lod1",
+      "prop.privacy-fence:996": "n/a",
+      "prop.privacy-fence:997": "culled",
+      "prop.privacy-fence:998": "culled",
+      "prop.privacy-fence:999": "lod2",
+      "prop.privacy-fence:1000": "lod2",
+      "prop.privacy-fence:1001": "lod2",
+      "prop.privacy-fence:1002": "lod1",
+      "prop.privacy-fence:1003": "lod1",
+      "prop.privacy-fence:1004": "lod1",
+      "prop.privacy-fence:1005": "lod1",
+      "prop.privacy-fence:1006": "lod1",
+      "prop.privacy-fence:1007": "culled",
+      "prop.privacy-fence:1008": "culled",
+      "prop.privacy-fence:1009": "culled",
+      "prop.privacy-fence:1010": "n/a",
+      "prop.privacy-fence:1029": "n/a",
+      "prop.privacy-fence:1030": "culled",
+      "prop.privacy-fence:1031": "culled",
+      "prop.privacy-fence:1032": "culled",
+      "prop.privacy-fence:1033": "culled",
+      "prop.privacy-fence:1034": "culled",
+      "prop.privacy-fence:1035": "culled",
+      "prop.privacy-fence:1036": "culled",
+      "prop.privacy-fence:1037": "culled",
+      "prop.privacy-fence:1038": "culled",
+      "prop.privacy-fence:1039": "culled",
+      "prop.privacy-fence:1040": "culled",
+      "prop.privacy-fence:1041": "culled",
+      "prop.privacy-fence:1042": "culled",
+      "prop.privacy-fence:1043": "n/a",
+      "prop.privacy-fence:1094": "n/a",
+      "prop.privacy-fence:1095": "culled",
+      "prop.privacy-fence:1096": "culled",
+      "prop.privacy-fence:1097": "culled",
+      "prop.privacy-fence:1098": "culled",
+      "prop.privacy-fence:1099": "culled",
+      "prop.privacy-fence:1100": "culled",
+      "prop.privacy-fence:1101": "culled",
+      "prop.privacy-fence:1102": "culled",
+      "prop.privacy-fence:1103": "culled",
+      "prop.privacy-fence:1104": "culled",
+      "prop.privacy-fence:1105": "culled",
+      "prop.privacy-fence:1106": "n/a",
+      "prop.street-lamp:1118": "culled",
+      "l3-highway-edge-kit.highway-onramp:991--1-3": "culled",
+      "l3-highway-edge-kit.highway-onramp:991--1-4": "culled",
+      "l3-highway-edge-kit.highway-onramp:991-1-3": "culled",
+      "l3-highway-car": "lod0"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 2,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "kit.highway-onramp:991",
+        "b": "l3-highway-edge-kit.highway-onramp:991-1-3",
+        "assetA": "kit.highway-onramp",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 78,
+        "region": {
+          "min": [
+            141.36361694335938,
+            0.011666055768728256,
+            1.3831677436828613
+          ],
+          "max": [
+            141.66375732421875,
+            0.9499900937080383,
+            2.6294784545898438
+          ]
+        },
+        "regionCm": [
+          30,
+          94,
+          125
+        ]
+      },
+      {
+        "a": "kit.highway-onramp:991",
+        "b": "l3-highway-edge-kit.highway-onramp:991--1-4",
+        "assetA": "kit.highway-onramp",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            142.81851196289062,
+            0.011666055768728256,
+            -1.9291115999221802
+          ],
+          "max": [
+            145.52037048339844,
+            0.9499900937080383,
+            -1.3749502897262573
+          ]
+        },
+        "regionCm": [
+          270,
+          94,
+          55
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 2,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

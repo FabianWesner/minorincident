@@ -53,7 +53,10 @@ export class NpcView extends Group {
    * before it first becomes visible. Clones share the actual hero geometry and
    * materials, without adding a simulated companion or changing its state. */
   prewarmCorgi(at: Vector3): () => void {
-    const root = this.dog.clone(true);
+    const root = new Group();
+    // Q-126: hidden escorts (notably the L1 clerk) expose head materials later.
+    // Share their real geometry/materials in the loading pass, just like the corgi.
+    root.add(...[this.dog, this.child, ...this.humans.values()].map(model => model.clone(true)));
     root.position.copy(at);
     this.add(root);
     return () => root.removeFromParent();
