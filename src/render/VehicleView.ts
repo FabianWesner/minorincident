@@ -48,9 +48,27 @@ export class VehicleView extends Group {
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   /** Compile transport passenger rigs during level loading, before boarding can hitch. */
   async prewarmOccupants(): Promise<(() => void) | undefined> {
-    const car = [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
+    const truckId = this.world.missions?.state.l2?.truckId;
+    const car = truckId ? this.world.vehicles!.cars.get(truckId) : [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
     const record = car && this.records.get(car.entity.id);
     if (!record) return;
+    // Q-126: warming disposable prototypes still rebuilt geometry and skinned
+    // buffers at the L2 ride start. Keep the actual courier/crew copies for boarding.
+    const crew = this.world.missions?.state.l2?.crewIds;
+    if (crew && !this.occupants.has(1)) {
+      const copies = await Promise.all([1, ...crew].map(id => {
+        const entity = this.world.entities.get(id)!;
+        const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
+        return VehicleOccupant.load(this.registry, id, asset, this.materials);
+      }));
+      const seat = record.model.getObjectByName('driverSeat')!;
+      for (const copy of copies) { record.model.add(copy); copy.pose(seat); }
+      let restored = false;
+      return () => {
+        if (restored) return; restored = true;
+        for (const copy of copies) { copy.visible = false; copy.removeFromParent(); this.occupants.get(copy.actorId)?.dispose(); this.occupants.set(copy.actorId, copy); }
+      };
+    }
     const assets = new Set<string>([`char.courier-${this.world.entities.get(1)!.survivor!.variant}`]);
     for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
     const copies = await Promise.all([...assets].map((asset, i) => VehicleOccupant.load(this.registry, -i - 1, asset, this.materials)));

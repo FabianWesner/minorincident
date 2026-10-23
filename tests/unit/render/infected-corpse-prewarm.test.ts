@@ -32,10 +32,17 @@ for (const scenario of ['blast-stress', 'L4', 'L7']) for (const low of [false, t
       corpseGeometry: Map<string, BufferGeometry>;
     };
     try {
-      if (!low) { await batches.loadBatch(def, 'lod1'); expect(prepare).not.toHaveBeenCalled(); }
+      if (!low) {
+        await batches.loadBatch(def, 'lod1');
+        expect(prepare).toHaveBeenCalledOnce();
+        expect(prepare.mock.calls[0][0]).toBe('infected.runner:death-back:0:near');
+        expect(prepare.mock.calls[0][5]).toBe(true);
+      }
       await batches.loadBatch(def, 'lod2');
-      expect(prepare).toHaveBeenCalledOnce();
-      expect([...batches.corpseGeometry.values()]).toContain(prepare.mock.calls[0][1]);
+      expect(prepare).toHaveBeenCalledTimes(low ? 1 : 2);
+      const far = prepare.mock.calls.at(-1)!;
+      expect(far[0]).toBe('infected.runner:death-back:0');
+      expect([...batches.corpseGeometry.values()]).toContain(far[1]);
     } finally { prepare.mockRestore(); corpseLoad.mockRestore(); load.mockRestore(); crowd.dispose(); world.dispose(); }
   });
 }

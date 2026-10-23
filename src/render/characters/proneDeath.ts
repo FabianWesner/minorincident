@@ -1,4 +1,4 @@
-import { Matrix4, Vector3 } from 'three';
+import { Matrix4, Quaternion, Vector3 } from 'three';
 import type { CrowdClip } from '../../assets/crowd';
 import { framesPerClip, infectedClips } from './bakeInfected';
 
@@ -46,9 +46,7 @@ export function proneDeath(clip: CrowdClip, name: typeof infectedClips[number] =
   frameTransform(last, 0);
   const flipped = (at(last, hip, a).applyMatrix4(transform).y + at(last, torso, b).applyMatrix4(transform).y) / 2;
   const lift = restHeight - flipped;
-  // Flipped, the back-fall's claws and boot toes point straight up/down. Lay hands and feet flat:
-  // fingers forward along the ground, soles facing up (toes pointing away from the head).
-  const flat = new Set([clip.parts.indexOf('handL'), clip.parts.indexOf('handR'), footL, footR]);
+  const flat = new Set([clip.parts.indexOf('handL'), clip.parts.indexOf('handR')]);
   const joint = new Vector3(), bend = new Matrix4();
   for (let frame = first; frame <= last; frame++) {
     const s = Math.min(1, Math.max(0, pitch(frame)) / end), t = frameTransform(frame, lift).clone();
@@ -63,7 +61,75 @@ export function proneDeath(clip: CrowdClip, name: typeof infectedClips[number] =
       part.toArray(m as number[], o);
     }
   }
+  groundDeathFeet(clip, name);
   // Furthest joint in front of the feet at rest (head), for the corpse-placement strip.
   pivot.addVectors(at(last, footL, a), at(last, footR, b)).multiplyScalar(.5);
   proneReach.set(clip, Math.max(0, -at(last, head, a).sub(pivot).dot(d)));
+}
+
+const grounded = new WeakMap<CrowdClip, Set<string>>();
+/** Settle the lower legs without changing shin length, then level the boot soles; also used by the Mega's side fall. */
+export function groundDeathFeet(clip: CrowdClip, name: typeof infectedClips[number]): void {
+  if (grounded.get(clip)?.has(name)) return;
+  const P = clip.parts.length, first = infectedClips.indexOf(name) * framesPerClip, last = first + framesPerClip - 1;
+  const footL = clip.parts.indexOf('footL'), footR = clip.parts.indexOf('footR'), hip = clip.parts.indexOf('hip'), head = clip.parts.indexOf('head');
+  if (clip.frames !== infectedClips.length * framesPerClip || [footL, footR, hip, head].some(i => i < 0)) return;
+  const names = grounded.get(clip) ?? new Set<string>(); names.add(name); grounded.set(clip, names);
+  const m = clip.matrices, a = new Vector3(), b = new Vector3(), up = new Vector3(0, 1, 0);
+  const at = (frame: number, part: number, out: Vector3) => out.fromArray(m, (frame * P + part) * 16 + 12);
+  const d = at(last, hip, a).sub(at(last, head, b)).setY(0).normalize().clone();
+  if (d.lengthSq() < 1e-6) return;
+  const legs = [footL, footR].map((foot, i) => ({ foot, thigh: clip.parts.indexOf(i ? 'legR' : 'legL'), shin: clip.parts.indexOf(i ? 'shinR' : 'shinL'), height: at(first, foot, a).y }));
+  const thighPose = new Matrix4(), shinPose = new Matrix4(), footPose = new Matrix4(), bend = new Matrix4(), rotation = new Matrix4(), transform = new Matrix4();
+  const knee = new Vector3(), ankle = new Vector3(), delta = new Vector3(), target = new Vector3(), scale = new Vector3(), joint = new Vector3();
+  const origin = new Vector3(), axis = new Vector3(), pole = new Vector3(), solvedKnee = new Vector3(), solvedAnkle = new Vector3();
+  const turn = new Quaternion(), footRotation = new Quaternion();
+  const levelFoot = new Quaternion().setFromRotationMatrix(new Matrix4().makeBasis(d, up, new Vector3().crossVectors(d, up)));
+  for (let frame = first; frame <= last; frame++) {
+    const s = Math.min(1, Math.max(0, ((frame - first) / (framesPerClip - 1) - .25) / .55));
+    if (s === 0) continue;
+    for (const leg of legs) {
+      const footOffset = (frame * P + leg.foot) * 16;
+      footPose.fromArray(m, footOffset); ankle.setFromMatrixPosition(footPose);
+      const ankleY = ankle.y + (leg.height - ankle.y) * s;
+      if (leg.shin >= 0) {
+        const shinOffset = (frame * P + leg.shin) * 16;
+        shinPose.fromArray(m, shinOffset); knee.setFromMatrixPosition(shinPose);
+        if (leg.thigh >= 0) {
+          const thighOffset = (frame * P + leg.thigh) * 16;
+          thighPose.fromArray(m, thighOffset); origin.setFromMatrixPosition(thighPose);
+          const upper = origin.distanceTo(knee), lower = knee.distanceTo(ankle), reach = upper + lower - .0001;
+          const dy = Math.max(-reach, Math.min(reach, ankleY - origin.y));
+          target.subVectors(ankle, origin).setY(0); if (target.lengthSq() < 1e-6) target.copy(d);
+          target.setLength(Math.min(target.length(), Math.sqrt(Math.max(0, reach * reach - dy * dy)))).setY(dy);
+          const distance = Math.max(.0001, target.length()); axis.copy(target).normalize(); solvedAnkle.copy(origin).add(target);
+          // Same two-bone construction as LimbIK: keep segment lengths and the authored knee's bend plane.
+          pole.subVectors(knee, origin).addScaledVector(axis, -delta.subVectors(knee, origin).dot(axis));
+          if (pole.lengthSq() < 1e-6) pole.copy(up).addScaledVector(axis, -up.dot(axis));
+          pole.normalize();
+          const along = (upper * upper + distance * distance - lower * lower) / (2 * distance);
+          solvedKnee.copy(origin).addScaledVector(axis, along).addScaledVector(pole, Math.sqrt(Math.max(0, upper * upper - along * along)));
+          turn.setFromUnitVectors(delta.subVectors(knee, origin).normalize(), target.subVectors(solvedKnee, origin).normalize());
+          bend.makeTranslation(origin.x, origin.y, origin.z).multiply(rotation.makeRotationFromQuaternion(turn)).multiply(transform.makeTranslation(-origin.x, -origin.y, -origin.z));
+          thighPose.premultiply(bend).toArray(m as number[], thighOffset); shinPose.premultiply(bend); footPose.premultiply(bend);
+          knee.setFromMatrixPosition(shinPose); ankle.setFromMatrixPosition(footPose);
+          turn.setFromUnitVectors(delta.subVectors(ankle, knee).normalize(), target.subVectors(solvedAnkle, knee).normalize());
+          bend.makeTranslation(knee.x, knee.y, knee.z).multiply(rotation.makeRotationFromQuaternion(turn)).multiply(transform.makeTranslation(-knee.x, -knee.y, -knee.z));
+          shinPose.premultiply(bend).toArray(m as number[], shinOffset); footPose.premultiply(bend);
+        } else {
+        delta.subVectors(ankle, knee); const length = delta.length();
+        if (length > 1e-5) {
+          const dy = Math.max(-length, Math.min(length, ankleY - knee.y));
+          target.copy(delta).setY(0); if (target.lengthSq() < 1e-6) target.copy(d);
+          target.normalize().multiplyScalar(Math.sqrt(Math.max(0, length * length - dy * dy))).setY(dy);
+          turn.setFromUnitVectors(delta.normalize(), target.normalize());
+          bend.makeTranslation(knee.x, knee.y, knee.z).multiply(rotation.makeRotationFromQuaternion(turn)).multiply(transform.makeTranslation(-knee.x, -knee.y, -knee.z));
+          shinPose.premultiply(bend).toArray(m as number[], shinOffset); footPose.premultiply(bend);
+        }
+        }
+      } else footPose.elements[13] = ankleY;
+      footPose.decompose(joint, footRotation, scale);
+      footPose.compose(joint, footRotation.slerp(levelFoot, s), scale).toArray(m as number[], footOffset);
+    }
+  }
 }

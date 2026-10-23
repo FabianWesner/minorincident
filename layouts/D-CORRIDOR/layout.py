@@ -284,8 +284,8 @@ g.place('kit.highway-onramp', 191.5, 0.0, 0.0, 1.0, check=False)
 g.solid('highway-deck', 'asphalt', [12.0, .5, 4.62], [173.5, 5.45, 0], collide=False)
 # PO P1-113: each ramp's road ends on a line tilted ~48 deg while the span ends square, leaving a dark wedge beside the joint rail
 # (x 179.5-181.2 at z<0 east, mirrored west). Fill it flush with the road top (collision: l3-highway-wedge in levels/L3/layout.ts).
-g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [180.25, 5.43, -0.95], collide=False)
-g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [166.75, 5.43, 0.95], collide=False)
+g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [180.25, 5.46, -0.95], collide=False)
+g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [166.75, 5.46, 0.95], collide=False)
 for side in (-1, 1):
     g.solid('highway-jersey', 'sidewalk', [12.0, .95, .5], [173.5, 6.175, side * 2.58])
     g.fence('privacy', 132.7, side * 10.5, AX, side * 10.5)
