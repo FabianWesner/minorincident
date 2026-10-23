@@ -12,6 +12,45 @@ import { PNG } from 'pngjs';
 const baseline = process.env.QA_INVARIANTS_BASELINE ?? 'https://minor-incident.com';
 const levels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10'] as const;
 
+test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occluded ground rings', async ({ browser }, info) => {
+  test.setTimeout(180_000);
+  const session = new SceneSession({ backend: 'webgpu', tier: 'low' });
+  try {
+    await session.open(browser);
+    for (const [key, at] of [['rosa', [58, 45.3]], ['sam', [-45, 38.5]]] as const) {
+      const spec = readSpec('tests/scenes/catalog/survivors-ai-bus-ring.json');
+      spec.actors![0].at = [...at];
+      await session.load(spec); await session.step(1); await session.ready();
+      const marker = await session.page.evaluate(key => {
+        const game = (window.__SCENE__ as unknown as { game: Game }).game;
+        const spot = game.view.scene.getObjectByName(`survivor-spot-${key}`)!;
+        const arrow = spot.getObjectByName(`survivor-arrow-${key}`) as Mesh;
+        const ring = spot.getObjectByName(`survivor-ring-${key}`) as Mesh;
+        const at = arrow.getWorldPosition(arrow.position.clone()), p = game.view.project(at.x, at.y, at.z);
+        return { visible: spot.visible && arrow.visible, ringDepth: (ring.material as { depthTest: boolean }).depthTest, arrowDepth: (arrow.material as { depthTest: boolean }).depthTest, x: (p[0] + 1) * innerWidth / 2, y: (1 - p[1]) * innerHeight / 2 };
+      }, key);
+      expect(marker.visible).toBe(true);
+      expect(marker.ringDepth).toBe(true); expect(marker.arrowDepth).toBe(false);
+      const drawn = PNG.sync.read(await session.page.screenshot());
+      await session.page.evaluate(async key => {
+        const game = (window.__SCENE__ as unknown as { game: Game }).game;
+        game.view.scene.getObjectByName(`survivor-arrow-${key}`)!.visible = false;
+        game.view.update(1);
+        for (let i = 0; i < 2; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      }, key);
+      const hidden = PNG.sync.read(await session.page.screenshot());
+      let pixels = 0;
+      for (let y = Math.max(0, Math.floor(marker.y - 20)); y < Math.min(drawn.height, marker.y + 20); y++) for (let x = Math.max(0, Math.floor(marker.x - 20)); x < Math.min(drawn.width, marker.x + 20); x++) {
+        const i = (y * drawn.width + x) * 4;
+        if (Math.abs(drawn.data[i] - hidden.data[i]) + Math.abs(drawn.data[i + 1] - hidden.data[i + 1]) + Math.abs(drawn.data[i + 2] - hidden.data[i + 2]) > 30) pixels++;
+      }
+      await info.attach(`L5-${key}-first-frame`, { body: PNG.sync.write(drawn), contentType: 'image/png' });
+      expect(pixels, `${key}: search arrow must contribute visible pixels within 2 s (sampled at frame 1)`).toBeGreaterThanOrEqual(8);
+      expect(session.errors).toEqual([]);
+    }
+  } finally { await session.close(); stopServer(); }
+});
+
 async function measure(browser: Browser, origin: string, level: typeof levels[number]) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   try {

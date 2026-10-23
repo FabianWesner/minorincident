@@ -1059,6 +1059,14 @@ solids = [q['visualAabb'] for q in l.data['placements'] if not q['assetId'].star
 drop = []
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
+    # The departure lane plus a 2.5 m shoulder stays clear of whole prop footprints. Removing only
+    # the tree and pole at (-473.5, 6) left the APC caught on the neighbouring hedge.
+    b = p['visualAabb']
+    if p['assetId'].startswith(('prop.', 'veh.')) and lane_hit(
+        (b['min'][0], b['min'][2], b['max'][0], b['max'][2]),
+        source['start'], source['routes'][0]['points'][1], source['routes'][0]['width'] / 2 + 2.5):
+        drop.append(i)
+        continue
     if in_gore(x, z) and route_d((x, z)) > 0 and not p['assetId'].startswith(('kit.', 'bld.')):
         drop.append(i)
         continue

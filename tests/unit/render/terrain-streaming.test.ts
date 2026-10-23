@@ -5,6 +5,7 @@ import { crossingChunks } from '../../../src/levels/L9/district';
 import { localTerrainPoint, selectTerrainChunks } from '../../../src/sim/world/TerrainChunks';
 import { TerrainView } from '../../../src/render/TerrainView';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GroundField } from '../../../src/render/GroundField';
 import { DistrictAssets } from '../../../src/assets/DistrictAssets';
 import { Materials } from '../../../src/render/Materials';
@@ -88,7 +89,7 @@ test('T-E31-13-assets-S3 @E31-AC13 streamed cells stay below LOD2 cap, coarse ho
 
 test('T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse terrain preserve seam heights', async () => {
   async function field(path: string, origin: [number, number] = [0, 0]) {
-    const b = readFileSync(path), scene = (await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength), '')).scene;
+    const b = readFileSync(path), scene = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength), '')).scene;
     scene.position.set(origin[0], 0, origin[1]); scene.updateMatrixWorld(true);
     const ground = new GroundField(); scene.traverse(n => { if (n instanceof Mesh) ground.add(n); });
     return ground;

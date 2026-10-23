@@ -7,9 +7,11 @@ import { optimizeAsset } from './optimize';
 import { requiredLods, triangleCount, lodTriangleLimit } from './delivery';
 import { packStatic } from './pack-static';
 import { writeStaticCollision } from './bake-static-collision';
+import { completeSchoolBusNodes } from './complete-school-bus-nodes';
 
 /** Pack existing detailed exports without invoking or changing their Blender builds. */
 export async function packAsset(def: AssetDef, regenerate = false): Promise<number> {
+  if (def.id === 'veh.school-bus') await completeSchoolBusNodes();
   const source = def.sourceGlb ?? def.glb;
   const io = await assetIO();
   await optimizeAsset(source, def.glb, def);
