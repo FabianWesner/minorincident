@@ -16,7 +16,7 @@ export class ObjectiveMarker extends Group {
   private readonly arrow = new Mesh(new ConeGeometry(0.25,0.5,4),this.material);
   constructor(private readonly world: SimWorld){super();this.ring.renderOrder=94;this.arrow.renderOrder=95;this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.add(this.ring,this.arrow);}
   // L5 search spots are drawn by SurvivorRings (batch 13e); this marker draws the single current objective.
-  update(_storyShot = false, zoomScale = 1):void{
+  update(_storyShot?: boolean, zoomScale = 1):void{
     const mission=this.world.missions,reached=!!mission?.state.l3?.crossedAt,anchor=reached?mission!.def.anchors['l3-zone']:markerAnchor(mission);
     const metroDone=!!mission?.state.l5?.shutterAt;
     this.material.color.set(reached?'#71e8a3':'#ffcf77');this.ringMaterial.color.copy(this.material.color);this.arrow.visible=!reached;

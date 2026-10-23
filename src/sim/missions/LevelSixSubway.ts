@@ -4,6 +4,7 @@ import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { seatAnchor } from '../npc/seats';
+import { leaveSeat } from '../npc/MorningRoutines';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
 import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
@@ -144,7 +145,7 @@ export class LevelSixSubway {
   private abandon():void {
     if(this.s.abandonAt)return;
     const s=this.s;s.abandonAt=this.w.tick;s.phase='retreat';
-    for(const r of this.living()){r.status='following';const c=this.w.entities.get(r.id)!.civilian!;c.story=null;delete c.floorY;}
+    for(const r of this.living()){r.status='following';const e=this.w.entities.get(r.id)!,c=e.civilian!;leaveSeat(e);c.story=null;delete c.floorY;}
     this.mission.setState('abandoned',true);this.w.events.emit({type:'l6.abandon',tick:this.w.tick});
     this.say(s.survivors[0].id,'Into the tunnel! Everybody, move!');this.mission.requestCheckpoint('abandon');
   }
