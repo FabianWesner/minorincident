@@ -1,13 +1,12 @@
 import { BufferAttribute, BufferGeometry, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, type InstancedMesh, type Node } from 'three/webgpu';
 import { attribute, Fn, instanceColor, mat3, mat4, normalLocal, positionLocal, transformNormal } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
-import { crowdHeadwearVisibility } from './characters/CrowdAppearance';
 
 const materials = new WeakMap<PaletteMaterial, PaletteMaterial>();
 function placementPosition(previous: Node | null, corpseNormals: boolean): Node {
   return Fn(() => {
     const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
-    positionLocal.assign(matrix.mul(corpseNormals ? positionLocal.mul(crowdHeadwearVisibility()) : positionLocal).xyz);
+    positionLocal.assign(matrix.mul(positionLocal).xyz);
     // Frozen bodies use yaw/translation only; other static props retain inverse-transpose normals.
     normalLocal.assign(corpseNormals ? mat3(matrix).mul(normalLocal).normalize() : transformNormal(normalLocal, matrix));
     instanceColor.assign(attribute('_placementColor', 'vec3'));

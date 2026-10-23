@@ -177,7 +177,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       }
       // The low L7 departure sees the map's distant surface/sky boundary. Height haze above can tint fully fogged
       // surfaces differently from the backdrop; make both converge to the same colour before the common post grade.
-      if (!emissive) result.assign(mix(result, lighting.backdropFog, rangeFogFactor(lighting.fogNear, lighting.fogFar).mul(lighting.backdropHaze)));
+      if (!emissive && lighting.departureBackdrop) result.assign(mix(result, lighting.backdropFog, rangeFogFactor(lighting.fogNear, lighting.fogFar).mul(lighting.backdropHaze)));
       if (!emissive) If(lighting.subwayDarkness.greaterThan(0), () => {
         const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
         const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
