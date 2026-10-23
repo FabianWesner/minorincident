@@ -81,12 +81,16 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       const d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
       let side = 1;
       const rng = keyed(`track:${route.id}:${i}`);
-      for (let s = 12 + rng.next() * 8; s < d - 12; s += (asphalt ? 38 : 20) + rng.next() * 10) {
+      // l9-night-look: the follow camera frames only the lane and a few metres of verge (~17 x 10 m at zoom 1, ~26 x 15 m at
+      // 1.5), so the flare/lantern line is what fills a frame: one every ~16 m (was ~43 m on the asphalt, ~25 m on the tracks),
+      // a ribbon of warm and red points leading through the dark towards the burning city.
+      for (let s = 12 + rng.next() * 8; s < d - 12; s += 13 + rng.next() * 6) {
         side = -side;
         const o = asphalt ? hw - 1.2 - rng.next() * .5 : hw + 1.1 + rng.next() * .9, x = a[0] + ux * s - uz * side * o, z = a[1] + uz * s + ux * side * o, yaw = rng.next() * 6.28;
         if (nearFork(x, z, 20) || x > 440 || !free(x, z, .8)) continue;
-        if (lantern) put({ kind: 'lantern', x, y: .14, z, yaw, color: '#ffb35c', glow: 5, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.2, range: 3.4 } });
-        else put({ kind: 'flare', x, y: .03, z, yaw, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.6, range: 3.6 } });
+        // l9-night-look: brighter emitters (bloom) and wider pools (3.4/3.6 -> 5/5.5 m) so a lantern or flare in frame lights a real patch of ground.
+        if (lantern) put({ kind: 'lantern', x, y: .14, z, yaw, color: '#ffb35c', glow: 9, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 4.4, range: 5 } });
+        else put({ kind: 'flare', x, y: .03, z, yaw, color: '#ff4a2a', glow: 12, flicker: 1, strobe: false, pool: { color: '#ff5a32', intensity: 5, range: 5.5 } });
       }
     }
   }
@@ -134,6 +138,38 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
           if (!nearFork(x, z, 30) && x < 440 && laneDistance([x, z]) > 7.5 && free(x, z, 2.2)) { fire(x, z, 1.1 + rng.next() * .7); break; }
         }
       }
+    }
+  }
+  // 4b') l9-night-look (QA 13j: "an empty black void around the APC"): the follow camera frames only ~17 x 10 m at zoom 1 and
+  // ~26 x 15 m at 1.5 (radius 21.85 m, fov 25 deg), i.e. the lane and 3-6 m of verge, so the 4b fires are almost never in frame.
+  // Small burning debris on the near verge (1.4-2.6 m past the lane edge, one every ~19 m, alternating sides) puts a warm,
+  // flickering light with a smoke wisp in many frames. Small radius: the pool (radius x 4 <= 3.2 m) lights a patch of verge,
+  // the E31-AC16 route band stays the brightest ground (median over the frame). Render-only, drive-over safe (no collider).
+  for (const route of crossing.routes) {
+    const hw = route.width / 2;
+    for (const [i, b] of route.points.slice(1).entries()) {
+      const a = route.points[i], d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
+      if (route.id !== 'road' && road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue;
+      const stations = keyed(`verge:${route.id}:${i}`);
+      for (let s = 6 + stations.next() * 12, n = 0; s < d - 6; s += 15 + stations.next() * 8, n++) {
+        const rng = keyed(`verge:${route.id}:${i}:${n}`);
+        for (let k = 0; k < 10; k++) {
+          const side = (n + (k >= 5 ? 1 : 0)) % 2 ? -1 : 1, o = hw + 1.4 + rng.next() * 1.2, t = s + (rng.next() - .5) * 6, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
+          if (!nearFork(x, z, 14) && x < 500 && laneDistance([x, z]) > 1.2 && free(x, z, 1)) { fires.push({ x: x + origin[0], z: z + origin[1], radius: .55 + rng.next() * .25, car: false, life: true }); break; }
+        }
+      }
+    }
+  }
+  // 4c) l9-night-look: the last stretch (barricades, crash deck, crawl to the city) had no light point at all. Road flares in the
+  // lane edge (as on the asphalt: they lift the route band, never the verge) mark the military stop line and the crawl, and
+  // burning debris on the near verge frames the deck; the kit's gully (x 506..526) stays dark for the crash cinematic.
+  for (let x = 444, n = 0; x < 556; x += 9, n++) {
+    if (x > 504 && x < 528) continue;
+    const rng = keyed(`east:${n}`), side = n % 2 ? -1 : 1, fx = x + rng.next() * 4, fz = side * (road.width / 2 - 1.2 - rng.next() * .5);
+    if (free(fx, fz, .8)) put({ kind: 'flare', x: fx, y: .03, z: fz, yaw: rng.next() * 6.28, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.6, range: 3.6 } });
+    if (n % 2 === 0) for (let k = 0; k < 6; k++) {
+      const bx = x + (rng.next() - .5) * 8, bz = -side * (road.width / 2 + 1.4 + rng.next() * 1.2);
+      if (laneDistance([bx, bz]) > 1.2 && free(bx, bz, 1)) { fires.push({ x: bx + origin[0], z: bz + origin[1], radius: .55 + rng.next() * .25, car: false, life: true }); break; }
     }
   }
   // 5) The next city burns: ground fires between the east-edge blocks, behind the gully.

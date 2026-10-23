@@ -46,14 +46,17 @@ const presets = {
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, heroRim: .22,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#c6d3f2', intensity: .38, polar: 1.12, azimuth: 3.0, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, heroFill: 1.2, roadLift: 1.2, roadColor: '#bbbdc0', headlightBeams: true,   // world-fill (PO #34 "pale purple road ribbon"): a dimmer, neutral lift (AC16 re-measured)
+  'L9-crossing': { sun: '#c6d3f2', intensity: .6, polar: 1.12, azimuth: 3.0, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, heroFill: 1.2, roadLift: 1.2, roadColor: '#bbbdc0', headlightBeams: true,   // world-fill (PO #34 "pale purple road ribbon"): a dimmer, neutral lift (AC16 re-measured)
     // E31 art addendum: a low moon (~26 deg) in the north (screen upper right), so trees/poles/fences throw long soft
     // shadows south across the east-west lanes (screen lower left, clear of the casters' own silhouettes); the ground takes the moon fully (coreLightEdge), only turned-away walls
     // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
     // look-l9b (PO 10-19: "washed-out pale lilac haze, no night contrast"): a dark base with a silver key, deep blue shadows and a
     // contrasty grade; the pools (headlights, lanterns, flares, fires) and the burning-city glow carry the frame.
-    look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .16, bloomStrength: .3, gradeShadow: '#22355e', gradeHighlight: '#d6e2f2', gradeAmount: .75, gradeContrast: 1.34, gradeSaturation: .8, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670', dust: '#d6ff8c', groundBreakup: .22, roadNeutral: .85,
-      coreLightEdge: .45, shadowRadius: 3, glow: '#ff3a10', glowAmount: .25, glowStart: -60, glowEnd: 640, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
+    look: { skyAmbient: '#7f98b8', groundAmbient: '#55505a', vignette: .1, bloomStrength: .5, gradeShadow: '#22355e', gradeHighlight: '#d6e2f2', gradeAmount: .55, gradeContrast: 1.12, gradeSaturation: .8, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670', dust: '#d6ff8c', groundBreakup: .4, roadNeutral: .85,
+      // l9-night-look (QA 13j: "an empty black void around the APC"): a softer grade (contrast 1.34 -> 1.12, amount .75 -> .55)
+      // stops crushing the verges to black, bloom .5 gives the flares/fires a halo, stronger breakup gives the open ground texture, a brighter moon (.38 -> .6) and city glow lift the silhouettes.
+      // All uniforms: no new shader graph.
+      coreLightEdge: .45, shadowRadius: 3, glow: '#ff3a10', glowAmount: .4, glowStart: -60, glowEnd: 640, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
     ambient: { leaf: 24, dust: 70, bird: 0, glow: 3.2 } },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
   // look-l9b recipe (orchestrator 10-20: "pale purple road fills a third of every frame, lane stripes glow"): dark moonlit base,
