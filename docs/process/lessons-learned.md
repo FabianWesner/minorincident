@@ -20,6 +20,8 @@ A living record, updated after every lane or experiment. Short entries with evid
   - Round 6 (aim assist + the PO's 'run when outnumbered' tactics in the prompt + the click-settle fix, real time): its best run. It cleared 3 of L1's steps (pickup, delivery, the bat step where rounds 2–5 died 7–9 times) with 1 death in 119 actions, turns 1–4 s. It stopped on its own before the 300-action target, so for long runs wrap it in a loop that re-prompts.
 - **Harness bugs looked like model failures:** a click that returned before the courier moved read as "NOT MOVING", a HUD arrow was mistaken for a marker, and a time cap counted from server start. Check the harness before blaming the model.
 
+- **Worked (10-23):** a real-input playtest bot now plays the whole game unattended (L1 → credits in 47m30s, WebGPU low zoom 1.5, 50/50 steps, no skips; `npm run playtest -- --levels L1-L10 --no-skip`). It got there by fixing bot gaps (weapon choice, finale range, zoom drift, escort pacing, HUD-covered clicks) rather than game rules, and it surfaced a real controls bug (Q-152).
+
 ## Asset creation (characters)
 - **Didn't work:** voxel-union surface merging plus reduction (old Alphas); it made blobs. Corpse-only convex shells fixed the shards at low quality but looked terrible up close.
 - **Worked:** imagegen concept drafts (Sol) before any Blender work. 4 Alpha and 3 Mega directions, a contact sheet against the current model, and turnarounds for the picks. The PO and orchestrator choose from images, not words.
