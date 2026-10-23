@@ -55,3 +55,18 @@ Rules:
 The army's accuracy and damage, the caps (60/120 infected), wave sizes and the collapse beat windows stay as they are (E22-AC13). What changes is that infected bunch up at the fence and come in as floods through 1–3 gaps instead of one by one anywhere, so more of them get inside and reach the plaza (target: infected inside the perimeter in every minute of the hold, mean ≥ 6 from minute 1). The breaches also funnel them, which suits the machine gun (26 m, pierce 1). If the census shows the courier is swamped (bot deaths > 2 on seed 3, E22-AC02), I lower the wave scale (`l4.war.waveScale` 3 → 2.5) rather than touching the army.
 
 Tests: L4 level tests updated where they assume vaulting (`L4-perimeter`), plus new ones: the wall breaks only by logged damage, infected pass through the breach, no inside spawn in view, the civilian cower rule.
+
+## 5. Result of phase 2 (lane l4-civilians, 10-23)
+
+Built: the wall as 58 E26 slots (`src/data/l4Perimeter.ts`), the Alpha breach job (announce, run-up, repeated charges, logged damage, `batterResist` 0.15 while at the wire), the flood order (`LevelFourWar.funnel`), HUD lines ("Alpha at the west wall", "Hold the west breach"), the ring/minimap pin at the gap, radio lines, one camera beat for the first breach, and damage stages in `MilitaryPerimeter` (cracked, sagging, fallen). Civilians: cower only with an infected within 15 m, and a crowded doorway is still the shelter. Balance: low headroom 12 → 6 and low alive shares .7/.8/.6 → .85/.9/.8; armed-civilian pistol range 18 → 12 m and hunting rifle 32 → 16 m, because armed civilians made more kills than the soldiers once the pile stood still at the wire. Soldier stats are unchanged.
+
+Census after (same command, seed 3, low, complete bot):
+
+| minute | inside the wall, mean / max (before) | inside, mean / max (after) | at the wire (after) | within 12 m of the courier (before → after) |
+| --- | --- | --- | --- | --- |
+| 0 | 4.3 / 18 | 2.6 / 13 | 13.3 | 1.4 → 0.8 |
+| 1 | 2.8 / 18 | 4.0 / 12 | 5.2 | 0.7 → 0.5 |
+| 2 | 6.3 / 13 | 3.5 / 8 | 7.0 | 2.1 → 4.0 |
+| 3 | 8.2 / 12 | 7.2 / 14 | 8.5 | 2.0 → 1.6 |
+
+The breaches open at 46 s (west), 118 s (north) and 119 s (south). The visible change is the pile at the wire and the breach set piece. The number of infected inside the wall per minute is about the same as before, because the army and the armed civilians still kill most of them in the gap: kills are soldiers 140, armed civilians 207, player 78. The target of mean ≥ 6 from minute 1 is **not met**.
