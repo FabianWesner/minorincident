@@ -88,3 +88,5 @@ two workers per run; the focused run used one. WebGPU was not checked.
 Game-camera evidence: `review.md`, `unarmed-review.png` (all 35 authored-action
 frames) and `civilian-gag.png`. Full original frame sequences are reproducibly
 written to `unarmed/` by the real Shift+LMB Playwright test.
+
+Q-152 (2026-10-23): AC14’s unconditional held-LMB retargeting clause was corrected to record the orchestrator’s held-attack exception; the fresh-click and WASD rules remain. The respawn fixture now waits for the intentional garage beat and tests travel toward unobstructed ground. All final gates passed; see the [eight-line report](../../../docs/reports/controls-q152/report.md) and [evidence](../../../docs/reports/controls-q152/evidence.json).
