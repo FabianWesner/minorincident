@@ -4,7 +4,6 @@ import { MaterialNode, NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGP
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
 import { PaletteMaterial } from './PaletteMaterial';
-import { ShadowRefresh } from './ShadowRefresh';
 
 // r186's module-level MaterialNode property cache keeps the last material in
 // each reference node, even after that material and its render objects retire.
@@ -98,16 +97,14 @@ export function installInterleavedBufferDisposal(backend: {
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
   private canvasOverlay = false;
-  private readonly shadowRefresh = new ShadowRefresh();
   /** Shadow nodes render the same scene recursively. Its world transforms are
    * already current from the enclosing beauty pass; avoid walking the whole
    * scene again for each shadow pass. Restore automatic updates between calls. */
   override render(scene: Object3D, camera: Camera): void {
     const automatic = scene.matrixWorldAutoUpdate;
     if (automatic) { scene.updateMatrixWorld(); scene.matrixWorldAutoUpdate = false; }
-    const restoreShadows = automatic ? this.shadowRefresh.prepare(scene, camera) : undefined;
     try { super.render(scene, camera); }
-    finally { restoreShadows?.(); scene.matrixWorldAutoUpdate = automatic; }
+    finally { scene.matrixWorldAutoUpdate = automatic; }
   }
 
   override get currentSamples(): number {

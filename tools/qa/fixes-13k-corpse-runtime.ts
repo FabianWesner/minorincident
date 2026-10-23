@@ -21,7 +21,7 @@ try {
           const bodies = a.query({}).filter(e => e.corpse), e = bodies[0];
           return { x, id: e?.id, bodies: bodies.length, transform: e?.transform, figure: a.getState().render.crowd?.figures.find(f => f.id === e?.id), nodeBuilds: a.perf().nodeBuilds };
         }, x);
-        assert.equal(sample.bodies, 1); assert.equal(sample.figure?.lod, expected); bands.push(sample);
+        assert.equal(sample.bodies, 1); assert.equal(sample.figure?.lod, tier === 'low' ? 'lod2' : expected); bands.push(sample);
       }
       for (const sample of bands) { assert.equal(sample.id, bands[0].id); assert.deepEqual(sample.transform, bands[0].transform); }
       await session.page.screenshot({ path: `${out}/${backend}-${tier}-near.jpg`, type: 'jpeg', quality: 88 });
@@ -43,7 +43,7 @@ try {
       assert.deepEqual(session.errors, []);
       results.push({ backend, tier, bands, deathFrame, bars, errors: session.errors });
       writeFileSync(`${out}/evidence.json`, JSON.stringify(results, null, 2));
-      console.log(`${backend} ${tier}: settled bands 2/1/1/2/1, one retained body; HP bar gone at first zero-HP frame ${deathFrame}`);
+      console.log(`${backend} ${tier}: settled bands ${bands.map(b => b.figure?.lod).join('/')}, one retained body; HP bar gone at first zero-HP frame ${deathFrame}`);
     } finally { await session.close(); }
   }
 } finally { stopServer(); }

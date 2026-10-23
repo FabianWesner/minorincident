@@ -32,6 +32,9 @@ test('Q-124 settled bodies change detail after approach and retreat without losi
     update(7.9); expect(pool.snapshot().figures[0]).toMatchObject({ id: 7, lod: 'lod1' });
     update(9); expect(pool.snapshot().figures[0].lod).toBe('lod1');
     update(10.1); expect(pool.snapshot().figures[0].lod).toBe('lod2');
+    update(7); expect(pool.snapshot().figures[0].lod).toBe('lod1');
+    pool.updateDetail({ x: 7, z: 0 }, false); expect(pool.snapshot().figures[0].lod).toBe('lod2');
+    pool.updateDetail({ x: 7, z: 0 }, true); expect(pool.snapshot().figures[0].lod).toBe('lod1');
     expect(pool.revision).toBe(revision); expect(pool.snapshot().instances).toBe(1);
     expect(pool.drawn()).toEqual([{ id: 7, x: 0, y: 0, z: 0 }]);
     for (const child of pool.children as InstancedMesh[]) if (child.count) {
