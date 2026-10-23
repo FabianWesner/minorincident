@@ -1,0 +1,36 @@
+{
+  "model": "four lanes, two 200 ms job steps with 2 s remote judging; no browser startup/guard cost",
+  "beforeTwoSlots": {
+    "slots": 2,
+    "wallMs": 4800,
+    "waitPerJobMs": [
+      0,
+      0,
+      2400,
+      2400
+    ],
+    "meanWaitMs": 1200
+  },
+  "pooledTwoContexts": {
+    "contexts": 2,
+    "wallMs": 2600,
+    "waitPerJobMs": [
+      0,
+      0,
+      200,
+      200
+    ],
+    "meanWaitMs": 100
+  },
+  "pooledFourContexts": {
+    "contexts": 4,
+    "wallMs": 2400,
+    "waitPerJobMs": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "meanWaitMs": 0
+  }
+}

@@ -8,7 +8,7 @@ import { delay } from './host';
 
 process.env.BROWSER_POOL_URL = 'http://127.0.0.1:4328';
 process.env.BROWSER_POOL_BACKEND = 'swiftshader';
-const daemon = spawn(process.execPath, ['--import', 'tsx', 'tools/browser-pool/daemon.ts'], { env: { ...process.env, BROWSER_POOL_PORT: '4328', BROWSER_POOL_SHARED_LIMIT: '2', BROWSER_POOL_IDLE_MS: '1500', BROWSER_POOL_BROWSER_IDLE_MS: '1500' }, stdio: ['ignore', 'pipe', 'pipe'] });
+const daemon = spawn(process.execPath, ['--import', 'tsx', 'tools/browser-pool/daemon.ts'], { env: { ...process.env, BROWSER_POOL_PORT: '4328', BROWSER_POOL_SHARED_LIMIT: '4', BROWSER_POOL_IDLE_MS: '1500', BROWSER_POOL_BROWSER_IDLE_MS: '1500' }, stdio: ['ignore', 'pipe', 'pipe'] });
 const profile = mkdtempSync(join(tmpdir(), 'mi-pool-profile-'));
 let log = ''; daemon.stdout.on('data', b => { log += b; }); daemon.stderr.on('data', b => { log += b; });
 const state = async () => await (await fetch(`${process.env.BROWSER_POOL_URL}/status`)).json() as { leases: unknown[]; browsers: { pid: number }[]; waiting: number };
