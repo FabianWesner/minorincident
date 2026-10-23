@@ -3,6 +3,9 @@
 # Use this instead of an outer e2e-lock wrapper for native performance measurements.
 command -v lockf >/dev/null 2>&1 || exec "$@"
 root=$(cd "$(dirname "$0")/../.." && pwd)
+if [ "${MI_BROWSER_POOL_EXCLUSIVE:-}" = "" ] && node "$root/tools/browser-pool/detect.mjs"; then
+  exec node --import tsx "$root/tools/browser-pool/wrapper.ts" exclusive "$@"
+fi
 if [ "${MI_PERF_JOB_HELD:-}" != 1 ]; then
   export MI_PERF_JOB_HELD=1
   exec python3 "$root/tools/browser-job.py" -- sh "$0" "$@"

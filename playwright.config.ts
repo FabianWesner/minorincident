@@ -32,6 +32,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     headless: true,
     launchOptions: { args: gpuArgs },
+    ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS } } : {}),
   },
   projects: [
     { name: 'chromium', ...(process.env.MI_REMOTE === '1' ? { testMatch: '**/e2e/**/*.spec.ts' } : {}), testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
@@ -41,7 +42,7 @@ export default defineConfig({
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } } }] : []),
     ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
-    { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] } } },
+    { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
   ],
   // Test the real production output, including the query-gated API chunk.
   webServer: { command: `npx vite preview --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },

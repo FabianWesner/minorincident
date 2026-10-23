@@ -54,6 +54,10 @@ try {
     for (let e = queue.shift(); e; e = queue.shift()) {
       const dirName = `${out}/${e.name}`, t0 = Date.now();
       try {
+        if (!session.isOpen) {
+          await session.open();
+          if (throttle > 1) await (await session.page.context().newCDPSession(session.page)).send('Emulation.setCPUThrottlingRate', { rate: throttle });
+        }
         const spec = e.spec;
         // The catalog keeps no full-size PNGs (disk): only the sheet. Re-run the scene itself for hi-res frames.
         const frames = spec.frames ?? 120;
@@ -62,7 +66,7 @@ try {
         rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: r.pass, seconds: r.seconds, frames: r.frames, errors: r.consoleErrors.length, requestedTier: e.tier, actualTier: r.actualTier, gates: r.checks.map(c => `${c.pass ? 'ok' : 'FAIL'} ${c.name} ${fmt(c.value)}/${c.limit}`).join('; '), failed: r.failed.map(c => `${c.name} ${fmt(c.value)} > ${c.limit}`), sheet: r.sheet && relative(out, r.sheet), sheetKb: r.sheetKb, note: (spec as { note?: string }).note });
       } catch (error) {
         rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: false, seconds: (Date.now() - t0) / 1000, frames: 0, errors: session.errors.length, gates: '', failed: [], error: String(error).split('\n').slice(0, 3).join(' '), });
-      }
+      } finally { if (process.env.MI_BROWSER_POOL === '1') await session.close(); }
       const last = rows[rows.length - 1];
       console.error(`[catalog] ${rows.length}/${entries.length} ${last.pass ? 'pass' : 'FAIL'} ${e.name} (${last.seconds.toFixed(1)} s)${last.failed.length ? ' ' + last.failed.join(', ') : ''}${last.error ? ' ' + last.error : ''}`);
     }

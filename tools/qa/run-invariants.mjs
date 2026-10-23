@@ -1,6 +1,6 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
-const env = { ...process.env, E2E_PORT: process.env.E2E_PORT ?? '4191', SCENE_PORT: process.env.SCENE_PORT ?? '4192', E2E_UNITS: '1', E2E_ADMISSION_TIMEOUT_SECONDS: '3600' };
+const env = { ...process.env, E2E_PORT: process.env.E2E_PORT ?? '4325', SCENE_PORT: process.env.SCENE_PORT ?? '4326', E2E_UNITS: '1', E2E_ADMISSION_TIMEOUT_SECONDS: '3600' };
 const receipts = [];
 mkdirSync('test-results/qa-invariants', { recursive: true });
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();

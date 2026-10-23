@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { look, type Body, type Eyes } from './eyes';
 
 /**
@@ -41,7 +41,7 @@ if (!(await up())) {
 }
 const hold = (ms: number) => new Promise(r => setTimeout(r, ms));
 const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
 await page.addInitScript('window.__name = (f) => f;');
 await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${quality}`);

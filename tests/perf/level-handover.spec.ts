@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadavg } from 'node:os';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../tools/browser-pool/fixtures';
 
 // Level handover timing: every campaign handover L1 -> L10 (and the menu Continue load into each level) on the
 // production build. Records time-to-playable (loadLevel call -> first full-size frame), load phases, the first

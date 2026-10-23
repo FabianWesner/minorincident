@@ -1,4 +1,5 @@
-import { test as base, expect, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { test as base, expect } from '../../tools/browser-pool/fixtures';
 import { consoleAllowlist } from './console-allowlist';
 
 /** All browser suites share the guard, including visual, perf and smoke tests. */

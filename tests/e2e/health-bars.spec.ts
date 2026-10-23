@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../tools/browser-pool/fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { SceneSession, readSpec, stopServer } from '../../tools/scenelab/session';
