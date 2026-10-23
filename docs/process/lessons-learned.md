@@ -52,4 +52,5 @@ A living record, updated after every lane or experiment. Short entries with evid
 - **Watch:**
   - disk: 6+ worktrees plus captures fill 200 GB quickly. Remove each worktree right after merging, check `git status` first, and stop on any uncommitted tracked file (10-22: two changes were lost that way);
   - lanes leave captures in the shared scratchpad and can delete files there;
+  - never `git worktree remove --force` directly: untracked evidence (bot logs, captures) lives in the worktree and gets lost (10-23: the L5 gate logs were lost that way). Use the guard script, and copy test-results/playtest/<run>/ first;
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
