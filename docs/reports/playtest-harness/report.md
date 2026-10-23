@@ -31,6 +31,8 @@ The driver uses WASD while firing for the replacement policy, with alternate mov
 
 ## Validation so far
 
+The uninterrupted `harness-campaign-04` run completed all ten levels through credits, every required step, zero deaths and no skips. It is archived in [evidence/campaign-04.json](evidence/campaign-04.json), including the boss health sequence and final flags. Its repeated wheel input widened L9 to zoom 2; it is not counted as the requested-settings proof. The fixed driver is being rerun as `harness-campaign-05`.
+
 - Remote unit suite at runtime commit `ebb11dd8b`: success, **2,048 passed, 0 failed, 7 skipped**. Compact results and all driver test assertions: [evidence/remote-unit.json](evidence/remote-unit.json).
 - Typecheck and lint passed; focused driver tests: 9 files, 55 tests passed.
 - Real-input checkpoint diagnostic `harness-finale-08`: all 16 L10 steps completed through credits in 248 seconds, zero deaths, no skips; WebGPU and actual Low quality. This uses a seeded checkpoint and is not the campaign proof.
