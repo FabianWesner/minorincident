@@ -82,6 +82,20 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     const models = [...new Set([...regularInfectedModels, ...manifest.filter(a => a.id.startsWith('npc.') && !['npc.survivor-group', 'npc.survivor-group.aftermath'].includes(a.id)).map(a => a.id)])];
     const raw = new Map<string, Box3>();
     for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
+    const frameTops = new Map<string, number>();
+    for (const model of ['npc.civilian-woman-b', 'npc.civilian-elderly']) {
+      const root = await asset(model, 'lod0'); prepareCivilianRig(root, model); root.updateMatrixWorld(true);
+      const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
+      // Measure the base GLB's head-part frames; aftermath recolours them but retains the same rig and shape.
+      // This is independent of the renderer's cached spectacle-top values and fitted hat output.
+      head.traverse(node => {
+        if (!(node instanceof Mesh) || Array.isArray(node.material) || !/pal_(leather|uiDark)$/.test(node.material.name)) return;
+        const positions = node.geometry.getAttribute('position'), index = node.geometry.index, matrix = inverse.clone().multiply(node.matrixWorld);
+        for (let i = 0; i < (index?.count ?? positions.count); i++) { point.fromBufferAttribute(positions, index ? index.getX(i) : i).applyMatrix4(matrix); if (point.x > .02 && point.y > .04) top = Math.max(top, point.y); }
+      });
+      expect(Number.isFinite(top), `${model}: source spectacle vertices`).toBe(true);
+      frameTops.set(model, top);
+    }
     for (const id of ids) {
       const def = manifest.find(a => a.id === id)!, size = raw.get(`${id}/lod0`)!.getSize(new Vector3());
       for (const axis of ['x', 'y', 'z'] as const) if (Math.abs(size[axis] - def.dimensions[axis]) > def.dimensions[axis] * def.dimensions.tolerance) errors.push(`${id}: GLB ${axis} extent ${size[axis]} exceeds authored ${def.dimensions[axis]} ±${def.dimensions.tolerance * 100}%`);
@@ -96,6 +110,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
       deinterleaveGeometry(baked.geometry); const geometry = mergeVertices(baked.geometry); packCrowdParts(geometry);
       markCrowdAppearance(geometry, model.startsWith('inf.'));
       const registeredSkull = bakedSkull(geometry), skull = registeredSkull ?? authoredSkull(root);
+      const civilianFrameTop = frameTops.get(model.replace(/\.aftermath$/, ''));
       // Glasses are authored into these civilian heads, not separate acc.* models.
       // Their dark front-face vertices must remain on the face and owned by the head joint.
       if (authoredGlasses.has(model) || authoredGlasses.has(model.replace(/\.aftermath$/, ''))) {
@@ -164,6 +179,11 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
           const ratio = skull!.size.clone().divide(reference.size);
           expectedTransform.premultiply(new Matrix4().makeTranslation(...skull!.centre.toArray()).multiply(new Matrix4().makeScale(...ratio.toArray())).multiply(new Matrix4().makeTranslation(...reference.centre.clone().negate().toArray())));
         }
+        if (id.startsWith('acc.hat-') && civilianFrameTop !== undefined) {
+          // Both LODs share one fit; use the lower authored brim so switching LOD cannot move the hat.
+          const bottom = Math.min(...(['lod0', 'lod1'] as const).map(l => raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform).min.y));
+          expectedTransform.premultiply(new Matrix4().makeTranslation(0, Math.max(0, civilianFrameTop + .012 - bottom), 0));
+        }
         const expected = raw.get(`${id}/${lod}`)!.clone().applyMatrix4(expectedTransform);
         const tolerance = Math.max(.002, expected.getSize(new Vector3()).length() / 1024);
         const head = new Matrix4().makeRotationY(.43).setPosition(3, 1.4, -7), world = new Matrix4().makeRotationY(-.7).setPosition(11, .2, 9);
@@ -188,6 +208,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     expect(glassesHeads, 'authored glasses inventory must not be empty').toBeGreaterThan(0);
     console.log(`[qa:invariants] accessories combinations=${combinations} eligible=${eligible} nativeGlassesHeads=${glassesHeads}`);
     const distinct = [...new Set(errors)];
+    if (distinct.length) console.log(`[qa:invariants] accessory offenders: ${JSON.stringify(distinct.slice(0, 16))}`);
     expect(distinct, `accessories invariant: ${distinct.length} bad head bounds across ${combinations} combinations`).toEqual([]);
   } finally { renderer.dispose(); vi.restoreAllMocks(); }
 }, 180_000);
