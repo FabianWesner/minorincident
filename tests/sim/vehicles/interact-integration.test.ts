@@ -40,6 +40,9 @@ test('M1 E07/E09 @E09 @E09-AC07 attached infected stay anchored while their chas
   const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 7); w.combat!.damage.god = true;
   try {
     const car = w.vehicles!.spawn('vehicle.sedan', { x: 5, z: 0 });
+    // The clinger scenario needs a living occupant; empty parked cars are not infected targets.
+    const parked = w.vehicles!.cars.get(car)!;
+    (w.vehicles as unknown as { enter(car: typeof parked): void }).enter(parked);
     const id = w.infected!.spawn('infected.runner', { x: 5, z: 1 }, { state: 'chase' });
     for (let i = 0; i < 60; i++) w.update();
     expect(w.entities.get(id)!.attachedTo).toBe(car);

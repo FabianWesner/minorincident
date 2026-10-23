@@ -117,6 +117,21 @@
           "present": true
         }
       ]
+    },
+    {
+      "item": "empty parked vehicles capture wave identities",
+      "path": "src/sim/vehicles/Vehicles.ts",
+      "blob": "2019db912f5169efb4a1b2bdbf5958a6400c9148",
+      "matched": [
+        {
+          "needle": "if (speed < 3 && distance <= 1.5 && state.attached.length < 4",
+          "present": true
+        },
+        {
+          "needle": "target.attachedTo = car.entity.id",
+          "present": true
+        }
+      ]
     }
   ]
 }

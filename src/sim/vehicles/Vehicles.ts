@@ -327,11 +327,16 @@ export class Vehicles {
     if (car.physics.def.id === 'vehicle.military-apc') { this.apcInfected(car); return; }
     const state = car.entity.vehicle!, p = car.entity.transform, speed = car.physics.speed;
     if (car.entity.health.current <= 0) { this.release(car); return; }
+    // Clingers pursue occupants, not empty parked hulls. Otherwise an off-screen wave can lose identities
+    // forever to a slow/idle car, and the same happens when its last occupant gets out.
+    const livingOccupant = (id: number) => { const e = this.world.entities.get(id); return !!e && e.health.current > 0 && !e.infected; };
+    const occupied = state.driver !== null && livingOccupant(state.driver) || state.passengers?.some(p => p.phase === 'seated' && livingOccupant(p.id)) === true;
+    if (!occupied) this.release(car);
     if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) this.release(car);
     for (const target of this.world.entities.iterate()) {
       if (target.kind !== 'infected' || target.health.current <= 0 || target.hidden || target.attachedTo) continue;
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, distance = Math.hypot(dx, dz);
-      if (speed < 3 && distance <= 1.5 && state.attached.length < 4 && Math.abs(car.physics.intent.steer) <= .8) {
+      if (occupied && speed < 3 && distance <= 1.5 && state.attached.length < 4 && Math.abs(car.physics.intent.steer) <= .8) {
         state.attached.push(target.id); target.attachedTo = car.entity.id;
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }

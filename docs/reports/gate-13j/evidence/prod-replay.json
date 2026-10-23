@@ -1,0 +1,58 @@
+{
+  "revision": "73bce8bc5",
+  "method": "Selected PROD implementation files replayed in an isolated remote batch snapshot against the corrected invariant fixtures; other batch source and assets retained.",
+  "tests": 27,
+  "passed": 20,
+  "failed": 7,
+  "failures": [
+    {
+      "file": "qa/invariants/accessories.test.ts",
+      "test": "1 accessories: actual head-local bounds and scale for every crowd model \u00d7 LOD \u00d7 appearance tier",
+      "messages": [
+        "AssertionError: accessories invariant: 15 bad head bounds across 2484 combinations: expected [ \u2026(15) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/accessories.test.ts:212:119\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/contract.test.ts",
+      "test": "automatic regression invariants 2 seated actors: every active sit/bench pose across L1\u2013L10 and both quality tiers has seat support",
+      "messages": [
+        "AssertionError: 12 seat failures; P1-112: expected [ \u2026(12) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/contract.test.ts:80:87\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/contract.test.ts",
+      "test": "automatic regression invariants 6 objectives: every mission step has a visible destination marker or explicit HUD-only rule",
+      "messages": [
+        "AssertionError: P1-114: objective routes and marker anchors must exist: expected [ \u2026(39) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/contract.test.ts:248:82\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/war-waves.test.ts",
+      "test": "5 L4 high: every authored war wave and collapse batch spawns and reaches its goal area",
+      "messages": [
+        "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(8) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/war-waves.test.ts:69:75\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/war-waves.test.ts",
+      "test": "5 L4 low: every authored war wave and collapse batch spawns and reaches its goal area",
+      "messages": [
+        "AssertionError: waves invariant: L4 authored count and goal arrival: expected [ \u2026(6) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/war-waves.test.ts:69:75\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/waves.test.ts",
+      "test": "5 authored wave census high: L1, L2, L3, L6, L7, L8 and L10",
+      "messages": [
+        "AssertionError: waves invariant high: expected [ \u2026(5) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/waves.test.ts:182:45\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "qa/invariants/waves.test.ts",
+      "test": "5 authored wave census low: L1, L2, L3, L6, L7, L8 and L10",
+      "messages": [
+        "AssertionError: waves invariant low: expected [ \u2026(4) ] to deeply equal []\n    at /srv/mi/jobs/gate-13j-fefb91-13878-1792715502/tests/qa/invariants/waves.test.ts:182:45\n    at file:///srv/mi/jobs/gate-13j-fefb91-13878-1792715502/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}
