@@ -1,6 +1,36 @@
 # Playtest harness: Q-151 / Q-128
 
-Campaign proof and final validation are still in progress. Changes are restricted to tooling, debug bots/API wiring and the `Game.driver` TypeScript union.
+**Complete:** one unattended real-input L1 → credits campaign passed on `lane/playtest-harness`. Changes are restricted to tooling, debug bots/API wiring and the `Game.driver` TypeScript union.
+
+## Campaign proof
+
+`harness-campaign-06`, runtime commit `6dc758170`, production build from `ef2c4598a` (documentation-only child), female courier, fresh campaign. One headless browser session under the shared lock, 20:04:56–20:52:26 CEST on 2026-10-23: **47 minutes 30 seconds**.
+
+```sh
+E2E_PORT=4371 SCENE_PORT=4372 npm run build
+E2E_PORT=4371 SCENE_PORT=4372 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/harness-campaign-06
+```
+
+**10/10 levels, all 50 mission steps completed, zero deaths, zero skipped steps, no harness hang.** WebGPU was verified; actual Low quality and target zoom 1.5 were asserted at every level's first playable frame. The final camera also remained at 1.5. No seeded save, god mode, objective cheat, bot control or manual intervention was used. Earlier-level map/navigation reads are logged; L10 has no hidden-state navigation assists.
+
+| Level | Wall seconds | Completed steps | Deaths / skips |
+| --- | ---: | ---: | ---: |
+| L1 | 147 | 5/5 | 0 / 0 |
+| L2 | 100 | 6/6 | 0 / 0 |
+| L3 | 176 | 3/3 | 0 / 0 |
+| L4 | 262 | 6/6 | 0 / 0 |
+| L5 | 162 | 3/3 | 0 / 0 |
+| L6 | 258 | 4/4 | 0 / 0 |
+| L7 | 329 | 3/3 | 0 / 0 |
+| L8 | 138 | 2/2 | 0 / 0 |
+| L9 | 118 | 2/2 | 0 / 0 |
+| L10 | 1145 | 16/16 | 0 / 0 |
+
+The saved campaign has `completedLevels: 10` and `crossingHandover.applied: true`; L9's approach and crawl both completed. L10 has all 16 steps completed, `mega-dead`, `cure-released`, `epilogue-finished` and `credits-finished` true, and epilogue phase `done`. The drawn Mega's observed health fell from 3,000 through 2,700, 2,400, 2,100, 1,800, 900, 600 and 300 before the kill advanced the objective. L10 recorded 53 launcher attacks and 14 pistol attacks.
+
+There were **10 P2 observations, zero P0/P1**: survivor navigation/boarding waits, a recovered L10 route obstruction, and an alert during the timed epilogue. L7's longest visible-progress wait was 88.7 seconds; L8 advanced after ordinary interaction recovery for its last passenger. The L6 clearance fallback did not trigger in this successful run; its blocked-ring behavior is covered by unit tests.
+
+[Committed campaign evidence](evidence/campaign-06.json) includes all step statuses, actual settings, boss-health observations, issues, final flags and SHA-256 hashes of the raw artifacts in `test-results/playtest/harness-campaign-06/`.
 
 ## Driver changes
 
@@ -29,12 +59,12 @@ Evidence: `test-results/playtest/harness-finale-04/log-finale.jsonl`, notably th
 
 The driver uses WASD while firing for the replacement policy, with alternate movement bearings when observed courier movement stalls. No controls fix is included here.
 
-## Validation so far
+## Validation and earlier attempts
 
-The uninterrupted `harness-campaign-04` run completed all ten levels through credits, every required step, zero deaths and no skips. It is archived in [evidence/campaign-04.json](evidence/campaign-04.json), including the boss health sequence and final flags. Its repeated wheel input widened L9 to zoom 2; it is not counted as the requested-settings proof. The zoom fix was confirmed through L6 in `harness-campaign-05`, which stopped after 90.5 seconds without progress at the final L6 retreat ring. The screenshot shows a follower crowded against the stationary courier; the driver now clears a stalled escort ring along its observed travel direction and retains that position so followers can pass. [Evidence for this failed attempt](evidence/campaign-05.json). After the requested 20-minute browser-free window, a fresh build and `harness-campaign-06` started. Its [settings and progress audit](evidence/campaign-06.json) confirms Low and target zoom 1.5 at all ten level starts. L1–L9 completed with no deaths or skips; L10 remains in progress. L7 had an 88.7-second wait for the group, and L8 needed the ordinary interaction recovery while waiting for its last passenger. The L6 clearance fallback did not trigger in this proof attempt; its blocked-ring behavior is covered by unit tests.
+The earlier uninterrupted `harness-campaign-04` completed through credits, but widened L9 to zoom 2; it is not the requested-settings proof. [Archived evidence](evidence/campaign-04.json). `harness-campaign-05` confirmed the zoom fix through L6, then stopped cleanly at its 90.5-second no-progress watchdog near the final retreat ring. A follower was crowded against the stationary courier; the driver now clears a stalled escort ring along its observed travel direction and retains that position so followers can pass. [Failed-attempt evidence](evidence/campaign-05.json). The final successful campaign-06 ran after the requested 20-minute browser-free window.
 
 - Remote unit suite at runtime commit `6dc758170`: success, **2,050 passed, 0 failed, 7 skipped**. Compact results and all driver test assertions: [evidence/remote-unit.json](evidence/remote-unit.json).
-- Typecheck and lint passed; focused driver tests: 9 files, 57 tests passed.
+- Production build, typecheck and lint passed; focused driver tests: 9 files, 57 tests passed.
 - Real-input checkpoint diagnostic `harness-finale-08`: all 16 L10 steps completed through credits in 248 seconds, zero deaths, no skips; WebGPU and actual Low quality. This uses a seeded checkpoint and is not the campaign proof.
 - Shared L7 sim bot, seed 1: completed in 540.38 simulation seconds; zero deaths, zero collision invariant failures.
 - Shared L10 sim bot, seed 1: completed through credits in 1,190.08 simulation seconds; zero deaths, zero collision invariant failures.
