@@ -59,3 +59,5 @@ Remote snapshot `52897d38a`: 458 files / 2,486 tests passed (3 files / 9 tests s
 ## Low-tier budget decision (08:46)
 
 The shadow-reuse experiment measured WebGL2 p95 3.6/3.5/3.5 ms and WebGPU 2.7/2.6/3.0 ms. WebGL2 remains more than 0.2 ms above PROD's 3.2 ms reference. Per the continuation instruction, regular near-band corpse geometry is now high-quality only; low retains its original far geometry and every body. The shadow experiment was removed. A new quality-switch assertion failed red (`lod1` remained after disabling detail), then passed while preserving identity, pose, tint and membership. Fresh paired quiet timing and final validation are pending.
+
+09:19 evidence checkpoint: current-source hitch profiles and raw frame traces are retained under `profiles/`; L1 maxima 16.8/16.8/16.8 ms, L2 33.3/33.4/33.3 ms, all six routes reached, no >200 ms frames. `receipts/` retains red regression outputs and passing focused/type/lint outputs. The accepted high-only near band is unchanged; final timing, invariants, full remote and smoke remain in flight.
