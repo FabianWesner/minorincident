@@ -23,7 +23,9 @@ The driver uses WASD while firing for the replacement policy, with alternate mov
 
 ## Validation so far
 
-- Remote unit suite at `ddfe5348d`: success, 2,041 passed, 7 skipped; JSON in `test-results/playtest/remote-unit.json`.
+- Remote unit suite at runtime commit `8a502bda5`: success, **2,047 passed, 0 failed, 7 skipped**. Compact results and all driver test assertions: [evidence/remote-unit.json](evidence/remote-unit.json).
+- Typecheck and lint passed; focused driver tests: 9 files, 54 tests passed.
+- Real-input checkpoint diagnostic `harness-finale-08`: all 16 L10 steps completed through credits in 248 seconds, zero deaths, no skips; WebGPU and actual Low quality. This uses a seeded checkpoint and is not the campaign proof.
 - Shared L7 sim bot, seed 1: completed in 540.38 simulation seconds; zero deaths, zero collision invariant failures.
 - Shared L10 sim bot, seed 1: completed through credits in 1,190.08 simulation seconds; zero deaths, zero collision invariant failures.
 - These sim runs and checkpoint-seeded diagnostics are not the requested uninterrupted real-input campaign proof.
