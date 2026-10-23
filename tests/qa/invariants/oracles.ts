@@ -5,7 +5,7 @@ export const oracle = {
   actor: (state: { inScriptedScene: boolean; exists: boolean; hidden: boolean }) => state.inScriptedScene && (!state.exists || state.hidden),
   vehicle: (overlapsSolid: boolean) => overlapsSolid,
   wave: (state: { authored: number; spawned: number }) => state.authored !== state.spawned,
-  objective: (state: { markerVisible: boolean; visibleAtMs: number }) => !state.markerVisible || !Number.isFinite(state.visibleAtMs) || state.visibleAtMs > 2000,
+  objective: (state: { markerVisible: boolean; visibleAtMs: number; hudVisible: boolean; text: string }) => !state.hudVisible || !state.text.trim() || !state.markerVisible || !Number.isFinite(state.visibleAtMs) || state.visibleAtMs > 2000,
   ground: (state: { drawnY: number; simY: number }) => !Number.isFinite(state.drawnY) || !Number.isFinite(state.simY) || Math.abs(state.drawnY - state.simY) > .2,
   load: (state: { candidateMs: number; baselineMs: number }) => !Number.isFinite(state.candidateMs) || !Number.isFinite(state.baselineMs) || state.candidateMs <= 0 || state.baselineMs <= 0 || state.candidateMs > state.baselineMs + Math.min(1000, state.baselineMs * .1),
 };

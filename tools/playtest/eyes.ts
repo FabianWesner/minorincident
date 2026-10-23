@@ -60,8 +60,11 @@ export function look(): Eyes {
   const shown = (el: HTMLElement | null) => !!el && !el.hidden && el.offsetParent !== null;
   const m = a.missions.state();
   const active = m ? Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0] ?? null : null;
-  const tracker = q('mission-tracker');
+  const liveTracker = q('objective-tracker');
+  const tracker = shown(liveTracker) ? liveTracker : q('mission-tracker');
   const objective = q('objective-text');
+  const trackerText = shown(tracker) ? tracker!.textContent ?? '' : '';
+  const distanceText = trackerText.match(/(?:^| · )(\d+(?:\.\d+)?)\s*m\b/);
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
@@ -112,8 +115,8 @@ export function look(): Eyes {
   return {
     tick: a.tick(), level: m?.id ?? null, phase: m?.phase ?? null, step: active, checkpoint: m?.checkpoint ?? null,
     completed: m ? Object.values(m.steps).filter(s => s.status === 'completed').length : 0,
-    objective: q('objective-text')?.textContent ?? '', tracker: shown(tracker) ? tracker!.textContent ?? '' : '',
-    distance: tracker?.dataset.distance ? Number(tracker.dataset.distance) : null,
+    objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
+    distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),

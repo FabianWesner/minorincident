@@ -1,0 +1,1866 @@
+{
+  "status": "PASS: one unattended fresh L1 to credits campaign, 50 completed steps, no skipped steps, no P0/P1",
+  "baseCommit": "2a65f61a4bf449c641003c77c13144bd048dd981",
+  "command": "E2E_PORT=4441 SCENE_PORT=4442 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L10 --mode campaign --quality low --zoom 1.5 --no-skip --out test-results/playtest/l5-regression-campaign",
+  "exitCode": 0,
+  "startedAt": "2026-10-23T22:08:01.918Z",
+  "completedAt": "2026-10-23T22:52:56.917Z",
+  "wallSeconds": 2688,
+  "settings": [
+    {
+      "t": "2026-10-23T22:08:01.918Z",
+      "renderer": "webgpu"
+    },
+    {
+      "t": "2026-10-23T22:08:05.610Z",
+      "quality": "low",
+      "level": "L1",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T22:08:06.131Z",
+      "zoom": 1.4941657539639637,
+      "targetZoom": 1.5,
+      "level": "L1"
+    },
+    {
+      "t": "2026-10-23T22:10:21.969Z",
+      "quality": "low",
+      "level": "L2",
+      "tick": 10
+    },
+    {
+      "t": "2026-10-23T22:10:21.975Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L2"
+    },
+    {
+      "t": "2026-10-23T22:12:01.824Z",
+      "quality": "low",
+      "level": "L3",
+      "tick": 12
+    },
+    {
+      "t": "2026-10-23T22:12:01.832Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L3"
+    },
+    {
+      "t": "2026-10-23T22:15:11.195Z",
+      "quality": "low",
+      "level": "L4",
+      "tick": 10
+    },
+    {
+      "t": "2026-10-23T22:15:11.198Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L4"
+    },
+    {
+      "t": "2026-10-23T22:19:36.769Z",
+      "quality": "low",
+      "level": "L5",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T22:19:36.779Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L5"
+    },
+    {
+      "t": "2026-10-23T22:21:41.562Z",
+      "quality": "low",
+      "level": "L6",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T22:21:41.566Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L6"
+    },
+    {
+      "t": "2026-10-23T22:26:33.396Z",
+      "quality": "low",
+      "level": "L7",
+      "tick": 0
+    },
+    {
+      "t": "2026-10-23T22:26:33.544Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L7"
+    },
+    {
+      "t": "2026-10-23T22:29:51.154Z",
+      "quality": "low",
+      "level": "L8",
+      "tick": 12
+    },
+    {
+      "t": "2026-10-23T22:29:51.167Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L8"
+    },
+    {
+      "t": "2026-10-23T22:31:07.883Z",
+      "quality": "low",
+      "level": "L9",
+      "tick": 5
+    },
+    {
+      "t": "2026-10-23T22:31:07.888Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L9"
+    },
+    {
+      "t": "2026-10-23T22:33:43.798Z",
+      "quality": "low",
+      "level": "L10",
+      "tick": 0
+    },
+    {
+      "t": "2026-10-23T22:33:43.895Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L10"
+    }
+  ],
+  "runs": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 136,
+      "simSeconds": 134,
+      "maxNoProgressSeconds": 13.783333333333333,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "tick": 11,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex \u00b7 107\u00a0m",
+          "tick": 1011,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "escape",
+          "text": "Get away from the facility \u00b7 63\u00a0m",
+          "tick": 4243,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself \u00b7 62\u00a0m",
+          "tick": 4283,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station \u00b7 100\u00a0m",
+          "tick": 5426,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.53,
+              "z": 41.27
+            },
+            "drawn": null,
+            "playerY": 0.9649999737739563,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 100,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.2,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 17
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "axe",
+          "text": "Take the fire axe \u00b7 2\u00a0m",
+          "tick": 10,
+          "marker": {
+            "anchor": "l2-axe-rack",
+            "ring": {
+              "x": -74.15,
+              "y": 0.4,
+              "z": 47.5
+            },
+            "drawn": [
+              -74.15,
+              0.4,
+              47.5
+            ],
+            "playerY": 1.1200000047683716,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "board",
+          "text": "Get on the fire truck \u00b7 13\u00a0m",
+          "tick": 100,
+          "marker": {
+            "anchor": "l2-board",
+            "ring": {
+              "x": -66.8,
+              "y": 0,
+              "z": 36.400000000000006
+            },
+            "drawn": [
+              -66.8,
+              0,
+              36.4
+            ],
+            "playerY": 1.1200000047683716,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "ride",
+          "text": "Ride with Engine 3 to Grove Market \u00b7 73\u00a0m",
+          "tick": 488,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": {
+              "x": -43,
+              "y": 0,
+              "z": -32
+            },
+            "drawn": null,
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "doors",
+          "text": "Cover the firefighters while they force the doors",
+          "tick": 1952,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "bridge",
+          "text": "Reach the police checkpoint at the bridge \u00b7 139\u00a0m",
+          "tick": 2717,
+          "marker": {
+            "anchor": "l2-gate-inside",
+            "ring": {
+              "x": 79.5,
+              "y": 0,
+              "z": 30
+            },
+            "drawn": [
+              79.5,
+              0,
+              30
+            ],
+            "playerY": 0.8500000238418579,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 188,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 14.555,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 61
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "steps": [
+        {
+          "id": "armory",
+          "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+          "tick": 12,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": {
+              "x": -139.2,
+              "y": 0,
+              "z": -8.4
+            },
+            "drawn": [
+              -139.2,
+              0.05,
+              -8.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "defend",
+          "text": "Help defend the station",
+          "tick": 653,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "checkpoint",
+          "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+          "tick": 1323,
+          "marker": {
+            "anchor": "l3-zone",
+            "ring": {
+              "x": 225,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              225,
+              0.05,
+              0
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 264,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 17.274,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 43
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+          "tick": 10,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster \u00b7 10\u00a0m",
+          "tick": 1837,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+          "tick": 2064,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7160000205039978,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 316\u00a0m",
+          "tick": 13471,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door \u00b7 5\u00a0m",
+          "tick": 14946,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.8100000619888306,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down \u00b7 0:07 remaining",
+          "tick": 15105,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 126,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 9.833333333333334,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 77
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "emerge",
+          "text": "Unbar the cellar door \u00b7 4\u00a0m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "look",
+          "text": "Look for anyone still alive",
+          "tick": 792,
+          "marker": {
+            "anchor": "l5-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "metro",
+          "text": "Lead the survivors down into the Metro \u00b7 Survivors in 0/2 \u00b7 92\u00a0m",
+          "tick": 5457,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": {
+              "x": 37.485400000000006,
+              "y": 0.94,
+              "z": -48.44
+            },
+            "drawn": [
+              37.49,
+              0.94,
+              -48.44
+            ],
+            "playerY": 0.8500000238418579,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 293,
+      "simSeconds": 285,
+      "maxNoProgressSeconds": 20.616666666666667,
+      "deaths": 1,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 441,
+        "weapon.fire-axe": 27
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter \u00b7 0:34 remaining",
+          "tick": 11,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected \u00b7 Retreat in 0:36",
+          "tick": 1993,
+          "marker": {
+            "anchor": "l5-metro-in",
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel \u00b7 15\u00a0m",
+          "tick": 4158,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 6,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              6,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night \u00b7 0/4 out \u00b7 31\u00a0m",
+          "tick": 16539,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.2699999809265137,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 188,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 8.809,
+      "deaths": 1,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 36
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "rocket",
+          "text": "",
+          "tick": 0,
+          "marker": {
+            "anchor": "l7-rocket",
+            "ring": {
+              "x": 276,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              0,
+              0,
+              0
+            ],
+            "playerY": 4.6049999999999995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "corridor",
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 4/4 nearby \u00b7 307\u00a0m",
+          "tick": 84,
+          "marker": {
+            "anchor": "l7-corridor-east",
+            "ring": {
+              "x": -30,
+              "y": 0,
+              "z": 50
+            },
+            "drawn": [
+              -30,
+              0.13,
+              50
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "departure",
+          "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+          "tick": 10010,
+          "marker": {
+            "anchor": "l7-bus-boarding",
+            "ring": {
+              "x": -70.5,
+              "y": 0,
+              "z": 47.5
+            },
+            "drawn": [
+              -70.5,
+              0,
+              47.5
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 82,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 7.783333333333333,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "escape",
+          "text": "Bring the survivors to the armored vehicle and board \u00b7 97\u00a0m",
+          "tick": 12,
+          "marker": {
+            "anchor": "exit",
+            "ring": {
+              "x": 96.71,
+              "y": 0,
+              "z": 76.275
+            },
+            "drawn": [
+              96.71,
+              0.12,
+              76.28
+            ],
+            "playerY": 0.8399999737739563,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "depart",
+          "text": "Wait for the breach \u00b7 37 s",
+          "tick": 1437,
+          "marker": {
+            "anchor": "exit",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.9954345226287842,
+            "pinVisible": false
+          }
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 157,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 14.616666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city \u00b7 1020\u00a0m",
+          "tick": 5,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 0.9970774054527283,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "reach-outskirts",
+          "text": "Get clear of the wreck \u00b7 81\u00a0m",
+          "tick": 8245,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": null,
+            "playerY": 0.9960278383890788,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 1154,
+      "simSeconds": 1151,
+      "maxNoProgressSeconds": 148.243,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.pistol": 12,
+        "weapon.army-mg": 41,
+        "weapon.rocket-launcher": 50
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "crash",
+          "text": "",
+          "tick": 0,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              0,
+              0,
+              0
+            ],
+            "playerY": 0.705,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "residential-fringe",
+          "text": "Recover the handgun at the checkpoint \u00b7 221\u00a0m",
+          "tick": 6,
+          "marker": {
+            "anchor": "cure-residential",
+            "ring": {
+              "x": 767,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              767,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "industrial-area",
+          "text": "Recover the shotgun at the checkpoint \u00b7 490\u00a0m",
+          "tick": 3222,
+          "marker": {
+            "anchor": "cure-industrial",
+            "ring": {
+              "x": 1257,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              1257,
+              0,
+              25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "military-zone",
+          "text": "Recover the machine gun at the checkpoint \u00b7 600\u00a0m",
+          "tick": 10892,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1857,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              1857,
+              0,
+              25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "research-campus",
+          "text": "Reach the research campus \u00b7 611\u00a0m",
+          "tick": 19303,
+          "marker": {
+            "anchor": "cure-research-entry",
+            "ring": {
+              "x": 2467,
+              "y": 0,
+              "z": -5
+            },
+            "drawn": [
+              2467,
+              0,
+              -5
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "research",
+          "text": "Play the research recording \u00b7 246\u00a0m",
+          "tick": 28713,
+          "marker": {
+            "anchor": "cure-terminal",
+            "ring": {
+              "x": 2707,
+              "y": 0,
+              "z": 41.25
+            },
+            "drawn": [
+              2707,
+              0,
+              41.25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "cure",
+          "text": "Pack the cure canister \u00b7 6\u00a0m",
+          "tick": 32457,
+          "marker": {
+            "anchor": "cure-canister",
+            "ring": {
+              "x": 2713,
+              "y": 0,
+              "z": 41
+            },
+            "drawn": [
+              2713,
+              0,
+              41
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "research-exit",
+          "text": "Get the cure out of the laboratory \u00b7 94\u00a0m",
+          "tick": 32910,
+          "marker": {
+            "anchor": "cure-research",
+            "ring": {
+              "x": 2807,
+              "y": 0,
+              "z": 45
+            },
+            "drawn": [
+              2807,
+              0,
+              45
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "destroyed-corridor",
+          "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 140\u00a0m",
+          "tick": 34228,
+          "marker": {
+            "anchor": "cure-corridor",
+            "ring": {
+              "x": 2937,
+              "y": 0,
+              "z": -5
+            },
+            "drawn": [
+              2937,
+              0,
+              -5
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "dispersal-complex",
+          "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+          "tick": 36194,
+          "marker": {
+            "anchor": "cure-complex",
+            "ring": {
+              "x": 3697,
+              "y": 0,
+              "z": -25
+            },
+            "drawn": [
+              3697,
+              0,
+              -25
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "install",
+          "text": "Install the cure in the dispersal device \u00b7 311\u00a0m",
+          "tick": 48541,
+          "marker": {
+            "anchor": "cure-install",
+            "ring": {
+              "x": 4006.5,
+              "y": 0,
+              "z": -39
+            },
+            "drawn": [
+              4006.5,
+              0,
+              -39
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Activate the dispersal console \u00b7 13\u00a0m",
+          "tick": 52895,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": {
+              "x": 4002,
+              "y": 0,
+              "z": -27
+            },
+            "drawn": [
+              4002,
+              0,
+              -27
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "mega",
+          "text": "Kill the Mega Alpha \u00b7 28\u00a0m",
+          "tick": 56697,
+          "marker": {
+            "anchor": "cure-mega",
+            "ring": {
+              "x": 4015.7000493643777,
+              "y": 0.7,
+              "z": -7.131249781801445
+            },
+            "drawn": [
+              4016.33,
+              0.7,
+              -7.29
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "release",
+          "text": "Release the cure at the console \u00b7 38\u00a0m",
+          "tick": 58233,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": {
+              "x": 4002,
+              "y": 0,
+              "z": -27
+            },
+            "drawn": [
+              4002,
+              0,
+              -27
+            ],
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "epilogue",
+          "text": "Watch the cure spread",
+          "tick": 59105,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "credits",
+          "text": "Minor Incident",
+          "tick": 68028,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "deaths": 2,
+  "completedSteps": [
+    {
+      "level": "L1",
+      "id": "pickup",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L1",
+      "id": "deliver",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L1",
+      "id": "escape",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L1",
+      "id": "weapon",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L1",
+      "id": "firestation",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "axe",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "calm",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "board",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "ride",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "doors",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L2",
+      "id": "bridge",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L3",
+      "id": "armory",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L3",
+      "id": "defend",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L3",
+      "id": "checkpoint",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "ride",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "quartermaster",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "hold",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "hide",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "bar",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L4",
+      "id": "wait",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L5",
+      "id": "emerge",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L5",
+      "id": "look",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L5",
+      "id": "metro",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L6",
+      "id": "shelter",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L6",
+      "id": "stop",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L6",
+      "id": "retreat",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L6",
+      "id": "exit",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L7",
+      "id": "rocket",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L7",
+      "id": "corridor",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L7",
+      "id": "departure",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L8",
+      "id": "escape",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L8",
+      "id": "depart",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L9",
+      "id": "approach",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L9",
+      "id": "reach-outskirts",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "crash",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "residential-fringe",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "industrial-area",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "military-zone",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "research-campus",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "research",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "cure",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "research-exit",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "destroyed-corridor",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "dispersal-complex",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "install",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "hold",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "mega",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "release",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "epilogue",
+      "optional": false,
+      "status": "completed"
+    },
+    {
+      "level": "L10",
+      "id": "credits",
+      "optional": false,
+      "status": "completed"
+    }
+  ],
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 6,
+    "P3": 0
+  },
+  "issues": [
+    {
+      "level": "L6",
+      "tick": 11069,
+      "x": 107.4,
+      "z": 15.4,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #161 (attack) 1.1 m away took no damage from 8 s of attacks (hp 32/60)",
+      "captures": [
+        "captures/campaign-L6-11069-enemy-unhittable.jpg"
+      ],
+      "step": "retreat",
+      "objective": "Bring the injured survivor back to the group \u00b7 31\u00a0m"
+    },
+    {
+      "level": "L6",
+      "tick": 11953,
+      "x": 111.4,
+      "z": 14.3,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 28.0 m, no marker: false); HUD: \"Bring the injured survivor back to the group \u00b7 28\u00a0m\"",
+      "captures": [
+        "captures/campaign-L6-11953-stuck-navigating.jpg"
+      ],
+      "step": "retreat",
+      "objective": "Bring the injured survivor back to the group \u00b7 28\u00a0m"
+    },
+    {
+      "level": "L6",
+      "tick": 15411,
+      "x": 193.4,
+      "z": 14.1,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #198 (attack) 1.9 m away took no damage from 8 s of attacks (hp 18/60)",
+      "captures": [
+        "captures/campaign-L6-15411-enemy-unhittable.jpg"
+      ],
+      "step": "retreat",
+      "objective": "Cover the retreat through the tunnel \u00b7 19\u00a0m"
+    },
+    {
+      "level": "L7",
+      "tick": 5097,
+      "x": -16,
+      "z": 46.9,
+      "severity": "P2",
+      "kind": "enemy-unhittable",
+      "text": "Infected #224 (chase) 1.1 m away took no damage from 8 s of attacks (hp 60/60)",
+      "captures": [
+        "captures/campaign-L7-5097-enemy-unhittable.jpg"
+      ],
+      "step": "corridor",
+      "objective": "Bring the group to the evacuation corridor \u00b7 Group 0/0 nearby \u00b7 14\u00a0m"
+    },
+    {
+      "level": "L10",
+      "tick": 42507,
+      "x": 3316.3,
+      "z": -91.7,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 387.0 m, no marker: false); HUD: \"Bring the cure to the dispersal complex \u00b7 387\u00a0m\"",
+      "captures": [
+        "captures/campaign-L10-42507-stuck-navigating.jpg"
+      ],
+      "step": "dispersal-complex",
+      "objective": "Bring the cure to the dispersal complex \u00b7 387\u00a0m"
+    },
+    {
+      "level": "L10",
+      "tick": 60332,
+      "x": 4002.2,
+      "z": -27,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Watch the cure spread\"",
+      "captures": [
+        "captures/campaign-L10-60332-stuck-navigating.jpg"
+      ],
+      "step": "epilogue",
+      "objective": "Watch the cure spread"
+    }
+  ],
+  "finalState": {
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        2
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 199.5,
+      "focus": [
+        4002.1538085937514,
+        2.5e-323,
+        -27.03928565979005
+      ],
+      "target": [
+        4001.2922851562507,
+        2.5e-323,
+        -27.02357139587403
+      ],
+      "position": [
+        4115.418535018379,
+        117.2631578323484,
+        87.102678466254
+      ],
+      "spot": null
+    },
+    "completedLevels": 10,
+    "crossingHandover": {
+      "applied": true,
+      "corgi": {
+        "kind": "companion",
+        "archetype": "char.corgi",
+        "faction": "survivor",
+        "transform": {
+          "x": 467.2852651001397,
+          "z": -21.509912478018453,
+          "y": 0.3,
+          "yaw": -0.6667828820737024
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "companion": {
+          "state": "follow",
+          "courage": 100,
+          "until": 0,
+          "barkAt": 0,
+          "hurtAt": 0,
+          "pickup": null,
+          "path": [],
+          "goal": -1,
+          "pathIndex": 20,
+          "following": true,
+          "velocity": {
+            "x": -3.3945138479629122,
+            "z": -3.6876605397245044
+          },
+          "hold": 0,
+          "warn": {
+            "stage": "none",
+            "threat": -1,
+            "nervousUntil": 0
+          }
+        },
+        "id": 161,
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 1858.1544776404778
+        },
+        "hidden": true,
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "passengerOf": 553
+      },
+      "checkpoint": "cure-crash",
+      "anchor": {
+        "x": 547,
+        "y": 0.72,
+        "z": 0,
+        "yaw": 0
+      },
+      "preCrashDurability": 1000,
+      "lostWeapons": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.bat",
+        "weapon.molotov",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb"
+      ],
+      "shelteredPassengers": []
+    },
+    "phase": "progression",
+    "states": {
+      "charge-active": true,
+      "console-held": true,
+      "terminal-read": true,
+      "cure-carried": false,
+      "cure-installed": true,
+      "charge-ready": true,
+      "mega-dead": true,
+      "cure-released": true,
+      "epilogue-finished": true,
+      "credits-finished": true,
+      "anchor-unavailable": false
+    },
+    "epiloguePhase": "done"
+  },
+  "audit": {
+    "allSettingsVerified": true,
+    "allStepsCompleted": true,
+    "noGodMode": true,
+    "noObjectiveSkipOrStateCompletionAssist": true,
+    "freshProfile": true,
+    "headless": true,
+    "browserAdmission": "tools/e2e-lock.sh",
+    "driverSourceSha256": {
+      "tools/playtest/eyes.ts": "9f8c88150d2da6f0ee9e2419d393e449cc188d142d4095a699d4fa177ba11527",
+      "tools/playtest/session.ts": "774617b6a8139a33da9f0b7000b52d58041d709914ae5eb6b8e6e5c307f613f9"
+    }
+  },
+  "rawArtifactSha256": {
+    "summary.json": "08afcb3c80c340b751d817fe6b2aacfa012c0a9b3cba3f918a9236d3e5a28b23",
+    "campaign-completion.json": "3a4f0ac6bb320789deea60d4f923d17adf8709f23788dfb078700e3a983ac30e",
+    "log-campaign.jsonl": "7d0767ae79e163beb56cfd1ab36afecca062a1aba3e19ea3d20e9c1133bc8582",
+    "issues-campaign.json": "5b6c478092c2a40de1bf3d063a3cafe4486a3506cc5725f6632aac951492be08",
+    "runs-campaign.json": "0db412c258d136f2a01250c32eb6b4c06e28d9b2f40db0e936718877bcde00cd",
+    "console.log": "8a71047711e22615a38065192ac0fb675396ccf126f1e40e40f4fe45e31c5594"
+  }
+}
