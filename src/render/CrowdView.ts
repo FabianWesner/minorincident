@@ -385,7 +385,7 @@ export class CrowdView extends Group {
         this.staticCorpses.prepare(`${key}:${death}:0`, this.corpseGeometry.get(key) ?? mesh.geometry.userData.inlineBody ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1);
       }
       if (regularInfectedModels.some(id => id === asset) && this.accessories) { await this.accessories.init(); this.staticCorpses.prepareHeadwear(material, this.accessories.corpseHeadwearSources()); }
-      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) this.staticCorpses.prepare(`${key}:death-back:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) this.staticCorpses.prepare(`${key}:death-back:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, false);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {

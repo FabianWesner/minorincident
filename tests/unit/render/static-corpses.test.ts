@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
+import { BoxGeometry, BufferAttribute, BufferGeometry, Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
@@ -317,4 +317,39 @@ test('permanent frozen bodies drop the live fade mask while the living material 
     expect(material.maskNode).toBe(liveMask);
     expect(page.count).toBe(1); expect(page.geometry.index?.count ?? page.geometry.getAttribute('position').count).toBe(baked.geometry.index?.count ?? baked.geometry.getAttribute('position').count);
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); materials.dispose(); lighting.dispose(); }
+});
+
+
+test('different fitted headwear shares one corpse body page and follows detail changes, throws and removal', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
+  const box = () => { const g = new BoxGeometry(); g.setAttribute('color', new BufferAttribute(new Float32Array(g.getAttribute('position').count * 3).fill(.4), 3)); g.setAttribute('_parts', new BufferAttribute(new Float32Array(g.getAttribute('position').count * 4), 4)); return g; };
+  const base = box(), piece = box(), fit = new Matrix4().makeScale(1.3, .8, 1.1).setPosition(.1, .2, .3);
+  const clip = (height: number) => ({ parts: ['hip', 'head'], frames: 1, duration: 1, matrices: new Float32Array([...new Matrix4().elements, ...new Matrix4().makeRotationY(.4).setPosition(0, height, 0).elements]) });
+  const farClip = clip(2), nearClip = clip(3), pool = new StaticCorpses(), records = new Map<number, EntitySnapshot>(), wrappers: BufferGeometry[] = [];
+  const source = (asset: string) => { const wrapper = new BufferGeometry(); for (const name of Object.keys(base.attributes)) wrapper.setAttribute(name, base.getAttribute(name)); wrapper.setIndex(base.index); wrapper.userData.corpseBody = base; wrapper.userData.corpseHeadwear = { asset, source: piece, fit }; wrappers.push(wrapper); return wrapper; };
+  const bodies = [source('hat-a'), source('hat-b')], transforms = [new Matrix4(), new Matrix4().makeRotationY(.6).setPosition(5, 0, 0)];
+  try {
+    for (let i = 0; i < 2; i++) {
+      const e = { id: i + 1, archetype: 'infected.runner', infected: { variant: 'inf.common-worker' }, corpse: true, transform: { x: i * 5, y: .7, z: 0, yaw: i * .6 } } as EntitySnapshot; records.set(e.id, e);
+      const look = { ...resolveCrowdAppearance(e), accessory: `hat-${i ? 'b' : 'a'}`, slot: i + 1, hidesHair: true };
+      pool.place(e, 'worker', bodies[i], material, farClip, 0, transforms[i], new Color('white'), [0, 0, 0], String(e.id), [], look, i ? { source: bodies[i], material, clip: nearClip, frame: 0 } : undefined);
+    }
+    const bodyPages = () => (pool.children as InstancedMesh[]).filter(m => m.name.startsWith('corpses:') && m.count);
+    const heads = () => (pool.children as InstancedMesh[]).filter(m => m.name.startsWith('corpse-headwear:') && m.count);
+    expect(bodyPages()).toHaveLength(1); expect(bodyPages()[0].count).toBe(2); expect(heads()).toHaveLength(2);
+    expect(pool.snapshot().instances).toBe(2); expect(pool.snapshot().figures.map(f => f.id).sort()).toEqual([1, 2]);
+    const head = () => heads().find(m => m.name.includes('hat-b'))!;
+    const checkHead = (height: number, transform: Matrix4) => {
+      const actual = new Matrix4(); head().getMatrixAt(0, actual);
+      const expected = new Matrix4().makeRotationY(.4).setPosition(0, height, 0).multiply(fit).premultiply(transform);
+      expected.elements.forEach((value, i) => expect(actual.elements[i]).toBeCloseTo(value, 6));
+      expect((head().material as MeshLambertNodeMaterial).userData.batchFeatures).toBe('corpse-headwear');
+    };
+    checkHead(2, transforms[1]);
+    pool.updateDetail({ x: 5, z: 0 }); checkHead(3, transforms[1]); expect(pool.snapshot().instances).toBe(2);
+    const thrown = records.get(2)!; thrown.corpseThrown = true; thrown.transform.x = 6;
+    pool.begin(id => records.get(id)); transforms[1].setPosition(6, 0, 0); checkHead(3, transforms[1]);
+    records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(1); expect(heads()).toHaveLength(1);
+    records.get(2)!.hidden = true; pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0); expect(heads()).toHaveLength(0);
+  } finally { pool.dispose(); base.dispose(); piece.dispose(); wrappers.forEach(g => g.dispose()); materials.dispose(); lighting.dispose(); }
 });
