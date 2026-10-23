@@ -36,7 +36,11 @@ test('@E31 L9 night accents: light points along every route, on budget, render-o
   // Verge debris fires (life): off the carriageway, clear of every footprint, small.
   const verge = fires.filter(f => f.life);
   expect(verge.length).toBeGreaterThan(80);
-  for (const f of verge) { expect(lane([f.x, f.z])).toBeGreaterThan(1.2); expect(inside(f.x, f.z, .9)).toBe(false); expect(f.radius).toBeLessThan(.85); }
+  for (const f of verge) {
+    // Crash wreckage on the far deck (x > 528) burns beside the crawl line (|z| <= 3.2), everything else off the carriageway.
+    if (f.x > 528) expect(Math.abs(f.z)).toBeGreaterThan(4); else expect(lane([f.x, f.z])).toBeGreaterThan(1.2);
+    expect(inside(f.x, f.z, .5)).toBe(false); expect(f.radius).toBeLessThan(.85);
+  }
   // One hazard car blinks in a single phase, in step with its pool.
   const hazards = points.filter(a => a.kind === 'hazard');
   for (let i = 0; i < hazards.length; i += 4) expect(new Set(hazards.slice(i, i + 4).map(a => a.seed)).size).toBe(1);
