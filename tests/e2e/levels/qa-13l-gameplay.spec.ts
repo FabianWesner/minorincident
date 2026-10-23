@@ -8,7 +8,7 @@ const url = '/?test=poses&testApi=1&scenelab=1&renderer=webgl&quality=low&dpr=1&
 
 test('Q-136 real throttle input keeps all six wheels and the APC hull together throughout the fall', async ({ page }) => {
   test.setTimeout(180_000); await boot(page, url);
-  const samples = await collapseProof(page);
+  const samples = await collapseProof(page); expect(samples).toHaveLength(120);
   for (const sample of samples) {
     expect(sample.phase).toBe('fall'); expect(sample.wheels).toHaveLength(6);
     expect(Math.abs(sample.drawnY - sample.simY), JSON.stringify(sample)).toBeLessThan(.002);

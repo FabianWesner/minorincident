@@ -25,25 +25,28 @@ export async function collapseProof(page: Page) {
   });
   await page.keyboard.down('KeyW');
   try {
-    for (let i = 0; i < 100; i++) {
-      await page.evaluate(() => window.__SS__!.step(6));
-      if (await page.evaluate(() => (window.__SCENE__ as unknown as { game: Game }).game.world.missions!.l9!.state.phase === 'fall')) break;
+    for (let i = 0; i < 600; i++) {
+      const phase = await page.evaluate(async () => { await window.__SS__!.step(1); return (window.__SCENE__ as unknown as { game: Game }).game.world.missions!.l9!.state.phase; });
+      if (phase === 'fall') break;
     }
   } finally { await page.keyboard.up('KeyW'); }
   const samples = [];
-  for (const ticks of [36, 36]) {
-    await page.evaluate(ticks => window.__SS__!.step(ticks), ticks);
-    const sample = await page.evaluate(() => {
-      const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.l9!.state;
-      g.view.update(1);
-      const car = w.vehicles!.cars.get(s.carId)!;
-      const view = g.view.labProbes().vehicles as unknown as { records: Map<number, { parent: Object3D; model: Object3D; wheels: { node: Object3D; y: number }[] }> };
-      const r = view.records.get(s.carId)!;
-      return { tick: w.tick, phase: s.phase, simY: car.physics.transform.y, drawnY: r.parent.position.y, meshes: r.model.children.length,
-        wheels: r.wheels.map((wheel, i) => ({ name: wheel.node.name, y: wheel.node.position.y, expected: wheel.y + car.physics.def.suspension - car.physics.wheels[i < 4 ? i : i - 2].suspension })) };
-    });
-    samples.push(sample);
-    await page.screenshot({ path: `${gameplayProofDir}/Q-136-fall-${samples.length}.png` });
+  for (const [index, ticks] of [36, 36, 48].entries()) {
+    const batch = await page.evaluate(async ticks => {
+      const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, rows = [];
+      for (let frame = 0; frame < ticks; frame++) {
+        const s = w.missions!.l9!.state; g.view.update(1);
+        const car = w.vehicles!.cars.get(s.carId)!;
+        const view = g.view.labProbes().vehicles as unknown as { records: Map<number, { parent: Object3D; model: Object3D; wheels: { node: Object3D; y: number }[] }> };
+        const r = view.records.get(s.carId)!;
+        rows.push({ tick: w.tick, phase: s.phase, simY: car.physics.transform.y, drawnY: r.parent.position.y, meshes: r.model.children.length,
+          wheels: r.wheels.map((wheel, i) => ({ name: wheel.node.name, y: wheel.node.position.y, expected: wheel.y + car.physics.def.suspension - car.physics.wheels[i < 4 ? i : i - 2].suspension })) });
+        await window.__SS__!.step(1);
+      }
+      return rows;
+    }, ticks);
+    samples.push(...batch);
+    await page.screenshot({ path: `${gameplayProofDir}/Q-136-fall-${index + 1}.png` });
   }
   writeFileSync(`${gameplayProofDir}/Q-136.json`, JSON.stringify(samples, null, 2));
   return samples;
