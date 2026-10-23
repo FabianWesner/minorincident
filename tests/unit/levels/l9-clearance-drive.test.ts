@@ -33,3 +33,15 @@ for (const route of crossing.routes) test(`Q-131 ${route.id} APC drive tolerates
     expect(longestStop, `${route.id}: continuous stop while holding forward`).toBeLessThan(3 * 60);
   } finally { world.dispose(); }
 }, 300_000);
+
+test('Q-139 debug-entry APC drives forward from the reported 402,-16.8 wedge', async () => {
+  const world = await loadLevel('L9', 1, 'low');
+  try {
+    const car = world.vehicles!.cars.get(world.missions!.l9!.state.carId)!;
+    expect(world.solids.clear({ x: 402, y: 1, z: -16.8 }, 1.6, car.entity.id, false)).toBe(true);
+    car.physics.body.setTranslation({ x: 402, y: 1, z: -16.8 }, true);
+    const input = { ...emptyInput(), drive: { throttle: .7, steer: 0 } };
+    for (let tick = 0; tick < 10 * 60 && car.entity.transform.x < 447; tick++) { world.applyInput(input, 'keyboard'); world.update(); }
+    expect(car.entity.transform.x).toBeGreaterThan(447);
+  } finally { world.dispose(); }
+}, 120_000);
