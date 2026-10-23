@@ -85,7 +85,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   if (source) for (const name of semanticNodeNames(source)) {
     const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
-    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh())) errors.push(`node ${name}: lost source geometry`);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
     if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
   }
   for (const name of def.animatedNodes) {
