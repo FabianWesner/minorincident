@@ -3,6 +3,8 @@ import { action, catalog } from '../../data/actions/catalog';
 import type { ActionDef } from '../../data/actions/schema';
 import type { SimWorld } from '../world/SimWorld';
 import { gearTier,modifiers,powerScore,rackSize,type CampaignSave } from './Campaign';
+import { weaponKey } from '../../data/weaponKeys';
+import type { Loadout } from '../combat/Loadout';
 /** Materialize once at a level/loadout boundary, never in a simulation/render tick. */
 export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   const m=modifiers(save),defs:Record<string,ActionDef>={};
@@ -23,6 +25,19 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
     defs[d.id]=d;
   }return defs;
 }
+export function restoreSelectedAction(loadout:Loadout,save:CampaignSave):string {
+  const entries=loadout.activeEntries();
+  let selected=save.selectedAction;
+  const entryFor=(id:string|undefined)=>entries.find(e=>e.id===id||weaponKey(e.id)!==undefined&&weaponKey(e.id)===weaponKey(id??''));
+  if(!selected||!entryFor(selected)) {
+    selected=save.ownedActions.map(id=>({id,key:weaponKey(id)})).filter((e):e is {id:string;key:number}=>e.key!==undefined).sort((a,b)=>b.key-a.key).find(e=>entryFor(e.id))?.id;
+    if(!selected)selected=entries.find(e=>e.id==='weapon.fists')?.id??entries[0].id;
+    if(save.selectedAction&&save.selectedAction!==selected)(globalThis as {console?:{info(message:string):void}}).console?.info(`[campaign] selected action ${save.selectedAction} unavailable; falling back to ${selected}`);
+  }
+  const entry=entryFor(selected)!;
+  loadout.state.selectedSide=entry.side;loadout.state[entry.side].index=entry.index;
+  return selected;
+}
 export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if (world.scenario === 'L10') enforceCureArsenal(save);
   if(!world.player)throw new Error('Progression needs a survivor');
@@ -39,7 +54,7 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   player.entity.health.max=100+m.health;player.entity.health.current=player.entity.health.max;
   player.progressionSpeed=(4.5+m.speed)/4.5;player.select(save.character,gearTier(save));
   if(world.vehicles){world.vehicles.progressionArmor=m.ramArmor;world.vehicles.progressionBoost=1+m.boost;}
-  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
+  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,save);if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
 }
 /** The racks a level starts with. The level's rack size is a floor, never a cut: a rack that grew by a pickup (L5's basement
  * shotgun, Pickups' extra slot) is carried whole (E24: "The player keeps the existing arsenal"; P1 10-20 lost shotgun in L6). */

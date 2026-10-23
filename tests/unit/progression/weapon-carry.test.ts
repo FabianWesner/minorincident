@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { catalog } from '../../../src/data/actions/catalog';
 import { newCampaign, preset, type CampaignSave, type Level } from '../../../src/sim/progression/Campaign';
-import { campaignLoadout } from '../../../src/sim/progression/apply';
+import { campaignLoadout, restoreSelectedAction } from '../../../src/sim/progression/apply';
 import { completeCampaignLevel } from '../../../src/sim/progression/carryover';
 import { decodeSave, validateSave } from '../../../src/sim/progression/Save';
 import { Loadout } from '../../../src/sim/combat/Loadout';
@@ -13,8 +13,8 @@ import { emptyInput } from '../../../src/input/InputFrame';
  * the save that carries it still loads from the menu. L9 -> L10 is the authored crossing (only the axe survives) and is not a carry.
  */
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
-const fakeWorld = (racks: CampaignSave['racks']) => ({
-  entities: { get: (id: number) => id === 1 ? { weapons: { LEFT: { rack: racks.LEFT.map(id => ({ id })) }, RIGHT: { rack: racks.RIGHT.map(id => ({ id })) } } } : undefined, iterate: () => [][Symbol.iterator]() },
+const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgun') => ({
+  entities: { get: (id: number) => id === 1 ? { weapons: { selectedSide: racks.RIGHT.includes(selectedAction) ? 'RIGHT' : 'LEFT', LEFT: { index: racks.LEFT.indexOf(selectedAction), rack: racks.LEFT.map(id => ({ id })) }, RIGHT: { index: racks.RIGHT.indexOf(selectedAction), rack: racks.RIGHT.map(id => ({ id })) } } } : undefined, iterate: () => [][Symbol.iterator]() },
 }) as never;
 function start(level: Level): CampaignSave {
   if (level === 1) return newCampaign();
@@ -22,6 +22,23 @@ function start(level: Level): CampaignSave {
 }
 
 describe('weapon carry across level handovers', () => {
+  it.each([1, 2, 3, 4, 5, 6, 7, 8] as const)('L%i handover and menu Continue retain the selected action', level => {
+    const save = start(level);
+    const selected = save.racks.RIGHT.includes('weapon.handgun') ? 'weapon.handgun' : save.racks.RIGHT[0];
+    completeCampaignLevel(save, level, result, fakeWorld(save.racks, selected));
+    expect(save.selectedAction).toBe(selected);
+    const loadout = campaignLoadout(save, level + 1), resumed = new Loadout(loadout.LEFT, loadout.RIGHT, undefined, loadout.size);
+    restoreSelectedAction(resumed, save);
+    expect(resumed.current(resumed.state.selectedSide).id).toBe(selected);
+  });
+  it('falls back to the best owned weapon when the selected weapon is lost', () => {
+    const save = preset('L8-default'); save.selectedAction = 'weapon.shotgun';
+    save.ownedActions = save.ownedActions.filter(id => id !== 'weapon.shotgun');
+    save.racks.RIGHT = save.racks.RIGHT.filter(id => id !== 'weapon.shotgun');
+    const loadout = campaignLoadout(save, 9), resumed = new Loadout(loadout.LEFT, loadout.RIGHT, undefined, loadout.size);
+    restoreSelectedAction(resumed, save);
+    expect(resumed.current(resumed.state.selectedSide).id).toBe('weapon.rocket-launcher');
+  });
   it('key 1 selects innate bare hands while leaving the carried arsenal unchanged', () => {
     const save=preset('L8-default');
     expect([...save.racks.LEFT,...save.racks.RIGHT]).not.toContain('weapon.fists');

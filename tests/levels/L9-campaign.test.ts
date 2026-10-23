@@ -50,6 +50,7 @@ test('T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign h
     expect(save.transport).toBeUndefined();
     expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
     expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
+    expect(save.selectedAction).toBe('weapon.fire-axe');
   } finally {
     mkdirSync('test-results/epics/E31', { recursive: true });
     writeFileSync(out, JSON.stringify({ seed: 1, reports, save }, null, 2) + '\n');

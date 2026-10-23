@@ -343,7 +343,6 @@ export class Game {
     else this.campaignUI.credits(save);
   }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
-    const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
     // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
@@ -353,10 +352,7 @@ export class Game {
     // Settings can save the previous live world: clear its resume only after those updates.
     // An explicit level is a whole-level restart; the menu's Resume action omits it.
     if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
-    await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
-      // A fresh handover equips the carried firearm; menu Resume keeps its loadout selection.
-      if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
-    }, record: true } : undefined);
+    await this.loadLevel(`L${level??save.unlockedLevel}`);
     this.view.settings(settings);
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
