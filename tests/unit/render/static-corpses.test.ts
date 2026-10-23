@@ -304,3 +304,17 @@ test('@E27-AC15 moving corpse pages update bounds once and settled float32 poses
     for (const p of pool.drawn()) expect(p.x).toBe(Math.fround(records.get(p.id)!.transform.x));
   } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
 });
+
+test('permanent frozen bodies drop the live fade mask while the living material keeps it', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
+  const liveMask = vec3(1).x.greaterThan(.5); material.maskNode = liveMask;
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses();
+  try {
+    pool.place({ id: 1, corpse: true } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    const page = pool.children[0] as InstancedMesh;
+    expect((page.material as MeshLambertNodeMaterial).maskNode).toBeNull();
+    expect(material.maskNode).toBe(liveMask);
+    expect(page.count).toBe(1); expect(page.geometry.index?.count ?? page.geometry.getAttribute('position').count).toBe(baked.geometry.index?.count ?? baked.geometry.getAttribute('position').count);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); materials.dispose(); lighting.dispose(); }
+});

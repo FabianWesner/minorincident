@@ -68,7 +68,7 @@ try {
               rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
               await a.step(1); await a.screenshotReady();
               const meshes: { name: string; instances: number; triangles: number }[] = [];
-              game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if (m.name.startsWith('corpses:') && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
+              game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if ((m.name.startsWith('corpses:') || m.name.startsWith('corpse-headwear:')) && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
               return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, perf: a.perf(), meshes, corpses: a.query({}).filter(e => e.corpse).length };
             }, zoom);
             assert.equal(state.backend, backend === 'webgl2' ? 'webgl' : backend);

@@ -200,8 +200,8 @@ export class CrowdAccessories extends Group {
   private readonly lifts = new Map<string, number>();
   private readonly liftMatrix = new Matrix4();
   private readonly referenceFit = new Matrix4();
-  private headPiece(id: string, model: string, head: number, slot = 0): BufferGeometry {
-    this.fit(id, model);
+  private headPiece(id: string, model: string, head: number, slot = 0, applyFit = true): BufferGeometry {
+    if (applyFit) this.fit(id, model);
     // Render backends may pad colours/normals to vec4 in place. Read the semantic
     // channels from both sources rather than borrowing their GPU attribute layout.
     const piece = new BufferGeometry(), original = this.batches.get(`${id}:lod1`)!.geometry;
@@ -212,7 +212,7 @@ export class CrowdAccessories extends Group {
       piece.setAttribute(name, new BufferAttribute(values, size));
     }
     piece.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
-    piece.applyMatrix4(this.fitTransform);
+    if (applyFit) piece.applyMatrix4(this.fitTransform);
     const count = piece.getAttribute('position').count, parts = new Float32Array(count * 4);
     for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 3] = slot ? 128 + slot * 8 : 0; parts[i * 4 + 1] = definitions.get(id)?.tint === 'hair' ? -5 : -4; }
     piece.setAttribute('_parts', new BufferAttribute(parts, 4));
@@ -231,13 +231,30 @@ export class CrowdAccessories extends Group {
     return geometry;
   }
   /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
-  corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
+  private readonly corpseHeadPieces = new Map<string, BufferGeometry>();
+  corpseHeadwearSources(): { asset: string; source: BufferGeometry }[] {
+    return this.ids.filter(id => this.batches.has(`${id}:lod1`)).map(asset => {
+      let source = this.corpseHeadPieces.get(asset);
+      if (!source) { source = this.headPiece(asset, '', 0, 0, false); this.corpseHeadPieces.set(asset, source); }
+      return { asset, source };
+    });
+  }
+  corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number, separate = false): BufferGeometry {
     const look = this.look(e);
     if (!look.accessory || head < 0) return source;
     const accessory = this.batches.get(`${look.accessory}:lod1`);
     if (!accessory) return source;
-    const key = `${source.uuid}/${model}/${look.accessory}/${head}`;
+    const key = `${source.uuid}/${model}/${look.accessory}/${head}/${separate}`;
     const cached = this.corpseSources.get(key); if (cached) return cached;
+    if (separate) {
+      const local = this.corpseHeadwearSources().find(piece => piece.asset === look.accessory)!;
+      this.fit(look.accessory, model);
+      const wrapper = new BufferGeometry();
+      for (const name of ['position', 'normal', 'color', '_parts']) wrapper.setAttribute(name, source.getAttribute(name));
+      wrapper.setIndex(source.index); wrapper.userData.corpseBody = source;
+      wrapper.userData.corpseHeadwear = { ...local, fit: this.fitTransform.clone() };
+      this.corpseSources.set(key, wrapper); return wrapper;
+    }
     const piece = this.headPiece(look.accessory, model, head);
     // Keep the large live buffers shared. StaticCorpses reuses their frozen
     // body pose and merges only after the small head piece has been posed.
@@ -257,5 +274,5 @@ export class CrowdAccessories extends Group {
     return { id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3,
       layout: { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 } };
   }); }
-  dispose(): void { this.infectedBatches.clear(); this.resolvingFrame = false; this.frameLooks.clear(); this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) { (geometry.userData.corpseAccessory as BufferGeometry|undefined)?.dispose(); geometry.dispose(); } this.corpseSources.clear(); this.clear(); }
+  dispose(): void { this.infectedBatches.clear(); this.resolvingFrame = false; this.frameLooks.clear(); this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) { (geometry.userData.corpseAccessory as BufferGeometry|undefined)?.dispose(); geometry.dispose(); } this.corpseSources.clear(); for (const piece of this.corpseHeadPieces.values()) piece.dispose(); this.corpseHeadPieces.clear(); this.clear(); }
 }

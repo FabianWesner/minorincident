@@ -62,7 +62,11 @@ test('@E19 imported vertex-color and emissive variants share the palette shader'
 
 test('@E19 golden morning has radial two-color fog and shadow bounds follow actual desktop/portrait views', () => {
   const scene = new Scene(), lighting = new Lighting(scene), view = new View(); lighting.set('L1'); lighting.setQuality('high');
-  expect(scene.backgroundNode).toBe(lighting.radialFog);
+  expect(scene.backgroundNode).toBe(lighting.backdropFog);
+  expect(lighting.backdropHaze.value).toBe(0);
+  const backdrop = lighting.backdropFog as unknown as { node: { aNode: unknown; bNode: unknown } };
+  expect(backdrop.node.aNode).toBe(lighting.radialFog);
+  expect(backdrop.node.bNode).toBe(lighting.look.nodes.haze);
   expect(lighting.color.value.getHexString()).toBe('ffd9b0'); expect(lighting.shadow.value.getHexString()).toBe('6c56ac');
   expect(lighting.getState()).toMatchObject({ shadowSize: 2048, normalBias: .08, shadowRadius: 2, coreShadowEdges: [1, -.25], fogColors: ['#f2c7a5', '#c7a2c9'] });
   view.resize(1600, 900); view.reset({ x: 42, z: -6.5 }); lighting.update(view);
