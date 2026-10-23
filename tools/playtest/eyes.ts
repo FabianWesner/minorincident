@@ -28,6 +28,31 @@ export function visibleGroupTarget(level: string | null, player: { x: number; z:
   return Math.hypot(player.x - centre.x, player.z - centre.z) > leash ? centre : null;
 }
 
+/** Leave a stationary escort ring clear for a nearby follower to pass through. */
+export class EscortClearance {
+  private ring: { x: number; z: number } | null = null;
+  private bearing: { x: number; z: number } | null = null;
+  private goal: { x: number; z: number } | null = null;
+  sample(level: string | null, step: string | null, player: { x: number; z: number }, ring: { x: number; z: number } | null, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean; kind?: string }[], stalledSeconds: number): { x: number; z: number } | null {
+    if (level !== 'L6' || step !== 'retreat' || !ring) {
+      this.ring = this.bearing = this.goal = null; return null;
+    }
+    const distance = this.ring ? Math.hypot(ring.x - this.ring.x, ring.z - this.ring.z) : 0;
+    if (this.ring && distance > .5) {
+      this.bearing = { x: (ring.x - this.ring.x) / distance, z: (ring.z - this.ring.z) / distance };
+      this.goal = null;
+    }
+    this.ring = { ...ring };
+    if (!this.goal && this.bearing && stalledSeconds >= 8 && Math.hypot(player.x - ring.x, player.z - ring.z) < 1.2
+      && allies.some(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion' && Math.hypot(a.x - player.x, a.z - player.z) < 3)) {
+      this.goal = { x: ring.x + this.bearing.x * 3.5, z: ring.z + this.bearing.z * 3.5 };
+    }
+    // Retain the clearance position while this ring waits; returning immediately
+    // to the ring would put the courier back in the follower's path.
+    return this.goal;
+  }
+}
+
 /** Runs in the page. Keep it self-contained (no closures). */
 export function look(): Eyes {
   const a = window.__SS__!;
@@ -35,8 +60,11 @@ export function look(): Eyes {
   const shown = (el: HTMLElement | null) => !!el && !el.hidden && el.offsetParent !== null;
   const m = a.missions.state();
   const active = m ? Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0] ?? null : null;
-  const tracker = q('mission-tracker');
+  const liveTracker = q('objective-tracker');
+  const tracker = shown(liveTracker) ? liveTracker : q('mission-tracker');
   const objective = q('objective-text');
+  const trackerText = shown(tracker) ? tracker!.textContent ?? '' : '';
+  const distanceText = trackerText.match(/(?:^| · )(\d+(?:\.\d+)?)\s*m\b/);
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
@@ -87,8 +115,8 @@ export function look(): Eyes {
   return {
     tick: a.tick(), level: m?.id ?? null, phase: m?.phase ?? null, step: active, checkpoint: m?.checkpoint ?? null,
     completed: m ? Object.values(m.steps).filter(s => s.status === 'completed').length : 0,
-    objective: q('objective-text')?.textContent ?? '', tracker: shown(tracker) ? tracker!.textContent ?? '' : '',
-    distance: tracker?.dataset.distance ? Number(tracker.dataset.distance) : null,
+    objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
+    distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
     marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),

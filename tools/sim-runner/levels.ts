@@ -16,8 +16,7 @@ import { missionIds, resolveCampaignMission, type MissionId } from '../../src/le
 import type { Trigger } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import type { MissionResult } from '../../src/sim/missions/types';
-import { l7Rocket } from '../../src/data/l7';
-import { l7CorridorAnchors } from '../../src/levels/L7/corridor';
+import { LevelSevenBot } from '../../src/debug/bot/LevelSevenBot';
 import { runL1, Walker } from './l1Bots';
 import { runTen, type CureRegionTiming } from './l10';
 
@@ -216,10 +215,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
 
 /** Drive the real pickup, encounter group and bus while the mission records checkpoints. */
 function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onComplete?: (world: SimWorld, result: MissionResult) => void): LevelReport {
-  const walker = new Walker(), boarding = l7CorridorAnchors['l7-bus-boarding'].position;
-  // Authored Northgate -> Lakeshore road route; keep the long injured group out of the frontage yards.
-  const route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: boarding[0], z: boarding[2] }];
-  let waypoint = 0;
+  const bot = new LevelSevenBot(world, report.policy);
   const stop = world.events.on('level.completed', e => {
     if (e.type !== 'level.completed' || e.id !== 'L7') return;
     report.completed = true; report.outcome = 'complete'; report.time = e.result.time;
@@ -229,24 +225,10 @@ function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onCo
   try {
     for (let tick = 0; tick < maxSeconds * 60 && !report.completed; tick++) {
       followFrustum(world);
-      const p = world.entities.get(1)!, f = emptyInput();
+      const p = world.entities.get(1)!;
       if (p.health.current <= 0) { report.deaths++; report.outcome = 'mission-failed'; break; }
-      if (!world.storyLock) {
-        const pickup = world.l7Encounters!.state.started ? undefined : [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
-        if (!pickup && waypoint < route.length - 1 && distance(p.transform, route[waypoint]) < 2) waypoint++;
-        const goal = pickup?.transform ?? route[waypoint];
-        report.furthestObjective = pickup ? 'rocket-pickup' : 'bus-departure';
-        f.move = walker.step(world, goal, pickup ? .5 : 1, `${report.furthestObjective}-${waypoint}`) ?? f.move;
-        if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
-        const rack = p.weapons!.RIGHT.rack, rocket = rack.findIndex(s => s.id === l7Rocket.action);
-        if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
-        const enemies = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && world.infected!.nav.visible(p.transform, e.transform, 0)).sort((a,b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
-        if (enemies[0]) { f.attackTarget = { id: enemies[0].id, side: 'RIGHT' }; f.right.held = true; }
-        // Keep the surviving group within its ordinary follow range before boarding.
-        const followers = world.l7Encounters!.state.roster.filter(r => r.status === 'following' && !world.l7Departure!.state.boarded.includes(r.id));
-        const limit = Math.max(12, Math.ceil(followers.length / 3) * 1.2 + 5);
-        if (!pickup && distance(p.transform, goal) > 10 && followers.some(r => { const e = world.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
-      }
+      report.furthestObjective = world.l7Encounters!.state.started ? 'bus-departure' : 'rocket-pickup';
+      const f = bot.sample();
       world.applyInput(f, 'keyboard'); world.update();
     }
     if (!report.completed) {

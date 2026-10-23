@@ -55,6 +55,8 @@ export interface AssetDef {
   authoredLodRatios?: { lod1: number; lod2: number };
   /** Reviewed distance variants: absolute caps; native vehicles/houses also have monotone file sizes. */
   authoredLodTriangles?: { lod1: number; lod2: number };
+  /** Semantic pivots whose named source nodes remain in the LOD but whose tiny detail mesh is intentionally omitted. */
+  lodOptionalGeometryNodes?: string[];
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
   /** Uniform metres conversion applied to the entire exported assembly once. */

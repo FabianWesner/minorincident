@@ -140,6 +140,10 @@ export class InputSystem implements Lifecycle {
   /** Explicit HUD/device action, shared by pointer buttons and the keyboard/touch frame. */
   interactOnce(): void { this.interact = true; }
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
+  private keyboardAttackHeld(): boolean {
+    for (const [code, action] of this.heldTokens) if (!code.startsWith('Mouse') && (action === 'left' || action === 'right')) return true;
+    return false;
+  }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
     if (held && /^Digit[1-9]$/.test(code)) {
@@ -270,7 +274,9 @@ export class InputSystem implements Lifecycle {
     }
     if (this.pointerGround && !this.drivingContext) {
       frame.pointerGround = true;
-      if (this.pointerGround === 'move' && frame.left.held && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
+      // Attack keys share logical buttons with LMB. Only physical ground dragging
+      // retargets; while an attack key is held, the pointer only aims between clicks.
+      if (this.pointer.isHeld(0) && !this.keyboardAttackHeld() && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
     }
     if ((this.drivingContext || this.mountedGunContext) && this.scheme === 'touch') {
       if (this.touch.holdingLeft) frame.left.held = true;

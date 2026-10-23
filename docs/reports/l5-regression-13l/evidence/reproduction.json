@@ -1,0 +1,88 @@
+{
+  "baseCommit": "2a65f61a4bf449c641003c77c13144bd048dd981",
+  "originalLostLog": [
+    "[P2] L5 t4105 (-27.6,37) stuck-navigating: 20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+    "[P0] L5 t8384 (-27.5,36.5) cannot-finish: No visible progress for 91.4 s; stopping without advancing the objective"
+  ],
+  "fixture": {
+    "seed": 1,
+    "quality": "low",
+    "zoom": 1.5,
+    "backend": "webgpu",
+    "tick": 4105,
+    "player": [
+      -27.6,
+      37
+    ],
+    "activeObjective": "look",
+    "found": [
+      "mia",
+      "okafor",
+      "dale"
+    ],
+    "remaining": [
+      "sam",
+      "rosa"
+    ],
+    "setup": "Ordinary 1-second discovery at each of the first three survivor rings, then a Mission.saveResume snapshot at the reported approach. Existing infected were removed in this diagnostic fixture to isolate navigation. Both driver versions load the identical snapshot before input. This fixture is not campaign proof."
+  },
+  "rootCause": [
+    "Full UI hides legacy mission-tracker; the driver read that element for tracker text and distance. Actual objective-tracker remained visible with Look for anyone still alive, survivor count, location and live distance.",
+    "L5 look intentionally has waypoint:false; separate SurvivorRings and its minimap cue provide guidance. Missing mission-marker is expected in this step.",
+    "The cue-pin branch continued after nearby clicks, bypassing shared navigation recovery and close-ring movement. The progress watchdog also missed cue-distance progress because it read the hidden tracker."
+  ],
+  "requiredPlayerAction": "Approach Sam at the visible bus ring (-45,50), stand within 2.5 m for 1 second or press E; find Rosa as the last hidden survivor, then lead the living group into the Metro.",
+  "simulation": "The same production L5 low-tier world and three-found fixture reaches Sam from (-27.6,37) within 600 ticks using a normal moveTarget input; approach-sim.json records positions and found counts. The level geometry/discovery step is reachable.",
+  "freshBaselineAttempts": [
+    "l5-regression-red: 1/1 L5 finished, 0 skips/P0/P1, same look warning at t4102; later recovered.",
+    "l5-regression-red-2: 1/1 L5 finished, 0 skips/P0/P1, same look warning at t4058 near (-29.3,37.8); later recovered."
+  ],
+  "savedFixtureResult": {
+    "baseline": {
+      "finished": false,
+      "P0": "cannot-finish",
+      "tick": 9574,
+      "noProgressSeconds": 90.2
+    },
+    "fixed": {
+      "finished": true,
+      "wallSeconds": 92,
+      "maxNoProgressSeconds": 21.35,
+      "deaths": 0,
+      "skips": [],
+      "P0": 0,
+      "P1": 0,
+      "found": 5
+    }
+  },
+  "sha256": {
+    "resume.json.gz": "184fbf95235bb69c600faa22fbbd5a86aed0efc4a1233caf5a11f95e30c7160f",
+    "green-issues-position-L5.json.gz": "711ca6dccefd879f85c09d070460dd1831213e06af5f02cde9f84d3178b4c0f4",
+    "red-issues-position-L5.json.gz": "0f1bff460fc4f2422599f1c0b15dfba4ab3917f125485a85d23beba774156304",
+    "red-cannot-finish.jpg": "32c8adb46d7c4eb07eb69e69e1e9707413e07ceff4a23917ea2c8c1c88907db9",
+    "green-log-position-L5.jsonl.gz": "2199b5a290699a67d665d4d6eeec5586755cf25471efeb5e1e6290ddb8ddb212",
+    "replay.mjs": "34ef9a64d04d6e2e8e4ab4beafd635eb6a21e0e53959aa581149e36033309411",
+    "green-console.txt": "de14df9cea628f970bc15724859d5a7469ed6ca88baf5f037865aeb2db10f735",
+    "approach-sim.json": "804f75cd4316fe14a29ca0f93d6c6818cd7d9a5326eadea6b198d18cf4a76fd4",
+    "red-live-hud.jpg": "075f614f878c0950424047aa4300e5f47c51afc2e6408f6056d5ee5d124a4969",
+    "red-log-position-L5.jsonl.gz": "2aa72f457f5ecbbe63ea8a03ac0f7dfdddf3412298509b6a6e95a07881252dff",
+    "red-runs-position-L5.json.gz": "c112354b3471de0436873dc9aa9dda9f6e3573ebde62fd300a4e6419b12c8c7d",
+    "red-console.txt": "c0c79b53299b5174494e0f672dbfe472bdd7378d921ecf9e8074bceac572dcc4",
+    "green-runs-position-L5.json.gz": "61223752d1451a8929eed31c4dcbd3f35e68ea217acbda1ba70ceb148e43f3a7"
+  },
+  "fixedDriverSourceSha256": {
+    "tools/playtest/eyes.ts": "9f8c88150d2da6f0ee9e2419d393e449cc188d142d4095a699d4fa177ba11527",
+    "tools/playtest/session.ts": "774617b6a8139a33da9f0b7000b52d58041d709914ae5eb6b8e6e5c307f613f9"
+  },
+  "canonicalReplayValidation": {
+    "command": "E2E_PORT=4441 SCENE_PORT=4442 E2E_UNITS=1 BROWSER_POOL=off sh tools/e2e-lock.sh node --import tsx docs/reports/l5-regression-13l/evidence/replay.mjs http://127.0.0.1:4441 test-results/playtest/l5-regression-canonical-green fixed",
+    "exitCode": 0,
+    "finished": true,
+    "wallSeconds": 94,
+    "maxNoProgressSeconds": 25.56,
+    "deaths": 0,
+    "skips": [],
+    "P0": 0,
+    "P1": 0
+  }
+}

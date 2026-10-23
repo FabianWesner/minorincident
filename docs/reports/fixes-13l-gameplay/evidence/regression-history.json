@@ -1,0 +1,51 @@
+{
+  "note": "Observed red-first outcomes from this job. Q-138 and Q-139 observations were captured in the command transcript; other entries also have the referenced native/browser receipts. No failing result below describes the final implementation.",
+  "Q-136": {
+    "red": "Scripted hull height ~0.469 m, rendered height ~-3.372 m; wheels had different local heights.",
+    "redReceipt": "Q-136-red.json",
+    "greenReceipt": "Q-136-green.json",
+    "assertion": "120 fall frames: rendered hull equals simulated hull, all six wheels retain their suspension offsets."
+  },
+  "Q-137": {
+    "red": "41 visible companion samples during the first drive frames; the initial hidden flag was overwritten by passenger updates.",
+    "redReceipt": "Q-137-red.json",
+    "greenReceipt": "Q-137-green.json",
+    "assertion": "All 61 sampled frames have a boarded, hidden companion."
+  },
+  "Q-138": {
+    "red": "With the old canFetch restored, the pending fetch regression moved the headlamp from x=1.5 to x=3.5.",
+    "test": "tests/levels/qa-136-141-149.test.ts: Q-138",
+    "greenReceipt": "Q-138-green.json",
+    "assertion": "Headlamp remains at its authored station for 7200 ticks; physical walking leaves it fixed and physical E collects it."
+  },
+  "Q-139": {
+    "red": "With the merged gameplay base layout, forward input from the reported stop wedged at x=402.355 instead of reaching x>447.",
+    "test": "tests/unit/levels/l9-clearance-drive.test.ts: Q-139",
+    "greenReceipt": "Q-139-green.json",
+    "assertion": "Clearance covers every authored road/detour; physical W passes x=447 from the reported stop."
+  },
+  "Q-140": {
+    "red": "Original bus anchor: visible ring pixels / full ring pixels = 0.338527.",
+    "redReceipt": "Q-140-red.json",
+    "greenReceipt": "Q-140-green.json",
+    "assertion": "Near-side ring visibility is 0.830959 at zoom 1.5 and physical click/E rescues Sam."
+  },
+  "Q-141": {
+    "red": "Original HUD leaves the missing-passenger cue hidden during the boarding wait.",
+    "redReceipt": "Q-140-Q-141-red-browser.json",
+    "greenReceipt": "Q-141-green.json",
+    "assertion": "After physical E boards the APC, the minimap cue identifies a missing survivor beyond the viewport and text gives distance."
+  },
+  "Q-149": {
+    "result": "No invulnerability reproduced; no production combat change.",
+    "receipt": "Q-149-input.json",
+    "setup": "Active L10 console hold, ordinary 60-HP runner 1.1 m away on navigation-clear ground, staggered to keep its position fixed; physical weapon selection, viewport mouse aim and Space attacks for 480 ticks per weapon.",
+    "weapons": [
+      "axe",
+      "handgun",
+      "army machine gun",
+      "shotgun"
+    ],
+    "assertion": "All four targets go from 60 HP to 0 while the console hold remains active. This does not recreate the unavailable original infected #624 state."
+  }
+}

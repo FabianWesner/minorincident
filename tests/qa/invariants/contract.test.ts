@@ -17,6 +17,7 @@ import { highwayPoint } from '../../../src/levels/L3/highway';
 import { inside } from '../../../src/levels/districts/validate';
 import { ObjectiveMarker } from '../../../src/render/ObjectiveMarker';
 import { objectiveText } from '../../../src/sim/missions/objectiveText';
+import { SurvivorRings } from '../../../src/render/SurvivorRings';
 import { l2TruckPath } from '../../../src/data/l2';
 import { vehicleDef } from '../../../src/data/vehicles';
 import { findDoorway } from '../../../src/sim/missions/doorRoute';
@@ -232,7 +233,7 @@ describe('automatic regression invariants', () => {
         const expectedMarker = override?.kind === 'marker' ? override.anchor : step.waypoint === false ? null : step.anchor;
         if (mission.state.marker !== expectedMarker) violations.push(`${id}/${step.id}: marker ${mission.state.marker} should be ${expectedMarker}`);
         const markerResolves = step.waypoint === false || !!markerAnchor(mission);
-        if (oracle.objective({ markerVisible: markerResolves, visibleAtMs: 0 })) violations.push(`${id}/${step.id}: no state-visible waypoint in the start tick`);
+        if (oracle.objective({ markerVisible: markerResolves, visibleAtMs: 0, hudVisible: mission.state.steps[step.id].status === 'active', text: objectiveText(mission, step.text) })) violations.push(`${id}/${step.id}: no readable objective or state-visible waypoint in the start tick`);
         if (step.waypoint !== false) {
           marker.update(false);
           if (!marker.visible) violations.push(`${id}/${step.id}: actual ObjectiveMarker suppressed at activation`);
@@ -245,6 +246,24 @@ describe('automatic regression invariants', () => {
       marker.dispose();
       world.dispose();
     }
+    const l5world = await loadLevel('L5', 1), l5mission = l5world.missions!;
+    const survivorRings = new SurvivorRings(l5world);
+    try {
+      l5mission.completeObjective('emerge');
+      for (let tick = 0; tick < 11 * 60; tick++) l5world.update();
+      survivorRings.update(false);
+      const search = l5mission.def.steps.find(step => l5mission.state.steps[step.id].status === 'active');
+      if (oracle.objective({ markerVisible: survivorRings.visibleCount() > 0, visibleAtMs: 0, hudVisible: search?.id === 'look', text: search ? objectiveText(l5mission, search.text) : '' })) violations.push('L5/look: search requires readable objective text and survivor guidance');
+      for (const key of ['rosa', 'sam'] as const) {
+        const anchor = l5mission.def.anchors[`l5-ring-${key}`];
+        const ring = survivorRings.children.find(child => child.name === `survivor-spot-${key}`);
+        const arrow = ring?.getObjectByName(`survivor-arrow-${key}`) as (typeof survivorRings.children[number] & { material?: { depthTest: boolean } }) | undefined;
+        if (!anchor || !ring) { violations.push(`L5/${key}: missing search ring anchor or mesh`); continue; }
+        if (!ring.visible) violations.push(`L5/${key}: search ring not visible within 2 s`);
+        if (Math.hypot(ring.position.x - anchor.x, ring.position.z - anchor.z) > .01 || !arrow || arrow.material?.depthTest) violations.push(`L5/${key}: search marker is misplaced or occluded`);
+        if (!l5world.trapRescue?.reachable(anchor.x, anchor.z)) violations.push(`L5/${key}: search ring is not reachable`);
+      }
+    } finally { survivorRings.dispose(); l5world.dispose(); }
     expect(violations, 'P1-114: objective routes and marker anchors must exist').toEqual([]);
     expect(preset('L10-default')).toBeTruthy(); // document the campaign-ready level preset used for late levels
   }, 300_000);

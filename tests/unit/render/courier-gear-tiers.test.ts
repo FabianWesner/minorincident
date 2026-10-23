@@ -1,12 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { SkinnedMesh } from 'three';
 import { expect, test } from 'vitest';
 
 const budget = { '': 1200, '.low': 600, '.lod2': 250 } as const;
 for (const sex of ['female', 'male']) for (const [lod, limit] of Object.entries(budget)) test(`${sex} courier tier gear${lod || ' LOD0'}: tier ranges ordered, within triangle budget, skinned to body bones`, async () => {
   const bytes = readFileSync(`public/assets/models/acc.courier-gear.${sex}.tiers${lod}.glb`);
-  const scene = (await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  const scene = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
   let mesh: SkinnedMesh | undefined; scene.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) mesh = node as SkinnedMesh; });
   expect(mesh).toBeDefined();
   const tiers = JSON.parse(String(mesh!.userData.tierTris)) as number[];
