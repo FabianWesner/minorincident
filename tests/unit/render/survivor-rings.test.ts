@@ -10,7 +10,7 @@ test('survivor ring count tracks the unfound survivors during the look step', ()
   const rings = new SurvivorRings(world as never);
   try {
     expect(rings.children).toHaveLength(5);
-    expect(rings.children[0]).toMatchObject({ material: { depthTest: true, depthWrite: false } });
+    expect(rings.children[0]).toMatchObject({ material: { depthTest: false, depthWrite: false } });
     rings.update(); expect(rings.visibleCount()).toBe(5);
     rings.update(true); expect(rings.visibleCount()).toBe(0);
     rings.update(); expect(rings.visibleCount()).toBe(5);

@@ -88,6 +88,12 @@ test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, 
   expect(findings).toEqual([]);
 }, 300_000); // Decode the complete production inventory on the shared build machine.
 
+test('T-E17-school-bus @E17-AC02 delivered bus tiers preserve door and seat node contracts', async () => {
+  const bus = manifest.find(asset => asset.id === 'veh.school-bus')! as AssetDef;
+  const reports = await validateAssets([bus]);
+  expect(reports.flatMap(report => report.errors), JSON.stringify(reports.filter(report => report.errors.length))).toEqual([]);
+});
+
 // Absolute caps must survive permissive manifest budgets and authored ratios.
 test.each([['veh.test', 'vehicle', 1, 6000], ['veh.test', 'vehicle', 2, 2000], ['bld.house-test', 'building', 1, 12000], ['bld.house-test', 'building', 2, 4000], ['house.test', 'building', 2, 4000], ['bld.safe-house', 'building', 1, 12000]] as const)('distance cap for %s LOD%d cannot be relaxed by the manifest', (id, category, lod, cap) => {
   const { doc, def } = fixture();
