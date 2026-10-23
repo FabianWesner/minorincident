@@ -42,6 +42,7 @@
     "assets:pack": "tsx tools/assets/pack.ts",
     "look:capture": "sh tools/e2e-lock.sh tsx tools/look/capture.ts",
     "look:score": "sh tools/e2e-lock.sh tsx tools/look/score.ts",
+    "qa:ab": "sh tools/qa/ab.sh",
     "scene": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts",
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
     "scene:mcp": "tsx tools/scenelab/mcp.ts",
