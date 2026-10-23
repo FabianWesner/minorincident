@@ -68,14 +68,16 @@ try {
               rig.inspectionPose = null; rig.reset(hero); rig.zoom(Math.log(zoom / rig.getState().targetZoom), true); rig.update(hero, 0);
               await a.step(1); await a.screenshotReady();
               const meshes: { name: string; instances: number; triangles: number }[] = [];
-              game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if (m.name.startsWith('corpses:') && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
-              return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, perf: a.perf(), meshes, corpses: a.query({}).filter(e => e.corpse).length };
+              game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if ((m.name.startsWith('corpses:') || m.name.startsWith('corpse-headwear:')) && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
+              return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, hero: a.getState().render.character, survivor: a.getEntity(1)?.survivor, perf: a.perf(), drawBreakdown: a.perf().profile, assetBreakdown: a.perf().profileAssets, meshes, corpses: a.query({}).filter(e => e.corpse).length };
             }, zoom);
             assert.equal(state.backend, backend === 'webgl2' ? 'webgl' : backend);
             assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);
             assert.ok(state.meshes.length > 0, 'Frozen bodies must be drawn');
             const name = `${level}-${backend}-${tier}-z${zoom}`;
             await session.page.screenshot({ path: `${out}/${name}.jpg`, type: 'jpeg', quality: 90 });
+            const profileSession = process.env.CORPSE_PROFILE ? await session.page.context().newCDPSession(session.page) : null;
+            if (profileSession) { await profileSession.send('Profiler.enable'); await profileSession.send('Profiler.setSamplingInterval', { interval: 500 }); await profileSession.send('Profiler.start'); }
             const samples = [];
             if (timing) for (let repeat = 0; repeat < 3; repeat++) samples.push(await session.page.evaluate(async () => {
               const a = window.__SS__!, frames: number[] = [], render: number[] = [], update: number[] = [];
@@ -91,6 +93,7 @@ try {
               const q = (v: number[], p: number) => v.sort((a,b) => a-b)[Math.ceil(v.length * p) - 1];
               return { frames: frames.length, frameP50: q(frames, .5), frameP95: q(frames, .95), renderP95: q(render, .95), updateP95: q(update, .95), perf: a.perf() };
             }));
+            if (profileSession) { const { profile } = await profileSession.send('Profiler.stop'); writeFileSync(`${out}/${name}.cpuprofile`, JSON.stringify(profile)); await profileSession.detach(); }
             rows.push({ name, setup, state, samples, errors: session.errors });
             writeFileSync(`${out}/evidence.json`, JSON.stringify(rows, (key, value) => ['profile', 'profileAssets', 'loadTiming', 'nodeBuildMaterials'].includes(key) ? undefined : value, 2));
             console.log(`${name}: ${state.corpses} corpses, ${state.meshes.length} pages${timing ? ` ${JSON.stringify(samples.map(s => s.frameP95))} ms p95` : ''}`);

@@ -1,0 +1,208 @@
+{
+  "sourceCommit": "cbfbe87239141dc73ec227a9ad492624dc472818",
+  "baseCommit": "bfff62015",
+  "acceptedScope": "regular corpse near band on high only; low retains PROD far geometry; all bodies retained",
+  "sourceSha256": {
+    "layouts/D-CORRIDOR/layout.py": "e0344fdc7dcd94e756df33c3d65e8b65210ad1e346e43cb023874d2e4beb91db",
+    "public/assets/layouts/D-CORRIDOR.base.glb": "a61cd07e6810f47ce6e1b437fb6138eb26c9d96be5d4f7aec337b17cfd2d3814",
+    "public/assets/layouts/D-CORRIDOR.layout.json": "df2be2221fe7ee1abbb8884b8afc72aa8be80ea4e95d5f23c27f4ffc93bd45e6",
+    "src/render/CrowdView.ts": "2ad58fba719913286a3bff23082746d664758c14ef4294189e4da3d5054c42f0",
+    "src/render/GameView.ts": "cb742790c7da973985cf992fa7bd56f62d7bd6f21aa05754cfc11a845e2cd583",
+    "src/render/HealthBars.ts": "8e77c55bd8f8acdfe6ac728a3de1fbda77b3f8f4c65d63b53645fabae9168e90",
+    "src/render/Lighting.ts": "815d6c06d7dfd8bd077d5eeae4cd2b5bac9dc29115170e8540f303f1acdcb6bd",
+    "src/render/PaletteMaterial.ts": "6087536a2720349ef5b76ba2fe655597d4c1b450c95a41a8d556640e41c3d2d3",
+    "src/render/VehicleView.ts": "871f43e130ac790f00895ef6bf77d2cab1ba45b194e23aeddfa75d9a2342625f",
+    "src/render/characters/StaticCorpses.ts": "c09a2ee3a96f73542590906579a22c6f69693044a548359d82aaa8c0709c8619",
+    "src/render/characters/proneDeath.ts": "83cd0c6142bf89a6ad3fda9280eceadb2c1a28d0b4c77b7f1da5ff36b882c1c6",
+    "src/render/lodPolicy.ts": "d7b3951eb488f1f8c3d548b1c2fb2ef2375e5f45c3e43e7071318d1fa86f419a",
+    "tests/unit/health-bars.test.ts": "be79da7e4ab034644c62b8b28e430158763bcf94a3e818a9e0139a0fc6b4575c",
+    "tests/unit/levels/l3-static.test.ts": "488b379f78350eae851f6e7cb4a98374f9cedad537f8ceac31b486ca54dbc9a2",
+    "tests/unit/render/infected-corpse-prewarm.test.ts": "5592b74bd74015ca43d9585ae7543908def5098a0ded0357b45481d74b5dcc2e",
+    "tests/unit/render/l1-grade.test.ts": "b494c72a622a6ba8915a1ebc5d9e6ebf08d7693b5943ec4748f552a7818322cd",
+    "tests/unit/render/lod-policy.test.ts": "1b2da73b2967dc144a6e34daba30cb8d29fc4012b3fd258ce958653fd92d0bb5",
+    "tests/unit/render/prone-death.test.ts": "43342d356345febcbb00c5995d79e0c4cb98c53afa535b01f68c7acd952bb298",
+    "tests/unit/render/real-kill-corpses.test.ts": "3cc9a5b41b13e7bb6e4e9a7b4f9d2081d33fda2d0a8d913a155da03f5ac0bd79",
+    "tests/unit/render/static-corpses.test.ts": "88b3106017753d8b93ae1d5d3ea7c61bc015d63a7818dd5fc75c600778c2100b",
+    "tests/unit/render/vehicle-occupant-prewarm.test.ts": "4157b696cb78234b715dd496e8fde830c6c22de10ef67971b0d9085f15db91b3"
+  },
+  "redFirst": {
+    "Q124": "Delivered Alpha boot-top bound failed before the two-bone foot settle; all eight delivered Alpha/Mega looks now covered by prone-death.test.ts.",
+    "Q125": "Zero-health recoverable Alpha eligibility failed before the positive-health guard.",
+    "Q126": "Vehicle prototype lifecycle and actual non-transport fire engine tests failed; receipts preserve both.",
+    "Q127": "Baseline departure captures reproduce the rectangular cutoff; final convergence captures are clean. Unit tests constrain the backdrop graph inputs and preserve non-L7 radial fog identity.",
+    "Q129": "Authored west wedge top 5.68 was below deck 5.70; new top 5.71 satisfies red-first height assertion.",
+    "lowQuality": "Explicitly disabling detail at unchanged player coordinates retained LOD1 before the quality-switch correction."
+  },
+  "review": {
+    "matrix": "Final accepted-source 36/36 cases reviewed on both backends: all three zooms and high/low. Alpha boots lie flat; the Mega has a distinct side-fallen shoulder/head/arm/foot silhouette; L3 concrete is continuous across the former seam in all sampled frames. Close Alpha/Mega sheets were also viewed directly.",
+    "departure": "Final accepted-source 48/48 frames reviewed using all twelve sheets. Four zoom-1.5 end shots were also viewed at full resolution: the entire top edge is continuous warm haze, without dark rectangles; city and buses remain visible. All 24 high / 15 low passengers retained.",
+    "runtime": "Four backend/tier cases: living Alpha bar present, first zero-HP frame 53 has no bar, through frame 240. Same body retained through high bands 2/1/1/2/1 and low bands 2/2/2/2/2.",
+    "hitches": "Original 266/450 ms stalls were not reproduced in unchanged quiet baseline. Three real-input runs per level reach the reported leg/ride. Final L1 maxima 16.8/16.8/16.8 ms, L2 33.3/33.4/33.3 ms; zero >200 ms frames and zero new vehicle programs while boarding."
+  },
+  "status": "final",
+  "remoteSourceVerified": {
+    "job": "fixes-13k-visual-08b34e-65731-1792738003",
+    "matchedFiles": 21,
+    "sha256Exact": true
+  },
+  "invariants": {
+    "command": "npm run qa:invariants",
+    "exit": 0,
+    "simPassed": 27,
+    "browserPassed": 11,
+    "allLevelLoadsComparedToPROD": true,
+    "receipt": "receipts/invariants-run.json"
+  },
+  "remote": {
+    "command": "sh tools/remote/run.sh $PWD -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+    "exit": 0,
+    "filesPassed": 458,
+    "testsPassed": 2487,
+    "testsSkipped": 9,
+    "receipt": "receipts/remote-final.log"
+  },
+  "smoke": {
+    "buildExit": 0,
+    "simulationPassed": 6,
+    "browserPassed": 31,
+    "browserWorkers": 1,
+    "receipt": "receipts/smoke-final-exit.txt"
+  },
+  "typecheckExit": 0,
+  "lintExit": 0,
+  "performance": {
+    "method": "quiet native uncapped Chrome; 1280x720, zoom 1; three 6-second samples with first second excluded; table uses median of sample p95 values",
+    "baseline": "PROD batch 13j, bfff62015; sibling worktree production build",
+    "rows": [
+      {
+        "case": "L10-webgl2-low-z1",
+        "retainedCorpses": 282,
+        "nearInstancesSubmitted": 0,
+        "baselineSamples": [
+          3.3,
+          3.2,
+          3.3
+        ],
+        "finalSamples": [
+          3.3,
+          3.2,
+          3.3
+        ],
+        "baselineMedianP95Ms": 3.3,
+        "finalMedianP95Ms": 3.3,
+        "deltaMs": 0.0
+      },
+      {
+        "case": "L10-webgl2-high-z1",
+        "retainedCorpses": 363,
+        "nearInstancesSubmitted": 46,
+        "baselineSamples": [
+          3.6,
+          3.9,
+          3.6
+        ],
+        "finalSamples": [
+          4,
+          4.4,
+          4.1
+        ],
+        "baselineMedianP95Ms": 3.6,
+        "finalMedianP95Ms": 4.1,
+        "deltaMs": 0.5
+      },
+      {
+        "case": "L10-webgpu-low-z1",
+        "retainedCorpses": 282,
+        "nearInstancesSubmitted": 0,
+        "baselineSamples": [
+          2.4,
+          2.3,
+          2.4
+        ],
+        "finalSamples": [
+          2.6,
+          2.5,
+          2.5
+        ],
+        "baselineMedianP95Ms": 2.4,
+        "finalMedianP95Ms": 2.5,
+        "deltaMs": 0.1
+      },
+      {
+        "case": "L10-webgpu-high-z1",
+        "retainedCorpses": 363,
+        "nearInstancesSubmitted": 46,
+        "baselineSamples": [
+          3,
+          3.2,
+          2.9
+        ],
+        "finalSamples": [
+          3.4,
+          3.4,
+          3
+        ],
+        "baselineMedianP95Ms": 3,
+        "finalMedianP95Ms": 3.4,
+        "deltaMs": 0.4
+      }
+    ],
+    "lowWebGLParity": true,
+    "lowWebGPUDeltaMs": 0.1,
+    "nearBand": "high only, enter <8m, exit >=10m",
+    "blenderDuringFinalWindow": [],
+    "hostSamples": 255,
+    "reservedWindowUTC": "07:44\u201307:56",
+    "conditions": "performance/quiet-conditions.jsonl",
+    "hostProcesses": "performance/host-processes.jsonl",
+    "rejectedComparison": "performance/rejected-blender/status.json",
+    "livePRODCommit": "3c48d1abe",
+    "baselineRuntimeMatchesLivePROD": true,
+    "baselineEquivalence": "src/, public/assets/, layouts/ and package-lock.json are identical between live PROD 3c48d1abe and baseline bfff62015; package.json differs only in a script."
+  },
+  "ab": {
+    "command": "npm run qa:ab -- --baseline https://minor-incident.com --candidate http://127.0.0.1:4261 --levels L1-L4",
+    "status": "complete",
+    "stops": 32,
+    "threshold": 0.02,
+    "expectedFlags": [
+      {
+        "id": "l3-army-pullback-z1",
+        "score": 0.034722222222222224,
+        "sheet": "l3-army-pullback-z1.jpg"
+      },
+      {
+        "id": "l3-ramp-east-z1",
+        "score": 0.033854166666666664,
+        "sheet": "l3-ramp-east-z1.jpg"
+      },
+      {
+        "id": "l3-ramp-west-z1",
+        "score": 0.029947916666666668,
+        "sheet": "l3-ramp-west-z1.jpg"
+      }
+    ],
+    "unexplainedFlags": 0,
+    "review": "ab/review.md"
+  },
+  "visualChecks": {
+    "matrixCasesPassed": 36,
+    "departureFrames": 48,
+    "runtimeCasesPassed": 4,
+    "requestedZooms": [
+      0.5,
+      1,
+      1.5
+    ],
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "reviewed": true
+  },
+  "sourceUnchangedSinceValidatedCommit": true
+}

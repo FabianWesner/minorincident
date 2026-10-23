@@ -47,6 +47,20 @@ const blockers = solid.filter(c => c.aabb.max[1] >= 1.55 && (c.aabb.max[0] - c.a
 const distBox = (p: Point, a: Aabb) => Math.hypot(Math.max(a.min[0] - p[0], 0, p[0] - a.max[0]), Math.max(a.min[2] - p[1], 0, p[1] - a.max[2]));
 
 describe('L3 static', () => {
+  test('T-E21-11-highway-junction @E21 Q-133 Q-129 deck and wedge fills are flat unbevelled slabs at one top height, with lane paint across the deck', () => {
+    const source = readFileSync('layouts/D-CORRIDOR/layout.py', 'utf8');
+    // g.solid boxes carry a 7 cm toy bevel: the chamfer ridges read as a light patch with hard edges and a dark seam at every join.
+    expect(source, 'deck is a slab').toMatch(/slab\('highway-deck', 'asphalt'/);
+    expect(source, 'no beveled box for the deck or the wedges').not.toMatch(/g\.solid\('highway-(deck|wedge)'/);
+    expect([...source.matchAll(/slab\('highway-wedge', 'asphalt'/g)], 'one wedge per ramp').toHaveLength(2);
+    expect([...source.matchAll(/slab\('highway-wedge', 'asphalt', [^\n]*DECK_TOP/g)], 'every wedge shares the deck top').toHaveLength(2);
+    expect(source).toMatch(/slab\('highway-deck'[^\n]*DECK_TOP/);
+    // 3 mm over the kit road (5.70) so nothing z-fights; paint stands 16 mm above it, like the kit's own.
+    const top = Number(source.match(/DECK_TOP, PAINT = ([\d.]+),/)![1]);
+    expect(top).toBeGreaterThan(5.7); expect(top - 5.7).toBeLessThanOrEqual(.005);
+    expect(source).toContain("'highway-centre-dash', 'picketWhite'"); expect(source).toContain("'highway-edge-line', 'schoolBusYellow'");
+  });
+
   test('T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart', () => {
     expect(validateLayout(base, worldAssets)).toEqual([]);
     const [sx] = at('l3-start'), [zx] = at('l3-zone');

@@ -18,16 +18,29 @@ test('@E31 L9 night accents: light points along every route, on budget, render-o
   const count = (kind: string) => points.filter(a => a.kind === kind).length;
   expect(count('stud')).toBeGreaterThan(200); expect(count('lantern')).toBeGreaterThan(12); expect(count('flare')).toBeGreaterThan(15);
   expect(count('hazard') % 4).toBe(0); expect(count('hazard')).toBeGreaterThanOrEqual(8); expect(count('beacon')).toBeGreaterThanOrEqual(6);
-  expect(fires.length).toBeGreaterThan(12); expect(fires.length).toBeLessThan(96);
-  // E18/E25: pools stay a small share of the light-field capacity (256 low), the emitters two instanced draws.
-  expect(points.filter(a => a.pool).length).toBeLessThan(140);
+  // l9-night-look: verge debris fires keep a light in the narrow follow-camera frame. Only frustum-visible fires draw (Blasts
+  // FLAMES/GLOWS caps), so the total is a layout budget, not a per-frame cost.
+  expect(fires.length).toBeGreaterThan(150); expect(fires.length).toBeLessThan(260);
+  // E18/E25: the light field draws pools inside its 60 m (low) window only; even the densest window stays far below 256.
+  const pools = points.filter(a => a.pool);
+  expect(pools.length).toBeLessThan(240);
+  const windowMax = Math.max(...pools.map(c => pools.filter(a => Math.abs(a.x - c.x) < 30 && Math.abs(a.z - c.z) < 30).length + fires.filter(f => Math.abs(f.x - c.x) < 30 && Math.abs(f.z - c.z) < 30).length));
+  expect(windowMax).toBeLessThan(96);
   for (const a of points) { expect(Math.abs(a.x)).toBeLessThan(600); expect(Math.abs(a.z)).toBeLessThan(400); }
   // Studs sit on the asphalt edge lines; drive-over emitters (flares, lanterns) never stand inside a placement footprint.
   for (const a of points.filter(p => p.kind === 'stud')) expect(lane([a.x, a.z])).toBeLessThan(0);
   const inside = (x: number, z: number, m: number) => layout.placements.some(p => x > p.visualAabb.min[0] - m && x < p.visualAabb.max[0] + m && z > p.visualAabb.min[2] - m && z < p.visualAabb.max[2] + m);
   for (const a of points.filter(p => p.kind === 'flare' || p.kind === 'lantern')) expect(inside(a.x, a.z, .5), `${a.kind} ${a.x},${a.z}`).toBe(false);
   // Brush fires burn away from every lane and building; burning wrecks sit on their car.
-  for (const f of fires.filter(f => !f.car)) { expect(lane([f.x, f.z])).toBeGreaterThan(7.5); expect(inside(f.x, f.z, 1.6)).toBe(false); }
+  for (const f of fires.filter(f => !f.car && !f.life)) { expect(lane([f.x, f.z])).toBeGreaterThan(7.5); expect(inside(f.x, f.z, 1.6)).toBe(false); }
+  // Verge debris fires (life): off the carriageway, clear of every footprint, small.
+  const verge = fires.filter(f => f.life);
+  expect(verge.length).toBeGreaterThan(80);
+  for (const f of verge) {
+    // Crash wreckage on the far deck (x > 528) burns beside the crawl line (|z| <= 3.2), everything else off the carriageway.
+    if (f.x > 528) expect(Math.abs(f.z)).toBeGreaterThan(4); else expect(lane([f.x, f.z])).toBeGreaterThan(1.2);
+    expect(inside(f.x, f.z, .5)).toBe(false); expect(f.radius).toBeLessThan(.85);
+  }
   // One hazard car blinks in a single phase, in step with its pool.
   const hazards = points.filter(a => a.kind === 'hazard');
   for (let i = 0; i < hazards.length; i += 4) expect(new Set(hazards.slice(i, i + 4).map(a => a.seed)).size).toBe(1);

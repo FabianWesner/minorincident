@@ -1,0 +1,543 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/node_modules/.bin/playwright",
+      "test",
+      "--config=tests/qa/invariants/playwright.config.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/tests/qa/invariants/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/tests/qa/invariants/rendering",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/test-results/qa-invariants/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/tests/qa/invariants/rendering",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual/test-results/qa-invariants/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "scene-lab.spec.ts",
+      "file": "scene-lab.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "8 load time L1: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:27:09.774Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMMSIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDI2MDUuMzAwMDAwMTkwNzM1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDIsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTU5LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiAyNzU4LjgwMDAwMDE5MDczNSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAzLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDE1OSwKICAgICJidW5kbGUiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20vYnVpbGQvaW5kZXgtRE5DcjFESmsuanMiCiAgfSwKICAiYmFzZWxpbmVVUkwiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20iLAogICJsaW1pdE1zIjogMzAzNC42ODAwMDAyMDk4MDg0Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-dfd4f494f91f26467b1e",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L2: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10186,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:27:19.498Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMMiIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDMzMTguMzAwMDAwMTkwNzM1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDEsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMjA1LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiAzNTI3LjMwMDAwMDE5MDczNSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAyLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDIwNSwKICAgICJidW5kbGUiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20vYnVpbGQvaW5kZXgtRE5DcjFESmsuanMiCiAgfSwKICAiYmFzZWxpbmVVUkwiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20iLAogICJsaW1pdE1zIjogMzg4MC4wMzAwMDAyMDk4MDgzCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-74264015afe918a65e12",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L3: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:27:29.705Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMMyIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDM3NzgsCiAgICAiYmFja2VuZCI6ICJ3ZWJncHUiLAogICAgInF1YWxpdHkiOiAibG93IiwKICAgICJ0aWNrIjogMiwKICAgICJwaGFzZSI6ICJwbGF5aW5nIiwKICAgICJkcmF3Q2FsbHMiOiAxMzksCiAgICAiYnVuZGxlIjogImh0dHA6Ly8xMjcuMC4wLjE6NDI2MS9idWlsZC9pbmRleC1QcEpINldhMi5qcyIKICB9LAogICJiYXNlbGluZSI6IHsKICAgICJtcyI6IDQwMTMuMzAwMDAwMTkwNzM1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDEsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTM5LAogICAgImJ1bmRsZSI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbS9idWlsZC9pbmRleC1ETkNyMURKay5qcyIKICB9LAogICJiYXNlbGluZVVSTCI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbSIsCiAgImxpbWl0TXMiOiA0NDE0LjYzMDAwMDIwOTgwOQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-169211c56e4e3a2be477",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L4: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:27:41.404Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMNCIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDM4MjguNjk5OTk5ODA5MjY1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDEsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTA3LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiA0NTk2LjA5OTk5OTQyNzc5NSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAyLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDEwNywKICAgICJidW5kbGUiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20vYnVpbGQvaW5kZXgtRE5DcjFESmsuanMiCiAgfSwKICAiYmFzZWxpbmVVUkwiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20iLAogICJsaW1pdE1zIjogNTA1NS43MDk5OTkzNzA1NzUKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-7cb25862b2301b8a8ae5",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L5: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14599,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:27:54.172Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMNSIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDQ4MjYuNTk5OTk5NDI3Nzk1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDIsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTc5LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiA1MTY2LjI5OTk5OTIzNzA2MSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAxLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDE3NSwKICAgICJidW5kbGUiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20vYnVpbGQvaW5kZXgtRE5DcjFESmsuanMiCiAgfSwKICAiYmFzZWxpbmVVUkwiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20iLAogICJsaW1pdE1zIjogNTY4Mi45Mjk5OTkxNjA3NjcKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-b4e792df08ee74e804f5",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L6: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:28:08.797Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMNiIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDI1NDguNjk5OTk5ODA5MjY1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDEsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogODQsCiAgICAiYnVuZGxlIjogImh0dHA6Ly8xMjcuMC4wLjE6NDI2MS9idWlsZC9pbmRleC1QcEpINldhMi5qcyIKICB9LAogICJiYXNlbGluZSI6IHsKICAgICJtcyI6IDMwNDIuMDk5OTk5NDI3Nzk1NCwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAxLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDg0LAogICAgImJ1bmRsZSI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbS9idWlsZC9pbmRleC1ETkNyMURKay5qcyIKICB9LAogICJiYXNlbGluZVVSTCI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbSIsCiAgImxpbWl0TXMiOiAzMzQ2LjMwOTk5OTM3MDU3NQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-2446b74923df5614a405",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L7: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10000,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:28:17.522Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMNyIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDM4MjcsCiAgICAiYmFja2VuZCI6ICJ3ZWJncHUiLAogICAgInF1YWxpdHkiOiAibG93IiwKICAgICJ0aWNrIjogMywKICAgICJwaGFzZSI6ICJwbGF5aW5nIiwKICAgICJkcmF3Q2FsbHMiOiA4MiwKICAgICJidW5kbGUiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjYxL2J1aWxkL2luZGV4LVBwSkg2V2EyLmpzIgogIH0sCiAgImJhc2VsaW5lIjogewogICAgIm1zIjogMzk0MS44OTk5OTk2MTg1MzAzLAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDMsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogODIsCiAgICAiYnVuZGxlIjogImh0dHBzOi8vbWlub3ItaW5jaWRlbnQuY29tL2J1aWxkL2luZGV4LUROQ3IxREprLmpzIgogIH0sCiAgImJhc2VsaW5lVVJMIjogImh0dHBzOi8vbWlub3ItaW5jaWRlbnQuY29tIiwKICAibGltaXRNcyI6IDQzMzYuMDg5OTk5NTgwMzgzCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-39ba5ea3137543e45a34",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L8: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13747,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:28:27.535Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMOCIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDQ4NzguODAwMDAwMTkwNzM1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDIsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTI3LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiA0Njg2LjE5OTk5OTgwOTI2NSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAxLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDEyNywKICAgICJidW5kbGUiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20vYnVpbGQvaW5kZXgtRE5DcjFESmsuanMiCiAgfSwKICAiYmFzZWxpbmVVUkwiOiAiaHR0cHM6Ly9taW5vci1pbmNpZGVudC5jb20iLAogICJsaW1pdE1zIjogNTE1NC44MTk5OTk3OTAxOTIKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-3c245217317d182cf02b",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L9: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27239,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:28:41.305Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMOSIsCiAgImNhbmRpZGF0ZSI6IHsKICAgICJtcyI6IDk5MjMuOTAwMDAwNTcyMjA1LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDMsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTM3LAogICAgImJ1bmRsZSI6ICJodHRwOi8vMTI3LjAuMC4xOjQyNjEvYnVpbGQvaW5kZXgtUHBKSDZXYTIuanMiCiAgfSwKICAiYmFzZWxpbmUiOiB7CiAgICAibXMiOiAxMTQ1NS41LAogICAgImJhY2tlbmQiOiAid2ViZ3B1IiwKICAgICJxdWFsaXR5IjogImxvdyIsCiAgICAidGljayI6IDMsCiAgICAicGhhc2UiOiAicGxheWluZyIsCiAgICAiZHJhd0NhbGxzIjogMTM3LAogICAgImJ1bmRsZSI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbS9idWlsZC9pbmRleC1ETkNyMURKay5qcyIKICB9LAogICJiYXNlbGluZVVSTCI6ICJodHRwczovL21pbm9yLWluY2lkZW50LmNvbSIsCiAgImxpbWl0TXMiOiAxMjQ1NS41Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-1c2f7f34bd2afdffede9",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "8 load time L10: level click → playable versus PROD, WebGPU low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:29:08.572Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "load-time",
+                      "contentType": "application/json",
+                      "body": "ewogICJsZXZlbCI6ICJMMTAiLAogICJjYW5kaWRhdGUiOiB7CiAgICAibXMiOiA2OTAwLjY5OTk5OTgwOTI2NSwKICAgICJiYWNrZW5kIjogIndlYmdwdSIsCiAgICAicXVhbGl0eSI6ICJsb3ciLAogICAgInRpY2siOiAzLAogICAgInBoYXNlIjogInBsYXlpbmciLAogICAgImRyYXdDYWxscyI6IDEyOSwKICAgICJidW5kbGUiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjYxL2J1aWxkL2luZGV4LVBwSkg2V2EyLmpzIgogIH0sCiAgImJhc2VsaW5lIjogewogICAgIm1zIjogMTAyNDkuNjAwMDAwMzgxNDcsCiAgICAiYmFja2VuZCI6ICJ3ZWJncHUiLAogICAgInF1YWxpdHkiOiAibG93IiwKICAgICJ0aWNrIjogNCwKICAgICJwaGFzZSI6ICJwbGF5aW5nIiwKICAgICJkcmF3Q2FsbHMiOiAxMjksCiAgICAiYnVuZGxlIjogImh0dHBzOi8vbWlub3ItaW5jaWRlbnQuY29tL2J1aWxkL2luZGV4LUROQ3IxREprLmpzIgogIH0sCiAgImJhc2VsaW5lVVJMIjogImh0dHBzOi8vbWlub3ItaW5jaWRlbnQuY29tIiwKICAibGltaXRNcyI6IDExMjQ5LjYwMDAwMDM4MTQ3Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-09f897fe660b85547416",
+          "file": "scene-lab.spec.ts",
+          "line": 57,
+          "column": 48
+        },
+        {
+          "title": "Scene Lab: scripted cast is submitted and drawn on both quality paths",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 50563,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-23T07:29:30.083Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "scripted-cast-low",
+                      "contentType": "application/json",
+                      "body": "ewogICJjb2xsaXNpb24iOiB7CiAgICAiZmFpbHVyZXMiOiAwLAogICAgInBlbmRpbmciOiAwLAogICAgImFkbWl0dGVkIjogMTEsCiAgICAiZGVmZXJyZWQiOiAwLAogICAgInJlcXVlc3RzIjogW10sCiAgICAib2ZmZW5kZXJzIjogW10KICB9LAogICJtYXJrZXREb29ycyI6IG51bGwsCiAgImFybXlCb29tIjogbnVsbCwKICAic2NlbmUiOiAicGVkLWwxLXN0YWdlZC1jYXN0IiwKICAiZnJhbWUiOiAzLAogICJ0aWNrIjogMywKICAiYmFja2VuZCI6ICJ3ZWJncHUiLAogICJxdWFsaXR5IjogImxvdyIsCiAgImNvbnZveU92ZXJsYXBGcmFtZXMiOiAwLAogICJjb3VyaWVyQXR0YWNobWVudHMiOiB7CiAgICAic2FtcGxlcyI6IDAsCiAgICAiZ2FwTWF4Q20iOiAwLAogICAgImZyYW1lIjogLTEsCiAgICAid29yc3QiOiBudWxsLAogICAgIndvcnN0QXQiOiBudWxsLAogICAgImF0dGFjaG1lbnRzIjogMAogIH0sCiAgImFuaW1hbExpbWJzIjogewogICAgInNhbXBsZXMiOiAwLAogICAgImdhcE1heENtIjogMCwKICAgICJmcmFtZSI6IC0xLAogICAgImFjdG9yIjogbnVsbAogIH0sCiAgImNvcmdpVG9uZ3VlIjogewogICAgImlkbGVTYW1wbGVzIjogMCwKICAgICJpZGxlT3V0RnJhbWVzIjogMCwKICAgICJmaXJzdElkbGVPdXQiOiAtMSwKICAgICJtb3ZpbmdTYW1wbGVzIjogMCwKICAgICJtb3ZpbmdJbkZyYW1lcyI6IDAsCiAgICAiZmlyc3RNb3ZpbmdJbiI6IC0xCiAgfSwKICAicHJvcFBlbmV0cmF0aW9uIjogewogICAgInNhbXBsZXMiOiAzMCwKICAgICJmcmFtZXNNYXgiOiAwLAogICAgInBhaXJzIjogW10KICB9LAogICJwcm9wcyI6IHsKICAgICJzaW5rTWF4Q20iOiAwLAogICAgInNhbXBsZXMiOiAwLAogICAgImdhcHMiOiBbXQogIH0sCiAgImJvZGllcyI6IFtdLAogICJhdHRhY2tPdmVybGFwIjogewogICAgImRlcHRoQ20iOiAwLAogICAgImZyYW1lIjogMCwKICAgICJhY3RvciI6ICIiCiAgfSwKICAid2hlZWxzIjoge30sCiAgImxvZFBsYWNlaG9sZGVycyI6IHsKICAgICJmcmFtZXMiOiAwLAogICAgImZpcnN0RnJhbWUiOiAtMSwKICAgICJhc3NldHMiOiBbXQogIH0sCiAgInBlcmYiOiB7CiAgICAiZHJhd0NhbGxzIjogewogICAgICAicDUwIjogMjQsCiAgICAgICJwOTUiOiAyNCwKICAgICAgIm1heCI6IDI0CiAgICB9LAogICAgInRyaWFuZ2xlcyI6IHsKICAgICAgInA1MCI6IDUzODU5LAogICAgICAicDk1IjogNTM4NTksCiAgICAgICJtYXgiOiA1Mzg1OQogICAgfSwKICAgICJzaGFkb3dEcmF3Q2FsbHMiOiB7CiAgICAgICJwNTAiOiA3LAogICAgICAicDk1IjogNywKICAgICAgIm1heCI6IDcKICAgIH0sCiAgICAic2hhZG93VHJpYW5nbGVzIjogewogICAgICAicDUwIjogNywKICAgICAgInA5NSI6IDcsCiAgICAgICJtYXgiOiA3CiAgICB9LAogICAgInN0ZXBNcyI6IHsKICAgICAgInA1MCI6IDIuOCwKICAgICAgInA5NSI6IDIuOCwKICAgICAgIm1heCI6IDguMwogICAgfSwKICAgICJsYXN0RnJhbWUiOiB7CiAgICAgICJkcmF3Q2FsbHMiOiAyNCwKICAgICAgInRyaWFuZ2xlcyI6IDUzODU5LAogICAgICAic2hhZG93RHJhd0NhbGxzIjogNywKICAgICAgInNoYWRvd1RyaWFuZ2xlcyI6IDcsCiAgICAgICJzdGVwTXMiOiAyLjE5OTk5OTgwOTI2NTEzNjcsCiAgICAgICJjYXRlZ29yaWVzIjogewogICAgICAgICJvdGhlciI6IDE0LAogICAgICAgICJzaGFkb3dzIjogNywKICAgICAgICAiY3Jvd2QiOiAxMAogICAgICB9CiAgICB9LAogICAgIm5vdGUiOiAidmlldyBkcmF3cy90cmlhbmdsZXMgZXhjbHVkZSB0aGUgc2hhZG93IHBhc3MgKHJlcG9ydGVkIHNlcGFyYXRlbHkpOyBzdGVwTXMgPSBDUFUgbXMgb2Ygb25lIHNpbSB0aWNrICsgcmVuZGVyIHN1Ym1pc3Npb24sIG5vdCBHUFUgdGltZSIKICB9LAogICJ2ZWhpY2xlcyI6IHt9LAogICJncm91bmRpbmciOiB7CiAgICAiY29ycHNlcyI6IDAsCiAgICAiY29ycHNlT2ZmTWF4Q20iOiAwLAogICAgInBpY2t1cHMiOiAwLAogICAgInBpY2t1cE9mZk1heENtIjogMCwKICAgICJ3b3JzdCI6IFtdCiAgfSwKICAicHVyc3VpdCI6IHsKICAgICJhY3RvcnMiOiB7fSwKICAgICJjb3VyaWVyU3dpbmdzIjogMCwKICAgICJjb3VyaWVyQXR0YWNrcyI6IDAsCiAgICAiaHVsbFdpbmR1cHMiOiAwLAogICAgImh1bGxIaXRzIjogMCwKICAgICJmaXJzdEF0dGFja0ZyYW1lIjogLTEsCiAgICAiYml0ZXMiOiAwLAogICAgImZpcnN0Qml0ZUZyYW1lIjogLTEKICB9LAogICJjdXJlIjogbnVsbCwKICAibWVnYUFscGhhIjogbnVsbCwKICAibWluaWd1biI6IG51bGwsCiAgInNwZWNpYWxzIjogW10sCiAgImhlbGRQcm9wcyI6IHsKICAgICJzYW1wbGVzIjogMCwKICAgICJpbnRlcnNlY3Rpb25zIjogMCwKICAgICJob2xkcyI6IHt9CiAgfSwKICAic2VlVGhyb3VnaCI6IHsKICAgICJmcmFtZXMiOiAzLAogICAgInNvbGlkUmFkaXVzTWF4IjogMS4wOTgsCiAgICAib2NjbHVkZXJzIjogW10sCiAgICAiY3V0TG93UHJvcHMiOiBbXSwKICAgICJjdXRQbGFjZW1lbnRzIjogW10KICB9LAogICJhcHBlYXJhbmNlIjogW10sCiAgImNvbXBhbmlvbiI6IHsKICAgICJvdmVybGFwTWF4Q20iOiAwLAogICAgIm92ZXJsYXBGcmFtZSI6IDAsCiAgICAicnVuTGFnTWF4TSI6IDAsCiAgICAicnVuTGFnRnJhbWUiOiAwLAogICAgInNhbXBsZXMiOiAwLAogICAgInJ1bm5pbmdTYW1wbGVzIjogMAogIH0sCiAgImJpa2UiOiB7CiAgICAiaW5WaWV3RnJhbWVzIjogMCwKICAgICJtaXNzZWRGcmFtZXMiOiAwLAogICAgIm9mZkZyYW1lcyI6IDAsCiAgICAibWF4T2Zmc2V0Q20iOiAwLAogICAgImZpcnN0TWlzc2VkRnJhbWUiOiAtMQogIH0sCiAgInZhcmlldHkiOiB7CiAgICAiaW5mZWN0ZWQiOiB7CiAgICAgICJmaWd1cmVzIjogMCwKICAgICAgImRpc3RpbmN0IjogMCwKICAgICAgInBlcjIwIjogW10sCiAgICAgICJsYXJnZXN0U2FtZUxvb2tTaGFyZSI6IDAsCiAgICAgICJsYXJnZXN0TW9kZWxTaGFyZSI6IDAKICAgIH0sCiAgICAicGVkZXN0cmlhbiI6IHsKICAgICAgImZpZ3VyZXMiOiAxMCwKICAgICAgImRpc3RpbmN0IjogMTAsCiAgICAgICJwZXIyMCI6IFsKICAgICAgICB7CiAgICAgICAgICAiZmlndXJlcyI6IDEwLAogICAgICAgICAgImRpc3RpbmN0IjogMTAKICAgICAgICB9CiAgICAgIF0sCiAgICAgICJsYXJnZXN0U2FtZUxvb2tTaGFyZSI6IDAuMSwKICAgICAgImxhcmdlc3RNb2RlbFNoYXJlIjogMC4xCiAgICB9CiAgfSwKICAiYWN0b3JzIjogewogICAgIm1hbi1hIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDMsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAtNSwKICAgICAgICAtMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IC01LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIC01LAogICAgICAgICAgLTMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAyLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogMCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9LAogICAgIm1hbi1iIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDQsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAtMi41LAogICAgICAgIC0zCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogLTIuNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAtMi41LAogICAgICAgICAgLTMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAtMiwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IC0yLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAid29tYW4tYSI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiA1LAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgMCwKICAgICAgICAtMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IDAsCiAgICAgICJoZWxkV2VhcG9uIjogbnVsbCwKICAgICAgInRhcmdldElkIjogbnVsbCwKICAgICAgInN0YXRlIjogImNhbG0iLAogICAgICAiaGVhbHRoIjogMTAwLAogICAgICAiZHJhd25GcmFtZXMiOiAzLAogICAgICAiaW5WaWV3RnJhbWVzIjogMywKICAgICAgIm1pc3NlZEluVmlld0ZyYW1lcyI6IDAsCiAgICAgICJsb2QiOiB7CiAgICAgICAgImxvZDEiOiAzCiAgICAgIH0sCiAgICAgICJmaXJzdERyYXduIjogewogICAgICAgICJmcmFtZSI6IDEsCiAgICAgICAgImF0IjogWwogICAgICAgICAgMCwKICAgICAgICAgIC0zCiAgICAgICAgXQogICAgICB9LAogICAgICAiZmFyTG9kQ2xvc2VGcmFtZXMiOiAwLAogICAgICAibW90aW9uIjogewogICAgICAgICJmcmFtZXMiOiAzLAogICAgICAgICJ0b3Jzb1BpdGNoTWluRGVnIjogMCwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IDAsCiAgICAgICAgImNvbnRhY3RzIjogMiwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDAsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJ3b21hbi1iIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDYsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAyLjUsCiAgICAgICAgLTMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiAyLjUsCiAgICAgICJoZWxkV2VhcG9uIjogbnVsbCwKICAgICAgInRhcmdldElkIjogbnVsbCwKICAgICAgInN0YXRlIjogImNhbG0iLAogICAgICAiaGVhbHRoIjogMTAwLAogICAgICAiZHJhd25GcmFtZXMiOiAzLAogICAgICAiaW5WaWV3RnJhbWVzIjogMywKICAgICAgIm1pc3NlZEluVmlld0ZyYW1lcyI6IDAsCiAgICAgICJsb2QiOiB7CiAgICAgICAgImxvZDEiOiAzCiAgICAgIH0sCiAgICAgICJmaXJzdERyYXduIjogewogICAgICAgICJmcmFtZSI6IDEsCiAgICAgICAgImF0IjogWwogICAgICAgICAgMi41LAogICAgICAgICAgLTMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAyLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogMCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9LAogICAgImVsZGVybHkiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogNywKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIDUsCiAgICAgICAgLTMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiA1LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIDUsCiAgICAgICAgICAtMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAiY2xlcmsiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogOCwKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIC01LAogICAgICAgIDMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiAtNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAtNSwKICAgICAgICAgIDMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAyLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogMCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9LAogICAgInRlY2gtYSI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiA5LAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgLTIuNSwKICAgICAgICAzCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogLTIuNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAtMi41LAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAidGVjaC1iIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDEwLAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgMCwKICAgICAgICAzCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogMCwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAwLAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAiZ3VhcmQiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogMTEsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAyLjUsCiAgICAgICAgMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IDIuNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAyLjUsCiAgICAgICAgICAzCiAgICAgICAgXQogICAgICB9LAogICAgICAiZmFyTG9kQ2xvc2VGcmFtZXMiOiAwLAogICAgICAibW90aW9uIjogewogICAgICAgICJmcmFtZXMiOiAzLAogICAgICAgICJ0b3Jzb1BpdGNoTWluRGVnIjogMCwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IDAsCiAgICAgICAgImNvbnRhY3RzIjogMSwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDQsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJmaXJlZmlnaHRlciI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiAxMiwKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIDUsCiAgICAgICAgMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IDUsCiAgICAgICJoZWxkV2VhcG9uIjogbnVsbCwKICAgICAgInRhcmdldElkIjogbnVsbCwKICAgICAgInN0YXRlIjogImNhbG0iLAogICAgICAiaGVhbHRoIjogMTAwLAogICAgICAiZHJhd25GcmFtZXMiOiAzLAogICAgICAiaW5WaWV3RnJhbWVzIjogMywKICAgICAgIm1pc3NlZEluVmlld0ZyYW1lcyI6IDAsCiAgICAgICJsb2QiOiB7CiAgICAgICAgImxvZDEiOiAzCiAgICAgIH0sCiAgICAgICJmaXJzdERyYXduIjogewogICAgICAgICJmcmFtZSI6IDEsCiAgICAgICAgImF0IjogWwogICAgICAgICAgNSwKICAgICAgICAgIDMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAyLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogMCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9CiAgfSwKICAiY2xpY2tzIjogewogICAgInRvdGFsIjogMCwKICAgICJtaXNzZXMiOiAwLAogICAgInJvd3MiOiBbXSwKICAgICJzd2luZ3MiOiBbXQogIH0sCiAgInZpc2liaWxpdHkiOiB7CiAgICAiZnJhbWUiOiAzLAogICAgInNpbSI6IHsKICAgICAgInBlZGVzdHJpYW4iOiAxMCwKICAgICAgImFjdG9ycyI6IDEwCiAgICB9LAogICAgImRyYXduIjogewogICAgICAidmVoaWNsZSI6IDAsCiAgICAgICJwZWRlc3RyaWFuIjogMTAKICAgIH0KICB9LAogICJsb2RzIjoge30sCiAgImNsaXBwaW5nIjogewogICAgImd1bkJvZHlIaXRzIjogMCwKICAgICJzdGF0aWNQYWlycyI6IDAsCiAgICAiaGVsZFByb3BIaXRzIjogMCwKICAgICJhY3RvckhpdHMiOiAwLAogICAgInBpZXJjaW5nIjogMAogIH0sCiAgImVtZXJnZW5jZSI6IG51bGwsCiAgImRvb3JzIjoge30sCiAgImxvZyI6IFtdCn0="
+                    },
+                    {
+                      "name": "seated-props-low",
+                      "contentType": "application/json",
+                      "body": "ewogICJiZW5jaGVzIjogWwogICAgewogICAgICAiaWQiOiAxMjMsCiAgICAgICJwcm9wIjogIkQtR1JPVkUvbDItc3RhdGlvbi01MyIsCiAgICAgICJkcmF3blNlYXQiOiB0cnVlLAogICAgICAicmVjdCI6IFsKICAgICAgICAtNzIuMjYyNzU1ODA3NTEyMiwKICAgICAgICAyODcuNzMyNzEyODYzMTkyOCwKICAgICAgICA2OC43NTY3NDY3MTM5Njk2NSwKICAgICAgICA0MDQuNDIwMzg4NDI4OTU2NDcKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogMTI0LAogICAgICAicHJvcCI6ICJELUdST1ZFL2wyLXN0YXRpb24tNTMiLAogICAgICAiZHJhd25TZWF0IjogdHJ1ZSwKICAgICAgInJlY3QiOiBbCiAgICAgICAgLTcyLjI2Mjc1NTgwNzUxMjIsCiAgICAgICAgMjg3LjczMjcxMjg2MzE5MjgsCiAgICAgICAgNjguNzU2NzQ2NzEzOTY5NjUsCiAgICAgICAgNDA0LjQyMDM4ODQyODk1NjQ3CiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDEyNSwKICAgICAgInByb3AiOiAiRC1HUk9WRS9sMi1zdGF0aW9uLTU0IiwKICAgICAgImRyYXduU2VhdCI6IHRydWUsCiAgICAgICJyZWN0IjogWwogICAgICAgIDY2LjYxMDg3MDgwMjk2ODY2LAogICAgICAgIDIzMy4yODc3NzY2MDQ1NjcxLAogICAgICAgIDE5NC40ODM3MzgxNzA0NjA2LAogICAgICAgIDM0Mi40MjkwMTMyNzg4NzA0NgogICAgICBdCiAgICB9LAogICAgewogICAgICAiaWQiOiAxMjYsCiAgICAgICJwcm9wIjogIkQtR1JPVkUvbDItc3RhdGlvbi01NCIsCiAgICAgICJkcmF3blNlYXQiOiB0cnVlLAogICAgICAicmVjdCI6IFsKICAgICAgICA2Ni42MTA4NzA4MDI5Njg2NiwKICAgICAgICAyMzMuMjg3Nzc2NjA0NTY3MSwKICAgICAgICAxOTQuNDgzNzM4MTcwNDYwNiwKICAgICAgICAzNDIuNDI5MDEzMjc4ODcwNDYKICAgICAgXQogICAgfQogIF0sCiAgImJlbmNoUGl4ZWxzIjogewogICAgIjEyMyI6IDQ2NywKICAgICIxMjQiOiA0NjcsCiAgICAiMTI1IjogNDY4LAogICAgIjEyNiI6IDQ2OAogIH0KfQ=="
+                    },
+                    {
+                      "name": "scripted-cast-high",
+                      "contentType": "application/json",
+                      "body": "ewogICJjb2xsaXNpb24iOiB7CiAgICAiZmFpbHVyZXMiOiAwLAogICAgInBlbmRpbmciOiAwLAogICAgImFkbWl0dGVkIjogMTEsCiAgICAiZGVmZXJyZWQiOiAwLAogICAgInJlcXVlc3RzIjogW10sCiAgICAib2ZmZW5kZXJzIjogW10KICB9LAogICJtYXJrZXREb29ycyI6IG51bGwsCiAgImFybXlCb29tIjogbnVsbCwKICAic2NlbmUiOiAicGVkLWwxLXN0YWdlZC1jYXN0IiwKICAiZnJhbWUiOiAzLAogICJ0aWNrIjogMywKICAiYmFja2VuZCI6ICJ3ZWJncHUiLAogICJxdWFsaXR5IjogImhpZ2giLAogICJjb252b3lPdmVybGFwRnJhbWVzIjogMCwKICAiY291cmllckF0dGFjaG1lbnRzIjogewogICAgInNhbXBsZXMiOiAwLAogICAgImdhcE1heENtIjogMCwKICAgICJmcmFtZSI6IC0xLAogICAgIndvcnN0IjogbnVsbCwKICAgICJ3b3JzdEF0IjogbnVsbCwKICAgICJhdHRhY2htZW50cyI6IDAKICB9LAogICJhbmltYWxMaW1icyI6IHsKICAgICJzYW1wbGVzIjogMCwKICAgICJnYXBNYXhDbSI6IDAsCiAgICAiZnJhbWUiOiAtMSwKICAgICJhY3RvciI6IG51bGwKICB9LAogICJjb3JnaVRvbmd1ZSI6IHsKICAgICJpZGxlU2FtcGxlcyI6IDAsCiAgICAiaWRsZU91dEZyYW1lcyI6IDAsCiAgICAiZmlyc3RJZGxlT3V0IjogLTEsCiAgICAibW92aW5nU2FtcGxlcyI6IDAsCiAgICAibW92aW5nSW5GcmFtZXMiOiAwLAogICAgImZpcnN0TW92aW5nSW4iOiAtMQogIH0sCiAgInByb3BQZW5ldHJhdGlvbiI6IHsKICAgICJzYW1wbGVzIjogMzAsCiAgICAiZnJhbWVzTWF4IjogMCwKICAgICJwYWlycyI6IFtdCiAgfSwKICAicHJvcHMiOiB7CiAgICAic2lua01heENtIjogMCwKICAgICJzYW1wbGVzIjogMCwKICAgICJnYXBzIjogW10KICB9LAogICJib2RpZXMiOiBbXSwKICAiYXR0YWNrT3ZlcmxhcCI6IHsKICAgICJkZXB0aENtIjogMCwKICAgICJmcmFtZSI6IDAsCiAgICAiYWN0b3IiOiAiIgogIH0sCiAgIndoZWVscyI6IHt9LAogICJsb2RQbGFjZWhvbGRlcnMiOiB7CiAgICAiZnJhbWVzIjogMCwKICAgICJmaXJzdEZyYW1lIjogLTEsCiAgICAiYXNzZXRzIjogW10KICB9LAogICJwZXJmIjogewogICAgImRyYXdDYWxscyI6IHsKICAgICAgInA1MCI6IDI0LAogICAgICAicDk1IjogMjQsCiAgICAgICJtYXgiOiAyNAogICAgfSwKICAgICJ0cmlhbmdsZXMiOiB7CiAgICAgICJwNTAiOiA4MzAwNywKICAgICAgInA5NSI6IDgzMDA3LAogICAgICAibWF4IjogODMwMDcKICAgIH0sCiAgICAic2hhZG93RHJhd0NhbGxzIjogewogICAgICAicDUwIjogMTgsCiAgICAgICJwOTUiOiAxOCwKICAgICAgIm1heCI6IDE4CiAgICB9LAogICAgInNoYWRvd1RyaWFuZ2xlcyI6IHsKICAgICAgInA1MCI6IDQ4NjQwLAogICAgICAicDk1IjogNDg2NDAsCiAgICAgICJtYXgiOiA0ODY0MAogICAgfSwKICAgICJzdGVwTXMiOiB7CiAgICAgICJwNTAiOiAzLjQsCiAgICAgICJwOTUiOiAzLjQsCiAgICAgICJtYXgiOiA4LjcKICAgIH0sCiAgICAibGFzdEZyYW1lIjogewogICAgICAiZHJhd0NhbGxzIjogMjQsCiAgICAgICJ0cmlhbmdsZXMiOiA4MzAwNywKICAgICAgInNoYWRvd0RyYXdDYWxscyI6IDE4LAogICAgICAic2hhZG93VHJpYW5nbGVzIjogNDg2NDAsCiAgICAgICJzdGVwTXMiOiAzLAogICAgICAiY2F0ZWdvcmllcyI6IHsKICAgICAgICAib3RoZXIiOiAxNCwKICAgICAgICAic2hhZG93cyI6IDE4LAogICAgICAgICJjcm93ZCI6IDEwCiAgICAgIH0KICAgIH0sCiAgICAibm90ZSI6ICJ2aWV3IGRyYXdzL3RyaWFuZ2xlcyBleGNsdWRlIHRoZSBzaGFkb3cgcGFzcyAocmVwb3J0ZWQgc2VwYXJhdGVseSk7IHN0ZXBNcyA9IENQVSBtcyBvZiBvbmUgc2ltIHRpY2sgKyByZW5kZXIgc3VibWlzc2lvbiwgbm90IEdQVSB0aW1lIgogIH0sCiAgInZlaGljbGVzIjoge30sCiAgImdyb3VuZGluZyI6IHsKICAgICJjb3Jwc2VzIjogMCwKICAgICJjb3Jwc2VPZmZNYXhDbSI6IDAsCiAgICAicGlja3VwcyI6IDAsCiAgICAicGlja3VwT2ZmTWF4Q20iOiAwLAogICAgIndvcnN0IjogW10KICB9LAogICJwdXJzdWl0IjogewogICAgImFjdG9ycyI6IHt9LAogICAgImNvdXJpZXJTd2luZ3MiOiAwLAogICAgImNvdXJpZXJBdHRhY2tzIjogMCwKICAgICJodWxsV2luZHVwcyI6IDAsCiAgICAiaHVsbEhpdHMiOiAwLAogICAgImZpcnN0QXR0YWNrRnJhbWUiOiAtMSwKICAgICJiaXRlcyI6IDAsCiAgICAiZmlyc3RCaXRlRnJhbWUiOiAtMQogIH0sCiAgImN1cmUiOiBudWxsLAogICJtZWdhQWxwaGEiOiBudWxsLAogICJtaW5pZ3VuIjogbnVsbCwKICAic3BlY2lhbHMiOiBbXSwKICAiaGVsZFByb3BzIjogewogICAgInNhbXBsZXMiOiAwLAogICAgImludGVyc2VjdGlvbnMiOiAwLAogICAgImhvbGRzIjoge30KICB9LAogICJzZWVUaHJvdWdoIjogewogICAgImZyYW1lcyI6IDMsCiAgICAic29saWRSYWRpdXNNYXgiOiAxLjA5OCwKICAgICJvY2NsdWRlcnMiOiBbXSwKICAgICJjdXRMb3dQcm9wcyI6IFtdLAogICAgImN1dFBsYWNlbWVudHMiOiBbXQogIH0sCiAgImFwcGVhcmFuY2UiOiBbXSwKICAiY29tcGFuaW9uIjogewogICAgIm92ZXJsYXBNYXhDbSI6IDAsCiAgICAib3ZlcmxhcEZyYW1lIjogMCwKICAgICJydW5MYWdNYXhNIjogMCwKICAgICJydW5MYWdGcmFtZSI6IDAsCiAgICAic2FtcGxlcyI6IDAsCiAgICAicnVubmluZ1NhbXBsZXMiOiAwCiAgfSwKICAiYmlrZSI6IHsKICAgICJpblZpZXdGcmFtZXMiOiAwLAogICAgIm1pc3NlZEZyYW1lcyI6IDAsCiAgICAib2ZmRnJhbWVzIjogMCwKICAgICJtYXhPZmZzZXRDbSI6IDAsCiAgICAiZmlyc3RNaXNzZWRGcmFtZSI6IC0xCiAgfSwKICAidmFyaWV0eSI6IHsKICAgICJpbmZlY3RlZCI6IHsKICAgICAgImZpZ3VyZXMiOiAwLAogICAgICAiZGlzdGluY3QiOiAwLAogICAgICAicGVyMjAiOiBbXSwKICAgICAgImxhcmdlc3RTYW1lTG9va1NoYXJlIjogMCwKICAgICAgImxhcmdlc3RNb2RlbFNoYXJlIjogMAogICAgfSwKICAgICJwZWRlc3RyaWFuIjogewogICAgICAiZmlndXJlcyI6IDEwLAogICAgICAiZGlzdGluY3QiOiAxMCwKICAgICAgInBlcjIwIjogWwogICAgICAgIHsKICAgICAgICAgICJmaWd1cmVzIjogMTAsCiAgICAgICAgICAiZGlzdGluY3QiOiAxMAogICAgICAgIH0KICAgICAgXSwKICAgICAgImxhcmdlc3RTYW1lTG9va1NoYXJlIjogMC4xLAogICAgICAibGFyZ2VzdE1vZGVsU2hhcmUiOiAwLjEKICAgIH0KICB9LAogICJhY3RvcnMiOiB7CiAgICAibWFuLWEiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogMywKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIC01LAogICAgICAgIC0zCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogLTUsCiAgICAgICJoZWxkV2VhcG9uIjogbnVsbCwKICAgICAgInRhcmdldElkIjogbnVsbCwKICAgICAgInN0YXRlIjogImNhbG0iLAogICAgICAiaGVhbHRoIjogMTAwLAogICAgICAiZHJhd25GcmFtZXMiOiAzLAogICAgICAiaW5WaWV3RnJhbWVzIjogMywKICAgICAgIm1pc3NlZEluVmlld0ZyYW1lcyI6IDAsCiAgICAgICJsb2QiOiB7CiAgICAgICAgImxvZDEiOiAzCiAgICAgIH0sCiAgICAgICJmaXJzdERyYXduIjogewogICAgICAgICJmcmFtZSI6IDEsCiAgICAgICAgImF0IjogWwogICAgICAgICAgLTUsCiAgICAgICAgICAtMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAibWFuLWIiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogNCwKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIC0yLjUsCiAgICAgICAgLTMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiAtMi41LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIC0yLjUsCiAgICAgICAgICAtMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IC0yLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogLTIsCiAgICAgICAgImNvbnRhY3RzIjogMiwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDAsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJ3b21hbi1hIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDUsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAwLAogICAgICAgIC0zCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogMCwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAwLAogICAgICAgICAgLTMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAyLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogMCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9LAogICAgIndvbWFuLWIiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogNiwKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIDIuNSwKICAgICAgICAtMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IDIuNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMSI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICAyLjUsCiAgICAgICAgICAtMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAiZWxkZXJseSI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiA3LAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgNSwKICAgICAgICAtMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IDUsCiAgICAgICJoZWxkV2VhcG9uIjogbnVsbCwKICAgICAgInRhcmdldElkIjogbnVsbCwKICAgICAgInN0YXRlIjogImNhbG0iLAogICAgICAiaGVhbHRoIjogMTAwLAogICAgICAiZHJhd25GcmFtZXMiOiAzLAogICAgICAiaW5WaWV3RnJhbWVzIjogMywKICAgICAgIm1pc3NlZEluVmlld0ZyYW1lcyI6IDAsCiAgICAgICJsb2QiOiB7CiAgICAgICAgImxvZDEiOiAzCiAgICAgIH0sCiAgICAgICJmaXJzdERyYXduIjogewogICAgICAgICJmcmFtZSI6IDEsCiAgICAgICAgImF0IjogWwogICAgICAgICAgNSwKICAgICAgICAgIC0zCiAgICAgICAgXQogICAgICB9LAogICAgICAiZmFyTG9kQ2xvc2VGcmFtZXMiOiAwLAogICAgICAibW90aW9uIjogewogICAgICAgICJmcmFtZXMiOiAzLAogICAgICAgICJ0b3Jzb1BpdGNoTWluRGVnIjogMCwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IDAsCiAgICAgICAgImNvbnRhY3RzIjogMiwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDAsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJjbGVyayI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiA4LAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgLTUsCiAgICAgICAgMwogICAgICBdLAogICAgICAieWF3RGVnIjogMCwKICAgICAgInRyYXZlbE0iOiAwLAogICAgICAibWF4WCI6IC01LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIC01LAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0sCiAgICAidGVjaC1hIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDksCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAtMi41LAogICAgICAgIDMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiAtMi41LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIC0yLjUsCiAgICAgICAgICAzCiAgICAgICAgXQogICAgICB9LAogICAgICAiZmFyTG9kQ2xvc2VGcmFtZXMiOiAwLAogICAgICAibW90aW9uIjogewogICAgICAgICJmcmFtZXMiOiAzLAogICAgICAgICJ0b3Jzb1BpdGNoTWluRGVnIjogMCwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IDAsCiAgICAgICAgImNvbnRhY3RzIjogMiwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDAsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJ0ZWNoLWIiOiB7CiAgICAgICJraW5kIjogInBlZGVzdHJpYW4iLAogICAgICAiZW50aXR5IjogMTAsCiAgICAgICJwb3NpdGlvbiI6IFsKICAgICAgICAwLAogICAgICAgIDMKICAgICAgXSwKICAgICAgInlhd0RlZyI6IDAsCiAgICAgICJ0cmF2ZWxNIjogMCwKICAgICAgIm1heFgiOiAwLAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIDAsCiAgICAgICAgICAzCiAgICAgICAgXQogICAgICB9LAogICAgICAiZmFyTG9kQ2xvc2VGcmFtZXMiOiAwLAogICAgICAibW90aW9uIjogewogICAgICAgICJmcmFtZXMiOiAzLAogICAgICAgICJ0b3Jzb1BpdGNoTWluRGVnIjogMCwKICAgICAgICAidG9yc29QaXRjaE1heERlZyI6IDAsCiAgICAgICAgImNvbnRhY3RzIjogMiwKICAgICAgICAic2xpZGVNYXhDbSI6IDAsCiAgICAgICAgInNsaWRlUDk1Q20iOiAwLAogICAgICAgICJ5YXdEcmlmdE1heERlZyI6IDAsCiAgICAgICAgImxpZnRNYXhDbSI6IDAsCiAgICAgICAgInNpbmtNYXhDbSI6IDAsCiAgICAgICAgImppdHRlclJ1bk1heCI6IDAsCiAgICAgICAgIndvcnN0U2xpZGVGcmFtZSI6IG51bGwKICAgICAgfQogICAgfSwKICAgICJndWFyZCI6IHsKICAgICAgImtpbmQiOiAicGVkZXN0cmlhbiIsCiAgICAgICJlbnRpdHkiOiAxMSwKICAgICAgInBvc2l0aW9uIjogWwogICAgICAgIDIuNSwKICAgICAgICAzCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogMi41LAogICAgICAiaGVsZFdlYXBvbiI6IG51bGwsCiAgICAgICJ0YXJnZXRJZCI6IG51bGwsCiAgICAgICJzdGF0ZSI6ICJjYWxtIiwKICAgICAgImhlYWx0aCI6IDEwMCwKICAgICAgImRyYXduRnJhbWVzIjogMywKICAgICAgImluVmlld0ZyYW1lcyI6IDMsCiAgICAgICJtaXNzZWRJblZpZXdGcmFtZXMiOiAwLAogICAgICAibG9kIjogewogICAgICAgICJsb2QxIjogMwogICAgICB9LAogICAgICAiZmlyc3REcmF3biI6IHsKICAgICAgICAiZnJhbWUiOiAxLAogICAgICAgICJhdCI6IFsKICAgICAgICAgIDIuNSwKICAgICAgICAgIDMKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmYXJMb2RDbG9zZUZyYW1lcyI6IDAsCiAgICAgICJtb3Rpb24iOiB7CiAgICAgICAgImZyYW1lcyI6IDMsCiAgICAgICAgInRvcnNvUGl0Y2hNaW5EZWciOiAwLAogICAgICAgICJ0b3Jzb1BpdGNoTWF4RGVnIjogMCwKICAgICAgICAiY29udGFjdHMiOiAxLAogICAgICAgICJzbGlkZU1heENtIjogMCwKICAgICAgICAic2xpZGVQOTVDbSI6IDAsCiAgICAgICAgInlhd0RyaWZ0TWF4RGVnIjogMCwKICAgICAgICAibGlmdE1heENtIjogNCwKICAgICAgICAic2lua01heENtIjogMCwKICAgICAgICAiaml0dGVyUnVuTWF4IjogMCwKICAgICAgICAid29yc3RTbGlkZUZyYW1lIjogbnVsbAogICAgICB9CiAgICB9LAogICAgImZpcmVmaWdodGVyIjogewogICAgICAia2luZCI6ICJwZWRlc3RyaWFuIiwKICAgICAgImVudGl0eSI6IDEyLAogICAgICAicG9zaXRpb24iOiBbCiAgICAgICAgNSwKICAgICAgICAzCiAgICAgIF0sCiAgICAgICJ5YXdEZWciOiAwLAogICAgICAidHJhdmVsTSI6IDAsCiAgICAgICJtYXhYIjogNSwKICAgICAgImhlbGRXZWFwb24iOiBudWxsLAogICAgICAidGFyZ2V0SWQiOiBudWxsLAogICAgICAic3RhdGUiOiAiY2FsbSIsCiAgICAgICJoZWFsdGgiOiAxMDAsCiAgICAgICJkcmF3bkZyYW1lcyI6IDMsCiAgICAgICJpblZpZXdGcmFtZXMiOiAzLAogICAgICAibWlzc2VkSW5WaWV3RnJhbWVzIjogMCwKICAgICAgImxvZCI6IHsKICAgICAgICAibG9kMCI6IDMKICAgICAgfSwKICAgICAgImZpcnN0RHJhd24iOiB7CiAgICAgICAgImZyYW1lIjogMSwKICAgICAgICAiYXQiOiBbCiAgICAgICAgICA1LAogICAgICAgICAgMwogICAgICAgIF0KICAgICAgfSwKICAgICAgImZhckxvZENsb3NlRnJhbWVzIjogMCwKICAgICAgIm1vdGlvbiI6IHsKICAgICAgICAiZnJhbWVzIjogMywKICAgICAgICAidG9yc29QaXRjaE1pbkRlZyI6IDAsCiAgICAgICAgInRvcnNvUGl0Y2hNYXhEZWciOiAwLAogICAgICAgICJjb250YWN0cyI6IDIsCiAgICAgICAgInNsaWRlTWF4Q20iOiAwLAogICAgICAgICJzbGlkZVA5NUNtIjogMCwKICAgICAgICAieWF3RHJpZnRNYXhEZWciOiAwLAogICAgICAgICJsaWZ0TWF4Q20iOiAwLAogICAgICAgICJzaW5rTWF4Q20iOiAwLAogICAgICAgICJqaXR0ZXJSdW5NYXgiOiAwLAogICAgICAgICJ3b3JzdFNsaWRlRnJhbWUiOiBudWxsCiAgICAgIH0KICAgIH0KICB9LAogICJjbGlja3MiOiB7CiAgICAidG90YWwiOiAwLAogICAgIm1pc3NlcyI6IDAsCiAgICAicm93cyI6IFtdLAogICAgInN3aW5ncyI6IFtdCiAgfSwKICAidmlzaWJpbGl0eSI6IHsKICAgICJmcmFtZSI6IDMsCiAgICAic2ltIjogewogICAgICAicGVkZXN0cmlhbiI6IDEwLAogICAgICAiYWN0b3JzIjogMTAKICAgIH0sCiAgICAiZHJhd24iOiB7CiAgICAgICJ2ZWhpY2xlIjogMCwKICAgICAgInBlZGVzdHJpYW4iOiAxMAogICAgfQogIH0sCiAgImxvZHMiOiB7fSwKICAiY2xpcHBpbmciOiB7CiAgICAiZ3VuQm9keUhpdHMiOiAwLAogICAgInN0YXRpY1BhaXJzIjogMCwKICAgICJoZWxkUHJvcEhpdHMiOiAwLAogICAgImFjdG9ySGl0cyI6IDAsCiAgICAicGllcmNpbmciOiAwCiAgfSwKICAiZW1lcmdlbmNlIjogbnVsbCwKICAiZG9vcnMiOiB7fSwKICAibG9nIjogW10KfQ=="
+                    },
+                    {
+                      "name": "seated-props-high",
+                      "contentType": "application/json",
+                      "body": "ewogICJiZW5jaGVzIjogWwogICAgewogICAgICAiaWQiOiAxMjMsCiAgICAgICJwcm9wIjogIkQtR1JPVkUvbDItc3RhdGlvbi01MyIsCiAgICAgICJkcmF3blNlYXQiOiB0cnVlLAogICAgICAicmVjdCI6IFsKICAgICAgICAtNzIuMjYyNzU1ODA3NTEyMiwKICAgICAgICAyODcuNzMyNzEyODYzMTkyOCwKICAgICAgICA2OC43NTY3NDY3MTM5Njk2NSwKICAgICAgICA0MDQuNDIwMzg4NDI4OTU2NDcKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgImlkIjogMTI0LAogICAgICAicHJvcCI6ICJELUdST1ZFL2wyLXN0YXRpb24tNTMiLAogICAgICAiZHJhd25TZWF0IjogdHJ1ZSwKICAgICAgInJlY3QiOiBbCiAgICAgICAgLTcyLjI2Mjc1NTgwNzUxMjIsCiAgICAgICAgMjg3LjczMjcxMjg2MzE5MjgsCiAgICAgICAgNjguNzU2NzQ2NzEzOTY5NjUsCiAgICAgICAgNDA0LjQyMDM4ODQyODk1NjQ3CiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJpZCI6IDEyNSwKICAgICAgInByb3AiOiAiRC1HUk9WRS9sMi1zdGF0aW9uLTU0IiwKICAgICAgImRyYXduU2VhdCI6IHRydWUsCiAgICAgICJyZWN0IjogWwogICAgICAgIDY2LjYxMDg3MDgwMjk2ODY2LAogICAgICAgIDIzMy4yODc3NzY2MDQ1NjcxLAogICAgICAgIDE5NC40ODM3MzgxNzA0NjA2LAogICAgICAgIDM0Mi40MjkwMTMyNzg4NzA0NgogICAgICBdCiAgICB9LAogICAgewogICAgICAiaWQiOiAxMjYsCiAgICAgICJwcm9wIjogIkQtR1JPVkUvbDItc3RhdGlvbi01NCIsCiAgICAgICJkcmF3blNlYXQiOiB0cnVlLAogICAgICAicmVjdCI6IFsKICAgICAgICA2Ni42MTA4NzA4MDI5Njg2NiwKICAgICAgICAyMzMuMjg3Nzc2NjA0NTY3MSwKICAgICAgICAxOTQuNDgzNzM4MTcwNDYwNiwKICAgICAgICAzNDIuNDI5MDEzMjc4ODcwNDYKICAgICAgXQogICAgfQogIF0sCiAgImJlbmNoUGl4ZWxzIjogewogICAgIjEyMyI6IDQ2NywKICAgICIxMjQiOiA0NjcsCiAgICAiMTI1IjogNDY4LAogICAgIjEyNiI6IDQ2OAogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "818346a97084514c9eac-515ed192b8eb6f269fde",
+          "file": "scene-lab.spec.ts",
+          "line": 71,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-23T07:27:08.651Z",
+    "duration": 192980.19999999998,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

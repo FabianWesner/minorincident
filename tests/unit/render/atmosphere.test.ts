@@ -96,7 +96,7 @@ test('@E25 atmosphere 2: haze range follows the camera distance and beam weight 
     lighting.set('L8-zoo');
     expect(lighting.practicalEffects.beamStrength.value).toBe(timeOfDay['L8-zoo'].look!.beamStrength);
     const camera = new PerspectiveCamera(30, 16 / 9, .1, 500); camera.position.set(0, 14, 13); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
-    lighting.update({ focus: new Vector3(), radius: 19, driving: false, camera } as unknown as View);
+    lighting.update({ focus: new Vector3(), radius: 19, driving: false, driveScale: 1, camera } as unknown as View);
     expect(lighting.hazeNear.value).toBeCloseTo(19 * worldLook.hazeStart); expect(lighting.hazeFar.value).toBeCloseTo(19 * worldLook.hazeEnd);
     lighting.set('night'); expect(lighting.practicalEffects.beamStrength.value).toBe(1);
   } finally { lighting.dispose(); }

@@ -5,6 +5,10 @@ import { cameraFraming, rocketZoomLimit } from '../data/cameraFraming';
 /** Player zoom range as a fraction of the default radius: in until the hero is ~1/3.5 of the viewport height. */
 // PO 2026-10-13: "End of L3, I can zoom out whihc I shouldn't" (scripted beats lock the framing).
 // PO 2026-10-13 later: "let me generally zoom out a bit more (like +30%)" … "better +50%"
+/** Driver camera: 1.4x the view area of the passenger/driving frame (area scales with radius squared). */
+export const driveWideScale = 1.15 * Math.sqrt(1.4);
+/** The player steers a rideable herself: an active car (APC, truck) or the bicycle. Drives the driver camera widening. */
+export const playerSteers = (vehicles: { active: unknown; bicycle: { riding: boolean } } | null | undefined): boolean => vehicles?.active != null || vehicles?.bicycle.riding === true;
 export const zoomLimits = [.5, 1.5] as const;
 /** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
 export const feetOffset = .72;
@@ -58,6 +62,10 @@ export class View {
   /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
   epilogueScale = 1;
   driving = false;
+  /** The player is the driver (not a passenger): the follow camera widens a further 1.4x in view area. */
+  driverWide = false;
+  /** Eased follow-radius multiplier: 1 on foot, 1.15 as a passenger, 1.15 x sqrt(1.4) driving. Eased (~0.7 s), never snapped. */
+  driveScale = 1;
   cameraShake = true;
   spot: string | null = null;
   private readonly target = new Vector3();
@@ -95,7 +103,7 @@ export class View {
     this.encounterScale = this.epilogueScale = 1;
     this.zoomRatio = this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], preserveZoom ? this.targetZoom : 1));
     this.radius = this.defaultRadius * this.zoomRatio;
-    this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
+    this.driving = false; this.driverWide = false; this.driveScale = 1; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
@@ -157,12 +165,15 @@ export class View {
       this.zoomReturn = Math.max(0, this.zoomReturn - seconds);
       if (this.zoomReturn < 1e-8) { this.zoomReturn = 0; this.zoomRatio = Math.min(this.zoomRatio, this.maxZoom); }
     }
+    const driveTarget = this.driving ? (this.driverWide ? driveWideScale : 1.15) : 1;
+    this.driveScale = seconds > 0 ? driveTarget + (this.driveScale - driveTarget) * Math.exp(-5 * seconds) : this.driveScale;
+    if (Math.abs(this.driveScale - driveTarget) < 1e-4) this.driveScale = driveTarget;
     this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
     this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
-    this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
+    this.offset.setFromSphericalCoords(this.radius * this.driveScale, this.polar, this.azimuth);
     // Facades are revealed by the shared see-through/silhouette pass. Preserve
     // the player's distance and polar angle, including when the lens is inside
     // a building: contracting and raising it turned narrow streets top-down.
@@ -207,6 +218,6 @@ export class View {
     this.camera.updateMatrixWorld();
   }
   getState() {
-    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [zoomLimits[0], this.maxZoom], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [zoomLimits[0], this.maxZoom], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * this.driveScale, focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }
