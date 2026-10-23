@@ -9,6 +9,7 @@ test('L10 selects the recovered campaign arsenal instead of keeping the crash ax
   weapons.push('weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher');
   expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.rocket-launcher');
   expect(campaignCombatWeapon('L10', weapons, 4)).toBe('weapon.army-mg');
+  expect(campaignCombatWeapon('L10', weapons, 4, true)).toBe('weapon.rocket-launcher');
   expect(campaignCombatWeapon('L7', weapons, 10)).toBe('weapon.rocket-launcher');
   expect(campaignCombatWeapon('L8', weapons, 10)).toBe('weapon.rocket-launcher');
   expect(campaignCombatWeapon('L6', weapons, 10)).toBeNull();

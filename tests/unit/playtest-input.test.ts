@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { clickGroundInput, markerWalkKeys } from '../../tools/playtest/input';
+import { clickGroundInput, dodgeFireInput, markerWalkKeys } from '../../tools/playtest/input';
 
 test('#102 raised exit steering retains the small correction toward the visible stair centre', () => {
   const frames = Array.from({ length: 12 }, (_, i) => markerWalkKeys(12, 4, i / 12));
@@ -20,4 +20,18 @@ test('#99 approaching a visible ally attacker releases held walking/attack keys 
     },
   }, 640, 360);
   expect(calls).toEqual(['keys-up','aim-up','move 640 360','mouse-down','mouse-up']);
+});
+
+test('finale dodging starts Space before the ground click so the attack key cannot cancel the route', async () => {
+  const calls: string[] = [];
+  await dodgeFireInput({
+    releaseAim: async () => { calls.push('aim-up'); },
+    holdFire: async () => { calls.push('space-held'); },
+    mouse: {
+      move: async (x, y) => { calls.push(`move ${x} ${y}`); },
+      down: async () => { calls.push('mouse-down'); },
+      up: async () => { calls.push('mouse-up'); },
+    },
+  }, { x: 700, y: 500 }, { x: 600, y: 300 });
+  expect(calls).toEqual(['aim-up', 'space-held', 'move 700 500', 'mouse-down', 'mouse-up', 'move 600 300']);
 });
