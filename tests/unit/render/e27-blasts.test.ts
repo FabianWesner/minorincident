@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { InstancedMesh, type Color, type Scene, type WebGPURenderer } from 'three/webgpu';
-import { Blasts } from '../../../src/render/vfx/Blasts';
+import { Blasts, castsColumnShadow } from '../../../src/render/vfx/Blasts';
 import { FxPool } from '../../../src/render/vfx/FxPool';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { LightField } from '../../../src/render/LightField';
@@ -99,4 +99,11 @@ test('T-E27-03p @E27 @E27-AC03 a fixed-tick jump retains distributed smoke birth
     expect(Math.max(...births)).toBeCloseTo(3);
     expect(births.filter(born => born < 2).length).toBeGreaterThan(3);
   } finally { blasts.dispose(); particles.dispose(); world.dispose(); }
+});
+
+test('Q-132: small debris fires and smoke clouds cast no long column shadow strip (the pale L9 night streaks)', () => {
+  expect(castsColumnShadow({ size: .65 })).toBe(false); // verge debris fire
+  expect(castsColumnShadow({ size: 3, cloud: 4 })).toBe(false);
+  expect(castsColumnShadow({ size: 1.2 })).toBe(true); // brush fire
+  expect(castsColumnShadow({ size: 1.8 })).toBe(true); // burning car
 });

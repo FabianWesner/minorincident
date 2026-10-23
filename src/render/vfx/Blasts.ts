@@ -25,6 +25,8 @@ export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strengt
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
 const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 96, FIREBALLS_LOW = 56, DEBRIS = 64, FLAMES = 128, GLOWS = 40, PARTS = 12;
 const wind = { x: .55, z: .25 };
+/** Q-132: smoke grenade clouds and small debris fires (size < 1, a lick of flame) cast no long moon/sun shadow strip. */
+export const castsColumnShadow = (c: { cloud?: number; size: number }): boolean => !c.cloud && c.size >= 1;
 const identity = new Matrix4();
 const up = new Vector3(0, 1, 0);
 
@@ -256,7 +258,8 @@ export class Blasts extends Group {
     const shadowGeometry = new PlaneGeometry(1, 1); shadowGeometry.rotateX(-Math.PI / 2);
     const shadowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
     const q = uv().sub(.5).mul(2);
-    shadowMaterial.outputNode = vec4(vec3(.16, .12, .25), q.x.abs().smoothstep(1, .3).mul(q.y.abs().smoothstep(1, .5)).mul(.24));
+    // Q-132: a fixed lavender tint is lighter than a night ground, so the 10-30 m moon-cast strip read as a pale streak. Scale it by the scene ambient like the smoke itself.
+    shadowMaterial.outputNode = vec4(vec3(.16, .12, .25).mul(host.ambient ? host.ambient.clamp(.12, 1) : float(1)), q.x.abs().smoothstep(1, .3).mul(q.y.abs().smoothstep(1, .5)).mul(.24));
     this.columnShadows = new InstancedMesh(shadowGeometry, shadowMaterial, 64);
     this.columnShadows.count = 0; this.columnShadows.frustumCulled = false; this.columnShadows.renderOrder = 1;
     this.add(this.scorch.mesh, this.glows, this.fireballs, this.debris, this.puffs, this.flames, this.parts, this.columnShadows);
@@ -499,8 +502,10 @@ export class Blasts extends Group {
       const f = accents[i], key = -1_000_000 - i; seen.add(key);
       let c = this.fireColumns.get(key);
       // look-l9b: columns scale with the authored radius (brush 1.1-1.8 m, city 2.4-3.8 m), so the fires read at the game camera.
-      if (!c) { const landmark = f.radius >= 2; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
+      // l9-night-look: small verge/deck debris fires (life, < 1 m) trail a thin wisp of small puffs, not one big pale ball.
+      if (!c) { const landmark = f.radius >= 2, debris = !!f.life && !f.car && f.radius < 1; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : debris ? 1 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : debris ? .65 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
+      // Debris fires (life) skip embers on low: the flame cards and pool carry them, the particle budget stays for combat.
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || !f.life && Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
@@ -532,7 +537,8 @@ export class Blasts extends Group {
     const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
     let shadows = 0;
     for (const c of [...this.columns, ...this.fireColumns.values()]) {
-      if (shadows >= 64 || c.cloud || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
+      // Q-132: small debris fires (size < 1) are a lick of flame, not a column: no long moon-cast shadow strip across the verge.
+      if (shadows >= 64 || !castsColumnShadow(c) || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
       const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
       this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
       this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z));
