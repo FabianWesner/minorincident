@@ -1,0 +1,161 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual
+
+ ❯ |functional| tests/unit/render/static-corpses.test.ts (17 tests | 1 failed) 211ms
+   × permanent frozen bodies drop the live fade mask while the living material keeps it 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/static-corpses.test.ts > permanent frozen bodies drop the live fade mask while the living material keeps it
+AssertionError: expected VarNode{ nodeType: null, …(18) } to be null
+
+- Expected:
+null
+
++ Received:
+VarNode {
+  "_beforeNodes": null,
+  "_cacheKey": null,
+  "_cacheKeyVersion": 0,
+  "_uuid": null,
+  "global": true,
+  "id": 2819,
+  "intent": true,
+  "isNode": true,
+  "isVarNode": true,
+  "name": null,
+  "node": OperatorNode {
+    "_beforeNodes": null,
+    "_cacheKey": null,
+    "_cacheKeyVersion": 0,
+    "_uuid": null,
+    "aNode": SplitNode {
+      "_beforeNodes": null,
+      "_cacheKey": null,
+      "_cacheKeyVersion": 0,
+      "_uuid": null,
+      "components": "x",
+      "global": false,
+      "id": 2817,
+      "isNode": true,
+      "isSplitNode": true,
+      "name": "",
+      "node": VarNode {
+        "_beforeNodes": null,
+        "_cache": {
+          "x": [Circular],
+        },
+        "_cacheKey": null,
+        "_cacheKeyVersion": 0,
+        "_uuid": null,
+        "global": true,
+        "id": 2816,
+        "intent": true,
+        "isNode": true,
+        "isVarNode": true,
+        "name": null,
+        "node": ConstNode {
+          "_beforeNodes": null,
+          "_cacheKey": null,
+          "_cacheKeyVersion": 0,
+          "_uuid": null,
+          "global": false,
+          "id": 2815,
+          "isConstNode": true,
+          "isInputNode": true,
+          "isNode": true,
+          "name": "",
+          "nodeType": "vec3",
+          "parents": false,
+          "precision": null,
+          "stackTrace": null,
+          "updateAfterType": "none",
+          "updateBeforeType": "none",
+          "updateType": "none",
+          "value": Vector3 {
+            "x": 1,
+            "y": 1,
+            "z": 1,
+          },
+          "version": 0,
+        },
+        "nodeType": null,
+        "parents": true,
+        "readOnly": false,
+        "stackTrace": null,
+        "updateAfterType": "none",
+        "updateBeforeType": "none",
+        "updateType": "none",
+        "version": 0,
+      },
+      "nodeType": null,
+      "parents": false,
+      "stackTrace": null,
+      "updateAfterType": "none",
+      "updateBeforeType": "none",
+      "updateType": "none",
+      "version": 0,
+    },
+    "bNode": ConstNode {
+      "_beforeNodes": null,
+      "_cacheKey": null,
+      "_cacheKeyVersion": 0,
+      "_uuid": null,
+      "global": false,
+      "id": 58,
+      "isConstNode": true,
+      "isInputNode": true,
+      "isNode": true,
+      "name": "",
+      "nodeType": null,
+      "parents": false,
+      "precision": null,
+      "stackTrace": null,
+      "updateAfterType": "none",
+      "updateBeforeType": "none",
+      "updateType": "none",
+      "value": 0.5,
+      "version": 0,
+    },
+    "global": false,
+    "id": 2818,
+    "intent": true,
+    "isNode": true,
+    "isOperatorNode": true,
+    "isTempNode": true,
+    "name": "",
+    "nodeType": null,
+    "op": ">",
+    "parents": false,
+    "stackTrace": null,
+    "updateAfterType": "none",
+    "updateBeforeType": "none",
+    "updateType": "none",
+    "version": 0,
+  },
+  "nodeType": null,
+  "parents": true,
+  "readOnly": false,
+  "stackTrace": null,
+  "updateAfterType": "none",
+  "updateBeforeType": "none",
+  "updateType": "none",
+  "version": 0,
+}
+
+ ❯ tests/unit/render/static-corpses.test.ts:316:65
+    314|     pool.place({ id: 1, corpse: true } as EntitySnapshot, 'runner', ba…
+    315|     const page = pool.children[0] as InstancedMesh;
+    316|     expect((page.material as MeshLambertNodeMaterial).maskNode).toBeNu…
+       |                                                                 ^
+    317|     expect(material.maskNode).toBe(liveMask);
+    318|     expect(page.count).toBe(1); expect(page.geometry.index!.count).toB…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 16 passed (17)
+   Start at  07:12:20
+   Duration  508ms (tests 46%, transform 34%, import 20%)
+
