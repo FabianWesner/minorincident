@@ -43,7 +43,7 @@ const pickColor = (palette: Color[], index: Node<'float'>) => {
 };
 export const frozenToneNames = ['_corpseHair', '_corpseSkin', '_corpseTrousers', '_corpseAccessory'] as const;
 /** Immutable corpse identity: upload the exact palette constants once, avoiding 34 vertex-shader palette selects. */
-export function writeFrozenCrowdTones(targets: readonly InstancedBufferAttribute[], index: number, id: number): void {
+export function writeFrozenCrowdTones(targets: readonly (InstancedBufferAttribute | InterleavedBufferAttribute)[], index: number, id: number): void {
   const look = crowdAppearance(id);
   const tones = [colors.hair[look.hair], colors.infected[look.skin], colors.trousers[look.trousers], colors.shirt[crowdAppearance(id + 503).shirt]];
   tones.forEach((tone, i) => targets[i].setXYZ(index, tone.r, tone.g, tone.b));

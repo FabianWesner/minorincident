@@ -10,7 +10,7 @@ import { installPaletteVariantCache } from '../../../src/render/Renderer';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
-import { frozenToneNames, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
+import { crowdVertexLayout, frozenToneNames, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
 import { crowdAppearance, hairTones, infectedSkinTones, trouserTones, shirtTones } from '../../../src/data/crowdAppearance';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
@@ -30,7 +30,7 @@ test('frozen palette constants match the live palette exactly and survive page s
     records.delete(7); pool.begin(id => records.get(id));
     const page = pool.children[0] as InstancedMesh, look = crowdAppearance(8);
     const expected = [hairTones[look.hair], infectedSkinTones[look.skin], trouserTones[look.trousers], shirtTones[crowdAppearance(8 + 503).shirt]];
-    expect(Object.keys(page.geometry.attributes)).toHaveLength(16);
+    expect(crowdVertexLayout(page.geometry)).toEqual({ buffers: 8, locations: 16, webgpu: true, webgl2: true });
     for (const [i, name] of frozenToneNames.entries()) {
       const attribute = page.geometry.getAttribute(name), values = new Color(expected[i]).toArray().map(Math.fround);
       expect([attribute.getX(0), attribute.getY(0), attribute.getZ(0)]).toEqual(values);
