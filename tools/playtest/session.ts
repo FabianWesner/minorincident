@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, shouldResumePause } from './startup';
-import { campaignCombatWeapon, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
+import { campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput, dodgeWalkKeys, markerWalkKeys } from './input';
@@ -213,7 +213,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const reach = e.level === 'L10' && (e.step === 'mega' || e.step === 'hold') && ranged.test(e.player?.current ?? '') ? 30 : lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
-    const nearby = e.enemies.find(b => b.d < reach && ok(b));
+    const nearby = campaignThreat(e.level, e.step, e.enemies.filter(ok), reach);
     const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,{ drawn:a.drawn, hp:a.hp, corpse:a.corpse, underAttack:b.attacking },e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
     const threat = prioritizeAllyThreat(unarmed, nearby, allyThreat);
     if (e.level === 'L6' && e.step === 'stop' && unarmed) {
@@ -264,7 +264,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const points = await page.evaluate(({ p, goal, enemy }) => {
           const a = window.__SS__!;
           return [a.input.project(p, 'player'), a.input.project(goal, 'destination'), a.input.project(enemy, 'destination')];
-        }, { p: e.player, goal: dodge, enemy: { x: threat.x, z: threat.z } });
+        }, { p: e.player, goal: dodge, enemy: e.player.current === 'weapon.rocket-launcher' ? rocketAimPoint(e.player, threat) : { x: threat.x, z: threat.z } });
         const dx = points[1].x - points[0].x, dy = points[1].y - points[0].y;
         if (Math.hypot(e.player.x - dodgePosition.x, e.player.z - dodgePosition.z) > .8) dodgePosition = { x: e.player.x, z: e.player.z, at: now };
         if (now > dodgeDetourUntil && now - dodgePosition.at > 800) {
@@ -662,7 +662,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const a = window.__SS__!;
         return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
       }, { p: e.player, goal: ring });
-      const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+      const keys = dodgeWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, unstickDir++);
       await releaseAim(); await press(keys); await hold(700); await press([]);
       log({ visibleMarkerUnstick: e.tick, keys }); continue;
     }
