@@ -731,11 +731,14 @@ export class InfectedSystem {
   }
   /**
    * Sends an L1 infected running to a point, then searching around it until `untilTick` (distractions, accident exits,
-   * director steering). Ignored while it chases or bites.
+   * director steering). Ignored while it chases or bites. `completeApproach` retains a finite authored entrance
+   * through long street detours and herd headings; visible humans still take priority.
    */
-  rush(id: number, point: { x: number; z: number }, untilTick: number): boolean {
+  rush(id: number, point: { x: number; z: number }, untilTick: number, completeApproach = false): boolean {
     if (this.l1 && this.flowUntil < 0) this.flowUntil = this.world.tick + l1Ticks(90); // the first rush = the accident exits
-    return this.goTo(id, point, untilTick, 0);
+    const sent = this.goTo(id, point, untilTick, 0);
+    if (sent) this.world.entities.get(id)!.infected!.l1!.search.completeApproach = completeApproach;
+    return sent;
   }
   /** Director pressure: rush to a human and prefer it over nearer bystanders until `untilTick` (L4 alarm on the courier). */
   press(id: number, targetId: number, untilTick: number): boolean {
@@ -756,7 +759,7 @@ export class InfectedSystem {
       if (this.infectedNav.clear(x, z, e.combat!.radius)) { brain.goalX = x; brain.goalZ = z; break; }
     }
     brain.mode = 'attracted'; e.infected!.state = 'attracted'; brain.hasGoal = true; brain.looking = false; brain.pauseUntil = 0; brain.distractionId = distractionId;
-    brain.search.until = untilTick; brain.search.originX = point.x; brain.search.originZ = point.z; brain.search.legTicks = 0;
+    brain.search.completeApproach = false; brain.search.until = untilTick; brain.search.originX = point.x; brain.search.originZ = point.z; brain.search.legTicks = 0;
     return true;
   }
   private distraction(event: DistractionEvent): void {
@@ -874,7 +877,7 @@ export class InfectedSystem {
    */
   private herdCue(e: EntitySnapshot, brain: L1Brain): void {
     // A visible victim may interrupt an approach; another infected's heading must not erase its authored destination.
-    if (brain.mode === 'attracted') return;
+    if (brain.mode === 'attracted' && brain.search.completeApproach) return;
     this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = this.l1!.rangeM;
     this.world.spatial.query(this.query, this.neighbors, false);
     // Sort only potential cues, retaining the original lowest-ID visible choice.
@@ -999,9 +1002,9 @@ export class InfectedSystem {
     const s = brain.search, tick = this.world.tick;
     if (tick >= s.until) { this.toWander(e, b, brain); return; }
     const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
-    // The attraction's own deadline bounds this approach. A fixed 10 s leg discarded valid long street detours
-    // before arrival; watchStuck/noRoute already handle approaches that cannot make physical progress.
-    if (distance <= 1) {
+    // Finite authored arrivals may need a long street detour. Their own deadline bounds the approach;
+    // watchStuck/noRoute still handle blocked movement. Ordinary sound investigations keep their short leg.
+    if (distance <= 1 || !s.completeApproach && ++s.legTicks > 600) {
       // Arrived at the sound: search around it (same behaviour, centred on the source) until the attraction ends.
       planSearch(s, this.l1Rng!, this.infectedNav, tick, { x: s.originX, z: s.originZ }, { x: 0, z: 0 }, s.until - tick, [3, 7]);
       s.next = 0; brain.mode = 'search'; b.state = 'attracted'; brain.looking = true; brain.lookYaw = e.transform.yaw + 1.2; brain.pauseUntil = tick + 30;

@@ -419,7 +419,7 @@ export class LevelTwoRescue {
       }
     }
     // The northern door needs a long route around its block, not a 30 m straight line.
-    else ai.rush(id, toward, world.tick + ticks(30));
+    else ai.rush(id, toward, world.tick + ticks(30), true);
     return id;
   }
   /** Escape population and the bridge cluster: planned at the alarm, each member emerges once its door is out of view. */
