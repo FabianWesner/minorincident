@@ -76,9 +76,9 @@ export class LevelThreeBot {
     // Fight: the axe for what is at arm's length, the handgun for what comes at the courier from range (before contact).
     const fight = (range: number): boolean => {
       if (!fights || skip) return false;
-      // Walk-grid visibility is insufficient at raised ramp/cover edges: an unreachable nearby body
-      // otherwise pins the bot in endless swings instead of following the connected escape route.
-      const contact = near.find(e => w.combat!.query.visible(p, e.transform, e.id));
+      // In the escape segment, defend against pursuers rather than stopping for every nearby body on a
+      // raised/blocked route. Walk-grid sight alone is insufficient to choose a reachable melee target.
+      const contact = near.find(e => (p.x < l3.map.segments[2][0] || this.chasing(e)) && w.combat!.query.visible(p, e.transform, e.id));
       if (contact) { strike(contact, 'LEFT'); return true; }
       if (!gun) return false;
       // In the last segment the courier escapes; the officers handle their own opponents.
@@ -139,7 +139,21 @@ export class LevelThreeBot {
     // Brief l3-polish: with the PO 10-12 police at half strength the careful courier no longer waits for runners to reach arm's
     // length in segment 1 (5 m); she shoots the ones closing in from 8 m and leaves the rest to the squad.
     const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 8 : p.x >= l3.map.segments[1][0] ? 9 : 15;
-    if (fight(range)) return frame;
+    if (fight(range)) {
+      // Segment 3 is an escape through a replenishing horde. Defend while advancing: waiting for
+      // the nearest pursuer to stay down can otherwise pin the courier here indefinitely.
+      if (p.x >= l3.map.segments[2][0] && routed && frame.attackTarget) {
+        const target = w.entities.get(frame.attackTarget.id);
+        frame.selectorSide = frame.attackTarget.side;
+        delete frame.attackTarget;
+        if (target) {
+          const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
+          frame.aim = { x: dx / d, z: dz / d };
+        }
+        go(routeAhead, .2, 'army-route');
+      }
+      return frame;
+    }
     // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
     // A newbie sticks to the police too, but only in the first segment and not for as long.
     // Evade-only never shoots, so it keeps the armed squad close as long as there is one (the police fight for it).
