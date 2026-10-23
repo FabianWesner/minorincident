@@ -197,6 +197,28 @@ export class Bicycle {
     delete next.attackTarget; delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }
+  /**
+   * Q-130: the rider's capsule is only 0.3 m round, but the frame reaches 0.85 m ahead of her, so a hydrant or post stopped the
+   * capsule with the prop inside the front cargo box. After physics, a ridden frame that overlaps a solid is walked back along
+   * its own axis (the way it came, or out of a prop it turned into) to the first clear pose and stops there. A frame that
+   * cannot be cleared within 1.2 m (a bad spawn) is left alone, so the rider is never trapped.
+   */
+  private clearFrame(b: BicycleState, p: { x: number; z: number }): void {
+    const body = this.world.physics.playerBody;
+    if (!this.world.physics.world || !body) return;
+    // The entity transform is copied from the body only later in the tick; the body holds this tick's pose.
+    const at = body.translation(); p.x = at.x; p.z = at.z;
+    if (this.frameFree(p.x, p.z, b.heading)) return;
+    const fx = Math.cos(b.heading), fz = Math.sin(b.heading);
+    for (const dir of [Math.sign(b.speed) || 1, -(Math.sign(b.speed) || 1)]) for (let d = .03; d <= 1.2; d += .03) {
+      const x = p.x - fx * d * dir, z = p.z - fz * d * dir;
+      if (!this.frameFree(x, z, b.heading)) continue;
+      p.x = x; p.z = z; b.speed = 0;
+      body.setTranslation({ x, y: at.y, z }, true);
+      const loco = this.world.player?.locomotion; if (loco) { loco.velocity.x = loco.velocity.z = 0; }
+      return;
+    }
+  }
   private lean(b: BicycleState, turnRate: number): void {
     const target = Math.max(-bicycleHandling.maxLean, Math.min(bicycleHandling.maxLean, Math.atan(b.speed * turnRate / 9.81)));
     b.lean = (b.lean ?? 0) + (target - (b.lean ?? 0)) * (1 - Math.exp(-bicycleHandling.leanResponse * FIXED_DT));
@@ -211,6 +233,7 @@ export class Bicycle {
       const yaw = bike.transform.yaw, fx = Math.cos(yaw), fz = -Math.sin(yaw);
       this.world.player.locomotion.props = b.mounted ? [] : [-.6, .1, .7].map(along => ({ transform: { x: bike.transform.x + fx * along, z: bike.transform.z + fz * along }, radius: .3 }));
     }
+    if (b.mounted) this.clearFrame(b, player.transform);
     if (b.mounted) { Object.assign(bike.transform, { x: player.transform.x, y: this.world.districts?.pavingHeight(player.transform.x, player.transform.z) ?? 0, z: player.transform.z, yaw: -b.heading }); player.transform.yaw = bike.transform.yaw; player.riding = bike.id; }
     else delete player.riding;
     // Route around parked frames too: destination clearance alone cannot stop a route
