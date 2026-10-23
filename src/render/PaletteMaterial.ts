@@ -1,7 +1,7 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
-import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
+import { context, sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { bloodSplatMask, cloudShadowMask, noise, surfaceDetail } from './SurfaceDetail';
@@ -175,6 +175,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
         result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
       }
+      // The low L7 departure sees the map's distant surface/sky boundary. Height haze above can tint fully fogged
+      // surfaces differently from the backdrop; make both converge to the same colour before the common post grade.
+      if (!emissive) result.assign(mix(result, lighting.backdropFog, rangeFogFactor(lighting.fogNear, lighting.fogFar).mul(lighting.backdropHaze)));
       if (!emissive) If(lighting.subwayDarkness.greaterThan(0), () => {
         const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
         const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
@@ -264,8 +267,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   }
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
   frozenCopy(): PaletteMaterial {
-    const copy = this.newCopy(); copy.copy(this); copy.outputFor = this.outputFor;
-    copy._outputs = this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    const copy = this.newCopy(); copy.copy(this);
+    copy.outputFor = this.userData.frozenCrowd ? mode => context(this.outputFor(mode), { frozenCrowd: true }) : this.outputFor;
+    copy._outputs = this.userData.frozenCrowd ? new Map() : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
   /** Same key as NodeMaterial, without allocating a child record and hashing

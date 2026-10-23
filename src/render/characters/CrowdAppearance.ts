@@ -1,6 +1,6 @@
 import { Color, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
-import type { Node } from 'three/webgpu';
-import { attribute, varying, vec3 } from 'three/tsl';
+import type { Node, NodeBuilder } from 'three/webgpu';
+import { attribute, Fn, varying, vec3 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
 import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -41,6 +41,15 @@ const pickColor = (palette: Color[], index: Node<'float'>) => {
   for (let i = 1; i < palette.length; i++) color = index.equal(i).select(vec3(palette[i].r, palette[i].g, palette[i].b), color);
   return color;
 };
+export const frozenToneNames = ['_corpseHair', '_corpseSkin', '_corpseTrousers', '_corpseAccessory'] as const;
+/** Immutable corpse identity: upload the exact palette constants once, avoiding 34 vertex-shader palette selects. */
+export function writeFrozenCrowdTones(targets: readonly InstancedBufferAttribute[], index: number, id: number): void {
+  const look = crowdAppearance(id);
+  const tones = [colors.hair[look.hair], colors.infected[look.skin], colors.trousers[look.trousers], colors.shirt[crowdAppearance(id + 503).shirt]];
+  tones.forEach((tone, i) => targets[i].setXYZ(index, tone.r, tone.g, tone.b));
+}
+const toneColor = (name: string, palette: Color[], index: Node<'float'>) => Fn((_: unknown[], builder: NodeBuilder) =>
+  (builder.context as { frozenCrowd?: boolean }).frozenCrowd ? attribute(name, 'vec3') : pickColor(palette, index))();
 export function crowdSkinColor(infected = false) {
   return varying(pickColor(infected ? colors.infected : colors.skin, attribute('_variant', 'vec4').y.div(2).floor().mod(6)), 'crowdSkinTone');
 }
@@ -48,10 +57,10 @@ export function crowdSkinColor(infected = false) {
 export function crowdAppearanceColor(infected = false) {
   const variant = attribute('_variant', 'vec4'), parts = attribute('_parts', 'vec4'), source = attribute('color', 'vec3');
   const shirt = variant.xyz.mod(2);
-  const hair = pickColor(colors.hair, variant.x.div(2).floor().mod(8));
-  const skin = pickColor(infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6));
-  const trousers = pickColor(colors.trousers, variant.z.div(2).floor().mod(8));
-  const accessory = pickColor(colors.shirt, variant.z.div(16).floor().mod(12));
+  const hair = toneColor(frozenToneNames[0], colors.hair, variant.x.div(2).floor().mod(8));
+  const skin = toneColor(frozenToneNames[1], infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6));
+  const trousers = toneColor(frozenToneNames[2], colors.trousers, variant.z.div(2).floor().mod(8));
+  const accessory = toneColor(frozenToneNames[3], colors.shirt, variant.z.div(16).floor().mod(12));
   const garment = parts.y.greaterThan(0).select(shirt.mul(parts.y), source);
   // Preserve the authored highlights and seams instead of flattening every material to one tone.
   const shade = source.dot(vec3(.2126, .7152, .0722));
