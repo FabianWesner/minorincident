@@ -172,6 +172,12 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       if (laneDistance([bx, bz]) > 1.2 && free(bx, bz, 1)) { fires.push({ x: bx + origin[0], z: bz + origin[1], radius: .55 + rng.next() * .25, car: false, life: true }); break; }
     }
   }
+  // 4d) The crash itself scatters burning wreckage over the far deck (x 531..553), beside the crawl line (crawl-start/fallback
+  // z +-3, crawl-end z 0) and never on it: |z| 4.2..5.4 m, a small flame every ~7 m, alternating sides.
+  for (let x = 531, n = 0; x < 553; x += 7, n++) {
+    const rng = keyed(`deck:${n}`), fx = x + rng.next() * 3, fz = (n % 2 ? -1 : 1) * (4.2 + rng.next() * 1.2);
+    if (free(fx, fz, .6)) fires.push({ x: fx + origin[0], z: fz + origin[1], radius: .45 + rng.next() * .2, car: false, life: true });
+  }
   // 5) The next city burns: ground fires between the east-edge blocks, behind the gully.
   for (let k = 0; k < 40; k++) {
     const rng = keyed(`city:${k}`), x = 556 + rng.next() * 38, z = (rng.next() - .5) * 360, radius = 2.4 + rng.next() * 1.4;
