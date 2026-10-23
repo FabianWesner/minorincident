@@ -19,3 +19,4 @@
 - L8 WebGPU/high N=20 passes: baseline 24.270/24.571/24.627 s → pose revision 3.931/3.967/4.000 s median/p90/max; post-card max 16.8 ms.
 - L8 WebGPU/low N=20 passes: baseline 24.101/24.611/24.825 s → pose revision 3.953/3.981/4.009 s median/p90/max; post-card max 16.8 ms. L1, L10 and both L8 GPU configurations are complete (10/20); both L8 GL and L7/L4 remain.
 - All four L8 N=20 configurations pass. WebGL2 high: baseline 24.542/24.942/25.075 s → candidate 3.994/4.042/4.359 s; WebGL2 low: 24.626/25.208/25.576 s → 4.026/4.076/4.178 s. Both have post-card max 16.8 ms. Twelve of twenty configurations are complete; L7/L4 remain.
+- All four L7 N=20 configurations pass: GL high 3.659/3.677/3.709 s, GL low 4.251/4.710/4.858 s, GPU high 3.492/3.559/3.613 s, GPU low 3.863/4.025/4.075 s (median/p90/max). Every median improves; largest recorded post-card frame is 66.6 ms. Sixteen of twenty configurations are complete; only L4 remains.
