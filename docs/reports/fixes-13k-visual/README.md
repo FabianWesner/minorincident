@@ -35,3 +35,11 @@ Dense-field CPU profiles attribute the added time to GPU backpressure in `drawEl
 ## Validation status
 
 Typecheck, lint and 29 focused tests pass at this checkpoint. Remote unit/level suites are still running. Invariants, PROD L1–L4 A/B, smoke, final timing, profile attribution and completion audit remain outstanding.
+
+## Later checkpoint
+
+Q-126 corrected truck selection is verified in three cold quiet runs: L1 maxima 16.8/16.8/16.8 ms; L2 33.4/33.4/33.4 ms, down from 50/66.6/50 ms. L2 creates zero new vehicle node programs during boarding (baseline: three per run). All six paths reach the requested delivery/ride event, with no frame >200 ms. These profiles align the ride transition to ticks 282–284.
+
+The first full remote suite ended with 2,477 passes and six stale assertions: three forbade the new LOD1 prewarm, two required Mega's old back fall, and one required the background node to be the unwrapped radial fog. Updated tests require both warm-up pages, the exact Mega side-fall, and the exact radial input with zero haze blend on L1. All 20 affected tests pass. An obsolete remote snapshot was stopped before the final resync.
+
+Packing, the always-one live-mask removal, and index cache ordering alone did not close the p95 gap (WebGL2 3.7–3.8 ms). Packing/index-order experiments were removed. The pool is now being consolidated: regular bodies sharing a model use common pages, while selected headwear keeps its precise frozen head pose and model fit in separate shared pages. Body IDs, bodies and accessories are retained. New lifecycle/world-transform tests and fresh timing remain pending; this is not accepted performance evidence yet.

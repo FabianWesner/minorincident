@@ -384,7 +384,8 @@ export class CrowdView extends Group {
         const death = asset.startsWith('inf.mega-alpha') ? 'death-side' : 'death-back';
         this.staticCorpses.prepare(`${key}:${death}:0`, this.corpseGeometry.get(key) ?? mesh.geometry.userData.inlineBody ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1);
       }
-      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) this.staticCorpses.prepare(`${key}:death-back:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, true);
+      if (regularInfectedModels.some(id => id === asset) && this.accessories) { await this.accessories.init(); this.staticCorpses.prepareHeadwear(material, this.accessories.corpseHeadwearSources()); }
+      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) this.staticCorpses.prepare(`${key}:death-back:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {
@@ -540,10 +541,10 @@ export class CrowdView extends Group {
           // applying it here reduced the intact source to a coloured torso lump.
           // Use the complete page warmed during load for every death cause.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
-          const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
+          const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head'), regularInfectedModels.some(id => id === def.asset)) ?? source : source;
           const nearBatch = regularInfectedModels.some(id => id === def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
           const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
-          const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
+          const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head'), true) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
           this.staticCorpses.place(e, `${key}:${death}:0`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), [], !batch.animal ? look : undefined, near);
           continue;
         }

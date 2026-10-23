@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { BufferAttribute, BoxGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PerspectiveCamera, Scene } from 'three/webgpu';
+import { BoxGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PerspectiveCamera, Scene } from 'three/webgpu';
 import { positionLocal } from 'three/tsl';
 // @ts-expect-error Three's internal module has no declaration
 import RenderObjects from 'three/src/renderers/common/RenderObjects.js';
@@ -73,28 +73,4 @@ test('static batches share shader keys while keeping independent matrix/color bu
   mask.dispose();
   b.geometry.deleteAttribute('normal'); expect(get(b).getCacheKey()).not.toBe(key);
   objects.dispose(); a.geometry.dispose(); b.geometry.dispose(); geometry.dispose(); a.dispose(); b.dispose(); materials.dispose(); lighting.dispose();
-});
-
-test('frozen corpse GPU buffers pack normals and linear colours without changing positions, topology or part ownership', () => {
-  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.get('sidewalk');
-  material.userData.batchFeatures = 'corpses';
-  const geometry = new BoxGeometry().rotateX(.29).rotateY(.36), count = geometry.getAttribute('position').count;
-  const colors = new Float32Array(count * 3);
-  for (let i = 0; i < colors.length; i++) colors[i] = (i * .173) % 1;
-  geometry.setAttribute('color', new BufferAttribute(colors, 3));
-  const parts = new BufferAttribute(new Float32Array(count * 4).fill(1), 4); geometry.setAttribute('_parts', parts);
-  const position = geometry.getAttribute('position'), normal = geometry.getAttribute('normal'), color = geometry.getAttribute('color'), index = geometry.index!;
-  const mesh = new InstancedMesh(geometry, material, 1); mesh.instanceColor = new InstancedBufferAttribute(new Float32Array([1, 1, 1]), 3);
-  expect(staticInstanceAttributes(mesh)).toBe(true);
-  const packedNormal = mesh.geometry.getAttribute('normal'), packedColor = mesh.geometry.getAttribute('color');
-  expect(packedNormal.array).toBeInstanceOf(Int16Array); expect(packedColor.array).toBeInstanceOf(Uint16Array);
-  expect(mesh.geometry.getAttribute('position').array).toBe(position.array); expect(mesh.geometry.index!.array).toBe(index.array);
-  expect(mesh.geometry.getAttribute('_parts').array).toBe(parts.array);
-  expect(mesh.geometry.getAttribute('position').count).toBe(count); expect(mesh.geometry.index!.count).toBe(index.count);
-  for (let i = 0; i < count; i++) for (let c = 0; c < 3; c++) {
-    expect(Math.abs(packedNormal.getComponent(i, c) - normal.getComponent(i, c))).toBeLessThanOrEqual(1 / 32767);
-    expect(Math.abs(packedColor.getComponent(i, c) - color.getComponent(i, c))).toBeLessThanOrEqual(1 / 65535);
-  }
-  expect(packedNormal.array.byteLength + packedColor.array.byteLength).toBeLessThan(normal.array.byteLength + color.array.byteLength);
-  mesh.geometry.dispose(); mesh.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
 });
