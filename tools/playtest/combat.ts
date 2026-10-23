@@ -19,6 +19,15 @@ export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined,
   return unarmed ? allyThreat ?? nearby : nearby ?? allyThreat;
 }
 
+/** Choose from the carried HUD arsenal, including L10's recovered checkpoint weapons. */
+export function campaignCombatWeapon(level: string | null, weapons: readonly string[], nearestEnemyM = Infinity): string | null {
+  if (level !== 'L7' && level !== 'L8' && level !== 'L10') return null;
+  const order = nearestEnemyM < 6
+    ? ['weapon.army-mg', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.rocket-launcher', 'weapon.fire-axe']
+    : ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.fire-axe'];
+  return order.find(id => weapons.includes(id)) ?? null;
+}
+
 /** A defensive walking goal derived from visible courier, console and enemy positions. */
 export function finaleDodgeGoal(level: string | null, step: string | null, player: { x: number; z: number }, console: { x: number; z: number } | null, enemy: { x: number; z: number; d: number }): { x: number; z: number } | null {
   if (level !== 'L10' || (step !== 'hold' && step !== 'mega') || !console || enemy.d > 12) return null;

@@ -1,7 +1,7 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
 import { validateSave } from '../../src/sim/progression/Save';
-import { assertRenderedBodies, isMandatoryBossObjective, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
+import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
   const source = preset('L6-default'), save = playtestSave(source, 'male', 'fists');
@@ -42,4 +42,19 @@ test('the input driver never debug-skips the mandatory L10 Mega objective', () =
   expect(isMandatoryBossObjective('L10', 'release')).toBe(false);
   expect(isMandatoryBossObjective('L9', 'mega')).toBe(false);
   expect(isMandatoryBossObjective(null, null)).toBe(false);
+});
+
+test('an unresponsive renderer fails within the observation budget and clears its timer', async () => {
+  vi.useFakeTimers();
+  try {
+    const blocked = observeWithin(new Promise<never>(() => {}), 100);
+    const failure = expect(blocked).rejects.toThrow('browser renderer is unresponsive');
+    await vi.advanceTimersByTimeAsync(100);
+    await failure;
+    expect(vi.getTimerCount()).toBe(0);
+    expect(await observeWithin(Promise.resolve('frame'))).toBe('frame');
+    expect(vi.getTimerCount()).toBe(0);
+    await expect(observeWithin(Promise.reject(new Error('Target closed')))).rejects.toThrow('Target closed');
+    expect(vi.getTimerCount()).toBe(0);
+  } finally { vi.useRealTimers(); }
 });
