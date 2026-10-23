@@ -1,0 +1,380 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual
+
+ ❯ |functional| tests/unit/render/l1-grade.test.ts (4 tests | 1 failed) 337ms
+   × @E19 golden morning has radial two-color fog and shadow bounds follow actual desktop/portrait views 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/l1-grade.test.ts > @E19 golden morning has radial two-color fog and shadow bounds follow actual desktop/portrait views
+AssertionError: expected VarNode{ nodeType: null, …(18) } to be VarNode{ nodeType: null, …(18) } // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,33 +1,50 @@
+  {
+    "inputNodes": {
+-     "node": "3e56a5bf-3d36-4f4e-9261-ff68191fccbf",
++     "node": "c7ba2c02-88be-4732-9884-51ac912e4562",
+    },
+    "metadata": {
+      "generator": "Node.toJSON",
+      "type": "Node",
+      "version": 4.7,
+    },
+    "nodes": [
+      {
+        "inputNodes": {
+-         "aNode": "f2e5445d-7969-48e0-9c78-b2117375f67a",
+-         "bNode": "38e17ddb-ec06-44d8-8c86-e85534512c97",
+-         "cNode": "13883b47-339f-4d25-a9ac-9379d369a37d",
++         "aNode": "ed15fabc-56f9-442d-a870-d8d490aec3e8",
++         "bNode": "996dbf6d-f61b-42df-9f56-eca156f21a90",
++         "cNode": "56ccd5a2-23b6-423b-abf4-b882fb0426c9",
+        },
+        "method": "mix",
+        "type": "MathNode",
+-       "uuid": "3e56a5bf-3d36-4f4e-9261-ff68191fccbf",
++       "uuid": "c7ba2c02-88be-4732-9884-51ac912e4562",
+      },
+      {
+        "inputNodes": {
+-         "groupNode": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++         "node": "ae6d89db-3109-4698-9ee7-f72c9f045664",
++       },
++       "type": "VarNode",
++       "uuid": "ed15fabc-56f9-442d-a870-d8d490aec3e8",
++     },
++     {
++       "inputNodes": {
++         "aNode": "44001355-443d-4e92-91ac-2f02c2ad668d",
++         "bNode": "0112a0c6-d2f5-4087-9870-fb90d0332ffb",
++         "cNode": "6c37b8c1-a505-4b79-b264-49318e6560d0",
++       },
++       "method": "mix",
++       "type": "MathNode",
++       "uuid": "ae6d89db-3109-4698-9ee7-f72c9f045664",
++     },
++     {
++       "inputNodes": {
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        },
+        "nodeType": null,
+        "precision": null,
+        "type": "UniformNode",
+-       "uuid": "f2e5445d-7969-48e0-9c78-b2117375f67a",
++       "uuid": "44001355-443d-4e92-91ac-2f02c2ad668d",
+        "value": [
+          0.8879231178794776,
+          0.5711248294565854,
+          0.37626212298046485,
+        ],
+@@ -35,190 +52,243 @@
+      },
+      {
+        "name": "render",
+        "shared": true,
+        "type": "UniformGroupNode",
+-       "uuid": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++       "uuid": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        "version": 0,
+      },
+      {
+        "inputNodes": {
+-         "groupNode": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        },
+        "nodeType": null,
+        "precision": null,
+        "type": "UniformNode",
+-       "uuid": "38e17ddb-ec06-44d8-8c86-e85534512c97",
++       "uuid": "0112a0c6-d2f5-4087-9870-fb90d0332ffb",
+        "value": [
+          0.5711248294565854,
+          0.36130677977297226,
+          0.5840784178830671,
+        ],
+        "valueType": "color",
+      },
+      {
+        "inputNodes": {
+-         "node": "b288a2a5-0b58-492d-9c88-d0b5f4bd7e89",
++         "node": "4e0b3156-7775-4f41-8825-73a44b3639b5",
+        },
+        "type": "VarNode",
+-       "uuid": "13883b47-339f-4d25-a9ac-9379d369a37d",
++       "uuid": "6c37b8c1-a505-4b79-b264-49318e6560d0",
+      },
+      {
+        "inputNodes": {
+-         "aNode": "88f78717-6b2a-41c7-89b7-1f5b9219e45c",
+-         "bNode": "64cbd5f0-c940-4511-a365-f74db0292158",
+-         "cNode": "d8b107fd-2ecc-468d-aa2c-8c127552a241",
++         "aNode": "76a2204c-4175-43f5-9ee6-089a7e478064",
++         "bNode": "cd6f76a3-0ae3-4fc4-ab4f-fbd29168de47",
++         "cNode": "93a5de3a-f4bd-41fa-9c49-e5cbed7caa52",
+        },
+        "method": "smoothstep",
+        "type": "MathNode",
+-       "uuid": "b288a2a5-0b58-492d-9c88-d0b5f4bd7e89",
++       "uuid": "4e0b3156-7775-4f41-8825-73a44b3639b5",
+      },
+      {
+        "inputNodes": {
+-         "groupNode": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        },
+        "nodeType": null,
+        "precision": null,
+        "type": "UniformNode",
+-       "uuid": "88f78717-6b2a-41c7-89b7-1f5b9219e45c",
++       "uuid": "76a2204c-4175-43f5-9ee6-089a7e478064",
+        "value": 0.05,
+        "valueType": "float",
+      },
+      {
+        "inputNodes": {
+-         "groupNode": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        },
+        "nodeType": null,
+        "precision": null,
+        "type": "UniformNode",
+-       "uuid": "64cbd5f0-c940-4511-a365-f74db0292158",
++       "uuid": "cd6f76a3-0ae3-4fc4-ab4f-fbd29168de47",
+        "value": 0.8,
+        "valueType": "float",
+      },
+      {
+        "inputNodes": {
+-         "node": "4a09cd15-49a4-406f-8cde-be5240056980",
++         "node": "bd74ede1-a141-4e3e-9c00-b8a9ce274793",
+        },
+        "type": "VarNode",
+-       "uuid": "d8b107fd-2ecc-468d-aa2c-8c127552a241",
++       "uuid": "93a5de3a-f4bd-41fa-9c49-e5cbed7caa52",
+      },
+      {
+        "inputNodes": {
+-         "aNode": "22403eff-9ffd-4cae-876c-bdd25c0dc6da",
++         "aNode": "5af4d682-2407-415e-b65c-25a4ae83c536",
+        },
+        "method": "length",
+        "type": "MathNode",
+-       "uuid": "4a09cd15-49a4-406f-8cde-be5240056980",
++       "uuid": "bd74ede1-a141-4e3e-9c00-b8a9ce274793",
+      },
+      {
+        "inputNodes": {
+-         "node": "34eca643-199e-4f5d-ac3e-b5c47c1bcea9",
++         "node": "9a0f3958-9483-4ee7-9f5d-dc3e95caa112",
+        },
+        "type": "VarNode",
+-       "uuid": "22403eff-9ffd-4cae-876c-bdd25c0dc6da",
++       "uuid": "5af4d682-2407-415e-b65c-25a4ae83c536",
+      },
+      {
+        "inputNodes": {
+-         "aNode": "84f1f39f-4083-4716-98fe-240bd7e07b80",
+-         "bNode": "1ad24b58-2c8c-4965-9a62-6b15a22d2604",
++         "aNode": "d53fd4ce-e57a-4e4f-9dc3-704fb19fb0b9",
++         "bNode": "bb409573-7a6b-44e6-afcd-9c6b05928f8a",
+        },
+        "op": "-",
+        "type": "OperatorNode",
+-       "uuid": "34eca643-199e-4f5d-ac3e-b5c47c1bcea9",
++       "uuid": "9a0f3958-9483-4ee7-9f5d-dc3e95caa112",
+      },
+      {
+        "inputNodes": {
+-         "node": "7f3a4a35-999b-4181-979a-6106cff21619",
++         "node": "3f39354a-03ae-4c92-8b9e-240a18ba8e40",
+        },
+        "type": "VarNode",
+-       "uuid": "84f1f39f-4083-4716-98fe-240bd7e07b80",
++       "uuid": "d53fd4ce-e57a-4e4f-9dc3-704fb19fb0b9",
+      },
+      {
+        "convertTo": "vec2",
+        "inputNodes": {
+-         "node": "d0e3f2fb-badf-4c05-a51b-913c3f7dfb96",
++         "node": "a1ac50e7-b225-4c9b-8794-ce56d0395ee4",
+        },
+        "type": "ConvertNode",
+-       "uuid": "7f3a4a35-999b-4181-979a-6106cff21619",
++       "uuid": "3f39354a-03ae-4c92-8b9e-240a18ba8e40",
+      },
+      {
+        "components": "xy",
+        "inputNodes": {
+-         "node": "d6773841-42bd-4809-b44c-ce61196aa34e",
++         "node": "3cb4fdc6-3d8b-41c1-b0a4-0583c9311ee6",
+        },
+        "type": "SplitNode",
+-       "uuid": "d0e3f2fb-badf-4c05-a51b-913c3f7dfb96",
++       "uuid": "a1ac50e7-b225-4c9b-8794-ce56d0395ee4",
+      },
+      {
+        "inputNodes": {
+-         "node": "fa0feec9-9278-4132-866b-f72cbbc3a9da",
++         "node": "8ca8c218-358b-46d6-9b76-68b3155457d4",
+        },
+        "type": "VarNode",
+-       "uuid": "d6773841-42bd-4809-b44c-ce61196aa34e",
++       "uuid": "3cb4fdc6-3d8b-41c1-b0a4-0583c9311ee6",
+      },
+      {
+        "inputNodes": {
+-         "aNode": "2cef48c6-9939-4c3b-bfe2-fcb472b511b8",
+-         "bNode": "c3a7c4dd-f825-4dbe-a465-bfa945929dec",
++         "aNode": "97c2155d-6a62-4ea2-aa43-246c8e02d180",
++         "bNode": "2c8f2050-0798-4fc0-85ee-25b5296572ca",
+        },
+        "op": "/",
+        "type": "OperatorNode",
+-       "uuid": "fa0feec9-9278-4132-866b-f72cbbc3a9da",
++       "uuid": "8ca8c218-358b-46d6-9b76-68b3155457d4",
+      },
+      {
+        "inputNodes": {
+-         "node": "02212391-acd8-497f-a00c-579e0f945216",
++         "node": "3351a8ae-a200-4d3a-b8da-c467693a4748",
+        },
+        "type": "VarNode",
+-       "uuid": "2cef48c6-9939-4c3b-bfe2-fcb472b511b8",
++       "uuid": "97c2155d-6a62-4ea2-aa43-246c8e02d180",
+      },
+      {
+        "inputNodes": {
+-         "aNode": "28336be4-ef43-40c6-b4e7-d97ed92772c7",
+-         "bNode": "3ccf12a7-9e51-41cf-8f8f-c5e0d2919229",
++         "aNode": "b85dfc82-d486-47ca-b55f-1948a3b4f99b",
++         "bNode": "2dbf8cec-f2f2-45c6-a6e4-1ff6d44828c1",
+        },
+        "op": "-",
+        "type": "OperatorNode",
+-       "uuid": "02212391-acd8-497f-a00c-579e0f945216",
++       "uuid": "3351a8ae-a200-4d3a-b8da-c467693a4748",
+      },
+      {
+        "type": "ScreenNode",
+-       "uuid": "28336be4-ef43-40c6-b4e7-d97ed92772c7",
++       "uuid": "b85dfc82-d486-47ca-b55f-1948a3b4f99b",
+      },
+      {
+        "components": "xy",
+        "inputNodes": {
+-         "node": "5184e80f-2993-4c4f-b6a2-6ca35f1c8023",
++         "node": "f2ec1927-8393-4876-83a3-2791deba8b8b",
+        },
+        "type": "SplitNode",
+-       "uuid": "3ccf12a7-9e51-41cf-8f8f-c5e0d2919229",
++       "uuid": "2dbf8cec-f2f2-45c6-a6e4-1ff6d44828c1",
+      },
+      {
+        "type": "ScreenNode",
+-       "uuid": "5184e80f-2993-4c4f-b6a2-6ca35f1c8023",
++       "uuid": "f2ec1927-8393-4876-83a3-2791deba8b8b",
+      },
+      {
+        "components": "zw",
+        "inputNodes": {
+-         "node": "5184e80f-2993-4c4f-b6a2-6ca35f1c8023",
++         "node": "f2ec1927-8393-4876-83a3-2791deba8b8b",
+        },
+        "type": "SplitNode",
+-       "uuid": "c3a7c4dd-f825-4dbe-a465-bfa945929dec",
++       "uuid": "2c8f2050-0798-4fc0-85ee-25b5296572ca",
+      },
+      {
+        "inputNodes": {
+-         "groupNode": "047356ec-d2f8-4cd6-bcd9-f9ed809da656",
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
+        },
+        "nodeType": null,
+        "precision": null,
+        "type": "UniformNode",
+-       "uuid": "1ad24b58-2c8c-4965-9a62-6b15a22d2604",
++       "uuid": "bb409573-7a6b-44e6-afcd-9c6b05928f8a",
+        "value": [
+          0.5,
+          0.35,
+        ],
+        "valueType": "vec2",
++     },
++     {
++       "inputNodes": {
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
++       },
++       "nodeType": null,
++       "precision": null,
++       "type": "UniformNode",
++       "uuid": "996dbf6d-f61b-42df-9f56-eca156f21a90",
++       "value": [
++         1,
++         0.623960391667596,
++         0.3231432091022285,
++       ],
++       "valueType": "color",
++     },
++     {
++       "inputNodes": {
++         "node": "732f87f8-0582-4d2c-aac4-2d9ecdb7ba4b",
++       },
++       "type": "VarNode",
++       "uuid": "56ccd5a2-23b6-423b-abf4-b882fb0426c9",
+      },
++     {
++       "inputNodes": {
++         "aNode": "b5a06240-9118-4d2b-8499-45520e74e73a",
++         "bNode": "1b25c43a-bfe5-4f9f-984f-c318cabc50e3",
++       },
++       "op": "*",
++       "type": "OperatorNode",
++       "uuid": "732f87f8-0582-4d2c-aac4-2d9ecdb7ba4b",
++     },
++     {
++       "inputNodes": {
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
++       },
++       "nodeType": null,
++       "precision": null,
++       "type": "UniformNode",
++       "uuid": "b5a06240-9118-4d2b-8499-45520e74e73a",
++       "value": 0.3,
++       "valueType": "float",
++     },
++     {
++       "inputNodes": {
++         "groupNode": "f0425513-765b-46c0-9ed3-0d9eefe4d665",
++       },
++       "nodeType": null,
++       "precision": null,
++       "type": "UniformNode",
++       "uuid": "1b25c43a-bfe5-4f9f-984f-c318cabc50e3",
++       "value": 0,
++       "valueType": "float",
++     },
+    ],
+    "type": "VarNode",
+-   "uuid": "42bbc6f7-2626-4ab5-91d7-b668418525d0",
++   "uuid": "d70d941a-2e45-436d-bd1d-34f4f80b9d92",
+  }
+
+ ❯ tests/unit/render/l1-grade.test.ts:65:32
+     63| test('@E19 golden morning has radial two-color fog and shadow bounds f…
+     64|   const scene = new Scene(), lighting = new Lighting(scene), view = ne…
+     65|   expect(scene.backgroundNode).toBe(lighting.radialFog);
+       |                                ^
+     66|   expect(lighting.color.value.getHexString()).toBe('ffd9b0'); expect(l…
+     67|   expect(lighting.getState()).toMatchObject({ shadowSize: 2048, normal…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  07:47:51
+   Duration  529ms (tests 69%, transform 19%, import 12%)
+
