@@ -960,6 +960,7 @@ export class GameView implements Lifecycle {
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
+    if (this.lighting) this.lighting.backdropHaze.value = this.world.l7Departure?.cinematic ? 1 : 0;
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);

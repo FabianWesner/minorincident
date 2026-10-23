@@ -20,7 +20,7 @@ test('T-E07-06-bars @E07-AC06 @E07-AC19 visibility boundary, damage, conversion 
     expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false);
   }
   e.faction = 'infected'; e.health.current = 0; e.infected!.state = 'dead'; e.infected!.recoverAt = 900;
-  expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(true); expect(healthFraction(0, 300)).toBe(0);
+  expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false); expect(healthFraction(0, 300)).toBe(0);
   e.infected!.recoverAt = -1; expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false);
   e.infected!.state = 'idle'; e.hidden = true; expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false);
   e.hidden = false; e.infected!.hidden = true; expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false);

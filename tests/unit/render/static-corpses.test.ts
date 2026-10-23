@@ -16,6 +16,34 @@ import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalett
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { RoutineProps } from '../../../src/render/npc/RoutineProps';
 
+test('Q-124 settled bodies change detail after approach and retreat without losing pose, identity or appearance', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const far = baked.geometry.clone(), near = baked.geometry.clone(); far.userData = { crowdLod: 'lod2' }; near.userData = { crowdLod: 'lod1' };
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 7, corpse: true, transform: { x: 0, y: .7, z: 0, yaw: .4 } } as EntitySnapshot;
+  const instance = new Matrix4().makeRotationY(.4).setPosition(0, 0, 0), tint = new Color('#3070b0');
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  const detail = { source: near, material, clip: baked.clip, frame };
+  pool.place(e, 'runner', far, material, baked.clip, frame, instance, tint, [.2, .3, .4], '7', [], undefined, detail);
+  const update = (x: number) => pool.updateDetail({ x, z: 0 });
+  try {
+    update(12); expect(pool.snapshot().figures[0].lod).toBe('lod2');
+    const revision = pool.revision;
+    update(7.9); expect(pool.snapshot().figures[0]).toMatchObject({ id: 7, lod: 'lod1' });
+    update(9); expect(pool.snapshot().figures[0].lod).toBe('lod1');
+    update(10.1); expect(pool.snapshot().figures[0].lod).toBe('lod2');
+    expect(pool.revision).toBe(revision); expect(pool.snapshot().instances).toBe(1);
+    expect(pool.drawn()).toEqual([{ id: 7, x: 0, y: 0, z: 0 }]);
+    for (const child of pool.children as InstancedMesh[]) if (child.count) {
+      const actual = new Matrix4(); child.getMatrixAt(0, actual);
+      expect(actual.elements).toEqual(instance.elements.map(Math.fround));
+      const colors = child.geometry.getAttribute('_variant'); expect(colors.getX(0) % 2).toBeCloseTo(tint.r);
+      expect(child.geometry.getAttribute('_overlay').getZ(0)).toBeCloseTo(.4);
+    }
+    e.hidden = true; pool.begin(() => e); update(0); expect(pool.snapshot().instances).toBe(0);
+  } finally { pool.dispose(); far.dispose(); near.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
 test('dropped accessories grow beyond their initial instance capacity @E07', () => {
   const props = new RoutineProps(); props.begin();
   for (let i = 0; i < 260; i++) props.dropped('coffee', { x: i, y: 0, z: 0, yaw: 0 });

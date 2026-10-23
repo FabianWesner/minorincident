@@ -36,6 +36,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const logFile = join(o.out, `log-${o.tag}.jsonl`);
   const log = (entry: object) => appendFileSync(logFile, JSON.stringify({ t: new Date().toISOString(), ...entry }) + '\n');
   const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+  const webgpu = process.env.PLAYTEST_BACKEND === 'webgpu';
+  if (webgpu) args.push('--enable-unsafe-webgpu');
   const context = await chromium.launchPersistentContext(resolve(o.profile), { headless: true, args, viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   const page = context.pages()[0] ?? await context.newPage();
   // tsx keeps function names with a __name helper; page-side functions need it defined.
@@ -83,7 +85,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- boot and menu ---
   // The figure probe checks presence of `test`; production clock/UI/prewarming check `test=1`.
   // Enable rendered-pose observations while retaining the production play path.
-  const params = `test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
+  const params = `test=poses&testApi=1&scenelab=1&${webgpu ? '' : 'renderer=webgl&'}dpr=1&audio=muted&quality=${o.quality}${o.entry === 'debug' ? '&debug=1' : ''}`;
   await page.goto(`${o.origin}/?${params}`);
   await page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.debug.figureJoints(true); });
@@ -660,7 +662,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     writeFileSync(join(o.out, `${o.tag}-builds.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestBuilds: unknown[] }).__playtestBuilds), null, 2));
     writeFileSync(join(o.out, `${o.tag}-inputs.json`), JSON.stringify(await page.evaluate(() => (window as unknown as { __playtestInputs: unknown[] }).__playtestInputs)));
   }
+  const longFrames = await page.evaluate(() => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames);
+  writeFileSync(join(o.out, `${o.tag}-frames.json`), JSON.stringify(longFrames, null, 2));
   await context.close();
+  if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
 }

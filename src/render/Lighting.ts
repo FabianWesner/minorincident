@@ -52,6 +52,9 @@ export class Lighting {
   readonly fogRadialStart;
   readonly fogRadialEnd;
   readonly radialFog;
+  readonly backdropFog;
+  /** L7's low departure shot exposes the skyline: far ground haze and sky must meet in the same colour. */
+  readonly backdropHaze = uniform(0).setGroup(renderGroup);
   private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
   private readonly ray = new Ray();
   private readonly corner = new Vector3();
@@ -140,6 +143,7 @@ export class Lighting {
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
     this.radialFog = mix(this.fogColorA, this.fogColor, vec2(viewportUV.xy).sub(this.fogCenter).length().smoothstep(this.fogRadialStart, this.fogRadialEnd));
+    this.backdropFog = mix(this.radialFog, this.look.nodes.haze, this.look.nodes.hazeAmount.mul(this.backdropHaze));
     this.fogGradient = this.radialFog;
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.08; this.sun.shadow.radius = 2;
@@ -176,7 +180,7 @@ export class Lighting {
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
-    this.fogColorA.value.set(p.sky); this.fogColor.value.set(p.fog); this.scene.backgroundNode = this.radialFog; this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
+    this.fogColorA.value.set(p.sky); this.fogColor.value.set(p.fog); this.scene.backgroundNode = this.backdropFog; this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
@@ -236,7 +240,7 @@ export class Lighting {
     this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : this.look.has('sky') && !this.look.has('fogA') ? v.sky : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : p.sky);
     this.fogB.value.set(this.look.has('fog') && !this.look.has('fogB') ? v.fog : (this.look.has('fogB') || this.preset === 'L1') ? v.fogB : p.fog);
     this.scene.background = new Color((this.look.has('sky') || this.preset === 'L1') ? v.sky : p.sky);
-    this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.radialFog;
+    this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.backdropFog;
     if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
     this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
     this.sun.shadow.needsUpdate = this.sun.shadow.autoUpdate || !this.sun.shadow.map; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
