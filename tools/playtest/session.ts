@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, shouldResumePause } from './startup';
+import { assertRenderedBodies, isMandatoryBossObjective, shouldResumePause } from './startup';
 import { canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput, markerWalkKeys } from './input';
@@ -40,6 +40,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (webgpu) args.push('--enable-unsafe-webgpu');
   const context = await launchProfile(resolve(o.profile), { headless: true, args, viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   const page = context.pages()[0] ?? await context.newPage();
+  let pageClosed = false;
+  page.on('close', () => { pageClosed = true; });
   // tsx keeps function names with a __name helper; page-side functions need it defined.
   await page.addInitScript(`window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
   if(process.env.PLAYTEST_HANDOVER_AUDIT==='1') await page.addInitScript(`window.__playtestHandoverAudit = []; (() => {
@@ -363,8 +365,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- main loop ---
   let lastLevel: string | null = null, levelIndex = 0, lastPhase = '', idleScreens = 0, bootWall = Date.now();
   for (;;) {
+    if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}; session cannot continue`);
     let e: Eyes;
-    try { e = await see(); } catch (error) { log({ seeError: String(error) }); await hold(500); if (Date.now() - bootWall > 600_000 && !run) break; continue; }
+    try { e = await see(); } catch (error) {
+      if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}: ${String(error)}`);
+      log({ seeError: String(error) }); await hold(500); if (Date.now() - bootWall > 600_000 && !run) break; continue;
+    }
     if (run && shouldResumePause(e.menu,e.loading)) {
       await press([]); await releaseAim();
       await page.getByTestId('resume-game').click({ timeout: 5000 });
@@ -497,6 +503,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (Date.now() > levelDeadline() || stuckSim > 420) {
       await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
       if(o.noSkip) { log({ abortedNoSkip:true, level:e.level, tick:e.tick, step:e.step }); break; }
+      // The L10 Mega is a mandatory kill. Completing its objective in debug mode
+      // leaves the living boss active, so it kills the courier during the cure
+      // step and the mission returns to mega forever. Fail this run explicitly.
+      if (isMandatoryBossObjective(e.level, e.step ?? null)) {
+        await issue('P0', 'mandatory-boss-stalled', 'The Mega Alpha cannot be skipped safely; stopping instead of advancing with the boss alive');
+        log({ abortedMandatoryBoss: true, level: e.level, tick: e.tick, step: e.step }); break;
+      }
       run.skipped.push(e.step ?? '?'); assist('skip-step', { step: e.step });
       await page.evaluate(id => window.__SS__!.cheats.completeObjective(id ?? undefined), e.step);
       wallStart = Math.max(wallStart, Date.now() - (o.levelMinutes - 4) * 60_000);
