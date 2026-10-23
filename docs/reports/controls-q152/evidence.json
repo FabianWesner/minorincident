@@ -579,5 +579,21 @@
         ]
       }
     ]
+  },
+  "specCorrection": {
+    "criterion": "E03-AC14",
+    "reason": "The former unconditional held-LMB retargeting statement lacked the orchestrator decision: while an attack key remains held, pointer movement only aims; fresh ground clicks still retarget. A fresh attack press still cancels movement."
+  },
+  "respawnFixture": {
+    "reason": "The accident checkpoint respawns next to the bat and triggers the intentional garage rack-grab input lock. The old movement assertion ran during that beat, toward a solid prop only 0.57 m away. The fixture now waits for the beat to finish, retains prop classification assertions, and measures the unchanged >0.5 m travel threshold toward unobstructed ground. No gameplay respawn behavior was changed.",
+    "testSha256": "0cd926144683dd1ae20cc6d754de698f9f20c5c4491477eab3fd5c8fa845644a",
+    "result": {
+      "startTime": "2026-10-23T19:00:10.369Z",
+      "duration": 20870.479,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
   }
 }

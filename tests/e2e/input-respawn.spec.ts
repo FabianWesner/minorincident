@@ -16,6 +16,10 @@ test('E19 @E19 PO respawn: after dying, a left click on the ground moves (no sta
   await page.keyboard.up('Shift'); await step(page, 200);
   expect(await page.evaluate(() => window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
   await page.mouse.up();
+  // This checkpoint respawns beside the bat and starts its scripted rack grab.
+  // Measure controls after that intentional input lock has finished.
+  await page.evaluate(() => window.__SS__!.cheats.god(true)); await step(page, 360);
+  expect(await page.evaluate(() => window.__SS__!.missions.state()?.l1?.beat)).toBeNull();
   // A Shift keyup lost during death/retry (dispatched keydown only): stale key state must not turn clicks into swings.
   await page.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', { code: 'ShiftLeft', key: 'Shift' })));
   const attacks = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length);
@@ -26,8 +30,18 @@ test('E19 @E19 PO respawn: after dying, a left click on the ground moves (no sta
   const pt = await page.evaluate(q => window.__SS__!.input.project(q), goal);
   await page.mouse.click(pt.x, pt.y); const frame = await page.evaluate(async () => { await window.__SS__!.step(1); return window.__SS__!.getState().input.frame; });
   expect(frame.attackTarget).toBeUndefined(); expect(frame.moveTarget).toBeDefined();
+  // A nearby solid prop can already be inside the stopping clearance. Keep the
+  // prop classification check, then measure travel toward unobstructed ground.
+  const ground = await page.evaluate(p => {
+    const a = window.__SS__!;
+    return [[3, -3], [3, 0], [3, 3], [0, 3], [-3, 3], [-3, 0], [-3, -3], [0, -3]]
+      .map(([x, z]) => ({ x: p.x + x, z: p.z + z })).find(at => a.input.visible(at));
+  }, p1);
+  expect(ground, 'respawn fixture has unobstructed ground to test movement').toBeDefined();
+  const walk = await page.evaluate(q => window.__SS__!.input.project(q), ground!);
+  await page.mouse.click(walk.x, walk.y);
   await step(page, 60);
   const p2 = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-  expect(Math.hypot(p2.x - p1.x, p2.z - p1.z)).toBeGreaterThan(.5);
+  expect(Math.hypot(p2.x - p1.x, p2.z - p1.z), JSON.stringify({ p1, prop, ground, p2 })).toBeGreaterThan(.5);
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBe(attacks);
 });
