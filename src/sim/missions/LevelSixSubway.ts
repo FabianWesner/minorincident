@@ -128,10 +128,9 @@ export class LevelSixSubway {
       const mouth=(index:number)=>{const base=l6Doors[index];return {x:base.x+(i%2)*.8,z:base.z+(wave===4&&base.z<l6.tunnel.z?1.4:-1.4)};};
       const door=candidates.find(index=>ai.director.offscreen(this.snap(mouth(index),wave===4?w.entities.get(1)!.transform:undefined),.6));
       if(door===undefined)continue;
-      const base=l6Doors[door],at=this.snap(mouth(door),wave===4?w.entities.get(1)!.transform:undefined);
+      const at=this.snap(mouth(door),wave===4?w.entities.get(1)!.transform:undefined);
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
       const id=o.spawnPedestrian(at,{model}),e=w.entities.get(id)!;o.turnNow(e);
-      if(wave===4)ai.rush(id,{x:base.x,z:l6.tunnel.z},w.tick+ticks(10));
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
     }
     return spawned;

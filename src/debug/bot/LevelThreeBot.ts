@@ -76,10 +76,13 @@ export class LevelThreeBot {
     // Fight: the axe for what is at arm's length, the handgun for what comes at the courier from range (before contact).
     const fight = (range: number): boolean => {
       if (!fights || skip) return false;
-      if (near[0]) { strike(near[0], 'LEFT'); return true; }
+      // Walk-grid visibility is insufficient at raised ramp/cover edges: an unreachable nearby body
+      // otherwise pins the bot in endless swings instead of following the connected escape route.
+      const contact = near.find(e => w.combat!.query.visible(p, e.transform, e.id));
+      if (contact) { strike(contact, 'LEFT'); return true; }
       if (!gun) return false;
       // In the last segment the courier escapes; the officers handle their own opponents.
-      const shot = this.threats(p, range).find(e => this.chasing(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9);
+      const shot = this.threats(p, range).find(e => (this.chasing(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9) && w.combat!.query.shotVisible(p, e.transform, e.id));
       if (shot) { strike(shot, 'RIGHT'); return true; }
       return false;
     };

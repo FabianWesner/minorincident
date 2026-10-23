@@ -19,7 +19,9 @@ export class LevelSixBot {
     const fights=this.profile!=='evade-only';
     const exposed=this.profile==='newbie'?s.survivors.filter(r=>r.status==='shelter'||r.status==='following').map(r=>w.entities.get(r.id)!):[];
     const biteRisk=(e: (typeof exposed)[number])=>exposed.some(v=>Math.hypot(e.transform.x-v.transform.x,e.transform.z-v.transform.z)<1.6)?0:1;
-    const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.infected!.nav.visible(p,e.transform,0)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'?16:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
+    // A visible bite on the group is an immediate rescue even beyond the newbie's normal 16 m threat scan.
+    // The existing bite-priority ordering was ineffective there despite the machine gun reaching the victim.
+    const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.infected!.nav.visible(p,e.transform,0)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'&&biteRisk(e)>0?16:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
     // Close a cleared gate from the valid interaction spot before pursuing another distant target.
     const closeGate=fights&&s.gates.find(g=>!g.closedAt&&p.x>g.x+1&&Math.hypot(p.x-LevelSixSubway.gateWait(g.x).x,p.z-LevelSixSubway.gateWait(g.x).z)<1.7&&friends.every(r=>w.entities.get(r.id)!.transform.x>g.x+2));
     if(closeGate&&(!enemies[0]||Math.hypot(enemies[0].transform.x-p.x,enemies[0].transform.z-p.z)>2.2)){f.interact=true;return f;}
