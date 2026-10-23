@@ -499,8 +499,10 @@ export class Blasts extends Group {
       const f = accents[i], key = -1_000_000 - i; seen.add(key);
       let c = this.fireColumns.get(key);
       // look-l9b: columns scale with the authored radius (brush 1.1-1.8 m, city 2.4-3.8 m), so the fires read at the game camera.
-      if (!c) { const landmark = f.radius >= 2; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
+      // l9-night-look: small verge/deck debris fires (life, < 1 m) trail a thin wisp of small puffs, not one big pale ball.
+      if (!c) { const landmark = f.radius >= 2, debris = !!f.life && !f.car && f.radius < 1; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : debris ? 1 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : debris ? .65 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
+      // Debris fires (life) skip embers on low: the flame cards and pool carry them, the particle budget stays for combat.
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || !f.life && Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
