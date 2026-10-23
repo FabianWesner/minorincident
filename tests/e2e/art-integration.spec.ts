@@ -1,5 +1,7 @@
+import { launchBrowser } from '../../tools/browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { devices, expect, test } from '@playwright/test';
+import { devices } from '@playwright/test';
+import { expect, test } from '../../tools/browser-pool/fixtures';
 import { attachErrorGuard } from './fixtures';
 import { menuUrl, menuStart } from './ui-helpers';
 
@@ -38,11 +40,11 @@ test('real L1 uses accepted survivor, corgi and instanced mission infected @E17-
   guard.dispose(); expect(guard.errors).toEqual([]);
 });
 for (const profile of ['desktop', 'mobile'] as const) {
-  test(`production art measurements ${profile}`, async ({ playwright, baseURL }) => {
+  test(`production art measurements ${profile}`, async ({ baseURL }) => {
     test.skip(process.env.ART_GPU !== '1' && process.env.ART_BASELINE !== '1', 'Opt-in art measurements: ART_GPU=1 (headless Metal)');
     test.setTimeout(600_000);
     mkdirSync(output, { recursive: true });
-    const browser = await playwright.chromium.launch({ headless: true, args: launchArgs });
+    const browser = await launchBrowser({ headless: true, args: launchArgs });
     const context = await browser.newContext(profile === 'mobile'
       ? { baseURL, ...devices['Pixel 7'], viewport: { width: 412, height: 915 }, deviceScaleFactor: 1 }
       : { baseURL, viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });

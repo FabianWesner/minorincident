@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../tools/browser-pool/fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 test('T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times and four headings', async ({page,baseURL}) => {

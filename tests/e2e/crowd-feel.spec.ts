@@ -70,9 +70,9 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
   const result = await capture;
   writeFileSync(`${output}/visibility.json`, JSON.stringify(result, null, 2));
   const video = page.video()!; await page.close();
-  const raw = await video.path();
+  const raw = `${output}/outbreak-full.webm`; await video.saveAs(raw);
   execFileSync('ffmpeg', ['-y', '-ss', String(videoOffset), '-i', raw, '-t', '15', '-vf', 'scale=1280:-2', '-c:v', 'libvpx-vp9', '-threads', '2', '-deadline', 'realtime', '-cpu-used', '8', '-an', `${output}/outbreak.webm`], { stdio: 'ignore' });
-  rmSync(raw, { force: true });
+  rmSync(raw, { force: true }); await video.delete();
   expect(result.onScreenSamples).toBeGreaterThan(1000);
   expect(result.movingInfectedSamples).toBeGreaterThan(100);
   expect(result.civilianSamples).toBeGreaterThan(100);
@@ -110,7 +110,7 @@ test('20 infected corpses remain drawn after walking 60 m away and returning @sm
   expect(proof.awayY).toBeGreaterThan(.5); expect(proof.returnedDistance).toBeLessThan(.2);
   mkdirSync(output, { recursive: true }); writeFileSync(`${output}/permanence.json`, JSON.stringify(proof, null, 2));
   await page.locator('canvas').screenshot({ path: `${output}/corpse-return.png` });
-  await page.close(); rmSync(await page.video()!.path(), { force: true });
+  await page.close(); await page.video()!.delete();
 });
 
 test('common-worker hierarchy and crowd remain readable at all delivered tiers @E07', async ({ page }) => {
@@ -134,5 +134,5 @@ test('common-worker hierarchy and crowd remain readable at all delivered tiers @
   await page.locator('canvas').screenshot({ path: `${output}/worker-horde.png` });
   await page.evaluate(async () => { const a = window.__SS__!; a.camera.cinematic({ position: [8, 6, 10], target: [3, .7, 0] }); await a.screenshotReady(); });
   await page.locator('canvas').screenshot({ path: `${output}/worker-crowd-close.png` });
-  await page.close(); const raw = await page.video()!.path(); rmSync(raw, { force: true });
+  await page.close(); await page.video()!.delete();
 });

@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 import { worldLook } from '../../src/data/worldLook';
 const paletteTokens = Object.keys(JSON.parse(readFileSync('src/assets/palette.json', 'utf8')));
 
-test('@E19 lookdev panel binds, exports and resets on production without the test API', async ({ page }) => {
+test('@E19 lookdev panel binds, exports and resets on production without the test API', async ({ page }, info) => {
   await page.goto('/?lookdev&renderer=webgl&quality=high&audio=muted&seed=1');
   const panel = page.locator('[data-lookdev="panel"]');
   await expect(panel).toBeVisible({ timeout: 30_000 });
@@ -16,7 +16,8 @@ test('@E19 lookdev panel binds, exports and resets on production without the tes
   const download = page.waitForEvent('download');
   await panel.getByRole('button', { name: 'Export JSON patch' }).click();
   const file = await download;
-  expect(JSON.parse(readFileSync((await file.path())!, 'utf8'))).toEqual({ version: 1, worldLook: { sunIntensity: 2 }, palette: {} });
+  const downloadPath = info.outputPath('look-patch.json'); await file.saveAs(downloadPath);
+  expect(JSON.parse(readFileSync(downloadPath, 'utf8'))).toEqual({ version: 1, worldLook: { sunIntensity: 2 }, palette: {} });
   await panel.getByRole('button', { name: 'Reset look', exact: true }).click();
   await expect(input).toHaveValue(String(worldLook.sunIntensity));
 });
