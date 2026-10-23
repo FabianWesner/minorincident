@@ -71,7 +71,7 @@ export class Vehicles {
     if (![pos.x, pos.z, yaw].every(Number.isFinite)) throw new RangeError('Vehicle position must be finite');
     const def = vehicleDef(id), physics = new VehicleBody(def, this.world.physics.world!, pos, yaw);
     const entity = this.world.entities.create({ kind: 'vehicle', archetype: id, transform: physics.transform, faction: 'survivor', health: { current: def.hp, max: def.hp }, vehicle: { ...(decay ? { decay } : {}), speed: 0, forwardSpeed: 0, steer: 0, braking: true, boosting: false, driver: null, attached: [], damage: 'normal', explodeAt: null, stuck: false, recoveringUntil: 0 } });
-    this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); return entity.id;
+    this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); this.world.solids.register(entity); return entity.id;
   }
   /** A car can be driven while it has durability, or at the L9 floor. */
   private operable(car: Car): boolean { return car.entity.vehicle!.damage !== 'exploded' && (car.entity.health.current > 0 || !!car.entity.vehicle!.floor); }
@@ -130,7 +130,9 @@ export class Vehicles {
       if (this.active !== car.entity.id) this.autopilot.get(car.entity.id)?.(drive, car.entity);
       // The floor vehicle has no voluntary exit: the interact input is ignored until the scripted crash.
       if (this.active === car.entity.id && frame.interact && !state.floor) this.exit(car);
-      if (this.operable(car) && this.active === car.entity.id) {
+      const zoo=this.world.missions?.l8;
+      const waitingForBoarding=zoo?.state.carId===car.entity.id&&!zoo.canDrive();
+      if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
           drive.steer = frame.drive?.steer ?? -frame.move.z;
@@ -212,7 +214,7 @@ export class Vehicles {
       // The long cab anchor still needs an exit inside E09's 2.5 m placement radius.
       this.localPoint(car, Math.max(-along, Math.min(along, car.physics.def.doorX + offset)), side * out);
       const hit = this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!);
-      if (hit) continue;
+      if (hit || !this.world.solids.clear(this.position, survivor.radius, 1)) continue;
       this.transition = { carId: car.entity.id, kind: 'exit', tick: this.world.tick, side, from: { ...car.entity.transform } };
       this.leave(car); return true;
     }
@@ -325,11 +327,16 @@ export class Vehicles {
     if (car.physics.def.id === 'vehicle.military-apc') { this.apcInfected(car); return; }
     const state = car.entity.vehicle!, p = car.entity.transform, speed = car.physics.speed;
     if (car.entity.health.current <= 0) { this.release(car); return; }
+    // Clingers pursue occupants, not empty parked hulls. Otherwise an off-screen wave can lose identities
+    // forever to a slow/idle car, and the same happens when its last occupant gets out.
+    const livingOccupant = (id: number) => { const e = this.world.entities.get(id); return !!e && e.health.current > 0 && !e.infected; };
+    const occupied = state.driver !== null && livingOccupant(state.driver) || state.passengers?.some(p => p.phase === 'seated' && livingOccupant(p.id)) === true;
+    if (!occupied) this.release(car);
     if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) this.release(car);
     for (const target of this.world.entities.iterate()) {
       if (target.kind !== 'infected' || target.health.current <= 0 || target.hidden || target.attachedTo) continue;
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, distance = Math.hypot(dx, dz);
-      if (speed < 3 && distance <= 1.5 && state.attached.length < 4 && Math.abs(car.physics.intent.steer) <= .8) {
+      if (occupied && speed < 3 && distance <= 1.5 && state.attached.length < 4 && Math.abs(car.physics.intent.steer) <= .8) {
         state.attached.push(target.id); target.attachedTo = car.entity.id;
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }
@@ -357,19 +364,13 @@ export class Vehicles {
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
       let contact = ledger.infected[id];
-      if (distance <= radius) {
+      // Shared hull admission leaves a millimetre of skin at an exact contact.
+      if (distance <= radius + .002) {
         contact ??= ledger.infected[id] = { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
         contact.separatedAt = null;
         if (contact.contactId === null) {
           contact.contactId = ++ledger.sequence;
           this.apcHit(car, target, 'contact', contact.contactId, null);
-        }
-        if (speed < 4 && target.health.current > 0) {
-          const x = target.transform.x, z = target.transform.z;
-          car.physics.separateHull(target.transform, radius);
-          // Static/nav ownership remains with the existing agent controller.
-          if (this.world.infected && !this.world.infected.nav.clear(target.transform.x, target.transform.z, radius)) { target.transform.x = x; target.transform.z = z; }
-          this.world.spatial.set(id, target.transform.x, target.transform.z);
         }
         // E09 mass damage is independent of contact billing, so accelerating through an overlap still rams.
         if (speed >= 4 && this.operable(car) && tick >= (car.hits.get(id) ?? 0)) {
@@ -539,7 +540,8 @@ export class Vehicles {
     for (const side of [1, -1]) for (let offset = 0; offset <= 4; offset++) {
       this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));
       const nav = this.world.infected?.nav;
-      if (nav && !nav.clear(this.position.x, this.position.z, survivor.radius)) continue;
+      if (nav && !nav.contains(this.position.x, this.position.z, actor.combat?.radius ?? survivor.radius)) continue;
+      if (!this.world.solids.clear(this.position, actor.combat?.radius ?? survivor.radius, actorId)) continue;
       if ([...this.world.entities.iterate()].some(e => e.id !== actorId && !e.hidden && e.health.current > 0 && (e.civilian || e.survivor) && Math.hypot(e.transform.x - this.position.x, e.transform.z - this.position.z) < .8)) continue;
       if (this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!)) continue;
       passenger.side = side; passenger.phase = 'exit'; passenger.started = this.world.tick;
@@ -581,6 +583,7 @@ export class Vehicles {
         p.phase = 'seated'; actor.hidden = true;
         this.world.events.emit({ type: 'vehicle.entered', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
       } else {
+        if (!this.world.solids.clear(p.to!, actor.combat?.radius ?? survivor.radius, actor.id)) { p.phase = 'seated'; actor.hidden = true; continue; }
         Object.assign(actor.transform, p.to); actor.hidden = false; delete actor.passengerOf; if (c) { c.pauseUntil = p.pauseUntil; c.floorY = p.floorY; c.story = p.story ?? null; }
         passengers.splice(i, 1);
         this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
