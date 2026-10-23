@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "job": "gameplay-13l-2",
+  "collectedAt": "2026-10-23T15:33:14.044Z",
+  "codeCommits": [
+    "2b91a6c2a",
+    "e90965331",
+    "84ef69aac"
+  ],
+  "screenshotCommit": "fe9e8b8fd",
+  "gates": {
+    "assets": {
+      "command": "npm run assets:validate",
+      "exitCode": 0,
+      "baselineFailedReports": 22,
+      "baselineFailures": [
+        {
+          "id": "veh.school-bus:lod2",
+          "errors": [
+            "node door_far_0:pal_uiDark: expected exactly one, found 0",
+            "node door_near_0:pal_uiDark: expected exactly one, found 0"
+          ]
+        },
+        {
+          "id": "veh.school-bus.wrecked:lod0",
+          "errors": [
+            "node steeringWheel: expected exactly one, found 0",
+            "node passengerSeat0L: expected exactly one, found 0",
+            "node passengerSeat0R: expected exactly one, found 0",
+            "node passengerSeat1L: expected exactly one, found 0",
+            "node passengerSeat1R: expected exactly one, found 0",
+            "node passengerSeat2L: expected exactly one, found 0",
+            "node passengerSeat2R: expected exactly one, found 0",
+            "node passengerSeat3L: expected exactly one, found 0",
+            "node passengerSeat3R: expected exactly one, found 0"
+          ]
+        },
+        {
+          "id": "veh.school-bus.wrecked:lod1",
+          "errors": [
+            "node steeringWheel: expected exactly one, found 0",
+            "node passengerSeat0L: expected exactly one, found 0",
+            "node passengerSeat0R: expected exactly one, found 0",
+            "node passengerSeat1L: expected exactly one, found 0",
+            "node passengerSeat1R: expected exactly one, found 0",
+            "node passengerSeat2L: expected exactly one, found 0",
+            "node passengerSeat2R: expected exactly one, found 0",
+            "node passengerSeat3L: expected exactly one, found 0",
+            "node passengerSeat3R: expected exactly one, found 0"
+          ]
+        },
+        {
+          "id": "veh.school-bus.wrecked:lod2",
+          "errors": [
+            "node steeringWheel: expected exactly one, found 0",
+            "node passengerSeat0L: expected exactly one, found 0",
+            "node passengerSeat0R: expected exactly one, found 0",
+            "node passengerSeat1L: expected exactly one, found 0",
+            "node passengerSeat1R: expected exactly one, found 0",
+            "node passengerSeat2L: expected exactly one, found 0",
+            "node passengerSeat2R: expected exactly one, found 0",
+            "node passengerSeat3L: expected exactly one, found 0",
+            "node passengerSeat3R: expected exactly one, found 0"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.female.tiers.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.female.tiers.lod2.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.female.tiers.low.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.male.tiers.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.male.tiers.lod2.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/acc.courier-gear.male.tiers.low.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.bathrobe-neighbor.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.bbq-dad.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.cashier.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.common-worker.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.delivery-driver.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.jogger.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/models/inf.suburban-mom.corpse.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/layouts/D-CROSSING.base.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/layouts/D-CROSSING.horizon.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/layouts/D-CURE.base.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/layouts/D-CURE.horizon.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        },
+        {
+          "id": "public/assets/layouts/D-SUBWAY.base.glb",
+          "errors": [
+            "delivery: missing meshopt/quantization"
+          ]
+        }
+      ],
+      "validatedReports": 1262,
+      "failedReports": 0
+    },
+    "remote": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+      "exitCode": 0,
+      "passedFiles": 461,
+      "skippedFiles": 3,
+      "totalFiles": 464,
+      "passed": 2502,
+      "skipped": 9,
+      "total": 2511,
+      "durationSeconds": 2669.16,
+      "suiteSnapshot": "e90965331",
+      "runtimeUnitLevelAssetScopeUnchanged": true,
+      "logSha256": "745049d6cf35df9363404b11a845a1f357ae9939fcff3b3a006c267cdd972e5b"
+    },
+    "smoke": {
+      "command": "E2E_PORT=4351 SCENE_PORT=4352 npm run test:smoke",
+      "exitCode": 0,
+      "simulationPassed": 6,
+      "browser": {
+        "startTime": "2026-10-23T14:46:42.665Z",
+        "duration": 140055.057,
+        "expected": 31,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "invariants": {
+      "command": "E2E_PORT=4351 SCENE_PORT=4352 npm run qa:invariants",
+      "exitCode": 0,
+      "stages": [
+        {
+          "stage": "remote-sim",
+          "code": 0,
+          "seconds": 344.179,
+          "revision": "e90965331dd543cbc6f327965d8f32aa12530670",
+          "log": "test-results/qa-invariants/remote-sim.log"
+        },
+        {
+          "stage": "build",
+          "code": 0,
+          "seconds": 4.907,
+          "revision": "e90965331dd543cbc6f327965d8f32aa12530670",
+          "log": "test-results/qa-invariants/build.log"
+        },
+        {
+          "stage": "Mac-WebGPU-low",
+          "code": 0,
+          "seconds": 248.811,
+          "revision": "e90965331dd543cbc6f327965d8f32aa12530670",
+          "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+        }
+      ],
+      "simulation": {
+        "passed": 27,
+        "failed": 0,
+        "skipped": 0
+      },
+      "macWebGPU": {
+        "startTime": "2026-10-23T14:55:12.781Z",
+        "duration": 247549.877,
+        "expected": 12,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "loadTimes": [
+        {
+          "level": "L1",
+          "candidateMs": 2480.5,
+          "baselineMs": 2706.800000190735,
+          "limitMs": 2977.480000209808
+        },
+        {
+          "level": "L2",
+          "candidateMs": 3178.300000190735,
+          "baselineMs": 3394.699999809265,
+          "limitMs": 3734.1699997901915
+        },
+        {
+          "level": "L3",
+          "candidateMs": 3376,
+          "baselineMs": 3837.9000005722046,
+          "limitMs": 4221.690000629425
+        },
+        {
+          "level": "L4",
+          "candidateMs": 3630.2999992370605,
+          "baselineMs": 3844.199999809265,
+          "limitMs": 4228.619999790191
+        },
+        {
+          "level": "L5",
+          "candidateMs": 4542.800000190735,
+          "baselineMs": 5458.39999961853,
+          "limitMs": 6004.2399995803835
+        },
+        {
+          "level": "L6",
+          "candidateMs": 2258.4000005722046,
+          "baselineMs": 3014.0999994277954,
+          "limitMs": 3315.509999370575
+        },
+        {
+          "level": "L7",
+          "candidateMs": 3826.699999809265,
+          "baselineMs": 6356.800000190735,
+          "limitMs": 6992.480000209808
+        },
+        {
+          "level": "L8",
+          "candidateMs": 4301,
+          "baselineMs": 4694.699999809265,
+          "limitMs": 5164.1699997901915
+        },
+        {
+          "level": "L9",
+          "candidateMs": 8676.199999809265,
+          "baselineMs": 9625,
+          "limitMs": 10587.5
+        },
+        {
+          "level": "L10",
+          "candidateMs": 6283.5,
+          "baselineMs": 6691.39999961853,
+          "limitMs": 7360.539999580384
+        }
+      ]
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    }
+  },
+  "regressions": {
+    "q131": {
+      "physicsTest": "tests/unit/levels/l9-clearance-drive.test.ts",
+      "cases": 4,
+      "passed": 4,
+      "coverage": [
+        "reported departure wedge without reverse",
+        "road with alternating steering offsets",
+        "countryside with alternating steering offsets",
+        "dry-shortcut with alternating steering offsets"
+      ],
+      "departureShoulderMetres": 2.5
+    },
+    "q135": {
+      "pixelTest": "6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occluded ground rings",
+      "status": "passed",
+      "sampleFrame": 1,
+      "minimumChangedArrowPixels": 8,
+      "groundRingDepthTest": true,
+      "l5TuningUnchanged": true,
+      "l5TuningSha256": "ed6ffe6b59aaef03ebb18b5ad046a5bc3a68ff3f2fbac30765a2545442d8e5cd",
+      "screenshots": [
+        {
+          "file": "L5-rosa-first-frame.png",
+          "sha256": "46cbce7ac7ff7ea10ccbe61c26ce04cf5a1cca477ab24b04d5012e499e4c0e5a"
+        },
+        {
+          "file": "L5-sam-first-frame.png",
+          "sha256": "505c4744c81af1bcff22a09fa23b16db9572fe7d9c1cd653b3ad7dc27cf112c8"
+        }
+      ]
+    }
+  }
+}
