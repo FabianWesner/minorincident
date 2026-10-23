@@ -18,6 +18,7 @@ export class ShadowRefresh {
       if ((light as unknown as { isLight?: boolean }).isLight && light.castShadow && light.shadow) { lights.push(light); return; }
       if (!object.castShadow) return;
       if (!(object instanceof Mesh)) { dynamic = true; return; }
+      if (object.count === 0) return;
       if (object.customDepthMaterial || object.customDistanceMaterial || (object as Mesh & { isBatchedMesh?: boolean }).isBatchedMesh) dynamic = true;
       values.push(object.id, object.count ?? 1, object.geometry.id, object.geometry.drawRange.start, object.geometry.drawRange.count, object.layers.mask);
       add(object.matrixWorld.elements);
