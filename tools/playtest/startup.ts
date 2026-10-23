@@ -20,6 +20,11 @@ export function isMandatoryBossObjective(level: string | null, step: string | nu
   return level === 'L10' && step === 'mega';
 }
 
+/** L10 automatically leaves its result frame after the credits clock completes. */
+export function campaignEndingComplete(ending: { level: string | null; phase: string | null; creditsFinished: boolean; endingPhase: string | null; completedLevels: number }): boolean {
+  return ending.level === 'L10' && ending.phase === 'progression' && ending.creditsFinished && ending.endingPhase === 'done' && ending.completedLevels === 10;
+}
+
 /** A dead renderer must not hold an unattended driver forever inside evaluate(). */
 export async function observeWithin<T>(operation: Promise<T>, timeoutMs = 15_000): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
