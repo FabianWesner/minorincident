@@ -14,7 +14,7 @@ import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
 import { cloneCrowdGeometry } from './characters/cloneCrowdGeometry';
 import { crowdLod, canHoldCrowdPose } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
-import { proneDeath, proneReach } from './characters/proneDeath';
+import { groundDeathFeet, proneDeath, proneReach } from './characters/proneDeath';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
@@ -227,6 +227,7 @@ export class CrowdView extends Group {
         if (this.disposed) { baked.geometry.dispose(); return; }
         // P1-117: Alphas fall onto their faces (live and frozen share the clip).
         if (alpha) proneDeath(baked.clip);
+        if (asset.startsWith('inf.mega-alpha')) groundDeathFeet(baked.clip, 'death-side');
         if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       // Weld identical vertices before instanced attributes are attached, retaining
       // the authored indices through the bake: same triangles and vertex values.
@@ -251,6 +252,7 @@ export class CrowdView extends Group {
           else {
             const body = bakeInfected(bodyModel, this.registry.definition(asset).animatedNodes, false, undefined, undefined, true);
             if (alpha) proneDeath(body.clip);
+            if (asset.startsWith('inf.mega-alpha')) groundDeathFeet(body.clip, 'death-side');
             deinterleaveGeometry(body.geometry);
             const corpse = mergeCrowdVertices(body.geometry); body.geometry.dispose();
             if (!healthy) markInfectedEyeCores(corpse);
@@ -379,8 +381,10 @@ export class CrowdView extends Group {
       // synchronously during play. Waiting for this batch also guarantees the
       // intact corpse geometry exists before the loading draw.
       if (lod === 'lod2' || alpha && lod === 'lod0') {
-        this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry.userData.inlineBody ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+        const death = asset.startsWith('inf.mega-alpha') ? 'death-side' : 'death-back';
+        this.staticCorpses.prepare(`${key}:${death}:0`, this.corpseGeometry.get(key) ?? mesh.geometry.userData.inlineBody ?? mesh.geometry, material, this.corpseClips.get(key) ?? baked.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1);
       }
+      if (lod === 'lod1' && regularInfectedModels.some(id => id === asset)) this.staticCorpses.prepare(`${key}:death-back:0:near`, mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, true);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {
@@ -492,7 +496,7 @@ export class CrowdView extends Group {
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), reaction = e.combat.reaction;
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
-      const death = e.archetype === 'infected.crawler' ? 'death-side' : 'death-back';
+      const death = e.archetype === 'infected.crawler' || def.asset.startsWith('inf.mega-alpha') ? 'death-side' : 'death-back';
       let clip: typeof infectedClips[number] = b.state === 'dead' ? death : (b.legLost || e.archetype === 'infected.crawler') && motion.speed <= .06 ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
       // Heavy reactions (deaths, finishers, kicks, blasts) knock down and get up, also while knocked back; light hits only flinch (InfectedMoves).
       const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
@@ -537,7 +541,10 @@ export class CrowdView extends Group {
           // Use the complete page warmed during load for every death cause.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
           const frozenSource = !batch.animal ? this.accessories?.corpseSource(e, source, def.asset, batch.poses.clip.parts.indexOf('head')) ?? source : source;
-          this.staticCorpses.place(e, `${key}:${death}:0`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), [], !batch.animal ? look : undefined);
+          const nearBatch = regularInfectedModels.some(id => id === def.asset) ? this.batches.get(`${key}:lod1`) : undefined;
+          const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
+          const near = nearBatch ? { source: this.accessories?.corpseSource(e, nearBatch.mesh.geometry, def.asset, nearBatch.poses.clip.parts.indexOf('head')) ?? nearBatch.mesh.geometry, material: nearBatch.mesh.material as MeshLambertNodeMaterial, clip: nearBatch.poses.clip, frame } : undefined;
+          this.staticCorpses.place(e, `${key}:${death}:0`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), [], !batch.animal ? look : undefined, near);
           continue;
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
@@ -566,6 +573,8 @@ export class CrowdView extends Group {
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       // Attack ground warnings belong to Vfx: one pooled decal per attack.
     }
+    this.staticCorpses.updateDetail(player.transform, !this.low);
+    if (view) this.staticCorpses.cull(this.frustum);
     for (const batch of this.batches.values()) {
       batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;
       if (batch.count) {

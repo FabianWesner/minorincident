@@ -86,7 +86,7 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
       crowd.traverse(o => { if (o.name.startsWith('corpses:') && (o as InstancedMesh).count) pages.push(o as InstancedMesh); });
       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
       for (const page of pages) {
-        expect(page.name).toMatch(/:death-back:0(?:[:/]|$)/);
+        expect(page.name).toMatch(asset === megaAlpha.asset ? /:death-side:0(?:[:/]|$)/ : /:death-back:0(?:[:/]|$)/);
         // The corpse shader can reuse placement columns for normals only while
         // every production frozen placement is a rotation plus translation.
         for (let index = 0; index < page.count; index++) {

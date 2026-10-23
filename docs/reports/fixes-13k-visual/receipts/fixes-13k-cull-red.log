@@ -1,0 +1,28 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fixes-13k-visual
+
+ ❯ |functional| tests/unit/render/static-corpses.test.ts (18 tests | 1 failed | 17 skipped) 35ms
+   × camera culling retains every corpse and restores its exact identity, pose and tint when the camera returns 34ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/static-corpses.test.ts > camera culling retains every corpse and restores its exact identity, pose and tint when the camera returns
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/unit/render/static-corpses.test.ts:334:32
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 skipped (18)
+   Start at  08:06:22
+   Duration  307ms (transform 57%, import 29%, tests 13%, worker 1%)
+
