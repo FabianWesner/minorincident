@@ -122,6 +122,18 @@ test('@E13 Q-158 a new campaign cannot inherit the outgoing L1 selection or rack
   expect(g.campaign).toEqual(newCampaign());
 });
 
+test.each([9, 10] as const)('@E13 Q-158 Continue into L%i cannot capture the outgoing resume payload during settings saves', async level => {
+  const save = debugCampaign(level, null), g = game(save);
+  g.applyCampaign(); world.scenario = `L${level}`;
+  const outgoing = vi.fn(() => { throw new Error('Captured outgoing resume payload'); });
+  world.missions = { state: { phase: 'playing', checkpoint: 'cure-crash' }, l9: level === 9 ? { save: outgoing } : undefined, saveResume: outgoing, dispose: vi.fn() } as never;
+  g.audio.set.mockImplementation(() => { g.saveCampaign(); });
+  const incoming = structuredClone(save); incoming.selectedAction = 'weapon.fire-axe';
+  await g.continueCampaign(incoming);
+  expect(outgoing).not.toHaveBeenCalled();
+  expect(selected()).toBe('weapon.fire-axe');
+});
+
 test('@E13 Q-158 the crossing logs the reason for losing the selected handgun and Continue restores the axe', async () => {
   const save = debugCampaign(9, null);
   equip(save, 'weapon.handgun', 4);
