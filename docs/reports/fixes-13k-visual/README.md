@@ -51,3 +51,7 @@ The shared-body regression test failed first (two body pages for two hats), then
 Shared headwear pages and palette lookup experiments were removed: they did not close WebGL2's 0.5 ms gap and added complexity. The original fitted, combined corpse surfaces are retained. L7 haze graphs are now built only for L7; other levels retain their original radial fog graph.
 
 Frozen pages now retain all logical instances while submitting only complete posed bounds that intersect the camera frustum. The camera-return regression failed red before culling (two instances submitted instead of one), and checks retained IDs, exact pose/tint, membership revision, removal, and insertion into an entirely offscreen page. No simulated or retained body count changes. Fresh timing and final validation remain pending.
+
+## 08:34 checkpoint
+
+Remote snapshot `52897d38a`: 458 files / 2,486 tests passed (3 files / 9 tests skipped), exit 0. A final source resync is still required. Per-instance culling retains all 282 logical bodies but has not met the no-regression gate: uncontaminated WebGL2 median p95 remains 3.6 ms versus baseline 3.2 ms. A general exact-input shadow-map reuse experiment is under evaluation, with conservative refresh for unknown shader effects and unit coverage of caster, light, geometry and visibility changes. It is not accepted performance evidence yet.

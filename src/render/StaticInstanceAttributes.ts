@@ -25,6 +25,7 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   let material = materials.get(source);
   if (!material) {
     material = source.frozenCopy();
+    material.userData.fixedStaticPosition = source.positionNode === null;
     if (source.userData.seeThrough === true) material.seeThrough('placement');
     material.positionNode = source.positionNode ? placementPosition(source.positionNode, corpseNormals) : corpseNormals ? corpsePosition : staticPosition;
     const owned = material;
