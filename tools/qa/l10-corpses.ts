@@ -76,6 +76,8 @@ try {
             assert.ok(state.meshes.length > 0, 'Frozen bodies must be drawn');
             const name = `${level}-${backend}-${tier}-z${zoom}`;
             await session.page.screenshot({ path: `${out}/${name}.jpg`, type: 'jpeg', quality: 90 });
+            const profileSession = process.env.CORPSE_PROFILE ? await session.page.context().newCDPSession(session.page) : null;
+            if (profileSession) { await profileSession.send('Profiler.enable'); await profileSession.send('Profiler.setSamplingInterval', { interval: 500 }); await profileSession.send('Profiler.start'); }
             const samples = [];
             if (timing) for (let repeat = 0; repeat < 3; repeat++) samples.push(await session.page.evaluate(async () => {
               const a = window.__SS__!, frames: number[] = [], render: number[] = [], update: number[] = [];
@@ -91,6 +93,7 @@ try {
               const q = (v: number[], p: number) => v.sort((a,b) => a-b)[Math.ceil(v.length * p) - 1];
               return { frames: frames.length, frameP50: q(frames, .5), frameP95: q(frames, .95), renderP95: q(render, .95), updateP95: q(update, .95), perf: a.perf() };
             }));
+            if (profileSession) { const { profile } = await profileSession.send('Profiler.stop'); writeFileSync(`${out}/${name}.cpuprofile`, JSON.stringify(profile)); await profileSession.detach(); }
             rows.push({ name, setup, state, samples, errors: session.errors });
             writeFileSync(`${out}/evidence.json`, JSON.stringify(rows, (key, value) => ['profile', 'profileAssets', 'loadTiming', 'nodeBuildMaterials'].includes(key) ? undefined : value, 2));
             console.log(`${name}: ${state.corpses} corpses, ${state.meshes.length} pages${timing ? ` ${JSON.stringify(samples.map(s => s.frameP95))} ms p95` : ''}`);

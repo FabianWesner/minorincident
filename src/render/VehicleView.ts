@@ -48,7 +48,8 @@ export class VehicleView extends Group {
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   /** Compile transport passenger rigs during level loading, before boarding can hitch. */
   async prewarmOccupants(): Promise<(() => void) | undefined> {
-    const car = [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
+    const truckId = this.world.missions?.state.l2?.truckId;
+    const car = truckId ? this.world.vehicles!.cars.get(truckId) : [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
     const record = car && this.records.get(car.entity.id);
     if (!record) return;
     // Q-126: warming disposable prototypes still rebuilt geometry and skinned

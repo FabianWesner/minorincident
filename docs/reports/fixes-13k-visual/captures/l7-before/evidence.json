@@ -4,8 +4,8 @@
     "backend": "webgpu",
     "quality": "high",
     "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
+      "zoom": 0.5,
+      "targetZoom": 0.5,
       "zoomLimits": [
         0.5,
         1.5
@@ -13,7 +13,7 @@
       "fov": 25,
       "azimuth": 0.7853981633974483,
       "polar": 0.9424777960769379,
-      "radius": 19,
+      "radius": 9.5,
       "focus": [
         -70.5,
         0,
@@ -25,9 +25,216 @@
         47.49711574074074
       ],
       "position": [
-        -59.62825330787293,
-        11.16860548928267,
-        58.37133465509004
+        -65.05835813541795,
+        5.589247189085779,
+        52.941229827545015
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z0.5-f120",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -64.7533589428192,
+        0,
+        47.00000000103058
+      ],
+      "target": [
+        -77.54526748971193,
+        4,
+        44
+      ],
+      "position": [
+        -41.54526748971193,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z0.5-f300",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -11.215403842995364,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        -23.4156378600823,
+        4,
+        44
+      ],
+      "position": [
+        12.584362139917703,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z0.5-f450",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        30.16179100494581,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        17.222222222222243,
+        4,
+        44
+      ],
+      "position": [
+        53.22222222222224,
+        12,
+        61
       ],
       "spot": null
     },
@@ -138,144 +345,6 @@
     "errors": []
   },
   {
-    "name": "webgpu-high-z1.5-f0",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -70.5,
-        0,
-        47.5
-      ],
-      "target": [
-        -70.51812962962963,
-        0.0032962962962962963,
-        47.49711574074074
-      ],
-      "position": [
-        -59.62825330787293,
-        11.16860548928267,
-        58.37133465509004
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
-    "name": "webgpu-high-z0.5-f120",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -64.7533589428192,
-        0,
-        47.00000000103058
-      ],
-      "target": [
-        -77.54526748971193,
-        4,
-        44
-      ],
-      "position": [
-        -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
     "name": "webgpu-high-z1-f120",
     "backend": "webgpu",
     "quality": "high",
@@ -302,144 +371,6 @@
       ],
       "position": [
         -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
-    "name": "webgpu-high-z1.5-f120",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -64.7533589428192,
-        0,
-        47.00000000103058
-      ],
-      "target": [
-        -77.54526748971193,
-        4,
-        44
-      ],
-      "position": [
-        -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
-    "name": "webgpu-high-z0.5-f300",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -11.215403842995364,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        -23.4156378600823,
-        4,
-        44
-      ],
-      "position": [
-        12.584362139917701,
         12,
         61
       ],
@@ -552,144 +483,6 @@
     "errors": []
   },
   {
-    "name": "webgpu-high-z1.5-f300",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -11.215403842995364,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        -23.4156378600823,
-        4,
-        44
-      ],
-      "position": [
-        12.584362139917701,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
-    "name": "webgpu-high-z0.5-f450",
-    "backend": "webgpu",
-    "quality": "high",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        30.16179100494581,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        17.222222222222243,
-        4,
-        44
-      ],
-      "position": [
-        53.22222222222224,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 24,
-    "errors": []
-  },
-  {
     "name": "webgpu-high-z1-f450",
     "backend": "webgpu",
     "quality": "high",
@@ -759,12 +552,12 @@
     "errors": []
   },
   {
-    "name": "webgpu-high-z1.5-f450",
+    "name": "webgpu-high-z1.5-f0",
     "backend": "webgpu",
     "quality": "high",
     "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
+      "zoom": 1.5,
+      "targetZoom": 1.5,
       "zoomLimits": [
         0.5,
         1.5
@@ -772,7 +565,214 @@
       "fov": 25,
       "azimuth": 0.7853981633974483,
       "polar": 0.9424777960769379,
-      "radius": 19,
+      "radius": 28.5,
+      "focus": [
+        -70.5,
+        0,
+        47.5
+      ],
+      "target": [
+        -70.51812962962963,
+        0.0032962962962962963,
+        47.49711574074074
+      ],
+      "position": [
+        -54.19814848032791,
+        16.74796378947956,
+        63.801439482635054
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z1.5-f120",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
+      "focus": [
+        -64.7533589428192,
+        0,
+        47.00000000103058
+      ],
+      "target": [
+        -77.54526748971193,
+        4,
+        44
+      ],
+      "position": [
+        -41.54526748971193,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z1.5-f300",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
+      "focus": [
+        -11.215403842995364,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        -23.4156378600823,
+        4,
+        44
+      ],
+      "position": [
+        12.584362139917701,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 24,
+    "errors": []
+  },
+  {
+    "name": "webgpu-high-z1.5-f450",
+    "backend": "webgpu",
+    "quality": "high",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
       "focus": [
         30.16179100494581,
         0,
@@ -832,8 +832,8 @@
     "backend": "webgpu",
     "quality": "low",
     "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
+      "zoom": 0.5,
+      "targetZoom": 0.5,
       "zoomLimits": [
         0.5,
         1.5
@@ -841,7 +841,7 @@
       "fov": 25,
       "azimuth": 0.7853981633974483,
       "polar": 0.9424777960769379,
-      "radius": 19,
+      "radius": 9.5,
       "focus": [
         -70.5,
         0,
@@ -853,9 +853,189 @@
         47.49711574074074
       ],
       "position": [
-        -59.62825330787293,
-        11.16860548928267,
-        58.37133465509004
+        -65.05835813541795,
+        5.589247189085779,
+        52.941229827545015
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z0.5-f120",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -64.7533589428192,
+        0,
+        47.00000000103058
+      ],
+      "target": [
+        -77.54526748971193,
+        4,
+        44
+      ],
+      "position": [
+        -41.54526748971193,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z0.5-f300",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -11.215403842995364,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        -23.4156378600823,
+        4,
+        44
+      ],
+      "position": [
+        12.584362139917703,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z0.5-f450",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        30.16179100494581,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        17.222222222222243,
+        4,
+        44
+      ],
+      "position": [
+        53.22222222222224,
+        12,
+        61
       ],
       "spot": null
     },
@@ -948,126 +1128,6 @@
     "errors": []
   },
   {
-    "name": "webgpu-low-z1.5-f0",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -70.5,
-        0,
-        47.5
-      ],
-      "target": [
-        -70.51812962962963,
-        0.0032962962962962963,
-        47.49711574074074
-      ],
-      "position": [
-        -59.62825330787293,
-        11.16860548928267,
-        58.37133465509004
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
-    "name": "webgpu-low-z0.5-f120",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -64.7533589428192,
-        0,
-        47.00000000103058
-      ],
-      "target": [
-        -77.54526748971193,
-        4,
-        44
-      ],
-      "position": [
-        -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
     "name": "webgpu-low-z1-f120",
     "backend": "webgpu",
     "quality": "low",
@@ -1094,126 +1154,6 @@
       ],
       "position": [
         -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
-    "name": "webgpu-low-z1.5-f120",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -64.7533589428192,
-        0,
-        47.00000000103058
-      ],
-      "target": [
-        -77.54526748971193,
-        4,
-        44
-      ],
-      "position": [
-        -41.54526748971193,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
-    "name": "webgpu-low-z0.5-f300",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -11.215403842995364,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        -23.4156378600823,
-        4,
-        44
-      ],
-      "position": [
-        12.584362139917701,
         12,
         61
       ],
@@ -1308,126 +1248,6 @@
     "errors": []
   },
   {
-    "name": "webgpu-low-z1.5-f300",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        -11.215403842995364,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        -23.4156378600823,
-        4,
-        44
-      ],
-      "position": [
-        12.584362139917701,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
-    "name": "webgpu-low-z0.5-f450",
-    "backend": "webgpu",
-    "quality": "low",
-    "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
-      "zoomLimits": [
-        0.5,
-        1.5
-      ],
-      "fov": 25,
-      "azimuth": 0.7853981633974483,
-      "polar": 0.9424777960769379,
-      "radius": 19,
-      "focus": [
-        30.16179100494581,
-        0,
-        47.00000000000002
-      ],
-      "target": [
-        17.222222222222243,
-        4,
-        44
-      ],
-      "position": [
-        53.22222222222224,
-        12,
-        61
-      ],
-      "spot": null
-    },
-    "departure": {
-      "phase": "departing",
-      "busId": 50,
-      "boarded": [
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65
-      ],
-      "entering": {},
-      "lastEnterAt": -1000000000,
-      "startedAt": 1,
-      "readyAt": -60
-    },
-    "originalRoster": 15,
-    "errors": []
-  },
-  {
     "name": "webgpu-low-z1-f450",
     "backend": "webgpu",
     "quality": "low",
@@ -1488,12 +1308,12 @@
     "errors": []
   },
   {
-    "name": "webgpu-low-z1.5-f450",
+    "name": "webgpu-low-z1.5-f0",
     "backend": "webgpu",
     "quality": "low",
     "camera": {
-      "zoom": 1,
-      "targetZoom": 1,
+      "zoom": 1.5,
+      "targetZoom": 1.5,
       "zoomLimits": [
         0.5,
         1.5
@@ -1501,7 +1321,187 @@
       "fov": 25,
       "azimuth": 0.7853981633974483,
       "polar": 0.9424777960769379,
-      "radius": 19,
+      "radius": 28.5,
+      "focus": [
+        -70.5,
+        0,
+        47.5
+      ],
+      "target": [
+        -70.51812962962963,
+        0.0032962962962962963,
+        47.49711574074074
+      ],
+      "position": [
+        -54.19814848032791,
+        16.74796378947956,
+        63.801439482635054
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z1.5-f120",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
+      "focus": [
+        -64.7533589428192,
+        0,
+        47.00000000103058
+      ],
+      "target": [
+        -77.54526748971193,
+        4,
+        44
+      ],
+      "position": [
+        -41.54526748971193,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z1.5-f300",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
+      "focus": [
+        -11.215403842995364,
+        0,
+        47.00000000000002
+      ],
+      "target": [
+        -23.4156378600823,
+        4,
+        44
+      ],
+      "position": [
+        12.584362139917701,
+        12,
+        61
+      ],
+      "spot": null
+    },
+    "departure": {
+      "phase": "departing",
+      "busId": 50,
+      "boarded": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "entering": {},
+      "lastEnterAt": -1000000000,
+      "startedAt": 1,
+      "readyAt": -60
+    },
+    "originalRoster": 15,
+    "errors": []
+  },
+  {
+    "name": "webgpu-low-z1.5-f450",
+    "backend": "webgpu",
+    "quality": "low",
+    "camera": {
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 28.5,
       "focus": [
         30.16179100494581,
         0,

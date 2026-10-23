@@ -1,7 +1,7 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
-import { context, sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
+import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { bloodSplatMask, cloudShadowMask, noise, surfaceDetail } from './SurfaceDetail';
@@ -268,8 +268,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
   frozenCopy(): PaletteMaterial {
     const copy = this.newCopy(); copy.copy(this);
-    copy.outputFor = this.userData.frozenCrowd ? mode => context(this.outputFor(mode), { frozenCrowd: true }) : this.outputFor;
-    copy._outputs = this.userData.frozenCrowd ? new Map() : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    copy.outputFor = this.outputFor;
+    copy._outputs = this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
   /** Same key as NodeMaterial, without allocating a child record and hashing

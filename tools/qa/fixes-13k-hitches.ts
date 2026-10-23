@@ -22,6 +22,8 @@ try {
           await a.step(1840);
           a.teleport(1, { x: 4.5, z: -32.7 });
         } else {
+          // Approach time places the physical boarding/ride transition around the reported tick 285.
+          await a.step(244);
           a.cheats.completeObjective('axe');
           const board = g.world.missions!.def.anchors['l2-board']; a.teleport(1, board);
         }
