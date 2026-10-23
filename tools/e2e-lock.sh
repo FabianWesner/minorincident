@@ -11,7 +11,7 @@ root=$(cd "$(dirname "$0")/.." && pwd)
 pool_supported=0
 for arg in "$@"; do
   case "$arg" in
-    playwright|*/playwright|*/playwright/cli.js|*/@playwright/test/cli.js|tools/scenelab/cli.ts|tools/scenelab/catalog.ts|tools/playtest/session.ts|tools/playtest/seed.ts|tools/playtest/live.ts|tools/qa/ab.ts) pool_supported=1;;
+    playwright|*/playwright|*/playwright/cli.js|*/@playwright/test/cli.js|tools/scenelab/cli.ts|tools/scenelab/catalog.ts|tools/playtest/session.ts|tools/playtest/seed.ts|tools/playtest/live.ts|tools/qa/ab.ts|tools/browser-pool/lane-load.ts) pool_supported=1;;
   esac
 done
 for arg in "$@"; do case "$arg" in webkit|--project=webkit) pool_supported=0;; esac; done

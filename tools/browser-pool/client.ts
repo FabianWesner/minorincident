@@ -41,7 +41,8 @@ export async function launchBrowser(options: LaunchOptions = {}): Promise<Browse
   if (options.headless === false) throw new Error('Browser automation must stay headless');
   const endpoint = await poolEndpoint();
   if (endpoint) {
-    const browser = await chromium.connect(endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options) } });
+    if (options.channel && !process.env.MI_BROWSER_POOL_EXCLUSIVE) throw new Error('A browser channel override requires quiet-run exclusive mode');
+    const browser = await chromium.connect(endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? '' } });
     const create = browser.newContext.bind(browser), close = browser.close.bind(browser), replacements = new Set<Browser>();
     browser.newContext = async contextOptions => {
       try { return await create(contextOptions); }
@@ -70,7 +71,7 @@ export async function launchBrowser(options: LaunchOptions = {}): Promise<Browse
 /** Each test context owns its connection, so native exclusive runs can restart Chrome
  * between specs without leaving a Playwright worker attached to the retired process. */
 export async function connectForTests(endpoint: string, options: LaunchOptions): Promise<Browser> {
-  const initial = await chromium.connect(await poolEndpoint() ?? endpoint, { headers: { 'x-mi-launch-options': JSON.stringify(options) } });
+  const initial = await chromium.connect(await poolEndpoint() ?? endpoint, { timeout: Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000), headers: { 'x-mi-launch-options': JSON.stringify(options), 'x-mi-job': process.env.BROWSER_POOL_JOB_ID ?? '' } });
   const children = new Set<Browser>();
   initial.newContext = async (contextOptions: BrowserContextOptions = {}) => {
     const browser = await launchBrowser(options); children.add(browser);
@@ -98,14 +99,24 @@ export async function launchProfile(profile: string, options: LaunchOptions & Br
   const { existsSync, mkdirSync } = await import('node:fs');
   const { resolve } = await import('node:path');
   const endpoint = await poolEndpoint();
-  if (!endpoint) return chromium.launchPersistentContext(profile, { ...options, headless: true });
   const storage = resolve(profile, 'pool-storage.json'); mkdirSync(profile, { recursive: true });
-  const browser = await launchBrowser(options);
-  const context = await browser.newContext({ viewport: options.viewport, deviceScaleFactor: options.deviceScaleFactor, ...(existsSync(storage) ? { storageState: storage } : {}) });
-  const close = context.close.bind(context);
-  context.close = async options => {
-    try { await context.storageState({ path: storage, indexedDB: true }); }
-    finally { try { await close(options); } finally { await browser.close(); } }
-  };
-  return context;
+  let browser: Browser | undefined, release: (() => Promise<void>) | undefined;
+  try {
+    if (endpoint) browser = await launchBrowser(options);
+    else if (process.env.MI_E2E_LOCK_HELD !== '1') {
+      release = await reserveLegacySlots();
+      if (!options.args?.includes('--use-angle=swiftshader')) await gpuAdmission();
+    }
+    const context = browser
+      ? await browser.newContext({ viewport: options.viewport, deviceScaleFactor: options.deviceScaleFactor, ...(existsSync(storage) ? { storageState: storage } : {}) })
+      : await chromium.launchPersistentContext(profile, { ...options, headless: true });
+    if (!browser && existsSync(storage)) await context.setStorageState(storage);
+    const close = context.close.bind(context);
+    let closing: Promise<void> | undefined;
+    context.close = options => closing ??= (async () => {
+      try { await context.storageState({ path: storage, indexedDB: true }); }
+      finally { try { await close(options); } finally { await browser?.close(); await release?.(); } }
+    })();
+    return context;
+  } catch (error) { await browser?.close(); await release?.(); throw error; }
 }
