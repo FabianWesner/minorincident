@@ -134,7 +134,7 @@ export class Lighting {
     this.weatherMode = mode;
     for (const material of this.paletteMaterials) material.setWeatherMode(mode);
   }
-  constructor(private readonly scene: Scene, readonly look = new LookUniforms(), renderer?: WebGPURenderer, private readonly sharedEnvironment?: Environment) {
+  constructor(private readonly scene: Scene, readonly look = new LookUniforms(), renderer?: WebGPURenderer, private readonly sharedEnvironment?: Environment, readonly departureBackdrop = false) {
     this.fallbackEnvironment.needsUpdate = true;
     if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
@@ -180,7 +180,7 @@ export class Lighting {
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
-    this.fogColorA.value.set(p.sky); this.fogColor.value.set(p.fog); this.scene.backgroundNode = this.backdropFog; this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
+    this.fogColorA.value.set(p.sky); this.fogColor.value.set(p.fog); this.scene.backgroundNode = this.departureBackdrop ? this.backdropFog : this.radialFog; this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
@@ -240,7 +240,7 @@ export class Lighting {
     this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : this.look.has('sky') && !this.look.has('fogA') ? v.sky : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : p.sky);
     this.fogB.value.set(this.look.has('fog') && !this.look.has('fogB') ? v.fog : (this.look.has('fogB') || this.preset === 'L1') ? v.fogB : p.fog);
     this.scene.background = new Color((this.look.has('sky') || this.preset === 'L1') ? v.sky : p.sky);
-    this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.backdropFog;
+    this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.departureBackdrop ? this.backdropFog : this.radialFog;
     if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
     this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
     this.sun.shadow.needsUpdate = this.sun.shadow.autoUpdate || !this.sun.shadow.map; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);

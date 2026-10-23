@@ -1,4 +1,4 @@
-import { BoxGeometry, BufferAttribute, BufferGeometry, Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
@@ -320,36 +320,25 @@ test('permanent frozen bodies drop the live fade mask while the living material 
 });
 
 
-test('different fitted headwear shares one corpse body page and follows detail changes, throws and removal', () => {
-  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
-  const box = () => { const g = new BoxGeometry(); g.setAttribute('color', new BufferAttribute(new Float32Array(g.getAttribute('position').count * 3).fill(.4), 3)); g.setAttribute('_parts', new BufferAttribute(new Float32Array(g.getAttribute('position').count * 4), 4)); return g; };
-  const base = box(), piece = box(), fit = new Matrix4().makeScale(1.3, .8, 1.1).setPosition(.1, .2, .3);
-  const clip = (height: number) => ({ parts: ['hip', 'head'], frames: 1, duration: 1, matrices: new Float32Array([...new Matrix4().elements, ...new Matrix4().makeRotationY(.4).setPosition(0, height, 0).elements]) });
-  const farClip = clip(2), nearClip = clip(3), pool = new StaticCorpses(), records = new Map<number, EntitySnapshot>(), wrappers: BufferGeometry[] = [];
-  const source = (asset: string) => { const wrapper = new BufferGeometry(); for (const name of Object.keys(base.attributes)) wrapper.setAttribute(name, base.getAttribute(name)); wrapper.setIndex(base.index); wrapper.userData.corpseBody = base; wrapper.userData.corpseHeadwear = { asset, source: piece, fit }; wrappers.push(wrapper); return wrapper; };
-  const bodies = [source('hat-a'), source('hat-b')], transforms = [new Matrix4(), new Matrix4().makeRotationY(.6).setPosition(5, 0, 0)];
+
+
+test('camera culling retains every corpse and restores its exact identity, pose and tint when the camera returns', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
+  const add = (id: number, x: number, tint: string) => { const e = { id, corpse: true, transform: { x, y: .7, z: 0 } } as EntitySnapshot; records.set(id, e); pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(x, 0, 0), new Color(tint), [id / 10, 0, 0]); };
+  add(2, 9.5, '#3070b0'); add(1, 0, '#e03020');
+  const page = pool.children[0] as InstancedMesh, geometry = page.geometry, initial = pool.drawn().sort((a, b) => a.id - b.id), revision = pool.revision;
+  const camera = new OrthographicCamera(-2, 2, 2, -2, .1, 30), frustum = new Frustum();
+  const aim = (x: number) => { camera.position.set(x, 10, 0); camera.lookAt(x, 0, 0); camera.updateMatrixWorld(true); frustum.setFromProjectionMatrix(new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)); pool.begin(id => records.get(id)); pool.cull?.(frustum); (page.onAfterRender as () => void)(); };
   try {
-    for (let i = 0; i < 2; i++) {
-      const e = { id: i + 1, archetype: 'infected.runner', infected: { variant: 'inf.common-worker' }, corpse: true, transform: { x: i * 5, y: .7, z: 0, yaw: i * .6 } } as EntitySnapshot; records.set(e.id, e);
-      const look = { ...resolveCrowdAppearance(e), accessory: `hat-${i ? 'b' : 'a'}`, slot: i + 1, hidesHair: true };
-      pool.place(e, 'worker', bodies[i], material, farClip, 0, transforms[i], new Color('white'), [0, 0, 0], String(e.id), [], look, i ? { source: bodies[i], material, clip: nearClip, frame: 0 } : undefined);
-    }
-    const bodyPages = () => (pool.children as InstancedMesh[]).filter(m => m.name.startsWith('corpses:') && m.count);
-    const heads = () => (pool.children as InstancedMesh[]).filter(m => m.name.startsWith('corpse-headwear:') && m.count);
-    expect(bodyPages()).toHaveLength(1); expect(bodyPages()[0].count).toBe(2); expect(heads()).toHaveLength(2);
-    expect(pool.snapshot().instances).toBe(2); expect(pool.snapshot().figures.map(f => f.id).sort()).toEqual([1, 2]);
-    const head = () => heads().find(m => m.name.includes('hat-b'))!;
-    const checkHead = (height: number, transform: Matrix4) => {
-      const actual = new Matrix4(); head().getMatrixAt(0, actual);
-      const expected = new Matrix4().makeRotationY(.4).setPosition(0, height, 0).multiply(fit).premultiply(transform);
-      expected.elements.forEach((value, i) => expect(actual.elements[i]).toBeCloseTo(value, 6));
-      expect((head().material as MeshLambertNodeMaterial).userData.batchFeatures).toBe('corpse-headwear');
-    };
-    checkHead(2, transforms[1]);
-    pool.updateDetail({ x: 5, z: 0 }); checkHead(3, transforms[1]); expect(pool.snapshot().instances).toBe(2);
-    const thrown = records.get(2)!; thrown.corpseThrown = true; thrown.transform.x = 6;
-    pool.begin(id => records.get(id)); transforms[1].setPosition(6, 0, 0); checkHead(3, transforms[1]);
-    records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(1); expect(heads()).toHaveLength(1);
-    records.get(2)!.hidden = true; pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0); expect(heads()).toHaveLength(0);
-  } finally { pool.dispose(); base.dispose(); piece.dispose(); wrappers.forEach(g => g.dispose()); materials.dispose(); lighting.dispose(); }
+    aim(0); expect(page.count).toBe(1); expect(pool.snapshot().instances).toBe(2); expect(pool.revision).toBe(revision);
+    expect(pool.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([1]);
+    expect(page.geometry.getAttribute('_variant').getX(0) % 2).toBeCloseTo(new Color('#e03020').r);
+    aim(9.5); expect(page.count).toBe(1); expect(pool.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([2]);
+    expect(page.geometry.getAttribute('_variant').getX(0) % 2).toBeCloseTo(new Color('#3070b0').r);
+    expect(pool.drawn().sort((a, b) => a.id - b.id)).toEqual(initial); expect(page.geometry).toBe(geometry);
+    records.delete(2); aim(9.5); expect(page.count).toBe(0); expect(pool.has(1)).toBe(true); expect(pool.snapshot().instances).toBe(1);
+    add(3, 10, '#70b030'); aim(9.5); expect(page.count).toBe(1); expect(pool.snapshot().instances).toBe(2); expect(pool.has(1)).toBe(true);
+    aim(0); expect(pool.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([1]); expect(pool.drawn().find(f => f.id === 1)!.x).toBe(0);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });

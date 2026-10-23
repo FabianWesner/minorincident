@@ -45,3 +45,9 @@ The first full remote suite ended with 2,477 passes and six stale assertions: th
 Packing, the always-one live-mask removal, and index cache ordering alone did not close the p95 gap (WebGL2 3.7–3.8 ms). Packing/index-order experiments were removed. The pool is now being consolidated: regular bodies sharing a model use common pages, while selected headwear keeps its precise frozen head pose and model fit in separate shared pages. Body IDs, bodies and accessories are retained. New lifecycle/world-transform tests and fresh timing remain pending; this is not accepted performance evidence yet.
 
 The shared-body regression test failed first (two body pages for two hats), then passed with one body page and two headwear pages. It checks exact fitted head matrices through LOD changes and throws, one probe per body, and removal without orphaned hats. Typecheck, lint and 36 focused tests pass. Fresh GPU timing is running.
+
+## Current performance direction
+
+Shared headwear pages and palette lookup experiments were removed: they did not close WebGL2's 0.5 ms gap and added complexity. The original fitted, combined corpse surfaces are retained. L7 haze graphs are now built only for L7; other levels retain their original radial fog graph.
+
+Frozen pages now retain all logical instances while submitting only complete posed bounds that intersect the camera frustum. The camera-return regression failed red before culling (two instances submitted instead of one), and checks retained IDs, exact pose/tint, membership revision, removal, and insertion into an entirely offscreen page. No simulated or retained body count changes. Fresh timing and final validation remain pending.
