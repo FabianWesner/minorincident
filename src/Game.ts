@@ -1,4 +1,7 @@
 import { LevelEightBot } from './debug/bot/LevelEightBot';
+import type { LevelSevenBot } from './debug/bot/LevelSevenBot';
+import type { LevelNineBot } from './debug/bot/LevelNineBot';
+import type { LevelTenBot } from './debug/bot/LevelTenBot';
 import { markerAnchor, searchAnchors } from './sim/missions/markerAnchor';
 import { LevelSixBot } from './debug/bot/LevelSixBot';
 import type { Inspection } from './debug/Inspection';
@@ -69,7 +72,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelEightBot | LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
+  driver: LevelTenBot | LevelNineBot | LevelEightBot | LevelSevenBot | LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   simTicks = 0;

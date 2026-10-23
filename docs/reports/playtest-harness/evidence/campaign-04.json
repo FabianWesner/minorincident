@@ -1,0 +1,806 @@
+{
+  "status": "Completed real-input campaign; not the final requested-settings proof because L9 reached zoom 2. Superseded by campaign-05.",
+  "runtimeCommit": "8a502bda5",
+  "artifacts": "test-results/playtest/harness-campaign-04",
+  "requestedSettings": {
+    "backend": "webgpu",
+    "quality": "low",
+    "zoom": 1.5
+  },
+  "zoomObservations": [
+    {
+      "t": "2026-10-23T16:32:46.626Z",
+      "zoom": 1.4941657539639637
+    },
+    {
+      "t": "2026-10-23T16:35:07.985Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:36:53.329Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:39:56.636Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:44:25.289Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:47:30.998Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:52:15.173Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:54:02.461Z",
+      "zoom": 1.5
+    },
+    {
+      "t": "2026-10-23T16:55:19.258Z",
+      "zoom": 1.996293079124768
+    },
+    {
+      "t": "2026-10-23T16:58:01.505Z",
+      "zoom": 1.5
+    }
+  ],
+  "summary": {
+    "mode": "campaign",
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "issues": 7,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 7,
+      "P3": 0
+    }
+  },
+  "runs": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 141,
+      "simSeconds": 139,
+      "maxNoProgressSeconds": 13.8,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ]
+    },
+    {
+      "level": "L2",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 105,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.387,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 18
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ]
+    },
+    {
+      "level": "L3",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 182,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 13.5,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 63
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ]
+    },
+    {
+      "level": "L4",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 267,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 16.509,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 159
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L5",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 186,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 68.291,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 47
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L6",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 285,
+      "simSeconds": 277,
+      "maxNoProgressSeconds": 25.505,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 109
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L7",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 97,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 7.65,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 19
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ]
+    },
+    {
+      "level": "L8",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 83,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 8.3,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ]
+    },
+    {
+      "level": "L9",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 163,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 18.55,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    },
+    {
+      "level": "L10",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 1144,
+      "simSeconds": 1142,
+      "maxNoProgressSeconds": 148.128,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.pistol": 12,
+        "weapon.army-mg": 50,
+        "weapon.rocket-launcher": 51
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ]
+    }
+  ],
+  "completedSteps": [
+    {
+      "level": "L1",
+      "tick": 8314,
+      "steps": [
+        {
+          "id": "pickup",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "deliver",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "weapon",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "firestation",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "tick": 6152,
+      "steps": [
+        {
+          "id": "axe",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "calm",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "board",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "doors",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bridge",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "tick": 10810,
+      "steps": [
+        {
+          "id": "armory",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "defend",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "checkpoint",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "tick": 15702,
+      "steps": [
+        {
+          "id": "ride",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "quartermaster",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hide",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "bar",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "wait",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "tick": 11039,
+      "steps": [
+        {
+          "id": "emerge",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "look",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "metro",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "tick": 16629,
+      "steps": [
+        {
+          "id": "shelter",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "stop",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "retreat",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "exit",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "tick": 5710,
+      "steps": [
+        {
+          "id": "rocket",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "departure",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "tick": 4104,
+      "steps": [
+        {
+          "id": "escape",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "depart",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "tick": 9465,
+      "steps": [
+        {
+          "id": "approach",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "reach-outskirts",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "tick": 68498,
+      "steps": [
+        {
+          "id": "crash",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "residential-fringe",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "industrial-area",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "military-zone",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research-campus",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "cure",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "research-exit",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "destroyed-corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "dispersal-complex",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "install",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "hold",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "mega",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "release",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "epilogue",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "credits",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "bossHealthObservations": [
+    {
+      "time": "2026-10-23T17:13:50.033Z",
+      "tick": 56835,
+      "hp": 3000,
+      "maxHp": 3000,
+      "distance": 11.67068008332936,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:13:51.080Z",
+      "tick": 56897,
+      "hp": 2700,
+      "maxHp": 3000,
+      "distance": 12.904416774703588,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:13:52.148Z",
+      "tick": 56962,
+      "hp": 2400,
+      "maxHp": 3000,
+      "distance": 12.024085594195295,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:13:53.170Z",
+      "tick": 57023,
+      "hp": 2100,
+      "maxHp": 3000,
+      "distance": 12.460191471148958,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:13:56.026Z",
+      "tick": 57194,
+      "hp": 1800,
+      "maxHp": 3000,
+      "distance": 11.494258730906076,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:13:57.114Z",
+      "tick": 57260,
+      "hp": 1500,
+      "maxHp": 3000,
+      "distance": 11.89973882367751,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:14:03.648Z",
+      "tick": 57652,
+      "hp": 1425,
+      "maxHp": 3000,
+      "distance": 11.39913422936119,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:14:05.729Z",
+      "tick": 57777,
+      "hp": 1125,
+      "maxHp": 3000,
+      "distance": 9.052927069778576,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:14:06.798Z",
+      "tick": 57841,
+      "hp": 825,
+      "maxHp": 3000,
+      "distance": 2.4691123594175464,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:14:07.880Z",
+      "tick": 57906,
+      "hp": 525,
+      "maxHp": 3000,
+      "distance": 3.3317591296126268,
+      "weapon": "weapon.rocket-launcher"
+    },
+    {
+      "time": "2026-10-23T17:14:09.987Z",
+      "tick": 58032,
+      "hp": 225,
+      "maxHp": 3000,
+      "distance": 9.134302544425399,
+      "weapon": "weapon.rocket-launcher"
+    }
+  ],
+  "finalState": {
+    "backend": "webgpu",
+    "quality": "low",
+    "completedLevels": 10,
+    "crossingHandoverApplied": true,
+    "missionPhase": "progression",
+    "states": {
+      "charge-active": true,
+      "console-held": true,
+      "terminal-read": true,
+      "cure-carried": false,
+      "cure-installed": true,
+      "charge-ready": true,
+      "mega-dead": true,
+      "cure-released": true,
+      "epilogue-finished": true,
+      "credits-finished": true,
+      "anchor-unavailable": false
+    },
+    "epilogue": {
+      "phase": "done",
+      "phaseTicks": 0,
+      "survivors": [
+        465,
+        466,
+        467
+      ],
+      "approaching": [
+        462,
+        463,
+        464
+      ],
+      "groupsAuthored": true
+    }
+  },
+  "sha256": {
+    "log-campaign.jsonl": "2bdcb841221a8479ed86761e15647e3d22cb06ec2abd63c082ad4e2677096161",
+    "campaign-completion.json": "519024d63b04bb0d03f6a730c3b081ff030d4b7eb11bb197e05810d9a0e19577",
+    "summary.json": "ac8f5651b681da3fbcf5d2baef40f594b70ff762f274347613eebd274f373e73"
+  }
+}
