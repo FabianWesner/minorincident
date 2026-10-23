@@ -23,3 +23,11 @@ export async function clickGroundInput(controls: GroundClickControls, x: number,
   await new Promise(resolve => setTimeout(resolve, 40));
   await controls.mouse.up();
 }
+
+/** Space must already be held when the ground command arrives: pressing it afterwards cancels click navigation. */
+export async function dodgeFireInput(controls: Omit<GroundClickControls, 'releaseKeys'> & { holdFire: () => Promise<void> }, goal: { x: number; y: number }, aim: { x: number; y: number }): Promise<void> {
+  await controls.releaseAim(); await controls.holdFire();
+  await controls.mouse.move(goal.x, goal.y); await controls.mouse.down();
+  await new Promise(resolve => setTimeout(resolve, 40)); await controls.mouse.up();
+  await controls.mouse.move(aim.x, aim.y);
+}

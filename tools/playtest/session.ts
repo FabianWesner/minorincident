@@ -7,7 +7,7 @@ import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, shouldRe
 import { campaignCombatWeapon, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
-import { clickGroundInput, markerWalkKeys } from './input';
+import { clickGroundInput, dodgeFireInput, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
 import type { Game } from '../../src/Game';
 
@@ -171,9 +171,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     await page.evaluate(() => {
-      const observation = window as unknown as { __playtestAttacks: Record<string, number> };
+      const observation = window as unknown as { __playtestAttacks: Record<string, number>; __playtestCompleted?: unknown[] };
       observation.__playtestAttacks = {};
+      observation.__playtestCompleted ??= [];
       const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+      const mission = world.missions!;
+      world.events.on('level.completed', event => {
+        if (event.type !== 'level.completed') return;
+        observation.__playtestCompleted!.push({ level: event.id, tick: world.tick, result: structuredClone(event.result), steps: mission.def.steps.map(s => ({ id: s.id, optional: !!s.optional, status: mission.state.steps[s.id].status })) });
+      });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
     });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
@@ -254,12 +260,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (dodge && e.player) {
         const points = await page.evaluate(({ p, goal, enemy }) => {
           const a = window.__SS__!;
-          return [a.input.project(p, 'player'), a.input.project(goal, 'player'), a.input.project(enemy, 'destination')];
+          return [a.input.project(p, 'player'), a.input.project(goal, 'destination'), a.input.project(enemy, 'destination')];
         }, { p: e.player, goal: dodge, enemy: { x: threat.x, z: threat.z } });
-        await releaseAim(); await page.mouse.move(points[2].x, points[2].y);
-        const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
-        await press([...keys, 'Space']);
-        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, keys, enemy: threat.id }); }
+        if (now - lastClick > 900 || !keysDown.has('Space')) {
+          await dodgeFireInput({ releaseAim, holdFire: () => press(['Space']), mouse: page.mouse }, safe(points[1].x, points[1].y, e), points[2]);
+          lastClick = now;
+        } else { await press(['Space']); await page.mouse.move(points[2].x, points[2].y); }
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, ground: points[1], enemy: threat.id }); }
         return true;
       }
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
@@ -267,7 +274,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (keysDown.has('Space')) await press([]);
       if (aimHeld !== threat.id) {
         await releaseAim();
-        await page.mouse.move(threat.screen.x, threat.screen.y - 18); await page.mouse.down(); aimHeld = threat.id;
+        await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id;
       }
       return true;
     }
@@ -374,14 +381,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
 
   // --- main loop ---
-  let lastLevel: string | null = null, levelIndex = 0, lastPhase = '', idleScreens = 0, bootWall = Date.now();
+  let lastLevel: string | null = null, levelIndex = 0, lastPhase = '', idleScreens = 0, bootWall = Date.now(), lastSeenWall = Date.now();
   for (;;) {
     if (pageCrashed) throw new Error(`Playtest browser renderer crashed during ${run?.level ?? 'startup'}; session cannot continue`);
     if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}; session cannot continue`);
     let e: Eyes;
-    try { e = await see(); } catch (error) {
+    try { e = await see(); lastSeenWall = Date.now(); } catch (error) {
       if (pageClosed || page.isClosed()) throw new Error(`Playtest browser page closed unexpectedly during ${run?.level ?? 'startup'}: ${String(error)}`);
       if (pageCrashed || String(error).includes('Playtest observation timed out')) throw error;
+      if (Date.now() - lastSeenWall > 15_000) throw new Error(`Playtest could not observe ${run?.level ?? 'startup'} for 15 s: ${String(error)}`);
       log({ seeError: String(error) }); await hold(500); if (Date.now() - bootWall > 600_000 && !run) break; continue;
     }
     if (run && shouldResumePause(e.menu,e.loading)) {
@@ -391,7 +399,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await hold(150); continue;
     }
     // Hitches: long frames during play only.
-    const frames = await page.evaluate(n => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames.slice(n), frameCursor);
+    const frames = await observeWithin(page.evaluate(n => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames.slice(n), frameCursor));
     frameCursor += frames.length;
     for (const frame of frames) {
       log({ frame });
@@ -514,8 +522,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }
     if (Date.now() > levelDeadline() || stuckSim > 420) {
-      await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
+      const mandatory = e.level === 'L9' || isMandatoryBossObjective(e.level, e.step ?? null);
+      await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip || mandatory?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
       if(o.noSkip) { log({ abortedNoSkip:true, level:e.level, tick:e.tick, step:e.step }); break; }
+      if (e.level === 'L9') {
+        await issue('P0', 'mandatory-crossing-stalled', 'The crossing must finish its real crash and crawl before handover; stopping instead of skipping the sequence');
+        break;
+      }
       // The L10 Mega is a mandatory kill. Completing its objective in debug mode
       // leaves the living boss active, so it kills the courier during the cure
       // step and the mission returns to mega forever. Fail this run explicitly.
@@ -559,7 +572,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
-    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.enemies[0]?.d);
+    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.enemies[0]?.d, e.enemies.some(b => b.max >= 1000));
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();
@@ -697,6 +710,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   }
   const longFrames = await page.evaluate(() => (window as unknown as { __playtestFrames: LongFrame[] }).__playtestFrames);
   writeFileSync(join(o.out, `${o.tag}-frames.json`), JSON.stringify(longFrames, null, 2));
+  writeFileSync(join(o.out, `${o.tag}-completion.json`), JSON.stringify(await page.evaluate(() => ({
+    levels: (window as unknown as { __playtestCompleted?: unknown[] }).__playtestCompleted ?? [],
+    campaign: window.__SS__!.campaign.state(), mission: window.__SS__!.missions.state(),
+    backend: window.__SS__!.getState().render.backend, camera: window.__SS__!.getState().render.camera,
+  })), null, 2));
   if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');
   return { runs, issues };
