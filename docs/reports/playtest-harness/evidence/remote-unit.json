@@ -1,11 +1,11 @@
 {
-  "runtimeCommit": "8a502bda5",
-  "command": "E2E_PORT=4371 SCENE_PORT=4372 sh tools/remote/run.sh \"$PWD\" --pull test-results/playtest/remote-unit-8a502bda5.json --env E2E_PORT=4371 --env SCENE_PORT=4372 -- timeout 1800 npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/playtest/remote-unit-8a502bda5.json",
-  "rawReport": "test-results/playtest/remote-unit-8a502bda5.json",
-  "sha256": "58fd956dcd1ffe9ea523d40d8a91dcbcc43dd736e03ee0e7e67006c307d68b62",
+  "runtimeCommit": "ebb11dd8b",
+  "command": "E2E_PORT=4371 SCENE_PORT=4372 sh tools/remote/run.sh \"$PWD\" --pull test-results/playtest/remote-unit-zoom.json --env E2E_PORT=4371 --env SCENE_PORT=4372 -- timeout 1800 npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/playtest/remote-unit-zoom.json",
+  "rawReport": "test-results/playtest/remote-unit-zoom.json",
+  "sha256": "eda0cfbc4829d645fa6103a8ef31b299e2d4961e8940f6626b8762e142acc096",
   "success": true,
   "tests": {
-    "numPassedTests": 2047,
+    "numPassedTests": 2048,
     "numFailedTests": 0,
     "numPendingTests": 7
   },
@@ -230,6 +230,10 @@
         },
         {
           "title": "the input driver never debug-skips the mandatory L10 Mega objective",
+          "status": "passed"
+        },
+        {
+          "title": "a handover already at zoom 1.5 must not scroll toward the launcher zoom limit",
           "status": "passed"
         },
         {
