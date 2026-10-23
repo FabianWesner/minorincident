@@ -126,6 +126,13 @@ export const toolchainCredits: readonly Credit[] = [
         "licenseUrl": "https://spdx.org/licenses/MIT.html"
     },
     {
+        "title": "@types/ws 8.18.2",
+        "author": "@types/ws",
+        "url": "https://www.npmjs.com/package/@types/ws",
+        "license": "MIT",
+        "licenseUrl": "https://spdx.org/licenses/MIT.html"
+    },
+    {
         "title": "eslint 10.12.0",
         "author": "eslint",
         "url": "https://www.npmjs.com/package/eslint",
@@ -192,6 +199,13 @@ export const toolchainCredits: readonly Credit[] = [
         "title": "vitest 5.0.3",
         "author": "vitest",
         "url": "https://www.npmjs.com/package/vitest",
+        "license": "MIT",
+        "licenseUrl": "https://spdx.org/licenses/MIT.html"
+    },
+    {
+        "title": "ws 8.22.0",
+        "author": "ws",
+        "url": "https://www.npmjs.com/package/ws",
         "license": "MIT",
         "licenseUrl": "https://spdx.org/licenses/MIT.html"
     },

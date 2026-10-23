@@ -9,9 +9,9 @@ import { delay, gpuAdmission, quietConditions, reserveLegacySlots, windowServerS
 type Backend = 'gpu' | 'swiftshader';
 type Wire = { id?: number; guid?: string; method?: string; params?: Record<string, unknown>; result?: { context?: { guid: string } }; error?: unknown };
 type Lease = { id: string; backend: Backend; connection: Connection; context?: string; last: number; calls: number; closing: boolean; exclusive?: string };
-type Exclusive = { id: string; last: number; granted: boolean };
+type Exclusive = { id: string; last: number; granted: boolean; external?: boolean };
 type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: string };
-type Connection = { client: WebSocket; upstream: WebSocket; backend: Backend; token?: string; parents: Map<string, string>; types: Map<string, string>; pending: Map<number, { lease?: Lease; create?: Lease }>; leases: Set<Lease>; closed: boolean };
+type Connection = { client: WebSocket; upstream: WebSocket; backend: Backend; token?: string; parents: Map<string, string>; types: Map<string, string>; pending: Map<number, { lease?: Lease; create?: Lease }>; leases: Set<Lease>; closed: boolean; job?: string };
 const port = Number(process.env.BROWSER_POOL_PORT ?? 4329);
 if (!Number.isInteger(port) || port < 4321 || port > 4329) throw new Error('Pool port must be 4321–4329');
 const configuredLimit = Number(process.env.BROWSER_POOL_SHARED_LIMIT ?? 2);
@@ -71,14 +71,14 @@ function pump() {
     waiters.splice(i, 1);
     const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
     leases.set(lease.id, lease); c.leases.add(lease); c.pending.set(waiter.message.id!, { create: lease, lease });
-    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, active: leases.size });
+    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, job: c.job, active: leases.size });
     c.upstream.send(waiter.raw);
   }
 }
-async function closeBrowsers(reason: string) {
+async function closeBrowsers(reason: string, keepSlots = false) {
   for (const c of connections) { c.client.close(1012, reason); c.upstream.close(); }
   await Promise.allSettled([...browsers.values()].map(b => b.server.close())); browsers.clear();
-  if (releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); }
+  if (!keepSlots && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); }
   event('browsers-released', { reason });
 }
 async function browserFor(backend: Backend, options: { args?: string[]; channel?: string }, token?: string) {
@@ -108,11 +108,12 @@ async function browserFor(backend: Backend, options: { args?: string[]; channel?
   event('browser-start', { backend, pid: server.process().pid, channel: channel ?? 'headless-shell' });
   return server;
 }
-function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?: string) {
-  const c: Connection = { client, upstream, backend, token, parents: new Map(), types: new Map(), pending: new Map(), leases: new Set(), closed: false };
+function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?: string, job?: string) {
+  const c: Connection = { client, upstream, backend, token, parents: new Map(), types: new Map(), pending: new Map(), leases: new Set(), closed: false, job };
   connections.add(c);
   upstream.on('message', (raw: RawData) => {
-    const text = raw.toString(), m = JSON.parse(text) as Wire;
+    const text = raw.toString();
+    let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
     if (m.method === '__create__') { c.parents.set(String(m.params?.guid), m.guid ?? ''); c.types.set(String(m.params?.guid), String(m.params?.type)); }
     if (m.id !== undefined) {
       if (m.id < 0) return;
@@ -131,7 +132,8 @@ function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?:
     if (client.readyState === WebSocket.OPEN) client.send(text);
   });
   client.on('message', (raw: RawData) => {
-    const text = raw.toString(), m = JSON.parse(text) as Wire;
+    const text = raw.toString();
+    let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
     if (m.method === 'newContext' && c.types.get(m.guid ?? '') === 'Browser') {
       if (token && !exclusives.some(e => e.id === token)) return wireError(c, m.id, 'Exclusive lease expired');
       waiters.push({ connection: c, message: m, raw: text, exclusive: token }); pump(); return;
@@ -158,7 +160,7 @@ function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?:
   upstream.on('close', () => { disconnected(); for (const lease of [...c.leases]) release(lease, 'upstream-disconnected'); });
   upstream.on('error', disconnected);
 }
-const http = createServer(async (req, res) => {
+const http = createServer((req, res) => { void (async () => {
   const url = new URL(req.url ?? '/', 'http://127.0.0.1');
   const json = (status: number, body: unknown) => { res.writeHead(status, { 'content-type': 'application/json' }); res.end(JSON.stringify(body)); };
   if (url.pathname === '/health' || url.pathname === '/status') return json(200, {
@@ -171,40 +173,59 @@ const http = createServer(async (req, res) => {
   if (url.pathname === '/exclusive' && req.method === 'POST') {
     const e = { id: randomUUID(), last: Date.now(), granted: false }; exclusives.push(e); pump(); return json(200, e);
   }
-  const exclusivePath = /^\/exclusive\/([^/]+)(\/release)?$/.exec(url.pathname);
+  const exclusivePath = /^\/exclusive\/([^/]+)(\/(?:release|external))?$/.exec(url.pathname);
   if (exclusivePath) {
     const i = exclusives.findIndex(e => e.id === exclusivePath[1]);
     if (i < 0) return json(404, { error: 'Exclusive lease expired' });
     const e = exclusives[i]; e.last = Date.now();
-    if (exclusivePath[2] && req.method === 'POST') {
+    if (exclusivePath[2] === '/external' && req.method === 'POST') {
+      if (!e.granted || leases.size) return json(409, { error: 'Exclusive reservation has not drained yet' });
+      e.external = true;
+      await closeBrowsers('external-exclusive', true);
+      if (!releaseSlots) releaseSlots = await reserveLegacySlots();
+      if (!exclusives.includes(e)) { const release = releaseSlots; releaseSlots = undefined; await release(); return json(409, { error: 'Reservation expired' }); }
+      return json(200, { prepared: true });
+    }
+    if (exclusivePath[2] === '/release' && req.method === 'POST') {
       for (const lease of leases.values()) if (lease.exclusive === e.id) closeLease(lease, 'Exclusive step finished');
       // Prevent the next shared client from reusing uncapped/native timing flags.
-      if (e.granted && leases.size === 0 && [...browsers.values()].some(b => b.signature !== JSON.stringify({ extra: [], channel: undefined }))) await closeBrowsers('exclusive-finished');
+      if (e.granted && leases.size === 0 && (e.external || [...browsers.values()].some(b => b.signature !== JSON.stringify({ extra: [], channel: undefined })))) await closeBrowsers('exclusive-finished');
       exclusives.splice(i, 1); pump(); return json(200, { released: true });
     }
     if (url.searchParams.has('quiet')) return json(200, { ...e, conditions: await quietConditions(new Set([...browsers.values()].map(b => b.server.process().pid!))) });
     return json(200, e);
   }
   json(404, { error: 'Not found' });
-});
+})().catch(error => {
+  event('http-error', { error: String(error) });
+  if (!res.headersSent) res.writeHead(503, { 'content-type': 'application/json' });
+  res.end(JSON.stringify({ error: 'Pool operation failed; inspect daemon log' }));
+}); });
 const ws = new WebSocketServer({ noServer: true });
 http.on('upgrade', (req, socket, head) => {
   const url = new URL(req.url ?? '/', 'http://127.0.0.1');
   const backend = url.pathname.slice('/ws/'.length) as Backend;
   if (!url.pathname.startsWith('/ws/') || !['gpu', 'swiftshader'].includes(backend) || stopping) { socket.destroy(); return; }
   const token = url.searchParams.get('exclusive') ?? undefined;
-  if (token && !exclusives.some(e => e.id === token && e.granted)) { socket.destroy(); return; }
+  if (token && !exclusives.some(e => e.id === token && e.granted && !e.external)) { socket.destroy(); return; }
   let options: { args?: string[]; channel?: string } = {};
   try { options = JSON.parse(String(req.headers['x-playwright-launch-options'] ?? req.headers['x-mi-launch-options'] ?? '{}')); } catch { socket.destroy(); return; }
   if (!token && options.args?.some(a => a === '--disable-frame-rate-limit' || a === '--disable-gpu-vsync')) { socket.destroy(); return; }
-  // Serial launch/reconfiguration prevents two roots of the same backend.
-  launchChain = launchChain.then(async () => {
-    const browser = await browserFor(backend, options, token);
-    if (socket.destroyed) return;
-    const upstream = new WebSocket(browser.wsEndpoint());
-    await new Promise<void>((resolve, reject) => { upstream.once('open', resolve); upstream.once('error', reject); });
-    ws.handleUpgrade(req, socket, head, client => proxy(client, upstream, backend, token));
-  }).catch(async error => { event('connection-error', { error: String(error) }); socket.destroy(); if (!browsers.size && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); } });
+  // Wait outside launchChain: a queued shared handshake must not block the
+  // exclusive client that owns admission and needs a differently configured Chrome.
+  const connect = () => {
+    if (socket.destroyed || stopping) return;
+    if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
+    launchChain = launchChain.then(async () => {
+      if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
+      const browser = await browserFor(backend, options, token);
+      if (socket.destroyed) return;
+      const upstream = new WebSocket(browser.wsEndpoint());
+      await new Promise<void>((resolve, reject) => { upstream.once('open', resolve); upstream.once('error', reject); });
+      ws.handleUpgrade(req, socket, head, client => proxy(client, upstream, backend, token, String(req.headers['x-mi-job'] ?? '')));
+    }).catch(async error => { event('connection-error', { error: String(error) }); socket.destroy(); if (!browsers.size && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); } });
+  };
+  socket.on('error', () => socket.destroy()); connect();
 });
 let previousWindow: Awaited<ReturnType<typeof windowServerSnapshot>>, previousAt = Date.now(), coolSamples = 0;
 let sampling = false;
@@ -222,6 +243,7 @@ const timer = setInterval(() => {
       windowServerCpu = (next.seconds - previousWindow.seconds) * 100_000 / (now - previousAt);
       if (windowServerCpu > 60) { limit = Math.max(1, limit - 1); coolSamples = 0; }
       else if (windowServerCpu < 30 && ++coolSamples >= 3) { limit = Math.min(configuredLimit, limit + 1); coolSamples = 0; }
+      else if (windowServerCpu >= 30) coolSamples = 0;
       event('host-sample', { windowServerCpu, limit });
     } else if (process.platform === 'darwin' && (!next || previousWindow)) { limit = 1; coolSamples = 0; windowServerCpu = null; }
     previousWindow = next; previousAt = now; pump();

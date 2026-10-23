@@ -28,7 +28,14 @@ export async function reserveLegacySlots(): Promise<() => Promise<void>> {
 
 export async function gpuAdmission(): Promise<void> {
   if (process.platform !== 'darwin') return;
-  await exec('python3', ['tools/mac-gpu-guard.py', '1'], { env: { ...process.env, MI_GPU_BROWSER_LIMIT: '1' } });
+  const deadline = Date.now() + Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000);
+  while (true) {
+    try { await exec('python3', ['tools/mac-gpu-guard.py', '1'], { env: { ...process.env, MI_GPU_BROWSER_LIMIT: '1' } }); return; }
+    catch (error) {
+      if ((error as { code?: number }).code !== 75 || Date.now() >= deadline) throw error;
+      await delay(1000);
+    }
+  }
 }
 
 export async function quietConditions(owned: Set<number>) {

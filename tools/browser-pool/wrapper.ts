@@ -5,6 +5,7 @@ import { delay } from './host';
 
 const exclusive = process.argv[2] === 'exclusive';
 const command = process.argv.slice(3);
+const migrated = command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || /tools\/(?:playtest|scenelab)\//.test(arg) || arg === 'tools/qa/ab.ts' || arg.endsWith('.ts') && (() => { try { return /(?:SceneSession|launchBrowser)/.test(readFileSync(arg, 'utf8')); } catch { return false; } })());
 if (!command.length) throw new Error('Pool wrapper needs a command');
 const admissionMs = Number(process.env.E2E_ADMISSION_TIMEOUT_SECONDS ?? 1800) * 1000;
 const deadline = Date.now() + admissionMs;
@@ -43,11 +44,18 @@ try {
     if (cancelled) throw new Error('Exclusive admission cancelled');
     process.env.MI_BROWSER_POOL_EXCLUSIVE = token;
     process.env.MI_PERF_LOCK_HELD = '1';
+    if (!migrated) {
+      await request(`/exclusive/${token}/external`, 'POST');
+      process.env.BROWSER_POOL = 'off';
+      process.env.MI_E2E_LOCK_HELD = '1';
+    }
   }
-  process.env.MI_BROWSER_POOL = '1';
-  const endpoint = await poolEndpoint();
-  if (!endpoint) throw new Error('Pool disappeared after wrapper admission');
-  process.env.MI_BROWSER_POOL_WS = endpoint;
+  if (migrated || !exclusive) {
+    process.env.MI_BROWSER_POOL = '1';
+    const endpoint = await poolEndpoint();
+    if (!endpoint) throw new Error('Pool disappeared after wrapper admission');
+    process.env.MI_BROWSER_POOL_WS = endpoint;
+  }
   let heartbeat: ReturnType<typeof setInterval> | undefined;
   if (token) heartbeat = setInterval(() => { void request(`/exclusive/${token}`).catch(() => child?.kill('SIGTERM')); }, 5000);
   started = true;

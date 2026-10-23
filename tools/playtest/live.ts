@@ -94,10 +94,12 @@ const act = async (a: Act) => {
   if (a.wait) await hold(Math.min(4000, a.wait));
 };
 let busy = Promise.resolve();
+let lastInput = Date.now();
+const idleMs = Number(process.env.BROWSER_POOL_IDLE_MS ?? 60_000);
 let fights = 0, fighting = false;
 const ranged = /pistol|handgun|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher|mg/;
 const fightTick = async () => {
-  if (!autofight || fighting) return;
+  if (!autofight || fighting || Date.now() - lastInput >= idleMs) return;
   fighting = true;
   try {
     const e = await page.evaluate(look);
@@ -118,6 +120,7 @@ createServer((req, res) => {
   req.on('data', c => { data += c; });
   req.on('end', () => { busy = busy.then(async () => {
     try {
+      if (req.url === '/act' || req.url === '/shot') lastInput = Date.now();
       if (req.url === '/shot') { const path = resolve(`test-results/live/shot.jpg`); await page.screenshot({ path, type: 'jpeg', quality: 50, scale: 'css', clip: { x: 0, y: 0, width: 1280, height: 720 } }); res.end(path + '\n'); return; }
       if (req.url === '/act') { const a = JSON.parse(data || '{}') as Act; await clock(true); await act(a); if (!a.move && !a.hold && !a.wait) await hold(step ? 400 : 700); await clock(false); }
       res.end(await see() + '\n');
@@ -125,4 +128,5 @@ createServer((req, res) => {
   }); });
 }).listen(livePort, '127.0.0.1', () => console.log(`live control on http://127.0.0.1:${livePort} (game ${origin})`));
 const stop = async () => { await browser.close().catch(() => undefined); server?.kill(); process.exit(0); };
+if (process.env.MI_BROWSER_POOL === '1') setInterval(() => { if (Date.now() - lastInput >= idleMs) { console.log('Live session idle: releasing browser; restart live.ts to play again.'); void stop(); } }, 1000).unref();
 process.on('SIGINT', stop); process.on('SIGTERM', stop);
