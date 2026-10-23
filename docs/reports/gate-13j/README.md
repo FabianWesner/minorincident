@@ -1,6 +1,6 @@
-# batch13j gate repair (in progress)
+# batch13j gate repair (final validation in progress)
 
-Base: `218f12ae5`; implementation branch: `lane/gate-13j` (fast-forwarded from the batch at the orchestrator's request). No deploy. The orchestrator subsequently authorized merging `lane/load-stalls` at `78eac9251` after these repairs; the final gate will cover that combined tree.
+Base: `218f12ae5`; implementation branch: `lane/gate-13j` (fast-forwarded from the batch at the orchestrator's request). No deploy. The orchestrator subsequently authorized merging `lane/load-stalls` at `78eac9251`; merge `f58219178` retains both indexed crowd baking and Alpha prone death. The final gate covers that combined tree.
 
 ## Triage
 
@@ -9,7 +9,7 @@ The remote starting sweep reproduced 379 accessory offenders, 12 unsupported sit
 | Item | Classification and cause | Repair / evidence |
 | --- | --- | --- |
 | Objectives | Real, also in PROD: `!storyShot` suppresses the current waypoint for camera pull-backs. | Keep the waypoint during a camera shot. Actual mission activation and 120-tick marker probes pass. |
-| Seats | Real, also in PROD: L6 assigns `npc-sit` at floor positions without authored seats. | Add shelter benches and bind the sitting schedule to each bench's hip anchor and lift. Both quality tiers pass the complete 90-second L1–L10 seat sweep. |
+| Seats | Real, also in PROD: L6 assigns `npc-sit` at floor positions without authored seats. | Add shelter benches and bind the sitting schedule to each bench's hip anchor and lift. The full placement gate exposed one bench on the existing station stairs: move it and its standing approach onto the adjacent shelter floor, retaining every placement assertion and baseline entry. Both quality tiers pass the complete 90-second L1–L10 seat sweep. |
 | L1 exits | Real, also in PROD: the rear lab-staff row starts behind the seal and cannot advance through the inside face of the open doorway. | Give the emerging row a bounded open-door lane, including its short indoor approach; remove it when the walk ends. The census improves from 3/5 to 5/5 on both tiers. |
 | L6 entries | Real, also in PROD: the north entries use the south entries' negative-Z offset and wander into the void outside the tunnel. | Emit both sides inward onto the authored tunnel floor; retain native perception and movement. All six entry quotas reach the tunnel on both tiers. |
 | Accessories | Mixed: reworked sun/bucket hat dimensions and glasses-clearance expectations are stale; missing skull skin tags on five aftermath models are real. | Keep the 10% manifest tolerance, 2 mm numerical floor and existing brim limits. Measure the reworked GLBs and base spectacle geometry; recognize the author's fixed 8% soot tint and the shipped survivor group's quantized local skin colours when recovering skin ownership. The complete accessory matrix passes (candidate4-census.log); the separate hat-brim regression also passes. |
@@ -27,7 +27,7 @@ The remote starting sweep reproduced 379 accessory offenders, 12 unsupported sit
 
 The Mac invariant starts immediately before the real level-menu click, activates Begin immediately, and stops after two drawn gameplay RAFs in mission phase `playing`. Each candidate/PROD observation uses a fresh context, WebGPU and low quality. The limit is `PROD + min(1000 ms, PROD * 0.1)`: a regression delta, not an acceptable absolute loading-time budget. The tracked earlier L8 receipt was 24.662 s candidate versus 23.145 s PROD and failed that delta. The orchestrator confirms that the merge lane's “50 s” receipt is no longer available after worktree removal, and likely covered both paired loads. It is not evidence of one 50-second load. The fresh pre-merge pair is 23.363 s candidate / 23.594 s PROD, with a 24.594 s regression limit. Its whole L8 test takes 50.4 s (`evidence/load-L8-before-merge.json`); the 27 simulation and 11 Mac checks pass (`evidence/invariants-before-merge.json`).
 
-Read-only context from `lane/load-stalls` confirms a quiet L8 load around 24.49 s (17.71 s assembly, 6.18 s warm-up), and a separate unchanged 6.0 s worst-load acceptance budget. Its completed loading fixes will be merged at the orchestrator's request. Final combined-tree `qa:invariants` measurements will be recorded separately.
+Read-only context from `lane/load-stalls` confirms a quiet L8 load around 24.49 s (17.71 s assembly, 6.18 s warm-up), and a separate unchanged 6.0 s worst-load acceptance budget. Its completed loading fixes are merged at the orchestrator's request. Final combined-tree `qa:invariants` measurements will be recorded separately.
 
 ## Validation
 
