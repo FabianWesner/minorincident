@@ -7,7 +7,8 @@ import type { SimWorld } from '../sim/world/SimWorld';
  * Same style and colour as ObjectiveMarker; one shared torus and material, five meshes, no per-frame allocation.
  */
 export class SurvivorRings extends Group {
-  private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
+  // Search markers remain readable at doorways and wrecks even when the ground point sits just behind their silhouette.
+  private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly geometry = new TorusGeometry(.6, .05, 6, 32);
   private readonly rings = new Map<string, Mesh>();
   constructor(private readonly world: SimWorld) {

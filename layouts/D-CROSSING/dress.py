@@ -1059,6 +1059,11 @@ solids = [q['visualAabb'] for q in l.data['placements'] if not q['assetId'].star
 drop = []
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
+    # Keep the L9 departure shoulder clear for the APC's long swept hull. A shallow line correction at
+    # (-473.5, 6) used to thread the tree/pole cluster immediately east of the start lane.
+    if p['assetId'] in ('prop.tree', 'prop.utility-pole') and math.hypot(x + 473.5, z - 6.0) < 12.0:
+        drop.append(i)
+        continue
     if in_gore(x, z) and route_d((x, z)) > 0 and not p['assetId'].startswith(('kit.', 'bld.')):
         drop.append(i)
         continue
