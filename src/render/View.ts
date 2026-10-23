@@ -7,6 +7,8 @@ import { cameraFraming, rocketZoomLimit } from '../data/cameraFraming';
 // PO 2026-10-13 later: "let me generally zoom out a bit more (like +30%)" … "better +50%"
 /** Driver camera: 1.4x the view area of the passenger/driving frame (area scales with radius squared). */
 export const driveWideScale = 1.15 * Math.sqrt(1.4);
+/** The player steers a rideable herself: an active car (APC, truck) or the bicycle. Drives the driver camera widening. */
+export const playerSteers = (vehicles: { active: unknown; bicycle: { riding: boolean } } | null | undefined): boolean => vehicles?.active != null || vehicles?.bicycle.riding === true;
 export const zoomLimits = [.5, 1.5] as const;
 /** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
 export const feetOffset = .72;

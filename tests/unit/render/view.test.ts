@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { Box3, Plane, Ray, Vector3 } from 'three';
 import { cameraFraming } from '../../../src/data/cameraFraming';
-import { View, zoomLimits, driveWideScale } from '../../../src/render/View';
+import { View, zoomLimits, driveWideScale, playerSteers } from '../../../src/render/View';
 
 test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately', () => {
   const view = new View(); view.reset({ x: 0, z: 0 });
@@ -237,4 +237,18 @@ test('l9-verge-dressing: the driver camera widens 1.4x in view area, eased in an
   expect(at() / walk).toBeCloseTo(1, 2);
   view.driving = true; for (let i = 0; i < 120; i++) view.update({ x: 0, z: 0 }, 1 / 60);
   expect(at() / walk).toBeCloseTo(1.15, 2);
+});
+
+test('Q-134: the bike rider is a driver too: the camera widens exactly like in a car, eased', () => {
+  expect(playerSteers({ active: null, bicycle: { riding: true } })).toBe(true);
+  expect(playerSteers({ active: 3, bicycle: { riding: false } })).toBe(true);
+  expect(playerSteers({ active: null, bicycle: { riding: false } })).toBe(false);
+  expect(playerSteers(undefined)).toBe(false);
+  const view = new View(); view.reset({ x: 0, z: 0 }, true);
+  view.update({ x: 0, z: 0 }, 1 / 60); const walk = view.getState().radius;
+  view.driving = view.driverWide = playerSteers({ active: null, bicycle: { riding: true } });
+  view.update({ x: 0, z: 0 }, 1 / 60);
+  expect(view.getState().radius / walk).toBeLessThan(1.05); // eased, not snapped
+  for (let i = 0; i < 120; i++) view.update({ x: 0, z: 0 }, 1 / 60);
+  expect(view.getState().radius / walk).toBeCloseTo(driveWideScale, 2);
 });
