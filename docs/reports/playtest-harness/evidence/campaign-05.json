@@ -1,0 +1,260 @@
+{
+  "status": "Stopped without skipping at the L6 no-progress watchdog; not a completed proof. Superseded by the escort-clearance fix.",
+  "runtimeCommit": "ebb11dd8b",
+  "settings": [
+    {
+      "t": "2026-10-23T17:20:37.735Z",
+      "renderer": "webgpu"
+    },
+    {
+      "t": "2026-10-23T17:20:41.418Z",
+      "quality": "low",
+      "level": "L1",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T17:20:41.936Z",
+      "zoom": 1.4945060912203274,
+      "targetZoom": 1.5,
+      "level": "L1"
+    },
+    {
+      "t": "2026-10-23T17:23:02.295Z",
+      "quality": "low",
+      "level": "L2",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T17:23:02.300Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L2"
+    },
+    {
+      "t": "2026-10-23T17:24:43.112Z",
+      "quality": "low",
+      "level": "L3",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T17:24:43.122Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L3"
+    },
+    {
+      "t": "2026-10-23T17:27:36.731Z",
+      "quality": "low",
+      "level": "L4",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T17:27:36.734Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L4"
+    },
+    {
+      "t": "2026-10-23T17:31:59.106Z",
+      "quality": "low",
+      "level": "L5",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T17:31:59.115Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L5"
+    },
+    {
+      "t": "2026-10-23T17:35:56.856Z",
+      "quality": "low",
+      "level": "L6",
+      "tick": 10
+    },
+    {
+      "t": "2026-10-23T17:35:56.860Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L6"
+    }
+  ],
+  "runs": [
+    {
+      "level": "L1",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 141,
+      "deaths": 0
+    },
+    {
+      "level": "L2",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 101,
+      "deaths": 0
+    },
+    {
+      "level": "L3",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 172,
+      "deaths": 0
+    },
+    {
+      "level": "L4",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 261,
+      "deaths": 0
+    },
+    {
+      "level": "L5",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 238,
+      "deaths": 0
+    },
+    {
+      "level": "L6",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 0,
+      "deaths": 0
+    }
+  ],
+  "failure": {
+    "t": "2026-10-23T17:41:16.770Z",
+    "abortedNoSkip": true,
+    "level": "L6",
+    "tick": 19205,
+    "step": "retreat"
+  },
+  "lastObservation": {
+    "t": "2026-10-23T17:41:16.733Z",
+    "observation": {
+      "tick": 19205,
+      "step": "retreat",
+      "checkpoint": "gate-210",
+      "menu": null,
+      "text": "Cover the retreat through the tunnel \u00b7 0\u00a0m",
+      "player": {
+        "x": 241.93377685546875,
+        "z": 14.94930362701416,
+        "hp": 100,
+        "weapon": "weapon.army-mg"
+      },
+      "enemies": [],
+      "marker": {
+        "x": 242,
+        "y": 0.6,
+        "z": 15
+      },
+      "noProgressSeconds": 90.53333333333333
+    }
+  },
+  "diagnosticMission": {
+    "phase": "playing",
+    "stepStates": {
+      "shelter": {
+        "status": "completed",
+        "started": 0,
+        "kills": [],
+        "events": {
+          "interact.completed:*": 1,
+          "pickup.collected:*": 1
+        },
+        "interaction": 1992
+      },
+      "stop": {
+        "status": "completed",
+        "started": 1992,
+        "kills": [
+          175,
+          167,
+          179,
+          165
+        ],
+        "events": {
+          "combat.kill:*": 4
+        },
+        "interaction": 0
+      },
+      "retreat": {
+        "status": "active",
+        "started": 4153,
+        "kills": [
+          177,
+          173,
+          171,
+          169,
+          167,
+          181,
+          161,
+          165,
+          175,
+          179,
+          32,
+          188,
+          163,
+          192,
+          183,
+          196,
+          148,
+          147,
+          200,
+          1000000034,
+          204,
+          145,
+          207,
+          211,
+          209,
+          135,
+          140
+        ],
+        "events": {
+          "player.damaged:*": 2,
+          "combat.kill:*": 64,
+          "interact.completed:*": 4,
+          "civilian.saved:*": 6
+        },
+        "interaction": 4461
+      },
+      "exit": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "states": {
+      "breached": true,
+      "abandoned": true,
+      "platform": false,
+      "exited": false
+    },
+    "leaderX": 276,
+    "tailX": 276,
+    "following": [
+      {
+        "key": "shelter-5",
+        "id": 130,
+        "injured": true,
+        "routine": "share",
+        "status": "following",
+        "straggler": true,
+        "collected": false,
+        "rejoined": true,
+        "hold": 0
+      }
+    ]
+  },
+  "artifacts": "test-results/playtest/harness-campaign-05",
+  "sha256": {
+    "summary.json": "16257fb01d7c6c453965163caf062975c4be27c54a31a49465f31f886305b9aa",
+    "log-campaign.jsonl": "45f34cc52069f6ca6b56f7507402cd5c7a2348e69fb6fe0d23b6e747e9c6fd11",
+    "campaign-completion.json": "9ba7683d0cc7412db919e41abeed4700a17b0fa4547e03995d35762aec5783f7",
+    "captures/campaign-L6-19205-cannot-finish.jpg": "de7da3a762552bbb88fdcfee8eea4e421710fb52975107b1ca091e757685cf04"
+  }
+}
