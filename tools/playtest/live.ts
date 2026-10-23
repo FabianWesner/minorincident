@@ -26,6 +26,9 @@ const arg = (name: string, fallback: string) => { const i = process.argv.indexOf
 const heroine = arg('heroine', 'female'), quality = arg('quality', 'low');
 // --step: the game clock pauses between actions and runs only while an action plays (turn-based, input stays real).
 const step = process.argv.includes('--step');
+// --autofight: an aim assist that attacks the nearest drawn, on-screen infected by real input (mouse on its body + Space).
+// Melee reach 2.6 m, ranged weapons 14 m. The agent still chooses route, weapon, prompts and objectives.
+const autofight = process.argv.includes('--autofight');
 const port = Number(process.env.E2E_PORT ?? 4101), livePort = Number(process.env.LIVE_PORT ?? 4102);
 if (port === 3300 || livePort === 3300) throw new Error('never port 3300');
 if (!existsSync('dist/index.html')) throw new Error('npm run build first');
@@ -56,7 +59,7 @@ const compass = (dx: number, dz: number) => ['E', 'SE', 'S', 'SW', 'W', 'NW', 'N
 const describe = (e: Eyes) => {
   const p = e.player, lines: string[] = [];
   if (p) { if (p.hp <= 0 && lastHp > 0) deaths++; lastHp = p.hp; }
-  lines.push(`t=${Math.round((Date.now() - started) / 1000)}s tick ${e.tick} level ${e.level ?? '-'} phase ${e.phase ?? '-'} deaths ${deaths}${e.loading ? ' LOADING' : ''}${e.menu ? ` MENU:${e.menu}` : ''}`);
+  lines.push(`t=${Math.round((Date.now() - started) / 1000)}s tick ${e.tick} level ${e.level ?? '-'} phase ${e.phase ?? '-'} deaths ${deaths}${autofight ? ` autofight-attacks ${fights}` : ''}${e.loading ? ' LOADING' : ''}${e.menu ? ` MENU:${e.menu}` : ''}`);
   lines.push(`objective: ${e.objective || '-'}${e.tracker ? ` | tracker: ${e.tracker}` : ''}`);
   if (e.marker) {
     // The edge arrow only shows a direction; turn it into a ground point a player would click (player ≈ screen centre).
@@ -78,12 +81,12 @@ const describe = (e: Eyes) => {
 const see = async () => describe(await page.evaluate(look));
 const click = async (x: number, y: number) => { await page.mouse.move(x, y); await page.mouse.down(); await hold(40); await page.mouse.up(); };
 const buttons: Record<string, string> = { mission: 'mission-button', resume: 'resume-game', retry: 'retry-level', continue: 'continue-level' };
-const clock = (run: boolean) => step ? page.evaluate(r => { const c = (window.__SCENE__ as unknown as { game: { clock: { pause(): void; resume(): void } } } | undefined)?.game.clock; if (c) { if (r) c.resume(); else c.pause(); } }, run) : Promise.resolve();
+const clock = (run: boolean) => { running = run; return step ? page.evaluate(r => { const c = (window.__SCENE__ as unknown as { game: { clock: { pause(): void; resume(): void } } } | undefined)?.game.clock; if (c) { if (r) c.resume(); else c.pause(); } }, run) : Promise.resolve(); };
 type Act = { key?: string; click?: [number, number]; attack?: [number, number]; move?: string; hold?: string; ms?: number; wait?: number; button?: string };
 const act = async (a: Act) => {
   if (a.key) await page.keyboard.press(/^[a-z]$/i.test(a.key) ? `Key${a.key.toUpperCase()}` : /^\d$/.test(a.key) ? `Digit${a.key}` : a.key);
   if (a.button) await page.getByTestId(buttons[a.button] ?? a.button).click({ timeout: 3000 }).catch(() => undefined);
-  if (a.click) await click(a.click[0], a.click[1]);
+  if (a.click) { while (fighting) await hold(20); fighting = true; try { await click(a.click[0], a.click[1]); } finally { fighting = false; } }
   if (a.attack) { await page.mouse.move(a.attack[0], a.attack[1]); await page.keyboard.press('Space'); }
   const ms = Math.min(4000, Math.max(0, a.ms ?? 500));
   if (a.move) { const keys = [...a.move.toLowerCase()].filter(k => 'wasd'.includes(k)).map(k => `Key${k.toUpperCase()}`); for (const k of keys) await page.keyboard.down(k); await hold(ms); for (const k of keys) await page.keyboard.up(k); }
@@ -91,13 +94,32 @@ const act = async (a: Act) => {
   if (a.wait) await hold(Math.min(4000, a.wait));
 };
 let busy = Promise.resolve();
+let fights = 0, fighting = false;
+const ranged = /pistol|handgun|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher|mg/;
+const fightTick = async () => {
+  if (!autofight || fighting) return;
+  fighting = true;
+  try {
+    const e = await page.evaluate(look);
+    const p = e.player;
+    if (!p || p.hp <= 0 || e.loading || e.menu || e.driving) return;
+    const reach = ranged.test(p.current ?? '') ? 14 : 2.6;
+    const target = e.enemies.find(b => b.drawn && b.d <= reach);
+    if (!target) return;
+    await page.mouse.move(target.aim.x, target.aim.y);
+    await page.keyboard.press('Space');
+    fights++;
+  } catch { /* page busy or navigating */ } finally { fighting = false; }
+};
+if (autofight) setInterval(() => { if (!step || running) void fightTick(); }, 220);
+let running = false;
 createServer((req, res) => {
   let data = '';
   req.on('data', c => { data += c; });
   req.on('end', () => { busy = busy.then(async () => {
     try {
       if (req.url === '/shot') { const path = resolve(`test-results/live/shot.jpg`); await page.screenshot({ path, type: 'jpeg', quality: 50, scale: 'css', clip: { x: 0, y: 0, width: 1280, height: 720 } }); res.end(path + '\n'); return; }
-      if (req.url === '/act') { const a = JSON.parse(data || '{}') as Act; await clock(true); await act(a); if (step && !a.move && !a.hold && !a.wait) await hold(400); await clock(false); }
+      if (req.url === '/act') { const a = JSON.parse(data || '{}') as Act; await clock(true); await act(a); if (!a.move && !a.hold && !a.wait) await hold(step ? 400 : 700); await clock(false); }
       res.end(await see() + '\n');
     } catch (error) { res.statusCode = 500; res.end(String(error) + '\n'); }
   }); });
