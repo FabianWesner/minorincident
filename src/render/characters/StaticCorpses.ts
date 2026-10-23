@@ -161,7 +161,12 @@ export class StaticCorpses extends Group {
     }
   }
   /** Only nearby cells and the previously detailed bodies need work as the player moves. Sources are frozen during load. */
-  updateDetail(focus: { x: number; z: number }): void {
+  updateDetail(focus: { x: number; z: number }, enabled = true): void {
+    if (!enabled) {
+      for (const id of this.detailed) this.switchDetail(this.detailBodies.get(id)!, false);
+      this.detailDirty = true;
+      return;
+    }
     if (!this.detailBodies.size || !this.detailDirty && this.detailQuery.x === focus.x && this.detailQuery.z === focus.z) return;
     this.detailDirty = false; this.detailQuery.x = focus.x; this.detailQuery.z = focus.z;
     for (const id of this.detailed) {

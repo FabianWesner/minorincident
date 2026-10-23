@@ -69,18 +69,7 @@ try {
               await a.step(1); await a.screenshotReady();
               const meshes: { name: string; instances: number; triangles: number }[] = [];
               game.view.scene.traverse(o => { const m = o as import('three').InstancedMesh; if ((m.name.startsWith('corpses:') || m.name.startsWith('corpse-headwear:')) && m.count) meshes.push({ name: m.name, instances: m.count, triangles: (m.geometry.index?.count ?? m.geometry.getAttribute('position').count) / 3 }); });
-              const casters: unknown[] = [];
-              if (location.search.includes('debug=true')) {
-                game.view.scene.traverseVisible(o => {
-                  const m = o as import('three/webgpu').Mesh;
-                  if (!m.castShadow || m.count === 0 || !m.material) return;
-                  for (const mat of (Array.isArray(m.material) ? m.material : [m.material])) {
-                    const n = mat as import('three/webgpu').MeshBasicNodeMaterial;
-                    casters.push({ name: m.name, count: m.count, material: n.name, position: !!n.positionNode, fixed: !!n.userData.fixedStaticPosition, mask: !!n.maskNode, opacity: !!n.opacityNode, normal: n.normalNode?.constructor.name });
-                  }
-                });
-              }
-              return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, hero: a.getState().render.character, survivor: a.getEntity(1)?.survivor, perf: a.perf(), shadowCasters: casters, drawBreakdown: a.perf().profile, assetBreakdown: a.perf().profileAssets, meshes, corpses: a.query({}).filter(e => e.corpse).length };
+              return { backend: a.perf().backend, quality: a.getState().render.quality, camera: a.getState().render.camera, hero: a.getState().render.character, survivor: a.getEntity(1)?.survivor, perf: a.perf(), drawBreakdown: a.perf().profile, assetBreakdown: a.perf().profileAssets, meshes, corpses: a.query({}).filter(e => e.corpse).length };
             }, zoom);
             assert.equal(state.backend, backend === 'webgl2' ? 'webgl' : backend);
             assert.equal(state.quality, tier); assert.ok(Math.abs(state.camera.zoom - zoom) < .001);

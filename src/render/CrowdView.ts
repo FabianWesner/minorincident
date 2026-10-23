@@ -573,7 +573,7 @@ export class CrowdView extends Group {
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       // Attack ground warnings belong to Vfx: one pooled decal per attack.
     }
-    this.staticCorpses.updateDetail(player.transform);
+    this.staticCorpses.updateDetail(player.transform, !this.low);
     if (view) this.staticCorpses.cull(this.frustum);
     for (const batch of this.batches.values()) {
       batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;

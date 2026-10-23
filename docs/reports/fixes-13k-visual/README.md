@@ -55,3 +55,7 @@ Frozen pages now retain all logical instances while submitting only complete pos
 ## 08:34 checkpoint
 
 Remote snapshot `52897d38a`: 458 files / 2,486 tests passed (3 files / 9 tests skipped), exit 0. A final source resync is still required. Per-instance culling retains all 282 logical bodies but has not met the no-regression gate: uncontaminated WebGL2 median p95 remains 3.6 ms versus baseline 3.2 ms. A general exact-input shadow-map reuse experiment is under evaluation, with conservative refresh for unknown shader effects and unit coverage of caster, light, geometry and visibility changes. It is not accepted performance evidence yet.
+
+## Low-tier budget decision (08:46)
+
+The shadow-reuse experiment measured WebGL2 p95 3.6/3.5/3.5 ms and WebGPU 2.7/2.6/3.0 ms. WebGL2 remains more than 0.2 ms above PROD's 3.2 ms reference. Per the continuation instruction, regular near-band corpse geometry is now high-quality only; low retains its original far geometry and every body. The shadow experiment was removed. A new quality-switch assertion failed red (`lod1` remained after disabling detail), then passed while preserving identity, pose, tint and membership. Fresh paired quiet timing and final validation are pending.
