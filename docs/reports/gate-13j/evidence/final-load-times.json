@@ -1,0 +1,236 @@
+{
+  "revision": "7b8831a1d4a368a3ea224128ca8c69a0ef345ac5",
+  "protocol": "Real level-menu click through two gameplay RAFs; fresh context for candidate and PROD, native WebGPU low; regression limit PROD + min(1000 ms, 10%).",
+  "observations": [
+    {
+      "level": "L1",
+      "candidate": {
+        "ms": 2417.699999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 159,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 2644.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 159,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 2908.730000209808
+    },
+    {
+      "level": "L2",
+      "candidate": {
+        "ms": 2995.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 205,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 3062.699999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 205,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 3368.9699997901917
+    },
+    {
+      "level": "L3",
+      "candidate": {
+        "ms": 3414.6000003814697,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 139,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 3566,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 139,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 3922.6
+    },
+    {
+      "level": "L4",
+      "candidate": {
+        "ms": 3596.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 107,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 4259.5,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 0,
+        "phase": "playing",
+        "drawCalls": 107,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 4685.45
+    },
+    {
+      "level": "L5",
+      "candidate": {
+        "ms": 4450.800000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 175,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 5029.400000572205,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 175,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 5532.340000629425
+    },
+    {
+      "level": "L6",
+      "candidate": {
+        "ms": 2282,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 1,
+        "phase": "playing",
+        "drawCalls": 84,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 3359.699999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 0,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 3695.6699997901915
+    },
+    {
+      "level": "L7",
+      "candidate": {
+        "ms": 3705.699999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 4059.5,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 82,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 4465.45
+    },
+    {
+      "level": "L8",
+      "candidate": {
+        "ms": 4228.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 127,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 23609.60000038147,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 127,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 24609.60000038147
+    },
+    {
+      "level": "L9",
+      "candidate": {
+        "ms": 8378.199999809265,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 137,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 9546.300000190735,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 137,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 10500.930000209808
+    },
+    {
+      "level": "L10",
+      "candidate": {
+        "ms": 6266.5,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 2,
+        "phase": "playing",
+        "drawCalls": 129,
+        "bundle": "http://127.0.0.1:4251/build/index-DsrH1Adw.js"
+      },
+      "baseline": {
+        "ms": 9250.5,
+        "backend": "webgpu",
+        "quality": "low",
+        "tick": 3,
+        "phase": "playing",
+        "drawCalls": 129,
+        "bundle": "https://minor-incident.com/build/index-D4kxfJBx.js"
+      },
+      "baselineURL": "https://minor-incident.com",
+      "limitMs": 10175.55
+    }
+  ]
+}

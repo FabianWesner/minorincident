@@ -1,0 +1,62 @@
+{
+  "numTotalTests": 13,
+  "numPassedTests": 13,
+  "numFailedTests": 0,
+  "success": true,
+  "revision": "7b8831a1d",
+  "reason": "Move the new bench off the existing station stairs; retain the placement baseline and all L6 thresholds.",
+  "tests": [
+    {
+      "name": "L6 gate prompt belongs only to the open gate targeted by the current group waypoint",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+      "status": "passed"
+    },
+    {
+      "name": "@E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline)",
+      "status": "passed"
+    }
+  ]
+}
