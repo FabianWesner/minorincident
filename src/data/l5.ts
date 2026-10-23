@@ -58,13 +58,13 @@ const column = l4Route(), truck = l4RoutePose(column, l4ConvoyStations(column.le
 const survivors: Omit<L5Survivor, 'outAt'>[] = [
   { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck on the plaza', cover: 'behind', hideAt: [truck.x, truck.z], ringAt: [truck.x, truck.z - 3.1], prompt: "Hold still or press E: open the truck cab",
     cue: { id: 'L5.cue.dale', text: 'Someone is banging on metal, close by.' }, found: 'You… you\'re real. Take me with you.' },
-  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], prompt: "Hold still or press E: open the pharmacy door",
+  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], prompt: "Hold still 1s or press E: open the pharmacy door",
     cue: { id: 'L5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
   { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], prompt: "Hold still or press E: open the vestry door",
     cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please, take me with you.' },
   { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-31.8699, -49.2], ringAt: [-30.3699, -44.4], prompt: "Hold still or press E: call up the stairwell",
     cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
-  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], prompt: "Hold still or press E: pry open the bus door",
+  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], prompt: "Hold still 1s or press E: pry open the bus door",
     cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside the wrecked bus on Lakeshore Avenue.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
 ];
 

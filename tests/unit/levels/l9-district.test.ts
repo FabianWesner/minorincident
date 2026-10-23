@@ -117,7 +117,7 @@ test('T-E31-04-dress @E31-AC04 route landmarks reuse countryside stock and leave
 
 test('T-E31-Q131 @E31-AC21 APC start shoulder clears the shallow-steer tree and pole wedge', () => {
   const conflicts = layout.placements.filter(p =>
-    (p.assetId === 'prop.tree' || p.assetId === 'prop.utility-pole') && Math.hypot(p.position[0] + 473.5, p.position[2] - 6) < 12,
+    /^(prop|veh)\./.test(p.assetId) && p.visualAabb.min[0] <= -441.5 && p.visualAabb.max[0] >= -558.5 && p.visualAabb.min[2] <= 8.5 && p.visualAabb.max[2] >= -8.5,
   ).map(p => p.id);
   expect(conflicts, 'the APC swept hull and 2.5 m steering allowance need open shoulder at the reported start position').toEqual([]);
 });
