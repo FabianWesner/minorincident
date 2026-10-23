@@ -595,5 +595,111 @@
       "unexpected": 0,
       "flaky": 0
     }
+  },
+  "verification": {
+    "remoteUnitAndLevels": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+      "exitCode": 0,
+      "success": true,
+      "passedTests": 2503,
+      "failedTests": 0,
+      "skippedTests": 9,
+      "report": "test-results/q152/remote-unit.json",
+      "reportSha256": "e9f772ca41895b0ab7eaeb863771418f26cafbcf3518fc2079a8cbdf2e184516",
+      "q152UnitCases": 8
+    },
+    "smoke": {
+      "command": "E2E_PORT=4381 SCENE_PORT=4382 npm run test:smoke -- --workers=1",
+      "exitCode": 0,
+      "unitPassed": 6,
+      "browser": {
+        "startTime": "2026-10-23T18:25:40.660Z",
+        "duration": 250815.578,
+        "expected": 31,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "report": "test-results/q152/smoke-e2e.json"
+    },
+    "epicE03": {
+      "command": "E2E_PORT=4381 SCENE_PORT=4382 E2E_UNITS=1 sh tools/e2e-lock.sh npm run verify -- E03",
+      "exitCode": 0,
+      "backend": "local headless ANGLE/Metal",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/sim-lock.sh",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E03/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--workers=1"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "unitPassed": 47,
+      "unitFailed": 0,
+      "browser": {
+        "startTime": "2026-10-23T19:03:21.804Z",
+        "duration": 1152743.143,
+        "expected": 171,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reports": {
+        "verify-checks.json": "6c32f43a4c293c7e2259fad3445d4e70dbfc1fb408194c9ae23033f8eb7d061b",
+        "verify-vitest.json": "d44341326b817a5228dee79c6ec3dcfe4e6db2a71544f748908af7f421a00b76",
+        "verify-browser.json": "db54ef4dddd750c05fdddb79932b7633a90635e1cad87eeea2a8bfa2540dae10"
+      }
+    },
+    "attemptNotes": [
+      "The remote E03 browser attempt failed the arrival cadence assertion (2 frames in three seconds; required >30); the gate was retained and verified on the native GPU.",
+      "One local E03 attempt was interrupted after an overlapping queued command cleared its trace directory. The final full E03 run was serialized and passed all 171 browser tests."
+    ]
   }
 }
