@@ -34,11 +34,12 @@
     "lowQuality": "Explicitly disabling detail at unchanged player coordinates retained LOD1 before the quality-switch correction."
   },
   "review": {
-    "matrix": "36 cases across Alpha/Mega/L3, zooms .5/1/1.5, high/low and WebGPU/WebGL2; original sheets reviewed. Final current-source recapture pending.",
-    "departure": "48 final frames across both tiers/backends and three pre-shot zooms reviewed; continuous warm fog at top edge, city silhouettes retained, no rectangles.",
+    "matrix": "Final accepted-source 36/36 cases reviewed on both backends: all three zooms and high/low. Alpha boots lie flat; the Mega has a distinct side-fallen shoulder/head/arm/foot silhouette; L3 concrete is continuous across the former seam in all sampled frames. Close Alpha/Mega sheets were also viewed directly.",
+    "departure": "Final accepted-source 48/48 frames reviewed using all twelve sheets. Four zoom-1.5 end shots were also viewed at full resolution: the entire top edge is continuous warm haze, without dark rectangles; city and buses remain visible. All 24 high / 15 low passengers retained.",
+    "runtime": "Four backend/tier cases: living Alpha bar present, first zero-HP frame 53 has no bar, through frame 240. Same body retained through high bands 2/1/1/2/1 and low bands 2/2/2/2/2.",
     "hitches": "Original 266/450 ms stalls were not reproduced in unchanged quiet baseline. Three real-input runs per level reach the reported leg/ride. Final L1 maxima 16.8/16.8/16.8 ms, L2 33.3/33.4/33.3 ms; zero >200 ms frames and zero new vehicle programs while boarding."
   },
-  "status": "Final timing and validation pending",
+  "status": "final",
   "remoteSourceVerified": {
     "job": "fixes-13k-visual-08b34e-65731-1792738003",
     "matchedFiles": 21,
@@ -68,5 +69,140 @@
     "receipt": "receipts/smoke-final-exit.txt"
   },
   "typecheckExit": 0,
-  "lintExit": 0
+  "lintExit": 0,
+  "performance": {
+    "method": "quiet native uncapped Chrome; 1280x720, zoom 1; three 6-second samples with first second excluded; table uses median of sample p95 values",
+    "baseline": "PROD batch 13j, bfff62015; sibling worktree production build",
+    "rows": [
+      {
+        "case": "L10-webgl2-low-z1",
+        "retainedCorpses": 282,
+        "nearInstancesSubmitted": 0,
+        "baselineSamples": [
+          3.3,
+          3.2,
+          3.3
+        ],
+        "finalSamples": [
+          3.3,
+          3.2,
+          3.3
+        ],
+        "baselineMedianP95Ms": 3.3,
+        "finalMedianP95Ms": 3.3,
+        "deltaMs": 0.0
+      },
+      {
+        "case": "L10-webgl2-high-z1",
+        "retainedCorpses": 363,
+        "nearInstancesSubmitted": 46,
+        "baselineSamples": [
+          3.6,
+          3.9,
+          3.6
+        ],
+        "finalSamples": [
+          4,
+          4.4,
+          4.1
+        ],
+        "baselineMedianP95Ms": 3.6,
+        "finalMedianP95Ms": 4.1,
+        "deltaMs": 0.5
+      },
+      {
+        "case": "L10-webgpu-low-z1",
+        "retainedCorpses": 282,
+        "nearInstancesSubmitted": 0,
+        "baselineSamples": [
+          2.4,
+          2.3,
+          2.4
+        ],
+        "finalSamples": [
+          2.6,
+          2.5,
+          2.5
+        ],
+        "baselineMedianP95Ms": 2.4,
+        "finalMedianP95Ms": 2.5,
+        "deltaMs": 0.1
+      },
+      {
+        "case": "L10-webgpu-high-z1",
+        "retainedCorpses": 363,
+        "nearInstancesSubmitted": 46,
+        "baselineSamples": [
+          3,
+          3.2,
+          2.9
+        ],
+        "finalSamples": [
+          3.4,
+          3.4,
+          3
+        ],
+        "baselineMedianP95Ms": 3,
+        "finalMedianP95Ms": 3.4,
+        "deltaMs": 0.4
+      }
+    ],
+    "lowWebGLParity": true,
+    "lowWebGPUDeltaMs": 0.1,
+    "nearBand": "high only, enter <8m, exit >=10m",
+    "blenderDuringFinalWindow": [],
+    "hostSamples": 255,
+    "reservedWindowUTC": "07:44\u201307:56",
+    "conditions": "performance/quiet-conditions.jsonl",
+    "hostProcesses": "performance/host-processes.jsonl",
+    "rejectedComparison": "performance/rejected-blender/status.json",
+    "livePRODCommit": "3c48d1abe",
+    "baselineRuntimeMatchesLivePROD": true,
+    "baselineEquivalence": "src/, public/assets/, layouts/ and package-lock.json are identical between live PROD 3c48d1abe and baseline bfff62015; package.json differs only in a script."
+  },
+  "ab": {
+    "command": "npm run qa:ab -- --baseline https://minor-incident.com --candidate http://127.0.0.1:4261 --levels L1-L4",
+    "status": "complete",
+    "stops": 32,
+    "threshold": 0.02,
+    "expectedFlags": [
+      {
+        "id": "l3-army-pullback-z1",
+        "score": 0.034722222222222224,
+        "sheet": "l3-army-pullback-z1.jpg"
+      },
+      {
+        "id": "l3-ramp-east-z1",
+        "score": 0.033854166666666664,
+        "sheet": "l3-ramp-east-z1.jpg"
+      },
+      {
+        "id": "l3-ramp-west-z1",
+        "score": 0.029947916666666668,
+        "sheet": "l3-ramp-west-z1.jpg"
+      }
+    ],
+    "unexplainedFlags": 0,
+    "review": "ab/review.md"
+  },
+  "visualChecks": {
+    "matrixCasesPassed": 36,
+    "departureFrames": 48,
+    "runtimeCasesPassed": 4,
+    "requestedZooms": [
+      0.5,
+      1,
+      1.5
+    ],
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "reviewed": true
+  },
+  "sourceUnchangedSinceValidatedCommit": true
 }
