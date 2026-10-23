@@ -2,6 +2,14 @@
 
 Campaign proof and final validation are still in progress. Changes are restricted to tooling, debug bots/API wiring and the `Game.driver` TypeScript union.
 
+## Driver changes
+
+- Closed/crashed pages and unresponsive observations stop with explicit errors; observation and browser-close waits have time limits. The finale credits transition is recognized only after the actual ending and saved campaign completion.
+- `bot.start` supports L7–L10. L7/L10 reuse the sim-runner policies; L9 reports completion only after its real crawl. The real-input campaign driver does not invoke these bots.
+- The campaign driver selects earned weapons through number keys. The finale prioritizes the drawn Mega Alpha, leads rockets from observed velocity, retreats with WASD while firing, and changes bearing when visible movement stalls. It activates the console with E and waits through the epilogue and credits.
+- `mega` and the L9 crash/crawl cannot be debug-skipped. `--no-skip` stops on missing progress without completing an objective. Earlier-level map/navigation recovery remains logged and uses physical movement keys; L10 movement/combat decisions use visible markers, drawn enemies and the carried arsenal.
+- The driver pins Low through the title settings UI and verifies the actual renderer/quality. It preserves zoom across handovers instead of repeating wheel input into the launcher's wider limit, and asserts the requested 1.5 target at every level start. Vehicle stalls use reverse/steering recovery through real keys.
+
 ## Controls triage candidate: Space retargets a ground movement command
 
 Observed in **L10**, dispersal-console defence, **rocket launcher**, WebGPU, 1280 × 720, zoom target 1.5. The probe requested Low, but its older driver did not pin the menu's quality setting; its exact effective tier was not recorded. This is a game-controls observation discovered during driver development; this lane does not change the game rule or input system.
@@ -23,8 +31,8 @@ The driver uses WASD while firing for the replacement policy, with alternate mov
 
 ## Validation so far
 
-- Remote unit suite at runtime commit `8a502bda5`: success, **2,047 passed, 0 failed, 7 skipped**. Compact results and all driver test assertions: [evidence/remote-unit.json](evidence/remote-unit.json).
-- Typecheck and lint passed; focused driver tests: 9 files, 54 tests passed.
+- Remote unit suite at runtime commit `ebb11dd8b`: success, **2,048 passed, 0 failed, 7 skipped**. Compact results and all driver test assertions: [evidence/remote-unit.json](evidence/remote-unit.json).
+- Typecheck and lint passed; focused driver tests: 9 files, 55 tests passed.
 - Real-input checkpoint diagnostic `harness-finale-08`: all 16 L10 steps completed through credits in 248 seconds, zero deaths, no skips; WebGPU and actual Low quality. This uses a seeded checkpoint and is not the campaign proof.
 - Shared L7 sim bot, seed 1: completed in 540.38 simulation seconds; zero deaths, zero collision invariant failures.
 - Shared L10 sim bot, seed 1: completed through credits in 1,190.08 simulation seconds; zero deaths, zero collision invariant failures.
