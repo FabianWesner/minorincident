@@ -59,6 +59,27 @@ test('T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap us
 
 });
 
+for (const [side, weapon] of [['left', 'weapon.bat'], ['right', 'weapon.handgun'], ['right', 'weapon.rocket-launcher']] as const) {
+  test(`Q-152 @E03 @E03-AC07 touch ${side} ${weapon} drag only aims and fires without movement`, async ({ page, context }) => {
+    await page.evaluate(async id => { const a = window.__SS__!; await a.loadScenario('combat-arena'); a.pause(); a.setLoadout([id], [id]); }, weapon);
+    const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
+    const cdp = await context.newCDPSession(page), finger = { id: 1, ...await center(page, side) };
+    await touch(cdp, 'touchStart', [finger]); await page.waitForTimeout(300);
+    await touch(cdp, 'touchMove', [{ ...finger, x: finger.x - 60 }]);
+    const aimed = await tick(page, 10);
+    expect(aimed.aimSource).toBe('touch'); expect(aimed[side].down).toBe(false);
+    expect(aimed.moveTarget).toBeUndefined(); expect(aimed.move).toEqual({ x: 0, z: 0 });
+    expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
+    await touch(cdp, 'touchEnd', []);
+    expect((await tick(page))[side].down).toBe(true);
+    await tick(page, 30);
+    expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').map(e => e.type === 'combat.attack' && e.actionId))).toContain(weapon);
+    const end = await page.evaluate(() => window.__SS__!.getState());
+    expect(end.controls?.moveTarget).toBeFalsy();
+    expect(Math.hypot(end.player!.transform.x - start.x, end.player!.transform.z - start.z)).toBeLessThan(.01);
+  });
+}
+
 for (const loss of ['blur', 'hidden', 'pagehide'] as const) {
   test(`T-E03-13-${loss} @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input`, async ({ page, context }) => {
     const cdp = await context.newCDPSession(page);

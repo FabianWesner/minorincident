@@ -84,6 +84,30 @@ test('T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held grou
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
 });
 
+test('Q-152 @E03 @E03-AC14 held Space aims without retargeting a ground click', async ({ page }) => {
+  await arena(page);
+  const first = await point(page, 5, 2);
+  await page.keyboard.down('Space');
+  await page.mouse.click(first.x, first.y);
+  const clicked = await tick(page);
+  expect(clicked.moveTarget!.x).toBeCloseTo(5, 2);
+  const second = await point(page, -4, 3);
+  await page.mouse.move(second.x, second.y);
+  const aimed = await tick(page);
+  expect(aimed.aimSource).toBe('pointer');
+  expect(aimed.moveTarget).toBeUndefined();
+  expect(await page.evaluate(() => window.__SS__!.getState().controls!.moveTarget)).toEqual(clicked.moveTarget);
+  const next = await point(page, 4, -2);
+  await page.mouse.move(next.x, next.y); await page.mouse.down();
+  const retargeted = await tick(page);
+  expect(retargeted.moveTarget!.x).toBeCloseTo(4, 2);
+  await page.mouse.move(second.x, second.y);
+  expect((await tick(page)).moveTarget).toBeUndefined();
+  expect(await page.evaluate(() => window.__SS__!.getState().controls!.moveTarget)).toEqual(retargeted.moveTarget);
+  await page.mouse.up();
+  await page.keyboard.up('Space');
+});
+
 test('T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it', async ({ page }) => {
   await arena(page);
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 1.8, z: 0 }, { hp: 1000 }));
