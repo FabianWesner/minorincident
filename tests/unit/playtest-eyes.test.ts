@@ -1,8 +1,31 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { runInNewContext } from 'node:vm';
-import { look, visibleGroupTarget } from '../../tools/playtest/eyes';
+import { EscortClearance, look, visibleGroupTarget } from '../../tools/playtest/eyes';
 
 afterEach(() => vi.unstubAllGlobals());
+
+test('a stalled escort ring is cleared along its visible travel direction and stays clear', () => {
+  const c = new EscortClearance(), friend = { x: 241.3, z: 15, hp: 60, drawn: true, corpse: false };
+  expect(c.sample('L6', 'retreat', { x: 237, z: 15 }, { x: 238, z: 15 }, [friend], 0)).toBeNull();
+  expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 7)).toBeNull();
+  expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 8)).toEqual({ x: 245.5, z: 15 });
+  expect(c.sample('L6', 'retreat', { x: 245.5, z: 15 }, { x: 242, z: 15 }, [], 9)).toEqual({ x: 245.5, z: 15 });
+  expect(c.sample('L6', 'exit', { x: 245.5, z: 15 }, { x: 273, z: 15 }, [friend], 20)).toBeNull();
+});
+
+test('escort clearance needs a nearby drawn living human and never runs in the finale', () => {
+  for (const friend of [
+    { x: 241, z: 15, hp: 60, drawn: false, corpse: false },
+    { x: 241, z: 15, hp: 0, drawn: true, corpse: true },
+    { x: 230, z: 15, hp: 60, drawn: true, corpse: false },
+    { x: 241, z: 15, hp: 60, drawn: true, corpse: false, kind: 'companion' },
+  ]) {
+    const c = new EscortClearance();
+    c.sample('L6', 'retreat', { x: 237, z: 15 }, { x: 238, z: 15 }, [], 0);
+    expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 20)).toBeNull();
+  }
+  expect(new EscortClearance().sample('L10', 'mega', { x: 242, z: 15 }, { x: 242, z: 15 }, [], 20)).toBeNull();
+});
 
 function renderedEyes(clip: string, simulationAttacking: boolean, serialized = false, trackerText = '', liveHud = false, coveredByButton = false) {
   const player = { id: 1, kind: 'player', transform: { x: 0, y: 0, z: 0, yaw: 0 }, health: { current: 100, max: 100 } };
