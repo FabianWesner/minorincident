@@ -18,3 +18,4 @@
 - All four L10 N=20 configurations pass on the pose revision. WebGPU low: 5.529/5.571/5.610 s median/p90/max. Worst of all 80 L10 cold loads: 5.676 s; every configuration median improves. L1+L10 acceptance complete (8/20 configurations); L8/L7/L4 remain.
 - L8 WebGPU/high N=20 passes: baseline 24.270/24.571/24.627 s → pose revision 3.931/3.967/4.000 s median/p90/max; post-card max 16.8 ms.
 - L8 WebGPU/low N=20 passes: baseline 24.101/24.611/24.825 s → pose revision 3.953/3.981/4.009 s median/p90/max; post-card max 16.8 ms. L1, L10 and both L8 GPU configurations are complete (10/20); both L8 GL and L7/L4 remain.
+- All four L8 N=20 configurations pass. WebGL2 high: baseline 24.542/24.942/25.075 s → candidate 3.994/4.042/4.359 s; WebGL2 low: 24.626/25.208/25.576 s → 4.026/4.076/4.178 s. Both have post-card max 16.8 ms. Twelve of twenty configurations are complete; L7/L4 remain.

@@ -20,8 +20,8 @@ The candidate records the first post-card frames of all 20 loads and a ten-secon
 | L7 webgl2 high | —/— | pending | pending | — | pending |
 | L8 webgpu low | 20/20 | 24.100/24.611/24.825 | 3.953/3.981/4.009 | 16.8 | PASS |
 | L8 webgpu high | 20/20 | 24.270/24.571/24.627 | 3.931/3.967/4.000 | 16.8 | PASS |
-| L8 webgl2 low | —/— | pending | pending | — | pending |
-| L8 webgl2 high | —/— | pending | pending | — | pending |
+| L8 webgl2 low | 20/20 | 24.626/25.208/25.576 | 4.026/4.076/4.178 | 16.8 | PASS |
+| L8 webgl2 high | 20/20 | 24.542/24.942/25.075 | 3.994/4.042/4.359 | 16.8 | PASS |
 | L10 webgpu low | 20/20 | 8.349/8.412/8.456 | 5.529/5.571/5.610 | 16.8 | PASS |
 | L10 webgpu high | 20/20 | 8.374/8.411/8.435 | 5.549/5.607/5.625 | 16.8 | PASS |
 | L10 webgl2 low | 20/20 | 8.343/8.377/8.409 | 5.610/5.644/5.676 | 16.8 | PASS |
