@@ -184,7 +184,7 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     if (Math.abs(z) >= 14 && free(x, z, 1.8)) fire(x, z, radius);
   }
   // 6) Red warning lamps on the crash approach barricades (the road ends ahead).
-  for (const p of placements.filter(q => q.assetId === 'prop.barricade')) put({ kind: 'beacon', x: p.position[0], y: 1.86, z: p.position[2], yaw: p.yaw, color: '#ff2a1a', glow: 8, flicker: 0, strobe: true, pool: { color: 'light_siren_red', intensity: 3, range: 3 } });
+  for (const p of placements.filter(q => q.assetId === 'prop.barricade' && q.position[0] > 380)) put({ kind: 'beacon', x: p.position[0], y: 1.86, z: p.position[2], yaw: p.yaw, color: '#ff2a1a', glow: 8, flicker: 0, strobe: true, pool: { color: 'light_siren_red', intensity: 3, range: 3 } });
   // 7) Radio masts (dress.py: stretched utility poles, scale y > 2): an aviation blinker on top and one at mid height.
   for (const p of placements.filter(q => q.assetId === 'prop.utility-pole' && q.scale[1] > 2)) {
     const h = (dims.get(p.assetId)?.y ?? 7) * p.scale[1];

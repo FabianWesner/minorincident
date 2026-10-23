@@ -943,6 +943,13 @@ def vput1(asset, x, z, yaw, decay=None):
     if any(route_d(q) < VERGE_MIN for q in pts):
         vstat['rej-lane'] = vstat.get('rej-lane', 0) + 1
         return False
+    # A prop never stands under a tree crown core (Scene Lab static clipping: placement x tree geometry).
+    for ob, k in neighbours(b, 1):
+        if k == 'tree':
+            ix, iz = (ob[2] - ob[0]) * .3, (ob[3] - ob[1]) * .3
+            if box_gap(b, (ob[0] + ix, ob[1] + iz, ob[2] - ix, ob[3] - iz)) < .15:
+                vstat['rej-tree'] = vstat.get('rej-tree', 0) + 1
+                return False
     zone = x < -512 and abs(z) < 22
     if not put(asset, x, z, yaw, decay=decay, zone=zone):
         vstat['rej-ok'] = vstat.get('rej-ok', 0) + 1
