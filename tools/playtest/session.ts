@@ -2,7 +2,7 @@ import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
-import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
+import { EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
@@ -150,6 +150,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let stuckLogged = new Set<string>(), lastClick = 0, lastE = 0, zoomed = false, assistMode = false, lastDeathTick = -1;
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let cureConsole: { x: number; z: number } | null = null;
+  let escortClearance = new EscortClearance();
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
@@ -176,6 +177,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     trail.length = 0; lastErr = null; steering = false;
     vehicleRecovery = new VehicleRecovery();
     cureConsole = null; lastE = lastClick = 0;
+    escortClearance = new EscortClearance();
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     await page.evaluate(() => {
@@ -538,7 +540,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
     }
     if(Date.now()-lastObservation>=1000) {
-      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),marker:ring,noProgressSeconds:observed.seconds}});
+      lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),...(e.level==='L6'?{allies:e.allies.filter(b=>b.drawn&&b.hp>0&&!b.corpse).map(b=>({id:b.id,x:b.x,z:b.z,hp:b.hp,kind:b.kind}))}:{}),marker:ring,noProgressSeconds:observed.seconds}});
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
@@ -584,6 +586,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
     // Cover visible walkers before advancing to the next retreat ring.
     if (e.player) {
+      const clearance = escortClearance.sample(e.level, e.step, e.player, ring, e.allies, observed.seconds);
+      if (clearance && !e.enemies.some(b => b.d < 3)) {
+        await releaseAim();
+        if (Math.hypot(clearance.x - e.player.x, clearance.z - e.player.z) > .5) {
+          const points = await page.evaluate(({ p, goal }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(goal, 'player')], { p: e.player, goal: clearance });
+          await press(markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12));
+        } else await press([]);
+        if (Date.now() - navLog > 3000) { navLog = Date.now(); log({ visibleEscortClearance: clearance, tick: e.tick }); }
+        await hold(200); continue;
+      }
       const groupTarget = visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
       if (e.level === 'L6' && e.step === 'exit' && ring && !e.enemies.some(b => b.d < 3)
         && (!groupTarget || Math.hypot(groupTarget.x - ring.x, groupTarget.z - ring.z) < ringDist!)) {

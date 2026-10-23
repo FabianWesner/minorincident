@@ -28,6 +28,31 @@ export function visibleGroupTarget(level: string | null, player: { x: number; z:
   return Math.hypot(player.x - centre.x, player.z - centre.z) > leash ? centre : null;
 }
 
+/** Leave a stationary escort ring clear for a nearby follower to pass through. */
+export class EscortClearance {
+  private ring: { x: number; z: number } | null = null;
+  private bearing: { x: number; z: number } | null = null;
+  private goal: { x: number; z: number } | null = null;
+  sample(level: string | null, step: string | null, player: { x: number; z: number }, ring: { x: number; z: number } | null, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean; kind?: string }[], stalledSeconds: number): { x: number; z: number } | null {
+    if (level !== 'L6' || step !== 'retreat' || !ring) {
+      this.ring = this.bearing = this.goal = null; return null;
+    }
+    const distance = this.ring ? Math.hypot(ring.x - this.ring.x, ring.z - this.ring.z) : 0;
+    if (this.ring && distance > .5) {
+      this.bearing = { x: (ring.x - this.ring.x) / distance, z: (ring.z - this.ring.z) / distance };
+      this.goal = null;
+    }
+    this.ring = { ...ring };
+    if (!this.goal && this.bearing && stalledSeconds >= 8 && Math.hypot(player.x - ring.x, player.z - ring.z) < 1.2
+      && allies.some(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion' && Math.hypot(a.x - player.x, a.z - player.z) < 3)) {
+      this.goal = { x: ring.x + this.bearing.x * 3.5, z: ring.z + this.bearing.z * 3.5 };
+    }
+    // Retain the clearance position while this ring waits; returning immediately
+    // to the ring would put the courier back in the follower's path.
+    return this.goal;
+  }
+}
+
 /** Runs in the page. Keep it self-contained (no closures). */
 export function look(): Eyes {
   const a = window.__SS__!;
