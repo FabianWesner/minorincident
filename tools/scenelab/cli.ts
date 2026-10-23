@@ -37,6 +37,7 @@ try {
   for (const file of files) {
     const spec = readSpec(resolve(file)), name = spec.name ?? basename(file, '.json');
     const out = resolve(files.length === 1 && flag('out') ? flag('out')! : `${flag('out') ?? 'test-results/scenes'}/${name}${backend === 'webgpu' ? '-webgpu' : ''}${tier === 'low' ? '-low' : ''}`);
+    if (!session.isOpen) await session.open();
     const errorsBefore = session.errors.length;
     try {
       const r = await runSpec(session, spec, { file, out, openMs, inspect: flag('inspect') === 'true', frames: flag('frames') ? Number(flag('frames')) : undefined, video: flag('video') ? Number(flag('video')) : undefined, sheet: flag('sheet') ? Number(flag('sheet')) : undefined, shots: flag('shots')?.split(',').map(Number) });
@@ -44,7 +45,7 @@ try {
       if (!r.pass) code = 1;
     } catch (error) {
       summary.push({ scene: name, pass: false, error: String(error), consoleErrors: session.errors.slice(errorsBefore) }); code = 1;
-    }
+    } finally { if (process.env.MI_BROWSER_POOL === '1') await session.close(); }
   }
 } catch (error) {
   console.error(error); console.error(session.errors.join('\n')); code = 1;

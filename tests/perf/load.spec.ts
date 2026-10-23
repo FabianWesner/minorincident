@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { chromium, expect, test } from '@playwright/test';
+import { launchBrowser } from '../../tools/browser-pool/client';
+import { expect, test } from '../../tools/browser-pool/fixtures';
 import { startCdnServer } from '../../tools/performance/cdn-server';
 import { launchArgs, measure, type LoadRun } from '../../tools/performance/load-measure';
 
@@ -39,7 +40,7 @@ test('T-LOAD-01 @perf @load production L1 load: critical download, title and Sta
   const tls = certificate();
   const { port, stop } = await startCdnServer({ root: 'dist', port: 0, cert: tls?.cert, key: tls?.key });
   // A pinned (trusted) certificate keeps Chromium's HTTP cache, which a certificate error would disable.
-  const browser = await chromium.launch({ headless: true, args: [...launchArgs, ...(tls ? [`--ignore-certificate-errors-spki-list=${tls.spki}`] : [])] });
+  const browser = await launchBrowser({ headless: true, args: [...launchArgs, ...(tls ? [`--ignore-certificate-errors-spki-list=${tls.spki}`] : [])] });
   const runs: LoadRun[] = [];
   try {
     const base = `${tls ? 'https' : 'http'}://127.0.0.1:${port}/`;

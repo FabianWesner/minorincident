@@ -3,10 +3,11 @@ import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, resolve } from 'node:path';
-import { chromium, devices, type Browser, type BrowserContext, type Page } from '@playwright/test';
+import { devices, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import { launchBrowser } from '../browser-pool/client';
 
 /** Scene Lab browser session: one headless Chromium page with the real game on a private Vite server.
  * Shared by the CLI runner (cli.ts) and the MCP server (mcp.ts). Never port 3300. */
@@ -43,6 +44,8 @@ export class SceneSession {
   private browser!: Browser;
   private context?: BrowserContext;
   private ownsBrowser = false;
+  private opened = false;
+  get isOpen() { return this.opened; }
   private sceneUrl = '';
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
@@ -59,11 +62,12 @@ export class SceneSession {
     // Native frame-budget probes measure uncapped cadence, as the E18 browser specs do.
     if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push(...uncappedArgs());
     this.ownsBrowser = !browser;
-    this.browser = browser ?? await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
+    this.browser = browser ?? await launchBrowser({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
     const context = await this.browser.newContext({ ...(this.options.phone ? devices['Pixel 7'] : {}), viewport: this.options.viewport, deviceScaleFactor: 1 });
     this.context = context;
     this.page = await context.newPage();
     this.guard = attachErrorGuard(this.page);
+    this.opened = true;
     const query = new URLSearchParams({ test: '1', scenelab: '1', profile: '1', dpr: '1', quality: this.options.tier, audio: 'muted', seed: String(this.options.seed) });
     if (!webgpu) query.set('renderer', 'webgl');
     for (const [key, value] of Object.entries(this.options.query)) query.set(key, value);
@@ -135,6 +139,8 @@ export class SceneSession {
     } finally { await scratch.close(); }
   }
   async close(): Promise<void> {
+    if (!this.opened) return;
+    this.opened = false;
     this.guard?.dispose();
     if (this.ownsBrowser) await this.browser?.close();
     else await this.context?.close();

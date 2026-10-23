@@ -1,12 +1,12 @@
 // Seeds a progressed campaign save (an L<n>-default preset through the game's own campaign API) into a playtest profile,
 // so `play.ts --mode continue --entry continue --keep-profile` resumes it from the menu. From visual-qa-13e2.
 // usage (under tools/e2e-lock.sh): tsx tools/playtest/seed.ts <origin> <profileDir> <female|male> [L6-default] [weapons|fists]
-import { chromium } from '@playwright/test';
+import { launchProfile } from '../browser-pool/client';
 import { resolve } from 'node:path';
 import { playtestSave } from './startup';
 const [origin, profile, heroine = 'female', presetName = 'L6-default', kind = 'weapons'] = process.argv.slice(2);
 const level = presetName.split('-')[0];
-const context = await chromium.launchPersistentContext(resolve(profile), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'], viewport: { width: 1280, height: 720 } });
+const context = await launchProfile(resolve(profile), { headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'], viewport: { width: 1280, height: 720 } });
 try {
   const page = context.pages()[0] ?? await context.newPage();
   await page.goto(`${origin}/?testApi=1&renderer=webgl&dpr=1&audio=muted&quality=low`);
