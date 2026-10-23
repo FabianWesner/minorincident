@@ -178,7 +178,9 @@ export class VehicleView extends Group {
       }
       // Rapier drives on the flat y = 0 plane while the district draws its roads 5 cm above it (and kerbs, paint, paving
       // higher): rest the car on the drawn ground, each wheel on its own spot.
-      if (this.ground) {
+      // A scripted fall already supplies world height. Ground settling would pull the hull
+      // into the gully a second time and lift each wheel back onto a different road lip.
+      if (this.ground && !state.scripted) {
         updateTyreMatrices(record.wheels);
         const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
         record.parent.position.y += mean;

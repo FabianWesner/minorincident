@@ -55,6 +55,22 @@ for (const id of ['veh.evac-bus', 'veh.school-bus']) {
   });
 }
 
+test('school-bus door and passenger seat pivots remain named across LOD and wrecked deliveries', async () => {
+  const io = await assetIO(), bus = manifest.find(a => a.id === 'veh.school-bus')!;
+  const doors = bus.lodOptionalGeometryNodes ?? [];
+  const sockets = ['steeringWheel', ...Array.from({ length: 4 }, (_, row) => [`passengerSeat${row}L`, `passengerSeat${row}R`]).flat()];
+  for (const decay of ['', '.wrecked']) for (const tier of tiers) {
+    const doc = await io.read(`public/assets/models/veh.school-bus${decay}${tier}.glb`);
+    const nodes = new Map(doc.getRoot().listNodes().map(node => [node.getName(), node]));
+    for (const name of sockets) expect(nodes.has(name), `${decay}${tier} ${name}`).toBe(true);
+    for (const name of sockets) if (decay) expect(nodes.get(name)!.getMesh(), `${decay}${tier} ${name} stays an empty socket`).toBeNull();
+    if (!decay && tier === '.lod2') for (const name of doors) {
+      expect(nodes.has(name), `${tier} ${name}`).toBe(true);
+      expect(nodes.get(name)!.getMesh(), `${tier} ${name} retains its pivot while dropping tiny detail`).toBeNull();
+    }
+  }
+});
+
 test('@bus-hero evac bus: node contract, transparent glass, seats, door and lights in every tier', async () => {
   const io = await assetIO(), def = manifest.find(a => a.id === 'veh.evac-bus')!;
   const caps = [15000, 6000, 2000];
