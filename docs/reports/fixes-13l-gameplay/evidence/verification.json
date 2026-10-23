@@ -1,0 +1,80 @@
+{
+  "productionFixCommit": "a4d19f43a",
+  "requiredBaseAncestor": "9a00f4b1c",
+  "finalFixtureCommit": "b320eca9e",
+  "checks": [
+    {
+      "command": "npm run typecheck && npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npx vitest run tests/levels/qa-136-141-149.test.ts tests/unit/levels/l9-clearance-drive.test.ts --maxWorkers=4 --configLoader runner --reporter=verbose",
+      "exitCode": 0,
+      "passed": 10
+    },
+    {
+      "command": "E2E_PORT=4361 SCENE_PORT=4362 sh tools/e2e-lock.sh npx playwright test tests/e2e/levels/qa-13l-gameplay.spec.ts tests/e2e/levels/l8-missing-survivor-guidance.spec.ts --project=chromium --workers=1",
+      "exitCode": 0,
+      "passed": 7,
+      "receipt": "browser-green.json"
+    },
+    {
+      "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/fixes-13l-remote.json -- npx vitest run tests/unit tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/fixes-13l-remote.json",
+      "exitCode": 0,
+      "passed": 2508,
+      "skipped": 9,
+      "failed": 0,
+      "receipt": "remote-unit-level.json.gz"
+    },
+    {
+      "command": "E2E_PORT=4361 SCENE_PORT=4362 E2E_UNITS=1 sh tools/e2e-lock.sh npm run test:smoke -- --workers=1",
+      "exitCode": 0,
+      "simPassed": 6,
+      "browserPassed": 31,
+      "browserSkipped": 0,
+      "receipt": "smoke-browser.json"
+    },
+    {
+      "command": "E2E_PORT=4361 SCENE_PORT=4362 npm run qa:invariants",
+      "exitCode": 0,
+      "simPassed": 27,
+      "browserPassed": 12,
+      "buildExitCode": 0,
+      "receipts": [
+        "invariant-run.json",
+        "invariant-sim.json.gz",
+        "invariant-browser.json.gz"
+      ]
+    }
+  ],
+  "executionNote": "The green invariant command started at 312bb9adb. Before its queued renderer started, b320eca9e moved only the Scene Lab fixture courier onto walkable near-side pavement; its focused objective check and the full rendering sweep both passed. Production source and unit/level tests were unchanged during the remote, smoke and invariant gates.",
+  "regressions": "regression-history.json",
+  "Q149Limit": "No invulnerability reproduced with four weapons during the active L10 console hold. The unavailable original infected #624 state was not replayed.",
+  "sha256": {
+    "Q-136-fall.png": "e1a4c88f0f0aa62099755bdecaecc1537f8c9ac9b78210855df278fae324c283",
+    "Q-136-green.json": "7260535dd25a40bd839a2d677e0a94cbfe49c271e117429e1ddee7376edab92c",
+    "Q-136-red.json": "01b2d2dd13d0e9502f75764d0d09a59554f26baef15d148fb2a5f45089541b5c",
+    "Q-137-green.json": "070ec5f5172d6fc1d98f154df959823ed793f5d5ecace98f5fc31fb9ae9af00c",
+    "Q-137-red.json": "7c808a2c38762f9c13a88f86b3c1b715b780059edc5e8e5334af50a08b81e4ba",
+    "Q-137-start.png": "e82ed009f54c7255b8960ce7ae4c0e926749fecc873fb43ace9a9286c4e328d7",
+    "Q-138-green.json": "3f0745e4bbb851036d0d962ada3ce36ee8c4efdf414b25fd0d8227721ee7f84c",
+    "Q-138-station.png": "d441edae2279f27fb3f2afcffe95307cbe1daed3472615fc15f2f69ad6a4b8b3",
+    "Q-139-green.json": "9e35f68f1f7b5085ddc465ac3fb5337b96add6d8463d79d28f2b21afc764be03",
+    "Q-140-Q-141-red-browser.json": "d4fd34d2235496836b3caba9886dcb8ea1d20a6635fd0bd42d497fdd64bae7f4",
+    "Q-140-green.json": "684ca0585df09d8c18e6652a1cc99efe2394a1c9adbaa50e188839d35ecca357",
+    "Q-140-red.json": "4c47d84c4acaed9877e14e1e7ef937c52fc3cea8fc5903e4c3eb295cc154eafa",
+    "Q-140-ring.png": "bb866df572b0edfb0f2e7babd905ea07432476d89fb518461b85478b7eeecf2b",
+    "Q-141-green.json": "c600a97ba037f9988ca948776cde90762fd4de86542e03292e964645b6b4e98f",
+    "Q-141-minimap.png": "0832de66546d548c277590381ae0944efa94541604e9496b40032a22f79e2e43",
+    "Q-149-console.png": "f27cf51eeb4d81c5da3b1a4ed8794034038bbc2f683009794c1ddb079a08f78e",
+    "Q-149-input.json": "24fe39e035f63ffeebea22b39465a390f4805c54fc5539da57b135a004d2c488",
+    "browser-green.json": "67b49fb226242009b9e3a8ed7429dcbdf605cede6c59d6e6552113361721d16d",
+    "invariant-browser.json.gz": "80f1d62affe6b3285c2fa29975e28f565df9672a3265728b7a35480d89969fc1",
+    "invariant-run.json": "8797e3f4c50c2cbddd0ff0e0807f5ac12fb9a11c5a6a1107375fe48d070b5a2a",
+    "invariant-sim.json.gz": "6e077a5226ce592051c5d65a12023f667a47cb6aafa34d1838532033aaf1e2a5",
+    "invariant-stale-fixture.json.gz": "03bbea034f90f8632ecef35b327af6fadc453f60728c9d66b256968040b0b79e",
+    "regression-history.json": "2c9e317055e08acb57b1bca0215696185dfa9408cfb1812b53d8f883f1e6f6bb",
+    "remote-unit-level.json.gz": "52d539d8ac69cec59ca5e96bdd42b1113052d4114b7a1164d1753edfd919d8b5",
+    "smoke-browser.json": "52b19bb21a6bc63e8acfd0308ec63fa761ac8748b43384cc77e61787db20c311"
+  }
+}
