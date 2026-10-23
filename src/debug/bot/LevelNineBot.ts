@@ -9,11 +9,12 @@ export class LevelNineBot {
   private index = 1;
   readonly path: readonly Point[];
   readonly length: number;
-  constructor(private readonly w: SimWorld, routeId: string, detour = false, private readonly throttle = .7) {
+  constructor(private readonly w: SimWorld, routeId = 'road', detour = false, private readonly throttle = .7, readonly profile = 'complete') {
     const route = crossing.routes.find(r => r.id === routeId);
     if (!route) throw new Error(`Unknown L9 route ${routeId}`);
     this.path = detour ? route.detour : route.points; this.length = crossingRouteLength(this.path);
   }
+  get finished(): boolean { return this.w.missions?.l9?.state.finished ?? false; }
   /** Share of the route length passed (0..1): finished segments plus the car's projection on the current one. */
   progress(): number {
     const car = this.w.missions?.l9 && this.w.entities.get(this.w.missions.l9.state.carId), a = this.path[this.index - 1], b = this.path[this.index];
@@ -31,7 +32,7 @@ export class LevelNineBot {
   sample(): InputFrame {
     const w = this.w, f = emptyInput(), l9 = w.missions?.l9;
     const car = l9 && w.entities.get(l9.state.carId);
-    if (!car || l9.state.phase !== 'driving') return f;
+    if (!car || this.profile === 'idle' || this.finished || l9.state.phase !== 'driving') return f;
     const p = car.transform;
     // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).

@@ -1034,7 +1034,9 @@ open('/private/tmp/claude-501/vstat.json', 'w').write(json.dumps(vstat))
 # T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry
 # shortcut. Drivers cut these corners, so the sectors between the diverging lanes stay free of anything with a collider,
 # and trees whose crown cuts into another solid (Scene Lab static clipping: tree x pole, tree x lamp, tree in a garage) go.
-GORE_R = 46
+# Q-139: the debug driver reaches (402, -16.8), just outside the old 46 m merge gore.
+# Include the full APC footprint and its approach, rather than one exact stop point.
+GORE_R = 60
 
 
 def in_gore(x, z):
@@ -1059,6 +1061,14 @@ solids = [q['visualAabb'] for q in l.data['placements'] if not q['assetId'].star
 drop = []
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
+    # The departure lane plus a 2.5 m shoulder stays clear of whole prop footprints. Removing only
+    # the tree and pole at (-473.5, 6) left the APC caught on the neighbouring hedge.
+    b = p['visualAabb']
+    if p['assetId'].startswith(('prop.', 'veh.')) and lane_hit(
+        (b['min'][0], b['min'][2], b['max'][0], b['max'][2]),
+        source['start'], source['routes'][0]['points'][1], source['routes'][0]['width'] / 2 + 2.5):
+        drop.append(i)
+        continue
     if in_gore(x, z) and route_d((x, z)) > 0 and not p['assetId'].startswith(('kit.', 'bld.')):
         drop.append(i)
         continue

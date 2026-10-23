@@ -1,5 +1,11 @@
 import { expect, test } from 'vitest';
-import { clickGroundInput, markerWalkKeys } from '../../tools/playtest/input';
+import { clickGroundInput, dodgeWalkKeys, markerWalkKeys } from '../../tools/playtest/input';
+
+test('blocked finale steering tries both sides and backing away instead of repeating the blocked bearing', () => {
+  expect([0, 1, 2, 3].map(attempt => dodgeWalkKeys(20, 0, attempt))).toEqual([['KeyD'], ['KeyS'], ['KeyW'], ['KeyA']]);
+  expect(dodgeWalkKeys(-20, -20)).toEqual(['KeyA', 'KeyW']);
+  expect(dodgeWalkKeys(0, 0, 1)).toEqual([]);
+});
 
 test('#102 raised exit steering retains the small correction toward the visible stair centre', () => {
   const frames = Array.from({ length: 12 }, (_, i) => markerWalkKeys(12, 4, i / 12));

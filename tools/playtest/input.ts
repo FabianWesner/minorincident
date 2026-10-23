@@ -4,6 +4,17 @@ interface GroundClickControls {
   mouse: { move: (x: number, y: number) => Promise<unknown>; down: () => Promise<unknown>; up: () => Promise<unknown> };
 }
 
+/** Try the visible bearing, both perpendiculars and then back away when movement is blocked. */
+export function dodgeWalkKeys(dx: number, dy: number, attempt = 0): string[] {
+  const turn = [0, Math.PI / 2, -Math.PI / 2, Math.PI][attempt % 4];
+  const x = dx * Math.cos(turn) - dy * Math.sin(turn), y = dx * Math.sin(turn) + dy * Math.cos(turn);
+  const length = Math.hypot(x, y), keys: string[] = [];
+  if (length < 1) return keys;
+  if (Math.abs(x) / length > .38) keys.push(x > 0 ? 'KeyD' : 'KeyA');
+  if (Math.abs(y) / length > .38) keys.push(y > 0 ? 'KeyS' : 'KeyW');
+  return keys;
+}
+
 /** Keyboard steering toward a visible screen-space marker. */
 export function markerWalkKeys(dx: number, dy: number, phase: number): string[] {
   const longest = Math.max(Math.abs(dx), Math.abs(dy)), keys: string[] = [];

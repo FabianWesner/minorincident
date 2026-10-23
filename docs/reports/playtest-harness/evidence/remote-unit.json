@@ -1,0 +1,296 @@
+{
+  "runtimeCommit": "6dc758170",
+  "command": "E2E_PORT=4371 SCENE_PORT=4372 sh tools/remote/run.sh \"$PWD\" --pull test-results/playtest/remote-unit-escort.json --env E2E_PORT=4371 --env SCENE_PORT=4372 -- timeout 1800 npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/playtest/remote-unit-escort.json",
+  "rawReport": "test-results/playtest/remote-unit-escort.json",
+  "sha256": "633673566303e3d77f4faa2981fcd6f82d63ae5ac4268da781895ee1a0631b39",
+  "success": true,
+  "tests": {
+    "numPassedTests": 2050,
+    "numFailedTests": 0,
+    "numPendingTests": 7
+  },
+  "driverTests": [
+    {
+      "file": "unit/playtest-combat.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "#99 one or two close infected must not plant the fists courier during the moving retreat",
+          "status": "passed"
+        },
+        {
+          "title": "#99 shelter defence and carried weapons retain their combat decisions",
+          "status": "passed"
+        },
+        {
+          "title": "#99 a close crowd permits the shipped right-hand kick while walking, rather than planting the courier",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists movement preserves the existing low-health kite policy",
+          "status": "passed"
+        },
+        {
+          "title": "#99 the unarmed driver covers visible allies during the shelter fight, then follows the retreat ring",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists ally cover requires a visible living actor",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists cover the attacked ally before chasing a closer isolated infected",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists defend visible allies when the retreat HUD asks for rear cover",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists still cover the visible trailing survivor when the exit HUD asks to stay with the group",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists use target-click approach outside punching reach instead of swinging from 1.6 m",
+          "status": "passed"
+        },
+        {
+          "title": "#99 fists cover a rendered ally being hit during an ordinary retreat or exit instruction",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-driving.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "a car blocked for three seconds reverses, then retries forward and alternates its escape turn",
+          "status": "passed"
+        },
+        {
+          "title": "visible travel resets the stall clock while tiny collision jitter does not",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-eyes.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "a stalled escort ring is cleared along its visible travel direction and stays clear",
+          "status": "passed"
+        },
+        {
+          "title": "escort clearance needs a nearby drawn living human and never runs in the finale",
+          "status": "passed"
+        },
+        {
+          "title": "#104 browser observation remains self-contained when serialized by Playwright",
+          "status": "passed"
+        },
+        {
+          "title": "Q-123 an enemy under the Home button is not a gameplay click target",
+          "status": "passed"
+        },
+        {
+          "title": "#99 ally-cover attack observation follows the submitted swing even when the simulation flag is off",
+          "status": "passed"
+        },
+        {
+          "title": "#99 an idle rendered figure supplies no attack observation even when the simulation flag is on",
+          "status": "passed"
+        },
+        {
+          "title": "#104 the driver sees the console E prompt when it is rendered in the mission tracker",
+          "status": "passed"
+        },
+        {
+          "title": "#104 the live HUD console prompt is observed while the old mission tracker is hidden",
+          "status": "passed"
+        },
+        {
+          "title": "#104 L7 driver regroups on visible survivors when it is more than 8 m from their column",
+          "status": "passed"
+        },
+        {
+          "title": "#102 the fists driver covers visible L6 walkers instead of waiting ahead at the next ring",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-finale.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "L10 selects the recovered campaign arsenal instead of keeping the crash axe",
+          "status": "passed"
+        },
+        {
+          "title": "L10 defence walks away from a visible approaching enemy instead of standing in the horde",
+          "status": "passed"
+        },
+        {
+          "title": "L10 boss defence increases separation from contact instead of circling toward the boss",
+          "status": "passed"
+        },
+        {
+          "title": "the boss kill objective aims at the visible Mega instead of a nearer walker",
+          "status": "passed"
+        },
+        {
+          "title": "rocket aim leads a visible body crossing the shot path",
+          "status": "passed"
+        },
+        {
+          "title": "finale dodging needs a visible nearby threat and remembered console, and stays out of other steps",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-frames.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "PO #100 queued loading stalls keep their recorded loading status when polled during play",
+          "status": "passed"
+        },
+        {
+          "title": "PO #100 the first post-card frame and later gameplay stalls remain guarded at 200 ms",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-input.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "blocked finale steering tries both sides and backing away instead of repeating the blocked bearing",
+          "status": "passed"
+        },
+        {
+          "title": "#102 raised exit steering retains the small correction toward the visible stair centre",
+          "status": "passed"
+        },
+        {
+          "title": "#99 approaching a visible ally attacker releases held walking/attack keys before clicking",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-progress.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "#99 following a moving visible ring is progress even when its distance stays 12 m",
+          "status": "passed"
+        },
+        {
+          "title": "#99 a stationary courier cannot gain progress just because the marker moves",
+          "status": "passed"
+        },
+        {
+          "title": "#99 oscillating player/marker positions cannot hide a 30 second navigation loop",
+          "status": "passed"
+        },
+        {
+          "title": "#99 visible countdowns progress, while a static zero-distance bring objective stays detectable",
+          "status": "passed"
+        },
+        {
+          "title": "#99 moving away and back toward a static marker does not beat its previous best distance",
+          "status": "passed"
+        },
+        {
+          "title": "#99 a visible checkpoint reposition starts a fresh movement observation",
+          "status": "passed"
+        },
+        {
+          "title": "#99 a cached pre-death ring cannot poison progress after the visible player respawns",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/playtest-startup.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "#99 fists seed persists only fists and kick while retaining campaign progress",
+          "status": "passed"
+        },
+        {
+          "title": "#99 an empty handover frame is valid; visible bodies still require rendered joints",
+          "status": "passed"
+        },
+        {
+          "title": "#99 the fists profile satisfies the real campaign save validator",
+          "status": "passed"
+        },
+        {
+          "title": "#99 the input driver resumes a visible pause menu during play",
+          "status": "passed"
+        },
+        {
+          "title": "the input driver never debug-skips the mandatory L10 Mega objective",
+          "status": "passed"
+        },
+        {
+          "title": "a handover already at zoom 1.5 must not scroll toward the launcher zoom limit",
+          "status": "passed"
+        },
+        {
+          "title": "automatic L10 progression is success only after the actual credits and campaign completion",
+          "status": "passed"
+        },
+        {
+          "title": "an unresponsive renderer fails within the observation budget and clears its timer",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/bot/late-levels.test.ts",
+      "status": "passed",
+      "assertions": [
+        {
+          "title": "bot.start dispatches L7, emits input and reports stop without E19 pending",
+          "status": "passed"
+        },
+        {
+          "title": "bot.start dispatches L8, emits input and reports stop without E19 pending",
+          "status": "passed"
+        },
+        {
+          "title": "bot.start dispatches L9, emits input and reports stop without E19 pending",
+          "status": "passed"
+        },
+        {
+          "title": "bot.start dispatches L10, emits input and reports stop without E19 pending",
+          "status": "passed"
+        },
+        {
+          "title": "L7 picks the rocket and waits for the living group while retaining fire input",
+          "status": "passed"
+        },
+        {
+          "title": "L10 uses recovered rockets and keeps moving around the console during boss defence",
+          "status": "passed"
+        },
+        {
+          "title": "L10 does not shoot hidden enemies or attack after cure release",
+          "status": "passed"
+        },
+        {
+          "title": "L9 completion waits for the completed crawl, then reports finished",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

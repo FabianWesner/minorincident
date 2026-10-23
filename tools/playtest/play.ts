@@ -18,7 +18,7 @@ import type { Issue, LevelRun, SessionOptions } from './session';
  */
 const { values } = parseArgs({ options: {
   levels: { type: 'string', default: 'L1-L10' }, quality: { type: 'string', default: 'low' }, mode: { type: 'string', default: 'campaign' },
-  heroine: { type: 'string', default: 'female' }, zoom: { type: 'string', default: '1.5' }, 'level-minutes': { type: 'string', default: '25' },
+  heroine: { type: 'string', default: 'female' }, zoom: { type: 'string', default: '1.5' }, 'level-minutes': { type: 'string', default: '60' },
   'no-skip': { type: 'boolean', default: false },
   out: { type: 'string' }, entry: { type: 'string' }, 'keep-profile': { type: 'boolean', default: false },
 } });

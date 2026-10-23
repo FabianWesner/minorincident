@@ -1,15 +1,38 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { runInNewContext } from 'node:vm';
-import { look, visibleGroupTarget } from '../../tools/playtest/eyes';
+import { EscortClearance, look, visibleGroupTarget } from '../../tools/playtest/eyes';
 
 afterEach(() => vi.unstubAllGlobals());
+
+test('a stalled escort ring is cleared along its visible travel direction and stays clear', () => {
+  const c = new EscortClearance(), friend = { x: 241.3, z: 15, hp: 60, drawn: true, corpse: false };
+  expect(c.sample('L6', 'retreat', { x: 237, z: 15 }, { x: 238, z: 15 }, [friend], 0)).toBeNull();
+  expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 7)).toBeNull();
+  expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 8)).toEqual({ x: 245.5, z: 15 });
+  expect(c.sample('L6', 'retreat', { x: 245.5, z: 15 }, { x: 242, z: 15 }, [], 9)).toEqual({ x: 245.5, z: 15 });
+  expect(c.sample('L6', 'exit', { x: 245.5, z: 15 }, { x: 273, z: 15 }, [friend], 20)).toBeNull();
+});
+
+test('escort clearance needs a nearby drawn living human and never runs in the finale', () => {
+  for (const friend of [
+    { x: 241, z: 15, hp: 60, drawn: false, corpse: false },
+    { x: 241, z: 15, hp: 0, drawn: true, corpse: true },
+    { x: 230, z: 15, hp: 60, drawn: true, corpse: false },
+    { x: 241, z: 15, hp: 60, drawn: true, corpse: false, kind: 'companion' },
+  ]) {
+    const c = new EscortClearance();
+    c.sample('L6', 'retreat', { x: 237, z: 15 }, { x: 238, z: 15 }, [], 0);
+    expect(c.sample('L6', 'retreat', { x: 242, z: 15 }, { x: 242, z: 15 }, [friend], 20)).toBeNull();
+  }
+  expect(new EscortClearance().sample('L10', 'mega', { x: 242, z: 15 }, { x: 242, z: 15 }, [], 20)).toBeNull();
+});
 
 function renderedEyes(clip: string, simulationAttacking: boolean, serialized = false, trackerText = '', liveHud = false, coveredByButton = false) {
   const player = { id: 1, kind: 'player', transform: { x: 0, y: 0, z: 0, yaw: 0 }, health: { current: 100, max: 100 } };
   const enemy = { id: 2, kind: 'infected', faction: 'infected', transform: { x: 1, y: 0, z: 0, yaw: 0 }, health: { current: 60, max: 60 }, combat: { attacking: simulationAttacking } };
   vi.stubGlobal('innerWidth',1280); vi.stubGlobal('innerHeight',720);
   vi.stubGlobal('document', {
-    querySelector: (selector: string) => selector === 'canvas' ? { getBoundingClientRect: () => ({ left: 0, top: 0, width: 1280, height: 720 }) } : selector === '[data-testid="mission-tracker"]' ? { textContent: trackerText, hidden: liveHud, offsetParent: liveHud ? null : {}, dataset: {} } : selector === '[data-testid="objective-text"]' && liveHud ? { textContent: trackerText, hidden: false, offsetParent: {} } : null,
+    querySelector: (selector: string) => selector === 'canvas' ? { getBoundingClientRect: () => ({ left: 0, top: 0, width: 1280, height: 720 }) } : selector === '[data-testid="mission-tracker"]' ? { textContent: trackerText, hidden: liveHud, offsetParent: liveHud ? null : {}, dataset: { distance: '99' } } : (selector === '[data-testid="objective-text"]' || selector === '[data-testid="objective-tracker"]') && liveHud ? { textContent: trackerText, hidden: false, offsetParent: {}, dataset: {} } : null,
     querySelectorAll: () => [],
     elementFromPoint: () => ({ closest: () => coveredByButton ? {} : null }),
   });
@@ -49,6 +72,14 @@ test('#104 the driver sees the console E prompt when it is rendered in the missi
 
 test('#104 the live HUD console prompt is observed while the old mission tracker is hidden', () => {
   expect(renderedEyes('shamble', false, true, 'Press E or tap the console action · Activate the dispersal console', true).prompt).toContain('Press E');
+});
+
+test('L5 search observes the visible HUD cue and its distance instead of the hidden legacy tracker', () => {
+  const text = 'Look for anyone still alive · Survivors found 3/5 · Search a wrecked bus on Lakeshore Avenue · 23 m';
+  const eyes = renderedEyes('shamble', false, true, text, true);
+  expect(eyes.tracker).toBe(text);
+  expect(eyes.distance).toBe(23);
+  expect(renderedEyes('shamble', false, true, 'Hold still 1s or press E: pry open the bus door', true).distance).toBeNull();
 });
 
 test('#104 L7 driver regroups on visible survivors when it is more than 8 m from their column', () => {

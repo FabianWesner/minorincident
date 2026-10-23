@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "baseRevision": "2a65f61a4bf449c641003c77c13144bd048dd981",
+  "sourceProvenance": "Checks ran against the working tree on lane/batch13l; these hashes identify the tested code committed with this receipt.",
+  "testedSourceSha256": {
+    "tools/playtest/eyes.ts": "9f8c88150d2da6f0ee9e2419d393e449cc188d142d4095a699d4fa177ba11527",
+    "tools/playtest/session.ts": "774617b6a8139a33da9f0b7000b52d58041d709914ae5eb6b8e6e5c307f613f9",
+    "tests/unit/playtest-eyes.test.ts": "c718fd7c516fddbcee496126a23b56cc49476ce2e4afe3e315891c1676f9f7d4",
+    "tests/qa/invariants/oracles.ts": "52c89d78081eafe672b771a091ac24103607ab3b8a4ad43904465c3929d643a0",
+    "tests/qa/invariants/oracles.test.ts": "cdd178438282c0cc07bf3e082d87574d06078ec7d09c20569ca9c298b220856d",
+    "tests/qa/invariants/contract.test.ts": "bcfdcbfe1007f3ce88fbc3926fbe40a2223078fc27f93d3d631eb3141ec012e7",
+    "tests/qa/invariants/rendering/scene-lab.spec.ts": "e454306ab613156761a1d98f6f1eecb4c7e7452eef030270fe706a380b8c83a7"
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "remoteUnit": {
+    "command": "npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=test-results/l5-regression-13l/unit.json",
+    "exitCode": 0,
+    "success": true,
+    "numPassedTests": 2067,
+    "numFailedTests": 0,
+    "numPendingTests": 7,
+    "existingMacOnlyExclusions": [
+      "machine browser capacity reserves units across concurrent jobs and releases them for waiting jobs",
+      "machine browser capacity returns a child exit 75 exactly once and preserves its stderr",
+      "machine browser capacity charges the Playwright worker count, including separated CLI arguments",
+      "machine browser capacity rejects undersized and invalid reservations before launching a command",
+      "machine browser capacity allows nesting within a reservation and rejects expansion",
+      "machine browser capacity does not use a legacy third slot when E2E_SLOTS exceeds two",
+      "machine browser capacity quiet-run covers the legacy fourth slot even with E2E_SLOTS=1"
+    ]
+  },
+  "remoteLevels": {
+    "command": "npx vitest run tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/l5-regression-13l/levels-full.json",
+    "exitCode": 0,
+    "success": true,
+    "numPassedTests": 470,
+    "numFailedTests": 0,
+    "numPendingTests": 2,
+    "existingOptInProbes": [
+      "L4 complete bot probe",
+      "L4 collapse probe (idle player, god)"
+    ]
+  },
+  "remoteCompletionBattery": {
+    "command": "npm run test:levels",
+    "exitCode": 0,
+    "completed": 30,
+    "runs": 30,
+    "collisionFailures": 0,
+    "deaths": 1
+  },
+  "smoke": {
+    "command": "E2E_PORT=4441 SCENE_PORT=4442 npm run test:smoke",
+    "exitCode": 0,
+    "simPassed": 6,
+    "browser": {
+      "startTime": "2026-10-23T23:05:53.560Z",
+      "duration": 135185.423,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "qaInvariants": {
+    "command": "E2E_PORT=4441 SCENE_PORT=4442 npm run qa:invariants",
+    "exitCode": 0,
+    "stages": [
+      {
+        "stage": "remote-sim",
+        "code": 0,
+        "seconds": 240.303,
+        "revision": "2a65f61a4bf449c641003c77c13144bd048dd981",
+        "log": "test-results/qa-invariants/remote-sim.log"
+      },
+      {
+        "stage": "build",
+        "code": 0,
+        "seconds": 6.054,
+        "revision": "2a65f61a4bf449c641003c77c13144bd048dd981",
+        "log": "test-results/qa-invariants/build.log"
+      },
+      {
+        "stage": "Mac-WebGPU-low",
+        "code": 0,
+        "seconds": 238.501,
+        "revision": "2a65f61a4bf449c641003c77c13144bd048dd981",
+        "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+      }
+    ],
+    "sim": {
+      "success": true,
+      "numPassedTests": 28,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "browser": {
+      "startTime": "2026-10-23T23:14:14.627Z",
+      "duration": 187256.151,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "earlierInfrastructureAttempts": {
+    "levelAcceptance": "The initial full suite was stopped by its external 1800-second budget before reporting. The full retry completed with an external 5400-second budget; no source test timeout or assertion was changed.",
+    "smoke": "The first browser attempt refused the reproduction server already on 4441; stopping that owned server allowed the full unchanged smoke command to pass."
+  }
+}

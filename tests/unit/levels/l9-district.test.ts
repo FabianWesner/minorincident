@@ -52,6 +52,19 @@ test('T-E31-05-district @E31-AC05 open road departure/reentry, shortcut ratio an
       expect(reached[district.nav.index(x+dx,z+dz)], `${route.id} hull ${x+dx},${z+dz}`).toBe(1);
       expect(district.groundHeight(x+dx,z+dz)).toBe(0);
     }
+    // A small steering correction must remain on connected, supported ground along every drive route.
+    for (let i = 1; i < route.points.length; i++) {
+      const [ax, az] = route.points[i - 1], [bx, bz] = route.points[i], length = Math.hypot(bx - ax, bz - az) || 1;
+      const side = [-2.5, 2.5];
+      for (const [x, z] of samples([route.points[i - 1], route.points[i]])) {
+        if (x > 508 && x < 524) continue; // The authored crash gully is intentionally unsupported.
+        for (const offset of side) {
+          const sx = x - (bz - az) / length * offset, sz = z + (bx - ax) / length * offset;
+          expect(reached[district.nav.index(sx, sz)], `${route.id} steering offset ${offset} at ${sx},${sz}`).toBe(1);
+          expect(district.groundHeight(sx, sz)).toBe(0);
+        }
+      }
+    }
     for (const risk of route.risks) {
       expect(samples(route.detour,.5).every(p => Math.hypot(p[0]-risk[0],p[1]-risk[1])>12), `${route.id} risk detour`).toBe(true);
     }
@@ -100,4 +113,11 @@ test('T-E31-04-dress @E31-AC04 route landmarks reuse countryside stock and leave
   expect(layout.placements.filter(p => p.assetId === 'veh.wreck' && p.position[0] < 450 && p.position[2] > -80 && p.position[2] < -40).length).toBeGreaterThanOrEqual(4);
   // The existing AC05 footprint/flood test checks every road, detour and sightline against these colliders.
   expect(layout.placements.every(p => worldAssets[p.assetId])).toBe(true);
+});
+
+test('T-E31-Q131 @E31-AC21 APC start shoulder clears the shallow-steer tree and pole wedge', () => {
+  const conflicts = layout.placements.filter(p =>
+    /^(prop|veh)\./.test(p.assetId) && p.visualAabb.min[0] <= -441.5 && p.visualAabb.max[0] >= -558.5 && p.visualAabb.min[2] <= 8.5 && p.visualAabb.max[2] >= -8.5,
+  ).map(p => p.id);
+  expect(conflicts, 'the APC swept hull and 2.5 m steering allowance need open shoulder at the reported start position').toEqual([]);
 });
