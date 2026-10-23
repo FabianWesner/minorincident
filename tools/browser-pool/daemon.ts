@@ -14,7 +14,7 @@ type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: 
 type Connection = { client: WebSocket; upstream: WebSocket; backend: Backend; token?: string; parents: Map<string, string>; types: Map<string, string>; pending: Map<number, { lease?: Lease; create?: Lease }>; leases: Set<Lease>; closed: boolean; job?: string };
 const port = Number(process.env.BROWSER_POOL_PORT ?? 4329);
 if (!Number.isInteger(port) || port < 4321 || port > 4329) throw new Error('Pool port must be 4321–4329');
-const configuredLimit = Number(process.env.BROWSER_POOL_SHARED_LIMIT ?? 2);
+const configuredLimit = Number(process.env.BROWSER_POOL_SHARED_LIMIT ?? 4);
 if (!Number.isInteger(configuredLimit) || configuredLimit < 1 || configuredLimit > 6) throw new Error('Shared limit must be 1–6');
 const idleMs = Number(process.env.BROWSER_POOL_IDLE_MS ?? 60_000);
 const browserIdleMs = Number(process.env.BROWSER_POOL_BROWSER_IDLE_MS ?? 60_000);
@@ -64,9 +64,10 @@ function pump() {
   for (let i = 0; i < waiters.length;) {
     const waiter = waiters[i], c = waiter.connection;
     if (c.closed) { waiters.splice(i, 1); continue; }
+    const softwareFull = c.backend === 'swiftshader' && [...leases.values()].filter(l => l.backend === 'swiftshader').length >= 2;
     const permitted = waiter.exclusive
       ? exclusive?.id === waiter.exclusive && exclusive.granted && leases.size === 0
-      : !exclusive && leases.size < limit;
+      : !exclusive && leases.size < limit && !softwareFull;
     if (!permitted) { i++; continue; }
     waiters.splice(i, 1);
     const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
