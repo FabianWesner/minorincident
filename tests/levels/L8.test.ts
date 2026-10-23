@@ -96,7 +96,7 @@ for (const count of [0, 12, 35]) test(`T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-
     const destination = new SimWorld(); await destination.init();
     try {
       const c = compositions.L9;
-      destination.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
+      destination.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1, null, undefined, undefined, [payload.vehicle.id, ...payload.occupants.map(e => e.id)].filter(id => id !== 1));
       destination.vehicles!.restoreTransfer(payload, { x: destination.districts!.playerStart[0], z: destination.districts!.playerStart[1] });
       expect(destination.vehicles!.active).toBe(payload.vehicle.id);
       expect(destination.entities.get(payload.vehicle.id)!.health).toEqual(payload.vehicle.health);
