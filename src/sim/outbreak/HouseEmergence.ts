@@ -21,6 +21,8 @@ export interface HouseDoor {
   x: number; z: number;
   /** Outward unit normal of the door. */
   nx: number; nz: number;
+  /** Clear authored door aperture (older saved emergence state may omit it). */
+  width?: number;
   /** Porch floor along the walk out: [until metres past the threshold, floor height], ground (0) beyond the last. */
   floor: [number, number][];
   /** Walkable doorstep on the path in front of the porch steps. */
@@ -136,6 +138,10 @@ export function emergeResident(world: SimWorld, house: HouseEmergence, tick: num
   // the nearest nav cell and reset its height): the scripted walk owns the body until the doorstep.
   if (e.combat) e.combat.staggerUntil = tick + 2;
   e.emerging = true;
+  // The rear row starts behind the door seal. Give its whole walk the same bounded aperture ownership
+  // as the technician's handover route, instead of pinning that row against the inside face forever.
+  e.doorLane = { x: house.x, z: house.z, ox: house.nx, oz: house.nz, half: (house.width ?? 1.2) / 2,
+    start: -(opts.inside ?? emergeInsideM) - actorRadius(e), end: Math.hypot(house.sx - house.x, house.sz - house.z) + .05 };
   world.solids.admit(e, 'house.emergence', 0, false);
   world.openDoor(doorId(house), { x: house.x, z: house.z, nx: house.nx, nz: house.nz }, tick);
   (house.walking ??= []).push({ id, until, leg: -1, ...(opts.lateral ? { lane: opts.lateral } : {}) });
@@ -160,7 +166,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
   const opened = world.openDoors.get(doorId(house)), swinging = !!opened && tick < opened.at + 27;
   for (let i = walking.length - 1; i >= 0; i--) {
     const w = walking[i], e = world.entities.get(w.id);
-    if (!e?.infected || e.health.current <= 0) { if (e) e.emerging = undefined; walking.splice(i, 1); continue; }
+    if (!e?.infected || e.health.current <= 0) { if (e) { e.emerging = undefined; delete e.doorLane; } walking.splice(i, 1); continue; }
     const p = e.transform;
     if (swinging) { if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2); w.until++; continue; }
     if (w.leg < 0) {
@@ -199,7 +205,7 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
         const range = world.solids.clear(p, radius, e.id, false) ? 4 : 0;
         if (!world.solids.admit(e, 'house.exit', range, false)) continue;
       }
-      walking.splice(i, 1); e.emerging = undefined; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id);
+      walking.splice(i, 1); e.emerging = undefined; delete e.doorLane; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id);
     }
   }
   return done;

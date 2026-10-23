@@ -23,6 +23,7 @@ function actor(e: EntitySnapshot): boolean {
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   if (!a) return false;
+  if (a.contactExempt === b.id || b.contactExempt === a.id) return true;
   const passenger = a.passengerOf, owner = a.attachedTo, other = b.attachedTo;
   return passenger !== undefined && passenger === b.passengerOf || owner !== undefined && (owner === b.id || owner === other) || other !== undefined && other === a.id;
 }
@@ -221,11 +222,13 @@ export class SolidRegistry {
     const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     const nav = e?.infected ? this.world.infected?.infectedNav : this.world.infected?.nav;
-    nav?.visitSolids(at.x, at.z, radius, (box, id) => {
+    // A scripted door walk crosses the open aperture on its bounded authored lane.
+    const lane = e?.doorLane, along = lane ? (at.x - lane.x) * lane.ox + (at.z - lane.z) * lane.oz : 0;
+    if (!lane || along <= (lane.start ?? 0) || along > lane.end || Math.abs((at.x - lane.x) * -lane.oz + (at.z - lane.z) * lane.ox) >= lane.half) nav?.visitSolids(at.x, at.z, radius, (box, id) => {
       // Height rejects most nearby roofs/supports before any ownership lookup.
       if (!(box.y + box.halfY > bottom && box.y - box.halfY < top)) return;
-      // Crowd lane edges (navOnly, L6) hold NPC bodies only; the courier and her companion walk the drawn walkways.
-      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion)) return;
+      // L6 followers displaced onto a walkable side walkway must cross the crowd lane edge back to the column.
+      if ((box as { navOnly?: boolean }).navOnly && (e?.id === 1 || e?.companion || this.world.missions?.state.l6?.survivors.some(r => r.id === e?.id && r.status === 'following'))) return;
       // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
@@ -357,11 +360,32 @@ export class SolidRegistry {
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true, playerClearance = 0): Point | null {
     const nav = this.world.infected?.nav, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     let connected = false;
+    const blockers: { entity: EntitySnapshot; reach2: number }[] = [];
     const direction = { x: 0, z: 0 };
     const player = playerClearance ? this.world.entities.get(1) : undefined;
     const fits = (p: Point) => {
       if (playerClearance && player && ignoreId !== 1 && layers(p, player.transform) && Math.hypot(p.x - player.transform.x, p.z - player.transform.z) < playerClearance) return false;
-      if (navigation && nav && !nav.contains(p.x, p.z, radius) || !this.clear(p, radius, ignoreId)) return false;
+      if (navigation && nav && !nav.contains(p.x, p.z, radius)) return false;
+      // Adjacent admission probes often hit the same body. As in commit(), a
+      // previous contact is an exact rejection witness, never a free-space
+      // proof. Clear probes still run the complete registry query. Transaction
+      // and companion footprints retain their existing specialized checks.
+      for (let i = blockers.length - 1; i >= 0; i--) {
+        const { entity, reach2 } = blockers[i];
+        if ((p.x - entity.transform.x) ** 2 + (p.z - entity.transform.z) ** 2 < reach2) {
+          this.bodyConflict = true; this.bodyConflictId = entity.id; return false;
+        }
+      }
+      if (!this.clear(p, radius, ignoreId)) {
+        const blocker = this.bodyConflict ? this.world.entities.get(this.bodyConflictId) : undefined;
+        // All candidates in this synchronous search keep the anchor's height.
+        // Cache a few exact contact circles, checking their fixed masks once.
+        if (!this.committing && blocker && !e?.companion && !blocker.companion && actor(blocker) && !pairExempt(e, blocker) && layers(at, blocker.transform)) {
+          if (blockers.length === 8) blockers.shift();
+          blockers.push({ entity: blocker, reach2: (radius + actorRadius(blocker) - skin) ** 2 });
+        }
+        return false;
+      }
       if (!connected || p === at) return true;
       const dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
       if (!distance) return true;
@@ -482,7 +506,7 @@ export class SolidRegistry {
       const radius = actorRadius(e);
       // Shapes and eligibility are stable during this final transaction. Reuse
       // their snapshot in the correction loops; full audits still read actors.
-      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
+      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined || e.contactExempt !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
       this.maxActor = Math.max(this.maxActor, e.companion ? radius + .4 : radius); this.bodies.push(e); this.live[e.id] = e;
       this.bodyIds.push(e.id);
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);

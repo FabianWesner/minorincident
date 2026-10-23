@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { Document, NodeIO } from '@gltf-transform/core';
 import { worldAssets } from '../../src/assets/worldDefinitions';
 import physicsAssets from '../../src/data/physicsAssets';
-import { l6, l6Doors, l6PhotoSpots } from '../../src/data/l6';
+import { l6, l6Doors, l6PhotoSpots, l6ShelterSeats } from '../../src/data/l6';
 import type { DistrictLayout, Placement, Point } from '../../src/levels/districts/types';
 /** The station sits SZ north of its authored frame so its platform track (kit.metro-track, z=23 in model frame) lands on the tunnel line z=15 (PO 10-15 "Tracks are disconnected"). */
 const SZ = -8;
@@ -84,6 +84,8 @@ for(const x of l6.gates) for(const z of [12.35,17.65]) place('prop.crates',x-3,z
 // Appended last so the ids of every other placement stay (placement-solids baseline keys on them).
 // One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
 for(const x of [-24,-12,0,12,24]) place('kit.metro-track',x,15,.35);
+// Real seats for the shelter's chair-sitting actors; append to preserve existing placement ids.
+for(const seat of l6ShelterSeats) place('prop.bench',seat.x,seat.z,.6,seat.yaw,'shelter-camp');
 const anchor=(name:string,x:number,z:number,y=.6)=>{layout.anchors[name]={position:[x,y,z],yaw:0};};
 anchor('player-start',3,8+SZ);anchor('maintenance-a',-10,-10+SZ);anchor('maintenance-b',10,-10+SZ);anchor('tunnel-start',30,15);anchor('mid-tunnel',150,15);anchor('exit-platform',242,15);anchor('night-exit',273,15,3.9);
 for(const [i,p] of l6Doors.entries())anchor(`service-${i}`,p.x,p.z);

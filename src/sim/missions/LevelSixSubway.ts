@@ -3,6 +3,7 @@ import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
+import { seatAnchor } from '../npc/seats';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
 import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
@@ -77,6 +78,16 @@ export class LevelSixSubway {
       e.civilian!.story={clip:routine==='sit'?'npc-sit':routine==='rest'?'death-side':routine==='talk'?'npc-gesture':routine==='treat'?'npc-cower':routine==='share'?'npc-give':'idle',start:start-i*13, ...(i===0?{prop:'pistol' as const}:{})};
       if(resident){e.health={current:resident.health.max,max:resident.health.max};e.appearance=structuredClone(resident.appearance);if(i<count)e.civilian!.story=structuredClone(resident.civilian!.story);}
       if(resident) readyCarriedAlly(e, start);
+      if(e.civilian!.story?.clip==='npc-sit'){
+        const district=w.districts!.districts[0], bench=district.layout.placements.filter(p=>p.assetId==='prop.bench')[Math.floor((i-1)/5)];
+        const seat=bench&&seatAnchor(bench.assetId,bench.position,bench.yaw,bench.scale,{x:district.origin[0],z:district.origin[1]});
+        if(seat){
+          const front={x:Math.cos(bench.yaw),z:-Math.sin(bench.yaw)}, target=this.snap({x:seat.x+front.x*.9,z:seat.z+front.z*.9});
+          Object.assign(e.transform,{...target,y:1.3,yaw:bench.yaw});w.spatial.set(e.id,target.x,target.z);
+          e.civilian!.schedule=[{activity:'sit',anchor:'l6/sit',target,seat,seatLift:seat.lift,seatProp:`${district.id}/${bench.id}`,facing:{x:seat.x+front.x*3,z:seat.z+front.z*3},ticks:60*60*10}];
+          e.civilian!.scheduleStep=0;e.civilian!.activityUntil=start+60*60*10;e.civilian!.activityStarted=start-60;
+        }
+      }
       if(i===0){e.civilian!.ally=allyState('officer',at,true);e.civilian!.ally.gun={damage:20,shotS:.5,rangeM:16,nearM:16,hitNear:.5,hitFar:.5};e.civilian!.ally.weapon='pistol';}
       this.s.survivors.push({key,id,injured,routine,status:'shelter',straggler:false,collected:false,rejoined:false,hold:0});
     });
@@ -112,11 +123,14 @@ export class LevelSixSubway {
       // tunnel access instead, rotating the alternatives so breach two retains
       // at least two sources. Test the snapped pose, which is the actual spawn.
       const candidates=wave<=2?[requested,...[2,3,4,5,6,7].map((_,j)=>2+(j+requested)%6)]:[requested];
-      const door=candidates.find(index=>{const base=l6Doors[index];return ai.director.offscreen(this.snap({x:base.x+(i%2)*.8,z:base.z-1.4},wave===4?w.entities.get(1)!.transform:undefined),.6);});
+      // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
+      const mouth=(index:number)=>{const base=l6Doors[index];return {x:base.x+(i%2)*.8,z:base.z+(wave===4&&base.z<l6.tunnel.z?1.4:-1.4)};};
+      const door=candidates.find(index=>ai.director.offscreen(this.snap(mouth(index),wave===4?w.entities.get(1)!.transform:undefined),.6));
       if(door===undefined)continue;
-      const base=l6Doors[door],at=this.snap({x:base.x+(i%2)*.8,z:base.z-1.4},wave===4?w.entities.get(1)!.transform:undefined);
+      const base=l6Doors[door],at=this.snap(mouth(door),wave===4?w.entities.get(1)!.transform:undefined);
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
       const id=o.spawnPedestrian(at,{model}),e=w.entities.get(id)!;o.turnNow(e);
+      if(wave===4)ai.rush(id,{x:base.x,z:l6.tunnel.z},w.tick+ticks(10));
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
     }
     return spawned;
