@@ -170,6 +170,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 - @types/node 22.19.1 — @types/node. Source: https://www.npmjs.com/package/@types/node. License: MIT (https://spdx.org/licenses/MIT.html).
 - @types/pngjs 6.0.5 — @types/pngjs. Source: https://www.npmjs.com/package/@types/pngjs. License: MIT (https://spdx.org/licenses/MIT.html).
 - @types/three 0.186.0 — @types/three. Source: https://www.npmjs.com/package/@types/three. License: MIT (https://spdx.org/licenses/MIT.html).
+- @types/ws 8.18.2 — @types/ws. Source: https://www.npmjs.com/package/@types/ws. License: MIT (https://spdx.org/licenses/MIT.html).
 - eslint 10.12.0 — eslint. Source: https://www.npmjs.com/package/eslint. License: MIT (https://spdx.org/licenses/MIT.html).
 - meshoptimizer 1.3.0 — meshoptimizer. Source: https://www.npmjs.com/package/meshoptimizer. License: MIT (https://spdx.org/licenses/MIT.html).
 - ndarray-pixels 5.2.0 — ndarray-pixels. Source: https://www.npmjs.com/package/ndarray-pixels. License: MIT (https://spdx.org/licenses/MIT.html).
@@ -180,6 +181,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 - typescript-eslint 8.71.0 — typescript-eslint. Source: https://www.npmjs.com/package/typescript-eslint. License: MIT (https://spdx.org/licenses/MIT.html).
 - vite 6.4.3 — vite. Source: https://www.npmjs.com/package/vite. License: MIT (https://spdx.org/licenses/MIT.html).
 - vitest 5.0.3 — vitest. Source: https://www.npmjs.com/package/vitest. License: MIT (https://spdx.org/licenses/MIT.html).
+- ws 8.22.0 — ws. Source: https://www.npmjs.com/package/ws. License: MIT (https://spdx.org/licenses/MIT.html).
 - zod 4.6.5 — zod. Source: https://www.npmjs.com/package/zod. License: MIT (https://spdx.org/licenses/MIT.html).
 
 ## Other technology and services

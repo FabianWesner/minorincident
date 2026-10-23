@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../tools/browser-pool/fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Game } from '../../src/Game';
 import { infectedSpecialMoves, type InfectedSpecialMove } from '../../src/data/infected';

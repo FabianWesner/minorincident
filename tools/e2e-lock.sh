@@ -6,6 +6,18 @@
 command -v lockf >/dev/null 2>&1 || exec "$@"
 slots="${E2E_SLOTS:-2}"
 root=$(cd "$(dirname "$0")/.." && pwd)
+# Only migrated callers bypass legacy process locks. All other tools wait on the
+# slots held by the daemon, and keep working unchanged when the pool is down.
+pool_supported=0
+for arg in "$@"; do
+  case "$arg" in
+    playwright|*/playwright|*/playwright/cli.js|*/@playwright/test/cli.js|tools/scenelab/cli.ts|tools/scenelab/catalog.ts|tools/playtest/session.ts|tools/playtest/seed.ts|tools/playtest/live.ts|tools/qa/ab.ts|tools/browser-pool/lane-load.ts) pool_supported=1;;
+  esac
+done
+for arg in "$@"; do case "$arg" in webkit|--project=webkit) pool_supported=0;; esac; done
+if [ "$pool_supported" -eq 1 ] && node "$root/tools/browser-pool/detect.mjs"; then
+  exec node --import tsx "$root/tools/browser-pool/wrapper.ts" shared "$@"
+fi
 if [ "${MI_E2E_JOB_HELD:-}" != 1 ]; then
   export MI_E2E_JOB_HELD=1
   exec python3 "$root/tools/browser-job.py" -- sh "$0" "$@"

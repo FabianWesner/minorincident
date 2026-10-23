@@ -1,4 +1,5 @@
-import { chromium, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { preview } from 'vite';
 import { parseArgs } from 'node:util';
 import { createHash } from 'node:crypto';
@@ -37,10 +38,10 @@ const rows:Row[]=[];
 let server:Awaited<ReturnType<typeof preview>>|undefined;
 if(Object.values(sources).includes('dist')){
   if(!existsSync(resolve(values['dist-dir']!,'index.html')))throw new Error('Build the local candidate first: npm run build');
-  server=await preview({configFile:false,build:{outDir:resolve(values['dist-dir']!)},preview:{host:'127.0.0.1',port:4201,strictPort:true}});
+  server=await preview({configFile:false,build:{outDir:resolve(values['dist-dir']!)},preview:{host:'127.0.0.1',port:Number(process.env.E2E_PORT??4323),strictPort:true}});
 }
-const browser=await chromium.launch({headless:true,args:process.platform==='darwin'?['--use-angle=metal','--enable-gpu','--enable-unsafe-webgpu','--ignore-gpu-blocklist']:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--enable-unsafe-webgpu','--ignore-gpu-blocklist']}).catch(async error=>{await server?.close();throw error;});
-function sourceUrl(source:string){const u=new URL(source==='dist'?'http://127.0.0.1:4201':source);for(const [key,value]of Object.entries({test:'1',scenelab:'1',profile:'1',dpr:'1',quality:'low',audio:'muted',preload:'0',seed:String(seed)}))u.searchParams.set(key,value);return u.toString();}
+
+function sourceUrl(source:string){const u=new URL(source==='dist'?`http://127.0.0.1:${process.env.E2E_PORT??4323}`:source);for(const [key,value]of Object.entries({test:'1',scenelab:'1',profile:'1',dpr:'1',quality:'low',audio:'muted',preload:'0',seed:String(seed)}))u.searchParams.set(key,value);return u.toString();}
 function escape(value:unknown){return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');}
 function report(status:'running'|'complete'|'failed'){
   rows.sort((a,b)=>b.score-a.score);
@@ -76,6 +77,8 @@ async function sheet(page:Page,id:string,images:Buffer[][],still:number){
 try{
   report('running');
   for(const side of ['baseline','candidate'] as const){
+    for(const variant of variants){
+    const browser=await launchBrowser({headless:true,args:process.platform==='darwin'?['--use-angle=metal','--enable-gpu','--enable-unsafe-webgpu','--ignore-gpu-blocklist']:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--enable-unsafe-webgpu','--ignore-gpu-blocklist']}).catch(async error=>{await server?.close();throw error;});
     const context=await browser.newContext({viewport:{width:1280,height:720},deviceScaleFactor:1});
     try{
       const page=await context.newPage();page.setDefaultTimeout(180000);await page.addInitScript('globalThis.__name = fn => fn');
@@ -89,7 +92,6 @@ try{
       const entry=build.scripts.find(s=>/\/build\/index-/.test(s)),entryText=entry?await(await page.request.get(entry)).text():'';
       builds[side]={...build,commit:/Build:\s*([0-9a-f]{7,40})/.exec(entryText)?.[1]??'unknown'};
       const scratch=await context.newPage();
-      for(const variant of variants){
         const {stop,zoom,id}=variant;console.log(`[${side}] ${id}: reaching ${stop.setup??stop.checkpoint??'start'}`);
         try{
           const save=debugCampaign(Number(stop.level.slice(1))<=4?10:Number(stop.level.slice(1)) as Level,null);save.settings.quality='low';save.seed=seed;
@@ -123,10 +125,10 @@ try{
             report('running');console.log(`[score] ${id}: ${(Math.max(...results.map(r=>r.score))*100).toFixed(2)}%`);
           }
         }catch(error){errors.push({side,stop:id,message:error instanceof Error?error.message:String(error)});console.error(`[unmeasured] ${side} ${id}: ${errors.at(-1)!.message}`);report('running');}
-      }
-    }finally{await context.close();}
+    }finally{await context.close();await browser.close();}
+    }
   }
   const summary=report(errors.length?'failed':'complete');console.log(JSON.stringify({report:output,status:summary.status,measured:summary.measuredStops,changed:summary.aboveThreshold.length,categoryCoverage:summary.categoryCoverage,imageBytes:summary.imageBytes},null,2));
   if(errors.length)process.exitCode=2;
 }catch(error){errors.push({side:'runner',stop:'boot',message:error instanceof Error?error.message:String(error)});report('failed');throw error;}
-finally{await browser.close();await server?.close();if(existsSync(raw)&&readdirSync(raw).length===0)rmdirSync(raw);}
+finally{await server?.close();if(existsSync(raw)&&readdirSync(raw).length===0)rmdirSync(raw);}

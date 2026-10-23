@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { expect, test, type Browser } from '@playwright/test';
+import { type Browser } from '@playwright/test';
+import { expect, test } from '../../../../tools/browser-pool/fixtures';
 import { newCampaign, preset, type ProgressionPreset } from '../../../../src/sim/progression/Campaign';
 import { oracle } from '../oracles';
 import { SceneSession, readSpec, stopServer } from '../../../../tools/scenelab/session';

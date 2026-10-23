@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../browser-pool/fixtures';
 import { SceneSession, readSpec } from './session';
 import { runSpec } from './run';
 
