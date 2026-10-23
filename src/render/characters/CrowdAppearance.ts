@@ -62,6 +62,13 @@ export function crowdAppearanceColor(infected = false) {
 const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
 const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));
 const swatches = Object.entries(palette).filter(([name]) => /^(hair|denim|trouser|khaki|navy|skin|infectedSkin)/.test(name)).map(([name, hex]) => ({ name, color: new Color(hex) }));
+// aftermath.py folds skin materials into vertex colours with a fixed 8% soot tint.
+// Retain their skin ownership so those heads can register an accessory fit after material folding.
+swatches.push(...swatches.filter(({ name }) => /skin/i.test(name)).map(({ name, color }) => ({ name, color: color.clone().multiplyScalar(.92) })));
+// The stock survivor group's local skin palette is already folded/quantized in its shipped GLBs.
+// Measured linear RGB for warm skin, blush and shadow; these are not the shared palette's swatches.
+swatches.push(...[[.79043, .40030, .23576], [.68596, .27928, .20208], [.44918, .17378, .10665]]
+  .map(([r, g, b]) => ({ name: 'skinSurvivorAftermath', color: new Color().setRGB(r, g, b) })));
 // The male hoodie export calls its brown hair swatch woodWarm; it is local to the head, never wood props.
 swatches.push({ name: 'headHair', color: new Color('#57301f') }, { name: 'headHair', color: new Color(palette.woodWarm) });
 /** Also annotates shipped prebuilt civilian bakes, whose material names were folded into vertex colours.
