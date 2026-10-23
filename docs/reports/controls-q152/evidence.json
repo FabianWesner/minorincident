@@ -1,0 +1,728 @@
+{
+  "issue": "Q-152",
+  "implementationCommit": "703813ee7562b26401cbf9d0821c9717a54b5a15",
+  "originalSource": {
+    "commit": "38d7c2e8d",
+    "sha256": "7e0e0dba639d2f0f2c396447b405344b7f20e0b1858ec46b18e8acdfae6cf4e0"
+  },
+  "fixedSourceSha256": "ace19a7d9f7e36389faf242d448cba2c2250f1981529a92d88b80590baec89d0",
+  "testSha256": "3eff269f72d5905ace4ad1b4f3ae56b55696feb1fdab0151fdb076d4c9da8300",
+  "regression": {
+    "command": "npx vitest run tests/unit/input/attack-move.test.ts --maxWorkers=4",
+    "firstObservedRed": {
+      "timestamp": "2026-10-23T20:19:17+02:00",
+      "tests": 5,
+      "failed": 4,
+      "passed": 1,
+      "evidence": "Initial unit-run output in the task session, before applying the fix. The original-code rerun below includes the expanded eight-case matrix."
+    },
+    "originalCodeRerun": {
+      "passed": 1,
+      "failed": 7,
+      "assertions": [
+        {
+          "title": "Q-152 @E03 @E03-AC14 Space hold never turns a released ground click into pointer-follow movement",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:46:30\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyJ hold never turns a released ground click into pointer-follow movement",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:46:30\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyK hold never turns a released ground click into pointer-follow movement",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyZ hold never turns a released ground click into pointer-follow movement",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:46:30\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 Space with held LMB only aims between fresh clicks",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:63:40\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyJ with held LMB only aims between fresh clicks",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:63:40\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyK with held LMB only aims between fresh clicks",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:63:40\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyZ with held LMB only aims between fresh clicks",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected { x: -3.999999999999943, \u2026(1) } to be undefined\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-q152/tests/unit/input/attack-move.test.ts:63:40\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+          ]
+        }
+      ]
+    },
+    "fixed": {
+      "passed": 8,
+      "failed": 0,
+      "assertions": [
+        {
+          "title": "Q-152 @E03 @E03-AC14 Space hold never turns a released ground click into pointer-follow movement",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyJ hold never turns a released ground click into pointer-follow movement",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyK hold never turns a released ground click into pointer-follow movement",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyZ hold never turns a released ground click into pointer-follow movement",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 Space with held LMB only aims between fresh clicks",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyJ with held LMB only aims between fresh clicks",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyK with held LMB only aims between fresh clicks",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "title": "Q-152 @E03 @E03-AC14 KeyZ with held LMB only aims between fresh clicks",
+          "status": "passed",
+          "failures": []
+        }
+      ]
+    }
+  },
+  "realInput": {
+    "command": "E2E_PORT=4381 SCENE_PORT=4382 SCENE_SERVER=preview E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/playtest/probe-q152.ts",
+    "headless": true,
+    "backend": "webgl2",
+    "input": "real keyboard/mouse; no input.set or teleport",
+    "results": [
+      {
+        "key": "Space",
+        "weapon": "weapon.bat",
+        "shortcut": "2",
+        "start": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -3.14159254949422
+        },
+        "destination": {
+          "x": 5.000000032729608,
+          "z": 2.0000000415565804
+        },
+        "aimPoint": {
+          "x": -1.9718752163417097,
+          "z": 0.011250034752839255
+        },
+        "afterAim": {
+          "moveTarget": {
+            "x": 5.000000032729608,
+            "z": 2.0000000415565804
+          },
+          "attack": null
+        },
+        "afterFreshClick": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "afterChord": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "end": {
+          "x": 3.950218677520752,
+          "y": 0.7049999833106995,
+          "z": -1.9486567974090576,
+          "yaw": 0.6356932783028786
+        },
+        "attacks": [
+          {
+            "type": "combat.attack",
+            "tick": 21,
+            "attackId": 1,
+            "actionId": "weapon.bat",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 41,
+            "attackId": 2,
+            "actionId": "weapon.bat",
+            "combo": 1,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 59,
+            "attackId": 3,
+            "actionId": "weapon.bat",
+            "combo": 2,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          }
+        ]
+      },
+      {
+        "key": "Space",
+        "weapon": "weapon.handgun",
+        "shortcut": "4",
+        "start": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -3.14159254949422
+        },
+        "destination": {
+          "x": 5.000000032729608,
+          "z": 2.0000000415565804
+        },
+        "aimPoint": {
+          "x": -1.9718752163417097,
+          "z": 0.011250034752839255
+        },
+        "afterAim": {
+          "moveTarget": {
+            "x": 5.000000032729608,
+            "z": 2.0000000415565804
+          },
+          "attack": null
+        },
+        "afterFreshClick": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "afterChord": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "end": {
+          "x": 3.950218677520752,
+          "y": 0.7049999833106995,
+          "z": -1.9486567974090576,
+          "yaw": 0.6356932783028786
+        },
+        "attacks": [
+          {
+            "type": "combat.attack",
+            "tick": 27,
+            "attackId": 1,
+            "actionId": "weapon.handgun",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 47,
+            "attackId": 2,
+            "actionId": "weapon.handgun",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -1,
+              "z": 0
+            }
+          }
+        ]
+      },
+      {
+        "key": "Space",
+        "weapon": "weapon.rocket-launcher",
+        "shortcut": "7",
+        "start": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 3.131902874606472
+        },
+        "destination": {
+          "x": 5.000000349004042,
+          "z": 1.9999997870989326
+        },
+        "aimPoint": {
+          "x": -1.9687811721562483,
+          "z": 0.019694831142700764
+        },
+        "afterAim": {
+          "moveTarget": {
+            "x": 5.000000349004042,
+            "z": 1.9999997870989326
+          },
+          "attack": null
+        },
+        "afterFreshClick": {
+          "moveTarget": {
+            "x": 4.000000049851789,
+            "z": -1.9999998178451701
+          },
+          "attack": null
+        },
+        "afterChord": {
+          "moveTarget": {
+            "x": 4.000000049851789,
+            "z": -1.9999998178451701
+          },
+          "attack": null
+        },
+        "end": {
+          "x": 3.95021915435791,
+          "y": 0.7049999833106995,
+          "z": -1.9486562013626099,
+          "yaw": 6.919883242157352
+        },
+        "attacks": [
+          {
+            "type": "combat.attack",
+            "tick": 27,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -1,
+              "z": 0
+            }
+          }
+        ]
+      },
+      {
+        "key": "KeyJ",
+        "weapon": "weapon.bat",
+        "shortcut": "2",
+        "start": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -3.14159254949422
+        },
+        "destination": {
+          "x": 5.000000032729608,
+          "z": 2.0000000415565804
+        },
+        "aimPoint": {
+          "x": -1.9718752163417097,
+          "z": 0.011250034752839255
+        },
+        "afterAim": {
+          "moveTarget": {
+            "x": 5.000000032729608,
+            "z": 2.0000000415565804
+          },
+          "attack": null
+        },
+        "afterFreshClick": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "afterChord": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "end": {
+          "x": 3.950218677520752,
+          "y": 0.7049999833106995,
+          "z": -1.9486567974090576,
+          "yaw": 0.6356932783028786
+        },
+        "attacks": [
+          {
+            "type": "combat.attack",
+            "tick": 21,
+            "attackId": 1,
+            "actionId": "weapon.bat",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 41,
+            "attackId": 2,
+            "actionId": "weapon.bat",
+            "combo": 1,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 59,
+            "attackId": 3,
+            "actionId": "weapon.bat",
+            "combo": 2,
+            "sourceId": 1,
+            "side": "LEFT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -0.9999999999999947,
+              "z": 1.0409557304315103e-07
+            }
+          }
+        ]
+      },
+      {
+        "key": "KeyK",
+        "weapon": "weapon.handgun",
+        "shortcut": "4",
+        "start": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": -3.14159254949422
+        },
+        "destination": {
+          "x": 5.000000032729608,
+          "z": 2.0000000415565804
+        },
+        "aimPoint": {
+          "x": -1.9718752163417097,
+          "z": 0.011250034752839255
+        },
+        "afterAim": {
+          "moveTarget": {
+            "x": 5.000000032729608,
+            "z": 2.0000000415565804
+          },
+          "attack": null
+        },
+        "afterFreshClick": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "afterChord": {
+          "moveTarget": {
+            "x": 3.9999996347248734,
+            "z": -2.0000002408873776
+          },
+          "attack": null
+        },
+        "end": {
+          "x": 3.950218677520752,
+          "y": 0.7049999833106995,
+          "z": -1.9486567974090576,
+          "yaw": 0.6254025663958452
+        },
+        "attacks": [
+          {
+            "type": "combat.attack",
+            "tick": 27,
+            "attackId": 1,
+            "actionId": "weapon.handgun",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -1,
+              "z": 0
+            }
+          },
+          {
+            "type": "combat.attack",
+            "tick": 47,
+            "attackId": 2,
+            "actionId": "weapon.handgun",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 0,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": -3.14159254949422
+            },
+            "direction": {
+              "x": -1,
+              "z": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "specCorrection": {
+    "criterion": "E03-AC14",
+    "reason": "The former unconditional held-LMB retargeting statement lacked the orchestrator decision: while an attack key remains held, pointer movement only aims; fresh ground clicks still retarget. A fresh attack press still cancels movement."
+  },
+  "respawnFixture": {
+    "reason": "The accident checkpoint respawns next to the bat and triggers the intentional garage rack-grab input lock. The old movement assertion ran during that beat, toward a solid prop only 0.57 m away. The fixture now waits for the beat to finish, retains prop classification assertions, and measures the unchanged >0.5 m travel threshold toward unobstructed ground. No gameplay respawn behavior was changed.",
+    "testSha256": "0cd926144683dd1ae20cc6d754de698f9f20c5c4491477eab3fd5c8fa845644a",
+    "result": {
+      "startTime": "2026-10-23T19:00:10.369Z",
+      "duration": 20870.479,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "verification": {
+    "remoteUnitAndLevels": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/levels --maxWorkers=4",
+      "exitCode": 0,
+      "success": true,
+      "passedTests": 2503,
+      "failedTests": 0,
+      "skippedTests": 9,
+      "report": "test-results/q152/remote-unit.json",
+      "reportSha256": "e9f772ca41895b0ab7eaeb863771418f26cafbcf3518fc2079a8cbdf2e184516",
+      "q152UnitCases": 8
+    },
+    "smoke": {
+      "command": "E2E_PORT=4381 SCENE_PORT=4382 npm run test:smoke -- --workers=1",
+      "exitCode": 0,
+      "unitPassed": 6,
+      "browser": {
+        "startTime": "2026-10-23T18:25:40.660Z",
+        "duration": 250815.578,
+        "expected": 31,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "report": "test-results/q152/smoke-e2e.json"
+    },
+    "epicE03": {
+      "command": "E2E_PORT=4381 SCENE_PORT=4382 E2E_UNITS=1 sh tools/e2e-lock.sh npm run verify -- E03",
+      "exitCode": 0,
+      "backend": "local headless ANGLE/Metal",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/sim-lock.sh",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E03/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--workers=1"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "unitPassed": 47,
+      "unitFailed": 0,
+      "browser": {
+        "startTime": "2026-10-23T19:03:21.804Z",
+        "duration": 1152743.143,
+        "expected": 171,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reports": {
+        "verify-checks.json": "6c32f43a4c293c7e2259fad3445d4e70dbfc1fb408194c9ae23033f8eb7d061b",
+        "verify-vitest.json": "d44341326b817a5228dee79c6ec3dcfe4e6db2a71544f748908af7f421a00b76",
+        "verify-browser.json": "db54ef4dddd750c05fdddb79932b7633a90635e1cad87eeea2a8bfa2540dae10"
+      }
+    },
+    "attemptNotes": [
+      "The remote E03 browser attempt failed the arrival cadence assertion (2 frames in three seconds; required >30); the gate was retained and verified on the native GPU.",
+      "One local E03 attempt was interrupted after an overlapping queued command cleared its trace directory. The final full E03 run was serialized and passed all 171 browser tests."
+    ],
+    "inputAndControls": {
+      "command": "E2E_PORT=4381 SCENE_PORT=4382 PLAYWRIGHT_JSON_OUTPUT_FILE=test-results/q152/input-final.json sh tools/e2e-lock.sh npx playwright test tests/e2e/input-*.spec.ts tests/e2e/controls-playtest.spec.ts tests/e2e/click-attack.spec.ts --workers=1 --reporter=list,json --output=test-results/q152/input-final-run",
+      "exitCode": 0,
+      "browser": {
+        "startTime": "2026-10-23T19:23:13.542Z",
+        "duration": 658673.1170000001,
+        "expected": 105,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "byProject": {
+        "chromium": 53,
+        "pixel-7": 13,
+        "pixel-7-landscape": 13,
+        "iphone-14": 13,
+        "iphone-14-landscape": 13
+      },
+      "q152Cases": 16,
+      "report": "test-results/q152/input-final.json",
+      "reportSha256": "b44b2b1c475891f86036a6533a6fdf2d1a922efe63ce689a673d6d9560175f03"
+    },
+    "completedAtUTC": "2026-10-23T19:34:45.558188+00:00"
+  }
+}
