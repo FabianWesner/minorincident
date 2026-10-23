@@ -178,14 +178,17 @@ export class LevelFourWar {
   }
   /**
    * PO #118 ("Zero Zombies"): the director's strict count keeps a slot for every downed infected, but the army re-downs each one as it
-   * gets up, so ~75 bodies pinned the war cap and no wave ever emerged. Beyond `downedSlots` the oldest downed bodies are finished off
-   * (they stay as corpses, PO 10-14) so their slots return to the waves.
+   * gets up, so ~75 bodies pinned the war cap and no wave ever emerged. Beyond `downedSlots` repeat regular downings are finished off
+   * (they stay as corpses, PO 10-14) so their slots return to the waves. First recoveries and the authored Alphas retain their timers:
+   * removing those prevented the close pressure and repeated Alpha attacks needed to break the army.
    */
   private finishDowned(): void {
-    const ai = this.world.infected!, downed = ai.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0);
+    const downed = this.world.infected!.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0);
     if (downed.length <= l4.war.downedSlots) return;
     downed.sort((a, b) => a.infected!.deadAt - b.infected!.deadAt);
-    for (const e of downed.slice(0, downed.length - l4.war.downedSlots)) e.infected!.recoverAt = -1;
+    // Preserve the first get-up and the authored Alpha jobs. Repeat regular downings return cap slots;
+    // retaining those would pin the low-tier cap and starve the next flank/alarm wave.
+    for (const e of downed.filter(e => e.archetype !== 'infected.alpha' && e.infected!.downs > 1).slice(0, downed.length - l4.war.downedSlots)) e.infected!.recoverAt = -1;
   }
   private alarmInfected(): number { return this.low ? l4.calm.alarmInfected.low : l4.calm.alarmInfected.high; }
   private queueSchedule(slot: readonly number[]): CivilianActivity[] {
@@ -663,7 +666,10 @@ export class LevelFourWar {
         for (let g = 0; g < size; g++) {
           const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }); if (!id) break;
           s.pend[i]--; s.emergedIds.push(id); s.origin[id] = k;
-          ai.rush(id, { x: to.x + (g - size / 2) * 1.5, z: to.z + ((id % 5) - 2) * 1.5 }, tick + ticks(w.emergeLeashM));
+          // A wide group must enter the hold area before spreading onto its defenders. Offsetting an edge post
+          // outside the wire left a few members circling the parked convoy instead of joining the assault.
+          const perimeter = l4.perimeter;
+          ai.rush(id, { x: Math.max(perimeter.x0 + 2, Math.min(perimeter.x1 - 2, to.x + (g - size / 2) * 1.5)), z: Math.max(perimeter.z0 + 2, Math.min(perimeter.z1 - 2, to.z + ((id % 5) - 2) * 1.5)) }, tick + ticks(w.emergeLeashM));
         }
         s.edgeCursor[i] = (s.edgeCursor[i] + tries + 1) % points.length;
         s.edgeNext[i] = tick + ticks(w.groupEveryS[0] + rng.next() * (w.groupEveryS[1] - w.groupEveryS[0]));
@@ -698,10 +704,14 @@ export class LevelFourWar {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, centre = l4.map.centre;
     for (let i = 0; i < s.pend.length; i++) {
       if (s.pend[i] <= 0) continue;
-      const at = this.spectacle.edgePoint(i);
-      if (!ai.director.offscreen(at) || dist(at, p) < 30 || this.inGap(at)) continue;
+      // The courier can remain within 30 m of an edge's first mouth after Fall back.
+      // Keep that edge's quota queued and use another authored mouth, rather than starving it forever.
+      const at = [this.spectacle.edgePoint(i), ...l4Emergence.filter(e => e.edge === i).map(e => ({ x: e.at[0], z: e.at[1] }))]
+        .map(point => this.snap(point, .45)).find(point => ai.director.offscreen(point) && dist(point, p) >= 32 && !this.inGap(point));
+      if (!at) continue;
       for (let k = 0; k < 3 && s.pend[i] > 0; k++) {
-        const id = this.emerge({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }); if (!id) return;
+        const point = this.snap({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }, .45);
+        const id = this.emerge(point); if (!id) break;
         s.pend[i]--; (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
         ai.rush(id, { x: centre.x + (k - .5) * 6, z: centre.z + ((id % 5) - 2) * 3 }, world.tick + ticks(l4.war.emergeLeashM));
       }
@@ -776,12 +786,18 @@ export class LevelFourWar {
     const { world } = this.mission, ai = world.infected!, e = l4.director.escape;
     const allies = this.allyEntities().filter(a => this.escapeDistance(a.transform) >= e.gapM + 2);
     for (const a of ai.active) {
-      if (a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || dist(a.transform, p) <= e.nearM || this.escapeDistance(a.transform) >= e.gapM) continue;
+      const brain = a.infected!, open = this.gapOpen(), outside = this.escapeDistance(a.transform) >= e.gapM, near = dist(a.transform, p) <= e.nearM;
+      if (brain.clearingStreet && (!open || outside || near || a.health.current <= 0)) { delete brain.clearingStreet; delete brain.scripted; }
+      if (!open || a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || near || outside) continue;
+      if (brain.scripted || brain.l1?.mode === 'bite' || brain.state === 'attack') continue;
       // Off the street first (ally-combat-feel: allies no longer shoot the runners down off screen, so they must leave the corridor
       // themselves): the nearest clear point beside the route, then on toward the fight.
       const side = this.offStreet(a.transform);
       const to = side ?? (allies.length ? allies.reduce((q, b) => dist(b.transform, a.transform) < dist(q.transform, a.transform) ? b : q).transform : { x: -26, z: 0 });
-      ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
+      // rush() deliberately refuses an ongoing chase. Own only this short physical walk, then return the
+      // body to ordinary perception beyond the street; close pursuers, bites and Alpha jobs keep their combat.
+      if (side) { brain.scripted = { ...side }; brain.clearingStreet = true; }
+      else ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
     }
   }
   /** A clear point `gapM + 3` m from the escape route on the side `p` is on (null when the street is walled in there). */
@@ -970,8 +986,8 @@ export class LevelFourWar {
         if (this.breakRadioAt && tick >= this.breakRadioAt) { this.breakRadioAt = 0; this.mission.radio('L4.break'); }
         if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }
         if (s.director.burnAt && tick >= s.director.burnAt) this.burnCars();
-        if (tick % 20 === 0 && this.gapOpen()) this.clearGap();
       }
+      if (tick % 20 === 0) this.clearGap();
       if (s.phase === 'cellar') this.cellarUpdate();
       // L4 infected hit like L3's (section 5.1 tuning; PO: a sensible player finishes with few deaths).
       if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l4.war.infectedDamage;
