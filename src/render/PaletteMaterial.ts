@@ -175,6 +175,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
         result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
       }
+      // The low L7 departure sees the map's distant surface/sky boundary. Height haze above can tint fully fogged
+      // surfaces differently from the backdrop; make both converge to the same colour before the common post grade.
+      if (!emissive && lighting.departureBackdrop) result.assign(mix(result, lighting.backdropFog, rangeFogFactor(lighting.fogNear, lighting.fogFar).mul(lighting.backdropHaze)));
       if (!emissive) If(lighting.subwayDarkness.greaterThan(0), () => {
         const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
         const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
@@ -264,7 +267,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   }
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
   frozenCopy(): PaletteMaterial {
-    const copy = this.newCopy(); copy.copy(this); copy.outputFor = this.outputFor;
+    const copy = this.newCopy(); copy.copy(this);
+    copy.outputFor = this.outputFor;
     copy._outputs = this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }

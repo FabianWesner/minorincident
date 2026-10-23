@@ -281,11 +281,49 @@ g.fence('privacy', AX + .6, 45.6, 248.0, 45.6)
 # PO 10-11: the final approach crosses the highway before entering the relocated base.
 g.place('kit.highway-onramp', 155.5, 0.0, PI, 1.0, check=False)
 g.place('kit.highway-onramp', 191.5, 0.0, 0.0, 1.0, check=False)
-g.solid('highway-deck', 'asphalt', [12.0, .5, 4.62], [173.5, 5.45, 0], collide=False)
+# Q-133 / Q-129: the deck, the wedges and the paint are flat, unbevelled slabs (g.solid boxes carry a 7 cm toy bevel: every top edge
+# was a chamfer ridge, read as a lighter patch with hard edges and as a dark seam where two boxes met). One top height for all of them,
+# 3 mm over the kit road (5.70) so nothing z-fights, paint 16 mm above that like the kit's own (1.9 cm over 5.70).
+import bpy
+from sslib.layout import material as _material
+DECK_TOP, PAINT = 5.703, .016
+
+
+def slab(name, token, pts, top, thick):
+    """Extruded polygon (x, z points in game metres), flat top at `top`, no bevel; same merge path as Layout.box."""
+    area = sum(a[0] * -b[1] - b[0] * -a[1] for a, b in zip(pts, pts[1:] + pts[:1]))
+    ring = pts if area > 0 else pts[::-1]
+    n = len(ring)
+    verts = [(x, -z, top) for x, z in ring] + [(x, -z, top - thick) for x, z in ring]
+    faces = [tuple(range(n)), tuple(range(2 * n - 1, n - 1, -1))] + [(i, i + n, (i + 1) % n + n, (i + 1) % n) for i in range(n)]
+    mesh = bpy.data.meshes.new(name); mesh.from_pydata(verts, [], faces); mesh.update()
+    o = bpy.data.objects.new(name, mesh); bpy.context.collection.objects.link(o)
+    o.data.materials.append(_material(token)); l.layers[0].append(o)
+    return o
+
+
+def strip(name, token, a, b, width, top):
+    """A paint band of `width` between two points on the deck plane."""
+    dx, dz = b[0] - a[0], b[1] - a[1]; d = math.hypot(dx, dz); nx, nz = -dz / d * width / 2, dx / d * width / 2
+    return slab(name, token, [(a[0] + nx, a[1] + nz), (b[0] + nx, b[1] + nz), (b[0] - nx, b[1] - nz), (a[0] - nx, a[1] - nz)], top, PAINT)
+
+
+slab('highway-deck', 'asphalt', [(167.5, -2.31), (179.5, -2.31), (179.5, 2.31), (167.5, 2.31)], DECK_TOP, .5)
 # PO P1-113: each ramp's road ends on a line tilted ~48 deg while the span ends square, leaving a dark wedge beside the joint rail
-# (x 179.5-181.2 at z<0 east, mirrored west). Fill it flush with the road top (collision: l3-highway-wedge in levels/L3/layout.ts).
-g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [180.25, 5.43, -0.95], collide=False)
-g.solid('highway-wedge', 'asphalt', [1.5, .5, 1.9], [166.75, 5.43, 0.95], collide=False)
+# (x 179.5-181.3 at z<0 east, mirrored west). Fill exactly that quad, 5 cm into the deck and the road (collision: l3-highway-wedge in levels/L3/layout.ts).
+EAST_HOLE = [(179.45, 0.0), (181.25, -1.55), (181.45, -1.75), (179.45, -2.4)]
+slab('highway-wedge', 'asphalt', EAST_HOLE, DECK_TOP, .5)
+slab('highway-wedge', 'asphalt', [(347.0 - x, -z) for x, z in EAST_HOLE], DECK_TOP, .5)
+# Lane paint of the deck, the kit's own bands (assets/kit.highway-onramp/build.py: yellow edge lines +-1.895..2.025, a 5 cm centre dash
+# every 1.043 m, dash .5 m long) kept between the two kits' tilted road ends (x 169.3-177.7) and joined to the kit's edge lines across the wedges.
+top = DECK_TOP + PAINT
+for z in (-1.96, 1.96):
+    strip('highway-edge-line', 'schoolBusYellow', (169.3, z), (177.7, z), .13, top)
+for k in range(8):
+    x0 = 169.45 + k * 1.043
+    strip('highway-centre-dash', 'picketWhite', (x0, 0), (x0 + .5, 0), .05, top)
+for z, (ex, ez), (ox, oz) in ((-1.96, (180.97, -1.30), (179.5, -1.96)), (1.96, (166.03, 1.30), (167.5, 1.96))):
+    strip('highway-edge-line', 'schoolBusYellow', (ox, oz), (ex, ez), .13, top)
 for side in (-1, 1):
     g.solid('highway-jersey', 'sidewalk', [12.0, .95, .5], [173.5, 6.175, side * 2.58])
     g.fence('privacy', 132.7, side * 10.5, AX, side * 10.5)

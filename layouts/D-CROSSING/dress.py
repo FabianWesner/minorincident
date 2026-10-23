@@ -10,6 +10,7 @@ import random
 R = random.Random(931)
 # look-l9b: blob outline jitter has its own stream, so the irregular rims never move a placement drawn from R.
 RB = random.Random(932)
+RV_CRACK = random.Random(936)   # l9-verge-dressing: crack shapes never move a draw from R
 M = l.manifest
 ROUTES = [(r['points'], r['width'] / 2) for r in source['routes']]
 DETOURS = [r['detour'] for r in source['routes']]
@@ -483,12 +484,19 @@ def road_decals(pts, hw, gravel, h0):
                 ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsCargo', h0, cut=False, cat='road', flat=True)
                 counts['patch'] += 1
             elif r < .5:
-                # tar crack: thin dark line across or along the lane
-                L = R.uniform(2.5, 8)
+                # tar crack: a short jagged branching fissure (the old 2.5-8 m straight hairlines read as scratches across the lane)
+                L = R.uniform(2.5, 8) * .42   # same single draw as before: the R stream is unchanged
                 ca = ang + R.choice([R.uniform(-.25, .25), R.uniform(1.1, 2.0)])
-                p0 = [cx - math.cos(ca) * L / 2, cz - math.sin(ca) * L / 2]
-                p1 = [cx + math.cos(ca) * L / 2, cz + math.sin(ca) * L / 2]
-                ov('road-crack', strip_poly(p0, p1, R.uniform(.04, .08), 0), 'uiDark', h0 + .0004, cut=False, cat='road')
+                px, pz = cx - math.cos(ca) * L / 2, cz - math.sin(ca) * L / 2
+                w0, steps = R.uniform(.04, .08) * 1.1, 3
+                for k in range(steps):
+                    na = ca + RV_CRACK.uniform(-.7, .7)
+                    qx, qz = px + math.cos(na) * L / steps, pz + math.sin(na) * L / steps
+                    ov('road-crack', strip_poly([px, pz], [qx, qz], w0 * (1.25 - k * .25), 0), 'uiDark', h0 + .0004, cut=False, cat='road')
+                    if k == 1 and RV_CRACK.random() < .5:
+                        ba = na + RV_CRACK.choice([-1, 1]) * RV_CRACK.uniform(.6, 1.1)
+                        ov('road-crack', strip_poly([qx, qz], [qx + math.cos(ba) * .7, qz + math.sin(ba) * .7], .05, 0), 'uiDark', h0 + .0004, cat='road')
+                    px, pz = qx, qz
                 counts['crack'] += 1
             elif r < .62:
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
@@ -498,7 +506,7 @@ def road_decals(pts, hw, gravel, h0):
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
-                L = R.uniform(3, 7)
+                L = R.uniform(3, 7) * .6
                 for off in (-.9, .9):
                     ox, oz = cx + nx * off, cz + nz * off
                     ov('skid', strip_poly([ox - ux * L / 2, oz - uz * L / 2], [ox + ux * L / 2 + nx * R.uniform(-.8, .8), oz + uz * L / 2 + nz * R.uniform(-.8, .8)], .15, 0), 'uiDark', h0 + .0002, cut=False, cat='road')
@@ -907,6 +915,120 @@ for side in (-1, 1):
         fill_plot(RF.choice(['hedgerow', 'grove', 'grove', 'fence']), [-598, 0], 1, 0, 0, 1, s, s + L, 6, side, zone=True)
         s += L + RF.uniform(3, 4.5)
 stats['world-fill'] = fill['n']
+
+# ---- verge-dressing (l9-verge-dressing, PO 10-23): props 2.5-6 m beyond the lane edge, the strip the night drive camera frames ------------
+# "while driving, the camera only sees about 17 x 10 m at zoom 1 ... the lane plus 3-6 m of verge": abandoned and burnt cars pushed
+# aside, rubble, broken fences, roadblock leftovers, dead lamps. Reuse of existing assets only. Own RNG (no earlier draw moves).
+# Rule: every footprint sample stays >= 2.5 m from the lane edge (so its collider never reaches the lane), the crash approach and
+# crawl (x > 430, the ok() exclusion) stays clear. The start drive-out (x < -512) gets the same pass with zone rules.
+RV = random.Random(935)
+vstat = {'n': 0, 'wreck': 0, 'rubble': 0, 'fence': 0, 'block': 0, 'lamp': 0, 'bush': 0}
+VERGE_MIN = 2.5
+usable = lambda a: a in M and 'world' in M[a] and 'dimensions' in M[a]
+WRECKS = [('veh.sedan-red', 'burned'), ('veh.sedan-white', 'burned'), ('veh.pickup-red', 'burned'), ('veh.sedan-blue', 'wrecked'),
+          ('veh.sedan-green', 'wrecked'), ('veh.suv-dark', 'burned'), ('veh.suv-dark', 'wrecked'), ('veh.wreck', None), ('veh.wreck', None),
+          ('veh.police-sedan', 'wrecked'), ('veh.police-sedan', 'burned'), ('veh.ambulance', 'wrecked'), ('veh.school-bus', 'burned'),
+          ('veh.military-truck', 'wrecked'), ('veh.fire-engine', 'burned')]
+RUBBLE = ['prop.crates', 'prop.pallet', 'prop.trash-bags', 'prop.plank-stack', 'prop.sofa', 'prop.broken-chair', 'prop.dumpster',
+          'prop.shopping-cart', 'prop.recycling-bin', 'prop.carpet', 'prop.wheelbarrow']
+
+
+def vput1(asset, x, z, yaw, decay=None):
+    """put() plus the verge rule: footprint centre and corners keep VERGE_MIN from every lane edge (any route) and stay on the map."""
+    if not usable(asset):
+        return False
+    b = fp(asset, x, z, yaw)
+    pts = [(x, z), (b[0], b[1]), (b[2], b[1]), (b[2], b[3]), (b[0], b[3])]
+    vstat['try'] = vstat.get('try', 0) + 1
+    if any(route_d(q) < VERGE_MIN for q in pts):
+        vstat['rej-lane'] = vstat.get('rej-lane', 0) + 1
+        return False
+    # A prop never stands under a tree crown core (Scene Lab static clipping: placement x tree geometry).
+    for ob, k in neighbours(b, 1):
+        if k == 'tree':
+            ix, iz = (ob[2] - ob[0]) * .3, (ob[3] - ob[1]) * .3
+            if box_gap(b, (ob[0] + ix, ob[1] + iz, ob[2] - ix, ob[3] - iz)) < .15:
+                vstat['rej-tree'] = vstat.get('rej-tree', 0) + 1
+                return False
+    zone = x < -512 and abs(z) < 22
+    if not put(asset, x, z, yaw, decay=decay, zone=zone):
+        vstat['rej-ok'] = vstat.get('rej-ok', 0) + 1
+        return False
+    l.data['placements'][-1]['verge'] = True
+    vstat['n'] += 1
+    return True
+
+
+def vput(asset, P, t, o, yaw, decay=None):
+    """Tries the nominal spot, then pushes outward (up to +1.8 m, never past 7.5 m) and slides along the lane, until the lane and neighbour rules pass."""
+    for dt in (0, 1.6, -1.6):
+        for do in (0, .6, 1.2, 1.8):
+            if o + do <= 7.5 and vput1(asset, *P(t + dt, o + do), yaw, decay):
+                return True
+    return False
+
+
+WRECKS = [w for w in WRECKS if usable(w[0]) and (w[1] is None or w[1] in M[w[0]].get('decayVariants', []))]
+RUBBLE = [a for a in RUBBLE if usable(a)]
+print('verge assets', [w[0] for w in WRECKS], RUBBLE)
+
+
+def vignette(kind, a, ux, uz, nx, nz, s, hw, side):
+    yaw = -math.atan2(uz, ux)
+    P = lambda t, o: (a[0] + ux * t + nx * side * (hw + o), a[1] + uz * t + nz * side * (hw + o))
+    if kind == 'wreck':
+        asset, dec = RV.choice(WRECKS)
+        d = M[asset]['dimensions']
+        o = VERGE_MIN + .4 + max(d['x'], d['z']) * RV.uniform(.2, .45) + RV.uniform(0, 1.5)
+        # pushed to the side: mostly nose-in toward the verge, a little skew
+        if vput(asset, P, s, o, yaw + RV.choice([0, math.pi, math.pi / 2, -math.pi / 2]) + RV.uniform(-.5, .5), dec):
+            vstat['wreck'] += 1
+            for _ in range(RV.randint(0, 2)):
+                if vput(RV.choice(RUBBLE), P, s + RV.uniform(-3, 3), RV.uniform(3.2, 6), RV.uniform(0, math.tau)):
+                    vstat['rubble'] += 1
+    elif kind == 'rubble':
+        for _ in range(RV.randint(2, 4)):
+            if vput(RV.choice(RUBBLE), P, s + RV.uniform(-2.5, 2.5), RV.uniform(2.9, 5.5), RV.uniform(0, math.tau)):
+                vstat['rubble'] += 1
+    elif kind == 'fence':
+        # broken run: panels along the lane with gaps, each skewed
+        t = s - 4
+        for _ in range(RV.randint(2, 4)):
+            if RV.random() < .8 and vput(RV.choice(['prop.crowd-fence', 'prop.crowd-fence', 'prop.picket-fence', 'prop.privacy-fence']),
+                                         P, t, RV.uniform(3.0, 4.2), yaw + (math.pi / 2 if RV.random() < .3 else 0) + RV.uniform(-.55, .55)):
+                vstat['fence'] += 1
+            t += RV.uniform(2.5, 4)
+    elif kind == 'block':
+        # leftover roadblock: jersey barriers and sandbags knocked sideways, a cone or a gate
+        for k in range(RV.randint(1, 3)):
+            asset = RV.choice(['prop.jersey-barrier', 'prop.jersey-barrier', 'prop.sandbag-pallet', 'prop.barricade', 'prop.checkpoint-gate', 'prop.traffic-cone'])
+            if vput(asset, P, s + (k - 1) * RV.uniform(2.6, 3.6), RV.uniform(2.9, 4.6), yaw + RV.uniform(-.7, .7)):
+                vstat['block'] += 1
+    elif kind == 'lamp':
+        if vput(RV.choice(['prop.street-lamp', 'prop.street-lamp', 'prop.street-sign', 'prop.utility-pole']), P, s, RV.uniform(2.9, 4.0), yaw + math.pi / 2 + RV.uniform(-.2, .2)):
+            vstat['lamp'] += 1
+        for _ in range(RV.randint(0, 2)):
+            if vput(RV.choice(['prop.traffic-cone', 'prop.trash-bags', 'prop.crates']), P, s + RV.uniform(-2.5, 2.5), RV.uniform(3.0, 5.0), RV.uniform(0, math.tau)):
+                vstat['rubble'] += 1
+    else:   # dead scrub
+        for _ in range(RV.randint(1, 3)):
+            if vput(RV.choice(['prop.garden-bush', 'prop.garden-bush-small', 'prop.garden-bush-small']), P, s + RV.uniform(-2.5, 2.5), RV.uniform(3.0, 5.8), RV.uniform(0, math.tau)):
+                vstat['bush'] += 1
+
+
+VERGE_KINDS = [('wreck', 5), ('rubble', 4), ('fence', 2), ('block', 2), ('lamp', 2), ('bush', 2)]
+for (pts, hw), gravel in zip(ROUTES, (False, True, True)):
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
+        nx, nz = -uz, ux
+        for side in (-1, 1):
+            s = RV.uniform(3, 7)
+            while s < d - 4:
+                vignette(RV.choices([k for k, _ in VERGE_KINDS], [w for _, w in VERGE_KINDS])[0], a, ux, uz, nx, nz, s, hw, side)
+                s += RV.uniform(7, 12)
+stats.update({'verge-' + k: v for k, v in vstat.items()})
+open('/private/tmp/claude-501/vstat.json', 'w').write(json.dumps(vstat))
 
 # ---- look-l9 clean-up: open fork/merge gores and crown-in-solid overlaps --------------------------------------------
 # T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry

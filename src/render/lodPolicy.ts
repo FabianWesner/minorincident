@@ -42,6 +42,11 @@ export function crowdLod(pixels: number, previous?: 'lod1' | 'lod2'): 'lod1' | '
   return pixels > (previous === 'lod1' ? crowdLodPixels.leave : previous === 'lod2' ? crowdLodPixels.enter : (crowdLodPixels.enter + crowdLodPixels.leave) / 2) ? 'lod1' : 'lod2';
 }
 
+/** High-tier settled infected enter detailed pages inside 8 m; the 2 m exit margin prevents page churn. Low keeps its measured far pages. */
+export function corpseLod(distance: number, previous?: 'lod1' | 'lod2'): 'lod1' | 'lod2' {
+  return distance < (previous === 'lod1' ? 10 : 8) ? 'lod1' : 'lod2';
+}
+
 /** Small dressing keeps its authored silhouette while avoiding subpixel detail.
  * Tall foliage and buildings keep the distance policy. */
 export function propLod(pixels: number, previous?: Lod): Lod {

@@ -1,0 +1,9 @@
+{
+ "name": "qa-l3-ramp-east",
+ "note": "Q-133: raised L3 highway, east ramp/deck junction: the filler beside the joint rail is the same asphalt as the road, lane markings run across it, no light patch, no seam",
+ "ground": "district", "time": "L3", "tier": 2,
+ "layout": { "district": "D-CORRIDOR", "level": "L3", "bbox": [[132, -14], [214, 14]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [177.5, -0.6], "yaw": 0 }],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "frames": 40, "shots": [0, 40]
+}

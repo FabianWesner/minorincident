@@ -35,7 +35,7 @@ import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
-import { View, type CameraPose } from './View';
+import { View, playerSteers, type CameraPose } from './View';
 import { Renderer } from './Renderer';
 import { preRender, incrementalPreRender } from './PreRenderer';
 import { Lighting } from './Lighting';
@@ -264,7 +264,8 @@ export class GameView implements Lifecycle {
     // The crossing survey views span hundreds of metres, including portrait framing.
     this.camera.far = this.world.districts?.districts.some(d => !!d.layout.terrainChunks?.length) ? 1600 : 600;
     this.camera.updateProjectionMatrix();
-    const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
+    const districts = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
+    const districtKey = districts ? `${districts}|departure:${this.world.scenario === 'L7'}` : undefined;
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
     // A live L7 handover keeps its frame budget while assets and batches assemble.
     // A cold menu load has no live scene to update: use the foreground policy.
@@ -276,7 +277,7 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
+        const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
@@ -320,7 +321,7 @@ export class GameView implements Lifecycle {
       this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'); this.materials = new Materials(this.lighting);
       const ground = new Mesh(new PlaneGeometry(this.world.combat?.definition.ground.width ?? 100, this.world.combat?.definition.ground.depth ?? 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
@@ -633,7 +634,10 @@ export class GameView implements Lifecycle {
       const loadout = player.weapons && this.world.combat?.runner.loadout;
       this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
-      this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
+      // Q-134 (PO: "Wider camera while driving / Yes do that"): the courier steering the bike gets the same driver widening as a car.
+      const steering = playerSteers(this.world.vehicles);
+      this.view.driving = steering || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
+      this.view.driverWide = steering;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.
@@ -960,6 +964,7 @@ export class GameView implements Lifecycle {
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
+    if (this.lighting) this.lighting.backdropHaze.value = this.world.l7Departure?.cinematic ? 1 : 0;
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);

@@ -94,3 +94,13 @@ test('@E19 live grade edits update the world sheet while preserving figure ident
   expect(lighting.coreShadowEdgeHigh.value).toBe(1); expect(lighting.fogCenter.value.x).toBe(.5);
   materials.dispose(); lighting.dispose();
 });
+
+
+test('only the departure lighting graph prepares the haze backdrop; other levels retain radial fog', () => {
+  const scene = new Scene(), lighting = new Lighting(scene, undefined, undefined, undefined, true);
+  lighting.set('L6');
+  expect(scene.backgroundNode).toBe(lighting.backdropFog); expect(lighting.backdropHaze.value).toBe(0);
+  const backdrop = lighting.backdropFog as unknown as { node: { aNode: unknown; bNode: unknown } };
+  expect(backdrop.node.aNode).toBe(lighting.radialFog); expect(backdrop.node.bNode).toBe(lighting.look.nodes.haze);
+  lighting.dispose();
+});
