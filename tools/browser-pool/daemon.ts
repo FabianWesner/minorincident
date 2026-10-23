@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 import { randomUUID } from 'node:crypto';
 import { chromium, type BrowserServer } from '@playwright/test';
 import WebSocket, { WebSocketServer, type RawData } from 'ws';
-import { delay, gpuAdmission, quietConditions, reserveLegacySlots, windowServerSnapshot } from './host';
+import { backoffAdmission, delay, gpuAdmission, quietConditions, reserveLegacySlots, windowServerSnapshot } from './host';
 
 // The proxy observes the pinned Playwright protocol. Tests exercise real connections;
 // upgrading Playwright requires running tools/browser-pool/check.ts again.
@@ -242,9 +242,7 @@ const timer = setInterval(() => {
     const now = Date.now();
     if (next && previousWindow?.pid === next.pid) {
       windowServerCpu = (next.seconds - previousWindow.seconds) * 100_000 / (now - previousAt);
-      if (windowServerCpu > 60) { limit = Math.max(1, limit - 1); coolSamples = 0; }
-      else if (windowServerCpu < 30 && ++coolSamples >= 3) { limit = Math.min(configuredLimit, limit + 1); coolSamples = 0; }
-      else if (windowServerCpu >= 30) coolSamples = 0;
+      ({ limit, coolSamples } = backoffAdmission({ limit, coolSamples }, configuredLimit, windowServerCpu));
       event('host-sample', { windowServerCpu, limit });
     } else if (process.platform === 'darwin' && (!next || previousWindow)) { limit = 1; coolSamples = 0; windowServerCpu = null; }
     previousWindow = next; previousAt = now; pump();

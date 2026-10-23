@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-10-23T09:50:14.088Z",
+  "remoteUnit": {
+    "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/browser-pool/unit.json -- npx vitest run tests/unit --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/browser-pool/unit.json",
+    "success": true,
+    "passed": 2018,
+    "failed": 0,
+    "skipped": 7,
+    "artifactSha256": "78d9011578d78889022d12ff7b74cc6faa00539b43bd2f683acc329f26fc522e"
+  },
+  "lifecycle": [
+    "PASS: context isolation, capacity queue, safe release, action activity, idle context/process release, exclusive drain, native restart/reconnect, opaque exclusive",
+    "PASS: pool down -> legacy headless launch, page actions and capture"
+  ],
+  "acceptance": [
+    {
+      "name": "full-smoke",
+      "code": 0,
+      "seconds": 139.091
+    },
+    {
+      "name": "catalog",
+      "code": 0,
+      "seconds": 19.256
+    },
+    {
+      "name": "invariants-Mac",
+      "code": 0,
+      "seconds": 63.078
+    },
+    {
+      "name": "MCP",
+      "code": 0,
+      "seconds": 17.418
+    },
+    {
+      "name": "playtest-session",
+      "code": 0,
+      "seconds": 4.867
+    },
+    {
+      "name": "playtest-live-idle",
+      "code": 0,
+      "seconds": 5.356
+    },
+    {
+      "name": "qa-ab",
+      "code": 0,
+      "seconds": 19.945
+    }
+  ],
+  "fullSmoke": {
+    "startTime": "2026-10-23T09:33:50.187Z",
+    "duration": 138352.045,
+    "expected": 28,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -6,6 +6,14 @@ import { delay } from './host';
 const exclusive = process.argv[2] === 'exclusive';
 const command = process.argv.slice(3);
 const migrated = command.some(arg => /(?:^|\/)(?:playwright|cli[.]js)$/.test(arg) || /tools\/(?:playtest|scenelab)\//.test(arg) || arg === 'tools/qa/ab.ts' || arg.endsWith('.ts') && (() => { try { return /(?:SceneSession|launchBrowser)/.test(readFileSync(arg, 'utf8')); } catch { return false; } })());
+if (command.some(arg => arg === 'playwright' || /\/(?:playwright|playwright-core)(?:\/cli[.]js)?$/.test(arg) || /\/@playwright\/test\/cli[.]js$/.test(arg))) {
+  for (let i = 0; i < command.length; i++) {
+    const workers = command[i] === '--workers' ? command[++i] : command[i].startsWith('--workers=') ? command[i].slice('--workers='.length) : undefined;
+    if ((command[i - 1] === '--workers' || workers !== undefined) && workers !== '1' && workers !== '2') {
+      console.error('Playwright is limited to 1 or 2 workers on this machine'); process.exit(2);
+    }
+  }
+}
 if (!command.length) throw new Error('Pool wrapper needs a command');
 const admissionMs = Number(process.env.E2E_ADMISSION_TIMEOUT_SECONDS ?? 1800) * 1000;
 const deadline = Date.now() + admissionMs;

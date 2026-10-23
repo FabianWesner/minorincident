@@ -65,3 +65,11 @@ export async function windowServerSnapshot(): Promise<{ pid: number; seconds: nu
   }
   return undefined;
 }
+
+export function backoffAdmission(state: { limit: number; coolSamples: number }, maximum: number, cpu: number) {
+  if (!Number.isFinite(cpu) || cpu < 0) return { limit: 1, coolSamples: 0 };
+  if (cpu > 60) return { limit: Math.max(1, state.limit - 1), coolSamples: 0 };
+  if (cpu >= 30) return { limit: state.limit, coolSamples: 0 };
+  if (state.coolSamples + 1 >= 3) return { limit: Math.min(maximum, state.limit + 1), coolSamples: 0 };
+  return { limit: state.limit, coolSamples: state.coolSamples + 1 };
+}
