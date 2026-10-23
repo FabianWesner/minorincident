@@ -12,3 +12,8 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - L4 hold: the alarm wave arrives at its full count; civilians don't clump at the wall (P1-118, P1-119).
 - Corpses (Alpha, infected, dogs) look like bodies up close (P1-117, #85).
 - L6 fists: finishable without a soft-lock (the rescue rate is free, PO 10-22).
+- Alpha and Mega Alpha corpses: no boot slabs sticking up; the Mega corpse reads as the creature, not a lump (Q-124).
+- A dead Alpha shows no HP bar above its corpse (Q-125).
+- No gameplay frame over 200 ms on real input at the L1 deliver leg and the L2 ride start (Q-126).
+- L7 end shot: no map edge or void visible at the top of the frame (Q-127).
+- L3 west ramp: no dark seam line across the deck (Q-129).
