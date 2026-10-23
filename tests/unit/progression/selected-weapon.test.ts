@@ -68,7 +68,10 @@ test.each([2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-158 Continue into L%i f
   const decoded = decodeSave(JSON.stringify(save));
   if (decoded.status !== 'ok') throw new Error('Fallback save did not reload');
   const log = vi.spyOn(console, 'info').mockImplementation(() => undefined);
-  await game(decoded.save).continueCampaign(decoded.save);
+  const g = game(decoded.save);
+  await g.continueCampaign(decoded.save, level);
+  expect(selected()).toBe(expected);
+  await g.continueCampaign(decoded.save);
   expect(selected()).toBe(expected);
   expect(log).toHaveBeenCalledWith(expect.stringContaining('falling back'));
   log.mockRestore();
