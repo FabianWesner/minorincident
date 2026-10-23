@@ -11,7 +11,10 @@ export const l6 = {
 /** Benches for the shelter's sitting routine, including slots for carried L5 survivors. */
 export const l6ShelterSeats = Array.from({ length: Math.ceil((l6.shelter.high + l5Survivors.length - 1) / 5) }, (_, k) => {
   const i = 1 + k * 5, yaw = i % 2 ? Math.PI : 0;
-  return { x: -8 + (i % 8) * 2.3 - Math.cos(yaw) * .33, z: -11 + Math.floor(i / 8) * 2.5, yaw };
+  // The eastern first-row routine stood on the station stairs (x 4.3..7.7). Keep its
+  // bench and standing approach on the shelter floor beside them.
+  const x = i === 6 ? 2.5 : -8 + (i % 8) * 2.3 - Math.cos(yaw) * .33;
+  return { x, z: -11 + Math.floor(i / 8) * 2.5, yaw };
 });
 export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */
