@@ -5,7 +5,7 @@ import { emptyInput } from '../../../src/input/InputFrame';
 import { weaponKey } from '../../../src/data/weaponKeys';
 import { compositions } from '../../../src/levels/compositions';
 import { resolveCampaignMission } from '../../../src/levels/missions';
-import { debugCampaign, type CampaignSave, type Level } from '../../../src/sim/progression/Campaign';
+import { debugCampaign, newCampaign, type CampaignSave, type Level } from '../../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../../src/sim/progression/apply';
 import { completeCampaignLevel } from '../../../src/sim/progression/carryover';
 import { decodeSave, SaveStore, validateSave } from '../../../src/sim/progression/Save';
@@ -28,8 +28,8 @@ function game(save: CampaignSave) {
   const g = Object.assign(Object.create(Game.prototype) as Game, {
     world, campaign: save, params: new URLSearchParams(),
     saves: new SaveStore({ getItem: () => stored, setItem: (_key, value) => { stored = value; }, removeItem: () => { stored = null; } }),
-    view: { settings: vi.fn() }, audio: { set: vi.fn() },
-    loadLevel: vi.fn(async (id: string) => { world.loadScenario('combat-arena'); world.scenario = id; applyCampaign(world, g.campaign!); }),
+    view: { settings: vi.fn(), update: vi.fn() }, audio: { set: vi.fn() },
+    loadLevel: vi.fn(async (id: string) => { world.loadScenario('combat-arena'); world.scenario = id; g.applyCampaign(); }),
   });
   return g;
 }
@@ -79,6 +79,7 @@ test.each([2, 3, 4, 5, 6, 7, 8, 9, 10] as const)('@E13 Q-158 Continue into L%i f
 
 test('@E13 Q-158 a live menu save captures selection and acquired racks for Continue', async () => {
   const save = debugCampaign(3, null), g = game(save);
+  g.applyCampaign();
   save.selectedAction = 'weapon.fire-axe';
   equip(save, 'weapon.handgun', 4);
   world.scenario = 'L3';
@@ -105,9 +106,20 @@ test('@E13 Q-158 Continue does not capture the outgoing world while applying sav
   world.scenario = 'L3'; world.missions = { state: { phase: 'playing' }, dispose: vi.fn() } as never;
   const incoming = structuredClone(save); incoming.selectedAction = 'weapon.fire-axe';
   const g = game(save);
+  g.applyCampaign();
+  world.combat!.runner.loadout.input({ ...emptyInput(), selectedWeaponKey: 4 }, 120);
   g.audio.set.mockImplementation(() => { g.saveCampaign(); });
   await g.continueCampaign(incoming);
   expect(selected()).toBe('weapon.fire-axe');
+});
+
+test('@E13 Q-158 a new campaign cannot inherit the outgoing L1 selection or rack', () => {
+  const save = newCampaign(), g = game(save);
+  g.applyCampaign(); equip(save, 'weapon.bat', 2);
+  world.scenario = 'L1'; world.missions = { state: { phase: 'playing' }, dispose: vi.fn() } as never;
+  g.campaign = newCampaign();
+  expect(g.saveCampaign()).toBe(true);
+  expect(g.campaign).toEqual(newCampaign());
 });
 
 test('@E13 Q-158 the crossing logs the reason for losing the selected handgun and Continue restores the axe', async () => {

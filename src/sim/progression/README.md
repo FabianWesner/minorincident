@@ -70,8 +70,9 @@ spending ammunition or starting a swap cooldown. A known action missing from the
 rack falls back to the highest numbered owned, racked weapon (9 down to 1), with a reason
 in the campaign log. The crossing explicitly logs its scripted loss and selects the axe.
 The optional field keeps old saves valid and retains their authored default selection.
-L5's setup respects a recorded selection; settings saves during Continue cannot replace it
-with the outgoing world's selection. Existing ammunition/charge boundary rules are unchanged.
+L5's setup respects a recorded selection. Live-save capture belongs to the campaign applied
+to the world, so Continue settings and new campaigns cannot inherit outgoing equipment.
+Existing ammunition/charge boundary rules are unchanged.
 
 `arsenal` script actions add/remove entitlements and racks before tick-end checkpoint
 capture. Checkpoints include the arsenal alongside entity loadout timers and existing
