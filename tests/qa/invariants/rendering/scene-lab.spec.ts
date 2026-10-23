@@ -17,7 +17,7 @@ test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occ
   const session = new SceneSession({ backend: 'webgpu', tier: 'low' });
   try {
     await session.open(browser);
-    for (const [key, at] of [['rosa', [58, 45.3]], ['sam', [-45, 38.5]]] as const) {
+    for (const [key, at] of [['rosa', [58, 45.3]], ['sam', [-45, 45.9]]] as const) {
       const spec = readSpec('tests/scenes/catalog/survivors-ai-bus-ring.json');
       spec.actors![0].at = [...at];
       await session.load(spec); await session.step(1); await session.ready();
