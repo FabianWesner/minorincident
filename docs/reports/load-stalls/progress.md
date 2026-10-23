@@ -7,6 +7,6 @@
 - Independent raw-data audit passes; source hashes, native backends, errors, exact distributions, movement segments and build identities are checked by `evidence/audit.py`. Candidate preview must be available on port 4222 when rerunning it.
 - L8 WebGPU high improves from 24.270/24.571/24.627 s to 3.931/3.967/4.000 s (median/p90/max).
 - The earlier indexed revision failed its L10 GL/high N=20 budget at 6.526 s; the full failed batch is preserved under `evidence/after-indexed-failed/`. The rig-pose revision fixes that measured miss.
-- The original one-off L1 10–16 s trigger remains unproven. A separate deployed-13g diagnostic trace batch is running; it is excluded from acceptance distributions.
+- The original one-off L1 10–16 s trigger remains unproven. Sixty additional deployed-13g diagnostic attempts completed without reproducing it: 20 with the main diagnostic probe (max 2.659 s) and 40 with the original menu protocol plus CDP-only tracing (max 3.585 s). All profiles/traces are retained separately. The slowest case added network/assembly delay before Preparing; its warm-up remained about 0.97 s. A trace from an actual 10–16 s L1 occurrence is needed to confirm that historical trigger.
 
 See [root cause](root-cause.md), [all distributions](distributions.md), and `evidence/final-audit.json`. The budget remains 6,000 ms.
