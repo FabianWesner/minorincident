@@ -2,15 +2,19 @@
 import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
-import { authoredClips, sampleClip, strideScale } from './clips';
+import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
+import { compactCrowdGeometry } from './compactCrowdGeometry';
 type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number };
 // Keep sampled animation and small bind transforms across loads. The source
 // registry already owns the geometry; cached expanded triangle soup otherwise
 // pins another vertex buffer after the scene indexes/disposes its own copy.
 const bakedCrowds = new Map<string, { clip: CrowdClip; transforms: Matrix4[] }>();
 const bakedCrowdLimit = 64;
+// LODs with exactly the same rigid skeleton share geometry-independent samples
+// within a cold load. Grounded/death poses still sample each model's own bounds.
+const rigPoses = new Map<string, Map<string, Float32Array>>();
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
   'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
 export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-') && !clip.startsWith('dog-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
@@ -37,7 +41,7 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
   }
   return step.value;
 }
-function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string): Generator<void, BakedCrowd> {
+function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false): Generator<void, BakedCrowd> {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -52,6 +56,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const required = new Set<Object3D>();
   for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
   const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
+  if (preserveIndices) root.updateMatrixWorld(true);
+  const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
+    ? JSON.stringify([crawlingRestPose, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
+  const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
+  if (poseKey) {
+    rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);
+    if (rigPoses.size > 8) rigPoses.delete(rigPoses.keys().next().value!);
+  }
   const updateJoints = () => {
     for (const node of joints) {
       if (node.matrixAutoUpdate) node.updateMatrix();
@@ -96,6 +108,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
 
     const mixer = new AnimationMixer(root);
     for (const clip of clipNames) {
+      const reusable = !groundClips.test(clip) && clip !== 'animal-death';
+      const shared = reusable ? sharedPoses?.get(clip) : undefined;
+      if (shared) { (matrices as Float32Array).set(shared, matrixOffset); matrixOffset += shared.length; continue; }
+      const clipStart = matrixOffset;
       const embedded = root.animations.find(animation => animation.name === clip);
       const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
       if (action) { action.clampWhenFinished = true; action.reset().play(); }
@@ -118,6 +134,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         if ((frame + 1) % 6 === 0) yield;
       }
       action?.stop();
+      if (reusable) sharedPoses?.set(clip, new Float32Array(matrices.slice(clipStart, matrixOffset)));
     }
     mixer.uncacheRoot(root);
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
@@ -141,7 +158,16 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     const bind = transforms[meshIndex++];
     if (bind) relative.copy(bind);
     else { relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
-    const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone();
+    // CrowdView can retain authored indices through the bake. Expanding every
+    // triangle first repeated transforms, attribute packing and welding work.
+    // Civilian grip tessellation still requests the original triangle soup.
+    const geometry = node.geometry.index && !preserveIndices ? node.geometry.toNonIndexed() : node.geometry.clone();
+    if (preserveIndices && !geometry.index) {
+      const indices = new Uint32Array(geometry.getAttribute('position').count);
+      for (let i = 0; i < indices.length; i++) indices[i] = i;
+      geometry.setIndex(new BufferAttribute(indices, 1));
+    }
+    if (preserveIndices) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
     for (const name of ['position', 'normal']) {
       const attribute = geometry.getAttribute(name);
@@ -172,19 +198,23 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   yield;
   const geometry = mergeGeometries(geometries); if (!geometry) throw new Error('Infected geometry merge failed'); for (const source of geometries) source.dispose();
   yield;
-  // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
-  // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
-  const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'];
-  const attributes = names.map((name) => geometry.getAttribute(name));
-  const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
-  const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
-  let offset = 0;
-  for (let a = 0; a < attributes.length; a++) {
-    const attribute = attributes[a];
-    for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
-    geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
-    offset += attribute.itemSize;
-    yield;
+  // CrowdView welds and packs these attributes immediately; avoid interleaving
+  // them only to deinterleave the same data again before that weld.
+  if (!preserveIndices) {
+    // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
+    // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
+    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'];
+    const attributes = names.map((name) => geometry.getAttribute(name));
+    const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
+    const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
+    let offset = 0;
+    for (let a = 0; a < attributes.length; a++) {
+      const attribute = attributes[a];
+      for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
+      geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
+      offset += attribute.itemSize;
+      yield;
+    }
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };

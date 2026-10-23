@@ -1,0 +1,40 @@
+total 2738 ms
+
+self time by file:
+    2353  three.webgpu.js
+     203  (garbage collector)
+      46  TextureUpload.ts
+      34  (program)
+      26  three.core.js
+      22  createBuffer
+       8  PaletteMaterial.ts
+       5  type.<computed>
+       5  writeBuffer
+       4  SurfaceDetail.ts
+       4  mark
+       3  now
+       3  createBindGroup
+       3  copyExternalImageToTexture
+       3  createRenderPipeline
+
+self time by function:
+     369  build three.webgpu.js:2515
+     203  (garbage collector) :-1
+     136  _getChildren three.webgpu.js:2037
+     135  getChildren three.webgpu.js:1986
+     123  build three.webgpu.js:3119
+      86  getNodeFromHash three.webgpu.js:53698
+      81  getDataFromNode three.webgpu.js:54613
+      73  analyze three.webgpu.js:2400
+      57  build three.webgpu.js:9307
+      56  getNodeType three.webgpu.js:2241
+      48  setData three.webgpu.js:51931
+      46  uploadFloatTexture TextureUpload.ts:17
+      40  setHashNode three.webgpu.js:53496
+      40  n three.webgpu.js:4343
+      39  generate three.webgpu.js:6794
+      36  getData three.webgpu.js:51911
+      35  generateNodeType three.webgpu.js:6706
+      34  (program) :-1
+      30  createAttribute three.webgpu.js:84173
+      30  getNodeProperties three.webgpu.js:54663

@@ -151,34 +151,39 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Static batches share node graphs. Compile one representative of each exact
     // material/attribute/shadow/capacity variant; the draws below still upload and
     // execute every render object, including both instancing driver paths.
-    const candidates = warmCandidates(leaves);
+    // Viewport-depth bindings acquire their multisampled texture in the HDR draw.
+    // As with incremental warm-up, compile the other graphs first and let that draw
+    // build the depth-dependent leaves against their actual target.
+    const candidates = warmCandidates(leaves).filter(leaf => renderer.selectedBackend !== 'webgpu' || !leaf.userData.preRenderNeedsDepth);
     // Shared pose materials change their texture in onBeforeRender. Explicitly
     // warm every batch's atlas before compilation, rather than only the last binding.
-    // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.
-    if (renderer.selectedBackend === 'webgpu' && budgetedWarmUp && pause) {
+    // Upload before linking: a first texSubImage2D otherwise flushes queued native
+    // pipeline compilation and blocks the renderer. Live/background loading keeps
+    // its 4 MiB paint budget; cold foreground loading has an opaque card.
+    if (pause) {
       const textures = new Set<DataTexture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
       let bytes = 0;
       for (const texture of textures) {
         const size = texture.image.data?.byteLength ?? 0;
-        if (bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
+        if ((background || cooperative) && bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
         renderer.initTexture(texture); bytes += size;
       }
-      await pause();
+      if (textures.size && (background || cooperative)) await pause();
       performance.measure('Texture atlas upload', { start, end: performance.now() });
     }
     progress?.(0, 1);
     const lanes = cooperative ? 1 : compileLanes;
     const partitions = Array.from({ length: lanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % lanes === lane; }); });
-    // L3 compiles foreground WebGPU pipelines asynchronously before drawing. Synchronous
-    // pipeline creation can stall later queue writes while Dawn compiles in the GPU
-    // process. Disjoint lanes retain the real HDR context and all shadow variants.
+    // Compile foreground WebGPU pipelines asynchronously before drawing on every level.
+    // Synchronous creation defers compilation to Dawn's GPU-process command flush,
+    // blocking later queue writes/fences. Disjoint lanes retain the actual HDR context.
     // Background node builds keep Three's cooperative yielding.
     const compilationStart = performance.now(), foregroundCompile = renderer.foregroundCompile;
     try {
       // The L7 -> L8 card still owns the frame budget. Use Three's yielding
       // node builds serially instead of stacking six complete graphs in a task.
       renderer.foregroundCompile = !background && !cooperative;
-      if (renderer.selectedBackend === 'webgl' || !background && budgetedWarmUp) await compile(partitions); else if (background) await compile([() => {}]);
+      if (renderer.selectedBackend === 'webgl' || !background) await compile(partitions); else if (background) await compile([() => {}]);
     } finally { renderer.foregroundCompile = foregroundCompile; for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start: compilationStart, end: performance.now() });
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so

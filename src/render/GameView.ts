@@ -266,9 +266,10 @@ export class GameView implements Lifecycle {
     this.camera.updateProjectionMatrix();
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
-    // Keep the handover's loading card responsive while the same assets parse
-    // and batches assemble; the full cast and all shader variants still load.
-    if (this.world.scenario === 'L8') loadGate.setPaced(true);
+    // A live L7 handover keeps its frame budget while assets and batches assemble.
+    // A cold menu load has no live scene to update: use the foreground policy.
+    const cooperative = this.world.scenario === 'L8' && this.frozenUpdates;
+    if (cooperative) loadGate.setPaced(true);
     const player = this.world.entities.get(1);
     this.view.reset(player?.transform ?? { x: 0, z: 0 }, true);
     let actors: Promise<unknown> | null = null;
@@ -447,7 +448,7 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', this.world.scenario === 'L8');
+      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6' || this.world.scenario === 'L8', cooperative);
       const prepare = async (): Promise<void> => {
         // L4's moving set pieces reveal the courier during combat. Warm both
         // graphs against every loading light/weather variant, before LOD swaps.

@@ -1,0 +1,40 @@
+total 4798 ms
+
+self time by file:
+    2028  three.core.js
+     532  CrowdView.ts
+     417  (program)
+     334  BufferGeometryUtils.js
+     228  bakeInfected.ts
+     165  00027f5e
+     143  clips.ts
+     138  staticBatch.ts
+     135  GroundField.ts
+     126  (garbage collector)
+     107  DistrictView.ts
+      60  Request
+      58  CrowdAppearance.ts
+      48  GLTFLoader.js
+      45  HeightSteps.ts
+
+self time by function:
+     531  loadBatch CrowdView.ts:188
+     417  (program) :-1
+     306  mergeVertices BufferGeometryUtils.js:642
+     266  updateMatrixWorld three.core.js:13066
+     154  applyMatrix4 three.core.js:5243
+     141  wasm-function[1] 00027f5e:0
+     132  add GroundField.ts:17
+     126  (garbage collector) :-1
+     106  getX three.core.js:17332
+     101  toArray three.core.js:4733
+      90  bakeInfectedSteps bakeInfected.ts:39
+      87  getObjectByProperty three.core.js:12834
+      82  multiplyMatrices three.core.js:10569
+      78  toArray three.core.js:5979
+      76  setFromPoints three.core.js:16009
+      72  getZ three.core.js:17398
+      61  node bakeInfected.ts:130
+      60  Request :-1
+      54  getComponent three.core.js:17298
+      46  footFrame DistrictView.ts:625

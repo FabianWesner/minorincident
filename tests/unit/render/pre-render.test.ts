@@ -149,19 +149,47 @@ test('@E18 WebGPU pose uploads yield within 4 MiB and finish before pipeline com
   scene.add(...leaves);
   const calls: string[] = [], initTexture = vi.fn(() => calls.push('upload'));
   const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), initTexture } as unknown as Renderer;
-  await preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => { calls.push('compile'); }, async () => { calls.push('pause'); }, undefined, false, true);
+  await preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => { calls.push('compile'); }, async () => { calls.push('pause'); }, undefined, false, true, true);
   expect(calls.slice(0, 7)).toEqual(['upload', 'pause', 'upload', 'pause', 'upload', 'pause', 'compile']);
   expect(initTexture).toHaveBeenCalledTimes(3);
   geometry.dispose(); material.dispose(); textures.forEach(texture => texture.dispose());
 });
 
 
-test('@E18 other WebGPU levels retain foreground compilation and draw batching', async () => {
+test('@E18 all foreground WebGPU levels compile asynchronously without changing driver draw coverage', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   const leaves = Array.from({ length: 130 }, () => new Mesh(geometry, material)); scene.add(...leaves);
   const compile = vi.fn(async () => {}), groups: number[] = [];
   const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
   await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(leaves.filter(leaf => leaf.visible).length); }, compile, async () => {});
-  expect(compile).not.toHaveBeenCalled(); expect(groups).toEqual([130, 130, 130]);
+  expect(compile).toHaveBeenCalledOnce(); expect(groups).toEqual([130, 130, 130]);
   geometry.dispose(); material.dispose();
+});
+
+test('@E18 viewport-depth leaves build in the real HDR draw rather than compiling a fallback binding', async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const ordinary = new Mesh(geometry, material), depth = new Mesh(geometry, material); depth.userData.preRenderNeedsDepth = true;
+  scene.add(ordinary, depth);
+  let compiled = false, draws = 0;
+  const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => {
+    expect(compiled).toBe(true); expect(depth.visible).toBe(true); draws++;
+  }, async partitions => {
+    for (const apply of partitions) { apply(); expect(depth.visible).toBe(false); }
+    compiled = true;
+  }, async () => {});
+  expect(draws).toBe(3); expect(ordinary.visible).toBe(true); expect(depth.visible).toBe(true);
+  geometry.dispose(); material.dispose();
+});
+
+for (const backend of ['webgl', 'webgpu']) test(`@E18 ${backend} cold foreground uploads atlases before compilation without paint pacing`, async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const textures = Array.from({ length: 3 }, () => new DataTexture(new Float32Array(600_000), 75, 2000));
+  for (const texture of textures) { const leaf = new Mesh(geometry, material); leaf.userData.preRenderTextures = [texture]; scene.add(leaf); }
+  const calls: string[] = [];
+  const renderer = { selectedBackend: backend, getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), initTexture: () => { calls.push('upload'); } } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { calls.push('draw'); }, async () => { calls.push('compile'); }, async () => { calls.push('pause'); });
+  expect(calls.slice(0, 4)).toEqual(['upload', 'upload', 'upload', 'compile']);
+  expect(calls.filter(call => call === 'draw')).toHaveLength(3);
+  geometry.dispose(); material.dispose(); textures.forEach(texture => texture.dispose());
 });

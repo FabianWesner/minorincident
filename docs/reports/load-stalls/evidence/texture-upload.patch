@@ -1,0 +1,52 @@
+--- a/src/render/PreRenderer.ts
++++ b/src/render/PreRenderer.ts
+@@ -157,16 +157,18 @@
+     const candidates = warmCandidates(leaves).filter(leaf => renderer.selectedBackend !== 'webgpu' || !leaf.userData.preRenderNeedsDepth);
+     // Shared pose materials change their texture in onBeforeRender. Explicitly
+     // warm every batch's atlas before compilation, rather than only the last binding.
+-    // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.
+-    if (renderer.selectedBackend === 'webgpu' && budgetedWarmUp && pause) {
++    // Upload before linking: a first texSubImage2D otherwise flushes queued native
++    // pipeline compilation and blocks the renderer. Live/background loading keeps
++    // its 4 MiB paint budget; cold foreground loading has an opaque card.
++    if (pause) {
+       const textures = new Set<DataTexture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
+       let bytes = 0;
+       for (const texture of textures) {
+         const size = texture.image.data?.byteLength ?? 0;
+-        if (bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
++        if ((background || cooperative) && bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
+         renderer.initTexture(texture); bytes += size;
+       }
+-      await pause();
++      if (textures.size && (background || cooperative)) await pause();
+       performance.measure('Texture atlas upload', { start, end: performance.now() });
+     }
+     progress?.(0, 1);
+--- a/tests/unit/render/pre-render.test.ts
++++ b/tests/unit/render/pre-render.test.ts
+@@ -149,7 +149,7 @@
+   scene.add(...leaves);
+   const calls: string[] = [], initTexture = vi.fn(() => calls.push('upload'));
+   const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), initTexture } as unknown as Renderer;
+-  await preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => { calls.push('compile'); }, async () => { calls.push('pause'); }, undefined, false, true);
++  await preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => { calls.push('compile'); }, async () => { calls.push('pause'); }, undefined, false, true, true);
+   expect(calls.slice(0, 7)).toEqual(['upload', 'pause', 'upload', 'pause', 'upload', 'pause', 'compile']);
+   expect(initTexture).toHaveBeenCalledTimes(3);
+   geometry.dispose(); material.dispose(); textures.forEach(texture => texture.dispose());
+@@ -181,3 +181,15 @@
+   expect(draws).toBe(3); expect(ordinary.visible).toBe(true); expect(depth.visible).toBe(true);
+   geometry.dispose(); material.dispose();
+ });
++
++for (const backend of ['webgl', 'webgpu']) test(`@E18 ${backend} cold foreground uploads atlases before compilation without paint pacing`, async () => {
++  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
++  const textures = Array.from({ length: 3 }, () => new DataTexture(new Float32Array(600_000), 75, 2000));
++  for (const texture of textures) { const leaf = new Mesh(geometry, material); leaf.userData.preRenderTextures = [texture]; scene.add(leaf); }
++  const calls: string[] = [];
++  const renderer = { selectedBackend: backend, getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), initTexture: () => { calls.push('upload'); } } as unknown as Renderer;
++  await preRender(renderer, scene, new PerspectiveCamera(), () => { calls.push('draw'); }, async () => { calls.push('compile'); }, async () => { calls.push('pause'); });
++  expect(calls.slice(0, 4)).toEqual(['upload', 'upload', 'upload', 'compile']);
++  expect(calls.filter(call => call === 'draw')).toHaveLength(3);
++  geometry.dispose(); material.dispose(); textures.forEach(texture => texture.dispose());
++});
