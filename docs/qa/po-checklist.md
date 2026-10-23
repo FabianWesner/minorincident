@@ -17,3 +17,15 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - No gameplay frame over 200 ms on real input at the L1 deliver leg and the L2 ride start (Q-126).
 - L7 end shot: no map edge or void visible at the top of the frame (Q-127).
 - L3 west ramp: no dark seam line across the deck (Q-129).
+- L5 bus hiding place: the search ring is visible at zoom 1.5, not hidden behind the wreck (Q-140).
+- L5 Metro finale: survivors do not merge into each other at the shutter (Q-145).
+- L6 shelter: an uncollected headlamp stays where it lies; its prompt never follows the courier (Q-138).
+- L6 end shot frames the scene, not a blank roof; the result card counts match the objective (Q-144).
+- L7 exit truck is lit, not a black silhouette; gore reads as blood, not red squares (Q-142, Q-143).
+- L7 point-blank rocket does not white out the whole frame (Q-148).
+- L8 boarding wait: missing survivors are visible or marked (Q-141).
+- L9 drive start: the corgi never stands inside the APC hull (Q-137).
+- L9 drive: the APC cannot wedge off-road before the bridge (Q-139).
+- L9 bridge collapse: the APC falls whole; no floating wheels, no vanishing hull (Q-136).
+- L9 approach: no giant flat white arrow over the APC (Q-146).
+- L10 Alpha slam telegraph reads as a ground effect, not debug lines (Q-147).
