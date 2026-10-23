@@ -1,0 +1,23 @@
+  1) [chromium] › tests/e2e/save.spec.ts:6:1 › @E13 @E13-AC05 L1 completion saves before Continue; reload unlocks L2 and restores aftermath from the level menu 
+
+    Error: page.evaluate: Error: Gate did not close
+        at eval (eval at evaluate (:311:30), <anonymous>:22:55)
+        at async <anonymous>:337:30
+        at eval (eval at evaluate (:311:30), <anonymous>:22:55)
+        at async <anonymous>:337:30
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/weapon-carryover/tests/e2e/save.spec.ts:13:35
+
+    Error Context: test-results/playwright/run-4411/e2e-save--E13-E13-AC05-L1--0a9d0-termath-from-the-level-menu-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4411/e2e-save--E13-E13-AC05-L1--0a9d0-termath-from-the-level-menu-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4411/e2e-save--E13-E13-AC05-L1--0a9d0-termath-from-the-level-menu-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/save.spec.ts:6:1 › @E13 @E13-AC05 L1 completion saves before Continue; reload unlocks L2 and restores aftermath from the level menu 
+  1 skipped
+  39 passed (3.0m)
