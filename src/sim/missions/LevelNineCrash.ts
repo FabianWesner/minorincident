@@ -42,7 +42,8 @@ export class LevelNineCrash {
       const car = w.vehicles!.cars.get(this.state.carId)!, t = car.entity.transform, def = car.physics.def, z = def.width / 2 + .55;
       const dog = w.entities.get(corgi)!;
       Object.assign(dog.transform, { x: t.x + Math.cos(t.yaw) * def.doorX + Math.sin(t.yaw) * z, z: t.z - Math.sin(t.yaw) * def.doorX + Math.cos(t.yaw) * z });
-      w.spatial.set(corgi, dog.transform.x, dog.transform.z); w.vehicles!.boardPassenger(this.state.carId, corgi);
+      w.spatial.set(corgi, dog.transform.x, dog.transform.z);
+      if (w.vehicles!.boardPassenger(this.state.carId, corgi)) { dog.hidden = true; w.spatial.delete(corgi); }
     }
     w.vehicles!.setFloorPolicy(this.state.carId);
     for (const actor of payload?.occupants ?? []) {

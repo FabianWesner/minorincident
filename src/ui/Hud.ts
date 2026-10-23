@@ -383,6 +383,23 @@ export class Hud {
       text(this.cueText, status.waiting ? ` · ${status.waiting}` : '');
       return;
     }
+    if (mission?.def.l8 && mission.state.steps.depart?.status === 'active') {
+      const zoo = mission.l8!, car = this.game.world.vehicles!.cars.get(zoo.state.carId)?.entity.vehicle;
+      const missing = zoo.passengers().map(id => this.game.world.entities.get(id)!).filter(e => !car?.passengers?.some(p => p.id === e.id && p.phase === 'seated'))
+        .sort((a, b) => Math.hypot(a.transform.x - px, a.transform.z - pz) - Math.hypot(b.transform.x - px, b.transform.z - pz));
+      const target = missing[0], aboard = zoo.passengers().length - missing.length;
+      setHidden(this.survivorText, false);
+      text(this.survivorText, ` · ${aboard}/${zoo.passengers().length} aboard`);
+      setHidden(this.cuePin, !target);
+      setHidden(this.cueText, !target);
+      if (target) {
+        const name = target.companion ? 'Corgi' : l5Survivors.find(s => s.key === target.civilian?.survivor?.key)?.name ?? `Survivor ${(target.civilian?.survivor?.slot ?? 0) + 1}`;
+        this.place(this.cuePin, target.transform.x, target.transform.z, px, pz, true);
+        attribute(this.cuePin, 'aria-label', `Find ${name}`); attribute(this.cuePin, 'data-survivor', String(target.id));
+        text(this.cueText, ` · Find ${name} · ${Math.ceil(Math.hypot(target.transform.x - px, target.transform.z - pz))} m`);
+      }
+      return;
+    }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }

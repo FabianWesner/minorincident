@@ -24,6 +24,7 @@ import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 import { lightPalette } from '../data/lights';
 const lampPosition = new Vector3(), lampDirection = new Vector3(), beamColor = new Color();
+export function vehiclePresentationDecay(scripted: boolean, decay: string | undefined): string | undefined { return scripted ? undefined : decay; }
 interface Record { bounds: Box3; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
@@ -120,8 +121,10 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
     const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
-    const decay = car.entity.vehicle!.decay;
-    const asset = def.asset, shell = decay ?? (def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : undefined);
+    // The L9 collapse is one authored body-and-wheel object in flight. A transferred APC may already
+    // have `decay: wrecked`; defer that shell swap until destroyScripted ends the fall.
+    const decay = vehiclePresentationDecay(car.entity.vehicle!.scripted ?? false, car.entity.vehicle!.decay);
+    const asset = def.asset, shell = decay ?? (!car.entity.vehicle!.scripted && def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : undefined);
     const prepared = decay === 'wrecked' && id === this.world.missions?.l9?.state.carId ? this.crashModels.get(lod) : undefined;
     if (prepared) this.crashModels.delete(lod);
     const model = prepared?.model ?? (atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed')));
@@ -154,7 +157,7 @@ export class VehicleView extends Group {
       const record = this.records.get(id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
-      const decay = car.entity.vehicle!.decay;
+      const decay = vehiclePresentationDecay(car.entity.vehicle!.scripted ?? false, car.entity.vehicle!.decay);
       if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       if (body.body.isKinematic()) {

@@ -88,7 +88,9 @@ export class Companion {
   private canFetch(entity: EntitySnapshot | undefined, player: EntitySnapshot): boolean {
     const pickup = entity?.pickup;
     if (this.safe || !pickup || Math.hypot(entity!.transform.x - player.transform.x, entity!.transform.z - player.transform.z) > 6) return false;
-    if ('kind' in pickup) return !pickup.collected && !((pickup.kind === 'medkit' || pickup.kind === 'soda') && player.health.current >= player.health.max);
+    // The headlamp is an interaction item: only the courier's E hold collects it.
+    // Fetching it moves the entity (and its prompt/ring), so leave it at its authored station.
+    if ('kind' in pickup) return entity!.archetype !== 'pickup.headlamp' && !pickup.collected && !((pickup.kind === 'medkit' || pickup.kind === 'soda') && player.health.current >= player.health.max);
     return pickup.armed && !pickup.interactTicks && !pickup.retain;
   }
   update(): void {

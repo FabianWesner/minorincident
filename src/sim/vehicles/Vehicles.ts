@@ -190,6 +190,7 @@ export class Vehicles {
     Object.assign(this.position, safe); this.transition = null;
     if (this.active === id) this.leave(car);
     state.floor = false; state.damage = 'exploded'; state.decay = 'wrecked'; state.explodeAt = null;
+    state.scripted = false;
     car.entity.health.current = 0;
     this.world.events.emit({ type: 'vehicle.exploded', tick: this.world.tick, sourceId: id });
     this.world.explosions?.blast(vehicleExplosion, car.entity.transform, { sourceId: id, damage: false, fires: false, height: car.entity.transform.y - (car.physics.def.suspension + car.physics.def.wheelRadius + .15) + .7 });
