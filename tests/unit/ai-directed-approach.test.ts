@@ -15,7 +15,7 @@ for (const cause of ['long detour', 'visible herd'] as const) test(`a directed a
     const ai = w.infected!; ai.configureL1v2();
     const id = ai.spawn('infected.runner', { x: 0, z: 0 }, { yaw: 0 });
     const e = w.entities.get(id)!, state = e.infected!, brain = state.l1!;
-    ai.rush(id, { x: 20, z: 0 }, w.tick + 1800);
+    ai.rush(id, { x: 20, z: 0 }, w.tick + 1800, true);
     const goal = [brain.goalX, brain.goalZ], until = brain.search.until;
     if (cause === 'long detour') {
       // This is still an active approach, with real progress possible and its own deadline remaining.
@@ -31,5 +31,7 @@ for (const cause of ['long detour', 'visible herd'] as const) test(`a directed a
     expect(brain.mode).toBe('attracted');
     expect([brain.goalX, brain.goalZ]).toEqual(goal);
     expect(brain.search.until).toBe(until);
+    ai.rush(id, { x: 20, z: 1 }, until);
+    expect(brain.search.completeApproach, 'ordinary investigations do not inherit an arrival order').toBe(false);
   } finally { w.dispose(); }
 });

@@ -22,6 +22,8 @@ export interface SearchPlan {
   visited: number;
   doubledBack: boolean;
   legTicks: number;
+  /** Finite authored arrival: retain its initial approach until the deadline; visible humans still interrupt it. */
+  completeApproach?: boolean;
 }
 /** Per-infected L1 brain; `mode`, `looking`, `lookYaw` and `search` are the animation surface for lane G. */
 export interface L1Brain {
@@ -79,7 +81,7 @@ function coverEdge(nav: ProbeTerrain, x: number, z: number): boolean { return !n
  */
 export function planSearch(plan: SearchPlan, rng: Rng, nav: ProbeTerrain, tick: number, origin: { x: number; z: number }, heading: { x: number; z: number }, durationTicks: number, radius: readonly [number, number] = l1v2.infected.search.probeRadiusM): void {
   const tuning = l1v2.infected.search;
-  plan.startTick = tick; plan.until = tick + durationTicks; plan.originX = origin.x; plan.originZ = origin.z;
+  plan.completeApproach = false; plan.startTick = tick; plan.until = tick + durationTicks; plan.originX = origin.x; plan.originZ = origin.z;
   plan.probes.length = 0; plan.doubleBackAt = -1; plan.next = -1; plan.visited = 0; plan.doubledBack = false; plan.legTicks = 0;
   const count = tuning.probePoints[0] + Math.floor(rng.next() * (tuning.probePoints[1] - tuning.probePoints[0] + 1));
   const known = heading.x !== 0 || heading.z !== 0, base = known ? Math.atan2(heading.z, heading.x) : rng.next() * Math.PI * 2;

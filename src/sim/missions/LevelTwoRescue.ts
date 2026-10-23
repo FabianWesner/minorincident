@@ -13,13 +13,16 @@ import type { CoverWall } from '../combat/HitQuery';
 
 const TICKS = 60, ticks = (s: number) => Math.round(s * TICKS);
 const NAV_TRUCK = 900_201;
+const arrivalHomes = [l2.cluster.home, ...l2.escape.groups.slice(0, 2)];
 /** Market openings (front east, loading south) and the checkpoint entrances (main gate, north and south side gates). */
 const WALLS: Record<string, CoverWall> = {
   'door-front': { x: -51.3, y: .9, z: -42.2, halfX: .2, halfY: .9, halfZ: 4.6 },
   'door-loading': { x: -55.6, y: .9, z: -37.6, halfX: 4.3, halfY: .9, halfZ: .2 },
   'gate-main': { x: l2.checkpoint.gateX, y: .9, z: 30.1, halfX: .25, halfY: .9, halfZ: 5.6 },
   'gate-north': { x: 82, y: .9, z: 24.6, halfX: 3.1, halfY: .9, halfZ: .25 },
-  'gate-south': { x: 81.5, y: .9, z: 35.0, halfX: 1.25, halfY: .9, halfZ: .25 },
+  // Join the fence post at x=83.6. The old 0.715 m jamb gap admitted a .7 m
+  // body; keep its permitted 2 cm contact depth outside the checkpoint edge too.
+  'gate-south': { x: 81.9, y: .9, z: 35.05, halfX: 1.7, halfY: .9, halfZ: .25 },
 };
 const fresh = (): L2State => ({
   phase: 'calm', alarmAt: 0, departAt: 0, arrivedAt: 0, crewExitAt: 0, atDoorsAt: 0, doorsOpenAt: 0, radioAt: 0, crossedAt: 0, gateClosedAt: 0,
@@ -48,12 +51,34 @@ const SHOUTS: readonly (readonly ['arrived' | 'exit' | 'doors', number, 'crew' |
  */
 export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
+  private reservedArrivals = 0;
   private driver: L2TruckDrive | null = null;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   constructor(private readonly mission: Mission) { mission.world.infectedMeleeHits = l2.infectedMeleeHits; }
   private get s(): L2State { return this.mission.state.l2!; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
+  /** The phone cap must leave room for the authored bridge cluster and its two
+   * preceding street beats. Bite conversions use the director's existing budget. */
+  private reserveArrivals(): void {
+    const ai = this.world.infected!;
+    // The finite market alarm owns its slots before ambient street arrivals or bites fill the cap.
+    let count = this.s.doorsOpenAt ? this.s.ambush.filter(a => !a.id).length : l2.rescue.ambushDoors.reduce((n, [, size]) => n + Math.ceil(size * (ai.director.tier === 'low' ? l2.escape.lowScale : 1)), 0);
+    if (ai.director.tier === 'low') {
+      if (!this.s.escapeSpawned) {
+        const scale = l2.escape.lowScale * (1 - this.relief());
+        count += Math.ceil(l2.cluster.count * scale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
+      } else for (const q of this.s.pending) {
+        if ((q.id === 0 || q.id === -2) && arrivalHomes.some(p => p[0] === q.home.x && p[1] === q.home.z)) count++;
+      }
+    }
+    ai.director.reserved += count - this.reservedArrivals;
+    this.reservedArrivals = count;
+  }
+  dispose(): void {
+    if (this.world.infected) this.world.infected.director.reserved -= this.reservedArrivals;
+    this.reservedArrivals = 0;
+  }
   /** Nearest point with `r` clearance (ring search, 0.5 m steps up to 6 m). */
   private snap(p: Point, r = .4): Point {
     const nav = this.world.infected!.nav;
@@ -75,6 +100,7 @@ export class LevelTwoRescue {
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l2.escape.caps.high;
+    this.reserveArrivals();
     world.npcs.setAmbient(0);
     // L2-default progression: the bat from L1 is in hand (a campaign load has already applied its racks).
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
@@ -312,11 +338,12 @@ export class LevelTwoRescue {
     const side = (lx: number, lz: number) => this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .45);
     const out = side(.6, 1.9);
     Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; s.seated = false;
+    world.solids.admit(player, 'l2.vehicle.exit');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = null; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.truckId, targetId: 1, role: 'passenger' });
-    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
   }
   private crewExit(): void {
@@ -325,7 +352,7 @@ export class LevelTwoRescue {
     for (const [i, id] of s.crewIds.entries()) {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
       const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
-      e.hidden = false; Object.assign(e.transform, p); world.spatial.set(id, p.x, p.z);
+      e.hidden = false; Object.assign(e.transform, p); world.solids.admit(e, 'l2.passenger.exit');
       // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
       const [x, z] = l2.rescue.crewDoors[i];
       e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
@@ -358,7 +385,8 @@ export class LevelTwoRescue {
     for (const a of s.ambush) if (!a.id && tick >= a.at) {
       // Each street runs at the exit nearest to it (the crowd streaming out), not at the courier.
       const [x, z] = l2.rescue.ambushRush[a.door] ?? [-46.5, -38], id = this.emerge(a.door, { x, z });
-      a.id = id || -1; if (id) s.ambushIds.push(id);
+      // Cap/admission pressure defers this identity; it must not cancel an authored arrival.
+      if (id) { a.id = id; s.ambushIds.push(id); this.reserveArrivals(); }
     }
   }
   /**
@@ -367,35 +395,55 @@ export class LevelTwoRescue {
    */
   private emerge(door: string, toward: Point, home?: Point): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak(), a = this.anchor(door);
-    if (!a || ai.director.count >= ai.director.cap || !ai.pool.length) return 0;
+    // Later street batches share the cap, but cannot consume the still-staggered market alarm's quota.
+    const alarmSlots = home ? this.s.ambush.filter(a => !a.id).length : 0;
+    if (!a || ai.director.count >= ai.director.cap - alarmSlots || !ai.pool.length) return 0;
     const out = this.snap({ x: a.x, z: a.z }, .45);
     const id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
-    world.events.emit({ type: 'gate.changed', tick: world.tick, id: door.replace('refuge-door-', 'door-'), open: true });
+    if (door.startsWith('refuge-door-')) world.events.emit({ type: 'gate.changed', tick: world.tick, id: door.replace('refuge-door-', 'door-'), open: true });
     const brain = e.infected.l1;
     // Street population: home + leash only (no rush, which would start the panic flow). The ambush runs at the forecourt.
-    if (brain && home) { brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM; }
-    else ai.rush(id, toward, world.tick + ticks(12));
+    if (brain && home) {
+      brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM;
+      if (door.startsWith('l2-street-edge-')) {
+        // Watch the incoming street; perception still chooses the closest visible human.
+        const yaw = home.x === -30 || home.x === -64 ? Math.PI / 2 : Math.PI;
+        e.transform.yaw = brain.lookYaw = yaw; brain.looking = true;
+        brain.pauseUntil = world.tick + ticks(l2.escape.streetLookS);
+      } else {
+        // Door exits walk onto their street instead of drifting behind the buildings.
+        ai.rush(id, home, world.tick + ticks(18));
+      }
+    }
+    // The northern door needs a long route around its block, not a 30 m straight line.
+    else ai.rush(id, toward, world.tick + ticks(30), true);
     return id;
   }
   /** Escape population and the bridge cluster: planned at the alarm, each member emerges once its door is out of view. */
   private spawnEscape(): void {
-    const s = this.s, doors = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-'));
+    const s = this.s, doors = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-') || n.startsWith('l2-street-edge-'));
+    // Recovering street infected keep their slots: get-ups must not exceed the finale's E18 cap.
+    this.world.infected!.director.strict = true;
     const forecourt = this.anchor('l2-forecourt'), market = this.anchor('l2-door-front');
     const near = (home: Point) => doors.map(d => ({ d, a: this.anchor(d) })).filter(({ a }) => Math.hypot(a.x - forecourt.x, a.z - forecourt.z) >= 42 && Math.hypot(a.x - market.x, a.z - market.z) >= 42)
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
     // Death-loop relief: a courier who keeps dying on the break-away meets a thinner street population.
     const scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
-    // The bridge cluster first: under the shared cap it must exist before the looser street groups.
-    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).slice(0, 4);
-    for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
-    for (const [x, z, size] of l2.escape.groups) {
-      const home = { x, z }, list = near(home).slice(0, 2);
+    // The phone cap reserves two street beats before the bridge; desktop has room for the full cluster first.
+    const cluster: Pending[] = [];
+    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).filter(e => e.d.startsWith('refuge-door-')).slice(0, 4);
+    for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) cluster.push({ id: -2, door: list[i % list.length].d, at: 0, home });
+    const low = this.world.infected!.director.tier === 'low';
+    if (!low) s.pending.push(...cluster);
+    for (const [index, [x, z, size]] of l2.escape.groups.entries()) {
+      if (index === 2 && low) s.pending.push(...cluster);
+      const home = { x, z }, list = near(home).slice(0, 1);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
-    s.escapeSpawned = true; this.emergePending(true);
+    s.escapeSpawned = true; this.reserveArrivals(); this.emergePending(true);
   }
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
@@ -410,12 +458,14 @@ export class LevelTwoRescue {
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       (cluster ? s.clusterIds : s.escapeIds).push(id);
     }
+    this.reserveArrivals();
   }
 
   // ---------------------------------------------------------------------------------------------------------- tick
   update(): void {
     const { world, state } = this.mission, s = state.l2; if (!s) return;
     const tick = world.tick, player = world.entities.get(1)!;
+    if (!s.escapeSpawned) this.reserveArrivals();
     if (s.phase === 'calm') {
       if (tick === this.mission.state.steps.axe.started + ticks(8)) this.mission.radio('L2.captain');
       return;
@@ -473,6 +523,13 @@ export class LevelTwoRescue {
     }
     if (this.mercyDue) this.mercy();
     this.calmCheckpoint(player);
+    // The bridge receives a horde on arrival, even when the courier used the riverside bypass.
+    // A fixed event position draws the approach group; ordinary sight still chooses every human target.
+    const bridge = this.anchor('l2-gate');
+    if (s.radioAt && !s.clusterSpawned && Math.hypot(player.transform.x - bridge.x, player.transform.z - bridge.z) < l2.checkpoint.hordeTriggerM) {
+      s.clusterSpawned = true;
+      for (const id of s.clusterIds) world.infected!.rush(id, { x: l2.checkpoint.gateX - 8, z: 30 }, tick + ticks(l2.checkpoint.hordeRushS));
+    }
     this.checkpointGate(tick, player);
     // L2 infected (turned adults in the open) hit harder than L1's first, disoriented victims (section 5.1 tuning).
     if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l2.infectedDamage;
@@ -502,8 +559,19 @@ export class LevelTwoRescue {
     for (; s.released < due; s.released++) {
       const i = s.released, id = s.trappedIds[i], e = this.world.entities.get(id); if (!e?.civilian) continue;
       const front = i % 2 === 0, k = Math.floor(i / 2) % 5;
-      const at = this.snap(front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 }, .35);
+      const at = front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 };
+      // Search outwards from this door. An unconstrained nearest-point search
+      // may choose the market interior when the doorstep is crowded.
+      for (let d = 0; d <= 4; d += .25) {
+        const x = at.x + (front ? d : 0), z = at.z + (front ? 0 : d);
+        const y = .7 + (this.world.districts?.groundHeight(x, z) ?? 0);
+        if (this.world.solids.clear({ x, y, z }, .35, id)) { at.x = x; at.z = z; break; }
+      }
       Object.assign(e.transform, at); e.transform.yaw = front ? 0 : -Math.PI / 2; e.hidden = false; this.world.spatial.set(id, at.x, at.z);
+      e.transform.y = .7 + (this.world.districts?.groundHeight(at.x, at.z) ?? 0);
+      // This is a release through the door, rather than motion from the old
+      // glass pose. Admit it so congestion cannot roll the civilian back inside.
+      this.world.solids.admit(e, 'l2.rescue.release', 0);
       const c = e.civilian; c.pauseUntil = tick; c.scheduleStep = 0; c.activityUntil = 0; c.story = null;
       if (c.l1) c.l1.walkSpeed = c.l1.fleeSpeed * (.85 + hash(id * 3 + this.world.seed) * .15);
       // A fan away from the door (front: east, loading: south), each person its own heading and distance.
@@ -616,7 +684,7 @@ export class LevelTwoRescue {
     const s = this.s;
     if (!s.radioAt || s.phase === 'done') return;
     if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) { s.crossedAt = tick; s.phase = 'checkpoint'; this.mission.radio('L2.checkpoint'); }
-    if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6)) {
+    if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6) && this.world.npcs!.companion.insideBeforeClosing({ x: l2.checkpoint.gateX, z: player.transform.z }, { x: l2.checkpoint.gateX + 1, z: player.transform.z })) {
       s.gateClosedAt = tick; for (const id of ['gate-main', 'gate-north', 'gate-south']) this.wall(id, true);
       // People still on their way can no longer get in: they make for the front of the closed gate instead.
       const g = l2.rescue.havenGate;
@@ -627,8 +695,6 @@ export class LevelTwoRescue {
       }
       for (const id of ['l2-gate-main', 'l2-gate-north', 'l2-gate-south']) this.world.events.emit({ type: 'gate.changed', tick, id, open: false });
       this.world.events.emit({ type: 'l2.gateClosed', tick });
-      // The corgi always makes it through with the courier.
-      for (const e of this.world.entities.iterate()) if (e.companion && !this.inZone(e.transform)) { const p = this.snap({ x: player.transform.x + 1, z: player.transform.z }, .35); Object.assign(e.transform, p); this.world.spatial.set(e.id, p.x, p.z); }
     }
     if (s.gateClosedAt && tick - s.gateClosedAt >= ticks(l2.checkpoint.holdS) && !this.mission.state.states.crossed) { s.phase = 'done'; this.mission.setState('crossed', true); }
   }
@@ -658,8 +724,15 @@ export class LevelTwoRescue {
     const { world } = this.mission, s = this.s, ai = world.infected, frac = this.relief();
     if (frac <= 0 || !ai) return;
     const p = world.entities.get(1)!.transform;
+    const distance = (e: EntitySnapshot) => Math.hypot(e.transform.x - p.x, e.transform.z - p.z);
     const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
-    thin([...ai.active].filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < l2.mercy.nearM).sort((a, b) => a.id - b.id), e => ai.release(e));
+    // Recovering bodies keep cap slots too. Remove the closest share so repeated
+    // retries open breathing room instead of leaving a dense inner ring by ID order.
+    const nearby = [...ai.active].filter(e => (e.health.current > 0 || s.escapeSpawned && (e.infected?.recoverAt ?? -1) >= 0) && distance(e) < l2.mercy.nearM);
+    if (s.escapeSpawned) {
+      nearby.sort((a, b) => distance(a) - distance(b) || a.id - b.id);
+      for (const e of nearby.slice(0, Math.floor(nearby.length * frac))) ai.release(e);
+    } else thin(nearby.sort((a, b) => a.id - b.id), e => ai.release(e));
     // The doors ambush still waiting behind its doors thins too.
     thin(s.ambush.filter(a => !a.id), a => { a.id = -1; });
   }
@@ -671,6 +744,8 @@ export class LevelTwoRescue {
   /** Checkpoint restore: shift the timeline, re-seat or re-park the truck, rebuild the walls from state. */
   restore(delta: number): void {
     const s = this.mission.state.l2; if (!s) return;
+    this.reserveArrivals();
+    this.world.infected!.director.strict = !!s.escapeSpawned;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
     for (const a of s.ambush) if (a.at) a.at += delta;
