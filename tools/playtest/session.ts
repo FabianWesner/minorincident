@@ -7,8 +7,9 @@ import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, shouldRe
 import { campaignCombatWeapon, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
-import { clickGroundInput, dodgeFireInput, markerWalkKeys } from './input';
+import { clickGroundInput, dodgeWalkKeys, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
+import { VehicleRecovery } from './driving';
 import type { Game } from '../../src/Game';
 
 /**
@@ -167,6 +168,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await press([]); await releaseAim();
     shotAt.clear(); ignored.clear(); reportedUnhittable.clear();
     trail.length = 0; lastErr = null; steering = false;
+    vehicleRecovery = new VehicleRecovery();
     cureConsole = null; lastE = lastClick = 0;
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
@@ -202,6 +204,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
   let aimHeld: number | null = null, lastAimClick = 0, lastCrowdKick = 0;
+  let dodgePosition = { x: 0, z: 0, at: 0 }, dodgeAttempt = 0, dodgeDetourUntil = 0, dodgeDetourKeys: string[] = [];
   const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const fight = async (e: Eyes): Promise<boolean> => {
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
@@ -262,11 +265,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const a = window.__SS__!;
           return [a.input.project(p, 'player'), a.input.project(goal, 'destination'), a.input.project(enemy, 'destination')];
         }, { p: e.player, goal: dodge, enemy: { x: threat.x, z: threat.z } });
-        if (now - lastClick > 900 || !keysDown.has('Space')) {
-          await dodgeFireInput({ releaseAim, holdFire: () => press(['Space']), mouse: page.mouse }, safe(points[1].x, points[1].y, e), points[2]);
-          lastClick = now;
-        } else { await press(['Space']); await page.mouse.move(points[2].x, points[2].y); }
-        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, ground: points[1], enemy: threat.id }); }
+        const dx = points[1].x - points[0].x, dy = points[1].y - points[0].y;
+        if (Math.hypot(e.player.x - dodgePosition.x, e.player.z - dodgePosition.z) > .8) dodgePosition = { x: e.player.x, z: e.player.z, at: now };
+        if (now > dodgeDetourUntil && now - dodgePosition.at > 800) {
+          dodgeDetourKeys = dodgeWalkKeys(dx, dy, ++dodgeAttempt);
+          dodgeDetourUntil = now + 1800; dodgePosition.at = now;
+        }
+        const keys = now < dodgeDetourUntil ? dodgeDetourKeys : dodgeWalkKeys(dx, dy);
+        await releaseAim(); await page.mouse.move(points[2].x, points[2].y); await press([...keys, 'Space']);
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ visibleFinaleDodge: e.tick, keys, enemy: threat.id, recovery: now < dodgeDetourUntil }); }
         return true;
       }
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
@@ -342,6 +349,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   /** Vehicle WASD is local (W throttle, A/D steer). Heading comes from the car's own motion; which of A/D turns which way is
    * learned from what the car does (a turn that makes the error grow flips the sign). */
   const drive = async (e: Eyes, goal: { x: number; z: number }) => {
+    const recovery = vehicleRecovery.keys(e.driving!, Date.now());
+    if (recovery) {
+      trail.length = 0; lastErr = null;
+      if (!keysDown.has('KeyS')) log({ vehicleReverse: e.tick, keys: recovery, at: e.driving });
+      await press(recovery); return;
+    }
     const car = e.driving!; trail.push({ x: car.x, z: car.z, t: Date.now() }); while (trail.length > 2 && Date.now() - trail[0].t > 1200) trail.shift();
     const a = trail[0], hx = car.x - a.x, hz = car.z - a.z, moving = Math.hypot(hx, hz) > .8;
     const gx = goal.x - car.x, gz = goal.z - car.z;
@@ -354,6 +367,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await press(keys);
   };
   const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
+  let vehicleRecovery = new VehicleRecovery();
 
   const watchAllies = async (e: Eyes) => {
     for (const a of e.allies) {
@@ -572,7 +586,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
-    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.enemies[0]?.d, e.enemies.some(b => b.max >= 1000));
+    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons);
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();
