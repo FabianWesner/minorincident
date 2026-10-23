@@ -1034,7 +1034,9 @@ open('/private/tmp/claude-501/vstat.json', 'w').write(json.dumps(vstat))
 # T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry
 # shortcut. Drivers cut these corners, so the sectors between the diverging lanes stay free of anything with a collider,
 # and trees whose crown cuts into another solid (Scene Lab static clipping: tree x pole, tree x lamp, tree in a garage) go.
-GORE_R = 46
+# Q-139: the debug driver reaches (402, -16.8), just outside the old 46 m merge gore.
+# Include the full APC footprint and its approach, rather than one exact stop point.
+GORE_R = 60
 
 
 def in_gore(x, z):

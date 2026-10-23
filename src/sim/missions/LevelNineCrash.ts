@@ -43,7 +43,11 @@ export class LevelNineCrash {
       const dog = w.entities.get(corgi)!;
       Object.assign(dog.transform, { x: t.x + Math.cos(t.yaw) * def.doorX + Math.sin(t.yaw) * z, z: t.z - Math.sin(t.yaw) * def.doorX + Math.cos(t.yaw) * z });
       w.spatial.set(corgi, dog.transform.x, dog.transform.z);
-      if (w.vehicles!.boardPassenger(this.state.carId, corgi)) { dog.hidden = true; w.spatial.delete(corgi); }
+      if (w.vehicles!.boardPassenger(this.state.carId, corgi)) {
+        // L9 starts with the courier driving: the companion has already boarded too.
+        car.entity.vehicle!.passengers!.find(p => p.id === corgi)!.phase = 'seated';
+        dog.hidden = true; w.spatial.delete(corgi);
+      }
     }
     w.vehicles!.setFloorPolicy(this.state.carId);
     for (const actor of payload?.occupants ?? []) {
