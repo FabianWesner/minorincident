@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, shouldResumePause } from './startup';
+import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, observeWithin, shouldResumePause } from './startup';
 import { campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
@@ -129,6 +129,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       return performance.now();
     });
   }
+  // The production menu reapplies persisted settings after boot, overriding the
+  // URL's initial tier. Select through the visible UI so the requested quality
+  // stays fixed throughout the campaign and is also saved for handovers.
+  await page.getByTestId('title-settings').click({ timeout: 120_000 });
+  await page.getByTestId('setting-quality').selectOption(o.quality);
+  await page.getByTestId('settings-back').click();
   await page.getByTestId('start-game').click({ timeout: 120_000 });
   await hold(500);
   const first = o.levels[0];
@@ -444,6 +450,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!run) { if (Date.now() - bootWall > 600_000) { await issue('P0', 'boot', 'No level started within 10 minutes of the menu click'); break; } await hold(400); continue; }
     if (e.phase !== lastPhase) { log({ phase: e.phase, level: e.level, tick: e.tick, panel: e.panel }); lastPhase = e.phase ?? ''; idleScreens = 0; }
 
+    if (e.level === 'L10' && e.phase === 'progression' && e.step === null) {
+      const ending = await page.evaluate(() => {
+        const m = window.__SS__!.missions.state()!;
+        return { level: m.id, phase: m.phase, creditsFinished: !!m.states['credits-finished'], endingPhase: m.epilogue?.phase ?? null, completedLevels: window.__SS__!.campaign.state()?.completedLevels ?? 0 };
+      });
+      assert.ok(campaignEndingComplete(ending), `L10 left play without completed credits: ${JSON.stringify(ending)}`);
+      await press([]); await releaseAim();
+      if (!run.finished) await finishLevel(e);
+      log({ done: e.level, ending }); break;
+    }
+
     if (e.phase === 'briefing' || e.phase === 'retry' || e.phase === 'progression') {
       if (e.phase === 'retry' && lastDeathTick !== e.tick) { lastDeathTick = e.tick; run.deaths++; await issue('P3', 'retry', `Mission failed screen: ${e.panel.heading}`); }
       await press([]); await releaseAim();
@@ -466,6 +483,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Playing.
     if (e.tick - lastShot > 45 * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
+      const quality = await page.evaluate(() => window.__SS__!.getState().render.quality);
+      assert.equal(quality, o.quality, `Playtest requested ${o.quality} but ${e.level} rendered ${quality}`);
+      log({ quality, level: e.level, tick: e.tick });
       if (e.level === 'L6') assertRenderedBodies(await page.evaluate(() => window.__SS__!.crowdFigures().map(f => ({ drawn: f.drawn, joints: !!f.joints }))));
       // Rack check at the first playing tick (the briefing can still show the previous rack).
       run.weaponsStart = e.player?.weapons ?? [];
@@ -581,7 +601,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     // The explicit console action takes priority over nearby combat. Charge and
     // release require a fresh E press, which a held attack must not starve.
-    if (e.level === 'L10' && e.prompt.includes('console action') && Date.now() - lastE > 2500) {
+    if (e.level === 'L10' && (e.prompt.includes('console action') || e.step === 'release' && atRing && /Release the cure/.test(e.objective)) && Date.now() - lastE > 2500) {
       lastE = Date.now(); await press([]); await releaseAim();
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
@@ -727,7 +747,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   writeFileSync(join(o.out, `${o.tag}-completion.json`), JSON.stringify(await page.evaluate(() => ({
     levels: (window as unknown as { __playtestCompleted?: unknown[] }).__playtestCompleted ?? [],
     campaign: window.__SS__!.campaign.state(), mission: window.__SS__!.missions.state(),
-    backend: window.__SS__!.getState().render.backend, camera: window.__SS__!.getState().render.camera,
+    backend: window.__SS__!.getState().render.backend, quality: window.__SS__!.getState().render.quality, camera: window.__SS__!.getState().render.camera,
   })), null, 2));
   if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
   assert.ok(handoverReady,'L8 objective, destination pin and minimap marker must appear within 2 s of control returning');

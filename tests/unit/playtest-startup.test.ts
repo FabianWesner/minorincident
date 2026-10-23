@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
 import { validateSave } from '../../src/sim/progression/Save';
-import { assertRenderedBodies, isMandatoryBossObjective, observeWithin, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
+import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, observeWithin, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
   const source = preset('L6-default'), save = playtestSave(source, 'male', 'fists');
@@ -42,6 +42,16 @@ test('the input driver never debug-skips the mandatory L10 Mega objective', () =
   expect(isMandatoryBossObjective('L10', 'release')).toBe(false);
   expect(isMandatoryBossObjective('L9', 'mega')).toBe(false);
   expect(isMandatoryBossObjective(null, null)).toBe(false);
+});
+
+test('automatic L10 progression is success only after the actual credits and campaign completion', () => {
+  const done = { level: 'L10', phase: 'progression', creditsFinished: true, endingPhase: 'done', completedLevels: 10 };
+  expect(campaignEndingComplete(done)).toBe(true);
+  expect(campaignEndingComplete({ ...done, creditsFinished: false })).toBe(false);
+  expect(campaignEndingComplete({ ...done, endingPhase: 'credits' })).toBe(false);
+  expect(campaignEndingComplete({ ...done, completedLevels: 9 })).toBe(false);
+  expect(campaignEndingComplete({ ...done, level: 'L9' })).toBe(false);
+  expect(campaignEndingComplete({ ...done, phase: 'playing' })).toBe(false);
 });
 
 test('an unresponsive renderer fails within the observation budget and clears its timer', async () => {
