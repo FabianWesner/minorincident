@@ -1,4 +1,5 @@
 import { l4, l4Edges, l4Inside } from '../../data/l4';
+import { l4BreachSides, l4BreachSite, l4Breaches, l4Wall, type L4BreachSide } from '../../data/l4Perimeter';
 import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
 import type { Mission } from './Mission';
 import type { L4Director, L4Line, L4State } from './types';
@@ -21,6 +22,8 @@ export interface CollapseHost {
   mission: Mission; s: () => L4State; low: () => boolean;
   snap: (p: Point, r?: number) => Point; emerge: (at: Point, push?: boolean) => number; human: (e: EntitySnapshot | undefined) => boolean;
   insideRing: (p: Point) => boolean; doors: () => { name: string; x: number; z: number }[]; fallBack: () => void;
+  /** PO 10-23 military wall: is a breach site open, and announce the Alpha coming for it. */
+  breachOpen: (side: L4BreachSide) => boolean; breachSegments: (side: L4BreachSide) => EntitySnapshot[]; announceBreach: (side: L4BreachSide, alphaId: number) => void;
 }
 
 /**
@@ -189,8 +192,12 @@ export class L4Collapse {
     const { world } = this, s = this.s, d = this.d, ai = world.infected!, tick = world.tick;
     for (const [n, id] of s.alphaIds.entries()) if (!d.alphaJobs.some(j => j.alphaId === id)) {
       const entry = l4AlphaEmergence.find(e => e.anchor === s.alphaAnchors[n]);
-      d.alphaJobs.push({ alphaId: id, job: entry?.job ?? 'line', stage: 'walk', startedAt: tick });
+      // PO 10-23: every Alpha comes in through a breach site of the wall: its own side, else the nearest one.
+      const e = world.entities.get(id), job = entry?.job ?? 'line';
+      const breach = job === 'west' || job === 'north' || job === 'south' ? job : e ? l4BreachSides.slice().sort((p, q) => dist(l4BreachSite(p).stage, e.transform) - dist(l4BreachSite(q).stage, e.transform))[0] : undefined;
+      d.alphaJobs.push({ alphaId: id, job, stage: 'walk', startedAt: tick, breach });
     }
+    this.batter();
     const live = (ids: number[]) => ids.map(sid => this.soldier(sid)).filter((x): x is EntitySnapshot => !!x);
     // A line whose own crews are all down: the Alpha goes for whichever soldiers still stand (the army's survivors).
     const crewsOf = (k: number) => { const own = live([...(k === 1 ? s.hmgIds : []), ...d.lines[k].soldierIds]); return own.length ? own : live(s.soldierIds); };
@@ -216,8 +223,25 @@ export class L4Collapse {
       const ready = nest ? this.t >= D.lines[1].pushS && d.lines[0].brokeAt > 0 : job.job === 'armor' ? this.t >= D.lines[2].pushS && d.lines[1].brokeAt > 0 : true;
       if (job.stage === 'walk') {
         // Held at its stage outside the line (ignores targets beyond it) until the beat; the armour Alpha waits where it came out (out of view).
-        if (!ready) { b.scripted = nest ? this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55) : (job.hold ??= { x: e.transform.x, z: e.transform.z }); continue; }
-        delete b.scripted; job.stage = 'charge';
+        // The nest Alphas leave their hold `wallLeadS` before the beat: the wall in front of the guns has to come down first.
+        const wallFirst = nest && !!job.breach && this.t >= D.lines[1].pushS - l4Wall.wallLeadS && d.lines[0].brokeAt > 0;
+        if (!ready && !wallFirst) { b.scripted = nest ? this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55) : (job.hold ??= { x: e.transform.x, z: e.transform.z }); continue; }
+        // Through early: it waits at the gap it tore open, roaring at the guns, until the beat.
+        if (!ready && this.h.breachOpen(job.breach!)) { b.scripted = this.h.snap(l4BreachSite(job.breach!).stage, .55); continue; }
+        if (ready) { delete b.scripted; job.stage = 'charge'; }
+      }
+      // The wall first (PO 10-23 "so Zombies or alphas can tear them down"): announced, it runs up from outside the breach site and
+      // charges the wire again and again (300 per contacted charge, E26 HP) until a segment falls; then its job goes on through the gap.
+      if (job.breach && !this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
+        const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out, stage = this.h.snap(site.stage, .55);
+        this.h.announceBreach(job.breach, e.id);
+        // Back off to the run-up point (unless already at the wire), then charge straight at the breach.
+        const atWire = Math.abs((e.transform.x - site.centre.x) * out.x + (e.transform.z - site.centre.z) * out.z) < 1.8;
+        if (!atWire && dist(e.transform, stage) > 1.2) { b.scripted = stage; continue; }
+        delete b.scripted;
+        const dx = site.centre.x - e.transform.x, dz = site.centre.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
+        if (!ai.startSpecial(e.id, 'alpha.charge', { id: e.id, x: site.centre.x, z: site.centre.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: dx / length, dz: dz / length })) b.scripted = stage;
+        continue;
       }
       // On a move cooldown it keeps closing in; at arm's length its own brain swipes at the crew in reach.
       const press = (to: Point) => { if (dist(e.transform, nearest.transform) > 2.5) b.scripted = this.h.snap(to, .55); else delete b.scripted; };
@@ -251,6 +275,27 @@ export class L4Collapse {
     if (this.world.infected!.hearing.closest(e, b.heardTargetId ?? 0) || (b.scripted && dist(e.transform, b.scripted) <= 1.2)) return false;
     b.scripted = this.h.snap({ x: tank.transform.x + (id % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); return true;
   }
+  /**
+   * An Alpha's charge that reaches the wire hits the breach segments it touches once each (logged E26 damage through the combat path:
+   * `barricade.damaged`, then `barricade.broken` at 0 HP). The charge's own blocker probe runs at the 0.7 m shot line, above the
+   * wall's low cover box, so the contact is resolved here. Battering Alphas take `batterResist` of the army's fire.
+   */
+  private batter(): void {
+    const world = this.world;
+    for (const job of this.d.alphaJobs) {
+      const e = world.entities.get(job.alphaId), b = e?.infected; if (!e || !b || !e.combat || e.health.current <= 0 || !job.breach) continue;
+      const battering = !this.h.breachOpen(job.breach) && !this.inside(e.transform);
+      e.combat.allyResist = battering ? l4Wall.batterResist : l4.alphas.allyResist;
+      const a = b.specialAttack; if (!battering || a?.move !== 'alpha.charge' || a.stage !== 'active') continue;
+      for (const seg of this.h.breachSegments(job.breach)) {
+        if (a.hitIds.includes(seg.id) || !world.barricades!.withinReach(e, seg)) continue;
+        a.hitIds.push(seg.id);
+        world.combat!.damage.apply({ sourceId: e.id, targetId: seg.id, attackId: a.attackId, actionId: a.move, origin: e.transform, direction: { x: a.area.dx, z: a.area.dz }, base: l4Wall.chargeDamage, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, hitStopMs: 0 });
+      }
+    }
+  }
+  /** Inside the military wall (an Alpha that is through needs no breach). */
+  private inside(p: Point): boolean { const r = l4.perimeter; return p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1; }
   /** The charge stage outside a slot: authored for the nest slots, else 8 m straight out of the slot. */
   private slotStage(side: 'north' | 'south' | 'west'): Point {
     if (side !== 'west') return pt(D.alphaStage[side]);

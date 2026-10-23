@@ -91,7 +91,7 @@ describe('L4 PO round 10-13', () => {
     step(w, 10 * 60 - (w.tick - turn));
     const live = soldiers.filter(id => human(w.entities.get(id)));
     const onDuty = live.filter(id => { const e = w.entities.get(id)!, d = dist(e.transform, post(id)); return e.civilian!.ally!.engaged && (d <= 1.5 || !!e.civilian!.ally!.run || d < start.get(id)! - 1); });
-    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection || e.civilian.story?.clip === 'npc-cower'; });
+    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection || e.civilian.story?.clip === 'npc-cower' || e.civilian.schedule?.[0]?.anchor === 'refuge/shelter'; });
     const r = { samples, aimedBefore, offPostMax, routineMin, soldiers: soldiers.length, live: live.length, onDuty: onDuty.length, peds: peds.length, fled: fled.length };
     record('po-round-alarm', r);
     expect(aimedBefore, 'no soldier aims or is engaged before the alarm').toBe(0);
@@ -119,7 +119,7 @@ describe('L4 PO round 10-13', () => {
     expect(s.turnAt).toBe(s.gunAt);
     step(w, 5 * 60);
     const humans = cohort.filter(id => human(w.entities.get(id)));
-    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower');
+    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower' || w.entities.get(id)!.civilian!.schedule?.[0]?.anchor === 'refuge/shelter');
     const newInfected = s.emergedIds.filter(id => !before.has(id));
     record(`civilians-stay-${tier}`, { cohort: cohort.length, humans: humans.length, panicking: panicking.length, newInfected: newInfected.length, infections });
     expect(humans.length / cohort.length).toBeGreaterThanOrEqual(.9);

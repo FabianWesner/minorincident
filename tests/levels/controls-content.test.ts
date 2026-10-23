@@ -49,7 +49,7 @@ test('@E22 @E22-AC13 first-line pressure can use concealed camp exits after the 
   const spawned: { x: number; z: number }[] = [];
   const director = new L4Collapse({ mission: m, s: () => s, low: () => false, snap: p => p,
     emerge: p => { spawned.push(p); return 0; }, human: e => !!e?.civilian && e.health.current > 0,
-    insideRing: () => true, doors: () => [], fallBack: () => {} });
+    insideRing: () => true, doors: () => [], fallBack: () => {}, breachOpen: () => true, breachSegments: () => [], announceBreach: () => {} });
   world.tick = Math.ceil((s.turnAt + l4.director.lines[0].pushS * 60) / 10) * 10;
   director.update();
   expect(spawned).toEqual([{ x: exit[0] - .9, z: exit[1] }]);

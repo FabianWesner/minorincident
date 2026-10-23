@@ -26,11 +26,11 @@ try {
     const rows = await page.evaluate(() => {
       const a = window.__SS__!;
       a.camera.zoom(1.5);
-      const ents = a.query({}) as any[];
+      const ents = a.query({}) as unknown as { id: number; hidden?: boolean; infected?: unknown; civilian?: { pet?: boolean; ally?: unknown; state: string; story?: { clip: string }; schedule?: { anchor?: string; activity?: string }[]; scheduleStep?: number }; appearance?: { handProp?: string }; health: { current: number }; transform: { x: number; z: number } }[];
       const infected = ents.filter(e => e.infected && e.health.current > 0 && !e.hidden);
       // A full-scene render so every civilian is drawn this frame (figures come from the drawn batches).
       return ents.filter(e => e.civilian && !e.civilian.pet && !e.hidden && e.health.current > 0 && !e.civilian.ally).map(e => {
-        const c = e.civilian, act = c.schedule?.[c.scheduleStep ?? 0];
+        const c = e.civilian!, act = c.schedule?.[c.scheduleStep ?? 0];
         const near = infected.reduce((m, i) => Math.min(m, Math.hypot(i.transform.x - e.transform.x, i.transform.z - e.transform.z)), Infinity);
         return { id: e.id, x: +e.transform.x.toFixed(1), z: +e.transform.z.toFixed(1), state: c.state, story: c.story?.clip ?? null, anchor: act?.anchor ?? null, activity: act?.activity ?? null, prop: e.appearance?.handProp ?? null, nearInfectedM: Number.isFinite(near) ? +near.toFixed(1) : null };
       });
@@ -43,7 +43,7 @@ try {
         const a = window.__SS__!;
         a.teleport('player', { x: x + 2.5, z: z + 2.5 }); a.step(1); a.camera.follow(); a.camera.zoom(1.5);
         await a.screenshotReady();
-        return (a.crowdFigures() as any[]).find(f => f.id === id) ?? null;
+        return (a.crowdFigures() as unknown as { id: number; clip: string; lod?: string }[]).find(f => f.id === id) ?? null;
       }, r as { id: number; x: number; z: number });
       const clip = fig?.clip ?? null, row = { ...r as object, clip, lod: fig?.lod ?? null };
       shots.push(row);

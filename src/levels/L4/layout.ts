@@ -1,6 +1,7 @@
 import { moveFairhavenCellar } from '../fairhavenCellar';
 import { freestanding, moveOffSolids } from '../placementClearance';
 import { l4, l4Anchors, l4CollapseGroups, l4Edges, l4Line } from '../../data/l4';
+import { l4BreachSides, l4BreachSite, l4Breaches } from '../../data/l4Perimeter';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
@@ -88,6 +89,8 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       const [x, z] = entry.at ?? l4Edges.find(e => e.id === entry.edgeId)!.at;
       layout.anchors[entry.anchor] = { position: [x, 0, z], yaw: -Math.atan2(l4.map.centre.z - z, l4.map.centre.x - x) };
     }
+    // PO 10-23 breach rings: just inside each breach site of the military wall.
+    for (const side of l4BreachSides) { const { centre } = l4BreachSite(side), o = l4Breaches[side].out; layout.anchors[`l4-breach-${side}`] = { position: [centre.x - o.x * 2.5, 0, centre.z - o.z * 2.5], yaw: 0 }; }
     for (const line of l4BreakableLine) {
       const p = l4Line[line.lineIndex], yaw = p.yaw === 0 ? 0 : H;
       const inward = p.yaw === 0 ? [0, p.z < 0 ? 1 : -1] : [1, 0];

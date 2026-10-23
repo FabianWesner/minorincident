@@ -77,7 +77,7 @@ export const l4 = {
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
-    headroom: 12,
+    headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
     downedSlots: 10,
     /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
@@ -128,7 +128,7 @@ export const l4 = {
     /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
     refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
-    alive: [.8, .9, .7] as readonly number[], aliveLow: [.7, .8, .6] as readonly number[],
+    alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
     fallback2: [[-16, -10], [-16, -6.7], [-16, -3.4], [-16, 0], [-16, 3.3], [-16, 6.6], [-16, 10], [-16, -15.5], [-16, 13.5]] as readonly P[],
@@ -181,8 +181,8 @@ export const l4 = {
   },
   civilians: {
     hp: 80, armedShare: .4, panicInfected: 3, panicRadiusM: 4, panicS: 6,
-    pistol: { damage: 20, shotS: .7, rangeM: 18, nearM: 12, hitNear: .5, hitFar: .25 },
-    rifle: { damage: 60, shotS: .6 / 1, rangeM: 32, nearM: 24, hitNear: .6, hitFar: .4 },
+    pistol: { damage: 20, shotS: .7, rangeM: 12, nearM: 8, hitNear: .5, hitFar: .25 },
+    rifle: { damage: 60, shotS: .6 / 1, rangeM: 16, nearM: 10, hitNear: .6, hitFar: .4 },
     /** Improvised melee (bat, pipe, crowbar): the firefighter swing with these numbers. */
     melee: { damage: 24, reachM: 1.9, swingS: .8 },
   },
