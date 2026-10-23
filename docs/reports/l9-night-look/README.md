@@ -54,3 +54,5 @@ in frame. The E31-AC16 contrast rule keeps the verge band dark, so the void is t
   apc 3.00-3.19 -> 3.00-3.14, road 2.66-3.00 -> 2.75-3.00, crawl 2.64-2.69 -> 2.56-2.82 (gate 2.5); courier 18.6-19.6 -> 13.3-14.7.
 - `npm run qa:invariants`: remote sim 27/27, Mac WebGPU low render 11/11 (L9 level click -> playable vs PROD passes).
 - `npm run test:smoke`: Vitest 6/6, Playwright 31/31.
+- Remote `vitest run tests/unit tests/levels --maxWorkers=4` on 0eceeb50e: 457 files / 2478 tests passed, 9 skipped.
+- `npm run typecheck`, `npm run lint`: green. The AC16 catalog ran before the debris-smoke tweak (0eceeb50e, smoke puffs only).
