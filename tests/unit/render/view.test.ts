@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { Box3, Plane, Ray, Vector3 } from 'three';
 import { cameraFraming } from '../../../src/data/cameraFraming';
-import { View, zoomLimits } from '../../../src/render/View';
+import { View, zoomLimits, driveWideScale } from '../../../src/render/View';
 
 test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately', () => {
   const view = new View(); view.reset({ x: 0, z: 0 });
@@ -135,7 +135,7 @@ test('@E22 vehicle follow framing stays fixed across facade bounds at both zooms
     const view = new View();
     Object.assign(view, { cameraSolids: [new Box3(new Vector3(-54, 0, -34), new Vector3(-43, 18, -20))] });
     view.reset({ x: -56.75, y: .705, z: -18 });
-    view.driving = true; view.zoom(Math.log(zoom), true);
+    view.driving = true; view.driveScale = 1.15; view.zoom(Math.log(zoom), true);
     view.update({ x: -56.75, y: .705, z: -18 }, 0);
     const offset = view.camera.position.clone().sub(view.focus);
     for (let tick = 0; tick < 240; tick++) {
@@ -220,4 +220,21 @@ test('@E02 campaign handovers preserve player zoom through cinematic framing and
   }
   const view = new View(); view.zoom(100, true); view.reset({ x: 0, z: 0 }, true);
   expect(view.playerZoom).toBe(zoomLimits[1]);
+});
+
+test('l9-verge-dressing: the driver camera widens 1.4x in view area, eased in and out, player zoom stays on top', () => {
+  const view = new View(); view.reset({ x: 0, z: 0 }, true); view.zoom(Math.log(.8), true);
+  const at = () => view.getState().radius;
+  view.update({ x: 0, z: 0 }, 1 / 60); const walk = at();
+  view.driving = true; view.driverWide = true;
+  let last = walk, jump = 0;
+  for (let i = 0; i < 90; i++) { view.update({ x: 0, z: 0 }, 1 / 60); jump = Math.max(jump, Math.abs(at() - last)); expect(at()).toBeGreaterThanOrEqual(last - 1e-9); last = at(); }
+  expect(at() / walk).toBeCloseTo(driveWideScale, 2);
+  expect(driveWideScale ** 2 / 1.15 ** 2).toBeCloseTo(1.4, 6);
+  expect(jump).toBeLessThan(walk * .05);
+  view.driving = false; view.driverWide = false;
+  for (let i = 0; i < 120; i++) view.update({ x: 0, z: 0 }, 1 / 60);
+  expect(at() / walk).toBeCloseTo(1, 2);
+  view.driving = true; for (let i = 0; i < 120; i++) view.update({ x: 0, z: 0 }, 1 / 60);
+  expect(at() / walk).toBeCloseTo(1.15, 2);
 });

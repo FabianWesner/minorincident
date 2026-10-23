@@ -908,6 +908,91 @@ for side in (-1, 1):
         s += L + RF.uniform(3, 4.5)
 stats['world-fill'] = fill['n']
 
+# ---- verge-dressing (l9-verge-dressing, PO 10-23): props 2.5-6 m beyond the lane edge, the strip the night drive camera frames ------------
+# "while driving, the camera only sees about 17 x 10 m at zoom 1 ... the lane plus 3-6 m of verge": abandoned and burnt cars pushed
+# aside, rubble, broken fences, roadblock leftovers, dead lamps. Reuse of existing assets only. Own RNG (no earlier draw moves).
+# Rule: every footprint sample stays >= 2.5 m from the lane edge (so its collider never reaches the lane), the crash approach and
+# crawl (x > 430, the ok() exclusion) stays clear. The start drive-out (x < -512) gets the same pass with zone rules.
+RV = random.Random(935)
+vstat = {'n': 0, 'wreck': 0, 'rubble': 0, 'fence': 0, 'block': 0, 'lamp': 0, 'bush': 0}
+VERGE_MIN = 2.5
+WRECKS = [('veh.sedan-red', 'burned'), ('veh.sedan-white', 'burned'), ('veh.pickup-red', 'burned'), ('veh.sedan-blue', 'wrecked'),
+          ('veh.sedan-green', 'wrecked'), ('veh.jeep-red', 'wrecked'), ('veh.suv-dark', 'burned'), ('veh.wreck', None), ('veh.wreck', None),
+          ('veh.ambulance', 'wrecked'), ('veh.pickup-white', 'wrecked'), ('veh.suv-green', 'burned')]
+RUBBLE = ['prop.crates', 'prop.pallet', 'prop.trash-bags', 'prop.plank-stack', 'prop.sofa', 'prop.broken-chair', 'prop.dumpster',
+          'prop.shopping-cart', 'prop.recycling-bin', 'prop.carpet', 'prop.wheelbarrow']
+
+
+def vput(asset, x, z, yaw, decay=None):
+    """put() plus the verge rule: footprint centre and corners keep VERGE_MIN from every lane edge (any route) and stay on the map."""
+    b = fp(asset, x, z, yaw)
+    pts = [(x, z), (b[0], b[1]), (b[2], b[1]), (b[2], b[3]), (b[0], b[3])]
+    if any(route_d(q) < VERGE_MIN for q in pts):
+        return False
+    zone = x < -512 and abs(z) < 22
+    if not put(asset, x, z, yaw, decay=decay, zone=zone):
+        return False
+    l.data['placements'][-1]['verge'] = True
+    vstat['n'] += 1
+    return True
+
+
+def vignette(kind, a, ux, uz, nx, nz, s, hw, side):
+    yaw = -math.atan2(uz, ux)
+    P = lambda t, o: (a[0] + ux * t + nx * side * (hw + o), a[1] + uz * t + nz * side * (hw + o))
+    if kind == 'wreck':
+        asset, dec = RV.choice(WRECKS)
+        d = M[asset]['dimensions']
+        o = VERGE_MIN + .4 + max(d['x'], d['z']) * RV.uniform(.2, .45) + RV.uniform(0, 1.5)
+        # pushed to the side: mostly nose-in toward the verge, a little skew
+        if vput('veh.' + asset[4:], *P(s, o), yaw + RV.choice([0, math.pi, math.pi / 2, -math.pi / 2]) + RV.uniform(-.5, .5), dec):
+            vstat['wreck'] += 1
+            for _ in range(RV.randint(0, 2)):
+                if vput(RV.choice(RUBBLE), *P(s + RV.uniform(-3, 3), RV.uniform(3.2, 6)), RV.uniform(0, math.tau)):
+                    vstat['rubble'] += 1
+    elif kind == 'rubble':
+        for _ in range(RV.randint(2, 4)):
+            if vput(RV.choice(RUBBLE), *P(s + RV.uniform(-2.5, 2.5), RV.uniform(2.9, 5.5)), RV.uniform(0, math.tau)):
+                vstat['rubble'] += 1
+    elif kind == 'fence':
+        # broken run: panels along the lane with gaps, each skewed
+        t = s - 4
+        for _ in range(RV.randint(2, 4)):
+            if RV.random() < .8 and vput(RV.choice(['prop.crowd-fence', 'prop.crowd-fence', 'prop.picket-fence', 'prop.privacy-fence']),
+                                         *P(t, RV.uniform(3.0, 4.2)), yaw + (math.pi / 2 if RV.random() < .3 else 0) + RV.uniform(-.55, .55)):
+                vstat['fence'] += 1
+            t += RV.uniform(2.5, 4)
+    elif kind == 'block':
+        # leftover roadblock: jersey barriers and sandbags knocked sideways, a cone or a gate
+        for k in range(RV.randint(1, 3)):
+            asset = RV.choice(['prop.jersey-barrier', 'prop.jersey-barrier', 'prop.sandbag-pallet', 'prop.barricade', 'prop.checkpoint-gate', 'prop.traffic-cone'])
+            if vput(asset, *P(s + (k - 1) * RV.uniform(2.6, 3.6), RV.uniform(2.9, 4.6)), yaw + RV.uniform(-.7, .7)):
+                vstat['block'] += 1
+    elif kind == 'lamp':
+        if vput(RV.choice(['prop.street-lamp', 'prop.street-lamp', 'prop.street-sign', 'prop.utility-pole']), *P(s, RV.uniform(2.9, 4.0)), yaw + math.pi / 2 + RV.uniform(-.2, .2)):
+            vstat['lamp'] += 1
+        for _ in range(RV.randint(0, 2)):
+            if vput(RV.choice(['prop.traffic-cone', 'prop.trash-bags', 'prop.crates']), *P(s + RV.uniform(-2.5, 2.5), RV.uniform(3.0, 5.0)), RV.uniform(0, math.tau)):
+                vstat['rubble'] += 1
+    else:   # dead scrub
+        for _ in range(RV.randint(1, 3)):
+            if vput(RV.choice(['prop.garden-bush', 'prop.garden-bush-small', 'prop.garden-bush-small']), *P(s + RV.uniform(-2.5, 2.5), RV.uniform(3.0, 5.8)), RV.uniform(0, math.tau)):
+                vstat['bush'] += 1
+
+
+VERGE_KINDS = [('wreck', 3), ('rubble', 4), ('fence', 2), ('block', 2), ('lamp', 2), ('bush', 2)]
+for (pts, hw), gravel in zip(ROUTES, (False, True, True)):
+    for a, b in zip(pts, pts[1:]):
+        d = math.dist(a, b)
+        ux, uz = (b[0] - a[0]) / d, (b[1] - a[1]) / d
+        nx, nz = -uz, ux
+        for side in (-1, 1):
+            s = RV.uniform(3, 7)
+            while s < d - 4:
+                vignette(RV.choices([k for k, _ in VERGE_KINDS], [w for _, w in VERGE_KINDS])[0], a, ux, uz, nx, nz, s, hw, side)
+                s += RV.uniform(7, 12)
+stats.update({'verge-' + k: v for k, v in vstat.items()})
+
 # ---- look-l9 clean-up: open fork/merge gores and crown-in-solid overlaps --------------------------------------------
 # T-E31-20: the APC rounding the (-450, 0) fork wedged on a utility pole + bush in the gore between the road and the dry
 # shortcut. Drivers cut these corners, so the sectors between the diverging lanes stay free of anything with a collider,

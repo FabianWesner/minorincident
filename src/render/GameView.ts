@@ -634,6 +634,7 @@ export class GameView implements Lifecycle {
       this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
+      this.view.driverWide = this.world.vehicles?.active != null;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.
