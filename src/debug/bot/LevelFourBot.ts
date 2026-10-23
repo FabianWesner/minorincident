@@ -154,7 +154,19 @@ export class LevelFourBot {
     if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, next, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 4 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 10, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
-    if (fight(5)) return frame;
+    if (fight(5)) {
+      // A slower courier keeps escaping while defending; stopping for each pursuer traps the novice in the replenishing crowd.
+      if (newbie && frame.attackTarget) {
+        const target = w.entities.get(frame.attackTarget.id);
+        frame.selectorSide = frame.attackTarget.side; delete frame.attackTarget;
+        if (target) {
+          const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
+          frame.aim = { x: dx / d, z: dz / d };
+        }
+        go(next, .45, 'escape-under-fire');
+      }
+      return frame;
+    }
     // Waypoints of the route (the grid path takes the cross streets by itself), then the cellar door: stand in its ring to descend.
     if (this.leg < legs.length) {
       if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { if (++this.noPath >= 90) { this.noPath = 0; this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = joinLeg(ROUTES[this.route], p); this.walker.reset(); } } else this.noPath = 0;
