@@ -24,7 +24,8 @@ const shoot = async (name: string) => {
   for (const zoom of zooms) {
     await page.evaluate(async zoom => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game, view = game.view.view;
-      view.follow(); view.zoom(Math.log(zoom / view.getState().targetZoom), true); game.view.advance(0);
+      view.follow(); view.zoom(Math.log(zoom / view.getState().targetZoom), true); for (let i = 0; i < 40; i++) game.view.advance(1 / 30);   // the driver camera eases out over ~0.7 s
+      if ((window as unknown as { __NOSHADOW__?: boolean }).__NOSHADOW__) game.view.scene.traverse(o => { if ((o as { isLight?: boolean }).isLight) (o as { castShadow: boolean }).castShadow = false; });
       await window.__SS__!.step(2); window.__SS__!.vfx.stepRender(1 / 30); await window.__SS__!.screenshotReady();
     }, zoom);
     await page.screenshot({ path: `${out}/${name}-z${zoom}.png` });
@@ -50,6 +51,7 @@ try {
   const begin = page.getByRole('button', { name: 'Begin mission' });
   if (await begin.isVisible().catch(() => false)) await begin.click();
   await page.evaluate(look => { window.__SS__!.pause(); document.body.classList.add('ui-hidden'); if (look) window.__SS__!.look.set({ version: 1, worldLook: look, palette: {} }); }, look);
+  if (process.env.NOSHADOW) await page.evaluate(() => { (window as unknown as { __NOSHADOW__: boolean }).__NOSHADOW__ = true; });
   await page.mouse.move(640, 300);
   await drive(-540, 0, 150); await shoot('1-start');
   await drive(-60, -330, 150); await shoot('2-mid-road');
