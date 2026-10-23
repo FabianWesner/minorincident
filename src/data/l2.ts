@@ -79,9 +79,13 @@ export const l2 = {
   },
   /** Section 5.5: the street escape. */
   escape: {
+    /** PO 10-23: solitary figures/pairs along the ordinary market → Juniper → Elm walk.
+     * Homes sit 3–4 m off the walking line, about 33 m apart along it; the bridge cluster remains separate.
+     * Prepared at doors-open, before the courier can see these street corners. Low tier keeps one per encounter. */
+    scattered: [[-34, -14, 2], [-27.2, 19, 1], [-13, 26.5, 2], [25, 26.5, 1]] as readonly (readonly [number, number, number])[],
     /** Group homes of the wandering infected (x, z, size); spawned at emergence doors when the escape starts. */
     groups: [
-      [-30, 8, 4], [-30, 22, 4], [4, 30, 4], [-64, 8, 4], [-64, 25, 4], [4, 48, 4], [48, 48, 4], [40, -31, 4],
+      [-64, 8, 4], [-64, 25, 4], [4, 48, 2], [48, 48, 2], [40, -31, 4],
     ] as readonly (readonly [number, number, number])[],
     /** Both street routes carry small groups; the central junctions remain open for breaking away. */
     /** People still out on the streets (from the alarm on), kept away from the bridge cluster. */
@@ -139,6 +143,7 @@ export const l2Truck = truck;
 export const axeStandX = 2.85;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
+  ...Object.fromEntries(l2.escape.scattered.map(([x, z], i) => [`l2-route-edge-${i + 1}`, [x, z] as P])),
   ...Object.fromEntries(l2.escape.groups.map(([x, z], i) => [`l2-street-edge-${i + 1}`, [x, z] as P])),
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
   // Stand-to-interact point of the axe rack on the solid wall left of the left bay (z 5.0), 1.05 m out from the facade (see L2Props); the old spot hung on the centre pier in the bay opening.

@@ -116,7 +116,7 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
       if (since <= 3) { doors.emerged3s = s.ambush.filter(q => q.id > 0).length; doors.doors3s = [...new Set(s.ambush.filter(q => q.id > 0).map(q => q.door))]; }
       for (const e of alive()) if (!known.has(e.id)) {
         known.add(e.id);
-        if (!s.ambushIds.includes(e.id) && !turnedAfter.has(e.id) && dist(e.transform, forecourt) < 40 && since > 0) doors.nonBiteNearRescue++;
+        if (!s.ambushIds.includes(e.id) && !s.escapeIds.includes(e.id) && !turnedAfter.has(e.id) && dist(e.transform, forecourt) < 40 && since > 0) doors.nonBiteNearRescue++;
       }
       for (const at of [0, 10, 60, 90, 120]) if (!(at in infectedAt) && since >= at) {
         const live = alive(); infectedAt[at] = { all: live.length, rescue: live.filter(e => s.ambushIds.includes(e.id) || turnedAfter.has(e.id)).length };

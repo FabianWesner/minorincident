@@ -6,8 +6,8 @@ import { followFrustum } from '../../../tools/sim-runner/l3Bots';
 for (const tier of ['high', 'low'] as const) test(`5 L2 escape ${tier}: every street batch and bridge cluster admits its quota and reaches its authored home`, async () => {
   const w = await loadLevel('L2', 1, tier);
   try {
-    const s = w.missions!.state.l2!, c = w.missions!.l2! as unknown as { spawnEscape(): void; emergePending(all?: boolean): void };
-    w.combat!.damage.god = true; w.update(); c.spawnEscape();
+    const s = w.missions!.state.l2!, c = w.missions!.l2! as unknown as { spawnRoute(): void; spawnEscape(): void; emergePending(all?: boolean): void };
+    w.combat!.damage.god = true; w.update(); c.spawnRoute(); c.spawnEscape();
     // Move between valid town approaches so every queued entrance gets a turn outside the exclusion radius.
     // Never place the courier outside the authored walkable map merely to force admission.
     const player = w.entities.get(1)!, nav = w.infected!.nav;
@@ -18,7 +18,7 @@ for (const tier of ['high', 'low'] as const) test(`5 L2 escape ${tier}: every st
     });
     const entries = s.pending as { id: number; home: { x: number; z: number } }[], admitted = new Set<number>(), reached = new Set<number>();
     const scale = tier === 'low' ? l2.escape.lowScale : 1;
-    const expected = Math.ceil(l2.cluster.count * scale) + l2.escape.groups.reduce((n, [, , count]) => n + Math.ceil(count * scale), 0);
+    const expected = Math.ceil(l2.cluster.count * scale) + [...l2.escape.scattered, ...l2.escape.groups].reduce((n, [, , count]) => n + Math.ceil(count * scale), 0);
     expect(entries.length, 'authoring must enumerate every escape batch').toBe(expected);
     // Keep phase calm to isolate this quota from the later market-collapse alarm.
     s.phase = 'calm';
