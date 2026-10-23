@@ -47,13 +47,18 @@ const blockers = solid.filter(c => c.aabb.max[1] >= 1.55 && (c.aabb.max[0] - c.a
 const distBox = (p: Point, a: Aabb) => Math.hypot(Math.max(a.min[0] - p[0], 0, p[0] - a.max[0]), Math.max(a.min[2] - p[1], 0, p[1] - a.max[2]));
 
 describe('L3 static', () => {
-  test('T-E21-11-highway-junction @E21 ramp wedge fill reaches the deck top without a dark vertical seam', () => {
+  test('T-E21-11-highway-junction @E21 Q-133 Q-129 deck and wedge fills are flat unbevelled slabs at one top height, with lane paint across the deck', () => {
     const source = readFileSync('layouts/D-CORRIDOR/layout.py', 'utf8');
-    const deck = source.match(/g\.solid\('highway-deck',\s*'asphalt',\s*\[12\.0,\s*([\d.]+),\s*4\.62\],\s*\[173\.5,\s*([\d.]+),\s*0\]/);
-    const wedges = [...source.matchAll(/g\.solid\('highway-wedge',\s*'asphalt',\s*\[1\.5,\s*([\d.]+),\s*1\.9\],\s*\[[^,]+,\s*([\d.]+),/g)];
-    expect(deck, 'authored deck geometry').not.toBeNull(); expect(wedges).toHaveLength(2);
-    const deckTop = Number(deck![2]) + Number(deck![1]) / 2;
-    for (const wedge of wedges) expect(Number(wedge[2]) + Number(wedge[1]) / 2, 'wedge reaches above the deck top to close the join').toBeGreaterThanOrEqual(deckTop + .005);
+    // g.solid boxes carry a 7 cm toy bevel: the chamfer ridges read as a light patch with hard edges and a dark seam at every join.
+    expect(source, 'deck is a slab').toMatch(/slab\('highway-deck', 'asphalt'/);
+    expect(source, 'no beveled box for the deck or the wedges').not.toMatch(/g\.solid\('highway-(deck|wedge)'/);
+    expect([...source.matchAll(/slab\('highway-wedge', 'asphalt'/g)], 'one wedge per ramp').toHaveLength(2);
+    expect([...source.matchAll(/slab\('highway-wedge', 'asphalt', [^\n]*DECK_TOP/g)], 'every wedge shares the deck top').toHaveLength(2);
+    expect(source).toMatch(/slab\('highway-deck'[^\n]*DECK_TOP/);
+    // 3 mm over the kit road (5.70) so nothing z-fights; paint stands 16 mm above it, like the kit's own.
+    const top = Number(source.match(/DECK_TOP, PAINT = ([\d.]+),/)![1]);
+    expect(top).toBeGreaterThan(5.7); expect(top - 5.7).toBeLessThanOrEqual(.005);
+    expect(source).toContain("'highway-centre-dash', 'picketWhite'"); expect(source).toContain("'highway-edge-line', 'schoolBusYellow'");
   });
 
   test('T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart', () => {
