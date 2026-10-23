@@ -1,22 +1,12 @@
-# P1-107 scene-loading investigation — work in progress
+# P1-107: measured acceptance complete
 
-- Baseline runtime `9698a393c`; build/source identity in `evidence/before-build.json`. Final performance acceptance is still outstanding.
-- Quiet L1 baseline, 20 fresh profiles/config: GPU low median/p90/max 2.459/2.511/2.561 s; high 2.485/2.559/2.593 s; GL low 2.642/2.719/2.743 s; high 2.627/2.686/2.773 s. Original 10–16 s L1 outlier has not recurred.
-- Quiet diagnostic L8 reproduces 24.490 s: 17.708 s scene assembly (17.256 s infected-crowd), 6.177 s warm-up; retained raw profile/trace in `evidence/diagnostic-L8/`.
-- L8 unnecessarily used the live-handover pacing on cold menu entry; L8/L10 also prepared unused catalogue creatures and duplicate pedestrian batches already drawn by CivilianCrowd.
-- Candidate keeps live L7→L8 pacing, uses foreground compilation for cold entry, and prepares every L10 future encounter, dog coat and Alpha/Mega look; the upload-order revision also initializes pose atlases before linking. Actual GPU driver draws/fences and alternate-light warm-up remain in place.
-- Population candidate `d691d50a6`: full remote suite passes (442 files / 2,432 tests), all 31 smoke checks pass, and all four L10 lamp-boundary replays pass (maximum 132.7 ms). This evidence is labeled separately from the final candidate.
-- Indexed candidate runtime `a6ea63646` also retains source indices during infected baking and hashes reused vertices once, avoiding an expand/interleave/deinterleave/weld round trip. Exact real-model geometry/animation comparisons pass. Typecheck/lint/build, 31 smoke checks and all four L10 lamp-boundary replays pass (84,720 playable frames; maximum 28.1 ms). Its N=20 L10 WebGL2/high distribution failed: median 5.971 s, p90 6.276 s, max 6.526 s. All raw observations are retained under `evidence/after-indexed-failed`. Its full remote suite passed 442 files / 2,437 tests, with one L9 navigation preparation timeout. Build identity: `evidence/indexed-build.json`.
-- The next revision shares geometry-independent clip samples across identical human rigs/LODs within a fresh first load. Grounded/death poses and animal rigs retain independent sampling; exact geometry and animation equivalence and explicit cross-LOD reuse tests pass. Runtime `6b05bca7f` passes typecheck/lint/build and its N=3 diagnostic in all four L10 configurations (worst 5.611 s). Fresh smoke (31/31) and all four L10 lamp replays pass (85,470 frames, max 33.9 ms); the full remote suite and complete quiet matrix are running; the 6.0 s budget is unchanged.
-- L8 WebGPU/high baseline: 20 cold profiles, median/p90/max 24.270/24.571/24.627 s. The candidate N=3 comparisons are diagnostics, not acceptance distributions.
-- Baseline remote suite: 2,423 pass, 3 fail (stale lighting-preview HTML expectation now fixed; asset-validation and L9 navigation timeouts). Final full suite and L10 replay remain outstanding; the final-run asset-validation file now passes (170 s).
-- `evidence/matrix.sh` pairs before/after per configuration under ≤20-minute quiet reservations; each configuration includes a ten-second real-movement segment and every cold load records its first post-card frames. Budget/gate are in `docs/qa/regression-gate.md` and `tools/perf/cold-load-time.ts`.
+- Runtime `6b05bca7f`, bundle `index-B2vU0WX6.js`; baseline runtime `9698a393c`.
+- All 20 configurations pass: L1/L4/L7/L8/L10 × WebGPU/WebGL2 × low/high, 20 fresh browser profiles before and after each (800 observations). Every candidate median is faster; worst candidate load is 5.676 s.
+- Maximum recorded post-card frame is 116.7 ms across 13,529 cold-load frames. Four L10 lamp-boundary replays add 85,470 playable frames, max 33.9 ms, no hitches.
+- Typecheck/lint/build pass. Full remote unit/level suite passes: 443 files / 2,446 tests; 3 files / 9 tests skipped. All 31 smoke checks pass.
+- Independent raw-data audit passes; source hashes, native backends, errors, exact distributions, movement segments and build identities are checked by `evidence/audit.py`. Candidate preview must be available on port 4222 when rerunning it.
+- L8 WebGPU high improves from 24.270/24.571/24.627 s to 3.931/3.967/4.000 s (median/p90/max).
+- The earlier indexed revision failed its L10 GL/high N=20 budget at 6.526 s; the full failed batch is preserved under `evidence/after-indexed-failed/`. The rig-pose revision fixes that measured miss.
+- The original one-off L1 10–16 s trigger remains unproven. A separate deployed-13g diagnostic trace batch is running; it is excluded from acceptance distributions.
 
-- Pose revision L1 acceptance is complete: all four configurations pass N=20, all medians improve, worst load 3.009 s, max recorded post-card frame 50.0 ms. L10/L8/L7/L4 acceptance remains in progress.
-- L10 WebGL2/high N=20 passes on the pose revision: median/p90/max 5.594/5.643/5.644 s (baseline 8.476/8.895/10.244 s); recorded post-card max 16.8 ms. No load budget was relaxed.
-- Pose revision full remote suite passes (exit 0, 2,446 tests; 443 files), with all seven runtime source hashes verified against the measured bundle. L10 WebGPU/high N=20 passes at 5.549/5.607/5.625 s median/p90/max.
-- All four L10 N=20 configurations pass on the pose revision. WebGPU low: 5.529/5.571/5.610 s median/p90/max. Worst of all 80 L10 cold loads: 5.676 s; every configuration median improves. L1+L10 acceptance complete (8/20 configurations); L8/L7/L4 remain.
-- L8 WebGPU/high N=20 passes: baseline 24.270/24.571/24.627 s → pose revision 3.931/3.967/4.000 s median/p90/max; post-card max 16.8 ms.
-- L8 WebGPU/low N=20 passes: baseline 24.101/24.611/24.825 s → pose revision 3.953/3.981/4.009 s median/p90/max; post-card max 16.8 ms. L1, L10 and both L8 GPU configurations are complete (10/20); both L8 GL and L7/L4 remain.
-- All four L8 N=20 configurations pass. WebGL2 high: baseline 24.542/24.942/25.075 s → candidate 3.994/4.042/4.359 s; WebGL2 low: 24.626/25.208/25.576 s → 4.026/4.076/4.178 s. Both have post-card max 16.8 ms. Twelve of twenty configurations are complete; L7/L4 remain.
-- All four L7 N=20 configurations pass: GL high 3.659/3.677/3.709 s, GL low 4.251/4.710/4.858 s, GPU high 3.492/3.559/3.613 s, GPU low 3.863/4.025/4.075 s (median/p90/max). Every median improves; largest recorded post-card frame is 66.6 ms. Sixteen of twenty configurations are complete; only L4 remains.
+See [root cause](root-cause.md), [all distributions](distributions.md), and `evidence/final-audit.json`. The budget remains 6,000 ms.

@@ -1,0 +1,357 @@
+{
+  "gate": "PASS",
+  "runtimeCommit": "6b05bca7f",
+  "sourceHash": "8be587a3d5dd1f4d345884d7d1d0722fefb75cadcbdceb037b368ac44e37df6b",
+  "bundle": "build/index-B2vU0WX6.js",
+  "configurations": [
+    {
+      "configuration": "L1-webgpu-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 2459.050000190735,
+        "p90": 2510.8999996185303,
+        "max": 2561.1000003814697
+      },
+      "after": {
+        "median": 2328.1000003814697,
+        "p90": 2360.199999809265,
+        "max": 2364.3999996185303
+      },
+      "maxFrameMs": 50,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L1-webgpu-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 2485.050000190735,
+        "p90": 2558.8999996185303,
+        "max": 2592.5
+      },
+      "after": {
+        "median": 2343.699999809265,
+        "p90": 2361,
+        "max": 2393.5
+      },
+      "maxFrameMs": 50,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L1-webgl2-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 2641.5999999046326,
+        "p90": 2719.199999809265,
+        "max": 2743.3999996185303
+      },
+      "after": {
+        "median": 2476.6499996185303,
+        "p90": 2493.3999996185303,
+        "max": 3009
+      },
+      "maxFrameMs": 50,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L1-webgl2-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 2626.550000190735,
+        "p90": 2686.300000190735,
+        "max": 2772.7000007629395
+      },
+      "after": {
+        "median": 2476.699999809265,
+        "p90": 2508.6000003814697,
+        "max": 2525.699999809265
+      },
+      "maxFrameMs": 49.899999999999636,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L4-webgpu-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 3918.199999809265,
+        "p90": 3967.1000003814697,
+        "max": 4110
+      },
+      "after": {
+        "median": 3592.300000667572,
+        "p90": 3642.300000190735,
+        "max": 3742
+      },
+      "maxFrameMs": 116.70000000000073,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L4-webgpu-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 3905.300000190735,
+        "p90": 3958.3999996185303,
+        "max": 4074.8999996185303
+      },
+      "after": {
+        "median": 3591.8499999046326,
+        "p90": 3669.300000190735,
+        "max": 3808.2000007629395
+      },
+      "maxFrameMs": 116.69999999999982,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L4-webgl2-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 4143.349999904633,
+        "p90": 4210.700000762939,
+        "max": 4406.800000190735
+      },
+      "after": {
+        "median": 3809.5,
+        "p90": 3909.3999996185303,
+        "max": 4042.1000003814697
+      },
+      "maxFrameMs": 116.69999999999891,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L4-webgl2-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 4109.550000190735,
+        "p90": 4159.900000572205,
+        "max": 4975.60000038147
+      },
+      "after": {
+        "median": 3801.3500003814697,
+        "p90": 3843.199999809265,
+        "max": 3991.6000003814697
+      },
+      "maxFrameMs": 116.69999999999891,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L7-webgpu-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 4213.050000190735,
+        "p90": 4391,
+        "max": 4458.60000038147
+      },
+      "after": {
+        "median": 3863.199999809265,
+        "p90": 4024.5,
+        "max": 4074.5999994277954
+      },
+      "maxFrameMs": 33.400000000000546,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L7-webgpu-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 3831.2999997138977,
+        "p90": 4006.8999996185303,
+        "max": 4076.6000003814697
+      },
+      "after": {
+        "median": 3491.8499999046326,
+        "p90": 3558.5,
+        "max": 3613.4000005722046
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L7-webgl2-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 4544.25,
+        "p90": 4610.200000762939,
+        "max": 4657.800000190735
+      },
+      "after": {
+        "median": 4251.099999904633,
+        "p90": 4709.60000038147,
+        "max": 4857.800000190735
+      },
+      "maxFrameMs": 66.60000000000036,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L7-webgl2-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 3984,
+        "p90": 4058.5,
+        "max": 4124.39999961853
+      },
+      "after": {
+        "median": 3659.0999994277954,
+        "p90": 3677.4000005722046,
+        "max": 3709.199999809265
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L8-webgpu-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 24100.499999523163,
+        "p90": 24611.400000572205,
+        "max": 24824.70000076294
+      },
+      "after": {
+        "median": 3952.949999809265,
+        "p90": 3981.1000003814697,
+        "max": 4009
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L8-webgpu-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 24270.25,
+        "p90": 24570.900000572205,
+        "max": 24627.199999809265
+      },
+      "after": {
+        "median": 3930.6000003814697,
+        "p90": 3967.300000190735,
+        "max": 4000.1000003814697
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L8-webgl2-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 24626.300000190735,
+        "p90": 25207.699999809265,
+        "max": 25575.70000076294
+      },
+      "after": {
+        "median": 4026.199999809265,
+        "p90": 4076,
+        "max": 4177.800000190735
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L8-webgl2-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 24542.050000190735,
+        "p90": 24942,
+        "max": 25074.5
+      },
+      "after": {
+        "median": 3993.5,
+        "p90": 4041.5,
+        "max": 4359.199999809265
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L10-webgpu-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 8349.099999904633,
+        "p90": 8411.5,
+        "max": 8456
+      },
+      "after": {
+        "median": 5529.249999523163,
+        "p90": 5570.900000572205,
+        "max": 5610
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L10-webgpu-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 8374.099999904633,
+        "p90": 8411.29999923706,
+        "max": 8435.199999809265
+      },
+      "after": {
+        "median": 5549.150000095367,
+        "p90": 5606.799999237061,
+        "max": 5624.60000038147
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L10-webgl2-low",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 8343.150000095367,
+        "p90": 8376.89999961853,
+        "max": 8408.699999809265
+      },
+      "after": {
+        "median": 5609.60000038147,
+        "p90": 5643.89999961853,
+        "max": 5675.699999809265
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    },
+    {
+      "configuration": "L10-webgl2-high",
+      "nBefore": 20,
+      "nAfter": 20,
+      "before": {
+        "median": 8475.949999809265,
+        "p90": 8894.599999427795,
+        "max": 10243.89999961853
+      },
+      "after": {
+        "median": 5593.949999809265,
+        "p90": 5642.599999427795,
+        "max": 5644
+      },
+      "maxFrameMs": 16.80000000000109,
+      "gate": "PASS"
+    }
+  ],
+  "nBefore": 400,
+  "nAfter": 400,
+  "worstCandidateMs": 5675.699999809265,
+  "maxPostCardFrameMs": 116.70000000000073,
+  "coldLoadRecordedFrames": 13529,
+  "lampReplayFrames": 85470,
+  "lampReplayMaxFrameMs": 33.90000057220459,
+  "remoteTestsPassed": 2446,
+  "smokeChecksPassed": 31
+}
