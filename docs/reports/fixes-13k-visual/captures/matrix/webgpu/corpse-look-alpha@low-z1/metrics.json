@@ -7,9 +7,9 @@
   "frames": 82,
   "timing": {
     "openMs": 0,
-    "loadMs": 5136,
-    "runMs": 646,
-    "sceneMs": 5782
+    "loadMs": 4698,
+    "runMs": 560,
+    "sceneMs": 5258
   },
   "checks": {
     "pass": true,
@@ -35,7 +35,7 @@
       {
         "name": "canvas.f80.varianceMin",
         "pass": true,
-        "value": 302.82498763359763,
+        "value": 302.829644067082,
         "limit": 1
       },
       {
@@ -47,7 +47,7 @@
       {
         "name": "canvas.f82.varianceMin",
         "pass": true,
-        "value": 301.0851667798779,
+        "value": 301.08982317332266,
         "limit": 1
       },
       {
@@ -97,11 +97,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          92.18454969618055,
+          92.18454861111111,
           73.46588975694445,
-          80.97640299479167
+          80.97640190972223
         ],
-        "variance": 302.82498763359763,
+        "variance": 302.829644067082,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -112,11 +112,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          92.16610026041667,
+          92.16609917534723,
           73.45900933159722,
-          80.97568467881945
+          80.97568359375
         ],
-        "variance": 301.0851667798779,
+        "variance": 301.08982317332266,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -263,16 +263,16 @@
         "max": 27353
       },
       "stepMs": {
-        "p50": 2.5,
-        "p95": 3.2,
-        "max": 13.4
+        "p50": 1.5,
+        "p95": 2.2,
+        "max": 11.4
       },
       "lastFrame": {
         "drawCalls": 26,
         "triangles": 65447,
         "shadowDrawCalls": 8,
         "shadowTriangles": 27353,
-        "stepMs": 2,
+        "stepMs": 1.6999998092651367,
         "categories": {
           "other": 17,
           "shadows": 8,

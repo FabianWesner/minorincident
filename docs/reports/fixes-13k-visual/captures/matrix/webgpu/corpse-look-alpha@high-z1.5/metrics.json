@@ -7,9 +7,9 @@
   "frames": 82,
   "timing": {
     "openMs": 0,
-    "loadMs": 4833,
-    "runMs": 579,
-    "sceneMs": 5412
+    "loadMs": 4784,
+    "runMs": 619,
+    "sceneMs": 5403
   },
   "checks": {
     "pass": true,
@@ -35,7 +35,7 @@
       {
         "name": "canvas.f80.varianceMin",
         "pass": true,
-        "value": 451.7779080009168,
+        "value": 451.7783022759322,
         "limit": 1
       },
       {
@@ -47,7 +47,7 @@
       {
         "name": "canvas.f82.varianceMin",
         "pass": true,
-        "value": 451.7856780685979,
+        "value": 451.7860723376616,
         "limit": 1
       },
       {
@@ -97,11 +97,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.65899197048611,
-          90.97356662326389,
-          104.18192816840278
+          103.658984375,
+          90.97355360243056,
+          104.18192708333333
         ],
-        "variance": 451.7779080009168,
+        "variance": 451.7783022759322,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -112,11 +112,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.65026801215278,
-          90.9685546875,
-          104.17918511284722
+          103.65026041666667,
+          90.96854166666667,
+          104.17918402777778
         ],
-        "variance": 451.7856780685979,
+        "variance": 451.7860723376616,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -263,16 +263,16 @@
         "max": 44633
       },
       "stepMs": {
-        "p50": 1.8,
-        "p95": 2.6,
-        "max": 13.5
+        "p50": 2.2,
+        "p95": 2.8,
+        "max": 14.3
       },
       "lastFrame": {
         "drawCalls": 26,
         "triangles": 82901,
         "shadowDrawCalls": 14,
         "shadowTriangles": 44633,
-        "stepMs": 1.8000001907348633,
+        "stepMs": 2.1999998092651367,
         "categories": {
           "other": 17,
           "shadows": 14,
@@ -679,7 +679,7 @@
         "missedInViewFrames": 0,
         "lod": {
           "lod1": 5,
-          "lod2": 77
+          "lod0": 77
         },
         "firstDrawn": {
           "frame": 1,
