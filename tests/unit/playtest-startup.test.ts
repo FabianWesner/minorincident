@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
 import { validateSave } from '../../src/sim/progression/Save';
-import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, observeWithin, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
+import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
   const source = preset('L6-default'), save = playtestSave(source, 'male', 'fists');
@@ -42,6 +42,14 @@ test('the input driver never debug-skips the mandatory L10 Mega objective', () =
   expect(isMandatoryBossObjective('L10', 'release')).toBe(false);
   expect(isMandatoryBossObjective('L9', 'mega')).toBe(false);
   expect(isMandatoryBossObjective(null, null)).toBe(false);
+});
+
+test('a handover already at zoom 1.5 must not scroll toward the launcher zoom limit', () => {
+  expect(needsZoomInput(1.5, 1.5)).toBe(false);
+  // Use the target, since the camera may still be easing toward it.
+  expect(needsZoomInput(1.50000001, 1.5)).toBe(false);
+  expect(needsZoomInput(1, 1.5)).toBe(true);
+  expect(needsZoomInput(2, 1.5)).toBe(true);
 });
 
 test('automatic L10 progression is success only after the actual credits and campaign completion', () => {

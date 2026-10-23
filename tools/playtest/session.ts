@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { look, visibleGroupTarget, type Body, type Eyes } from './eyes';
-import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, observeWithin, shouldResumePause } from './startup';
+import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
@@ -493,9 +493,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (lost.length) await issue('P1', 'lost-weapon', `Carried ${lost.join(', ')} at the end of the previous level, not in the rack when ${e.level} starts (rack: ${run.weaponsStart.join(', ')})`);
     }
     if (!zoomed) { // the PO's zoom: wheel over the canvas
-      await page.mouse.move(e.view.w / 2, e.view.h / 2);
-      for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, o.zoom >= 1 ? 120 : -120); await hold(60); }
-      zoomed = true; log({ zoom: await page.evaluate(() => window.__SS__!.getState().render.camera.zoom) });
+      const before = await page.evaluate(() => window.__SS__!.getState().render.camera);
+      if (needsZoomInput(before.targetZoom, o.zoom)) {
+        await page.mouse.move(e.view.w / 2, e.view.h / 2);
+        for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, o.zoom >= 1 ? 120 : -120); await hold(60); }
+      }
+      const camera = await page.evaluate(() => window.__SS__!.getState().render.camera);
+      if (o.zoom === 1.5) assert.ok(!needsZoomInput(camera.targetZoom, o.zoom), `Requested zoom 1.5, observed target ${camera.targetZoom} in ${e.level}`);
+      zoomed = true; log({ zoom: camera.zoom, targetZoom: camera.targetZoom, level: e.level });
     }
     const key = `${e.step}|${e.completed}|${e.checkpoint}|${e.objective.replace(/ · [\d.]+\s?m\b/g, '').replace(/ · \d+:\d\d/g, '').replace(/\d+\/\d+ ?s\b/g, '#')}`;
     if (key !== lastProgress.key) {
