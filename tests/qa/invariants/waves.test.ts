@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { loadLevel } from './world';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
-import { l2 } from '../../../src/data/l2';
+import { l2, l2TruckPath } from '../../../src/data/l2';
 import { l3 } from '../../../src/data/l3';
 import { l6Entries, l6Doors } from '../../../src/data/l6';
 import { l7Encounters } from '../../../src/data/l7';
@@ -11,17 +11,22 @@ import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4
 
 const failure = (authored: number, ids: number[]) => ids.length !== authored || ids.some(id => id <= 0);
 function observed(world: SimWorld, ids: number[]) { return ids.filter(id => { const e = world.entities.get(id); return e && !e.hidden && !e.pendingAdmission && e.infected && !e.infected.hidden; }); }
-function reach(w: SimWorld, ids: number[], goal: (id: number, x: number, z: number) => boolean, frames = 1800) {
+function reach(w: SimWorld, ids: number[] | (() => number[]), goal: (id: number, x: number, z: number) => boolean, frames = 1800) {
   const admitted = new Set<number>(), reached = new Set<number>();
-  for (let tick = 0; tick < frames && reached.size < ids.length; tick++) {
+  const current = () => typeof ids === 'function' ? ids() : ids;
+  for (let tick = 0; tick < frames && reached.size < current().length; tick++) {
     // Isolate navigation from damage: an ally killing an arrival before it reaches the test area is not a routing failure.
-    for (const id of ids) { const e = w.entities.get(id); if (e) e.health.current = e.health.max = 1_000_000; }
+    for (const id of current()) { const e = w.entities.get(id); if (e) e.health.current = e.health.max = 1_000_000; }
     followFrustum(w); w.update();
-    for (const id of observed(w, ids)) {
+    for (const id of observed(w, current())) {
       admitted.add(id); const e = w.entities.get(id)!;
       if (!e.emerging && goal(id, e.transform.x, e.transform.z)) reached.add(id);
     }
   }
+  if (reached.size < current().length) console.log(`[qa:invariants] unreached identities: ${JSON.stringify(current().filter(id => !reached.has(id)).map(id => {
+    const e = w.entities.get(id), brain = e?.infected?.l1, target = brain && w.entities.get(brain.targetId);
+    return { id, at: e?.transform, mode: brain?.mode, goal: brain && [brain.goalX, brain.goalZ], target: target && { id: target.id, at: target.transform }, pending: e?.pendingAdmission, hidden: e?.hidden, emerging: e?.emerging };
+  }))}`);
   return { admitted: admitted.size, reached: reached.size, admittedIds: [...admitted], reachedIds: [...reached] };
 }
 async function withWorld(id: Parameters<typeof loadLevel>[0], tier: 'high' | 'low', action: (world: SimWorld) => void) {
@@ -46,13 +51,29 @@ for (const tier of ['high', 'low'] as const) test(`5 authored wave census ${tier
     record('L1/lab-exits', 5, ids, w, reach(w, ids, () => true));
   });
   await withWorld('L2', tier, w => {
-    const c = w.missions!.l2! as unknown as { openDoors(): void; emergeAmbush(tick: number): void };
-    w.update(); c.openDoors();
+    const c = w.missions!.l2! as unknown as { arrive(): void; crewExit(): void; openDoors(): void; emergeAmbush(tick: number): void };
+    w.update();
     const s = w.missions!.state.l2!;
-    // Preserve the authored stagger; dispatching the whole queue at one synthetic future tick jams the mouths.
-    for (let i = 0; i < 20 * 60 && s.ambush.some(a => !a.id); i++) { followFrustum(w); w.update(); }
+    // Open the market after the real arrival/disembark lifecycle, rather than with the whole crew still at the fire station.
+    const truck = w.entities.get(s.truckId)!, stop = w.missions!.def.anchors['l2-truck-stop'];
+    Object.assign(truck.transform, { x: stop.x, z: stop.z, yaw: l2TruckPath.at(-1)!.yaw });
+    c.arrive(); c.crewExit();
+    const player = w.entities.get(1)!, forecourt = w.missions!.def.anchors['l2-forecourt'];
+    Object.assign(player.transform, forecourt); w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform); w.spatial.set(1, player.transform.x, player.transform.z);
+    c.openDoors();
+    // This is a routing census, already isolated from damage. An immortal fleeing human outside the market
+    // can legitimately intercept an ambusher forever; keep perception targets in the measured goal area.
+    // Movement, obstacles, the cap, stagger and the exact authored quota remain the production paths.
+    const humans = w.infected!.l1!.humans, all = humans.all.bind(humans), get = humans.get.bind(humans), within = humans.within.bind(humans);
+    const inMarket = (id: number) => { const p = w.entities.get(id)?.transform; return !!p && p.x >= -64 && p.x <= -36 && p.z >= -52 && p.z <= -24; };
+    vi.spyOn(humans, 'all').mockImplementation(() => all().filter(h => inMarket(h.id)));
+    vi.spyOn(humans, 'get').mockImplementation(id => inMarket(id) ? get(id) : undefined);
+    vi.spyOn(humans, 'within').mockImplementation((p, r) => within(p, r).filter(h => inMarket(h.id)));
+    // Observe/protect from the first staggered arrival: an early member may cross the forecourt and chase a fleeing
+    // victim away before the last member spawns. Starting observation after the batch missed that real arrival.
+    const movement = reach(w, () => s.ambush.map(a => a.id), (_id, x, z) => x >= -64 && x <= -36 && z >= -52 && z <= -24, 3000);
     const ids = s.ambush.map(a => a.id);
-    record('L2/market-ambush', l2.rescue.ambushDoors.reduce((n, [, count]) => n + Math.ceil(count * (tier === 'low' ? l2.escape.lowScale : 1)), 0), ids, w, reach(w, ids, (_id, x, z) => x >= -64 && x <= -36 && z >= -52 && z <= -24));
+    record('L2/market-ambush', l2.rescue.ambushDoors.reduce((n, [, count]) => n + Math.ceil(count * (tier === 'low' ? l2.escape.lowScale : 1)), 0), ids, w, movement);
   });
   await withWorld('L3', tier, w => {
     const c = w.missions!.l3! as unknown as { startAttack(): void; emergeWaves(): void; checkFallback(): void };
@@ -190,6 +211,6 @@ for (const tier of ['high', 'low'] as const) test(`5 L4 alarm ${tier}: every aut
     const expected = l4.calm.alarmInfected[tier];
     expect(ids.length, `L4/${tier}: authored alarm count`).toBe(expected);
     expect(admitted.size, `L4/${tier}: visible admitted alarm identities`).toBe(expected);
-    expect(reached.size, `L4/${tier}: alarm identities reaching the military hold area; missing ${ids.filter(id => !reached.has(id))}; phase ${s.phase}`).toBe(expected);
+    expect(reached.size, `L4/${tier}: alarm identities reaching the military hold area; missing ${JSON.stringify(ids.filter(id => !reached.has(id)).map(id => { const e=w.entities.get(id); return {id,at:e?.transform,scripted:e?.infected?.scripted,vault:e?.infected?.vault,mode:e?.infected?.l1?.mode,goal:e?.infected?.l1&&[e.infected.l1.goalX,e.infected.l1.goalZ]}; }))}; phase ${s.phase}`).toBe(expected);
   } finally { w.dispose(); }
 }, 240_000);

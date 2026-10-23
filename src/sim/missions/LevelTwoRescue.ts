@@ -62,11 +62,12 @@ export class LevelTwoRescue {
    * preceding street beats. Bite conversions use the director's existing budget. */
   private reserveArrivals(): void {
     const ai = this.world.infected!;
-    let count = 0;
+    // The finite market alarm owns its slots before ambient street arrivals or bites fill the cap.
+    let count = this.s.doorsOpenAt ? this.s.ambush.filter(a => !a.id).length : l2.rescue.ambushDoors.reduce((n, [, size]) => n + Math.ceil(size * (ai.director.tier === 'low' ? l2.escape.lowScale : 1)), 0);
     if (ai.director.tier === 'low') {
       if (!this.s.escapeSpawned) {
         const scale = l2.escape.lowScale * (1 - this.relief());
-        count = Math.ceil(l2.cluster.count * scale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
+        count += Math.ceil(l2.cluster.count * scale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
       } else for (const q of this.s.pending) {
         if ((q.id === 0 || q.id === -2) && arrivalHomes.some(p => p[0] === q.home.x && p[1] === q.home.z)) count++;
       }
@@ -384,7 +385,8 @@ export class LevelTwoRescue {
     for (const a of s.ambush) if (!a.id && tick >= a.at) {
       // Each street runs at the exit nearest to it (the crowd streaming out), not at the courier.
       const [x, z] = l2.rescue.ambushRush[a.door] ?? [-46.5, -38], id = this.emerge(a.door, { x, z });
-      a.id = id || -1; if (id) s.ambushIds.push(id);
+      // Cap/admission pressure defers this identity; it must not cancel an authored arrival.
+      if (id) { a.id = id; s.ambushIds.push(id); this.reserveArrivals(); }
     }
   }
   /**
@@ -393,7 +395,9 @@ export class LevelTwoRescue {
    */
   private emerge(door: string, toward: Point, home?: Point): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak(), a = this.anchor(door);
-    if (!a || ai.director.count >= ai.director.cap || !ai.pool.length) return 0;
+    // Later street batches share the cap, but cannot consume the still-staggered market alarm's quota.
+    const alarmSlots = home ? this.s.ambush.filter(a => !a.id).length : 0;
+    if (!a || ai.director.count >= ai.director.cap - alarmSlots || !ai.pool.length) return 0;
     const out = this.snap({ x: a.x, z: a.z }, .45);
     const id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
@@ -414,7 +418,8 @@ export class LevelTwoRescue {
         ai.rush(id, home, world.tick + ticks(18));
       }
     }
-    else ai.rush(id, toward, world.tick + ticks(12));
+    // The northern door needs a long route around its block, not a 30 m straight line.
+    else ai.rush(id, toward, world.tick + ticks(30));
     return id;
   }
   /** Escape population and the bridge cluster: planned at the alarm, each member emerges once its door is out of view. */

@@ -873,6 +873,8 @@ export class InfectedSystem {
    * few seconds. Sight only: the cue is a visible attacker, so chains propagate naturally.
    */
   private herdCue(e: EntitySnapshot, brain: L1Brain): void {
+    // A visible victim may interrupt an approach; another infected's heading must not erase its authored destination.
+    if (brain.mode === 'attracted') return;
     this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = this.l1!.rangeM;
     this.world.spatial.query(this.query, this.neighbors, false);
     // Sort only potential cues, retaining the original lowest-ID visible choice.
@@ -997,7 +999,9 @@ export class InfectedSystem {
     const s = brain.search, tick = this.world.tick;
     if (tick >= s.until) { this.toWander(e, b, brain); return; }
     const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
-    if (distance <= 1 || ++s.legTicks > 600) {
+    // The attraction's own deadline bounds this approach. A fixed 10 s leg discarded valid long street detours
+    // before arrival; watchStuck/noRoute already handle approaches that cannot make physical progress.
+    if (distance <= 1) {
       // Arrived at the sound: search around it (same behaviour, centred on the source) until the attraction ends.
       planSearch(s, this.l1Rng!, this.infectedNav, tick, { x: s.originX, z: s.originZ }, { x: 0, z: 0 }, s.until - tick, [3, 7]);
       s.next = 0; brain.mode = 'search'; b.state = 'attracted'; brain.looking = true; brain.lookYaw = e.transform.yaw + 1.2; brain.pauseUntil = tick + 30;
