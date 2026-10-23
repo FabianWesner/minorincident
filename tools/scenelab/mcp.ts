@@ -6,6 +6,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import { readFileSync } from 'node:fs';
 import { runSpec } from './run';
+import { poolHealth } from '../browser-pool/client';
 import { SceneSession, readSpec, stopServer, thumbnail, writeJson, type Backend } from './session';
 import type { ActorSpec, PropSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 
@@ -22,7 +23,7 @@ let options: { backend: Backend; tier: 'high' | 'low' } = { backend: 'webgl2', t
 
 /** Hold the shared browser lock (tools/e2e-lock.sh) through a child that waits on stdin; releasing = closing stdin. */
 async function acquireLock(): Promise<void> {
-  if (lock || process.env.MI_E2E_LOCK_HELD) return;
+  if (lock || process.env.MI_E2E_LOCK_HELD || await poolHealth()) return;
   log('waiting for the e2e browser lock');
   const child = spawn('sh', ['tools/e2e-lock.sh', 'sh', '-c', 'echo locked; cat >/dev/null'], { stdio: ['pipe', 'pipe', 'inherit'] });
   await new Promise<void>((done, fail) => { child.stdout!.once('data', () => done()); child.once('exit', code => fail(new Error(`e2e lock exited ${code}`))); });
@@ -33,7 +34,8 @@ async function close(): Promise<void> { if (idle) clearTimeout(idle); idle = nul
 async function ensure(): Promise<SceneSession> {
   if (idle) clearTimeout(idle);
   idle = setTimeout(() => { log('idle: closing the browser'); void close(); }, idleSeconds * 1000);
-  if (session) return session;
+  if (session?.isOpen) return session;
+  if (session) { await session.close(); session = null; }
   await acquireLock();
   const s = new SceneSession({ ...options, log });
   await s.open(); session = s; return s;
@@ -67,6 +69,7 @@ async ({ path, spec, sheet, frames, shots: shotList, video }) => {
     if (r.sheet) content.push({ type: 'image', data: readFileSync(r.sheet).toString('base64'), mimeType: 'image/jpeg' });
     return { content };
   } catch (error) { return { ...text(String(error instanceof Error ? error.message : error)), isError: true }; }
+  finally { if (await poolHealth()) await close(); }
 });
 server.registerTool('inspect_level', { description: 'Run a real registered level with normal sim and a detached camera. Returns anchors. bot=true drives the existing complete profile; otherwise courier is a ghost.', inputSchema: { level: z.string(), bot: z.boolean().optional() } },
 call((s, { level, bot }: { level: string; bot?: boolean }) => s.inspectLevel(level, bot)));

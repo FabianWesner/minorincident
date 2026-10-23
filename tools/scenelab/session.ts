@@ -19,16 +19,21 @@ export type Backend = 'webgl2' | 'webgpu';
 export interface SessionOptions { /** Pixel 7 touch emulation for phone timing. */ phone?: boolean; backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
 
 let server: ChildProcess | null = null;
+let serverStarting: Promise<void> | undefined;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
 /** Reuse a running Scene Lab server, else start Vite (dev: current sources; SCENE_SERVER=preview serves dist/). */
 async function ensureServer(log: (line: string) => void): Promise<void> {
   if (await up()) return;
+  if (serverStarting) return serverStarting;
+  serverStarting = (async () => {
   const preview = process.env.SCENE_SERVER === 'preview';
   log(`starting ${preview ? 'vite preview' : 'vite dev'} on ${origin}`);
   // Own the Vite process directly so stopServer does not leave an npx child serving a deleted remote job.
   server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), ...(preview ? ['preview', ...(process.env.SCENE_DIST ? ['--outDir', process.env.SCENE_DIST] : [])] : []), '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore', detached: false });
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
   if (!(await up())) { server.kill(); server = null; throw new Error(`Scene Lab server did not start on ${port}`); }
+  })().finally(() => { serverStarting = undefined; });
+  return serverStarting;
 }
 export function stopServer(): void { server?.kill(); server = null; }
 
@@ -45,7 +50,8 @@ export class SceneSession {
   private context?: BrowserContext;
   private ownsBrowser = false;
   private opened = false;
-  get isOpen() { return this.opened; }
+  get isOpen() { return this.opened && !this.page?.isClosed(); }
+  private presentationZoom?: number;
   private sceneUrl = '';
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
@@ -75,6 +81,9 @@ export class SceneSession {
     await this.page.goto(this.sceneUrl);
     await this.page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120_000 });
     await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
+    // The legacy multi-spec page retains player zoom. Preserve that job-local
+    // presentation setting across leases: it also controls fog/DOF at photo poses.
+    if (this.presentationZoom !== undefined) await this.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), this.presentationZoom);
     // Story/HUD overlays are not part of an isolated scene.
     await this.page.addStyleTag({ content: '#hud:not([data-scene-hud]),.hud:not([data-scene-hud]),.story-bubble,html:not([data-scene-hud]) .mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
   }
@@ -141,6 +150,7 @@ export class SceneSession {
   async close(): Promise<void> {
     if (!this.opened) return;
     this.opened = false;
+    if (process.env.MI_BROWSER_POOL === '1' && !this.page.isClosed()) this.presentationZoom = await this.page.evaluate(() => (window.__SS__!.getState().render.camera as { targetZoom: number }).targetZoom).catch(() => this.presentationZoom);
     this.guard?.dispose();
     if (this.ownsBrowser) await this.browser?.close();
     else await this.context?.close();

@@ -1,15 +1,17 @@
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { cpus, totalmem, loadavg } from 'node:os';
+import { chromium } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { delay, windowServerSnapshot } from './host';
 
 const phase = process.argv[2];
 if (phase !== 'before' && phase !== 'after') throw new Error('usage: tsx tools/browser-pool/benchmark.ts before|after [clients comma-separated]');
 const counts = (process.argv[3] ?? '1,2,4,6').split(',').map(Number);
-const out = resolve('test-results/browser-pool/benchmark', phase); mkdirSync(out, { recursive: true });
+const benchRoot = resolve(process.env.BROWSER_POOL_BENCH_ROOT ?? 'test-results/browser-pool/benchmark');
+const out = resolve(benchRoot, phase); mkdirSync(out, { recursive: true });
 const fixtures = ['bench-sitter', 'house', 'courier-turns', 'qa-grove-east-south'];
 const children = new Set<ChildProcess>();
 let daemonLog = '';
@@ -44,7 +46,7 @@ function sceneEvidence(dir: string) {
     const folder = resolve(dir, name), metrics = JSON.parse(readFileSync(resolve(folder, 'metrics.json'), 'utf8'));
     const captures = readdirSync(folder).filter(p => p.endsWith('.png')).map(file => {
       const path = resolve(folder, file), png = PNG.sync.read(readFileSync(path));
-      const basePath = resolve('test-results/browser-pool/benchmark/before/scenes-n1-c0', name, file);
+      const basePath = resolve(benchRoot, 'before/scenes-n1-c0', name, file);
       const base = PNG.sync.read(readFileSync(phase === 'before' && dir.endsWith('scenes-n1-c0') ? path : basePath));
       let changedPixels = 0;
       for (let i = 0; i < png.data.length; i += 4) if (png.data[i] !== base.data[i] || png.data[i + 1] !== base.data[i + 1] || png.data[i + 2] !== base.data[i + 2] || png.data[i + 3] !== base.data[i + 3]) changedPixels++;
@@ -53,9 +55,12 @@ function sceneEvidence(dir: string) {
     return { name, backend: metrics.backend, pass: metrics.checks.pass, failed: metrics.checks.checks.filter((c: { pass: boolean }) => !c.pass), consoleErrors: metrics.consoleErrors, timing: metrics.timing, captures };
   });
 }
-const groups: unknown[] = [];
+const summaryPath = resolve(out, 'summary.json');
+const previous = existsSync(summaryPath) ? JSON.parse(readFileSync(summaryPath, 'utf8')) : undefined;
+if (previous && process.env.BROWSER_POOL_RESUME !== '1') throw new Error('Existing measurements: set BROWSER_POOL_RESUME=1 to run only missing groups, or choose a fresh BROWSER_POOL_BENCH_ROOT');
+const groups: { kind: string; clients: number; [key: string]: unknown }[] = previous?.groups ?? [];
 let preview: ChildProcess | undefined, daemon: ChildProcess | undefined;
-const began = Date.now(), windowBefore = await windowServerSnapshot();
+const began = previous?.began ?? Date.now(), windowBefore = previous?.windowBefore ?? await windowServerSnapshot();
 try {
   if (await alive('http://127.0.0.1:4321')) throw new Error('Port 4321 is already in use');
   if (await alive(`${env.BROWSER_POOL_URL}/health`)) throw new Error('Stop the existing pool before an isolated benchmark');
@@ -66,8 +71,14 @@ try {
     daemon = start(['--import', 'tsx', 'tools/browser-pool/daemon.ts'], { BROWSER_POOL_SHARED_LIMIT: process.env.BROWSER_POOL_SHARED_LIMIT ?? '6', BROWSER_POOL_PORT: '4329' });
     daemon.stdout!.on('data', b => { daemonLog += b; }); daemon.stderr!.on('data', b => { daemonLog += b; });
     await until(() => alive(`${env.BROWSER_POOL_URL}/health`), 'pool');
+    if (groups.length) {
+      const health = await (await fetch(`${env.BROWSER_POOL_URL}/health`)).json() as { endpoints: { gpu: string } };
+      const primer = await chromium.connect(health.endpoints.gpu, { timeout: 1_800_000 });
+      const context = await primer.newContext(); await context.close(); await primer.close();
+    }
   }
   for (const kind of ['scenes', 'smoke', 'lanes']) for (const n of kind === 'lanes' ? [4] : counts) {
+    if (groups.some(g => g.kind === kind && g.clients === n)) continue;
     const groupStart = Date.now(), samples = [telemetry()], windowStart = await windowServerSnapshot();
     const sampler = setInterval(() => samples.push(telemetry()), 1000);
     try {

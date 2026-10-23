@@ -48,7 +48,7 @@ try {
   for (const tier of tiers) {
   queue = entries.filter(e => e.tier === tier);
   // Open the browsers one after the other so only the first one starts the Vite server.
-  for (let i = 0; i < Math.min(jobs, queue.length); i++) { const s = new SceneSession({ backend, tier, viewport: { width, height }, query, log: () => {} }); await s.open(); if (throttle > 1) await (await s.page.context().newCDPSession(s.page)).send('Emulation.setCPUThrottlingRate', { rate: throttle }); sessions.push(s); }
+  for (let i = 0; i < Math.min(jobs, queue.length); i++) { const s = new SceneSession({ backend, tier, viewport: { width, height }, query, log: () => {} }); if (process.env.MI_BROWSER_POOL !== '1') await s.open(); if (process.env.MI_BROWSER_POOL !== '1' && throttle > 1) await (await s.page.context().newCDPSession(s.page)).send('Emulation.setCPUThrottlingRate', { rate: throttle }); sessions.push(s); }
   console.error(`[catalog] ${queue.length} scenes, ${sessions.length} browser(s), ${width}x${height}, ${backend}, ${tier}`);
   await Promise.all(sessions.map(async session => {
     for (let e = queue.shift(); e; e = queue.shift()) {
