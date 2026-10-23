@@ -17,6 +17,7 @@ A living record, updated after every lane or experiment. Short entries with evid
   - It lost every fight, even in turn-based `--step` mode. The aim assist helped, and the PO's tactic ("run away when outnumbered") belongs in the prompt.
   - Turns take 5–10 s real time and 1–2 s in step mode.
   - Verdict: a cheap navigation and clarity tester, not a combat gate.
+  - Round 6 (aim assist + the PO's 'run when outnumbered' tactics in the prompt + the click-settle fix, real time): its best run. It cleared 3 of L1's steps (pickup, delivery, the bat step where rounds 2–5 died 7–9 times) with 1 death in 119 actions, turns 1–4 s. It stopped on its own before the 300-action target, so for long runs wrap it in a loop that re-prompts.
 - **Harness bugs looked like model failures:** a click that returned before the courier moved read as "NOT MOVING", a HUD arrow was mistaken for a marker, and a time cap counted from server start. Check the harness before blaming the model.
 
 ## Asset creation (characters)
