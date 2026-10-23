@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { Matrix4, Vector3 } from 'three';
 import { framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
-import { proneDeath, proneReach } from '../../../src/render/characters/proneDeath';
+import { groundDeathFeet, proneDeath, proneReach } from '../../../src/render/characters/proneDeath';
 import type { CrowdClip } from '../../../src/assets/crowd';
+import { readFileSync } from 'node:fs';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { bakeInfected } from '../../../src/render/characters/bakeInfected';
+import { alphaLookAssets } from '../../../src/data/alphaLooks';
 
 // P1-117: Alphas fall onto their faces. A synthetic rig falls backward (+X) about its heels; joint heights in metres.
 const parts = ['root', 'hip', 'torso', 'head', 'handL', 'handR', 'footL', 'footR'];
@@ -37,4 +42,37 @@ describe('prone Alpha death (P1-117)', () => {
     const c = clip(); proneDeath(c);
     for (let f = first + 1; f <= last; f++) for (const name of parts) expect(joint(c, f, name).distanceTo(joint(c, f - 1, name))).toBeLessThan(.5);
   });
+  it('keeps both boot soles level in the final prone pose and preserves standing orientation at the start', () => {
+    const c = clip(); proneDeath(c);
+    for (const name of ['footL', 'footR']) {
+      const o = (last * c.parts.length + c.parts.indexOf(name)) * 16;
+      expect(c.matrices[o + 5], name).toBeGreaterThan(.99);
+      expect(joint(c, last, name).y).toBeLessThan(.2);
+      const start = (first * c.parts.length + c.parts.indexOf(name)) * 16;
+      expect(c.matrices.slice(start, start + 16)).toEqual(clip().matrices.slice(start, start + 16));
+    }
+  });
+});
+
+it('Q-124 delivered Alpha boots stay below 65 cm; Alpha and side-lying Mega boots keep level soles', async () => {
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  for (const model of alphaLookAssets) {
+    const bytes = readFileSync(`public/assets/models/${model}.glb`);
+    const root = (await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+    const baked = bakeInfected(root, [], false, undefined, undefined, true);
+    const death = model.startsWith('inf.mega-alpha') ? 'death-side' : 'death-back';
+    if (death === 'death-side') groundDeathFeet(baked.clip, death); else proneDeath(baked.clip);
+    const frame = infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1;
+    const position = baked.geometry.getAttribute('position'), owner = baked.geometry.getAttribute('_part_index'), point = new Vector3();
+    for (const name of ['footL', 'footR']) {
+      const index = baked.clip.parts.indexOf(name), matrix = new Matrix4().fromArray(baked.clip.matrices, (frame * baked.clip.parts.length + index) * 16);
+      const heights: number[] = [];
+      for (let i = 0; i < position.count; i++) if (owner.getX(i) === index) heights.push(point.fromBufferAttribute(position, i).applyMatrix4(matrix).y);
+      if (!model.startsWith('inf.mega-alpha')) expect(Math.max(...heights), `${model} ${name} top`).toBeLessThan(.65);
+      expect(Math.max(...heights) - Math.min(...heights), `${model} ${name} vertical span`).toBeLessThan(.65);
+      expect(Math.min(...heights), `${model} ${name} sole`).toBeGreaterThanOrEqual(-.05);
+      expect(new Vector3().setFromMatrixColumn(matrix, 1).normalize().y, `${model} ${name} sole normal`).toBeGreaterThan(.98);
+    }
+    baked.geometry.dispose();
+  }
 });

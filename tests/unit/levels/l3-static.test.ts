@@ -47,6 +47,15 @@ const blockers = solid.filter(c => c.aabb.max[1] >= 1.55 && (c.aabb.max[0] - c.a
 const distBox = (p: Point, a: Aabb) => Math.hypot(Math.max(a.min[0] - p[0], 0, p[0] - a.max[0]), Math.max(a.min[2] - p[1], 0, p[1] - a.max[2]));
 
 describe('L3 static', () => {
+  test('T-E21-11-highway-junction @E21 ramp wedge fill reaches the deck top without a dark vertical seam', () => {
+    const source = readFileSync('layouts/D-CORRIDOR/layout.py', 'utf8');
+    const deck = source.match(/g\.solid\('highway-deck',\s*'asphalt',\s*\[12\.0,\s*([\d.]+),\s*4\.62\],\s*\[173\.5,\s*([\d.]+),\s*0\]/);
+    const wedges = [...source.matchAll(/g\.solid\('highway-wedge',\s*'asphalt',\s*\[1\.5,\s*([\d.]+),\s*1\.9\],\s*\[[^,]+,\s*([\d.]+),/g)];
+    expect(deck, 'authored deck geometry').not.toBeNull(); expect(wedges).toHaveLength(2);
+    const deckTop = Number(deck![2]) + Number(deck![1]) / 2;
+    for (const wedge of wedges) expect(Number(wedge[2]) + Number(wedge[1]) / 2, 'wedge reaches above the deck top to close the join').toBeGreaterThanOrEqual(deckTop + .005);
+  });
+
   test('T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart', () => {
     expect(validateLayout(base, worldAssets)).toEqual([]);
     const [sx] = at('l3-start'), [zx] = at('l3-zone');
