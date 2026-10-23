@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { preset } from '../../src/sim/progression/Campaign';
 import { validateSave } from '../../src/sim/progression/Save';
-import { assertRenderedBodies, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
+import { assertRenderedBodies, isMandatoryBossObjective, playtestSave, shouldResumePause } from '../../tools/playtest/startup';
 
 test('#99 fists seed persists only fists and kick while retaining campaign progress', () => {
   const source = preset('L6-default'), save = playtestSave(source, 'male', 'fists');
@@ -35,4 +35,11 @@ test('#99 the input driver resumes a visible pause menu during play', () => {
   expect(shouldResumePause(null,false)).toBe(false);
   expect(shouldResumePause('title',false)).toBe(false);
   expect(shouldResumePause('settings',false)).toBe(false);
+});
+
+test('the input driver never debug-skips the mandatory L10 Mega objective', () => {
+  expect(isMandatoryBossObjective('L10', 'mega')).toBe(true);
+  expect(isMandatoryBossObjective('L10', 'release')).toBe(false);
+  expect(isMandatoryBossObjective('L9', 'mega')).toBe(false);
+  expect(isMandatoryBossObjective(null, null)).toBe(false);
 });

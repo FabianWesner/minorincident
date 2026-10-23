@@ -14,3 +14,8 @@ export function assertRenderedBodies(figures: { drawn: boolean; joints?: unknown
 export function shouldResumePause(menu: string | null, loading: boolean): boolean {
   return menu === 'pause' && !loading;
 }
+
+/** Never advance past the L10 Mega objective with the boss still alive. */
+export function isMandatoryBossObjective(level: string | null, step: string | null): boolean {
+  return level === 'L10' && step === 'mega';
+}
