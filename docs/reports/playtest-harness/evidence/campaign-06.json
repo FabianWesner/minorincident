@@ -1,0 +1,103 @@
+{
+  "status": "Running; not yet a completed campaign proof",
+  "runtimeCommit": "6dc758170",
+  "command": "E2E_PORT=4371 SCENE_PORT=4372 npm run build && E2E_PORT=4371 SCENE_PORT=4372 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/harness-campaign-06",
+  "artifacts": "test-results/playtest/harness-campaign-06",
+  "asOf": "2026-10-23T18:17:01.796Z",
+  "settings": [
+    {
+      "t": "2026-10-23T18:04:56.193Z",
+      "renderer": "webgpu"
+    },
+    {
+      "t": "2026-10-23T18:04:59.820Z",
+      "quality": "low",
+      "level": "L1",
+      "tick": 10
+    },
+    {
+      "t": "2026-10-23T18:05:00.341Z",
+      "zoom": 1.4938507949758324,
+      "targetZoom": 1.5,
+      "level": "L1"
+    },
+    {
+      "t": "2026-10-23T18:07:26.399Z",
+      "quality": "low",
+      "level": "L2",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T18:07:26.411Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L2"
+    },
+    {
+      "t": "2026-10-23T18:09:06.747Z",
+      "quality": "low",
+      "level": "L3",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T18:09:06.758Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L3"
+    },
+    {
+      "t": "2026-10-23T18:12:03.821Z",
+      "quality": "low",
+      "level": "L4",
+      "tick": 10
+    },
+    {
+      "t": "2026-10-23T18:12:03.825Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L4"
+    },
+    {
+      "t": "2026-10-23T18:16:27.630Z",
+      "quality": "low",
+      "level": "L5",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T18:16:27.634Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L5"
+    }
+  ],
+  "runs": [
+    {
+      "level": "L1",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 147,
+      "deaths": 0
+    },
+    {
+      "level": "L2",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 100,
+      "deaths": 0
+    },
+    {
+      "level": "L3",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 176,
+      "deaths": 0
+    },
+    {
+      "level": "L4",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 262,
+      "deaths": 0
+    }
+  ]
+}
