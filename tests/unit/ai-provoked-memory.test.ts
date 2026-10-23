@@ -78,3 +78,15 @@ for (const outbreak of [false, true]) test(`a recycled ${outbreak ? 'outbreak' :
     expect(next.infected!.l1?.focusId ?? 0).toBe(0);
   } finally { world.dispose(); }
 }, 120_000);
+
+test('a recycled infected brain forgets its previous scripted street exit', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena');
+  try {
+    const ai = world.infected!, old = world.entities.get(ai.spawn('infected.runner', { x: 32, z: 0 }))!;
+    old.infected!.scripted = { x: 0, z: 0 }; old.infected!.clearingStreet = true;
+    ai.release(old);
+    const next = world.entities.get(ai.spawn('infected.runner', { x: -32, z: 0 }))!;
+    expect(next.infected).toBe(old.infected);
+    expect(next.infected!.scripted).toBeUndefined(); expect(next.infected!.clearingStreet).toBeUndefined();
+  } finally { world.dispose(); }
+});

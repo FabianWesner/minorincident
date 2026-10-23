@@ -78,7 +78,7 @@ export const l4 = {
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12,
-    /** Downed infected allowed to keep their slot and get up; older ones are finished off so soldiers who re-down every riser cannot starve the waves (PO #118). */
+    /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
     downedSlots: 10,
     /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
     heap: { cellM: 4 },
