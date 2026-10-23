@@ -3,18 +3,18 @@ import { campaignCombatWeapon, finaleDodgeGoal } from '../../tools/playtest/comb
 
 test('L10 selects the recovered campaign arsenal instead of keeping the crash axe', () => {
   const weapons = ['weapon.fire-axe'];
-  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.fire-axe');
+  expect(campaignCombatWeapon('L10', weapons)).toBe('weapon.fire-axe');
   weapons.push('weapon.handgun');
-  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.handgun');
+  expect(campaignCombatWeapon('L10', weapons)).toBe('weapon.handgun');
   weapons.push('weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher');
-  expect(campaignCombatWeapon('L10', weapons, 10)).toBe('weapon.rocket-launcher');
-  expect(campaignCombatWeapon('L10', weapons, 4)).toBe('weapon.army-mg');
-  expect(campaignCombatWeapon('L10', weapons, 4, true)).toBe('weapon.rocket-launcher');
-  expect(campaignCombatWeapon('L7', weapons, 10)).toBe('weapon.rocket-launcher');
-  expect(campaignCombatWeapon('L8', weapons, 10)).toBe('weapon.rocket-launcher');
-  expect(campaignCombatWeapon('L6', weapons, 10)).toBeNull();
-  expect(campaignCombatWeapon('L10', [], 10)).toBeNull();
-  expect(campaignCombatWeapon('L10', ['weapon.fire-axe', 'weapon.pistol'], 10)).toBe('weapon.pistol');
+  expect(campaignCombatWeapon('L10', weapons)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L10', weapons.filter(id => id !== 'weapon.rocket-launcher'))).toBe('weapon.army-mg');
+  expect(campaignCombatWeapon('L10', weapons)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L7', weapons)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L8', weapons)).toBe('weapon.rocket-launcher');
+  expect(campaignCombatWeapon('L6', weapons)).toBeNull();
+  expect(campaignCombatWeapon('L10', [])).toBeNull();
+  expect(campaignCombatWeapon('L10', ['weapon.fire-axe', 'weapon.pistol'])).toBe('weapon.pistol');
 });
 
 test('L10 defence walks away from a visible approaching enemy instead of standing in the horde', () => {
