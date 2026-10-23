@@ -13,6 +13,7 @@ import { l5 } from './data/l5';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { heldAction } from './sim/progression/selection';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel } from './sim/progression/carryover';
@@ -63,6 +64,7 @@ export class Game {
   private readonly rescueFade = new RescueFade();
   readonly ticker = new Ticker();
   campaign: CampaignSave | null = null;
+  private restoringCampaign = false;
   /** Anonymous play telemetry (src/telemetry), installed after boot on the live site; null in tests and local dev. */
   telemetry: TelemetrySink | null = null;
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
@@ -343,21 +345,30 @@ export class Game {
     else this.campaignUI.credits(save);
   }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
-    this.campaign=structuredClone(save);
-    if(save.pending){completePending(this.campaign);this.saveCampaign();}
-    // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
-    if(level&&level>save.unlockedLevel&&!['1','true'].includes(this.params.get('debug')??''))throw new Error('Level is locked');
-    const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
-    this.view.settings(settings);this.audio.set(save.settings);
-    // Settings can save the previous live world: clear its resume only after those updates.
-    // An explicit level is a whole-level restart; the menu's Resume action omits it.
-    if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
-    await this.loadLevel(`L${level??save.unlockedLevel}`);
-    this.view.settings(settings);
+    this.restoringCampaign = true;
+    try {
+      this.campaign=structuredClone(save);
+      if(save.pending){completePending(this.campaign);this.saveCampaign();}
+      // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
+      if(level&&level>save.unlockedLevel&&!['1','true'].includes(this.params.get('debug')??''))throw new Error('Level is locked');
+      const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
+      this.view.settings(settings);this.audio.set(save.settings);
+      // Settings can save the previous live world: clear its resume only after those updates.
+      // An explicit level is a whole-level restart; the menu's Resume action omits it.
+      if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
+      await this.loadLevel(`L${level??save.unlockedLevel}`);
+      this.view.settings(settings);
+    } finally { this.restoringCampaign = false; }
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
   saveCampaign():boolean {
     if(!this.campaign)return false;
+    const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
+    if (!this.restoringCampaign && !this.loading && held && this.world.scenario === `L${this.campaign.unlockedLevel}` && (phase === 'playing' || phase === 'retry')) {
+      this.campaign.selectedAction = heldAction(held);
+      this.campaign.racks = { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) };
+      for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
+    }
     if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
     if (this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;

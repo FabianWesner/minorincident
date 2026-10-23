@@ -69,8 +69,8 @@ export class LevelFiveAftermath {
       combat.rackCapacity = Math.max(combat.rackCapacity, 4);
       combat.actionDefinitions = { ...combat.actionDefinitions, 'weapon.shotgun': { ...(combat.actionDefinitions?.['weapon.shotgun'] ?? action('weapon.shotgun')), magazine: 0, reloadTime: 0 } };
       if (!world.progression || !world.entities.get(1)!.weapons) combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]);
-      // Continued campaign racks are kept (296e45b9), but L5 still opens on the machine-gun side (E23-AC02 "from L5-default (machine gun)").
-      combat.runner.loadout.state.selectedSide = 'RIGHT';
+      // Keep a recorded campaign selection; legacy/default entries retain the authored machine-gun opening.
+      if (!world.progression?.campaign?.selectedAction) combat.runner.loadout.state.selectedSide = 'RIGHT';
     }
     combat?.withholdPickups('weapon.shotgun');
     this.placeInCellar();
