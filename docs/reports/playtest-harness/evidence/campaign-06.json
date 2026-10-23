@@ -3,7 +3,7 @@
   "runtimeCommit": "6dc758170",
   "command": "E2E_PORT=4371 SCENE_PORT=4372 npm run build && E2E_PORT=4371 SCENE_PORT=4372 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/harness-campaign-06",
   "artifacts": "test-results/playtest/harness-campaign-06",
-  "asOf": "2026-10-23T18:17:01.796Z",
+  "asOf": "2026-10-23T18:34:29.312Z",
   "settings": [
     {
       "t": "2026-10-23T18:04:56.193Z",
@@ -68,36 +68,327 @@
       "zoom": 1.5,
       "targetZoom": 1.5,
       "level": "L5"
+    },
+    {
+      "t": "2026-10-23T18:19:08.690Z",
+      "quality": "low",
+      "level": "L6",
+      "tick": 12
+    },
+    {
+      "t": "2026-10-23T18:19:08.693Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L6"
+    },
+    {
+      "t": "2026-10-23T18:23:25.930Z",
+      "quality": "low",
+      "level": "L7",
+      "tick": 0
+    },
+    {
+      "t": "2026-10-23T18:23:26.145Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L7"
+    },
+    {
+      "t": "2026-10-23T18:29:04.865Z",
+      "quality": "low",
+      "level": "L8",
+      "tick": 11
+    },
+    {
+      "t": "2026-10-23T18:29:04.877Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L8"
+    },
+    {
+      "t": "2026-10-23T18:31:25.106Z",
+      "quality": "low",
+      "level": "L9",
+      "tick": 1
+    },
+    {
+      "t": "2026-10-23T18:31:25.112Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L9"
+    },
+    {
+      "t": "2026-10-23T18:33:22.538Z",
+      "quality": "low",
+      "level": "L10",
+      "tick": 0
+    },
+    {
+      "t": "2026-10-23T18:33:22.642Z",
+      "zoom": 1.5,
+      "targetZoom": 1.5,
+      "level": "L10"
     }
   ],
   "runs": [
     {
       "level": "L1",
+      "entry": "new",
+      "heroine": "female",
       "finished": true,
       "skipped": [],
       "wallSeconds": 147,
-      "deaths": 0
+      "simSeconds": 144,
+      "maxNoProgressSeconds": 13.867,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ]
     },
     {
       "level": "L2",
+      "entry": "new",
+      "heroine": "female",
       "finished": true,
       "skipped": [],
       "wallSeconds": 100,
-      "deaths": 0
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.311,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.fire-axe": 18
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ]
     },
     {
       "level": "L3",
+      "entry": "new",
+      "heroine": "female",
       "finished": true,
       "skipped": [],
       "wallSeconds": 176,
-      "deaths": 0
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.182,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 65
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ]
     },
     {
       "level": "L4",
+      "entry": "new",
+      "heroine": "female",
       "finished": true,
       "skipped": [],
       "wallSeconds": 262,
-      "deaths": 0
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 16.549,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 34
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L5",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 162,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 45.166666666666664,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 42
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L6",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 258,
+      "simSeconds": 250,
+      "maxNoProgressSeconds": 11.932,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 239,
+        "weapon.fire-axe": 8
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ]
+    },
+    {
+      "level": "L7",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 329,
+      "simSeconds": 327,
+      "maxNoProgressSeconds": 88.722,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 24
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ]
+    },
+    {
+      "level": "L8",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 138,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 63.098,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ]
+    },
+    {
+      "level": "L9",
+      "entry": "new",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 118,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 6.416666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
     }
-  ]
+  ],
+  "buildCommit": "ef2c4598a"
 }
