@@ -534,7 +534,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const seen = escort && e.allies.find(b => b.id === escort!.id && b.drawn && b.hp > 0 && !b.corpse);
       if (seen && escort) { escort.x = seen.x; escort.z = seen.z; }
     }
-    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
+    const observed=visibleProgress.update({context:`${e.level}|${e.step}|${e.checkpoint}|${run.deaths}`,text:e.tracker||e.objective,distance:e.distance,player:e.player,marker:ring,tick:e.tick,nowMs:Date.now()});
     if(observed.reason) {
       lastProgress.tick=e.tick;lastProgress.wall=Date.now();lastProgress.best=e.distance??Infinity;
       log({visibleProgress:{tick:e.tick,text:e.objective,distance:e.distance,player:e.player?{x:e.player.x,z:e.player.z}:null,marker:ring,reason:observed.reason}});
@@ -654,7 +654,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       assist('state-locate', { why: `stuck ${Math.round(stuckSim)} s`, truth });
       await issue('P1', 'hidden-condition', `Stuck ${Math.round(stuckSim)} s on "${e.objective}"; read mission state to locate the blocker: ${JSON.stringify(truth).slice(0, 400)}`);
     }
-    const g = await goalScreen(e);
+    let g = await goalScreen(e);
     if (stuckSim > 60 && (atRing || !g) && Date.now() - lastE > 4000) { lastE = Date.now(); await press([]); await page.keyboard.down('KeyE'); await hold(1600); await page.keyboard.up('KeyE'); continue; }
     // Prompts near the objective (or naming it) get E; side prompts (push a dumpster) are ignored like a player would.
     const relevant = e.prompt && !/^push\b/i.test(e.prompt) && (atRing || (e.distance !== null && e.distance < 6) || /pick|take|grab|open|bar|unbar|play|pack|install|release|board|enter|recover|console|activate/i.test(e.prompt));
@@ -676,11 +676,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         ring = { x: pin.x, y: pin.y, z: pin.z };
         // A new pin: re-evaluate distances against it on the next pass.
         if (changed) { log({ pinGoal: pin, tick: e.tick }); await press([]); continue; }
-        const r = await page.evaluate(q => window.__SS__!.input.project(q, 'destination'), ring);
-        const near = e.player && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) < 25;
-        if (near && Date.now() - lastClick > 900) { const sp = safe(r.x, r.y, e); await clickGround(sp.x, sp.y); lastClick = Date.now(); await hold(150); continue; }
-        if (near) { await hold(150); continue; }
-        // far: fall through to the nav-follow block below with this goal
+        // Cue pins use the same movement and stalled-route recovery as an
+        // objective arrow. Repeated nearby clicks must not bypass that recovery.
+        g = await page.evaluate(q => window.__SS__!.input.project(q, 'destination'), ring);
       } else { await press([]); await hold(200); continue; }
     }
     const arrived = atRing && ringDist! < 1.2;

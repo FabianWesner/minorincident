@@ -19,6 +19,7 @@ test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occ
     await session.open(browser);
     for (const [key, at] of [['rosa', [58, 45.3]], ['sam', [-45, 54.1]]] as const) {
       const spec = readSpec('tests/scenes/catalog/survivors-ai-bus-ring.json');
+      spec.hud = true;
       spec.actors![0].at = [...at];
       await session.load(spec); await session.step(1); await session.ready();
       const marker = await session.page.evaluate(key => {
@@ -27,8 +28,13 @@ test('6 objectives: L5 pharmacy and bus arrows draw in the first frame, with occ
         const arrow = spot.getObjectByName(`survivor-arrow-${key}`) as Mesh;
         const ring = spot.getObjectByName(`survivor-ring-${key}`) as Mesh;
         const at = arrow.getWorldPosition(arrow.position.clone()), p = game.view.project(at.x, at.y, at.z);
-        return { visible: spot.visible && arrow.visible, ringDepth: (ring.material as { depthTest: boolean }).depthTest, arrowDepth: (arrow.material as { depthTest: boolean }).depthTest, x: (p[0] + 1) * innerWidth / 2, y: (1 - p[1]) * innerHeight / 2 };
+        const hud = document.querySelector<HTMLElement>('[data-testid=objective-tracker]')!;
+        const text = document.querySelector<HTMLElement>('[data-testid=objective-text]')!;
+        const hudVisible = !hud.hidden && hud.offsetParent !== null && getComputedStyle(hud).visibility === 'visible'
+          && !text.hidden && text.offsetParent !== null && getComputedStyle(text).visibility === 'visible';
+        return { visible: spot.visible && arrow.visible, hudVisible, text: text.textContent ?? '', ringDepth: (ring.material as { depthTest: boolean }).depthTest, arrowDepth: (arrow.material as { depthTest: boolean }).depthTest, x: (p[0] + 1) * innerWidth / 2, y: (1 - p[1]) * innerHeight / 2 };
       }, key);
+      expect(oracle.objective({ markerVisible: marker.visible, visibleAtMs: 1000 / 60, hudVisible: marker.hudVisible, text: marker.text }), `L5/look ${key}: actual search HUD and guidance must be visible`).toBe(false);
       expect(marker.visible).toBe(true);
       expect(marker.ringDepth).toBe(true); expect(marker.arrowDepth).toBe(false);
       const drawn = PNG.sync.read(await session.page.screenshot());
