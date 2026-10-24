@@ -11,11 +11,9 @@ export interface UISettings {
   muted: boolean;
   /** E27 bullet time on big nearby blasts. */
   slowMotion: boolean;
-  /** Dev/QA: draw the textured 3D-pipeline assets (also `?tex=1`); off by default until accepted. */
-  texturedFigures: boolean;
 }
 export const settingsKey = 'minor-incident.ui.v1';
-const defaults: UISettings = { textSize: 1, aimAssist: 'Default', gore: 'Full', cameraShake: true, flashReduction: false, colorblind: false, quality: 'auto', muted: false, slowMotion: true, texturedFigures: false };
+const defaults: UISettings = { textSize: 1, aimAssist: 'Default', gore: 'Full', cameraShake: true, flashReduction: false, colorblind: false, quality: 'auto', muted: false, slowMotion: true };
 export class Settings {
   readonly value: UISettings = { ...defaults };
   constructor(private readonly storage?: Pick<Storage, 'getItem' | 'setItem'>) {
