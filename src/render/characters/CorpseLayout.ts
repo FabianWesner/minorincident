@@ -37,6 +37,15 @@ export class CorpseLayout {
   private readonly query = { x: 0, z: 0, r: 5 };
   private revision = -1;
   constructor(private readonly world: SimWorld) {}
+  audit(): { count: number; overlaps: number; courierClear: boolean } {
+    const bodies = [...this.bodies.values()], player = this.world.entities.get(1)?.transform;
+    let overlaps = 0;
+    for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+      const a = bodies[i], b = bodies[j];
+      if (segmentDistance(a.ax, a.az, a.bx, a.bz, b) < a.radius + b.radius - .001) overlaps++;
+    }
+    return { count: bodies.length, overlaps, courierClear: !player || bodies.every(p => pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= 1.099) };
+  }
   place(e: EntitySnapshot, deadAt = e.infected?.deadAt ?? 0, prone?: number): RestingPose | EntitySnapshot['transform'] {
     if (this.revision !== this.world.entities.revision) {
       for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }

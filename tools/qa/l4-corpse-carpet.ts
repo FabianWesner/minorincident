@@ -38,13 +38,13 @@ try {
           const p = a.camera.project(e.transform.x, e.transform.y + .6, e.transform.z);
           return !e.appearance && !e.pendingAdmission && Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
         });
-        return { backend: a.perf().backend, tier: a.perf().quality.tier, player, live: live.length, drawnLiving: visible.filter(e => drawn.has(e.id)).length,
+        return { layout: a.debug.corpseLayout(), backend: a.perf().backend, tier: a.perf().quality.tier, player, live: live.length, drawnLiving: visible.filter(e => drawn.has(e.id)).length,
           missingLiving: visible.filter(e => !drawn.has(e.id)).map(e => e.id), corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length };
       });
       const file = `${seconds}s-z${zoom}.png`;
       await page.screenshot({ path: `${out}/${file}` });
       samples.push({ seconds, zoom, file, ...sample }); console.log(JSON.stringify(samples.at(-1)));
-      if (sample.backend !== 'webgpu' || sample.tier !== 'low' || sample.missingLiving.length) throw new Error('PO capture backend, quality or living figure proof failed');
+      if (sample.backend !== 'webgpu' || sample.tier !== 'low' || sample.missingLiving.length || sample.layout.overlaps || !sample.layout.courierClear) throw new Error('PO capture backend, quality, body spacing, courier clearance or living figure proof failed');
     }
   }
   const receipt = { settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: [1, 1.5] }, bundles: await page.evaluate(() => [...document.scripts].map(s => s.src).filter(Boolean)), samples, errors };
