@@ -1,0 +1,735 @@
+{
+  "mainRevision": "36a960fca976ce9473d5ba265523c2965b5473bf",
+  "sourceSha256": "867bdd5fa6f953f28c6a10545cba6f1fdd4b77d546c7740b6e40eabdc64f2cc2",
+  "pipelineCommit": "2339b3f",
+  "freshRebuildIdenticalGLBs": 12,
+  "validator": {
+    "rows": 1262,
+    "errors": 0,
+    "sha256": "96d8ee770c7be4f86aa28a210b7fb032e1b0a411c678cd6a4e1141eed20daa76"
+  },
+  "matrix": [
+    {
+      "version": "main",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 4,
+        "decodedBytes": 5592400
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 4,
+        "decodedBytes": 5592400
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgl",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgl",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 6,
+        "decodedBytes": 33554424
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgl",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgl",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 6,
+        "decodedBytes": 33554424
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 4,
+        "decodedBytes": 5592400
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 4,
+        "decodedBytes": 5592400
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "atlases": {
+        "count": 6,
+        "decodedBytes": 33554424
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod0",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "main",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 0,
+        "decodedBytes": 0
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 7,
+            "locations": 14,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    },
+    {
+      "version": "replacement",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "atlases": {
+        "count": 6,
+        "decodedBytes": 33554424
+      },
+      "zebraBatches": [
+        {
+          "id": "healthy.zebra",
+          "asset": "amb.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        },
+        {
+          "id": "inf.zebra",
+          "asset": "inf.zebra",
+          "lod": "lod1",
+          "instances": 1,
+          "layout": {
+            "buffers": 4,
+            "locations": 15,
+            "webgpu": true,
+            "webgl2": true
+          },
+          "source": "glb"
+        }
+      ]
+    }
+  ],
+  "motions": [
+    {
+      "action": "kick",
+      "travelM": 0,
+      "clips": [
+        "infected-idle",
+        "zebra-rear-kick"
+      ],
+      "grounding": {
+        "corpses": 0,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": []
+      },
+      "undrawnFrames": 0,
+      "frames": 84
+    },
+    {
+      "action": "stampede",
+      "travelM": 6.166666666666669,
+      "clips": [
+        "windup",
+        "zebra-stampede"
+      ],
+      "grounding": {
+        "corpses": 0,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": []
+      },
+      "undrawnFrames": 0,
+      "frames": 84
+    },
+    {
+      "action": "walk",
+      "travelM": 0.4469008882364055,
+      "clips": [
+        "idle",
+        "walk"
+      ],
+      "grounding": {
+        "corpses": 0,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": []
+      },
+      "undrawnFrames": 0,
+      "frames": 45
+    },
+    {
+      "action": "run",
+      "travelM": 1.4898766666666672,
+      "clips": [
+        "infected-idle",
+        "infected-sprint",
+        "shamble"
+      ],
+      "grounding": {
+        "corpses": 0,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": []
+      },
+      "undrawnFrames": 0,
+      "frames": 45
+    },
+    {
+      "action": "hurt",
+      "travelM": 0.30000000000000004,
+      "clips": [
+        "infected-idle"
+      ],
+      "grounding": {
+        "corpses": 0,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": []
+      },
+      "undrawnFrames": 0,
+      "frames": 18
+    },
+    {
+      "action": "death",
+      "travelM": 0,
+      "clips": [
+        "death-back"
+      ],
+      "grounding": {
+        "corpses": 1,
+        "corpseOffMaxCm": 0,
+        "pickups": 0,
+        "pickupOffMaxCm": 0,
+        "worst": [
+          {
+            "id": 3,
+            "at": [
+              -1,
+              0,
+              0
+            ],
+            "support": 0,
+            "offCm": 0
+          }
+        ]
+      },
+      "undrawnFrames": 0,
+      "frames": 1800
+    }
+  ]
+}
