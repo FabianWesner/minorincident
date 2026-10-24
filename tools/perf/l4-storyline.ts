@@ -1,7 +1,7 @@
 /** Paired natural L4 hold timing at the PO settings. Run through quiet-run.sh -> e2e-lock.sh. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { chromium } from '@playwright/test';
+import { chromium, devices } from '@playwright/test';
 import { preview } from 'vite';
 import { uncappedArgs } from './uncapped';
 import { l4 } from '../../src/data/l4';
@@ -9,6 +9,10 @@ import { l4 } from '../../src/data/l4';
 const out = resolve(process.env.L4_STORYLINE_PERF_OUT ?? 'test-results/l4-storyline/perf');
 const diagnostic = process.env.L4_STORYLINE_PROFILE === '1';
 const wholeHold = process.env.L4_STORYLINE_WHOLE_HOLD === '1';
+const phone = process.env.L4_STORYLINE_PHONE === '1';
+const candidateOnly = phone || process.env.L4_STORYLINE_CANDIDATE_ONLY === '1';
+// Orchestrator 2026-10-24: the visible horde has its own headroom budget.
+const budgetMs = phone ? 33 : 11, dpr = phone ? 1.5 : 1;
 const repeats = diagnostic ? 1 : wholeHold ? 2 : 3;
 const checkpoints = diagnostic ? [150] : wholeHold ? [0] : [90, 150];
 const port = Number(process.env.E2E_PORT ?? 4431);
@@ -20,13 +24,14 @@ const sources = { baseline: 'https://minor-incident.com', candidate: `http://127
 const rows: { side: string; repeat: number; afterTurnS: number; frameP95: number; [key: string]: unknown }[] = [];
 try {
   // Alternate which build goes first, measuring one browser/context at a time.
-  for (let repeat = 0; repeat < repeats; repeat++) for (const side of diagnostic ? ['candidate'] as const : repeat % 2 ? ['candidate', 'baseline'] as const : ['baseline', 'candidate'] as const) {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
+  for (let repeat = 0; repeat < repeats; repeat++) for (const side of diagnostic || candidateOnly ? ['candidate'] as const : repeat % 2 ? ['candidate', 'baseline'] as const : ['baseline', 'candidate'] as const) {
+    const context = await browser.newContext(phone ? { ...devices['Pixel 7'], viewport: { width: 390, height: 844 } } : { viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(); page.setDefaultTimeout(180_000);
+    if (phone) { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
     await page.addInitScript('window.__name = value => value');
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
     try {
-      await page.goto(`${sources[side]}/?test=1&renderer=webgpu&quality=low&dpr=1&audio=muted&seed=3&preload=0${diagnostic ? '&profile=1' : ''}`);
+      await page.goto(`${sources[side]}/?test=1&renderer=webgpu&quality=low&dpr=${dpr}&audio=muted&seed=3&preload=0${diagnostic ? '&profile=1' : ''}`);
       await page.waitForFunction(() => !!window.__SS__);
       await page.evaluate(async () => {
         const a = window.__SS__!; await a.ready;
@@ -85,10 +90,10 @@ try {
   const median = (values: number[]) => [...values].sort((x, y) => x - y)[Math.floor(values.length / 2)];
   const comparisons = (diagnostic ? [] : checkpoints).map(afterTurnS => {
     const value = (side: string) => median(rows.filter(r => r.side === side && r.afterTurnS === afterTurnS).map(r => r.frameP95));
-    const baseline = value('baseline'), candidate = value('candidate');
-    return { afterTurnS, baseline, candidate, delta: candidate - baseline, pass: candidate <= baseline };
+    const baseline = candidateOnly ? undefined : value('baseline'), candidate = value('candidate');
+    return { afterTurnS, baseline, candidate, delta: baseline === undefined ? undefined : candidate - baseline, budgetMs, pass: candidate <= budgetMs };
   });
-  const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1 }, sources, comparisons, rows };
+  const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: phone ? [390, 844] : [1280, 720], dpr, cpuThrottle: phone ? 4 : 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1 }, sources, comparisons, rows };
   writeFileSync(`${out}/summary.json`, JSON.stringify(proof, null, 2));
   console.log(JSON.stringify(comparisons));
   if (comparisons.some(row => !row.pass)) process.exitCode = 1;
