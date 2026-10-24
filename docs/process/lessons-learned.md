@@ -31,6 +31,7 @@ A living record, updated after every lane or experiment. Short entries with evid
   - the faceting was too hard.
 - **In progress (10-23):** Sol high plus an independent critical judge (a separate codex exec, the same prompt every round, sees only draft, status quo and new renders), finishing only at ≥ 9/10 for every look. Added techniques from the PO's research: silhouette first, same-angle comparison with region-specific fixes, a reusable part library, automated geometry QA. Record the outcome here when docs/reports/alpha-polish/README.md lands.
 - **To evaluate:** WAM (geometry DSL) and blender-skills. Check the licence first, then pilot one asset (roadmap).
+- **Didn't work (10-24):** I read an L4 capture full of bodies as "action"; it was a corpse carpet (243 corpses within 14 m vs 55 on PROD). When judging a crowd capture, count living vs dead and compare with PROD at the same moment, don't eyeball density.
 - **Worked:** the orchestrator looks at the sheets itself. Lanes' own visual verdicts are often too kind ("reads clearly" while hats were 2.5× head width).
 
 ## Performance
