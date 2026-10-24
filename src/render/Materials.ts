@@ -93,24 +93,6 @@ export class Materials {
     if (!material) { material = new PaletteMaterial(token, this.texture, this.lighting, emissive); this.cache.set(key, material); }
     return material;
   }
-  /** Shared opaque figure atlas material; its registry owns the image lifetime. */
-  fromTexture(name: string, map: Texture, tint: Color, side: Side): PaletteMaterial {
-    const key = `texture:${map.uuid}:${tint.getHexString()}:${side}`;
-    let material = this.cache.get(key);
-    if (!material) {
-      material = this.shaded(texture(map).rgb.mul(uniform(tint.clone())));
-      material.name = name; material.color.copy(tint); material.side = side;
-      material.map = map; material.userData.sharedPalette = true;
-      this.cache.set(key, material);
-      const cached = material;
-      const release = () => {
-        map.removeEventListener('dispose', release);
-        this.textureReleases.delete(key); this.cache.delete(key); cached.dispose();
-      };
-      map.addEventListener('dispose', release); this.textureReleases.set(key, release);
-    }
-    return material;
-  }
   /** Imported hero detail swatches retain their authored colors with the same stylized shading. */
   fromColor(name: string, color: Color, emissive = 0, world = false): PaletteMaterial {
     const key = `swatch:${name}:${color.getHexString()}:${emissive}:${world}`;
@@ -118,28 +100,43 @@ export class Materials {
     if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, emissive, world ? undefined : color.clone(), false, world ? { base: this.sample(uniform(this.nearest(color))) } : undefined); material.color.copy(color); material.name = name; material.userData.emissiveStrength = emissive; this.cache.set(key, material); }
     return material;
   }
-  /** Textured-figure route (3D pipeline, ?tex=1): an opaque glTF base-colour map through the full game graph (shadow,
-   * bounce, fill/rim, fog, weather, blood feedback). One material per map, shared by every owner of that map and counted:
-   * callers pair each fromTexture with releaseTexture; the last release drops the material (the map stays with its asset).
-   * Shared by every textured lane (skinned courier, textured crowds/props) so prewarm sees one graph per map. */
+  /** Textured-figure route (3D pipeline): an opaque glTF base-colour map through the full game graph (shadow, bounce,
+   * fill/rim, fog, weather, blood feedback). ONE route for every textured lane (skinned courier, textured crowds/props):
+   * one material per map+tint+side, ref-counted per map. Callers either pair each fromTexture with releaseTexture, or
+   * (registry-owned atlases) rely on the map's dispose event; the last release drops the materials (the map stays with its asset). */
   private readonly textureOwners = new Map<string, number>();
-  fromTexture(name: string, map: Texture): PaletteMaterial {
-    const key = `texture:${map.uuid}`;
+  private readonly textureKeys = new Map<string, Set<string>>();
+  fromTexture(name: string, map: Texture, tint: Color = new Color(0xffffff), side: Side = FrontSide): PaletteMaterial {
+    const key = `texture:${map.uuid}:${tint.getHexString()}:${side}`;
     let material = this.cache.get(key);
     if (!material) {
-      material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base: texture(map).rgb });
-      material.name = name; material.userData.textureKey = key; this.cache.set(key, material);
+      material = this.shaded(texture(map).rgb.mul(uniform(tint.clone())));
+      material.name = name; material.color.copy(tint); material.side = side;
+      material.map = map; material.userData.sharedPalette = true; material.userData.textureKey = key;
+      this.cache.set(key, material);
+      let keys = this.textureKeys.get(map.uuid);
+      if (!keys) {
+        keys = new Set(); this.textureKeys.set(map.uuid, keys);
+        const release = () => { map.removeEventListener('dispose', release); this.textureReleases.delete(map.uuid); this.dropTexture(map); };
+        map.addEventListener('dispose', release); this.textureReleases.set(map.uuid, release);
+      }
+      keys.add(key);
     }
-    this.textureOwners.set(key, (this.textureOwners.get(key) ?? 0) + 1);
+    this.textureOwners.set(map.uuid, (this.textureOwners.get(map.uuid) ?? 0) + 1);
     return material;
   }
   releaseTexture(map: Texture): void {
-    const key = `texture:${map.uuid}`, owners = (this.textureOwners.get(key) ?? 0) - 1;
-    if (owners > 0) { this.textureOwners.set(key, owners); return; }
-    this.textureOwners.delete(key); this.cache.get(key)?.dispose(); this.cache.delete(key);
+    const owners = (this.textureOwners.get(map.uuid) ?? 0) - 1;
+    if (owners > 0) { this.textureOwners.set(map.uuid, owners); return; }
+    this.dropTexture(map);
   }
-  /** Live textured-figure materials (diagnostics/tests). */
-  get texturedMaterials(): number { return this.textureOwners.size; }
+  private dropTexture(map: Texture): void {
+    this.textureOwners.delete(map.uuid);
+    for (const key of this.textureKeys.get(map.uuid) ?? []) { this.cache.get(key)?.dispose(); this.cache.delete(key); }
+    this.textureKeys.delete(map.uuid);
+  }
+  /** Live textured-figure maps (diagnostics/tests). */
+  get texturedMaterials(): number { return this.textureKeys.size; }
   /** Rigid character parts share their authored vertex swatches and blood mask. */
   fromVertexColors(name: string): PaletteMaterial {
     const key = `vertices:${name}`;
