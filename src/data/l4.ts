@@ -91,7 +91,7 @@ export const l4 = {
      * and staggered. `inside`: during the war groups of 4-5 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 2.5, group: [2, 3] as P, minM: 6 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1.5, group: [4, 5] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
