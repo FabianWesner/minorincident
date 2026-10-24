@@ -28,7 +28,7 @@ test('atlas materials are shared by map; the owning registry releases the map on
 });
 
 test('UVs and texture masks survive the production crowd bake and frozen corpse page within backend limits', () => {
-  const root = createInfectedPlaceholder('runner'); root.userData.assetTextureMode = 'baseColor';
+  const root = createInfectedPlaceholder('runner');
   let assigned = false;
   root.traverse(n => {
     if (!(n instanceof Mesh) || assigned) return;
@@ -37,7 +37,7 @@ test('UVs and texture masks survive the production crowd bake and frozen corpse 
     n.geometry.setAttribute('uv', new Float32BufferAttribute(uv, 2));
     (n.material as MeshBasicMaterial).map = new DataTexture(new Uint8Array(4), 1, 1); assigned = true;
   });
-  const baked = bakeInfected(root, [], false, undefined, undefined, true);
+  const baked = bakeInfected(root, [], false, undefined, undefined, true, true);
   const uv = baked.geometry.getAttribute('uv');
   const masks = baked.geometry.getAttribute('_shirt');
   expect(Array.from({ length: masks.count }, (_, i) => masks.getX(i))).toContain(-10);

@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { Box3, Mesh, Vector3 } from 'three';
@@ -10,7 +11,7 @@ import { disposeCharacter } from '../../../src/render/characters/rig';
 for (const id of ['inf.dog', 'inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.zebra', 'inf.flamingo']) test(`T-E32-23-fall-${id} @E32-AC23 shared death rolls the whole animal rig and rests on the ground`, async () => {
   const def = manifest.find(d => d.id === id)!;
   const bytes = readFileSync(def.glb);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   try {
     const body = scene.getObjectByName('body'), hip = scene.getObjectByName('hip')!;
     const root = !body || body.parent?.name === 'torso' ? hip : body;

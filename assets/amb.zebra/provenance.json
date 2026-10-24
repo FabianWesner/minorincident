@@ -117,8 +117,8 @@
       "sourceSurfaceTexels": 560687
     },
     {
-      "triangles": 299,
-      "uvCharts": 84,
+      "triangles": 329,
+      "uvCharts": 82,
       "sourceBounds": [
         [
           -2.0555935371536855,
@@ -145,32 +145,32 @@
       ],
       "sourceSha256": "804a9245c16b8f4e16af1fc1b87d30d99cf92d9ebb93cd9dcbfa3468d8a71898",
       "projectionDistance": {
-        "p50": 0.027354884118524665,
-        "p95": 0.10188072242942811,
-        "p99": 0.14880986800021412,
-        "max": 0.19209539497252828
+        "p50": 0.02361635773702793,
+        "p95": 0.09096948288888691,
+        "p99": 0.1318675300109125,
+        "max": 0.1814355234444753
       },
       "semanticTriangles": {
-        "body": 39,
-        "foreArmL": 8,
-        "foreArmR": 7,
-        "head": 34,
+        "body": 42,
+        "foreArmL": 9,
+        "foreArmR": 8,
+        "head": 42,
         "jaw": 11,
         "legBL": 13,
-        "legBR": 10,
+        "legBR": 13,
         "legFL": 11,
-        "legFR": 12,
-        "neck": 29,
+        "legFR": 16,
+        "neck": 34,
         "pawBL": 14,
         "pawBR": 8,
-        "pawFL": 21,
+        "pawFL": 22,
         "pawFR": 52,
-        "shinL": 6,
+        "shinL": 8,
         "shinR": 6,
-        "tail": 18
+        "tail": 20
       },
-      "healthyShoulderTexels": 27416,
-      "sourceSurfaceTexels": 623658
+      "healthyShoulderTexels": 27386,
+      "sourceSurfaceTexels": 617839
     }
   ],
   "motion": "Copied production node hierarchy, pivots and embedded actions; shared runtime motions unchanged.",
@@ -182,5 +182,6 @@
     "cleanTriangles": 13333
   },
   "exporterSha256": "4c98714805ad283cb2730dfbdf3ff1dee2c45b2671cab653fac2dab940916e85",
-  "directReplacement": true
+  "directReplacement": true,
+  "reproducibleGLBs": 12
 }

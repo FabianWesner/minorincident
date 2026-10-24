@@ -16,6 +16,7 @@ try {
    await session.page.evaluate(async()=>{
     const a=window.__SS__!;await a.loadScenario('L8',{seed:7});a.pause();a.cheats.god(true);
     const anchor=a.inspect.anchors().find(p=>p.id.includes('animal-zebra'));if(!anchor)throw new Error('No L8 zebra anchor');
+    a.spawn('infected.zebra',{x:anchor.position[0]-3,z:anchor.position[2]-3},{state:'idle'});
     a.teleport('player',{x:anchor.position[0]+3,z:anchor.position[2]+3});a.camera.follow();a.camera.zoom(1.5);await a.step(120);await a.screenshotReady();
    });
    const proof=await session.page.evaluate(async()=>{
