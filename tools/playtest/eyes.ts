@@ -18,6 +18,7 @@ export interface Eyes {
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; current: string | null } | null;
   driving: { id: number; x: number; z: number; yaw: number } | null;
   enemies: Body[]; allies: Body[];
+  healthKits?: { x: number; z: number; d: number; screen: { x: number; y: number } }[];
   view: { w: number; h: number };
 }
 
@@ -99,6 +100,7 @@ export function look(): Eyes {
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
+    healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })) : [],
     enemies, allies, view,
   };
 }
