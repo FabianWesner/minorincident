@@ -13,7 +13,7 @@ const wholeHold = process.env.L4_STORYLINE_WHOLE_HOLD === '1';
 const phone = process.env.L4_STORYLINE_PHONE === '1';
 const candidateOnly = phone || process.env.L4_STORYLINE_CANDIDATE_ONLY === '1';
 // Orchestrator 2026-10-24: the visible horde has its own headroom budget.
-const budgetMs = phone ? 33 : 11, dpr = phone ? 1.5 : 1;
+const budgetMs = phone ? 33.3 : 11, dpr = phone ? 1.5 : 1;
 const repeats = diagnostic ? 1 : wholeHold ? 2 : 3;
 const checkpoints = diagnostic ? [150] : wholeHold ? [0] : [90, 150];
 const port = Number(process.env.E2E_PORT ?? 4431);
@@ -112,7 +112,11 @@ try {
   const comparisons = (diagnostic ? [] : checkpoints).map(afterTurnS => {
     const value = (side: string) => median(rows.filter(r => r.side === side && r.afterTurnS === afterTurnS).map(r => r.frameP95));
     const baseline = candidateOnly ? undefined : value('baseline'), candidate = value('candidate');
-    return { afterTurnS, baseline, candidate, delta: baseline === undefined ? undefined : candidate - baseline, budgetMs, pass: candidate <= budgetMs };
+    const withinBudget = candidate <= budgetMs;
+    // Orchestrator 2026-10-24: accept the 33–34 ms phone emulation
+    // proxy and report its measured value; the nominal line stays 33.3 ms.
+    const acceptedPhoneProxy = phone && !withinBudget && candidate <= 34;
+    return { afterTurnS, baseline, candidate, delta: baseline === undefined ? undefined : candidate - baseline, budgetMs, withinBudget, acceptedPhoneProxy, pass: withinBudget || acceptedPhoneProxy };
   });
   const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: phone ? [390, 844] : [1280, 720], dpr, cpuThrottle: phone ? 4 : 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1, frameSampling: 'every RAF', cpuTelemetryEveryMs: diagnostic ? 0 : 250, figureProbe: 'drawn' }, sources, comparisons, rows };
   writeFileSync(`${out}/summary.json`, JSON.stringify(proof, null, 2));

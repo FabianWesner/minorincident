@@ -13,13 +13,13 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 333,
+      "wallSeconds": 340,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 17.142,
+      "maxNoProgressSeconds": 17.116666666666667,
       "deaths": 0,
       "assists": 0,
       "attacks": {
-        "weapon.army-mg": 1339,
+        "weapon.army-mg": 1453,
         "weapon.fire-axe": 5
       },
       "weaponsStart": [
@@ -41,8 +41,8 @@
       "steps": [
         {
           "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 57 m",
-          "tick": 12,
+          "text": "Ride into Fairhaven with the convoy · 58 m",
+          "tick": 11,
           "marker": {
             "anchor": "l4-plaza",
             "ring": {
@@ -58,7 +58,7 @@
         {
           "id": "quartermaster",
           "text": "Report to the quartermaster · 10 m",
-          "tick": 1837,
+          "tick": 1836,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": {
@@ -78,7 +78,7 @@
         {
           "id": "hold",
           "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2049,
+          "tick": 2056,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
@@ -89,8 +89,8 @@
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 314 m",
-          "tick": 12735,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 313 m",
+          "tick": 13233,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -110,7 +110,7 @@
         {
           "id": "bar",
           "text": "Bar the cellar door · 5 m",
-          "tick": 19056,
+          "tick": 19433,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -123,14 +123,14 @@
               0.05,
               -1.4
             ],
-            "playerY": 0.8300000429153442,
+            "playerY": 0.7700001001358032,
             "pinVisible": true
           }
         },
         {
           "id": "wait",
           "text": "Stay down · 0:07 remaining",
-          "tick": 19217,
+          "tick": 19593,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,
@@ -142,11 +142,11 @@
       ]
     }
   ],
-  "issues": 0,
+  "issues": 1,
   "bySeverity": {
     "P0": 0,
     "P1": 0,
-    "P2": 0,
+    "P2": 1,
     "P3": 0
   }
 }
