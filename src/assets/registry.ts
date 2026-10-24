@@ -20,14 +20,18 @@ export class AssetRegistry {
   private readonly cache = new Map<string, Promise<Object3D>>();
   private readonly materials: AssetMaterials;
   private readonly crowdAtlases = new Map<string, import('three').Texture>();
+  private textureTier: 'high' | 'low';
+  private readonly atlasImages = new Map<import('three').Texture, Record<'high' | 'low', { width: number; height: number; close?: () => void }>>();
+  private readonly atlasReady = new Map<import('three').Texture, Promise<void>>();
   private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
   constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; textureTier?: 'high' | 'low'; materials?: Materials } = {}) {
+    this.textureTier = options.textureTier ?? 'high';
     this.materials = new AssetMaterials(options.materials);
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const manager = new LoadingManager();
-    if (options.textureTier === 'low') manager.setURLModifier(url => url.replace('inf.common-worker.atlas.webp', 'inf.common-worker.atlas.low.webp'));
+    manager.setURLModifier(url => this.textureTier === 'low' ? url.replace('inf.common-worker.atlas.webp', 'inf.common-worker.atlas.low.webp') : url);
     const gltf = new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
       this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(options.renderer);
@@ -118,6 +122,8 @@ export class AssetRegistry {
           else this.crowdAtlases.set(def.id, atlas);
         }
       });
+      const atlas = this.crowdAtlases.get(def.id);
+      if (atlas) await this.prepareAtlasTiers(atlas, def);
       this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
       return root;
     } catch (error) {
@@ -134,6 +140,31 @@ export class AssetRegistry {
       return fallback(String(error));
     }
   }
+  /** Keep sampler/material identity while changing the one resident atlas image.
+   * Both decoded sources are prepared behind load; only the active tier enters GPU memory. */
+  setTextureTier(tier: 'high' | 'low'): void {
+    this.textureTier = tier;
+    for (const [texture, images] of this.atlasImages) {
+      if (texture.image === images[tier]) continue;
+      // Three requires releasing the old allocation when image dimensions change.
+      texture.dispose(); texture.image = images[tier]; texture.needsUpdate = true;
+    }
+  }
+  private prepareAtlasTiers(texture: import('three').Texture, def: AssetDef): Promise<void> {
+    let pending = this.atlasReady.get(texture);
+    if (!pending) {
+      const image = texture.image as { width?: number; height?: number; close?: () => void } | undefined;
+      if (!image?.width || !image.height) return Promise.resolve(); // Geometry-only injected loaders have no image.
+      const first = image.width === 512 ? 'low' : 'high', other = first === 'low' ? 'high' : 'low';
+      const url = '/' + def.glb!.replace(/^public\//, '').replace(/[^/]+$/, `inf.common-worker.atlas${other === 'low' ? '.low' : ''}.webp`);
+      pending = new TextureLoader().loadAsync(url).then(alternate => {
+        const images = { [first]: image, [other]: alternate.image } as Record<'high' | 'low', { width: number; height: number; close?: () => void }>;
+        this.atlasImages.set(texture, images); alternate.dispose(); this.setTextureTier(this.textureTier);
+      });
+      this.atlasReady.set(texture, pending);
+    }
+    return pending;
+  }
   async dispose(): Promise<void> {
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>(), textures = new Set<import('three').Texture>();
     for (const pending of this.cache.values()) (await pending).traverse((node) => {
@@ -148,7 +179,9 @@ export class AssetRegistry {
     for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
     const images = new Set<{ close?: () => void }>();
     for (const texture of textures) { texture.dispose(); if (texture.image) images.add(texture.image as { close?: () => void }); }
+    for (const tiers of this.atlasImages.values()) { images.add(tiers.high); images.add(tiers.low); }
     for (const image of images) image.close?.();
+    this.atlasImages.clear(); this.atlasReady.clear();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
     this.cache.clear(); this.crowdAtlases.clear(); this.materials.dispose(); this.ktx?.dispose();

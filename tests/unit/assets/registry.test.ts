@@ -1,5 +1,5 @@
-import { expect, test } from 'vitest';
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import { expect, test, vi } from 'vitest';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, Texture, TextureLoader } from 'three/webgpu';
 import { AssetRegistry, lodForScreenHeight, type PlaceholderLog } from '../../../src/assets/registry';
 import { fixture } from './fixture';
 import { placeholder } from '../../../src/assets/placeholders';
@@ -99,4 +99,26 @@ test('T-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and
     expect(urls.at(-1)).toBe('/test.lod2.glb');
     await registry.dispose();
   }
+});
+
+
+test('shared infected atlas switches tiers without replacing materials and releases both decoded images @E17', async () => {
+  const { def } = fixture(); def.id = 'inf.common-worker'; def.status = 'integrated'; def.glb = 'public/assets/models/inf.common-worker.glb';
+  const high = { width: 1024, height: 1024, close: vi.fn() }, low = { width: 512, height: 512, close: vi.fn() };
+  const atlas = new Texture(high as unknown as HTMLImageElement), alternate = new Texture(low as unknown as HTMLImageElement);
+  const loadImage = vi.spyOn(TextureLoader.prototype, 'loadAsync').mockResolvedValue(alternate);
+  const logs: PlaceholderLog[] = [];
+  const registry = new AssetRegistry(e => logs.push(e), { manifest: [def], load: async () => {
+    const root = placeholder(def); delete root.userData.placeholder;
+    root.traverse(node => { if (node instanceof Mesh) (node.material as MeshBasicNodeMaterial).map = atlas; });
+    return root;
+  } });
+  try {
+    const actor = await registry.loadAsset(def.id), corpse = actor.clone();
+    expect(loadImage).toHaveBeenCalledOnce(); expect(logs).toEqual([]);
+    registry.setTextureTier('low'); expect(atlas.image).toBe(low);
+    registry.setTextureTier('high'); expect(atlas.image).toBe(high);
+    for (const root of [actor,corpse]) root.traverse(node => { if (node instanceof Mesh) expect((node.material as MeshBasicNodeMaterial).map).toBe(atlas); });
+  } finally { await registry.dispose(); loadImage.mockRestore(); }
+  expect(high.close).toHaveBeenCalledOnce(); expect(low.close).toHaveBeenCalledOnce();
 });

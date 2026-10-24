@@ -15,7 +15,7 @@ try {
       await session.open();
       for (const scene of ['crowd-200', 'L1']) {
         if (scene === 'crowd-200') {
-          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, actors: [{ id: 'courier', kind: 'courier', at: [0, 0], god: true }], dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, actors: [{ id: 'courier', kind: 'courier', at: [0, 0], god: true }], dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 2 } });
           await session.page.evaluate(async () => {
             const a = window.__SS__!; a.cheats.god(true);
             // Stress 200 on the low renderer while retaining low simulation settings.
@@ -37,17 +37,17 @@ try {
         }
         const result = await session.page.evaluate(async () => {
           const a = window.__SS__!; a.resume();
-          const frames: number[] = [], sim: number[] = []; let previous = 0, maxDraws = 0, maxCrowdDraws = 0;
+          const frames: number[] = [], sim: number[] = []; let previous = 0, maxDraws = 0, maxCrowdDraws = 0, minSubmittedBodies = Infinity;
           const start = performance.now(), startTick = a.tick(), startRender = a.perf().renderedFrames;
           for (let i = 0; i < 720 || performance.now() - start < 12000; i++) {
             const now = await new Promise<number>(requestAnimationFrame);
             if (i >= 120 && previous) { frames.push(now - previous); sim.push(a.perf().simMs); }
             previous = now;
-            if (i % 60 === 0) { maxDraws = Math.max(maxDraws, a.perf().drawCalls); maxCrowdDraws = Math.max(maxCrowdDraws, a.getState().render.crowd?.meshDrawCalls ?? 0); }
+            if (i % 60 === 0) { maxDraws = Math.max(maxDraws, a.perf().drawCalls); const crowd = a.getState().render.crowd; maxCrowdDraws = Math.max(maxCrowdDraws, crowd?.meshDrawCalls ?? 0); minSubmittedBodies = Math.min(minSubmittedBodies, crowd?.batches.reduce((n,b)=>n+b.instances,0) ?? 0); }
           }
           frames.sort((a,b) => a-b); sim.sort((a,b) => a-b);
           const state = a.getState(), perf = a.perf(); a.pause();
-          return { backend: perf.backend, rendererTier: state.render.quality, cap: state.ai?.cap, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
+          return { minSubmittedBodies, backend: perf.backend, rendererTier: state.render.quality, cap: state.ai?.cap, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
         });
         if (variant === 'after' && scene === 'L1') {
           const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
@@ -56,7 +56,7 @@ try {
         }
         receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
         console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));
-        if (session.errors.length || result.rendererTier !== 'low' || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
+        if (session.errors.length || result.rendererTier !== 'low' || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.minSubmittedBodies !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
       }
     } finally { await session.close(); stopServer(); }
     // Wait for the owned preview listener to close before switching source roots.
