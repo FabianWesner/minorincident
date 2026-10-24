@@ -42,7 +42,7 @@ interface FightMetrics {
 const fighting = (e: EntitySnapshot, tick: number) => e.health.current > 0 && !e.infection && !e.hidden && !!e.civilian?.ally && e.civilian.state !== 'grabbed' && e.civilian.state !== 'bitten' && tick >= e.civilian.knockedUntil;
 
 /** Samples every 15 ticks: an ally is "in the fight" while it had a target within the last 3 s and stays fighting for the window. */
-function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => number[]) {
+function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => number[], mobilityStarted = () => true) {
   const lastTarget = new Map<number, { tick: number; id: number }>(), anchor = new Map<number, { x: number; z: number; tick: number }>(), trail = new Map<number, { x: number; z: number; tick: number }[]>();
   let moved = 0, movedN = 0, still = 0, stillN = 0, shots = 0, offscreen = 0, civilianOutOfPatch = 0, queued = 0, samples = 0;
   const seen = new Set<number>(), mobileSeen = new Set<number>();
@@ -78,7 +78,7 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
         // Armed civilians defend their shelter without hunting. Their range,
         // on-screen shots and queue departure stay measured above/below;
         // sustained maneuver is required of the soldiers and officers.
-        if (e.civilian!.ally!.role === 'civilian') { anchor.delete(e.id); trail.delete(e.id); continue; }
+        if (e.civilian!.ally!.role === 'civilian' || !mobilityStarted()) { anchor.delete(e.id); trail.delete(e.id); continue; }
         mobileSeen.add(e.id);
         const a = anchor.get(e.id);
         if (!a || Math.hypot(p.x - a.x, p.z - a.z) >= .25) anchor.set(e.id, p);
@@ -121,10 +121,18 @@ describe('ally combat feel', () => {
     runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 300, stopWhen: mm => mm.state.l4!.phase === 'war' });
     const s = m.state.l4!, allies = () => [...s.soldierIds, ...s.armed.map(a => a.id)].map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally);
     const queue = () => [...s.evacueeIds, ...s.residentIds];
-    const o = observer(w, allies, queue);
-    let ms = 0, max = 0;
-    for (let t = 0; t < 30 * 60; t++) { followFrustum(w); w.applyInput(emptyInput(), 'keyboard'); const t0 = performance.now(); w.update(); const dt = performance.now() - t0; ms += dt; max = Math.max(max, dt); o.tick((w.tick - s.turnAt) / 60); }
-    const r = { ...o.done(), tickMs: +(ms / 1800).toFixed(3), tickMaxMs: +max.toFixed(2) }; record('ally-feel-l4', r);
+    // The intact-wall beat is a firing line. Judge maneuver during the first
+    // breach and its physical fallback; keep observing shots and the queue
+    // from the alarm onward.
+    const o = observer(w, allies, queue, () => !!s.director.lines[0].brokeAt);
+    let ms = 0, max = 0, measured = 0;
+    for (let t = 0; t < 120 * 60; t++) {
+      followFrustum(w); w.applyInput(emptyInput(), 'keyboard'); const t0 = performance.now(); w.update(); const dt = performance.now() - t0;
+      ms += dt; measured++; max = Math.max(max, dt); o.tick((w.tick - s.turnAt) / 60);
+      if (s.director.lines[0].brokeAt && w.tick >= s.director.lines[0].brokeAt + 30 * 60) break;
+    }
+    expect(s.director.lines[0].brokeAt, 'the mobility window must include a real breach').toBeGreaterThan(0);
+    const r = { ...o.done(), tickMs: +(ms / measured).toFixed(3), tickMaxMs: +max.toFixed(2) }; record('ally-feel-l4', r);
     feel(r);
     expect(r.civilianOutOfPatch).toBe(0);
     expect(r.queued).toBe(0);
