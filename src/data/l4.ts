@@ -132,8 +132,8 @@ export const l4 = {
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     // First fallback line runs past the courier toward the plaza centre; the
     // second line (x=-10.8) remains deeper in camp.
-    fallback1: [[-13.2, -11.8], [-13.2, -8.5], [-13.2, -5.2], [-13.2, -1.9], [-13.2, 1.4], [-13.2, 4.7], [-13.2, 8], [-13.2, 11.3], [-13.2, 14.6]] as readonly P[],
-    fallback2: [[-10.8, -10], [-10.8, -6.7], [-10.8, -3.4], [-10.8, 0], [-10.8, 3.3], [-10.8, 6.6], [-10.8, 10], [-10.8, -15.5], [-10.8, 13.5]] as readonly P[],
+    fallback1: [[-16, -11.8], [-16, -8.5], [-16, -5.2], [-16, -1.9], [-16, 1.4], [-16, 4.7], [-16, 8], [-16, 11.3], [-16, 14.6]] as readonly P[],
+    fallback2: [[-15.2, -10], [-15.2, -6.7], [-15.2, -3.4], [-15.2, 0], [-15.2, 3.3], [-15.2, 6.6], [-15.2, 10], [-15.2, -15.5], [-15.2, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
     flanks: [
@@ -331,7 +331,7 @@ export const l4Inside: readonly P[] = [
 /** Entrances of the three freestanding tents and the reception kit's two field tents. */
 export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
   ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
-  ...[-12.1, -5.5].map(z => ({ at: [-28.25, z] as P, out: [1, 0] as P, step: [-27.7, z] as P, route: [[-27.7, -8.8], [-26.65, -8.8]] as readonly P[], floor: .08 })),
+  ...[-12.1, -5.5].map((z, i) => ({ at: [-28.25, z] as P, out: [1, 0] as P, step: [-27.7, z] as P, route: [[-27.7, i ? -8.35 : -9.25], [-26.65, i ? -8.35 : -9.25]] as readonly P[], floor: .08 })),
 ];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [

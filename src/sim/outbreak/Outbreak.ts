@@ -234,6 +234,7 @@ export class Outbreak {
   private shelterCower(e: EntitySnapshot): void {
     const c = e.civilian!, anchor = c.schedule?.[c.scheduleStep ?? 0]?.anchor;
     if (anchor !== 'refuge/shelter' && anchor !== 'fight/hide' || c.story && c.story.clip !== 'npc-cower') return;
+    if (c.ally) { if (c.story?.clip === 'npc-cower') c.story = null; return; }
     const near = this.threatNear(e);
     if (!near && c.story) c.story = null;
     else if (near && !c.story) c.story = { clip: 'npc-cower', start: this.world.tick };
@@ -355,7 +356,7 @@ export class Outbreak {
       this.state(e, 'calm'); c.path.length = 0; c.goal = -1;
       c.schedule = [{ activity: 'look', anchor: h.cower ? 'fight/hide' : 'l2/haven', target: { x: h.x, z: h.z }, facing: h.cower ? { x: h.x * 2 - h.cower.x, z: h.z * 2 - h.cower.z } : { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
       // A person hiding from a gunfight crouches there, back to the fight (PO Q-159), while infected are close.
-      if (h.cower && this.threatNear(e)) c.story = { clip: 'npc-cower', start: tick };
+      if (h.cower && !c.ally && this.threatNear(e)) c.story = { clip: 'npc-cower', start: tick };
       return;
     }
     const before = { x: e.transform.x, z: e.transform.z };
@@ -439,7 +440,7 @@ export class Outbreak {
     const refuge = this.refuges.find(r => r.id === c.l1!.refuge), facing = refuge && Math.hypot(refuge.x - at.x, refuge.z - at.z) > .3 ? { x: refuge.x, z: refuge.z } : { x: at.x * 2 - c.threat.x, z: at.z * 2 - c.threat.z };
     c.schedule = [{ activity: 'look', anchor: 'refuge/shelter', target: at, facing, ticks: ticks(600) }];
     c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
-    c.story = this.threatNear(e) ? { clip: 'npc-cower', start: this.world.tick } : null;
+    c.story = !c.ally && this.threatNear(e) ? { clip: 'npc-cower', start: this.world.tick } : null;
     e.hidden = false; this.world.spatial.set(e.id, at.x, at.z);
   }
   private escape(e: EntitySnapshot): void {

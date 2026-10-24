@@ -222,6 +222,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         npcs.move(e, target.transform, a.runSpeed, c, 2.1);
         return true;
       }
+      // Completing an L4 fallback while firing must release the run order,
+      // otherwise it suppresses firing-position movement forever at the post.
+      if (world.missions?.def.l4 && a.run && dist(e.transform, a.run) <= .35) a.run = null;
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
       if (!finishing && c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
         if (a.run && !subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);

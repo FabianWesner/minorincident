@@ -16,7 +16,7 @@ const HEAVY = 1_800_000;
 const inRing = (p: { x: number; z: number }) => { const r = l4.map.ring; return p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1; };
 
 interface Trace {
-  beats: { beat: string; t: number; cause: string; soldiers: number; inside: number }[]; soldiers: { t: number; n: number }[]; fallBackRadio: number; breakT: number; cause: string; knockdowns: number; barricades: number; turnedAtTurn: number; tank: string; maxAlive: number;
+  beats: { beat: string; t: number; cause: string; soldiers: number; inside: number }[]; soldiers: { t: number; n: number }[]; fallBackRadio: number; breakT: number; cause: string; knockdowns: number; barricades: number; turnedAtTurn: number; tank: string; maxAlive: number; maxInside: number;
   /** l4-collapse-2: line-1 size at the turn; infected on the escape street east of the ring (> 12 m from the courier) at "Fall back!" and 4 s later; the most drawn bodies in one 4 m square; attackers around the still courier (samples with >= 4 within 2.5 m: occupied 90-degree quadrants). */
   line1Size: number; line1Fallback: number; firstBreach: number; gapAtFallBack: number; gapAfter: number; heapMax: number; corpseLosses: number; ringSamples: number[]; pressMax: number;
 }
@@ -24,7 +24,7 @@ const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean): Trace {
   const corpseIds = new Set<number>();
-  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
+  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, maxInside: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
   const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
   w.events.on('l4.beat', e => { if (e.type === 'l4.beat') tr.beats.push({ beat: e.beat, t: t(e.tick), cause: e.cause, soldiers: e.soldiers, inside: e.inside }); });
@@ -36,6 +36,7 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
     for (const id of corpseIds) if (!w.entities.get(id)?.corpse) { tr.corpseLosses++; corpseIds.delete(id); }
     for (const e of w.entities.iterate()) if (e.corpse && e.faction === 'infected') corpseIds.add(e.id);
     if (st.turnAt && (w.tick - st.turnAt) % 60 === 0) tr.soldiers.push({ t: t(w.tick), n: st.soldierIds.filter(id => { const e = w.entities.get(id); return e?.civilian && !e.infection && e.health.current > 0; }).length });
+    if (st.phase === 'war') tr.maxInside = Math.max(tr.maxInside, w.infected!.active.filter(e => e.health.current > 0 && inRing(e.transform)).length);
     tr.maxAlive = Math.max(tr.maxAlive, w.infected!.active.filter(e => e.health.current > 0).length);
     if (st.turnAt && !tr.line1Size) tr.line1Size = st.director.lines[0].size;
     const firstLine = st.director.lines[0];
@@ -95,7 +96,7 @@ describe('L4 collapse director', () => {
     // Keep the authored population bound strict: fewer than ten remain.
     expect(tr.beats[0].soldiers).toBeLessThan(10); expect(tr.beats[0].soldiers).toBeLessThanOrEqual(tr.turnedAtTurn);
     expect(tr.barricades).toBeGreaterThanOrEqual(1); expect(tr.knockdowns).toBeGreaterThanOrEqual(1);
-    expect(Math.max(...tr.beats.map(b => b.inside))).toBeGreaterThanOrEqual(5);
+    expect(tr.maxInside, 'a flood enters during the hold, including between the three instantaneous fall beats').toBeGreaterThanOrEqual(5);
     expect(tr.line1Fallback, 'surviving first-line soldiers reach the deeper second line after the breach').toBeGreaterThanOrEqual(4);
     expect(tr.maxAlive).toBeLessThanOrEqual(l4.war.caps.infected.high);
     void inRing;

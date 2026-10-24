@@ -1,3 +1,6 @@
+/** Firearms carried by the courier, including L4's army MG. */
+export const rangedWeaponPattern = /pistol|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher|army-mg|hmg/;
+
 /** A short kick makes space while the real-input driver follows the visible retreat marker. */
 export function keepMovingWithFists(level: string | null, step: string | null, fistsOnly: boolean, nearbyEnemies: number, healthRatio = 1, targetDistance = 0): boolean {
   return targetDistance <= 1.3 && healthRatio >= .3 && level === 'L6' && fistsOnly && (nearbyEnemies >= 3 || nearbyEnemies > 0 && (step === 'retreat' || step === 'exit'));

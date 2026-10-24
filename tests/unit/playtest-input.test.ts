@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { rangedWeaponPattern } from '../../tools/playtest/combat';
 import { clickGroundInput, markerWalkKeys } from '../../tools/playtest/input';
 
 test('#102 raised exit steering retains the small correction toward the visible stair centre', () => {
@@ -20,4 +21,10 @@ test('#99 approaching a visible ally attacker releases held walking/attack keys 
     },
   }, 640, 360);
   expect(calls).toEqual(['keys-up','aim-up','move 640 360','mouse-down','mouse-up']);
+});
+
+
+test('L4 real-input combat recognizes the army MG as a firearm and keeps melee weapons out', () => {
+  for (const id of ['weapon.army-mg', 'weapon.hmg', 'weapon.handgun', 'weapon.hunting-rifle']) expect(rangedWeaponPattern.test(id), id).toBe(true);
+  for (const id of ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.bat']) expect(rangedWeaponPattern.test(id), id).toBe(false);
 });
