@@ -99,7 +99,7 @@ export class Combat {
     this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
-      if (!attack.autoAim) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
+      if (!attack.autoAim) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);

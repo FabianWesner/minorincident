@@ -1,3 +1,4 @@
+import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
 import type { EntityStore } from '../world/EntityStore';
 import type { HitQuery } from './HitQuery';
@@ -19,15 +20,30 @@ export class AimAssist {
     aim.x = x; aim.z = z;
   }
   /** Mutates a shot's private direction, never the remembered per-side player aim. */
-  apply(sourceId: number, origin: Vec2, aim: Vec2, range: number): void {
+  apply(sourceId: number, origin: Vec2, aim: Vec2, range: number, projectileSpeed?: number): void {
     if (this.setting === 'Off') return;
-    let best = Infinity, x = aim.x, z = aim.z;
+    let best = Infinity, x = aim.x, z = aim.z, selected: EntitySnapshot | undefined;
     const cosine = Math.cos(degrees[this.setting] * Math.PI / 180);
     for (const id of this.query.nearby(origin, range)) {
       const target = this.entities.get(id)!;
       if (id === sourceId || target.faction !== 'infected' || target.health.current <= 0 || target.infected?.hidden) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-      if (distance && distance < best && (dx * aim.x + dz * aim.z) / distance >= cosine && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; }
+      if (distance && distance < best && (dx * aim.x + dz * aim.z) / distance >= cosine && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; selected = target; }
+    }
+    // Keep a deliberate projectile lead when it is closer to the intercept than
+    // snapping to the current body. Direct target intent retains its usual snap.
+    const velocity = selected?.motion?.velocity;
+    if (selected && velocity && projectileSpeed) {
+      const dx = selected.transform.x - origin.x, dz = selected.transform.z - origin.z;
+      const a = velocity.x ** 2 + velocity.z ** 2 - projectileSpeed ** 2;
+      const b = 2 * (dx * velocity.x + dz * velocity.z), c = dx ** 2 + dz ** 2;
+      const discriminant = b * b - 4 * a * c;
+      const roots = Math.abs(a) < 1e-6 ? [b ? -c / b : 0] : discriminant >= 0 ? [(-b + Math.sqrt(discriminant)) / (2 * a), (-b - Math.sqrt(discriminant)) / (2 * a)] : [];
+      const time = Math.min(...roots.filter(t => t >= 0));
+      if (Number.isFinite(time)) {
+        const px = dx + velocity.x * time, pz = dz + velocity.z * time, length = Math.hypot(px, pz);
+        if (length && (aim.x * px + aim.z * pz) / length > (x * px + z * pz) / length + 1e-9) { x = aim.x; z = aim.z; }
+      }
     }
     aim.x = x; aim.z = z;
   }
