@@ -1,5 +1,5 @@
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Vector3, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -28,6 +28,7 @@ export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
   private readonly slots = new Map<string, { page: Chunk; index: number }>();
   private readonly moved = new Matrix4();
+  private readonly movedScale = new Vector3();
   private readonly placedSphere = new Sphere();
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
@@ -38,6 +39,8 @@ export class StaticCorpses extends Group {
   private readonly detailNeighbors: number[] = [];
   private readonly detailQuery = { x: Infinity, z: Infinity, r: 8 };
   private detailDirty = false;
+  private focusX = Infinity;
+  private focusZ = Infinity;
   has(id: number): boolean { return this.bodies.has(String(id)); }
   /** Scene Lab probe: where each frozen body is drawn (matrix translation = the figure's feet). */
   drawn(): { id: number; x: number; y: number; z: number }[] {
@@ -45,7 +48,9 @@ export class StaticCorpses extends Group {
     for (const [key, body] of this.bodies) { const slot = this.slots.get(key); if (!slot) continue; slot.page.mesh.getMatrixAt(slot.index, m); out.push({ id: body.id, x: m.elements[12], y: m.elements[13], z: m.elements[14] }); }
     return out;
   }
-  begin(get: (id: number) => EntitySnapshot | undefined, resting?: (body: EntitySnapshot) => { x: number; z: number }): void {
+  begin(get: (id: number) => EntitySnapshot | undefined, resting?: (body: EntitySnapshot) => { x: number; y?: number; z: number; yaw?: number }, focus?: { x: number; z: number }): void {
+    const movedFocus = !focus || focus.x !== this.focusX || focus.z !== this.focusZ;
+    if (focus) { this.focusX = focus.x; this.focusZ = focus.z; }
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
     // hidden or deleted (level unload or restart) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
     let gone: string[] | null = null;
@@ -56,12 +61,17 @@ export class StaticCorpses extends Group {
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
       // Thrown bodies follow their flight; settled bodies can yield the
       // courier's footprint. Update both during the existing lifecycle pass.
-      const pose = resting?.(body) ?? (body.corpseThrown ? body.transform : undefined);
+      const pose = (movedFocus || body.corpseThrown ? resting?.(body) : undefined) ?? (body.corpseThrown ? body.transform : undefined);
       if (pose) {
         const slot = this.slots.get(key)!;
         slot.page.mesh.getMatrixAt(slot.index, this.moved);
-        const y = body.corpseThrown ? body.transform.y - .7 : this.moved.elements[13];
-        if (this.moved.elements[12] !== Math.fround(pose.x) || this.moved.elements[13] !== Math.fround(y) || this.moved.elements[14] !== Math.fround(pose.z)) {
+        const y = pose.y ?? (body.corpseThrown ? body.transform.y - .7 : this.moved.elements[13]);
+        const rotated = pose.yaw !== undefined && Math.abs(Math.atan2(Math.sin(pose.yaw - Math.atan2(-this.moved.elements[2], this.moved.elements[0])), Math.cos(pose.yaw - Math.atan2(-this.moved.elements[2], this.moved.elements[0])))) > 1e-6;
+        if (rotated) {
+          this.movedScale.setFromMatrixScale(this.moved);
+          this.moved.makeRotationY(pose.yaw!); this.moved.scale(this.movedScale);
+        }
+        if (rotated || this.moved.elements[12] !== Math.fround(pose.x) || this.moved.elements[13] !== Math.fround(y) || this.moved.elements[14] !== Math.fround(pose.z)) {
           this.moved.setPosition(pose.x, y, pose.z);
           slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true;
           const detail = this.detailBodies.get(body.id);

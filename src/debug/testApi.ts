@@ -130,7 +130,7 @@ export interface SSTestApi {
     /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
     figureJoints(on: boolean): void;
     /** Blank-viewport probe: camera pose/matrices/near/far, visible scene children, the first mesh under five screen points, renderer and PostFx diagnostics. */
-    renderProbe(): Record<string, unknown>; corpseLayout(): { count: number; overlaps: number; courierClear: boolean }; cpuProfile(): Record<string, number> };
+    renderProbe(): Record<string, unknown>; corpseLayout(): { count: number; sunkPairs: number; heapPairs: number; repeatedPairs: number; maxDisplacementM: number; courierClear: boolean }; cpuProfile(): Record<string, number> };
   perf(): ReturnType<Game['perf']>;
   /** Telemetry replays (`?telemetry=record` keeps the input log in memory; tools/replay/play.ts feeds it back). */
   replay: ReturnType<typeof replayApi>;

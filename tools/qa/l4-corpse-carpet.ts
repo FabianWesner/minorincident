@@ -23,7 +23,7 @@ try {
     a.pause(); a.cheats.god(true); a.teleport('player', { x: -22.85, z: .7 }); a.camera.follow(); a.camera.zoom(1.5);
   });
   const samples = [];
-  for (const seconds of [20, 60, 150]) {
+  for (const seconds of [20, 60, 120, 150]) {
     await page.evaluate(async seconds => {
       const a = window.__SS__!, until = a.missions.state()!.l4!.turnAt + seconds * 60;
       while (a.tick() < until) await a.step(Math.min(60, until - a.tick()));
@@ -36,7 +36,7 @@ try {
         const drawn = new Set(a.crowdFigures().filter(f => f.drawn).map(f => f.id));
         const visible = live.filter(e => {
           const p = a.camera.project(e.transform.x, e.transform.y + .6, e.transform.z);
-          return !e.appearance && !e.pendingAdmission && Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
+          return !e.pendingAdmission && Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
         });
         return { layout: a.debug.corpseLayout(), backend: a.perf().backend, tier: a.perf().quality.tier, player, live: live.length, drawnLiving: visible.filter(e => drawn.has(e.id)).length,
           missingLiving: visible.filter(e => !drawn.has(e.id)).map(e => e.id), corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length };
@@ -44,7 +44,7 @@ try {
       const file = `${seconds}s-z${zoom}.png`;
       await page.screenshot({ path: `${out}/${file}` });
       samples.push({ seconds, zoom, file, ...sample }); console.log(JSON.stringify(samples.at(-1)));
-      if (sample.backend !== 'webgpu' || sample.tier !== 'low' || sample.missingLiving.length || sample.layout.overlaps || !sample.layout.courierClear) throw new Error('PO capture backend, quality, body spacing, courier clearance or living figure proof failed');
+      if (sample.backend !== 'webgpu' || sample.tier !== 'low' || sample.missingLiving.length || sample.layout.sunkPairs || sample.layout.repeatedPairs || sample.layout.maxDisplacementM > 1.000001 || !sample.layout.courierClear) throw new Error('PO capture backend, quality, bounded heap settling, courier clearance or living figure proof failed');
     }
   }
   const receipt = { settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: [1, 1.5] }, bundles: await page.evaluate(() => [...document.scripts].map(s => s.src).filter(Boolean)), samples, errors };

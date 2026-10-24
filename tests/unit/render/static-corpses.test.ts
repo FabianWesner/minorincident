@@ -328,6 +328,24 @@ test('@E27-AC15 moving corpse pages update bounds once and settled float32 poses
   } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
 });
 
+test('a stationary courier reuses settled placement; walking rechecks its footprint and thrown bodies keep moving', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 2, corpse: true, transform: { x: 3, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+  pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(3, 0, 0), new Color('white'), [0, 0, 0]);
+  const focus = { x: 0, z: 0 }, resting = vi.fn(() => ({ x: focus.x + 3, y: .22, z: 0, yaw: focus.x * .3 }));
+  try {
+    pool.begin(() => e, resting, focus); pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(1);
+    focus.x = 2; pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(2); expect(pool.drawn()[0].x).toBe(5); expect(pool.drawn()[0].y).toBeCloseTo(.22);
+    const matrix = new Matrix4(); (pool.children[0] as InstancedMesh).getMatrixAt(0, matrix);
+    expect(Math.atan2(-matrix.elements[2], matrix.elements[0])).toBeCloseTo(.6);
+    e.corpseThrown = true; pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(3);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
 test('permanent frozen bodies drop the live fade mask while the living material keeps it', () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
   const liveMask = vec3(1).x.greaterThan(.5); material.maskNode = liveMask;
