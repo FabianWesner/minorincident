@@ -86,6 +86,20 @@ function beatsOnTime(tr: Trace): void {
 }
 
 describe('L4 collapse director', () => {
+  test('T-E22-Q166 @E22 @E22-AC14 seed 3 low: the 150-second corpse field stays below twice PROD', async () => {
+    const l = await loadL4(3, 'low'); world = l.world;
+    let within14 = -1;
+    runL4(l.world, l.mission, 'idle', { seed: 3, god: true, maxSeconds: 240, stopWhen: m => {
+      const s = m.state.l4!;
+      if (!s.turnAt || l.world.tick < s.turnAt + 150 * 60) return false;
+      const p = l.world.entities.get(1)!.transform;
+      within14 = [...l.world.entities.iterate()].filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 14).length;
+      return true;
+    } });
+    expect(within14, 'dead infected within 14 m of the held courier at 150 s').toBeGreaterThanOrEqual(0);
+    expect(within14).toBeLessThanOrEqual(110);
+  }, HEAVY);
+
   test('T-E22-13-collapse @E22 @E22-AC13 idle courier: breach flood reaches line 1, soldiers physically fall back, then the three lines fall on their beats', async () => {
     const l = await loadL4(2); world = l.world;
     // The breach now sends the first line physically past the courier. Losses

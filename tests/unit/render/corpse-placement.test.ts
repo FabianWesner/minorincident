@@ -6,9 +6,9 @@ import type { EntitySnapshot } from '../../../src/sim/world/types';
 type Pose = { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number };
 // Exercise production placement without loading render assets. The reference reproduces
 // the old all-body separation predicate; candidate and support/visibility order stay identical.
-function fixture(indexed: boolean) {
+function fixture(indexed: boolean, courier?: { x: number; z: number }) {
   const corpses = new Map<number, Pose>(), spatial = new SpatialHash();
-  const world = { infected: { nav: { clear: (x: number, z: number) => Math.abs(x) < 30 && Math.abs(z) < 30, visible: () => true } }, districts: { supportBelow: (x: number) => x > 12 ? 3 : 0 } };
+  const world = { infected: { nav: { clear: (x: number, z: number) => Math.abs(x) < 30 && Math.abs(z) < 30, visible: () => true } }, districts: { supportBelow: (x: number) => x > 12 ? 3 : 0 }, ...(courier ? { entities: { get: () => ({ transform: courier }) } } : {}) };
   const context = { corpses, corpseSpatial: spatial, corpseNeighbors: [], corpseQuery: { x: 0, z: 0, r: 1.25 }, world };
   if (!indexed) spatial.query = (q, result = []) => { result.length = 0; for (const id of corpses.keys()) result.push(id); return result; };
   const place = (CrowdView.prototype as unknown as { corpsePosition(this: typeof context, e: EntitySnapshot, tick: number): Pose }).corpsePosition;
@@ -39,4 +39,9 @@ test('permanent separated corpses query local neighbors instead of copying every
   expect(f.place(body(2001, 0, 0), 2)).toMatchObject({ x: 0, z: 0 });
   expect(iterate).not.toHaveBeenCalled();
   expect(f.corpses.size).toBe(2001);
+});
+
+test('a newly settled body leaves the courier feet clear', () => {
+  const f = fixture(true, { x: 0, z: 0 }), p = f.place(body(12, 0, 0), 1);
+  expect(Math.hypot(p.x, p.z)).toBeGreaterThanOrEqual(1.7);
 });

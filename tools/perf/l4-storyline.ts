@@ -50,7 +50,13 @@ try {
           while (a.tick() < until) await a.step(Math.min(60, until - a.tick()));
           a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady();
         }, afterTurnS);
-        if (repeat === 0) await page.screenshot({ path: `${out}/${side}-${afterTurnS}.png` });
+        if (repeat === 0) {
+          for (const zoom of [1, 1.5]) {
+            await page.evaluate(async z => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(z); await a.screenshotReady(); }, zoom);
+            await page.screenshot({ path: `${out}/${side}-${afterTurnS}-z${String(zoom).replace('.', '')}.png` });
+          }
+          await page.evaluate(async () => { const a = window.__SS__!; a.camera.zoom(1.5); await a.screenshotReady(); });
+        }
         const cpuSampler = sampledCpu ? await context.newCDPSession(page) : null;
         if (cpuSampler) { await cpuSampler.send('Profiler.enable'); await cpuSampler.send('Profiler.start'); }
         const result = await page.evaluate(async ({ perimeter, diagnostic, wholeHold }) => {
@@ -65,6 +71,7 @@ try {
               return Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
             });
             return { tick: a.tick(), phase: a.missions.state()!.l4!.phase, infected: live.length,
+              corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - a.getState().player!.transform.x, e.transform.z - a.getState().player!.transform.z) <= 14).length,
               drawnInfected: live.filter(e => drawn.has(e.id)).length, missingNative: visibleNative.filter(e => !drawn.has(e.id)).map(e => e.id),
               inside: live.filter(e => e.transform.x > perimeter.x0 && e.transform.x < perimeter.x1 && e.transform.z > perimeter.z0 && e.transform.z < perimeter.z1).length,
               backend: a.perf().backend, quality: a.perf().quality.tier, player: a.getState().player!.transform };
@@ -103,6 +110,8 @@ try {
         if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || [result.before, result.after, ...result.holdCensuses].some(c => c.missingNative.length) || errors.length)
           throw new Error(`Invalid ${side} measurement: ${JSON.stringify({ ...result.before, samples: result.frames.length, errors })}`);
         rows.push({ side, repeat, afterTurnS, scripts, ...result });
+        if (side === 'candidate' && afterTurnS === 150 && result.after.corpses14 > 110)
+          throw new Error(`Q-166 corpse field exceeds 110 within 14 m at 150 s: ${result.after.corpses14}`);
         writeFileSync(`${out}/samples.json`, JSON.stringify(rows, null, 2));
         console.log(JSON.stringify({ side, repeat, afterTurnS, frameP95: result.frameP95, simP95: result.simP95, before: result.before, after: result.after }));
       }

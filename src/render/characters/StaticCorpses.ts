@@ -100,6 +100,7 @@ export class StaticCorpses extends Group {
     const index = page.keys.length; page.mesh.count = index + 1;
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
+    if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .67, .66); page.mesh.instanceColor.needsUpdate = true; }
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Cover every joining body's
@@ -128,12 +129,13 @@ export class StaticCorpses extends Group {
     const { page, index } = slot, mesh = page.mesh, last = page.keys.length - 1;
     if (index !== last) {
       mesh.getMatrixAt(last, this.moved); mesh.setMatrixAt(index, this.moved);
-      for (const attribute of [page.tint, page.overlay]) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
+      for (const attribute of [page.tint, page.overlay, page.mesh.instanceColor].filter((a): a is InstancedBufferAttribute => !!a)) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
       const moved = page.keys[last]; page.keys[index] = moved; this.slots.get(moved)!.index = index;
       page.spheres[index] = page.spheres[last]; page.probe.figures[index] = page.probe.figures[last];
     }
     page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last;
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     if (last > 0) this.bounds(page);
     return true;
   }
@@ -146,7 +148,7 @@ export class StaticCorpses extends Group {
       let visible = 0, changed = false;
       for (let i = 0; i < page.keys.length; i++) if (frustum.intersectsSphere(page.spheres[i])) {
         if (i !== visible) {
-          for (const attribute of [page.mesh.instanceMatrix, page.tint, page.overlay]) for (let c = 0; c < attribute.itemSize; c++) {
+          for (const attribute of [page.mesh.instanceMatrix, page.tint, page.overlay, page.mesh.instanceColor].filter((a): a is InstancedBufferAttribute => !!a)) for (let c = 0; c < attribute.itemSize; c++) {
             const a = i * attribute.itemSize + c, b = visible * attribute.itemSize + c, value = attribute.array[a]; attribute.array[a] = attribute.array[b]; attribute.array[b] = value;
           }
           [page.keys[i], page.keys[visible]] = [page.keys[visible], page.keys[i]];
@@ -218,7 +220,7 @@ export class StaticCorpses extends Group {
       } else {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(parts.getZ(i) > 0) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
