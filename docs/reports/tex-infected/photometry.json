@@ -1,0 +1,592 @@
+{
+  "method": "Displayed sRGB PNG, inverse IEC sRGB transfer, Rec.709 Y. Production depth/pose-preserving magenta silhouette excludes contact-shadow quad. Eye rectangles projected from head-owned emitter geometry; count bright red pixels (R>=180 and R-max(G,B)>=45), report peak Y. No post-capture colour adjustment.",
+  "thresholds": {
+    "figureRatio": [
+      0.9,
+      1.1
+    ],
+    "eyePeakRatioMin": 0.9,
+    "eyeCoverageRatioMin": 0.6,
+    "eyeCorePixelsMin": 4,
+    "closeHeightMin": 150
+  },
+  "allGreen": true,
+  "rows": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "framing": "z1",
+      "heightPx": 136,
+      "figureLuminanceBefore": 0.06978526093327013,
+      "figureLuminanceAfter": 0.06421896621367312,
+      "figureRatio": 0.9202368144052712,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 64,
+          "redPixelsAfter": 56,
+          "coverageRatio": 0.875,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 60,
+          "redPixelsAfter": 54,
+          "coverageRatio": 0.9,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            87.03271509531206,
+            52.433668212259825,
+            54.83681092220485
+          ],
+          "meanHSVSaturation": 0.5292927067274205
+        },
+        "after": {
+          "meanSRGB": [
+            79.4573804573822,
+            53.84630234630418,
+            61.511583011585344
+          ],
+          "meanHSVSaturation": 0.3741351988184261
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "framing": "z1.5",
+      "heightPx": 91,
+      "figureLuminanceBefore": 0.10664112385331619,
+      "figureLuminanceAfter": 0.1061493324217663,
+      "figureRatio": 0.9953883510058809,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4043643404707503,
+          "brightnessRatio": 0.9888545991799359,
+          "redPixelsBefore": 31,
+          "redPixelsAfter": 24,
+          "coverageRatio": 0.7741935483870968,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4041623042665131,
+          "brightnessRatio": 0.9883605288335542,
+          "redPixelsBefore": 30,
+          "redPixelsAfter": 26,
+          "coverageRatio": 0.8666666666666667,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            112.4045956951711,
+            78.0863874345547,
+            68.31791739383253
+          ],
+          "meanHSVSaturation": 0.4063551532593997
+        },
+        "after": {
+          "meanSRGB": [
+            110.04399999999994,
+            80.67566666666565,
+            74.38766666666585
+          ],
+          "meanHSVSaturation": 0.3180228473532034
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "framing": "close",
+      "heightPx": 290,
+      "figureLuminanceBefore": 0.06952261424623961,
+      "figureLuminanceAfter": 0.06422278779237518,
+      "figureRatio": 0.9237683088974019,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 284,
+          "redPixelsAfter": 234,
+          "coverageRatio": 0.823943661971831,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 271,
+          "redPixelsAfter": 263,
+          "coverageRatio": 0.9704797047970479,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.25988511517552,
+            51.24474373987908,
+            53.52339523727892
+          ],
+          "meanHSVSaturation": 0.5465338420186848
+        },
+        "after": {
+          "meanSRGB": [
+            77.28737547062248,
+            52.67477426446602,
+            60.44627328155456
+          ],
+          "meanHSVSaturation": 0.38290298278098456
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "framing": "z1",
+      "heightPx": 136,
+      "figureLuminanceBefore": 0.06978526093327013,
+      "figureLuminanceAfter": 0.06521275607509468,
+      "figureRatio": 0.9344774985860157,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 64,
+          "redPixelsAfter": 56,
+          "coverageRatio": 0.875,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.40146988821485613,
+          "brightnessRatio": 1.0179205602080625,
+          "redPixelsBefore": 60,
+          "redPixelsAfter": 59,
+          "coverageRatio": 0.9833333333333333,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            87.03271509531206,
+            52.433668212259825,
+            54.83681092220485
+          ],
+          "meanHSVSaturation": 0.5292927067274205
+        },
+        "after": {
+          "meanSRGB": [
+            81.23210573210694,
+            54.0320760320781,
+            61.7074547074568
+          ],
+          "meanHSVSaturation": 0.3855167314308344
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "framing": "z1.5",
+      "heightPx": 91,
+      "figureLuminanceBefore": 0.10664112385331619,
+      "figureLuminanceAfter": 0.10678299008947255,
+      "figureRatio": 1.0013303145262376,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4043643404707503,
+          "brightnessRatio": 0.9888545991799359,
+          "redPixelsBefore": 31,
+          "redPixelsAfter": 24,
+          "coverageRatio": 0.7741935483870968,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4041623042665131,
+          "brightnessRatio": 0.9883605288335542,
+          "redPixelsBefore": 30,
+          "redPixelsAfter": 26,
+          "coverageRatio": 0.8666666666666667,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            112.4045956951711,
+            78.0863874345547,
+            68.31791739383253
+          ],
+          "meanHSVSaturation": 0.4063551532593997
+        },
+        "after": {
+          "meanSRGB": [
+            110.83033333333323,
+            80.81766666666563,
+            74.6096666666659
+          ],
+          "meanHSVSaturation": 0.3213494523085016
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "framing": "close",
+      "heightPx": 295,
+      "figureLuminanceBefore": 0.07040256315780137,
+      "figureLuminanceAfter": 0.07154926790774782,
+      "figureRatio": 1.0162878267283566,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 258,
+          "redPixelsAfter": 244,
+          "coverageRatio": 0.9457364341085271,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4206136771708185,
+          "brightnessRatio": 1.0664593347229008,
+          "redPixelsBefore": 255,
+          "redPixelsAfter": 284,
+          "coverageRatio": 1.1137254901960785,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.72638427615935,
+            51.719034137299005,
+            53.44473784502752
+          ],
+          "meanHSVSaturation": 0.5444468749197605
+        },
+        "after": {
+          "meanSRGB": [
+            83.29782949205676,
+            53.06358085859418,
+            59.11837100020092
+          ],
+          "meanHSVSaturation": 0.4378140471363634
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "framing": "z1",
+      "heightPx": 136,
+      "figureLuminanceBefore": 0.06964566808433693,
+      "figureLuminanceAfter": 0.0644132883115248,
+      "figureRatio": 0.924871425363082,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 65,
+          "redPixelsAfter": 57,
+          "coverageRatio": 0.8769230769230769,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 61,
+          "redPixelsAfter": 55,
+          "coverageRatio": 0.9016393442622951,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.98853240561795,
+            52.436412833395984,
+            54.8696044324183
+          ],
+          "meanHSVSaturation": 0.5289836732991646
+        },
+        "after": {
+          "meanSRGB": [
+            79.56303640130389,
+            53.945989937853255,
+            61.56599585676464
+          ],
+          "meanHSVSaturation": 0.3736048423476192
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "framing": "z1.5",
+      "heightPx": 90,
+      "figureLuminanceBefore": 0.106433709717035,
+      "figureLuminanceAfter": 0.10628991798253412,
+      "figureRatio": 0.9986490019479433,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4043643404707503,
+          "brightnessRatio": 0.9888545991799359,
+          "redPixelsBefore": 30,
+          "redPixelsAfter": 24,
+          "coverageRatio": 0.8,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4041623042665131,
+          "brightnessRatio": 0.9883605288335542,
+          "redPixelsBefore": 31,
+          "redPixelsAfter": 26,
+          "coverageRatio": 0.8387096774193549,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            112.26208503203193,
+            78.01164822364555,
+            68.30372743156562
+          ],
+          "meanHSVSaturation": 0.40561933625302116
+        },
+        "after": {
+          "meanSRGB": [
+            110.0662229617303,
+            80.70981697171274,
+            74.42229617304406
+          ],
+          "meanHSVSaturation": 0.3178018596887163
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "framing": "close",
+      "heightPx": 290,
+      "figureLuminanceBefore": 0.06953018941469366,
+      "figureLuminanceAfter": 0.0643093032270471,
+      "figureRatio": 0.9249119521808287,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 285,
+          "redPixelsAfter": 233,
+          "coverageRatio": 0.8175438596491228,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 274,
+          "redPixelsAfter": 262,
+          "coverageRatio": 0.9562043795620438,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.23695439967699,
+            51.24520987308724,
+            53.535936410522844
+          ],
+          "meanHSVSaturation": 0.5465420739520139
+        },
+        "after": {
+          "meanSRGB": [
+            77.35347924427218,
+            52.72847924425948,
+            60.474487759423056
+          ],
+          "meanHSVSaturation": 0.38281177778918946
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "framing": "z1",
+      "heightPx": 136,
+      "figureLuminanceBefore": 0.06964566808433693,
+      "figureLuminanceAfter": 0.06541204866787542,
+      "figureRatio": 0.9392120208921704,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.39249779840758053,
+          "brightnessRatio": 0.995171968219088,
+          "redPixelsBefore": 65,
+          "redPixelsAfter": 56,
+          "coverageRatio": 0.8615384615384616,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.40146988821485613,
+          "brightnessRatio": 1.0179205602080625,
+          "redPixelsBefore": 61,
+          "redPixelsAfter": 59,
+          "coverageRatio": 0.9672131147540983,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.98853240561795,
+            52.436412833395984,
+            54.8696044324183
+          ],
+          "meanHSVSaturation": 0.5289836732991646
+        },
+        "after": {
+          "meanSRGB": [
+            81.34033737792352,
+            54.146493045281744,
+            61.75140574134562
+          ],
+          "meanHSVSaturation": 0.3848915769564311
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "framing": "z1.5",
+      "heightPx": 90,
+      "figureLuminanceBefore": 0.106433709717035,
+      "figureLuminanceAfter": 0.10694702413541884,
+      "figureRatio": 1.0048228556511705,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4043643404707503,
+          "brightnessRatio": 0.9888545991799359,
+          "redPixelsBefore": 30,
+          "redPixelsAfter": 24,
+          "coverageRatio": 0.8,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.4089219393893627,
+          "peakLuminanceAfter": 0.4041623042665131,
+          "brightnessRatio": 0.9883605288335542,
+          "redPixelsBefore": 31,
+          "redPixelsAfter": 26,
+          "coverageRatio": 0.8387096774193549,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            112.26208503203193,
+            78.01164822364555,
+            68.30372743156562
+          ],
+          "meanHSVSaturation": 0.40561933625302116
+        },
+        "after": {
+          "meanSRGB": [
+            110.87121464226297,
+            80.86988352745318,
+            74.62861896838525
+          ],
+          "meanHSVSaturation": 0.3213668578369848
+        }
+      },
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "framing": "close",
+      "heightPx": 295,
+      "figureLuminanceBefore": 0.07043950991854338,
+      "figureLuminanceAfter": 0.07158239180501161,
+      "figureRatio": 1.0162250118972984,
+      "eyes": [
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4107770389063651,
+          "brightnessRatio": 1.0415186937766043,
+          "redPixelsBefore": 258,
+          "redPixelsAfter": 242,
+          "coverageRatio": 0.937984496124031,
+          "passed": true
+        },
+        {
+          "peakLuminanceBefore": 0.3944019837194327,
+          "peakLuminanceAfter": 0.4206136771708185,
+          "brightnessRatio": 1.0664593347229008,
+          "redPixelsBefore": 258,
+          "redPixelsAfter": 284,
+          "coverageRatio": 1.1007751937984496,
+          "passed": true
+        }
+      ],
+      "color": {
+        "main": {
+          "meanSRGB": [
+            86.76991560033855,
+            51.72602777020266,
+            53.43920500950826
+          ],
+          "meanHSVSaturation": 0.5445336897323664
+        },
+        "after": {
+          "meanSRGB": [
+            83.34735162731357,
+            53.109253350331755,
+            59.157434588362555
+          ],
+          "meanHSVSaturation": 0.437663072226668
+        }
+      },
+      "passed": true
+    }
+  ]
+}

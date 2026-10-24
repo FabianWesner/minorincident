@@ -2,38 +2,38 @@
   "id": "inf.common-worker",
   "sourceTriangles": 35990,
   "sourceSHA256": "739ce9749241b8702236ec73bfc606f68b5f0e2f3c969a67bc5675eba5703906",
-  "pipelineCommit": "b01e5ca142f099074c58c9e6dbd0c89977f367a6",
-  "runtimeChangeCommit": "184cacded",
+  "pipelineCommit": "a68803836b5df2d3f46f5e79f4b5c693fc589d70",
+  "runtimeChangeCommit": "5f61aca56e2997a557303db664cfde4e0d0819e7",
   "baselineCommit": "36a960fca976ce9473d5ba265523c2965b5473bf",
   "files": [
     {
       "tier": "lod0",
       "file": "public/assets/models/inf.common-worker.glb",
-      "bytes": 176464,
-      "sha256": "50906ae43f615ca39d0e25a55ab784ff78f420050fc7b87299f3fdf147e0fc8a"
+      "bytes": 178848,
+      "sha256": "9d00bf2868d85663b6c47cdd0c452f06cbd8bf98edcbb22607bc0231c3be0bf8"
     },
     {
       "tier": "lod1",
       "file": "public/assets/models/inf.common-worker.lod1.glb",
-      "bytes": 88084,
-      "sha256": "81f80cd027661fe3e13ac09a3cbd20015c06eeabc9ae49017b75fd2b6f9a777a"
+      "bytes": 90460,
+      "sha256": "1af3ce65e73de37c6800232d69a9ae525518d2c52eb201856bdf88f6b90c4e8c"
     },
     {
       "tier": "lod2",
       "file": "public/assets/models/inf.common-worker.lod2.glb",
-      "bytes": 60156,
-      "sha256": "632f8dac3c5e49c5285b2b1a3b48298e612db984fe7edd35ef7ef28491f179a5"
+      "bytes": 62520,
+      "sha256": "5ec03c2891c0a5c236e48878696f59f88ba4b26ca2b1e5d86859903fb8a041b4"
     },
     {
       "tier": "corpse",
       "file": "public/assets/models/inf.common-worker.corpse.glb",
-      "bytes": 67548,
-      "sha256": "02a53e2a122eb0572c94ffb4186ce78f2e147f1caddfe99c884b5ce939858a56"
+      "bytes": 69916,
+      "sha256": "3c1c0b24a27562f9a896dfecc060b70570e03713e8fecb6d00551e59bee35725"
     },
     {
       "file": "public/assets/models/inf.common-worker.atlas.webp",
-      "bytes": 141956,
-      "sha256": "6a853850edae31989cc0a3ef44db3a8da248fc7e01755724a0e1eecd01567a0e"
+      "bytes": 134204,
+      "sha256": "edff02c5fae310edcb91a7fdc3858175d1d3ae647580ce41d426ad2d1d8a0bc1"
     },
     {
       "file": "public/assets/models/inf.common-worker.atlas.low.webp",
@@ -41,7 +41,7 @@
       "sha256": "793f596d07a28ee65af49c92b8a6b0a8d06194a4be8e2d2c73aa12cdb377366a"
     }
   ],
-  "totalBytes": 592408,
+  "totalBytes": 594148,
   "sharedAtlasURI": "inf.common-worker.atlas.webp",
   "requiredNodes": [
     "root",
@@ -91,8 +91,8 @@
       "sha256": "eddc4db41a2f1157dc09ca4e2d29e909a936e8a72b8426258be86069d7fe61a6"
     },
     "candidate": {
-      "entry": "/build/index-C5qy3jmO.js",
-      "sha256": "9be8a7a8d19f17ed57590de4f8e18c11c8a157393b71923825f77bfdedf89815"
+      "entry": "/build/index-F90QNyti.js",
+      "sha256": "49b61fa761fb1ae5f8af2773df6bb04fa97823b69ea457c08ca911ed95ad828d"
     }
   },
   "GPUAtlasBytesWithMips": {
@@ -107,5 +107,33 @@
     "sockets",
     "category",
     "script"
-  ]
+  ],
+  "livingTriangles": [
+    5718,
+    2202,
+    900
+  ],
+  "corpseTriangles": 1180,
+  "heightM": [
+    1.8331794637441634,
+    1.8331794637441634,
+    1.8066297668218612
+  ],
+  "baselineRuntimeEqualCurrentMain": true,
+  "currentMainAtAudit": "fbad7ba00e8d7a6586f8a685837cef142d975778",
+  "readability": {
+    "headScale": 1.2,
+    "headCentreY": 0.3,
+    "eyeParts": 2,
+    "addedEyeTriangles": 4,
+    "existingUVStream": true,
+    "emissionSRGB": "#ff3b2f",
+    "emissionStrength": [
+      3,
+      6
+    ],
+    "textureGamma": 0.85,
+    "directionalScale": 0.65,
+    "neutralFill": 0.18
+  }
 }

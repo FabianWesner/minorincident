@@ -1,8 +1,7 @@
 {
-  "allGreen": true,
-  "runtimeChangeCommit": "184cacded",
-  "captureAndGateCommit": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
-  "pipelineCommit": "b01e5ca142f099074c58c9e6dbd0c89977f367a6",
+  "allGreen": false,
+  "runtimeChangeCommit": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+  "pipelineCommit": "a68803836b5df2d3f46f5e79f4b5c693fc589d70",
   "testCounts": {
     "unit.json": {
       "passed": 2069,
@@ -51,10 +50,57 @@
       "expected": 12,
       "skipped": 0,
       "unexpected": 0,
-      "flaky": 0
+      "flaky": 0,
+      "receiptStatus": "previous revision; native rerun pending"
     }
   },
-  "performance": [
+  "nativeQualityTransitions": 8,
+  "nonfiniteHDRChannels": 0,
+  "captureFilesReviewed": [
+    "compare-webgl2-high.png",
+    "compare-webgl2-low.png",
+    "compare-webgpu-high.png",
+    "compare-webgpu-low.png",
+    "corpse-low-webgl2.png",
+    "corpse-low-webgpu.png",
+    "crowd30-webgl2.png",
+    "crowd30-webgpu.png",
+    "motion-webgl2.png",
+    "motion-webgpu.png",
+    "pipeline-viewer.png",
+    "solidify-trial.png"
+  ],
+  "browserUnits": 1,
+  "reservationWatchdogSeconds": 1195,
+  "nativePorts": [
+    4491,
+    4492
+  ],
+  "deliveryBytes": 594148,
+  "pending": [
+    "quiet-host QA native load invariants",
+    "paired200-crowd and L1 performance"
+  ],
+  "readabilityRevision": true,
+  "photometryGreen": true,
+  "levelsReceiptReused": {
+    "file": "levels.json",
+    "passed": 470,
+    "skipped": 2,
+    "reason": "No changes to src/sim or tests/levels since the verified184cacded snapshot",
+    "simTreeBefore": "d3e033ca23d0cca0c6607c3e44983d079d05c7fa",
+    "simTreeAfter": "d3e033ca23d0cca0c6607c3e44983d079d05c7fa"
+  },
+  "freshReadabilityChecks": {
+    "remoteUnitPassed": 2069,
+    "remoteUnitSkipped": 7,
+    "focusedPassed": 46,
+    "groundingExplosionPassed": 11,
+    "nativeE17SmokePassed": 47,
+    "photometryCases": 12,
+    "hdrTierTransitions": 8
+  },
+  "previousPerformance": [
     {
       "backend": "webgl",
       "scene": "crowd-200",
@@ -96,26 +142,16 @@
       "passed": true
     }
   ],
-  "nativeQualityTransitions": 8,
-  "nonfiniteHDRChannels": 0,
-  "captureFilesReviewed": [
-    "L1-webgl2.png",
-    "L1-webgpu.png",
-    "compare-webgl2-high.png",
-    "compare-webgl2-low.png",
-    "compare-webgpu-high.png",
-    "compare-webgpu-low.png",
-    "corpse-low-webgl2.png",
-    "corpse-low-webgpu.png",
-    "motion-webgl2.png",
-    "motion-webgpu.png",
-    "pipeline-viewer.png"
-  ],
-  "browserUnits": 1,
-  "reservationWatchdogSeconds": 1195,
-  "nativePorts": [
-    4491,
-    4492
-  ],
-  "deliveryBytes": 592408
+  "previousPerformanceRevision": "184cacded",
+  "performance": [],
+  "qaAdmission": {
+    "status": "waiting for priority batch14 campaign; no browser tests started",
+    "exitCode": 124,
+    "browserSlotReleased": true,
+    "successfulStages": [
+      "remote-sim",
+      "build"
+    ]
+  },
+  "previousCaptureAndGateCommit": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321"
 }

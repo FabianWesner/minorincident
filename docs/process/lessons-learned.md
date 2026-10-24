@@ -67,3 +67,10 @@ A living record, updated after every lane or experiment. Short entries with evid
 - Count the dedicated corpse derivative and both quality atlases in delivery bytes; deduplicate decoded images and crowd materials by atlas ownership. Compare production builds against a pinned main worktree under the shared quiet lock.
 - Live quality changes need to resize the shared atlas as well as initial loading: prepare both decoded sources behind the loading card, release the old GPU allocation on a size change, retain texture/material identity for existing corpse pages, and close both images at the last owner.
 - E17 fixtures must follow current production triggers: alternate survivor rigs load on selection, the L4 alarm starts at the quartermaster pickup, and cap triangle assertions must distinguish the compact textured profile from old procedural caps.
+
+## 2026-10-24 · tex-infected-2
+
+- Verify two displayed eye cores at game zoom1/1.5 on both renderers and quality tiers. Tiny red colour-map patches can vanish under filtering; two head-owned radial discs reuse the existing UV/flag channels and crowd draw. Preserve their surface mask when freezing corpses.
+- Measure figure luminance with the production silhouette pass and exclude its contact-shadow quad. Project emitter bounds to measure the eyes separately from red ties, blood and warm skin. Compare native pixels without post-capture colour changes.
+- Enlarge a reconstructed head around its centre, then check adult height and Alpha-relative scale at every LOD. Scaling from the neck broke both existing contracts; fixing the pivot preserved the readable face within1.85m.
+- Evaluate solidification against the approved features as well as closure/sliver metrics. The suit envelope filled its mouth/eye sockets; winding retained the mouth but softened fingers, hair and lapels. The existing reduction had lower source-surface error.
