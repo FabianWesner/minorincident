@@ -557,6 +557,9 @@ export class CivilianCrowd extends Group {
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);
     const entity = this.world.entities.get(id); if (!entity) return null;
+    // Firing and hearing remain simulation events. A fully off-screen L4
+    // shooter needs no extra skeleton/footwork solve just to place its flash.
+    if (this.low && this.world.scenario === 'L4' && !this.visibility.visible(entity.transform.x, entity.transform.y + .2, entity.transform.z, 1.8)) return null;
     const model = crowdModelOf(entity);
     for (const batch of this.batches) if (batch.model === model) batch.update(1,this.low,id);
     return this.muzzle(id);
