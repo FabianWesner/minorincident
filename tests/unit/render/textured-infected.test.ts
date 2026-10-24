@@ -29,6 +29,8 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     const baked = bakeInfected(root, [], false, clips, undefined, true, true);
     expect(baked.texture).toBe(atlas);
     const p = baked.geometry.getAttribute('position'), uv = baked.geometry.getAttribute('uv'), part = baked.geometry.getAttribute('_part_index');
+    const normals = baked.geometry.getAttribute('normal');
+    for (let i=0;i<normals.count;i++) expect(Math.hypot(normals.getX(i),normals.getY(i),normals.getZ(i)), `${lod}: source normal ${i}`).toBeGreaterThan(.9);
     expect(uv.count).toBe(p.count); expect(baked.geometry.index!.count / 3).toBeLessThanOrEqual(budget);
     // The reconstructed face is asymmetric. Both eye neighbourhoods must retain
     // the emission flag after fitting the head and decoding each distance tier.

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
-import { Box3, Color, Matrix4, Mesh, Vector3, type BufferGeometry, type Group, type InstancedMesh, type MeshBasicMaterial } from 'three';
+import { Box3, Color, Matrix4, Mesh, Texture, Vector3, type BufferGeometry, type Group, type InstancedMesh, type MeshBasicMaterial } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -35,7 +35,10 @@ async function asset(id: string, lod: Lod): Promise<Group> {
     });
     const def = manifest.find(a => a.id === id)!;
     const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
-    const parsed = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), ''), { scene } = parsed;
+    // This geometry oracle runs in Node. Keep real UVs/material slots while
+    // bypassing browser image decoding; rendered atlas pixels have native gates.
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).register(() => ({ name: 'geometry-only-textures', loadTexture: async () => new Texture() }));
+    const parsed = await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), ''), { scene } = parsed;
     scene.traverse(node => { const index = parsed.parser.associations.get(node)?.nodes; if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name; });
     scene.userData.assetId = id; return scene;
   })());
@@ -196,7 +199,9 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
         if (process.env.QA_INVARIANTS_BREAK === 'accessories') headLocal.premultiply(new Matrix4().makeTranslation(0, .4, 0));
         const actual = bounds(mesh.geometry, headLocal);
         if (!mesh.visible || mesh.count !== 1 || oracle.accessory({ attach: 'head', offset: [actual.min.distanceTo(expected.min), actual.max.distanceTo(expected.max)], tolerance })) errors.push(`${model}/${lod}/${tier}/${id}: head bounds ${actual.min.toArray()}..${actual.max.toArray()}, authored ${expected.min.toArray()}..${expected.max.toArray()}, tolerance ${tolerance}`);
-        if (lod !== 'lod0') {
+        // Textured crowds retain the separately fitted head-piece draw at every
+        // LOD; only palette bodies use livingSource's merged accessory path.
+        if (lod !== 'lod0' && !geometry.hasAttribute('uv')) {
           const inline = renderer.livingSource(geometry, model, characterNodes.indexOf('head')), parts = inline.getAttribute('_parts'), slot = renderer.ids.indexOf(id) + 1;
           const inlineBounds = bounds(inline, new Matrix4(), i => Math.floor((parts.getW(i) - 128) / 8) === slot);
           if (inlineBounds.min.distanceTo(expected.min) > tolerance || inlineBounds.max.distanceTo(expected.max) > tolerance) errors.push(`${model}/${lod}/${tier}/${id}: inline head geometry differs from authored bounds`);

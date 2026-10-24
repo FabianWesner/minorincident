@@ -1,9 +1,11 @@
 /** Native low-tier A/B. quiet-run owns the GPU; both roots serve remote production builds. */
 import type { Game } from '../../src/Game';
 import { resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
 const afterDist = process.env.TEX_DIST ?? 'dist';
+process.env.SCENE_SERVER = 'preview';
 const report = resolve(worktree, 'docs/reports/tex-infected/performance.json');
 const receipts: { variant: string; scene: string; backend: string; p95: number; maxCrowdDraws: number; triangles: number; errors: string[] }[] = [];
 try {
@@ -35,7 +37,16 @@ try {
             a.camera.follow(); a.camera.zoom(1); await a.step(120); await a.screenshotReady();
           });
         }
-        const result = await session.page.evaluate(async () => {
+        // Shared admission leaves another lane free to start. Reject overlapping
+        // browser work instead of presenting contaminated clocks as quiet timing.
+        let overlappingBrowser = false;
+        const monitor = setInterval(() => {
+          const roots = execFileSync('ps', ['-axo', 'command='], { encoding: 'utf8' }).split('\n').filter(line => /^\/(?:.*\/)?(?:chrome-headless-shell|Chromium|Google Chrome) /.test(line) && !line.includes('--type=') && (line.includes('headless') || line.includes('--remote-debugging')));
+          if (roots.length > 1) overlappingBrowser = true;
+        }, 1000);
+        let result;
+        try {
+        result = await session.page.evaluate(async () => {
           const a = window.__SS__!; a.resume();
           const frames: number[] = [], sim: number[] = []; let previous = 0, maxDraws = 0, maxCrowdDraws = 0, minSubmittedBodies = Infinity;
           const start = performance.now(), startTick = a.tick(), startRender = a.perf().renderedFrames;
@@ -49,6 +60,8 @@ try {
           const state = a.getState(), perf = a.perf(); a.pause();
           return { minSubmittedBodies, backend: perf.backend, rendererTier: state.render.quality, cap: state.ai?.cap, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
         });
+        } finally { clearInterval(monitor); }
+        if (overlappingBrowser) throw new Error('Concurrent browser detected: discard timing receipt and retry during an idle window');
         if (variant === 'after' && scene === 'L1') {
           const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
           if (!textured) throw new Error('L1 mix contains no textured common worker');

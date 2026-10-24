@@ -3,6 +3,14 @@
 # Use this instead of an outer e2e-lock wrapper for native performance measurements.
 command -v lockf >/dev/null 2>&1 || exec "$@"
 root=$(cd "$(dirname "$0")/../.." && pwd)
+# Explicit shared admission for lanes instructed to leave the second slot free.
+# Preflight remains mandatory; this mode does not promise exclusive GPU timing.
+if [ "${MI_PERF_SHARED_BROWSER:-}" = 1 ] && [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
+  export E2E_UNITS=1 MI_PERF_LOCK_HELD=1 MI_PERF_SLOTS_HELD=1
+  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + ${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}))
+  exec sh "$root/tools/e2e-lock.sh" python3 "$root/tools/browser-job.py" --seconds 1195 -- sh "$0" "$@"
+fi
+if [ "${MI_PERF_SHARED_BROWSER:-}" != 1 ]; then
 if [ "${MI_BROWSER_POOL_EXCLUSIVE:-}" = "" ] && node "$root/tools/browser-pool/detect.mjs"; then
   exec node --import tsx "$root/tools/browser-pool/wrapper.ts" exclusive "$@"
 fi
@@ -50,6 +58,7 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
   printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2
   exit 75
 fi
+fi
 while :; do
   [ "$(date +%s)" -lt "$MI_PERF_WAIT_DEADLINE" ] || { printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2; exit 75; }
   # Match executables, not scheduler summaries quoting previous process commands.
@@ -61,7 +70,7 @@ while :; do
     if [ -n "${PERF_CONDITIONS_LOG:-}" ]; then
       node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,localVitest:0,localBlender:0,localBuild:0,browserSlots:Array.from({length:Number(process.env.MI_PERF_SLOTS_HELD||4)},(_,i)=>i),command:process.argv.slice(1)})+"\n")' "$@"
     fi
-    printf '%s\n' 'Quiet-run preflight: load < 3; no local Vitest, Blender, build or headless Chrome processes; all configured browser slots held.'
+    printf 'Quiet-run preflight: load < 3; no local Vitest, Blender, build or headless Chrome processes; %s browser slot(s) held.\n' "${MI_PERF_SLOTS_HELD:-4}"
     root=$(cd "$(dirname "$0")/../.." && pwd)
     python3 "$root/tools/mac-gpu-guard.py" 1 || { sleep 2; continue; }
     exec "$@"

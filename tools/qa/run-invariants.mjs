@@ -20,7 +20,10 @@ async function run(stage, command, args) {
 }
 // A red sim check must not prevent the other invariants from being measured.
 await run('remote-sim', 'npm', ['run', 'qa:invariants:sim:remote']);
-if (await run('build', 'npm', ['run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', ['tools/perf/quiet-run.sh', 'sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
+// Functional invariants can share GPU capacity when a lane must leave a slot free.
+// Performance comparisons still use the timing admission/preflight separately.
+const browserWrapper = process.env.MI_QA_SHARED_BROWSER === '1' ? [] : ['tools/perf/quiet-run.sh', 'sh'];
+if (await run('build', 'npm', ['run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', [...browserWrapper, 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
 mkdirSync('test-results/qa-invariants', { recursive: true });
 writeFileSync('test-results/qa-invariants/run.json', JSON.stringify(receipts, null, 2) + '\n');
 console.log(JSON.stringify(receipts));

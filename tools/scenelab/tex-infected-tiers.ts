@@ -1,5 +1,7 @@
 /** Live tier changes must preserve the atlas identity, frozen bodies and valid GPU bindings. */
 import { resolve } from 'node:path';
+import type { Game } from '../../src/Game';
+import type { RenderTarget } from 'three/webgpu';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const receipts: unknown[]=[];
 try {
@@ -20,7 +22,15 @@ try {
         const atlas=render.crowd?.batches.find(b=>b.atlas)?.atlas;
         if(!atlas||atlas.width!==(tier==='low'?512:1024)||identity&&identity!==atlas.id||(!render.crowd?.texturedCorpsePages || !render.crowd.figures.length))throw new Error('Live tier lost atlas identity/size or frozen corpse pages');
         identity=atlas.id;
-        receipts.push({backend,tier,atlas,corpseIds,corpseFigures:render.crowd.figures.length,corpsePages:render.crowd.texturedCorpsePages,errors:session.errors.slice()});
+        const nonfiniteHDR=await session.page.evaluate(async()=>{
+          const game=(window.__SCENE__ as unknown as {game:Game}).game;
+          const target=(game.view as unknown as {postFx:{scenePass:{renderTarget:RenderTarget}}}).postFx.scenePass.renderTarget;
+          const pixels=await game.view.renderer.readRenderTargetPixelsAsync(target,0,0,target.width,target.height);
+          let bad=0;for(const value of pixels)if(pixels instanceof Float32Array?!Number.isFinite(value):(value&0x7c00)===0x7c00)bad++;
+          return bad;
+        });
+        if(nonfiniteHDR)throw new Error(`${backend}/${tier}: ${nonfiniteHDR} nonfinite HDR channels`);
+        receipts.push({backend,tier,atlas,corpseIds,nonfiniteHDR,corpseFigures:render.crowd.figures.length,corpsePages:render.crowd.texturedCorpsePages,errors:session.errors.slice()});
       }
       await session.page.screenshot({path:resolve(`docs/reports/tex-infected/corpse-low-${backend}.png`)});
       if(session.errors.length)throw new Error(session.errors.join('\n'));
