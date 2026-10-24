@@ -197,7 +197,10 @@ export interface L4State {
    * PO 10-13 spread arrivals: per street edge the tick of its next small group and its next emergence point (cursor into its `l4Emergence`
    * points); the next group from inside the perimeter (tick, cursor into `l4Inside`); `origin` the emergence point index per emerged id.
    */
-  edgeNext: number[]; edgeCursor: number[]; insideAt: number; insideCursor: number; origin: Record<number, number>;
+  edgeNext: number[]; edgeCursor: number[]; insideAt: number; insideCursor: number; insidePending: number; origin: Record<number, number>;
+  /** Alarm infected still walking out through the reception tent flaps. */
+  tentDoors: import('../outbreak/HouseEmergence').HouseEmergence[];
+  alarmPending: number; alarmCursor: number;
   /** PO 10-13 perimeter: the jersey barriers that close the convoy gate (entity ids) and the next "stay inside" call. */
   gateIds: number[]; barkAt: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
@@ -209,6 +212,8 @@ export interface L4State {
   heliId: number; heliAngle: number; heliPhase: 'off' | 'arrive' | 'orbit' | 'withdraw' | 'gone'; heliAt: number; heliBurstAt: number; heliBurst: number; heliShots: number; heliTarget: { x: number; z: number } | null;
   hmgBursts: number; hmgLastAt: Record<number, number>;
   fuelId: number; craterId: number; burning: number[]; fires: number; glass: number[]; scorch: number; lastShot: Record<number, number>;
+  /** PO 10-23 wall breaches: when an Alpha was announced at a breach site and when the wall there fell (ticks, 0 = not yet). */
+  breaches?: Partial<Record<'west' | 'north' | 'south', { announcedAt: number; openAt: number }>>;
   /** Kills by the player and by allies (soldiers, armed civilians) since the turn; the kill share check reads these. */
   kills: { player: number; soldiers: number; armedCivilians: number; unarmedCivilians: number; heli: number; tank: number; other: number };
 }
@@ -220,7 +225,7 @@ export interface L4Line {
 }
 export interface L4Director {
   lines: L4Line[];
-  alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'tank' | 'done'; startedAt: number; hold?: { x: number; z: number } }[];
+  alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'tank' | 'done'; startedAt: number; hold?: { x: number; z: number }; breach?: 'west' | 'north' | 'south' }[];
   /** Alpha hits that knocked a soldier down, E26 slots broken, people who turned inside a line, infected spawned by the director, the soldiers cut off. */
   knockdowns: number; barricades: number; turnedInside: number; spawned: number; cutOff: number[];
   swarmedAt: number; fallBackAt: number; settled: number;

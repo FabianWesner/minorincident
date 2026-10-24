@@ -1,0 +1,244 @@
+{
+  "diagnostic": false,
+  "wholeHold": true,
+  "settings": {
+    "seed": 3,
+    "backend": "webgpu",
+    "quality": "low",
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1.5,
+    "cpuThrottle": 4,
+    "zoom": 1.5,
+    "warmupS": 3,
+    "measuredS": "entire hold after warmup",
+    "repeats": 2,
+    "uncapped": true,
+    "resolutionMs": 0.1,
+    "figureProbe": "drawn",
+    "frameSampling": "every RAF",
+    "cpuTelemetryEveryMs": 0
+  },
+  "sources": {
+    "baseline": "https://minor-incident.com",
+    "candidate": "http://127.0.0.1:4431"
+  },
+  "comparisons": [
+    {
+      "afterTurnS": 0,
+      "candidate": 33.9,
+      "budgetMs": 33,
+      "pass": false
+    }
+  ],
+  "rows": [
+    {
+      "side": "candidate",
+      "repeat": 0,
+      "afterTurnS": 0,
+      "scripts": [
+        "http://127.0.0.1:4431/build/index-Cb1Hs_Tr.js"
+      ],
+      "before": {
+        "tick": 1,
+        "phase": "war",
+        "infected": 24,
+        "drawnInfected": 0,
+        "missingNative": [],
+        "inside": 9,
+        "backend": "webgpu",
+        "quality": "low",
+        "player": {
+          "x": -22.850000381469727,
+          "y": 0.7049999833106995,
+          "z": 0.699999988079071,
+          "yaw": 4.475923437479963
+        }
+      },
+      "after": {
+        "tick": 11429,
+        "phase": "collapse",
+        "infected": 39,
+        "drawnInfected": 26,
+        "missingNative": [],
+        "inside": 32,
+        "backend": "webgpu",
+        "quality": "low",
+        "player": {
+          "x": -22.850000381469727,
+          "y": 0.7049999833106995,
+          "z": 0.699999988079071,
+          "yaw": 4.475923437479963
+        }
+      },
+      "elapsedMs": 193736.19999980927,
+      "holdCensuses": [
+        {
+          "tick": 5433,
+          "phase": "war",
+          "infected": 20,
+          "drawnInfected": 6,
+          "missingNative": [],
+          "inside": 10,
+          "backend": "webgpu",
+          "quality": "low",
+          "player": {
+            "x": -22.850000381469727,
+            "y": 0.7049999833106995,
+            "z": 0.699999988079071,
+            "yaw": 4.475923437479963
+          }
+        },
+        {
+          "tick": 9024,
+          "phase": "war",
+          "infected": 13,
+          "drawnInfected": 1,
+          "missingNative": [],
+          "inside": 5,
+          "backend": "webgpu",
+          "quality": "low",
+          "player": {
+            "x": -22.850000381469727,
+            "y": 0.7049999833106995,
+            "z": 0.699999988079071,
+            "yaw": 4.475923437479963
+          }
+        }
+      ],
+      "frameP95": 33.3,
+      "simP95": 7.299999237060547,
+      "updateP95": 0,
+      "renderP95": 0,
+      "cpuP95": {}
+    },
+    {
+      "side": "candidate",
+      "repeat": 1,
+      "afterTurnS": 0,
+      "scripts": [
+        "http://127.0.0.1:4431/build/index-Cb1Hs_Tr.js"
+      ],
+      "before": {
+        "tick": 1,
+        "phase": "war",
+        "infected": 24,
+        "drawnInfected": 0,
+        "missingNative": [],
+        "inside": 9,
+        "backend": "webgpu",
+        "quality": "low",
+        "player": {
+          "x": -22.850000381469727,
+          "y": 0.7049999833106995,
+          "z": 0.699999988079071,
+          "yaw": 4.475923437479963
+        }
+      },
+      "after": {
+        "tick": 11439,
+        "phase": "collapse",
+        "infected": 39,
+        "drawnInfected": 26,
+        "missingNative": [],
+        "inside": 32,
+        "backend": "webgpu",
+        "quality": "low",
+        "player": {
+          "x": -22.850000381469727,
+          "y": 0.7049999833106995,
+          "z": 0.699999988079071,
+          "yaw": 4.475923437479963
+        }
+      },
+      "elapsedMs": 193905.89999961853,
+      "holdCensuses": [
+        {
+          "tick": 5440,
+          "phase": "war",
+          "infected": 20,
+          "drawnInfected": 6,
+          "missingNative": [],
+          "inside": 10,
+          "backend": "webgpu",
+          "quality": "low",
+          "player": {
+            "x": -22.850000381469727,
+            "y": 0.7049999833106995,
+            "z": 0.699999988079071,
+            "yaw": 4.475923437479963
+          }
+        },
+        {
+          "tick": 9032,
+          "phase": "war",
+          "infected": 13,
+          "drawnInfected": 2,
+          "missingNative": [],
+          "inside": 5,
+          "backend": "webgpu",
+          "quality": "low",
+          "player": {
+            "x": -22.850000381469727,
+            "y": 0.7049999833106995,
+            "z": 0.699999988079071,
+            "yaw": 4.475923437479963
+          }
+        }
+      ],
+      "frameP95": 33.9,
+      "simP95": 7.300000190734863,
+      "updateP95": 0,
+      "renderP95": 0,
+      "cpuP95": {}
+    }
+  ],
+  "measurementRevision": "f9d5b87822f898b0a90caed5cfa66637a62c5281",
+  "policy": {
+    "nominalBudgetMs": 33.3,
+    "acceptedProxyCeilingMs": 34,
+    "approvedBy": "orchestrator 2026-10-24, extended deadline 07:30 CEST",
+    "note": "Report the actual 33\u201334 ms emulation proxy; stop optimisation. The twelve-body LOD trial was reverted."
+  },
+  "acceptedComparisons": [
+    {
+      "afterTurnS": 0,
+      "candidate": 33.9,
+      "budgetMs": 33.3,
+      "pass": false,
+      "withinBudget": false,
+      "acceptedPhoneProxy": true,
+      "passUnderApprovedPolicy": true
+    }
+  ],
+  "conditions": [
+    {
+      "at": "2026-10-24T03:57:33.787Z",
+      "load": [
+        2.54833984375,
+        2.24609375,
+        2.158203125
+      ],
+      "otherHeadlessChrome": 0,
+      "localVitest": 0,
+      "localBlender": 0,
+      "localBuild": 0,
+      "browserSlots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/perf/l4-storyline.ts"
+      ]
+    }
+  ]
+}

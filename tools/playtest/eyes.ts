@@ -7,16 +7,18 @@
  * tells the player) so the log can name steps; it is never used to find a trigger.
  * Ground-truth state used to locate the player when lost goes through `locate()` and is always logged.
  */
-export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; drawn: boolean; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
+export interface Body { id: number; x: number; z: number; hp: number; max: number; d: number; kind: string; archetype?: string; drawn: boolean; screen: { x: number; y: number }; aim: { x: number; y: number }; moving: boolean; speed: number; yaw: number; vx: number; vz: number; corpse: boolean; state?: string; attacking?: boolean }
 export interface Eyes {
   tick: number; level: string | null; phase: string | null; step: string | null; checkpoint: string | null; completed: number;
   objective: string; tracker: string; distance: number | null;
-  marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null } | null;
+  marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null; guidance?: string } | null;
+  route: { dx: number; dz: number } | null;
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; current: string | null } | null;
   driving: { id: number; x: number; z: number; yaw: number } | null;
   enemies: Body[]; allies: Body[];
+  healthKits?: { x: number; z: number; d: number; screen: { x: number; y: number } }[];
   view: { w: number; h: number };
 }
 
@@ -68,6 +70,7 @@ export function look(): Eyes {
   const ringPrompt = shown(q('interaction-ring')) ? q('interaction-ring')!.textContent ?? 'ring' : '';
   const trackerPrompt = shown(objective) ? objective!.textContent ?? '' : shown(tracker) ? tracker!.textContent ?? '' : '';
   const markerEl = q('mission-marker');
+  const route = q('minimap-route');
   const panel = q('mission-panel'), button = q<HTMLButtonElement>('mission-button');
   const menu = [...document.querySelectorAll<HTMLElement>('[data-menu-screen]')].find(el => !el.hidden)?.dataset.menuScreen ?? null;
   const p = a.getEntity(1);
@@ -86,10 +89,15 @@ export function look(): Eyes {
       const enemy = e.faction === 'infected' && !e.emerging && !e.infectionRise;
       if (!ally && !enemy) continue;
       if (enemy && (e.corpse || e.health.current <= 0)) continue;
-      if (!a.input.visible(e.transform)) continue;
+      // The ground navigation ray also blocks on waist-high cover. L4 sees
+      // submitted bodies over that cover; solid buildings still occlude them.
+      if (enemy && m?.id === 'L4') {
+        const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+        if (world.infected?.director.occluded(e.transform)) continue;
+      } else if (!a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
       const joints = figures.get(e.id)?.joints;
-      if (enemy && !joints) continue;
+      if (enemy && !figures.has(e.id)) continue;
       // Aim at the drawn chest, including a lunge or a fall. A fixed offset above the feet misses bodies
       // at different zooms and can become a ground click; only rendered, on-screen enemies are targets.
       let aim = { x: s.x, y: s.y - 18 };
@@ -101,7 +109,7 @@ export function look(): Eyes {
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="dialog"]')) continue;
-      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, drawn: figures.has(e.id), screen: s, aim,
+      const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, archetype: e.archetype, drawn: figures.has(e.id), screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, attacking: /^(windup|swing|dog-lunge-bite|zebra-rear-kick)$/.test(figures.get(e.id)?.clip ?? '') };
       (enemy ? enemies : allies).push(b);
@@ -117,13 +125,15 @@ export function look(): Eyes {
     completed: m ? Object.values(m.steps).filter(s => s.status === 'completed').length : 0,
     objective: shown(objective) ? objective!.textContent ?? '' : trackerText, tracker: trackerText,
     distance: shown(tracker) && tracker?.dataset.distance ? Number(tracker.dataset.distance) : distanceText ? Number(distanceText[1]) : null,
-    marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null } : null,
+    marker: markerEl && Number.isFinite(left) ? { visible: shown(markerEl), offscreen: markerEl.dataset.offscreen === 'true', x: left, y: top, anchor: markerEl.dataset.anchor ?? null, guidance: markerEl.dataset.guidance } : null,
+    route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * 30 / 44, dz: (parseFloat(route!.style.top) - 50) * 30 / 44 } : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
+    healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h && !document.elementFromPoint(k.screen.x, k.screen.y)?.closest('button, input, select, textarea, [role="dialog"]')) : [],
     enemies, allies, view,
   };
 }

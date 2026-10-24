@@ -33,6 +33,8 @@ export interface HouseDoor {
   ox: number; oz: number;
 }
 export interface HouseEmergence extends HouseDoor {
+  /** L4 tent aisles must finish the authored walk before ordinary AI takes over. */
+  strictRoute?: boolean;
   /** Tick of the next resident; `ids` the residents out (or on their way out) so far. */
   next: number; ids: number[];
   /** Walk-out pace (m/s), default `emergeSpeedMs` (a stumble); the lab staff burst out running. */
@@ -166,8 +168,11 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
   const opened = world.openDoors.get(doorId(house)), swinging = !!opened && tick < opened.at + 27;
   for (let i = walking.length - 1; i >= 0; i--) {
     const w = walking[i], e = world.entities.get(w.id);
+    // A downed resident may recover. Keep its door route owned until recovery,
+    // so it cannot resume ordinary AI inside the tent aisle.
+    if (house.strictRoute && e?.infected && e.health.current <= 0 && e.infected.recoverAt >= 0) { w.until++; continue; }
     if (!e?.infected || e.health.current <= 0) { if (e) { e.emerging = undefined; delete e.doorLane; } walking.splice(i, 1); continue; }
-    const p = e.transform;
+    const p = e.transform, before = house.strictRoute ? { ...e.transform } : undefined, beforeLeg = w.leg;
     if (swinging) { if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2); w.until++; continue; }
     if (w.leg < 0) {
       const s = Math.min(end, (p.x - house.x) * house.nx + (p.z - house.z) * house.nz + step), lane = w.lane ?? 0;
@@ -191,10 +196,17 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0);
       world.spatial.set(e.id, p.x, p.z);
     }
+    if (before && !world.solids.clear(p, actorRadius(e), e.id)) {
+      Object.assign(p, before); w.leg = beforeLeg; w.until++;
+      world.spatial.set(e.id, p.x, p.z);
+      if (e.combat) e.combat.staggerUntil = tick + 2;
+      continue;
+    }
     if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2);
     // Released at the end of the walk only, never inside the house (the AI would snap the body onto the nearest nav cell).
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
-    if (w.leg >= house.route.length || (outside && tick >= w.until)) {
+    if (w.leg >= house.route.length || (!house.strictRoute && outside && tick >= w.until)) {
+      if (house.strictRoute && !world.solids.admit(e, 'house.exit', 0, false)) continue;
       if (e.pendingAdmission) {
         const radius = actorRadius(e);
         // A queued resident has finished walking. Body congestion at this one

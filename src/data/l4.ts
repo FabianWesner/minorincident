@@ -75,9 +75,9 @@ export const l4 = {
   war: {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 2.5,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
-    headroom: 12,
+    headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
     downedSlots: 10,
     /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
@@ -88,10 +88,10 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war groups of 1-2 also come out of the buildings inside the perimeter (tents, containers,
+     * and staggered. `inside`: during the war groups of 4-6 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1.5, group: [4, 6] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -124,14 +124,16 @@ export const l4 = {
       { id: 'nests', earliestS: 110, dueS: 124, pushS: 104 },
       { id: 'armor', earliestS: 170, dueS: 182, pushS: 150 },
     ] as readonly { id: 'line-1' | 'nests' | 'armor'; earliestS: number; dueS: number; pushS: number }[],
-    pushEveryS: 4, push: { high: 10, low: 5 }, frontWave: { high: 30, low: 15 }, standing: .5,
+    pushEveryS: 4, push: { high: 20, low: 5 }, frontWave: { high: 30, low: 15 }, standing: .5,
     /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
     refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
-    alive: [.8, .9, .7] as readonly number[], aliveLow: [.7, .8, .6] as readonly number[],
+    alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
-    fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
-    fallback2: [[-16, -10], [-16, -6.7], [-16, -3.4], [-16, 0], [-16, 3.3], [-16, 6.6], [-16, 10], [-16, -15.5], [-16, 13.5]] as readonly P[],
+    // First fallback line runs past the courier toward the plaza centre; the
+    // second line remains deeper in camp, clear of the parked convoy.
+    fallback1: [[-16, -11.8], [-16, -8.5], [-16, -5.2], [-16, -1.9], [-16, 1.4], [-16, 4.7], [-16, 8], [-16, 11.3], [-16, 14.6]] as readonly P[],
+    fallback2: [[-15.2, -10], [-15.2, -6.7], [-15.2, -3.4], [-15.2, 0], [-15.2, 3.3], [-15.2, 6.6], [-15.2, 10], [-15.2, -15.5], [-15.2, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
     flanks: [
@@ -159,12 +161,12 @@ export const l4 = {
        * cellar door. From "Fall back!" (and after a respawn in the collapse) for `gapS` the horde leaves a gap on it: infected farther than
        * `nearM` from the courier within `gapM` of the route run off toward the army, and nothing emerges on it. Pursuers still chase.
        */
-      route: [[-12, 16], [-4, 16], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
+      route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
     },
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
       [[-25, -8], [-25, 4], [-25, 10]],
-      [[-16, -11]], // rear of the north reception line, beside the camp medical supplies
+      [[-20, -2]], // plaza centre, in front of the retreating second line
       [[-9.8, -16.5], [-9.8, -6.5], [-11, 16]], // bumper gaps behind the convoy crew, clear of the hulls and south tank swarm
       [[-11, 16]], // armour falls: rally at the south convoy gap before breaking away onto Lakeshore
     ] as readonly (readonly P[])[],
@@ -181,8 +183,8 @@ export const l4 = {
   },
   civilians: {
     hp: 80, armedShare: .4, panicInfected: 3, panicRadiusM: 4, panicS: 6,
-    pistol: { damage: 20, shotS: .7, rangeM: 18, nearM: 12, hitNear: .5, hitFar: .25 },
-    rifle: { damage: 60, shotS: .6 / 1, rangeM: 32, nearM: 24, hitNear: .6, hitFar: .4 },
+    pistol: { damage: 20, shotS: .7, rangeM: 12, nearM: 8, hitNear: .5, hitFar: .25 },
+    rifle: { damage: 60, shotS: .6 / 1, rangeM: 16, nearM: 10, hitNear: .6, hitFar: .4 },
     /** Improvised melee (bat, pipe, crowbar): the firefighter swing with these numbers. */
     melee: { damage: 24, reachM: 1.9, swingS: .8 },
   },
@@ -207,7 +209,7 @@ export const l4 = {
    * The first legs reuse the existing break-away gap; both sidewalks remain open throughout. Running may shorten the walk.
    */
   finale: {
-    route: [[-12, 16], [-4, 16], [-4, 28], [-2, 41], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4],
+    route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4],
       [20, -37.4], [-12, -37.4], [-44, -37.4], [-64, -39.5], [-79, -40], [-79.3, -45.2801]] as readonly P[],
   },
   /** Beat 7: the cellar. After the door is barred the battle goes on above for at least this long. */
@@ -301,6 +303,11 @@ export const l4Edges: readonly { id: string; at: P }[] = [
  * mouth plus side streets and the doors of the shops and houses around the plaza (`door`: a building door, used from 12 m off the courier;
  * a street point from 24 m). An edge releases its small groups from these in turn, always out of view.
  */
+export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
+  { id: 'west-end', edge: 0, at: [-76, 55] }, { id: 'nw-alley-end', edge: 1, at: [-76, -45] },
+  { id: 'north-end', edge: 2, at: [26, -45] }, { id: 'east-alley', edge: 3, at: [24, -37] },
+  { id: 'southeast-end', edge: 4, at: [36, 55] }, { id: 'southwest-end', edge: 5, at: [-40, 55] },
+];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 0, at: [-56.6, 6] }, { edge: 0, at: [-57, -14] }, { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
   { edge: 1, at: [-39.2, -35] }, { edge: 1, at: [-40, -26] }, { edge: 1, at: [-46.9, -23], door: true }, { edge: 1, at: [-42, -15.5], door: true },
@@ -309,9 +316,22 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 4, at: [-5.5, 42.6] }, { edge: 4, at: [-14, 40] }, { edge: 4, at: [.9, 18.8], door: true }, { edge: 4, at: [-.1, 33.5], door: true },
   { edge: 5, at: [-23, 42.6] }, { edge: 5, at: [-36, 40] }, { edge: 5, at: [-44.9, 27.1], door: true },
   { edge: 6, at: [50.5, -37.4] },
+  // Outer street ends keep every edge eligible from every courier position in
+  // the camp. SpawnDirector still applies its live frustum + 6 m guard.
+  ...l4OffscreenMouths.map(({ edge, at }) => ({ edge, at })),
 ];
 /** Inside the perimeter (PO 10-13: "ALso from within buildings inside the army area"): behind the tents, the supply crates and the registration kit. */
-export const l4Inside: readonly P[] = [[-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6]];
+export const l4Inside: readonly P[] = [
+  [-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6],
+  // Rear camp edge, out of the zoom-1.5 player frame from the quartermaster.
+  // These are opportunistic off-screen exits; the director still rejects them
+  // whenever the courier moves far enough to see them.
+  [-33, 19], [-29, 20], [-25, 21],
+];
+/** Usable flaps of the three freestanding tents. The furnished reception kit has no connected exit aisle. */
+export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
+  ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
+];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [
   { at: [-30, 43.3], yaw: 0, def: 'vehicle.sedan' }, { at: [-6, 43.3], yaw: 0, def: 'vehicle.suv' }, { at: [-38, -42.6], yaw: Math.PI, def: 'vehicle.pickup' },
@@ -409,12 +429,16 @@ export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' |
 /** Remaining street-route distance, including the approach to its nearest leg; optionally writes the next turn for the minimap. */
 export function l4CellarDistance(p: { x: number; z: number }, next?: { x: number; z: number }): number {
   const route = l4.finale.route;
-  let nearest = Infinity, remaining = 0, tail = 0;
+  let nearest = Infinity, guidanceDistance = Infinity, remaining = 0, tail = 0;
   for (let i = route.length - 1; i > 0; i--) {
     const [ax, az] = route[i - 1], [bx, bz] = route[i], dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz);
     const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (length * length)));
     const d = Math.hypot(p.x - ax - t * dx, p.z - az - t * dz);
-    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; if (next) { next.x = bx; next.z = bz; } }
+    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; }
+    // A courier within half a metre of a junction has reached its turn. Keep
+    // the later leg on near ties; centimetres of sidewalk offset must not
+    // keep pointing backward to a corner that the movement controller reached.
+    if (next && d < guidanceDistance - .5) { guidanceDistance = d; next.x = bx; next.z = bz; }
     tail += length;
   }
   return remaining;

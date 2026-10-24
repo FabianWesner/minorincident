@@ -49,7 +49,7 @@ test('PO #4 ambient world trajectories depend on camera focus only inside whole-
 
 test('PO #24 neighbours wait with varied quiet gestures and widely spaced phases', () => {
   const ids = Array.from({ length: 8 }, (_, i) => i + 240);
-  expect(new Set(ids.map(id => waitingIdle(id))).size).toBe(4);
+  expect(new Set(ids.map(id => waitingIdle(id, null, true))).size).toBe(4);
   expect(ids.map(id => waitingIdle(id))).not.toContain('npc-gesture');
   expect(new Set(ids.map(id => Math.floor(idleOffset(id)))) .size).toBe(4);
   for (const id of ids) { expect(idleOffset(id)).toBe(idleOffset(id)); expect(idleOffset(id)).toBeGreaterThanOrEqual(0); expect(idleOffset(id)).toBeLessThan(4); }

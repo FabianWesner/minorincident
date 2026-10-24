@@ -25,7 +25,9 @@ test('@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the
         const e = w.entities.get(id)!;
         expect(e, `${level}/${id}`).toBeDefined(); expect(e.hidden, level).not.toBe(true);
         expect(e.civilian!.state, level).toBe('calm');
-        expect(e.civilian!.story?.clip, level).toBe('npc-cower');
+        // PO Q-159: sheltered at the door; with no infected within cowerThreatM they stand alert instead of cowering.
+        expect(e.civilian!.schedule?.[0]?.anchor, level).toBe('refuge/shelter');
+        expect(e.civilian!.story?.clip, level).not.toBe('npc-cower');
         expect(Math.hypot(e.transform.x - refuge.x, e.transform.z - refuge.z), level).toBeLessThan(1.5);
       }
       expect(w.openDoors.has(refuge.id), 'closed door stays closed; nobody crosses it').toBe(false);

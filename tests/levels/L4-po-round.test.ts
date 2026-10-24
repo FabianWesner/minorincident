@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Emergence, l4Inside, l4Line, l4Posts } from '../../src/data/l4';
+import { l4, l4Emergence, l4Inside, l4TentEntrances, l4Line, l4Posts } from '../../src/data/l4';
 import { l4AlphaEmergence } from '../../src/levels/L4/layout';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -91,7 +91,7 @@ describe('L4 PO round 10-13', () => {
     step(w, 10 * 60 - (w.tick - turn));
     const live = soldiers.filter(id => human(w.entities.get(id)));
     const onDuty = live.filter(id => { const e = w.entities.get(id)!, d = dist(e.transform, post(id)); return e.civilian!.ally!.engaged && (d <= 1.5 || !!e.civilian!.ally!.run || d < start.get(id)! - 1); });
-    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection || e.civilian.story?.clip === 'npc-cower'; });
+    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection || e.civilian.story?.clip === 'npc-cower' || e.civilian.schedule?.[0]?.anchor === 'refuge/shelter'; });
     const r = { samples, aimedBefore, offPostMax, routineMin, soldiers: soldiers.length, live: live.length, onDuty: onDuty.length, peds: peds.length, fled: fled.length };
     record('po-round-alarm', r);
     expect(aimedBefore, 'no soldier aims or is engaged before the alarm').toBe(0);
@@ -119,7 +119,7 @@ describe('L4 PO round 10-13', () => {
     expect(s.turnAt).toBe(s.gunAt);
     step(w, 5 * 60);
     const humans = cohort.filter(id => human(w.entities.get(id)));
-    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower');
+    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower' || w.entities.get(id)!.civilian!.schedule?.[0]?.anchor === 'refuge/shelter');
     const newInfected = s.emergedIds.filter(id => !before.has(id));
     record(`civilians-stay-${tier}`, { cohort: cohort.length, humans: humans.length, panicking: panicking.length, newInfected: newInfected.length, infections });
     expect(humans.length / cohort.length).toBeGreaterThanOrEqual(.9);
@@ -136,7 +136,7 @@ describe('L4 PO round 10-13', () => {
 
   test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
-    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
     const reached = new Set<number>(), reachSectors = new Set<number>(), alphaReached = new Set<number>(), beats: string[] = [];
     const nests = l4Posts.filter(p => p.role === 'hmg').map(p => ({ x: p.at[0], z: p.at[1] })), pallets = l4Line.map(p => ({ x: p.x, z: p.z }));
     const soldierIds = () => s.soldierIds.filter(id => human(w.entities.get(id)));
@@ -144,6 +144,7 @@ describe('L4 PO round 10-13', () => {
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && s.alphaIds.includes(e.sourceId) && w.entities.get(e.targetId)?.civilian?.ally?.role === 'soldier') alphaReached.add(e.sourceId); });
     w.events.on('barricade.damaged', e => { if (e.type === 'barricade.damaged' && s.alphaIds.includes(e.sourceId)) alphaReached.add(e.sourceId); });
     let seen = 0, maxGroup = 0; const threats = new Set<number>();
+    w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') seen = e.ids.length; });
     const r = runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 480, stopWhen: mm => {
       const st = mm.state.l4!;
       // Not in bulk: what one emergence point releases at once (one tick) is a small group.
@@ -161,7 +162,11 @@ describe('L4 PO round 10-13', () => {
     } });
     const byTick = new Map<string, number>();
     for (const id of s.emergedIds) { const e = s.origin[id]; if (e === undefined) continue; const k = `${e}`; byTick.set(k, (byTick.get(k) ?? 0) + 1); }
-    const total = [...byTick.values()].reduce((a, b) => a + b, 0), share = Math.max(...byTick.values()) / total;
+    const total = [...byTick.values()].reduce((a, b) => a + b, 0);
+    // Street waves still spread across many approaches. The interior beat now
+    // deliberately uses three real tent flaps, each with an animated queue.
+    const streetCounts = [...byTick].filter(([origin]) => Number(origin) < l4Emergence.length).map(([, count]) => count);
+    const share = Math.max(...streetCounts) / streetCounts.reduce((a, b) => a + b, 0);
     const inside = s.emergedIds.filter(id => (s.origin[id] ?? -1) >= l4Emergence.length).length;
     const quadrants = new Set([...reachSectors].map(k => Math.floor(k / 2)));
     const out = { total, share, maxGroup, perPoint: Object.fromEntries([...byTick.entries()].map(([k, v]) => [k, v])), inside, reachSectors: [...reachSectors], quadrants: quadrants.size, reached: reached.size, threats: threats.size,
@@ -170,7 +175,8 @@ describe('L4 PO round 10-13', () => {
     // PO 10-14: downed infected keep their slots (they get up) under the 120 cap, so the war counts distinct threats
     // (initial turns + new arrivals + Alphas), not only new arrivals.
     expect(threats.size, '> 100 distinct infected fight in the war').toBeGreaterThan(100);
-    expect(share, 'no emergence point delivers more than 25 %').toBeLessThanOrEqual(.25);
+    expect(share, 'no street emergence point delivers more than 25 % of the street wave population').toBeLessThanOrEqual(.25);
+    expect(streetCounts.length, 'the street flood retains at least twelve distinct source points').toBeGreaterThanOrEqual(12);
     expect(maxGroup, 'groups of 2-5, not a stream').toBeLessThanOrEqual(l4.war.group[1]);
     expect(new Set(Object.keys(out.perPoint)).size).toBeGreaterThanOrEqual(12);
     expect(inside, 'infected also come from inside the camp').toBeGreaterThanOrEqual(1);
