@@ -399,3 +399,24 @@ test('camera culling retains every corpse and restores its exact identity, pose 
     aim(0); expect(pool.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([1]); expect(pool.drawn().find(f => f.id === 1)!.x).toBe(0);
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
+
+
+test('Q-166 identity corpse roots skip page world composition without changing placement', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const material = new MeshLambertNodeMaterial(), scene = new Scene();
+  for (const automatic of [true, false]) {
+    const pool = new StaticCorpses(); pool.matrixWorldAutoUpdate = automatic; scene.add(pool);
+    const e = { id: 7, corpse: true } as EntitySnapshot, placement = new Matrix4().makeRotationY(.7).setPosition(2, .44, 3);
+    try {
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, placement, new Color('white'), [0, 0, 0]);
+      const page = pool.children[0] as InstancedMesh, compose = vi.spyOn(page.matrixWorld, 'multiplyMatrices');
+      scene.updateMatrixWorld(true); scene.updateMatrixWorld(true);
+      expect(page.matrixWorldAutoUpdate).toBe(automatic);
+      expect(compose.mock.calls.length).toBe(automatic ? 2 : 0);
+      expect(page.matrixWorld.equals(new Matrix4())).toBe(true);
+      const actual = new Matrix4(); page.getMatrixAt(0, actual);
+      expect(actual.elements).toEqual(placement.elements.map(Math.fround));
+    } finally { scene.remove(pool); pool.dispose(); }
+  }
+  baked.geometry.dispose(); material.dispose();
+});
