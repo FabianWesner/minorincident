@@ -14,14 +14,16 @@ async function run(stage, command, args) {
     child.on('error', error => { console.error(error); resolve(1); });
     child.on('exit', code => resolve(code ?? 1));
   });
-  receipts.push({ stage, code, seconds: (Date.now() - start) / 1000, revision, log });
+  receipts.push({ stage, code, seconds: (Date.now() - start) / 1000, revision, log, ...(stage === 'Mac-WebGPU-low' ? { quietAdmission: process.env.QA_INVARIANTS_NO_QUIET !== '1' } : {}) });
   writeFileSync('test-results/qa-invariants/run.json', JSON.stringify(receipts, null, 2) + '\n');
   return code;
 }
 // A red sim check must not prevent the other invariants from being measured.
 await run('remote-sim', 'npm', ['run', 'qa:invariants:sim:remote']);
 // Rebuilding dist must wait for every browser using its current asset set.
-if (await run('build', 'env', ['E2E_UNITS=2', 'sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', ['tools/perf/quiet-run.sh', 'sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
+// The orchestrator can defer native timing while retaining every browser assertion.
+const quietAdmission = process.env.QA_INVARIANTS_NO_QUIET === '1' ? [] : ['tools/perf/quiet-run.sh', 'sh'];
+if (await run('build', 'env', ['E2E_UNITS=2', 'sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', [...quietAdmission, 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
 mkdirSync('test-results/qa-invariants', { recursive: true });
 writeFileSync('test-results/qa-invariants/run.json', JSON.stringify(receipts, null, 2) + '\n');
 console.log(JSON.stringify(receipts));
