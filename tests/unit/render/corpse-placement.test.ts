@@ -42,6 +42,23 @@ test('settled bodies keep the courier feet clear as she walks through the field'
   expect(e.transform).toMatchObject({ x: 0, z: 0 });
 });
 
+test('settling can use connected floor around props without touching the AI path workspace', () => {
+  const f = fixture(), e = body(12, 0, 0); f.records.set(e.id, e);
+  Object.assign(f.courier, { x: 0, z: 0 });
+  Object.assign(f.world.infected!.nav, { revision: 0, width: 5, blocked: new Uint8Array(25), nearestCell: () => 0, cell: () => 24, visible: () => false });
+  f.layout.place(e);
+  expect(f.layout.audit()).toMatchObject({ count: 1, overlaps: 0, courierClear: true, unplaced: [] });
+});
+
+test('settling cannot use a floor region separated by a solid wall', () => {
+  const f = fixture(), e = body(12, 0, 0); f.records.set(e.id, e);
+  Object.assign(f.courier, { x: 0, z: 0 });
+  const blocked = new Uint8Array(25); for (let z = 0; z < 5; z++) blocked[z * 5 + 2] = 1;
+  Object.assign(f.world.infected!.nav, { revision: 0, width: 5, blocked, nearestCell: () => 0, cell: () => 24, visible: () => false });
+  f.layout.place(e);
+  expect(f.layout.bodies.get(e.id)!.fit).toBe(false);
+});
+
 test('stable bodies retain their placement without repeated navigation work; restores release old footprints', () => {
   const f = fixture(), e = body(12, 0, 0); f.records.set(e.id, e);
   const first = f.layout.place(e), clear = vi.spyOn(f.world.infected!.nav, 'clear');
