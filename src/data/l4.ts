@@ -128,7 +128,7 @@ export const l4 = {
     /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
     refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
-    alive: [.9, 1, 1] as readonly number[], aliveLow: [.9, 1, 1] as readonly number[],
+    alive: [.9, 1, 1] as readonly number[], aliveLow: [.85, 1, 1] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     // First fallback line runs past the courier toward the plaza centre; the
     // second line remains deeper in camp, clear of the parked convoy.
