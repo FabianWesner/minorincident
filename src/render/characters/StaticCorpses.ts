@@ -99,8 +99,8 @@ export class StaticCorpses extends Group {
     // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry. 40 m cells (l4-collapse-2; was 16 m): every
     // page is its own InstancedMesh and three builds a node program per InstancedMesh (its uuid is in the cache key), so each new page
     // compiled mid-fight (~60 builds in the L4 war, the line-break hitches).
-    // Removed hats do not change corpse geometry. Batch those identities by
-    // the remaining hair mask, while actual retained pieces keep their page.
+    // Accessory identity splits pages only when its geometry is retained.
+    // Plain bodies can share the same remaining hair mask.
     const appearanceKey = source.userData.corpseAccessory && look?.accessory ? `${key}:${look.accessory}` : look?.hidesHair ? `${key}:hairless` : key;
     const cellKey = `${appearanceKey}/${Math.floor(instance.elements[12] / CELL)}/${Math.floor(instance.elements[14] / CELL)}`;
     const prepared = this.chunks.get(appearanceKey);
