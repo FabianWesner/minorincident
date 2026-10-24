@@ -32,7 +32,7 @@ def arg(key, default=None):
     return ARGS[ARGS.index(key) + 1] if key in ARGS else default
 SOURCE = Path(arg('--source', '/Users/wesner/Workspace/minorincident_3dpipeline/experiments/heroine-garment-preview-1k-v2/heroine/raw.glb'))
 RIG = HERE / 'rig-source.skin.glb'
-HEIGHT = 1.455
+HEIGHT = 1.438  # source height; the narrow-stance pose lifts the figure ~1.7 cm, so the built body stands 1.455 m (the manifest height)
 
 def smooth(x):
     t = np.clip(x, 0, 1); return t * t * (3 - 2 * t)
@@ -133,7 +133,7 @@ neck_z = shoulder + .01
 for name, f in (('torso', .17), ('spine', .45), ('chest', .73)):
     J[name] = V((0, 0, J['hip'][2] + f * (neck_z - J['hip'][2])))
 J['neck'] = V((0, 0, neck_z))
-J['head'] = V((RJ['head'][0] * .5, 0, RJ['head'][2] - .02))
+J['head'] = V((RJ['head'][0] + .01, 0, RJ['head'][2] - .02))  # pivot over the skull base (her head sits slightly forward of the neck)
 for s in 'LR':
     J['elbow' + s] = J['foreArm' + s].copy(); J['knee' + s] = J['shin' + s].copy()
     J['foreArmTwist' + s] = J['foreArm' + s] + .55 * (J['hand' + s] - J['foreArm' + s])
@@ -331,6 +331,11 @@ if '--no-leg-pose' not in ARGS:
         pf.matrix = Matrix.Translation(head) @ Matrix.Rotation(-angle, 4, 'X') @ Matrix.Translation(-head) @ pf.matrix
         bpy.context.view_layer.update()
         print('LEG', s, 'spread', round(math.degrees(spread), 1), '->', round(math.degrees(target), 1))
+    # soft elbows: the source hangs her arms almost straight (≈ 9° in idle); the courier rest carries a slight bend
+    for s in 'LR':
+        pf = rig.pose.bones['foreArm' + s]; head = pf.head.copy()
+        pf.matrix = Matrix.Translation(head) @ Matrix.Rotation(math.radians(-7), 4, 'Y') @ Matrix.Translation(-head) @ pf.matrix
+        bpy.context.view_layer.update()
     bpy.ops.object.mode_set(mode='OBJECT')
     bpy.context.view_layer.objects.active = body
     with bpy.context.temp_override(object=body, active_object=body):
