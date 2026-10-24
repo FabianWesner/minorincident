@@ -45,13 +45,12 @@
       "flaky": 0
     },
     "qa-browser.json": {
-      "startTime": "2026-10-24T17:30:44.284Z",
-      "duration": 200385.995,
+      "startTime": "2026-10-24T20:00:33.564Z",
+      "duration": 205511.93,
       "expected": 12,
       "skipped": 0,
       "unexpected": 0,
-      "flaky": 0,
-      "receiptStatus": "previous revision; native rerun pending"
+      "flaky": 0
     }
   },
   "nativeQualityTransitions": 8,
@@ -78,7 +77,7 @@
   ],
   "deliveryBytes": 594148,
   "pending": [
-    "quiet-host QA native load invariants",
+    "protected quiet-host load comparisons",
     "paired200-crowd and L1 performance"
   ],
   "readabilityRevision": true,
@@ -98,7 +97,8 @@
     "groundingExplosionPassed": 11,
     "nativeE17SmokePassed": 47,
     "photometryCases": 12,
-    "hdrTierTransitions": 8
+    "hdrTierTransitions": 8,
+    "qaNativePassed": 12
   },
   "previousPerformance": [
     {
@@ -145,13 +145,23 @@
   "previousPerformanceRevision": "184cacded",
   "performance": [],
   "qaAdmission": {
-    "status": "waiting for priority batch14 campaign; no browser tests started",
-    "exitCode": 124,
+    "status": "all stages passed after native retry; load checks overlapped batch14-zebra, quiet rerun pending",
     "browserSlotReleased": true,
     "successfulStages": [
       "remote-sim",
-      "build"
+      "build",
+      "Mac-WebGPU-low"
     ]
   },
-  "previousCaptureAndGateCommit": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321"
+  "previousCaptureAndGateCommit": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
+  "timingAttemptRejected": {
+    "at": "2026-10-24T20:04:22Z",
+    "reason": "Concurrent browser detected; no sample retained",
+    "otherBrowsers": [
+      "batch14-zebra (PID85426)",
+      "showcase-record (PID89246)"
+    ],
+    "quietPreflightPassed": true,
+    "performanceRowsRetained": 0
+  }
 }

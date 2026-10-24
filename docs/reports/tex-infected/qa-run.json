@@ -2,22 +2,30 @@
   {
     "stage": "remote-sim",
     "code": 0,
-    "seconds": 261.98,
-    "revision": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
+    "seconds": 279.997,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
     "log": "test-results/qa-invariants/remote-sim.log"
   },
   {
     "stage": "build",
     "code": 0,
-    "seconds": 6.422,
-    "revision": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
+    "seconds": 7.169,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
     "log": "test-results/qa-invariants/build.log"
   },
   {
     "stage": "Mac-WebGPU-low",
     "code": 0,
-    "seconds": 221.587,
-    "revision": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
-    "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+    "seconds": 207,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+    "log": "/private/tmp/tex-readability-qa-native-final.log",
+    "retryOf": {
+      "stage": "Mac-WebGPU-low",
+      "code": 124,
+      "seconds": 1210.385,
+      "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+      "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+    },
+    "dist": "/private/tmp/tex-infected-dist-readability-release-5f61aca56"
   }
 ]
