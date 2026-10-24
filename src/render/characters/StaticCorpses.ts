@@ -100,7 +100,7 @@ export class StaticCorpses extends Group {
     const index = page.keys.length; page.mesh.count = index + 1;
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
-    if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .67, .66); page.mesh.instanceColor.needsUpdate = true; }
+    if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .64, .64); page.mesh.instanceColor.needsUpdate = true; }
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Cover every joining body's
@@ -220,7 +220,7 @@ export class StaticCorpses extends Group {
       } else {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(parts.getZ(i) > 0) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
@@ -261,6 +261,14 @@ export class StaticCorpses extends Group {
           }
           geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
         }
+      }
+      // Frozen infected retain the complete head surface, but the packed
+      // emissive flag is live-only: dead eyes must not glow in the corpse field.
+      const flags = geometry.getAttribute('_parts'), colors = geometry.getAttribute('color');
+      if (colors?.itemSize >= 3) for (let i = 0; i < colors.count; i++) {
+        const red = colors.getX(i), green = colors.getY(i), blue = colors.getZ(i), gray = red * .2126 + green * .7152 + blue * .0722;
+        colors.setXYZ(i, gray + (red - gray) * .45, gray + (green - gray) * .45, gray + (blue - gray) * .45);
+        if (flags?.itemSize >= 3 && flags.getZ(i) > 0) { colors.setXYZ(i, gray * .12, gray * .12, gray * .12); flags.setZ(i, 0); }
       }
       if (!geometry.boundingSphere) geometry.computeBoundingSphere();
       // One frozen material per source material: every death frame / gore mask shares its shader (l4-collapse-2: a copy per mask

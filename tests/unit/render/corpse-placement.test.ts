@@ -41,7 +41,11 @@ test('permanent separated corpses query local neighbors instead of copying every
   expect(f.corpses.size).toBe(2001);
 });
 
-test('a newly settled body leaves the courier feet clear', () => {
-  const f = fixture(true, { x: 0, z: 0 }), p = f.place(body(12, 0, 0), 1);
-  expect(Math.hypot(p.x, p.z)).toBeGreaterThanOrEqual(1.7);
+test('settled bodies keep the courier feet clear as she walks through the field', () => {
+  const courier = { x: 0, z: 0 }, f = fixture(true, courier), e = body(12, 0, 0), first = f.place(e, 1);
+  expect(Math.hypot(first.x - courier.x, first.z - courier.z)).toBeGreaterThanOrEqual(1.7);
+  Object.assign(courier, { x: first.x, z: first.z });
+  const moved = f.place(e, 2);
+  expect(Math.hypot(moved.x - courier.x, moved.z - courier.z)).toBeGreaterThanOrEqual(1.7);
+  expect(moved.x === first.x && moved.z === first.z).toBe(false);
 });

@@ -75,7 +75,7 @@ export const l4 = {
   war: {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3.5,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 2.5,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
@@ -88,8 +88,8 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war groups of 4-6 also come out of the buildings inside the perimeter (tents, containers,
-     * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
+     * and staggered. `inside`: during the war grouped arrivals come from separated, concealed camp exits (`l4Inside`)
+     * each `insideEveryS`, only when an exit is out of view or hidden behind a building and at least `minM` from the courier.
      */
     group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [8, 10] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */

@@ -47,6 +47,22 @@ test('Q-124 settled bodies change detail after approach and retreat without losi
   } finally { pool.dispose(); far.dispose(); near.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
 
+test('Q-166 settled corpses mute eye emitters and desaturate their frozen surface', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 9, corpse: true, transform: { x: 0, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+  try {
+    pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    const geometry = (pool.children[0] as InstancedMesh).geometry, sourceColor = baked.geometry.getAttribute('color'), sourceFlags = baked.geometry.getAttribute('_parts');
+    const color = geometry.getAttribute('color'), flags = geometry.getAttribute('_parts');
+    const colored = Array.from({ length: sourceColor.count }, (_, i) => i).find(i => sourceFlags.getZ(i) === 0 && Math.max(sourceColor.getX(i), sourceColor.getY(i), sourceColor.getZ(i)) - Math.min(sourceColor.getX(i), sourceColor.getY(i), sourceColor.getZ(i)) > .1)!;
+    const before = [sourceColor.getX(colored), sourceColor.getY(colored), sourceColor.getZ(colored)], after = [color.getX(colored), color.getY(colored), color.getZ(colored)];
+    expect(Math.max(...after) - Math.min(...after)).toBeCloseTo((Math.max(...before) - Math.min(...before)) * .45);
+    const eye = Array.from({ length: sourceFlags.count }, (_, i) => i).find(i => sourceFlags.getZ(i) > 0);
+    expect(eye).toBeDefined(); expect(flags.getZ(eye!)).toBe(0); expect(Math.max(color.getX(eye!), color.getY(eye!), color.getZ(eye!))).toBeLessThan(.2);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
 test('dropped accessories grow beyond their initial instance capacity @E07', () => {
   const props = new RoutineProps(); props.begin();
   for (let i = 0; i < 260; i++) props.dropped('coffee', { x: i, y: 0, z: 0, yaw: 0 });
