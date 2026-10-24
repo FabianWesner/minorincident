@@ -72,6 +72,7 @@ export class Player {
     const state=this.entity.survivor!;
     this.entity.health.current=this.entity.health.max; state.diedAt=null; state.invulnerableUntil=tick;
     this.lastDamage=-Infinity; this.action=null; delete state.attack; delete state.knockdown; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+    if (this.entity.combat) this.entity.combat.staggerUntil = tick;
     this.entity.locomotion = this.locomotion.response;
     this.animate('idle',tick);
   }
