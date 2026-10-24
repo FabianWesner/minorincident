@@ -46,10 +46,12 @@ export class CorpseLayout {
     const safePlayer = (p: RestingPose) => !player || pointDistance(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= 1.1;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && safePlayer(previous)) return previous;
     const feet = e.transform.y - .7, support = this.world.districts;
+    const lane = e.doorLane;
+    const from = lane ? { x: lane.x + lane.ox * lane.end, z: lane.z + lane.oz * lane.end } : e.transform;
     // A thrown body follows its flight until it returns to its ground support.
     if (e.corpseThrown && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return e.transform;
     const yaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
-    const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction, length = prone ?? 1.25, radius = prone === undefined ? .38 : .6;
+    const dx = -Math.cos(yaw) * direction, dz = Math.sin(yaw) * direction, length = prone ?? 1.25, radius = prone === undefined ? .6 : .8;
     const pose: RestingPose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt, ax: 0, az: 0, bx: 0, bz: 0, radius, body: e };
     const clear = (x: number, z: number) => {
       pose.x = x; pose.z = z; pose.ax = x - dx * .15; pose.az = z - dz * .15; pose.bx = x + dx * length; pose.bz = z + dz * length;
@@ -68,7 +70,7 @@ export class CorpseLayout {
       const distance = ring * .3, samples = Math.max(12, ring * 6);
       for (let i = 0; i < samples; i++) {
         const angle = yaw + i * Math.PI * 2 / samples, x = e.transform.x + Math.cos(angle) * distance, z = e.transform.z + Math.sin(angle) * distance;
-        if (clear(x, z) && this.world.infected!.nav.visible(e.transform, { x, z }, .35)) { found = true; break search; }
+        if (clear(x, z) && this.world.infected!.nav.visible(from, { x, z }, .35)) { found = true; break search; }
       }
     }
     // A fully enclosed support can have no free footprint. Keep the body on

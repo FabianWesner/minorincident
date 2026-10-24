@@ -234,6 +234,9 @@ export class CrowdAccessories extends Group {
   corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
     const look = this.look(e);
     if (!look.accessory || head < 0) return source;
+    // Wide brims obscure the ground silhouette in a permanent corpse field.
+    // Keep the complete body/head; settled hats no longer crown the dead pile.
+    if (definitions.get(look.accessory)?.slot === 'hat') return source;
     const accessory = this.batches.get(`${look.accessory}:lod1`);
     if (!accessory) return source;
     const key = `${source.uuid}/${model}/${look.accessory}/${head}`;

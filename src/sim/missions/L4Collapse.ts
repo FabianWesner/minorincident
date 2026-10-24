@@ -176,14 +176,27 @@ export class L4Collapse {
     const goal = this.h.snap(pt(D.retreat[g.i % D.retreat.length]), .35), ai = world.infected!;
     const door = this.h.doors().filter(dd => ai.director.offscreen(dd) && dist(dd, player) >= 12).sort((a, b) => dist(a, goal) - dist(b, goal))[0];
     const from = door ?? pt(l4Edges[g.i === 0 ? 2 : g.i === 1 ? 3 : 4].at);
-    const victims = groups[g.i].map(id => this.soldier(id)!);
-    for (let k = 0; k < this.tier(D.cutOff); k++) {
-      const id = this.h.emerge({ x: from.x + (k % 3 - 1) * .9, z: from.z + Math.floor(k / 3) * .9 }, true); if (!id) break;
-      this.d.spawned++;
-      const victim = victims[k % victims.length];
-      ai.press(id, victim.id, world.tick + ticks(dist(from, victim.transform) / 1.6 + 20), 30);
-    }
     this.d.cutOff = [...groups[g.i]];
+    this.d.cutOffSource = from; this.d.cutOffPending = this.tier(D.cutOff);
+    this.releaseCutOff();
+  }
+  /** The army's retreat cohort keeps its quota through temporary cap pressure. */
+  releaseCutOff(): void {
+    const d = this.d, from = d.cutOffSource;
+    if (!from || !d.cutOffPending) return;
+    const ai = this.world.infected!, room = ai.director.cap - ai.director.reserved - ai.director.pendingTurns - ai.director.count;
+    if (room < d.cutOffPending) return;
+    const victims = d.cutOff.map(id => this.soldier(id)).filter((e): e is EntitySnapshot => !!e);
+    const targets = victims.length ? victims : this.s.soldierIds.map(id => this.soldier(id)).filter((e): e is EntitySnapshot => !!e);
+    if (!targets.length) return;
+    while (d.cutOffPending > 0) {
+      const k = this.tier(D.cutOff) - d.cutOffPending;
+      const at = this.h.snap({ x: from.x + (k % 3 - 1) * .9, z: from.z + Math.floor(k / 3) * .9 }, .45);
+      const id = this.h.emerge(at, true); if (!id) return;
+      d.spawned++; d.cutOffPending--;
+      const victim = targets[k % targets.length];
+      this.world.infected!.press(id, victim.id, this.world.tick + ticks(dist(at, victim.transform) / 1.6 + 20), 30);
+    }
   }
   /** Short camera beat on the collapse (mission cinematic: <= 2 s, the sim pauses, skippable after 0.5 s). Skipped while another one runs. */
   private camera(id: string): void { if (this.h.mission.def.cinematics[id]) this.h.mission.cinematic(id); }

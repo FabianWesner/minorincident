@@ -28,7 +28,7 @@ test('native and civilian corpse pages share a non-overlapping ground layout', (
   for (let i = 0; i < poses.length; i++) for (let j = 0; j < i; j++) {
     const a = poses[i], b = poses[j];
     for (let s = 0; s <= 10; s++) for (let t = 0; t <= 10; t++)
-      expect(Math.hypot(a.ax + (a.bx - a.ax) * s / 10 - b.ax - (b.bx - b.ax) * t / 10, a.az + (a.bz - a.az) * s / 10 - b.az - (b.bz - b.az) * t / 10)).toBeGreaterThanOrEqual(.76 - 1e-8);
+      expect(Math.hypot(a.ax + (a.bx - a.ax) * s / 10 - b.ax - (b.bx - b.ax) * t / 10, a.az + (a.bz - a.az) * s / 10 - b.az - (b.bz - b.az) * t / 10)).toBeGreaterThanOrEqual(1.2 - 1e-8);
   }
 });
 

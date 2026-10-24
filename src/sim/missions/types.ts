@@ -228,6 +228,8 @@ export interface L4Director {
   alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'tank' | 'done'; startedAt: number; hold?: { x: number; z: number }; breach?: 'west' | 'north' | 'south' }[];
   /** Alpha hits that knocked a soldier down, E26 slots broken, people who turned inside a line, infected spawned by the director, the soldiers cut off. */
   knockdowns: number; barricades: number; turnedInside: number; spawned: number; cutOff: number[];
+  /** Retained retreat cohort demand when ordinary concurrency admission is full. */
+  cutOffPending?: number; cutOffSource?: { x: number; z: number };
   swarmedAt: number; fallBackAt: number; settled: number;
   /** Tick the next street car catches fire after the line break (staggered so the blasts do not land in one frame); 0 = none pending. */
   burnAt: number;
