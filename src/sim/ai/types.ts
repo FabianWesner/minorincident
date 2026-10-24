@@ -23,6 +23,8 @@ export interface InfectedState {
   scripted?: { x: number; z: number };
   /** L4 street group: finish the breach crossing before acquiring a defender. */
   breachApproach?: 'outside' | 'inside';
+  /** L4: finish a defender flank when the courier's corpse field is saturated. */
+  l4FlankTarget?: number;
   /** L4's bounded walk off the escape street; released after crossing its edge or the window ends. */
   clearingStreet?: true;
   /** E32 Mega Alpha: movement owned by MegaPursuit (no sight, hearing or lure); survives checkpoints with the entity. */

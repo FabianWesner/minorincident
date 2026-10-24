@@ -55,6 +55,7 @@ test('a pooled tent resident returns as an ordinary street arrival without doorw
   const { world } = await loadL4(3, 'low'), ai = world.infected!;
   const id = ai.spawn('infected.runner', { x: 8, z: 0 }), resident = world.entities.get(id)!;
   resident.emerging = true;
+  resident.infected!.l4FlankTarget = 999;
   resident.doorLane = { x: 8, z: 0, ox: 0, oz: 1, half: .6, start: -1, end: 1 };
   ai.release(resident);
   const next = world.entities.get(ai.spawn('infected.runner', { x: 8, z: 0 }))!;
@@ -62,5 +63,6 @@ test('a pooled tent resident returns as an ordinary street arrival without doorw
   expect(next.id).not.toBe(id);
   expect(next.emerging).toBeUndefined();
   expect(next.doorLane).toBeUndefined();
+  expect(next.infected!.l4FlankTarget).toBeUndefined();
   world.dispose();
 });
