@@ -3,6 +3,7 @@ import { Color, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Texture, 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
+import { float } from 'three/tsl';
 import { bakeInfected, framesPerClip } from '../../../src/render/characters/bakeInfected';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
@@ -19,6 +20,13 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     const atlas = new Texture();
     root.traverse(node => { if (node instanceof Mesh && node.name.startsWith('suit_')) (node.material as MeshLambertNodeMaterial).map = atlas; });
     root.updateMatrixWorld(true);
+    const eyes: Mesh[] = [];
+    root.traverse(node => { if (node instanceof Mesh && node.userData.crowdEye === true) eyes.push(node); });
+    expect(eyes).toHaveLength(2);
+    for (const eye of eyes) {
+      expect(eye.parent?.name).toBe('head');
+      expect(eye.geometry.index!.count / 3).toBe(2);
+    }
     for (const name of ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR']) {
       const cap = root.getObjectByName(`stump_${name}`) as Mesh;
       expect(cap.userData.hidden).toBe(true);
@@ -30,6 +38,9 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     expect(baked.texture).toBe(atlas);
     const p = baked.geometry.getAttribute('position'), uv = baked.geometry.getAttribute('uv'), part = baked.geometry.getAttribute('_part_index');
     const normals = baked.geometry.getAttribute('normal');
+    const stableEyeVertices = Array.from({ length: p.count }, (_, i) => i).filter(i => baked.geometry.getAttribute('_emissive').getX(i) === 2);
+    expect(stableEyeVertices).toHaveLength(8);
+    for (const i of stableEyeVertices) expect(part.getX(i)).toBe(baked.clip.parts.indexOf('head'));
     for (let i=0;i<normals.count;i++) expect(Math.hypot(normals.getX(i),normals.getY(i),normals.getZ(i)), `${lod}: source normal ${i}`).toBeGreaterThan(.9);
     expect(uv.count).toBe(p.count); expect(baked.geometry.index!.count / 3).toBeLessThanOrEqual(budget);
     // The reconstructed face is asymmetric. Both eye neighbourhoods must retain
@@ -52,9 +63,12 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     }
     packCrowdParts(baked.geometry);
     const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+    const eyeSurfaceMask = float(1).greaterThan(0);
+    material.userData.frozenSurfaceMask = eyeSurfaceMask;
     const frame = clips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
     pool.place({ id: 3, corpse: true } as EntitySnapshot, 'suit', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
     const frozen = (pool.children[0] as InstancedMesh).geometry.getAttribute('uv');
+    expect(((pool.children[0] as InstancedMesh).material as MeshLambertNodeMaterial).maskNode).toBe(eyeSurfaceMask);
     const flags = baked.geometry.getAttribute('_parts'), kept = Array.from({ length: uv.count }, (_, i) => i).filter(i => flags.getW(i) < 1024);
     expect(frozen.count).toBe(kept.length);
     kept.forEach((source, i) => { expect(frozen.getX(i)).toBe(uv.getX(source)); expect(frozen.getY(i)).toBe(uv.getY(source)); });

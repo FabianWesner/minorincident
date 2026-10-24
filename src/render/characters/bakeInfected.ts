@@ -202,7 +202,9 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       const eyeRegion = preserveUV && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;
-      emissive[i] = Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || preserveUV && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
+      // Authored eye discs use the existing flag/UV channels; they must survive
+      // minification independently of the colour atlas's tiny red texels.
+      emissive[i] = node.userData.crowdEye === true ? 2 : Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || preserveUV && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
     if (preserveUV) geometry.setAttribute('_vein', new BufferAttribute(new Float32Array(count).fill(cap ? 1024 + capIndex : 0), 1));

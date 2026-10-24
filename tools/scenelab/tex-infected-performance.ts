@@ -65,7 +65,7 @@ try {
         if (variant === 'after' && scene === 'L1') {
           const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
           if (!textured) throw new Error('L1 mix contains no textured common worker');
-          await session.page.screenshot({path:resolve(worktree,`docs/reports/tex-infected/L1-${backend}.png`)});
+          await session.page.screenshot({path:resolve(worktree,`/private/tmp/tex-infected-readability/L1-${backend}.png`)});
         }
         receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
         console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));

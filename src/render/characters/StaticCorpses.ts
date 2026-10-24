@@ -269,14 +269,14 @@ export class StaticCorpses extends Group {
         if (material instanceof PaletteMaterial) {
           let shared = sharedFrozenMaterials.get(material);
           if (!shared) {
-            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null; copy.maskNode = null;
+            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null; copy.maskNode = material.userData.frozenSurfaceMask ?? null;
             shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
           }
           shared.users++; frozenMaterial = shared.material;
         } else {
           // Plain fallback materials retain their per-pool value snapshot.
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
-          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = null;
+          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = material.userData.frozenSurfaceMask ?? null;
         }
         this.frozenMaterials.set(material, frozenMaterial);
       }
