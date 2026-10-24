@@ -91,7 +91,7 @@ export const l4 = {
      * and staggered. `inside`: during the war grouped arrivals come from separated, concealed camp exits (`l4Inside`)
      * each `insideEveryS`, only when an exit is out of view or hidden behind a building and at least `minM` from the courier.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [12, 14] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 125 } },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [12, 14] as P, minM: 6, bodyField: { radiusM: 6, count: 40, activeFloor: 8, outerCount: 115 } },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
