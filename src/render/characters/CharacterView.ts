@@ -73,6 +73,8 @@ export class CharacterView extends Group {
   private readonly appliedRotation = new Quaternion();
   cpuMs = 0;
   get skinActive(): boolean { return this.riders.has(this.variant); }
+  /** Rest-pose ankle height above the sole (rig units) of the drawn skinned courier: the ground contacts' own sole. */
+  get restSole(): number | undefined { return this.riders.get(this.variant)?.soleHeight; }
   /** Held gear remains stowed until the hands have released the bicycle. */
   get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
   private prepareVariant?: (variant: SurvivorVariant) => Promise<void>;
