@@ -55,3 +55,12 @@ A living record, updated after every lane or experiment. Short entries with evid
   - lanes leave captures in the shared scratchpad and can delete files there;
   - never `git worktree remove --force` directly: untracked evidence (bot logs, captures) lives in the worktree and gets lost (10-23: the L5 gate logs were lost that way). Use the guard script, and copy test-results/playtest/<run>/ first;
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
+
+### 2026-10-24 — Zebra source, rigid atlas and delivery checks
+
+- Rename an authored GLB node called `world` before flattening with trimesh: it collides with trimesh's implicit graph root and can silently discard the game-space wrapper transform. Check source bounds before reduction.
+- Remove reconstruction floaters with semantic exceptions for mane/tail details. Dense coplanar sole patches can consume a quadric reducer's entire budget; replace them with simple closed soles and reserve triangles for joint closure.
+- Preserve UVs, opaque-part masks and the registry-owned map through both live crowd bakes and frozen corpse pages. Interleave static attributes to keep the additional UV within backend buffer limits. Budget decoded atlas uploads and mip allocations, rather than WebP file size.
+- Geometry-only Node probes should reuse `stripGlbTextures`; verify actual image decoding, texture sampling and corpse retention in the browser separately.
+- A melee downing can recover. For permanent-corpse acceptance, deliver a permanent damage event and inspect the frozen body after retirement and again after 30 seconds.
+- Large terrain horizons need float positions to preserve their streamed support edges. Normal-only quantization in the current glTF Transform release needs an explicit `KHR_mesh_quantization` flag; test seams as well as delivery metadata.

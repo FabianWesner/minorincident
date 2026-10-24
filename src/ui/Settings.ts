@@ -9,7 +9,6 @@ export interface UISettings {
   colorblind: boolean;
   quality: 'high' | 'low' | 'auto';
   muted: boolean;
-  /** Experimental character art, applied on the next level load. */
   /** E27 bullet time on big nearby blasts. */
   slowMotion: boolean;
 }
