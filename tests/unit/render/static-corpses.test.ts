@@ -346,6 +346,22 @@ test('a stationary courier reuses settled placement; walking rechecks its footpr
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
 
+test('removed headwear identities share a frozen body page while retaining per-instance appearance', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  try {
+    for (const id of [2, 3]) {
+      const e = { id, archetype: 'infected.runner', corpse: true, transform: { x: id, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+      const look = { ...resolveCrowdAppearance(e), accessory: `removed-hat-${id}`, hidesHair: true };
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(id, 0, 0), new Color(id === 2 ? 'red' : 'blue'), [0, 0, 0], String(id), [], look);
+    }
+    expect(pool.children).toHaveLength(1);
+    expect(pool.snapshot().instances).toBe(2);
+    const page = pool.children[0] as InstancedMesh, tint = page.geometry.getAttribute('_variant');
+    expect(tint.getX(0) % 2).not.toBe(tint.getX(1) % 2);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
 test('permanent frozen bodies drop the live fade mask while the living material keeps it', () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
   const liveMask = vec3(1).x.greaterThan(.5); material.maskNode = liveMask;
