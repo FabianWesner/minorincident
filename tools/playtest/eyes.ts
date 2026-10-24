@@ -61,10 +61,15 @@ export function look(): Eyes {
       const enemy = e.faction === 'infected' && !e.emerging && !e.infectionRise;
       if (!ally && !enemy) continue;
       if (enemy && (e.corpse || e.health.current <= 0)) continue;
-      if (!a.input.visible(e.transform)) continue;
+      // The ground navigation ray also blocks on waist-high cover. L4 sees
+      // submitted bodies over that cover; solid buildings still occlude them.
+      if (enemy && m?.id === 'L4') {
+        const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
+        if (world.infected?.director.occluded(e.transform)) continue;
+      } else if (!a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
       const joints = figures.get(e.id)?.joints;
-      if (enemy && !joints) continue;
+      if (enemy && !figures.has(e.id)) continue;
       // Aim at the drawn chest, including a lunge or a fall. A fixed offset above the feet misses bodies
       // at different zooms and can become a ground click; only rendered, on-screen enemies are targets.
       let aim = { x: s.x, y: s.y - 18 };
@@ -100,7 +105,7 @@ export function look(): Eyes {
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
-    healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })) : [],
+    healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h && !document.elementFromPoint(k.screen.x, k.screen.y)?.closest('button, input, select, textarea, [role="dialog"]')) : [],
     enemies, allies, view,
   };
 }

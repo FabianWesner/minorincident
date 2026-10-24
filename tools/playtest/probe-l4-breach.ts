@@ -28,11 +28,17 @@ try {
       alpha: alpha ? { id: alpha.id, health: alpha.health, infected: { recoverAt: alpha.infected?.recoverAt }, transform: alpha.transform } : null };
   });
   const shot = async (name: string) => { await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady(); }); await page.screenshot({ path: `${out}/${name}.png` }); console.log('shot', name, JSON.stringify(await state())); };
-  const until = async (done: (s: Awaited<ReturnType<typeof state>>) => boolean, max: number) => { for (let i = 0; i < max; i += 30) { const s = await state(); if (done(s)) return; await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: -29, z: 4 }); await a.step(30); }); } throw new Error('Capture beat did not occur within its deadline'); };
+  let courier = { x: -29, z: 4 };
+  const until = async (done: (s: Awaited<ReturnType<typeof state>>) => boolean, max: number) => { for (let i = 0; i < max; i += 30) { const s = await state(); if (done(s)) return; await page.evaluate(async courier => { const a = window.__SS__!; a.teleport('player', courier); await a.step(30); }, courier); } throw new Error('Capture beat did not occur within its deadline'); };
   await until(s => s.tick - s.turnAt > 25 * 60, 40 * 60); await shot('1-pile-at-the-wire');
   await until(s => !!s.west?.announcedAt && s.tick - s.west.announcedAt > 7 * 60, 40 * 60); await shot('2-alpha-battering');
   await until(s => !!s.west?.openAt, 40 * 60); await page.evaluate(() => window.__SS__!.step(40)); await shot('3-breach-open');
   await until(s => !!s.alpha && s.alpha.health.current <= 0, 30 * 60); await shot('4-soldier-approaches-downed-alpha');
   await until(s => !!s.alpha && s.alpha.health.current <= 0 && (s.alpha.infected?.recoverAt ?? 0) < 0, 45 * 60); await shot('5-soldier-finishes-alpha');
   await until(s => !!s.west?.openAt && s.tick - s.west.openAt > 8 * 60, 20 * 60); await shot('6-flood');
+  // Matched before/after views use the timing probe's courier position.
+  courier = { x: -22.85, z: .7 };
+  await page.evaluate(async courier => { const a = window.__SS__!; await a.loadLevel('L4', { seed: 3, checkpoint: 'turn', progression: 'L4-default' }); a.pause(); a.cheats.god(true); a.teleport('player', courier); a.camera.follow(); a.camera.zoom(1.5); }, courier);
+  await until(s => s.tick - s.turnAt >= 90 * 60, 100 * 60); await shot('after-90s');
+  await until(s => s.tick - s.turnAt >= 150 * 60, 70 * 60); await shot('after-150s');
 } finally { await browser.close(); }
