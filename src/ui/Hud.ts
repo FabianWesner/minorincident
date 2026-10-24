@@ -1,7 +1,6 @@
 import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { l5Survivors } from '../data/l5';
-import { l4CellarDistance } from '../data/l4';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
 import { SurvivorRadar } from './SurvivorRadar';
@@ -276,7 +275,7 @@ export class Hud {
     attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
-    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? l4CellarDistance({ x: px, z: pz }, this.cellarTurn) : null;
+    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? mission.l4!.cellarDistance(this.cellarTurn) : null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     if (cellarDistance !== null) this.place(this.routePin, this.cellarTurn.x, this.cellarTurn.z, px, pz, true);
     setHidden(this.objectivePin, !anchor);

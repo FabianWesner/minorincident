@@ -1,7 +1,6 @@
 import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { markerAnchor } from '../sim/missions/markerAnchor';
-import { l4CellarDistance } from '../data/l4';
 // Notification identity/text presentation adapted from Bruno Simon folio-2025
 // Notifications.js (MIT, 41046b5); sim tick deadlines replace wall-clock timers.
 import { Vector3 } from 'three';
@@ -103,7 +102,7 @@ export class MissionUI {
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
     const anchor=markerAnchor(mission),player=this.world.entities.get(1);
-    const cellarDistance = playing && player && mission.def.l4 && state.l4?.phase === 'collapse' ? l4CellarDistance(player.transform, this.cellarTurn) : null;
+    const cellarDistance = playing && player && mission.def.l4 && state.l4?.phase === 'collapse' ? mission.l4!.cellarDistance(this.cellarTurn) : null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     setHidden(this.marker,storyShot||!!this.world.storyLock||!!this.world.l7Departure?.cinematic||!playing||!anchor||!player);
     if(player&&objective&&playing){

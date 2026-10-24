@@ -55,3 +55,18 @@ test('@E22 a real L4 armory-table corner cannot trap an outward click', async ()
   const p = w.entities.get(1)!.transform;
   expect(Math.hypot(p.x - target.x, p.z - target.z)).toBeLessThan(1);
 }, 120_000);
+
+
+test('@E22 cellar guidance gives a reachable turn from the armory chair corner', async () => {
+  const loaded = await loadL4(1, 'low'); world = loaded.world;
+  while (loaded.mission.state.l4!.phase === 'convoy') world.update();
+  const corner = { x: -20.70009422302246, z: -6.535141944885254 };
+  place(world, corner);
+  for (let i = 0; i < 600; i++) {
+    const target = { x: 0, z: 0 }; loaded.mission.l4!.cellarDistance(target);
+    const p = world.entities.get(1)!.transform, dx = target.x - p.x, dz = target.z - p.z, length = Math.hypot(dx, dz) || 1;
+    world.applyInput({ ...emptyInput(), move: { x: dx / length, z: dz / length } }, 'keyboard'); world.update();
+  }
+  const p = world.entities.get(1)!.transform;
+  expect(Math.hypot(p.x - corner.x, p.z - corner.z)).toBeGreaterThan(10);
+}, 120_000);
