@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
 const report = resolve(worktree, 'docs/reports/tex-infected/performance.json');
-const receipts: unknown[] = [];
+const receipts: { variant: string; scene: string; backend: string; p95: number; maxCrowdDraws: number; triangles: number; errors: string[] }[] = [];
 try {
   for (const backend of ['webgl2', 'webgpu'] as Backend[]) for (const variant of ['main', 'after', 'after', 'main']) {
     process.chdir(variant === 'main' ? main : worktree);
@@ -51,4 +51,14 @@ try {
     // Wait for the owned preview listener to close before switching source roots.
     for (let i = 0; i < 20; i++) { try { await fetch('http://127.0.0.1:4492'); await new Promise(r => setTimeout(r, 100)); } catch { break; } }
   }
+  const median = (values: number[]) => { const sorted = values.slice().sort((a,b)=>a-b); return (sorted[Math.floor((sorted.length-1)/2)]+sorted[Math.ceil((sorted.length-1)/2)])/2; };
+  const comparisons = ['webgl', 'webgpu'].flatMap(backend => ['crowd-200', 'L1'].map(scene => {
+    const rows = receipts.filter(r => r.backend === backend && r.scene === scene);
+    const before = median(rows.filter(r=>r.variant==='main').map(r=>r.p95)), after = median(rows.filter(r=>r.variant==='after').map(r=>r.p95));
+    const ratio = after/before, deltaMs = after-before;
+    return { backend, scene, before, after, ratio, deltaMs, draws: Math.max(...rows.filter(r=>r.variant==='after').map(r=>r.maxCrowdDraws)), passed: rows.length===4 && (scene==='crowd-200' ? ratio<=1.1 : deltaMs<=1) };
+  }));
+  writeJson(resolve(worktree,'docs/reports/tex-infected/performance-summary.json'),comparisons);
+  console.log(JSON.stringify(comparisons));
+  if (comparisons.some(c=>!c.passed)) throw new Error('Main/lane performance budget failed');
 } finally { stopServer(); process.chdir(worktree); writeJson(report, receipts); }

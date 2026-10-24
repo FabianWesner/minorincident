@@ -102,7 +102,7 @@ const addMesh = (name, owner, tris, mat, textured = true) => {
     const values = [];
     for (const tri of tris) for (const vi of tri) {
       let v = input.getElement(vi, []);
-      if (semantic === 'POSITION') { const p = convert(v); v = p.map((n, i) => n - absolute[owner][i]); if (owner === 'head') v = headUp(v); }
+      if (semantic === 'POSITION') { const p = convert(v); v = p.map((n, i) => n - absolute[owner][i]); if (owner === 'head') v = headUp(v).map(n => n * 1.025); }
       else if (semantic === 'NORMAL') { v = [-v[1], v[2], -v[0]]; if (owner === 'head') v = headUp(v); }
       values.push(...v);
     }
