@@ -2,17 +2,19 @@
 import { resolve } from 'node:path';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
+const afterDist = process.env.TEX_DIST ?? 'dist';
 const report = resolve(worktree, 'docs/reports/tex-infected/performance.json');
 const receipts: { variant: string; scene: string; backend: string; p95: number; maxCrowdDraws: number; triangles: number; errors: string[] }[] = [];
 try {
   for (const backend of ['webgl2', 'webgpu'] as Backend[]) for (const variant of ['main', 'after', 'after', 'main']) {
     process.chdir(variant === 'main' ? main : worktree);
+    process.env.SCENE_DIST = variant === 'main' ? 'dist' : afterDist;
     const session = new SceneSession({ backend, tier: 'low', nativeFrameTiming: true, viewport: { width: 1280, height: 720 } });
     try {
       await session.open();
       for (const scene of ['crowd-200', 'L1']) {
         if (scene === 'crowd-200') {
-          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 400, dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
           await session.page.evaluate(async () => {
             const a = window.__SS__!; a.cheats.god(true);
             for (let i = 0; i < 200; i++) a.spawn('infected.sprinter', { x: i % 20 * .8 - 7.6, z: Math.floor(i / 20) * .8 - 3.6 }, { state: 'chase', variant: 'inf.common-worker' });
@@ -43,6 +45,11 @@ try {
           const state = a.getState(), perf = a.perf(); a.pause();
           return { backend: perf.backend, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
         });
+        if (variant === 'after' && scene === 'L1') {
+          const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
+          if (!textured) throw new Error('L1 mix contains no textured common worker');
+          await session.page.screenshot({path:resolve(worktree,`docs/reports/tex-infected/L1-${backend}.png`)});
+        }
         receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
         console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));
         if (session.errors.length || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
