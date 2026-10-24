@@ -31,6 +31,7 @@ A living record, updated after every lane or experiment. Short entries with evid
   - the faceting was too hard.
 - **In progress (10-23):** Sol high plus an independent critical judge (a separate codex exec, the same prompt every round, sees only draft, status quo and new renders), finishing only at ≥ 9/10 for every look. Added techniques from the PO's research: silhouette first, same-angle comparison with region-specific fixes, a reusable part library, automated geometry QA. Record the outcome here when docs/reports/alpha-polish/README.md lands.
 - **To evaluate:** WAM (geometry DSL) and blender-skills. Check the licence first, then pilot one asset (roadmap).
+- **Didn't work (10-24):** I read an L4 capture full of bodies as "action"; it was a corpse carpet (243 corpses within 14 m vs 55 on PROD). When judging a crowd capture, count living vs dead and compare with PROD at the same moment, don't eyeball density.
 - **Worked:** the orchestrator looks at the sheets itself. Lanes' own visual verdicts are often too kind ("reads clearly" while hats were 2.5× head width).
 
 ## Performance
@@ -54,3 +55,15 @@ A living record, updated after every lane or experiment. Short entries with evid
   - lanes leave captures in the shared scratchpad and can delete files there;
   - never `git worktree remove --force` directly: untracked evidence (bot logs, captures) lives in the worktree and gets lost (10-23: the L5 gate logs were lost that way). Use the guard script, and copy test-results/playtest/<run>/ first;
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
+
+### 2026-10-24 — Zebra source, rigid atlas and delivery checks
+
+- Rename an authored GLB node called `world` before flattening with trimesh: it collides with trimesh's implicit graph root and can silently discard the game-space wrapper transform. Check source bounds before reduction.
+- Remove reconstruction floaters with semantic exceptions for mane/tail details. Dense coplanar sole patches can consume a quadric reducer's entire budget; replace them with simple closed soles and reserve triangles for joint closure.
+- Preserve UVs, opaque-part masks and the registry-owned map through both live crowd bakes and frozen corpse pages. Interleave static attributes to keep the additional UV within backend buffer limits. Budget decoded atlas uploads and mip allocations, rather than WebP file size.
+- Geometry-only Node probes should reuse `stripGlbTextures`; verify actual image decoding, texture sampling and corpse retention in the browser separately.
+- A melee downing can recover. For permanent-corpse acceptance, deliver a permanent damage event and inspect the frozen body after retirement and again after 30 seconds.
+- Large terrain horizons need float positions to preserve their streamed support edges. Normal-only quantization in the current glTF Transform release needs an explicit `KHR_mesh_quantization` flag; test seams as well as delivery metadata.
+- A shared material cache must evict atlas materials on the registry-owned texture’s disposal event, even when the global material system outlives a level. Test injected shared ownership as well as standalone registry disposal.
+- Inspection ghost removes the courier from AI human-target queries. Keep the courier present for real projectile-impact acceptance, assert actual health loss, and enable ghost only for the later cooldown observation.
+- Before repairing a browser assertion, compare it with the current runtime and unit contract: the health-bar fixture still expected an empty bar on a downed body after main had changed eligibility to living actors only. Keep the recovery and permanent-death checks.

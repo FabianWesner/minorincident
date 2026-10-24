@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { BoxGeometry, DirectionalLight, Group, InstancedMesh, LineSegments, LineBasicNodeMaterial, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, DataTexture, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
+import { BoxGeometry, DirectionalLight, Group, InstancedMesh, LineSegments, LineBasicNodeMaterial, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, DataTexture, Texture, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
 import { compileLanes, preRender, warmUpSize } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
 
@@ -142,9 +142,9 @@ for (const background of [false, true]) test(`@transition ${background ? 'backgr
 });
 
 
-test('@E18 WebGPU pose uploads yield within 4 MiB and finish before pipeline compilation', async () => {
+test.each(['pose', 'atlas'])('@E18 WebGPU %s uploads yield within 4 MiB and finish before pipeline compilation', async kind => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
-  const textures = Array.from({ length: 3 }, () => new DataTexture(new Float32Array(600_000), 75, 2000));
+  const textures = Array.from({ length: 3 }, () => kind === 'pose' ? new DataTexture(new Float32Array(600_000), 75, 2000) : new Texture({ width: 1024, height: 1024 }));
   const leaves = textures.map(texture => { const mesh = new Mesh(geometry, material); mesh.userData.preRenderTextures = [texture]; return mesh; });
   scene.add(...leaves);
   const calls: string[] = [], initTexture = vi.fn(() => calls.push('upload'));

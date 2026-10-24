@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { Box3, Matrix4, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -22,7 +23,7 @@ for (const quality of ['high', 'low']) for (const lod of ['lod0', 'lod1', 'lod2'
   test(`every civilian, ally and infected skin has its age/species height in ${quality} ${lod} @E08 @E18`, async () => {
     for (const skin of skins) {
       const file = readFileSync(lod === 'lod0' ? skin.glb : skin.lods?.[lod] ?? skin.glb);
-      const model = (await loader.parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '')).scene;
+      const model = (await loader.parseAsync(stripGlbTextures(file), '')).scene;
       const npc = skin.id.startsWith('npc.');
       if (npc) { restoreStanding(model); fitCivilianHeight(model, skin.id); }
       const target = npc ? civilianHeight(skin.id) : skin.dimensions.y;

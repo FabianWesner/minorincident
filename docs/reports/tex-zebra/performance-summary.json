@@ -1,0 +1,50 @@
+[
+  {
+    "backend": "webgl2",
+    "mainP95Ms": 4.150000000001455,
+    "replacementP95Ms": 4.400000000000091,
+    "deltaMs": 0.25,
+    "mainDrawCallsMax": 153,
+    "replacementDrawCallsMax": 153,
+    "mainTrianglesMax": 132093,
+    "replacementTrianglesMax": 132054,
+    "simulationTicks": [
+      960,
+      960,
+      960,
+      960
+    ],
+    "samples": [
+      4478,
+      4609,
+      4494,
+      4915
+    ],
+    "decodedAtlasBytes": 5592400,
+    "pass": true
+  },
+  {
+    "backend": "webgpu",
+    "mainP95Ms": 3.300000000000182,
+    "replacementP95Ms": 3.299999999998363,
+    "deltaMs": -0.0,
+    "mainDrawCallsMax": 153,
+    "replacementDrawCallsMax": 153,
+    "mainTrianglesMax": 132093,
+    "replacementTrianglesMax": 132054,
+    "simulationTicks": [
+      960,
+      960,
+      960,
+      960
+    ],
+    "samples": [
+      7331,
+      6546,
+      6922,
+      6210
+    ],
+    "decodedAtlasBytes": 5592400,
+    "pass": true
+  }
+]

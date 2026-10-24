@@ -7,9 +7,9 @@ import type { Document } from '@gltf-transform/core';
 import { KHRTextureBasisu } from '@gltf-transform/extensions';
 import { getTextureColorSpace, listTextureSlots } from '@gltf-transform/functions';
 
-/** Texture-free palette assets need no external encoder. Atlases require toktx. */
+/** Preserve reviewed WebP/KTX2 deliveries; PNG atlases use the offline toktx stage. */
 export function compressTextures(document: Document, binary = process.env.TOKTX_BIN ?? 'toktx', maxSize = 1024): void {
-  const textures = document.getRoot().listTextures().filter(t => t.getMimeType() !== 'image/ktx2');
+  const textures = document.getRoot().listTextures().filter(t => !['image/ktx2', 'image/webp'].includes(t.getMimeType()));
   if (!textures.length) return;
   const directory = mkdtempSync(join(tmpdir(),'minor-incident-ktx-'));
   try {

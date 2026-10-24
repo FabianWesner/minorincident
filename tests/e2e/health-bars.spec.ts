@@ -73,9 +73,9 @@ for (const [width, height, tier] of [[1600, 900, 'high'], [390, 844, 'low'], [84
       const projected = await session.page.evaluate(anchor => window.__SS__!.camera.project(anchor[0], anchor[1], anchor[2]), bars.bars[0].anchor);
       expect(Math.abs((projected[0] + 1) / 2 * width - bars.bars[0].x)).toBeLessThanOrEqual(2);
       expect(Math.abs((1 - projected[1]) / 2 * height - bars.bars[0].y)).toBeLessThanOrEqual(2);
-      // Recoverable death keeps an empty bar; explosive death removes it.
+      // Downed bodies lose their bar; recovery restores it; explosive death removes it.
       await session.page.evaluate(async () => { window.__SCENE__!.command('near', { hit: { amount: 1000 } }); await window.__SS__!.step(0); });
-      bars = await state(); expect(bars.count).toBe(1); expect(bars.bars[0].fraction).toBe(0);
+      bars = await state(); expect(bars.count).toBe(0);
       await session.page.evaluate(async id => { const a = window.__SS__!; await a.step(a.getEntity(id)!.infected!.recoverAt - a.tick() + 1); }, id);
       expect((await state()).bars[0].fraction).toBe(1);
       await session.page.evaluate(async () => { window.__SCENE__!.effect({ blast: 'explosion.car', at: [-3, 0] }); await window.__SCENE__!.step(1); });

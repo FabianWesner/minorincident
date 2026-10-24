@@ -1,0 +1,1353 @@
+{
+  "status": "deferred_by_orchestrator",
+  "note": "The first three timeouts were reported before the later WebGPU-low timeout. Retries stopped at the orchestrator time-box decision; no thresholds changed.",
+  "cases": [
+    {
+      "case": "webgl-high",
+      "completedSamples": 14,
+      "expectedSamples": 16,
+      "timeoutMs": 360000,
+      "partialReceiptSha256": "aa4963e5950bc553fccab5d3859ea0a605148e4a499db545876a733b60ebdb71",
+      "reportedEarlier": true,
+      "samples": [
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 136,
+          "triangles": 145300,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 134,
+          "triangles": 144980,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 76,
+          "triangles": 148896,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 66,
+          "triangles": 144506,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 71,
+          "triangles": 142873,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 65,
+          "triangles": 127989,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 76,
+          "triangles": 145749,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 72,
+          "triangles": 141755,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 85,
+          "triangles": 152048,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 76,
+          "triangles": 148383,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 74,
+          "triangles": 145261,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 71,
+          "triangles": 139743,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 3,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 82,
+          "triangles": 144740,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 3,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 78,
+          "triangles": 141898,
+          "alphas": 3,
+          "drawnAlphas": 3
+        }
+      ]
+    },
+    {
+      "case": "webgl-low",
+      "completedSamples": 13,
+      "expectedSamples": 16,
+      "timeoutMs": 360000,
+      "partialReceiptSha256": "a291903bbcf005dbf1bcf209518d2a521c962ddd5a07701a4852859228b57bf1",
+      "reportedEarlier": true,
+      "samples": [
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 127,
+          "triangles": 102532,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 126,
+          "triangles": 102452,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 65,
+          "triangles": 94202,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 60,
+          "triangles": 92606,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 60,
+          "triangles": 91189,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 57,
+          "triangles": 86937,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 67,
+          "triangles": 102829,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 62,
+          "triangles": 101179,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 72,
+          "triangles": 96913,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 67,
+          "triangles": 95759,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 65,
+          "triangles": 98725,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 61,
+          "triangles": 98679,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 2,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgl",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 73,
+          "triangles": 96417,
+          "alphas": 2,
+          "drawnAlphas": 2
+        }
+      ]
+    },
+    {
+      "case": "webgpu-high",
+      "completedSamples": 15,
+      "expectedSamples": 16,
+      "timeoutMs": 360000,
+      "partialReceiptSha256": "e7306eed2f4ffbc141ad03fc5f17e59dff32d1c09a940247c7cc7c7482de2041",
+      "reportedEarlier": true,
+      "samples": [
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 136,
+          "triangles": 145300,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 134,
+          "triangles": 144980,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 76,
+          "triangles": 148896,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 66,
+          "triangles": 144506,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 71,
+          "triangles": 142873,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 65,
+          "triangles": 127989,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 76,
+          "triangles": 145749,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 72,
+          "triangles": 141755,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 85,
+          "triangles": 152048,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 76,
+          "triangles": 148383,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 74,
+          "triangles": 145261,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 71,
+          "triangles": 139743,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 3,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 82,
+          "triangles": 144740,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 3,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 0.5001770385354753,
+          "draws": 78,
+          "triangles": 141898,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L5",
+          "at": [
+            -14,
+            8
+          ],
+          "count": 2,
+          "player": {
+            "x": -14,
+            "y": 0.7049999833106995,
+            "z": 8,
+            "yaw": -1.5707963267948966
+          },
+          "backend": "webgpu",
+          "tier": "high",
+          "zoom": 1,
+          "draws": 168,
+          "triangles": 408132,
+          "alphas": 2,
+          "drawnAlphas": 2
+        }
+      ]
+    },
+    {
+      "case": "webgpu-low",
+      "completedSamples": 15,
+      "expectedSamples": 16,
+      "timeoutMs": 360000,
+      "partialReceiptSha256": "91db60e4af3c0f4289ec94cbd478c771d632a27079f3f4cec39d29a6b7c91573",
+      "reportedEarlier": false,
+      "samples": [
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 127,
+          "triangles": 102532,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            547,
+            0
+          ],
+          "checkpoint": "cure-crash",
+          "region": "crash-outskirts",
+          "count": 0,
+          "player": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 126,
+          "triangles": 102452,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 65,
+          "triangles": 94202,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            937,
+            80
+          ],
+          "checkpoint": "cure-residential",
+          "region": "residential-fringe",
+          "count": 0,
+          "player": {
+            "x": 937,
+            "y": 0.7049999833106995,
+            "z": 80,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 60,
+          "triangles": 92606,
+          "alphas": 0,
+          "drawnAlphas": 0
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 60,
+          "triangles": 91189,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            1517,
+            100
+          ],
+          "checkpoint": "cure-industrial",
+          "region": "industrial-area",
+          "count": 1,
+          "player": {
+            "x": 1517,
+            "y": 0.7049999833106995,
+            "z": 100,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 57,
+          "triangles": 86937,
+          "alphas": 1,
+          "drawnAlphas": 1
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 67,
+          "triangles": 102829,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2060,
+            -75
+          ],
+          "checkpoint": "cure-military",
+          "region": "military-zone",
+          "count": 2,
+          "player": {
+            "x": 2060,
+            "y": 0.7049999833106995,
+            "z": -75,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 62,
+          "triangles": 101179,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 72,
+          "triangles": 96913,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            2707,
+            45
+          ],
+          "checkpoint": "cure-research-entry",
+          "region": "research-campus",
+          "count": 2,
+          "player": {
+            "x": 2707,
+            "y": 0.7049999833106995,
+            "z": 45,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 67,
+          "triangles": 95759,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 65,
+          "triangles": 98725,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            3317,
+            95
+          ],
+          "checkpoint": "cure-corridor",
+          "region": "destroyed-corridor",
+          "count": 3,
+          "player": {
+            "x": 3317,
+            "y": 0.7049999833106995,
+            "z": 95,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 61,
+          "triangles": 98679,
+          "alphas": 3,
+          "drawnAlphas": 3
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 2,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 73,
+          "triangles": 96417,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L10",
+          "at": [
+            4002,
+            -27
+          ],
+          "checkpoint": "cure-complex",
+          "region": "dispersal-complex",
+          "count": 2,
+          "player": {
+            "x": 4002,
+            "y": 0.7049999833106995,
+            "z": -27,
+            "yaw": 1.6691310848665624
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 0.5001770385354753,
+          "draws": 71,
+          "triangles": 95447,
+          "alphas": 2,
+          "drawnAlphas": 2
+        },
+        {
+          "level": "L5",
+          "at": [
+            -14,
+            8
+          ],
+          "count": 2,
+          "player": {
+            "x": -14,
+            "y": 0.7049999833106995,
+            "z": 8,
+            "yaw": -1.5707963267948966
+          },
+          "backend": "webgpu",
+          "tier": "low",
+          "zoom": 1,
+          "draws": 156,
+          "triangles": 224814,
+          "alphas": 2,
+          "drawnAlphas": 2
+        }
+      ]
+    }
+  ]
+}

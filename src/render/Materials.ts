@@ -1,6 +1,6 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -14,6 +14,7 @@ export class Materials {
   readonly wind;
   readonly texture: DataTexture;
   private readonly cache = new Map<string, PaletteMaterial>();
+  private readonly textureReleases = new Map<string, () => void>();
   private readonly nearestCache = new Map<string, number>();
   private readonly swatches = paletteTokens.map(token => new Color(palette[token]));
   private readonly owned: PaletteMaterial[] = [];
@@ -92,6 +93,24 @@ export class Materials {
     if (!material) { material = new PaletteMaterial(token, this.texture, this.lighting, emissive); this.cache.set(key, material); }
     return material;
   }
+  /** Shared opaque figure atlas material; its registry owns the image lifetime. */
+  fromTexture(name: string, map: Texture, tint: Color, side: Side): PaletteMaterial {
+    const key = `texture:${map.uuid}:${tint.getHexString()}:${side}`;
+    let material = this.cache.get(key);
+    if (!material) {
+      material = this.shaded(texture(map).rgb.mul(uniform(tint.clone())));
+      material.name = name; material.color.copy(tint); material.side = side;
+      material.map = map; material.userData.sharedPalette = true;
+      this.cache.set(key, material);
+      const cached = material;
+      const release = () => {
+        map.removeEventListener('dispose', release);
+        this.textureReleases.delete(key); this.cache.delete(key); cached.dispose();
+      };
+      map.addEventListener('dispose', release); this.textureReleases.set(key, release);
+    }
+    return material;
+  }
   /** Imported hero detail swatches retain their authored colors with the same stylized shading. */
   fromColor(name: string, color: Color, emissive = 0, world = false): PaletteMaterial {
     const key = `swatch:${name}:${color.getHexString()}:${emissive}:${world}`;
@@ -135,6 +154,7 @@ export class Materials {
     material.transparent = transparent; this.owned.push(material); return material;
   }
   dispose(): void {
+    for (const release of this.textureReleases.values()) release();
     for (const material of this.cache.values()) material.dispose();
     for (const material of this.owned) material.dispose();
     this.cache.clear(); this.nearestCache.clear(); this.owned.length = 0; this.texture.dispose();

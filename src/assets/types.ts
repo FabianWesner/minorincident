@@ -13,6 +13,8 @@ export interface AccessoryDef {
   fits: Record<string, AccessoryFit & { hasHeadwear?: boolean }>;
 }
 export interface AssetDef {
+  /** Opaque figure atlas; low-tier siblings use the .low.glb suffix. */
+  textureMode?: 'baseColor';
   /** Runtime leaf crowns in asset-local Y-up metres; layouts export these as foliage empties. */
   foliage?: { colors: [string, string]; tokens?: [PaletteToken, PaletteToken]; crowns: { position: [number, number, number]; radius: [number, number, number] }[] };
   /** E06 code icons and category-specific fallbacks use the same manifest/status gates. */

@@ -52,13 +52,16 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) {
       expect(validation.triangles).toBeLessThanOrEqual(budget);
       expect(validation.materials).toBeLessThanOrEqual(4);
       expect(validation.fileKB).toBeLessThanOrEqual(600);
-      // Closed source parts prove the authored LOD never became a perforated decimation shell.
-      for (const surface of surfaces(source)) expect([...surface.edges.values()].every(n => n === 2), surface.name).toBe(true);
+      // Every boundary is paired. Caps meeting at the shared rigid pivot can have
+      // four coincident incidences; no unpaired/open source edge is allowed.
+      for (const surface of surfaces(source)) expect([...surface.edges.values()].every(n => n >= 2 && n % 2 === 0), surface.name).toBe(true);
       const names = doc.getRoot().listMaterials().map(m => m.getName());
       expect(names).toContain('pal_uiDark');
       expect(names).toContain(def.id.startsWith('inf.') ? 'pal_infectedSkin' : 'pal_picketWhite');
       expect(names.some(n => n.startsWith('emi_'))).toBe(def.id.startsWith('inf.'));
-      const bytes = readFileSync(path);
+      // Motion-only Node load: browser WebP pixels/UVs are covered separately.
+      const motion = await io.read(path); motion.getRoot().listTextures().forEach(t => t.dispose());
+      const bytes = await io.writeBinary(motion);
       const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
       expect(gltf.animations.map(a => a.name).sort()).toEqual(['zebra-rear-kick', 'zebra-stampede']);
       for (const clip of gltf.animations) {
