@@ -84,13 +84,18 @@ export class CharacterView extends Group {
     if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
     await this.variantLoads.get(variant); return true;
   }
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null, lamp = false): Promise<void> {
-    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant, lamp);
+  /** Variants drawn by the textured 3D-pipeline body (char.courier-<variant>-tex, dev/QA switch ?tex=1). */
+  readonly textured = new Set<SurvivorVariant>();
+  private readonly textureReleases: (() => void)[] = [];
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null, lamp = false, tex = false): Promise<void> {
+    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant, lamp, tex);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     // null arms later preparation while a speculative L1 awaits the menu choice.
     for (const variant of selected === null ? [] : selected ? [selected] : ['female', 'male'] as const) {
       if (this.characters.has(variant)) continue;
-      const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
+      // The textured body exists for the female courier only; it replaces the skinned palette body, same skeleton and clips.
+      const texId = `char.${outfit}-${variant}-tex`, texDef = tex && skin && outfit === 'courier' ? (manifest as AssetDef[]).find(asset => asset.id === texId) : undefined;
+      const id = texDef ? texId : `char.${outfit}-${variant}`, def = texDef ?? (manifest as AssetDef[]).find(asset => asset.id === id);
       let isSkin = false;
       const character = await loadCharacter(variant, async () => {
         if (!def || !atLeast(def.status, 'integrated')) {
@@ -98,7 +103,8 @@ export class CharacterView extends Group {
           throw new Error(reason);
         }
         const skinned = skin && outfit === 'courier';
-        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, low ? '.skin.low.glb' : '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        // The textured body is one 6k-triangle file for both quality tiers.
+        const scene = (await loader.loadAsync('/' + (texDef ? def.glb : skinned ? def.glb.replace(/\.glb$/, low ? '.skin.low.glb' : '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
         if (skinned && alignSkeleton(scene).length) isSkin = true;
         return scene;
       }, def?.dimensions.y);
@@ -119,7 +125,19 @@ export class CharacterView extends Group {
         if (!(object instanceof Mesh)) return;
         const remap = (source: Material): Material => {
           if (source === vertexMaterial) return source;
-          if (source.name === 'pal_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
+          if (source.name === 'pal_vertexColor' || source.name === 'tex_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
+          const map = (source as import('three').MeshStandardMaterial).map as import('three/webgpu').Texture | null;
+          if (source.name === 'tex_baseColor' && map) {
+            let textured = replacements.get(source);
+            if (textured) return textured;
+            textured = materials.fromTexture(`character:${variant}:tex`, map);
+            textured.userData.sharedPalette = true;
+            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1;
+            if (bloodFeedback) this.bloodMaterials.push(textured as PaletteMaterial);
+            this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
+            this.textured.add(variant);
+            oldMaterials.add(source); replacements.set(source, textured); return textured;
+          }
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
@@ -141,7 +159,8 @@ export class CharacterView extends Group {
       // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
       let tierGear: LoadedCharacter['tierGear'];
-      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
+      // Tier gear is authored on (and skinned with) the palette body's surface; it would float on the textured body.
+      if (isSkin && !texDef) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
       const pilot = isSkin;
       if (pilot) {
         const r = character.rig;
@@ -190,7 +209,7 @@ export class CharacterView extends Group {
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin && !texDef ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     if (!this.parcel) this.makeParcel(materials);
   }
@@ -465,5 +484,5 @@ export class CharacterView extends Group {
     return { visible: this.visible, cureVisible: character?.cure?.visible ?? false, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, gearMeshes: character?.gear.filter(g => g.visible).map(g => g.name) ?? [], position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); for (const release of this.textureReleases.splice(0)) release(); this.textured.clear(); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

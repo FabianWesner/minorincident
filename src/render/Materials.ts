@@ -1,6 +1,6 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -99,6 +99,28 @@ export class Materials {
     if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, emissive, world ? undefined : color.clone(), false, world ? { base: this.sample(uniform(this.nearest(color))) } : undefined); material.color.copy(color); material.name = name; material.userData.emissiveStrength = emissive; this.cache.set(key, material); }
     return material;
   }
+  /** Textured-figure route (3D pipeline, ?tex=1): an opaque glTF base-colour map through the full game graph (shadow,
+   * bounce, fill/rim, fog, weather, blood feedback). One material per map, shared by every owner of that map and counted:
+   * callers pair each fromTexture with releaseTexture; the last release drops the material (the map stays with its asset).
+   * Shared by every textured lane (skinned courier, textured crowds/props) so prewarm sees one graph per map. */
+  private readonly textureOwners = new Map<string, number>();
+  fromTexture(name: string, map: Texture): PaletteMaterial {
+    const key = `texture:${map.uuid}`;
+    let material = this.cache.get(key);
+    if (!material) {
+      material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base: texture(map).rgb });
+      material.name = name; material.userData.textureKey = key; this.cache.set(key, material);
+    }
+    this.textureOwners.set(key, (this.textureOwners.get(key) ?? 0) + 1);
+    return material;
+  }
+  releaseTexture(map: Texture): void {
+    const key = `texture:${map.uuid}`, owners = (this.textureOwners.get(key) ?? 0) - 1;
+    if (owners > 0) { this.textureOwners.set(key, owners); return; }
+    this.textureOwners.delete(key); this.cache.get(key)?.dispose(); this.cache.delete(key);
+  }
+  /** Live textured-figure materials (diagnostics/tests). */
+  get texturedMaterials(): number { return this.textureOwners.size; }
   /** Rigid character parts share their authored vertex swatches and blood mask. */
   fromVertexColors(name: string): PaletteMaterial {
     const key = `vertices:${name}`;
