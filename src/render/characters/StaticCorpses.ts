@@ -1,6 +1,6 @@
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { interleaveAttributes, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
@@ -219,7 +219,7 @@ export class StaticCorpses extends Group {
       } else {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
@@ -291,6 +291,13 @@ export class StaticCorpses extends Group {
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
+    if (geometry.hasAttribute('uv')) {
+      // Frozen texture pages also bind placement, tint and feedback. Keep their
+      // immutable surface in one buffer so the UV path stays within WebGPU's eight.
+      const names = ['position', 'normal', 'color', '_parts', 'uv'];
+      const packed = interleaveAttributes(names.map(name => geometry.getAttribute(name)))!;
+      names.forEach((name, i) => geometry.setAttribute(name, packed[i]));
+    }
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);

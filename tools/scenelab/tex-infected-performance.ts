@@ -1,0 +1,54 @@
+/** Native low-tier A/B. quiet-run owns the GPU; both roots serve remote production builds. */
+import { resolve } from 'node:path';
+import { SceneSession, stopServer, writeJson, type Backend } from './session';
+const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
+const report = resolve(worktree, 'docs/reports/tex-infected/performance.json');
+const receipts: unknown[] = [];
+try {
+  for (const backend of ['webgl2', 'webgpu'] as Backend[]) for (const variant of ['main', 'after', 'after', 'main']) {
+    process.chdir(variant === 'main' ? main : worktree);
+    const session = new SceneSession({ backend, tier: 'low', nativeFrameTiming: true, viewport: { width: 1280, height: 720 } });
+    try {
+      await session.open();
+      for (const scene of ['crowd-200', 'L1']) {
+        if (scene === 'crowd-200') {
+          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 400, dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+          await session.page.evaluate(async () => {
+            const a = window.__SS__!; a.cheats.god(true);
+            for (let i = 0; i < 200; i++) a.spawn('infected.sprinter', { x: i % 20 * .8 - 7.6, z: Math.floor(i / 20) * .8 - 3.6 }, { state: 'chase', variant: 'inf.common-worker' });
+            await a.step(120); await a.screenshotReady();
+          });
+        } else {
+          await session.page.evaluate(async () => {
+            const a = window.__SS__!; await a.loadLevel('L1', { seed: 1 }); a.pause(); a.missions.begin(); a.cheats.god(true);
+            const p = a.getEntity(1)!.transform; let count = 0;
+            for (let i = 0; i < 100 && count < 20; i++) {
+              try { a.spawn('infected.runner', { x: p.x + i % 10 * .9 - 4.5, z: p.z + Math.floor(i / 10) * .9 + 2 }, { state: 'chase' }); count++; } catch { /* District navigation rejects a house or parked car. */ }
+            }
+            if (count !== 20) throw new Error(`L1 reference admission: ${count}/20`);
+            a.camera.follow(); a.camera.zoom(1); await a.step(120); await a.screenshotReady();
+          });
+        }
+        const result = await session.page.evaluate(async () => {
+          const a = window.__SS__!; a.resume();
+          const frames: number[] = [], sim: number[] = []; let previous = 0, maxDraws = 0, maxCrowdDraws = 0;
+          const start = performance.now(), startTick = a.tick(), startRender = a.perf().renderedFrames;
+          for (let i = 0; i < 720 || performance.now() - start < 12000; i++) {
+            const now = await new Promise<number>(requestAnimationFrame);
+            if (i >= 120 && previous) { frames.push(now - previous); sim.push(a.perf().simMs); }
+            previous = now;
+            if (i % 60 === 0) { maxDraws = Math.max(maxDraws, a.perf().drawCalls); maxCrowdDraws = Math.max(maxCrowdDraws, a.getState().render.crowd?.meshDrawCalls ?? 0); }
+          }
+          frames.sort((a,b) => a-b); sim.sort((a,b) => a-b);
+          const state = a.getState(), perf = a.perf(); a.pause();
+          return { backend: perf.backend, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
+        });
+        receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
+        console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));
+        if (session.errors.length || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
+      }
+    } finally { await session.close(); stopServer(); }
+    // Wait for the owned preview listener to close before switching source roots.
+    for (let i = 0; i < 20; i++) { try { await fetch('http://127.0.0.1:4492'); await new Promise(r => setTimeout(r, 100)); } catch { break; } }
+  }
+} finally { stopServer(); process.chdir(worktree); writeJson(report, receipts); }

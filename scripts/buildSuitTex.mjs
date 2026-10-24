@@ -58,6 +58,7 @@ const segments = [
 ];
 const assign = point => {
   if (point[1] > 1.24) return 'head';
+  if (point[1] < .18) return point[2] < .05 ? 'footL' : 'footR';
   return segments.reduce((best, segment) => {
     const score = distanceToSegment(point, segment[1], segment[2]) / segment[3];
     return score < best.score ? { name: segment[0], score } : best;

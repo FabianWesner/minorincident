@@ -199,7 +199,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       const eyeRegion = preserveUV && owner === rig.head && geometry.getAttribute('position').getY(i) > .14 && geometry.getAttribute('position').getY(i) < .36 && geometry.getAttribute('position').getX(i) > .05;
-      emissive[i] = Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
+      emissive[i] = Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || preserveUV && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
     if (!preserveUV) geometry.deleteAttribute('uv');
