@@ -30,6 +30,13 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     expect(baked.texture).toBe(atlas);
     const p = baked.geometry.getAttribute('position'), uv = baked.geometry.getAttribute('uv'), part = baked.geometry.getAttribute('_part_index');
     expect(uv.count).toBe(p.count); expect(baked.geometry.index!.count / 3).toBeLessThanOrEqual(budget);
+    // The reconstructed face is asymmetric. Both eye neighbourhoods must retain
+    // the emission flag after fitting the head and decoding each distance tier.
+    for (const eye of [new Vector3(.03,.30,-.132), new Vector3(.058,.35,-.025)]) {
+      let nearest = Infinity;
+      for (let i=0;i<p.count;i++) if (part.getX(i) === baked.clip.parts.indexOf('head') && baked.geometry.getAttribute('_emissive').getX(i) > .5) nearest=Math.min(nearest,new Vector3().fromBufferAttribute(p,i).distanceTo(eye));
+      expect(nearest, `${lod}: retained eye mask`).toBeLessThan(.1);
+    }
     const point = new Vector3(), matrix = new Matrix4();
     for (let c = 0; c < clips.length; c++) for (let f = 0; f < framesPerClip; f++) {
       let min = Infinity, max = -Infinity;
