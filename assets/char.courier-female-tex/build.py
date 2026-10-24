@@ -182,7 +182,8 @@ for s, sgn in (('L', 1), ('R', -1)):
     pts = [J['arm' + s], J['foreArm' + s], J['hand' + s], tip]
     t, d = chain(pts)
     l1 = np.linalg.norm(pts[1] - pts[0])
-    radius = np.where(t < l1, .062, .055)
+    # the heroine's arms are thin (≈ 3.5 cm radius): a tight capsule keeps the front/back chest beside the armpit out
+    radius = np.where(t < l1, .05, .05)
     allowed = (d < radius) & (t > -.03) & (WP[:, 1] * sgn > .1)
     seeds = np.where(allowed & (t > l1 + .05))[0]
     inside = np.zeros(NW, bool); inside[seeds] = True; stack = list(seeds)
@@ -204,14 +205,26 @@ crotch = np.percentile(WP[shorts & (np.abs(WP[:, 1]) < .02), 2], 10) if (shorts 
 print('SHORTS z pct', np.percentile(WP[shorts, 2], [5, 25, 50, 75, 90, 95, 98]).round(3), 'front', np.percentile(WP[shorts & (WP[:, 0] > 0) & (np.abs(WP[:, 1]) < .05), 2], [90, 98]).round(3))
 print('SHORTS', int(shorts.sum()), 'waist', round(float(waist), 3), 'crotch', round(float(crotch), 3), 'denim', int(denim.sum()), 'teal', int(teal.sum()))
 leg_all = smooth((waist - .02 - WP[:, 2]) / (waist - .02 - crotch)) * (1 - np.clip(arms, 0, 1))
+# hands and fingers hang beside the thighs (|y| > 0.2): whatever the arm flood missed there is hand, never leg
+for s, sgn in (('L', 1), ('R', -1)):
+    tip = J['hand' + s] + 1.6 * (RJ['Palm' + s] - J['hand' + s])
+    _, dh = chain([J['foreArm' + s], J['hand' + s], tip])
+    _, dl = chain([J['leg' + s], J['shin' + s], J['foot' + s]])
+    hand = (WP[:, 1] * sgn > .2) & (dh < .07) & (dh < dl) & (WP[:, 2] > J['shin' + s][2])
+    leg_all[hand] = 0; member['arm' + s] = np.maximum(member['arm' + s], hand.astype(float))
+    print('HAND fix', s, int(hand.sum()))
 side = smooth(WP[:, 1] / .04 + .5)
 member['legL'] = leg_all * side; member['legR'] = leg_all * (1 - side)
-member['bag'] = bag.astype(float)
+# the bag is fused to the back: it bends with the back it rests on (spine hats below) and only its outer body takes a
+# share of the socket's pendulum, fading to zero at the contact face (no seam between bag and shirt)
+depth = bagP[:, 0].max() - WP[:, 0] if bag.any() else np.zeros(NW)
+bag_socket = .35 * smooth((depth - .02) / .08) * bag
+member['bag'] = bag_socket
 # continuity: relax membership along the welded surface (not across gaps), re-pinning hard cores
 names = ['armL', 'armR', 'legL', 'legR', 'bag']
 F = np.stack([member[n] for n in names], 1)
 core = (F.max(1) > .999) & (np.array([len(n) for n in nbr]) > 0)
-F = lap(F, 3, .5)
+F = lap(F, 6, .5)
 F[shorts] *= np.array([0, 0, 1, 1, 0])  # shorts never take any arm or bag share
 F = np.clip(F, 0, 1); tot = F.sum(1); F[tot > 1] /= tot[tot > 1, None]
 member = {n: F[:, i] for i, n in enumerate(names)}
@@ -238,7 +251,7 @@ for s in 'LR':
     for limb, (up_, mid, end) in (('arm', ('arm', 'foreArm', 'hand')), ('leg', ('leg', 'shin', 'foot'))):
         A, B, C = J[up_ + s], J[mid + s], J[end + s]; l1, l2 = np.linalg.norm(B - A), np.linalg.norm(C - B)
         t, _ = chain([A, B, C])
-        if limb == 'arm': c = [(min(.35 * l1, l1 - BAND), 'arm' + s), (l1, 'elbow' + s), (l1 + min(BAND, .42 * l2), 'foreArm' + s), (l1 + .8 * l2, 'foreArmTwist' + s), (l1 + l2 + .012, 'hand' + s)]
+        if limb == 'arm': c = [(min(.35 * l1, l1 - BAND), 'arm' + s), (l1, 'elbow' + s), (l1 + min(BAND, .42 * l2), 'foreArm' + s), (l1 + .65 * l2, 'foreArmTwist' + s), (l1 + l2 + .03, 'hand' + s)]
         else: c = [(min(.35 * l1, l1 - LEG_BAND), 'leg' + s), (l1, 'knee' + s), (l1 + min(LEG_BAND, .45 * l2), 'shin' + s), (l1 + l2 + .01, 'foot' + s)]
         m = member[limb + s]
         for bone, x in hats(t, c).items(): add(bone, m * x)
