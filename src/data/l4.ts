@@ -128,7 +128,7 @@ export const l4 = {
     /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
     refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
-    alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
+    alive: [.9, 1, 1] as readonly number[], aliveLow: [.85, 1, 1] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     // First fallback line runs past the courier toward the plaza centre; the
     // second line remains deeper in camp, clear of the parked convoy.
@@ -309,7 +309,7 @@ export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] =
   { id: 'southeast-end', edge: 4, at: [36, 55] }, { id: 'southwest-end', edge: 5, at: [-40, 55] },
 ];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
-  { edge: 0, at: [-56.6, 6] }, { edge: 0, at: [-57, -14] }, { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
+  { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
   { edge: 1, at: [-39.2, -35] }, { edge: 1, at: [-40, -26] }, { edge: 1, at: [-46.9, -23], door: true }, { edge: 1, at: [-42, -15.5], door: true },
   { edge: 2, at: [-18, -38.4] }, { edge: 2, at: [-30, -38] }, { edge: 2, at: [-30, -21.2], door: true }, { edge: 2, at: [-13.7, -23.2], door: true },
   { edge: 3, at: [13.4, -3] }, { edge: 3, at: [13, -20] }, { edge: 3, at: [13, 14] }, { edge: 3, at: [2, -9], door: true }, { edge: 3, at: [-.1, -17.5], door: true },
@@ -327,6 +327,13 @@ export const l4Inside: readonly P[] = [
   // These are opportunistic off-screen exits; the director still rejects them
   // whenever the courier moves far enough to see them.
   [-33, 19], [-29, 20], [-25, 21],
+];
+/** Follow-up groups approach the wall from the surrounding streets, then use
+ * the physical breaches. The tents release only their opening alarm group. */
+export const l4BreachApproaches = [
+  ...[-12, -4, 8, 16].map(z => ({ side: 'west' as const, at: [l4.perimeter.x0 - 3, z] as P })),
+  ...[-32, -24, -16].map(x => ({ side: 'north' as const, at: [x, l4.perimeter.z0 - 3] as P })),
+  ...[-32, -24, -16].map(x => ({ side: 'south' as const, at: [x, l4.perimeter.z1 + 3] as P })),
 ];
 /** Usable flaps of the three freestanding tents. The furnished reception kit has no connected exit aisle. */
 export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [

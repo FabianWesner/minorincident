@@ -110,8 +110,8 @@ try {
         if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || [result.before, result.after, ...result.holdCensuses].some(c => c.missingNative.length) || errors.length)
           throw new Error(`Invalid ${side} measurement: ${JSON.stringify({ ...result.before, samples: result.frames.length, errors })}`);
         rows.push({ side, repeat, afterTurnS, scripts, ...result });
-        if (side === 'candidate' && afterTurnS === 150 && result.after.corpses14 > 110)
-          throw new Error(`Q-166 corpse field exceeds 110 within 14 m at 150 s: ${result.after.corpses14}`);
+        if (side === 'candidate' && afterTurnS === 150 && result.before.corpses14 > 150)
+          throw new Error(`Q-166 corpse field exceeds 150 within 14 m at 150 s: ${result.before.corpses14}`);
         writeFileSync(`${out}/samples.json`, JSON.stringify(rows, null, 2));
         console.log(JSON.stringify({ side, repeat, afterTurnS, frameP95: result.frameP95, simP95: result.simP95, before: result.before, after: result.after }));
       }

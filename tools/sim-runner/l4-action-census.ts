@@ -16,7 +16,7 @@ const alphaAudit = new Map<number, { id: number; entered: number | null; downed:
 const pressureSamples: unknown[] = [];
 const originalPeople = new Set<number>();
 const spawns: { t: number; id: number; arch: string; x: number; z: number; dPlayer: number; inView: boolean; emerging: boolean; transformation: boolean; origin: number | null; inside: boolean }[] = [];
-const seconds: { t: number; phase: string; alive: number; inside: number; near: number; insideActive: number; nearActive: number; wire: number; step: string | null; courier: { x: number; z: number } }[] = [];
+const seconds: { t: number; phase: string; alive: number; inside: number; near: number; insideActive: number; nearActive: number; corpses14: number; wire: number; step: string | null; courier: { x: number; z: number } }[] = [];
 // Game camera view at zoom 1: radius 19, polar 0.3π → the frame covers roughly ±17 m by ±11 m around the courier on the ground.
 // The game camera at the PO zoom 1.5 (radius 19 x 1.5, polar 0.3 pi, azimuth 45 deg), any part of a standing body on screen.
 const cam = new PerspectiveCamera(25, 16 / 9, .1, 600), off = new Vector3(), pt = new Vector3();
@@ -45,9 +45,9 @@ const r = runL4(w, m, profile, { seed, god: true, maxSeconds: 520, stopWhen: mm 
   if (s.turnAt && (w.tick - s.turnAt) % (20 * 60) === 0 && s.phase === 'war') pressureSamples.push({ t: (w.tick - s.turnAt) / 60, infected: w.infected!.active.filter(e => e.health.current > 0 && inside(e.transform)).map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z, emerging: e.emerging, origin: s.origin[e.id], brain: e.infected!.l1 && { mode: e.infected!.l1.mode, focus: e.infected!.l1.focusId, target: e.infected!.l1.targetId, x: e.infected!.l1.goalX, z: e.infected!.l1.goalZ } })) });
   if (s.turnAt && (w.tick - s.turnAt) % 60 === 0) {
     const live = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden), p = w.entities.get(1)!.transform;
-    seconds.push({ t: (w.tick - s.turnAt) / 60, phase: s.phase, alive: live.length, inside: live.filter(e => inside(e.transform)).length, insideActive: live.filter(e => !e.emerging && inside(e.transform)).length, nearActive: live.filter(e => !e.emerging && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, near: live.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, wire: live.filter(e => !inside(e.transform) && e.transform.x > per.x0 - 4 && e.transform.x < per.x1 + 4 && e.transform.z > per.z0 - 4 && e.transform.z < per.z1 + 4).length, step: mm.def.steps.find(d => mm.state.steps[d.id].status === 'active')?.id ?? null, courier: { x: +p.x.toFixed(1), z: +p.z.toFixed(1) } });
+    seconds.push({ t: (w.tick - s.turnAt) / 60, phase: s.phase, alive: live.length, inside: live.filter(e => inside(e.transform)).length, insideActive: live.filter(e => !e.emerging && inside(e.transform)).length, nearActive: live.filter(e => !e.emerging && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, near: live.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, corpses14: [...w.entities.iterate()].filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 14).length, wire: live.filter(e => !inside(e.transform) && e.transform.x > per.x0 - 4 && e.transform.x < per.x1 + 4 && e.transform.z > per.z0 - 4 && e.transform.z < per.z1 + 4).length, step: mm.def.steps.find(d => mm.state.steps[d.id].status === 'active')?.id ?? null, courier: { x: +p.x.toFixed(1), z: +p.z.toFixed(1) } });
   }
-  return false;
+  return process.env.L4_CENSUS_HOLD_ONLY === '1' && !!s.turnAt && s.phase !== 'war' && w.tick > s.turnAt + 60;
 }, zoom: 1.5 });
 const outDir = process.env.L4_CENSUS_OUT ?? 'test-results/l4-storyline';
 mkdirSync(outDir, { recursive: true });
@@ -62,6 +62,8 @@ for (let min = 0; min < 6; min++) {
 for (const a of spawns.filter(x => x.arch === 'infected.alpha')) console.log('alpha', JSON.stringify(a));
 const visible = spawns.filter(x => x.inView), transformations = visible.filter(x => x.transformation), popIns = visible.filter(x => !x.transformation && !x.emerging && (x.origin === null || x.origin < l4Emergence.length));
 console.log('visible admissions', JSON.stringify({ all: visible.length, transformations: transformations.length, animatedDoor: visible.length - transformations.length - popIns.length, popIns: popIns.length }));
+const hold = seconds.filter(s => s.phase === 'war' && s.step === 'hold');
+console.log('hold contact', JSON.stringify({ contact: hold.filter(s => s.nearActive > 0).length, seconds: hold.length, percent: 100 * hold.filter(s => s.nearActive > 0).length / hold.length, corpses14: Object.fromEntries([20, 60, 150].map(t => [t, seconds.find(s => s.t === t)?.corpses14])) }));
 console.log('breaches', JSON.stringify(Object.fromEntries(Object.entries(m.state.l4!.breaches ?? {}).map(([k, v]) => [k, { announced: +((v!.announcedAt - m.state.l4!.turnAt) / 60).toFixed(1), open: v!.openAt ? +((v!.openAt - m.state.l4!.turnAt) / 60).toFixed(1) : null }]))));
 console.log('timeline', JSON.stringify(r.timeline.map(x => `${x.type}@${x.t.toFixed(0)}`)));
 w.dispose();

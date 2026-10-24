@@ -4,6 +4,7 @@ import type { DistrictLayout } from '../../../src/levels/districts/types';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { floorAt, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
+import { loadL4 } from '../../../tools/sim-runner/l4Bots';
 
 /** PO P1 10-08 "a zombie spawning out of nowhere": the beat-9 residents come out of a real front door. */
 describe('HouseEmergence door geometry', () => {
@@ -48,4 +49,18 @@ test('L4 tent walk waits for body clearance and retains a downed resident until 
   clear = true;
   for (let tick = 22; tick < 100 && house.walking!.length; tick++) walkResidents(w, house, tick);
   expect(house.walking).toHaveLength(0); expect(e.emerging).toBeUndefined(); expect(e.transform.z).toBeCloseTo(1);
+});
+
+test('a pooled tent resident returns as an ordinary street arrival without doorway ownership', async () => {
+  const { world } = await loadL4(3, 'low'), ai = world.infected!;
+  const id = ai.spawn('infected.runner', { x: 8, z: 0 }), resident = world.entities.get(id)!;
+  resident.emerging = true;
+  resident.doorLane = { x: 8, z: 0, ox: 0, oz: 1, half: .6, start: -1, end: 1 };
+  ai.release(resident);
+  const next = world.entities.get(ai.spawn('infected.runner', { x: 8, z: 0 }))!;
+  expect(next).toBe(resident);
+  expect(next.id).not.toBe(id);
+  expect(next.emerging).toBeUndefined();
+  expect(next.doorLane).toBeUndefined();
+  world.dispose();
 });

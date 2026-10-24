@@ -45,7 +45,7 @@ export class StaticCorpses extends Group {
     for (const [key, body] of this.bodies) { const slot = this.slots.get(key); if (!slot) continue; slot.page.mesh.getMatrixAt(slot.index, m); out.push({ id: body.id, x: m.elements[12], y: m.elements[13], z: m.elements[14] }); }
     return out;
   }
-  begin(get: (id: number) => EntitySnapshot | undefined): void {
+  begin(get: (id: number) => EntitySnapshot | undefined, resting?: (body: EntitySnapshot) => { x: number; z: number }): void {
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
     // hidden or deleted (level unload or restart) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
     let gone: string[] | null = null;
@@ -56,14 +56,16 @@ export class StaticCorpses extends Group {
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
       // Only thrown bodies change their instance matrix. Handle them during the
       // lifecycle pass instead of walking every permanent body a second time.
-      if (body.corpseThrown) {
+      const pose = resting?.(body) ?? (body.corpseThrown ? body.transform : undefined);
+      if (pose) {
         const slot = this.slots.get(key)!;
         slot.page.mesh.getMatrixAt(slot.index, this.moved);
-        if (this.moved.elements[12] !== Math.fround(body.transform.x) || this.moved.elements[13] !== Math.fround(body.transform.y - .7) || this.moved.elements[14] !== Math.fround(body.transform.z)) {
-          this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
+        const y = body.corpseThrown ? body.transform.y - .7 : this.moved.elements[13];
+        if (this.moved.elements[12] !== Math.fround(pose.x) || this.moved.elements[13] !== Math.fround(y) || this.moved.elements[14] !== Math.fround(pose.z)) {
+          this.moved.setPosition(pose.x, y, pose.z);
           slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true;
           const detail = this.detailBodies.get(body.id);
-          if (detail) { detail.x = body.transform.x; detail.z = body.transform.z; this.detailSpatial.set(body.id, detail.x, detail.z); this.detailDirty = true; }
+          if (detail) { detail.x = pose.x; detail.z = pose.z; this.detailSpatial.set(body.id, detail.x, detail.z); this.detailDirty = true; }
           slot.page.spheres[slot.index].copy(slot.page.mesh.geometry.boundingSphere!).applyMatrix4(this.moved);
           (movedPages ??= new Set()).add(slot.page.mesh);
         }

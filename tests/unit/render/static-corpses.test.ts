@@ -43,6 +43,10 @@ test('Q-124 settled bodies change detail after approach and retreat without losi
       const colors = child.geometry.getAttribute('_variant'); expect(colors.getX(0) % 2).toBeCloseTo(tint.r);
       expect(child.geometry.getAttribute('_overlay').getZ(0)).toBeCloseTo(.4);
     }
+    // Courier clearance reaches frozen GPU instances too, after their first placement.
+    pool.begin(() => e, () => ({ x: 2, z: 3 }));
+    expect(pool.drawn()).toEqual([{ id: 7, x: 2, y: 0, z: 3 }]);
+    expect(pool.snapshot().instances).toBe(1);
     e.hidden = true; pool.begin(() => e); update(0); expect(pool.snapshot().instances).toBe(0);
   } finally { pool.dispose(); far.dispose(); near.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
