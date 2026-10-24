@@ -59,99 +59,76 @@ Baselines ("main") are the palette courier from `main`, in the same scenes.
 | look scene, last frame, low (WebGPU = WebGL2) | 21 draws, 40,782 tris, 28,986 shadow tris | 22 draws, 19,438 tris, 7,642 shadow tris |
 | look scene, last frame, high | 21 draws, 62,796 tris | 22 draws, 24,178 tris |
 | stretch audit, max over 31 clips | 32.4× | 24.0× |
-| edge samples > 4× (24 samples per clip) | 2,770 | 1,380 |
+| edge samples > 4× (24 samples per clip) | 2,770 | 1,375 |
 
 - **Stretch audit:** `tools/assets/courier-stretch-audit.ts` (production evaluation: alignSkeleton, retargetClip with
   skin overrides and rigid fallback, driveHelpers; no IK or contacts).
   - Neither body meets the pipeline's 4× bar under raw clips.
   - Worst on the heroine: front shoulder top in the bat swings (24×; main 27–32× in the same region).
-  - Run is 6.6× vs 2.6× on main (shirt front, spine).
+  - Run: 4.9× vs 2.6× on main, at the front hip crease. Round 1 was 6.7×: smoothing had carried thigh weight onto
+    the belly; the upper 40 % of the shorts now rides the hip only.
   - Before the bag and hand fixes the heroine had 4,396 flagged samples at 24 steps: an 8× bag seam in the walk and
     10× finger–thigh edges.
   - Files: `stretch-tex.json`, `stretch-base.json`.
-- **L1 low p95 frame time: not measured.** It needs the exclusive quiet-run window (another lane held a browser).
+- **L1 low p95 frame time and qa:invariants:** left to the orchestrator's quiet window, as agreed.
   The heroine draws 21–39k fewer triangles per frame and one more draw call.
 
-## Clip coverage (unchanged game clips)
-| action | status |
-|---|---|
-| idle, walk 2 m/s, run 4.5 m/s, turns | works (skin clips, helper drive, contacts). Turn in place: foot slide 6.4 cm vs 0.3 on main, a real regression |
-| fists (jab/cross), kick, bat, axe, handgun, MG, carry, hurt | works in the qa-courier-* scenes, 0 console errors, 0 body overlap, 0 new clipping |
-| bike mount / ride / dismount | works (qa-courier-bike, LimbIK adapts to her limbs) |
-| throw, interact, hand-over, equip, rack-grab | rigid-library clips, audited (above); no dedicated Scene Lab spec run |
-| handover depot | runs. Its gate failure (recipient forearm 1.3 cm from the depot) is identical on main |
-| gaps | no blink and no ponytail sim: eyes and hair are texture/rigid with the head. No tier gear (gear tiers 1–4 are invisible). Headlamp (L6) and cure canister (L10) offsets were tuned for the cap courier and were not checked |
+## Round 2 (orchestrator review)
+1. **Run (knees, trailing shin):**
+   - shorter knee blend (8.5 → 5 cm). The long blend half-rotated the upper shin, which read as a thin, kinked shin;
+   - 6° rest stance instead of 4°;
+   - the upper shorts no longer carry thigh weight.
+   - A Node probe of the skeleton shows the knees are not valgus on either body (max 0 cm inward of the hip–ankle line,
+     mean 0.5 cm outward). The X look from behind is the forward knee bend.
+2. **Turn-in-place slide 6.4 → 0 cm (gate unchanged):**
+   - cause: Scene Lab calibrated the sole from the raw frame-0 idle clip. On her longer legs that clip lifts the feet
+     1.3 cm before the contacts blend in, so every planted foot read 8 mm under the floor and the low turn-step counted
+     as sliding;
+   - fix: Scene Lab now uses the skinned courier's rest ankle height (`CharacterView.restSole`, which is what the
+     contacts plant);
+   - main female and male locomotion and courier-turns still pass;
+   - `qa-courier-locomotion-f`: slide 0, sink 0, yaw drift 0.2°.
+3. **Tier gear 1–4:**
+   - refit by the existing ray-fit build (`assets/acc.courier-gear/build.py`) on her body. Male gear is untouched;
+   - changes for the textured body: the vest and gloves cast outside-in (her loose shirt has inner shells, and one
+     glove ray missed into a floating shard); the vest starts at her spine joint, above the high-waisted shorts; the
+     pack test uses her bag's socket share;
+   - tier gear is drawn again, and `character-loading.test.ts` is back to main's expectations.
+4. **Ponytail and blink:**
+   - the ponytail is flood-filled from the red hair tie and rides pony1..3 (CourierLiving verlet spring);
+   - the colliders shrink to her rest clearance, so the tail is not pushed out of its own bind pose;
+   - the courier unit test "ponytail and bag settle … outside their colliders" passes;
+   - no blink: her eyes are texture only (no lid geometry), so there is nothing cheap to close.
 
-## Scene Lab
-- **Main and heroine, both:** qa-courier-attack-{fists,kick,bat,axe}, handgun-tracer, long-gun-army-mg, bike, hitreact
-  and carry-front all pass.
-- **Long-gun MG:** gunBodyHits 1 (torso 11.7 cm) on both.
-- **qa-courier-locomotion-f:** passes on main and fails on the heroine (footSlideMaxCm 6.4 > 6, frame 666, turn in place).
-  This is the only new red gate.
-- **New specs:** `qa-courier-tex-gait` (close camera, walk/run) and `qa-courier-tex-look-z{05,1,15}`.
-  The look specs ran at WebGPU and WebGL2 × high and low × zoom 0.5/1/1.5, for both bodies: 24 runs, all pass,
-  0 console errors.
+## Sheets (round 2 build, every one looked at)
+- `source-textured-clay.jpg`: the source, textured and clay; clean.
+- `r2-gear.jpg`: tiers 0–4 standing (top) and running (bottom; the last one is WebGPU low).
+  - Tier 1: gloves and knee pads. Tier 2: olive vest band over the shirt. Tier 3: shoulder and elbow pads.
+    Tier 4: forearm guards and goggles on the hair.
+  - All hug the body, with no boxes and no floating parts. The round-1 glove shard is gone.
+  - The goggles sit high on the hair (her head has no cap), which reads as goggles pushed up.
+- `r2-gait-ab.jpg`: main and heroine pairs, walk and run at a close camera. Her run strides are clean: knees bend
+  forward, shins full, shorts follow the thighs. She reads slimmer than the chibi courier.
+- `r2-look-webgpu-low.jpg`: heroine (top) vs main (bottom), WebGPU low, zoom 0.5 idle/walk/run/bat, zoom 1, zoom 1.5.
+  The bat sits in the hand; face, logo and denim read at 0.5.
+- `r2-look-webgl2-high.jpg`: WebGL2 high (and one WebGPU high) at zooms 0.5/1/1.5. Shading matches across backends.
+- `r2-actions.jpg`: fists, kick, axe, bat, MG (close), hit react, carry and bike. Weapons are in hand, the bag stays
+  on the back, the hands are on the bars.
 
-## Sheets (every one looked at)
-- `source-textured-clay.jpg`: source front/back/side/top, textured and clay. Clean silhouette, no holes, bag and
-  ponytail intact. Flat-shaded faceting (game normals are smoothed).
-- `final-webgpu-low.jpg`: top row heroine, bottom row main; WebGPU low, zoom 0.5 idle/walk/run/bat, zoom 1, zoom 1.5.
-  - Heroine: face, shirt logo, denim and sneakers read at 0.5; the bat sits in the hand; no floating parts.
-  - The heroine's head is smaller than the chibi courier's, so at zoom 1.5 she reads smaller.
-- `final-webgl2-high-z05.jpg`: the same on WebGL2 high. Colour and shading match WebGPU, with no darkening.
-- `gait-ab-final.jpg`: close camera, main and heroine pairs, walk then run.
-  - The walk reads natural.
-  - At run extremes (0765–0775) her knees knock inward and the trailing shin looks thin and kinked. Main's chunky legs
-    hide this. This is the main "not stunning yet" point (QA note 1).
-  - The shorts follow the thighs without flaring at these extremes (QA note 3).
-- `ab-attacks.jpg`, main and heroine pairs:
-  - fists, kick, axe, bat, MG and hit react hold the same poses; the heroine's weapons sit in the hand;
-  - the backpack stays on the back in the close MG shot;
-  - the handgun scene frame shows a survivor-outfit figure in both runs (not the courier).
-- `ab-bike-handover.jpg`: riding and dismount look correct, hands on the bars. The handover frame shows the depot
-  (no courier in frame).
+## Scene Lab (round 2 build)
+- 24/24 look-matrix runs pass with 0 console errors.
+- These pass: qa-courier-locomotion-f (now green), qa-courier-tex-gait, qa-courier-gear-t0..t4 (+ t4 WebGPU low),
+  qa-courier-attack-{fists,kick,bat,axe}, long-gun-army-mg, bike, hitreact, carry-front.
+- Low look scene, last frame: 22 draws, 19,438 tris (main: 21 draws, 40,782).
 
-## Visual verdict
-- **As good as the 9/10 look?** Standing and walking: yes. It is the PO's viewer body, lit by the game, detailed at
-  zoom 0.5, and clearly richer than the palette courier.
-- **Motion:** not stunning yet. Running shows knock-knees and thin, kinked shins. The bat swings stretch the front
-  shoulder (as on main).
-- **Glitches:**
-  - no holes, floating weapons or light cap patches after the re-tint;
-  - turn-in-place foot slide 6.4 cm;
-  - no blink or ponytail motion;
-  - gear tiers invisible.
-
-## Gates
-- `npm run typecheck`: pass. `npm run lint`: pass.
-- Asset validator, `--ids char.courier-female`: lod0, lod1 and lod2 have no errors.
-- Remote `npx vitest run tests/unit tests/levels --maxWorkers=4`:
-  - first run: 460 of 465 files passed and 5 failed, all courier-skin tests;
-  - causes: Node cannot decode the embedded texture, the test mocks had no `fromTexture`, the body was 1.7 cm over the
-    1.4 ± 0.07 test height, the arms were too straight (9.8° < 10°), the run lean was 7.9° < 8°, and the tier-gear
-    expectation;
-  - fixes:
-    - `tests/setup/node-gltf-images.ts`: an empty-texture plugin for Node tests only;
-    - the test mocks gained `fromTexture`;
-    - the rebuild fixed height, elbows and head pivot;
-    - the tier-gear test now expects no gear for the textured female, and the low-skin test accepts an identical low
-      file for a body under the low budget;
-  - no gate was loosened;
-  - re-run locally after the fixes: `tests/unit/render` + `tests/unit/assets`, 188/188 files, 1,307/1,307 tests pass.
-    The full remote suite was not re-run after this last rebuild.
-- Smoke: Playwright `--grep @smoke --workers=1` on a fresh build, 31/31 passed. Vitest `-t @smoke`, 6/6 passed.
-- `npm run qa:invariants`: NOT run. Its Mac stage needs the exclusive quiet-run window, and another lane held a browser.
-  The same goes for the L1 low p95 frame time. Both are left for the orchestrator's quiet window.
-- Captures: the look matrix and attack scenes were taken before the last rebuild (elbow 7°, head pivot +1 cm, height
-  −1.7 cm). The gait and WebGPU-low "final" sheets include the bag and hand fixes but not that rebuild.
-- Remote runner note: SSH warned "REMOTE HOST IDENTIFICATION HAS CHANGED" for one runner (known_hosts_mi-runner:6).
-  The job still ran. I did not touch known_hosts.
+## Gates (round 2)
+- typecheck and lint pass; the courier unit files pass 46/46 locally.
+- Remote `tests/unit tests/levels` on the final build: 465 files passed, 3 skipped, 0 failed (exit 0).
+- Smoke (round 1 build): Playwright 31/31, Vitest 6/6.
+- qa:invariants and the L1 p95 are left to the orchestrator's quiet window.
 
 ## Recommendation
-One more round before PROD:
-1. the run knees/shins: lower the knee helper bulge, or tune the stance rotation and knee band in the run;
-2. the turn-in-place slide;
-3. weight the ponytail onto pony1..3 and add blink-free eyes;
-4. tier gear refit for the new surface;
-5. the L1 low p95 in a quiet window.
-Shipping now trades the visible gear tiers and a slightly worse run for a much better look.
+Ship after the orchestrator's quiet-window gates (L1 low p95, qa:invariants). Open items are small:
+- no blink (needs lid geometry);
+- headlamp (L6) and cure-canister (L10) offsets are not re-checked on her head and bag;
+- the bat-swing shoulder stretch, which main has too.
