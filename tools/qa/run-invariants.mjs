@@ -20,7 +20,8 @@ async function run(stage, command, args) {
 }
 // A red sim check must not prevent the other invariants from being measured.
 await run('remote-sim', 'npm', ['run', 'qa:invariants:sim:remote']);
-if (await run('build', 'npm', ['run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', ['tools/perf/quiet-run.sh', 'sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
+// Rebuilding dist must wait for every browser using its current asset set.
+if (await run('build', 'env', ['E2E_UNITS=2', 'sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']) === 0) await run('Mac-WebGPU-low', 'sh', ['tools/perf/quiet-run.sh', 'sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1']);
 mkdirSync('test-results/qa-invariants', { recursive: true });
 writeFileSync('test-results/qa-invariants/run.json', JSON.stringify(receipts, null, 2) + '\n');
 console.log(JSON.stringify(receipts));
