@@ -91,7 +91,7 @@ export const l4 = {
      * and staggered. `inside`: during the war grouped arrivals come from separated, concealed camp exits (`l4Inside`)
      * each `insideEveryS`, only when an exit is out of view or hidden behind a building and at least `minM` from the courier.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [8, 10] as P, minM: 6 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1, group: [12, 14] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -295,7 +295,7 @@ export const l4Crowd = {
  * Street (north), Plaza Way (east), and the two lake-garden gaps (south). `metro` is the last, used for the collapse on the Metro Road route.
  */
 export const l4Edges: readonly { id: string; at: P }[] = [
-  { id: 'west', at: [-56.6, 6] }, { id: 'nw-alley', at: [-39.2, -35] }, { id: 'north', at: [-18, -38.4] }, { id: 'east', at: [13.4, -3] },
+  { id: 'west', at: [-57, -30] }, { id: 'nw-alley', at: [-39.2, -35] }, { id: 'north', at: [-18, -38.4] }, { id: 'east', at: [13.4, -3] },
   { id: 'south-east', at: [-5.5, 42.6] }, { id: 'south-west', at: [-23, 42.6] }, { id: 'metro', at: [50.5, -37.4] },
 ];
 /**

@@ -266,10 +266,15 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     this.fog = false;
   }
   /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
-  frozenCopy(): PaletteMaterial {
+  frozenCopy(corpse = false): PaletteMaterial {
     const copy = this.newCopy(); copy.copy(this);
-    copy.outputFor = this.outputFor;
-    copy._outputs = this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    copy.outputFor = corpse ? mode => {
+      // Apply after palette/skin/clothing resolution: editing only the source
+      // vertex colours leaves the crowd's per-person garment tints saturated.
+      const output = this.outputFor(mode) as Node<'vec4'>;
+      return vec4(mix(vec3(luminance(output.rgb)), output.rgb, .4).mul(.62), output.a);
+    } : this.outputFor;
+    copy._outputs = corpse ? new Map() : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
   /** Same key as NodeMaterial, without allocating a child record and hashing

@@ -124,7 +124,7 @@ try {
     const withinBudget = candidate <= budgetMs;
     // Orchestrator 2026-10-24: accept the 33–34 ms phone emulation
     // proxy and report its measured value; the nominal line stays 33.3 ms.
-    const acceptedPhoneProxy = phone && !withinBudget && candidate <= 34;
+    const acceptedPhoneProxy = phone && !withinBudget && candidate <= 33.9;
     return { afterTurnS, baseline, candidate, delta: baseline === undefined ? undefined : candidate - baseline, budgetMs, withinBudget, acceptedPhoneProxy, pass: withinBudget || acceptedPhoneProxy };
   });
   const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: phone ? [390, 844] : [1280, 720], dpr, cpuThrottle: phone ? 4 : 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1, frameSampling: 'every RAF', cpuTelemetryEveryMs: diagnostic ? 0 : 250, figureProbe: 'drawn' }, sources, comparisons, rows };

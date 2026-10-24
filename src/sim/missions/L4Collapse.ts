@@ -180,7 +180,8 @@ export class L4Collapse {
     for (let k = 0; k < this.tier(D.cutOff); k++) {
       const id = this.h.emerge({ x: from.x + (k % 3 - 1) * .9, z: from.z + Math.floor(k / 3) * .9 }, true); if (!id) break;
       this.d.spawned++;
-      const v = victims[k % victims.length].transform; ai.rush(id, { x: v.x, z: v.z }, world.tick + ticks(20));
+      const victim = victims[k % victims.length];
+      ai.press(id, victim.id, world.tick + ticks(dist(from, victim.transform) / 1.6 + 20), 30);
     }
     this.d.cutOff = [...groups[g.i]];
   }
