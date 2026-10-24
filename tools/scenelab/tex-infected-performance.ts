@@ -15,13 +15,13 @@ try {
       await session.open();
       for (const scene of ['crowd-200', 'L1']) {
         if (scene === 'crowd-200') {
-          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, actors: [{ id: 'courier', kind: 'courier', at: [0, 0], god: true }], dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 2 } });
           await session.page.evaluate(async () => {
-            const a = window.__SS__!; a.cheats.god(true);
-            // Stress 200 on the low renderer while retaining low simulation settings.
-            // The normal low-tier director halves levelCap, so admit 400/2 here only.
-            (window.__SCENE__ as unknown as { game: Game }).game.world.infected!.director.levelCap = 400;
-            for (let i = 0; i < 200; i++) a.spawn('infected.sprinter', { x: i % 20 * .8 - 7.6, z: Math.floor(i / 20) * .8 - 3.6 }, { state: 'chase', variant: 'inf.common-worker' });
+            const a = window.__SS__!; await a.loadScenario('perf-horde-200'); a.pause(); a.cheats.god(true);
+            // The shipped benchmark already retains 200 actors on both quality tiers.
+            // Exercise this exact existing asset on every actor, using the normal runner AI.
+            const game = (window.__SCENE__ as unknown as { game: Game }).game;
+            for (const e of game.world.infected!.active) e.infected!.variant = 'inf.common-worker';
+            a.camera.preset('perf-horde'); a.camera.zoom(1.5);
             await a.step(120); await a.screenshotReady();
           });
         } else {
