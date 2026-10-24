@@ -70,17 +70,23 @@ try {
               backend: a.perf().backend, quality: a.perf().quality.tier, player: a.getState().player!.transform };
           };
           const before = census(), start = performance.now(), holdCensuses: ReturnType<typeof census>[] = [];
-          let previous = 0, stillWar = true, polledAt = start;
+          let previous = 0, stillWar = true, polledAt = start, telemetryAt = start;
           a.resume();
           while (wholeHold ? stillWar && performance.now() - start < 230_000 : performance.now() - start < 13_000) {
-            const now = await new Promise<number>(r => requestAnimationFrame(r)), p = a.perf();
+            const now = await new Promise<number>(r => requestAnimationFrame(r));
             if (wholeHold && now - polledAt >= 1_000) {
               stillWar = a.missions.state()!.l4!.phase === 'war'; polledAt = now;
               if (!stillWar) break;
               if (holdCensuses.length < 2 && (a.tick() - before.tick) / 60 >= [90, 150][holdCensuses.length]) holdCensuses.push(census());
             }
             if (previous && now - start >= 3_000) {
-              frames.push(now - previous); sim.push(p.simTickMs); updates.push(p.updateCpuMs); renders.push(p.renderCpuMs);
+              frames.push(now - previous);
+              // Native timing records every RAF; optional CPU/scene telemetry
+              // need not allocate a full diagnostic snapshot on every frame.
+              if (diagnostic || now - telemetryAt >= 250) {
+                const p = a.perf(); telemetryAt = now;
+                sim.push(p.simTickMs); updates.push(p.updateCpuMs); renders.push(p.renderCpuMs);
+              }
               if (diagnostic) for (const [key, value] of Object.entries(a.debug.cpuProfile())) (cpu[key] ??= []).push(value);
             }
             previous = now;
@@ -108,7 +114,7 @@ try {
     const baseline = candidateOnly ? undefined : value('baseline'), candidate = value('candidate');
     return { afterTurnS, baseline, candidate, delta: baseline === undefined ? undefined : candidate - baseline, budgetMs, pass: candidate <= budgetMs };
   });
-  const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: phone ? [390, 844] : [1280, 720], dpr, cpuThrottle: phone ? 4 : 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1 }, sources, comparisons, rows };
+  const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: phone ? [390, 844] : [1280, 720], dpr, cpuThrottle: phone ? 4 : 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1, frameSampling: 'every RAF', cpuTelemetryEveryMs: diagnostic ? 0 : 250, figureProbe: 'drawn' }, sources, comparisons, rows };
   writeFileSync(`${out}/summary.json`, JSON.stringify(proof, null, 2));
   console.log(JSON.stringify(comparisons));
   if (comparisons.some(row => !row.pass)) process.exitCode = 1;
