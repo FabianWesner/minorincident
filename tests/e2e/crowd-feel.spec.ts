@@ -90,7 +90,9 @@ test('20 infected corpses remain drawn after walking 60 m away and returning @sm
   const proof = await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('horde-arena'); a.pause(); a.cheats.god(true);
     const ids = Array.from({ length: 20 }, (_, i) => a.spawn('infected.runner', { x: 3 + i % 5, z: -2 + Math.floor(i / 5) }, { state: 'idle' }));
-    a.cheats.killAll(); await a.step(121); a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
+    // Settled bodies now occupy separate footprints; frame the entire spread
+    // while keeping the same twenty-body visibility and permanence assertions.
+    a.cheats.killAll(); await a.step(121); a.camera.cinematic({ position: [20, 18, 22], target: [5, .5, 0] }); await a.screenshotReady();
     const first = ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn));
     // Stay inside the finite arena floor and exercise the actual walking controller.
     a.input.set({ moveTarget: { x: -50, z: 45 }, walk: true }); a.camera.follow(); await a.step(3000); a.input.clear();
@@ -98,7 +100,7 @@ test('20 infected corpses remain drawn after walking 60 m away and returning @sm
     const waited = a.getEntity(1)!.transform;
     a.input.set({ moveTarget: { x: 0, z: 0 }, walk: true }); await a.step(3000); a.input.clear();
     const returned = a.getEntity(1)!.transform;
-    a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
+    a.camera.cinematic({ position: [20, 18, 22], target: [5, .5, 0] }); await a.screenshotReady();
     a.settings.set({ gore: 'Off' }); await a.step(0); await a.screenshotReady();
     const goreOffVisible = ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length;
     a.settings.set({ gore: 'Full' }); await a.step(0); await a.screenshotReady();
