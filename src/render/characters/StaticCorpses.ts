@@ -54,8 +54,8 @@ export class StaticCorpses extends Group {
       const current = get(body.id);
       if (current && current !== body) { this.reset(); gone = null; movedPages = null; break; }
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
-      // Only thrown bodies change their instance matrix. Handle them during the
-      // lifecycle pass instead of walking every permanent body a second time.
+      // Thrown bodies follow their flight; settled bodies can yield the
+      // courier's footprint. Update both during the existing lifecycle pass.
       const pose = resting?.(body) ?? (body.corpseThrown ? body.transform : undefined);
       if (pose) {
         const slot = this.slots.get(key)!;
