@@ -63,7 +63,7 @@ try {
           const a = window.__SS__!, frames: number[] = [], sim: number[] = [], updates: number[] = [], renders: number[] = [];
           const cpu: Record<string, number[]> = {};
           const census = () => {
-            const all = a.query({}), live = all.filter(e => e.infected && !e.hidden && e.health.current > 0);
+            const all = a.query({}), player = all.find(e => e.id === 1)!.transform, live = all.filter(e => e.infected && !e.hidden && e.health.current > 0);
             const drawn = new Set(a.crowdFigures().filter(f => f.drawn).map(f => f.id));
             const visibleNative = live.filter(e => {
               if (e.appearance || e.pendingAdmission || e.infected?.hidden) return false;
@@ -71,10 +71,10 @@ try {
               return Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
             });
             return { tick: a.tick(), phase: a.missions.state()!.l4!.phase, infected: live.length,
-              corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - a.getState().player!.transform.x, e.transform.z - a.getState().player!.transform.z) <= 14).length,
+              corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length,
               drawnInfected: live.filter(e => drawn.has(e.id)).length, missingNative: visibleNative.filter(e => !drawn.has(e.id)).map(e => e.id),
               inside: live.filter(e => e.transform.x > perimeter.x0 && e.transform.x < perimeter.x1 && e.transform.z > perimeter.z0 && e.transform.z < perimeter.z1).length,
-              backend: a.perf().backend, quality: a.perf().quality.tier, player: a.getState().player!.transform };
+              backend: a.perf().backend, quality: a.perf().quality.tier, player };
           };
           const before = census(), start = performance.now(), holdCensuses: ReturnType<typeof census>[] = [];
           let previous = 0, stillWar = true, polledAt = start, telemetryAt = start;
