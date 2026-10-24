@@ -158,8 +158,8 @@ export class CharacterView extends Group {
       // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
       let tierGear: LoadedCharacter['tierGear'];
-      // Tier gear is authored on (and skinned with) the palette body's surface; it would float on the textured body.
-      if (isSkin && !this.textured.has(variant)) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
+      // Tier gear is ray-fitted to each body's own surface (assets/acc.courier-gear/build.py), the textured female included.
+      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
       const pilot = isSkin;
       if (pilot) {
         const r = character.rig;

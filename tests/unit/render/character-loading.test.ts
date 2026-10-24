@@ -23,13 +23,11 @@ for (const low of [false, true]) for (const deferred of [false, true]) test.each
     const rigs = () => loader.mock.calls.map(call => String(call[0])).filter(path => path.endsWith(suffix));
     const gear = () => loader.mock.calls.map(call => String(call[0])).filter(path => path.includes('/acc.courier-gear'));
     expect(rigs()).toEqual([`/assets/models/char.courier-${selected}${suffix}`]);
-    // The female body is textured since 10-24: the palette tier gear is not fitted to it and is not requested.
-    const gearOf = (variant: string) => variant === 'female' ? [] : [`/assets/models/acc.courier-gear.${variant}.tiers${low ? '.low' : ''}.glb`];
-    expect(gear()).toEqual(gearOf(selected));
+    expect(gear()).toEqual([`/assets/models/acc.courier-gear.${selected}.tiers${low ? '.low' : ''}.glb`]);
     expect(await character.readyVariant(selected)).toBe(false);
     await Promise.all([character.readyVariant(other), character.readyVariant(other)]);
     expect(rigs()).toEqual([`/assets/models/char.courier-${selected}${suffix}`, `/assets/models/char.courier-${other}${suffix}`]);
-    expect(gear()).toHaveLength(1);
+    expect(gear()).toHaveLength(2);
     expect(await character.readyVariant(other)).toBe(false);
     expect(await character.readyVariant(selected)).toBe(false);
     expect(character.children.filter(child => child.name === 'carried-parcel')).toHaveLength(1);

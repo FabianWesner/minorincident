@@ -48,12 +48,15 @@ class Body:
         for o in list(bpy.data.objects):
             if o not in (self.rig, self.obj): bpy.data.objects.remove(o, do_unlink=True)
         me = self.obj.data
+        # Textured TRELLIS body (female courier since 10-24): loose shirt and inner shells, so shells are cast outside-in.
+        self.textured = any(m and m.name == 'tex_baseColor' for m in me.materials)
         self.bones = {b.name: (b.head_local.copy(), b.tail_local.copy()) for b in self.rig.data.bones}
         self.bvh = BVHTree.FromObject(self.obj, bpy.context.evaluated_depsgraph_get())
         # the same without the rigid backpack so back/torso rays reach the clothes
         bm = bmesh.new(); bm.from_mesh(me)
         deform = bm.verts.layers.deform.verify(); pack = self.obj.vertex_groups['backpackSocket'].index
-        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v[deform].get(pack, 0) > .5 and v.co.x < -.08], context='VERTS')
+        # The textured female bag (10-24) bends with the back and carries at most a 35 % socket share: any share behind the back is pack.
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v[deform].get(pack, 0) > (.02 if 'tex_baseColor' in [m.name for m in me.materials if m] else .5) and v.co.x < -.08], context='VERTS')
         self.bvh_nopack = BVHTree.FromBMesh(bm)
         self.nopack_teal = [False] * len(bm.faces)
         bm.free()
@@ -270,12 +273,14 @@ def build_gear(body, lod, sex):
     for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
         g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: -.12 + s * .86, 0, 0, closed=True),
-                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki',
+                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=.06 if body.textured else None,
                 remap=only({'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))
     g.tier_mark()
 
     # ---- tier 2: quilted padded vest (olive, collar, ridges, armholes) ------------------------------------------------
     z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .02
+    # The heroine's high-waisted shorts reach the spine joint: her vest starts there instead of draping over them.
+    if body.textured: z0 = bones['spine'][0].z + .005
     torso = lambda v: (Vector((0, 0, v)), zup)
     cols = n(16, 6); rows = n(6, 2)
     def vest_thick(s, t):
@@ -289,7 +294,7 @@ def build_gear(body, lod, sex):
         if j == 0: return 'brass'                    # zip
         return 'olive' if i % 2 else 'oliveSeam'
     g.patch('olive', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True), vest_thick, rows, cols, closed=True,
-            bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4,
+            bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4, outer=.35 if body.textured else None,
             drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 42)   # armholes
     g.tier_mark()
 
