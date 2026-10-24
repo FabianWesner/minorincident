@@ -130,5 +130,17 @@ Baselines ("main") are the palette courier from `main`, in the same scenes.
 ## Recommendation
 Ship after the orchestrator's quiet-window gates (L1 low p95, qa:invariants). Open items are small:
 - no blink (needs lid geometry);
-- headlamp (L6) and cure-canister (L10) offsets are not re-checked on her head and bag;
 - the bat-swing shoulder stretch, which main has too.
+
+## Round 3 (orchestrator review of r2-gear)
+- **Tier-4 goggles:** they were fitted to the chibi cap height (the head bone's tail) and floated on top of her hair.
+  On the textured body they now centre 2.5 cm above her eyes: band at 16–24° elevation, lenses at 22–46°.
+  `r3-goggles-t4.jpg`: the band wraps her hair at forehead height and the lenses sit on the bangs, standing and running.
+  Male gear is unchanged.
+- **L6 headlamp:** it floated about 15 cm above her head (offsets tuned for the courier's cap). It now sits at
+  (0.04, 0.14) on her head, scaled (0.95, 0.85, 0.9). `r3-l6-headlamp.jpg`: side view and game camera in the L6
+  subway fixture; the helmet rests on her hair with the ponytail behind.
+- **L10 cure canister** (`l10-e2-backpack` fixture, female, close views): mounted on the bag's back face as on main,
+  with no gap or clipping. No change needed. `r3-l10-canister.jpg`.
+- **Affected tests:** typecheck and lint are clean. `tests/unit/assets` plus the courier render tests:
+  44 files, 751 tests pass.
