@@ -1,12 +1,12 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type Texture } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 import { compactCrowdGeometry } from './compactCrowdGeometry';
-type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number };
+type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
 // Keep sampled animation and small bind transforms across loads. The source
 // registry already owns the geometry; cached expanded triangle soup otherwise
 // pins another vertex buffer after the scene indexes/disposes its own copy.
@@ -41,7 +41,7 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
   }
   return step.value;
 }
-function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false): Generator<void, BakedCrowd> {
+function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -71,7 +71,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       node.matrixWorldNeedsUpdate = false;
     }
   };
-  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}` : undefined;
+  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}:${preserveUV}` : undefined;
   const template = key ? bakedCrowds.get(key) : undefined, cached = template?.clip;
   if (template) {
     bakedCrowds.delete(key!); bakedCrowds.set(key!, template); root.updateMatrixWorld(true);
@@ -144,6 +144,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   const transforms = template?.transforms ?? []; let meshIndex = 0;
   let shirtColor: import('three').Color | undefined;
+  let texture: Texture | undefined;
   let doubleSided = false;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
@@ -169,7 +170,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     if (preserveIndices) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
-    for (const name of ['position', 'normal']) {
+    for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
       const attribute = geometry.getAttribute(name);
       if (attribute.array instanceof Float32Array && !attribute.normalized) continue;
       const values = new Float32Array(attribute.count * attribute.itemSize);
@@ -178,7 +179,11 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
-    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
+    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial & MeshStandardMaterial;
+    if (preserveUV && material.map) {
+      if (texture && texture !== material.map) throw new Error('Textured infected crowd assets must use one shared atlas');
+      texture = material.map;
+    }
     doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
@@ -192,7 +197,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
     }
-    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
+    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
+    if (!preserveUV) geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });
   yield;
@@ -203,7 +209,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   if (!preserveIndices) {
     // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
     // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
-    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'];
+    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index', ...(preserveUV ? ['uv'] : [])];
     const attributes = names.map((name) => geometry.getAttribute(name));
     const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
     const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
@@ -217,7 +223,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
+  const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
   if (key) {
     bakedCrowds.set(key, { clip, transforms });
     if (bakedCrowds.size > bakedCrowdLimit) {

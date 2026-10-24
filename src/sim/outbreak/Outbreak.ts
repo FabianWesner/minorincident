@@ -121,13 +121,12 @@ export class Outbreak {
     this.rng.next(); // Preserve the former random-shirt sample's place in the gameplay stream.
     return shirtTones[crowdAppearance(id).shirt];
   }
-  private readonly modelCounts = new Map<string, number>(l1Pedestrians.models.map(model => [model, 0]));
   private crowdModel(at: Point, infected = false): string {
-    const counts = this.modelCounts;
-    for (const model of counts.keys()) counts.set(model, 0);
+    const models = infected && this.world.scenario === 'L1' ? [...l1Pedestrians.models, 'inf.common-worker'] : l1Pedestrians.models;
+    const counts = new Map<string, number>(models.map(model => [model, 0]));
     for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)
       && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 30 && counts.has(e.appearance!.asset)) counts.set(e.appearance!.asset, counts.get(e.appearance!.asset)! + 1);
-    return leastCrowdedModel(l1Pedestrians.models, counts, Math.floor(this.rng.next() * 0x100000000));
+    return leastCrowdedModel(models, counts, Math.floor(this.rng.next() * 0x100000000));
   }
 
   /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id.
@@ -173,7 +172,7 @@ export class Outbreak {
   dressInfected(): void {
     for (const e of this.world.infected!.active) {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
-      const asset = this.crowdModel(e.transform, true);
+      const asset = e.infected?.variant === 'inf.common-worker' ? 'inf.common-worker' : this.crowdModel(e.transform, true);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
       e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier, bornInfected: true };
     }

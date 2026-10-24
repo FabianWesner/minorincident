@@ -13,8 +13,9 @@ import type { SurvivorState } from '../../../src/data/survivor';
 import { createCorgiPlaceholder } from '../../../src/render/npc/placeholders';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
 import manifest from '../../../src/assets/manifest.json';
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 
-async function model(path: string) { const file = readFileSync(path); return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), ''); }
+async function model(path: string) { const file = readFileSync(path); return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(file), ''); }
 
 test('M1-02 @E04 Blender glTF action library covers shared joints and distinct weapon/corgi moves', async () => {
   const library = await model('assets/animation-library/library.glb');

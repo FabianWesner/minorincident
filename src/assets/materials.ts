@@ -17,6 +17,9 @@ export class AssetMaterials {
     root.traverse(node => {
       if (!(node instanceof Mesh)) return;
       const replace = (source: Material): Material => {
+        // This crowd profile folds its shared atlas into the instanced shader at
+        // bake time. Keep the source map available to that bake and its owner.
+        if (root.userData.assetId === 'inf.common-worker' && 'map' in source && source.map) return source;
         // Legacy vehicle panes use 52–88% alpha, which still conceals seats at
         // the game lens. Keep their tint and lower authored alpha, with clear glazing.
         const opacity = vehicle && source.transparent ? Math.min(source.opacity, .25) : source.opacity;

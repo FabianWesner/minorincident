@@ -122,14 +122,18 @@ export class AssetRegistry {
     }
   }
   async dispose(): Promise<void> {
-    const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>();
+    const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>(), textures = new Set<import('three').Texture>();
     for (const pending of this.cache.values()) (await pending).traverse((node) => {
       const mesh = node as import('three').Mesh;
       if (mesh.geometry) geometries.add(mesh.geometry);
-      if (mesh.material) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+      if (mesh.material) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+        materials.add(material);
+        for (const value of Object.values(material)) if (value && typeof value === 'object' && 'isTexture' in value && value.isTexture) textures.add(value as import('three').Texture);
+      }
     });
     for (const geometry of geometries) geometry.dispose();
     for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
+    for (const texture of textures) texture.dispose();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
     this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
