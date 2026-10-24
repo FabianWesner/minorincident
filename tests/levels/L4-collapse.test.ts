@@ -22,7 +22,7 @@ interface Trace {
 }
 const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.escape.route; let best = Infinity; for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz))); best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t)); } return best; };
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
-function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean): Trace {
+function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean, retreatSettleS = 0): Trace {
   const corpseIds = new Set<number>();
   const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, maxInside: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
   const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
@@ -63,7 +63,7 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
         .sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       if (target) { const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1; w.combat!.damage.apply({ attackId: 0, actionId: l4.machineGun.id, sourceId: 1, targetId: target.id, origin: { x: p.x, z: p.z }, direction: { x: dx / d, z: dz / d }, base: 999, multiplier: 1, type: 'bullet', knockback: 0, stagger: .3 }); }
     }
-    return st.lineBreakAt > 0 && w.tick - st.lineBreakAt > 250;
+    return st.lineBreakAt > 0 && w.tick - st.lineBreakAt > Math.max(250, (retreatSettleS + 1) * 60);
   } });
   tr.breakT = s.lineBreakAt ? t(s.lineBreakAt) : -1; tr.cause = s.lineCause; tr.knockdowns = s.director.knockdowns; tr.barricades = s.director.barricades; tr.tank = s.tankPhase;
   mkdirSync('test-results/epics/E22', { recursive: true }); writeFileSync(`test-results/epics/E22/collapse-${tier}-${shoot ? 'shooter' : 'idle'}.json`, JSON.stringify(tr, null, 1) + '\n');
@@ -88,13 +88,20 @@ function beatsOnTime(tr: Trace): void {
 describe('L4 collapse director', () => {
   test('T-E22-13-collapse @E22 @E22-AC13 idle courier: breach flood reaches line 1, soldiers physically fall back, then the three lines fall on their beats', async () => {
     const l = await loadL4(2); world = l.world;
-    const tr = war(l.world, l.mission, 2, 'high', false);
+    // The breach now sends the first line physically past the courier. Losses
+    // resolve while the horde pursues the later retreat, rather than on the
+    // old armor deadline. Give that retreat ninety seconds to resolve.
+    const retreatSettleS = 90;
+    const tr = war(l.world, l.mission, 2, 'high', false, retreatSettleS);
     expect(tr.turnedAtTurn).toBeGreaterThanOrEqual(15); expect(tr.turnedAtTurn).toBeLessThanOrEqual(25);
     beatsOnTime(tr);
-    // The first wall breach now starts the physical fallback sequence. Measure
-    // the casualty bound at that new beat, rather than the old armor deadline.
-    // Keep the authored population bound strict: fewer than ten remain.
-    expect(tr.beats[0].soldiers).toBeLessThan(10); expect(tr.beats[0].soldiers).toBeLessThanOrEqual(tr.turnedAtTurn);
+    // Count the whole army, including soldiers outside the three line groups.
+    // A bound on the nine-person first line alone would be vacuous.
+    const atTurn = tr.soldiers[0].n, atBreach = tr.soldiers.find(x => x.t >= tr.firstBreach);
+    const afterRetreat = tr.soldiers.find(x => x.t >= tr.breakT + retreatSettleS);
+    expect(atBreach).toBeDefined(); expect(afterRetreat).toBeDefined();
+    expect(afterRetreat!.n).toBeLessThan(10); expect(afterRetreat!.n).toBeLessThan(atTurn * .5);
+    expect(atBreach!.n).toBeLessThanOrEqual(atTurn);
     expect(tr.barricades).toBeGreaterThanOrEqual(1); expect(tr.knockdowns).toBeGreaterThanOrEqual(1);
     expect(tr.maxInside, 'a flood enters during the hold, including between the three instantaneous fall beats').toBeGreaterThanOrEqual(5);
     expect(tr.line1Fallback, 'surviving first-line soldiers reach the deeper second line after the breach').toBeGreaterThanOrEqual(4);
