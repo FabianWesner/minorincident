@@ -1,0 +1,86 @@
+[
+  {
+    "level": "L6",
+    "tick": 10303,
+    "x": 117,
+    "z": 14.8,
+    "severity": "P2",
+    "kind": "enemy-unhittable",
+    "text": "Infected #163 (chase) 1.7 m away took no damage from 8 s of attacks (hp 60/60)",
+    "captures": [
+      "captures/campaign-L6-10303-enemy-unhittable.jpg"
+    ],
+    "step": "retreat",
+    "objective": "Bring the injured survivor back to the group · 31 m"
+  },
+  {
+    "level": "L6",
+    "tick": 12080,
+    "x": 135.5,
+    "z": 14.5,
+    "severity": "P2",
+    "kind": "enemy-unhittable",
+    "text": "Infected #187 (chase) 2.0 m away took no damage from 8 s of attacks (hp 37.6/60)",
+    "captures": [
+      "captures/campaign-L6-12080-enemy-unhittable.jpg"
+    ],
+    "step": "retreat",
+    "objective": "Bring the injured survivor back to the group · 14 m"
+  },
+  {
+    "level": "L6",
+    "tick": 12471,
+    "x": 139.6,
+    "z": 15.1,
+    "severity": "P2",
+    "kind": "enemy-unhittable",
+    "text": "Infected #171 (bite) 1.6 m away took no damage from 8 s of attacks (hp 60/60)",
+    "captures": [
+      "captures/campaign-L6-12471-enemy-unhittable.jpg"
+    ],
+    "step": "retreat",
+    "objective": "Bring the injured survivor back to the group · 10 m"
+  },
+  {
+    "level": "L10",
+    "tick": 42992,
+    "x": 3315.5,
+    "z": -91.7,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 387.0 m, no marker: false); HUD: \"Bring the cure to the dispersal complex · 387 m\"",
+    "captures": [
+      "captures/campaign-L10-42992-stuck-navigating.jpg"
+    ],
+    "step": "dispersal-complex",
+    "objective": "Bring the cure to the dispersal complex · 387 m"
+  },
+  {
+    "level": "L10",
+    "tick": 68846,
+    "x": 4000.8,
+    "z": -16.2,
+    "severity": "P2",
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (1.0 m); HUD: \"Kill the Mega Alpha · 1 m\"",
+    "captures": [
+      "captures/campaign-L10-68846-stuck-at-ring.jpg"
+    ],
+    "step": "mega",
+    "objective": "Kill the Mega Alpha · 1 m"
+  },
+  {
+    "level": "L10",
+    "tick": 215478,
+    "x": 4002,
+    "z": -27,
+    "severity": "P0",
+    "kind": "cannot-finish",
+    "text": "Driver could not finish step mega (\"Kill the Mega Alpha · 10 m\") after 0 s on it (60 min level cap: true); stopping without advancing the objective",
+    "captures": [
+      "captures/campaign-L10-215478-cannot-finish.jpg"
+    ],
+    "step": "mega",
+    "objective": "Kill the Mega Alpha · 10 m"
+  }
+]
