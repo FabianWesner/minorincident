@@ -55,3 +55,11 @@ A living record, updated after every lane or experiment. Short entries with evid
   - lanes leave captures in the shared scratchpad and can delete files there;
   - never `git worktree remove --force` directly: untracked evidence (bot logs, captures) lives in the worktree and gets lost (10-23: the L5 gate logs were lost that way). Use the guard script, and copy test-results/playtest/<run>/ first;
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
+
+## 2026-10-24: TRELLIS.2 character pipeline (orchestrator experiments)
+- **Worked:** Codex imagegen redraw of the game concept in an A-pose, then hosted TRELLIS.2 (≈ 90 s for inference plus a 300k export), then quadric LODs (fast-simplification), then a Blender emission bake. On the Alpha "overgrown worker" this kept rocks, rebar, hard hat and torn jacket at 7.6k triangles / 640 KB.
+- **Didn't work:**
+  - TRELLIS.2's own export below 100k triangles is rejected by the Space;
+  - Blender Decimate stalls at ≈ 20k on TRELLIS meshes (≈ 1,000 floater components);
+  - a DIFFUSE colour bake turns metallic-marked parts black.
+- **Rule:** LODs are made locally from the 300k export; bake emission of the base colour. Scripts: minorincident_3dpipeline/v2/.
