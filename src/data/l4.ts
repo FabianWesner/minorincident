@@ -221,7 +221,7 @@ export const l4 = {
   ] as readonly P[] },
   checkpoints: ['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break'] as const,
   /** Bots (section 8). Bands are provisional until the first green run (staging decision section 6). */
-  bots: { seeds: 20, completeMedianS: [260, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
+  bots: { seeds: 20, completeMedianS: [245, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
 
 /** Convoy parking: the column ends along the plaza at x = -11, head (APC) in the north. See `l4Route`. */
