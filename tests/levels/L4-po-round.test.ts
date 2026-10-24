@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Emergence, l4Inside, l4Line, l4Posts } from '../../src/data/l4';
+import { l4, l4Emergence, l4Inside, l4TentEntrances, l4Line, l4Posts } from '../../src/data/l4';
 import { l4AlphaEmergence } from '../../src/levels/L4/layout';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -136,7 +136,7 @@ describe('L4 PO round 10-13', () => {
 
   test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
-    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
     const reached = new Set<number>(), reachSectors = new Set<number>(), alphaReached = new Set<number>(), beats: string[] = [];
     const nests = l4Posts.filter(p => p.role === 'hmg').map(p => ({ x: p.at[0], z: p.at[1] })), pallets = l4Line.map(p => ({ x: p.x, z: p.z }));
     const soldierIds = () => s.soldierIds.filter(id => human(w.entities.get(id)));

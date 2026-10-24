@@ -92,7 +92,7 @@ export class L4Collapse {
   /** Line 1 front: a big push from the streets the sandbag runs face (west, NW alley, north, south-west). */
   private frontWave(): void {
     const s = this.s, n = this.tier(D.frontWave), edges = [0, 1, 2, 5];
-    for (const e of edges) s.pend[e] = Math.min(l4.war.pendMax, s.pend[e] + Math.ceil(n / edges.length));
+    for (const e of edges) s.pend[e] += Math.ceil(n / edges.length);
     this.world.events.emit({ type: 'l4.wave', tick: this.world.tick, wave: -1, count: n, edges });
   }
   /** The line holds too well: new infected arrive at its flank out of view; existing humans can only turn after bites. */
@@ -127,7 +127,7 @@ export class L4Collapse {
     if (!tank || s.tankPhase === 'silent' || s.tankPhase === 'gone') { if (!this.d.swarmedAt && this.t >= D.lines[2].earliestS) this.d.swarmedAt = world.tick; return; }
     const at = { x: tank.transform.x, z: tank.transform.z };
     for (const e of ai.active) if (e.health.current > 0 && !e.hidden && e.infected?.l1 && dist(e.transform, at) < 30) ai.rush(e.id, at, world.tick + ticks(15));
-    if (world.tick % 60 === 0) for (const edge of [5, 4]) s.pend[edge] = Math.min(l4.war.pendMax, s.pend[edge] + this.tier({ high: 6, low: 3 }));
+    if (world.tick % 60 === 0) for (const edge of [5, 4]) s.pend[edge] += this.tier({ high: 6, low: 3 });
     const near = ai.active.filter(e => e.health.current > 0 && !e.hidden && dist(e.transform, at) <= D.swarmM).length;
     if (near >= D.swarm && this.t >= D.lines[2].earliestS - 6) this.silenceTank();
   }

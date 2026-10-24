@@ -75,7 +75,7 @@ export const l4 = {
   war: {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
@@ -91,7 +91,7 @@ export const l4 = {
      * and staggered. `inside`: during the war groups of 4-5 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 2.5, group: [2, 3] as P, minM: 9 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 2.5, group: [2, 3] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -131,9 +131,9 @@ export const l4 = {
     alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     // First fallback line runs past the courier toward the plaza centre; the
-    // second line (x=-16) remains deeper in camp.
-    fallback1: [[-18.8, -11.8], [-18.8, -8.5], [-18.8, -5.2], [-18.8, -1.9], [-18.8, 1.4], [-18.8, 4.7], [-18.8, 8], [-18.8, 11.3], [-18.8, 14.6]] as readonly P[],
-    fallback2: [[-16, -10], [-16, -6.7], [-16, -3.4], [-16, 0], [-16, 3.3], [-16, 6.6], [-16, 10], [-16, -15.5], [-16, 13.5]] as readonly P[],
+    // second line (x=-10.8) remains deeper in camp.
+    fallback1: [[-13.2, -11.8], [-13.2, -8.5], [-13.2, -5.2], [-13.2, -1.9], [-13.2, 1.4], [-13.2, 4.7], [-13.2, 8], [-13.2, 11.3], [-13.2, 14.6]] as readonly P[],
+    fallback2: [[-10.8, -10], [-10.8, -6.7], [-10.8, -3.4], [-10.8, 0], [-10.8, 3.3], [-10.8, 6.6], [-10.8, 10], [-10.8, -15.5], [-10.8, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
     flanks: [
@@ -166,7 +166,7 @@ export const l4 = {
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
       [[-25, -8], [-25, 4], [-25, 10]],
-      [[-16, -11]], // rear of the north reception line, beside the camp medical supplies
+      [[-12, -11]], // behind the courier-side fallback line
       [[-9.8, -16.5], [-9.8, -6.5], [-11, 16]], // bumper gaps behind the convoy crew, clear of the hulls and south tank swarm
       [[-11, 16]], // armour falls: rally at the south convoy gap before breaking away onto Lakeshore
     ] as readonly (readonly P[])[],
@@ -304,8 +304,8 @@ export const l4Edges: readonly { id: string; at: P }[] = [
  * a street point from 24 m). An edge releases its small groups from these in turn, always out of view.
  */
 export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
-  { id: 'west-end', edge: 0, at: [-83, 5] }, { id: 'nw-alley-end', edge: 1, at: [-60, -60] },
-  { id: 'north-end', edge: 2, at: [-10, -60] }, { id: 'east-end', edge: 3, at: [80, 25] },
+  { id: 'west-end', edge: 0, at: [-83, 60] }, { id: 'nw-alley-end', edge: 1, at: [-83, -60] },
+  { id: 'north-end', edge: 2, at: [25, -60] }, { id: 'east-end', edge: 3, at: [80, 25] },
   { id: 'southeast-end', edge: 4, at: [35, 60] }, { id: 'southwest-end', edge: 5, at: [-40, 60] },
 ];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
@@ -327,6 +327,11 @@ export const l4Inside: readonly P[] = [
   // These are opportunistic off-screen exits; the director still rejects them
   // whenever the courier moves far enough to see them.
   [-33, 19], [-29, 20], [-25, 21],
+];
+/** Entrances of the three freestanding tents and the reception kit's two field tents. */
+export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
+  ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
+  ...[-12.1, -5.5].map(z => ({ at: [-28.25, z] as P, out: [1, 0] as P, step: [-27.7, z] as P, route: [[-27.7, -8.8], [-26.65, -8.8]] as readonly P[], floor: .08 })),
 ];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [

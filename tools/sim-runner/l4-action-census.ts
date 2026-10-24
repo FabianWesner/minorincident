@@ -12,7 +12,8 @@ const seed = Number(process.argv[2] ?? 3), tier = (process.argv[3] ?? 'low') as 
 const { world: w, mission: m } = await loadL4(seed, tier);
 const per = l4.perimeter, inside = (p: { x: number; z: number }) => p.x > per.x0 && p.x < per.x1 && p.z > per.z0 && p.z < per.z1;
 const seen = new Set<number>();
-const spawns: { t: number; id: number; arch: string; x: number; z: number; dPlayer: number; inView: boolean; emerging: boolean; origin: number | null; inside: boolean }[] = [];
+const originalPeople = new Set<number>();
+const spawns: { t: number; id: number; arch: string; x: number; z: number; dPlayer: number; inView: boolean; emerging: boolean; transformation: boolean; origin: number | null; inside: boolean }[] = [];
 const seconds: { t: number; phase: string; alive: number; inside: number; near: number; wire: number; step: string | null; courier: { x: number; z: number } }[] = [];
 // Game camera view at zoom 1: radius 19, polar 0.3π → the frame covers roughly ±17 m by ±11 m around the courier on the ground.
 // The game camera at the PO zoom 1.5 (radius 19 x 1.5, polar 0.3 pi, azimuth 45 deg), any part of a standing body on screen.
@@ -25,10 +26,11 @@ const inView = (p: { x: number; z: number }) => {
 };
 const r = runL4(w, m, profile, { seed, god: true, maxSeconds: 520, stopWhen: mm => {
   const s = mm.state.l4!;
+  if (!s.turnAt) for (const e of w.entities.iterate()) if (e.civilian) originalPeople.add(e.id);
   for (const e of w.infected!.active) if (!seen.has(e.id) && !e.hidden && e.health.current > 0) {
     seen.add(e.id);
     const p = w.entities.get(1)!.transform;
-    if (s.turnAt) spawns.push({ t: +((w.tick - s.turnAt) / 60).toFixed(1), id: e.id, arch: e.archetype, x: +e.transform.x.toFixed(1), z: +e.transform.z.toFixed(1), dPlayer: +Math.hypot(e.transform.x - p.x, e.transform.z - p.z).toFixed(1), inView: inView(e.transform) && !w.infected!.director.occluded(e.transform), emerging: !!e.emerging, origin: s.origin[e.id] ?? null, inside: inside(e.transform) });
+    if (s.turnAt) spawns.push({ t: +((w.tick - s.turnAt) / 60).toFixed(1), id: e.id, arch: e.archetype, x: +e.transform.x.toFixed(1), z: +e.transform.z.toFixed(1), dPlayer: +Math.hypot(e.transform.x - p.x, e.transform.z - p.z).toFixed(1), inView: inView(e.transform) && !w.infected!.director.occluded(e.transform), emerging: !!e.emerging, transformation: originalPeople.has(e.id), origin: s.origin[e.id] ?? null, inside: inside(e.transform) });
   }
   if (s.turnAt && (w.tick - s.turnAt) % 60 === 0) {
     const live = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden), p = w.entities.get(1)!.transform;
@@ -46,8 +48,8 @@ for (let min = 0; min < 6; min++) {
   console.log(`min ${min}: phase ${s.at(-1)!.phase} step ${s.at(-1)!.step} alive ${Math.round(s.reduce((a, b) => a + b.alive, 0) / s.length)} insideMean ${(s.reduce((a, b) => a + b.inside, 0) / s.length).toFixed(1)} insideMax ${Math.max(...s.map(x => x.inside))} nearMean ${(s.reduce((a, b) => a + b.near, 0) / s.length).toFixed(1)} wireMean ${(s.reduce((a, b) => a + b.wire, 0) / s.length).toFixed(1)} spawns ${sp.length} inView ${sp.filter(x => x.inView).length} insideSpawns ${sp.filter(x => x.inside).length}`);
 }
 for (const a of spawns.filter(x => x.arch === 'infected.alpha')) console.log('alpha', JSON.stringify(a));
-const visible = spawns.filter(x => x.inView), popIns = visible.filter(x => !x.emerging && (x.origin === null || x.origin < l4Emergence.length));
-console.log('visible admissions', JSON.stringify({ all: visible.length, animatedDoor: visible.length - popIns.length, popIns: popIns.length }));
+const visible = spawns.filter(x => x.inView), transformations = visible.filter(x => x.transformation), popIns = visible.filter(x => !x.transformation && !x.emerging && (x.origin === null || x.origin < l4Emergence.length));
+console.log('visible admissions', JSON.stringify({ all: visible.length, transformations: transformations.length, animatedDoor: visible.length - transformations.length - popIns.length, popIns: popIns.length }));
 console.log('breaches', JSON.stringify(Object.fromEntries(Object.entries(m.state.l4!.breaches ?? {}).map(([k, v]) => [k, { announced: +((v!.announcedAt - m.state.l4!.turnAt) / 60).toFixed(1), open: v!.openAt ? +((v!.openAt - m.state.l4!.turnAt) / 60).toFixed(1) : null }]))));
 console.log('timeline', JSON.stringify(r.timeline.map(x => `${x.type}@${x.t.toFixed(0)}`)));
 w.dispose();

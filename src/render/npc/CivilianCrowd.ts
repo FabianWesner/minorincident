@@ -264,7 +264,7 @@ class CivilianBatch extends Group {
       if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'shotgun', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.
         const target = c.ally?.targetId ? this.world.entities.get(c.ally.targetId) : undefined;
-        if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
+        if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y - (target.health.current <= 0 ? 1.1 : 0),target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
         else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
         const hold = handProp === 'pistol' ? undefined : crowdLongGunHold;

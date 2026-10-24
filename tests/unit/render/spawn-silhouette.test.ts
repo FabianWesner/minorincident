@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import { Matrix4, PerspectiveCamera, Vector3 } from 'three';
 import { l4, l4OffscreenMouths } from '../../../src/data/l4';
+import { cameraFraming } from '../../../src/data/cameraFraming';
 import { SpawnDirector } from '../../../src/sim/ai/SpawnDirector';
 import type { InfectedSystem } from '../../../src/sim/ai/InfectedSystem';
 
@@ -44,13 +45,19 @@ test('T-E22-20-silhouette @E22-AC20 spawn silhouettes agree with the original sl
 
 test('L4 authored street mouths stay beyond the camera frustum plus 6 m throughout the camp and zoom range', () => {
   const director = new SpawnDirector({ world: { scenario: 'L4', combat: { definition: { walls: [] } } } } as unknown as InfectedSystem);
-  const camera = new PerspectiveCamera(25, 16 / 9, .1, 600), offset = new Vector3();
-  for (let x = l4.perimeter.x0; x <= l4.perimeter.x1; x += 1) for (let z = l4.perimeter.z0; z <= l4.perimeter.z1; z += 1) {
-    for (const zoom of [.5, .75, 1, 1.25, 1.5]) {
-      offset.setFromSphericalCoords(19 * zoom, Math.PI * .3, Math.PI / 4);
-      camera.position.set(x + offset.x, offset.y, z + offset.z); camera.lookAt(x, 0, z); camera.updateMatrixWorld(true);
-      director.setFrustum(camera.projectionMatrix.clone().multiply(camera.matrixWorldInverse).elements, camera.position);
-      for (const mouth of l4OffscreenMouths) expect(director.offscreen({ x: mouth.at[0], z: mouth.at[1] }), `${mouth.id} at courier ${x},${z}, zoom ${zoom}`).toBe(true);
+  const offset = new Vector3();
+  for (const aspect of [16 / 9, 390 / 844, 844 / 390]) {
+    const camera = new PerspectiveCamera(cameraFraming.fovDeg, aspect, .1, 600);
+    const radius = aspect >= 1 ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(cameraFraming.fovDeg * Math.PI / 360) * aspect));
+    const xs = Array.from({ length: Math.ceil(l4.perimeter.x1 - l4.perimeter.x0) + 1 }, (_, i) => Math.min(l4.perimeter.x1, l4.perimeter.x0 + i));
+    const zs = Array.from({ length: Math.ceil(l4.perimeter.z1 - l4.perimeter.z0) + 1 }, (_, i) => Math.min(l4.perimeter.z1, l4.perimeter.z0 + i));
+    for (const x of xs) for (const z of zs) {
+      for (const zoom of [.5, .75, 1, 1.25, 1.5]) {
+        offset.setFromSphericalCoords(radius * zoom, cameraFraming.polar, Math.PI / 4);
+        camera.position.set(x + offset.x, offset.y, z + offset.z); camera.lookAt(x, 0, z); camera.updateMatrixWorld(true);
+        director.setFrustum(camera.projectionMatrix.clone().multiply(camera.matrixWorldInverse).elements, camera.position);
+        for (const mouth of l4OffscreenMouths) expect(director.offscreen({ x: mouth.at[0], z: mouth.at[1] }), `${mouth.id} at courier ${x},${z}, zoom ${zoom}, aspect ${aspect}`).toBe(true);
+      }
     }
   }
 });

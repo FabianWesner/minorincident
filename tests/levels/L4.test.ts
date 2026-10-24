@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4TentEntrances, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -151,14 +151,14 @@ describe('L4 The Safe City Falls', () => {
       expect(turns, `seed ${seed}`).toHaveLength(1);
       expect(turns[0].tick).toBe(s.gunAt);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
-      const tentDoors = [[-30.65, 11.15], [-26.8, 11.15], [-22.8, 11.15]] as const;
+      const tentDoors = l4TentEntrances.map(door => door.at);
       const sources = [...tentDoors, ...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
       for (const id of turns[0].ids) expect(sources.some(([x, z]) => dist(at.get(id)!, { x, z }) < 2), `new infected ${id} at an authored emergence point`).toBe(true);
       expect([...origins]).not.toContain('L3-bus');
       expect(turns[0].ids.every(id => !s.evacueeIds.includes(id) && !s.residentIds.includes(id))).toBe(true);
       const groups = new Map<number, number>();
       for (const id of turns[0].ids) groups.set(s.origin[id], (groups.get(s.origin[id]) ?? 0) + 1);
-      expect(Math.max(...groups.values()), 'the alarm is split evenly among the three animated tent doors').toBeLessThanOrEqual(Math.ceil(l4.calm.alarmInfected.high / tentDoors.length));
+      expect(Math.max(...groups.values()), 'the alarm is split evenly among the animated tent doors').toBeLessThanOrEqual(Math.ceil(l4.calm.alarmInfected.high / tentDoors.length));
       w.dispose();
     }
     // The camp remains calm while the player has not collected the gun.
@@ -235,7 +235,7 @@ describe('L4 The Safe City Falls', () => {
     const doors = (l.mission.l4 as unknown as { doors(): { x: number; z: number }[] }).doors();
     while (s.phase !== 'war') w.update();
     const refugeDoors = Object.entries(l.mission.def.anchors).filter(([n]) => n.startsWith('refuge-door-')).map(([, a]) => a);
-    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4TentEntrances.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
     for (let t = 0; t < 90 * 60; t++) {
       w.update();
       for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(points.some(q => dist(q, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6) || refugeDoors.some(d => dist(d, e.transform) < 6)); }
