@@ -23,7 +23,7 @@ interface Trace {
 const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.escape.route; let best = Infinity; for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz))); best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t)); } return best; };
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean, retreatSettleS = 0): Trace {
-  const corpseIds = new Set<number>();
+  const corpseIds = new Set<number>(), retreatAudit: object[] = [];
   const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, maxInside: 0, line1Size: 0, line1Fallback: 0, firstBreach: -1, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
   const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
@@ -33,6 +33,12 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
   w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && e.id === 'L4.fallback') tr.fallBackRadio = t(e.tick); });
   runL4(w, m, 'idle', { seed, god: true, maxSeconds: 480, stopWhen: mm => {
     const st = mm.state.l4!;
+    if (retreatSettleS && st.lineBreakAt && (w.tick - st.lineBreakAt) % 1800 === 0) {
+      retreatAudit.push({ seconds: (w.tick - st.lineBreakAt) / 60, pockets: st.pockets, pocketSpawned: { ...st.pocketSpawned }, reserved: w.infected!.director.reserved,
+        soldiers: st.soldierIds.map(id => w.entities.get(id)!).filter(e => e?.civilian && !e.infection && e.health.current > 0).map(e => ({ id: e.id, at: { ...e.transform }, hp: e.health.current, ally: e.civilian!.ally })),
+        infected: w.infected!.active.filter(e => e.health.current > 0).map(e => { const b = e.infected!.l1; return { id: e.id, archetype: e.archetype, at: { ...e.transform }, hp: e.health.current, state: e.infected!.state, emerging: e.emerging, scripted: e.infected!.scripted, focus: b?.focusId, target: b?.targetId, mode: b?.mode, goal: b && [b.goalX, b.goalZ], search: b?.search }; }),
+      });
+    }
     for (const id of corpseIds) if (!w.entities.get(id)?.corpse) { tr.corpseLosses++; corpseIds.delete(id); }
     for (const e of w.entities.iterate()) if (e.corpse && e.faction === 'infected') corpseIds.add(e.id);
     if (st.turnAt && (w.tick - st.turnAt) % 60 === 0) tr.soldiers.push({ t: t(w.tick), n: st.soldierIds.filter(id => { const e = w.entities.get(id); return e?.civilian && !e.infection && e.health.current > 0; }).length });
@@ -66,7 +72,9 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
     return st.lineBreakAt > 0 && w.tick - st.lineBreakAt > Math.max(250, (retreatSettleS + 1) * 60);
   } });
   tr.breakT = s.lineBreakAt ? t(s.lineBreakAt) : -1; tr.cause = s.lineCause; tr.knockdowns = s.director.knockdowns; tr.barricades = s.director.barricades; tr.tank = s.tankPhase;
-  mkdirSync('test-results/epics/E22', { recursive: true }); writeFileSync(`test-results/epics/E22/collapse-${tier}-${shoot ? 'shooter' : 'idle'}.json`, JSON.stringify(tr, null, 1) + '\n');
+  mkdirSync('test-results/epics/E22', { recursive: true });
+  if (retreatAudit.length) writeFileSync(`test-results/epics/E22/collapse-${tier}-audit.json`, JSON.stringify(retreatAudit, null, 1) + '\n');
+  writeFileSync(`test-results/epics/E22/collapse-${tier}-${shoot ? 'shooter' : 'idle'}.json`, JSON.stringify(tr, null, 1) + '\n');
   return tr;
 }
 function beatsOnTime(tr: Trace): void {

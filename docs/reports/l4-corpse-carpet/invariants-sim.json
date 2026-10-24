@@ -1,0 +1,172 @@
+{
+  "numTotalTestSuites": 10,
+  "numPassedTestSuites": 10,
+  "numFailedTestSuites": 0,
+  "numTotalTests": 28,
+  "numPassedTests": 28,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "success": true,
+  "cases": [
+    {
+      "file": "accessories.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "1 accessories: actual head-local bounds and scale for every crowd model \u00d7 LOD \u00d7 appearance tier",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "contract.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "automatic regression invariants 2 seated actors: every active sit/bench pose across L1\u2013L10 and both quality tiers has seat support",
+          "status": "passed"
+        },
+        {
+          "title": "automatic regression invariants 3 scripted actors: all initial cast, depot clerk and lab technician persist until their scripted exits",
+          "status": "passed"
+        },
+        {
+          "title": "automatic regression invariants 4 vehicles: scripted route and stop poses have no overlap with registered solids",
+          "status": "passed"
+        },
+        {
+          "title": "automatic regression invariants 6 objectives: every mission step has a visible destination marker or explicit HUD-only rule",
+          "status": "passed"
+        },
+        {
+          "title": "automatic regression invariants 7 walkable ground: every authored raised walkable surface edge follows sim ground within 20 cm",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "escape-waves.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "5 L2 escape high: every street batch and bridge cluster admits its quota and reaches its authored home",
+          "status": "passed"
+        },
+        {
+          "title": "5 L2 escape low: every street batch and bridge cluster admits its quota and reaches its authored home",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "oracles.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "invariant proof fixtures fixture accessories",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture seats",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture actors",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture vehicles",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture waves",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture objectives",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture ground",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures fixture load",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures load rejects either budget independently",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures missing or non-finite measurements fail closed",
+          "status": "passed"
+        },
+        {
+          "title": "invariant proof fixtures objective guidance cannot pass with an empty or hidden HUD, even when its ring is visible",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "scripted-scenes.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "3 late scripted scenes low: firefighter invitation and metro lookout persist",
+          "status": "passed"
+        },
+        {
+          "title": "3 late scripted scenes high: firefighter invitation and metro lookout persist",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "vehicle-scenes.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted crash clear structural solids",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "war-waves.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "5 L4 high: every authored war wave and collapse batch spawns and reaches its goal area",
+          "status": "passed"
+        },
+        {
+          "title": "5 L4 low: every authored war wave and collapse batch spawns and reaches its goal area",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "waves.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "5 authored wave census high: L1, L2, L3, L6, L7, L8 and L10",
+          "status": "passed"
+        },
+        {
+          "title": "5 authored wave census low: L1, L2, L3, L6, L7, L8 and L10",
+          "status": "passed"
+        },
+        {
+          "title": "5 L4 alarm high: every authored identity is admitted and reaches the hold area",
+          "status": "passed"
+        },
+        {
+          "title": "5 L4 alarm low: every authored identity is admitted and reaches the hold area",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

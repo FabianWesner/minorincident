@@ -30,3 +30,18 @@ test('L4 excess pursuers cover another defender while coherent cohorts keep thei
   expect(press).toHaveBeenCalledWith(60, 12, expect.any(Number), 30);
   expect(active[0].infected!.l1!.goalX).toBe(60);
 });
+
+
+test('L4 high retreat resumes an interrupted approach even when its defender has not moved', () => {
+  const player = { id: 1, transform: { x: 0, z: 0 } } as EntitySnapshot;
+  const soldier = { id: 11, transform: { x: 50, z: 0 } } as EntitySnapshot;
+  const brain = { mode: 'search', targetId: 0, focusId: 11, focusUntil: 99999, goalX: 50, goalZ: 0, search: { completeApproach: false, originX: 30, originZ: 10 } };
+  const runner = { id: 60, archetype: 'infected.runner', transform: { x: 30, z: 0 }, health: { current: 60 }, infected: { l1: brain } } as unknown as EntitySnapshot;
+  const press = vi.fn(), world = { tick: 60, entities: { get: () => player }, infected: { active: [runner], press, director: { tier: 'high' } } };
+  const war = Object.assign(Object.create(LevelFourWar.prototype), {
+    mission: { world, state: { l4: { phase: 'collapse' } } }, liveSoldiers: () => [soldier],
+  }) as { followBreachHorde(): void };
+  war.followBreachHorde();
+  expect(press).toHaveBeenCalledWith(60, 11, expect.any(Number), 30);
+  expect(brain.search).toMatchObject({ completeApproach: true, originX: 50, originZ: 0 });
+});

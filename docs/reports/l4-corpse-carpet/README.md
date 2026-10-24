@@ -51,5 +51,6 @@ The census reader now fetches the courier once from its existing entity snapshot
 - Smoke: 6 simulation checks and 31 browser checks passed, using one browser worker. [Receipt](smoke.json).
 - L4 low / zoom 1.5 real-input bot, `--no-skip`: finished, **0 deaths**, no skipped objectives, 291 s wall time. It used four navigation assists and reported one transient P2 navigation stall at the start of the escape before reaching the cellar. These assists steer through physical controls; they do not teleport or complete objectives. [Receipt](bot.json).
 - Fresh PO WebGPU captures at zoom 1 and 1.5: passed, 144 total bodies (143 infected) within 14 m at 150 s, no missing living figures, no sunk pairs, no repeated intersecting poses/yaw, offset ≤1 m and courier clearance true.
-- Focused high collapse case: local pass, **8 survivors** 90 s after fallback, unchanged `<10` / less than half of the initial army assertions. Remote confirmation and the full remote unit + levels and invariants receipts are pending.
+- `E2E_PORT=4471 SCENE_PORT=4472 QA_INVARIANTS_NO_QUIET=1 npm run qa:invariants`: **28 Linux simulation checks + 12 Mac WebGPU browser checks passed**, with every wave arrival assertion retained. [Run receipt](invariants.json), [simulation cases](invariants-sim.json).
+- Focused high collapse case: local pass, **8 survivors** 90 s after fallback, unchanged `<10` / less than half of the initial army assertions. Remote confirmation and the full remote unit + levels receipt are pending.
 - Native timing is deferred to the orchestrator as described above.
