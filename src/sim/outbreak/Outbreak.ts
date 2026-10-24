@@ -1,4 +1,4 @@
-import { leastCrowdedModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
+import { leastCrowdedModel, crowdAppearance, shirtTones, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
@@ -175,7 +175,10 @@ export class Outbreak {
   dressInfected(): void {
     for (const e of this.world.infected!.active) {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
-      const asset = this.crowdModel(e.transform, true);
+      // L4's arriving horde shares the seven existing infected model batches.
+      // Original people already own an appearance and keep it through a turn.
+      const variant = e.infected?.variant;
+      const asset = this.world.scenario === 'L4' && regularInfectedModels.some(model => model === variant) ? variant! : this.crowdModel(e.transform, true);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
       e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier, bornInfected: true };
     }
@@ -225,7 +228,7 @@ export class Outbreak {
   /** PO Q-159 ("people behave strange"): sheltering/hiding people cower only while a live infected is within `cowerThreatM`; otherwise they stand alert. */
   threatNear(e: EntitySnapshot): boolean {
     for (const a of this.world.infected?.active ?? []) if (a.health.current > 0 && !a.hidden && !a.infected?.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
-    for (const a of this.turning) if (a !== e && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
+    for (const a of this.turning) if (a !== e && a.health.current > 0 && !a.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
     return false;
   }
   private shelterCower(e: EntitySnapshot): void {

@@ -73,18 +73,24 @@ The breaches open at 46 s (west), 118 s (north) and 119 s (south). The visible c
 
 ## 6. Finish pass: authored sources and courier-side flood (2026-10-24)
 
-The review called out two remaining failures: groups could stall forever at an unusable mouth, and the breach flood collected at the gap instead of reaching the courier. Six outer street-end / alley mouths now pass a full courier-position sweep at zooms 0.5–1.5 with the six-metre camera guard; solid-building occlusion is accepted by the L4 spawn director. Pending groups retain their count and try the next eligible mouth. The alarm and recurring interior population use the reception tent door-walk emergence, so an in-frame body is staged behind a tent and walks out rather than appearing on pavement. After a breach opens, groups and live infected retarget the nearest living defender or courier. The first retreat line is physically placed past the courier toward the plaza centre.
+Six outer street-end / alley mouths now pass a one-metre courier-position sweep, including the camp boundaries, at zooms 0.5–1.5, desktop landscape, phone portrait and phone landscape, with the six-metre camera guard. Each mouth also has a navigation path to the camp streets; merely being walkable was insufficient for sources beyond the district's connected streets. Solid-building occlusion is accepted by the director; vehicles and generic collision walls cannot authorize a visible spawn. Pending groups retain every authored quota and try the nearest eligible mouth. Their finite street approach survives the ordinary ten-second investigation cutoff.
 
-Latest seed-3, low, complete-bot census (`node --import tsx tools/sim-runner/l4-action-census.ts 3 low complete`):
+The alarm and recurring interior population walk out of five actual reception tent doors: three freestanding tents and the two tents already in the registration kit. The kit exits follow the central aisle around its tables. Two narrow walking lanes stay behind each real flap before emerging. Armed civilians defend only within eight metres of themselves or their shelter. On a breach, the first line physically retreats east past the courier; its checkpoint stays in the plaza in front of that second line. Street groups press toward the nearest living defender inside the camp or the courier rather than stopping at the gap.
 
-| minute after turn | inside perimeter mean / max | within 12 m mean | hold seconds with ≥1 within 12 m |
-| --- | ---: | ---: | ---: |
-| 0 | 5.2 / 26 | 1.4 | 71.7% |
-| 1 | 16.1 / 32 | 0.8 | 51.7% |
-| 2 | 12.8 / 35 | 3.3 | 96.7% |
-| 3 (11 s of hold) | 29.9 / 32 | 3.3 | 100% |
-| **whole hold** | — | — | **143 / 191 s = 74.9%** |
+Soldiers prioritize breached Alphas without HP, rifle damage or accuracy changes. Per the orchestrator's explicit exception, an L4 soldier within six metres may approach a downed Alpha inside the wall and shoot the body permanently through the normal bullet-damage transaction. The gun points downward at the body. Other levels, outside-wall bodies and player-only knockdowns retain shared recovery. The input driver reads the visible north-up route pin and uses ground-relative WASD at close turns. Wave scale is 2.5 after repeated escape deaths, as required by the difficulty rule.
 
-At zoom 1.5 the census saw 51 infected enter the frame; all 51 were in the scripted tent-door emergence, and no street spawn popped into view. The origin ledger records 13 distinct street/interior sources in the PO spread test. The no-skip sim bot completed in 298.2 s with 0 deaths, max 57 concurrent infected / 78 characters; `waveScale` remains 3. The focused L4 regression set passed after the queue, escape-gap and cellar-mouth fixes.
+Seed-3 low census at zoom 1.5, complete bot (`node --import tsx tools/sim-runner/l4-action-census.ts 3 low complete`):
 
-Validation limits in this sandbox: typecheck, lint and production build pass; the six `@smoke` sim tests pass. The exact remote unit/levels gate has no remote runner (DNS failure). The real-input playtest and visual smoke cannot bind 127.0.0.1:4431 (`listen EPERM`); `qa:invariants` render preflight also cannot inspect processes (`ps`/`pgrep` EPERM), so p95 versus PROD, captures and rendered invariants remain unmeasured. Commit is also unavailable because `.git/worktrees/.../index.lock` is denied. Do not mark E22 complete until those environment gates can run and the result is committed.
+| minute after turn | previous lane inside mean | final inside mean / max | within 12 m mean | hold seconds with contact |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | 2.6 | 4.3 / 11 | 2.5 | 55 / 60 |
+| 1 | 4.0 | 10.5 / 20 | 7.6 | 60 / 60 |
+| 2 | 3.5 | 13.3 / 22 | 1.3 | 38 / 60 |
+| 3 (11 s of hold) | 7.2 | 15.3 / 23 | 0.9 | 6 / 11 |
+| **whole hold** | — | — | — | **159 / 191 s = 83.2%** |
+
+The census records zero unanimated in-frame admissions: 153 animated tent walkouts. All five Alphas that entered before Fall back were permanently finished before that call (at 53.6, 121.8, 121.8, 150.0 and 164.3 s after the alarm). The sixth entered afterward. Raw per-second positions, admission origins, Alpha entry/down/finish times and twenty-second pressure samples are in `test-results/l4-storyline/census-low-3-complete.json`.
+
+Performance work: newly arriving hordes use the existing seven infected model batches, while original people retain their appearance through infection. Wall colour buffers upload only when damage or boundary feedback changes them. A dead person still carrying an infection component no longer keeps a nearby civilian cowering.
+
+Validation in progress: typecheck, lint, the finisher/recovery regression and all six mouth camera/connection checks pass. Exact remote unit/level, wave census, full invariants, real-input no-skip, visual smoke, paired PROD frame timing and final captures are being measured on the unrestricted runner. The earlier sandbox restrictions no longer apply. Do not mark the goal complete until these final gates are green.

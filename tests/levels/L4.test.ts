@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4TentEntrances, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4TentEntrances, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths, l4CellarDistance } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -25,6 +25,17 @@ const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w
 const humans = (w: SimWorld) => [...w.entities.iterate()].filter(e => e.civilian && !e.infection && e.health.current > 0 && !e.hidden);
 
 describe('L4 The Safe City Falls', () => {
+  test('T-E22-cellar-turn the visible map advances past reached street corners despite a small sidewalk offset', () => {
+    for (const [at, expected] of [
+      [{ x: -4.2, z: 16.1 }, { x: -4, z: 28 }],
+      [{ x: 48.52, z: -37.54 }, { x: 20, z: -37.4 }],
+    ]) {
+      const next = { x: 0, z: 0 }, distance = l4CellarDistance(at, next);
+      expect(next).toEqual(expected);
+      expect(distance, 'guidance tolerance does not change the displayed route distance').toBe(l4CellarDistance(at));
+    }
+  });
+
   test('T-E22-20-offscreen-mouths @E22-AC20 all six authored outer mouths are walkable spawn sources', async () => {
     const l = await loadL4(1, 'low'); world = l.world;
     expect(l4OffscreenMouths.length).toBeGreaterThanOrEqual(6);

@@ -305,7 +305,7 @@ export const l4Edges: readonly { id: string; at: P }[] = [
  */
 export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
   { id: 'west-end', edge: 0, at: [-76, 55] }, { id: 'nw-alley-end', edge: 1, at: [-76, -45] },
-  { id: 'north-end', edge: 2, at: [26, -45] }, { id: 'east-end', edge: 3, at: [70, 29] },
+  { id: 'north-end', edge: 2, at: [26, -45] }, { id: 'east-alley', edge: 3, at: [24, -37] },
   { id: 'southeast-end', edge: 4, at: [36, 55] }, { id: 'southwest-end', edge: 5, at: [-40, 55] },
 ];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
@@ -430,12 +430,16 @@ export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' |
 /** Remaining street-route distance, including the approach to its nearest leg; optionally writes the next turn for the minimap. */
 export function l4CellarDistance(p: { x: number; z: number }, next?: { x: number; z: number }): number {
   const route = l4.finale.route;
-  let nearest = Infinity, remaining = 0, tail = 0;
+  let nearest = Infinity, guidanceDistance = Infinity, remaining = 0, tail = 0;
   for (let i = route.length - 1; i > 0; i--) {
     const [ax, az] = route[i - 1], [bx, bz] = route[i], dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz);
     const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (length * length)));
     const d = Math.hypot(p.x - ax - t * dx, p.z - az - t * dz);
-    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; if (next) { next.x = bx; next.z = bz; } }
+    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; }
+    // A courier within half a metre of a junction has reached its turn. Keep
+    // the later leg on near ties; centimetres of sidewalk offset must not
+    // keep pointing backward to a corner that the movement controller reached.
+    if (next && d < guidanceDistance - .5) { guidanceDistance = d; next.x = bx; next.z = bz; }
     tail += length;
   }
   return remaining;

@@ -38,7 +38,7 @@ export class MilitaryPerimeter extends Group {
   private readonly pos = new Vector3(); private readonly size = new Vector3(); private readonly axis = new Vector3(); private readonly upDir = new Vector3();
   private readonly yAxis = new Vector3(0, 1, 0);
   /** Damage stage per segment (0 intact, 1 cracked, 2 sagging, 3 fallen) and the shake offset last drawn; -1 = not drawn yet. */
-  private readonly drawn = l4PerimeterSegments.map(() => ({ stage: -1, shake: 0 }));
+  private readonly drawn = l4PerimeterSegments.map(() => ({ stage: -1, shake: 0, color: undefined as Color | undefined }));
   private readonly segmentIds: number[] = [];
   /**
    * One segment's barrier, wire strands/barbs and sign as a rigid group pivoting on the outer foot of the wall: cracked leans 4 degrees
@@ -75,15 +75,16 @@ export class MilitaryPerimeter extends Group {
     this.visible = !!s && s.phase === 'war';
     if (!this.visible) return;
     const feedback = this.world.controls.blockedMove, active = feedback && feedback.until > this.world.tick, tick = this.world.tick;
-    let moved = false;
+    let moved = false, colored = false;
     l4PerimeterSegments.forEach((seg, i) => {
       const e = this.segment(i), b = e?.barricade, f = !e || !b ? 1 : b.intact ? e.health.current / Math.max(1, e.health.max) : 0;
       const stage = f <= 0 ? 3 : f <= l4Wall.sag ? 2 : f <= l4Wall.crack ? 1 : 0, age = b ? tick - b.hitTick : 99;
       const shake = stage < 3 && age < 12 ? Math.sin(age * 2) * .05 * (1 - age / 12) : 0, last = this.drawn[i];
       if (last.stage !== stage || last.shake !== shake) { this.place(i, stage, shake); last.stage = stage; last.shake = shake; moved = true; }
-      this.barriers.setColorAt(i, active && Math.hypot(seg.x - feedback.point.x, seg.z - feedback.point.z) < 4 ? this.highlight : stage ? this.damaged[stage - 1] : this.normal);
+      const color = active && Math.hypot(seg.x - feedback.point.x, seg.z - feedback.point.z) < 4 ? this.highlight : stage ? this.damaged[stage - 1] : this.normal;
+      if (last.color !== color) { this.barriers.setColorAt(i, color); last.color = color; colored = true; }
     });
-    this.barriers.instanceColor!.needsUpdate = true;
+    if (colored) this.barriers.instanceColor!.needsUpdate = true;
     if (moved) { this.barriers.instanceMatrix.needsUpdate = true; this.wire.instanceMatrix.needsUpdate = true; this.signs.instanceMatrix.needsUpdate = true; this.barriers.computeBoundingSphere(); }
   }
   /** Cracked, sagging and fallen concrete read darker and dustier. */

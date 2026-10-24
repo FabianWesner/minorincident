@@ -1,4 +1,5 @@
 import { expect, test, vi } from 'vitest';
+import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
 
@@ -66,5 +67,23 @@ test('@E22 player-only and outside-wall Alpha knockdowns retain ordinary recover
     expect(alone.infected!.recoverAt).toBeGreaterThan(world.tick);
     world.tick = Math.max(...[outside, alone].map(e => e.infected!.recoverAt)) + 1; world.update();
     expect(outside.health.current).toBeGreaterThan(0); expect(alone.health.current).toBeGreaterThan(0);
+  } finally { world.dispose(); }
+});
+
+
+test('@E22 newly arriving infected use shared model batches while camp people keep their own appearance', async () => {
+  const { world } = await loadL4(3, 'low');
+  try {
+    const people = [...world.entities.iterate()].filter(e => e.civilian && e.appearance);
+    const looks = people.map(e => structuredClone(e.appearance));
+    const arrivals = Array.from({ length: 14 }, () => world.infected!.spawn('infected.runner', { x: -56.6, z: 6 }));
+    world.npcs!.civilians.outbreak!.dressInfected();
+    for (const id of arrivals) {
+      const e = world.entities.get(id)!;
+      expect(regularInfectedModels).toContain(e.appearance!.asset);
+      expect(e.appearance!.bornInfected).toBe(true);
+      expect(e.health.max).toBe(60);
+    }
+    expect(people.map(e => e.appearance)).toEqual(looks);
   } finally { world.dispose(); }
 });
