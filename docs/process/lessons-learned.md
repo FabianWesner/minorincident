@@ -57,6 +57,9 @@ A living record, updated after every lane or experiment. Short entries with evid
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
 
 ## 2026-10-24 · tex-infected
+
+- Validate finite HDR pixels as well as browser errors and draw counters. Missing source normals passed geometry budgets and rendered black only after WebGL bloom; repair them from adjacent faces before delivery. Zero-valued normals must never reach a shader normalize.
+- A one-slot timing reservation needs overlap detection: another lane may start after an idle-host preflight. Reject that receipt and retry; record the actual reservation conditions.
 - Preserve glTF's top-origin UV convention when packing freshly rebaked LOD charts; a three-colour atlas regression catches swapped lower tiers before a renderer review.
 - Transfer named source anatomy before cutting rigid parts. A horizontal head threshold left part of the jaw on the torso; closest-source ownership retains the whole face.
 - Ground a reconstructed rig from shared shoe bounds across every LOD, and include those bounds in the pose-cache key. Per-LOD geometry bounds otherwise make cached poses depend on load order.
