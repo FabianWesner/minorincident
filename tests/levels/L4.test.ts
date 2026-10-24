@@ -40,6 +40,8 @@ describe('L4 The Safe City Falls', () => {
     const l = await loadL4(1, 'low'); world = l.world;
     expect(l4OffscreenMouths.length).toBeGreaterThanOrEqual(6);
     const nav = l.world.infected!.nav;
+    const playerNav = nav.forPlayer(.45);
+    for (const [x, z] of l4.finale.route) expect(playerNav.clear(x, z, .45), `cellar guidance turn ${x},${z} is on clear pavement`).toBe(true);
     for (const mouth of l4OffscreenMouths) {
       expect(nav.clear(mouth.at[0], mouth.at[1], .45), mouth.id).toBe(true);
       expect(nav.path(nav.nearestCell(mouth.at[0], mouth.at[1]), nav.nearestCell(-56.6, 6), [], 1_000_000), `${mouth.id} connects to the camp streets`).toBe(true);

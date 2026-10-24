@@ -8,6 +8,9 @@ import { l4 } from '../../src/data/l4';
 
 const out = resolve(process.env.L4_STORYLINE_PERF_OUT ?? 'test-results/l4-storyline/perf');
 const diagnostic = process.env.L4_STORYLINE_PROFILE === '1';
+const wholeHold = process.env.L4_STORYLINE_WHOLE_HOLD === '1';
+const repeats = diagnostic ? 1 : wholeHold ? 2 : 3;
+const checkpoints = diagnostic ? [150] : wholeHold ? [0] : [90, 150];
 const port = Number(process.env.E2E_PORT ?? 4431);
 if (port === 3300) throw new Error('Use the lane preview port');
 mkdirSync(out, { recursive: true });
@@ -17,7 +20,7 @@ const sources = { baseline: 'https://minor-incident.com', candidate: `http://127
 const rows: { side: string; repeat: number; afterTurnS: number; frameP95: number; [key: string]: unknown }[] = [];
 try {
   // Alternate which build goes first, measuring one browser/context at a time.
-  for (let repeat = 0; repeat < (diagnostic ? 1 : 3); repeat++) for (const side of diagnostic ? ['candidate'] as const : repeat % 2 ? ['candidate', 'baseline'] as const : ['baseline', 'candidate'] as const) {
+  for (let repeat = 0; repeat < repeats; repeat++) for (const side of diagnostic ? ['candidate'] as const : repeat % 2 ? ['candidate', 'baseline'] as const : ['baseline', 'candidate'] as const) {
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(); page.setDefaultTimeout(180_000);
     await page.addInitScript('window.__name = value => value');
@@ -33,7 +36,7 @@ try {
       });
       const scripts = await page.evaluate(() => [...document.scripts].map(s => s.src).filter(Boolean));
       if (diagnostic) await page.evaluate(() => window.__SS__!.debug.cpuProfile());
-      for (const afterTurnS of diagnostic ? [150] : [90, 150]) {
+      for (const afterTurnS of checkpoints) {
         await page.evaluate(async seconds => {
           const a = window.__SS__!, turnAt = a.missions.state()!.l4!.turnAt;
           if (!turnAt) throw new Error('L4 turn checkpoint did not start the hold');
@@ -42,7 +45,7 @@ try {
           a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady();
         }, afterTurnS);
         if (repeat === 0) await page.screenshot({ path: `${out}/${side}-${afterTurnS}.png` });
-        const result = await page.evaluate(async ({ perimeter, diagnostic }) => {
+        const result = await page.evaluate(async ({ perimeter, diagnostic, wholeHold }) => {
           const a = window.__SS__!, frames: number[] = [], sim: number[] = [], updates: number[] = [], renders: number[] = [];
           const cpu: Record<string, number[]> = {};
           const census = () => {
@@ -51,10 +54,16 @@ try {
               inside: live.filter(e => e.transform.x > perimeter.x0 && e.transform.x < perimeter.x1 && e.transform.z > perimeter.z0 && e.transform.z < perimeter.z1).length,
               backend: a.perf().backend, quality: a.perf().quality.tier, player: a.getState().player!.transform };
           };
-          const before = census(), start = performance.now(); let previous = 0;
+          const before = census(), start = performance.now(), holdCensuses: ReturnType<typeof census>[] = [];
+          let previous = 0, stillWar = true, polledAt = start;
           a.resume();
-          while (performance.now() - start < 13_000) {
+          while (wholeHold ? stillWar && performance.now() - start < 230_000 : performance.now() - start < 13_000) {
             const now = await new Promise<number>(r => requestAnimationFrame(r)), p = a.perf();
+            if (wholeHold && now - polledAt >= 1_000) {
+              stillWar = a.missions.state()!.l4!.phase === 'war'; polledAt = now;
+              if (!stillWar) break;
+              if (holdCensuses.length < 2 && (a.tick() - before.tick) / 60 >= [90, 150][holdCensuses.length]) holdCensuses.push(census());
+            }
             if (previous && now - start >= 3_000) {
               frames.push(now - previous); sim.push(p.simTickMs); updates.push(p.updateCpuMs); renders.push(p.renderCpuMs);
               if (diagnostic) for (const [key, value] of Object.entries(a.debug.cpuProfile())) (cpu[key] ??= []).push(value);
@@ -63,9 +72,9 @@ try {
           }
           a.pause();
           const p95 = (values: number[]) => [...values].sort((x, y) => x - y)[Math.ceil(values.length * .95) - 1];
-          return { before, after: census(), frameP95: p95(frames), simP95: p95(sim), updateP95: p95(updates), renderP95: p95(renders), cpuP95: Object.fromEntries(Object.entries(cpu).map(([key, values]) => [key, p95(values)])), frames };
-        }, { perimeter: l4.perimeter, diagnostic });
-        if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || errors.length)
+          return { before, after: census(), elapsedMs: performance.now() - start, holdCensuses, frameP95: Math.round(p95(frames) * 10) / 10, simP95: p95(sim), updateP95: p95(updates), renderP95: p95(renders), cpuP95: Object.fromEntries(Object.entries(cpu).map(([key, values]) => [key, p95(values)])), frames };
+        }, { perimeter: l4.perimeter, diagnostic, wholeHold });
+        if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || errors.length)
           throw new Error(`Invalid ${side} measurement: ${JSON.stringify({ ...result.before, samples: result.frames.length, errors })}`);
         rows.push({ side, repeat, afterTurnS, scripts, ...result });
         writeFileSync(`${out}/samples.json`, JSON.stringify(rows, null, 2));
@@ -74,12 +83,12 @@ try {
     } finally { await context.close(); }
   }
   const median = (values: number[]) => [...values].sort((x, y) => x - y)[Math.floor(values.length / 2)];
-  const comparisons = (diagnostic ? [] : [90, 150]).map(afterTurnS => {
+  const comparisons = (diagnostic ? [] : checkpoints).map(afterTurnS => {
     const value = (side: string) => median(rows.filter(r => r.side === side && r.afterTurnS === afterTurnS).map(r => r.frameP95));
     const baseline = value('baseline'), candidate = value('candidate');
     return { afterTurnS, baseline, candidate, delta: candidate - baseline, pass: candidate <= baseline };
   });
-  const proof = { diagnostic, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: 1.5, warmupS: 3, measuredS: 10, repeats: diagnostic ? 1 : 3, uncapped: true }, sources, comparisons, rows };
+  const proof = { diagnostic, wholeHold, settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: 1.5, warmupS: 3, measuredS: wholeHold ? 'entire hold after warmup' : 10, repeats, uncapped: true, resolutionMs: .1 }, sources, comparisons, rows };
   writeFileSync(`${out}/summary.json`, JSON.stringify(proof, null, 2));
   console.log(JSON.stringify(comparisons));
   if (comparisons.some(row => !row.pass)) process.exitCode = 1;

@@ -49,9 +49,10 @@ const r = runL4(w, m, profile, { seed, god: true, maxSeconds: 520, stopWhen: mm 
   }
   return false;
 }, zoom: 1.5 });
-mkdirSync('test-results/l4-storyline', { recursive: true });
+const outDir = process.env.L4_CENSUS_OUT ?? 'test-results/l4-storyline';
+mkdirSync(outDir, { recursive: true });
 const out = { seed, tier, profile, outcome: r.outcome, timeline: r.timeline, kills: r.kills_, breakAfterS: r.breakAfterS, seconds, spawns, alphaAudit: [...alphaAudit.values()], pressureSamples };
-writeFileSync(`test-results/l4-storyline/census-${tier}-${seed}-${profile}.json`, JSON.stringify(out, null, 1));
+writeFileSync(`${outDir}/census-${tier}-${seed}-${profile}.json`, JSON.stringify(out, null, 1));
 // Per minute of the war (from the turn): infected inside the perimeter (mean), spawns in view, Alphas.
 for (let min = 0; min < 6; min++) {
   const s = seconds.filter(x => x.t >= min * 60 && x.t < (min + 1) * 60); if (!s.length) break;
