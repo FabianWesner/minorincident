@@ -63,3 +63,5 @@ A living record, updated after every lane or experiment. Short entries with evid
   - Blender Decimate stalls at ≈ 20k on TRELLIS meshes (≈ 1,000 floater components);
   - a DIFFUSE colour bake turns metallic-marked parts black.
 - **Rule:** LODs are made locally from the 300k export; bake emission of the base colour. Scripts: minorincident_3dpipeline/v2/.
+- **Didn't work (10-24, orchestrator):** I removed the cast-sources pipeline worktree after merging. Its git-ignored cache/ held the 300k TRELLIS highs, so they were lost and 10 inferences had to be repeated. **Rule:** large generated sources go to a permanent folder outside every worktree (/Users/wesner/Workspace/trellis-highs/<id>/), and before removing a pipeline worktree, check its cache/.
+- **Worked (10-24):** a "solidify" stage (watertight, then isosurface, then planar-weighted reduction) makes TRELLIS figures read as clean masses from the game camera; quadric reduction alone leaves shards. Texture work alone (colour match, region flattening) could not fix that.
