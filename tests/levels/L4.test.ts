@@ -28,7 +28,11 @@ describe('L4 The Safe City Falls', () => {
   test('T-E22-20-offscreen-mouths @E22-AC20 all six authored outer mouths are walkable spawn sources', async () => {
     const l = await loadL4(1, 'low'); world = l.world;
     expect(l4OffscreenMouths.length).toBeGreaterThanOrEqual(6);
-    for (const mouth of l4OffscreenMouths) expect(l.world.infected!.nav.clear(mouth.at[0], mouth.at[1], .45), mouth.id).toBe(true);
+    const nav = l.world.infected!.nav;
+    for (const mouth of l4OffscreenMouths) {
+      expect(nav.clear(mouth.at[0], mouth.at[1], .45), mouth.id).toBe(true);
+      expect(nav.path(nav.nearestCell(mouth.at[0], mouth.at[1]), nav.nearestCell(-56.6, 6), [], 1_000_000), `${mouth.id} connects to the camp streets`).toBe(true);
+    }
   });
 
   test('T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer', async () => {

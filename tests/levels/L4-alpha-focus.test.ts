@@ -38,8 +38,8 @@ test('@E22 a nearby L4 soldier steps in and shoots a downed breached Alpha perma
     Object.assign(alpha.transform, { x: -25, z: -3 }); alpha.health.current = 0;
     world.infected!.down(alpha, false);
     const recovery = alpha.infected!.recoverAt, shots: number[] = [], kills: number[] = [];
-    world.events.on('ally.attack', e => { if (e.targetId === alpha.id) shots.push(e.sourceId); });
-    world.events.on('combat.kill', e => { if (e.targetId === alpha.id) kills.push(e.sourceId); });
+    world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.targetId === alpha.id) shots.push(e.sourceId); });
+    world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.targetId === alpha.id) kills.push(e.sourceId); });
     const start = { ...guard.transform };
     for (; world.tick < Math.min(recovery, 300) && alpha.infected!.recoverAt >= 0; world.tick++) updateAlly(world, guard, () => true);
     expect(Math.hypot(guard.transform.x - start.x, guard.transform.z - start.z), 'visible approach to the body').toBeGreaterThan(2);

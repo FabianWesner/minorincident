@@ -75,7 +75,7 @@ export const l4 = {
   war: {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 2.5,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
@@ -166,7 +166,7 @@ export const l4 = {
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
       [[-25, -8], [-25, 4], [-25, 10]],
-      [[-12, -11]], // behind the courier-side fallback line
+      [[-20, -2]], // plaza centre, in front of the retreating second line
       [[-9.8, -16.5], [-9.8, -6.5], [-11, 16]], // bumper gaps behind the convoy crew, clear of the hulls and south tank swarm
       [[-11, 16]], // armour falls: rally at the south convoy gap before breaking away onto Lakeshore
     ] as readonly (readonly P[])[],
@@ -304,9 +304,9 @@ export const l4Edges: readonly { id: string; at: P }[] = [
  * a street point from 24 m). An edge releases its small groups from these in turn, always out of view.
  */
 export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
-  { id: 'west-end', edge: 0, at: [-83, 60] }, { id: 'nw-alley-end', edge: 1, at: [-83, -60] },
-  { id: 'north-end', edge: 2, at: [25, -60] }, { id: 'east-end', edge: 3, at: [80, 25] },
-  { id: 'southeast-end', edge: 4, at: [35, 60] }, { id: 'southwest-end', edge: 5, at: [-40, 60] },
+  { id: 'west-end', edge: 0, at: [-76, 55] }, { id: 'nw-alley-end', edge: 1, at: [-76, -45] },
+  { id: 'north-end', edge: 2, at: [26, -45] }, { id: 'east-end', edge: 3, at: [70, 29] },
+  { id: 'southeast-end', edge: 4, at: [36, 55] }, { id: 'southwest-end', edge: 5, at: [-40, 55] },
 ];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 0, at: [-56.6, 6] }, { edge: 0, at: [-57, -14] }, { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
