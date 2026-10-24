@@ -156,6 +156,25 @@ for s in 'LR':
 headTop = WP[:, 2].max()
 for n in ('eyeL', 'irisL', 'eyeR', 'irisR', 'pony1', 'pony2', 'pony3'):
     J[n] = J['head'] + (RIGJ[n] - RIGJ['head']) * np.array([1, 1, (headTop - J['head'][2]) / (1.455 - RIGJ['head'][2])])
+# ponytail: from the red hair tie at the back of the crown out to the tip, flood-filled along the mesh beyond the tie
+red = ((hue < 15) | (hue > 345)) & (HSV[:, 1] > .45) & (cnt > 0)
+tie_sel = red & (WP[:, 2] > J['head'][2] + .15) & (WP[:, 0] < J['head'][0] + .02)
+PONY = None
+if tie_sel.sum() >= 4:
+    tie = WP[tie_sel].mean(0); hc = np.array([J['head'][0], 0, J['head'][2] + .15])
+    d0 = (tie - hc) / np.linalg.norm(tie - hc)
+    beyond = ((WP - tie) @ d0 > .01) & ~tie_sel
+    far = np.where(beyond)[0][np.argmax(np.linalg.norm(WP[beyond] - tie, axis=1))]
+    pony = np.zeros(NW, bool); pony[far] = True; stack = [far]
+    while stack:
+        i = stack.pop()
+        for j in nbr[i]:
+            if not pony[j] and beyond[j]: pony[j] = True; stack.append(j)
+    dist = np.linalg.norm(WP - tie, axis=1); L = dist[pony].max()
+    cents = [WP[pony & (dist > L * a) & (dist <= L * b)].mean(0) for a, b in ((.25, .42), (.58, .75), (.9, 1.01))]
+    J['pony1'] = tie; J['pony2'] = cents[0]; J['pony3'] = cents[1]
+    PONY = dict(mask=pony, tie=tie, d0=d0, L=L, tip=cents[2])
+    print('PONY', int(pony.sum()), 'tie', tie.round(3), 'L', round(float(L), 3), 'joints', [c.round(3).tolist() for c in cents])
 assert set(J) == set(RIGJ), set(RIGJ) ^ set(J)
 for n in sorted(J): print('JOINT', n, J[n].round(3), 'courier', RIGJ[n].round(3))
 
@@ -204,7 +223,9 @@ waist = np.percentile(WP[shorts, 2], 98) if shorts.any() else legz + .08
 crotch = np.percentile(WP[shorts & (np.abs(WP[:, 1]) < .02), 2], 10) if (shorts & (np.abs(WP[:, 1]) < .02)).any() else legz - .06
 print('SHORTS z pct', np.percentile(WP[shorts, 2], [5, 25, 50, 75, 90, 95, 98]).round(3), 'front', np.percentile(WP[shorts & (WP[:, 0] > 0) & (np.abs(WP[:, 1]) < .05), 2], [90, 98]).round(3))
 print('SHORTS', int(shorts.sum()), 'waist', round(float(waist), 3), 'crotch', round(float(crotch), 3), 'denim', int(denim.sum()), 'teal', int(teal.sum()))
-leg_all = smooth((waist - .02 - WP[:, 2]) / (waist - .02 - crotch)) * (1 - np.clip(arms, 0, 1))
+# the upper 40 % of the shorts (waistband, belly front) rides the hip only; the thighs take over towards the crotch
+leg_top = crotch + .6 * (waist - crotch)
+leg_all = smooth((leg_top - WP[:, 2]) / (leg_top - crotch)) * (1 - np.clip(arms, 0, 1))
 # hands and fingers hang beside the thighs (|y| > 0.2): whatever the arm flood missed there is hand, never leg
 for s, sgn in (('L', 1), ('R', -1)):
     tip = J['hand' + s] + 1.6 * (RJ['Palm' + s] - J['hand' + s])
@@ -226,6 +247,8 @@ F = np.stack([member[n] for n in names], 1)
 core = (F.max(1) > .999) & (np.array([len(n) for n in nbr]) > 0)
 F = lap(F, 6, .5)
 F[shorts] *= np.array([0, 0, 1, 1, 0])  # shorts never take any arm or bag share
+# smoothing must not carry the thighs onto the belly: no leg share above the waistband (the run tore the shirt front)
+F[:, 2:4] *= smooth((leg_top + .02 - WP[:, 2]) / .03)[:, None]
 F = np.clip(F, 0, 1); tot = F.sum(1); F[tot > 1] /= tot[tot > 1, None]
 member = {n: F[:, i] for i, n in enumerate(names)}
 
@@ -243,7 +266,7 @@ def hats(t, centers):
         out[bone] = out.get(bone, 0) + w
     return out
 BAND = .06
-LEG_BAND = .085  # the heroine's legs are ~15 % longer than the courier's: a wider knee blend keeps the shin from pinching
+LEG_BAND = .05  # a short knee transition: a long blend half-rotates the upper shin and reads as a thin, kinked shin at a run
 W = {}
 def add(bone, x):
     W[bone] = W.get(bone, 0) + x
@@ -264,6 +287,14 @@ for s in 'LR':
             W['foot' + s] = W.get('foot' + s, 0) * (1 - shoe) + shoe * (1 - u)
             add('toe' + s, shoe * u)
 add('backpackSocket', member['bag'])
+if PONY is not None:
+    # the tail leaves the head over its first 15 %, then rides pony1..3 (the courier's own hats along the chain)
+    t = np.clip((WP - PONY['tie']) @ PONY['d0'], 0, None) / PONY['L']
+    t = np.maximum(t, np.linalg.norm(WP - PONY['tie'], axis=1) / PONY['L']) * PONY['mask']
+    mp = PONY['mask'] * smooth(t / .15)
+    for bone, x in hats(t, [(0., 'head'), (.17, 'pony1'), (.5, 'pony2'), (.84, 'pony3')]).items():
+        if bone != 'head': add(bone, mp * x)
+    member['pony'] = mp * (1 - hats(t, [(0., 'head'), (.17, 'pony1'), (.5, 'pony2'), (.84, 'pony3')])['head'])
 rest = np.clip(1 - sum(member.values()), 0, 1)
 SPINE = [(J['hip'][2], 'hip'), (J['torso'][2] + .02, 'torso'), (J['spine'][2], 'spine'), (J['chest'][2], 'chest'), (J['neck'][2], 'neck'), (J['head'][2] + .025, 'head')]
 part = hats(WP[:, 2], SPINE)
@@ -322,7 +353,7 @@ if '--no-leg-pose' not in ARGS:
     for s, sgn in (('L', 1), ('R', -1)):
         hipj, ank = Vector(J['leg' + s]), Vector(J['foot' + s])
         d = ank - hipj; spread = math.atan2(d.y, -d.z)
-        target = sgn * math.radians(4)
+        target = sgn * math.radians(6)
         angle = target - spread  # rotate about +X: y' = y cos - z sin
         pb = rig.pose.bones['leg' + s]
         pb.matrix = Matrix.Translation(hipj) @ Matrix.Rotation(angle, 4, 'X') @ Matrix.Translation(-hipj) @ pb.matrix

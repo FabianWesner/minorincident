@@ -67,6 +67,7 @@ for (const name of clips) {
   const mesh = meshes[worstEdge[0]], skinIndex = mesh.geometry.attributes.skinIndex, skinWeight = mesh.geometry.attributes.skinWeight;
   const names = new Set<string>();
   for (const v of [worstEdge[1], worstEdge[2]]) for (let k = 0; k < 4; k++) if (skinWeight.getComponent(v, k) > .2) names.add(mesh.skeleton.bones[skinIndex.getComponent(v, k)].name);
+  if (process.env.AUDIT_WEIGHTS) for (const v of [worstEdge[1], worstEdge[2]]) console.log(name, v, [0, 1, 2, 3].map(k => `${mesh.skeleton.bones[skinIndex.getComponent(v, k)].name}:${skinWeight.getComponent(v, k).toFixed(3)}`).join(" "));
   report.push({ clip: name, samples: steps + 1, over2, over4, worst: +worst.toFixed(2), worstTime: +worstTime.toFixed(3), worstBones: [...names], at: [rest[worstEdge[0]][worstEdge[1]], rest[worstEdge[0]][worstEdge[2]]].map(v => v.toArray().map(x => +x.toFixed(3))) });
 }
 const summary = { source, triangles: meshes.reduce((n, mesh) => n + mesh.geometry.index!.count / 3, 0), maxStretch: Math.max(...report.map(r => r.worst)), flaggedOver4: report.reduce((n, r) => n + Math.max(0, r.over4), 0), clips: report };
