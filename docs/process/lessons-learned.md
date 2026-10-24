@@ -55,3 +55,10 @@ A living record, updated after every lane or experiment. Short entries with evid
   - lanes leave captures in the shared scratchpad and can delete files there;
   - never `git worktree remove --force` directly: untracked evidence (bot logs, captures) lives in the worktree and gets lost (10-23: the L5 gate logs were lost that way). Use the guard script, and copy test-results/playtest/<run>/ first;
   - never delete anything under /tmp or /private/tmp without first checking which running lane owns it (10-23: the orchestrator deleted the WAM pilot's clone .git during cleanup). Only delete paths a finished lane created, or paths named in a lane's report.
+
+## 2026-10-24 · tex-infected
+- Preserve glTF's top-origin UV convention when packing freshly rebaked LOD charts; a three-colour atlas regression catches swapped lower tiers before a renderer review.
+- Transfer named source anatomy before cutting rigid parts. A horizontal head threshold left part of the jaw on the torso; closest-source ownership retains the whole face.
+- Ground a reconstructed rig from shared shoe bounds across every LOD, and include those bounds in the pose-cache key. Per-LOD geometry bounds otherwise make cached poses depend on load order.
+- Keep real stump geometry nonzero before quantization; hide it using the existing cap metadata. Retain UVs through frozen corpse pages and pack their immutable attributes into one buffer.
+- Count the dedicated corpse derivative and both quality atlases in delivery bytes; deduplicate decoded images and crowd materials by atlas ownership. Compare production builds against a pinned main worktree under the shared quiet lock.

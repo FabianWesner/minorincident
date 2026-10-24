@@ -23,7 +23,7 @@ for (const backend of backends) for (const tier of (motion ? ['high'] : ['high',
     await session.open();
     if (motion) {
       await session.load({ name: 'textured-infected-motion', ground: 'asphalt', time: 'L1', dof: false, trace: true,
-        camera: { mode: 'game', target: [0, .8, 0], zoom: 1 },
+        camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 },
         actors: [
           { id: 'courier', kind: 'courier', at: [2.8, 0], god: true },
           { id: 'suit', kind: 'infected', archetype: 'infected.sprinter', at: [-2, 0], look: { model: 'inf.common-worker' }, state: { walk: [[-2, 0], [0, 0]], loop: true } },
