@@ -328,10 +328,9 @@ export const l4Inside: readonly P[] = [
   // whenever the courier moves far enough to see them.
   [-33, 19], [-29, 20], [-25, 21],
 ];
-/** Entrances of the three freestanding tents and the reception kit's two field tents. */
+/** Usable flaps of the three freestanding tents. The furnished reception kit has no connected exit aisle. */
 export const l4TentEntrances: readonly { at: P; out: P; step: P; route: readonly P[]; floor: number }[] = [
   ...[-30.65, -26.8, -22.8].map(x => ({ at: [x, 11.15] as P, out: [0, -1] as P, step: [x, 9.55] as P, route: [], floor: 0 })),
-  ...[-12.1, -5.5].map((z, i) => ({ at: [-28.25, z] as P, out: [1, 0] as P, step: [-27.7, z] as P, route: [[-27.7, i ? -8.35 : -9.25], [-26.65, i ? -8.35 : -9.25]] as readonly P[], floor: .08 })),
 ];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [
