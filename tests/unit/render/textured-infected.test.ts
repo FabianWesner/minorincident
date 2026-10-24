@@ -49,5 +49,6 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     for (let i = 0; i < uv.count; i++) { expect(frozen.getX(i)).toBe(uv.getX(i)); expect(frozen.getY(i)).toBe(uv.getY(i)); }
     pool.dispose(); baked.geometry.dispose(); material.dispose(); atlas.dispose();
   }
+  bytes += readFileSync('assets/inf.common-worker/inf.common-worker.atlas.webp').length + readFileSync('assets/inf.common-worker/inf.common-worker.atlas.low.webp').length;
   expect(bytes).toBeLessThanOrEqual(600_000);
 });

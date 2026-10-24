@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon's ResourcesLoader (MIT): loaders + promise cache.
-import { Box3, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { Box3, Group, LoadingManager, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -19,13 +19,16 @@ export class AssetRegistry {
   private readonly definitions: Map<string, AssetDef>;
   private readonly cache = new Map<string, Promise<Object3D>>();
   private readonly materials: AssetMaterials;
+  private readonly crowdAtlases = new Map<string, import('three').Texture>();
   private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
-  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; materials?: Materials } = {}) {
+  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; textureTier?: 'high' | 'low'; materials?: Materials } = {}) {
     this.materials = new AssetMaterials(options.materials);
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
-    const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    const manager = new LoadingManager();
+    if (options.textureTier === 'low') manager.setURLModifier(url => url.replace('inf.common-worker.atlas.webp', 'inf.common-worker.atlas.low.webp'));
+    const gltf = new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
       this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(options.renderer);
       gltf.setKTX2Loader(this.ktx);
@@ -105,6 +108,16 @@ export class AssetRegistry {
       root.userData.diner = def.id === 'bld.joes-diner';
       root.userData.paletteWorld = !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
       if (vehicleDecayFallback(def, decay)) applyVehicleDecay(root, decay!);
+      if (def.id === 'inf.common-worker') root.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+          const mapped = material as import('three').MeshStandardMaterial, atlas = mapped.map;
+          if (!atlas) continue;
+          const shared = this.crowdAtlases.get(def.id);
+          if (shared && shared !== atlas) { mapped.map = shared; atlas.dispose(); }
+          else this.crowdAtlases.set(def.id, atlas);
+        }
+      });
       this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
       return root;
     } catch (error) {
@@ -136,6 +149,6 @@ export class AssetRegistry {
     for (const texture of textures) texture.dispose();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
-    this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
+    this.cache.clear(); this.crowdAtlases.clear(); this.materials.dispose(); this.ktx?.dispose();
   }
 }
