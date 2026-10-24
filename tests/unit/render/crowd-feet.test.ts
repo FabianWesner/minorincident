@@ -89,11 +89,11 @@ test('phone crowd poses hold their planted world pose for one 30 Hz frame and re
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
   const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 4);
   const footwork = new CrowdFootwork(4), loco = new CrowdLocomotion(scene, baked.clip, footwork);
-  const present = (time: number, phase: number, x: number, clip: typeof civilianClips[number] = 'infected-lurch') => {
+  const present = (time: number, phase: number, x: number, clip: typeof civilianClips[number] = 'infected-lurch', holdDistanceM = .05) => {
     footwork.begin(time);
     const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const root = new Matrix4().makeRotationY(.4).setPosition(x, 0, 0), blend = palette.sample(1, clip, frame, time);
-    const row = loco.present(1, palette, frame, blend, clip, phase, root, baked.strideScale, .5, time, true, { lurch: 1 }, undefined, true, 2);
+    const row = loco.present(1, palette, frame, blend, clip, phase, root, baked.strideScale, .5, time, true, { lurch: 1 }, undefined, true, 2, holdDistanceM);
     return { root: [...root.elements], pose: palette.pose(row, ...blend) };
   };
   try {
@@ -103,5 +103,10 @@ test('phone crowd poses hold their planted world pose for one 30 Hz frame and re
     expect(next.root[12]).toBeCloseTo(.02); expect(next.pose).not.toEqual(first.pose);
     const windup = present(10 + 2 / 30 + .005, .5, .021, 'windup');
     expect(windup.root[12]).toBeCloseTo(.021); expect(windup.pose.every(Number.isFinite)).toBe(true);
+    const far = present(20, .3, 0, 'infected-lurch', .08);
+    const farHeld = present(20 + 1 / 30, .34, .07, 'infected-lurch', .08);
+    expect(farHeld.root).toEqual(far.root); expect(farHeld.pose).toEqual(far.pose);
+    const farChanged = present(20 + 1 / 30 + .005, .5, .071, 'windup', .08);
+    expect(farChanged.root[12]).toBeCloseTo(.071);
   } finally { palette.texture.dispose(); baked.geometry.dispose(); }
 });
