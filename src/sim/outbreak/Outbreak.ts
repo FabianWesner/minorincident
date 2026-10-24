@@ -178,7 +178,14 @@ export class Outbreak {
       // L4's arriving horde shares the seven existing infected model batches.
       // Original people already own an appearance and keep it through a turn.
       const variant = e.infected?.variant;
-      const asset = this.world.scenario === 'L4' && regularInfectedModels.some(model => model === variant) ? variant! : this.crowdModel(e.transform, true);
+      if (this.world.scenario === 'L4' && regularInfectedModels.some(model => model === variant)) {
+        // The native infected renderer owns these seven batches. Giving them
+        // an appearance would route them to the NPC renderer, which loads only
+        // npc.* models, and make the arriving horde invisible.
+        delete e.appearance;
+        continue;
+      }
+      const asset = this.crowdModel(e.transform, true);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
       e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier, bornInfected: true };
     }

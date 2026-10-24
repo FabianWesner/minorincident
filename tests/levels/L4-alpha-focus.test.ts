@@ -80,8 +80,8 @@ test('@E22 newly arriving infected use shared model batches while camp people ke
     world.npcs!.civilians.outbreak!.dressInfected();
     for (const id of arrivals) {
       const e = world.entities.get(id)!;
-      expect(regularInfectedModels).toContain(e.appearance!.asset);
-      expect(e.appearance!.bornInfected).toBe(true);
+      expect(regularInfectedModels).toContain(e.infected!.variant);
+      expect(e.appearance, 'native inf.* batches must remain owned by CrowdView').toBeUndefined();
       expect(e.health.max).toBe(60);
     }
     expect(people.map(e => e.appearance)).toEqual(looks);
