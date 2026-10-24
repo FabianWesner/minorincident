@@ -192,7 +192,7 @@ export interface L4State {
   soldiersAtTurn: number; civiliansAtTurn: number; infectedAtT30: number; killsAtBreak: number; infectedAtBreak: number; soldiersAtBreak: number; soldiersAtCellar: number;
   /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
   alphaIds: number[]; alphaAnchors: string[];
-  wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number;
+  wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number; collapseEdgeCursor?: number;
   /**
    * PO 10-13 spread arrivals: per street edge the tick of its next small group and its next emergence point (cursor into its `l4Emergence`
    * points); the next group from inside the perimeter (tick, cursor into `l4Inside`); `origin` the emergence point index per emerged id.

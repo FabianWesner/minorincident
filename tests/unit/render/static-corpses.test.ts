@@ -350,7 +350,7 @@ test('a stationary courier reuses settled placement; walking rechecks its footpr
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
 
-test('removed headwear identities share a frozen body page while retaining per-instance appearance', () => {
+test('identities without retained accessory geometry share a frozen body page while retaining per-instance appearance', () => {
   const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
   try {

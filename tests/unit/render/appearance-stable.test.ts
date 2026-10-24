@@ -39,7 +39,7 @@ test('every human crowd model keeps its complete identity through poses, tiers, 
   accessories.dispose();
 });
 
-test('living LOD2 keeps headwear; frozen bodies retain heads and hair without corpse hat brims @E07 @E18 @E32', async () => {
+test('LOD2 and frozen bodies keep hood/cap/hat geometry, colour and head transform without stacking authored headwear @E07 @E18 @E32', async () => {
   const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation(async () => {
     const group = new Group(); group.add(new Mesh(new BoxGeometry(.2, .1, .2), new MeshLambertNodeMaterial({ color: 'white' }))); return group;
   });
@@ -70,30 +70,25 @@ test('living LOD2 keeps headwear; frozen bodies retain heads and hair without co
       expect(accessories.corpseSource(e, source, look.model, 0)).toBe(combined);
       e.corpse = true;
       corpses.place(e, 'human', combined, material, clip, 0, new Matrix4(), new Color(look.tint), [0, 0, 0], String(e.id), [], look);
-      const hair = id.startsWith('acc.hair-'), page = corpses.children[hair ? 1 : 0] as InstancedMesh, parts = page.geometry.getAttribute('_parts');
+      const page = corpses.children[i] as InstancedMesh, parts = page.geometry.getAttribute('_parts');
       expect(Array.from({ length: parts.count }, (_, v) => parts.getY(v))).not.toContain(-2);
       expect(Array.from({ length: parts.count }, (_, v) => parts.getW(v))).not.toContain(4);
-      const partTags = Array.from({ length: parts.count }, (_, v) => parts.getY(v));
-      if (hair) expect(partTags).toContain(-5);
-      else { expect(combined).toBe(source); expect(partTags.every(tag => tag >= -3)).toBe(true); }
+      expect(Array.from({ length: parts.count }, (_, v) => parts.getY(v))).toContain(id.startsWith('acc.hair-') ? -5 : -4);
       expect((page.geometry.index?.count ?? parts.count) % 3).toBe(0);
-      expect(page.geometry.index?.count ?? parts.count).toBe(hair ? 39 : 3);
+      expect(page.geometry.index?.count).toBe(39);
       const liveHead = accessories.children.find(node => node.name === `${id}:lod1`) as InstancedMesh;
       const headTransform = new Matrix4(); liveHead.getMatrixAt(0, headTransform);
       const local = new Vector3().fromBufferAttribute(liveHead.geometry.getAttribute('position'), liveHead.geometry.index?.getX(0) ?? 0).applyMatrix4(headTransform);
       const accessoryVertex = Array.from({ length: parts.count }, (_, v) => v).find(v => parts.getY(v) < -3)!;
-      if (hair) {
-        const frozen = new Vector3().fromBufferAttribute(page.geometry.getAttribute('position'), accessoryVertex);
-        expect(frozen.distanceTo(local)).toBeLessThan(1e-6);
-      } else expect(accessoryVertex).toBeUndefined();
+      const frozen = new Vector3().fromBufferAttribute(page.geometry.getAttribute('position'), accessoryVertex);
+      expect(frozen.distanceTo(local)).toBeLessThan(1e-6);
       const packed = page.geometry.getAttribute('_variant'), live = new InstancedBufferAttribute(new Float32Array(4), 4);
       writeCrowdAppearance(live, 0, e.id, new Color(look.tint), 1, look.slot, look.hidesHair);
-      const slot = hair ? 0 : i;
-      expect([packed.getX(slot), packed.getY(slot), packed.getZ(slot)]).toEqual(Array.from(live.array).slice(0, 3));
+      expect([packed.getX(0), packed.getY(0), packed.getZ(0)]).toEqual(Array.from(live.array).slice(0, 3));
       expect(corpses.snapshot().figures[i].appearance?.accessory).toBe(id);
     }
     accessories.finish();
     expect(accessories.snapshot().filter(b => b.instances).every(b => b.triangles <= 80)).toBe(true);
-    expect(corpses.snapshot()).toMatchObject({ instances: 4, draws: 2 });
+    expect(corpses.snapshot()).toMatchObject({ instances: 4, draws: 4 });
   } finally { poses.texture.dispose(); corpses.dispose(); source.dispose(); material.dispose(); accessories.dispose(); load.mockRestore(); }
 });

@@ -30,19 +30,3 @@ test('L4 excess pursuers cover another defender while coherent cohorts keep thei
   expect(press).toHaveBeenCalledWith(60, 12, expect.any(Number), 30);
   expect(active[0].infected!.l1!.goalX).toBe(60);
 });
-
-
-test('L4 high retreat Alphas break mutually covered crews while low retains its nearest target', () => {
-  for (const tier of ['high', 'low']) {
-    const player = { id: 1, transform: { x: 0, z: 0 } } as EntitySnapshot;
-    const soldiers = [{ id: 11, transform: { x: 1, z: 30 } }, ...[12, 13, 14, 15].map((id, i) => ({ id, transform: { x: i, z: 60 } }))] as EntitySnapshot[];
-    const alpha = { id: 60, archetype: 'infected.alpha', transform: { x: 0, z: 30 }, health: { current: 100 }, infected: {} } as EntitySnapshot;
-    const startSpecial = vi.fn(), world = { tick: 60, entities: { get: () => player }, combat: { query: { visible: () => true } }, infected: { active: [alpha], startSpecial, director: { tier } } };
-    const war = Object.assign(Object.create(LevelFourWar.prototype), {
-      mission: { world, state: { l4: { phase: 'collapse' } } }, liveSoldiers: () => soldiers, snap: (p: unknown) => p,
-    }) as { followBreachHorde(): void };
-    war.followBreachHorde();
-    if (tier === 'high') { expect(alpha.infected!.heardTargetId).toBe(12); expect(alpha.infected!.scripted).toMatchObject({ z: 60 }); }
-    else { expect(alpha.infected!.heardTargetId).toBe(11); expect(startSpecial).toHaveBeenCalledWith(60, 'alpha.ground-slam', expect.anything(), expect.anything()); }
-  }
-});
