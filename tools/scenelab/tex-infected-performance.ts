@@ -1,4 +1,5 @@
 /** Native low-tier A/B. quiet-run owns the GPU; both roots serve remote production builds. */
+import type { Game } from '../../src/Game';
 import { resolve } from 'node:path';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
@@ -14,9 +15,12 @@ try {
       await session.open();
       for (const scene of ['crowd-200', 'L1']) {
         if (scene === 'crowd-200') {
-          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+          await session.load({ name: 'crowd-200-ab', ground: 'asphalt', time: 'L1', infectedCap: 200, actors: [{ id: 'courier', kind: 'courier', at: [0, 0], god: true }], dof: false, camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
           await session.page.evaluate(async () => {
             const a = window.__SS__!; a.cheats.god(true);
+            // Stress 200 on the low renderer while retaining low simulation settings.
+            // The normal low-tier director halves levelCap, so admit 400/2 here only.
+            (window.__SCENE__ as unknown as { game: Game }).game.world.infected!.director.levelCap = 400;
             for (let i = 0; i < 200; i++) a.spawn('infected.sprinter', { x: i % 20 * .8 - 7.6, z: Math.floor(i / 20) * .8 - 3.6 }, { state: 'chase', variant: 'inf.common-worker' });
             await a.step(120); await a.screenshotReady();
           });
@@ -43,7 +47,7 @@ try {
           }
           frames.sort((a,b) => a-b); sim.sort((a,b) => a-b);
           const state = a.getState(), perf = a.perf(); a.pause();
-          return { backend: perf.backend, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
+          return { backend: perf.backend, rendererTier: state.render.quality, cap: state.ai?.cap, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95)-1], p50: frames[Math.ceil(frames.length * .5)-1], simP95: sim[Math.ceil(sim.length*.95)-1], samples: frames.length, durationMs: performance.now()-start, ticks: a.tick()-startTick, renderedFrames: perf.renderedFrames-startRender, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, crowd: state.render.crowd, memory: perf.textures, recordedAt: new Date().toISOString() };
         });
         if (variant === 'after' && scene === 'L1') {
           const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
@@ -52,7 +56,7 @@ try {
         }
         receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
         console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));
-        if (session.errors.length || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
+        if (session.errors.length || result.rendererTier !== 'low' || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || scene === 'crowd-200' && (result.count !== 200 || result.maxCrowdDraws > 30)) throw new Error('Invalid performance receipt');
       }
     } finally { await session.close(); stopServer(); }
     // Wait for the owned preview listener to close before switching source roots.
