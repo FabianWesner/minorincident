@@ -132,6 +132,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle' | 'prop'; damageType?: import('../combat/Damage').DamageEvent['type']; /** combat.kill of an infected that only went down (PO "Infected recover"): it gets up at this tick. */ downed?: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
+  | { tick: number; type: 'combat.empty'; sourceId: number; actionId: string; position: Transform }
   | { tick: number; type: 'combat.landed'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }
   | { tick: number; type: 'combat.exploded'; sourceId: number; attackId: number; position: { x: number; y: number; z: number }; radius: number }
   | { tick: number; type: 'player.died' | 'player.respawned'; id: number }

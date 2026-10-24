@@ -23,10 +23,10 @@ export function prioritizeAllyThreat<T>(unarmed: boolean, nearby: T | undefined,
 }
 
 /** Choose from the carried HUD arsenal, including L10's recovered checkpoint weapons. */
-export function campaignCombatWeapon(level: string | null, weapons: readonly string[]): string | null {
+export function campaignCombatWeapon(level: string | null, weapons: readonly string[], emptyWeapons: readonly string[] = []): string | null {
   if (level !== 'L7' && level !== 'L8' && level !== 'L10') return null;
   const order = ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.fire-axe'];
-  return order.find(id => weapons.includes(id)) ?? null;
+  return order.find(id => weapons.includes(id) && !emptyWeapons.includes(id)) ?? null;
 }
 
 /** The visible boss bar takes priority over a nearer ordinary walker during its kill objective. */

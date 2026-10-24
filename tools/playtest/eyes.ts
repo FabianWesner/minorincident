@@ -15,7 +15,7 @@ export interface Eyes {
   route: { dx: number; dz: number } | null;
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
-  player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; current: string | null } | null;
+  player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; emptyWeapons?: string[]; current: string | null } | null;
   driving: { id: number; x: number; z: number; yaw: number } | null;
   enemies: Body[]; allies: Body[];
   healthKits?: { x: number; z: number; d: number; screen: { x: number; y: number } }[];
@@ -117,6 +117,8 @@ export function look(): Eyes {
     enemies.sort((l, r) => l.d - r.d);
   }
   const weapons = p?.weapons ? (['LEFT', 'RIGHT'] as const).flatMap(side => p.weapons![side].rack.map(slot => slot.id)) : [];
+  const loadout = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game.world.combat?.runner.loadout;
+  const emptyWeapons = p?.weapons && loadout ? (['LEFT', 'RIGHT'] as const).flatMap(side => p.weapons![side].rack.filter(slot => !loadout.hasAmmo(slot)).map(slot => slot.id)) : [];
   const selected = p?.weapons?.[p.weapons.selectedSide];
   const current = selected ? (selected.index === -1 ? selected.unarmed : selected.rack[selected.index])?.id ?? null : null;
   const left = markerEl ? parseFloat(markerEl.style.left) : NaN, top = markerEl ? parseFloat(markerEl.style.top) : NaN;
@@ -131,7 +133,7 @@ export function look(): Eyes {
     menu, loading: shown(q('menu-loading')) || shown(q('level-transition')),
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
-    player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, current } : null,
+    player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, emptyWeapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
     healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h && !document.elementFromPoint(k.screen.x, k.screen.y)?.closest('button, input, select, textarea, [role="dialog"]')) : [],
     enemies, allies, view,

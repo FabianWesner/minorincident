@@ -73,6 +73,11 @@ export class Loadout {
     const index = Math.max(0, rack.index), previous = rack.rack[index].id; rack.rack[index] = next; rack.index = index; return previous;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.index === -1 ? state.unarmed ??= slot('weapon.fists', this.definition) : state.rack[state.index]; }
+  /** Zero capacity means bottomless campaign ammo, not an exhausted magazine. */
+  hasAmmo(slot: ActionSlot): boolean {
+    const def = this.definition(slot.id);
+    return (!def.magazine || slot.magazine > 0) && (!def.charges || slot.charges > 0);
+  }
   update(tick: number, switched: (side: Side, id: string) => void): void {
     for (const name of ['LEFT', 'RIGHT'] as const) {
       const side = this.state[name];
@@ -85,8 +90,8 @@ export class Loadout {
     }
   }
   usable(side: Side, tick: number): boolean {
-    const slot = this.current(side), def = this.definition(slot.id);
-    return tick >= this.state[side].swapUntil && tick >= slot.readyAt && !slot.reloadUntil && (!def.charges || slot.charges > 0);
+    const slot = this.current(side);
+    return tick >= this.state[side].swapUntil && tick >= slot.readyAt && !slot.reloadUntil && this.hasAmmo(slot);
   }
   spend(side: Side, tick: number, def: ActionDef, infiniteCharges: boolean): void {
     const slot = this.current(side);
