@@ -38,6 +38,10 @@ export function modelLod(distance: number, previous: string | undefined, low: bo
  * figure is 120-180 CSS px (2-3x that on retina/phones), where LOD2 reads as a broken kite torso with floating parts
  * (PROD "this guy looks terrible"). Both tiers therefore keep LOD1 down to ~96 px; the low tier used to force LOD2. */
 export const crowdLodPixels = { enter: 104, leave: 88 } as const;
+/** L4 phone hordes match the twelve-slot detailed footwork budget; all figures still draw. */
+export function crowdNearBudget(scenario: string | null | undefined, low: boolean, width: number): number {
+  return low && scenario === 'L4' && width <= 480 ? 12 : 16;
+}
 export function crowdLod(pixels: number, previous?: 'lod1' | 'lod2'): 'lod1' | 'lod2' {
   return pixels > (previous === 'lod1' ? crowdLodPixels.leave : previous === 'lod2' ? crowdLodPixels.enter : (crowdLodPixels.enter + crowdLodPixels.leave) / 2) ? 'lod1' : 'lod2';
 }

@@ -85,3 +85,12 @@ test('phone pedestrian gait band preserves story actions, pets and close figures
   e.civilian!.story = { clip: 'npc-look-around', start: 0 }; expect(pick()).toBe(false); delete e.civilian!.story;
   e.civilian!.pet = 'dog'; expect(pick()).toBe(false);
 });
+
+test('L4 portrait phones retain twelve detailed native bodies without changing other bands', async () => {
+  const { crowdNearBudget } = await import('../../../src/render/lodPolicy');
+  expect(crowdNearBudget('L4', true, 390)).toBe(12);
+  expect(crowdNearBudget('L4', true, 480)).toBe(12);
+  expect(crowdNearBudget('L4', true, 481)).toBe(16);
+  expect(crowdNearBudget('L4', false, 390)).toBe(16);
+  expect(crowdNearBudget('L3', true, 390)).toBe(16);
+});
