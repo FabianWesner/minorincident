@@ -88,10 +88,10 @@ export const l4 = {
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
-     * and staggered. `inside`: during the war groups of 4-5 also come out of the buildings inside the perimeter (tents, containers,
+     * and staggered. `inside`: during the war groups of 4-6 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1.5, group: [4, 5] as P, minM: 6 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 1.5, group: [4, 6] as P, minM: 6 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
@@ -131,7 +131,7 @@ export const l4 = {
     alive: [.8, .9, .7] as readonly number[], aliveLow: [.85, .9, .8] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     // First fallback line runs past the courier toward the plaza centre; the
-    // second line (x=-10.8) remains deeper in camp.
+    // second line remains deeper in camp, clear of the parked convoy.
     fallback1: [[-16, -11.8], [-16, -8.5], [-16, -5.2], [-16, -1.9], [-16, 1.4], [-16, 4.7], [-16, 8], [-16, 11.3], [-16, 14.6]] as readonly P[],
     fallback2: [[-15.2, -10], [-15.2, -6.7], [-15.2, -3.4], [-15.2, 0], [-15.2, 3.3], [-15.2, 6.6], [-15.2, 10], [-15.2, -15.5], [-15.2, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
