@@ -114,7 +114,7 @@ export class AssetRegistry {
           const mapped = material as import('three').MeshStandardMaterial, atlas = mapped.map;
           if (!atlas) continue;
           const shared = this.crowdAtlases.get(def.id);
-          if (shared && shared !== atlas) { mapped.map = shared; atlas.dispose(); }
+          if (shared && shared !== atlas) { mapped.map = shared; atlas.dispose(); const bitmap = atlas.image as { close?: () => void }; if (bitmap !== shared.image) bitmap?.close?.(); }
           else this.crowdAtlases.set(def.id, atlas);
         }
       });
@@ -146,7 +146,9 @@ export class AssetRegistry {
     });
     for (const geometry of geometries) geometry.dispose();
     for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
-    for (const texture of textures) texture.dispose();
+    const images = new Set<{ close?: () => void }>();
+    for (const texture of textures) { texture.dispose(); if (texture.image) images.add(texture.image as { close?: () => void }); }
+    for (const image of images) image.close?.();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
     this.cache.clear(); this.crowdAtlases.clear(); this.materials.dispose(); this.ktx?.dispose();

@@ -15,7 +15,7 @@ test('T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses
     const nodes=doc.getRoot().listNodes(), parts=clip.parts.map(name=>nodes.find(n=>n.getName()===name)!);
     const rest=parts.map(p=>p.getRotation());
     // Hidden gore materials are deliberately excluded from crowd geometry.
-    expect(baked.getRoot().listNodes()).toHaveLength(doc.getRoot().listMaterials().filter(m=>!['pal_flesh','pal_bone'].includes(m.getName())).length);
+    expect(baked.getRoot().listNodes()).toHaveLength(new Set(nodes.filter(n=>!n.getExtras().hidden && !n.getName().startsWith('stump_')).flatMap(n=>n.getMesh()?.listPrimitives().map(p=>p.getMaterial()) ?? [])).size);
     expect(baked.getRoot().listMeshes().every(m=>m.listPrimitives().length===1)).toBe(true);
     for(const time of [0,.25,.5,.75,1]) {
       for(const [i,part] of parts.entries()){part.setRotation(rest[i]);walkSample(part,time,rest[i]);}

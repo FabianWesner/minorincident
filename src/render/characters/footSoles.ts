@@ -4,6 +4,8 @@ import { Box3, Matrix4, Mesh, Vector3, type Object3D } from 'three';
  * Store four sole corners in each foot's local bind frame, once per crowd batch. */
 export function authoredSoles(root: Object3D): Vector3[][] | undefined {
   if (root.getObjectByName('root')?.userData.meshSoles !== true) return;
+  const declared = root.getObjectByName('root')?.userData.soleBounds as number[][] | undefined;
+  if (declared) return declared.map(b => [b[0], b[3]].flatMap(x => [b[2], b[5]].map(z => new Vector3(x, b[1], z))));
   root.updateMatrixWorld(true);
   return ['footL', 'footR'].map(name => {
     const foot = root.getObjectByName(name)!, inverse = new Matrix4().copy(foot.matrixWorld).invert();

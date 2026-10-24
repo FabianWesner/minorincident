@@ -9,7 +9,7 @@ import { getTextureColorSpace, listTextureSlots } from '@gltf-transform/function
 
 /** Texture-free palette assets need no external encoder. Atlases require toktx. */
 export function compressTextures(document: Document, binary = process.env.TOKTX_BIN ?? 'toktx', maxSize = 1024): void {
-  const textures = document.getRoot().listTextures().filter(t => t.getMimeType() !== 'image/ktx2');
+  const textures = document.getRoot().listTextures().filter(t => t.getMimeType() !== 'image/ktx2' && !(t.getMimeType() === 'image/webp' && document.getRoot().listNodes().some(n => n.getExtras().crowdAtlas === true)));
   if (!textures.length) return;
   const directory = mkdtempSync(join(tmpdir(),'minor-incident-ktx-'));
   try {

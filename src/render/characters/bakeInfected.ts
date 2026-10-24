@@ -59,8 +59,9 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
   const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
   if (preserveIndices) root.updateMatrixWorld(true);
+  const sourceSoles = authoredSoles(root);
   const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
-    ? JSON.stringify([crawlingRestPose, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
+    ? JSON.stringify([crawlingRestPose, sourceSoles, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
   const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
   if (poseKey) {
     rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);
@@ -86,7 +87,6 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
     // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
     const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
-    const sourceSoles = authoredSoles(root);
     const lowestSole = () => Math.min(...feet.flatMap((foot, side) => sourceSoles ? sourceSoles[side].map(point => sole.copy(point).applyMatrix4(foot.matrixWorld).y) : [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
     const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
     // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
@@ -151,7 +151,9 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   let doubleSided = false;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
-    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
+    const capIndex = preserveUV ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(node.name.replace(/^stump_/, '')) : -1;
+    const cap = node.name.startsWith('stump_') && capIndex >= 0;
+    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !(cap && ancestor === node)) return;
     // A named animated part can itself be a Mesh (not only a parent joint).
     let owner: Object3D | null = node;
     while (owner && !parts.includes(owner)) owner = owner.parent;
@@ -171,6 +173,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       for (let i = 0; i < indices.length; i++) indices[i] = i;
       geometry.setIndex(new BufferAttribute(indices, 1));
     }
+    if (cap) { geometry.computeVertexNormals(); geometry.setAttribute('uv', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 2), 2)); }
     if (preserveIndices) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
     for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
@@ -202,6 +205,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       emissive[i] = Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || preserveUV && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
+    if (preserveUV) geometry.setAttribute('_vein', new BufferAttribute(new Float32Array(count).fill(cap ? 1024 + capIndex : 0), 1));
     if (!preserveUV) geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });

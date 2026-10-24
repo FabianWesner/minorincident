@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 // Convert a source-rebaked, xatlas-unwrapped static suit LOD into the game's
@@ -64,11 +65,16 @@ const assign = point => {
     return score < best.score ? { name: segment[0], score } : best;
   }, { name: 'torso', score: Infinity }).name;
 };
+const semanticsFile = input.replace(/\.glb$/, '.semantics.json');
+const semanticHead = existsSync(semanticsFile) ? new Set(JSON.parse(readFileSync(semanticsFile)).headFaces) : undefined;
+const headAngle = 28 * Math.PI / 180;
+const headUp = p => [p[0]*Math.cos(headAngle)-p[1]*Math.sin(headAngle),p[0]*Math.sin(headAngle)+p[1]*Math.cos(headAngle),p[2]];
 const faces = Object.fromEntries(Object.keys(world).map(name => [name, []]));
 for (let i = 0; i < indices.length; i += 3) {
   const tri = indices.slice(i, i + 3), center = [0, 0, 0];
   for (const vi of tri) { const v = convert(sourcePositions[vi]); for (let a = 0; a < 3; a++) center[a] += v[a] / 3; }
-  faces[assign(center)].push(tri);
+  const owner = semanticHead?.has(i / 3) ? 'head' : semanticHead ? (center[1] > 1.24 ? 'torso' : assign(center)) : assign(center);
+  faces[owner].push(tri);
 }
 
 // Replace the source scene with named, pivoted game joints.
@@ -96,8 +102,8 @@ const addMesh = (name, owner, tris, mat, textured = true) => {
     const values = [];
     for (const tri of tris) for (const vi of tri) {
       let v = input.getElement(vi, []);
-      if (semantic === 'POSITION') { const p = convert(v); v = p.map((n, i) => n - absolute[owner][i]); }
-      else if (semantic === 'NORMAL') v = [-v[1], v[2], -v[0]];
+      if (semantic === 'POSITION') { const p = convert(v); v = p.map((n, i) => n - absolute[owner][i]); if (owner === 'head') v = headUp(v); }
+      else if (semantic === 'NORMAL') { v = [-v[1], v[2], -v[0]]; if (owner === 'head') v = headUp(v); }
       values.push(...v);
     }
     attrs[semantic] = doc.createAccessor(`${name}_${semantic}`).setType(itemSize === 2 ? 'VEC2' : 'VEC3').setArray(new Float32Array(values)).setBuffer(buffer);
@@ -118,10 +124,15 @@ const caps = [
   ['foreArmL', 'armL', world.foreArmL, 'z'], ['foreArmR', 'armR', world.foreArmR, 'z'],
   ['legL', 'hip', world.legL, 'y'], ['legR', 'hip', world.legR, 'y'],
 ];
-for (const [name, owner, at, axis] of caps) {
+for (const [name, owner, at] of caps) {
   const node = doc.createNode(`stump_${name}`).setName(`stump_${name}`).setTranslation(at).setExtras({ hidden: true, stumpFor: name });
   joints[owner].addChild(node);
-  const side = .035, points = axis === 'y' ? [[-side,0,-side],[side,0,-side],[side,0,side],[-side,0,side]] : [[0,-side,-side],[0,side,-side],[0,side,side],[0,-side,side]];
+  const radius = name === 'head' ? .065 : name.startsWith('leg') ? .09 : .075;
+  const next = name.startsWith('arm') ? 'foreArm' + name.slice(-1) : name.startsWith('foreArm') ? 'hand' + name.slice(-1) : name.startsWith('leg') ? 'shin' + name.slice(-1) : null;
+  const direction = next ? world[next] : [0, 1, 0], normal = direction.map(n => n / Math.hypot(...direction));
+  const cross = [0, -normal[2], normal[1]], u = cross.map(n => n / Math.hypot(...cross));
+  const v = [normal[1]*u[2]-normal[2]*u[1], normal[2]*u[0]-normal[0]*u[2], normal[0]*u[1]-normal[1]*u[0]];
+  const points = [[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b]) => u.map((n,i) => (a*n+b*v[i])*radius));
   const pos = doc.createAccessor(`stump_${name}_position`).setType('VEC3').setArray(new Float32Array([...points[0], ...points[1], ...points[2], ...points[0], ...points[2], ...points[3]])).setBuffer(buffer);
   const capMesh = doc.createMesh(`stump_${name}_mesh`), capPrim = doc.createPrimitive().setMaterial(capMaterial).setMode(4).setAttribute('POSITION', pos);
   capMesh.addPrimitive(capPrim); node.setMesh(capMesh);

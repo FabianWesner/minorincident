@@ -24,7 +24,7 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
       expect(cap.userData.hidden).toBe(true);
       cap.geometry.computeBoundingBox();
       const size = cap.geometry.boundingBox!.getSize(new Vector3()).multiply(cap.scale);
-      expect(Math.max(size.x, size.y, size.z)).toBeLessThan(.08);
+      expect(Math.max(size.x, size.y, size.z)).toBeLessThan(.25);
     }
     const baked = bakeInfected(root, [], false, clips, undefined, true, true);
     expect(baked.texture).toBe(atlas);
@@ -34,6 +34,7 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     for (let c = 0; c < clips.length; c++) for (let f = 0; f < framesPerClip; f++) {
       let min = Infinity, max = -Infinity;
       for (let i = 0; i < p.count; i++) {
+        if (baked.geometry.getAttribute('_vein').getX(i) >= 1024) continue;
         point.fromBufferAttribute(p, i).applyMatrix4(matrix.fromArray(baked.clip.matrices, ((c * framesPerClip + f) * baked.clip.parts.length + part.getX(i)) * 16));
         min = Math.min(min, point.y); max = Math.max(max, point.y);
       }
@@ -45,10 +46,12 @@ test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse 
     const frame = clips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
     pool.place({ id: 3, corpse: true } as EntitySnapshot, 'suit', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
     const frozen = (pool.children[0] as InstancedMesh).geometry.getAttribute('uv');
-    expect(frozen.count).toBe(uv.count);
-    for (let i = 0; i < uv.count; i++) { expect(frozen.getX(i)).toBe(uv.getX(i)); expect(frozen.getY(i)).toBe(uv.getY(i)); }
+    const flags = baked.geometry.getAttribute('_parts'), kept = Array.from({ length: uv.count }, (_, i) => i).filter(i => flags.getW(i) < 1024);
+    expect(frozen.count).toBe(kept.length);
+    kept.forEach((source, i) => { expect(frozen.getX(i)).toBe(uv.getX(source)); expect(frozen.getY(i)).toBe(uv.getY(source)); });
     pool.dispose(); baked.geometry.dispose(); material.dispose(); atlas.dispose();
   }
+  bytes += readFileSync('public/assets/models/inf.common-worker.corpse.glb').length;
   bytes += readFileSync('assets/inf.common-worker/inf.common-worker.atlas.webp').length + readFileSync('assets/inf.common-worker/inf.common-worker.atlas.low.webp').length;
   expect(bytes).toBeLessThanOrEqual(600_000);
 });
