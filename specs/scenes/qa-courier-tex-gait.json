@@ -1,0 +1,18 @@
+{
+  "name": "qa-courier-tex-gait",
+  "note": "Heroine rebind (char.courier-female-tex, run with --query tex=1; without it the same shots show the current courier). Walk 2 m/s then run 4.5 m/s past a fixed close camera: knees, shins, shorts and armpits at stride extremes, front, side and back.",
+  "ground": "sidewalk",
+  "size": 40,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-6, 0], "yaw": 0, "look": { "model": "female" }, "state": "idle" }
+  ],
+  "script": [
+    { "frame": 40, "actor": "courier", "do": { "walk": [[6, 0]] } },
+    { "frame": 470, "actor": "courier", "do": { "run": [[-6, 0]] } },
+    { "frame": 680, "actor": "courier", "do": { "run": [[6, 0]] } }
+  ],
+  "camera": { "mode": "close", "target": "courier", "radius": 6, "azimuth": 150 },
+  "frames": 880,
+  "shots": [30, 200, 208, 216, 224, 232, 240, 560, 565, 570, 575, 580, 760, 765, 770, 775],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "footSinkMaxCm": 2 }
+}

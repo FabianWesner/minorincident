@@ -1,0 +1,86 @@
+{
+  "name": "qa-courier-tex-look-z05",
+  "note": "Heroine rebind look check at the game camera, zoom 0.5: idle, walk, run, bat swing. Run with --query tex=1 for char.courier-female-tex; without it for the current courier (A/B).",
+  "ground": "sidewalk",
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "look": {
+        "model": "female"
+      }
+    },
+    {
+      "id": "dummy-1",
+      "kind": "infected",
+      "at": [
+        -6.5,
+        1.2
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            3,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 170,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -5,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 300,
+      "actor": "courier",
+      "do": {
+        "attack": "dummy-1",
+        "seconds": 2.4
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 0.5
+  },
+  "frames": 450,
+  "shots": [
+    50,
+    130,
+    230,
+    330,
+    350,
+    370
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

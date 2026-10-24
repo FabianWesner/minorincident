@@ -230,6 +230,7 @@ def hats(t, centers):
         out[bone] = out.get(bone, 0) + w
     return out
 BAND = .06
+LEG_BAND = .085  # the heroine's legs are ~15 % longer than the courier's: a wider knee blend keeps the shin from pinching
 W = {}
 def add(bone, x):
     W[bone] = W.get(bone, 0) + x
@@ -238,7 +239,7 @@ for s in 'LR':
         A, B, C = J[up_ + s], J[mid + s], J[end + s]; l1, l2 = np.linalg.norm(B - A), np.linalg.norm(C - B)
         t, _ = chain([A, B, C])
         if limb == 'arm': c = [(min(.35 * l1, l1 - BAND), 'arm' + s), (l1, 'elbow' + s), (l1 + min(BAND, .42 * l2), 'foreArm' + s), (l1 + .8 * l2, 'foreArmTwist' + s), (l1 + l2 + .012, 'hand' + s)]
-        else: c = [(min(.35 * l1, l1 - BAND), 'leg' + s), (l1, 'knee' + s), (l1 + min(BAND, .45 * l2), 'shin' + s), (l1 + l2 + .01, 'foot' + s)]
+        else: c = [(min(.35 * l1, l1 - LEG_BAND), 'leg' + s), (l1, 'knee' + s), (l1 + min(LEG_BAND, .45 * l2), 'shin' + s), (l1 + l2 + .01, 'foot' + s)]
         m = member[limb + s]
         for bone, x in hats(t, c).items(): add(bone, m * x)
         if limb == 'leg':
@@ -352,6 +353,19 @@ me.normals_split_custom_set(loopN)
 
 body.name = 'courierSkin'; rig.name = 'courierRig'
 body['asset_id'] = 'char.courier-female-tex'; body['skinned'] = True; body['skeleton'] = 2
+# arm-repair caps: their research vertex gradient reads as light patches in game light. Re-tint each cap vertex with the
+# base-colour texture of the nearest textured surface (sRGB, as the texture is sampled), so the caps match the skin around them.
+patch_loops = [(li, vi) for poly in me.polygons if me.materials[poly.material_index] and 'repair' in me.materials[poly.material_index].name
+               for li, vi in zip(poly.loop_indices, poly.vertices)]
+if patch_loops and 'Color' in me.color_attributes:
+    textured = np.where(cnt > 0)[0]
+    Pt = WP[textured]
+    attr = me.color_attributes['Color']
+    for li, vi in patch_loops:
+        d = np.linalg.norm(Pt - WP[inverse[vi]], axis=1); near = textured[np.argsort(d)[:8]]
+        c = WC[near].mean(0)
+        attr.data[li].color_srgb = (float(c[0]), float(c[1]), float(c[2]), 1.)
+    stats['repairCapLoops'] = len(patch_loops)
 for m in me.materials:
     if m and 'repair' not in m.name: m.name = 'tex_baseColor'
     elif m: m.name = 'tex_vertexColor'
