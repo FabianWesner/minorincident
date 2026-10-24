@@ -56,8 +56,15 @@ export class LevelSevenEncounters {
       if (c.l1) c.l1.target = null;
       // Armed shelter residents travel with the group rather than holding their old underground post.
       const key = c.survivor?.key ?? `shelter-${slot}`;
-      c.survivor = { key, mode: 'follow', slot, leader: 1, cover: false, waitAt: 0, foundAt: w.tick };
-      this.state.roster.push({ id: e.id, key, injured: (c.l1?.walkSpeed ?? 2.2) <= 1.4, status: 'following', passed: false });
+      // Ordinary pedestrians also stroll below 1.4 m/s. Their routine pace is
+      // not an injury; preserve L6's story flag through the campaign handover.
+      // Older L6 saves predate that flag but retain the authored shelter slot.
+      const shelter = source?.civilian?.survivor;
+      const injured = shelter?.injured ?? (shelter?.leader === 0
+        ? shelter.slot > 0 && shelter.slot % 5 === 0 && key !== 'rosa'
+        : source?.civilian?.l1?.walkSpeed === 1.4);
+      c.survivor = { key, mode: 'follow', slot, leader: 1, cover: false, ...(source ? { injured } : {}), waitAt: 0, foundAt: w.tick };
+      this.state.roster.push({ id: e.id, key, injured, status: 'following', passed: false });
       w.solids.admit(e, 'l7.roster.arrival');
     }
   }
@@ -116,6 +123,9 @@ export class LevelSevenEncounters {
       if (r.status !== 'following') w.events.emit({ type: 'mission.signal', tick: w.tick, name: `l7.survivor-${r.status}`, actorId: r.id });
     }
     const p = w.entities.get(1)!.transform;
+    // The crowd already builds this field above twenty infected. Keep it
+    // available for distant followers after the fighting has thinned out too.
+    if (ai.active.length <= 20 && s.roster.some(r => r.status === 'following' && distance(w.entities.get(r.id)!.transform, p) > 30)) ai.nav.flow(p.x, p.z, 1500);
     s.passageReady = s.finalReady && p.x <= l7Encounters.passage.x && Math.abs(p.z - l7Encounters.passage.z) < 7 && s.roster.every(r => r.status !== 'following' || r.passed);
     const m=w.missions;
     if(m?.state.steps.corridor?.status==='active'){
@@ -148,21 +158,31 @@ export class LevelSevenEncounters {
       w.events.emit({ type: 'story.say', tick: w.tick, id: e.id, text: 'Wait for us!', position: e.transform });
     }
     if (distance(e.transform, target) > .9) {
-      // Cross-city searches share the grid's scratch state. Use short routes
-      // that finish within one search budget, then keep walking that route.
+      // Reuse the crowd's connected route across the city. Until that field
+      // reaches a follower, short searches fit the shared A* scratch budget.
       let destination = target;
       if (d > 30) {
         const nav = w.infected!.nav;
-        if (!c.l1!.target || distance(e.transform, c.l1!.target) <= .6) {
-          if ((w.tick + e.id) % 30 !== 0) return true;
-          const length = distance(e.transform, target);
-          const local = { x: e.transform.x + (target.x - e.transform.x) * 8 / length, z: e.transform.z + (target.z - e.transform.z) * 8 / length };
-          const budget = w.infected!.director.tier === 'low' ? 200 : 400;
-          if (!nav.steer(e.transform, local, c, .35, this.waypoint, budget)) return true;
-          const cell = nav.nearestCell(local.x, local.z, .35);
-          c.l1!.target = { x: nav.x(cell), z: nav.z(cell) };
+        const cell = nav.nearestCell(e.transform.x, e.transform.z, .35);
+        let next = nav.flowNext(cell);
+        if (next >= 0 && next !== cell) {
+          // A straight eight-metre goal can land inside a building and snap
+          // back to this same wall forever. Follow the connected crowd route.
+          for (let i = 0; i < 7; i++) next = nav.flowNext(next);
+          this.waypoint.x = nav.x(next); this.waypoint.z = nav.z(next);
+          c.l1!.target = null; destination = this.waypoint;
+        } else {
+          if (!c.l1!.target || distance(e.transform, c.l1!.target) <= .6) {
+            if ((w.tick + e.id) % 30 !== 0) return true;
+            const length = distance(e.transform, target);
+            const local = { x: e.transform.x + (target.x - e.transform.x) * 8 / length, z: e.transform.z + (target.z - e.transform.z) * 8 / length };
+            const budget = w.infected!.director.tier === 'low' ? 200 : 400;
+            if (!nav.steer(e.transform, local, c, .35, this.waypoint, budget)) return true;
+            const cell = nav.nearestCell(local.x, local.z, .35);
+            c.l1!.target = { x: nav.x(cell), z: nav.z(cell) };
+          }
+          destination = c.l1!.target;
         }
-        destination = c.l1!.target;
       } else c.l1!.target = null;
       w.npcs!.move(e, destination, r.injured ? 1.4 : 3.8, c, .5, d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600);
     }

@@ -57,7 +57,7 @@ export class LevelEightZoo {
       if (c.l1) c.l1.target = null;
       if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
       readyCarriedAlly(e, w.tick);
-      c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, waitAt: 0, foundAt: w.tick };
+      c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, injured: c.survivor?.injured ?? c.l1?.walkSpeed === 1.4, waitAt: 0, foundAt: w.tick };
       s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
     }
     const centres: Point[] = [{ x: -60, z: 0 }, { x: 60, z: 0 }, { x: -30, z: -64 }, { x: -45, z: 64 }, { x: 24, z: 64 }];
@@ -231,7 +231,7 @@ export class LevelEightZoo {
     const target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     if (boarding && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) {
-      const speed = (c.l1?.walkSpeed ?? 2.2) <= 1.4 ? 1.4 : 3.8;
+      const speed = c.survivor?.injured ? 1.4 : 3.8;
       if (!boarding || !this.approachDoor(e, door, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : .8, 2400);
     }
     return true;
