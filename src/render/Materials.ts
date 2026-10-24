@@ -1,6 +1,6 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -90,6 +90,18 @@ export class Materials {
     const key = `${token}:${emissive}`;
     let material = this.cache.get(key);
     if (!material) { material = new PaletteMaterial(token, this.texture, this.lighting, emissive); this.cache.set(key, material); }
+    return material;
+  }
+  /** Shared opaque figure atlas material; its registry owns the image lifetime. */
+  fromTexture(name: string, map: Texture, tint: Color, side: Side): PaletteMaterial {
+    const key = `texture:${map.uuid}:${tint.getHexString()}:${side}`;
+    let material = this.cache.get(key);
+    if (!material) {
+      material = this.shaded(texture(map).rgb.mul(uniform(tint.clone())));
+      material.name = name; material.color.copy(tint); material.side = side;
+      material.map = map; material.userData.sharedPalette = true;
+      this.cache.set(key, material);
+    }
     return material;
   }
   /** Imported hero detail swatches retain their authored colors with the same stylized shading. */

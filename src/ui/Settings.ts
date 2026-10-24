@@ -9,11 +9,13 @@ export interface UISettings {
   colorblind: boolean;
   quality: 'high' | 'low' | 'auto';
   muted: boolean;
+  /** Experimental character art, applied on the next level load. */
+  texturedCharacters: boolean;
   /** E27 bullet time on big nearby blasts. */
   slowMotion: boolean;
 }
 export const settingsKey = 'minor-incident.ui.v1';
-const defaults: UISettings = { textSize: 1, aimAssist: 'Default', gore: 'Full', cameraShake: true, flashReduction: false, colorblind: false, quality: 'auto', muted: false, slowMotion: true };
+const defaults: UISettings = { textSize: 1, aimAssist: 'Default', gore: 'Full', cameraShake: true, flashReduction: false, colorblind: false, quality: 'auto', muted: false, texturedCharacters: false, slowMotion: true };
 export class Settings {
   readonly value: UISettings = { ...defaults };
   constructor(private readonly storage?: Pick<Storage, 'getItem' | 'setItem'>) {

@@ -171,7 +171,7 @@ export class GameUI {
     this.select(form, 'aimAssist', 'Aim assist', ['Off', 'Low', 'Default', 'High']);
     this.select(form, 'gore', 'Blood', ['Off', 'Reduced', 'Full']);
     this.select(form, 'quality', 'Quality', ['auto', 'high', 'low']);
-    for (const [key, label] of [['cameraShake', 'Camera shake'], ['flashReduction', 'Reduce flashes'], ['colorblind', 'Colorblind telegraphs'], ['slowMotion', 'Explosion slow motion'], ['muted', 'Mute audio']] as const) {
+    for (const [key, label] of [['cameraShake', 'Camera shake'], ['flashReduction', 'Reduce flashes'], ['colorblind', 'Colorblind telegraphs'], ['slowMotion', 'Explosion slow motion'], ['muted', 'Mute audio'], ['texturedCharacters', 'Detailed characters (next level)']] as const) {
       const row = node('label', `label-${key}`, label), input = node('input', `setting-${key}`);
       input.type = 'checkbox'; input.checked = this.settings.value[key];
       input.addEventListener('change', () => { this.settings.patch({ [key]: input.checked }); this.applySettings(); });

@@ -1,3 +1,4 @@
+import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -225,7 +226,7 @@ export class StaticCorpses extends Group {
         if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
         else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
         const matrices = clip.matrices, frameOffset = Math.floor(frame) * clip.parts.length * 16;
-        for (const name of ['position', 'normal', 'color', '_parts']) {
+        for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name);
           // GPU backends may pad normals to vec4. Frozen geometry retains the
           // semantic xyz layout warmed before combat, including accessory pages.
@@ -289,9 +290,10 @@ export class StaticCorpses extends Group {
     const frozen = this.frozenPose(source, material, clip, frame, hiddenParts, hidesHair);
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
-    for (const name of ['position', 'normal', 'color', '_parts']) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
+    for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
+    interleaveTexturedCrowd(geometry);
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
