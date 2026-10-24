@@ -111,7 +111,7 @@ export class StaticCorpses extends Group {
     if (!page || page.keys.length >= 128) {
       page = this.createPage(cellKey, source, material, clip, frame, hiddenParts, look?.hidesHair);
     }
-    const index = page.keys.length; page.mesh.count = index + 1;
+    const index = page.keys.length; page.mesh.count = index + 1; page.mesh.visible = true;
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
     if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .64, .64); page.mesh.instanceColor.needsUpdate = true; }
@@ -147,7 +147,7 @@ export class StaticCorpses extends Group {
       const moved = page.keys[last]; page.keys[index] = moved; this.slots.get(moved)!.index = index;
       page.spheres[index] = page.spheres[last]; page.probe.figures[index] = page.probe.figures[last];
     }
-    page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last;
+    page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last; mesh.visible = last > 0;
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     if (last > 0) this.bounds(page);
@@ -172,7 +172,7 @@ export class StaticCorpses extends Group {
         }
         visible++;
       }
-      page.mesh.count = visible;
+      page.mesh.count = visible; page.mesh.visible = visible > 0;
       if (changed) page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     }
   }
@@ -320,7 +320,7 @@ export class StaticCorpses extends Group {
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
-    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.name = `corpses:${key}`;
+    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.visible = false; mesh.name = `corpses:${key}`;
     if (frozen.material instanceof PaletteMaterial) {
       // Spatial/death/gore pages share the layout, while their matrices,
       // appearance and bounds remain independent. Avoid a node build per UUID.

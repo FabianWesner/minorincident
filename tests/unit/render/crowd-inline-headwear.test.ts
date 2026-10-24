@@ -13,14 +13,15 @@ function fixture() {
   return {accessories,ids,batches,body,entity};
 }
 test('T-E07-12-headwear @E07 optional live slots preserve the original corpse body and fitted selected-piece geometry',()=>{
-  const {accessories,body,entity}=fixture(), count=body.getAttribute('position').count;
-  const corpse=accessories.corpseSource(entity(),body,'npc.civilian-man-a',0), selected=corpse.userData.corpseAccessory as BoxGeometry;
+  const {accessories,body,entity,ids}=fixture(), count=body.getAttribute('position').count;
+  expect(accessories.corpseSource(entity(),body,'npc.civilian-man-a',0)).toBe(body);
+  const corpse=accessories.corpseSource(entity(78,ids[1]),body,'npc.civilian-man-a',0), selected=corpse.userData.corpseAccessory as BoxGeometry;
   const live=accessories.livingSource(body,'npc.civilian-man-a',0), parts=live.getAttribute('_parts');
   expect(live.userData.inlineBody).toBe(body);expect(live.userData.inlineAccessories).toBe(true);
   expect(live.getAttribute('position').count).toBe(count+2*24);expect(live.index!.count).toBe(36*3);
   expect(parts.getW(0)).toBe(128);expect(parts.getW(count)).toBe(136);expect(parts.getW(count+24)).toBe(144);
   expect(parts.getY(count)).toBe(-4);expect(parts.getY(count+24)).toBe(-5);expect(body.getAttribute('_parts').getW(0)).toBe(0);
-  for(const name of ['position','normal','color'])for(let i=0;i<24;i++)for(let c=0;c<3;c++)expect(live.getAttribute(name).getComponent(count+i,c)).toBe(selected.getAttribute(name).getComponent(i,c));
+  for(const name of ['position','normal','color'])for(let i=0;i<24;i++)for(let c=0;c<3;c++)expect(live.getAttribute(name).getComponent(count+24+i,c)).toBe(selected.getAttribute(name).getComponent(i,c));
   expect(Array.from(selected.getAttribute('_parts').array).filter((_,i)=>i%4===3).every(w=>w===0)).toBe(true);
   let retired=0;body.addEventListener('dispose',()=>retired++);live.dispose();expect(retired).toBe(1);accessories.dispose();
 });

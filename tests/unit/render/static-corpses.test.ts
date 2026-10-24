@@ -122,6 +122,8 @@ test('distant corpse pages cull independently while every body persists @E07', (
   const visible = pool.children.filter(mesh => frustum.intersectsObject(mesh));
   expect(visible.reduce((count, mesh) => count + (mesh as InstancedMesh).count, 0)).toBe(2);
   expect(pool.snapshot().instances).toBe(4);
+  pool.cull(frustum);
+  for (const page of pool.children as InstancedMesh[]) expect(page.visible).toBe(page.count > 0);
   const pages = pool.children as InstancedMesh[];
   expect(pages[1].material).toBe(pages[0].material);
   expect(pages[1].geometry.getAttribute('position')).toBe(pages[0].geometry.getAttribute('position'));
@@ -135,15 +137,17 @@ test('L6 prewarmed corpse pages stay empty until a real body joins @E24', () => 
   const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
   pool.prepare('runner', baked.geometry, material, baked.clip, frame);
   const page = pool.children[0] as InstancedMesh, geometry = page.geometry, frozen = page.material;
+  expect(page.visible).toBe(false);
   expect(pool.snapshot()).toMatchObject({ instances: 0, draws: 0, figures: [] });
   pool.prepare('runner', baked.geometry, material, baked.clip, frame);
   expect(pool.children).toHaveLength(1);
   const e = { id: 7, corpse: true } as EntitySnapshot;
   pool.place(e, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
-  expect(page.geometry).toBe(geometry); expect(page.material).toBe(frozen);
+  expect(page.geometry).toBe(geometry); expect(page.material).toBe(frozen); expect(page.visible).toBe(true);
   expect(pool.snapshot()).toMatchObject({ instances: 1, draws: 1 });
   pool.begin(id => id === 7 ? e : undefined);
   expect(pool.snapshot().instances).toBe(1);
+  pool.begin(() => undefined); expect(page.visible).toBe(false);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 
