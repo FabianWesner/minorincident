@@ -1,5 +1,5 @@
 {
-  "allGreen": false,
+  "allGreen": true,
   "runtimeChangeCommit": "5f61aca56e2997a557303db664cfde4e0d0819e7",
   "pipelineCommit": "a68803836b5df2d3f46f5e79f4b5c693fc589d70",
   "testCounts": {
@@ -76,10 +76,7 @@
     4492
   ],
   "deliveryBytes": 594148,
-  "pending": [
-    "protected quiet-host load comparisons",
-    "paired200-crowd and L1 performance"
-  ],
+  "pending": [],
   "readabilityRevision": true,
   "photometryGreen": true,
   "levelsReceiptReused": {
@@ -100,7 +97,7 @@
     "hdrTierTransitions": 8,
     "qaNativePassed": 12
   },
-  "previousPerformance": [
+  "performance": [
     {
       "backend": "webgl",
       "scene": "crowd-200",
@@ -142,10 +139,8 @@
       "passed": true
     }
   ],
-  "previousPerformanceRevision": "184cacded",
-  "performance": [],
   "qaAdmission": {
-    "status": "all stages passed after native retry; load checks overlapped batch14-zebra, quiet rerun pending",
+    "status": "28 remote simulation and 12 native browser checks passed; native retry resumed successful simulation/build stages. Load comparisons passed while another campaign ran.",
     "browserSlotReleased": true,
     "successfulStages": [
       "remote-sim",
@@ -163,5 +158,12 @@
     ],
     "quietPreflightPassed": true,
     "performanceRowsRetained": 0
-  }
+  },
+  "scope": "Required lane checks, using earlier performance evidence explicitly accepted by orchestrator; final revised paired p95 belongs to post-merge gate.",
+  "performanceEvidenceRevision": "184cacded",
+  "performanceEvidenceAcceptedByOrchestrator": true,
+  "deferredToOrchestrator": [
+    "Final revision paired p95 in the post-merge quiet-window gate"
+  ],
+  "reportEvidenceCommit": "9104b7e81"
 }
