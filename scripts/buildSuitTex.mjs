@@ -73,7 +73,7 @@ for (let i = 0; i < indices.length; i += 3) {
 // Replace the source scene with named, pivoted game joints.
 for (const child of [...scene.listChildren()]) scene.removeChild(child);
 for (const node of [...root.listNodes()]) if (node.getMesh()) node.setMesh(null);
-const joints = { root: sourceRoot.setName('root').setTranslation([0, 0, 0]) };
+const joints = { root: sourceRoot.setName('root').setTranslation([0, 0, 0]).setExtras({ meshSoles: true, crowdAtlas: true }) };
 scene.addChild(joints.root);
 for (const name of Object.keys(world)) {
   if (name === 'root') continue;

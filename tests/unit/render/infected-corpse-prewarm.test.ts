@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -19,12 +20,12 @@ for (const scenario of ['blast-stress', 'L4', 'L7']) for (const low of [false, t
     const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation(async (id, lod) => {
       const asset = (manifest as AssetDef[]).find(asset => asset.id === id)!;
       const bytes = readFileSync(lod === 'lod0' ? asset.glb! : asset.lods![lod === 'lod2' ? 'lod2' : 'lod1']!);
-      const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+      const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
       return gltf.scene;
     });
     const corpseLoad = vi.spyOn(AssetRegistry.prototype, 'loadCorpse').mockImplementation(async id => {
       const bytes = readFileSync((manifest as AssetDef[]).find(asset => asset.id === id)!.corpseGlb!);
-      return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+      return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
     });
     const prepare = vi.spyOn(StaticCorpses.prototype, 'prepare').mockImplementation(() => {});
     const batches = crowd as unknown as {

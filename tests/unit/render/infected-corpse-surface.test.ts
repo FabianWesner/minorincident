@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { Box3, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -13,7 +14,7 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 
 async function model(path: string) {
   const bytes = readFileSync(path);
-  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
 }
 for (const low of [true, false]) for (const asset of regularInfectedModels) {
   test(`PO #85 @E32 @E07 ${asset} ${low ? 'low' : 'high'} chooses a closed corpse mesh instead of the living LOD`, async () => {

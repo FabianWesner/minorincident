@@ -6,6 +6,7 @@ import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 import { compactCrowdGeometry } from './compactCrowdGeometry';
+import { authoredSoles } from './footSoles';
 type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
 // Keep sampled animation and small bind transforms across loads. The source
 // registry already owns the geometry; cached expanded triangle soup otherwise
@@ -42,6 +43,7 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
   return step.value;
 }
 function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
+  preserveUV ||= root.getObjectByName('root')?.userData.crowdAtlas === true;
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -84,7 +86,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
     // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
     const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
-    const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
+    const sourceSoles = authoredSoles(root);
+    const lowestSole = () => Math.min(...feet.flatMap((foot, side) => sourceSoles ? sourceSoles[side].map(point => sole.copy(point).applyMatrix4(foot.matrixWorld).y) : [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
     const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
     // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
     // hoof bounds together instead of moving a whole upper leg away from its shoulder.
@@ -186,7 +189,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
-    const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
+    const clothing = material.name === 'pal_infectedShirt' || preserveUV && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
     const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
@@ -195,7 +198,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       colors[i * 3 + 2] = base[2] * (material.vertexColors && sourceColor ? sourceColor.getZ(i) : 1);
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
-      emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
+      const eyeRegion = preserveUV && owner === rig.head && geometry.getAttribute('position').getY(i) > .14 && geometry.getAttribute('position').getY(i) < .36 && geometry.getAttribute('position').getX(i) > .05;
+      emissive[i] = Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
     if (!preserveUV) geometry.deleteAttribute('uv');
@@ -223,6 +227,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
+  if (preserveUV) geometry.userData.crowdAtlas = true;
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
   if (key) {
     bakedCrowds.set(key, { clip, transforms });

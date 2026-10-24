@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -9,7 +10,7 @@ import { packCrowdParts } from '../../../src/assets/crowdParts';
 
 test('T-E29-19-corpses @E29-AC19 settled crowd bodies keep positions/colors/rig ownership with fewer triangles', async () => {
   const bytes = readFileSync('public/assets/models/inf.common-worker.lod2.glb');
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const baked = bakeInfected(scene); deinterleaveGeometry(baked.geometry);
   const live = mergeVertices(baked.geometry); baked.geometry.dispose();
   await simplifyCrowdLod(live);

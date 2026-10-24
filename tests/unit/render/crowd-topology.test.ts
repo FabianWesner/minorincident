@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { DoubleSide, Matrix4, Vector3, Mesh } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -10,7 +11,7 @@ test('common-worker crowd triangles keep one rigid owner and bounded posed edges
   const metrics = [];
   for (const lod of ['', '.lod1', '.lod2']) {
     const bytes = readFileSync(`public/assets/models/inf.common-worker${lod}.glb`);
-    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
     // The repaired tiers are authored closed solids. Reapplying the generated
     // delivery collapse would recreate the torn surfaces found in production.
     if (lod) expect(scene.userData.deliveryLodGenerated, lod).not.toBe(true);

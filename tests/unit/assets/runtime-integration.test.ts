@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { Box3, Color, Mesh, MeshBasicNodeMaterial, Vector3 } from 'three/webgpu';
@@ -14,7 +15,7 @@ import { loadCharacter, disposeCharacter } from '../../../src/render/characters/
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 async function load(url: string) {
   const file = readFileSync(`public${url}`);
-  return (await loader.parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '')).scene;
+  return (await loader.parseAsync(stripGlbTextures(file), '')).scene;
 }
 test('chair distance LODs preserve the reviewed solid slats instead of decimating them into spikes', async () => {
   for (const id of ['prop.broken-chair', 'prop.lawn-chair-a', 'prop.lawn-chair-b']) {

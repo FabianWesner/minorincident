@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -9,7 +10,7 @@ import { handTriangles, prepareGrip } from '../../../src/render/npc/civilianGrip
 
 test('@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership', async () => {
   const file = readFileSync('public/assets/models/inf.common-worker.lod2.glb');
-  const model = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '');
+  const model = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(file), '');
   const baked = bakeInfected(model.scene); deinterleaveGeometry(baked.geometry);
   const geometry = mergeVertices(baked.geometry); baked.geometry.dispose();
   const before = geometry.index!.count, attributes = { ...geometry.attributes };
@@ -32,7 +33,7 @@ test('@E18-AC01 @perf far worker reduces geometry while retaining every vertex c
 
 test('T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels', async () => {
   const bytes = readFileSync('public/assets/models/npc.civilian-man-a.lod2.glb');
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const baked = bakeInfected(scene, [], false, civilianClips), handPart = baked.clip.parts.indexOf('handR');
   const authoredTriangles = baked.geometry.getAttribute('position').count / 3;
   prepareGrip(baked.geometry, handPart);
