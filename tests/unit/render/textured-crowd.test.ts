@@ -3,7 +3,6 @@ import { DataTexture, Mesh, MeshBasicMaterial, Matrix4, Color, Float32BufferAttr
 import { MeshLambertNodeMaterial, InstancedMesh } from 'three/webgpu';
 import { AssetRegistry } from '../../../src/assets/registry';
 import type { AssetDef } from '../../../src/assets/types';
-import { texturedCharactersEnabled } from '../../../src/assets/textureVariants';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { packCrowdParts } from '../../../src/assets/crowd';
@@ -13,16 +12,6 @@ import { crowdVertexLayout } from '../../../src/render/characters/CrowdAppearanc
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 
 afterEach(() => vi.unstubAllGlobals());
-test('texture opt-in is off by default; explicit URL overrides the persisted setting', () => {
-  vi.stubGlobal('location', { search: '' });
-  vi.stubGlobal('localStorage', { getItem: () => JSON.stringify({ texturedCharacters: true }) });
-  expect(texturedCharactersEnabled()).toBe(true);
-  vi.stubGlobal('location', { search: '?tex=0' }); expect(texturedCharactersEnabled()).toBe(false);
-  vi.stubGlobal('location', { search: '?tex=1' }); expect(texturedCharactersEnabled()).toBe(true);
-  vi.stubGlobal('localStorage', { getItem: () => '{}' });
-  vi.stubGlobal('location', { search: '' }); expect(texturedCharactersEnabled()).toBe(false);
-});
-
 test('atlas materials are shared by map; the owning registry releases the map once', async () => {
   const atlas = new DataTexture(new Uint8Array(16), 2, 2); atlas.generateMipmaps = true;
   const dispose = vi.spyOn(atlas, 'dispose');

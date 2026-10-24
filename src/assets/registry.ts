@@ -8,7 +8,6 @@ import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types'
 import { placeholder } from './placeholders';
 import type { Materials } from '../render/Materials';
 import { AssetMaterials } from './materials';
-import { textureVariant } from './textureVariants';
 import { loadGltf } from './loadGate';
 import { applyVehicleDecay, vehicleDecayFallback } from './vehicleDecay';
 
@@ -45,7 +44,7 @@ export class AssetRegistry {
       return parsed.scene;
     });
   }
-  definition(id: string): AssetDef { const def = this.definitions.get(textureVariant(id, this.definitions)); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
+  definition(id: string): AssetDef { const def = this.definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
   /** Permanent bodies have an independent mesh budget and retain the original rig. */
   async loadCorpse(id: string, decay?: string): Promise<Object3D> {
     const def = this.definition(id);

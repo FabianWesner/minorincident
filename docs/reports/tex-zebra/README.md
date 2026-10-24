@@ -1,3 +1,3 @@
 # Textured zebra
-Integration is in progress on `lane/tex-zebra`; the opt-in is `?tex=1` or Detailed characters in Settings.
-The production default remains the existing zebra; visual and performance acceptance are pending.
+The existing `amb.zebra` and `inf.zebra` IDs now use the TRELLIS exports directly; no selection switch.
+Visual and performance acceptance are in progress.

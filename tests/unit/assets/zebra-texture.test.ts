@@ -12,11 +12,11 @@ import { packCrowdParts } from '../../../src/assets/crowd';
 import { interleaveTexturedCrowd } from '../../../src/render/characters/crowdTexture';
 import { crowdVertexLayout } from '../../../src/render/characters/CrowdAppearance';
 
-const defs = ['amb.zebra-tex', 'inf.zebra-tex'].map(id => manifest.find(a => a.id === id)! as AssetDef);
+const defs = ['amb.zebra', 'inf.zebra'].map(id => manifest.find(a => a.id === id)! as AssetDef);
 for (const [lod, budget] of [6000, 2000, 700].entries()) test(`textured zebra LOD${lod}: delivered budgets, UVs, exact old rig/actions and grounded production atlas @E07-AC01 @E07-AC19 @E18-AC01`, async () => {
   const io = await assetIO(), hashes: string[] = [];
   for (const def of defs) {
-    const base = await io.read(`assets/${def.id.replace('-tex', '')}/model.glb`);
+    const base = await io.read('tests/fixtures/zebra-production-rig.glb');
     const source = await io.read(`assets/${def.id}/model${lod ? `.lod${lod}` : ''}.glb`);
     for (const name of def.requiredNodes) {
       const old = base.getRoot().listNodes().find(n => n.getName() === name)!;
@@ -29,10 +29,7 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) test(`textured zebra LO
       const path = `public/assets/models/${def.id}${lod ? `.lod${lod}` : ''}${size === 512 ? '.low' : ''}.glb`;
       const document = await io.read(path), validation = validateDocument(document, def, statSync(path).size, lod, source);
       expect(validation.errors).toEqual([]); expect(validation.triangles).toBeLessThanOrEqual(budget);
-      const oldPath = lod ? `public/assets/models/${def.id.replace('-tex', '')}.lod${lod}.glb` : `public/assets/models/${def.id.replace('-tex', '')}.glb`;
-      const old = await io.read(oldPath);
-      const draws = old.getRoot().listNodes().reduce((n, node) => n + (node.getMesh()?.listPrimitives().length ?? 0), 0);
-      expect(validation.drawCalls).toBeLessThanOrEqual(draws);
+      expect(validation.drawCalls).toBeLessThanOrEqual(35); // Frozen production rig has 35 owner/material draws at every tier.
       expect(document.getRoot().listTextures().map(t => t.getSize())).toEqual([[size, size]]);
       for (const mesh of document.getRoot().listMeshes()) for (const p of mesh.listPrimitives()) {
         if (p.getMaterial()?.getBaseColorTexture()) expect(p.getAttribute('TEXCOORD_0')?.getCount()).toBe(p.getAttribute('POSITION')!.getCount());
@@ -56,7 +53,7 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) test(`textured zebra LO
       const joint = gltf.scene.getObjectByName(name)!, result: { part: number; point: Vector3 }[] = [];
       joint.traverse(n => { if (n instanceof Mesh) { const p = n.geometry.getAttribute('position'); for (let i = 0; i < p.count; i++) result.push({ part: baked.clip.parts.indexOf(name), point: joint.worldToLocal(new Vector3().fromBufferAttribute(p, i).applyMatrix4(n.matrixWorld)) }); } }); return result;
     });
-    for (const clip of ['walk', 'run', 'dog-gallop', 'zebra-stampede'] as const) for (let f = 0; f < framesPerClip; f++) {
+    for (const clip of ['walk', 'run', 'shamble', 'infected-frail', 'infected-lurch', 'infected-sprint', 'dog-gallop', 'zebra-stampede'] as const) for (let f = 0; f < framesPerClip; f++) {
       const offset = (infectedClips.indexOf(clip) * framesPerClip + f) * width;
       expect(Math.min(...paws.map(p => point.copy(p.point).applyMatrix4(matrix.fromArray(baked.clip.matrices, offset + p.part * 16)).y)), `${clip} ${f} grounded hooves`).toBeGreaterThanOrEqual(-.001);
     }
