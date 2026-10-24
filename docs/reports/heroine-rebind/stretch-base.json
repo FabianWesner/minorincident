@@ -1,0 +1,394 @@
+{
+  "source": "public/assets/models/char.courier-female.skin.glb",
+  "triangles": 44620,
+  "maxStretch": 32.39,
+  "flaggedOver4": 2770,
+  "clips": [
+    {
+      "clip": "idle",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.26,
+      "worstTime": 0.522,
+      "worstBones": [
+        "hip",
+        "legL",
+        "torso"
+      ]
+    },
+    {
+      "clip": "walk",
+      "samples": 25,
+      "over2": 50,
+      "over4": 0,
+      "worst": 2.76,
+      "worstTime": 0.692,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "run",
+      "samples": 25,
+      "over2": 192,
+      "over4": 0,
+      "worst": 2.63,
+      "worstTime": 0.174,
+      "worstBones": [
+        "kneeR",
+        "shinR"
+      ]
+    },
+    {
+      "clip": "carry",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.86,
+      "worstTime": 1.583,
+      "worstBones": [
+        "shinL",
+        "kneeL"
+      ]
+    },
+    {
+      "clip": "hurt",
+      "samples": 25,
+      "over2": 4,
+      "over4": 0,
+      "worst": 2.07,
+      "worstTime": 0,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    },
+    {
+      "clip": "ride",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.38,
+      "worstTime": 1.436,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    },
+    {
+      "clip": "mount",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.26,
+      "worstTime": 0.522,
+      "worstBones": [
+        "hip",
+        "legL",
+        "torso"
+      ]
+    },
+    {
+      "clip": "dismount",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.26,
+      "worstTime": 0.522,
+      "worstBones": [
+        "hip",
+        "legL",
+        "torso"
+      ]
+    },
+    {
+      "clip": "unarmed-jab",
+      "samples": 25,
+      "over2": 504,
+      "over4": 20,
+      "worst": 7.2,
+      "worstTime": 0.226,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "unarmed-cross",
+      "samples": 25,
+      "over2": 490,
+      "over4": 13,
+      "worst": 4.28,
+      "worstTime": 0.365,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    },
+    {
+      "clip": "unarmed-front-kick",
+      "samples": 25,
+      "over2": 894,
+      "over4": 243,
+      "worst": 10.07,
+      "worstTime": 0.254,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "unarmed-roundhouse-kick",
+      "samples": 25,
+      "over2": 1148,
+      "over4": 281,
+      "worst": 10.71,
+      "worstTime": 0.254,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "kick",
+      "samples": 25,
+      "over2": 146,
+      "over4": 7,
+      "worst": 6.87,
+      "worstTime": 0.167,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "spin-kick",
+      "samples": 25,
+      "over2": 482,
+      "over4": 33,
+      "worst": 8.38,
+      "worstTime": 0.167,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "bat-1",
+      "samples": 25,
+      "over2": 2034,
+      "over4": 471,
+      "worst": 27.33,
+      "worstTime": 0.311,
+      "worstBones": [
+        "chest",
+        "armL"
+      ]
+    },
+    {
+      "clip": "bat-2",
+      "samples": 25,
+      "over2": 2251,
+      "over4": 914,
+      "worst": 26.5,
+      "worstTime": 0,
+      "worstBones": [
+        "chest",
+        "armL"
+      ]
+    },
+    {
+      "clip": "bat-3",
+      "samples": 25,
+      "over2": 1050,
+      "over4": 341,
+      "worst": 32.39,
+      "worstTime": 0.139,
+      "worstBones": [
+        "chest",
+        "armL"
+      ]
+    },
+    {
+      "clip": "crowbar-1",
+      "samples": 25,
+      "over2": 441,
+      "over4": 0,
+      "worst": 2.81,
+      "worstTime": 0.381,
+      "worstBones": [
+        "torso",
+        "hip"
+      ]
+    },
+    {
+      "clip": "machete-1",
+      "samples": 25,
+      "over2": 440,
+      "over4": 0,
+      "worst": 2.81,
+      "worstTime": 0.381,
+      "worstBones": [
+        "torso",
+        "hip"
+      ]
+    },
+    {
+      "clip": "machete-2",
+      "samples": 25,
+      "over2": 528,
+      "over4": 0,
+      "worst": 3.08,
+      "worstTime": 0.381,
+      "worstBones": [
+        "torso",
+        "hip"
+      ]
+    },
+    {
+      "clip": "machete-3",
+      "samples": 25,
+      "over2": 424,
+      "over4": 0,
+      "worst": 2.81,
+      "worstTime": 0.381,
+      "worstBones": [
+        "torso",
+        "hip"
+      ]
+    },
+    {
+      "clip": "swing",
+      "samples": 25,
+      "over2": 237,
+      "over4": 0,
+      "worst": 2.67,
+      "worstTime": 0.258,
+      "worstBones": [
+        "torso",
+        "hip"
+      ]
+    },
+    {
+      "clip": "windup",
+      "samples": 25,
+      "over2": 51,
+      "over4": 0,
+      "worst": 3.65,
+      "worstTime": 0.495,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    },
+    {
+      "clip": "shoot",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.59,
+      "worstTime": 0.054,
+      "worstBones": [
+        "chest",
+        "armR",
+        "spine"
+      ]
+    },
+    {
+      "clip": "throw",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.63,
+      "worstTime": 0.154,
+      "worstBones": [
+        "chest",
+        "armR",
+        "spine"
+      ]
+    },
+    {
+      "clip": "interact",
+      "samples": 25,
+      "over2": 735,
+      "over4": 181,
+      "worst": 8.17,
+      "worstTime": 0.192,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "hand-over",
+      "samples": 25,
+      "over2": 582,
+      "over4": 137,
+      "worst": 8.83,
+      "worstTime": 0.466,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "equip",
+      "samples": 25,
+      "over2": 45,
+      "over4": 0,
+      "worst": 2.42,
+      "worstTime": 0.344,
+      "worstBones": [
+        "handR",
+        "foreArmTwistR"
+      ]
+    },
+    {
+      "clip": "rack-grab",
+      "samples": 25,
+      "over2": 375,
+      "over4": 129,
+      "worst": 11.76,
+      "worstTime": 1.344,
+      "worstBones": [
+        "armL",
+        "chest",
+        "spine"
+      ]
+    },
+    {
+      "clip": "stagger-left",
+      "samples": 25,
+      "over2": 115,
+      "over4": 0,
+      "worst": 3.93,
+      "worstTime": 0.108,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    },
+    {
+      "clip": "stagger-right",
+      "samples": 25,
+      "over2": 234,
+      "over4": 0,
+      "worst": 3.93,
+      "worstTime": 0.108,
+      "worstBones": [
+        "armL",
+        "chest"
+      ]
+    }
+  ]
+}

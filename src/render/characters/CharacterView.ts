@@ -73,6 +73,8 @@ export class CharacterView extends Group {
   private readonly appliedRotation = new Quaternion();
   cpuMs = 0;
   get skinActive(): boolean { return this.riders.has(this.variant); }
+  /** Rest-pose ankle height above the sole (rig units) of the drawn skinned courier: the ground contacts' own sole. */
+  get restSole(): number | undefined { return this.riders.get(this.variant)?.soleHeight; }
   /** Held gear remains stowed until the hands have released the bicycle. */
   get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
   private prepareVariant?: (variant: SurvivorVariant) => Promise<void>;
@@ -84,6 +86,9 @@ export class CharacterView extends Group {
     if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
     await this.variantLoads.get(variant); return true;
   }
+  /** Variants whose skinned body is a textured 3D-pipeline body (the female courier since 10-24). */
+  readonly textured = new Set<SurvivorVariant>();
+  private readonly textureReleases: (() => void)[] = [];
   async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null, lamp = false): Promise<void> {
     this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant, lamp);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
@@ -119,7 +124,19 @@ export class CharacterView extends Group {
         if (!(object instanceof Mesh)) return;
         const remap = (source: Material): Material => {
           if (source === vertexMaterial) return source;
-          if (source.name === 'pal_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
+          if (source.name === 'pal_vertexColor' || source.name === 'tex_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
+          const map = (source as import('three').MeshStandardMaterial).map as import('three/webgpu').Texture | null;
+          if (source.name === 'tex_baseColor' && map) {
+            let textured = replacements.get(source);
+            if (textured) return textured;
+            textured = materials.fromTexture(`character:${variant}:tex`, map);
+            textured.userData.sharedPalette = true;
+            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1;
+            if (bloodFeedback) this.bloodMaterials.push(textured as PaletteMaterial);
+            this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
+            this.textured.add(variant);
+            oldMaterials.add(source); replacements.set(source, textured); return textured;
+          }
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
@@ -141,6 +158,7 @@ export class CharacterView extends Group {
       // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
       let tierGear: LoadedCharacter['tierGear'];
+      // Tier gear is ray-fitted to each body's own surface (assets/acc.courier-gear/build.py), the textured female included.
       if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
       const pilot = isSkin;
       if (pilot) {
@@ -178,8 +196,13 @@ export class CharacterView extends Group {
         headlamp = (await loader.loadAsync(`/assets/models/acc.headlamp${low ? '.lod1' : ''}.glb`)).scene;
         headlamp.name = 'courier-headlamp'; headlamp.visible = false;
         // The couriers' authored caps sit above the head pivot (different heights).
-        headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
-        headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1); headlamp.userData.worn = headlamp.scale.clone();
+        // The textured heroine has no cap and a smaller head: the lamp sits on her hair, sized to her skull.
+        if (this.textured.has(variant)) { headlamp.position.set(.04, .14, 0); headlamp.scale.set(.95, .85, .9); }
+        else {
+          headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
+          headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1);
+        }
+        headlamp.userData.worn = headlamp.scale.clone();
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
@@ -465,5 +488,5 @@ export class CharacterView extends Group {
     return { visible: this.visible, cureVisible: character?.cure?.visible ?? false, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, gearMeshes: character?.gear.filter(g => g.visible).map(g => g.name) ?? [], position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); for (const release of this.textureReleases.splice(0)) release(); this.textured.clear(); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

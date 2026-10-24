@@ -173,7 +173,7 @@ test('skin pilot kick lunge recovers without accumulating mixer offsets @E04', a
 test.each(['female', 'male'] as const)('skin rollout %s hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04', async variant => {
   const loader = vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => ({ scene: await model(`public${path}`) }) as never);
   const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 }, heroFigure: { value: 0 } });
-  const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
+  const materials = { fromVertexColors: material, fromColor: material, fromTexture: material, releaseTexture: () => undefined, get: material, unique: material } as unknown as Materials;
   const character = new CharacterView();
   try {
     await character.init(materials, false, false, 'courier', true);
@@ -246,7 +246,7 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
 test.each(['female', 'male'] as const)('courier %s mount and dismount preserve the last presented position across the sim seat/exit snap @E04', async variant => {
   const loader = vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => ({ scene: await model(`public${path}`) }) as never);
   const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 }, heroFigure: { value: 0 } });
-  const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
+  const materials = { fromVertexColors: material, fromColor: material, fromTexture: material, releaseTexture: () => undefined, get: material, unique: material } as unknown as Materials;
   const character = new CharacterView(), state = pose(); state.variant = variant;
   try {
     await character.init(materials, false, false, 'courier', true);

@@ -48,12 +48,15 @@ class Body:
         for o in list(bpy.data.objects):
             if o not in (self.rig, self.obj): bpy.data.objects.remove(o, do_unlink=True)
         me = self.obj.data
+        # Textured TRELLIS body (female courier since 10-24): loose shirt and inner shells, so shells are cast outside-in.
+        self.textured = any(m and m.name == 'tex_baseColor' for m in me.materials)
         self.bones = {b.name: (b.head_local.copy(), b.tail_local.copy()) for b in self.rig.data.bones}
         self.bvh = BVHTree.FromObject(self.obj, bpy.context.evaluated_depsgraph_get())
         # the same without the rigid backpack so back/torso rays reach the clothes
         bm = bmesh.new(); bm.from_mesh(me)
         deform = bm.verts.layers.deform.verify(); pack = self.obj.vertex_groups['backpackSocket'].index
-        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v[deform].get(pack, 0) > .5 and v.co.x < -.08], context='VERTS')
+        # The textured female bag (10-24) bends with the back and carries at most a 35 % socket share: any share behind the back is pack.
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v[deform].get(pack, 0) > (.02 if 'tex_baseColor' in [m.name for m in me.materials if m] else .5) and v.co.x < -.08], context='VERTS')
         self.bvh_nopack = BVHTree.FromBMesh(bm)
         self.nopack_teal = [False] * len(bm.faces)
         bm.free()
@@ -270,12 +273,14 @@ def build_gear(body, lod, sex):
     for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
         g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: -.12 + s * .86, 0, 0, closed=True),
-                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki',
+                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=.06 if body.textured else None,
                 remap=only({'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))
     g.tier_mark()
 
     # ---- tier 2: quilted padded vest (olive, collar, ridges, armholes) ------------------------------------------------
     z0 = bones['torso'][0].z + .012; z1 = bones['chest'][0].z + .02
+    # The heroine's high-waisted shorts reach the spine joint: her vest starts there instead of draping over them.
+    if body.textured: z0 = bones['spine'][0].z + .005
     torso = lambda v: (Vector((0, 0, v)), zup)
     cols = n(16, 6); rows = n(6, 2)
     def vest_thick(s, t):
@@ -289,7 +294,7 @@ def build_gear(body, lod, sex):
         if j == 0: return 'brass'                    # zip
         return 'olive' if i % 2 else 'oliveSeam'
     g.patch('olive', around(torso, lambda s: z1 - (z1 - z0) * s, -180 / cols, 0, closed=True), vest_thick, rows, cols, closed=True,
-            bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4,
+            bvh=body.bvh_nopack, cell_color=vest_color, median=True, shade=.4, outer=.35 if body.textured else None,
             drop=lambda i, j, R, C: i < R * .85 and min(abs(360 * j / C - 90), abs(360 * j / C - 270)) <= 42)   # armholes
     g.tier_mark()
 
@@ -310,13 +315,17 @@ def build_gear(body, lod, sex):
 
     # ---- tier 4: survivor goggles on the cap (dark strap above the brim, two teal lenses with silver rims), forearm guards ---------
     head = bones['head']; hc = Vector((0.0, 0, head[1].z - .03))
+    # The heroine has no cap: her goggles sit pushed up on the forehead, centred just above the eyes (the courier head's
+    # tail is the chibi cap height and floated the band above her hair).
+    band, tabs, lens = ((31, 39), (29, 41), (48, 78)) if not body.textured else ((16, 24), (14, 26), (22, 46))
+    if body.textured: hc = Vector((bones['head'][0].x, 0, bones['eyeL'][0].z + .025))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
-    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, 31, 39), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
+    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
             rim=None, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-158, 158) if lod < 2 else ():   # brass end tabs close the strap visually where it tucks behind the ponytail
-        g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, 29, 41, az0), pad(.022, .6), 2, 2, outer=.6, remap=only({'head', 'neck'}, 'head'))
+        g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, *tabs, az0), pad(.022, .6), 2, 2, outer=.6, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-22, 22) if lod < 2 else ():
-        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, 48, 78, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver', rim_cells=False,
+        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, *lens, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver', rim_cells=False,
                 remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
