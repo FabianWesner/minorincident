@@ -39,7 +39,7 @@ try {
           return !e.pendingAdmission && Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
         });
         return { layout: a.debug.corpseLayout(), backend: a.perf().backend, tier: a.perf().quality.tier, player, live: live.length, drawnLiving: visible.filter(e => drawn.has(e.id)).length,
-          missingLiving: visible.filter(e => !drawn.has(e.id)).map(e => e.id), corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length };
+          missingLiving: visible.filter(e => !drawn.has(e.id)).map(e => e.id), allDeadBodies14: all.filter(e => e.health.current <= 0 && (e.infected || e.civilian || e.corpse) && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length, corpses14: all.filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 14).length };
       });
       const file = `${seconds}s-z${zoom}.png`;
       await page.screenshot({ path: `${out}/${file}` });
@@ -49,7 +49,7 @@ try {
   }
   const receipt = { settings: { seed: 3, backend: 'webgpu', quality: 'low', viewport: [1280, 720], dpr: 1, zoom: [1, 1.5] }, bundles: await page.evaluate(() => [...document.scripts].map(s => s.src).filter(Boolean)), samples, errors };
   writeFileSync(`${out}/receipt.json`, JSON.stringify(receipt, null, 2));
-  if (errors.length || samples.some(s => s.seconds === 150 && s.corpses14 > 150)) throw new Error('Q-166 capture count or browser errors failed');
+  if (errors.length || samples.some(s => s.seconds === 150 && s.allDeadBodies14 > 150)) throw new Error('Q-166 capture count or browser errors failed');
 } finally {
   await browser.close();
   await new Promise<void>((resolve, reject) => server.httpServer.close(error => error ? reject(error) : resolve()));

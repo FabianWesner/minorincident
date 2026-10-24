@@ -205,6 +205,8 @@ export interface L4State {
   gateIds: number[]; barkAt: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
   pendingDoor: { id: number; door: string; reserved?: boolean; home: { x: number; z: number } }[]; pockets: number[];
+  /** Successful admissions per pocket; retained across retries and checkpoints. */
+  pocketSpawned?: Record<number, number>;
   /** Spectacle: tank (route progress, next shot, shots fired), helicopter, HMG bursts, fuel truck and the live damage. */
   tankId: number; tankS: number; tankFireAt: number; tankShots: number; tankPhase: 'off' | 'enter' | 'hold' | 'silent' | 'gone';
   /** The collapse director (l4-collapse): the three lines, their soldiers and break ticks, the Alpha jobs and the counters the report reads. */
