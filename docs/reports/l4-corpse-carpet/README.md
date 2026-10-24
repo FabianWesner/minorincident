@@ -50,8 +50,8 @@ The hold census uses the complete route with God mode; the independent real-inpu
 
 - `npm run typecheck` and `npm run lint`: passed.
 - Smoke: 6 simulation checks and 31 browser checks passed, using one browser worker. [Receipt](smoke.json).
-- L4 low / zoom 1.5 real-input bot, `--no-skip`: finished, **0 deaths**, no skipped objectives, **0 issues**, 255 s wall time. It used 1 navigation assists through physical controls. [Receipt](bot.json).
+- L4 low / zoom 1.5 real-input bot, `--no-skip`: finished, **0 deaths**, no skipped objectives, **0 issues**, 255 s wall time. It used 1 navigation assist through physical controls. [Receipt](bot.json).
 - Fresh PO WebGPU captures at zoom 1 and 1.5: passed, 144 total bodies (143 infected) within 14 m at 150 s, no missing living figures, no sunk pairs, no repeated intersecting poses/yaw, offset ≤1 m and courier clearance true.
 - Final invariants: **28 Linux simulation checks + 12 Mac WebGPU browser checks passed**. The same-revision successful simulation receipt is resumed with source-cleanliness checks; the build requests one slot after this worktree's other browser readers have closed. Every browser assertion remains active. [Run receipt](invariants.json), [simulation cases](invariants-sim.json).
-- Focused high collapse case: **Linux pass, 7 survivors from 20**, 90 s after fallback, unchanged `<10` / less than half assertions. Seven first-line soldiers physically reach fallback. [Receipt](collapse-linux.json). The full remote unit + levels receipt is pending.
+- L4 collapse suite: **all 5 Linux cases passed**. The high-tier audit records **7 survivors from 20**, 90 s after fallback, unchanged `<10` / less than half assertions. Seven first-line soldiers physically reach fallback. [Receipt](collapse-linux.json). The full remote unit + levels receipt is pending.
 - Native timing is deferred to the orchestrator as described above.
