@@ -1,0 +1,46 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/weapon-carryover
+
+ ❯ |functional| tests/unit/progression/selected-weapon.test.ts (27 tests | 2 failed | 25 skipped) 89ms
+   × @E13 Q-158 Continue into L9 cannot capture the outgoing resume payload during settings saves 86ms
+   × @E13 Q-158 Continue into L10 cannot capture the outgoing resume payload during settings saves 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/progression/selected-weapon.test.ts > @E13 Q-158 Continue into L9 cannot capture the outgoing resume payload during settings saves
+Error: Captured outgoing resume payload
+ ❯ Object.<anonymous> tests/unit/progression/selected-weapon.test.ts:128:40
+    126|   const save = debugCampaign(level, null), g = game(save);
+    127|   g.applyCampaign(); world.scenario = `L${level}`;
+    128|   const outgoing = vi.fn(() => { throw new Error('Captured outgoing re…
+       |                                        ^
+    129|   world.missions = { state: { phase: 'playing', checkpoint: 'cure-cras…
+    130|   g.audio.set.mockImplementation(() => { g.saveCampaign(); });
+ ❯ Game.saveCampaign src/Game.ts:370:148
+ ❯ Object.<anonymous> tests/unit/progression/selected-weapon.test.ts:130:44
+ ❯ Game.continueCampaign src/Game.ts:353:45
+ ❯ tests/unit/progression/selected-weapon.test.ts:132:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/unit/progression/selected-weapon.test.ts > @E13 Q-158 Continue into L10 cannot capture the outgoing resume payload during settings saves
+Error: Captured outgoing resume payload
+ ❯ Object.<anonymous> tests/unit/progression/selected-weapon.test.ts:128:40
+    126|   const save = debugCampaign(level, null), g = game(save);
+    127|   g.applyCampaign(); world.scenario = `L${level}`;
+    128|   const outgoing = vi.fn(() => { throw new Error('Captured outgoing re…
+       |                                        ^
+    129|   world.missions = { state: { phase: 'playing', checkpoint: 'cure-cras…
+    130|   g.audio.set.mockImplementation(() => { g.saveCampaign(); });
+ ❯ Game.saveCampaign src/Game.ts:374:59
+ ❯ Object.<anonymous> tests/unit/progression/selected-weapon.test.ts:130:44
+ ❯ Game.continueCampaign src/Game.ts:353:45
+ ❯ tests/unit/progression/selected-weapon.test.ts:132:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 25 skipped (27)
+   Start at  23:19:08
+   Duration  2.25s (transform 78%, import 18%, tests 4%)

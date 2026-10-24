@@ -1,0 +1,26 @@
+
+ RUN  v5.0.3 /private/tmp/weapon-carryover-red
+
+ ❯ |functional| tests/levels/L4.test.ts (23 tests | 1 failed | 22 skipped) 88872ms
+   ❯ L4 The Safe City Falls (23)
+     × T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths 88871ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths
+AssertionError: expected 4 to be less than or equal to 2
+ ❯ tests/levels/L4.test.ts:386:58
+    384|     const r = runL4(l.world, l.mission, 'newbie', { seed: 4, maxSecond…
+    385|     record('bot-newbie', r);
+    386|     expect(r.outcome).toBe('complete'); expect(r.deaths).toBeLessThanO…
+       |                                                          ^
+    387|   }, HEAVY);
+    388|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 22 skipped (23)
+   Start at  22:43:35
+   Duration  90.34s (tests 98%, transform 1%)

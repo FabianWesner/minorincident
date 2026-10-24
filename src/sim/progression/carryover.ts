@@ -3,6 +3,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
 import { commitCrossingHandover } from './crossingHandover';
 import { autoRewards, carriedRackMax, lastLevel, type CampaignSave, type Level } from './Campaign';
+import { heldAction } from './selection';
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
 export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {
@@ -11,10 +12,11 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   save.results ??= {};
   save.results[`L${level}`] = structuredClone(result);
   if (level === 5) { save.survivors = [...result.survivors ?? []]; save.stationOccupants = structuredClone(result.stationOccupants); save.rescuedSurvivors = structuredClone(result.rescuedSurvivors); }
-  if (level === 9) { commitCrossingHandover(save, world); return; }
-  if (level !== save.completedLevels + 1) return;
   const held = world.entities.get(1)?.weapons;
+  if (held) save.selectedAction = heldAction(held);
+  if (level === 9) { commitCrossingHandover(save, world); return; }
   const holding = held ? { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) } : null;
+  if (level !== save.completedLevels + 1) { if (holding) carry(save, holding, false); return; }
   // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
   if (level >= 6) {
     save.completedLevels = level; save.unlockedLevel = Math.max(save.unlockedLevel, Math.min(lastLevel, level + 1)) as Level;
