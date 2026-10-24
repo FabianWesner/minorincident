@@ -31,7 +31,9 @@ for (const tier of ['high', 'low'] as const) for (const move of ['charge', 'grou
       const game = (lab as unknown as { game: import('../../../src/Game').Game }).game, w = game.world;
       // Pin the radius probes, as in alpha-physical/support.test.ts, so their
       // boundary position is not changed by panic, separation or awareness.
-      w.inspectionGhost = true;
+      // Corpse throws query living humans: inspection ghost excludes the courier.
+      // Keep that target present for the real impact, then freeze the cooldown below.
+      w.inspectionGhost = move !== 'grab-throw';
       for (const actor of lab.actors.values()) {
         const e = w.entities.get(actor.entity)!;
         if (e.civilian) { e.civilian.state = 'annoyed'; e.civilian.until = 100_000; }
@@ -80,7 +82,11 @@ for (const tier of ['high', 'low'] as const) for (const move of ['charge', 'grou
     const entity = (name: string) => resolved.actors.find(a => a.name === name)!.entity!;
     const hit = (name: string) => resolved.events.some(e => e.type === 'combat.hit' && e.attackId === setup.first.attackId && e.targetId === entity(name).id);
     if (move === 'charge' || move === 'ground-slam') { expect(hit('inside')).toBe(true); expect(hit('outside')).toBe(false); }
-    if (move === 'grab-throw') { expect(entity('body').corpse).toBe(true); expect(entity('body').corpseThrown).toBe(true); expect(hit('courier')).toBe(true); }
+    if (move === 'grab-throw') {
+      expect(entity('body').corpse).toBe(true); expect(entity('body').corpseThrown).toBe(true); expect(hit('courier')).toBe(true);
+      expect(entity('courier').health.current).toBe(70);
+      await page.evaluate(() => { const lab = window.__SCENE__!; (lab as unknown as { game: import('../../../src/Game').Game }).game.world.inspectionGhost = true; });
+    }
     if (move === 'roar') {
       const id = entity('regular').id, outside = entity('outside').id;
       expect(resolved.events.some(e => e.type === 'infected.roar-buff' && e.targetId === id && e.stage === 'active')).toBe(true);
