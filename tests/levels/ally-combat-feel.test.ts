@@ -22,7 +22,7 @@ afterEach(() => { world?.dispose(); world = undefined; });
 const HEAVY = 1_800_000;
 
 interface FightMetrics {
-  /** Mean share of fighting allies that moved >= 0.5 m within the trailing 5 s window. */
+  /** Mean share of fighting soldiers/officers that moved >= 0.5 m within the trailing 5 s window. */
   moved5: number;
   /** Mean share of fighting allies standing still (< 0.25 m) for more than 2 s. */
   still2: number;
@@ -35,7 +35,7 @@ interface FightMetrics {
   civilianOutOfPatch: number;
   /** Most unarmed civilians still standing in the registration queue (calm) 3 s or more into the fight. */
   queued: number;
-  fighters: number; samples: number;
+  fighters: number; mobileFighters: number; samples: number;
   /** Mean and worst sim tick (ms) over the fight window: the AI cost of the fighting (E18). */
   tickMs?: number; tickMaxMs?: number;
 }
@@ -45,7 +45,7 @@ const fighting = (e: EntitySnapshot, tick: number) => e.health.current > 0 && !e
 function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => number[]) {
   const lastTarget = new Map<number, { tick: number; id: number }>(), anchor = new Map<number, { x: number; z: number; tick: number }>(), trail = new Map<number, { x: number; z: number; tick: number }[]>();
   let moved = 0, movedN = 0, still = 0, stillN = 0, shots = 0, offscreen = 0, civilianOutOfPatch = 0, queued = 0, samples = 0;
-  const seen = new Set<number>();
+  const seen = new Set<number>(), mobileSeen = new Set<number>();
   // A checkpoint restore (the idle courier can still be dragged down) puts everybody back where they stood at the turn.
   let restoredAt = -1e9;
   const offRestore = w.events.on('checkpoint.restored', e => { restoredAt = e.tick; });
@@ -75,6 +75,11 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
           && tick - recent.tick <= 180 && Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) <= defendM;
         if (!active) { anchor.delete(e.id); trail.delete(e.id); continue; }
         seen.add(e.id);
+        // Armed civilians defend their shelter without hunting. Their range,
+        // on-screen shots and queue departure stay measured above/below;
+        // sustained maneuver is required of the soldiers and officers.
+        if (e.civilian!.ally!.role === 'civilian') { anchor.delete(e.id); trail.delete(e.id); continue; }
+        mobileSeen.add(e.id);
         const a = anchor.get(e.id);
         if (!a || Math.hypot(p.x - a.x, p.z - a.z) >= .25) anchor.set(e.id, p);
         const since = (tick - (anchor.get(e.id)!.tick)) / 60;
@@ -95,12 +100,13 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
         queued = Math.max(queued, n);
       }
     },
-    done(): FightMetrics { off(); offRestore(); return { moved5: movedN ? moved / movedN : 1, still2: stillN ? still / stillN : 0, offscreenShots: offscreen, shots, civilianOutOfPatch, queued, fighters: seen.size, samples }; },
+    done(): FightMetrics { off(); offRestore(); return { moved5: movedN ? moved / movedN : 1, still2: stillN ? still / stillN : 0, offscreenShots: offscreen, shots, civilianOutOfPatch, queued, fighters: seen.size, mobileFighters: mobileSeen.size, samples }; },
   };
 }
 function record(name: string, value: unknown) { mkdirSync('test-results/epics/E22', { recursive: true }); writeFileSync(`test-results/epics/E22/${name}.json`, JSON.stringify(value, null, 1) + '\n'); }
 function feel(m: FightMetrics): void {
   expect(m.fighters).toBeGreaterThanOrEqual(4);
+  expect(m.mobileFighters).toBeGreaterThanOrEqual(4);
   expect(m.moved5).toBeGreaterThanOrEqual(.7);
   // The new breach funnel creates short close-range firing holds; preserve the
   // movement requirement while allowing at most one quarter of samples to be

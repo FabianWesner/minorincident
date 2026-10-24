@@ -162,7 +162,11 @@ describe('L4 PO round 10-13', () => {
     } });
     const byTick = new Map<string, number>();
     for (const id of s.emergedIds) { const e = s.origin[id]; if (e === undefined) continue; const k = `${e}`; byTick.set(k, (byTick.get(k) ?? 0) + 1); }
-    const total = [...byTick.values()].reduce((a, b) => a + b, 0), share = Math.max(...byTick.values()) / total;
+    const total = [...byTick.values()].reduce((a, b) => a + b, 0);
+    // Street waves still spread across many approaches. The interior beat now
+    // deliberately uses three real tent flaps, each with an animated queue.
+    const streetCounts = [...byTick].filter(([origin]) => Number(origin) < l4Emergence.length).map(([, count]) => count);
+    const share = Math.max(...streetCounts) / streetCounts.reduce((a, b) => a + b, 0);
     const inside = s.emergedIds.filter(id => (s.origin[id] ?? -1) >= l4Emergence.length).length;
     const quadrants = new Set([...reachSectors].map(k => Math.floor(k / 2)));
     const out = { total, share, maxGroup, perPoint: Object.fromEntries([...byTick.entries()].map(([k, v]) => [k, v])), inside, reachSectors: [...reachSectors], quadrants: quadrants.size, reached: reached.size, threats: threats.size,
@@ -171,7 +175,8 @@ describe('L4 PO round 10-13', () => {
     // PO 10-14: downed infected keep their slots (they get up) under the 120 cap, so the war counts distinct threats
     // (initial turns + new arrivals + Alphas), not only new arrivals.
     expect(threats.size, '> 100 distinct infected fight in the war').toBeGreaterThan(100);
-    expect(share, 'no emergence point delivers more than 25 %').toBeLessThanOrEqual(.25);
+    expect(share, 'no street emergence point delivers more than 25 % of the street wave population').toBeLessThanOrEqual(.25);
+    expect(streetCounts.length, 'the street flood retains at least twelve distinct source points').toBeGreaterThanOrEqual(12);
     expect(maxGroup, 'groups of 2-5, not a stream').toBeLessThanOrEqual(l4.war.group[1]);
     expect(new Set(Object.keys(out.perPoint)).size).toBeGreaterThanOrEqual(12);
     expect(inside, 'infected also come from inside the camp').toBeGreaterThanOrEqual(1);

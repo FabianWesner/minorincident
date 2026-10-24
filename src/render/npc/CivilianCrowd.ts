@@ -118,6 +118,7 @@ class CivilianBatch extends Group {
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
   constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super();
+    if (world.scenario === 'L4') { this.matrixAutoUpdate = false; this.corpses.matrixAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
     this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
@@ -408,6 +409,7 @@ export class CivilianCrowd extends Group {
   }
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
+    if (world.scenario === 'L4') this.matrixAutoUpdate = false;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
     const models=this.staged ? [] : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     for (const model of models) { this.known.add(model); if (!this.staged) this.farModels.add(model); }

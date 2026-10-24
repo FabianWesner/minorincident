@@ -8,6 +8,7 @@ import { l4 } from '../../src/data/l4';
 
 const out = resolve(process.env.L4_STORYLINE_PERF_OUT ?? 'test-results/l4-storyline/perf');
 const diagnostic = process.env.L4_STORYLINE_PROFILE === '1';
+const sampledCpu = process.env.L4_STORYLINE_CDP_PROFILE === '1';
 const wholeHold = process.env.L4_STORYLINE_WHOLE_HOLD === '1';
 const phone = process.env.L4_STORYLINE_PHONE === '1';
 const candidateOnly = phone || process.env.L4_STORYLINE_CANDIDATE_ONLY === '1';
@@ -31,7 +32,7 @@ try {
     await page.addInitScript('window.__name = value => value');
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
     try {
-      await page.goto(`${sources[side]}/?test=1&renderer=webgpu&quality=low&dpr=${dpr}&audio=muted&seed=3&preload=0${diagnostic ? '&profile=1' : ''}`);
+      await page.goto(`${sources[side]}/?test=1&renderer=webgpu&quality=low&dpr=${dpr}&audio=muted&seed=3&preload=0${diagnostic && !sampledCpu ? '&profile=1' : ''}`);
       await page.waitForFunction(() => !!window.__SS__);
       await page.evaluate(async () => {
         const a = window.__SS__!; await a.ready;
@@ -40,7 +41,7 @@ try {
         a.teleport('player', { x: -22.85, z: .7 });
       });
       const scripts = await page.evaluate(() => [...document.scripts].map(s => s.src).filter(Boolean));
-      if (diagnostic) await page.evaluate(() => window.__SS__!.debug.cpuProfile());
+      if (diagnostic && !sampledCpu) await page.evaluate(() => window.__SS__!.debug.cpuProfile());
       for (const afterTurnS of checkpoints) {
         await page.evaluate(async seconds => {
           const a = window.__SS__!, turnAt = a.missions.state()!.l4!.turnAt;
@@ -50,6 +51,8 @@ try {
           a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady();
         }, afterTurnS);
         if (repeat === 0) await page.screenshot({ path: `${out}/${side}-${afterTurnS}.png` });
+        const cpuSampler = sampledCpu ? await context.newCDPSession(page) : null;
+        if (cpuSampler) { await cpuSampler.send('Profiler.enable'); await cpuSampler.send('Profiler.start'); }
         const result = await page.evaluate(async ({ perimeter, diagnostic, wholeHold }) => {
           const a = window.__SS__!, frames: number[] = [], sim: number[] = [], updates: number[] = [], renders: number[] = [];
           const cpu: Record<string, number[]> = {};
@@ -78,7 +81,12 @@ try {
           a.pause();
           const p95 = (values: number[]) => [...values].sort((x, y) => x - y)[Math.ceil(values.length * .95) - 1];
           return { before, after: census(), elapsedMs: performance.now() - start, holdCensuses, frameP95: Math.round(p95(frames) * 10) / 10, simP95: p95(sim), updateP95: p95(updates), renderP95: p95(renders), cpuP95: Object.fromEntries(Object.entries(cpu).map(([key, values]) => [key, p95(values)])), frames };
-        }, { perimeter: l4.perimeter, diagnostic, wholeHold });
+        }, { perimeter: l4.perimeter, diagnostic: diagnostic && !sampledCpu, wholeHold });
+        if (cpuSampler) {
+          writeFileSync(`${out}/${side}-${repeat}-${afterTurnS}.cpuprofile`, JSON.stringify((await cpuSampler.send('Profiler.stop')).profile));
+          const telemetryMs = await page.evaluate(() => { const a = window.__SS__!, start = performance.now(); for (let i = 0; i < 1000; i++) a.perf(); return (performance.now() - start) / 1000; });
+          console.log(JSON.stringify({ telemetryMs, render: await page.evaluate(() => window.__SS__!.perf()) }));
+        }
         if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || errors.length)
           throw new Error(`Invalid ${side} measurement: ${JSON.stringify({ ...result.before, samples: result.frames.length, errors })}`);
         rows.push({ side, repeat, afterTurnS, scripts, ...result });
