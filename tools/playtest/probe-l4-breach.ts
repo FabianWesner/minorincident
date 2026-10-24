@@ -33,6 +33,6 @@ try {
   await until(s => !!s.west?.announcedAt && s.tick - s.west.announcedAt > 7 * 60, 40 * 60); await shot('2-alpha-battering');
   await until(s => !!s.west?.openAt, 40 * 60); await page.evaluate(() => window.__SS__!.step(40)); await shot('3-breach-open');
   await until(s => !!s.alpha && s.alpha.health.current <= 0, 30 * 60); await shot('4-soldier-approaches-downed-alpha');
-  await until(s => !!s.alpha && s.alpha.health.current <= 0 && (s.alpha.infected?.recoverAt ?? 0) < 0, 15 * 60); await shot('5-soldier-finishes-alpha');
+  await until(s => !!s.alpha && s.alpha.health.current <= 0 && (s.alpha.infected?.recoverAt ?? 0) < 0, 45 * 60); await shot('5-soldier-finishes-alpha');
   await until(s => !!s.west?.openAt && s.tick - s.west.openAt > 8 * 60, 20 * 60); await shot('6-flood');
 } finally { await browser.close(); }

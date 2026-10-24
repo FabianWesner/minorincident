@@ -75,7 +75,7 @@ The breaches open at 46 s (west), 118 s (north) and 119 s (south). The visible c
 
 Six outer street-end / alley mouths now pass a one-metre courier-position sweep, including the camp boundaries, at zooms 0.5–1.5, desktop landscape, phone portrait and phone landscape, with the six-metre camera guard. Each mouth also has a navigation path to the camp streets; merely being walkable was insufficient for sources beyond the district's connected streets. Solid-building occlusion is accepted by the director; vehicles and generic collision walls cannot authorize a visible spawn. Pending groups retain every authored quota and try the nearest eligible mouth. Their finite street approach survives the ordinary ten-second investigation cutoff.
 
-The alarm and recurring interior population walk out of five actual reception tent doors: three freestanding tents and the two tents already in the registration kit. The kit exits follow the central aisle around its tables. Two narrow walking lanes stay behind each real flap before emerging. Armed civilians defend only within eight metres of themselves or their shelter. On a breach, the first line physically retreats east past the courier; its checkpoint stays in the plaza in front of that second line. Street groups press toward the nearest living defender inside the camp or the courier rather than stopping at the gap.
+The alarm and recurring interior population walk out of five actual reception tent doors: three freestanding tents and the two tents already in the registration kit. The kit exits follow the central aisle around its tables. Each flap uses a single-file queue. Its route remains owned through knockdown and recovery; each step and recovery checks body clearance, so the aisle cannot release or stand a resident inside another body. Armed civilians defend only within eight metres of themselves or their shelter. On a breach, the first line physically retreats east past the courier; its checkpoint stays in the plaza in front of that second line. Street groups press toward the nearest living defender inside the camp or the courier rather than stopping at the gap.
 
 Soldiers prioritize breached Alphas without HP, rifle damage or accuracy changes. Per the orchestrator's explicit exception, an L4 soldier within six metres may approach a downed Alpha inside the wall and shoot the body permanently through the normal bullet-damage transaction. The gun points downward at the body. Other levels, outside-wall bodies and player-only knockdowns retain shared recovery. The input driver reads the visible north-up route pin and uses ground-relative WASD at close turns. Wave scale is 2.5 after repeated escape deaths, as required by the difficulty rule.
 
@@ -83,14 +83,16 @@ Seed-3 low census at zoom 1.5, complete bot (`node --import tsx tools/sim-runner
 
 | minute after turn | previous lane inside mean | final inside mean / max | within 12 m mean | hold seconds with contact |
 | --- | ---: | ---: | ---: | ---: |
-| 0 | 2.6 | 4.3 / 11 | 2.5 | 55 / 60 |
-| 1 | 4.0 | 10.5 / 20 | 7.6 | 60 / 60 |
-| 2 | 3.5 | 13.3 / 22 | 1.3 | 38 / 60 |
-| 3 (11 s of hold) | 7.2 | 15.3 / 23 | 0.9 | 6 / 11 |
-| **whole hold** | — | — | — | **159 / 191 s = 83.2%** |
+| 0 | 2.6 | 6.5 / 13 | 3.2 | 60 / 60 |
+| 1 | 4.0 | 10.5 / 13 | 7.2 | 60 / 60 |
+| 2 | 3.5 | 10.1 / 11 | 0.9 | 18 / 60 |
+| 3 (11 s of hold) | 7.2 | 10.0 / 10 | 1.0 | 11 / 11 |
+| **whole hold** | — | — | — | **149 / 191 s = 78.0%** |
 
-The census records zero unanimated in-frame admissions: 153 animated tent walkouts. All five Alphas that entered before Fall back were permanently finished before that call (at 53.6, 121.8, 121.8, 150.0 and 164.3 s after the alarm). The sixth entered afterward. Raw per-second positions, admission origins, Alpha entry/down/finish times and twenty-second pressure samples are in `test-results/l4-storyline/census-low-3-complete.json`.
+The census records zero unanimated in-frame admissions: 53 animated tent walkouts. All five Alphas that entered before Fall back were permanently finished before that call (at 76.9, 116.7, 122.7, 137.6 and 162.1 s after the alarm). The sixth never entered the perimeter during this run. Raw per-second positions, admission origins, Alpha entry/down/finish times and twenty-second pressure samples are in `test-results/l4-storyline/final-census/census-low-3-complete.json`.
 
 Performance work: newly arriving hordes use the existing seven infected model batches, while original people retain their appearance through infection. Wall colour buffers upload only when damage or boundary feedback changes them. A dead person still carrying an infection component no longer keeps a nearby civilian cowering.
 
 Validation in progress: typecheck, lint, the finisher/recovery regression and all six mouth camera/connection checks pass. Exact remote unit/level, wave census, full invariants, real-input no-skip, visual smoke, paired PROD frame timing and final captures are being measured on the unrestricted runner. The earlier sandbox restrictions no longer apply. Do not mark the goal complete until these final gates are green.
+
+The seven legacy checks retain their intent: alarm allocation and alarm wave count measure all door-source quotas; collapse samples casualties at the first physical breach and retains its <10 bound; perimeter checks intact segments and authored openings; T-E22-09 checks staged approaches and wall destruction; ally combat distinguishes shelter posture from a service queue; collision placement checks actual admission and the new fallback posts against solids. The fallback posts are east of the courier and clear of the parked convoy. Seed-1 complete probes on both low and high finish with zero collision violations.
