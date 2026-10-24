@@ -14,6 +14,7 @@ export class Materials {
   readonly wind;
   readonly texture: DataTexture;
   private readonly cache = new Map<string, PaletteMaterial>();
+  private readonly textureReleases = new Map<string, () => void>();
   private readonly nearestCache = new Map<string, number>();
   private readonly swatches = paletteTokens.map(token => new Color(palette[token]));
   private readonly owned: PaletteMaterial[] = [];
@@ -101,6 +102,12 @@ export class Materials {
       material.name = name; material.color.copy(tint); material.side = side;
       material.map = map; material.userData.sharedPalette = true;
       this.cache.set(key, material);
+      const cached = material;
+      const release = () => {
+        map.removeEventListener('dispose', release);
+        this.textureReleases.delete(key); this.cache.delete(key); cached.dispose();
+      };
+      map.addEventListener('dispose', release); this.textureReleases.set(key, release);
     }
     return material;
   }
@@ -147,6 +154,7 @@ export class Materials {
     material.transparent = transparent; this.owned.push(material); return material;
   }
   dispose(): void {
+    for (const release of this.textureReleases.values()) release();
     for (const material of this.cache.values()) material.dispose();
     for (const material of this.owned) material.dispose();
     this.cache.clear(); this.nearestCache.clear(); this.owned.length = 0; this.texture.dispose();

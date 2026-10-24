@@ -1,6 +1,8 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import { DataTexture, Mesh, MeshBasicMaterial, Matrix4, Color, Float32BufferAttribute } from 'three';
+import { DataTexture, Mesh, MeshBasicMaterial, Matrix4, Color, Float32BufferAttribute, Scene, type Material } from 'three';
 import { MeshLambertNodeMaterial, InstancedMesh } from 'three/webgpu';
+import { Materials } from '../../../src/render/Materials';
+import { Lighting } from '../../../src/render/Lighting';
 import { AssetRegistry } from '../../../src/assets/registry';
 import type { AssetDef } from '../../../src/assets/types';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
@@ -12,22 +14,26 @@ import { crowdVertexLayout } from '../../../src/render/characters/CrowdAppearanc
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 
 afterEach(() => vi.unstubAllGlobals());
-test('atlas materials are shared by map; the owning registry releases the map once', async () => {
+test('@E07 atlas materials and the owning registry release a shared map and its cached material once', async () => {
   const atlas = new DataTexture(new Uint8Array(16), 2, 2); atlas.generateMipmaps = true;
   const dispose = vi.spyOn(atlas, 'dispose');
   const root = createInfectedPlaceholder('runner');
   root.traverse(node => { if (node instanceof Mesh) node.material = new MeshBasicMaterial({ map: atlas }); });
   const def = { id: 'inf.test-tex', textureMode: 'baseColor', status: 'integrated', glb: 'public/test.glb', requiredNodes: [], animatedNodes: [], sockets: [], decayVariants: [] } as unknown as AssetDef;
-  const registry = new AssetRegistry(() => {}, { manifest: [def], load: async () => root });
+  const lighting = new Lighting(new Scene()), shading = new Materials(lighting);
+  const registry = new AssetRegistry(() => {}, { manifest: [def], load: async () => root, materials: shading });
   const first = await registry.loadAsset(def.id), second = await registry.loadAsset(def.id);
   expect(crowdTexture(first)).toBe(atlas); expect(crowdTexture(second)).toBe(atlas);
   const materials: unknown[] = []; first.traverse(n => { if (n instanceof Mesh) materials.push(n.material); });
   expect(new Set(materials).size).toBe(1);
   expect(registry.textureMemory()).toEqual({ count: 1, decodedBytes: 20 });
-  await registry.dispose(); expect(dispose).toHaveBeenCalledTimes(1);
+  const material = materials[0] as Material, released = vi.spyOn(material, 'dispose');
+  await registry.dispose(); expect(dispose).toHaveBeenCalledTimes(1); expect(released).toHaveBeenCalledTimes(1);
+  expect([...shading['cache'].values()]).not.toContain(material);
+  shading.dispose(); expect(released).toHaveBeenCalledTimes(1); lighting.dispose();
 });
 
-test('UVs and texture masks survive the production crowd bake and frozen corpse page within backend limits', () => {
+test('@E07 UVs and texture masks survive the production crowd bake and frozen corpse page within backend limits', () => {
   const root = createInfectedPlaceholder('runner');
   let assigned = false;
   root.traverse(n => {
