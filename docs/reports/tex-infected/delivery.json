@@ -1,0 +1,111 @@
+{
+  "id": "inf.common-worker",
+  "sourceTriangles": 35990,
+  "sourceSHA256": "739ce9749241b8702236ec73bfc606f68b5f0e2f3c969a67bc5675eba5703906",
+  "pipelineCommit": "b01e5ca142f099074c58c9e6dbd0c89977f367a6",
+  "runtimeChangeCommit": "184cacded",
+  "baselineCommit": "36a960fca976ce9473d5ba265523c2965b5473bf",
+  "files": [
+    {
+      "tier": "lod0",
+      "file": "public/assets/models/inf.common-worker.glb",
+      "bytes": 176464,
+      "sha256": "50906ae43f615ca39d0e25a55ab784ff78f420050fc7b87299f3fdf147e0fc8a"
+    },
+    {
+      "tier": "lod1",
+      "file": "public/assets/models/inf.common-worker.lod1.glb",
+      "bytes": 88084,
+      "sha256": "81f80cd027661fe3e13ac09a3cbd20015c06eeabc9ae49017b75fd2b6f9a777a"
+    },
+    {
+      "tier": "lod2",
+      "file": "public/assets/models/inf.common-worker.lod2.glb",
+      "bytes": 60156,
+      "sha256": "632f8dac3c5e49c5285b2b1a3b48298e612db984fe7edd35ef7ef28491f179a5"
+    },
+    {
+      "tier": "corpse",
+      "file": "public/assets/models/inf.common-worker.corpse.glb",
+      "bytes": 67548,
+      "sha256": "02a53e2a122eb0572c94ffb4186ce78f2e147f1caddfe99c884b5ce939858a56"
+    },
+    {
+      "file": "public/assets/models/inf.common-worker.atlas.webp",
+      "bytes": 141956,
+      "sha256": "6a853850edae31989cc0a3ef44db3a8da248fc7e01755724a0e1eecd01567a0e"
+    },
+    {
+      "file": "public/assets/models/inf.common-worker.atlas.low.webp",
+      "bytes": 58200,
+      "sha256": "793f596d07a28ee65af49c92b8a6b0a8d06194a4be8e2d2c73aa12cdb377366a"
+    }
+  ],
+  "totalBytes": 592408,
+  "sharedAtlasURI": "inf.common-worker.atlas.webp",
+  "requiredNodes": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR",
+    "stump_head",
+    "stump_armL",
+    "stump_armR",
+    "stump_foreArmL",
+    "stump_foreArmR",
+    "stump_legL",
+    "stump_legR"
+  ],
+  "animatedNodes": [
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "bundles": {
+    "main": {
+      "entry": "/build/index-BHxoJBZc.js",
+      "sha256": "eddc4db41a2f1157dc09ca4e2d29e909a936e8a72b8426258be86069d7fe61a6"
+    },
+    "candidate": {
+      "entry": "/build/index-C5qy3jmO.js",
+      "sha256": "9be8a7a8d19f17ed57590de4f8e18c11c8a157393b71923825f77bfdedf89815"
+    }
+  },
+  "GPUAtlasBytesWithMips": {
+    "baseline": 0,
+    "low": 1398100,
+    "high": 5592404
+  },
+  "CPUDecodedAtlasBytes": 5242880,
+  "baselineContractFieldsPreserved": [
+    "requiredNodes",
+    "animatedNodes",
+    "sockets",
+    "category",
+    "script"
+  ]
+}
