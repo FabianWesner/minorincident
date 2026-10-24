@@ -50,7 +50,7 @@ try {
           while (a.tick() < until) await a.step(Math.min(60, until - a.tick()));
           a.camera.follow(); a.camera.zoom(1.5); await a.screenshotReady();
         }, afterTurnS);
-        if (repeat === 0) {
+        if (repeat === 0 && (afterTurnS === 150 || checkpoints.length === 1)) {
           for (const zoom of [1, 1.5]) {
             await page.evaluate(async z => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(z); await a.screenshotReady(); }, zoom);
             await page.screenshot({ path: `${out}/${side}-${afterTurnS}-z${String(zoom).replace('.', '')}.png` });

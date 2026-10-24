@@ -75,7 +75,7 @@ export const l4 = {
   war: {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 2.5,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3.5,
     /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12, /** PO 10-23 ("L4 is still no action"; the PO plays low): the low cap is half of high, so a fixed 12 kept a fifth of it empty. */ headroomLow: 6,
     /** Retained downed-body budget: recycle repeat regular downings above it (PO #118), preserving first recoveries and authored Alphas. */
