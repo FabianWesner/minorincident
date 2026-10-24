@@ -1,7 +1,7 @@
 /** Q-166 PO views. Run under tools/e2e-lock.sh after a production build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { chromium } from '@playwright/test';
+import { launchBrowser } from '../browser-pool/client';
 import { preview } from 'vite';
 
 const out = resolve(process.env.L4_CORPSE_OUT ?? 'docs/reports/l4-corpse-carpet/captures');
@@ -9,7 +9,7 @@ const port = Number(process.env.E2E_PORT ?? 4471);
 if (port === 3300) throw new Error('Use the lane port');
 mkdirSync(out, { recursive: true });
 const server = await preview({ configFile: false, build: { outDir: resolve('dist') }, preview: { host: '127.0.0.1', port, strictPort: true } });
-const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
   page.setDefaultTimeout(180_000);
