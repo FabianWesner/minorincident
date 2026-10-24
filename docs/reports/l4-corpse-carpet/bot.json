@@ -13,14 +13,14 @@
       "heroine": "female",
       "finished": true,
       "skipped": [],
-      "wallSeconds": 291,
+      "wallSeconds": 255,
       "simSeconds": 0,
-      "maxNoProgressSeconds": 28.446,
+      "maxNoProgressSeconds": 16.866666666666667,
       "deaths": 0,
-      "assists": 4,
+      "assists": 1,
       "attacks": {
-        "weapon.army-mg": 1606,
-        "weapon.fire-axe": 2
+        "weapon.army-mg": 1247,
+        "weapon.fire-axe": 4
       },
       "weaponsStart": [
         "weapon.fire-axe",
@@ -58,7 +58,7 @@
         {
           "id": "quartermaster",
           "text": "Report to the quartermaster · 10 m",
-          "tick": 1837,
+          "tick": 1835,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": {
@@ -78,19 +78,19 @@
         {
           "id": "hold",
           "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2063,
+          "tick": 2053,
           "marker": {
             "anchor": "l4-quartermaster",
             "ring": null,
             "drawn": null,
-            "playerY": 0.7170000076293945,
+            "playerY": 0.7160000205039978,
             "pinVisible": false
           }
         },
         {
           "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 313 m",
-          "tick": 12746,
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 90 m",
+          "tick": 12730,
           "marker": {
             "anchor": "l4-cellar-door",
             "ring": {
@@ -110,7 +110,7 @@
         {
           "id": "bar",
           "text": "Bar the cellar door · 5 m",
-          "tick": 16516,
+          "tick": 14363,
           "marker": {
             "anchor": "l4-brace",
             "ring": {
@@ -123,14 +123,14 @@
               0.05,
               -1.4
             ],
-            "playerY": 0.7700001001358032,
+            "playerY": 0.7900000810623169,
             "pinVisible": true
           }
         },
         {
           "id": "wait",
           "text": "Stay down · 0:07 remaining",
-          "tick": 16673,
+          "tick": 14522,
           "marker": {
             "anchor": "l4-brace",
             "ring": null,
@@ -142,11 +142,11 @@
       ]
     }
   ],
-  "issues": 1,
+  "issues": 0,
   "bySeverity": {
     "P0": 0,
     "P1": 0,
-    "P2": 1,
+    "P2": 0,
     "P3": 0
   }
 }
