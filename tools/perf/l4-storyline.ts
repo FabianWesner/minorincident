@@ -32,7 +32,7 @@ try {
     await page.addInitScript('window.__name = value => value');
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
     try {
-      await page.goto(`${sources[side]}/?test=1&renderer=webgpu&quality=low&dpr=${dpr}&audio=muted&seed=3&preload=0${diagnostic && !sampledCpu ? '&profile=1' : ''}`);
+      await page.goto(`${sources[side]}/?test=1&crowdProbe=drawn&renderer=webgpu&quality=low&dpr=${dpr}&audio=muted&seed=3&preload=0${diagnostic && !sampledCpu ? '&profile=1' : ''}`);
       await page.waitForFunction(() => !!window.__SS__);
       await page.evaluate(async () => {
         const a = window.__SS__!; await a.ready;
@@ -58,7 +58,14 @@ try {
           const cpu: Record<string, number[]> = {};
           const census = () => {
             const all = a.query({}), live = all.filter(e => e.infected && !e.hidden && e.health.current > 0);
+            const drawn = new Set(a.crowdFigures().filter(f => f.drawn).map(f => f.id));
+            const visibleNative = live.filter(e => {
+              if (e.appearance || e.pendingAdmission || e.infected?.hidden) return false;
+              const p = a.camera.project(e.transform.x, e.transform.y + .6, e.transform.z);
+              return Math.abs(p[0]) < .8 && Math.abs(p[1]) < .8 && p[2] > -1 && p[2] < 1;
+            });
             return { tick: a.tick(), phase: a.missions.state()!.l4!.phase, infected: live.length,
+              drawnInfected: live.filter(e => drawn.has(e.id)).length, missingNative: visibleNative.filter(e => !drawn.has(e.id)).map(e => e.id),
               inside: live.filter(e => e.transform.x > perimeter.x0 && e.transform.x < perimeter.x1 && e.transform.z > perimeter.z0 && e.transform.z < perimeter.z1).length,
               backend: a.perf().backend, quality: a.perf().quality.tier, player: a.getState().player!.transform };
           };
@@ -87,7 +94,7 @@ try {
           const telemetryMs = await page.evaluate(() => { const a = window.__SS__!, start = performance.now(); for (let i = 0; i < 1000; i++) a.perf(); return (performance.now() - start) / 1000; });
           console.log(JSON.stringify({ telemetryMs, render: await page.evaluate(() => window.__SS__!.perf()) }));
         }
-        if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || errors.length)
+        if (result.before.backend !== 'webgpu' || result.before.quality !== 'low' || result.before.phase !== 'war' || result.frames.length < 60 || wholeHold && (result.after.phase === 'war' || result.elapsedMs < 100_000) || [result.before, result.after, ...result.holdCensuses].some(c => c.missingNative.length) || errors.length)
           throw new Error(`Invalid ${side} measurement: ${JSON.stringify({ ...result.before, samples: result.frames.length, errors })}`);
         rows.push({ side, repeat, afterTurnS, scripts, ...result });
         writeFileSync(`${out}/samples.json`, JSON.stringify(rows, null, 2));
