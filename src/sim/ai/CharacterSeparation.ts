@@ -10,7 +10,7 @@ export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
 function spacingRadius(e: EntitySnapshot, world: SimWorld): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
-  if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || e.contactExempt !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
+  if (e.infectionRise || e.hidden || e.emerging && world.scenario !== 'L4' || e.health.current <= 0 || e.attachedTo !== undefined || e.contactExempt !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return world.missions?.state.l5?.metroAt ? actorRadius(e) : .9;
   if (e.civilian?.pet) return .5;
   if (e.survivor) return actorRadius(e);
@@ -60,10 +60,11 @@ export function installCharacterSeparation(world: SimWorld): void {
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.hullContact = !!drivenHull && drivenHull.speed < .2 && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow' && !world.missions?.state.l5?.metroAt;
-      body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
+      body.fixed = !!(e.emerging && world.scenario === 'L4') || !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
       body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
       radii[e.id] = body; radiusIds.push(e.id); maximumRadius = Math.max(maximumRadius, r);
+      if (e.emerging && world.scenario === 'L4') continue;
       if ((e.infected?.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') || e.survivor && !yieldCourier || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       bodies[bodyCount++] = body;
     }
