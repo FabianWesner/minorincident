@@ -64,3 +64,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 - Geometry-only Node probes should reuse `stripGlbTextures`; verify actual image decoding, texture sampling and corpse retention in the browser separately.
 - A melee downing can recover. For permanent-corpse acceptance, deliver a permanent damage event and inspect the frozen body after retirement and again after 30 seconds.
 - Large terrain horizons need float positions to preserve their streamed support edges. Normal-only quantization in the current glTF Transform release needs an explicit `KHR_mesh_quantization` flag; test seams as well as delivery metadata.
+- A shared material cache must evict atlas materials on the registry-owned texture’s disposal event, even when the global material system outlives a level. Test injected shared ownership as well as standalone registry disposal.
