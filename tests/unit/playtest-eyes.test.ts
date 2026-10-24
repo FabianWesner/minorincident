@@ -36,7 +36,8 @@ function renderedEyes(clip: string, simulationAttacking: boolean, serialized = f
     querySelectorAll: () => [],
     elementFromPoint: () => ({ closest: () => coveredByButton ? {} : null }),
   });
-  vi.stubGlobal('window',{ __SS__: {
+  // The browser driver reads its optional combat owner through the Scene Lab bridge.
+  vi.stubGlobal('window',{ __SCENE__: { game: { world: {} } }, __SS__: {
     tick: () => 10,
     missions: { state: () => ({ id: 'L6', phase: 'playing', steps: { retreat: { status: 'active' } } }) },
     getEntity: () => player,
