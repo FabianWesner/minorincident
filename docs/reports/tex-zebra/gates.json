@@ -1,0 +1,233 @@
+{
+  "runtimeCodeRevision": "30e6cdd17",
+  "documentationRevision": "2f135b23b",
+  "delivery": "Direct replacement under amb.zebra and inf.zebra; no settings flag, URL gate or parallel asset IDs. Shared textureMode:baseColor route.",
+  "validator": {
+    "success": true,
+    "rows": 1262,
+    "errors": 0,
+    "path": "test-results/tex-zebra/validator-all.json",
+    "sha256": "96d8ee770c7be4f86aa28a210b7fb032e1b0a411c678cd6a4e1141eed20daa76"
+  },
+  "unit": {
+    "path": "test-results/tex-zebra/unit-owner-final.json",
+    "sha256": "28c4440d7ea73f4f0dbef26511e7a377c1e5590232e330c56357ea62013de1c9",
+    "success": true,
+    "numTotalTests": 2080,
+    "numPassedTests": 2073,
+    "numFailedTests": 0,
+    "numPendingTests": 7
+  },
+  "levels": {
+    "success": true,
+    "passedAfterIsolatedRetry": 470,
+    "disabledProbes": 2,
+    "initialRun": {
+      "path": "test-results/tex-zebra/levels.json",
+      "sha256": "15587684ab12eb16ba6350f30b1103d6cc354d1c65634a0312e9373636035cf5",
+      "success": false,
+      "numTotalTests": 472,
+      "numPassedTests": 469,
+      "numFailedTests": 1,
+      "numPendingTests": 2
+    },
+    "initialFailure": "Unchanged L7 audit exceeded 300000 ms under shared CPU load.",
+    "isolatedRetry": {
+      "path": "test-results/tex-zebra/l7-isolated.json",
+      "sha256": "a3bbefe7b7e710c0d699b251d4070aeb8b34393b22f85e41628411cc5b170a0f",
+      "success": true,
+      "numTotalTests": 1,
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "retryDurationMs": 222215.824461
+  },
+  "threeSeedLevelCompletion": {
+    "success": true,
+    "completed": 30,
+    "runs": 30,
+    "observedFailures": {
+      "player-died": 1
+    },
+    "path": "test-results/sim/all-complete.json",
+    "sha256": "7f7017eda4f75cacadf10809649c99e43ca92902ea3a8a4a95f732a1f6cc1d1c"
+  },
+  "smoke": {
+    "success": true,
+    "browserPassed": 31,
+    "browserReceipt": {
+      "path": "test-results/tex-zebra/smoke-browser.log",
+      "sha256": "980ec3eaada92a0ad7376b45cb7df14ed56ec1eefb6b16d93bda0680f707d4e1"
+    },
+    "remoteSelected": {
+      "path": "test-results/tex-zebra/smoke-sim.json",
+      "sha256": "97795a75c71b8ba23fa61a15893900cd4bef666811516d985c16240d14751836",
+      "success": true,
+      "numTotalTests": 3806,
+      "numPassedTests": 6,
+      "numFailedTests": 0,
+      "numPendingTests": 3800
+    }
+  },
+  "invariants": {
+    "success": true,
+    "simulation": {
+      "path": "test-results/qa-invariants/sim.json",
+      "sha256": "49b21c885eb57e33fa6c53f10eb3a199bc505fbb5f81cb63fc05b0e74dddd877",
+      "success": true,
+      "numTotalTests": 28,
+      "numPassedTests": 28,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "nativeWebGPUPassed": 12,
+    "stages": [
+      {
+        "stage": "remote-sim",
+        "code": 0,
+        "seconds": 319.641,
+        "revision": "85df5b3bbbb9066e74840555e31e3d07740e375a",
+        "log": "test-results/qa-invariants/remote-sim.log"
+      },
+      {
+        "stage": "build",
+        "code": 0,
+        "seconds": 11.049,
+        "revision": "85df5b3bbbb9066e74840555e31e3d07740e375a",
+        "log": "test-results/qa-invariants/build.log"
+      },
+      {
+        "stage": "Mac-WebGPU-low",
+        "code": 0,
+        "seconds": 603.442,
+        "revision": "85df5b3bbbb9066e74840555e31e3d07740e375a",
+        "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+      }
+    ]
+  },
+  "E07": {
+    "status": "deferred_by_orchestrator",
+    "timing": {
+      "success": true,
+      "acceptedRunner": "2.31.10.108",
+      "unchangedThresholds": true,
+      "runnerComparison": [
+        {
+          "path": "test-results/tex-zebra/main-timing.json",
+          "sha256": "43ce137c81f62804b0ae5463aac4e9d280a34887af9a2b16283f86ae2de8c709",
+          "passed": 2,
+          "failed": 3,
+          "failures": [
+            {
+              "name": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+              "message": "AssertionError: expected 5.284367000000202 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            },
+            {
+              "name": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+              "message": "AssertionError: expected 5.040787000001728 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            },
+            {
+              "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+              "message": "AssertionError: expected 6.130616000000373 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/tex-zebra-baseline-85c1d1-17115-1792853919/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            }
+          ]
+        },
+        {
+          "path": "test-results/tex-zebra/e07-timing-failure.json",
+          "sha256": "57c5d159d37bc34f921f5c2ecde72d12885dd5a9b034055b883cc5374280b408",
+          "passed": 2,
+          "failed": 3,
+          "failures": [
+            {
+              "name": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+              "message": "AssertionError: expected 5.4143620000004375 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-51949b-93064-1792853156/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/tex-zebra-51949b-93064-1792853156/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            },
+            {
+              "name": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+              "message": "AssertionError: expected 6.516856000000189 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-51949b-93064-1792853156/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/tex-zebra-51949b-93064-1792853156/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            },
+            {
+              "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+              "message": "AssertionError: expected 5.389875999999276 to be less than or equal to 4\n    at /srv/mi/jobs/tex-zebra-51949b-93064-1792853156/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/tex-zebra-51949b-93064-1792853156/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            }
+          ]
+        },
+        {
+          "path": "test-results/tex-zebra/e07-timing-accepted.json",
+          "sha256": "1f38baf72e22730357ccf33e3277764c38b72a99284ffb7ac610be3d9cb7e033",
+          "passed": 5,
+          "failed": 0,
+          "failures": []
+        }
+      ]
+    },
+    "verificationRevision": "49c26e645",
+    "handoff": "Stop E07 Alpha stress retries per orchestrator time-box decision. Main fails the same 200-infected timing cases on loaded runners; orchestrator will rerun E07 in a quiet window after merging. E07 is not claimed green.",
+    "nativeBrowserAttempt": {
+      "exitCode": 1,
+      "passed": 106,
+      "failed": 5,
+      "didNotRun": 6,
+      "selected": 117,
+      "receipt": "test-results/tex-zebra/e07-browser-initial.json",
+      "failures": "Four Alpha scene-budget timeouts at 360000 ms, plus the stale downed-body health-bar assertion corrected in c207516e1.",
+      "timeouts": "e07-timeouts.json",
+      "sampleCounts": {
+        "webgl-high": "14/16",
+        "webgl-low": "13/16",
+        "webgpu-high": "15/16",
+        "webgpu-low": "15/16"
+      }
+    },
+    "sourceVerification": {
+      "typecheck": "passed",
+      "lint": "passed",
+      "build": "passed",
+      "functionalPassed": 393,
+      "timingPassed": 5,
+      "functionalReceipt": "test-results/tex-zebra/e07-source-final.json",
+      "timingReceipt": "test-results/tex-zebra/e07-timing-final.json"
+    },
+    "stoppedRetries": [
+      {
+        "command": "Alpha visual budgets webgl; later WebGPU and perf phases were never launched",
+        "exitCode": 143,
+        "state": "Canceled while waiting for admission; log empty.",
+        "log": "test-results/tex-zebra/e07-budget-webgl-quiet.log"
+      },
+      {
+        "command": "health-bars.spec.ts excluding @perf",
+        "exitCode": 143,
+        "state": "Canceled while waiting for admission; log empty.",
+        "log": "test-results/tex-zebra/e07-health-bars-quiet.log"
+      }
+    ]
+  },
+  "performance": {
+    "success": true,
+    "summary": "performance-summary.json",
+    "verdict": "performance-verdict.json"
+  },
+  "additionalDeliveryRepair": {
+    "asset": "public/assets/layouts/D-CROSSING.horizon.glb",
+    "reason": "Existing horizon lacked the compression metadata required by the full validator.",
+    "change": "Repacked existing geometry with meshopt and quantized normals, preserving float POSITION and authored terrain support edges.",
+    "terrainSeamTestsPassed": 8
+  },
+  "additionalFixtureRepair": {
+    "file": "tests/e2e/acceptance/l4-alpha.spec.ts",
+    "reason": "inspectionGhost removes the courier from the corpse-throw human target query, contradicting the real impact assertion.",
+    "change": "Keep the courier target present during the first grab-throw impact, then enable inspection ghost for the cooldown probe.",
+    "strongerAssertion": "The courier health must fall from 100 to 70, in addition to the retained corpse and combat.hit assertions.",
+    "runtimePhysicsChanged": false,
+    "validation": "Corrected Alpha throw acceptance passed at high and low in the final native E07 attempt."
+  },
+  "healthBarFixtureRepair": {
+    "file": "tests/e2e/health-bars.spec.ts",
+    "reason": "The browser test still expected an empty downed-body bar, superseded by main commit 61667086e and tests/unit/health-bars.test.ts.",
+    "change": "Expect no bar while downed; retain full recovery, explosive death, conversion, occlusion and zoo checks.",
+    "runtimeHealthBarLogicChanged": false,
+    "validation": "Lint passed. The focused browser retry never started and was canceled per orchestrator instruction; full browser confirmation is deferred with E07."
+  }
+}
