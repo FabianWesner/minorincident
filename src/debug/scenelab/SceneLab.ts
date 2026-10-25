@@ -342,7 +342,10 @@ export class SceneLab {
       }
     }
     if (spec.l6Subway) {
-      world.scenario = 'L6'; applyCampaign(world, preset('L6-default'));
+      // The courier's look.model picks the survivor (as cureProgression does): the L6 preset alone always loaded the heroine.
+      const l6 = preset('L6-default'), l6Model = spec.actors?.find(actor => actor.kind === 'courier')?.look?.model;
+      if (l6Model === 'male' || l6Model === 'female') l6.character = l6Model;
+      world.scenario = 'L6'; applyCampaign(world, l6);
       const mission = world.loadMission(resolveCampaignMission('L6', world.districts!)); mission.begin();
       if (spec.l6Subway !== 'pickup') {
         const lamp = world.entities.values().find(e => e.archetype === 'pickup.headlamp')!;
@@ -1089,7 +1092,9 @@ export class SceneLab {
     const swings = this.world.events.events(0).flatMap(e => e.type === 'combat.attack' && e.sourceId === 1 ? [`${e.tick}:${e.actionId.replace('weapon.', '')}${e.style ? `/${e.style}` : ''}`] : []);
     return { total: rows.length, misses: rows.filter(r => !r.hit).length, rows, swings };
   }
-  /** Courier ankle height above the sole, in foot-local units, from the frame-0 idle pose (feet flat on the floor). */
+  /** Courier ankle height above the sole, in foot-local units: the skinned courier's rest ankle height (what its ground
+   * contacts plant on the floor), else the frame-0 idle pose (feet flat on the floor). The raw frame-0 idle clip lifts a
+   * longer-legged body's feet before the contacts blend in (heroine 10-24: +1.3 cm), which read every plant as sunk. */
   private calibrateSole(): void {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'), c = this.game.view.labProbes().character, foot = c?.node('footL');
     if (!courier || !c || !foot) return;
@@ -1097,7 +1102,7 @@ export class SceneLab {
     // Sole depth is an asset-local measurement. The paused initial capsule may
     // still be settling onto raised paving; baking that floor delta into the
     // shoe depth would report every later planted foot as floating or sunk.
-    courier.sole = (foot.getWorldPosition(this.point).y - c.position.y) / foot.getWorldScale(new Vector3()).y;
+    courier.sole = c.restSole ?? (foot.getWorldPosition(this.point).y - c.position.y) / foot.getWorldScale(new Vector3()).y;
   }
   /** Per-frame probes: foot/torso tracks, LOD and visibility of every actor; bone-vs-prop clipping every 3rd frame. */
   /**
