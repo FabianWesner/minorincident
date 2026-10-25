@@ -243,7 +243,7 @@ try {
         receipts.push({ case: 'infection-accessories', backend, metrics: await session.metrics(), errors: [...session.errors] });
       }
       if (cases.has('textures')) {
-        await session.load({ ...spec, name: 'shared-atlas-pages', actors: [{ id: 'courier', kind: 'courier', at: [0, 30] },
+        await session.load({ ...spec, name: 'shared-atlas-pages', size: 80, actors: [{ id: 'courier', kind: 'courier', at: [0, 30] },
           { id: 'orange', kind: 'pedestrian', at: [-1.3, 0], look: { model: 'npc.civilian-man-b', accessories: [] } },
           { id: 'dress', kind: 'pedestrian', at: [1.3, 0], look: { model: 'npc.civilian-woman-a', accessories: [] } }],
           camera: { mode: 'pose', position: [5, 3, 7], target: [0, 1, 0] } });
