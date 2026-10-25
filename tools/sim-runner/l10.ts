@@ -10,12 +10,15 @@ export interface CureRegionTiming {
 }
 /** Full production level, seed fixed by the caller. Only movement, aim, weapon selection and interaction inputs. */
 export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: number) {
-  const mission = world.missions!, player = world.entities.get(1)!, bot = new LevelTenBot(world, policy);
+  const mission = world.missions!, bot = new LevelTenBot(world, policy);
   const timings: CureRegionTiming[] = cure.regions.map(r => ({ id: r.id, seconds: 0, travelSeconds: 0, combatSeconds: 0, interactionSeconds: 0, holdSeconds: 0, epilogueSeconds: 0, otherSeconds: 0, metres: 0 }));
   let peak = 0;
   for (let tick = 0; tick < maxSeconds * 60 && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; tick++) {
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
-    if (!active || player.health.current <= 0 || mission.state.phase === 'retry') break;
+    if (!active || mission.state.phase === 'retry') break;
+    // Keep updating through the ordinary death delay. Checkpoint respawn can
+    // replace entity 1, so reacquire it instead of retaining the dead body.
+    const player = world.entities.get(1)!;
     const f = bot.sample(), p = player.transform;
     const finale = active.id === 'hold' || active.id === 'mega', released = !!mission.state.states['cure-released'];
     const region = cure.regions.findIndex(r => p.x >= r.envelope[0][0] && p.x <= r.envelope[1][0]);
