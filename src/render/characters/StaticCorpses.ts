@@ -1,5 +1,5 @@
 import { premultiplyRow, skinnedVertexMatrix, skinnedWoundNormal } from './skinnedCrowd';
-import { interleaveTexturedCrowd } from './crowdTexture';
+import { interleaveTexturedCrowd, crowdSurfaceBindings } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { normalViewGeometry } from 'three/tsl';
@@ -361,7 +361,9 @@ export class StaticCorpses extends Group {
     // the instance matrices. Other levels retain normal parent transforms.
     mesh.matrixWorldAutoUpdate = this.matrixWorldAutoUpdate;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
-    mesh.userData.preRenderTextures = material.userData.preRenderTextures ?? [];
+    const surface = crowdSurfaceBindings.get(source);
+    if (surface) mesh.onBeforeRender = surface.bind;
+    mesh.userData.preRenderTextures = surface?.textures ?? material.userData.preRenderTextures ?? [];
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[], spheres: [] as Sphere[] }; pages.push(page); this.add(mesh);
     return page;

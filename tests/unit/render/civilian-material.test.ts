@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { DataTexture, FloatType, RGBAFormat, Scene } from 'three/webgpu';
+import { DataTexture, FloatType, RGBAFormat, Scene, Texture } from 'three/webgpu';
 import { Lighting } from '../../../src/render/Lighting';
 import { Materials } from '../../../src/render/Materials';
 import { civilianMaterial } from '../../../src/render/npc/CivilianMaterial';
@@ -17,4 +17,16 @@ test('civilian shader leases share side/hand graphs and retire only after the la
   b.release(); expect(retired).toHaveBeenCalledOnce();
   const next = civilianMaterial(shading, false, 12, textures[0]); expect(next.material).not.toBe(a.material);
   next.release(); sided.release(); hand.release(); textures.forEach(texture => texture.dispose()); shading.dispose(); lighting.dispose();
+});
+
+
+test('textured skins share one graph across atlases while each lease rebinds its own surface', () => {
+  const scene = new Scene(), lighting = new Lighting(scene), shading = new Materials(lighting);
+  const pose = new DataTexture(new Float32Array(16), 4, 1, RGBAFormat, FloatType), atlases = [new Texture(), new Texture()];
+  const a = civilianMaterial(shading, false, 9, pose, { skinned: true, bindRow: 1, atlas: atlases[0] });
+  const b = civilianMaterial(shading, false, 9, pose, { skinned: true, bindRow: 1, atlas: atlases[1] });
+  expect(a.material).toBe(b.material);
+  const key = a.material.customProgramCacheKey(); a.bindTexture(pose); b.bindTexture(pose); a.bindTexture(pose);
+  expect(a.material.customProgramCacheKey()).toBe(key);
+  a.release(); b.release(); pose.dispose(); atlases.forEach(t => t.dispose()); shading.dispose(); lighting.dispose();
 });

@@ -1,5 +1,10 @@
 import { InterleavedBuffer, InterleavedBufferAttribute, Mesh, type BufferGeometry, type Object3D, type Texture } from 'three';
 
+/** Shared shader graphs bind each living or frozen page's own atlas before drawing.
+ * Keep live resources outside serializable geometry metadata. */
+export interface CrowdSurfaceBinding { bind(): void; textures: Texture[] }
+export const crowdSurfaceBindings = new WeakMap<BufferGeometry, CrowdSurfaceBinding>();
+
 /** A crowd draws one opaque atlas. All of its source parts must share that map. */
 export function crowdTexture(root: Object3D): Texture | undefined {
 

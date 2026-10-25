@@ -13,6 +13,7 @@ import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalett
 import { PickBodies } from '../../../src/render/characters/PickBodies';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { AssetRegistry } from '../../../src/assets/registry';
+import { crowdSurfaceBindings } from '../../../src/render/characters/crowdTexture';
 import { sampleClip } from '../../../src/render/characters/clips';
 
 async function baked(id: string) {
@@ -203,3 +204,14 @@ test('every newly opened wound boundary is closed by cap edges at all production
     }
   }
 }, 120000);
+
+
+test('frozen pages bind the source atlas when living textured civilians share a shader', async () => {
+  const { geometry, clip } = await baked('npc.civilian-man-a'), corpses = new StaticCorpses(), material = new MeshLambertNodeMaterial(), texture = new Texture(), bind = vi.fn();
+  crowdSurfaceBindings.set(geometry, { bind, textures: [texture] });
+  corpses.prepare('atlas', geometry, material, clip, clip.frames - 1);
+  const page = corpses.children[0] as import('three').InstancedMesh;
+  (page.onBeforeRender as () => void)();
+  expect(bind).toHaveBeenCalledOnce(); expect(page.userData.preRenderTextures).toEqual([texture]);
+  corpses.dispose(); material.dispose(); geometry.dispose(); texture.dispose();
+});

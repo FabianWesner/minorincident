@@ -5,14 +5,14 @@ import { crowdBlendedMatrix, poseTexture } from '../../assets/crowd';
 import { skinnedCrowdMatrix } from '../characters/skinnedCrowd';
 import type { Materials } from '../Materials';
 
-type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; uses: number };
+type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; atlas?: ReturnType<typeof sampleTexture>; uses: number };
 const caches = new WeakMap<Materials, Map<string, Entry>>();
 /** One graph per side/hand layout. Each draw binds its own immutable geometry,
  * current pose texture, transforms, tint and infection attributes. */
 export function civilianMaterial(shading: Materials | undefined, doubleSided: boolean, handIndex: number, initialTexture: DataTexture, options: { bindRow: number; skinned: boolean; atlas?: Texture } = { bindRow: 0, skinned: false }) {
   let cache = shading && caches.get(shading);
   if (!cache) { cache = new Map(); if (shading) caches.set(shading, cache); }
-  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${options.atlas?.uuid ?? ''}`;
+  const key = `${doubleSided}:${handIndex}:${options.skinned}:${options.bindRow}:${!!options.atlas}`;
   let entry = cache.get(key);
   if (!entry) {
     const pose = poseTexture(initialTexture);
@@ -20,7 +20,8 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
     const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z.min(1), mark = parts.w.mod(4), vein = mark.equal(1).select(1, 0), blood = mark.equal(2).select(1, 0), socket = mark.equal(3).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
-    const clothing = options.atlas ? mix(crowdAppearanceColor(), sampleTexture(options.atlas, attribute('uv', 'vec2')).rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
+    const atlas = options.atlas ? sampleTexture(options.atlas, attribute('uv', 'vec2')) : undefined;
+    const clothing = atlas ? mix(crowdAppearanceColor(), atlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
@@ -60,11 +61,11 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
       material.userData.frozenSurfaceMask = eyeDisc.not();
     }
     if (options.skinned) material.maskNode = material.maskNode ? (material.maskNode as Node<'bool'>).and(parts.w.lessThan(1024)) : parts.w.lessThan(1024);
-    entry = { material, pose, uses: 0 }; cache.set(key, entry);
+    entry = { material, pose, atlas, uses: 0 }; cache.set(key, entry);
   }
   const owned = entry; owned.uses++; let released = false;
   return { material: owned.material,
-    bindTexture: (value: DataTexture) => { owned.pose.value = value; },
+    bindTexture: (value: DataTexture, atlas: Texture | undefined = options.atlas) => { owned.pose.value = value; if (owned.atlas && atlas) owned.atlas.value = atlas; },
     release: () => { if (released) return; released = true; if (--owned.uses === 0) { cache!.delete(key); owned.material.dispose(); } },
   };
 }
