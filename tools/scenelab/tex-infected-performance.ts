@@ -3,10 +3,11 @@ import type { Game } from '../../src/Game';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
-const worktree = resolve(import.meta.dirname, '../..'), main = '/private/tmp/tex-infected-main-36a960fc';
+const worktree = resolve(import.meta.dirname, '../..'), main = resolve(process.env.TEX_MAIN_ROOT ?? '/private/tmp/tex-infected-main-36a960fc');
 const afterDist = process.env.TEX_DIST ?? 'dist';
 process.env.SCENE_SERVER = 'preview';
-const report = resolve(worktree, 'docs/reports/tex-infected/performance.json');
+const reportDir = resolve(worktree, process.env.TEX_REPORT_DIR ?? 'docs/reports/tex-infected');
+const report = resolve(reportDir, 'performance.json');
 const receipts: { variant: string; scene: string; backend: string; p95: number; maxCrowdDraws: number; triangles: number; errors: string[] }[] = [];
 try {
   for (const backend of ['webgl2', 'webgpu'] as Backend[]) for (const variant of ['main', 'after', 'after', 'main']) {
@@ -65,7 +66,7 @@ try {
         if (variant === 'after' && scene === 'L1') {
           const textured = await session.page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && e.appearance?.asset === 'inf.common-worker').length);
           if (!textured) throw new Error('L1 mix contains no textured common worker');
-          await session.page.screenshot({path:resolve(worktree,`/private/tmp/tex-infected-readability/L1-${backend}.png`)});
+          await session.page.screenshot({path:resolve(reportDir, `L1-${backend}.png`)});
         }
         receipts.push({ variant, scene, ...result, errors: session.errors }); writeJson(report, receipts);
         console.log(JSON.stringify({ variant, scene, backend, p95: result.p95, count: result.count, crowdDraws: result.maxCrowdDraws, errors: session.errors.length }));
@@ -73,7 +74,7 @@ try {
       }
     } finally { await session.close(); stopServer(); }
     // Wait for the owned preview listener to close before switching source roots.
-    for (let i = 0; i < 20; i++) { try { await fetch('http://127.0.0.1:4492'); await new Promise(r => setTimeout(r, 100)); } catch { break; } }
+    for (let i = 0; i < 20; i++) { try { await fetch(`http://127.0.0.1:${process.env.SCENE_PORT ?? 3341}`); await new Promise(r => setTimeout(r, 100)); } catch { break; } }
   }
   const median = (values: number[]) => { const sorted = values.slice().sort((a,b)=>a-b); return (sorted[Math.floor((sorted.length-1)/2)]+sorted[Math.ceil((sorted.length-1)/2)])/2; };
   const comparisons = ['webgl', 'webgpu'].flatMap(backend => ['crowd-200', 'L1'].map(scene => {
@@ -82,7 +83,7 @@ try {
     const ratio = after/before, deltaMs = after-before;
     return { backend, scene, before, after, ratio, deltaMs, draws: Math.max(...rows.filter(r=>r.variant==='after').map(r=>r.maxCrowdDraws)), passed: rows.length===4 && (scene==='crowd-200' ? ratio<=1.1 : deltaMs<=1) };
   }));
-  writeJson(resolve(worktree,'docs/reports/tex-infected/performance-summary.json'),comparisons);
+  writeJson(resolve(reportDir, 'performance-summary.json'),comparisons);
   console.log(JSON.stringify(comparisons));
   if (comparisons.some(c=>!c.passed)) throw new Error('Main/lane performance budget failed');
 } finally { stopServer(); process.chdir(worktree); writeJson(report, receipts); }
