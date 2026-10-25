@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../assets/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { Matrix4, Quaternion, Vector3, type Group } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -16,7 +17,7 @@ import type { EntitySnapshot } from '../../src/sim/world/types';
  * displayed foot parts: a foot is grounded while its lowest sole point is within 1.2 cm of the floor. */
 export async function load(asset: string): Promise<Group> {
   const bytes = readFileSync(`public/assets/models/${asset}.glb`);
-  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
 }
 type Feet = { heel: Vector3; toe: Vector3; yaw: number }[];
 interface Plan { speed: number; yaw: number; rate?: number; attack?: { until: number }; hit?: { started: number; until: number; heavy?: boolean } }

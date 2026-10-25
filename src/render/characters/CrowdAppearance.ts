@@ -75,6 +75,12 @@ swatches.push({ name: 'headHair', color: new Color('#57301f') }, { name: 'headHa
  * Skin/eye/garment flags win over matching colours, keeping lips, pupils and story uniforms intact. */
 export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected = false): void {
   const parts = geometry.getAttribute('_parts'), color = geometry.getAttribute('color'), position = geometry.getAttribute('position');
+  if (geometry.userData.crowdAtlas) {
+    // Source paint owns skin, hair and wounds. Only the authored crown yields
+    // to shared hats; palette matching would hide the entire textured face.
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && position.getY(i) > .4 && !parts.getZ(i)) parts.setW(i, 4);
+    return;
+  }
   // Ordinary infected: the glowing eyes bound the face; any surface clearly above them belongs to hair or headwear.
   let eyeTop = -Infinity;
   if (ordinaryInfected) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getZ(i) > 0) eyeTop = Math.max(eyeTop, position.getY(i));
@@ -150,5 +156,5 @@ export function crowdHeadwearVisibility() {
   const covered = attribute('_variant', 'vec4').x.div(512).floor().mod(2).equal(1);
   const flags = parts.w.mod(128), slot = flags.div(8).floor();
   const selected = attribute('_variant', 'vec4').x.div(16).floor().mod(32);
-  return slot.greaterThan(0).select(slot.equal(selected).select(1, 0), parts.y.equal(-2).or(flags.greaterThanEqual(4)).and(covered).select(0, 1));
+  return parts.w.greaterThanEqual(1024).select(1, slot.greaterThan(0).select(slot.equal(selected).select(1, 0), parts.y.equal(-2).or(flags.greaterThanEqual(4)).and(covered).select(0, 1)));
 }

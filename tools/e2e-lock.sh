@@ -55,6 +55,10 @@ if [ -n "${MI_E2E_LOCK_HELD:-}" ]; then
   exec "$@"
 fi
 export MI_E2E_LOCK_HELD=1 MI_E2E_UNITS_HELD="$units"
+if [ -n "${E2E_RESERVATION_SECONDS:-}" ]; then
+  case "$E2E_RESERVATION_SECONDS" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_RESERVATION_SECONDS must be a positive integer' >&2; exit 2;; esac
+  set -- python3 "$root/tools/browser-job.py" --seconds "$E2E_RESERVATION_SECONDS" -- "$@"
+fi
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 # The command may itself return 75. Record admission so that it is never mistaken for
 # lockf's busy status and executed again. Keep command stderr; -s silences only lockf.

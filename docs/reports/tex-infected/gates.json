@@ -1,0 +1,169 @@
+{
+  "allGreen": true,
+  "runtimeChangeCommit": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+  "pipelineCommit": "a68803836b5df2d3f46f5e79f4b5c693fc589d70",
+  "testCounts": {
+    "unit.json": {
+      "passed": 2069,
+      "skipped": 7,
+      "failed": 0
+    },
+    "levels.json": {
+      "passed": 470,
+      "skipped": 2,
+      "failed": 0
+    },
+    "focused.json": {
+      "passed": 23,
+      "skipped": 0,
+      "failed": 0
+    },
+    "E17-unit.json": {
+      "passed": 50,
+      "skipped": 3753,
+      "failed": 0
+    },
+    "qa-sim.json": {
+      "passed": 28,
+      "skipped": 0,
+      "failed": 0
+    },
+    "E17-functional-browser.json": {
+      "startTime": "2026-10-24T17:06:21.732Z",
+      "duration": 729392.3030000001,
+      "expected": 47,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "E17-inventory-browser.json": {
+      "startTime": "2026-10-24T17:18:41.942Z",
+      "duration": 432553.725,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "qa-browser.json": {
+      "startTime": "2026-10-24T20:00:33.564Z",
+      "duration": 205511.93,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "nativeQualityTransitions": 8,
+  "nonfiniteHDRChannels": 0,
+  "captureFilesReviewed": [
+    "compare-webgl2-high.png",
+    "compare-webgl2-low.png",
+    "compare-webgpu-high.png",
+    "compare-webgpu-low.png",
+    "corpse-low-webgl2.png",
+    "corpse-low-webgpu.png",
+    "crowd30-webgl2.png",
+    "crowd30-webgpu.png",
+    "motion-webgl2.png",
+    "motion-webgpu.png",
+    "pipeline-viewer.png",
+    "solidify-trial.png"
+  ],
+  "browserUnits": 1,
+  "reservationWatchdogSeconds": 1195,
+  "nativePorts": [
+    4491,
+    4492
+  ],
+  "deliveryBytes": 594148,
+  "pending": [],
+  "readabilityRevision": true,
+  "photometryGreen": true,
+  "levelsReceiptReused": {
+    "file": "levels.json",
+    "passed": 470,
+    "skipped": 2,
+    "reason": "No changes to src/sim or tests/levels since the verified184cacded snapshot",
+    "simTreeBefore": "d3e033ca23d0cca0c6607c3e44983d079d05c7fa",
+    "simTreeAfter": "d3e033ca23d0cca0c6607c3e44983d079d05c7fa"
+  },
+  "freshReadabilityChecks": {
+    "remoteUnitPassed": 2069,
+    "remoteUnitSkipped": 7,
+    "focusedPassed": 46,
+    "groundingExplosionPassed": 11,
+    "nativeE17SmokePassed": 47,
+    "photometryCases": 12,
+    "hdrTierTransitions": 8,
+    "qaNativePassed": 12
+  },
+  "performance": [
+    {
+      "backend": "webgl",
+      "scene": "crowd-200",
+      "before": 5.649999999999636,
+      "after": 4.750000000000455,
+      "ratio": 0.8407079646019046,
+      "deltaMs": -0.8999999999991815,
+      "draws": 14,
+      "passed": true
+    },
+    {
+      "backend": "webgl",
+      "scene": "L1",
+      "before": 5.200000000000728,
+      "after": 5.25,
+      "ratio": 1.0096153846152434,
+      "deltaMs": 0.049999999999272404,
+      "draws": 10,
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "scene": "crowd-200",
+      "before": 5.2000000000005,
+      "after": 4.5,
+      "ratio": 0.8653846153845322,
+      "deltaMs": -0.7000000000005002,
+      "draws": 14,
+      "passed": true
+    },
+    {
+      "backend": "webgpu",
+      "scene": "L1",
+      "before": 4.600000000002183,
+      "after": 4.699999999998909,
+      "ratio": 1.0217391304340606,
+      "deltaMs": 0.09999999999672582,
+      "draws": 10,
+      "passed": true
+    }
+  ],
+  "qaAdmission": {
+    "status": "28 remote simulation and 12 native browser checks passed; native retry resumed successful simulation/build stages. Load comparisons passed while another campaign ran.",
+    "browserSlotReleased": true,
+    "successfulStages": [
+      "remote-sim",
+      "build",
+      "Mac-WebGPU-low"
+    ]
+  },
+  "previousCaptureAndGateCommit": "f5e3b5f68eb40c0f18cbf4a282a5898c1ec60321",
+  "timingAttemptRejected": {
+    "at": "2026-10-24T20:04:22Z",
+    "reason": "Concurrent browser detected; no sample retained",
+    "otherBrowsers": [
+      "batch14-zebra (PID85426)",
+      "showcase-record (PID89246)"
+    ],
+    "quietPreflightPassed": true,
+    "performanceRowsRetained": 0
+  },
+  "scope": "Required lane checks, using earlier performance evidence explicitly accepted by orchestrator; final revised paired p95 belongs to post-merge gate.",
+  "performanceEvidenceRevision": "184cacded",
+  "performanceEvidenceAcceptedByOrchestrator": true,
+  "deferredToOrchestrator": [
+    "Final revision paired p95 in the post-merge quiet-window gate"
+  ],
+  "reportEvidenceCommit": "9104b7e81"
+}

@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
@@ -13,7 +14,7 @@ const digest = (values: ArrayBufferView) => createHash('sha256').update(new Uint
 
 test.each(['inf.common-worker', 'inf.common-worker.lod1', 'inf.common-worker.lod2', 'inf.jogger', 'inf.jogger.lod1', 'inf.jogger.lod2', 'inf.dog.lod1', 'inf.mega-alpha', 'inf.mega-alpha.lod1', 'inf.mega-alpha.lod2'])('%s indexed bake retains exact welded triangles, channels and animation', async asset => {
   const bytes = readFileSync(`public/assets/models/${asset}.glb`);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const expanded = bakeInfected(scene.clone(true));
   const indexed = bakeInfected(scene.clone(true), [], false, undefined, undefined, true);
   expect(indexed.geometry.getAttribute('position').count).toBeLessThan(expanded.geometry.getAttribute('position').count);
@@ -41,7 +42,7 @@ test('a fresh human LOD reuses non-ground samples from its identical skeleton', 
   try {
     for (const suffix of ['', '.lod1']) {
       const bytes = readFileSync(`public/assets/models/inf.common-worker${suffix}.glb`);
-      const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+      const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
       sample.mockClear();
       const baked = bakeInfected(scene, [], false, undefined, undefined, true);
       if (suffix) expect(sample.mock.calls.length).toBeLessThan(infectedClips.length * framesPerClip);

@@ -29,6 +29,9 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
                 : level === 'L6' && checkpoint === 'exit-platform' ? 'abandon' : checkpoint;
           await a.loadLevel(level, { checkpoint: base });
           a.pause(); a.cheats.god(true);
+          // The authored L4 alarm starts on the machine-gun pickup. An idle
+          // observer at the arrival checkpoint never starts it by waiting.
+          if (level === 'L4' && (checkpoint === 'turn' || checkpoint === 'line-break')) a.cheats.completeObjective('quartermaster');
           // Calm-only respawn checkpoints are not photo-state gates. Stage the
           // observer and advance ordinary timers without a completion bot.
           if (level === 'L3' && checkpoint === 'segment-3b') a.missions.teleport('player', { x: 92, z: 0 });

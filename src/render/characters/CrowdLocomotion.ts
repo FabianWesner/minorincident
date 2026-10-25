@@ -6,6 +6,7 @@ import type { CharacterRig } from './rig';
 import { cadenceStride, gaitShape, strides } from './clips';
 import { PawContacts } from './PawContacts';
 import { CourierGroundContacts, type GaitStyle } from './CourierGroundContacts';
+import { authoredSoles } from './footSoles';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 
 /** Presentation-only pose layers on top of the baked clip (zombie move set, hunch). Body space: +x forward, +z lateral. */
@@ -85,11 +86,13 @@ export class CrowdLocomotion {
   readonly reach: number;
   /** Rest ankle height in foot-local units (sole contact offset for probes). */
   readonly sole: number;
+  private readonly solePoints?: Vector3[][];
   constructor(private readonly model: Object3D, private readonly clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.animal = !!model.getObjectByName('legFL');
     this.groundedAnimal = this.animal && model.getObjectByName('root')?.userData.groundedAnimal === true;
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
     model.updateMatrixWorld(true);
+    this.solePoints = authoredSoles(model);
     const originals = clip.parts.map(name => model.getObjectByName(name)!);
     this.nodes = originals.map(node => {
       const copy = new Object3D(); copy.name = node.name;
@@ -246,7 +249,10 @@ export class CrowdLocomotion {
     if (!hip || !footL || !footR || !this.sole) return;
     const floor = this.frame.matrixWorld.elements[13];
     let deficit = 0;
-    for (const foot of [footL, footR]) for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
+    for (const [side, foot] of [footL, footR].entries()) {
+      if (this.solePoints) for (const point of this.solePoints[side]) deficit = Math.max(deficit, floor - this.point.copy(point).applyMatrix4(foot.matrixWorld).y);
+      else for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
+    }
     if (deficit > 1e-4) { hip.position.y += deficit / this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y; updateWorldTranslation(hip); }
   }
   reset(id: number): void { this.contacts.get(id)?.reset(); this.paws.get(id)?.reset(); }

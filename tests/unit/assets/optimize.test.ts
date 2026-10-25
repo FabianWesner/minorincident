@@ -100,7 +100,7 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
     expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
     expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
     let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
-    expect(triangles).toBe(42);
+    expect(triangles).toBe(result.getRoot().listNodes().some(n=>n.getExtras().crowdAtlas) ? 2 : 42);
     const parent=cap.getParentNode()!;parent.removeChild(limb);
     expect(cap.getParentNode()).toBe(parent);
   }

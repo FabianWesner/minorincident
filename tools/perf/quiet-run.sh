@@ -3,6 +3,14 @@
 # Use this instead of an outer e2e-lock wrapper for native performance measurements.
 command -v lockf >/dev/null 2>&1 || exec "$@"
 root=$(cd "$(dirname "$0")/../.." && pwd)
+# Explicit shared admission for lanes instructed to leave the second slot free.
+# Preflight remains mandatory; this mode does not promise exclusive GPU timing.
+if [ "${MI_PERF_SHARED_BROWSER:-}" = 1 ] && [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
+  export E2E_UNITS=1 MI_PERF_LOCK_HELD=1 MI_PERF_SLOTS_HELD=1
+  export MI_PERF_WAIT_DEADLINE=$(($(date +%s) + ${E2E_ADMISSION_TIMEOUT_SECONDS:-1800}))
+  exec sh "$root/tools/e2e-lock.sh" python3 "$root/tools/browser-job.py" --seconds 1195 -- sh "$0" "$@"
+fi
+if [ "${MI_PERF_SHARED_BROWSER:-}" != 1 ]; then
 if [ "${MI_BROWSER_POOL_EXCLUSIVE:-}" = "" ] && node "$root/tools/browser-pool/detect.mjs"; then
   exec node --import tsx "$root/tools/browser-pool/wrapper.ts" exclusive "$@"
 fi
@@ -49,6 +57,7 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
   done
   printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2
   exit 75
+fi
 fi
 while :; do
   [ "$(date +%s)" -lt "$MI_PERF_WAIT_DEADLINE" ] || { printf 'Quiet-run: admission exceeded %s seconds; report unmeasured coverage.\n' "$MI_PERF_ADMISSION_TIMEOUT_SECONDS" >&2; exit 75; }

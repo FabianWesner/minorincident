@@ -17,7 +17,7 @@ export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
   // SwiftShader compilation competes for CPU across contexts on the remote runners.
-  workers: process.platform === 'darwin' ? 2 : 1, // several lanes share one Mac
+  workers: process.env.MI_VERIFY_REMOTE_SIM === '1' ? 1 : process.platform === 'darwin' ? 2 : 1, // remote verification lanes keep one native GPU browser
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
@@ -45,5 +45,5 @@ export default defineConfig({
     { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
   ],
   // Test the real production output, including the query-gated API chunk.
-  webServer: { command: `npx vite preview --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },
+  webServer: { command: `npx vite preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },
 });

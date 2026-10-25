@@ -20,6 +20,8 @@ export class AssetRegistry {
   private readonly cache = new Map<string, Promise<Object3D>>();
   private readonly materials: AssetMaterials;
   private readonly figureTextures = new Set<import('three').Texture>();
+  private textureTier: 'high' | 'low' = 'high';
+  private readonly atlasReady = new WeakMap<import('three').Texture, Promise<void>>();
   private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
@@ -27,6 +29,7 @@ export class AssetRegistry {
   constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; materials?: Materials; textureSize?: 512 | 1024 } = {}) {
     this.materials = new AssetMaterials(options.materials);
     this.textureSize = options.textureSize ?? 1024;
+    this.textureTier = this.textureSize === 512 ? 'low' : 'high';
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
@@ -86,7 +89,7 @@ export class AssetRegistry {
       } catch (error) { return fallback(String(error)); }
     }
     const highPath = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb);
-    const path = def.textureMode && this.textureSize === 512 ? highPath.replace(/\.glb$/, '.low.glb') : highPath;
+    const path = def.textureMode && !def.textureAtlasLow && this.textureSize === 512 ? highPath.replace(/\.glb$/, '.low.glb') : highPath;
     if (!path) return fallback(`missing ${lod}`);
     let root: Object3D | undefined;
     try {
@@ -107,13 +110,17 @@ export class AssetRegistry {
       }
       root.userData.assetId = def.id;
       root.userData.assetTextureMode = def.textureMode;
-      if (def.textureMode) root.traverse(node => {
-        if (!(node instanceof Mesh)) return;
-        for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
-          const map = (material as import('three').MeshStandardMaterial).map;
-          if (map) this.figureTextures.add(map);
-        }
-      });
+      if (def.textureMode) {
+        const maps = new Set<import('three').Texture>();
+        root.traverse(node => {
+          if (!(node instanceof Mesh)) return;
+          for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+            const map = (material as import('three').MeshStandardMaterial).map;
+            if (map) { this.figureTextures.add(map); maps.add(map); }
+          }
+        });
+        if (def.textureAtlasLow) await Promise.all([...maps].map(map => this.prepareAtlasTiers(map, def)));
+      }
       root.userData.diner = def.id === 'bld.joes-diner';
       root.userData.paletteWorld = !def.textureMode && !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
       if (vehicleDecayFallback(def, decay)) applyVehicleDecay(root, decay!);
@@ -148,6 +155,33 @@ export class AssetRegistry {
     }
     return { count: this.figureTextures.size, decodedBytes };
   }
+  /** Change the image behind the existing Materials.fromTexture map and cache entry. */
+  setTextureTier(tier: 'high' | 'low'): void {
+    this.textureTier = tier;
+    for (const map of this.figureTextures) {
+      const images = map.userData.textureTierImages as Partial<Record<'high' | 'low', { width: number; height: number; close?: () => void }>> | undefined;
+      const image = images?.[tier];
+      if (image && map.image !== image) { map.image = image; map.needsUpdate = true; }
+    }
+  }
+  private prepareAtlasTiers(map: import('three').Texture, def: AssetDef): Promise<void> {
+    const images = map.userData.textureTierImages as Partial<Record<'high' | 'low', { width: number; height: number; close?: () => void }>> | undefined;
+    if (images?.high && images.low) return Promise.resolve();
+    let pending = this.atlasReady.get(map);
+    if (!pending) {
+      const image = map.image as { width?: number; height?: number; close?: () => void } | undefined;
+      if (!image?.width || !image.height || !def.textureAtlasLow) return Promise.resolve();
+      const first = image.width <= 512 ? 'low' : 'high';
+      const other = first === 'low' ? 'high' : 'low';
+      const url = other === 'low' ? '/' + def.textureAtlasLow.replace(/^public\//, '') : '/' + def.glb!.replace(/^public\//, '').replace(/[^/]+$/, `${def.id}.atlas.webp`);
+      pending = new TextureLoader().loadAsync(url).then(alternate => {
+        map.userData.textureTierImages = { ...(map.userData.textureTierImages ?? {}), [first]: image, [other]: alternate.image };
+        alternate.dispose(); this.setTextureTier(this.textureTier);
+      });
+      this.atlasReady.set(map, pending);
+    }
+    return pending;
+  }
   async dispose(): Promise<void> {
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>();
     for (const pending of this.cache.values()) (await pending).traverse((node) => {
@@ -159,7 +193,14 @@ export class AssetRegistry {
     for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
-    for (const texture of this.figureTextures) texture.dispose();
+    for (const texture of this.figureTextures) {
+      texture.dispose();
+      const images = texture.userData.textureTierImages as Partial<Record<'high' | 'low', { close?: () => void }>> | undefined;
+      const ownedImages = new Set(Object.values(images ?? {}));
+      if (texture.image) ownedImages.add(texture.image as { close?: () => void });
+      for (const image of ownedImages) image?.close?.();
+      delete texture.userData.textureTierImages;
+    }
     this.figureTextures.clear();
     this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
   }

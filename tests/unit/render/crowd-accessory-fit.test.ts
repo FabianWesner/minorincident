@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
 import { Box3, Vector3, Matrix4, type InstancedMesh } from 'three';
@@ -14,7 +15,7 @@ import manifest from '../../../src/assets/manifest.json';
 async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
   const def = manifest.find(d => d.id === id)!;
   const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   scene.userData.assetId = id; return scene;
 }
 async function crowdGeometry(id: string, lod: 'lod1' | 'lod2') {

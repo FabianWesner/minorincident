@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { Vector3, type BufferGeometry } from 'three';
 import { readFileSync } from 'node:fs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -22,11 +23,21 @@ function surfaceAreas(geometry: BufferGeometry): Map<number, number> {
 
 for (const model of regularInfectedModels) for (const lod of ['lod1', 'lod2']) test(`@E25 @E25-AC13 ${model} ${lod}: body surfaces and red eye cores survive the low bake`, async () => {
   const file = readFileSync(`public/assets/models/${model}.${lod}.glb`);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(file), '');
   const baked = bakeInfected(scene); deinterleaveGeometry(baked.geometry);
   const geometry = mergeVertices(baked.geometry); baked.geometry.dispose();
   const emissive = geometry.getAttribute('_emissive'), skin = geometry.getAttribute('_shirt'), position = geometry.getAttribute('position');
   const original = Array.from({ length: emissive.count }, (_, i) => emissive.getX(i));
+  if (geometry.userData.crowdAtlas) {
+    // Textured delivery uses the sampled red atlas pixels inside this retained
+    // vertex eye-region mask; palette core expansion does not run on it.
+    const parts = geometry.getAttribute('_part_index');
+    expect(geometry.getAttribute('uv').count).toBe(position.count);
+    expect(original.filter(Boolean).length).toBeGreaterThan(0);
+    for (let i = 0; i < original.length; i++) if (original[i]) expect(parts.getX(i)).toBe(baked.clip.parts.indexOf('head'));
+    expect(geometry.index!.count / 3).toBeLessThanOrEqual(lod === 'lod2' ? 900 : 2500);
+    geometry.dispose(); return;
+  }
   markInfectedEyeCores(geometry);
   const cores = original.flatMap((value, i) => !value && emissive.getX(i) > .5 ? [i] : []);
   expect(cores.length).toBeGreaterThan(0);

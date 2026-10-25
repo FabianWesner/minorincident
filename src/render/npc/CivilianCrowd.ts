@@ -6,6 +6,7 @@ import { useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
+import { corpseLayout, corpsePose, corpsePoses } from '../characters/CorpseLayout';
 import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
@@ -51,7 +52,7 @@ type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
-  if (e.escort || e.civilian?.zooAnimal || e.civilian?.pet) return null;
+  if (e.escort || e.civilian?.zooAnimal || e.civilian?.pet || e.appearance?.asset === 'inf.common-worker') return null;
   const c = e.civilian;
   // Old checkpoints may still contain an adult skin on a protected child.
   if (c?.adult === false && !c.pet) return 'npc.civilian-kid';
@@ -118,6 +119,7 @@ class CivilianBatch extends Group {
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
   constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super();
+    if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.corpses.matrixAutoUpdate = this.corpses.matrixWorldAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
     this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
@@ -189,11 +191,11 @@ class CivilianBatch extends Group {
     // Warm the band actually used for settled bodies: L4/L7 phones freeze LOD2,
     // while desktop and L6 freeze LOD1. Warming a different band left the first
     // phone corpse baking geometry and compiling its shader during combat.
-    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, true);
+    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) for (const death of corpsePoses) this.corpses.prepare(`${this.model}:${death}`, baked.geometry, material, baked.clip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, true);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
-    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id));
+    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id), e => corpseLayout(this.world).place(e), this.world.entities.get(1)?.transform);
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
@@ -231,7 +233,7 @@ class CivilianBatch extends Group {
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
       let clip: Clip = storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
-      if (!storyClip && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && ['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '')) clip = waitingIdle(e.id, e.appearance?.handProp);
+      if (!storyClip && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && ['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '')) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
       if (e.passengerOf === undefined && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
@@ -264,7 +266,7 @@ class CivilianBatch extends Group {
       if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'shotgun', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.
         const target = c.ally?.targetId ? this.world.entities.get(c.ally.targetId) : undefined;
-        if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
+        if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y - (target.health.current <= 0 ? 1.1 : 0),target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
         else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
         const hold = handProp === 'pistol' ? undefined : crowdLongGunHold;
@@ -307,7 +309,7 @@ class CivilianBatch extends Group {
     else this.shirt.copy(crowdShirt(e.id));
     writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
     const figure = this.probe.figures.at(-1);
-    if (figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
+    if (this.probe.details && figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
   private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
   /** Scene Lab probe: dead pedestrian-look infected as drawn (feet position), frozen corpses included. */
@@ -324,6 +326,7 @@ class CivilianBatch extends Group {
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
     const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
     let clip: Clip = infectedClip(b.state, motion.speed, e.appearance!.tier, tick < b.until);
+    if (b.state === 'dead') clip = corpsePose(e.id);
     // Heavy reactions (deaths, finishers, blasts) knock the body down and get it up again; light hits flinch (InfectedMoves).
     const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
     if (heavy) clip = age < .7 ? 'knockdown' : 'get-up';
@@ -351,7 +354,9 @@ class CivilianBatch extends Group {
     // The baked walking hunch also reaches beyond the roots while approaching a
     // neighbour. Yield that upper-body pose before two otherwise clear feet meet.
     if (contact && !still && !heavy && !b.specialAttack && b.state !== 'dead') { layers.lean = -.15; layers.lurch = 0; }
-    this.transform.setPosition(presented.x, presented.y - .7, presented.z);
+    const resting = b.state === 'dead' ? corpseLayout(this.world).place(e) : presented;
+    if (b.state === 'dead') this.transform.makeRotationY(resting.yaw);
+    this.transform.setPosition(resting.x, b.state === 'dead' ? resting.y : presented.y - .7, resting.z);
     if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
@@ -360,7 +365,8 @@ class CivilianBatch extends Group {
     if (e.corpse) {
       this.tintOf(e, index, 1);
       const source = this.accessories?.corpseSource(e, this.mesh.geometry, this.model, this.bakedClip.parts.indexOf('head')) ?? this.mesh.geometry;
-      this.corpses.place(e, this.model, source, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1], String(e.id), [], resolveCrowdAppearance(e));
+      const death = corpsePose(e.id);
+      this.corpses.place(e, `${this.model}:${death}`, source, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1], String(e.id), [], resolveCrowdAppearance(e));
       return false;
     }
     this.accessories?.place(e, this.lod, this.poses, frame, blend, this.transform);
@@ -408,6 +414,7 @@ export class CivilianCrowd extends Group {
   }
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
+    if (world.scenario === 'L4') this.matrixAutoUpdate = false;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
     const models=this.staged ? [] : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     for (const model of models) { this.known.add(model); if (!this.staged) this.farModels.add(model); }
@@ -459,6 +466,7 @@ export class CivilianCrowd extends Group {
   private disposed = false;
   private readonly known = new Set<string>();
   private readonly farModels = new Set<string>();
+  private figureRevision = -1;
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
     // Campaign people spawn at Begin. Their close tiers must be ready before
@@ -535,16 +543,22 @@ export class CivilianCrowd extends Group {
     loadMeasure('view:civilian-crowd', started); this.update(1, this.staged ? camera : undefined);
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
-    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera && this.world.missions!.state.phase === 'briefing') this.stageInitial(); this.props.begin();
+    // L4 people retain their model through infection. EntityStore revisions
+    // cover births, replacement and checkpoint restore; live poses still update.
+    const membershipChanged = this.world.scenario !== 'L4' || this.figureRevision !== this.world.entities.revision;
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); if (membershipChanged) this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera && this.world.missions!.state.phase === 'briefing') this.stageInitial(); this.props.begin();
     for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
     {
       // Each human belongs to one model (every scenario: the L3/L4 5x hordes made the per-batch full scan the view cost). All its LOD batches share this frame's
       // list instead of rescanning every prop, light and other crowd model.
-      for (const list of this.figures.values()) list.length = 0;
-      for (const e of this.world.entities.iterate()) {
-        const model = crowdModelOf(e); if (!model) continue;
-        let list = this.figures.get(model); if (!list) this.figures.set(model, list = []);
-        list.push(e);
+      if (membershipChanged) {
+        for (const list of this.figures.values()) list.length = 0;
+        for (const e of this.world.entities.iterate()) {
+          const model = crowdModelOf(e); if (!model) continue;
+          let list = this.figures.get(model); if (!list) this.figures.set(model, list = []);
+          list.push(e);
+        }
+        this.figureRevision = this.world.entities.revision;
       }
       for (const b of this.batches) b.update(alpha, this.low, undefined, this.figures.get(b.model) ?? noFigures);
     }
@@ -555,6 +569,9 @@ export class CivilianCrowd extends Group {
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);
     const entity = this.world.entities.get(id); if (!entity) return null;
+    // Firing and hearing remain simulation events. A fully off-screen L4
+    // shooter needs no extra skeleton/footwork solve just to place its flash.
+    if (this.low && this.world.scenario === 'L4' && !this.visibility.visible(entity.transform.x, entity.transform.y + .2, entity.transform.z, 1.8)) return null;
     const model = crowdModelOf(entity);
     for (const batch of this.batches) if (batch.model === model) batch.update(1,this.low,id);
     return this.muzzle(id);

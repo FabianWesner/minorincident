@@ -1,0 +1,99 @@
+{
+  "pitch": 0.007897434988990426,
+  "grid": [
+    111,
+    74,
+    138
+  ],
+  "construction_views": 56,
+  "filled_voxels": 95772,
+  "volume_faces": 66496,
+  "source_sha256": "739ce9749241b8702236ec73bfc606f68b5f0e2f3c969a67bc5675eba5703906",
+  "resolution": 128,
+  "winding_threshold": 0.35,
+  "closing": 1,
+  "method": "envelope",
+  "raster_resolution": 256,
+  "stage_sha256": "dac3722a111e98b7e1c7fd654e5f46cc7ca4136857d244f0aa853d5f90b85b61",
+  "lods": {
+    "5700": {
+      "faces": 5700,
+      "watertight": true,
+      "sliver_percent": 0.21052631578947367,
+      "path": "/private/tmp/tex-suit-solidify/suit_5700.ply"
+    },
+    "2184": {
+      "faces": 2184,
+      "watertight": true,
+      "sliver_percent": 0.045787545787545784,
+      "path": "/private/tmp/tex-suit-solidify/suit_2184.ply"
+    },
+    "882": {
+      "faces": 882,
+      "watertight": true,
+      "sliver_percent": 0.11337868480725624,
+      "path": "/private/tmp/tex-suit-solidify/suit_882.ply"
+    }
+  },
+  "seconds": 9.482326459139585,
+  "upstreamCommit": "8003c3f94086083635f1da5eeddb9bae6650aa2f",
+  "decision": "Retain approved source geometry: envelope fills the open mouth and eye sockets, merges the shirt and tie relief, and loses torn lapels. It does not improve the approved suit look.",
+  "targets": [
+    5700,
+    2184,
+    882
+  ],
+  "windingTrial": {
+    "pitch": 0.003948717494495213,
+    "resolution": 256,
+    "grid": [
+      213,
+      138,
+      266
+    ],
+    "winding_threshold": 0.35,
+    "winding_range": [
+      -0.3936234712600708,
+      1.8101670742034912
+    ],
+    "source_faces": 35990,
+    "surface_voxels": 207480,
+    "filled_voxels": 433565,
+    "volume_faces": 420368,
+    "source_sha256": "739ce9749241b8702236ec73bfc606f68b5f0e2f3c969a67bc5675eba5703906",
+    "closing": 0,
+    "method": "winding",
+    "raster_resolution": 512,
+    "stage_sha256": "dac3722a111e98b7e1c7fd654e5f46cc7ca4136857d244f0aa853d5f90b85b61",
+    "lods": {
+      "5700": {
+        "faces": 5694,
+        "watertight": true,
+        "sliver_percent": 0.12293642430628732,
+        "path": "/private/tmp/tex-suit-solidify/winding_5700.ply"
+      }
+    },
+    "seconds": 38.01116579119116
+  },
+  "surfaceDistances": {
+    "current_5700": {
+      "meanDistance": 0.001461300214110815,
+      "p95Distance": 0.003901022836736252,
+      "sourceMaxExtent": 1.0108716785907745,
+      "samples": 20000
+    },
+    "suit_5700": {
+      "meanDistance": 0.005899370656013213,
+      "p95Distance": 0.015613527496931392,
+      "sourceMaxExtent": 1.0108716785907745,
+      "samples": 20000
+    },
+    "winding_5700": {
+      "meanDistance": 0.0032551111939033085,
+      "p95Distance": 0.006343399122604777,
+      "sourceMaxExtent": 1.0108716785907745,
+      "samples": 20000
+    }
+  },
+  "windingDecision": "Winding at resolution256 retains the mouth but rounds the finger separation, hair spikes and lapels. Surface p95 error is 1.63x the existing 5700-triangle reduction. The current reduction preserves the approved features better; do not promote either solid trial."
+}

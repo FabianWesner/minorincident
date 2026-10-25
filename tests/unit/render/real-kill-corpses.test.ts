@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test, vi } from 'vitest';
@@ -15,7 +16,7 @@ import { megaAlpha } from '../../../src/data/megaAlpha';
 
 async function model(path: string) {
   const bytes = readFileSync(path);
-  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
 }
 function surfaceSignature(geometry: BufferGeometry): string {
   const hash = createHash('sha256');
