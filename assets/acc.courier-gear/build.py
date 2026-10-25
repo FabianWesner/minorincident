@@ -60,6 +60,13 @@ class Body:
         self.bvh_nopack = BVHTree.FromBMesh(bm)
         self.nopack_teal = [False] * len(bm.faces)
         bm.free()
+        # the head without the ponytail (Q-171): the heroine's spring-driven tail swings away from the skull, so a goggle strap cast
+        # onto it stood in the air on a run turn. Only vertices that follow pony1..3 noticeably are removed; the hair shell on the skull stays.
+        bm = bmesh.new(); bm.from_mesh(me); deform = bm.verts.layers.deform.verify()
+        pony = [self.obj.vertex_groups[n].index for n in ('pony1', 'pony2', 'pony3') if n in self.obj.vertex_groups]
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if sum(v[deform].get(i, 0) for i in pony) > .05], context='VERTS')
+        self.bvh_nopony = BVHTree.FromBMesh(bm)
+        bm.free()
         cols = me.color_attributes[0].data
         self.teal = [self.is_teal(sum((Vector(cols[li].color) for li in poly.loop_indices), Vector((0, 0, 0, 0))) / len(poly.loop_indices)) for poly in me.polygons]
         self.kd = KDTree(len(me.vertices))
@@ -273,7 +280,7 @@ def build_gear(body, lod, sex):
     for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
         g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: -.12 + s * .86, 0, 0, closed=True),
-                lambda s, t_: .014 * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=.06 if body.textured else None,
+                lambda s, t_: (.008 if body.textured else .014) * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=.06 if body.textured else None,
                 remap=only({'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))
     g.tier_mark()
 
@@ -305,7 +312,7 @@ def build_gear(body, lod, sex):
                 remap=only({'arm' + side, 'clavicle' + side, 'chest'}, 'arm' + side))
         arm = limb_axis(body, [('arm' + side, 'h'), ('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(arm)
         ez = bones['foreArm' + side][0].z
-        if lod < 1: g.patch(DARK, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.026, .45), n(3, 2), n(4, 3), rim=TRIM,
+        if lod < 1: g.patch(DARK, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.013 if body.textured else .026, .45), n(3, 2), n(4, 3), rim=TRIM,
                 remap=only({'arm' + side, 'elbow' + side, 'foreArm' + side, 'foreArmTwist' + side}, 'arm' + side))
     wz = bones['torso'][0].z
     bcols = n(16, 8)
@@ -320,17 +327,19 @@ def build_gear(body, lod, sex):
     band, tabs, lens = ((31, 39), (29, 41), (48, 78)) if not body.textured else ((16, 24), (14, 26), (22, 46))
     if body.textured: hc = Vector((bones['head'][0].x, 0, bones['eyeL'][0].z + .025))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
-    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: .016 * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
-            rim=None, remap=only({'head', 'neck'}, 'head'))
+    hbvh = body.bvh_nopony if body.textured else None
+    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: (.009 if body.textured else .016) * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
+            bvh=hbvh, rim=None, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-158, 158) if lod < 2 else ():   # brass end tabs close the strap visually where it tucks behind the ponytail
-        g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, *tabs, az0), pad(.022, .6), 2, 2, outer=.6, remap=only({'head', 'neck'}, 'head'))
+        g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, *tabs, az0), pad(.012 if body.textured else .022, .6), 2, 2, outer=.6, bvh=hbvh, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-22, 22) if lod < 2 else ():
-        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, *lens, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, rim='silver', rim_cells=False,
+        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, *lens, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, bvh=hbvh, rim='silver', rim_cells=False,
                 remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
         fz = bones['foreArm' + side][0].z
-        g.patch(DARK, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.022, .55), n(2, 2), n(5, 3), rim=TRIM,
+        # The heroine's forearm is slim (~2.5 cm radius): a 2.2 cm plate doubled it and read as a slab standing off the arm (Q-171).
+        g.patch(DARK, around(fa, lambda s, fz=fz, vz=vz: vz(fz - .022 - .08 * s), 90 * sg, 76), pad(.009 if body.textured else .022, .55), n(2, 2), n(5, 3), rim=TRIM,
                 remap=only({'arm' + side, 'foreArm' + side, 'foreArmTwist' + side, 'elbow' + side, 'hand' + side}, 'foreArm' + side))
     g.tier_mark()
     return g

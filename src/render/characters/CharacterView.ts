@@ -383,7 +383,7 @@ export class CharacterView extends Group {
       const geometry = source.geometry; geometry.setAttribute('skinIndex', new Uint16BufferAttribute(remapped, 4));
       const mesh = new SkinnedMesh(geometry, material);
       mesh.name = 'courier-tier-gear'; mesh.position.copy(bodyMesh.position); mesh.quaternion.copy(bodyMesh.quaternion); mesh.scale.copy(bodyMesh.scale);
-      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false;
+      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false; mesh.userData.tierTris = tierTris;
       bodyMesh.parent!.add(mesh); mesh.updateMatrixWorld(true); mesh.bind(bodyMesh.skeleton, bodyMesh.bindMatrix);
       return { mesh, tierTris };
     } catch { return undefined; }
@@ -442,14 +442,26 @@ export class CharacterView extends Group {
       // build, assets/acc.courier-gear). The guard measures those, i.e. the gap between the gear and the skin, never a plate's outer face.
       // Meshes without `_inner` (other accessories) measure every vertex.
       const inner = node.geometry.getAttribute('_inner'), position = node.geometry.getAttribute('position');
+      // Only drawn geometry counts (Q-171): the tier gear is one mesh whose draw range grows per tier, so at tier 1-3 the
+      // tier-4 goggle vertices exist in the buffer but are not drawn. Vertices are taken from the indexed triangles inside the
+      // draw range; each one is labelled with the tier whose triangles first use it (tierTris, cumulative triangle ends).
+      const index = node.geometry.getIndex(), range = node.geometry.drawRange, tierTris = node.userData.tierTris as number[] | undefined;
+      const drawn = new Map<number, number>();
+      if (index) {
+        const from = Math.max(0, range.start), to = Math.min(index.count, range.start + (Number.isFinite(range.count) ? range.count : index.count));
+        for (let k = from; k < to; k++) { const v = index.getX(k); if (!drawn.has(v)) drawn.set(v, tierTris ? tierTris.findIndex(end => k < end * 3) + 1 : 0); }
+      } else for (let i = 0; i < position.count; i++) drawn.set(i, 0);
       const all = points(node, position.count), picks: number[] = [];
-      for (let i = 0; i < position.count; i++) if (!inner || inner.getX(i) > .5) picks.push(i);
+      for (const i of drawn.keys()) if (!inner || inner.getX(i) > .5) picks.push(i);
+      picks.sort((a, b) => a - b);
       const stride = Math.max(1, Math.floor(picks.length / 300));
       for (let k = 0; k < picks.length; k += stride) {
         const p = all[picks[k]]; let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b));
         if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = picks[k]; at = p.toArray().map(v => Math.round(v * 1000) / 1000); }
       }
-      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
+      if (!picks.length) return;
+      const tier = drawn.get(vertex) ?? 0;
+      report.push({ name: `${node.parent?.name || node.name || 'mesh'}${tier ? `.t${tier}` : ''}`, gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
     });
     return report;
   }

@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { MeshLambertMaterial, Quaternion, Vector3, type Object3D } from 'three';
+import { MeshLambertMaterial, Quaternion, Vector3, type Object3D, type SkinnedMesh } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { afterEach, expect, test, vi } from 'vitest';
@@ -25,9 +25,9 @@ async function courier(variant: 'female' | 'male') {
   const state = pose(variant);
   let speed = 0, yaw = 0;
   /** One presented frame like GameView: facing, sim pose, glance target, ride contacts (the living layer runs last). */
-  const frame = (tick: number, want: { speed?: number; yaw?: number; look?: Vector3 | null } = {}) => {
+  const frame = (tick: number, want: { speed?: number; yaw?: number; look?: Vector3 | null; turnRate?: number } = {}) => {
     const target = want.speed ?? 0; speed += Math.sign(target - speed) * Math.min(Math.abs(target - speed), 9 / 60);
-    const delta = Math.atan2(Math.sin((want.yaw ?? yaw) - yaw), Math.cos((want.yaw ?? yaw) - yaw)); yaw += Math.sign(delta) * Math.min(Math.abs(delta), 4.5 / 60);
+    const delta = Math.atan2(Math.sin((want.yaw ?? yaw) - yaw), Math.cos((want.yaw ?? yaw) - yaw)); yaw += Math.sign(delta) * Math.min(Math.abs(delta), (want.turnRate ?? 4.5) / 60);
     character.position.x += Math.cos(yaw) * speed / 60; character.position.z -= Math.sin(yaw) * speed / 60;
     state.velocity = { x: Math.cos(yaw) * speed, z: -Math.sin(yaw) * speed };
     character.face(yaw, tick / 60); character.update(state, tick, 1); character.glanceAt(want.look ?? null); character.applyRideContacts(); character.updateMatrixWorld(true);
@@ -110,6 +110,46 @@ test.each(['female', 'male'] as const)('courier %s ponytail and bag settle after
     const settle = tips.filter(t => t.tick > stopped + 60);
     for (let i = 1; i < settle.length; i++) expect(settle[i][key]!.distanceTo(settle[i - 1][key]!) * 60, `${key} tick ${settle[i].tick}`).toBeLessThan(.02);
   }
+  c.character.dispose();
+});
+
+test('heroine ponytail never swings forward past the crown plane on a 180° run turn (Q-172) @E04', async () => {
+  const c = await courier('female'), head = c.root.getObjectByName('head')!;
+  const tail = (c.living as unknown as { pony: { p: Vector3 }[] }).pony;
+  let front = -Infinity, turned = 0;
+  // Sprint, then a snap reversal (30 rad/s: the presentation turn after a sharp input flip) and a stop.
+  for (let tick = 1; tick <= 420; tick++) {
+    c.frame(tick, { speed: tick < 330 ? 7 : 0, yaw: tick < 150 ? 0 : tick < 240 ? Math.PI : 0, turnRate: 30 });
+    if (tick > 150) turned++;
+    // Head frame: +x forward, +y up; the skull centre (head collider) sits at x = -0.03.
+    for (const particle of tail) front = Math.max(front, head.worldToLocal(particle.p.clone()).x);
+  }
+  expect(turned).toBeGreaterThan(0);
+  expect(front).toBeLessThanOrEqual(-.03 + 1e-3);
+  c.character.dispose();
+});
+
+test('heroine attachment gate measures only drawn tier gear and still catches a real 3 cm offset (Q-171) @E04', async () => {
+  const c = await courier('female');
+  const gear = c.root.parent!.getObjectByName('courier-tier-gear') as SkinnedMesh;
+  expect(gear).toBeTruthy();
+  const measure = (tier: number) => {
+    c.state.gearTier = tier as SurvivorState['gearTier']; c.frame(1);
+    c.root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) (node as SkinnedMesh).skeleton.update(); });
+    gear.skeleton.update();
+    return Math.max(0, ...c.character.looseAttachments().map(a => a.gapCm));
+  };
+  for (const tier of [1, 2, 3, 4]) expect(measure(tier), `tier ${tier}`).toBeLessThanOrEqual(2);
+  // Vertices only the tier-4 triangles use (goggles, forearm guards) pushed 3 cm off the head/arms: hidden at tiers 1-3, so those
+  // tiers stay green; tier 4 draws them and must fail.
+  const tiers = gear.userData.tierTris as number[], index = gear.geometry.getIndex()!, position = gear.geometry.getAttribute('position');
+  const earlier = new Set<number>(); for (let k = 0; k < tiers[2] * 3; k++) earlier.add(index.getX(k));
+  const moved = new Set<number>(); for (let k = tiers[2] * 3; k < tiers[3] * 3; k++) { const v = index.getX(k); if (!earlier.has(v)) moved.add(v); }
+  expect(moved.size).toBeGreaterThan(20);
+  const shift = .03 / gear.getWorldScale(new Vector3()).y;
+  for (const v of moved) position.setY(v, position.getY(v) + shift);
+  for (const tier of [1, 2, 3]) expect(measure(tier), `tier ${tier} with hidden tier-4 offset`).toBeLessThanOrEqual(2);
+  expect(measure(4)).toBeGreaterThanOrEqual(2.5);
   c.character.dispose();
 });
 
