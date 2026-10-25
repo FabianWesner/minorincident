@@ -23,9 +23,17 @@ process.env.SCENE_SERVER = 'preview';
 try {
   for (const backend of (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[]) for (const variant of (process.env.VARIANTS ?? 'main,skin,skin,main').split(',')) {
     process.chdir(variant === 'main' ? baseline : root); process.env.SCENE_DIST = 'dist';
-    const session = new SceneSession({ backend, tier: 'high', nativeFrameTiming: true, query: { crowdProbe: 'drawn' } });
+    const session = new SceneSession({ backend, tier: 'low', nativeFrameTiming: true, query: { crowdProbe: 'drawn' } });
     try {
-      await session.open(); await session.load(spec);
+      await session.open();
+      await session.page.evaluate(() => {
+        // Lift only the spawn admission cap while constructing the fixed 200-AI fixture.
+        // Game.loadLevel reapplies low before view.load: low textures, meshes and shaders initialize on low.
+        const scene = window.__SCENE__ as unknown as { setup(world: Game['world'], spec: SceneSpec): void };
+        const setup = scene.setup;
+        scene.setup = function(world, spec) { scene.setup = setup; world.infected?.director.setTier('high'); return setup.call(this, world, spec); };
+      });
+      await session.load(spec);
       await session.page.evaluate(() => { window.__SS__!.settings.set({ quality: 'low' }); window.__SS__!.debug.figureJoints(false); window.__SS__!.cheats.god(true); });
       await session.step(120); await session.ready();
       const profiler = process.env.PROFILE ? await session.page.context().newCDPSession(session.page) : undefined;
@@ -72,7 +80,7 @@ try {
             return { asset: b.asset, lod: b.lod, instances: b.count, integerFrames, vertices, triangles: (g.index?.count ?? vertices) / 3,
               meanInfluences: skin ? influences / vertices : 1, poseTexture: [b.texture.image.width, b.texture.image.height] };
           });
-          return { batches, backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
+          return { initialQuality: 'low', batches, backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
             missing, assets: [...assets].sort(), skins: [...skins].sort(), samples: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1],
             p50: frames[Math.ceil(frames.length * .5) - 1], triangles: perf.triangles, updateCpuMs: perf.updateCpuMs, renderCpuMs: perf.renderCpuMs, simMs: perf.simMs, elapsedMs: performance.now() - started };
         });
