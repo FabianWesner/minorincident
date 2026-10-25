@@ -131,7 +131,9 @@ export class CharacterView extends Group {
             if (textured) return textured;
             textured = materials.fromTexture(`character:${variant}:tex`, map);
             textured.userData.sharedPalette = true;
-            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1; const lift = (textured as PaletteMaterial).heroNightLift; if (lift) lift.value = 1;
+            // Night lift (Q-178) for the heroine's dark map only: on the male's lighter map it washed him out (L8 start figure luminance
+            // 0.51 vs PROD 0.377 with it, 0.415 without; docs/reports/male-courier/night-l8.json).
+            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1; const lift = (textured as PaletteMaterial).heroNightLift; if (lift) lift.value = variant === 'female' ? 1 : 0;
             if (bloodFeedback) this.bloodMaterials.push(textured as PaletteMaterial);
             this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
             this.textured.add(variant);
