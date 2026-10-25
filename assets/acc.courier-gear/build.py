@@ -52,6 +52,8 @@ class Body:
         self.textured = any(m and m.name == 'tex_baseColor' for m in me.materials)
         # The textured male (10-25) wears his cap at the old cap height: his goggles keep the cap fit (the heroine's sit on her hair).
         self.capped = not self.textured or 'courier-male' in Path(path).name
+        # textured male: chunky wrist bands and a 6k cap surface; pads stay within the 2 cm attachment gate
+        self.slim = self.textured and self.capped
         self.bones = {b.name: (b.head_local.copy(), b.tail_local.copy()) for b in self.rig.data.bones}
         self.bvh = BVHTree.FromObject(self.obj, bpy.context.evaluated_depsgraph_get())
         # the same without the rigid backpack so back/torso rays reach the clothes
@@ -82,7 +84,22 @@ class Body:
         return c[0] < .35 and c[1] > c[0] * 1.5 and c[1] > c[2] * .85
     def weights_at(self, p, n=3, remap=None):
         acc = {}
-        for co, idx, dist in self.kd.find_n(p, n):
+        if self.slim:
+            # 6k textured male: his triangles are 1.5-2 cm, so the 3 nearest vertices can sit across an elbow/twist band and the
+            # plate left the skin in a bend (3-7 cm). Use the barycentric weights of the nearest surface triangle instead.
+            if not hasattr(self, 'tri_bvh'):
+                self.me.calc_loop_triangles()
+                self.tris = [tuple(t.vertices) for t in self.me.loop_triangles]
+                self.tri_bvh = BVHTree.FromPolygons([v.co for v in self.me.vertices], self.tris)
+            loc, _, face, _ = self.tri_bvh.find_nearest(p)
+            a, b, c = (self.me.vertices[i].co for i in self.tris[face])
+            from mathutils.geometry import barycentric_transform
+            q = barycentric_transform(loc, a, b, c, Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1)))
+            for idx, w in zip(self.tris[face], (q.x, q.y, q.z)):
+                for g in self.me.vertices[idx].groups:
+                    acc[g.group] = acc.get(g.group, 0) + g.weight * max(w, 0)
+        else:
+          for co, idx, dist in self.kd.find_n(p, n):
             w = 1 / (dist + 1e-4)
             for g in self.me.vertices[idx].groups:
                 acc[g.group] = acc.get(g.group, 0) + g.weight * w
@@ -269,6 +286,9 @@ def build_gear(body, lod, sex):
         return conv
     def only(allowed, fallback):
         """A plate follows only its own limb's bones (never the other side, never the torso): everything else folds into `fallback`."""
+        # The textured male's 6k skin blends arm and torso over the fused sleeve/back (a hard split tore 16x in the bat swing): his plates
+        # copy the skin's own weights unfolded, so they stay on it in every pose (folded plates left it by 3.7-7.6 cm in a bend).
+        if body.slim: return None
         return {name: fallback for name in body.names if name not in allowed}
     ARMS = {'armL': 'chest', 'armR': 'chest', 'elbowL': 'chest', 'elbowR': 'chest', 'clavicleL': 'chest', 'clavicleR': 'chest', 'foreArmL': 'chest', 'foreArmR': 'chest'}
     STEEL, DARK, TRIM = 'pantsDark', 'uiDark', '#6d6a78'   # one mid-grey rim for every pad
@@ -278,12 +298,13 @@ def build_gear(body, lod, sex):
         kz = bones['knee' + side][0].z
         leg = limb_axis(body, [('leg' + side, 'h'), ('knee' + side, 'h'), ('shin' + side, 't')]); vz = v_of_z(leg)
         g.patch(DARK, around(leg, lambda s, kz=kz, vz=vz: vz(kz + .058 - .12 * s), 0, 66),
-                pad(.026, .45), n(4, 2), n(5, 3), rim=TRIM, remap=only({'leg' + side, 'knee' + side, 'shin' + side, 'hip'}, 'leg' + side))
+                pad(.017 if body.slim else .026, .45), n(4, 2), n(5, 3), rim=TRIM, remap=only({'leg' + side, 'knee' + side, 'shin' + side, 'hip'}, 'leg' + side))
     for side in 'LR' if lod < 2 else '':
         h, t = bones['hand' + side]; up = (h - t).normalized()
-        g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: -.12 + s * .86, 0, 0, closed=True),
-                lambda s, t_: (.008 if body.textured else .014) * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=.06 if body.textured else None,
-                remap=only({'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))
+        # slim (textured male): the glove sits on his rigid hand below the wrist band; over the twisting band it lifted 2.2-2.6 cm in a bat swing
+        g.patch('leather', around(lambda v, h=h, t=t, up=up: (h.lerp(t, v), up), lambda s: (.3 if body.slim else -.12) + s * (.55 if body.slim else .86), 0, 0, closed=True),
+                lambda s, t_: ((.004 if body.slim else .008) if body.textured else .014) * (.6 + .4 * math.sin(math.pi * s)), n(3, 2), n(8, 5), closed=True, rim='gloveKhaki', outer=(.095 if body.slim else .06) if body.textured else None,
+                remap=only({'hand' + side} if body.slim else {'foreArm' + side, 'foreArmTwist' + side, 'hand' + side, 'elbow' + side}, 'hand' + side))  # slim: on his rigid hand only
     g.tier_mark()
 
     # ---- tier 2: quilted padded vest (olive, collar, ridges, armholes) ------------------------------------------------
@@ -317,6 +338,8 @@ def build_gear(body, lod, sex):
         if lod < 1: g.patch(DARK, around(arm, lambda s, ez=ez, vz=vz: vz(ez + .046 - .092 * s), 135 * sg, 56), pad(.013 if body.textured else .026, .45), n(3, 2), n(4, 3), rim=TRIM,
                 remap=only({'arm' + side, 'elbow' + side, 'foreArm' + side, 'foreArmTwist' + side}, 'arm' + side))
     wz = bones['torso'][0].z
+    # the textured male's belt rides his own belt line at the hip joint; at the torso joint it met his front pouch and bag bottom (4-7.7 cm off)
+    if body.slim: wz = bones['hip'][0].z - .01
     bcols = n(16, 8)
     if lod < 1: g.patch('leather', around(torso, lambda s: wz + .02 - .03 * s, -180 / bcols, 0, closed=True), lambda s, t: .02, 1, bcols, closed=True,
             bvh=body.bvh_nopack, cell_color=lambda i, j, R, C: 'brass' if j == 0 else 'leather', median=True, shade=.5)
@@ -330,12 +353,12 @@ def build_gear(body, lod, sex):
     if not body.capped: hc = Vector((bones['head'][0].x, 0, bones['eyeL'][0].z + .025))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
     hbvh = body.bvh_nopony if body.textured else None
-    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: (.009 if body.textured else .016) * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
+    g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: (.009 if body.textured and not body.slim else .014) * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
             bvh=hbvh, rim=None, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-158, 158) if lod < 2 else ():   # brass end tabs close the strap visually where it tucks behind the ponytail
         g.patch('brass', dome(hc, yleft, zup, xfwd, 5.5, *tabs, az0), pad(.012 if body.textured else .022, .6), 2, 2, outer=.6, bvh=hbvh, remap=only({'head', 'neck'}, 'head'))
     for az0 in (-22, 22) if lod < 2 else ():
-        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, *lens, az0), pad(.03, .5), n(3, 2), n(3, 2), outer=.6, bvh=hbvh, rim='silver', rim_cells=False,
+        g.patch('#06606c', dome(hc, yleft, zup, xfwd, 14, *lens, az0), pad(.018 if body.slim else .03, .5), n(3, 2), n(3, 2), outer=.6, bvh=hbvh, rim='silver', rim_cells=False,
                 remap=only({'head', 'neck'}, 'head'))
     for side, sg in (('L', 1), ('R', -1)) if lod < 1 else ():
         fa = limb_axis(body, [('foreArm' + side, 'h'), ('hand' + side, 'h')]); vz = v_of_z(fa)
