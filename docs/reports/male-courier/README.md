@@ -13,8 +13,9 @@ The rigid `?skin=0` fallback (`char.courier-male.glb` + LODs) is unchanged. "Old
   - The high is clean: arms free, bag on the back, front pouch, cap, curls.
 - **Pipeline v2:**
   - `solidify.py`: 6,000 cap, 256 grid, head-depth carve → 5,990 tris, watertight, 0.2 % slivers;
-  - `bake.py`: emission 1K;
-  - `cast_surface.py` repair, then `colour_match` (Lab) → `assets/char.courier-male-skin/source.glb`.
+  - `bake.py`: emission 1K (cage .02, ray .05);
+  - `colour_match` (Lab) → `assets/char.courier-male-skin/source.glb`.
+  - No `cast_surface.py` repair (orchestrator review): its nearest-surface transfer painted the 300k's teal straps and bag onto his orange shirt front and sleeves. The ray bake alone is clean on every side, with no misses on this figure.
   - The global Lab match turned the teal-green bag, straps and cap back blue-grey, so the build re-tints only that hue family to the reference teal (hue 172°).
 
 ## Bind (`assets/char.courier-male-skin/build.py`, same route as the heroine)
@@ -35,14 +36,14 @@ The rigid `?skin=0` fallback (`char.courier-male.glb` + LODs) is unchanged. "Old
 ## Numbers (old palette male → new)
 | | old | new |
 |---|---:|---:|
-| download, skin high / low | 709,892 / 703,168 B | 387,072 / 387,072 B |
-| download, tier gear LOD0 / low / LOD2 | 42,056 / 23,456 / 16,520 B | 41,484 / 23,748 / 17,372 B |
+| download, skin high / low | 709,892 / 703,168 B | 411,984 / 411,984 B |
+| download, tier gear LOD0 / low / LOD2 | 42,056 / 23,456 / 16,520 B | 41,500 / 23,772 / 17,372 B |
 | body triangles high / low | 51,124 / 29,674 | 5,990 / 5,990 |
 | body draw calls | 1 (+1 tier gear) | 1 (+1 tier gear); no repair caps |
 | decoded texture memory | 0 | 1024² RGBA8 + mips ≈ 5.6 MB |
 | look z1 scene, WebGPU low, last frame | 21 draws, 43,110 tris, 31,314 shadow tris | 21 draws, 19,426 tris, 7,630 shadow tris |
 | stretch audit max (31 clips, 24 steps) | 22.1× (bat-3) | 7.5× (bat-3, front crotch) |
-| edge samples > 4× | 841 | 563 |
+| edge samples > 4× | 841 | 591 |
 | `qa-courier-locomotion-m` foot slide / sink | 0 / 0 cm | 0 / 0 cm |
 | tier-gear attachment gap, 72 matrix rows | — | max 1.6 cm (gate 2) |
 | L8 start figure luminance vs PROD (`night-l8.json`) | 0.377 | 0.415 |
