@@ -1,3 +1,5 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { AnimationMixer, Box3, Matrix4, Mesh, Vector3 } from 'three';
@@ -15,7 +17,7 @@ const find = (id: string) => manifest.find(a => a.id === id) as AssetDef;
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 async function load(path: string) {
   const bytes = readFileSync(path);
-  return await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  return await loader.parseAsync(stripGlbTextures(bytes), '');
 }
 /** Edge multiplicity per node surface (`by: 'node'`, authored dog sweeps shared across palette faces) or per material
  * primitive (`by: 'material'`, the remeshed Mega Alpha solids: neighbouring material pieces may touch, each is closed). */
@@ -124,9 +126,15 @@ for (const lod of [0, 1, 2]) {
         const source = await io.read(sourcePath(def.id, lod, variant));
         for (const surface of surfaces(source, 'node')) expect([...surface.edges.values()].every(n => n === 2), `${label} ${surface.name}`).toBe(true);
         const names = doc.getRoot().listMaterials().map(m => m.getName());
-        expect(names.some(n => n.startsWith('emi_')), label).toBe(infected);
-        expect(names, label).toContain('pal_uiDark');
-        mains.push(names.filter(n => !n.startsWith('emi_')).sort().join(','));
+        if (def.crowdSkin) {
+          expect(doc.getRoot().listNodes().find(n => n.getName() === 'skin_eyes')?.getExtras().crowdEye, label).toBe(true);
+          expect(names, label).toContain('tex_baseColor');
+          expect(doc.getRoot().listTextures().every(t => t.getMimeType() === 'image/ktx2'), label).toBe(true);
+        } else {
+          expect(names.some(n => n.startsWith('emi_')), label).toBe(infected);
+          expect(names, label).toContain('pal_uiDark');
+        }
+        mains.push(def.crowdSkin ? createHash('sha256').update(doc.getRoot().listTextures()[0].getImage()!).digest('hex') : names.filter(n => !n.startsWith('emi_')).sort().join(','));
         const gltf = await load(path);
         expect(gltf.animations.map(a => a.name).sort(), label).toEqual(['dog-gallop', 'dog-lunge-bite']);
         for (const clip of gltf.animations) {
@@ -168,7 +176,7 @@ for (const lod of [0, 1, 2]) {
     }
     expect(heights.get('inf.dog')! / heights.get('amb.dog')!, 'the infected dog carries a lower stance').toBeLessThan(.85);
     // Same rig: node names and parents are identical between the healthy and infected dog and between coats.
-    const hierarchy = async (def: AssetDef, variant?: string) => (await io.read(lodPath(def, lod, variant))).getRoot().listNodes().map(n => `${n.getName()}<${n.getParentNode()?.getName() ?? ''}`).sort();
+    const hierarchy = async (def: AssetDef, variant?: string) => (await io.read(lodPath(def, lod, variant))).getRoot().listNodes().filter(n => def.requiredNodes.includes(n.getName()) || def.animatedNodes.includes(n.getName())).map(n => `${n.getName()}<${n.getName() === 'root' ? '' : n.getParentNode()?.getName() ?? ''}`).sort();
     expect(await hierarchy(dogs[1])).toEqual(await hierarchy(dogs[0]));
     expect(await hierarchy(dogs[0], 'black')).toEqual(await hierarchy(dogs[0]));
     expect(await hierarchy(dogs[1], 'cream')).toEqual(await hierarchy(dogs[1]));

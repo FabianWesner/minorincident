@@ -1,3 +1,4 @@
+import manifest from './manifest.json' with { type: 'json' };
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
 export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
@@ -42,6 +43,7 @@ function drain(): void {
 }
 /** Worker failure keeps the same loading-phase preparation as the fallback. */
 export function loadCivilianBake(model: string, lod: string, source = false): Promise<PreparedCivilian | undefined> {
+  if (manifest.some(def => def.id === model && 'crowdSkin' in def && def.crowdSkin)) return Promise.resolve(undefined);
   if (typeof Worker === 'undefined' || unavailable) return Promise.resolve(undefined);
   civilianBakeStats.submitted++;
   return new Promise(resolve => { queue.push({ id: ++sequence, model, lod, source, resolve }); drain(); });

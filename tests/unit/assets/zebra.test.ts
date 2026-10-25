@@ -47,7 +47,7 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) {
       const materialCount = source.getRoot().listMaterials().length;
       generateStumpCaps(source, def);
       expect(source.getRoot().listMaterials().length, 'authored caps add no unused materials during standard builds').toBe(materialCount);
-      expect(validateDocument(doc, def, statSync(path).size, lod, source).errors).toEqual([]);
+      expect(validateDocument(doc, def, statSync(path).size, lod, def.crowdSkin ? await io.read(def.sourceGlb!) : source).errors).toEqual([]);
       const validation = validateDocument(doc, def, statSync(path).size, lod);
       expect(validation.triangles).toBeLessThanOrEqual(budget);
       expect(validation.materials).toBeLessThanOrEqual(4);
@@ -56,9 +56,14 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) {
       // four coincident incidences; no unpaired/open source edge is allowed.
       for (const surface of surfaces(source)) expect([...surface.edges.values()].every(n => n >= 2 && n % 2 === 0), surface.name).toBe(true);
       const names = doc.getRoot().listMaterials().map(m => m.getName());
+      if (def.crowdSkin) {
+        expect(names).toContain('tex_baseColor');
+        expect(doc.getRoot().listTextures().every(t => t.getMimeType() === 'image/ktx2')).toBe(true);
+      } else {
       expect(names).toContain('pal_uiDark');
       expect(names).toContain(def.id.startsWith('inf.') ? 'pal_infectedSkin' : 'pal_picketWhite');
       expect(names.some(n => n.startsWith('emi_'))).toBe(def.id.startsWith('inf.'));
+      }
       // Motion-only Node load: browser WebP pixels/UVs are covered separately.
       const motion = await io.read(path); motion.getRoot().listTextures().forEach(t => t.dispose());
       const bytes = await io.writeBinary(motion);
@@ -102,7 +107,7 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) {
         expect(bottom, 'real hooves stay grounded across the run atlas').toBeGreaterThanOrEqual(-.001);
       }
       const emissive = baked.geometry.getAttribute('_emissive');
-      expect(Array.from({ length: emissive.count }, (_, i) => emissive.getX(i)).some(v => v > .5)).toBe(def.id.startsWith('inf.'));
+      expect(Array.from({ length: emissive.count }, (_, i) => emissive.getX(i)).some(v => v > .5)).toBe(def.crowdSkin || def.id.startsWith('inf.'));
       baked.geometry.dispose();
     }
     const healthy = await io.read(`assets/amb.zebra/model${lod ? `.lod${lod}` : ''}.glb`);

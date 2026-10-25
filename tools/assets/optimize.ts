@@ -5,12 +5,13 @@ import { pathToFileURL } from 'node:url';
 import { Matrix4, Quaternion, Vector3, Color } from 'three';
 import manifest from '../../src/assets/manifest.json';
 import type { Document, Node } from '@gltf-transform/core';
-import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds, transformMesh } from '@gltf-transform/functions';
+import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds, transformMesh, quantize, reorder } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { compressTextures } from './textures';
+import { EXTMeshoptCompression, KHRMeshQuantization } from '@gltf-transform/extensions';
 import { consolidateMeshopt } from './compress';
 import { semanticNodeNames } from './delivery';
 import { palette } from '../../src/assets/palette';
@@ -227,6 +228,15 @@ function shareVertexStreams(document: Document): void {
 
 /** Named transforms are gameplay pivots; quantization acts on geometry children. */
 export async function optimizeDocument(document: Document, def: AssetDef, ratio = 1): Promise<void> {
+  if (def.crowdSkin && document.getRoot().listSkins().length) {
+    // The cast builder supplies authored surface LODs. Position quantization would move the mesh node outside its bind frame.
+    await MeshoptEncoder.ready;
+    await document.transform(weld(), dedup(), prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }),
+      quantize({ pattern: /^(NORMAL|TEXCOORD_0|WEIGHTS_0|COLOR_0)$/, quantizeNormal: 10, quantizeTexcoord: 14, quantizeWeight: 16, quantizeColor: 16 }), reorder({ encoder: MeshoptEncoder }));
+    document.createExtension(KHRMeshQuantization).setRequired(true);
+    document.createExtension(EXTMeshoptCompression).setRequired(true).setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.QUANTIZE });
+    return;
+  }
   normalizeForward(document, def);
   normalizeScale(document, def);
   removeDegenerateTriangles(document);

@@ -1,7 +1,7 @@
 import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
-import { Box3, Mesh, Vector3 } from 'three';
+import { Box3, Mesh, SkinnedMesh, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../../src/assets/manifest.json';
@@ -26,7 +26,9 @@ for (const id of ['inf.dog', 'inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.zeb
     scene.traverse(node => {
       if (!(node instanceof Mesh)) return;
       for (let parent = node as import('three').Object3D | null; parent; parent = parent.parent) if (!parent.visible || parent.name.startsWith('stump_')) return;
-      node.geometry.computeBoundingBox(); bounds.union(node.geometry.boundingBox!.clone().applyMatrix4(node.matrixWorld));
+      if (node.userData.crowdEye) return;
+      if (node instanceof SkinnedMesh) { node.skeleton.update(); node.computeBoundingBox(); bounds.union(node.boundingBox!.clone().applyMatrix4(node.matrixWorld)); }
+      else { node.geometry.computeBoundingBox(); bounds.union(node.geometry.boundingBox!.clone().applyMatrix4(node.matrixWorld)); }
     });
     expect(bounds.min.y).toBeCloseTo(.015, 2);
   } finally { disposeCharacter(scene); }

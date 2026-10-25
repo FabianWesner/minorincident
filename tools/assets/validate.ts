@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { getBounds } from '@gltf-transform/functions';
 import type { Document, Node, Scene, Mesh } from '@gltf-transform/core';
 import type { AssetDef } from '../../src/assets/types';
-import { atLeast, variantPath } from '../../src/assets/types';
+import { atLeast, variantPath, drawComparisonPath } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
@@ -72,6 +72,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
+  const skinJoints = new Set(root.listSkins().flatMap(skin => skin.listJoints()));
   const weighted = new Set<Node>();
   for (const skin of root.listSkins()) {
     const joints = skin.listJoints();
@@ -98,7 +99,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   if (source) for (const name of semanticNodeNames(source)) {
     const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
-    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !weighted.has(packed) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !weighted.has(packed) && !skinJoints.has(packed) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
     if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
   }
   for (const name of def.animatedNodes) {
@@ -106,7 +107,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     const original = source?.getRoot().listNodes().find(node => node.getName() === name);
     // Amputees retain empty animation pivots; packing must preserve the source geometry contract.
     const originallyEmpty = original && !descendants(original).some(node => node.getMesh());
-    if (node && !originallyEmpty && !weighted.has(node) && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
+    if (node && !originallyEmpty && !weighted.has(node) && !skinJoints.has(node) && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
   }
   if (source) for (const animation of source.getRoot().listAnimations()) {
     const packed = root.listAnimations().find(candidate => candidate.getName() === animation.getName());
@@ -262,7 +263,7 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           // the same distance tier; a declared budget cannot widen this limit.
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const rig = definitions.find(candidate => candidate.id === def.rigidDrawBase);
-          const rigPath = rig && [rig.glb, rig.lods?.lod1, rig.lods?.lod2][lod];
+          const rigPath = rig && drawComparisonPath(rig, lod, def.crowdSkin);
           if (!rigPath || !existsSync(rigPath)) validation.errors.push(`rigidDrawBase: missing shipped LOD${lod}`);
           else {
             const baseline = await io.read(rigPath);
@@ -273,14 +274,14 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
         if (def.rigDrawBase) {
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const rigBase = definitions.find(a => a.id === def.rigDrawBase!.id);
-          const basePath = lod === 0 ? rigBase?.glb : rigBase?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+          const basePath = rigBase && drawComparisonPath(rigBase, lod, def.crowdSkin);
           if (def.category !== 'character' || !rigBase || rigBase.id === def.id || rigBase.category !== 'character' || !atLeast(rigBase.status, 'integrated') || !basePath || !existsSync(basePath)) validation.errors.push('rigDrawBase: expected a shipped living character tier');
           else validation.errors.push(...rigDrawErrors(document, def, await io.read(basePath)));
         }
         if (def.animatedDrawBase) {
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const peer = definitions.find(candidate => candidate.id === def.animatedDrawBase);
-          const peerPath = lod === 0 ? peer?.glb : peer?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+          const peerPath = peer && drawComparisonPath(peer, lod, def.crowdSkin);
           if (def.category !== 'character' || !peer || peer.category !== 'character' || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
             validation.errors.push('animated-owner draws: missing integrated character base');
           } else {

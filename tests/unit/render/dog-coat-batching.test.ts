@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 /** Diagnose whether palette variants can share one animated geometry without changing surfaces. */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, vi, expect } from 'vitest';
@@ -18,7 +19,7 @@ test('T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a pale
     const a = (manifest as AssetDef[]).find(a => a.id === id)!;
     const path = corpse ? a.corpseGlb! : lod === 'lod0' ? a.glb! : a.lods![lod as 'lod1' | 'lod2']!;
     const bytes = readFileSync(variantPath(path, decay));
-    return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+    return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
   }
   const asset = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod = 'lod0', decay) => load(id, lod, decay));
   const corpse = vi.spyOn(AssetRegistry.prototype, 'loadCorpse').mockImplementation((id, decay) => load(id, 'lod0', decay, true));
@@ -36,11 +37,11 @@ test('T-E07-12-dog-coats @E07 identical authored LOD1 coat surfaces share a pale
     for (const lod of ['lod0','lod1','lod2'] as const) {
       for (const coat of ['', 'black', 'cream']) await internal.loadBatch({ ...def, id: coat ? `inf.dog.${coat}` : def.id, ...(coat ? { decay: coat } : {}) }, lod);
       const batches = [...internal.batches.values()].slice(-3);
-      if (lod === 'lod1') {
+      if (lod === 'lod1' && !(manifest as AssetDef[]).find(a => a.id === 'inf.dog')!.crowdSkin) {
         expect(shareDogCoatPalette(batches[0].mesh.geometry, batches[2].mesh.geometry, batches[0].poses.clip, batches[2].poses.clip)).toBe(true);
         expect(Array.from(batches[0].mesh.geometry.getAttribute('_dogCream').array)).toEqual(Array.from(batches[2].mesh.geometry.getAttribute('color').array));
       }
-      if (lod === 'lod2') expect(shareDogCoatPalette(batches[0].mesh.geometry, batches[2].mesh.geometry, batches[0].poses.clip, batches[2].poses.clip)).toBe(false);
+      if (lod === 'lod2' || (manifest as AssetDef[]).find(a => a.id === 'inf.dog')!.crowdSkin) expect(shareDogCoatPalette(batches[0].mesh.geometry, batches[2].mesh.geometry, batches[0].poses.clip, batches[2].poses.clip)).toBe(false);
       records.push({ lod, black: compare(batches[0].mesh.geometry,batches[1].mesh.geometry), cream: compare(batches[0].mesh.geometry,batches[2].mesh.geometry), clipsEqual: JSON.stringify(batches[0].poses.clip) === JSON.stringify(batches[1].poses.clip) && JSON.stringify(batches[0].poses.clip) === JSON.stringify(batches[2].poses.clip) });
     }
     const bodies = [...internal.corpseGeometry.values()]; records.push({ corpseBlack: compare(bodies[0],bodies[1]), corpseCream:compare(bodies[0],bodies[2]) });

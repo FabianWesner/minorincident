@@ -1,6 +1,7 @@
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
+import manifest from '../../src/assets/manifest.json';
 import { coreCivilianModels } from '../../src/data/npcs';
 import { l6CastModels } from '../../src/data/l6';
 import { loadCivilianSource, disposeCivilianSource } from '../../src/assets/civilianSource';
@@ -16,6 +17,7 @@ const lod2Only = process.argv.includes('--lod2');
 const files: Record<string, string> = lod2Only ? JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) : {};
 let total = 0, count = 0;
 for (const model of [...new Set([...coreCivilianModels, ...l6CastModels])].sort()) {
+  if (manifest.some(def => def.id === model && 'crowdSkin' in def && def.crowdSkin)) continue;
   for (const lod of lod2Only ? ['lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
     const root = await loadCivilianSource(model, lod, async url => {
       const data = readFileSync(`public${url}`);

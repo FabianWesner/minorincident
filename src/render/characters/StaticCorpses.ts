@@ -238,7 +238,7 @@ export class StaticCorpses extends Group {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
         const capNames = ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'];
-        const visible = (i: number) => parts.getZ(i) <= 1.5 && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) : !hidden.has(parts.getX(i))) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
+        const visible = (i: number) => parts.getZ(i) <= 1.5 && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) && !hidden.has(parts.getX(i)) : !hidden.has(parts.getX(i))) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];

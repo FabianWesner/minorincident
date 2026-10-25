@@ -154,8 +154,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   let shirtColor: import('three').Color | undefined;
   let texture: Texture | undefined;
   let doubleSided = false;
-  // skinned-crowd prototype: one welded SkinnedMesh body. Every vertex of such a figure stays in the bind
-  // (world rest) space; the pose atlas is premultiplied by the inverse rest matrices on upload.
+  // Welded bodies keep vertices in world rest space. The shader combines unchanged joint rows with inverse binds.
   let skinnedFigure = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) skinnedFigure = true; });
   const binds = skinnedFigure ? restInverses(parts) : undefined;
   root.traverse((node) => {
@@ -234,7 +233,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         inverse.fromArray(binds!, indices[i] * 16);
         point.fromBufferAttribute(geometry.getAttribute('position'), i).applyMatrix4(inverse);
         const region = geometry.getAttribute('_crowd_region');
-        shirt[i] = cap || !material.map ? -10 : region ? region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+        shirt[i] = cap || !material.map ? -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
         emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
       }
       geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));

@@ -1,4 +1,4 @@
-import { Box3, Mesh, MeshBasicMaterial, Vector3, type Group, type Material } from 'three';
+import { Box3, DataTexture, Mesh, MeshBasicMaterial, Vector3, type Group, type Material } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from './manifest.json' with { type: 'json' };
@@ -18,6 +18,11 @@ export async function loadCivilianSource(id: string, requested: 'lod0' | 'lod1' 
   try {
     const path = lod === 'lod0' ? def.glb : def.lods![lod]!;
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    if (def.crowdSkin) {
+      // CPU source readers need UVs/regions and joints. Production skin textures stay with the renderer's AssetRegistry.
+      const texture = new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
+      loader.register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => texture }));
+    }
     const parsed = await loader.parseAsync(await read('/' + path.replace(/^public\//, '')), ''); root = parsed.scene;
     root.traverse(node => {
       const index = parsed.parser.associations.get(node)?.nodes;
@@ -29,14 +34,14 @@ export async function loadCivilianSource(id: string, requested: 'lod0' | 'lod1' 
       const bounds = new Box3().setFromObject(root), size = bounds.getSize(new Vector3());
       if (bounds.isEmpty() || (['x', 'y', 'z'] as const).some(axis => Math.abs(size[axis] / def.dimensions[axis] - 1) > def.dimensions.tolerance)) throw Error('Civilian LOD dimensions');
     }
-    root.userData.assetId = id;
+    root.userData.assetId = id; root.userData.assetTextureMode = def.textureMode;
     root.traverse(node => {
       if (!(node instanceof Mesh)) return;
       const replace = (source: Material): Material => {
         const match = source.name.match(/^(pal|emi)_(.+)$/), original = source as Material & { color?: import('three').Color };
         if (!original.color) return source;
         const token = match && Object.hasOwn(palette, match[2]) ? match[2] as PaletteToken : undefined;
-        const material = new MeshBasicMaterial({ color: token ? palette[token] : original.color, side: source.side, vertexColors: !!token && match![1] !== 'emi' && node.geometry.hasAttribute('color') });
+        const material = new MeshBasicMaterial({ color: token ? palette[token] : original.color, side: source.side, map: def.textureMode ? (source as Material & { map?: import('three').Texture }).map ?? null : null, vertexColors: !!token && match![1] !== 'emi' && node.geometry.hasAttribute('color') });
         material.name = token ? source.name : `${source.name}:${source.opacity}:${source.side}`;
         source.dispose(); return material;
       };

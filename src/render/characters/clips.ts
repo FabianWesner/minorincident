@@ -1,4 +1,4 @@
-import { AnimationClip, AnimationMixer, Box3, Mesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
+import { AnimationClip, AnimationMixer, Box3, Mesh, SkinnedMesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
 import type { AnimationState } from '../../data/survivor';
 import library from './library.json';
 import skinLibrary from './library.skin.json';
@@ -359,7 +359,11 @@ export function settleGroundPose(root: Object3D, resting = false): void {
   for (const mesh of meshes) {
     let visible = true;
     for (let parent: Object3D | null = mesh; parent; parent = parent.parent) if (!parent.visible || parent.name.startsWith('stump_')) { visible = false; break; }
-    if (visible && mesh.geometry.boundingBox) bounds.union(partBounds.copy(mesh.geometry.boundingBox).applyMatrix4(mesh.matrixWorld));
+    if (!visible || mesh.userData.crowdEye) continue;
+    if (mesh instanceof SkinnedMesh) {
+      mesh.skeleton.update(); mesh.computeBoundingBox();
+      if (mesh.boundingBox) bounds.union(partBounds.copy(mesh.boundingBox).applyMatrix4(mesh.matrixWorld));
+    } else if (mesh.geometry.boundingBox) bounds.union(partBounds.copy(mesh.geometry.boundingBox).applyMatrix4(mesh.matrixWorld));
   }
   const hip = root.getObjectByName('hip') ?? root.getObjectByName('body');
   const floor = root.getWorldPosition(worldOrigin).y + .015;

@@ -54,6 +54,8 @@ const BAND: Record<string, number> = { hip: .06, torso: .07, head: .035, armL: .
 await MeshoptDecoder.ready;
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
 const rig = await io.read(rigPath);
+const contractPath = arg('--contract');
+if (contractPath) { const contract = await io.read(contractPath); const metadata = new Map(contract.getRoot().listNodes().map(node => [node.getName(), node.getExtras()])); for (const node of rig.getRoot().listNodes()) node.setExtras({ ...metadata.get(node.getName()), ...node.getExtras() }); }
 const sceneRoot = rig.getRoot().listScenes()[0];
 const world = (node: GNode) => new Matrix4().fromArray(node.getWorldMatrix());
 const nodes = rig.getRoot().listNodes();
@@ -391,7 +393,11 @@ if (args.includes('--spectacles') && texture && texture.mime !== 'image/ktx2') {
     const rgb = [...png.data.subarray((row * png.width + x) * 4, (row * png.width + x) * 4 + 3)];
     return Math.max(...rgb) < 70 && Math.max(...rgb) - Math.min(...rgb) < 22;
   });
-  if (samples.length >= 4) spectacleTop = Math.max(...samples.map(({ point }) => point.y));
+  if (samples.length >= 4) {
+    spectacleTop = Math.max(...samples.map(({ point }) => point.y));
+    const regions = prim.getAttribute('_CROWD_REGION')!;
+    for (const { i } of samples) regions.setScalar(i, 2);
+  }
   rmSync(directory, { recursive: true, force: true });
 }
 const soleBounds = (name: string) => {

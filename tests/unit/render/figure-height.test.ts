@@ -10,6 +10,7 @@ import { infectedDefinitions } from '../../../src/data/infected';
 import { restoreStanding, crowdModelOf } from '../../../src/render/npc/CivilianCrowd';
 import { civilianHeight, fitCivilianHeight } from '../../../src/render/npc/figureHeight';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
+import { skinnedVertexMatrix } from '../../../src/render/characters/skinnedCrowd';
 import { disposeCharacter } from '../../../src/render/characters/rig';
 import type { AssetDef } from '../../../src/assets/types';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
@@ -34,9 +35,12 @@ for (const quality of ['high', 'low']) for (const lod of ['lod0', 'lod1', 'lod2'
       else {
         const baked = bakeInfected(model, skin.animatedNodes, false, ['npc-look-around']);
         const p = baked.geometry.getAttribute('position'), parts = baked.geometry.getAttribute('_part_index');
-        const point = new Vector3(), matrix = new Matrix4(); let min = Infinity, max = -Infinity;
+        const point = new Vector3(), matrix = new Matrix4(), values = new Float32Array(16), packed = baked.geometry.getAttribute('_skin'); let min = Infinity, max = -Infinity;
         for (let i = 0; i < p.count; i++) {
-          point.fromBufferAttribute(p, i).applyMatrix4(matrix.fromArray(baked.clip.matrices, parts.getX(i) * 16));
+          if ((baked.geometry.getAttribute('_vein')?.getX(i) ?? 0) >= 1024 || baked.geometry.getAttribute('_emissive').getX(i) > 1.5) continue;
+          if (packed) matrix.fromArray(skinnedVertexMatrix(baked.clip, 0, parts, packed, i, values));
+          else matrix.fromArray(baked.clip.matrices, parts.getX(i) * 16);
+          point.fromBufferAttribute(p, i).applyMatrix4(matrix);
           min = Math.min(min, point.y); max = Math.max(max, point.y);
         }
         height = max - min; baked.geometry.dispose();

@@ -22,11 +22,12 @@ test('T-E17-sources @E17-AC05 every integrated standalone export and LOD is regi
     const def = manifest.find(asset => asset.id === id);
     expect(def, id).toBeDefined();
     if (!['integrated','final'].includes(def!.status)) continue;
-    expect(def?.sourceGlb, id).toBe(source);
+    expect(def?.sourceGlb, id).toBe(def?.crowdSkin ? source.replace('model.glb', 'model.skin.glb') : source);
+    if (def?.crowdSkin) expect(existsSync(def.sourceGlb!), def.sourceGlb).toBe(true);
     expect(existsSync(def!.glb), def!.glb).toBe(true);
     for (const lod of ['lod1', 'lod2'] as const) {
       const source = `assets/${id}/model.${lod}.glb`;
-      if (sources.has(source) && def!.tier === 'hero') expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
+      if (sources.has(source) && def!.tier === 'hero') expect(def?.lods?.[lod], source).toBe(def?.crowdSkin ? def.glb.replace('.lod0.glb', `.${lod}.glb`) : def?.glb.replace('.glb', `.${lod}.glb`));
       const output = def?.lods?.[lod];
       if (output) expect(existsSync(output), output).toBe(true);
     }

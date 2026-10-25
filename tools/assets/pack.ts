@@ -11,6 +11,13 @@ import { completeSchoolBusNodes } from './complete-school-bus-nodes';
 
 /** Pack existing detailed exports without invoking or changing their Blender builds. */
 export async function packAsset(def: AssetDef, regenerate = false): Promise<number> {
+  if (def.crowdSkin) {
+    if (regenerate) throw new Error(`${def.id}: regenerate authored skin LODs with tools/assets/skin-crowd-build.sh <cast/id>`);
+    const { validateAssets } = await import('./validate');
+    const errors = (await validateAssets([def])).flatMap(row => row.errors.map(error => `${row.id}: ${error}`));
+    if (errors.length) throw new Error(errors.join('; '));
+    return 0;
+  }
   if (def.id === 'veh.school-bus') await completeSchoolBusNodes();
   const source = def.sourceGlb ?? def.glb;
   const io = await assetIO();

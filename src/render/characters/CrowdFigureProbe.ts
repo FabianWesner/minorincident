@@ -51,7 +51,12 @@ export class CrowdFigureProbe {
     // skeleton per figure per frame. Scene Lab still records every requested joint.
     const pose = CrowdFigureProbe.joints || this.animalSoles.length ? palette.pose(frame, outgoing, weight) : undefined;
     const partMatrix = (part: number) => pose ? this.matrix.fromArray(pose, part * 16) : palette.part(frame, outgoing, weight, part, this.matrix);
-    const feet = ['footL', 'footR'].map(name => {
+    const feet = this.animalSoles.length && pose ? this.animalSoles.map(({ part, heel, toe }) => {
+      const index = palette.clip.parts.indexOf(part);
+      if (index < 0) return [];
+      this.matrix.fromArray(pose, index * 16).premultiply(instance);
+      return this.point.copy(heel).add(toe).multiplyScalar(.5).applyMatrix4(this.matrix).toArray();
+    }) : ['footL', 'footR'].map(name => {
       const part = palette.clip.parts.indexOf(name);
       if (part < 0) return [];
       partMatrix(part);

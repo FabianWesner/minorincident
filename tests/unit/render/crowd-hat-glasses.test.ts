@@ -1,7 +1,7 @@
 import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
-import { Box3, Vector3, Matrix4, type InstancedMesh } from 'three';
+import { Box3, Vector3, Matrix4, Texture, Mesh, type InstancedMesh } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { markCrowdAppearance, crowdAccessoryIds } from '../../../src/render/characters/CrowdAppearance';
@@ -13,7 +13,9 @@ async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
   const def = manifest.find(d => d.id === id)!;
   const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
-  scene.userData.assetId = id; return scene;
+  scene.userData.assetId = id;
+  if (def.crowdSkin) scene.traverse(node => { if (node instanceof Mesh && !Array.isArray(node.material) && node.material.name === 'tex_baseColor') (node.material as import('three').MeshStandardMaterial).map = new Texture(); });
+  return scene;
 }
 
 // PO 2026-10-22 #108 "Glasses are on the hat" (L1, civilian-woman-b with a pale sun hat: the frames poked out through
@@ -29,7 +31,7 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   expect(hats.length).toBeGreaterThanOrEqual(6);
   const bake = async (id: string, lod: 'lod0' | 'lod1' | 'lod2') => {
     const m = await model(id, lod); prepareCivilianRig(m, id);
-    const baked = await prepareCivilianGeometry(m, id, lod !== 'lod0'); markCrowdAppearance(baked.geometry);
+    const baked = await prepareCivilianGeometry(m, id, lod !== 'lod0'); baked.geometry.userData.crowdLod = lod; markCrowdAppearance(baked.geometry);
     return baked.geometry;
   };
   const fitted = (id: string, lod: 'lod0' | 'lod1' | 'lod2', hat: string) => {
@@ -46,7 +48,19 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) { const g = await bake(id, lod); geometries.set(`${id}:${lod}`, g); accessories.registerSkull(id, g); }
   const spectacled = l1Pedestrians.models.filter(id => glassesTop(geometries.get(`${id}:lod0`)!) !== null);
   expect(spectacled.sort()).toEqual(Object.keys(spectacleTops).sort());
-  for (const id of spectacled) expect(Math.abs(glassesTop(geometries.get(`${id}:lod0`)!)! - spectacleTops[id]), `${id} authored frame top`).toBeLessThan(.005);
+  for (const id of spectacled) {
+    const root = await model(id, 'lod0'); root.updateMatrixWorld(true);
+    let expected = spectacleTops[id];
+    if (manifest.find(d => d.id === id)?.crowdSkin) {
+      const mesh = root.getObjectByName('skin_body') as import('three').SkinnedMesh;
+      const region = mesh.geometry.getAttribute('_crowd_region'), position = mesh.geometry.getAttribute('position');
+      const inverse = root.getObjectByName('head')!.matrixWorld.clone().invert().multiply(mesh.matrixWorld), point = new Vector3();
+      expected = -Infinity;
+      for (let i = 0; i < region.count; i++) if (region.getX(i) > 1.5) expected = Math.max(expected, point.fromBufferAttribute(position, i).applyMatrix4(inverse).y);
+      expect(Number.isFinite(expected)).toBe(true);
+    }
+    expect(Math.abs(glassesTop(geometries.get(`${id}:lod0`)!)! - expected), `${id} authored frame top`).toBeLessThan(.005);
+  }
   const reference = new Map(hats.map(hat => { const box = fitted('npc.civilian-man-a', 'lod0', hat), skull = bakedSkull(geometries.get('npc.civilian-man-a:lod0')!)!; return [hat, box.getSize(new Vector3()).z / skull.size.z]; }));
   // PO 2026-10-22 P1-115 "What are they doing?": brim width relative to the head (lateral and fore-aft), every base and LOD.
   const limit = (hat: string) => (hat.endsWith('sun-hat') ? 1.4 : hat.endsWith('bucket-hat') ? 1.3 : 1.15) + .03;
@@ -55,7 +69,7 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
     for (const hat of hats) { const size = fitted(id, lod, hat).getSize(new Vector3()); expect(size.z / skull.size.z, `${id} ${lod} ${hat} brim/head`).toBeLessThan(limit(hat)); }
   }
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
-    const geometry = geometries.get(`${id}:${lod}`)!, skull = bakedSkull(geometry)!, frames = spectacleTops[id] ?? null;
+    const geometry = geometries.get(`${id}:${lod}`)!, skull = bakedSkull(geometry)!, frames = glassesTop(geometry);
     for (const hat of hats) {
       const box = fitted(id, lod, hat), centre = box.getCenter(new Vector3()), label = `${id} ${lod} ${hat}`;
       // Anchored: centred over the skull and resting on its upper half, never hanging over face and shoulders.

@@ -30,7 +30,13 @@ export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: V
 /** Head-local height of a spectacle frame: near-black neutral, untagged head vertices in front of the skull centre
  * that reach the temples (eyes, brows and mouths stay inside the face). null without glasses. */
 export function glassesTop(geometry: BufferGeometry): number | null {
-  if (typeof geometry.userData.crowdGlassesTop === 'number') return geometry.userData.crowdGlassesTop;
+  if (geometry.userData.crowdBinds) {
+    const position = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts');
+    const inverse = new Matrix4().fromArray(geometry.userData.crowdBinds, characterNodes.indexOf('head') * 16), point = new Vector3();
+    let top = -Infinity;
+    for (let i = 0; i < position.count; i++) if (parts.getY(i) === -6) top = Math.max(top, point.fromBufferAttribute(position, i).applyMatrix4(inverse).y);
+    return Number.isFinite(top) ? top : null;
+  }
   const skull = bakedSkull(geometry); if (!skull) return null;
   const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), color = geometry.getAttribute('color');
   if (!color) return null;
@@ -101,7 +107,8 @@ export class CrowdAccessories extends Group {
     if (this.fits.has(model) && rank >= (this.skullLods.get(model) ?? 2)) return;
     const skull = bakedSkull(geometry); if (!skull) return;
     this.skullLods.set(model, rank);
-    if (typeof geometry.userData.crowdGlassesTop === 'number') this.measuredGlasses.set(model, geometry.userData.crowdGlassesTop);
+    const frames = glassesTop(geometry);
+    if (geometry.userData.crowdBinds && frames !== null) this.measuredGlasses.set(model, frames);
     for (const key of this.lifts.keys()) if (key.endsWith(`/${model}`)) this.lifts.delete(key);
     if (geometry.userData.crowdBinds) this.skinnedModels.add(model);
     const scale = skull.size.divide(referenceSkull.size);
@@ -195,6 +202,16 @@ export class CrowdAccessories extends Group {
     // Retargeted reference fit: skull mapping x the reference base's authored fit of this accessory.
     const reference = definitions.get(id)?.fits?.[referenceBase];
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
+    if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat') {
+      const scale = new Vector3().setFromMatrixScale(skull), centre = new Vector3(referenceSkull.centre.x, referenceSkull.centre.y, referenceSkull.centre.z).applyMatrix4(skull);
+      const limit = id.endsWith('sun-hat') ? 1.4 : id.endsWith('bucket-hat') ? 1.3 : 1.15;
+      let width = 0;
+      for (const lod of ['lod0', 'lod1']) {
+        const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (!geometry) continue;
+        geometry.computeBoundingBox(); width = Math.max(width, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).z);
+      }
+      if (width > referenceSkull.size.z * scale.z * limit) this.fitTransform.premultiply(new Matrix4().makeTranslation(0, 0, centre.z).multiply(new Matrix4().makeScale(1, 1, referenceSkull.size.z * scale.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -centre.z)));
+    }
   }
   /** PO 10-22 #108 "Glasses are on the hat": hats were fitted to the bare skull, so a brim sat below the frames of
    * a spectacled head (civilian-woman-b, elderly) and the temples poked out through the crown. Seat such a hat with

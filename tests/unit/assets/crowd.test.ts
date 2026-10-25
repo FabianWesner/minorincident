@@ -9,7 +9,7 @@ import manifest from '../../../src/assets/manifest.json';
 test('T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times', async () => {
   const def=manifest.find(a=>a.id==='inf.common-worker')! as AssetDef;
   const io=await assetIO();
-  for (const path of [def.sourceGlb!,def.lods!.lod1!]) {
+  for (const path of [def.rigidBaseline?.glb ?? def.sourceGlb!,def.rigidBaseline?.lods?.lod1 ?? def.lods!.lod1!]) {
     const doc=await io.read(path);
     const baked=bakeCrowd(doc,def), clip=baked.getRoot().listScenes()[0].getExtras().crowd as unknown as CrowdClip;
     const nodes=doc.getRoot().listNodes(), parts=clip.parts.map(name=>nodes.find(n=>n.getName()===name)!);

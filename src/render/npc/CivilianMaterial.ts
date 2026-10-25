@@ -20,7 +20,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
     const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z.min(1), mark = parts.w.mod(4), vein = mark.equal(1).select(1, 0), blood = mark.equal(2).select(1, 0), socket = mark.equal(3).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
-    const clothing = options.atlas ? mix(crowdAppearanceColor(), sampleTexture(options.atlas, attribute('uv', 'vec2')).rgb, parts.y.lessThanEqual(-4).select(0, 1)) : crowdAppearanceColor();
+    const clothing = options.atlas ? mix(crowdAppearanceColor(), sampleTexture(options.atlas, attribute('uv', 'vec2')).rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),

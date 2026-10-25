@@ -6,6 +6,7 @@ import { getBounds } from '@gltf-transform/functions';
 import type { AssetDef } from '../../src/assets/types';
 import { variantPath } from '../../src/assets/types';
 import { assetIO } from './io';
+import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
@@ -23,6 +24,7 @@ const io = await assetIO(), started = Date.now(), receipts = [];
 for (const lod of [0, 1, 2]) {
   const rig = join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/flat-lod${lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
+  const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === lod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(placement?.rotation_y_degrees ?? 0));
   else if (metadata) args.push('--reconstruct-body');
@@ -59,9 +61,16 @@ for (const lod of [0, 1, 2]) {
   receipts.push({ lod, source: rig, sourceSha256: createHash('sha256').update(readFileSync(rig)).digest('hex'), tiers });
   unlinkSync(raw);
 }
+if (!def.crowdSkin) def.rigidBaseline = { glb: def.glb, lods: def.lods };
 def.crowdSkin = true; def.textureMode = 'baseColor'; def.sourceGlb = join(assets, 'model.skin.glb');
 def.glb = join(output, `${id}.lod0.glb`); def.lods = { lod1: join(output, `${id}.lod1.glb`), lod2: join(output, `${id}.lod2.glb`) };
 delete def.textureAtlasLow; delete def.lowGlb; delete def.corpseGlb;
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+const bakePath = 'src/assets/civilianBakes.json', bakes = JSON.parse(readFileSync(bakePath, 'utf8')) as Record<string, string>;
+for (const key of Object.keys(bakes)) if (key.startsWith(id + ':')) { const file = 'public' + bakes[key]; if (existsSync(file)) unlinkSync(file); delete bakes[key]; }
+writeFileSync(bakePath, JSON.stringify(bakes, null, 2) + '\n');
+const validation = await validateAssets([def]);
+writeFileSync(join(report, 'validation.json'), JSON.stringify(validation, null, 2) + '\n');
+if (validation.some(row => row.errors.length)) throw Error(`${id}: standard validator failed: ${validation.flatMap(row => row.errors).join('; ')}`);
 writeFileSync(join(report, 'build.json'), JSON.stringify({ id, source, elapsedSeconds: (Date.now() - started) / 1000, manualSteps: [], receipts }, null, 2) + '\n');
 console.log(`${id}: 3 LODs × 2 tiers validated, ${((Date.now() - started) / 1000).toFixed(1)} s, zero manual steps`);

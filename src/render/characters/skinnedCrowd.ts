@@ -1,14 +1,7 @@
-/**
- * skinned-crowd prototype (dev flag `?skinCrowd=1`, internal only): crowd figures as ONE welded skinned body
- * on the crowd skeleton, drawn by the same instanced pose-atlas shader.
- *
- * - The pose atlas keeps one matrix per joint and frame (CPU rows unchanged: footwork IK, picking, accessories,
- *   corpse freezing all keep reading joint world matrices). The GPU copy is premultiplied by each joint's
- *   inverse bind, so a vertex in bind space needs only Σ wᵢ·Aᵢ (the same 2-row fetch per influence as a rigid part).
- * - Vertex layout: `_parts.x` = dominant joint (every CPU consumer keeps a valid part id), `_skin` =
- *   (j1 + 32·j2 + 1024·j3, w1, w2, w3), w0 = 1 − w1 − w2 − w3. One extra location, no extra buffer.
- * - `?skinCrowd=rigid` loads the same welded bodies but bakes every vertex to its dominant joint
- *   (A/B of the 4-influence vertex cost against one influence on identical geometry).
+/** Instanced welded bodies on the production crowd skeleton.
+ * CPU pose rows remain joint-world matrices for contacts, sockets and picking.
+ * A final atlas row holds inverse binds; the shader blends joint(frame) × inverseBind.
+ * _parts.x stores the dominant joint; _skin packs the other three joints and weights.
  */
 import { BufferAttribute, DataTexture, Matrix4, type BufferGeometry } from 'three';
 import { float, Fn, If, attribute, int, ivec2, mat4, textureLoad } from 'three/tsl';

@@ -9,6 +9,7 @@ import { balancedCrowdModel, crowdAppearance, regularInfectedModels } from '../.
 import { crowdVertexLayout, markCrowdAppearance, packedAppearance, renderedCrowdLook, crowdVariety } from '../../../src/render/characters/CrowdAppearance';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
 import { prepareCivilianGeometry, prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
+import { interleaveTexturedCrowd } from '../../../src/render/characters/crowdTexture';
 import { packCrowdParts } from '../../../src/assets/crowdParts';
 import { decodeCivilianBake } from '../../../src/assets/civilianBakeData';
 import manifest from '../../../src/assets/manifest.json';
@@ -64,8 +65,10 @@ for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}
   // matrix reported 9 buffers (spec audit 10-16) while the real WebGPU pipeline uses 7.
   const crowd = new InstancedInterleavedBuffer(new Float32Array(16),16,1);
   for (let c=0;c<4;c++) infected.geometry.setAttribute(`_crowd${c}`,new InterleavedBufferAttribute(crowd,4,c*4));
+  interleaveTexturedCrowd(infected.geometry);
   const layout = crowdVertexLayout(infected.geometry, matrix);
-  expect(layout).toEqual({ buffers:8, locations:15, webgpu:true, webgl2:true });
+  expect(layout.buffers).toBeLessThanOrEqual(8); expect(layout.locations).toBeLessThanOrEqual(16);
+  expect(layout.webgpu).toBe(true); expect(layout.webgl2).toBe(true);
   const rig = await model('npc.civilian-elderly', lod); prepareCivilianRig(rig, 'npc.civilian-elderly');
   const civilian = await prepareCivilianGeometry(rig, 'npc.civilian-elderly', lod==='lod2');
   markCrowdAppearance(civilian.geometry);

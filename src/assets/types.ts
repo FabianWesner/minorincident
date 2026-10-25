@@ -15,6 +15,8 @@ export interface AccessoryDef {
 export interface AssetDef {
   /** Welded crowd body on the production joints; selected directly without a query flag. */
   crowdSkin?: boolean;
+  /** Original shipped rigid tiers, retained as draw ceilings for unconverted derivatives during migration. */
+  rigidBaseline?: { glb: string; lods?: { lod1?: string; lod2?: string } };
   /** Opaque figure atlas; low-tier siblings use the .low.glb suffix. */
   textureMode?: 'baseColor';
   /** Optional lower-resolution atlas image for one shared textured-figure map. */
@@ -97,4 +99,10 @@ export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {
 /** Variants use the same node contract and LOD suffixes as the base asset. */
 export function variantPath(path: string, decay?: string): string {
   return decay ? path.replace(/(\.lod[12])?\.glb$/, `.${decay}$1.glb`) : path;
+}
+
+/** Compare unconverted rigid derivatives with their original rigid base; converted pairs use the current skin. */
+export function drawComparisonPath(base: AssetDef, lod: number, subjectSkinned = false): string | undefined {
+  const surface = !subjectSkinned && base.rigidBaseline ? base.rigidBaseline : base;
+  return lod === 0 ? surface.glb : surface.lods?.[lod === 1 ? 'lod1' : 'lod2'];
 }

@@ -2,6 +2,7 @@ import { BufferAttribute, type BufferGeometry } from 'three/webgpu';
 import type { CrowdClip } from '../../assets/crowd';
 /** Only palette variants with identical surfaces and poses may share an animated draw. */
 export function shareDogCoatPalette(base: BufferGeometry, cream: BufferGeometry, baseClip: CrowdClip, creamClip: CrowdClip): boolean {
+  if (base.userData.crowdAtlas || cream.userData.crowdAtlas) return false;
   if (baseClip.frames !== creamClip.frames || baseClip.duration !== creamClip.duration || baseClip.parts.join('/') !== creamClip.parts.join('/') || baseClip.matrices.length !== creamClip.matrices.length || !baseClip.matrices.every((v, i) => v === creamClip.matrices[i])) return false;
   for (const name of ['position', 'normal', '_parts', 'index']) {
     const a = name === 'index' ? base.getIndex() : base.getAttribute(name), b = name === 'index' ? cream.getIndex() : cream.getAttribute(name);
