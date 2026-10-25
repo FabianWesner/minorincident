@@ -1,0 +1,66 @@
+{
+  "runtimeRevision": "bc86d7204dc466b8bb84bbd1a58a61021658a4fc",
+  "runtimeUnchangedAfterGates": true,
+  "artifacts": {
+    "gates/E17-checks.json": "b3afe57b876696d3ea8b28ac8992aca970df74bdd5739773966672c25ba30cfb",
+    "gates/E17-inventory.json": "5767ad85d24be40db6f613c74b8d9521043686948480bf5d967f3ddafa91650b",
+    "gates/invariants-run.json": "e921b37796aa773e52dc9b20004a0e458a842031992860ae0ce6f25e104ca18e",
+    "performance.json": "e58dfc0199fe16e8a646ab74134d2b94ed331678d578d252863b2e2c2bcd3822",
+    "performance-summary.json": "aa905aa8ec7ac891d29d1887d42d6d87328eb52ded20c328188462f25b8d6c68",
+    "validator.json": "8b91eb56d0b8bc6e0821d59afe0e4bc1448064fbbaf1831e4eb2c2394bc784fe",
+    "visual-verification.json": "4ee8a751abe264de111cf32e42d0049284b37003c36d36d21a42c3dae82facb1",
+    "texture-sharing.json": "5b05e6dbedf817088c46f4e7a2bfa72cd9577774d9a4c5450270dfe11f5275fa",
+    "l1-census.json": "a6d8ca84744b4a4ae5d8cbb8e22e3769abc7d61a3402ce0e64de07c5e07ac165",
+    "remote-unit-levels-final10.json": "f444823c2453f0118cfb6a67ea60af2d015187349c5d8a78cc02faaced0d4d9d",
+    "campaign/summary.json": "4a23fbc576b917864dd86be0404d1b1db436d7407af44a3a05aa78b01d15ba2f",
+    "campaign/issues-campaign.json": "297cb04dce380d8e8933d14c2bda360e1e8eb33868d9fc1d3975cc8311ea5f36",
+    "campaign/runs-campaign.json": "9622010e5018c8e0771ab5a5ac059598bf25a991faa72fd22a484095a1669841"
+  },
+  "completed": {
+    "E17": {
+      "checks": 6,
+      "browser": 47,
+      "inventoryAssets": 371
+    },
+    "invariants": {
+      "simulation": 28,
+      "nativeWebGPU": 12
+    },
+    "performance": {
+      "webglDeltaMs": 0.7,
+      "webgpuDeltaMs": 0.8,
+      "actors": 200,
+      "skinnedArchetypes": 6,
+      "crowdDraws": 19
+    },
+    "remoteUnitLevels": {
+      "tests": 2701,
+      "passed": 2692,
+      "skipped": 9,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "campaign": {
+      "exitCode": 0,
+      "levelsFinished": 10,
+      "skippedSteps": 0,
+      "wallSeconds": 2766,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 5,
+        "P3": 0
+      },
+      "command": "E2E_PORT=4631 SCENE_PORT=4632 E2E_UNITS=1 E2E_RESERVATION_SECONDS=14400 npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/skinned-prod"
+    },
+    "validator": {
+      "rows": 1262,
+      "errors": 0
+    }
+  },
+  "pending": [],
+  "postRuntimeChanges": "report artifacts and census explanatory text only",
+  "evidencePreparedAfterRevision": "2e75738ef7698db76759035e06257f7d7a535fe3",
+  "completedAtUTC": "2026-10-25T23:18:45.443419+00:00",
+  "runtimeDiffPaths": []
+}

@@ -1,0 +1,506 @@
+{
+  "level": "L7",
+  "candidate": {
+    "ms": 3908.9000005722046,
+    "backend": "webgpu",
+    "quality": "low",
+    "tick": 3,
+    "phase": "playing",
+    "drawCalls": 83,
+    "bundle": "http://127.0.0.1:4631/build/index-B1RG8tlc.js",
+    "preparation": {
+      "workers": 8,
+      "submitted": 6,
+      "completed": 6,
+      "prebuilt": 6,
+      "failed": 0
+    },
+    "phases": [
+      {
+        "name": "view:actors",
+        "start": -189,
+        "ms": 30.5
+      },
+      {
+        "name": "view:lod-ready",
+        "start": -158.5,
+        "ms": 0.10000038146972656
+      },
+      {
+        "name": "view:warm-up",
+        "start": -158.39999961853027,
+        "ms": 5
+      },
+      {
+        "name": "level:layouts",
+        "start": 37.60000038146973,
+        "ms": 7.899999618530273
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "start": 37.60000038146973,
+        "ms": 3801
+      },
+      {
+        "name": "level:sim",
+        "start": 45.5,
+        "ms": 288.5
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "start": 45.60000038146973,
+        "ms": 0
+      },
+      {
+        "name": "level:world+nav",
+        "start": 46.40000057220459,
+        "ms": 261.30000019073486
+      },
+      {
+        "name": "level:mission+cast",
+        "start": 307.70000076293945,
+        "ms": 16.699999809265137
+      },
+      {
+        "name": "level:physics-prepare",
+        "start": 324.4000005722046,
+        "ms": 9.5
+      },
+      {
+        "name": "level:view",
+        "start": 334,
+        "ms": 3344
+      },
+      {
+        "name": "view:districts+character",
+        "start": 358.30000019073486,
+        "ms": 1375.6999998092651
+      },
+      {
+        "name": "view:civilian-crowd",
+        "start": 378.30000019073486,
+        "ms": 1052
+      },
+      {
+        "name": "view:infected-crowd",
+        "start": 378.80000019073486,
+        "ms": 1395
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "start": 476.9000005722046,
+        "ms": 33.89999961853027
+      },
+      {
+        "name": "bake:inf.alpha:lod1",
+        "start": 550.2000007629395,
+        "ms": 11.09999942779541
+      },
+      {
+        "name": "bake:inf.alpha:lod2",
+        "start": 574.5,
+        "ms": 8.100000381469727
+      },
+      {
+        "name": "bake:inf.alpha-worker:lod0",
+        "start": 593.6000003814697,
+        "ms": 14.800000190734863
+      },
+      {
+        "name": "bake:inf.alpha-worker:lod1",
+        "start": 634.4000005722046,
+        "ms": 9.899999618530273
+      },
+      {
+        "name": "bake:inf.alpha-worker:lod2",
+        "start": 655,
+        "ms": 7.90000057220459
+      },
+      {
+        "name": "bake:inf.alpha-hoodie:lod0",
+        "start": 670.7000007629395,
+        "ms": 13.399999618530273
+      },
+      {
+        "name": "bake:inf.alpha-hoodie:lod2",
+        "start": 709,
+        "ms": 7.100000381469727
+      },
+      {
+        "name": "bake:inf.alpha-hoodie:lod1",
+        "start": 722.7000007629395,
+        "ms": 8.799999237060547
+      },
+      {
+        "name": "bake:inf.alpha-fire:lod0",
+        "start": 741.8000001907349,
+        "ms": 12.40000057220459
+      },
+      {
+        "name": "bake:inf.alpha-fire:lod1",
+        "start": 794,
+        "ms": 9.300000190734863
+      },
+      {
+        "name": "bake:inf.alpha-fire:lod2",
+        "start": 813.9000005722046,
+        "ms": 6.800000190734863
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "start": 827.3000001907349,
+        "ms": 11.40000057220459
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod1",
+        "start": 861.9000005722046,
+        "ms": 8.699999809265137
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "start": 880.4000005722046,
+        "ms": 6.800000190734863
+      },
+      {
+        "name": "bake:inf.jogger:lod1",
+        "start": 893.7000007629395,
+        "ms": 20
+      },
+      {
+        "name": "bake:inf.jogger:lod2",
+        "start": 925.7000007629395,
+        "ms": 12.5
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod2",
+        "start": 943.6000003814697,
+        "ms": 22
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod1",
+        "start": 971.7000007629395,
+        "ms": 22.299999237060547
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod2",
+        "start": 1005.9000005722046,
+        "ms": 14.800000190734863
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod1",
+        "start": 1026.6000003814697,
+        "ms": 13.800000190734863
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod1",
+        "start": 1051.5,
+        "ms": 26.200000762939453
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod2",
+        "start": 1088.8000001907349,
+        "ms": 12.199999809265137
+      },
+      {
+        "name": "bake:inf.cashier:lod2",
+        "start": 1105.5,
+        "ms": 19.600000381469727
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod1",
+        "start": 1129.4000005722046,
+        "ms": 17.5
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod2",
+        "start": 1156.4000005722046,
+        "ms": 11.399999618530273
+      },
+      {
+        "name": "bake:inf.cashier:lod1",
+        "start": 1172.1000003814697,
+        "ms": 12.300000190734863
+      },
+      {
+        "name": "view:route-lods",
+        "start": 1734,
+        "ms": 0.20000076293945312
+      },
+      {
+        "name": "view:actors",
+        "start": 1749.9000005722046,
+        "ms": 38.80000019073486
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "start": 1753.7000007629395,
+        "ms": 0.09999942779541016
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "start": 1763.2000007629395,
+        "ms": 0
+      },
+      {
+        "name": "view:lod-ready",
+        "start": 1788.7000007629395,
+        "ms": 11.699999809265137
+      },
+      {
+        "name": "view:warm-up",
+        "start": 1800.4000005722046,
+        "ms": 1821.6999998092651
+      },
+      {
+        "name": "Texture atlas upload",
+        "start": 1805.3000001907349,
+        "ms": 10.800000190734863
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "start": 1805.3000001907349,
+        "ms": 1689.1999998092651
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 1816.4000005722046,
+        "ms": 1597.8999996185303
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 3495.2000007629395,
+        "ms": 42.79999923706055
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 3495.2000007629395,
+        "ms": 76.89999961853027
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 3538,
+        "ms": 34.10000038146973
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 3572.1000003814697,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 3589,
+        "ms": 4.700000762939453
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 3593.7000007629395,
+        "ms": 11.699999809265137
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 3593.7000007629395,
+        "ms": 28.299999237060547
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 3605.4000005722046,
+        "ms": 16.59999942779541
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 3622,
+        "ms": 0
+      },
+      {
+        "name": "level:audio",
+        "start": 3678,
+        "ms": 0.40000057220458984
+      },
+      {
+        "name": "level:hud",
+        "start": 3680.300000190735,
+        "ms": 13.699999809265137
+      }
+    ]
+  },
+  "baseline": {
+    "ms": 4176.799999237061,
+    "backend": "webgpu",
+    "quality": "low",
+    "tick": 3,
+    "phase": "playing",
+    "drawCalls": 83,
+    "bundle": "https://minor-incident.com/build/index-Dog88jbr.js",
+    "preparation": {
+      "workers": 8,
+      "submitted": 4,
+      "completed": 4,
+      "prebuilt": 4,
+      "failed": 0
+    },
+    "phases": [
+      {
+        "name": "view:actors",
+        "start": -191.20000076293945,
+        "ms": 45.60000038146973
+      },
+      {
+        "name": "view:lod-ready",
+        "start": -145.60000038146973,
+        "ms": 0.10000038146972656
+      },
+      {
+        "name": "view:warm-up",
+        "start": -145.5,
+        "ms": 4.59999942779541
+      },
+      {
+        "name": "level:layouts",
+        "start": 39.69999980926514,
+        "ms": 47
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "start": 39.69999980926514,
+        "ms": 4066.3999996185303
+      },
+      {
+        "name": "level:sim",
+        "start": 86.69999980926514,
+        "ms": 282.8999996185303
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "start": 86.79999923706055,
+        "ms": 0
+      },
+      {
+        "name": "level:world+nav",
+        "start": 87.69999980926514,
+        "ms": 255.89999961853027
+      },
+      {
+        "name": "level:mission+cast",
+        "start": 343.5999994277954,
+        "ms": 16
+      },
+      {
+        "name": "level:physics-prepare",
+        "start": 359.5999994277954,
+        "ms": 9.800000190734863
+      },
+      {
+        "name": "level:view",
+        "start": 369.5999994277954,
+        "ms": 3524.5
+      },
+      {
+        "name": "view:districts+character",
+        "start": 394.8999996185303,
+        "ms": 1593.5
+      },
+      {
+        "name": "view:civilian-crowd",
+        "start": 415.19999980926514,
+        "ms": 1090
+      },
+      {
+        "name": "view:infected-crowd",
+        "start": 415.69999980926514,
+        "ms": 1495
+      },
+      {
+        "name": "view:route-lods",
+        "start": 1988.3999996185303,
+        "ms": 0.10000038146972656
+      },
+      {
+        "name": "view:actors",
+        "start": 1999.8999996185303,
+        "ms": 30.399999618530273
+      },
+      {
+        "name": "view:lod-ready",
+        "start": 2030.2999992370605,
+        "ms": 11.700000762939453
+      },
+      {
+        "name": "view:warm-up",
+        "start": 2042,
+        "ms": 1797.1999998092651
+      },
+      {
+        "name": "Texture atlas upload",
+        "start": 2047,
+        "ms": 16.59999942779541
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "start": 2047,
+        "ms": 1682.5999994277954
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 2063.699999809265,
+        "ms": 1583.5
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 3730.199999809265,
+        "ms": 42.30000019073486
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 3730.199999809265,
+        "ms": 59.89999961853027
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 3772.5,
+        "ms": 17.59999942779541
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 3790.0999994277954,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 3806.199999809265,
+        "ms": 4.5
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 3810.699999809265,
+        "ms": 11.899999618530273
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 3810.699999809265,
+        "ms": 28.399999618530273
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 3822.5999994277954,
+        "ms": 16.5
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 3839.0999994277954,
+        "ms": 0
+      },
+      {
+        "name": "level:audio",
+        "start": 3894.199999809265,
+        "ms": 0.19999980926513672
+      },
+      {
+        "name": "level:hud",
+        "start": 3896.3999996185303,
+        "ms": 40.69999980926514
+      }
+    ]
+  },
+  "baselineURL": "https://minor-incident.com",
+  "limitMs": 4594.479999160767
+}

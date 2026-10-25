@@ -15,3 +15,7 @@ Every proof has `-webgl2.png` and `-webgpu.png` versions. The gallery uses low q
 | LOD changes | [near](lod-3-webgl2.png), [middle](lod-14-webgl2.png), [far](lod-48-webgl2.png) | A weighted body is submitted at each production LOD; the receipt records the selected batch. |
 
 `gate-attempts/wound-*-hdr-before.png` retains the rejected WebGL2 NaN captures. The final wound captures use posed face normals and are checked again by HDR readback; those rejected captures are not acceptance evidence.
+
+## Full campaign
+
+[Summary](campaign/summary.json), [runs](campaign/runs-campaign.json), [issues](campaign/issues-campaign.json) and the compressed [event log](campaign/log-campaign.jsonl.gz) cover one continuous fresh-profile L1–L10 run on the production build, low quality, zoom 1.5, with `--no-skip`. All ten levels finish, including the Mega Alpha and credits; P0/P1 are zero. The five retained P2 observations are two L6 combat stalls, one L9 navigation delay, one L10 navigation delay and the L10 epilogue wait. Per-level result images and all five issue images are in `campaign/captures/`.
