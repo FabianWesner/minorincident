@@ -22,6 +22,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { crowdLimbParts } from '../../src/assets/crowdParts';
 import { Document, NodeIO, type Node as GNode } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder, MeshoptSimplifier } from 'meshoptimizer';
@@ -302,6 +303,7 @@ if (mime === 'image/ktx2') out.createExtension((await import('@gltf-transform/ex
 if (image) material.setBaseColorTexture(out.createTexture('atlas').setImage(new Uint8Array(image)).setMimeType(mime!));
 const prim = out.createPrimitive().setMaterial(material);
 const positions = new Float32Array(n * 3), normals = new Float32Array(n * 3), uvs = new Float32Array(n * 2), J = new Uint16Array(n * 4), W = new Float32Array(n * 4);
+const semanticParts = new Uint16Array(n);
 let zeroNormals = 0;
 for (let i = 0; i < n; i++) {
   const w = weldOf[i]; const nx = wnormal[w * 3], ny = wnormal[w * 3 + 1], nz = wnormal[w * 3 + 2], len = Math.hypot(nx, ny, nz);
@@ -310,23 +312,34 @@ for (let i = 0; i < n; i++) {
   if (len < 1e-12) { normals[i * 3 + 1] = 1; zeroNormals++; } else { normals[i * 3] = nx / len; normals[i * 3 + 1] = ny / len; normals[i * 3 + 2] = nz / len; }
   uvs[i * 2] = body.uv[i * 2]; uvs[i * 2 + 1] = body.uv[i * 2 + 1];
   for (let k = 0; k < 4; k++) { J[i * 4 + k] = joints4[w * 4 + k]; W[i * 4 + k] = weights4[w * 4 + k]; }
+  let major = 0; for (let k = 1; k < 4; k++) if (W[i * 4 + k] > W[i * 4 + major]) major = k;
+  semanticParts[i] = J[i * 4 + major];
 }
 if (args.includes('--healthy') && texture && texture.mime !== 'image/ktx2') {
   const directory = mkdtempSync(join(tmpdir(), 'crowd-skin-region-')), input = join(directory, 'image.' + texture.mime.split('/')[1]), output = join(directory, 'image.png');
   writeFileSync(input, texture.image); execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' });
   const png = PNG.sync.read(readFileSync(output)), regions = new Float32Array(n);
+  const handRatios: number[][] = [];
+  for (let i = 0; i < n; i++) if (/^hand[LR]$/.test(JOINTS[body.owner[i]])) {
+    const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
+    const r = png.data[offset], g = png.data[offset + 1], b = png.data[offset + 2];
+    if (r > 64 && g / r > .5 && g / r < .96 && b < r) handRatios.push([g / r, b / r]);
+  }
+  const skinRatio = [0, 1].map(axis => handRatios.map(rgb => rgb[axis]).sort((a, b) => a - b)[Math.floor(handRatios.length / 2)]);
   for (let i = 0; i < n; i++) {
     const part = JOINTS[body.owner[i]];
     if (/^hand[LR]$/.test(part)) { regions[i] = 1; continue; }
-    if (part !== 'head') continue;
+    if (part !== 'head' && !/^(arm|foreArm|leg|shin)[LR]$/.test(part)) continue;
     const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
     const r = png.data[offset], g = png.data[offset + 1], b = png.data[offset + 2];
     // Healthy skin paint is warm and moderately saturated; dark/auburn hair, neutral frames and red wounds stay authored.
-    regions[i] = Number(r > 48 && g / Math.max(1, r) > .5 && g / Math.max(1, r) < .96 && b < r * 1.05);
+    const warm = r > 48 && g / Math.max(1, r) > .5 && g / Math.max(1, r) < .96 && b < r * 1.05;
+    regions[i] = Number(warm && (part === 'head' || handRatios.length && Math.abs(g / r - skinRatio[0]) < .12 && Math.abs(b / r - skinRatio[1]) < .12));
   }
   prim.setAttribute('_CROWD_REGION', out.createAccessor().setType('SCALAR').setArray(regions));
   rmSync(directory, { recursive: true, force: true });
 }
+prim.setAttribute('_CROWD_PART', out.createAccessor().setType('SCALAR').setArray(semanticParts));
 prim.setAttribute('POSITION', out.createAccessor().setType('VEC3').setArray(positions));
 prim.setAttribute('NORMAL', out.createAccessor().setType('VEC3').setArray(normals));
 prim.setAttribute('TEXCOORD_0', out.createAccessor().setType('VEC2').setArray(uvs));
@@ -338,11 +351,17 @@ scene.addChild(out.createNode('skin_body').setMesh(bodyMesh).setSkin(skin));
 // The rigid export's old discs can lie inside a weighted neck/shoulder.
 // Close the actual boundary left when whole triangles of a limb are removed.
 // Rim vertices retain the body's weights, so their posed seam stays welded.
-const capFits: { part: string; rim: number; distance: number }[] = [];
-if (!quadruped) {
-  const cuts: Record<string, string[]> = { head: ['head'], armL: ['armL', 'foreArmL', 'handL'], armR: ['armR', 'foreArmR', 'handR'], foreArmL: ['foreArmL', 'handL'], foreArmR: ['foreArmR', 'handR'], legL: ['legL', 'shinL', 'footL'], legR: ['legR', 'shinR', 'footR'] };
+const capFits: { part: string; rim: number; distance: number; method: string }[] = [];
+{
+  const cuts: Record<string, readonly string[]> = { head: ['head'], armL: ['armL', 'foreArmL', 'handL'], armR: ['armR', 'foreArmR', 'handR'], foreArmL: ['foreArmL', 'handL'], foreArmR: ['foreArmR', 'handR'], legL: ['legL', 'shinL', 'footL'], legR: ['legR', 'shinR', 'footR'] };
+  for (const parts of crowdLimbParts(quadruped)) cuts[parts[0]] = parts;
+  if (quadruped) { cuts.foreArmL = ['foreArmL', 'handL', 'pawFL']; cuts.foreArmR = ['foreArmR', 'handR', 'pawFR']; }
   const representative = new Map<number, number>(); weldOf.forEach((w, i) => representative.set(w, i));
-  const owners = Array.from({ length: n }, (_, i) => { let k = 0; for (let j = 1; j < 4; j++) if (W[i * 4 + j] > W[i * 4 + k]) k = j; return JOINTS[J[i * 4 + k]]; });
+  const owners = Array.from(semanticParts, part => JOINTS[part]);
+  const originalEdges = new Map<string, number>();
+  for (let t = 0; t < body.tris.length; t += 3) for (let k = 0; k < 3; k++) {
+    const a = weldOf[body.tris[t + k]], b = weldOf[body.tris[t + (k + 1) % 3]], key = a < b ? `${a}/${b}` : `${b}/${a}`; originalEdges.set(key, (originalEdges.get(key) ?? 0) + 1);
+  }
   const at = (w: number) => new Vector3().fromArray(positions, representative.get(w)! * 3);
   for (const [part, removed] of Object.entries(cuts)) {
     const sourceCap = nodes.find(node => node.getName() === `stump_${part}`);
@@ -372,7 +391,11 @@ if (!quadruped) {
       }
       if (current === start && loop.length >= 3) loops.push(loop);
     }
-    const pivot = new Vector3().setFromMatrixPosition(world(jointNode.get(part)!));
+    const fresh = (loop: number[]) => loop.filter((a, i) => { const b = loop[(i + 1) % loop.length]; return (originalEdges.get(a < b ? `${a}/${b}` : `${b}/${a}`) ?? 0) > 1; }).length / loop.length;
+    const created = loops.filter(loop => fresh(loop) >= .8);
+    if (created.length) loops.splice(0, loops.length, ...created);
+    const cutRoot = quadruped && part === 'head' && jointNode.has('neck') ? 'neck' : part;
+    const pivot = new Vector3().setFromMatrixPosition(world(jointNode.get(cutRoot)!));
     const missing = new Vector3(); let count = 0;
     for (let i = 0; i < n; i++) if (removed.includes(owners[i])) { missing.add(new Vector3().fromArray(positions, i * 3)); count++; }
     if (count) missing.divideScalar(count);
@@ -402,23 +425,26 @@ if (!quadruped) {
     const distance = centre.distanceTo(pivot); if (distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
     const direction = missing.clone().sub(centre).normalize();
     if (normalOf(loop).dot(direction) < 0) loop.reverse();
-    const parentName = parentJoint.get(part), parentIndex = parentName ? JOINTS.indexOf(parentName) : 0;
+    let parentName = parentJoint.get(part); while (parentName && removed.includes(parentName)) parentName = parentJoint.get(parentName);
+    const parentIndex = parentName ? JOINTS.indexOf(parentName) : 0;
+    const capParts: number[] = [Math.max(0, parentIndex)];
     const capPositions: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
     centre.addScaledVector(direction, .001).toArray(capPositions);
     capJoints.push(Math.max(0, parentIndex), 0, 0, 0); capWeights.push(1, 0, 0, 0);
     for (const w of loop) {
       const i = representative.get(w)!; at(w).addScaledVector(direction, surface ? .0005 : 0).toArray(capPositions, capPositions.length);
+      capParts.push(semanticParts[i]);
       capJoints.push(...J.subarray(i * 4, i * 4 + 4)); capWeights.push(...W.subarray(i * 4, i * 4 + 4));
     }
     for (let i = 0; i < loop.length; i++) triangles.push(0, i + 1, (i + 1) % loop.length + 1);
     const attribute = (values: number[], type: 'VEC3' | 'VEC4') => out.createAccessor().setType(type).setArray(new Float32Array(values));
-    const cap = out.createPrimitive().setMaterial(capMaterial).setAttribute('POSITION', attribute(capPositions, 'VEC3'))
+    const cap = out.createPrimitive().setMaterial(capMaterial).setAttribute('_CROWD_PART', out.createAccessor().setType('SCALAR').setArray(new Uint16Array(capParts))).setAttribute('POSITION', attribute(capPositions, 'VEC3'))
       .setAttribute('NORMAL', attribute(capPositions.map((_, i) => i % 3 === 1 ? 1 : 0), 'VEC3'))
       .setAttribute('JOINTS_0', out.createAccessor().setType('VEC4').setArray(new Uint16Array(capJoints))).setAttribute('WEIGHTS_0', attribute(capWeights, 'VEC4'))
       .setIndices(out.createAccessor().setType('SCALAR').setArray(new Uint32Array(triangles)));
     for (const child of target.listChildren()) child.dispose();
     target.setMesh(out.createMesh(`stump_${part}`).addPrimitive(cap)).setSkin(skin);
-    capFits.push({ part, rim: loop.length, distance });
+    capFits.push({ part, rim: loop.length, distance, method: surface ? 'closed-part-surface' : fresh(loop) >= .8 ? 'cut-boundary' : 'source-opening' });
   }
 }
 if (!eyes.length) {

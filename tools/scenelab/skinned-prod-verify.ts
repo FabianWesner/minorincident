@@ -6,7 +6,53 @@ import { SceneSession, stopServer, writeJson, type Backend } from './session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 import type { InstancedMesh } from 'three';
-import { civilianClips, framesPerClip } from '../../src/render/characters/bakeInfected';
+import { authoredClips, strides } from '../../src/render/characters/clips';
+import { idleOffset } from '../../src/render/npc/waitingIdle';
+import { civilianClips } from '../../src/render/characters/bakeInfected';
+import type { CrowdPosePalette } from '../../src/render/characters/CrowdPosePalette';
+
+/** Aim at the actual posed wound surface, including underside-facing cuts. */
+async function focusCap(session: SceneSession, id: number, cap: number, frozen: boolean) {
+  return session.page.evaluate(({ id, cap, frozen }) => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    game.view.update(1);
+    const crowd = (game.view as unknown as { crowd: {
+      batches: Map<string, { mesh: InstancedMesh; poses: CrowdPosePalette; probe: { figures: { id: number }[] } }>;
+      staticCorpses: { slots: Map<string, { page: { mesh: InstancedMesh }; index: number }> };
+    } }).crowd;
+    const batch = [...crowd.batches.values()].find(b => b.mesh.count && b.probe.figures.some(f => f.id === id));
+    const slot = crowd.staticCorpses.slots.get(String(id));
+    const mesh = frozen ? slot?.page.mesh : batch?.mesh;
+    if (!mesh) throw Error('Missing wound surface');
+    const index = frozen ? slot!.index : batch!.probe.figures.findIndex(f => f.id === id), instance = mesh.matrix.clone(); mesh.getMatrixAt(index, instance);
+    const geometry = mesh.geometry, position = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
+    const state = geometry.getAttribute('_state'), variant = geometry.getAttribute('_variant'), packedBlend = variant?.getW(index) ?? 1;
+    const matrices = new Map<number, typeof instance>();
+    const pointAt = (i: number) => {
+      const point = mesh.position.clone().fromBufferAttribute(position, i);
+      if (frozen) return point.applyMatrix4(instance);
+      const packed = skin.getX(i), joints = [parts.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
+      const weights = [1 - skin.getY(i) - skin.getZ(i) - skin.getW(i) % 1, skin.getY(i), skin.getZ(i), skin.getW(i) % 1], result = point.clone().set(0, 0, 0);
+      for (let k = 0; k < 4; k++) if (weights[k] > 0) {
+        let matrix = matrices.get(joints[k]);
+        if (!matrix) { matrix = instance.clone(); batch!.poses.part(state.getX(index), Math.floor(packedBlend / 2), packedBlend % 2, joints[k], matrix); matrix.multiply(instance.clone().fromArray(batch!.poses.clip.binds!, joints[k] * 16)).premultiply(instance); matrices.set(joints[k], matrix); }
+        result.addScaledVector(point.clone().applyMatrix4(matrix), weights[k]);
+      }
+      return result;
+    };
+    const centre = mesh.position.clone().set(0, 0, 0), normal = centre.clone(); let triangles = 0;
+    const indices = geometry.index, count = indices?.count ?? position.count;
+    for (let t = 0; t < count; t += 3) {
+      const ids = [0, 1, 2].map(k => indices ? indices.getX(t + k) : t + k);
+      if (ids.some(i => parts.getW(i) !== 1024 + cap)) continue;
+      const [a, b, c] = ids.map(pointAt); centre.add(a).add(b).add(c); normal.add(b.clone().sub(a).cross(c.clone().sub(a))); triangles++;
+    }
+    if (!triangles || normal.lengthSq() < 1e-12) throw Error('Degenerate wound surface');
+    centre.divideScalar(triangles * 3); normal.normalize(); const camera = centre.clone().addScaledVector(normal, 3); camera.y = Math.max(.12, camera.y);
+    window.__SCENE__!.setCamera({ mode: 'pose', position: [camera.x, camera.y, camera.z], target: [centre.x, centre.y, centre.z] });
+    return { triangles, centre: centre.toArray(), normal: normal.toArray(), camera: camera.toArray(), frozen };
+  }, { id, cap, frozen });
+}
 
 const out = resolve('docs/reports/skinned-prod'), receipts = [];
 const backends = (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[];
@@ -26,7 +72,10 @@ try {
   for (const backend of backends) {
     const session = new SceneSession({ backend, tier: 'low', query: { crowdProbe: 'full' } });
     try {
-      await session.open(); await session.load(spec); await session.step(30);
+      await session.open();
+      await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
+      await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
+      await session.load(spec); await session.step(30);
       if (cases.has('humans')) {
         await session.screenshot(resolve(out, `humans-${backend}.png`));
         const metrics = await session.metrics(), state = await session.page.evaluate(() => window.__SS__!.getState().render);
@@ -65,9 +114,11 @@ try {
             const e = game.world.entities.get(id)!; e.health.current = 0; e.infected!.state = 'dead'; e.infected!.deadAt = game.world.tick; e.infected!.recoverAt = -1;
             (game.view as unknown as { crowd: { detach(id: number, limb: number): void } }).crowd.detach(id, limb);
           }, { id, limb });
+          const capIndex = limb === 0 ? 1 : limb === 2 ? 5 : 0;
+          const liveCamera = await focusCap(session, id, capIndex, false);
           await session.screenshot(resolve(out, `cap-${label}-${backend}.png`));
           await session.page.evaluate(() => window.__SCENE__!.command('cut', { corpse: true })); await session.step(180);
-          await session.page.evaluate(() => window.__SCENE__!.setCamera({ mode: 'pose', position: [2.6, 3.5, -3.4], target: [0, .3, 0] }));
+          const frozenCamera = await focusCap(session, id, capIndex, true);
           await session.screenshot(resolve(out, `frozen-${label}-${backend}.png`));
           const frozen = await session.page.evaluate(id => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -79,7 +130,7 @@ try {
             return { caps, vertices: g.getAttribute('position').count, triangles: (g.index?.count ?? parts.count) / 3 };
           }, id);
           if (Object.keys(frozen.caps).length !== 1) throw Error(`${label}: missing or extra frozen caps`);
-          receipts.push({ case: 'details', label, backend, frozen, errors: [...session.errors] });
+          receipts.push({ case: 'details', label, backend, frozen, liveCamera, frozenCamera, errors: [...session.errors] });
         }
         await session.load({ ...spec, name: 'skin-hit-flash', actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
           { id: 'hit', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.common-worker', accessories: [] } }],
@@ -117,27 +168,35 @@ try {
           await session.load({ ...spec, name: `skin-civilian-clips-${group}`, actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
             ...names.map((_, i) => ({ id: `pose-${i}`, kind: 'pedestrian' as const, at: [(i % 4) * 2 - 3, Math.floor(i / 4) * 3] as [number, number], yaw: -25, look: { model: 'npc.civilian-man-b', accessories: [] } }))],
             camera: { mode: 'pose', position: [9, 8, 12], target: [0, .9, 1.5] } });
-          await session.step(1);
+          const actors = (await session.metrics()).actors;
+          const ids = names.map((_, i) => actors[`pose-${i}`].entity);
+          const descriptions = names.map((name, i) => ({ name, id: ids[i], duration: authoredClips.get(name)!.duration, stride: !!strides[name], offset: idleOffset(ids[i]), looping: ['npc-wave-in', 'npc-glance', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back'].includes(name) }));
+          await session.page.evaluate(rows => {
+            const game = (window.__SCENE__ as unknown as { game: Game }).game;
+            for (const [i, row] of rows.entries()) {
+              window.__SCENE__!.command(`pose-${i}`, { idle: true });
+              const c = game.world.entities.get(row.id)!.civilian!;
+              c.story = { clip: row.name, start: game.world.tick,
+                ...(row.name === 'npc-carry' ? { prop: 'parcel' as const } : row.name === 'npc-cane' ? { prop: 'cane' as const } : row.name === 'npc-water' ? { prop: 'watering-can' as const } : {}) };
+            }
+          }, descriptions);
+          await session.step(24);
           for (const phase of [5, 13, 21]) {
-            const frames = names.map(name => civilianClips.indexOf(name) * framesPerClip + phase);
-            const drawn = await session.page.evaluate(frames => {
+            await session.page.evaluate(({ rows, phase }) => {
               const game = (window.__SCENE__ as unknown as { game: Game }).game;
-              let count = 0;
-              game.view.scene.traverse(node => {
-                const mesh = node as InstancedMesh, g = mesh.geometry;
-                if (!mesh.count || !g?.hasAttribute('_clip_frame') || !g.hasAttribute('_skin')) return;
-                count += mesh.count;
-                const previous = mesh.onBeforeRender;
-                mesh.onBeforeRender = function (...args) {
-                  previous.apply(this, args);
-                  for (let i = 0; i < mesh.count; i++) { g.getAttribute('_overlay').setW(i, frames[i % frames.length]); g.getAttribute('_clip_frame').setX(i, frames[i % frames.length]); g.getAttribute('_variant').setW(i, 1); }
-                  for (const name of ['_overlay', '_clip_frame', '_variant']) g.getAttribute(name).needsUpdate = true;
-                };
-              }); return count;
-            }, frames);
-            if (drawn !== names.length) throw Error(`Civilian gallery lost actors ${drawn}/${names.length}`);
+              const gait = (game.view as unknown as { npcs: { civilians: { gait: { states: Map<number, { distance: number; phase: number }> } } } }).npcs.civilians.gait;
+              for (const row of rows) {
+                const e = game.world.entities.get(row.id)!, c = e.civilian!;
+                c.state = 'calm'; c.story!.start = game.world.tick - (phase / 23 * row.duration - (row.looping ? row.offset : 0)) * 60;
+                if (e.motion) { e.motion.moving = row.stride; e.motion.speed = row.stride ? 1 : 0; }
+                if (row.stride) gait.states.set(row.id, { distance: e.motion?.distance ?? 0, phase: phase / 23 });
+              }
+            }, { rows: descriptions, phase });
             await session.screenshot(resolve(out, `clips-${group}-${phase}-${backend}.png`));
-            receipts.push({ case: 'clips', backend, names, phase, drawn, method: 'real civilian shader, authored atlas rows at three phases', errors: [...session.errors] });
+            const figures = await session.page.evaluate(() => window.__SS__!.getState().render.npcs?.civilians.figures ?? []);
+            const drawn = figures.filter(f => ids.includes(f.id) && f.drawn);
+            if (drawn.length !== names.length || descriptions.some(row => drawn.find(f => f.id === row.id)?.clip !== row.name)) throw Error('Civilian gallery did not select the requested production clips');
+            receipts.push({ case: 'clips', backend, names, phase, drawn, method: 'production story clips and gait phase; attached props/accessories use the same pose', errors: [...session.errors] });
           }
         }
       }
@@ -153,10 +212,15 @@ try {
       if (cases.has('infection') || cases.has('accessories')) {
         await session.load({ ...spec, name: 'skin-glasses-and-turning', actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
           { id: 'glasses', kind: 'pedestrian', at: [-1.2, 0], yaw: -30, look: { model: 'npc.civilian-woman-b', accessories: ['acc.hat-sun-hat'] } },
-          { id: 'turning', kind: 'pedestrian', at: [1.2, 0], yaw: -30, look: { model: 'npc.civilian-man-b', accessories: [] } }],
+          { id: 'turning', kind: 'pedestrian', at: [1.2, 0], yaw: -30, look: { model: 'npc.civilian-man-b', accessories: ['acc.hair-short-crop'] } }],
           camera: { mode: 'pose', position: [4.5, 2.7, 5.5], target: [0, 1.2, 0] } });
         await session.step(1); await session.screenshot(resolve(out, `healthy-glasses-${backend}.png`));
         await session.page.evaluate(() => window.__SCENE__!.command('turning', { infect: {} })); await session.step(240);
+        const turningId = (await session.metrics()).actors.turning.entity;
+        await session.page.evaluate(id => {
+          const game = (window.__SCENE__ as unknown as { game: Game }).game, e = game.world.entities.get(id)!;
+          window.__SCENE__!.setCamera({ mode: 'pose', position: [e.transform.x + Math.cos(e.transform.yaw) * 3, 1.7, e.transform.z - Math.sin(e.transform.yaw) * 3], target: [e.transform.x, 1.3, e.transform.z] });
+        }, turningId);
         await session.screenshot(resolve(out, `turning-glasses-${backend}.png`));
         receipts.push({ case: 'infection-accessories', backend, metrics: await session.metrics(), errors: [...session.errors] });
       }

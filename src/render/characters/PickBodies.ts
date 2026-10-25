@@ -5,7 +5,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** World points of a drawn body: feet midpoint, hips, head centre (metres). */
 export interface PickBody { feet: Vector3; hip: Vector3; head: Vector3 }
 
-interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean }
+interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean; cutMask?: number }
 
 /** The bodies the crowd renderers drew last frame, for click picking against what the player sees (not the sim
  * capsule): a lunging, hunched or lying infected is clicked where it is drawn. Recording copies one matrix per
@@ -14,7 +14,7 @@ interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; p
 export class PickBodies {
   private readonly entries = new Map<number, Entry>();
   private frame = 0;
-  private readonly skinSupports = new WeakMap<BufferGeometry, Uint32Array>();
+  private readonly skinSupports = new WeakMap<BufferGeometry, Map<number, Uint32Array>>();
   private readonly geometryBounds = new WeakMap<BufferGeometry, Box3[]>();
   private readonly localBounds = new Box3();
   private readonly topBounds = new Box3();
@@ -24,10 +24,10 @@ export class PickBodies {
   private readonly inverseBind = new Matrix4();
   reset(): void { this.entries.clear(); this.frame++; }
   begin(): void { this.frame++; if (this.entries.size > 2048) this.entries.clear(); }
-  add(id: number, instance: Matrix4, palette: CrowdPosePalette, pose: number, outgoing: number, weight: number, geometry?: BufferGeometry): void {
+  add(id: number, instance: Matrix4, palette: CrowdPosePalette, pose: number, outgoing: number, weight: number, geometry?: BufferGeometry, cutMask = 0): void {
     let entry = this.entries.get(id);
     if (!entry) { entry = { frame: 0, instance: new Matrix4(), palette, pose, outgoing, weight }; this.entries.set(id, entry); }
-    entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry;
+    entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry; entry.cutMask = cutMask;
     entry.boundsReady = false; entry.fullVertices = false; entry.verticesReady = false;
   }
   /** The drawn body of `id` in the last rendered frame, or null when it was not drawn. */
@@ -109,12 +109,13 @@ export class PickBodies {
   /** Single-joint vertices undergo one affine transform: only their convex hull
    * can contribute an extreme. Blended seam vertices remain explicit. This
    * preserves exact bounds while avoiding full body skinning for every bar. */
-  private skinSupport(geometry: BufferGeometry): Uint32Array {
-    const cached = this.skinSupports.get(geometry); if (cached) return cached;
+  private skinSupport(geometry: BufferGeometry, cutMask = 0): Uint32Array {
+    let byMask = this.skinSupports.get(geometry); if (!byMask) { byMask = new Map(); this.skinSupports.set(geometry, byMask); }
+    const cached = byMask.get(cutMask); if (cached) return cached;
     const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
     const groups = new Map<number, Vector3[]>(), indices = new Map<Vector3, number>(), selected = new Set<number>(), blended = new Set<string>();
     for (let i = 0; i < positions.count; i++) {
-      if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+      if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5 || cutMask && (Math.floor(skin.getW(i)) & cutMask)) continue;
       if (skin.getY(i) || skin.getZ(i) || (skin.getW(i) % 1)) {
         const key = [positions.getX(i), positions.getY(i), positions.getZ(i), parts.getX(i), skin.getX(i), skin.getY(i), skin.getZ(i), (skin.getW(i) % 1)].join('/');
         if (!blended.has(key)) { blended.add(key); selected.add(i); }
@@ -134,13 +135,13 @@ export class PickBodies {
       if (!hull?.faces.length || !Number.isFinite(volume) || Math.abs(volume) < 1e-12) { for (const point of points) selected.add(indices.get(point)!); continue; }
       for (const face of hull.faces) { let edge = face.edge; do { selected.add(indices.get(edge.head().point)!); edge = edge.next; } while (edge !== face.edge); }
     }
-    const result = new Uint32Array(selected); this.skinSupports.set(geometry, result); return result;
+    const result = new Uint32Array(selected); byMask.set(cutMask, result); return result;
   }
   private skinTop(entry: Entry, projection: Matrix4): number | null {
     if (!entry.verticesReady && !this.skinBounds(entry, this.topBounds)) return null;
     const vertices = entry.vertices!, p = projection.elements;
     let top = -Infinity, lowW = Infinity, highW = -Infinity;
-    for (const i of this.skinSupport(entry.geometry!)) {
+    for (const i of this.skinSupport(entry.geometry!, entry.cutMask)) {
       const x = vertices[i * 3], y = vertices[i * 3 + 1], z = vertices[i * 3 + 2];
       const w = p[3] * x + p[7] * y + p[11] * z + p[15];
       lowW = Math.min(lowW, w); highW = Math.max(highW, w);
@@ -152,7 +153,7 @@ export class PickBodies {
   private skinBounds(entry: Entry, out: Box3, projection?: Matrix4): Box3 | null {
     const geometry = entry.geometry!, clip = entry.palette.clip, positions = geometry.getAttribute('position');
     const parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
-    const support = this.skinSupport(entry.geometry!);
+    const support = this.skinSupport(entry.geometry!, entry.cutMask);
     const vertices = entry.vertices?.length === positions.count * 3 ? entry.vertices : entry.vertices = new Float32Array(positions.count * 3);
     const matrices = entry.worldParts ??= [];
     if (!entry.boundsReady) {
@@ -169,7 +170,7 @@ export class PickBodies {
     const writeVertices = (selection?: Uint32Array) => {
       for (let k = 0; k < (selection?.length ?? positions.count); k++) {
         const i = selection ? selection[k] : k;
-        if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+        if (!selection && (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5 || entry.cutMask && (Math.floor(skin.getW(i)) & entry.cutMask))) continue;
         const packed = skin.getX(i), w1 = skin.getY(i), w2 = skin.getZ(i), w3 = (skin.getW(i) % 1);
         const x = positions.getX(i), y = positions.getY(i), z = positions.getZ(i);
         const m = matrices[parts.getX(i)].elements, w0 = 1 - w1 - w2 - w3;
@@ -210,7 +211,7 @@ export class PickBodies {
     for (let k = 0; k < (selected?.length ?? positions.count); k++) {
       const i = selected ? selected[k] : k;
       // Stump caps are hidden until a limb is removed, and never raise a health bar.
-      if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+      if (!selected && (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5 || entry.cutMask && (Math.floor(skin.getW(i)) & entry.cutMask))) continue;
       if (projection) { this.point.fromArray(vertices, i * 3).applyMatrix4(projection); out.expandByPoint(this.point); }
       else {
         const x = vertices[i * 3], y = vertices[i * 3 + 1], z = vertices[i * 3 + 2];

@@ -12,6 +12,7 @@ import { CrowdView } from '../../../src/render/CrowdView';
 import { registerCrowdModel } from '../../../src/render/crowdModels';
 import { Vfx } from '../../../src/render/vfx/Vfx';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { crowdLimbParts } from '../../../src/assets/crowdParts';
 import { megaAlpha } from '../../../src/data/megaAlpha';
 
 async function model(path: string) {
@@ -29,7 +30,7 @@ function surfaceSignature(geometry: BufferGeometry): string {
 const kinds = ['infected.runner', 'infected.dog', 'infected.alpha', 'infected.firefighter'].map(archetype => ({ archetype, asset: infectedDefinitions.find(d => d.id === archetype)!.asset }));
 kinds.push({ archetype: 'infected.alpha', asset: megaAlpha.asset });
 for (const low of [true, false]) for (const { archetype, asset } of kinds) {
-  test(`PO #98 @E07 @E32 real kills retain intact frozen ${asset} bodies (${low ? 'low' : 'high'})`, async () => {
+  test(`PO #98 @E07 @E32 real kills retain frozen ${asset} surfaces and their severance bodies (${low ? 'low' : 'high'})`, async () => {
     const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 32);
     const base = infectedDefinitions.find(d => d.id === archetype)!, def = { ...base, ...(asset !== base.asset ? { id: asset, asset } : {}) }, crowd = new CrowdView(w, low);
     const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation(async (id, lod) => {
@@ -87,7 +88,19 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
       crowd.traverse(o => { if (o.name.startsWith('corpses:') && (o as InstancedMesh).count) pages.push(o as InstancedMesh); });
       expect(pages.reduce((n, p) => n + p.count, 0)).toBe(ids.length);
       for (const page of pages) {
-        expect(page.name).toMatch(asset === megaAlpha.asset ? /:death-side:0(?:[:/]|$)/ : /:death-back:0(?:[:/]|$)/);
+        const skinned = manifest.find(d => d.id === asset)!.crowdSkin;
+        expect(page.name).toMatch(asset === megaAlpha.asset ? /:death-side:0(?:[:/]|$)/ : skinned ? /:death-back:(?:0|31)(?:[:/]|$)/ : /:death-back:0(?:[:/]|$)/);
+        const severed = skinned && /:death-back:31(?:[:/]|$)/.test(page.name);
+        if (severed) {
+          const parts = page.geometry.getAttribute('_parts');
+          const clip = [...(crowd as unknown as { batches: Map<string, { poses: { clip: { parts: string[] } } }> }).batches.values()][0].poses.clip;
+          const hidden = crowdLimbParts(archetype === 'infected.dog').flat(), caps = new Set<number>();
+          for (let i = 0; i < parts.count; i++) {
+            if (parts.getW(i) >= 1024) caps.add(parts.getW(i) - 1024);
+            else expect(hidden).not.toContain(clip.parts[parts.getX(i)]);
+          }
+          expect([...caps].sort()).toEqual([0, 1, 2, 5, 6]);
+        }
         // The corpse shader can reuse placement columns for normals only while
         // every production frozen placement is a rotation plus translation.
         for (let index = 0; index < page.count; index++) {
@@ -102,7 +115,8 @@ for (const low of [true, false]) for (const { archetype, asset } of kinds) {
         // A full reclining body spans well beyond the torso-only blast remnant.
         let min = Infinity, max = -Infinity;
         for (let i = 0; i < positions.count; i++) { min = Math.min(min, positions.getX(i)); max = Math.max(max, positions.getX(i)); }
-        expect(max - min).toBeGreaterThan(archetype === 'infected.dog' ? .6 : 1);
+        if (severed) expect(positions.count, 'closed torso and five wound caps remain').toBeGreaterThan(20);
+        else expect(max - min).toBeGreaterThan(archetype === 'infected.dog' ? .6 : 1);
       }
       const original = ids.map(id => w.entities.get(id));
       w.tick += 60 * 60 * 60 * 2; w.update(); crowd.update();

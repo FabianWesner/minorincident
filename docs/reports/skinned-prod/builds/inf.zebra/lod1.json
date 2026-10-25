@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.zebra/model.lod1.glb",
   "out": "docs/reports/skinned-prod/builds/inf.zebra/lod1.raw.glb",
-  "bytes": 402404,
+  "bytes": 417768,
   "body": "rigid parts welded by position",
   "vertices": 1873,
   "weldedVertices": 652,
@@ -42,6 +42,50 @@
     "pawBR"
   ],
   "rigKind": "quadruped",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 3,
+      "distance": 0.0429714736742867,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "armL",
+      "rim": 3,
+      "distance": 0.03429957868316469,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "armR",
+      "rim": 3,
+      "distance": 0.02053787955932401,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 3,
+      "distance": 0.23672735284708585,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 3,
+      "distance": 0.2034466155369227,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legL",
+      "rim": 3,
+      "distance": 0.07481206145554421,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legR",
+      "rim": 3,
+      "distance": 0.050951957159621364,
+      "method": "closed-part-surface"
+    }
+  ],
   "removedClosureTriangles": 0,
   "removedDegenerateTriangles": 1,
   "joints": 28,

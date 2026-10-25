@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/lod2.glb",
   "out": "docs/reports/skinned-prod/builds/npc.civilian-woman-a/lod2.raw.glb",
-  "bytes": 268584,
+  "bytes": 283428,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/source/flat-lod2.glb",
   "scale": 2.073771131960094,
   "yaw": 135,
@@ -33,6 +33,50 @@
     "footR"
   ],
   "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 21,
+      "distance": 0.12009200479906874,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 3,
+      "distance": 0.10206979201710867,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "armR",
+      "rim": 13,
+      "distance": 0.09349392150917554,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 3,
+      "distance": 0.0942166066622484,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 3,
+      "distance": 0.10077838170595756,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legL",
+      "rim": 3,
+      "distance": 0.204831062358654,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legR",
+      "rim": 3,
+      "distance": 0.07381488900851747,
+      "method": "closed-part-surface"
+    }
+  ],
   "removedClosureTriangles": 0,
   "removedDegenerateTriangles": 0,
   "joints": 16,

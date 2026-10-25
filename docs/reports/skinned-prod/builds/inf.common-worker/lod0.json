@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.common-worker/model.glb",
   "out": "docs/reports/skinned-prod/builds/inf.common-worker/lod0.raw.glb",
-  "bytes": 678208,
+  "bytes": 724936,
   "body": "rigid parts welded by position",
   "vertices": 8924,
   "weldedVertices": 2869,
@@ -30,6 +30,50 @@
     "footR"
   ],
   "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 3,
+      "distance": 0.02512358890144235,
+      "method": "source-opening"
+    },
+    {
+      "part": "armL",
+      "rim": 11,
+      "distance": 0.09618761977948251,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 16,
+      "distance": 0.09936967113883469,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 7,
+      "distance": 0.03656587612739243,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 8,
+      "distance": 0.10436966870858043,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 3,
+      "distance": 0.09657316169302464,
+      "method": "closed-part-surface"
+    },
+    {
+      "part": "legR",
+      "rim": 22,
+      "distance": 0.05793538584762355,
+      "method": "cut-boundary"
+    }
+  ],
   "removedClosureTriangles": 0,
   "removedDegenerateTriangles": 0,
   "joints": 16,

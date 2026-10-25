@@ -1,3 +1,4 @@
+import { crowdLimbParts } from '../../assets/crowdParts';
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
 import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type SkinnedMesh, type Texture } from 'three';
 import { packSkin, restInverses } from './skinnedCrowd';
@@ -161,7 +162,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     if (!(node instanceof Mesh)) return;
     let capNode: Object3D | null = node;
     while (capNode && !capNode.name.startsWith('stump_')) capNode = capNode.parent;
-    const capIndex = texturedHumanoid && capNode ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(capNode.name.replace(/^stump_/, '')) : -1;
+    const capIndex = preserveUV && capNode ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(capNode.name.replace(/^stump_/, '')) : -1;
     const cap = capIndex >= 0;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !cap) return;
     // A named animated part can itself be a Mesh (not only a parent joint).
@@ -184,7 +185,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       geometry.setIndex(new BufferAttribute(indices, 1));
     }
     if (cap) { geometry.computeVertexNormals(); geometry.setAttribute('uv', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 2), 2)); }
-    if (preserveIndices) compactCrowdGeometry(geometry);
+    if (preserveIndices && !skinnedFigure) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
     for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
       const attribute = geometry.getAttribute(name);
@@ -225,7 +226,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
         else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
       }
-      const packed = packSkin(joints, weights, count, false);
+      const semantic = geometry.getAttribute('_crowd_part'), semanticParts = semantic ? Float32Array.from({ length: count }, (_, i) => map[semantic.getX(i)]) : undefined;
+      const packed = packSkin(joints, weights, count, false, semanticParts);
       indices.set(packed.dominant);
       const point = new Vector3(), inverse = new Matrix4();
       for (let i = 0; i < count; i++) {
@@ -239,8 +241,8 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       // Integer bits in the fourth weight identify every limb touched by a
       // triangle. Its fractional part remains the fourth skin weight. Shared
       // vertices are compacted after this triangle-local mask is assigned.
-      if (!cap && texturedHumanoid) {
-        const groups = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']];
+      if (!cap && preserveUV) {
+        const groups = crowdLimbParts(!!root.getObjectByName('body'));
         for (let t = 0; t < count; t += 3) {
           let mask = 0;
           for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;
@@ -248,7 +250,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         }
       }
       geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
-      geometry.deleteAttribute('_crowd_region');
+      geometry.deleteAttribute('_crowd_region'); geometry.deleteAttribute('_crowd_part');
       geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
     }
     if (preserveUV) {

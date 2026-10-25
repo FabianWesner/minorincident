@@ -45,6 +45,7 @@ export function prepareCivilianRig(model: Group, id: string, placeholder = false
 export async function prepareCivilianGeometry(model: Group, modelId: string, distant: boolean, placeholder = false): Promise<PreparedCivilian> {
   const baked = bakeInfected(model, [], false, civilianClips);
     prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'), baked.clip.binds);
+    const sourceMarks = baked.geometry.getAttribute('_vein');
     const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
@@ -62,6 +63,7 @@ export async function prepareCivilianGeometry(model: Group, modelId: string, dis
     for (let i = 0; i < color.count; i++) { const k = [head, torso].indexOf(partOf.getX(i)); if (k < 0) continue; for (let a = 0; a < 3; a++) { const v = position.getComponent(i, a); bounds[k].min[a] = Math.min(bounds[k].min[a], v); bounds[k].max[a] = Math.max(bounds[k].max[a], v); } }
     const rel = (k: number, i: number, a: number) => (position.getComponent(i, a) - bounds[k].min[a]) / Math.max(1e-6, bounds[k].max[a] - bounds[k].min[a]);
     for (let i = 0; i < veins.length; i++) {
+      if ((sourceMarks?.getX(i) ?? 0) >= 1024) { veins[i] = sourceMarks.getX(i); continue; }
       veins[i] = Number(Math.abs(color.getX(i) - veinColor.r) < .0001 && Math.abs(color.getY(i) - veinColor.g) < .0001);
       // Forward is +X: the front-lower third of the face, and the front-upper collar on one side of the torso.
       const p = partOf.getX(i);

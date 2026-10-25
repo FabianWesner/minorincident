@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-b/lod0.glb",
   "out": "docs/reports/skinned-prod/builds/npc.civilian-man-b/lod0.raw.glb",
-  "bytes": 557156,
+  "bytes": 597716,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-b/source/flat-lod0.glb",
   "scale": 1.7613044127401543,
   "yaw": 90,
@@ -33,6 +33,50 @@
     "footR"
   ],
   "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 50,
+      "distance": 0.058816915449278334,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 5,
+      "distance": 0.04218882604747702,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 32,
+      "distance": 0.16441845654231788,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 22,
+      "distance": 0.07862444578111148,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 30,
+      "distance": 0.0413278018871036,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 30,
+      "distance": 0.08301811065280361,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legR",
+      "rim": 48,
+      "distance": 0.06575233594015316,
+      "method": "cut-boundary"
+    }
+  ],
   "removedClosureTriangles": 0,
   "removedDegenerateTriangles": 0,
   "joints": 16,

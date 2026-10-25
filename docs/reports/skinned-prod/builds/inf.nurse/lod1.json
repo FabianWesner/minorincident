@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/lod1.glb",
   "out": "docs/reports/skinned-prod/builds/inf.nurse/lod1.raw.glb",
-  "bytes": 472632,
+  "bytes": 509932,
   "body": "automatic 512-cell voxel union of closed source partitions",
   "scale": 1,
   "yaw": 0,
@@ -33,6 +33,50 @@
     "footR"
   ],
   "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 25,
+      "distance": 0.11265673174971431,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 9,
+      "distance": 0.12172187955927213,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 26,
+      "distance": 0.0581230246198264,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 7,
+      "distance": 0.10416674869700654,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 8,
+      "distance": 0.06097587146939283,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 23,
+      "distance": 0.038519080490064764,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legR",
+      "rim": 20,
+      "distance": 0.09806656329933161,
+      "method": "cut-boundary"
+    }
+  ],
   "removedClosureTriangles": 0,
   "removedDegenerateTriangles": 0,
   "joints": 16,

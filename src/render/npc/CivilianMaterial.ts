@@ -1,5 +1,5 @@
 import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility } from '../characters/CrowdAppearance';
-import { DoubleSide, FrontSide, MeshLambertNodeMaterial, type DataTexture, type Texture } from 'three/webgpu';
+import { type Node, DoubleSide, FrontSide, MeshLambertNodeMaterial, type DataTexture, type Texture } from 'three/webgpu';
 import { attribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos, texture as sampleTexture, varying } from 'three/tsl';
 import { crowdBlendedMatrix, poseTexture } from '../../assets/crowd';
 import { skinnedCrowdMatrix } from '../characters/skinnedCrowd';
@@ -59,6 +59,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
       material.maskNode = eyeDisc.not().or(eyeGlow.greaterThan(.01).and(radius.lessThanEqual(1)));
       material.userData.frozenSurfaceMask = eyeDisc.not();
     }
+    if (options.skinned) material.maskNode = material.maskNode ? (material.maskNode as Node<'bool'>).and(parts.w.lessThan(1024)) : parts.w.lessThan(1024);
     entry = { material, pose, uses: 0 }; cache.set(key, entry);
   }
   const owned = entry; owned.uses++; let released = false;

@@ -7,7 +7,8 @@ import { MeshLambertNodeMaterial } from 'three/webgpu';
 import manifest from '../../../src/assets/manifest.json';
 import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
-import { packCrowdParts } from '../../../src/assets/crowdParts';
+import { crowdLimbParts, packCrowdParts } from '../../../src/assets/crowdParts';
+import { compactCrowdGeometry } from '../../../src/render/characters/compactCrowdGeometry';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { PickBodies } from '../../../src/render/characters/PickBodies';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
@@ -17,8 +18,10 @@ async function baked(id: string) {
   const def = manifest.find(d => d.id === id)!;
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(def.glb)), '');
   scene.traverse(node => { if (node instanceof Mesh && !Array.isArray(node.material) && node.material.name === 'tex_baseColor') (node.material as import('three').MeshStandardMaterial).map = new Texture(); });
-  const result = bakeInfected(scene, def.animatedNodes, false, civilianClips);
-  packCrowdParts(result.geometry); return result;
+  const result = bakeInfected(scene, def.animatedNodes, false, civilianClips, undefined, !id.startsWith('npc.'));
+  packCrowdParts(result.geometry);
+  if (!id.startsWith('npc.')) compactCrowdGeometry(result.geometry);
+  return result;
 }
 
 for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
@@ -27,11 +30,11 @@ for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-wo
   expect(clip.matrices.every(Number.isFinite)).toBe(true);
   const picker = new PickBodies(), palette = new CrowdPosePalette(clip, 1), instance = new Matrix4().makeRotationY(.63).setPosition(3, .4, -2), projection = new Matrix4().makeRotationX(-.7);
   const inverse = new Matrix4(), matrix = new Matrix4(), source = new Vector3(), transformed = new Vector3(), sum = new Vector3();
-  for (let c = 0; c < civilianClips.length; c++) {
+  for (const { c, cutMask } of [...civilianClips.map((_, c) => ({ c, cutMask: 0 })), ...[1, 2, 4, 8, 16, 31].map(cutMask => ({ c: 0, cutMask }))]) {
     const frame = c * framesPerClip + 13, expected = new Box3(), projected = new Box3();
     let vertices = 0;
     for (let i = 0; i < positions.count; i++) {
-      if (tags.getW(i) >= 1024 || tags.getZ(i) > 1.5) continue;
+      if (tags.getW(i) >= 1024 || tags.getZ(i) > 1.5 || (Math.floor(skin.getW(i)) & cutMask)) continue;
       const packed = skin.getX(i), weights = [1 - skin.getY(i) - skin.getZ(i) - (skin.getW(i) % 1), skin.getY(i), skin.getZ(i), (skin.getW(i) % 1)];
       const joints = [tags.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
       source.fromBufferAttribute(positions, i); sum.set(0, 0, 0);
@@ -41,8 +44,8 @@ for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-wo
       }
       sum.applyMatrix4(instance); expected.expandByPoint(sum); projected.expandByPoint(sum.applyMatrix4(projection)); vertices++;
     }
-    expect(vertices).toBeGreaterThan(100); expect(expected.isEmpty(), civilianClips[c]).toBe(false);
-    picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry);
+    expect(vertices).toBeGreaterThan(cutMask ? 20 : 100); expect(expected.isEmpty(), civilianClips[c]).toBe(false);
+    picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry, cutMask);
     const actual = picker.bounds(1, new Box3())!;
     expect(actual.min.distanceTo(expected.min), civilianClips[c]).toBeLessThan(1e-5);
     expect(actual.max.distanceTo(expected.max), civilianClips[c]).toBeLessThan(1e-5);
@@ -66,6 +69,20 @@ test('severed skinned corpses retain only the requested cap and exclude every re
     expect(Array.from(result.getAttribute('position').array).every(Number.isFinite)).toBe(true);
   }
   corpses.dispose(); material.dispose(); geometry.dispose();
+});
+
+test('production indexed skin batches retain a constant, correct severance mask on each triangle', async () => {
+  for (const id of ['inf.common-worker', 'inf.nurse', 'inf.dog', 'inf.zebra']) {
+    const { geometry, clip } = await baked(id), index = geometry.getIndex()!, tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
+    const groups = crowdLimbParts(clip.parts.includes('legFL'));
+    for (let t = 0; t < index.count; t += 3) {
+      const vertices = [0, 1, 2].map(k => index.getX(t + k)); if (vertices.some(i => tags.getW(i) >= 1024)) continue;
+      let mask = 0;
+      for (const i of vertices) groups.forEach((names, bit) => { if (names.includes(clip.parts[tags.getX(i)])) mask |= 1 << bit; });
+      for (const i of vertices) expect(Math.floor(skin.getW(i)), `${id} triangle ${t / 3}`).toBe(mask);
+    }
+    geometry.dispose();
+  }
 });
 
 test('three unseen cast builds publish validated compressed skins within every standalone byte limit', () => {
@@ -93,7 +110,7 @@ test('exact skin support retains flat parts and falls back to all vertices acros
   palette.texture.dispose(); geometry.dispose();
 });
 
-for (const id of ['inf.common-worker', 'inf.nurse', 'npc.civilian-man-b']) test(`${id}: wound rims follow the actual body skin through idle, running and death`, async () => {
+for (const id of ['inf.common-worker', 'inf.nurse', 'npc.civilian-man-b', 'inf.dog', 'amb.zebra']) test(`${id}: wound rims follow the actual body skin through idle, running and death`, async () => {
   const def = manifest.find(d => d.id === id)!;
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(def.sourceGlb!)), '');
   const body = scene.getObjectByName('skin_body') as SkinnedMesh, point = new Vector3(), target = new Vector3();
