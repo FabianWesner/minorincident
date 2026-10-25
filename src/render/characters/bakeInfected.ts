@@ -1,5 +1,6 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type Texture } from 'three';
+import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type SkinnedMesh, type Texture } from 'three';
+import { packSkin, restInverses, skinnedCrowdMode } from './skinnedCrowd';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
@@ -148,6 +149,11 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const transforms = template?.transforms ?? []; let meshIndex = 0;
   let shirtColor: import('three').Color | undefined;
   let doubleSided = false;
+  // skinned-crowd prototype: one welded SkinnedMesh body. Every vertex of such a figure stays in the bind
+  // (world rest) space; the pose atlas is premultiplied by the inverse rest matrices on upload.
+  let skinnedFigure = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) skinnedFigure = true; });
+  const skinMode = skinnedFigure ? skinnedCrowdMode() : 'off';
+  const binds = skinnedFigure ? restInverses(parts) : undefined;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
@@ -160,7 +166,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // for geometry must match the sampled atlas on subsequent loads.
     const bind = transforms[meshIndex++];
     if (bind) relative.copy(bind);
-    else { relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
+    else { if (skinnedFigure) relative.copy(node.matrixWorld); else relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
     // CrowdView can retain authored indices through the bake. Expanding every
     // triangle first repeated transforms, attribute packing and welding work.
     // Civilian grip tessellation still requests the original triangle soup.
@@ -195,7 +201,20 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
     }
-    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); 
+    if (skinnedFigure) {
+      const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
+      const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
+      const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
+      for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
+        if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
+        else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
+      }
+      const packed = packSkin(joints, weights, count, skinMode === 'rigid');
+      indices.set(packed.dominant);
+      if (skinMode !== 'rigid') geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
+      geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
+    }
+    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
     if (textured) {
       const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
       for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; if (!material.map) shirt[i] = -10; }
@@ -225,6 +244,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
+  if (binds) clip.binds = binds;
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
   if (key) {
     bakedCrowds.set(key, { clip, transforms });

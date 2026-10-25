@@ -1,0 +1,465 @@
+{
+ "name": "crowd30",
+ "note": "skinned-crowd prototype. --query skinCrowd=1 skinned bodies, skinCrowd=rigid same bodies on the dominant joint, no flag = main rigid crowd.",
+ "ground": "asphalt",
+ "size": 30,
+ "time": "golden",
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    9
+   ],
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "ped",
+   "kind": "pedestrian",
+   "at": [
+    11,
+    11
+   ],
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c0",
+   "kind": "infected",
+   "at": [
+    -3.75,
+    -4.0
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c1",
+   "kind": "infected",
+   "at": [
+    -2.25,
+    -4.0
+   ],
+   "yaw": 45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c2",
+   "kind": "infected",
+   "at": [
+    -0.75,
+    -4.0
+   ],
+   "yaw": 90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c3",
+   "kind": "infected",
+   "at": [
+    0.75,
+    -4.0
+   ],
+   "yaw": 135,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c4",
+   "kind": "infected",
+   "at": [
+    2.25,
+    -4.0
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c5",
+   "kind": "infected",
+   "at": [
+    3.75,
+    -4.0
+   ],
+   "yaw": -90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c6",
+   "kind": "infected",
+   "at": [
+    -3.75,
+    -2.4
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c7",
+   "kind": "infected",
+   "at": [
+    -2.25,
+    -2.4
+   ],
+   "yaw": 45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c8",
+   "kind": "infected",
+   "at": [
+    -0.75,
+    -2.4
+   ],
+   "yaw": 90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c9",
+   "kind": "infected",
+   "at": [
+    0.75,
+    -2.4
+   ],
+   "yaw": 135,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c10",
+   "kind": "infected",
+   "at": [
+    2.25,
+    -2.4
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c11",
+   "kind": "infected",
+   "at": [
+    3.75,
+    -2.4
+   ],
+   "yaw": -90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c12",
+   "kind": "infected",
+   "at": [
+    -3.75,
+    -0.7999999999999998
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c13",
+   "kind": "infected",
+   "at": [
+    -2.25,
+    -0.7999999999999998
+   ],
+   "yaw": 45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c14",
+   "kind": "infected",
+   "at": [
+    -0.75,
+    -0.7999999999999998
+   ],
+   "yaw": 90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c15",
+   "kind": "infected",
+   "at": [
+    0.75,
+    -0.7999999999999998
+   ],
+   "yaw": 135,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c16",
+   "kind": "infected",
+   "at": [
+    2.25,
+    -0.7999999999999998
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c17",
+   "kind": "infected",
+   "at": [
+    3.75,
+    -0.7999999999999998
+   ],
+   "yaw": -90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c18",
+   "kind": "infected",
+   "at": [
+    -3.75,
+    0.8000000000000007
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c19",
+   "kind": "infected",
+   "at": [
+    -2.25,
+    0.8000000000000007
+   ],
+   "yaw": 45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c20",
+   "kind": "infected",
+   "at": [
+    -0.75,
+    0.8000000000000007
+   ],
+   "yaw": 90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c21",
+   "kind": "infected",
+   "at": [
+    0.75,
+    0.8000000000000007
+   ],
+   "yaw": 135,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c22",
+   "kind": "infected",
+   "at": [
+    2.25,
+    0.8000000000000007
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c23",
+   "kind": "infected",
+   "at": [
+    3.75,
+    0.8000000000000007
+   ],
+   "yaw": -90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c24",
+   "kind": "infected",
+   "at": [
+    -3.75,
+    2.4000000000000004
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c25",
+   "kind": "infected",
+   "at": [
+    -2.25,
+    2.4000000000000004
+   ],
+   "yaw": 45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c26",
+   "kind": "infected",
+   "at": [
+    -0.75,
+    2.4000000000000004
+   ],
+   "yaw": 90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c27",
+   "kind": "infected",
+   "at": [
+    0.75,
+    2.4000000000000004
+   ],
+   "yaw": 135,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "c28",
+   "kind": "infected",
+   "at": [
+    2.25,
+    2.4000000000000004
+   ],
+   "yaw": 180,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "c29",
+   "kind": "infected",
+   "at": [
+    3.75,
+    2.4000000000000004
+   ],
+   "yaw": -90,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   -0.8
+  ],
+  "zoom": 0.75
+ },
+ "frames": 90,
+ "shots": [
+  90
+ ],
+ "sheet": 4
+}

@@ -19,7 +19,7 @@ export function crowdTexture(root: Object3D): Texture | undefined {
 /** One static buffer leaves room for matrix and instance state on both backends. */
 export function interleaveTexturedCrowd(geometry: BufferGeometry): void {
   if (!geometry.hasAttribute('uv')) return;
-  const names = ['position', 'normal', 'color', 'uv', '_parts'];
+  const names = ['position', 'normal', 'color', 'uv', '_parts', ...(geometry.hasAttribute('_skin') ? ['_skin'] : [])];
   const attributes = names.map(name => geometry.getAttribute(name));
   const stride = attributes.reduce((sum, a) => sum + a.itemSize, 0);
   const buffer = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);

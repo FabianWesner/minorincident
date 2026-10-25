@@ -2,7 +2,7 @@ import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, Instance
 import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float, Fn, If, nodeObject } from 'three/tsl';
 import { palette } from './palette';
 
-export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array }
+export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array; /** skinned-crowd prototype: inverse rest matrix per part; the GPU atlas holds joint·bind⁻¹. */ binds?: Float32Array }
 export function clipTexture(clip: CrowdClip): DataTexture {
   const texture=new DataTexture(clip.matrices instanceof Float32Array ? clip.matrices : new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
   // Pose samples address atlas texels directly. Its identity UV matrix never changes;

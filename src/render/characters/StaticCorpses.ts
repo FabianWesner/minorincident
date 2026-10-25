@@ -1,3 +1,4 @@
+import { skinnedVertexMatrix } from './skinnedCrowd';
 import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Vector3, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
@@ -241,7 +242,7 @@ export class StaticCorpses extends Group {
         const kept: number[] = [];
         if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
         else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
-        const matrices = clip.matrices, frameOffset = Math.floor(frame) * clip.parts.length * 16;
+        const frameOffset = Math.floor(frame) * clip.parts.length * 16, skin = clip.binds ? source.getAttribute('_skin') : undefined, skinMatrix = new Float32Array(16);
         for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name);
           // GPU backends may pad normals to vec4. Frozen geometry retains the
@@ -251,7 +252,10 @@ export class StaticCorpses extends Group {
           for (let output = 0; output < kept.length; output++) {
             const i = kept[output];
             if (name === 'position' || name === 'normal') {
-              const m = frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
+              // skinned-crowd prototype: blend the premultiplied joint matrices of this vertex.
+              const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix) : undefined;
+              const matrices = skinned ?? clip.matrices;
+              const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
               let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;
               let ny = matrices[m + 1] * x + matrices[m + 5] * y + matrices[m + 9] * z;
               let nz = matrices[m + 2] * x + matrices[m + 6] * y + matrices[m + 10] * z;
