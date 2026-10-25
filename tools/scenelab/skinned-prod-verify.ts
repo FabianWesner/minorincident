@@ -242,6 +242,26 @@ try {
         await session.screenshot(resolve(out, `turning-glasses-${backend}.png`));
         receipts.push({ case: 'infection-accessories', backend, metrics: await session.metrics(), errors: [...session.errors] });
       }
+      if (cases.has('textures')) {
+        await session.load({ ...spec, name: 'shared-atlas-pages', actors: [{ id: 'courier', kind: 'courier', at: [0, 30] },
+          { id: 'orange', kind: 'pedestrian', at: [-1.3, 0], look: { model: 'npc.civilian-man-b', accessories: [] } },
+          { id: 'dress', kind: 'pedestrian', at: [1.3, 0], look: { model: 'npc.civilian-woman-a', accessories: [] } }],
+          camera: { mode: 'pose', position: [5, 3, 7], target: [0, 1, 0] } });
+        await session.step(1); await session.screenshot(resolve(out, `mixed-atlases-live-${backend}.png`));
+        const actors = (await session.metrics()).actors, ids = [actors.orange.entity, actors.dress.entity];
+        await session.page.evaluate(() => { for (const name of ['orange', 'dress']) window.__SCENE__!.command(name, { infect: {} }); });
+        await session.step(240);
+        await session.page.evaluate(() => { for (const name of ['orange', 'dress']) window.__SCENE__!.command(name, { corpse: true }); });
+        await session.step(180);
+        await session.page.evaluate(ids => {
+          const game = (window.__SCENE__ as unknown as { game: Game }).game;
+          const positions = ids.map(id => game.world.entities.get(id)!.transform), x = positions.reduce((n, p) => n + p.x, 0) / positions.length, z = positions.reduce((n, p) => n + p.z, 0) / positions.length;
+          window.__SCENE__!.setCamera({ mode: 'pose', position: [x + 4, 3, z + 6], target: [x, .3, z] });
+        }, ids);
+        await session.step(1); await session.screenshot(resolve(out, `mixed-atlases-frozen-${backend}.png`));
+        const frozenHDR = await hdr(session); if (frozenHDR.nonfinite) throw Error('Shared atlas corpse HDR is nonfinite');
+        receipts.push({ case: 'textures', backend, ids, frozenHDR, metrics: await session.metrics(), errors: [...session.errors] });
+      }
       if (cases.has('lod')) {
         await session.load({ ...spec, name: 'skin-lod', actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
           { id: 'figure', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.nurse' } }] });
