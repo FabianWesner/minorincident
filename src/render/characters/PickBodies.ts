@@ -5,7 +5,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** World points of a drawn body: feet midpoint, hips, head centre (metres). */
 export interface PickBody { feet: Vector3; hip: Vector3; head: Vector3 }
 
-interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean; cutMask?: number; revision?: number; worldBounds?: Box3; worldBoundsReady?: boolean; topProjection?: Matrix4; projectedTop?: number }
+interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; skinParts?: Matrix4[]; skinPartsReady?: boolean; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean; cutMask?: number; revision?: number; worldBounds?: Box3; worldBoundsReady?: boolean; topProjection?: Matrix4; projectedTop?: number }
 
 /** The bodies the crowd renderers drew last frame, for click picking against what the player sees (not the sim
  * capsule): a lunging, hunched or lying infected is clicked where it is drawn. Recording copies one matrix per
@@ -30,7 +30,9 @@ export class PickBodies {
     const revision = geometry && palette.clip.binds ? palette.revision(pose, outgoing, weight) : -1;
     // Low presentation may reuse the complete pose and world transform. Its exact
     // vertices/bounds remain valid until a sampled atlas row or input changes.
-    const unchanged = revision >= 0 && entry.revision === revision && entry.palette === palette && entry.pose === pose && entry.outgoing === outgoing && entry.weight === weight && entry.geometry === geometry && entry.cutMask === cutMask && entry.instance.equals(instance);
+    const samePose = revision >= 0 && entry.revision === revision && entry.palette === palette && entry.pose === pose && entry.outgoing === outgoing && entry.weight === weight;
+    const unchanged = samePose && entry.geometry === geometry && entry.cutMask === cutMask && entry.instance.equals(instance);
+    if (!samePose) entry.skinPartsReady = false;
     entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry; entry.cutMask = cutMask; entry.revision = revision;
     if (!unchanged) { entry.boundsReady = false; entry.fullVertices = false; entry.verticesReady = false; entry.worldBoundsReady = false; entry.projectedTop = undefined; }
   }
@@ -164,11 +166,18 @@ export class PickBodies {
     const vertices = entry.vertices?.length === positions.count * 3 ? entry.vertices : entry.vertices = new Float32Array(positions.count * 3);
     const matrices = entry.worldParts ??= [];
     if (!entry.boundsReady) {
+      const skinParts = entry.skinParts ??= [];
       for (let p = 0; p < clip.parts.length; p++) {
-        const matrix = matrices[p] ??= new Matrix4();
-        entry.palette.part(entry.pose, entry.outgoing, entry.weight, p, matrix);
-        matrix.multiply(this.inverseBind.fromArray(clip.binds!, p * 16)).premultiply(entry.instance);
+        const local = skinParts[p] ??= new Matrix4(), matrix = matrices[p] ??= new Matrix4();
+        // A held pose can move through the world. Reuse joint × inverse bind;
+        // placement still updates exactly for this frame's instance matrix.
+        if (!entry.skinPartsReady) {
+          entry.palette.part(entry.pose, entry.outgoing, entry.weight, p, local);
+          local.multiply(this.inverseBind.fromArray(clip.binds!, p * 16));
+        }
+        matrix.multiplyMatrices(entry.instance, local);
       }
+      entry.skinPartsReady = true;
       entry.boundsReady = true; entry.fullVertices = false; entry.verticesReady = false;
     }
     // Affine skin matrices have W=1. Evaluate their weighted xyz directly:

@@ -101,7 +101,9 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
     expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
     let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
     if (def.crowdSkin) {
-      expect(triangles).toBeGreaterThanOrEqual(3);
+      // A triangular retained boundary needs one face; shipped skin seam
+      // closure is checked separately across every production LOD.
+      expect(triangles).toBeGreaterThanOrEqual(1);
       expect(cap.getSkin()).not.toBeNull();
       cap.traverse(n => { for (const p of n.getMesh()?.listPrimitives() ?? []) {
         expect(p.getAttribute('JOINTS_0')?.getCount()).toBe(p.getAttribute('POSITION')!.getCount());

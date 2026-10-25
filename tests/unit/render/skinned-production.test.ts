@@ -168,6 +168,7 @@ test('held skin bounds reuse exact vertices and invalidate when the same mutable
   instance.makeTranslation(2, 0, 0);
   picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry); picker.bounds(1, bounds);
   expect(bounds.max.toArray()).toEqual([3, 3, 1]);
+  expect(part).toHaveBeenCalledTimes(1); // moving the held pose reuses its local skin matrices
   for (let repeat = 0; repeat < 2; repeat++) {
     picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry, 1);
     expect(picker.bounds(1, bounds)).toBeNull();
