@@ -19,6 +19,7 @@ import { oracle } from './oracles';
 import { loadCivilianSource } from '../../../src/assets/civilianSource';
 import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
 import { palette } from '../../../src/data/palette';
+import type { AssetDef } from '../../../src/assets/types';
 
 type Lod = 'lod0' | 'lod1' | 'lod2';
 // Authored glasses are native head meshes, including staff/quest characters. Aftermath variants inherit their source.
@@ -27,15 +28,17 @@ const authoredGlasses = new Set(manifest.filter(a => a.id.startsWith('npc.') && 
 authoredGlasses.add('npc.survivor-group.aftermath.sam');
 const spectacleColors = [new Color(palette.uiDark), new Color(palette.leather)];
 const cache = new Map<string, Promise<Group>>();
-async function asset(id: string, lod: Lod): Promise<Group> {
-  const key = `${id}/${lod}`;
+async function asset(id: string, lod: Lod, reference = false): Promise<Group> {
+  const key = `${id}/${lod}/${reference}`;
   if (!cache.has(key)) cache.set(key, (async () => {
-    if (id.startsWith('npc.')) return loadCivilianSource(id, lod, async url => {
+    if (id.startsWith('npc.') && !reference) return loadCivilianSource(id, lod, async url => {
       const bytes = readFileSync(`public${url}`);
       return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
     });
-    const def = manifest.find(a => a.id === id)!;
-    const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
+    const def = manifest.find(a => a.id === id)! as AssetDef;
+    // Authored accessory fits use the original man-A calibration mesh, retained by conversion.
+    const paths = reference ? def.rigidBaseline ?? def : def;
+    const bytes = readFileSync(lod === 'lod0' ? paths.glb : paths.lods![lod]!);
     // This geometry oracle runs in Node. Keep real UVs/material slots while
     // bypassing browser image decoding; rendered atlas pixels have native gates.
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => new Texture() }));
@@ -84,7 +87,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
   const errors: string[] = [];
   try {
     await renderer.init();
-    const referenceRoot = await asset('npc.civilian-man-a', 'lod1');
+    const referenceRoot = await asset('npc.civilian-man-a', 'lod1', true);
     prepareCivilianRig(referenceRoot, 'npc.civilian-man-a');
     const referenceGeo = bakeInfected(referenceRoot, [], false, ['idle']).geometry;
     packCrowdParts(referenceGeo);
@@ -97,8 +100,10 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     const raw = new Map<string, Box3>();
     for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
     const frameTops = new Map<string, number>();
-    for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly']) {
-      const root = await asset(model, 'lod0'); prepareCivilianRig(root, model); root.updateMatrixWorld(true);
+    for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly', 'npc.civilian-elderly.aftermath']) {
+      const base = model.replace(/\.aftermath$/, ''), source = manifest.find(d => d.id === base)! as AssetDef;
+      const legacy = base !== model && !!source.rigidBaseline;
+      const root = await asset(legacy ? base : model, 'lod0', legacy); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
       const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
       // Measure the base GLB's head-part frames; aftermath recolours them but retains the same rig and shape.
       // This is independent of the renderer's cached spectacle-top values and fitted hat output.

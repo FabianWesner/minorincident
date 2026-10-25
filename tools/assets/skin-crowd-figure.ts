@@ -505,13 +505,20 @@ if (args.includes('--spectacles') && texture && texture.mime !== 'image/ktx2') {
   const vertices = body.owner.flatMap((owner, i) => owner === head ? [{ i, point: new Vector3().fromArray(body.pos, i * 3).applyMatrix4(inverse) }] : []);
   const lo = new Vector3(Infinity, Infinity, Infinity), hi = new Vector3(-Infinity, -Infinity, -Infinity);
   for (const { point } of vertices) { lo.min(point); hi.max(point); }
-  const samples = vertices.filter(({ i, point }) => {
+  const candidates = vertices.filter(({ point }) => {
     const y = (point.y - lo.y) / (hi.y - lo.y), z = Math.abs(point.z - (lo.z + hi.z) / 2) / (hi.z - lo.z);
-    if (y < .45 || y > .78 || z < .25 || point.x < (lo.x + hi.x) / 2) return false;
-    const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), row = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height)));
-    const rgb = [...png.data.subarray((row * png.width + x) * 4, (row * png.width + x) * 4 + 3)];
-    return Math.max(...rgb) < 70 && Math.max(...rgb) - Math.min(...rgb) < 22;
+    return y >= .45 && y <= .78 && z >= .25 && point.x >= (lo.x + hi.x) / 2;
   });
+  const colorAt = (i: number) => {
+    const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), row = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height)));
+    return [...png.data.subarray((row * png.width + x) * 4, (row * png.width + x) * 4 + 3)];
+  };
+  let samples = candidates.filter(({ i }) => {
+    const rgb = colorAt(i); return Math.max(...rgb) < 70 && Math.max(...rgb) - Math.min(...rgb) < 22;
+  });
+  // Brown frames need a warm dark-paint fallback; neutral temple shadows are excluded.
+  if (samples.length < 4) samples = candidates.filter(({ i }) => { const rgb = colorAt(i); return Math.max(...rgb) < 120 && Math.max(...rgb) - Math.min(...rgb) < 55 && rgb[0] > rgb[1] * 1.35; });
+  if (samples.length < 4) throw Error('Spectacled source has no detectable frame paint; refusing an unmeasured hat fit');
   if (samples.length >= 4) {
     spectacleTop = Math.max(...samples.map(({ point }) => point.y));
     const regions = prim.getAttribute('_CROWD_REGION')!;
