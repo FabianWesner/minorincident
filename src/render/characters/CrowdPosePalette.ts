@@ -6,6 +6,8 @@ import { Matrix4, Quaternion, Vector3 } from 'three';
 export class CrowdPosePalette {
   readonly texture;
   private readonly rows: Float32Array;
+  private readonly rowRevisions: Float64Array;
+  private revisionSequence = 0;
   /** atlas row holding every part's inverse bind (read by the vertex shader). */
   readonly bindRow: number;
   private readonly width: number;
@@ -24,6 +26,7 @@ export class CrowdPosePalette {
     // so CPU rows and uploads stay exactly the rigid ones (a CPU premultiply cost +2.7 ms p95 on the 4x phone proxy).
     this.bindRow = clip.frames + capacity * 2;
     this.rows = new Float32Array((this.bindRow + (clip.binds ? 1 : 0)) * this.width);
+    this.rowRevisions = new Float64Array(this.bindRow + 1);
     this.rows.set(clip.matrices);
     if (clip.binds) this.rows.set(clip.binds, this.bindRow * this.width);
     // The GPU copy keeps joint-world rows and the inverse binds in their separate final row.
@@ -91,7 +94,12 @@ export class CrowdPosePalette {
     return row;
   }
   /** Only mutable pose rows change; the baked atlas stays resident on both backends. */
+  /** Latest write to any row sampled by this displayed pose; baked rows are immutable. */
+  revision(frame: number, outgoing: number, weight: number): number {
+    return Math.max(this.rowRevisions[Math.floor(frame)] ?? 0, this.rowRevisions[Math.ceil(frame)] ?? 0, weight < 1 ? this.rowRevisions[outgoing] ?? 0 : 0);
+  }
   private dirty(row: number): void {
+    this.rowRevisions[row] = ++this.revisionSequence;
     this.texture.addUpdateRange(row * this.width, this.width);
     this.texture.needsUpdate = true;
   }

@@ -1,5 +1,5 @@
 import { readFileSync, statSync } from 'node:fs';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4, Mesh, SkinnedMesh, Texture, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -145,4 +145,31 @@ for (const id of ['inf.common-worker', 'inf.nurse', 'npc.civilian-man-b', 'inf.d
       }
     }
   }
+});
+
+
+test('held skin bounds reuse exact vertices and invalidate when the same mutable pose row is rewritten', () => {
+  const geometry = new BufferGeometry().setAttribute('position', new Float32BufferAttribute([0, 0, 0, 1, 1, 1], 3));
+  geometry.setAttribute('_parts', new Float32BufferAttribute([0, 0, 0, 0, 0, 0, 0, 0], 4));
+  geometry.setAttribute('_skin', new Float32BufferAttribute([0, 0, 0, 1, 0, 0, 0, 1], 4));
+  const clip = { parts: ['root'], frames: 1, duration: 1, matrices: new Float32Array(new Matrix4().elements), binds: new Float32Array(new Matrix4().elements) };
+  const palette = new CrowdPosePalette(clip, 1), picker = new PickBodies(), instance = new Matrix4(), bounds = new Box3();
+  const blend = palette.sample(1, 'walk', 0, 0);
+  const frame = palette.correct(1, 0, blend[0], 1, () => {});
+  picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry); picker.bounds(1, bounds);
+  const part = vi.spyOn(palette, 'part');
+  picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry); picker.bounds(1, bounds);
+  expect(part).not.toHaveBeenCalled(); expect(bounds.max.toArray()).toEqual([1, 1, 1]);
+  // The row index remains identical while its GPU and CPU contents change.
+  expect(palette.correct(1, 0, blend[0], 1, pose => { pose[13] = 2; })).toBe(frame);
+  picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry); picker.bounds(1, bounds);
+  expect(part).toHaveBeenCalledTimes(1); expect(bounds.max.toArray()).toEqual([1, 3, 1]);
+  instance.makeTranslation(2, 0, 0);
+  picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry); picker.bounds(1, bounds);
+  expect(bounds.max.toArray()).toEqual([3, 3, 1]);
+  for (let repeat = 0; repeat < 2; repeat++) {
+    picker.begin(); picker.add(1, instance, palette, frame, 0, 1, geometry, 1);
+    expect(picker.bounds(1, bounds)).toBeNull();
+  }
+  geometry.dispose(); palette.texture.dispose();
 });

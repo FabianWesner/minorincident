@@ -5,7 +5,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** World points of a drawn body: feet midpoint, hips, head centre (metres). */
 export interface PickBody { feet: Vector3; hip: Vector3; head: Vector3 }
 
-interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean; cutMask?: number }
+interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean; cutMask?: number; revision?: number; worldBounds?: Box3; worldBoundsReady?: boolean; topProjection?: Matrix4; projectedTop?: number }
 
 /** The bodies the crowd renderers drew last frame, for click picking against what the player sees (not the sim
  * capsule): a lunging, hunched or lying infected is clicked where it is drawn. Recording copies one matrix per
@@ -27,8 +27,12 @@ export class PickBodies {
   add(id: number, instance: Matrix4, palette: CrowdPosePalette, pose: number, outgoing: number, weight: number, geometry?: BufferGeometry, cutMask = 0): void {
     let entry = this.entries.get(id);
     if (!entry) { entry = { frame: 0, instance: new Matrix4(), palette, pose, outgoing, weight }; this.entries.set(id, entry); }
-    entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry; entry.cutMask = cutMask;
-    entry.boundsReady = false; entry.fullVertices = false; entry.verticesReady = false;
+    const revision = geometry && palette.clip.binds ? palette.revision(pose, outgoing, weight) : -1;
+    // Low presentation may reuse the complete pose and world transform. Its exact
+    // vertices/bounds remain valid until a sampled atlas row or input changes.
+    const unchanged = revision >= 0 && entry.revision === revision && entry.palette === palette && entry.pose === pose && entry.outgoing === outgoing && entry.weight === weight && entry.geometry === geometry && entry.cutMask === cutMask && entry.instance.equals(instance);
+    entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry; entry.cutMask = cutMask; entry.revision = revision;
+    if (!unchanged) { entry.boundsReady = false; entry.fullVertices = false; entry.verticesReady = false; entry.worldBoundsReady = false; entry.projectedTop = undefined; }
   }
   /** The drawn body of `id` in the last rendered frame, or null when it was not drawn. */
   body(id: number, out: PickBody): PickBody | null {
@@ -138,6 +142,7 @@ export class PickBodies {
     const result = new Uint32Array(selected); byMask.set(cutMask, result); return result;
   }
   private skinTop(entry: Entry, projection: Matrix4): number | null {
+    if (entry.projectedTop !== undefined && entry.topProjection?.equals(projection)) return entry.projectedTop;
     if (!entry.verticesReady && !this.skinBounds(entry, this.topBounds)) return null;
     const vertices = entry.vertices!, p = projection.elements;
     let top = -Infinity, lowW = Infinity, highW = -Infinity;
@@ -147,10 +152,12 @@ export class PickBodies {
       lowW = Math.min(lowW, w); highW = Math.max(highW, w);
       top = Math.max(top, (p[1] * x + p[5] * y + p[9] * z + p[13]) / w);
     }
-    if (lowW <= 0 && highW >= 0) return this.skinBounds(entry, this.topBounds, projection)?.max.y ?? null;
-    return Number.isFinite(top) ? top : null;
+    const result = lowW <= 0 && highW >= 0 ? this.skinBounds(entry, this.topBounds, projection)?.max.y ?? null : Number.isFinite(top) ? top : null;
+    if (result !== null) { (entry.topProjection ??= new Matrix4()).copy(projection); entry.projectedTop = result; }
+    return result;
   }
   private skinBounds(entry: Entry, out: Box3, projection?: Matrix4): Box3 | null {
+    if (!projection && entry.worldBoundsReady) return entry.worldBounds!.isEmpty() ? null : out.copy(entry.worldBounds!);
     const geometry = entry.geometry!, clip = entry.palette.clip, positions = geometry.getAttribute('position');
     const parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
     const support = this.skinSupport(entry.geometry!, entry.cutMask);
@@ -219,6 +226,7 @@ export class PickBodies {
         out.max.x = Math.max(out.max.x, x); out.max.y = Math.max(out.max.y, y); out.max.z = Math.max(out.max.z, z);
       }
     }
+    if (!projection) { (entry.worldBounds ??= new Box3()).copy(out); entry.worldBoundsReady = true; }
     return out.isEmpty() ? null : out;
   }
 }

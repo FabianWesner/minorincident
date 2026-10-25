@@ -23,15 +23,9 @@ export { packCrowdParts } from './crowdParts';
 export function crowdMatrix(texture: DataTexture | TextureNode, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0]) {
   const atlas = texture instanceof DataTexture ? poseTexture(texture) : texture;
   const start=int(part).mul(4);
-  const f = float(frame), low = f.floor(), high = f.ceil(), alpha = f.fract();
-  return Fn(() => {
-    const columns = [0, 1, 2, 3].map(index => textureLoad(atlas, ivec2(start.add(index), int(low))).toVar());
-    // Contact-corrected rows are integer frames: their floor/ceil texels are identical.
-    If(alpha.greaterThan(0), () => {
-      columns.forEach((column, index) => column.assign(mix(column, textureLoad(atlas, ivec2(start.add(index), int(high))), alpha)));
-    });
-    return mat4(columns[0], columns[1], columns[2], columns[3]);
-  })();
+  const f = float(frame), low = f.floor(), high = f.ceil();
+  const column = (index:number) => mix(textureLoad(atlas,ivec2(start.add(index),int(low))), textureLoad(atlas,ivec2(start.add(index),int(high))), f.fract());
+  return mat4(column(0),column(1),column(2),column(3));
 }
 /** Outgoing atlas rows are fetched only while an actor is transitioning. */
 export function crowdBlendedMatrix(texture: DataTexture | TextureNode, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0], outgoing: Parameters<typeof int>[0], weight: Node<'float'>) {
