@@ -2,7 +2,9 @@
   "id": "npc.civilian-elderly",
   "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-elderly",
   "elapsedSeconds": 17.349,
-  "manualSteps": [],
+  "manualSteps": [
+    "Rejected source: cane is fused into the body; separate it from the hand before migration. Rigid renderer retained."
+  ],
   "receipts": [
     {
       "lod": 0,
@@ -75,5 +77,6 @@
     "npc.civilian-elderly:lod1": "/assets/civilians/npc.civilian-elderly.lod1.a52eae63242ae000.bin.gz",
     "npc.civilian-elderly:lod2:infected": "/assets/civilians/npc.civilian-elderly.lod2.infected.d10f8d1345acb654.bin.gz",
     "npc.civilian-elderly:lod2": "/assets/civilians/npc.civilian-elderly.lod2.db4ee81c56d72b24.bin.gz"
-  }
+  },
+  "accepted": false
 }

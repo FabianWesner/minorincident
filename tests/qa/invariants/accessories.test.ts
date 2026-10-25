@@ -101,8 +101,8 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     for (const id of ids) for (const lod of ['lod0', 'lod1', 'lod2'] as const) raw.set(`${id}/${lod}`, await authoredBounds(id, lod));
     const frameTops = new Map<string, number>();
     for (const model of ['npc.civilian-woman-b', 'npc.civilian-woman-b.aftermath', 'npc.civilian-elderly', 'npc.civilian-elderly.aftermath']) {
-      const base = model.replace(/\.aftermath$/, ''), source = manifest.find(d => d.id === base)! as AssetDef;
-      const legacy = base !== model && !!source.rigidBaseline;
+      const base = model.replace(/\.aftermath$/, '');
+      const legacy = base !== model;
       const root = await asset(legacy ? base : model, 'lod0', legacy); prepareCivilianRig(root, base); root.updateMatrixWorld(true);
       const head = root.getObjectByName('head')!, inverse = head.matrixWorld.clone().invert(), point = new Vector3(); let top = -Infinity;
       // Measure the base GLB's head-part frames; aftermath recolours them but retains the same rig and shape.

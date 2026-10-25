@@ -76,7 +76,9 @@ test.each(['amb.zebra', 'inf.zebra'])('@E07 @E17 %s keeps its authored emission 
     root.traverse(node => { delete node.userData.crowdAtlas; delete node.userData.assetTextureMode; });
     const baked = bakeInfected(root, [], false, ['idle'], undefined, true, preserveUV);
     const flags = baked.geometry.getAttribute('_emissive');
-    emission.push(Array.from({ length: flags.count }, (_, i) => flags.getX(i)));
+    const caps = baked.geometry.getAttribute('_vein');
+    emission.push(Array.from({ length: flags.count }, (_, i) => i).filter(i => (caps?.getX(i) ?? 0) < 1024).map(i => flags.getX(i)));
+    for (let i = 0; i < flags.count; i++) if ((caps?.getX(i) ?? 0) >= 1024) expect(flags.getX(i)).toBe(0);
     baked.geometry.dispose();
   }
   expect(emission[1]).toEqual(emission[0]);

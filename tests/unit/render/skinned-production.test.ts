@@ -40,7 +40,7 @@ test('converted assets load each requested LOD without hidden wound transforms c
   } finally { await registry.dispose(); }
 }, 120000);
 
-for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
+for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
   const { geometry, clip } = await baked(id), positions = geometry.getAttribute('position'), tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
   expect(clip.frames).toBe(civilianClips.length * framesPerClip); expect(clip.binds).toBeDefined(); expect(skin.count).toBe(positions.count);
   expect(clip.matrices.every(Number.isFinite)).toBe(true);
@@ -102,7 +102,7 @@ test('production indexed skin batches retain a constant, correct severance mask 
 });
 
 test('L1 proof sources and additional unseen builds publish validated compressed skins within every standalone byte limit', () => {
-  for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-elderly', 'inf.nurse', 'inf.dog']) {
+  for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-b', 'inf.nurse', 'inf.dog']) {
     const receipt = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/build.json`, 'utf8'));
     expect(receipt.manualSteps).toEqual([]); expect(receipt.receipts).toHaveLength(3);
     expect(Object.keys(receipt.preparedBakes)).toHaveLength(id.startsWith('npc.') ? 6 : 3);

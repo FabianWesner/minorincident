@@ -9,6 +9,7 @@ import { assetIO } from './io';
 import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
+import { Matrix4, Vector3 } from 'three';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
 const source = resolve(process.argv[2] ?? ''), id = basename(source);
@@ -22,6 +23,21 @@ const output = 'public/assets/models/skinned', report = join('docs/reports/skinn
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const io = await assetIO(), started = Date.now(), receipts = [];
+// A carried object fused into the body cannot follow the game's prop lifecycle.
+// Refuse it before changing any active asset; anatomy fits inside this hand envelope.
+if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
+  const document = await io.read(join(source, authored ? 'model.glb' : 'lod0.glb'));
+  const bounds = getBounds(document.getRoot().listScenes()[0]), reach = (bounds.max[1] - bounds.min[1]) * .2;
+  for (const name of ['handL', 'handR']) {
+    const hand = document.getRoot().listNodes().find(node => node.getName() === name); if (!hand) continue;
+    const pivot = new Vector3().setFromMatrixPosition(new Matrix4().fromArray(hand.getWorldMatrix())); let distance = 0;
+    hand.traverse(node => { for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      const position = primitive.getAttribute('POSITION')!, matrix = new Matrix4().fromArray(node.getWorldMatrix());
+      for (let i = 0; i < position.getCount(); i++) distance = Math.max(distance, new Vector3().fromArray(position.getElement(i, [])).applyMatrix4(matrix).distanceTo(pivot));
+    } });
+    if (distance > reach) throw Error(`${id}: ${name} includes a fused carried prop (${distance.toFixed(3)} m); separate it from the source body before migration`);
+  }
+}
 for (const lod of [0, 1, 2]) {
   const rig = join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/flat-lod${lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];

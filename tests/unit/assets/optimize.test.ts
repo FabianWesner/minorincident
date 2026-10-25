@@ -100,7 +100,15 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
     expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
     expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
     let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
-    expect(triangles).toBe(result.getRoot().listNodes().some(n=>n.getExtras().crowdAtlas) ? 2 : 42);
+    if (def.crowdSkin) {
+      expect(triangles).toBeGreaterThanOrEqual(3);
+      expect(cap.getSkin()).not.toBeNull();
+      cap.traverse(n => { for (const p of n.getMesh()?.listPrimitives() ?? []) {
+        expect(p.getAttribute('JOINTS_0')?.getCount()).toBe(p.getAttribute('POSITION')!.getCount());
+        const weights = p.getAttribute('WEIGHTS_0')!;
+        for (let i = 0; i < weights.getCount(); i++) expect(weights.getElement(i, []).reduce((a, b) => a + b, 0)).toBeCloseTo(1, 4);
+      } });
+    } else expect(triangles).toBe(result.getRoot().listNodes().some(n=>n.getExtras().crowdAtlas) ? 2 : 42);
     const parent=cap.getParentNode()!;parent.removeChild(limb);
     expect(cap.getParentNode()).toBe(parent);
   }
@@ -143,7 +151,7 @@ test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.3
       }
       const subjects=[doc.getRoot().listScenes()[0],...doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName()))];
       for (const subject of subjects) {
-        const bounds=getBounds(subject),height=bounds.max[1]-bounds.min[1];
+        const bounds=getBounds('crowdSkin' in def && def.crowdSkin ? doc.getRoot().listNodes().find(n => n.getName() === 'skin_body')! : subject),height=bounds.max[1]-bounds.min[1];
         if (def.id === 'inf.alpha' || def.id.startsWith('inf.alpha-')) {
           // E07's new large human derives from the 1.8 m worker: ordinary adult
           // bounds below stay exact; Alpha has its own PO height contract.
