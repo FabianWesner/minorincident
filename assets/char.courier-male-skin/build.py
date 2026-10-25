@@ -121,6 +121,18 @@ for m in body.data.materials:
         for n in m.node_tree.nodes:
             if n.type == 'TEX_IMAGE' and n.image: img = n.image
 tex = np.array(img.pixels[:]).reshape(img.size[1], img.size[0], 4)[..., :3] if img else None
+# The global Lab match turned his teal-green bag, straps and cap back blue-grey (hue ≈ 200°, sat ≈ .17); the approved
+# reference is a deep teal-green (hue ≈ 172°). Re-tint only that family in the map: hue -> 172°, saturation x 1.9 (≤ .6).
+import colorsys
+_px = np.array(img.pixels[:]).reshape(-1, 4)
+_mx, _mn = _px[:, :3].max(1), _px[:, :3].min(1); _sat = (_mx - _mn) / np.maximum(_mx, 1e-6)
+_h = np.array([colorsys.rgb_to_hsv(*c)[0] for c in _px[:, :3]]) * 360
+_fam = (_h > 160) & (_h < 235) & (_sat > .05) & (_mx < .75)
+for _i in np.where(_fam)[0]:
+    _px[_i, :3] = colorsys.hsv_to_rgb(172 / 360, min(.6, _sat[_i] * 1.9), _mx[_i])
+img.pixels[:] = _px.ravel(); img.pack()
+print('TEAL retint', int(_fam.sum()), 'of', len(_px))
+tex = _px.reshape(img.size[1], img.size[0], 4)[..., :3]
 uvl = body.data.uv_layers.active
 vcol = np.zeros((len(P), 3)); has_tex = np.zeros(len(P), bool)
 for poly in body.data.polygons:
@@ -205,7 +217,7 @@ for s, sgn in (('L', 1), ('R', -1)):
     t, d = chain(pts)
     l1 = np.linalg.norm(pts[1] - pts[0])
     # his arms are ≈ 5 cm radius (short sleeves ≈ 7 cm at the shoulder)
-    radius = np.where(t < l1, .075, .06)
+    radius = np.where(t < l1, .075, .072)  # the wrist bands are chunky (≈ 6.5 cm)
     # his upper arms hang 2-3 cm off the torso flank (flank |y| <= .18 below z .78): the flood never enters the flank
     flank = np.where(WP[:, 2] < .78, .18, np.where(WP[:, 2] < .84, .15, .12))
     allowed = (d < radius) & (t > -.03) & (WP[:, 1] * sgn > flank)
@@ -232,14 +244,16 @@ print('PANTS', int(pants.sum()), 'waist', round(float(waist), 3), 'crotch', roun
 leg_top = crotch + .6 * (waist - crotch)
 leg_all = smooth((leg_top - WP[:, 2]) / (leg_top - crotch)) * (1 - np.clip(arms, 0, 1))
 # hands and fingers hang beside the thighs (|y| > 0.2): whatever the arm flood missed there is hand, never leg
+hands = {}
 for s, sgn in (('L', 1), ('R', -1)):
     tip = J['hand' + s] + 1.6 * (RJ['Palm' + s] - J['hand' + s])
     _, dh = chain([J['foreArm' + s], J['hand' + s], tip])
     _, dl = chain([J['leg' + s], J['shin' + s], J['foot' + s]])
-    hand = (WP[:, 1] * sgn > .2) & (dh < .07) & (dh < dl) & (WP[:, 2] > J['shin' + s][2])
-    leg_all[hand] = 0; member['arm' + s] = np.maximum(member['arm' + s], hand.astype(float))
+    # below his wrist band nothing but the hand reaches past |y| .22 (the pants stop at .18)
+    hand = (WP[:, 1] * sgn > .22) & (WP[:, 2] < J['hand' + s][2] - .015) & (WP[:, 2] > .3) & (dh < .12)
+    leg_all[hand] = 0; member['arm' + s] = np.maximum(member['arm' + s], hand.astype(float)); hands[s] = hand
     print('HAND fix', s, int(hand.sum()))
-side = smooth(WP[:, 1] / .04 + .5)
+side = smooth(WP[:, 1] / .07 + .5)  # a wider crotch blend: the bat lunge spreads his legs (8.6x at .04)
 member['legL'] = leg_all * side; member['legR'] = leg_all * (1 - side)
 # the bag is fused to the back: it bends with the back it rests on (spine hats below) and only its outer body takes a
 # share of the socket's pendulum, fading to zero at the contact face (no seam between bag and shirt)
@@ -251,6 +265,8 @@ names = ['armL', 'armR', 'legL', 'legR', 'bag']
 F = np.stack([member[n] for n in names], 1)
 core = (F.max(1) > .999) & (np.array([len(n) for n in nbr]) > 0)
 F = lap(F, 6, .5)
+# the hands stay whole hand after the relax (a partial share left the spine/hip rest on his fingers: 5x stretch in swings)
+for i, s in enumerate('LR'): F[hands[s]] = np.eye(5)[i]
 F[pants] *= np.array([0, 0, 1, 1, 0])  # pants never take any arm or bag share
 # smoothing must not carry the thighs onto the belly: no leg share above the waistband (the run tore the shirt front)
 F[:, 2:4] *= smooth((leg_top + .02 - WP[:, 2]) / .03)[:, None]
@@ -309,7 +325,12 @@ print('NECK_RADIUS', round(float(NECK_R), 3))
 radial = np.hypot(WP[:, 0] - J['neck'][0], WP[:, 1] - J['neck'][1])
 lateral = smooth((radial - NECK_R) / .035)
 # hair/head above the jaw stays on the head regardless of radius
-above = smooth((WP[:, 2] - (J['head'][2] + .03)) / .04)
+above = smooth((WP[:, 2] - (J['head'][2] - .005)) / .035)  # his jaw and sideburns start right at the skull-base pivot
+# his curly hair hangs over the nape down to the collar: brown hair above the neck joint is head, never chest
+# (it tore 11x between head and chest in the bat swings)
+hair = (hue > 5) & (hue < 30) & (HSV[:, 1] > .4) & (HSV[:, 2] < .65) & (cnt > 0) & (WP[:, 2] > J['neck'][2] + .02) & (WP[:, 0] < J['head'][0])
+above = np.maximum(above, lap(hair[:, None].astype(float), 2)[:, 0])
+print('HAIR nape', int(hair.sum()))
 lateral *= 1 - above
 for bname in ('neck', 'head'):
     part['chest'] = part['chest'] + part[bname] * lateral; part[bname] = part[bname] * (1 - lateral)

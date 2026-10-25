@@ -196,8 +196,9 @@ export class CharacterView extends Group {
         headlamp = (await loader.loadAsync(`/assets/models/acc.headlamp${low ? '.lod1' : ''}.glb`)).scene;
         headlamp.name = 'courier-headlamp'; headlamp.visible = false;
         // The couriers' authored caps sit above the head pivot (different heights).
-        // The textured heroine has no cap and a smaller head: the lamp sits on her hair, sized to her skull.
-        if (this.textured.has(variant)) { headlamp.position.set(.04, .14, 0); headlamp.scale.set(.95, .85, .9); }
+        // The textured heroine has no cap and a smaller head: the lamp sits on her hair, sized to her skull. The textured male
+        // (10-25) keeps his cap at the old cap height (head pivot 1.00 vs 1.02, cap top 1.398 on both), so he keeps the cap fit.
+        if (this.textured.has(variant) && variant === 'female') { headlamp.position.set(.04, .14, 0); headlamp.scale.set(.95, .85, .9); }
         else {
           headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
           headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1);

@@ -1,0 +1,55 @@
+{
+  "name": "qa-courier-m-l6-headlamp-side",
+  "l6Subway": "lamp",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        -32,
+        -30
+      ],
+      [
+        288,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        -2
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "look": {
+        "model": "male"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": "courier",
+    "radius": 2.2,
+    "azimuth": 90
+  },
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "note": "Male courier (TRELLIS.2 rebind, PO 10-25): the L6 headlamp must sit on his cap, not float or sink."
+}

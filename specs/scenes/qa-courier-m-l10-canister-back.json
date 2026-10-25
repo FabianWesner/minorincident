@@ -1,0 +1,57 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "camera": {
+    "mode": "close",
+    "target": "courier",
+    "radius": 2.4,
+    "azimuth": 210
+  },
+  "frames": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "qa-courier-m-l10-canister-back",
+  "note": "Male courier (TRELLIS.2 rebind, PO 10-25): the L10 cure canister rides on his backpack without a gap or clipping.",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2673,
+        5
+      ],
+      [
+        2758,
+        85
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2713,
+        45
+      ],
+      "yaw": 210,
+      "look": {
+        "model": "male"
+      }
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-research",
+    "authored": true
+  },
+  "shots": [
+    5,
+    59
+  ]
+}

@@ -50,6 +50,8 @@ class Body:
         me = self.obj.data
         # Textured TRELLIS body (female courier since 10-24): loose shirt and inner shells, so shells are cast outside-in.
         self.textured = any(m and m.name == 'tex_baseColor' for m in me.materials)
+        # The textured male (10-25) wears his cap at the old cap height: his goggles keep the cap fit (the heroine's sit on her hair).
+        self.capped = not self.textured or 'courier-male' in Path(path).name
         self.bones = {b.name: (b.head_local.copy(), b.tail_local.copy()) for b in self.rig.data.bones}
         self.bvh = BVHTree.FromObject(self.obj, bpy.context.evaluated_depsgraph_get())
         # the same without the rigid backpack so back/torso rays reach the clothes
@@ -324,8 +326,8 @@ def build_gear(body, lod, sex):
     head = bones['head']; hc = Vector((0.0, 0, head[1].z - .03))
     # The heroine has no cap: her goggles sit pushed up on the forehead, centred just above the eyes (the courier head's
     # tail is the chibi cap height and floated the band above her hair).
-    band, tabs, lens = ((31, 39), (29, 41), (48, 78)) if not body.textured else ((16, 24), (14, 26), (22, 46))
-    if body.textured: hc = Vector((bones['head'][0].x, 0, bones['eyeL'][0].z + .025))
+    band, tabs, lens = ((31, 39), (29, 41), (48, 78)) if body.capped else ((16, 24), (14, 26), (22, 46))
+    if not body.capped: hc = Vector((bones['head'][0].x, 0, bones['eyeL'][0].z + .025))
     xfwd = Vector((1, 0, 0)); yleft = Vector((0, 1, 0))
     hbvh = body.bvh_nopony if body.textured else None
     g.patch(DARK, dome(hc, yleft, zup, xfwd, 158, *band), lambda s, t: (.009 if body.textured else .016) * (.55 + .45 * math.sin(math.pi * s)), 1, n(14, 6), outer=.6,
