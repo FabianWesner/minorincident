@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import type { Game } from '../../src/Game';
 import type { RenderTarget } from 'three/webgpu';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
+const reportDir = resolve(process.env.TEX_REPORT_DIR ?? 'docs/reports/tex-infected');
 const receipts: unknown[]=[];
 try {
   for(const backend of ['webgl2','webgpu'] as Backend[]) {
@@ -32,8 +33,8 @@ try {
         if(nonfiniteHDR)throw new Error(`${backend}/${tier}: ${nonfiniteHDR} nonfinite HDR channels`);
         receipts.push({backend,tier,atlas,corpseIds,nonfiniteHDR,corpseFigures:render.crowd.figures.length,corpsePages:render.crowd.texturedCorpsePages,errors:session.errors.slice()});
       }
-      await session.page.screenshot({path:resolve(`docs/reports/tex-infected/corpse-low-${backend}.png`)});
+      await session.page.screenshot({path:resolve(reportDir, `corpse-low-${backend}.png`)});
       if(session.errors.length)throw new Error(session.errors.join('\n'));
     }finally{await session.close();stopServer();}
   }
-}finally{stopServer();writeJson('docs/reports/tex-infected/live-tiers.json',receipts);}
+}finally{stopServer();writeJson(resolve(reportDir, 'live-tiers.json'),receipts);}
