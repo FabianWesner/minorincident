@@ -96,7 +96,7 @@ Stretch details are in `stretch-base.json` and `stretch-tex.json`.
   - 9 on WebGL2 high pass;
   - the gear matrix passes 72/72;
   - 0 console errors.
-- Remote `tests/unit tests/levels`: see the lane report.
+- Remote `tests/unit tests/levels` on the final build (d98a13162): 485 files passed, 3 skipped, 0 failed (exit 0).
 
 ## Open
 - His eyes are texture only, so he has no blink (as the heroine).
