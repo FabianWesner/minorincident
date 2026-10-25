@@ -1,13 +1,13 @@
 import { clipTexture, type CrowdClip } from '../../assets/crowd';
 import { Matrix4, Quaternion, Vector3 } from 'three';
-import { premultiplyRow } from './skinnedCrowd';
 
 /** Freeze the last displayed pose when a clip changes, including interrupted fades.
  * Extra atlas rows keep animation transitions in the existing single crowd draw. */
 export class CrowdPosePalette {
   readonly texture;
   private readonly rows: Float32Array;
-  private readonly gpu: Float32Array;
+  /** skinned-crowd prototype: atlas row holding every part's inverse bind (read by the vertex shader). */
+  readonly bindRow: number;
   private readonly width: number;
   private readonly currentMatrix = new Matrix4();
   private readonly previousMatrix = new Matrix4();
@@ -20,12 +20,14 @@ export class CrowdPosePalette {
   private readonly states = new Map<number, { clip: string; frame: number; row: number; weight: number; started: number; seen: number }>();
   constructor(readonly clip: CrowdClip, private readonly capacity: number, readonly seconds = .2) {
     this.width = clip.parts.length * 16;
-    this.rows = new Float32Array((clip.frames + capacity * 2) * this.width);
+    // skinned-crowd prototype: one extra row holds the inverse binds; the shader multiplies joint·bind⁻¹ per influence,
+    // so CPU rows and uploads stay exactly the rigid ones (a CPU premultiply cost +2.7 ms p95 on the 4x phone proxy).
+    this.bindRow = clip.frames + capacity * 2;
+    this.rows = new Float32Array((this.bindRow + (clip.binds ? 1 : 0)) * this.width);
     this.rows.set(clip.matrices);
+    if (clip.binds) this.rows.set(clip.binds, this.bindRow * this.width);
     // skinned-crowd prototype: the GPU copy holds joint·bind⁻¹; CPU rows keep the joint world matrices.
-    this.gpu = clip.binds ? new Float32Array(this.rows.length) : this.rows;
-    if (clip.binds) for (let row = 0; row < clip.frames; row++) premultiplyRow(this.rows, this.gpu, clip.binds, row * this.width, clip.parts.length);
-    this.texture = clipTexture({ ...clip, frames: clip.frames + capacity * 2, matrices: this.gpu });
+    this.texture = clipTexture({ ...clip, frames: this.bindRow + (clip.binds ? 1 : 0), matrices: this.rows });
   }
   sample(id: number, clip: string, frame: number, time: number): [number, number] {
     let state = this.states.get(id);
@@ -90,8 +92,6 @@ export class CrowdPosePalette {
   }
   /** Only mutable pose rows change; the baked atlas stays resident on both backends. */
   private dirty(row: number): void {
-    if (this.clip.binds) premultiplyRow(this.rows, this.gpu, this.clip.binds, row * this.width, this.clip.parts.length);
-    else if (this.texture.image.data !== this.rows) (this.texture.image.data as Float32Array).set(this.rows.subarray(row * this.width, (row + 1) * this.width), row * this.width);
     this.texture.addUpdateRange(row * this.width, this.width);
     this.texture.needsUpdate = true;
   }

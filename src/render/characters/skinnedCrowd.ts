@@ -10,11 +10,11 @@
  * - `?skinCrowd=rigid` loads the same welded bodies but bakes every vertex to its dominant joint
  *   (A/B of the 4-influence vertex cost against one influence on identical geometry).
  */
-import { BufferAttribute, Matrix4, type BufferGeometry, type DataTexture } from 'three';
-import { float, Fn, If, attribute } from 'three/tsl';
+import { BufferAttribute, DataTexture, Matrix4, type BufferGeometry } from 'three';
+import { float, Fn, If, attribute, int, ivec2, mat4, textureLoad } from 'three/tsl';
 import type { Node, TextureNode } from 'three/webgpu';
 import type { AssetDef } from '../../assets/types';
-import { crowdBlendedMatrix, type CrowdClip } from '../../assets/crowd';
+import { crowdBlendedMatrix, poseTexture, type CrowdClip } from '../../assets/crowd';
 
 export type SkinnedCrowdMode = 'off' | 'skin' | 'rigid';
 export function skinnedCrowdMode(): SkinnedCrowdMode {
@@ -60,18 +60,27 @@ export function packSkin(indices: ArrayLike<number>, weights: ArrayLike<number>,
   return { dominant, skin };
 }
 
-/** GPU skin matrix: Σ wᵢ·Aᵢ(frame) with Aᵢ = joint(frame)·bind⁻¹ (premultiplied atlas). Influences with zero
- * weight are skipped, so a vertex deep inside one part costs what a rigid vertex costs. */
-export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant: Node<'float'>, frame: Node<'float'>, outgoing: Node<'float'>, weight: Node<'float'>) {
+/** One part's inverse bind from the atlas bind row (4 texels). */
+export function crowdBind(texture: DataTexture | TextureNode, part: Node<'float'>, bindRow: number) {
+  const atlas = texture instanceof DataTexture ? poseTexture(texture) : texture, start = int(part).mul(4), row = int(bindRow);
+  return mat4(textureLoad(atlas, ivec2(start, row)), textureLoad(atlas, ivec2(start.add(1), row)), textureLoad(atlas, ivec2(start.add(2), row)), textureLoad(atlas, ivec2(start.add(3), row)));
+}
+/** One influence: joint(frame) · bind⁻¹. */
+export function crowdSkinJoint(texture: DataTexture | TextureNode, part: Node<'float'>, frame: Node<'float'>, outgoing: Node<'float'>, weight: Node<'float'>, bindRow: number) {
+  return crowdBlendedMatrix(texture, part, frame, outgoing, weight).mul(crowdBind(texture, part, bindRow));
+}
+/** GPU skin matrix: sum of w_i * joint_i(frame) * bind_i^-1. Influences with zero weight are skipped, so a vertex deep
+ * inside one part costs one rigid fetch plus its bind. */
+export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant: Node<'float'>, frame: Node<'float'>, outgoing: Node<'float'>, weight: Node<'float'>, bindRow: number) {
   return Fn(() => {
     const skin = attribute('_skin', 'vec4'), packed = skin.x;
     const w1 = skin.y, w2 = skin.z, w3 = skin.w, w0 = float(1).sub(w1).sub(w2).sub(w3);
-    const matrix = crowdBlendedMatrix(texture, dominant, frame, outgoing, weight).mul(w0).toVar();
+    const matrix = crowdSkinJoint(texture, dominant, frame, outgoing, weight, bindRow).mul(w0).toVar();
     If(w1.greaterThan(0), () => {
-      matrix.assign(matrix.add(crowdBlendedMatrix(texture, packed.mod(32), frame, outgoing, weight).mul(w1)));
+      matrix.assign(matrix.add(crowdSkinJoint(texture, packed.mod(32), frame, outgoing, weight, bindRow).mul(w1)));
       If(w2.greaterThan(0), () => {
-        matrix.assign(matrix.add(crowdBlendedMatrix(texture, packed.div(32).floor().mod(32), frame, outgoing, weight).mul(w2)));
-        If(w3.greaterThan(0), () => { matrix.assign(matrix.add(crowdBlendedMatrix(texture, packed.div(1024).floor(), frame, outgoing, weight).mul(w3))); });
+        matrix.assign(matrix.add(crowdSkinJoint(texture, packed.div(32).floor().mod(32), frame, outgoing, weight, bindRow).mul(w2)));
+        If(w3.greaterThan(0), () => { matrix.assign(matrix.add(crowdSkinJoint(texture, packed.div(1024).floor(), frame, outgoing, weight, bindRow).mul(w3))); });
       });
     });
     return matrix;

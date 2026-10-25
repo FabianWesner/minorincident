@@ -1,0 +1,143 @@
+[
+  {
+    "variant": "main-worker",
+    "phone": true,
+    "zoom": 1.5,
+    "loadMs": 5773.300000190735,
+    "measures": [
+      {
+        "name": "view:infected-crowd",
+        "ms": 1970.0999994277954
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "ms": 97.80000019073486
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "ms": 38.5
+      }
+    ],
+    "minSubmittedBodies": 169,
+    "backend": "webgl",
+    "tier": "low",
+    "count": 200,
+    "p95": 14.5,
+    "p50": 11.299999999999272,
+    "simP95": 2.6000003814697266,
+    "samples": 907,
+    "drawCalls": 56,
+    "maxDraws": 56,
+    "maxCrowdDraws": 2,
+    "triangles": 471119,
+    "batches": [
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 168,
+        "triangles": 2717,
+        "skinned": false,
+        "poseTexture": [
+          76,
+          1540
+        ],
+        "poseTextureBytes": 1872640
+      }
+    ],
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "phone": true,
+    "zoom": 1.5,
+    "loadMs": 6211.60000038147,
+    "measures": [
+      {
+        "name": "view:infected-crowd",
+        "ms": 2089.3999996185303
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "ms": 56.60000038146973
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "ms": 21.699999809265137
+      }
+    ],
+    "minSubmittedBodies": 168,
+    "backend": "webgl",
+    "tier": "low",
+    "count": 200,
+    "p95": 17.200000000000728,
+    "p50": 12.600000000000364,
+    "simP95": 2.8999996185302734,
+    "samples": 785,
+    "drawCalls": 56,
+    "maxDraws": 56,
+    "maxCrowdDraws": 2,
+    "triangles": 163511,
+    "batches": [
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 168,
+        "triangles": 886,
+        "skinned": true,
+        "poseTexture": [
+          76,
+          1540
+        ],
+        "poseTextureBytes": 1872640
+      }
+    ],
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "phone": true,
+    "zoom": 1.5,
+    "loadMs": 6077.800000190735,
+    "measures": [
+      {
+        "name": "view:infected-crowd",
+        "ms": 2100.5
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "ms": 59.69999980926514
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "ms": 14.300000190734863
+      }
+    ],
+    "minSubmittedBodies": 169,
+    "backend": "webgl",
+    "tier": "low",
+    "count": 200,
+    "p95": 17.200000000000728,
+    "p50": 12.5,
+    "simP95": 2.90000057220459,
+    "samples": 788,
+    "drawCalls": 56,
+    "maxDraws": 56,
+    "maxCrowdDraws": 2,
+    "triangles": 163511,
+    "batches": [
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 168,
+        "triangles": 886,
+        "skinned": true,
+        "poseTexture": [
+          76,
+          1540
+        ],
+        "poseTextureBytes": 1872640
+      }
+    ],
+    "errors": []
+  }
+]
