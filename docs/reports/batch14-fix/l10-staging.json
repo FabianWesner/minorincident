@@ -1,0 +1,1149 @@
+{
+  "source": "Failed exact campaign charge-ready save; original and fixed retain normal boss health and cruise speed.",
+  "cases": {
+    "original": [
+      {
+        "tick": 0,
+        "pos": {
+          "x": 3984.3915942305207,
+          "y": 1,
+          "z": -11.422580136331344,
+          "yaw": 0
+        },
+        "mode": "coarse",
+        "bhidden": true,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 2654.189999997516,
+          "z": 45,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 30,
+        "pos": {
+          "x": 3985.2950955796628,
+          "y": 1,
+          "z": -11.422580136331344,
+          "yaw": 0
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 2654.189999997516,
+          "z": 45,
+          "noPath": 30,
+          "goal": null
+        }
+      },
+      {
+        "tick": 60,
+        "pos": {
+          "x": 3985.2950955796628,
+          "y": 1,
+          "z": -11.422580136331344,
+          "yaw": 0
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 2654.189999997516,
+          "z": 45,
+          "noPath": 60,
+          "goal": null
+        }
+      },
+      {
+        "tick": 90,
+        "pos": {
+          "x": 3984.926053083261,
+          "y": 1,
+          "z": -11.891316536900034,
+          "yaw": 1.3683333333333332
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 61,
+          "sampleAt": 61,
+          "x": 3985.2950955796628,
+          "z": -11.422580136331344,
+          "noPath": 0,
+          "goal": {
+            "x": 3984.25,
+            "z": -12.75
+          }
+        }
+      },
+      {
+        "tick": 120,
+        "pos": {
+          "x": 3984.152215420413,
+          "y": 1,
+          "z": -12.874200308402065,
+          "yaw": 2.6183333333333323
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 61,
+          "sampleAt": 61,
+          "x": 3985.2950955796628,
+          "z": -11.422580136331344,
+          "noPath": 17,
+          "goal": null
+        }
+      },
+      {
+        "tick": 150,
+        "pos": {
+          "x": 3983.9331931924576,
+          "y": 1,
+          "z": -13.152389654554815,
+          "yaw": 2.240061740990742
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 61,
+          "sampleAt": 61,
+          "x": 3985.2950955796628,
+          "z": -11.422580136331344,
+          "noPath": 47,
+          "goal": null
+        }
+      },
+      {
+        "tick": 180,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 2,
+          "since": 164,
+          "sampleAt": 164,
+          "x": 3983.915719563518,
+          "z": -13.174583645799299,
+          "noPath": 17,
+          "goal": null
+        }
+      },
+      {
+        "tick": 210,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 2,
+          "since": 164,
+          "sampleAt": 164,
+          "x": 3983.915719563518,
+          "z": -13.174583645799299,
+          "noPath": 47,
+          "goal": null
+        }
+      },
+      {
+        "tick": 240,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 224,
+          "sampleAt": 224,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 270,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 224,
+          "sampleAt": 224,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 300,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 224,
+          "sampleAt": 224,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 330,
+        "pos": {
+          "x": 3983.9088424263978,
+          "y": 1,
+          "z": -13.18331858698207,
+          "yaw": 2.2377703876599666
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 224,
+          "sampleAt": 224,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 360,
+        "pos": {
+          "x": 3984.0503566200036,
+          "y": 1,
+          "z": -13.084838117712147,
+          "yaw": 1.7844370543266335
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 344,
+          "sampleAt": 344,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 0,
+          "goal": {
+            "x": 3985.25,
+            "z": -12.25
+          }
+        }
+      },
+      {
+        "tick": 390,
+        "pos": {
+          "x": 3985.023578577565,
+          "y": 1,
+          "z": -12.407567854970647,
+          "yaw": -0.3855629456733662
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 344,
+          "sampleAt": 344,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 5,
+          "goal": null
+        }
+      },
+      {
+        "tick": 420,
+        "pos": {
+          "x": 3985.619630990416,
+          "y": 1,
+          "z": -11.992771855842921,
+          "yaw": -0.7855629456733653
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 1,
+          "since": 344,
+          "sampleAt": 344,
+          "x": 3983.9088424263978,
+          "z": -13.18331858698207,
+          "noPath": 35,
+          "goal": null
+        }
+      },
+      {
+        "tick": 450,
+        "pos": {
+          "x": 3985.7003397008143,
+          "y": 1,
+          "z": -11.936606241132514,
+          "yaw": -0.6082461898604301
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 2,
+          "since": 446,
+          "sampleAt": 446,
+          "x": 3985.695969911194,
+          "z": -11.939647200639433,
+          "noPath": 5,
+          "goal": null
+        }
+      },
+      {
+        "tick": 480,
+        "pos": {
+          "x": 3985.704663791979,
+          "y": 1,
+          "z": -11.933597083420588,
+          "yaw": -0.6080361632684483
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 2,
+          "since": 446,
+          "sampleAt": 446,
+          "x": 3985.695969911194,
+          "z": -11.939647200639433,
+          "noPath": 35,
+          "goal": null
+        }
+      },
+      {
+        "tick": 510,
+        "pos": {
+          "x": 3985.704663791979,
+          "y": 1,
+          "z": -11.933597083420588,
+          "yaw": -0.6080361632684483
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 506,
+          "sampleAt": 506,
+          "x": 3985.704663791979,
+          "z": -11.933597083420588,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 540,
+        "pos": {
+          "x": 3985.704663791979,
+          "y": 1,
+          "z": -11.933597083420588,
+          "yaw": -0.6080361632684483
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 506,
+          "sampleAt": 506,
+          "x": 3985.704663791979,
+          "z": -11.933597083420588,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 570,
+        "pos": {
+          "x": 3985.704663791979,
+          "y": 1,
+          "z": -11.933597083420588,
+          "yaw": -0.6080361632684483
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 506,
+          "sampleAt": 506,
+          "x": 3985.704663791979,
+          "z": -11.933597083420588,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 600,
+        "pos": {
+          "x": 3985.704663791979,
+          "y": 1,
+          "z": -11.933597083420588,
+          "yaw": -0.6080361632684483
+        },
+        "mode": "recover",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 3,
+          "since": 506,
+          "sampleAt": 506,
+          "x": 3985.704663791979,
+          "z": -11.933597083420588,
+          "noPath": 0,
+          "goal": null
+        }
+      }
+    ],
+    "fixed": [
+      {
+        "tick": 0,
+        "pos": {
+          "x": 3994.289383215321,
+          "y": 0.7,
+          "z": -4.272343086014729,
+          "yaw": 0
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 3994.289383215321,
+          "z": -4.272343086014729,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 30,
+        "pos": {
+          "x": 3994.514687399362,
+          "y": 0.7,
+          "z": -4.820707310778932,
+          "yaw": 1.248916567612487
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 3994.289383215321,
+          "z": -4.272343086014729,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 60,
+        "pos": {
+          "x": 3995.000813110258,
+          "y": 0.7,
+          "z": -6.153640063295249,
+          "yaw": 1.2739786168382548
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 3994.289383215321,
+          "z": -4.272343086014729,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 90,
+        "pos": {
+          "x": 3995.5320567699227,
+          "y": 0.7,
+          "z": -7.618470425783635,
+          "yaw": 1.2226028112765495
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 0,
+          "x": 3994.289383215321,
+          "z": -4.272343086014729,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 120,
+        "pos": {
+          "x": 3996.069714555055,
+          "y": 0.7,
+          "z": -9.097007523868564,
+          "yaw": 1.2219465655421642
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 120,
+          "x": 3996.051773278995,
+          "z": -9.04768501889304,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 150,
+        "pos": {
+          "x": 3996.6066422400877,
+          "y": 0.7,
+          "z": -10.57698592371268,
+          "yaw": 1.230184131261178
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 120,
+          "x": 3996.051773278995,
+          "z": -9.04768501889304,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 180,
+        "pos": {
+          "x": 3997.11751757984,
+          "y": 0.7,
+          "z": -12.06663493471275,
+          "yaw": 1.2427121806761874
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 120,
+          "x": 3996.051773278995,
+          "z": -9.04768501889304,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 210,
+        "pos": {
+          "x": 3997.622637395214,
+          "y": 0.7,
+          "z": -13.558416290067841,
+          "yaw": 1.2446097354519319
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 120,
+          "x": 3996.051773278995,
+          "z": -9.04768501889304,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 240,
+        "pos": {
+          "x": 3998.1270145919084,
+          "y": 0.7,
+          "z": -15.050469101764042,
+          "yaw": 1.2448511581467645
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 270,
+        "pos": {
+          "x": 3998.6312976589857,
+          "y": 0.7,
+          "z": -16.542555848816804,
+          "yaw": 1.2448819137608427
+        },
+        "mode": "detailed",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 300,
+        "pos": {
+          "x": 3998.6481067661716,
+          "y": 0.7,
+          "z": -16.592292190785614,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 330,
+        "pos": {
+          "x": 3999.0361159499266,
+          "y": 0.7,
+          "z": -17.853977125039684,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 360,
+        "pos": {
+          "x": 4000.094322814713,
+          "y": 0.7,
+          "z": -21.294936036641694,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 390,
+        "pos": {
+          "x": 4000.735253903658,
+          "y": 0.7,
+          "z": -23.37904417808011,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 420,
+        "pos": {
+          "x": 4000.735253903658,
+          "y": 0.7,
+          "z": -23.37904417808011,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 450,
+        "pos": {
+          "x": 4000.735253903658,
+          "y": 0.7,
+          "z": -23.37904417808011,
+          "yaw": 1.2724433435679896
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 240,
+          "x": 3998.1102044922427,
+          "z": -15.000733114573544,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 480,
+        "pos": {
+          "x": 4000.9514725093713,
+          "y": 0.7,
+          "z": -23.324839294433264,
+          "yaw": -0.07571833053662021
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 452,
+          "x": 4000.73542548569,
+          "z": -23.379001163354083,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 510,
+        "pos": {
+          "x": 4001.2997717165185,
+          "y": 0.7,
+          "z": -23.722285737030138,
+          "yaw": -0.47443088632119
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 452,
+          "x": 4000.73542548569,
+          "z": -23.379001163354083,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 540,
+        "pos": {
+          "x": 4001.5753860496743,
+          "y": 0.7,
+          "z": -25.04754025579684,
+          "yaw": 1.436041176557801
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 452,
+          "x": 4000.73542548569,
+          "z": -23.379001163354083,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 570,
+        "pos": {
+          "x": 4001.4070279860393,
+          "y": 0.7,
+          "z": -26.373192238060227,
+          "yaw": 1.4027078432244668
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 570,
+          "x": 4001.3950372422382,
+          "z": -26.33061808814357,
+          "noPath": 0,
+          "goal": null
+        }
+      },
+      {
+        "tick": 600,
+        "pos": {
+          "x": 4001.3743641662786,
+          "y": 0.7,
+          "z": -27.039799133712055,
+          "yaw": 1.1015348461475094
+        },
+        "mode": "close",
+        "bhidden": false,
+        "health": {
+          "current": 3000,
+          "max": 3000
+        },
+        "resident": true,
+        "active": true,
+        "navclear": true,
+        "stuck": {
+          "level": 0,
+          "since": -1,
+          "sampleAt": 600,
+          "x": 4001.3713041993215,
+          "z": -27.035819317204137,
+          "noPath": 0,
+          "goal": null
+        }
+      }
+    ]
+  }
+}

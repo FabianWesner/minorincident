@@ -1,0 +1,112 @@
+{
+  "focused": [
+    {
+      "check": "L7 routes and departure",
+      "success": true,
+      "files": 3,
+      "passedTests": 47,
+      "failedTests": 0
+    },
+    {
+      "check": "Predictive combat and missions",
+      "success": true,
+      "files": 4,
+      "passedTests": 60,
+      "failedTests": 0
+    },
+    {
+      "check": "L3 gate feedback",
+      "success": true,
+      "files": 1,
+      "passedTests": 2,
+      "failedTests": 0
+    },
+    {
+      "check": "Final manual-lead combat and missions",
+      "success": true,
+      "files": 4,
+      "passedTests": 60,
+      "failedTests": 0
+    },
+    {
+      "check": "Final L6 complete policy",
+      "success": true,
+      "rescued": 27,
+      "total": 29,
+      "deaths": 0,
+      "simSeconds": 282.2
+    },
+    {
+      "check": "Final L4 movement and guidance",
+      "success": true,
+      "files": 3,
+      "passedTests": 16,
+      "failedTests": 0
+    },
+    {
+      "check": "Final Mega staging and pursuit",
+      "success": true,
+      "files": 2,
+      "passedTests": 33,
+      "failedTests": 0
+    },
+    {
+      "check": "New L7 injury/wall route, projectile lead, connected Mega staging, and L4 chair-corner regressions",
+      "success": true,
+      "files": 4,
+      "passedTests": 37,
+      "failedTests": 0
+    },
+    {
+      "check": "L10 stale resume stagger and finale suite",
+      "success": true,
+      "files": 1,
+      "passedTests": 21,
+      "failedTests": 0
+    },
+    {
+      "check": "L3 evacuation distance feedback",
+      "success": true,
+      "files": 1,
+      "passedTests": 3,
+      "failedTests": 0
+    }
+  ],
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "remoteUnitLevels": {
+    "status": "running",
+    "source": "final thirteen game files and new regression tests",
+    "receipt": "remote-final.json"
+  },
+  "campaign": {
+    "status": "running",
+    "sourceRevision": "b7e211ca7beb8e6c2e44d71ef290eb494c5154b2",
+    "command": "npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/batch14-fix"
+  },
+  "smoke": {
+    "status": "pending"
+  },
+  "invariants": {
+    "status": "pending"
+  },
+  "invariantSimulationEarly": {
+    "exitCode": 0,
+    "success": true,
+    "passedTests": 28,
+    "failedTests": 0,
+    "files": 8
+  },
+  "priorRemoteUnitLevels": {
+    "success": true,
+    "source": "eleven game files before connected staging and stale resume stagger fixes",
+    "passedFiles": 485,
+    "skippedFiles": 3,
+    "passedTests": 2630,
+    "pendingTests": 9
+  }
+}
