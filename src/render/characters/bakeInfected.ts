@@ -44,6 +44,7 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
 }
 function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
   preserveUV ||= root.userData.assetTextureMode === 'baseColor' || root.getObjectByName('root')?.userData.crowdAtlas === true;
+  const texturedHumanoid = preserveUV && !root.getObjectByName('body');
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -151,7 +152,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   let doubleSided = false;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
-    const capIndex = preserveUV ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(node.name.replace(/^stump_/, '')) : -1;
+    const capIndex = texturedHumanoid ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(node.name.replace(/^stump_/, '')) : -1;
     const cap = node.name.startsWith('stump_') && capIndex >= 0;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !(cap && ancestor === node)) return;
     // A named animated part can itself be a Mesh (not only a parent joint).
@@ -192,7 +193,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
-    const clothing = material.name === 'pal_infectedShirt' || preserveUV && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
+    const clothing = material.name === 'pal_infectedShirt' || texturedHumanoid && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
     const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
@@ -201,10 +202,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       colors[i * 3 + 2] = base[2] * (material.vertexColors && sourceColor ? sourceColor.getZ(i) : 1);
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
-      const eyeRegion = preserveUV && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;
+      const eyeRegion = texturedHumanoid && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;
       // Authored eye discs use the existing flag/UV channels; they must survive
       // minification independently of the colour atlas's tiny red texels.
-      emissive[i] = node.userData.crowdEye === true ? 2 : Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || preserveUV && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
+      emissive[i] = node.userData.crowdEye === true ? 2 : Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || texturedHumanoid && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
     }
     if (preserveUV) {
       const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
