@@ -1,5 +1,5 @@
 import { FloatType, Matrix4, Mesh, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, RenderTarget, Scene, Vector3, WebGPURenderer } from 'three/webgpu';
-import { int, mat4, uniform, uv, vec3, vec4 } from 'three/tsl';
+import { float, int, mat4, uniform, uv, vec3, vec4 } from 'three/tsl';
 import { clipTexture, crowdPosition, type CrowdClip } from './crowd';
 
 /** Read the actual GPU matrix shader at five frames and four movement headings, one pixel per rigid part. */
@@ -9,15 +9,16 @@ export async function crowdPoseError(renderer: WebGPURenderer, clip: CrowdClip):
   let maximum=0;
   try {
     for(const yaw of [0,Math.PI/2,Math.PI,Math.PI*1.5]) for(const time of [0,.25,.5,.75,1]) {
-      const frame=Math.round(time*(clip.frames-1));
+      const frame=Math.floor(time*(clip.frames-1))+(time > 0 && time < 1 ? .375 : 0);
       const material=new MeshBasicNodeMaterial(); material.toneMapped=false;
       const instance = new Matrix4().makeRotationY(yaw).setPosition(3,0,7);
-      material.outputNode=vec4(crowdPosition(mat4(uniform(instance)),texture,int(uv().x.mul(clip.parts.length)),int(frame),vec3(.11,.22,.33)),1);
+      material.outputNode=vec4(crowdPosition(mat4(uniform(instance)),texture,int(uv().x.mul(clip.parts.length)),float(frame),vec3(.11,.22,.33)),1);
       const geometry=new PlaneGeometry(2,2), mesh=new Mesh(geometry,material); scene.add(mesh);
       renderer.setRenderTarget(target); await renderer.compileAsync(scene,camera); renderer.render(scene,camera);
       const pixels=await renderer.readRenderTargetPixelsAsync(target,0,0,clip.parts.length,1);
       for(let part=0;part<clip.parts.length;part++) {
-        const matrix=clip.matrices.slice((frame*clip.parts.length+part)*16,(frame*clip.parts.length+part+1)*16);
+        const low=Math.floor(frame), high=Math.ceil(frame), alpha=frame-low;
+        const matrix=Array.from({length:16},(_,i)=>clip.matrices[(low*clip.parts.length+part)*16+i]*(1-alpha)+clip.matrices[(high*clip.parts.length+part)*16+i]*alpha);
         const point=new Vector3(.11,.22,.33);
         const x=matrix[0]*point.x+matrix[4]*point.y+matrix[8]*point.z+matrix[12];
         const y=matrix[1]*point.x+matrix[5]*point.y+matrix[9]*point.z+matrix[13];
