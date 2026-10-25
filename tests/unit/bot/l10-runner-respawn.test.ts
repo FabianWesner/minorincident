@@ -17,7 +17,7 @@ test('L10 runner advances the normal death delay and uses the respawned entity',
   });
   const world = {
     tick: 0, missions: mission, entities, infected: { director: { count: 0 } }, megaPursuit: { state: { id: 3 } },
-    applyInput: vi.fn(), update() {
+    applyInput: vi.fn(), update(this: { tick: number }) {
       this.tick++;
       if (this.tick === 1) entities.set(1, alive);
       else { alive.transform.x++; mission.state.phase = 'result'; }
