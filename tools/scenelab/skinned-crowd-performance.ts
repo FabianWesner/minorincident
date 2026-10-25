@@ -19,9 +19,9 @@ const variants: Record<string, { query: Record<string, string>; worker: boolean 
 };
 const order = (process.env.VARIANTS ?? 'main-worker,skin,skin-rigid,main-mix,main-mix,skin-rigid,skin,main-worker').split(',');
 const backends = (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[];
-const phone = process.env.PHONE === '1';
+const phone = process.env.PHONE === '1', zoom = Number(process.env.ZOOM ?? 1.5);
 const receipts: Record<string, unknown>[] = [];
-const out = resolve(reportDir, phone ? 'performance-phone.json' : 'performance.json');
+const out = resolve(reportDir, `performance${phone ? '-phone' : ''}${zoom === 1.5 ? '' : `-z${zoom}`}.json`);
 try {
   for (const backend of phone ? ['webgl2' as Backend] : backends) for (const variant of order) {
     const v = variants[variant];
@@ -29,16 +29,16 @@ try {
     try {
       await session.open();
       if (phone) { const cdp = await session.page.context().newCDPSession(session.page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
-      const load = await session.page.evaluate(async (worker) => {
+      const load = await session.page.evaluate(async ({ worker, zoom }) => {
         const a = window.__SS__!; const started = performance.now();
         await a.loadScenario('perf-horde-200'); a.pause(); a.cheats.god(true);
         const game = (window.__SCENE__ as unknown as { game: Game }).game;
         if (worker) for (const e of game.world.infected!.active) e.infected!.variant = 'inf.common-worker';
-        a.camera.preset('perf-horde'); a.camera.zoom(1.5);
+        a.camera.preset('perf-horde'); a.camera.zoom(zoom);
         await a.step(120); await a.screenshotReady();
         const measures = performance.getEntriesByType('measure').filter(m => m.name === 'view:infected-crowd' || m.name.startsWith('bake:inf.common-worker'));
         return { loadMs: performance.now() - started, measures: measures.map(m => ({ name: m.name, ms: m.duration })) };
-      }, v.worker);
+      }, { worker: v.worker, zoom });
       const result = await session.page.evaluate(async () => {
         const a = window.__SS__!; a.resume();
         const frames: number[] = [], sim: number[] = []; let previous = 0, maxDraws = 0, maxCrowdDraws = 0, minSubmittedBodies = Infinity;
@@ -55,7 +55,7 @@ try {
         const batches = [...view.crowd.batches.values()].filter(b => b.count > 0).map(b => ({ asset: b.asset, lod: b.lod, instances: b.count, triangles: (b.mesh.geometry.index?.count ?? 0) / 3, skinned: '_skin' in b.mesh.geometry.attributes, poseTexture: [b.poses.texture.image.width, b.poses.texture.image.height], poseTextureBytes: b.poses.texture.image.width * b.poses.texture.image.height * 16 }));
         return { minSubmittedBodies, backend: perf.backend, tier: state.render.quality, count: state.ai?.count, p95: frames[Math.ceil(frames.length * .95) - 1], p50: frames[Math.ceil(frames.length * .5) - 1], simP95: sim[Math.ceil(sim.length * .95) - 1], samples: frames.length, drawCalls: perf.drawCalls, maxDraws, maxCrowdDraws, triangles: perf.triangles, batches };
       });
-      receipts.push({ variant, phone, ...load, ...result, errors: session.errors.slice(0, 3) });
+      receipts.push({ variant, phone, zoom, ...load, ...result, errors: session.errors.slice(0, 3) });
       writeJson(out, receipts);
       console.log(JSON.stringify({ variant, backend, phone, p95: result.p95, p50: result.p50, count: result.count, crowdDraws: result.maxCrowdDraws, draws: result.maxDraws, loadMs: Math.round(load.loadMs), errors: session.errors.length }));
     } finally { await session.close(); stopServer(); }

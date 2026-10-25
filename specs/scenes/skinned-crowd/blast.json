@@ -1,0 +1,172 @@
+{
+ "name": "blast",
+ "note": "skinned-crowd prototype. --query skinCrowd=1 skinned bodies, skinCrowd=rigid same bodies on the dominant joint, no flag = main rigid crowd.",
+ "ground": "asphalt",
+ "time": "golden",
+ "size": 30,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    8
+   ],
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "ped",
+   "kind": "pedestrian",
+   "at": [
+    11,
+    11
+   ],
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "b0",
+   "kind": "infected",
+   "at": [
+    -3.3,
+    -1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "b1",
+   "kind": "infected",
+   "at": [
+    -1.1,
+    -1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "b2",
+   "kind": "infected",
+   "at": [
+    1.1,
+    -1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "b3",
+   "kind": "infected",
+   "at": [
+    3.3,
+    -1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "b4",
+   "kind": "infected",
+   "at": [
+    -3.3,
+    1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "b5",
+   "kind": "infected",
+   "at": [
+    -1.1,
+    1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  },
+  {
+   "id": "b6",
+   "kind": "infected",
+   "at": [
+    1.1,
+    1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "b7",
+   "kind": "infected",
+   "at": [
+    3.3,
+    1
+   ],
+   "yaw": 0,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "npc.civilian-woman-a"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 0.6
+ },
+ "frames": 600,
+ "shots": [
+  55,
+  75,
+  150,
+  600
+ ],
+ "sheet": 12,
+ "script": [
+  {
+   "frame": 60,
+   "effect": {
+    "blast": "explosion.grenade",
+    "at": [
+     0,
+     0
+    ]
+   }
+  }
+ ]
+}

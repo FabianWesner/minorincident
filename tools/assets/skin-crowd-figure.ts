@@ -22,7 +22,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Document, NodeIO, type Node as GNode, type Primitive } from '@gltf-transform/core';
+import { Document, NodeIO, type Node as GNode } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
 import { Matrix4, Vector3 } from 'three';

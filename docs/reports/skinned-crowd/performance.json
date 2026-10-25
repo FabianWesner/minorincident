@@ -1,0 +1,48 @@
+[
+  {
+    "variant": "skin",
+    "phone": false,
+    "loadMs": 2352.8999996185303,
+    "measures": [
+      {
+        "name": "view:infected-crowd",
+        "ms": 547.1000003814697
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "ms": 15.5
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "ms": 4.5
+      }
+    ],
+    "minSubmittedBodies": 200,
+    "backend": "webgl",
+    "tier": "low",
+    "count": 200,
+    "p95": 4.5,
+    "p50": 3.4000000000005457,
+    "simP95": 0.6999998092651367,
+    "samples": 3181,
+    "drawCalls": 56,
+    "maxDraws": 56,
+    "maxCrowdDraws": 2,
+    "triangles": 191927,
+    "batches": [
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 200,
+        "triangles": 886,
+        "skinned": true,
+        "poseTexture": [
+          76,
+          1540
+        ],
+        "poseTextureBytes": 1872640
+      }
+    ],
+    "errors": []
+  }
+]
