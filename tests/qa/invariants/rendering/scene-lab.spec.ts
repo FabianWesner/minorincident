@@ -90,7 +90,7 @@ async function measure(browser: Browser, origin: string, level: typeof levels[nu
       // background chunk streaming (screenshotReady can wait forever while an L9/L10 world keeps streaming).
       for (let i = 0; i < 2; i++) await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
       const perf = window.__SS__!.perf();
-      return { ms: performance.now() - start, backend: perf.backend, quality: perf.quality.tier, tick: window.__SS__!.tick(), phase: window.__SS__!.missions.state()?.phase, drawCalls: perf.drawCalls, bundle: document.querySelector<HTMLScriptElement>('script[type=module][src]')?.src };
+      return { ms: performance.now() - start, backend: perf.backend, quality: perf.quality.tier, tick: window.__SS__!.tick(), phase: window.__SS__!.missions.state()?.phase, drawCalls: perf.drawCalls, bundle: document.querySelector<HTMLScriptElement>('script[type=module][src]')?.src, preparation: perf.crowdPreparation, phases: performance.getEntriesByType('measure').map(e => ({ name: e.name, start: e.startTime - start, ms: e.duration })) };
     }, t0);
     expect(result.backend, `${level} requires WebGPU`).toBe('webgpu');
     expect(result.quality, `${level} requires low quality`).toBe('low');

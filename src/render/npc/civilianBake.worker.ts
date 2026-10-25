@@ -2,12 +2,12 @@ import type { Group } from 'three/webgpu';
 import { decompressCivilianBake } from '../../assets/bakeCompression';
 import files from '../../assets/civilianBakes.json';
 
-const worker = globalThis as unknown as { onmessage: (event: MessageEvent<{ model: string; lod: 'lod0' | 'lod1' | 'lod2'; cpuRate: number; source?: boolean }>) => void; postMessage(value: unknown, transfer?: Transferable[]): void };
+const worker = globalThis as unknown as { onmessage: (event: MessageEvent<{ model: string; lod: 'lod0' | 'lod1' | 'lod2'; cpuRate: number; source?: boolean; infected?: boolean }>) => void; postMessage(value: unknown, transfer?: Transferable[]): void };
 worker.onmessage = async ({ data }) => {
   const start = performance.now(); let downloads = 0;
   let root: Group | undefined, dispose: ((root: Group) => void) | undefined;
   try {
-    const path = (files as Record<string, string>)[`${data.model}:${data.lod}`];
+    const path = (files as Record<string, string>)[`${data.model}:${data.lod}${data.infected ? ':infected' : ''}`];
     if (!data.source && path && typeof DecompressionStream !== 'undefined') {
       try {
         const before = performance.now();
@@ -21,6 +21,7 @@ worker.onmessage = async ({ data }) => {
         worker.postMessage({ bytes, prebuilt: true }, [bytes]); return;
       } catch { /* Missing build output uses the same runtime preparation below. */ }
     }
+    if (data.infected) { worker.postMessage({}); return; }
     // Shipped bakes need only fetch + inflate. Load Three and the animation
     // library only for the source fallback, rather than booting them in eight workers.
     const [{ loadCivilianSource, disposeCivilianSource }, { prepareCivilianGeometry, prepareCivilianRig }, { encodeCivilianBake }] = await Promise.all([import('../../assets/civilianSource'), import('./prepareCivilianGeometry'), import('../../assets/civilianBakeData')]);

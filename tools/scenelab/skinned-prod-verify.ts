@@ -61,6 +61,8 @@ const spec: SceneSpec = {
   name: 'skinned-prod-humans', ground: 'asphalt', time: 'golden', size: 30, trace: true,
   actors: [
     { id: 'courier', kind: 'courier', at: [0, 7] },
+    { id: 'man-a', kind: 'pedestrian', at: [-4.2, 0], yaw: -30, look: { model: 'npc.civilian-man-a' } },
+    { id: 'elderly', kind: 'pedestrian', at: [4.2, 0], yaw: -30, look: { model: 'npc.civilian-elderly' } },
     { id: 'woman', kind: 'pedestrian', at: [-2.5, 0], yaw: -30, look: { model: 'npc.civilian-woman-a', accessories: ['acc.hat-baseball-cap'] } },
     { id: 'man', kind: 'pedestrian', at: [-.8, 0], yaw: -30, look: { model: 'npc.civilian-man-b' } },
     { id: 'worker', kind: 'infected', archetype: 'infected.sprinter', at: [.8, 0], yaw: -30, state: 'idle', look: { model: 'inf.common-worker' } },
@@ -106,7 +108,7 @@ try {
       if (cases.has('details')) {
         for (const [label, limb, height] of [['arm', 0, 1.25], ['leg', 2, .8], ['head', 4, 1.5]] as const) {
           await session.load({ ...spec, name: `skin-cap-${label}`, actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
-            { id: 'cut', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.common-worker', accessories: [] } }],
+            { id: 'cut', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.nurse', accessories: [] } }],
             camera: { mode: 'pose', position: [2.6, height + 1.2, -3.4], target: [0, height, 0] } });
           await session.step(1); const id = (await session.metrics()).actors.cut.entity;
           await session.page.evaluate(({ id, limb }) => {
@@ -116,10 +118,10 @@ try {
           }, { id, limb });
           const capIndex = limb === 0 ? 1 : limb === 2 ? 5 : 0;
           const liveCamera = await focusCap(session, id, capIndex, false);
-          await session.screenshot(resolve(out, `cap-${label}-${backend}.png`));
+          await session.screenshot(resolve(out, `nurse-cap-${label}-${backend}.png`));
           await session.page.evaluate(() => window.__SCENE__!.command('cut', { corpse: true })); await session.step(180);
           const frozenCamera = await focusCap(session, id, capIndex, true);
-          await session.screenshot(resolve(out, `frozen-${label}-${backend}.png`));
+          await session.screenshot(resolve(out, `nurse-frozen-${label}-${backend}.png`));
           const frozen = await session.page.evaluate(id => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
             const crowd = (game.view as unknown as { crowd: { staticCorpses: { slots: Map<string, { page: { mesh: InstancedMesh }; index: number }> } } }).crowd;
@@ -130,7 +132,7 @@ try {
             return { caps, vertices: g.getAttribute('position').count, triangles: (g.index?.count ?? parts.count) / 3 };
           }, id);
           if (Object.keys(frozen.caps).length !== 1) throw Error(`${label}: missing or extra frozen caps`);
-          receipts.push({ case: 'details', label, backend, frozen, liveCamera, frozenCamera, errors: [...session.errors] });
+          receipts.push({ case: 'details', asset: 'inf.nurse', label, backend, frozen, liveCamera, frozenCamera, errors: [...session.errors] });
         }
         await session.load({ ...spec, name: 'skin-hit-flash', actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
           { id: 'hit', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.common-worker', accessories: [] } }],
@@ -238,7 +240,7 @@ try {
           receipts.push({ case: 'lod', backend, distance, drawn, errors: [...session.errors] });
         }
       }
-      writeJson(resolve(out, 'visual-verification.json'), receipts);
+      writeJson(resolve(out, process.env.CAPTURE_REPORT ?? 'visual-verification.json'), receipts);
       console.log(JSON.stringify({ backend, cases: [...cases], errors: session.errors }));
       if (session.errors.length) throw Error(`${backend}: browser console errors`);
     } finally { await session.close(); stopServer(); }

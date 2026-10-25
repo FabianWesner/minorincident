@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
-import { BufferAttribute, BufferGeometry, Color, type Group } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, DataTexture, type Group } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
@@ -30,7 +30,9 @@ test('civilian transfer preserves every geometry/pose byte and display field', (
   geometry.dispose(); restored.geometry.dispose();
 });
 for (const id of ['npc.civilian-man-a', 'npc.civilian-elderly', 'npc.national-guard', 'npc.shelter-survivor.lying']) test(`${id}: worker transfer preserves all poses, geometry, rig transforms and gun aim`, async () => {
-  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder), registry = new AssetRegistry(event => { throw new Error(JSON.stringify(event)); }, { load: async url => {
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  loader.register(() => ({ name: 'KHR_texture_basisu', loadTexture: async () => new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1) }));
+  const registry = new AssetRegistry(event => { throw new Error(JSON.stringify(event)); }, { load: async url => {
     const bytes = readFileSync(`public${url}`); return (await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
   } });
   try {

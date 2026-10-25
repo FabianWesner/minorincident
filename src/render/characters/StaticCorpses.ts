@@ -1,4 +1,4 @@
-import { skinnedVertexMatrix } from './skinnedCrowd';
+import { premultiplyRow, skinnedVertexMatrix } from './skinnedCrowd';
 import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
@@ -245,6 +245,9 @@ export class StaticCorpses extends Group {
         if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
         else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
         const frameOffset = Math.floor(frame) * clip.parts.length * 16, skin = clip.binds ? source.getAttribute('_skin') : undefined, skinMatrix = new Float32Array(16);
+        // A frozen pose reuses each joint × inverse bind for every vertex.
+        const skinPose = skin && clip.binds ? new Float32Array(clip.parts.length * 16) : undefined;
+        if (skinPose) premultiplyRow(clip.matrices, skinPose, clip.binds!, frameOffset, clip.parts.length, 0);
         for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name);
           // GPU backends may pad normals to vec4. Frozen geometry retains the
@@ -255,7 +258,7 @@ export class StaticCorpses extends Group {
             const i = kept[output];
             if (name === 'position' || name === 'normal') {
               // Blend the premultiplied joint matrices of this vertex.
-              const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix) : undefined;
+              const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix, skinPose) : undefined;
               const matrices = skinned ?? clip.matrices;
               const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
               let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;

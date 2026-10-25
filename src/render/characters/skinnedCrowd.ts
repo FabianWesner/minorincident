@@ -63,7 +63,7 @@ export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant:
 }
 
 /** CPU counterpart for frozen corpse pages: the blended, premultiplied matrix of vertex `i` at atlas frame offset. */
-export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts: BufferAttribute | import('three').InterleavedBufferAttribute, skin: BufferAttribute | import('three').InterleavedBufferAttribute, i: number, out: Float32Array): Float32Array {
+export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts: BufferAttribute | import('three').InterleavedBufferAttribute, skin: BufferAttribute | import('three').InterleavedBufferAttribute, i: number, out: Float32Array, pose?: Float32Array): Float32Array {
   const binds = clip.binds!, matrices = clip.matrices, packed = skin.getX(i);
   const joints = [parts.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
   const w = [0, skin.getY(i), skin.getZ(i), skin.getW(i) % 1]; w[0] = 1 - w[1] - w[2] - w[3];
@@ -73,8 +73,8 @@ export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts:
     const m = frameOffset + joints[k] * 16, b = joints[k] * 16;
     // out += w · (M · B)  (column-major)
     for (let col = 0; col < 4; col++) for (let row = 0; row < 4; row++) {
-      let sum = 0;
-      for (let x = 0; x < 4; x++) sum += matrices[m + x * 4 + row] * binds[b + col * 4 + x];
+      let sum = pose?.[b + col * 4 + row] ?? 0;
+      if (!pose) for (let x = 0; x < 4; x++) sum += matrices[m + x * 4 + row] * binds[b + col * 4 + x];
       out[col * 4 + row] += w[k] * sum;
     }
   }
@@ -82,13 +82,13 @@ export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts:
 }
 
 /** Premultiply one atlas row (all parts) into the GPU copy. */
-export function premultiplyRow(rows: Float32Array, gpu: Float32Array, binds: Float32Array, rowOffset: number, parts: number): void {
+export function premultiplyRow(rows: ArrayLike<number>, gpu: Float32Array, binds: ArrayLike<number>, rowOffset: number, parts: number, outputOffset = rowOffset): void {
   for (let p = 0; p < parts; p++) {
     const m = rowOffset + p * 16, b = p * 16;
     for (let col = 0; col < 4; col++) for (let row = 0; row < 4; row++) {
       let sum = 0;
       for (let x = 0; x < 4; x++) sum += rows[m + x * 4 + row] * binds[b + col * 4 + x];
-      gpu[m + col * 4 + row] = sum;
+      gpu[outputOffset + p * 16 + col * 4 + row] = sum;
     }
   }
 }

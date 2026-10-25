@@ -7,6 +7,8 @@ import { l6CastModels } from '../../src/data/l6';
 import { loadCivilianSource, disposeCivilianSource } from '../../src/assets/civilianSource';
 import { encodeCivilianBake } from '../../src/assets/civilianBakeData';
 import { prepareCivilianGeometry, prepareCivilianRig } from '../../src/render/npc/prepareCivilianGeometry';
+import { skinCrowdBakes } from './skin-crowd-bakes';
+import type { AssetDef } from '../../src/assets/types';
 
 // Run after changing civilian source GLBs, palette, clips or preparation code.
 // The production loader retains the runtime worker path for unavailable bakes.
@@ -16,8 +18,9 @@ mkdirSync(directory, { recursive: true });
 const lod2Only = process.argv.includes('--lod2');
 const files: Record<string, string> = lod2Only ? JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) : {};
 let total = 0, count = 0;
-for (const model of [...new Set([...coreCivilianModels, ...l6CastModels])].sort()) {
-  if (manifest.some(def => def.id === model && 'crowdSkin' in def && def.crowdSkin)) continue;
+for (const model of [...new Set([...coreCivilianModels, ...l6CastModels, ...manifest.filter(def => 'crowdSkin' in def && def.crowdSkin).map(def => def.id)])].sort()) {
+  const skin = manifest.find(def => def.id === model && 'crowdSkin' in def && def.crowdSkin);
+  if (skin) { Object.assign(files, await skinCrowdBakes(skin as AssetDef, lod2Only ? ['lod2'] : undefined)); continue; }
   for (const lod of lod2Only ? ['lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
     const root = await loadCivilianSource(model, lod, async url => {
       const data = readFileSync(`public${url}`);

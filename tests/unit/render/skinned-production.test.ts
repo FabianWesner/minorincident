@@ -12,6 +12,7 @@ import { compactCrowdGeometry } from '../../../src/render/characters/compactCrow
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { PickBodies } from '../../../src/render/characters/PickBodies';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
+import { AssetRegistry } from '../../../src/assets/registry';
 import { sampleClip } from '../../../src/render/characters/clips';
 
 async function baked(id: string) {
@@ -24,7 +25,22 @@ async function baked(id: string) {
   return result;
 }
 
-for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
+test('converted assets load each requested LOD without hidden wound transforms causing a fallback', async () => {
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder), requests: string[] = [];
+  const registry = new AssetRegistry(event => { throw Error(JSON.stringify(event)); }, { load: async url => {
+    requests.push(url); return (await loader.parseAsync(stripGlbTextures(readFileSync(`public${url}`)), '')).scene;
+  } });
+  try {
+    for (const def of manifest.filter(d => 'crowdSkin' in d && d.crowdSkin)) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
+      requests.length = 0;
+      const model = await registry.loadAsset(def.id, lod), expected = lod === 'lod0' ? def.glb : def.lods![lod];
+      expect(model.userData.placeholder, `${def.id}/${lod}`).not.toBe(true);
+      expect(expected).toBeDefined(); expect(requests, `${def.id}/${lod}`).toEqual(['/' + expected!.replace(/^public\//, '')]);
+    }
+  } finally { await registry.dispose(); }
+}, 120000);
+
+for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
   const { geometry, clip } = await baked(id), positions = geometry.getAttribute('position'), tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
   expect(clip.frames).toBe(civilianClips.length * framesPerClip); expect(clip.binds).toBeDefined(); expect(skin.count).toBe(positions.count);
   expect(clip.matrices.every(Number.isFinite)).toBe(true);
@@ -85,10 +101,11 @@ test('production indexed skin batches retain a constant, correct severance mask 
   }
 });
 
-test('three unseen cast builds publish validated compressed skins within every standalone byte limit', () => {
-  for (const id of ['npc.civilian-man-b', 'inf.nurse', 'inf.dog']) {
+test('L1 proof sources and additional unseen builds publish validated compressed skins within every standalone byte limit', () => {
+  for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-elderly', 'inf.nurse', 'inf.dog']) {
     const receipt = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/build.json`, 'utf8'));
     expect(receipt.manualSteps).toEqual([]); expect(receipt.receipts).toHaveLength(3);
+    expect(Object.keys(receipt.preparedBakes)).toHaveLength(id.startsWith('npc.') ? 6 : 3);
     expect(JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/validation.json`, 'utf8')).flatMap((r: { errors: string[] }) => r.errors)).toEqual([]);
     for (const row of receipt.receipts) for (const tier of row.tiers) expect(statSync(tier.path).size).toBeLessThanOrEqual([600000, 250000, 150000][row.lod]);
   }

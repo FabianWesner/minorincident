@@ -8,6 +8,7 @@ import { variantPath } from '../../src/assets/types';
 import { assetIO } from './io';
 import { validateAssets } from './validate';
 import { compressSkin } from './skin-crowd-compress';
+import { skinCrowdBakes } from './skin-crowd-bakes';
 
 // A cast directory is the complete input; no hand-prepared files or placement numbers.
 const source = resolve(process.argv[2] ?? ''), id = basename(source);
@@ -78,9 +79,11 @@ delete def.textureAtlasLow; delete def.lowGlb; delete def.corpseGlb;
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 const bakePath = 'src/assets/civilianBakes.json', bakes = JSON.parse(readFileSync(bakePath, 'utf8')) as Record<string, string>;
 for (const key of Object.keys(bakes)) if (key.startsWith(id + ':')) { const file = 'public' + bakes[key]; if (existsSync(file)) unlinkSync(file); delete bakes[key]; }
+const preparedBakes = await skinCrowdBakes(def);
+Object.assign(bakes, preparedBakes);
 writeFileSync(bakePath, JSON.stringify(bakes, null, 2) + '\n');
 const validation = await validateAssets([def]);
 writeFileSync(join(report, 'validation.json'), JSON.stringify(validation, null, 2) + '\n');
 if (validation.some(row => row.errors.length)) throw Error(`${id}: standard validator failed: ${validation.flatMap(row => row.errors).join('; ')}`);
-writeFileSync(join(report, 'build.json'), JSON.stringify({ id, source, elapsedSeconds: (Date.now() - started) / 1000, manualSteps: [], receipts }, null, 2) + '\n');
+writeFileSync(join(report, 'build.json'), JSON.stringify({ id, source, elapsedSeconds: (Date.now() - started) / 1000, manualSteps: [], receipts, preparedBakes }, null, 2) + '\n');
 console.log(`${id}: 3 LODs × 2 tiers validated, ${((Date.now() - started) / 1000).toFixed(1)} s, zero manual steps`);

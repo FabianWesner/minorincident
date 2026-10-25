@@ -31,7 +31,7 @@ export async function loadCivilianSource(id: string, requested: 'lod0' | 'lod1' 
     for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) throw Error(`Missing civilian node ${name}`);
     root.traverse(node => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
     if (lod !== 'lod0') {
-      const bounds = new Box3().setFromObject(root), size = bounds.getSize(new Vector3());
+      const bounds = new Box3().setFromObject(root.getObjectByName('skin_body') ?? root), size = bounds.getSize(new Vector3());
       if (bounds.isEmpty() || (['x', 'y', 'z'] as const).some(axis => Math.abs(size[axis] / def.dimensions[axis] - 1) > def.dimensions.tolerance)) throw Error('Civilian LOD dimensions');
     }
     root.userData.assetId = id; root.userData.assetTextureMode = def.textureMode;
