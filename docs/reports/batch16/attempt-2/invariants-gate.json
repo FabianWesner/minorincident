@@ -1,0 +1,20 @@
+{
+  "revision": "e9c67251ea5c3681aee99d46a7d6bf8bc80265f0",
+  "command": [
+    "npm",
+    "run",
+    "qa:invariants"
+  ],
+  "exitCode": 0,
+  "seconds": 744.6,
+  "environment": {
+    "E2E_PORT": "4603",
+    "SCENE_PORT": "4604",
+    "E2E_UNITS": "1",
+    "E2E_SLOTS": "1",
+    "QA_INVARIANTS_BUILD_UNITS": "1",
+    "MI_PERF_SHARED_BROWSER": "1",
+    "QA_INVARIANTS_RESUME_SIM": "1"
+  },
+  "resumeReason": "Queued build admission was stopped before it ran, to avoid the campaign preview port during the female-to-male handoff. Completed same-revision 28-test simulation reused by the supported runner."
+}

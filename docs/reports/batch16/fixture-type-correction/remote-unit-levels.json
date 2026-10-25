@@ -1,0 +1,18 @@
+{
+  "revision": "591ef70585e452f7cd925069e9f9b3f3965a4b03",
+  "command": [
+    "sh",
+    "tools/remote/run.sh",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/batch16",
+    "--",
+    "npx",
+    "vitest",
+    "run",
+    "tests/unit",
+    "tests/levels",
+    "--maxWorkers=4"
+  ],
+  "runner": "94.130.181.173",
+  "exitCode": 130,
+  "seconds": 107.91
+}

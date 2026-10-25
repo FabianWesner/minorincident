@@ -1,0 +1,24 @@
+{
+  "command": [
+    "sh",
+    "tools/remote/run.sh",
+    "/Users/wesner/Workspace/minorincident/.claude/worktrees/batch16",
+    "--",
+    "npx",
+    "vitest",
+    "run",
+    "tests/unit",
+    "tests/levels",
+    "--maxWorkers=4"
+  ],
+  "exitCode": 0,
+  "seconds": 3275.25,
+  "summaryLines": [
+    "Test Files  486 passed | 3 skipped (489)",
+    "Tests  2637 passed | 9 skipped (2646)",
+    "Duration  3175.80s (tests 98%, import 1%)"
+  ],
+  "passedTests": 2637,
+  "skippedTests": 9,
+  "passedFiles": 486
+}

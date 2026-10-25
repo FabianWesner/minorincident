@@ -1,0 +1,313 @@
+{
+  "mode": "campaign",
+  "quality": "low",
+  "heroine": "male",
+  "zoom": 1.5,
+  "levels": [
+    "L1",
+    "L2",
+    "L3"
+  ],
+  "runs": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 136,
+      "simSeconds": 133,
+      "maxNoProgressSeconds": 13.892,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "steps": [
+        {
+          "id": "pickup",
+          "text": "Pick up the package at the courier depot · 55 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "parcel-counter",
+            "ring": {
+              "x": -37.8,
+              "y": 0,
+              "z": -37.5
+            },
+            "drawn": [
+              -37.8,
+              0.05,
+              -37.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "deliver",
+          "text": "Deliver the package to the Medical Annex · 107 m",
+          "tick": 1034,
+          "marker": {
+            "anchor": "lab-door",
+            "ring": {
+              "x": 66,
+              "y": 0,
+              "z": -12.3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "weapon",
+          "text": "Find something to defend yourself · 63 m",
+          "tick": 4283,
+          "marker": {
+            "anchor": "garage-door",
+            "ring": {
+              "x": 22.8,
+              "y": 0,
+              "z": 36.699999999999996
+            },
+            "drawn": [
+              22.8,
+              0.24,
+              36.7
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "firestation",
+          "text": "Get inside the fire station · 100 m",
+          "tick": 5642,
+          "marker": {
+            "anchor": "fire-bay-trigger",
+            "ring": {
+              "x": -76.6,
+              "y": 0.53,
+              "z": 41.27
+            },
+            "drawn": null,
+            "playerY": 0.9649999737739563,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "entry": "new",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 133,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.1,
+      "deaths": 1,
+      "assists": 1,
+      "attacks": {
+        "weapon.fire-axe": 64
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "axe",
+          "text": "Take the fire axe · 2 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l2-axe-rack",
+            "ring": {
+              "x": -74.15,
+              "y": 0.4,
+              "z": 47.5
+            },
+            "drawn": [
+              -74.15,
+              0.4,
+              47.5
+            ],
+            "playerY": 1.1200000047683716,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "board",
+          "text": "Get on the fire truck · 13 m",
+          "tick": 103,
+          "marker": {
+            "anchor": "l2-board",
+            "ring": {
+              "x": -66.8,
+              "y": 0,
+              "z": 36.400000000000006
+            },
+            "drawn": [
+              -66.8,
+              0,
+              36.4
+            ],
+            "playerY": 1.1200000047683716,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "ride",
+          "text": "Ride with Engine 3 to Grove Market · 73 m",
+          "tick": 494,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": {
+              "x": -43,
+              "y": 0,
+              "z": -32
+            },
+            "drawn": null,
+            "playerY": 0.7200000286102295,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "doors",
+          "text": "Cover the firefighters while they force the doors",
+          "tick": 1964,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "bridge",
+          "text": "Reach the police checkpoint at the bridge · 139 m",
+          "tick": 2722,
+          "marker": {
+            "anchor": "l2-gate-inside",
+            "ring": {
+              "x": 79.5,
+              "y": 0,
+              "z": 30
+            },
+            "drawn": [
+              79.5,
+              0,
+              30
+            ],
+            "playerY": 0.8500000238418579,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "entry": "new",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 210,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 14.082,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.handgun": 179
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure",
+        "weapon.molotov",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "steps": [
+        {
+          "id": "armory",
+          "text": "Take a handgun from the armory · 19 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": {
+              "x": -139.2,
+              "y": 0,
+              "z": -8.4
+            },
+            "drawn": [
+              -139.2,
+              0.05,
+              -8.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "defend",
+          "text": "Help defend the station",
+          "tick": 647,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "checkpoint",
+          "text": "Get inside the army checkpoint · 364 m",
+          "tick": 1292,
+          "marker": {
+            "anchor": "l3-zone",
+            "ring": {
+              "x": 225,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              225,
+              0.05,
+              0
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  }
+}
