@@ -4,7 +4,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { SkinnedMesh } from 'three';
 import { expect, test } from 'vitest';
 
-const budget = { '': 1200, '.low': 600, '.lod2': 250 } as const;
+// Q-183: textured garment shells cut from the 6k TRELLIS bodies (body 44.6k → 6k triangles since 10-24; body + gear stays < 10k).
+const budget = { '': 3400, '.low': 3400, '.lod2': 850 } as const;
 for (const sex of ['female', 'male']) for (const [lod, limit] of Object.entries(budget)) test(`${sex} courier tier gear${lod || ' LOD0'}: tier ranges ordered, within triangle budget, skinned to body bones`, async () => {
   const bytes = readFileSync(`public/assets/models/acc.courier-gear.${sex}.tiers${lod}.glb`);
   const scene = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
