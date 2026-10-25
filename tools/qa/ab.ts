@@ -11,8 +11,8 @@ import { cure } from '../../src/levels/L10/district';
 import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab-tour';
 import { perceptualDiff } from './ab-metrics';
 
-const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},stops:{type:'string'},help:{type:'boolean'}}});
-if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
+const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},survivor:{type:'string',default:'female'},stops:{type:'string'},help:{type:'boolean'}}});
+if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--survivor female|male] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
 if(!values.candidate)throw new Error('--candidate <url|dist> is required');
 if(values.inject&&(!['hide-npc','hats','tank','bench','all'].includes(values.inject)||values.candidate!=='dist'))throw new Error('--inject requires candidate dist and hide-npc|hats|tank|bench|all');
 const threshold=Number(values.threshold),seed=Number(values.seed);
@@ -94,7 +94,7 @@ try{
       const scratch=await context.newPage();
         const {stop,zoom,id}=variant;console.log(`[${side}] ${id}: reaching ${stop.setup??stop.checkpoint??'start'}`);
         try{
-          const save=debugCampaign(Number(stop.level.slice(1))<=4?10:Number(stop.level.slice(1)) as Level,null);save.settings.quality='low';save.seed=seed;
+          const save=debugCampaign(Number(stop.level.slice(1))<=4?10:Number(stop.level.slice(1)) as Level,null);save.settings.quality='low';save.seed=seed;save.character=values.survivor==='male'?'male':'female';
           let walkRoute:number[][]|undefined;
           if(stop.level==='L10'&&stop.checkpoint){
             const region=cure.regions.findIndex(r=>r.checkpoint===stop.checkpoint),target=cure.anchors[stop.checkpoint];

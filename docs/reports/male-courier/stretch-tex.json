@@ -1,0 +1,766 @@
+{
+  "source": "public/assets/models/char.courier-male.skin.glb",
+  "triangles": 5990,
+  "maxStretch": 7.47,
+  "flaggedOver4": 591,
+  "clips": [
+    {
+      "clip": "idle",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.53,
+      "worstTime": 0.783,
+      "worstBones": [
+        "legL",
+        "legR",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.071,
+          0.478,
+          -0.015
+        ],
+        [
+          -0.08,
+          0.491,
+          0.002
+        ]
+      ]
+    },
+    {
+      "clip": "walk",
+      "samples": 25,
+      "over2": 55,
+      "over4": 0,
+      "worst": 2.81,
+      "worstTime": 0.634,
+      "worstBones": [
+        "legL",
+        "hip",
+        "legR"
+      ],
+      "at": [
+        [
+          0.031,
+          0.49,
+          -0.007
+        ],
+        [
+          0.028,
+          0.496,
+          0.006
+        ]
+      ]
+    },
+    {
+      "clip": "run",
+      "samples": 25,
+      "over2": 415,
+      "over4": 0,
+      "worst": 3.32,
+      "worstTime": 0.174,
+      "worstBones": [
+        "shinR",
+        "kneeR"
+      ],
+      "at": [
+        [
+          0.057,
+          0.297,
+          0.087
+        ],
+        [
+          0.061,
+          0.312,
+          0.083
+        ]
+      ]
+    },
+    {
+      "clip": "carry",
+      "samples": 25,
+      "over2": 13,
+      "over4": 0,
+      "worst": 2.26,
+      "worstTime": 0.583,
+      "worstBones": [
+        "shinR",
+        "kneeR"
+      ],
+      "at": [
+        [
+          0.057,
+          0.297,
+          0.087
+        ],
+        [
+          0.061,
+          0.312,
+          0.083
+        ]
+      ]
+    },
+    {
+      "clip": "hurt",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.74,
+      "worstTime": 0.26,
+      "worstBones": [
+        "foreArmR",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.07,
+          0.672,
+          0.278
+        ],
+        [
+          -0.078,
+          0.691,
+          0.264
+        ]
+      ]
+    },
+    {
+      "clip": "ride",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.52,
+      "worstTime": 0.783,
+      "worstBones": [
+        "legL",
+        "legR",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.071,
+          0.478,
+          -0.015
+        ],
+        [
+          -0.08,
+          0.491,
+          0.002
+        ]
+      ]
+    },
+    {
+      "clip": "mount",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.53,
+      "worstTime": 0.783,
+      "worstBones": [
+        "legL",
+        "legR",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.071,
+          0.478,
+          -0.015
+        ],
+        [
+          -0.08,
+          0.491,
+          0.002
+        ]
+      ]
+    },
+    {
+      "clip": "dismount",
+      "samples": 25,
+      "over2": 0,
+      "over4": 0,
+      "worst": 1.53,
+      "worstTime": 0.783,
+      "worstBones": [
+        "legL",
+        "legR",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.071,
+          0.478,
+          -0.015
+        ],
+        [
+          -0.08,
+          0.491,
+          0.002
+        ]
+      ]
+    },
+    {
+      "clip": "unarmed-jab",
+      "samples": 25,
+      "over2": 1064,
+      "over4": 5,
+      "worst": 4.18,
+      "worstTime": 0.226,
+      "worstBones": [
+        "elbowL",
+        "armL",
+        "spine"
+      ],
+      "at": [
+        [
+          -0.001,
+          0.745,
+          -0.196
+        ],
+        [
+          0,
+          0.748,
+          -0.178
+        ]
+      ]
+    },
+    {
+      "clip": "unarmed-cross",
+      "samples": 25,
+      "over2": 2099,
+      "over4": 0,
+      "worst": 3.77,
+      "worstTime": 0.469,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "unarmed-front-kick",
+      "samples": 25,
+      "over2": 799,
+      "over4": 0,
+      "worst": 3.29,
+      "worstTime": 0.254,
+      "worstBones": [
+        "legR",
+        "legL",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.08,
+          0.491,
+          0.002
+        ],
+        [
+          -0.077,
+          0.489,
+          0.015
+        ]
+      ]
+    },
+    {
+      "clip": "unarmed-roundhouse-kick",
+      "samples": 25,
+      "over2": 1030,
+      "over4": 0,
+      "worst": 3.78,
+      "worstTime": 0.466,
+      "worstBones": [
+        "legR",
+        "legL",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.08,
+          0.491,
+          0.002
+        ],
+        [
+          -0.077,
+          0.489,
+          0.015
+        ]
+      ]
+    },
+    {
+      "clip": "kick",
+      "samples": 25,
+      "over2": 50,
+      "over4": 0,
+      "worst": 3.2,
+      "worstTime": 0.167,
+      "worstBones": [
+        "legR",
+        "legL",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.08,
+          0.491,
+          0.002
+        ],
+        [
+          -0.077,
+          0.489,
+          0.015
+        ]
+      ]
+    },
+    {
+      "clip": "spin-kick",
+      "samples": 25,
+      "over2": 974,
+      "over4": 0,
+      "worst": 3.47,
+      "worstTime": 0.083,
+      "worstBones": [
+        "torso",
+        "backpackSocket",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.244,
+          0.632,
+          -0.106
+        ],
+        [
+          -0.246,
+          0.61,
+          -0.091
+        ]
+      ]
+    },
+    {
+      "clip": "bat-1",
+      "samples": 25,
+      "over2": 5629,
+      "over4": 321,
+      "worst": 6.8,
+      "worstTime": 0.292,
+      "worstBones": [
+        "legL",
+        "hip",
+        "legR"
+      ],
+      "at": [
+        [
+          0.031,
+          0.49,
+          -0.007
+        ],
+        [
+          0.028,
+          0.496,
+          0.006
+        ]
+      ]
+    },
+    {
+      "clip": "bat-2",
+      "samples": 25,
+      "over2": 4226,
+      "over4": 166,
+      "worst": 6.73,
+      "worstTime": 0,
+      "worstBones": [
+        "legL",
+        "hip",
+        "legR"
+      ],
+      "at": [
+        [
+          0.031,
+          0.49,
+          -0.007
+        ],
+        [
+          0.028,
+          0.496,
+          0.006
+        ]
+      ]
+    },
+    {
+      "clip": "bat-3",
+      "samples": 25,
+      "over2": 1897,
+      "over4": 49,
+      "worst": 7.47,
+      "worstTime": 0.139,
+      "worstBones": [
+        "legL",
+        "hip",
+        "legR"
+      ],
+      "at": [
+        [
+          0.031,
+          0.49,
+          -0.007
+        ],
+        [
+          0.028,
+          0.496,
+          0.006
+        ]
+      ]
+    },
+    {
+      "clip": "crowbar-1",
+      "samples": 25,
+      "over2": 1311,
+      "over4": 7,
+      "worst": 4.67,
+      "worstTime": 0.381,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "machete-1",
+      "samples": 25,
+      "over2": 1307,
+      "over4": 5,
+      "worst": 4.67,
+      "worstTime": 0.381,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "machete-2",
+      "samples": 25,
+      "over2": 1029,
+      "over4": 0,
+      "worst": 4,
+      "worstTime": 0.381,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "machete-3",
+      "samples": 25,
+      "over2": 1316,
+      "over4": 7,
+      "worst": 5.02,
+      "worstTime": 0.127,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "swing",
+      "samples": 25,
+      "over2": 1709,
+      "over4": 11,
+      "worst": 4.61,
+      "worstTime": 0.215,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "windup",
+      "samples": 25,
+      "over2": 179,
+      "over4": 0,
+      "worst": 2.47,
+      "worstTime": 0.495,
+      "worstBones": [
+        "torso",
+        "backpackSocket",
+        "hip"
+      ],
+      "at": [
+        [
+          -0.244,
+          0.632,
+          -0.106
+        ],
+        [
+          -0.234,
+          0.61,
+          -0.107
+        ]
+      ]
+    },
+    {
+      "clip": "shoot",
+      "samples": 25,
+      "over2": 389,
+      "over4": 0,
+      "worst": 3.62,
+      "worstTime": 0.054,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "throw",
+      "samples": 25,
+      "over2": 581,
+      "over4": 0,
+      "worst": 3.92,
+      "worstTime": 0.154,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "interact",
+      "samples": 25,
+      "over2": 493,
+      "over4": 0,
+      "worst": 2.85,
+      "worstTime": 0.192,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "hand-over",
+      "samples": 25,
+      "over2": 538,
+      "over4": 0,
+      "worst": 3.13,
+      "worstTime": 0.466,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "equip",
+      "samples": 25,
+      "over2": 500,
+      "over4": 0,
+      "worst": 3.74,
+      "worstTime": 0.42,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "rack-grab",
+      "samples": 25,
+      "over2": 1038,
+      "over4": 20,
+      "worst": 4.93,
+      "worstTime": 0.504,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "stagger-left",
+      "samples": 25,
+      "over2": 105,
+      "over4": 0,
+      "worst": 2.48,
+      "worstTime": 0.108,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    },
+    {
+      "clip": "stagger-right",
+      "samples": 25,
+      "over2": 54,
+      "over4": 0,
+      "worst": 2.48,
+      "worstTime": 0.108,
+      "worstBones": [
+        "spine",
+        "elbowR"
+      ],
+      "at": [
+        [
+          -0.066,
+          0.745,
+          0.168
+        ],
+        [
+          -0.063,
+          0.745,
+          0.186
+        ]
+      ]
+    }
+  ]
+}
