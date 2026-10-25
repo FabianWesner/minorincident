@@ -131,7 +131,7 @@ export class CharacterView extends Group {
             if (textured) return textured;
             textured = materials.fromTexture(`character:${variant}:tex`, map);
             textured.userData.sharedPalette = true;
-            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1;
+            (textured as PaletteMaterial).movingFigure.value = 1; (textured as PaletteMaterial).heroFigure.value = 1; (textured as PaletteMaterial).heroNightLift.value = 1;
             if (bloodFeedback) this.bloodMaterials.push(textured as PaletteMaterial);
             this.textureReleases.push(() => { materials.releaseTexture(map); map.dispose(); });
             this.textured.add(variant);

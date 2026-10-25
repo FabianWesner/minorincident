@@ -27,6 +27,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly figureFill = uniform(0).setGroup(this._uniformGroup);
   /** Only courier meshes receive the continuous survivor surface fill. */
   readonly heroFigure = uniform(0).setGroup(this._uniformGroup);
+  /** Q-178: extra night read for the textured heroine (muted red/denim/brown map), 0..1; only inside the night key branch. */
+  readonly heroNightLift = uniform(0).setGroup(this._uniformGroup);
   /** Companion coat retains its identity outside the subway headlamp cone. */
   readonly companion = uniform(0).setGroup(this._uniformGroup);
   /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
@@ -224,13 +226,18 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           // warm key and neutral fill, plus a little of the night light (pools, moon) so she belongs there.
           const key = normalView.dot(vec3(-.42, .62, .66)).mul(.5).add(.5);
           const keyed = lifted.mul(mix(vec3(.66, .66, .72), vec3(1, .97, .9), key.mul(key))).add(result.max(vec3(0)).mul(.2)).toVar();
-          const peak = max(max(keyed.r, keyed.g), keyed.b);
-          keyed.mulAssign(float(.9).div(peak.max(.9)));
+          // Q-178: the textured heroine's map is darker and more saturated than the old vertex-coloured courier (deep red tee,
+          // denim, dark hair), so the same key left her ~25 % darker on the night road. She takes a brighter key and a
+          // slightly lighter, still hue-true surface (a small mix toward warm white), and her peak may reach .96.
+          const lift = this.heroNightLift;
+          keyed.assign(mix(keyed.mul(lift.mul(.5).add(1)), vec3(1, .95, .88).mul(luminance(keyed).add(.3).min(1)), lift.mul(.2)));
+          const peak = max(max(keyed.r, keyed.g), keyed.b), cap = lift.mul(.06).add(.9);
+          keyed.mulAssign(cap.div(peak.max(cap)));
           // Narrow back rim in her own (brightened) colours, warm-white biased: the outline reads at
           // every zoom without a mint/grey veil over the face and clothes.
           const band = facing.smoothstep(0, lighting.heroRimEdge.mul(.45)).oneMinus();
           const tint = mix(surface.div(max(max(surface.r, surface.g), surface.b).max(.02)), vec3(1, .9, .75), .45).mul(.9);
-          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(3.6)).clamp(0, .8)));
+          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(lift.mul(.5).add(1)).mul(3.6)).clamp(0, .8)));
         }).Else(() => {
           // Other night presets (L5 dusk aura, practical pools): the aura and pools stack on her and the
           // survivors beside her. Scale RGB together so the brightest channel stays below clipping: the
