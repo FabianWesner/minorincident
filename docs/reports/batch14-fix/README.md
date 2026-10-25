@@ -1,11 +1,10 @@
-# Batch14 campaign fixes
+# Batch14 regression fixes
 
-- Base: `lane/batch14` (`2b740072b`); game fixes are committed with regression tests for survivor routing, combat, staging, resume and navigation feedback.
-- L7: short follower goals inside buildings snapped back to the current wall forever; connected crowd routing fixes this. L6 now carries the actual injury flag instead of treating slow pedestrians as injured. [Route evidence](l7-route.json).
-- Same 22-survivor L6-end save: base / zebra / fix retained 0 / 1 / 3 survivors, with 1 / 0 / 3 player deaths. Per-survivor bite histories and checkpoint-revival context are retained in [comparison](l7-comparison.json).
-- L7 on-screen alive/drawn samples: 548/548, 542/542, 837/837; frame p95: 16.7 / 16.8 / 16.8 ms. No missing draws or material render-cost regression was observed.
-- L10: finale staging could put the living boss in a clear but unreachable factory pocket; staging now requires a body-clear approach. Hitscan aim assistance also erased projectile lead; assistance now preserves deliberate projectile lead while retaining Default assistance. Resume also clears stale combat stagger when the clock restarts. At the Mega's cruise speed this removed a measured 1.6 m aiming error at 9 m. [Production combat vectors](l10-projectile-aim.json).
-- Visible-target, physical mouse/Space/WASD boss probes won on [base](l10-humanlike-base.json) and [fix](l10-humanlike-fix.json) with zero deaths; these east-of-console fixtures bypassed the later-discovered staging fault.
-- Exact unattended full campaign: pending final receipt.
-- Remote unit+levels, smoke, invariants: pending final receipts; focused 47 tests, typecheck and lint are green.
-- Zebra textures and heroine assets are retained; regression tests were added; thresholds, specifications and deployment were unchanged.
+- L7: distant follower goals snapped back to the same building wall; connected crowd routes fix the stall. L6 now carries story injury explicitly instead of classifying slow pedestrians as injured. [Route proof](l7-route.json).
+- Same 22-survivor L6-end save, base / zebra / fix: survivor casualties 22 / 21 / 19 (fatal bites); player deaths 1 / 0 / 3. Individual causes and checkpoint revivals are recorded in the [comparison](l7-comparison.json).
+- Alive/drawn infected samples: 548/548, 542/542, 837/837; frame p95 16.7 / 16.8 / 16.8 ms (max 83.4 / 83.4 / 116.7 ms). No missing draws or texture render-cost regression was observed.
+- L10: nearest-clear staging could trap the Mega inside a factory pocket; staging now requires a body-clear approach at the authored distance. Aim assistance preserves deliberate rocket lead, removing a measured 1.6 m miss at 9 m. [Staging](l10-staging.json), [combat vectors](l10-projectile-aim.json).
+- Physical-input probes won on base/fix with zero deaths but bypassed staging; the actual failed-save replay now finishes in 201 s with zero deaths. [Replay](l10-failed-save-replay.json). This does not establish a bot-only fault.
+- Also fixed expired stagger blocking resumed input, L4 guidance pointing through furniture, and L3 evacuation hiding which officer was approaching. Seven new regression cases passed; existing thresholds are unchanged. [Tests](regression-tests.json).
+- Exact unattended campaign: 10/10 finished, no skipped objectives, P0=0, P1=0; L7/L10 deaths 0/0. [Campaign JSON](summary.json), [completion](campaign-completion.json).
+- Remote: 490 files / 2,687 tests passed (existing 3 files / 9 tests skipped); typecheck/lint passed. Smoke and invariants pending. Zebra textures and heroine retained on `lane/batch14-fix`. [Gates](gates.json).
