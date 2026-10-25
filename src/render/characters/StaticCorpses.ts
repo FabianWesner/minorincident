@@ -1,7 +1,7 @@
 import { skinnedVertexMatrix } from './skinnedCrowd';
 import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Vector3, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -229,6 +229,7 @@ export class StaticCorpses extends Group {
           for (let i = 0; i < have.count; i++) for (let c = 0; c < want; c++) values[i * want + c] = c < have.itemSize ? have.getComponent(i, c) : 1;
           pieces[1].setAttribute(name, new BufferAttribute(values, want));
         }
+        if (pieces[0].hasAttribute('uv') && !pieces[1].hasAttribute('uv')) pieces[1].setAttribute('uv', new BufferAttribute(new Float32Array(pieces[1].getAttribute('position').count * 2), 2));
         const indexed = pieces.map(piece => { if(piece.index)return piece;const wrapper=new BufferGeometry();for(const name of Object.keys(piece.attributes))wrapper.setAttribute(name,piece.getAttribute(name));wrapper.setIndex(Array.from({length:piece.getAttribute('position').count},(_,i)=>i));return wrapper; });
         geometry = mergeGeometries(indexed)!;
         geometry.boundingSphere = pieces[0].boundingSphere!.clone().union(pieces[1].boundingSphere!);
@@ -236,7 +237,7 @@ export class StaticCorpses extends Group {
       } else {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+        const visible = (i: number) => parts.getW(i) < 1024 && !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
@@ -297,14 +298,14 @@ export class StaticCorpses extends Group {
         if (material instanceof PaletteMaterial) {
           let shared = sharedFrozenMaterials.get(material);
           if (!shared) {
-            const copy = material.frozenCopy(true); copy.positionNode = null; copy.normalNode = null; copy.maskNode = null;
+            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null; copy.maskNode = material.userData.frozenSurfaceMask ?? null;
             shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
           }
           shared.users++; frozenMaterial = shared.material;
         } else {
           // Plain fallback materials retain their per-pool value snapshot.
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
-          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = null;
+          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = material.userData.frozenSurfaceMask ?? null;
         }
         this.frozenMaterials.set(material, frozenMaterial);
       }
@@ -319,6 +320,19 @@ export class StaticCorpses extends Group {
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
+    if (geometry.hasAttribute('uv')) {
+      // Frozen texture pages also bind placement, tint and feedback. Keep their
+      // immutable surface in one buffer so the UV path stays within WebGPU's eight.
+      const names = ['position', 'normal', 'color', '_parts', 'uv'];
+      const attributes = names.map(name => geometry.getAttribute(name));
+      const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
+      const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
+      let offset = 0;
+      attributes.forEach((attribute, a) => {
+        for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
+        geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset)); offset += attribute.itemSize;
+      });
+    }
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
     interleaveTexturedCrowd(geometry);
@@ -341,6 +355,7 @@ export class StaticCorpses extends Group {
     // the instance matrices. Other levels retain normal parent transforms.
     mesh.matrixWorldAutoUpdate = this.matrixWorldAutoUpdate;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
+    mesh.userData.preRenderTextures = material.userData.preRenderTextures ?? [];
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[], spheres: [] as Sphere[] }; pages.push(page); this.add(mesh);
     return page;

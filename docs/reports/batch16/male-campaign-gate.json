@@ -1,0 +1,43 @@
+{
+  "revision": "e9c67251ea5c3681aee99d46a7d6bf8bc80265f0",
+  "command": [
+    "npm",
+    "run",
+    "playtest",
+    "--",
+    "--levels",
+    "L1-L3",
+    "--quality",
+    "low",
+    "--zoom",
+    "1.5",
+    "--no-skip",
+    "--out",
+    "test-results/playtest/batch16-male",
+    "--heroine",
+    "male"
+  ],
+  "exitCode": 0,
+  "passed": true,
+  "seconds": 762.51,
+  "levels": [
+    "L1",
+    "L2",
+    "L3"
+  ],
+  "survivor": "male",
+  "finished": 3,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "copiedJsonSha256": {
+    "male-campaign-completion.json": "e924a975f3294b58c918adc866e9d601506a9fcf4810b01f1dd602880d83add8",
+    "male-campaign-frames.json": "a55846413dad3e3495acaebeb8b088dac514baed46a2eaeced21f55c649275c4",
+    "male-issues-campaign.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "male-runs-campaign.json": "27cba9cbc51ee433980ae4c6906cb456cc6738b2cd21f857a67ec432d70a95f3",
+    "male-summary.json": "5c509c0d8b38539407262bcb7e639cbf04c712893a41de2e595ccd93bbe9dc02"
+  }
+}

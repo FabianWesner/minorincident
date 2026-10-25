@@ -1,0 +1,44 @@
+{
+  "validatedRevision": "6bae1f3db48de1690683e3c7e0fb618c9cd9bead",
+  "branch": "lane/batch15",
+  "base": "a2fee5bb0761f91e6072df56ad4c9091747dfdce",
+  "mergedLane": "45f78d4ab34f3cb5361ede1c895c765028a55392",
+  "mergeCommit": "32f59fe2e2500a6376e42531c5dd8a90ea92331c",
+  "mergeParents": "a2fee5bb0761f91e6072df56ad4c9091747dfdce 45f78d4ab34f3cb5361ede1c895c765028a55392",
+  "sharedMaterialFilesUnchangedFromMain": [
+    "src/render/Materials.ts",
+    "src/assets/materials.ts"
+  ],
+  "fromTextureDefinitions": 1,
+  "assetMaterialWorkerBypass": false,
+  "crowdPrivateTextureMaterialCache": false,
+  "texturedManifestIds": [
+    "inf.common-worker",
+    "amb.zebra",
+    "inf.zebra"
+  ],
+  "approvedSuitFilesUnchangedFromLane": [
+    "assets/inf.common-worker/build.py",
+    "assets/inf.common-worker/inf.common-worker.atlas.low.webp",
+    "assets/inf.common-worker/inf.common-worker.atlas.webp",
+    "assets/inf.common-worker/model.corpse.glb",
+    "assets/inf.common-worker/model.glb",
+    "assets/inf.common-worker/model.lod1.glb",
+    "assets/inf.common-worker/model.lod2.glb",
+    "assets/inf.common-worker/notes.md",
+    "assets/inf.common-worker/report.json",
+    "assets/inf.common-worker/review.md",
+    "public/assets/models/inf.common-worker.atlas.low.webp",
+    "public/assets/models/inf.common-worker.atlas.webp",
+    "public/assets/models/inf.common-worker.corpse.glb",
+    "public/assets/models/inf.common-worker.glb",
+    "public/assets/models/inf.common-worker.lod1.glb",
+    "public/assets/models/inf.common-worker.lod2.glb"
+  ],
+  "tierSwapReceipt": "live-tiers.json",
+  "productionChangesAfterCampaignBuild": [],
+  "existingSkinnedTextureConsumersUnchangedFromMain": [
+    "src/render/characters/CharacterView.ts",
+    "src/render/characters/VehicleOccupant.ts"
+  ]
+}

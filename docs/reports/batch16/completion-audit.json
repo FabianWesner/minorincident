@@ -1,0 +1,101 @@
+{
+  "revision": "287ae99e5732925c46a437cdce91bc9210408289",
+  "auditedAt": "2026-10-25T14:17:36.689521+00:00",
+  "branch": "lane/batch16",
+  "mainRevision": "a2fee5bb0761f91e6072df56ad4c9091747dfdce",
+  "status": "passed",
+  "pending": [],
+  "requirements": [
+    {
+      "requirement": "batch15 + male-courier committed; shared main texture route; heroine-only night lift",
+      "status": "passed",
+      "evidence": [
+        "integration-audit.json",
+        "remote-source-proof.json"
+      ]
+    },
+    {
+      "requirement": "retain both green campaigns under explicit authorization; production/runtime/driver source identical",
+      "status": "passed",
+      "evidence": [
+        "campaign-code-equivalence.json",
+        "runner-fix.json"
+      ]
+    },
+    {
+      "requirement": "typecheck, lint, asset validator, production build",
+      "status": "passed",
+      "evidence": [
+        "static-gates.json",
+        "asset-validator.json"
+      ]
+    },
+    {
+      "requirement": "remote unit + levels with maxWorkers=4",
+      "status": "passed",
+      "evidence": [
+        "remote-unit-levels.json",
+        "remote-source-proof.json"
+      ]
+    },
+    {
+      "requirement": "smoke on E2E_PORT=4601 SCENE_PORT=4602",
+      "status": "passed",
+      "evidence": [
+        "smoke-gate.json",
+        "smoke-browser.json"
+      ]
+    },
+    {
+      "requirement": "npm run qa:invariants",
+      "status": "passed",
+      "evidence": [
+        "invariants-gate.json",
+        "invariants-run.json",
+        "invariants-sim.json",
+        "invariants-browser.json"
+      ]
+    },
+    {
+      "requirement": "both-survivor gear catalog, both backends, <=2 cm",
+      "status": "passed",
+      "evidence": [
+        "gear-gate.json",
+        "gear-summary.json",
+        "gear-attachments-webgpu.json",
+        "gear-attachments-webgl2.json",
+        "vision-review.json"
+      ]
+    },
+    {
+      "requirement": "paired 200-infected horde A/B against main, WebGPU + WebGL2",
+      "status": "passed",
+      "evidence": [
+        "performance-gate.json",
+        "performance-summary.json",
+        "performance-provenance.json",
+        "perf-conditions.jsonl"
+      ]
+    },
+    {
+      "requirement": "full L1-L10 campaign; all finished; zero P0/P1",
+      "status": "passed",
+      "evidence": [
+        "campaign-gate.json",
+        "summary.json",
+        "campaign-completion.json",
+        "issues-campaign.json"
+      ]
+    },
+    {
+      "requirement": "male picked through the menu, L1-L3 campaign; all finished; zero P0/P1",
+      "status": "passed",
+      "evidence": [
+        "male-campaign-gate.json",
+        "male-summary.json",
+        "male-campaign-completion.json",
+        "male-issues-campaign.json"
+      ]
+    }
+  ]
+}

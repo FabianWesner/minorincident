@@ -1,0 +1,86 @@
+[
+  {
+    "level": "L4",
+    "tick": 15984,
+    "x": -30.8,
+    "z": -2,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 327.0 m, no marker: false); HUD: \"Run to the cellar via Lakeshore, Metro Road and Harbor Street · 327 m\"",
+    "captures": [
+      "captures/campaign-L4-15984-stuck-navigating.jpg"
+    ],
+    "step": "hide",
+    "objective": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 327 m"
+  },
+  {
+    "level": "L5",
+    "tick": 7130,
+    "x": -25.7,
+    "z": 37.8,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 23.0 m, no marker: true); HUD: \"Look for anyone still alive · Survivors found 3/5 · Search a wrecked bus on Lakeshore Avenue · 23 m\"",
+    "captures": [
+      "captures/campaign-L5-7130-stuck-navigating.jpg"
+    ],
+    "step": "look",
+    "objective": "Look for anyone still alive"
+  },
+  {
+    "level": "L6",
+    "tick": 13013,
+    "x": 183.9,
+    "z": 15.7,
+    "severity": "P2",
+    "kind": "enemy-unhittable",
+    "text": "Infected #207 (attack) 1.6 m away took no damage from 8 s of attacks (hp 60/60)",
+    "captures": [
+      "captures/campaign-L6-13013-enemy-unhittable.jpg"
+    ],
+    "step": "retreat",
+    "objective": "Bring the injured survivor back to the group · 10 m"
+  },
+  {
+    "level": "L7",
+    "tick": 10804,
+    "x": -70.6,
+    "z": 47.5,
+    "severity": "P2",
+    "kind": "stuck-at-ring",
+    "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Get everyone aboard the bus · 0 m · Aboard 12/13 · Waiting for Mr. Okafor · 8 m\"",
+    "captures": [
+      "captures/campaign-L7-10804-stuck-at-ring.jpg"
+    ],
+    "step": "departure",
+    "objective": "Get everyone aboard the bus · 0 m"
+  },
+  {
+    "level": "L10",
+    "tick": 43001,
+    "x": 3319.4,
+    "z": -91.3,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance 383.0 m, no marker: false); HUD: \"Bring the cure to the dispersal complex · 383 m\"",
+    "captures": [
+      "captures/campaign-L10-43001-stuck-navigating.jpg"
+    ],
+    "step": "dispersal-complex",
+    "objective": "Bring the cure to the dispersal complex · 383 m"
+  },
+  {
+    "level": "L10",
+    "tick": 60628,
+    "x": 4002.1,
+    "z": -27.4,
+    "severity": "P2",
+    "kind": "stuck-navigating",
+    "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Watch the cure spread\"",
+    "captures": [
+      "captures/campaign-L10-60628-stuck-navigating.jpg"
+    ],
+    "step": "epilogue",
+    "objective": "Watch the cure spread"
+  }
+]

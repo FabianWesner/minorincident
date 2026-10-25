@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync, statSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { Box3, Matrix4, Vector3 } from 'three';
@@ -16,7 +17,7 @@ const def = manifest.find(a => a.id === 'inf.alpha') as AssetDef;
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 async function load(path: string) {
   const bytes = readFileSync(path);
-  return (await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  return (await loader.parseAsync(stripGlbTextures(bytes), '')).scene;
 }
 for (const [lod, budget] of [8000, 3000, 1000].entries()) {
   test(`T-E07-01-alpha-asset-lod${lod} @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation`, async () => {

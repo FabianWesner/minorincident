@@ -10,5 +10,5 @@ export default defineConfig({
   use: { ...base.use, baseURL: `http://127.0.0.1:${e2ePort}`, trace: 'retain-on-failure' },
   outputDir: resolve('test-results/qa-invariants/browser'),
   reporter: [['list'], ['json', { outputFile: resolve('test-results/qa-invariants/browser.json') }]],
-  webServer: [e2ePort, scenePort].map(port => ({ command: `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, cwd: resolve('.'), reuseExistingServer: false, timeout: 30_000 })),
+  webServer: [e2ePort, scenePort].map(port => ({ command: `node node_modules/vite/bin/vite.js preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, cwd: resolve('.'), reuseExistingServer: false, timeout: 30_000 })),
 });

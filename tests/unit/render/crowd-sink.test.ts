@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { Matrix4, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -12,7 +13,7 @@ import { unplantedClips } from '../../../src/debug/scenelab/motion';
 // the heel and toe (CrowdFigureProbe sole points) on or above the floor.
 test.each(['inf.common-worker.lod1', 'inf.bbq-dad.lod1', 'inf.brute.lod1', 'inf.cashier.lod1', 'npc.civilian-man-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'])('baked crowd standing and gait frames keep both soles on the floor: %s @E07', async (asset) => {
   const bytes = readFileSync(`public/assets/models/${asset}.glb`);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const baked = bakeInfected(scene, [], false, civilianClips), sole = new CrowdLocomotion(scene, baked.clip).sole;
   const parts = ['footL', 'footR'].map(n => baked.clip.parts.indexOf(n)), m = new Matrix4(), p = new Vector3();
   const worst: Record<string, number> = {};

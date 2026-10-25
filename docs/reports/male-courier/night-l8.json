@@ -1,0 +1,7 @@
+{
+  "what": "L8 start (qa:ab --levels L8 --stops l8-start --survivor male, WebGPU low, 6 frames each), courier figure relative luminance (linear sRGB): mean / p90 of the pixels brighter than the box background. Baseline = PROD minor-incident.com (old palette male).",
+  "script": "figure box from the baseline/candidate difference; figure = pixels > border median + 0.03",
+  "prodBaseline": { "z1": { "mean": 0.377, "p90": 0.663 }, "z1.5": { "mean": 0.372, "p90": 0.653 }, "background": 0.0086 },
+  "newMaleWithHeroNightLift1": { "z1": { "mean": 0.51, "p90": 0.795 }, "z1.5": { "mean": 0.509, "p90": 0.78 }, "verdict": "washed out, pastel" },
+  "newMaleShipped_heroNightLift0": { "z1": { "mean": 0.415, "p90": 0.673 }, "z1.5": { "mean": 0.413, "p90": 0.652 }, "verdict": "+10 % mean vs PROD, same p90, hue-true" }
+}

@@ -1,0 +1,1 @@
+A missing explicit `this` type in the new test fixture failed typecheck. The fixture was corrected in 287ae99e5; the early remote dispatches and QA admission were canceled so all final gates use that complete source tree. No game, bot, playtest or threshold change.

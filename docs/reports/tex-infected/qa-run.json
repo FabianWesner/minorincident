@@ -1,0 +1,31 @@
+[
+  {
+    "stage": "remote-sim",
+    "code": 0,
+    "seconds": 279.997,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+    "log": "test-results/qa-invariants/remote-sim.log"
+  },
+  {
+    "stage": "build",
+    "code": 0,
+    "seconds": 7.169,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+    "log": "test-results/qa-invariants/build.log"
+  },
+  {
+    "stage": "Mac-WebGPU-low",
+    "code": 0,
+    "seconds": 207,
+    "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+    "log": "/private/tmp/tex-readability-qa-native-final.log",
+    "retryOf": {
+      "stage": "Mac-WebGPU-low",
+      "code": 124,
+      "seconds": 1210.385,
+      "revision": "5f61aca56e2997a557303db664cfde4e0d0819e7",
+      "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+    },
+    "dist": "/private/tmp/tex-infected-dist-readability-release-5f61aca56"
+  }
+]

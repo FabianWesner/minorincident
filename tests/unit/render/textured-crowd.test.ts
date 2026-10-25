@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { afterEach, expect, test, vi } from 'vitest';
 import { DataTexture, Mesh, MeshBasicMaterial, Matrix4, Color, Float32BufferAttribute, Scene, type Material } from 'three';
 import { MeshLambertNodeMaterial, InstancedMesh } from 'three/webgpu';
@@ -61,4 +65,19 @@ test('@E07 UVs and texture masks survive the production crowd bake and frozen co
   interleaveTexturedCrowd(baked.geometry);
   expect(crowdVertexLayout(baked.geometry, page.instanceMatrix).buffers).toBeLessThanOrEqual(8);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+// Adding the suit atlas must preserve the zebra's authored eye emitters.
+test.each(['amb.zebra', 'inf.zebra'])('@E07 @E17 %s keeps its authored emission when UVs are retained', async id => {
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  const emission: number[][] = [];
+  for (const preserveUV of [false, true]) {
+    const root = (await loader.parseAsync(stripGlbTextures(readFileSync(`public/assets/models/${id}.lod2.glb`)), '')).scene;
+    root.traverse(node => { delete node.userData.crowdAtlas; delete node.userData.assetTextureMode; });
+    const baked = bakeInfected(root, [], false, ['idle'], undefined, true, preserveUV);
+    const flags = baked.geometry.getAttribute('_emissive');
+    emission.push(Array.from({ length: flags.count }, (_, i) => flags.getX(i)));
+    baked.geometry.dispose();
+  }
+  expect(emission[1]).toEqual(emission[0]);
 });

@@ -30,7 +30,13 @@ test('T-E17-05e @E17-AC05 integrated survivor art uses accepted rigs without pla
     await window.__SS__!.loadScenario('survivor'); window.__SS__!.pause();
     return window.__SS__!.getState().render.character!;
   });
-  expect(character.sources.map(source => source.source)).toEqual(['glb', 'glb']);
+  expect(character.sources.find(source => source.variant === 'female')?.source).toBe('glb');
+  // Alternate survivor rigs load on selection; exercise that accepted asset too.
+  const switched = await page.evaluate(async () => {
+    const a = window.__SS__!; a.survivor.select('male'); await a.step(1); await a.screenshotReady();
+    return a.getState().render.character!;
+  });
+  expect(switched.sources.map(source => source.source)).toEqual(['glb', 'glb']);
   expect(events.filter(event => event.id.startsWith('char.survivor-'))).toEqual([]);
 });
 test('T-E17-05c @E17-AC05 missing production art renders a logged placeholder', async ({page,baseURL}) => {

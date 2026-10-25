@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { Matrix4, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -13,7 +14,7 @@ test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and head
   const results: { asset: string; rootScale: number; clip: string; speed: number; beforeCm: number; afterCm: number }[] = [];
   for (const asset of ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.lab-tech-a', 'inf.common-worker.lod1']) {
     const bytes = readFileSync(`public/assets/models/${asset}.glb`);
-    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
     const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 1);
     const loco = new CrowdLocomotion(scene, baked.clip);
     for (const rootScale of [1, .7]) for (const [name, speed] of [['npc-walk', 1.4], ['civ-flee', 4], ['infected-frail', 4.7], ['infected-lurch', 5.1], ['infected-sprint', 5.6]] as const) {
@@ -62,7 +63,7 @@ test('distance phase stays continuous when speed and stride change @E07', () => 
 // GPU drew nothing for that infected (or pedestrian) for seconds while the sim kept it attacking.
 test('crowd footwork entering mid-run never produces a non-finite pose @E07', async () => {
   const bytes = readFileSync('public/assets/models/npc.civilian-man-a.glb');
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 64);
   const footwork = new CrowdFootwork(64), loco = new CrowdLocomotion(scene, baked.clip, footwork);
   const bad: string[] = [];
@@ -86,7 +87,7 @@ test('crowd footwork entering mid-run never produces a non-finite pose @E07', as
 
 test('phone crowd poses hold their planted world pose for one 30 Hz frame and refresh on a clip change @E18', async () => {
   const bytes = readFileSync('public/assets/models/npc.civilian-man-a.glb');
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 4);
   const footwork = new CrowdFootwork(4), loco = new CrowdLocomotion(scene, baked.clip, footwork);
   const present = (time: number, phase: number, x: number, clip: typeof civilianClips[number] = 'infected-lurch', holdDistanceM = .05) => {

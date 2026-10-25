@@ -1,6 +1,7 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
-import { Box3, Vector3, Matrix4, type InstancedMesh } from 'three';
+import { Box3, Vector3, Matrix4, Mesh, Texture, type MeshStandardMaterial, type InstancedMesh } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -14,8 +15,18 @@ import manifest from '../../../src/assets/manifest.json';
 async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
   const def = manifest.find(d => d.id === id)!;
   const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
-  scene.userData.assetId = id; return scene;
+  const source = JSON.parse(bytes.toString('utf8', 20, 20 + bytes.readUInt32LE(12)));
+  const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
+  // Node geometry loading retains the production atlas/material markers.
+  const atlas = new Texture();
+  gltf.scene.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      const index = gltf.parser.associations.get(material)?.materials;
+      if (index !== undefined && source.materials[index]?.pbrMetallicRoughness?.baseColorTexture) (material as MeshStandardMaterial).map = atlas;
+    }
+  });
+  gltf.scene.userData.assetId = id; gltf.scene.userData.assetTextureMode = def.textureMode; return gltf.scene;
 }
 async function crowdGeometry(id: string, lod: 'lod1' | 'lod2') {
   const baked = bakeInfected(await model(id, lod));

@@ -1,13 +1,13 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type SkinnedMesh, type Texture } from 'three';
+import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type SkinnedMesh, type Texture } from 'three';
 import { packSkin, restInverses, skinnedCrowdMode } from './skinnedCrowd';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
-import { crowdTexture } from './crowdTexture';
 import { compactCrowdGeometry } from './compactCrowdGeometry';
+import { authoredSoles } from './footSoles';
 type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number; texture?: Texture };
 // Keep sampled animation and small bind transforms across loads. The source
 // registry already owns the geometry; cached expanded triangle soup otherwise
@@ -44,8 +44,8 @@ export async function bakeInfectedAsync(pause: () => Promise<void>, ...args: Par
   return step.value;
 }
 function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string, preserveIndices = false, preserveUV = false): Generator<void, BakedCrowd> {
-  const textured = preserveUV || root.userData.assetTextureMode === 'baseColor';
-  const texture = textured ? crowdTexture(root) : undefined;
+  preserveUV ||= root.userData.assetTextureMode === 'baseColor' || root.getObjectByName('root')?.userData.crowdAtlas === true;
+  const texturedHumanoid = preserveUV && !root.getObjectByName('body');
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -61,8 +61,9 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
   const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
   if (preserveIndices) root.updateMatrixWorld(true);
+  const sourceSoles = authoredSoles(root);
   const poseKey = preserveIndices && !root.parent && !root.animations.length && !root.getObjectByName('body')
-    ? JSON.stringify([crawlingRestPose, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
+    ? JSON.stringify([crawlingRestPose, sourceSoles, parts.map(part => joints.indexOf(part)), joints.map(node => [node.name, joints.indexOf(node.parent!), node.matrixAutoUpdate, node.matrixWorldAutoUpdate, node.matrix.elements, node.rotation.order])]) : undefined;
   const sharedPoses = poseKey ? rigPoses.get(poseKey) ?? new Map<string, Float32Array>() : undefined;
   if (poseKey) {
     rigPoses.delete(poseKey); rigPoses.set(poseKey, sharedPoses!);
@@ -75,7 +76,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       node.matrixWorldNeedsUpdate = false;
     }
   };
-  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}:${textured}` : undefined;
+  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}:${preserveUV}` : undefined;
   const template = key ? bakedCrowds.get(key) : undefined, cached = template?.clip;
   if (template) {
     bakedCrowds.delete(key!); bakedCrowds.set(key!, template); root.updateMatrixWorld(true);
@@ -88,7 +89,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
     // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
     const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
-    const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
+    const lowestSole = () => Math.min(...feet.flatMap((foot, side) => sourceSoles ? sourceSoles[side].map(point => sole.copy(point).applyMatrix4(foot.matrixWorld).y) : [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
     const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
     // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
     // hoof bounds together instead of moving a whole upper leg away from its shoulder.
@@ -148,6 +149,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   const transforms = template?.transforms ?? []; let meshIndex = 0;
   let shirtColor: import('three').Color | undefined;
+  let texture: Texture | undefined;
   let doubleSided = false;
   // skinned-crowd prototype: one welded SkinnedMesh body. Every vertex of such a figure stays in the bind
   // (world rest) space; the pose atlas is premultiplied by the inverse rest matrices on upload.
@@ -156,7 +158,9 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   const binds = skinnedFigure ? restInverses(parts) : undefined;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
-    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
+    const capIndex = texturedHumanoid ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(node.name.replace(/^stump_/, '')) : -1;
+    const cap = node.name.startsWith('stump_') && capIndex >= 0;
+    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !(cap && ancestor === node)) return;
     // A named animated part can itself be a Mesh (not only a parent joint).
     let owner: Object3D | null = node;
     while (owner && !parts.includes(owner)) owner = owner.parent;
@@ -176,9 +180,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       for (let i = 0; i < indices.length; i++) indices[i] = i;
       geometry.setIndex(new BufferAttribute(indices, 1));
     }
+    if (cap) { geometry.computeVertexNormals(); geometry.setAttribute('uv', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count * 2), 2)); }
     if (preserveIndices) compactCrowdGeometry(geometry);
     // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
-    for (const name of ['position', 'normal']) {
+    for (const name of ['position', 'normal', ...(preserveUV ? ['uv'] : [])]) {
       const attribute = geometry.getAttribute(name);
       if (attribute.array instanceof Float32Array && !attribute.normalized) continue;
       const values = new Float32Array(attribute.count * attribute.itemSize);
@@ -187,10 +192,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
-    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
+    const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial & MeshStandardMaterial;
+    if (preserveUV && material.map) {
+      if (texture && texture !== material.map) throw new Error('Textured infected crowd assets must use one shared atlas');
+      texture = material.map;
+    }
     doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
-    const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
+    const clothing = material.name === 'pal_infectedShirt' || texturedHumanoid && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
     const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
@@ -199,7 +208,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       colors[i * 3 + 2] = base[2] * (material.vertexColors && sourceColor ? sourceColor.getZ(i) : 1);
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
-      emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
+      const eyeRegion = texturedHumanoid && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;
+      // Authored eye discs use the existing flag/UV channels; they must survive
+      // minification independently of the colour atlas's tiny red texels.
+      emissive[i] = node.userData.crowdEye === true ? 2 : Number(material.name.startsWith('emi_') || pupil || eyeRegion); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) || texturedHumanoid && (owner === rig.head && geometry.getAttribute('position').getY(i) < .4 || /^hand[LR]$/.test(owner?.name ?? '')) ? -1 : Number(clothing);
     }
     if (skinnedFigure) {
       const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
@@ -214,12 +226,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
       if (skinMode !== 'rigid') geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
       geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
     }
-    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
-    if (textured) {
+    if (preserveUV) {
       const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
       for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; if (!material.map) shirt[i] = -10; }
       geometry.setAttribute('uv', new BufferAttribute(uv, 2));
-    } else geometry.deleteAttribute('uv');
+    }
+    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));
+    if (preserveUV) geometry.setAttribute('_vein', new BufferAttribute(new Float32Array(count).fill(cap ? 1024 + capIndex : 0), 1));
+    if (!preserveUV) geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });
   yield;
@@ -230,7 +244,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   if (!preserveIndices) {
     // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
     // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
-    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index', ...(textured ? ['uv'] : [])];
+    const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index', ...(preserveUV ? ['uv'] : [])];
     const attributes = names.map((name) => geometry.getAttribute(name));
     const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
     const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
@@ -245,6 +259,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   if (binds) clip.binds = binds;
+  if (preserveUV) geometry.userData.crowdAtlas = true;
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
   if (key) {
     bakedCrowds.set(key, { clip, transforms });

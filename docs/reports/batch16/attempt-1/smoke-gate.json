@@ -1,0 +1,16 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "test:smoke",
+    "--",
+    "--workers=1"
+  ],
+  "environment": {
+    "E2E_PORT": "4601",
+    "SCENE_PORT": "4602",
+    "E2E_UNITS": "1"
+  },
+  "exitCode": 0,
+  "seconds": 327.45
+}

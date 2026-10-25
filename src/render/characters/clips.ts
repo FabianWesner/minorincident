@@ -102,8 +102,14 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
           if ((skinLocomotion || skinPlanted) && nodeName === 'hip') q.slerp(new Quaternion(), skinLocomotion ? .82 : .7);
           // Forward-reaching infected need their arms beside the body and bent
           // legs lowered as the back pose settles, rather than pointing upward.
-          if (/^(die|death-back)$/.test(name) && (root.getObjectByName('foreArmL')?.position.x ?? 0) > .08 && /^(arm|foreArm|leg)[LR]$/.test(nodeName)) {
-            const resting = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (nodeName.startsWith('foreArm') ? 0 : nodeName.startsWith('leg') ? -30 : -100) * Math.PI / 180);
+          if (/^(die|death-back)$/.test(name) && Math.max(root.getObjectByName('foreArmL')?.position.x ?? 0, root.getObjectByName('foreArmR')?.position.x ?? 0) > .08 && /^(arm|foreArm|leg)[LR]$/.test(nodeName)) {
+            const side = nodeName.endsWith('R') ? 'R' : 'L';
+            const shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+            // A reconstructed forward shoe needs its asymmetric bind advance lowered
+            // beside the other leg when the existing back-death pose settles.
+            const advance = Math.max(0, node.position.x + (shin?.position.x ?? 0) + (foot?.position.x ?? 0));
+            const shoeFit = root.getObjectByName('root')?.userData.meshSoles === true && nodeName.startsWith('leg') ? Math.atan2(advance, Math.abs((shin?.position.y ?? 0) + (foot?.position.y ?? 0))) * 1.2 : 0;
+            const resting = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (nodeName.startsWith('foreArm') ? 0 : nodeName.startsWith('leg') ? -30 : -100) * Math.PI / 180 - shoeFit);
             q.slerp(resting, Math.max(0, Math.min(1, (times[i] / source.duration - .5) * 2)));
           }
           if (!additive) q.premultiply(node.quaternion);

@@ -6,6 +6,10 @@ import manifest from '../../../src/assets/manifest.json';
 import { placementColliders } from '../../../src/levels/districts/staticCollision';
 import type { Placement } from '../../../src/levels/districts/types';
 import { footprints } from '../../../src/levels/placementClearance';
+import { Physics } from '../../../src/physics/Physics';
+import { KinematicController } from '../../../src/sim/locomotion/KinematicController';
+import { emptyInput } from '../../../src/input/InputFrame';
+import { survivor } from '../../../src/data/survivor';
 
 test('annex rubble opts into compound geometry without changing existing district rubble', () => {
   const aabb: Placement['visualAabb'] = { min: [-1, 0, -1], max: [1, 1, 1] };
@@ -44,4 +48,22 @@ test('@E19 M1-08 low flower strips never retain a blocking district fallback', (
   const aabb = { min: [-1, 0, -.4], max: [1, .39, .4] } as Placement['visualAabb'];
   const placement: Placement = { id: 'flowers', assetId: 'prop.flower', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, lightGroup: '', allowRoad: false, visualAabb: aabb };
   expect(placementColliders([placement], [{ id: placement.id, aabb, minTier: 0, maxTier: 5 }])).toEqual([]);
+});
+
+test.each([0, Math.PI])('@E32 dispersal tank barrel rejects a walking courier (yaw %s)', async yaw => {
+  const physics = new Physics(); await physics.init();
+  const sign = yaw === 0 ? -1 : 1;
+  const player = { x: 0, y: survivor.height / 2 + .005, z: sign * 6.5, yaw: 0 };
+  physics.load({ name: 'dispersal-tank-entry', survivor: true, ground: { width: 40, depth: 40 }, player });
+  try {
+    const tank: Placement = { id: 'tank', assetId: 'kit.dispersal-tank-bullet', position: [0, 0, 0], yaw, scale: [1, 1, 1], minTier: 0, maxTier: 5, lightGroup: '', allowRoad: false, visualAabb: { min: [-6, 0, -6], max: [6, 7, 6] } };
+    for (const collider of placementColliders([tank], [])) physics.addStatic(collider.aabb, [0, 0]);
+    const controller = new KinematicController(physics), input = emptyInput(); input.move.z = -sign;
+    for (let i = 0; i < 120; i++) {
+      controller.move(input, player, true); physics.update(); Object.assign(player, physics.playerBody!.translation());
+      // The visible twin barrels extend to z +/-5.3. The courier must stay outside,
+      // rather than stepping onto their low footing and getting hidden inside a vessel.
+      expect(Math.abs(player.z)).toBeGreaterThanOrEqual(5.3 + survivor.radius - .03);
+    }
+  } finally { physics.dispose(); }
 });

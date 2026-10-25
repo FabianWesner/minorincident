@@ -1,0 +1,41 @@
+{
+  "baselineRevision": "a2fee5bb0761f91e6072df56ad4c9091747dfdce",
+  "revision": "287ae99e5732925c46a437cdce91bc9210408289",
+  "baselineSource": "detached sibling Git worktree (no archive or /tmp repository copy)",
+  "baselineRoot": "/Users/wesner/Workspace/minorincident/.claude/worktrees/batch16-main-baseline",
+  "baselineBuildCommand": "npm run build",
+  "baselineBundles": {
+    "dist/build/index-CXFnNJ3k.js": "6d599e34a3153536170a53b69301c740a6ba251cdd2e597377c61db032b1e69c",
+    "dist/build/index-Cg589KS3.js": "a9faec595b8c724f1de2698a2c4ee2384c70c6a504a5fb72a4c2be3f3166c4f9",
+    "dist/build/index-W5FvhvLU.js": "2b8d2e40ab74b297c707323f50f0455c8d80bf60e9965424b634b7180ba46706"
+  },
+  "candidateBundles": {
+    "dist/build/index-Bmd1-3DJ.js": "5d4266e5bf2e504efb41aa6cd53815a27b419b47fccf1dcad55b9c70aabc36c4",
+    "dist/build/index-Cj9d-FiU.js": "05191ba2681eef5618a282196796e32b84f9450e5b56e3444420d329b8f88b2c",
+    "dist/build/index-DZMSdKcb.js": "49e376e92b168ed9d4e80c12c38278459779da23b702d8b247aeff5e1bc7aebd"
+  },
+  "command": [
+    "sh",
+    "tools/perf/quiet-run.sh",
+    "node",
+    "--import",
+    "tsx",
+    "tools/scenelab/tex-infected-performance.ts"
+  ],
+  "environment": {
+    "E2E_SLOTS": "1",
+    "E2E_UNITS": "1",
+    "SCENE_PORT": "4602",
+    "SCENE_SERVER": "preview",
+    "MI_PERF_SHARED_BROWSER": "1",
+    "TEX_MAIN_ROOT": "/Users/wesner/Workspace/minorincident/.claude/worktrees/batch16-main-baseline",
+    "TEX_REPORT_DIR": "docs/reports/batch16",
+    "PERF_CONDITIONS_LOG": "/Users/wesner/Workspace/minorincident/.claude/worktrees/batch16/docs/reports/batch16/perf-conditions.jsonl"
+  },
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "cpuCount": 10,
+  "nodeVersion": "v22.20.0",
+  "nodeExecutable": "/private/tmp/batch16-node22/node-v22.20.0-darwin-arm64/bin/node",
+  "chromeVersion": "155.0.8059.86"
+}
