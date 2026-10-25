@@ -1,6 +1,7 @@
 import { metroIngressColliders } from '../L5/metro';
 import { highwayColliders } from '../L3/highway';
 import { staticCollision } from '../../assets/staticCollision';
+import physicsAssets from '../../data/physicsAssets';
 import type { Placement, StaticCollider, Aabb } from './types';
 
 /** Same compound GLB boxes serve physics, navigation and the debug overlay.
@@ -36,7 +37,11 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
     const shape = platform ? dispersalPlatform : sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
-    const boxes = shape.boxes.concat(extraSupports[p.assetId] ?? []);
+    // The body-height bake retains the bullet tank's saddles but misses its
+    // raised vessels. Keep the GLB's authored solid barrel hulls as well, so
+    // dodging cannot put the courier inside the tank during the Mega fight.
+    const tankHulls = p.assetId === 'kit.dispersal-tank-bullet' && !p.collisionId ? physicsAssets[p.assetId].boxes as Aabb[] : [];
+    const boxes = shape.boxes.concat(extraSupports[p.assetId] ?? [], tankHulls);
     return boxes.flatMap((box, index) => {
       if (p.assetId === 'kit.army-checkpoint' && p.boomOpen && box.min[1] > 1 && box.min[0] < -5.9 && box.max[0] > -6.1 && box.min[2] < -1 && box.max[2] > 1) return [];
       const aabb: Aabb = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
