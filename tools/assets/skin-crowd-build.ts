@@ -31,7 +31,17 @@ for (const lod of [0, 1, 2]) {
   if (id.startsWith('npc.')) args.push('--healthy');
   if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (metadata?.class === 'quadruped') args.push('--rig-kind', 'quadruped');
-  execFileSync(process.execPath, ['--import', 'tsx', ...args], { stdio: 'pipe' });
+  const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
+  const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  let bodyBudget: number | undefined;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
+    const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
+    if (total <= triangleLimit) break;
+    const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
+    bodyBudget = info.triangles - (total - triangleLimit) - 8;
+    if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
+  }
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
@@ -54,7 +64,7 @@ for (const lod of [0, 1, 2]) {
     }
   }
   if (lod === 0) {
-    const document = await io.read(tiers[0].path), bounds = getBounds(document.getRoot().listScenes()[0]);
+    const document = await io.read(tiers[0].path), bounds = getBounds(document.getRoot().listNodes().find(node => node.getName() === 'skin_body')!);
     def.dimensions = { x: bounds.max[0] - bounds.min[0], y: bounds.max[1] - bounds.min[1], z: bounds.max[2] - bounds.min[2], tolerance: .15 };
     await io.write(join(assets, 'model.skin.glb'), await io.read(raw));
   }

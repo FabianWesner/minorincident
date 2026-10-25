@@ -44,7 +44,7 @@ export function crowdSkinJoint(texture: DataTexture | TextureNode, part: Node<'f
 export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant: Node<'float'>, frame: Node<'float'>, outgoing: Node<'float'>, weight: Node<'float'>, bindRow: number) {
   return Fn(() => {
     const skin = attribute('_skin', 'vec4'), packed = skin.x;
-    const w1 = skin.y, w2 = skin.z, w3 = skin.w, w0 = float(1).sub(w1).sub(w2).sub(w3);
+    const w1 = skin.y, w2 = skin.z, w3 = skin.w.fract(), w0 = float(1).sub(w1).sub(w2).sub(w3);
     const matrix = crowdSkinJoint(texture, dominant, frame, outgoing, weight, bindRow).mul(w0).toVar();
     If(w1.greaterThan(0), () => {
       matrix.assign(matrix.add(crowdSkinJoint(texture, packed.mod(32), frame, outgoing, weight, bindRow).mul(w1)));
@@ -61,7 +61,7 @@ export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant:
 export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts: BufferAttribute | import('three').InterleavedBufferAttribute, skin: BufferAttribute | import('three').InterleavedBufferAttribute, i: number, out: Float32Array): Float32Array {
   const binds = clip.binds!, matrices = clip.matrices, packed = skin.getX(i);
   const joints = [parts.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
-  const w = [0, skin.getY(i), skin.getZ(i), skin.getW(i)]; w[0] = 1 - w[1] - w[2] - w[3];
+  const w = [0, skin.getY(i), skin.getZ(i), skin.getW(i) % 1]; w[0] = 1 - w[1] - w[2] - w[3];
   out.fill(0);
   for (let k = 0; k < 4; k++) {
     if (w[k] <= 0) continue;

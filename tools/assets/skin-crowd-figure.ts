@@ -1,5 +1,5 @@
 /**
- * skinned-crowd prototype: turn a crowd figure into ONE welded skinned body on the crowd skeleton.
+ * Production crowd conversion: turn a crowd figure into ONE welded skinned body on the crowd skeleton.
  *
  *   npx tsx tools/assets/skin-crowd-figure.ts --rig <rigid crowd glb> --out <skinned glb> --texture <image>
  *       [--body <welded static glb> --body-scale s --body-rot-y deg]  [--report <json>]
@@ -16,7 +16,7 @@
  *    w_other = 0.5 * (1 - smoothstep(0, R, d)), d = edge distance to the seam on either side.
  * 4. Smooth normals come from the welded surface (no lighting seam at UV islands).
  * Output: the same node hierarchy, the rigid meshes removed, one SkinnedMesh `skin_body` (+ `skin_eyes`
- * with an `emi_` material for the infected eye discs), joints = the 16 deforming crowd joints.
+ * with a crowdEye material marker). Humanoids use 16 deforming joints; quadrupeds retain the 28-name contract below.
  */
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -24,9 +24,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Document, NodeIO, type Node as GNode } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { MeshoptDecoder } from 'meshoptimizer';
+import { MeshoptDecoder, MeshoptSimplifier } from 'meshoptimizer';
 import { PNG } from 'pngjs';
-import { Matrix4, Ray, Vector3 } from 'three';
+import { Matrix4, Ray, Triangle, Vector3 } from 'three';
 
 class MinHeap {
   private keys: number[] = []; private values: number[] = [];
@@ -51,7 +51,7 @@ const QUADRUPED = [...HUMANOID, 'body', 'neck', 'jaw', 'tail', 'legFL', 'legFR',
 /** Geodesic blend half-width per child joint (metres at 1.8 m figure height). */
 const BAND: Record<string, number> = { hip: .06, torso: .07, head: .035, armL: .06, armR: .06, foreArmL: .05, foreArmR: .05, handL: .03, handR: .03, legL: .07, legR: .07, shinL: .055, shinR: .055, footL: .035, footR: .035, body: .08, neck: .06, jaw: .025, tail: .035, legFL: .06, legFR: .06, legBL: .06, legBR: .06, pawFL: .035, pawFR: .035, pawBL: .035, pawBR: .035 };
 
-await MeshoptDecoder.ready;
+await Promise.all([MeshoptDecoder.ready, MeshoptSimplifier.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
 const rig = await io.read(rigPath);
 const contractPath = arg('--contract');
@@ -155,6 +155,13 @@ if (bodyPath) {
 }
 if (recovered) { fit.body = 'automatic 512-cell voxel union of closed source partitions'; rmSync(recovered, { recursive: true, force: true }); }
 
+const bodyBudget = Number(arg('--body-budget') ?? Infinity);
+if (body.tris.length / 3 > bodyBudget) {
+  let [indices] = MeshoptSimplifier.simplify(new Uint32Array(body.tris), new Float32Array(body.pos), 3, Math.floor(bodyBudget) * 3, .02, ['Permissive']);
+  if (indices.length / 3 > bodyBudget) [indices] = MeshoptSimplifier.simplifySloppy(new Uint32Array(body.tris), new Float32Array(body.pos), 3, null, Math.floor(bodyBudget) * 3, .05);
+  if (indices.length / 3 > bodyBudget) throw Error(`Cannot retain silhouette within body budget ${bodyBudget}`);
+  body.tris = [...indices];
+}
 const used = [...new Set(body.tris)], remap = new Map(used.map((v, i) => [v, i]));
 body = { pos: used.flatMap(i => body.pos.slice(i * 3, i * 3 + 3)), uv: used.flatMap(i => body.uv.slice(i * 2, i * 2 + 2)), owner: used.map(i => body.owner[i]), tris: body.tris.map(i => remap.get(i)!) };
 
@@ -328,6 +335,92 @@ prim.setAttribute('WEIGHTS_0', out.createAccessor().setType('VEC4').setArray(W))
 prim.setIndices(out.createAccessor().setType('SCALAR').setArray(n > 65535 ? new Uint32Array(body.tris) : new Uint16Array(body.tris)));
 const bodyMesh = out.createMesh('skin_body').addPrimitive(prim);
 scene.addChild(out.createNode('skin_body').setMesh(bodyMesh).setSkin(skin));
+// The rigid export's old discs can lie inside a weighted neck/shoulder.
+// Close the actual boundary left when whole triangles of a limb are removed.
+// Rim vertices retain the body's weights, so their posed seam stays welded.
+const capFits: { part: string; rim: number; distance: number }[] = [];
+if (!quadruped) {
+  const cuts: Record<string, string[]> = { head: ['head'], armL: ['armL', 'foreArmL', 'handL'], armR: ['armR', 'foreArmR', 'handR'], foreArmL: ['foreArmL', 'handL'], foreArmR: ['foreArmR', 'handR'], legL: ['legL', 'shinL', 'footL'], legR: ['legR', 'shinR', 'footR'] };
+  const representative = new Map<number, number>(); weldOf.forEach((w, i) => representative.set(w, i));
+  const owners = Array.from({ length: n }, (_, i) => { let k = 0; for (let j = 1; j < 4; j++) if (W[i * 4 + j] > W[i * 4 + k]) k = j; return JOINTS[J[i * 4 + k]]; });
+  const at = (w: number) => new Vector3().fromArray(positions, representative.get(w)! * 3);
+  for (const [part, removed] of Object.entries(cuts)) {
+    const sourceCap = nodes.find(node => node.getName() === `stump_${part}`);
+    let target = sourceCap && copy.get(sourceCap);
+    if (!target) {
+      target = out.createNode(`stump_${part}`).setExtras({ hidden: true });
+      const parent = parentJoint.get(part);
+      (parent ? outJoints[JOINTS.indexOf(parent)] : scene).addChild(target);
+    }
+    const edges = new Map<string, { a: number; b: number; count: number }>();
+    for (let t = 0; t < body.tris.length; t += 3) {
+      const triangle = body.tris.slice(t, t + 3); if (triangle.some(i => removed.includes(owners[i]))) continue;
+      for (let k = 0; k < 3; k++) {
+        const a = weldOf[triangle[k]], b = weldOf[triangle[(k + 1) % 3]], key = a < b ? `${a}/${b}` : `${b}/${a}`;
+        const edge = edges.get(key); if (edge) edge.count++; else edges.set(key, { a, b, count: 1 });
+      }
+    }
+    const outgoing = new Map<number, { b: number; key: string }[]>();
+    for (const [key, edge] of edges) if (edge.count === 1) outgoing.set(edge.a, [...outgoing.get(edge.a) ?? [], { b: edge.b, key }]);
+    const visited = new Set<string>(), loops: number[][] = [];
+    for (const [start, choices] of outgoing) for (const first of choices) {
+      if (visited.has(first.key)) continue;
+      const loop = [start]; let edge = first, current = start;
+      while (!visited.has(edge.key)) {
+        visited.add(edge.key); current = edge.b; if (current === start) break;
+        loop.push(current); const next = outgoing.get(current)?.find(candidate => !visited.has(candidate.key)); if (!next) break; edge = next;
+      }
+      if (current === start && loop.length >= 3) loops.push(loop);
+    }
+    const pivot = new Vector3().setFromMatrixPosition(world(jointNode.get(part)!));
+    const missing = new Vector3(); let count = 0;
+    for (let i = 0; i < n; i++) if (removed.includes(owners[i])) { missing.add(new Vector3().fromArray(positions, i * 3)); count++; }
+    if (count) missing.divideScalar(count);
+    else {
+      const parent = parentJoint.get(part), origin = parent ? new Vector3().setFromMatrixPosition(world(jointNode.get(parent)!)) : pivot.clone().add(new Vector3(0, .1, 0));
+      missing.copy(pivot).sub(origin).normalize().multiplyScalar(.1).add(pivot);
+    }
+    const centreOf = (loop: number[]) => loop.reduce((sum, w) => sum.add(at(w)), new Vector3()).divideScalar(loop.length);
+    const normalOf = (loop: number[]) => loop.reduce((sum, w, i) => sum.add(at(w).cross(at(loop[(i + 1) % loop.length]))), new Vector3());
+    const alignment = (loop: number[]) => Math.abs(normalOf(loop).normalize().dot(missing.clone().sub(centreOf(loop)).normalize()));
+    loops.sort((a, b) => centreOf(a).distanceToSquared(pivot) / Math.max(.01, alignment(a) ** 2) - centreOf(b).distanceToSquared(pivot) / Math.max(.01, alignment(b) ** 2));
+    let loop = loops[0], centre = loop && centreOf(loop), surface = false;
+    if (!loop || centre!.distanceTo(pivot) > .18 || alignment(loop) < .4) {
+      // A legacy rigid partition can already close the retained shoulder.
+      // Its nearest outward surface becomes the blood cap, offset by 0.5 mm.
+      let best = Infinity;
+      const direction = missing.clone().sub(pivot).normalize(), closest = new Vector3(), triangle = new Triangle();
+      for (let t = 0; t < body.tris.length; t += 3) {
+        const ids = body.tris.slice(t, t + 3); if (ids.some(i => removed.includes(owners[i]))) continue;
+        triangle.set(...ids.map(i => new Vector3().fromArray(positions, i * 3)) as [Vector3, Vector3, Vector3]);
+        if (triangle.getNormal(new Vector3()).dot(direction) < .4) continue;
+        const distance = triangle.closestPointToPoint(pivot, closest).distanceToSquared(pivot);
+        if (distance < best) { best = distance; loop = ids.map(i => weldOf[i]); centre = closest.clone(); surface = true; }
+      }
+    }
+    if (!loop || !centre) throw Error(`No retained skin surface for stump_${part}`);
+    const distance = centre.distanceTo(pivot); if (distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
+    const direction = missing.clone().sub(centre).normalize();
+    if (normalOf(loop).dot(direction) < 0) loop.reverse();
+    const parentName = parentJoint.get(part), parentIndex = parentName ? JOINTS.indexOf(parentName) : 0;
+    const capPositions: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
+    centre.addScaledVector(direction, .001).toArray(capPositions);
+    capJoints.push(Math.max(0, parentIndex), 0, 0, 0); capWeights.push(1, 0, 0, 0);
+    for (const w of loop) {
+      const i = representative.get(w)!; at(w).addScaledVector(direction, surface ? .0005 : 0).toArray(capPositions, capPositions.length);
+      capJoints.push(...J.subarray(i * 4, i * 4 + 4)); capWeights.push(...W.subarray(i * 4, i * 4 + 4));
+    }
+    for (let i = 0; i < loop.length; i++) triangles.push(0, i + 1, (i + 1) % loop.length + 1);
+    const attribute = (values: number[], type: 'VEC3' | 'VEC4') => out.createAccessor().setType(type).setArray(new Float32Array(values));
+    const cap = out.createPrimitive().setMaterial(capMaterial).setAttribute('POSITION', attribute(capPositions, 'VEC3'))
+      .setAttribute('NORMAL', attribute(capPositions.map((_, i) => i % 3 === 1 ? 1 : 0), 'VEC3'))
+      .setAttribute('JOINTS_0', out.createAccessor().setType('VEC4').setArray(new Uint16Array(capJoints))).setAttribute('WEIGHTS_0', attribute(capWeights, 'VEC4'))
+      .setIndices(out.createAccessor().setType('SCALAR').setArray(new Uint32Array(triangles)));
+    for (const child of target.listChildren()) child.dispose();
+    target.setMesh(out.createMesh(`stump_${part}`).addPrimitive(cap)).setSkin(skin);
+    capFits.push({ part, rim: loop.length, distance });
+  }
+}
 if (!eyes.length) {
   // Healthy-source bodies need dormant eye discs too: CivilianMaterial reveals them only as infection takes hold.
   const head = JOINTS.indexOf('head'), inverse = world(jointNode.get('head')!).invert(), rest = inverse.clone().invert();
@@ -415,7 +508,7 @@ for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') nod
 if (bodyPath && (openEdges > 0 || components !== 1)) throw new Error(`Continuous source must remain closed and connected: ${components} components, ${openEdges} open edges`);
 const bytes = await io.writeBinary(out);
 writeFileSync(outPath, bytes);
-const report = { rig: rigPath, out: outPath, bytes: bytes.length, ...fit, vertices: n, weldedVertices: welded, triangles: body.tris.length / 3, components, openEdges, unrelatedSeams, maxInfluences, zeroNormals, jointNames: JOINTS, rigKind: quadruped ? 'quadruped' : 'humanoid', removedClosureTriangles, removedDegenerateTriangles, spectacleTop, joints: JOINTS.length, eyes: eyes.length, seams };
+const report = { rig: rigPath, out: outPath, bytes: bytes.length, ...fit, vertices: n, weldedVertices: welded, triangles: body.tris.length / 3, components, openEdges, unrelatedSeams, maxInfluences, zeroNormals, jointNames: JOINTS, rigKind: quadruped ? 'quadruped' : 'humanoid', capFits, removedClosureTriangles, removedDegenerateTriangles, spectacleTop, joints: JOINTS.length, eyes: eyes.length, seams };
 if (reportPath) writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify(report));
 

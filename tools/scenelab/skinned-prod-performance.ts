@@ -1,6 +1,7 @@
 /** Identical 200-AI, six-model scene on main and this lane. ABBA, native headless Metal, one browser per reservation. */
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
+import { get } from 'node:http';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 import type { InstancedMesh } from 'three';
@@ -17,16 +18,18 @@ const spec: SceneSpec = { name: 'skinned-prod-200', size: 120, ground: 'asphalt'
     ...Array.from({ length: 200 }, (_, i) => ({ id: `ai-${i}`, kind: 'infected' as const,
       archetype: i % 6 === 4 ? 'infected.dog' : i % 6 === 5 ? 'infected.zebra' : i % 6 === 1 ? 'infected.nurse' : 'infected.sprinter',
       at: [i % 20 * .8 - 8, Math.floor(i / 20) * .8 - 12] as [number, number], state: 'chase' as const, look: { model: models[i % 6] } }))],
-  camera: { mode: 'pose', position: [24, 28, 18], target: [0, .5, -5] } };
+  camera: { mode: 'pose', position: [40, 45, 32], target: [2, .5, 0] } };
 process.env.SCENE_SERVER = 'preview';
 try {
-  for (const backend of (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[]) for (const variant of ['main', 'skin', 'skin', 'main']) {
+  for (const backend of (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[]) for (const variant of (process.env.VARIANTS ?? 'main,skin,skin,main').split(',')) {
     process.chdir(variant === 'main' ? baseline : root); process.env.SCENE_DIST = 'dist';
     const session = new SceneSession({ backend, tier: 'high', nativeFrameTiming: true, query: { crowdProbe: 'drawn' } });
     try {
       await session.open(); await session.load(spec);
       await session.page.evaluate(() => { window.__SS__!.settings.set({ quality: 'low' }); window.__SS__!.debug.figureJoints(false); window.__SS__!.cheats.god(true); });
       await session.step(120); await session.ready();
+      const profiler = process.env.PROFILE ? await session.page.context().newCDPSession(session.page) : undefined;
+      if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.start'); }
       let overlap = false;
       const monitor = setInterval(() => {
         const processes = execFileSync('ps', ['-axo', 'command='], { encoding: 'utf8' }).split('\n');
@@ -37,8 +40,9 @@ try {
       try {
         result = await session.page.evaluate(async () => {
           const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
-          const crowd = (game.view as unknown as { crowd: { batches: Map<string, { count: number; asset: string; mesh: InstancedMesh }> } }).crowd;
+          const crowd = (game.view as unknown as { crowd: { batches: Map<string, { count: number; asset: string; mesh: InstancedMesh; probe: { figures: { id: number; drawn: boolean }[] } }> } }).crowd;
           const frames: number[] = [], assets = new Set<string>(), skins = new Set<string>();
+          let missing: unknown[] = [];
           let previous = 0, minBodies = Infinity, maxDraws = 0;
           const started = performance.now(); api.resume();
           for (let i = 0; i < 720 || performance.now() - started < 12000; i++) {
@@ -49,23 +53,36 @@ try {
               for (const batch of crowd.batches.values()) if (batch.count) {
                 bodies += batch.count; assets.add(batch.asset); if (batch.mesh.geometry.hasAttribute('_skin')) skins.add(batch.asset);
               }
+              if (bodies < minBodies) {
+                const drawn = new Set([...crowd.batches.values()].flatMap(b => b.probe.figures.filter(f => f.drawn).map(f => f.id)));
+                missing = game.world.infected!.active.filter(e => !drawn.has(e.id)).map(e => ({ id: e.id, archetype: e.archetype, at: e.transform, hidden: e.hidden, corpse: e.corpse, civilian: e.civilian?.state, state: e.infected?.state }));
+              }
               minBodies = Math.min(minBodies, bodies); maxDraws = Math.max(maxDraws, api.getState().render.crowd?.meshDrawCalls ?? 0);
             }
           }
           api.pause(); frames.sort((a, b) => a - b);
           const perf = api.perf();
           return { backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
-            assets: [...assets].sort(), skins: [...skins].sort(), samples: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1],
-            p50: frames[Math.ceil(frames.length * .5) - 1], triangles: perf.triangles, elapsedMs: performance.now() - started };
+            missing, assets: [...assets].sort(), skins: [...skins].sort(), samples: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1],
+            p50: frames[Math.ceil(frames.length * .5) - 1], triangles: perf.triangles, updateCpuMs: perf.updateCpuMs, renderCpuMs: perf.renderCpuMs, simMs: perf.simMs, elapsedMs: performance.now() - started };
         });
       } finally { clearInterval(monitor); }
+      if (profiler) writeJson(resolve(out, `cpu-profile-${variant}-${backend}.json`), await profiler.send('Profiler.stop'));
       if (overlap) throw Error('Concurrent browser detected; timing is invalid');
       receipts.push({ variant, ...result, errors: [...session.errors] }); writeJson(resolve(out, 'performance.json'), receipts);
       console.log(JSON.stringify({ variant, ...result, errors: session.errors.length }));
       if (result.quality !== 'low' || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || result.count !== 200 || result.minBodies !== 200 || result.maxDraws > 30 || variant === 'skin' && result.skins.length < 6 || session.errors.length) throw Error('Invalid 200-AI receipt');
     } finally { await session.close(); stopServer(); }
-    for (let i = 0; i < 30; i++) { try { await fetch(`http://127.0.0.1:${process.env.SCENE_PORT ?? 4632}`); await new Promise(r => setTimeout(r, 100)); } catch { break; } }
+    for (let i = 0; i < 30; i++) {
+      const alive = await new Promise<boolean>(resolve => {
+        const request = get(`http://127.0.0.1:${process.env.SCENE_PORT ?? 4632}`, { agent: false }, response => { response.resume(); resolve(true); });
+        request.on('error', () => resolve(false)); request.setTimeout(1000, () => { request.destroy(); resolve(false); });
+      });
+      if (!alive) break; await new Promise(r => setTimeout(r, 100));
+    }
   }
+  if (process.env.PROFILE) { console.log('Diagnostic profile complete; this is not an acceptance run.'); process.exitCode = 0; }
+  else {
   const summaries = ['webgl', 'webgpu'].map(backend => {
     const rows = receipts.filter(r => r.backend === backend);
     const mean = (variant: string) => { const values = rows.filter(r => r.variant === variant).map(r => r.p95 as number); return values.reduce((a, b) => a + b, 0) / values.length; };
@@ -74,4 +91,5 @@ try {
   });
   writeJson(resolve(out, 'performance-summary.json'), summaries);
   if (summaries.some(row => !row.passed)) throw Error('Low p95 exceeded main +1 ms');
+  }
 } finally { stopServer(); process.chdir(root); writeJson(resolve(out, 'performance.json'), receipts); }

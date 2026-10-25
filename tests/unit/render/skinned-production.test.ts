@@ -1,6 +1,6 @@
 import { readFileSync, statSync } from 'node:fs';
 import { expect, test } from 'vitest';
-import { Box3, Matrix4, Mesh, Texture, Vector3 } from 'three';
+import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4, Mesh, SkinnedMesh, Texture, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshLambertNodeMaterial } from 'three/webgpu';
@@ -11,6 +11,7 @@ import { packCrowdParts } from '../../../src/assets/crowdParts';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { PickBodies } from '../../../src/render/characters/PickBodies';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
+import { sampleClip } from '../../../src/render/characters/clips';
 
 async function baked(id: string) {
   const def = manifest.find(d => d.id === id)!;
@@ -20,7 +21,7 @@ async function baked(id: string) {
   packCrowdParts(result.geometry); return result;
 }
 
-for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
+for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
   const { geometry, clip } = await baked(id), positions = geometry.getAttribute('position'), tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
   expect(clip.frames).toBe(civilianClips.length * framesPerClip); expect(clip.binds).toBeDefined(); expect(skin.count).toBe(positions.count);
   expect(clip.matrices.every(Number.isFinite)).toBe(true);
@@ -31,7 +32,7 @@ for (const id of ['npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-wo
     let vertices = 0;
     for (let i = 0; i < positions.count; i++) {
       if (tags.getW(i) >= 1024 || tags.getZ(i) > 1.5) continue;
-      const packed = skin.getX(i), weights = [1 - skin.getY(i) - skin.getZ(i) - skin.getW(i), skin.getY(i), skin.getZ(i), skin.getW(i)];
+      const packed = skin.getX(i), weights = [1 - skin.getY(i) - skin.getZ(i) - (skin.getW(i) % 1), skin.getY(i), skin.getZ(i), (skin.getW(i) % 1)];
       const joints = [tags.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
       source.fromBufferAttribute(positions, i); sum.set(0, 0, 0);
       for (let j = 0; j < 4; j++) if (weights[j] > 0) {
@@ -61,7 +62,7 @@ test('severed skinned corpses retain only the requested cap and exclude every re
       if (parts.getW(i) >= 1024) { expect(parts.getW(i), part).toBe(1024 + cap); caps++; }
       else expect(hidden as readonly string[], part).not.toContain(clip.parts[parts.getX(i)]);
     }
-    expect(caps, part).toBeGreaterThan(0); expect(result.getIndex()!.count, part).toBeGreaterThan(100);
+    expect(caps, part).toBeGreaterThan(0); expect((result.getIndex()?.count ?? result.getAttribute('position').count), part).toBeGreaterThan(100);
     expect(Array.from(result.getAttribute('position').array).every(Number.isFinite)).toBe(true);
   }
   corpses.dispose(); material.dispose(); geometry.dispose();
@@ -73,5 +74,41 @@ test('three unseen cast builds publish validated compressed skins within every s
     expect(receipt.manualSteps).toEqual([]); expect(receipt.receipts).toHaveLength(3);
     expect(JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/validation.json`, 'utf8')).flatMap((r: { errors: string[] }) => r.errors)).toEqual([]);
     for (const row of receipt.receipts) for (const tier of row.tiers) expect(statSync(tier.path).size).toBeLessThanOrEqual([600000, 250000, 150000][row.lod]);
+  }
+});
+
+test('exact skin support retains flat parts and falls back to all vertices across a perspective pole', () => {
+  const points = [[-2, -.3, 0], [-1, -1, 0], [1, -2, 0], [2, -.4, 0], [2, 1, 0], [.3, 2, 0], [-1.5, 1, 0], [.2, -.1, 0]];
+  const geometry = new BufferGeometry().setAttribute('position', new Float32BufferAttribute(points.flat(), 3));
+  geometry.setAttribute('_parts', new Float32BufferAttribute(points.flatMap(() => [0, 0, 0, 0]), 4));
+  geometry.setAttribute('_skin', new Float32BufferAttribute(points.flatMap(() => [0, 0, 0, 0]), 4));
+  const clip = { parts: ['root'], frames: 1, duration: 1, matrices: new Float32Array(new Matrix4().elements), binds: new Float32Array(new Matrix4().elements) };
+  const palette = new CrowdPosePalette(clip, 1), picker = new PickBodies(), projection = new Matrix4(); projection.elements[7] = 1; projection.elements[15] = .13;
+  picker.begin(); picker.add(1, new Matrix4(), palette, 0, 0, 1, geometry);
+  const expected = new Box3(), position = geometry.getAttribute('position'), point = new Vector3();
+  for (let i = 0; i < position.count; i++) expected.expandByPoint(point.fromBufferAttribute(position, i).applyMatrix4(projection));
+  const actual = picker.bounds(1, new Box3(), projection)!;
+  expect(actual.min.distanceTo(expected.min)).toBeLessThan(1e-6); expect(actual.max.distanceTo(expected.max)).toBeLessThan(1e-6);
+  expect(picker.top(1, projection)).toBeCloseTo(expected.max.y, 6);
+  palette.texture.dispose(); geometry.dispose();
+});
+
+for (const id of ['inf.common-worker', 'inf.nurse', 'npc.civilian-man-b']) test(`${id}: wound rims follow the actual body skin through idle, running and death`, async () => {
+  const def = manifest.find(d => d.id === id)!;
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(def.sourceGlb!)), '');
+  const body = scene.getObjectByName('skin_body') as SkinnedMesh, point = new Vector3(), target = new Vector3();
+  for (const [clip, time] of [['idle', 0], ['run', .25], ['death-back', 1]] as const) {
+    sampleClip(scene, clip, time); scene.updateMatrixWorld(true); body.skeleton.update();
+    const positions = new Float32Array(body.geometry.getAttribute('position').count * 3);
+    for (let i = 0; i < positions.length / 3; i++) body.getVertexPosition(i, point).applyMatrix4(body.matrixWorld).toArray(positions, i * 3);
+    for (const part of ['head', 'armL', 'legL']) {
+      const cap = scene.getObjectByName(`stump_${part}`) as SkinnedMesh;
+      expect(cap.isSkinnedMesh, `${id} ${part}`).toBe(true); cap.skeleton.update();
+      for (let i = 1; i < cap.geometry.getAttribute('position').count; i++) {
+        cap.getVertexPosition(i, point).applyMatrix4(cap.matrixWorld); let distance = Infinity;
+        for (let j = 0; j < positions.length; j += 3) distance = Math.min(distance, point.distanceToSquared(target.fromArray(positions, j)));
+        expect(Math.sqrt(distance), `${id} ${clip} ${part} rim ${i}`).toBeLessThan(.0011);
+      }
+    }
   }
 });

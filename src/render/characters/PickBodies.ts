@@ -1,10 +1,11 @@
 import { Box3, Matrix4, Vector3, type BufferGeometry } from 'three';
+import { ConvexHull } from 'three/addons/math/ConvexHull.js';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 
 /** World points of a drawn body: feet midpoint, hips, head centre (metres). */
 export interface PickBody { feet: Vector3; hip: Vector3; head: Vector3 }
 
-interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array }
+interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array; fullVertices?: boolean; verticesReady?: boolean }
 
 /** The bodies the crowd renderers drew last frame, for click picking against what the player sees (not the sim
  * capsule): a lunging, hunched or lying infected is clicked where it is drawn. Recording copies one matrix per
@@ -13,13 +14,13 @@ interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; p
 export class PickBodies {
   private readonly entries = new Map<number, Entry>();
   private frame = 0;
+  private readonly skinSupports = new WeakMap<BufferGeometry, Uint32Array>();
   private readonly geometryBounds = new WeakMap<BufferGeometry, Box3[]>();
   private readonly localBounds = new Box3();
   private readonly topBounds = new Box3();
   private readonly part = new Matrix4();
   private readonly world = new Matrix4();
   private readonly point = new Vector3();
-  private readonly influence = new Vector3();
   private readonly inverseBind = new Matrix4();
   reset(): void { this.entries.clear(); this.frame++; }
   begin(): void { this.frame++; if (this.entries.size > 2048) this.entries.clear(); }
@@ -27,7 +28,7 @@ export class PickBodies {
     let entry = this.entries.get(id);
     if (!entry) { entry = { frame: 0, instance: new Matrix4(), palette, pose, outgoing, weight }; this.entries.set(id, entry); }
     entry.frame = this.frame; entry.instance.copy(instance); entry.palette = palette; entry.pose = pose; entry.outgoing = outgoing; entry.weight = weight; entry.geometry = geometry;
-    entry.boundsReady = false;
+    entry.boundsReady = false; entry.fullVertices = false; entry.verticesReady = false;
   }
   /** The drawn body of `id` in the last rendered frame, or null when it was not drawn. */
   body(id: number, out: PickBody): PickBody | null {
@@ -78,7 +79,7 @@ export class PickBodies {
   top(id: number, projection: Matrix4): number | null {
     const entry = this.entries.get(id);
     if (!entry || entry.frame !== this.frame || !entry.geometry) return null;
-    if (entry.palette.clip.binds && entry.geometry.hasAttribute('_skin')) return this.skinBounds(entry, this.topBounds, projection)?.max.y ?? null;
+    if (entry.palette.clip.binds && entry.geometry.hasAttribute('_skin')) return this.skinTop(entry, projection);
     if (!entry.boundsReady && !this.bounds(id, this.topBounds)) return null;
     const boxes = this.geometryBounds.get(entry.geometry)!;
     let top = -Infinity;
@@ -105,32 +106,117 @@ export class PickBodies {
     entry.palette.part(entry.pose, entry.outgoing, entry.weight, part, this.part);
     out.setFromMatrixPosition(this.world.multiplyMatrices(entry.instance, this.part));
   }
-  /** Exact posed skin vertices, cached for world bounds and projected health-bar height in the same frame. */
+  /** Single-joint vertices undergo one affine transform: only their convex hull
+   * can contribute an extreme. Blended seam vertices remain explicit. This
+   * preserves exact bounds while avoiding full body skinning for every bar. */
+  private skinSupport(geometry: BufferGeometry): Uint32Array {
+    const cached = this.skinSupports.get(geometry); if (cached) return cached;
+    const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
+    const groups = new Map<number, Vector3[]>(), indices = new Map<Vector3, number>(), selected = new Set<number>(), blended = new Set<string>();
+    for (let i = 0; i < positions.count; i++) {
+      if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+      if (skin.getY(i) || skin.getZ(i) || (skin.getW(i) % 1)) {
+        const key = [positions.getX(i), positions.getY(i), positions.getZ(i), parts.getX(i), skin.getX(i), skin.getY(i), skin.getZ(i), (skin.getW(i) % 1)].join('/');
+        if (!blended.has(key)) { blended.add(key); selected.add(i); }
+        continue;
+      }
+      const joint = parts.getX(i), points = groups.get(joint) ?? []; groups.set(joint, points);
+      const point = new Vector3().fromBufferAttribute(positions, i); points.push(point); indices.set(point, i);
+    }
+    for (const points of groups.values()) {
+      let hull: ConvexHull | undefined;
+      if (points.length >= 4) { try { hull = new ConvexHull().setFromPoints(points); } catch { /* Flat/degenerate parts retain all their vertices. */ } }
+      let volume = 0;
+      for (const face of hull?.faces ?? []) {
+        const a = face.edge.head().point, b = face.edge.next.head().point, c = face.edge.next.next.head().point;
+        volume += a.x * (b.y * c.z - b.z * c.y) + a.y * (b.z * c.x - b.x * c.z) + a.z * (b.x * c.y - b.y * c.x);
+      }
+      if (!hull?.faces.length || !Number.isFinite(volume) || Math.abs(volume) < 1e-12) { for (const point of points) selected.add(indices.get(point)!); continue; }
+      for (const face of hull.faces) { let edge = face.edge; do { selected.add(indices.get(edge.head().point)!); edge = edge.next; } while (edge !== face.edge); }
+    }
+    const result = new Uint32Array(selected); this.skinSupports.set(geometry, result); return result;
+  }
+  private skinTop(entry: Entry, projection: Matrix4): number | null {
+    if (!entry.verticesReady && !this.skinBounds(entry, this.topBounds)) return null;
+    const vertices = entry.vertices!, p = projection.elements;
+    let top = -Infinity, lowW = Infinity, highW = -Infinity;
+    for (const i of this.skinSupport(entry.geometry!)) {
+      const x = vertices[i * 3], y = vertices[i * 3 + 1], z = vertices[i * 3 + 2];
+      const w = p[3] * x + p[7] * y + p[11] * z + p[15];
+      lowW = Math.min(lowW, w); highW = Math.max(highW, w);
+      top = Math.max(top, (p[1] * x + p[5] * y + p[9] * z + p[13]) / w);
+    }
+    if (lowW <= 0 && highW >= 0) return this.skinBounds(entry, this.topBounds, projection)?.max.y ?? null;
+    return Number.isFinite(top) ? top : null;
+  }
   private skinBounds(entry: Entry, out: Box3, projection?: Matrix4): Box3 | null {
     const geometry = entry.geometry!, clip = entry.palette.clip, positions = geometry.getAttribute('position');
     const parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
+    const support = this.skinSupport(entry.geometry!);
     const vertices = entry.vertices?.length === positions.count * 3 ? entry.vertices : entry.vertices = new Float32Array(positions.count * 3);
+    const matrices = entry.worldParts ??= [];
     if (!entry.boundsReady) {
-      const matrices = entry.worldParts ??= [];
       for (let p = 0; p < clip.parts.length; p++) {
         const matrix = matrices[p] ??= new Matrix4();
         entry.palette.part(entry.pose, entry.outgoing, entry.weight, p, matrix);
         matrix.multiply(this.inverseBind.fromArray(clip.binds!, p * 16)).premultiply(entry.instance);
       }
-      for (let i = 0; i < positions.count; i++) {
-        const packed = skin.getX(i), w1 = skin.getY(i), w2 = skin.getZ(i), w3 = skin.getW(i);
-        this.point.set(0, 0, 0);
-        const apply = (part: number, weight: number) => { if (weight > 0) this.point.addScaledVector(this.influence.fromBufferAttribute(positions, i).applyMatrix4(matrices[part]), weight); };
-        apply(parts.getX(i), 1 - w1 - w2 - w3); apply(packed % 32, w1); apply(Math.floor(packed / 32) % 32, w2); apply(Math.floor(packed / 1024), w3);
-        this.point.toArray(vertices, i * 3);
+      entry.boundsReady = true; entry.fullVertices = false; entry.verticesReady = false;
+    }
+    // Affine skin matrices have W=1. Evaluate their weighted xyz directly:
+    // health bars ask this for every visible animal, so avoid a closure and
+    // four Vector3 perspective transforms per vertex on every frame.
+    const writeVertices = (selection?: Uint32Array) => {
+      for (let k = 0; k < (selection?.length ?? positions.count); k++) {
+        const i = selection ? selection[k] : k;
+        if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+        const packed = skin.getX(i), w1 = skin.getY(i), w2 = skin.getZ(i), w3 = (skin.getW(i) % 1);
+        const x = positions.getX(i), y = positions.getY(i), z = positions.getZ(i);
+        const m = matrices[parts.getX(i)].elements, w0 = 1 - w1 - w2 - w3;
+        let px = (m[0] * x + m[4] * y + m[8] * z + m[12]) * w0;
+        let py = (m[1] * x + m[5] * y + m[9] * z + m[13]) * w0;
+        let pz = (m[2] * x + m[6] * y + m[10] * z + m[14]) * w0;
+        if (w1 > 0) {
+          const n = matrices[packed % 32].elements;
+          px += (n[0] * x + n[4] * y + n[8] * z + n[12]) * w1;
+          py += (n[1] * x + n[5] * y + n[9] * z + n[13]) * w1;
+          pz += (n[2] * x + n[6] * y + n[10] * z + n[14]) * w1;
+        }
+        if (w2 > 0) {
+          const n = matrices[Math.floor(packed / 32) % 32].elements;
+          px += (n[0] * x + n[4] * y + n[8] * z + n[12]) * w2;
+          py += (n[1] * x + n[5] * y + n[9] * z + n[13]) * w2;
+          pz += (n[2] * x + n[6] * y + n[10] * z + n[14]) * w2;
+        }
+        if (w3 > 0) {
+          const n = matrices[Math.floor(packed / 1024)].elements;
+          px += (n[0] * x + n[4] * y + n[8] * z + n[12]) * w3;
+          py += (n[1] * x + n[5] * y + n[9] * z + n[13]) * w3;
+          pz += (n[2] * x + n[6] * y + n[10] * z + n[14]) * w3;
+        }
+        vertices[i * 3] = px; vertices[i * 3 + 1] = py; vertices[i * 3 + 2] = pz;
       }
-      entry.boundsReady = true;
+    };
+    if (!entry.verticesReady) { writeVertices(support); entry.verticesReady = true; }
+    // A perspective pole through the figure breaks convex projected extrema.
+    // Keep the exact full-vertex path for that rare camera/figure intersection.
+    let selected: Uint32Array | undefined = support;
+    if (projection) {
+      const p = projection.elements; let low = Infinity, high = -Infinity;
+      for (const i of support) { const w = p[3] * vertices[i * 3] + p[7] * vertices[i * 3 + 1] + p[11] * vertices[i * 3 + 2] + p[15]; low = Math.min(low, w); high = Math.max(high, w); }
+      if (low <= 0 && high >= 0) { if (!entry.fullVertices) writeVertices(); entry.fullVertices = true; selected = undefined; }
     }
     out.makeEmpty();
-    for (let i = 0; i < positions.count; i++) {
+    for (let k = 0; k < (selected?.length ?? positions.count); k++) {
+      const i = selected ? selected[k] : k;
       // Stump caps are hidden until a limb is removed, and never raise a health bar.
       if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
-      this.point.fromArray(vertices, i * 3); if (projection) this.point.applyMatrix4(projection); out.expandByPoint(this.point);
+      if (projection) { this.point.fromArray(vertices, i * 3).applyMatrix4(projection); out.expandByPoint(this.point); }
+      else {
+        const x = vertices[i * 3], y = vertices[i * 3 + 1], z = vertices[i * 3 + 2];
+        out.min.x = Math.min(out.min.x, x); out.min.y = Math.min(out.min.y, y); out.min.z = Math.min(out.min.z, z);
+        out.max.x = Math.max(out.max.x, x); out.max.y = Math.max(out.max.y, y); out.max.z = Math.max(out.max.z, z);
+      }
     }
     return out.isEmpty() ? null : out;
   }

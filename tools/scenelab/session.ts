@@ -3,6 +3,7 @@ import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, resolve } from 'node:path';
+import { get } from 'node:http';
 import { devices, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
@@ -20,7 +21,12 @@ export interface SessionOptions { /** Pixel 7 touch emulation for phone timing. 
 
 let server: ChildProcess | null = null;
 let serverStarting: Promise<void> | undefined;
-const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
+// A fresh request avoids retaining an Undici socket across owned Vite restarts
+// (Node 26 on macOS can throw setTypeOfService EINVAL on that retired socket).
+const up = () => new Promise<boolean>(resolve => {
+  const request = get(origin, { agent: false }, response => { response.resume(); resolve(response.statusCode === 200); });
+  request.on('error', () => resolve(false)); request.setTimeout(1000, () => { request.destroy(); resolve(false); });
+});
 /** Reuse a running Scene Lab server, else start Vite (dev: current sources; SCENE_SERVER=preview serves dist/). */
 async function ensureServer(log: (line: string) => void): Promise<void> {
   if (await up()) return;

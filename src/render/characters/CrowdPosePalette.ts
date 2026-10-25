@@ -6,7 +6,7 @@ import { Matrix4, Quaternion, Vector3 } from 'three';
 export class CrowdPosePalette {
   readonly texture;
   private readonly rows: Float32Array;
-  /** skinned-crowd prototype: atlas row holding every part's inverse bind (read by the vertex shader). */
+  /** atlas row holding every part's inverse bind (read by the vertex shader). */
   readonly bindRow: number;
   private readonly width: number;
   private readonly currentMatrix = new Matrix4();
@@ -20,13 +20,13 @@ export class CrowdPosePalette {
   private readonly states = new Map<number, { clip: string; frame: number; row: number; weight: number; started: number; seen: number }>();
   constructor(readonly clip: CrowdClip, private readonly capacity: number, readonly seconds = .2) {
     this.width = clip.parts.length * 16;
-    // skinned-crowd prototype: one extra row holds the inverse binds; the shader multiplies joint·bind⁻¹ per influence,
+    // one extra row holds the inverse binds; the shader multiplies joint·bind⁻¹ per influence,
     // so CPU rows and uploads stay exactly the rigid ones (a CPU premultiply cost +2.7 ms p95 on the 4x phone proxy).
     this.bindRow = clip.frames + capacity * 2;
     this.rows = new Float32Array((this.bindRow + (clip.binds ? 1 : 0)) * this.width);
     this.rows.set(clip.matrices);
     if (clip.binds) this.rows.set(clip.binds, this.bindRow * this.width);
-    // skinned-crowd prototype: the GPU copy holds joint·bind⁻¹; CPU rows keep the joint world matrices.
+    // The GPU copy keeps joint-world rows and the inverse binds in their separate final row.
     this.texture = clipTexture({ ...clip, frames: this.bindRow + (clip.binds ? 1 : 0), matrices: this.rows });
   }
   sample(id: number, clip: string, frame: number, time: number): [number, number] {
@@ -104,6 +104,7 @@ export class CrowdPosePalette {
   part(frame: number, outgoing: number, weight: number, part: number, out: Matrix4): Matrix4 {
     const e = out.elements, base = part * 16;
     const low = Math.floor(frame), alpha = frame - low, from = low * this.width + base, to = Math.ceil(frame) * this.width + base;
+    if (alpha === 0 && weight === 1) return out.fromArray(this.rows, from);
     for (let i = 0; i < 16; i++) e[i] = (this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha) * weight + this.rows[outgoing * this.width + base + i] * (1 - weight);
     return out;
   }

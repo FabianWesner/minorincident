@@ -173,11 +173,11 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // for geometry must match the sampled atlas on subsequent loads.
     const bind = transforms[meshIndex++];
     if (bind) relative.copy(bind);
-    else { if (skinnedFigure) relative.copy(node.matrixWorld); else relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
+    else { if ((node as SkinnedMesh).isSkinnedMesh) relative.copy(root.matrixWorld); else if (skinnedFigure) relative.copy(node.matrixWorld); else relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld); if (key) transforms.push(relative.clone()); }
     // CrowdView can retain authored indices through the bake. Expanding every
     // triangle first repeated transforms, attribute packing and welding work.
     // Civilian grip tessellation still requests the original triangle soup.
-    const geometry = node.geometry.index && !preserveIndices ? node.geometry.toNonIndexed() : node.geometry.clone();
+    const geometry = node.geometry.index && (!preserveIndices || skinnedFigure) ? node.geometry.toNonIndexed() : node.geometry.clone();
     if (preserveIndices && !geometry.index) {
       const indices = new Uint32Array(geometry.getAttribute('position').count);
       for (let i = 0; i < indices.length; i++) indices[i] = i;
@@ -235,6 +235,17 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         const region = geometry.getAttribute('_crowd_region');
         shirt[i] = cap || !material.map ? -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
         emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
+      }
+      // Integer bits in the fourth weight identify every limb touched by a
+      // triangle. Its fractional part remains the fourth skin weight. Shared
+      // vertices are compacted after this triangle-local mask is assigned.
+      if (!cap && texturedHumanoid) {
+        const groups = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']];
+        for (let t = 0; t < count; t += 3) {
+          let mask = 0;
+          for (let k = 0; k < 3; k++) for (let group = 0; group < groups.length; group++) if (groups[group].includes(parts[indices[t + k]].name)) mask |= 1 << group;
+          for (let k = 0; k < 3; k++) packed.skin[(t + k) * 4 + 3] += mask;
+        }
       }
       geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
       geometry.deleteAttribute('_crowd_region');

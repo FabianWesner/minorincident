@@ -6,6 +6,6 @@
 - [Build receipts](builds/): all three unseen sources run automatically; nurse reconstruction is closed/connected at each LOD.
 - Quantized normals/UVs/weights + meshopt + KTX2 ETC1S q192; standalone LOD byte limits enforced.
 - [Human captures](visual-verification.json): both backends render without console errors; visual acceptance remains pending.
-- Severance persistence/caps and corpse accessory handling implemented; isolated on-screen proof pending.
+- Caps now follow retained skin boundaries; posed rim and close-capture checks are in progress.
 - Selected validator: 27 rows / zero errors; broader static, remote unit/levels, smoke and invariants pending.
-- Six-archetype 200-AI timing and full L1–L10 campaign pending; rollout is not yet accepted.
+- Six-archetype 200-AI timing is currently +1.2 ms (target ≤+1); final gates and L1–L10 campaign pending.

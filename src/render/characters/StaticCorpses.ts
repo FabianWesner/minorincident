@@ -254,7 +254,7 @@ export class StaticCorpses extends Group {
           for (let output = 0; output < kept.length; output++) {
             const i = kept[output];
             if (name === 'position' || name === 'normal') {
-              // skinned-crowd prototype: blend the premultiplied joint matrices of this vertex.
+              // Blend the premultiplied joint matrices of this vertex.
               const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix) : undefined;
               const matrices = skinned ?? clip.matrices;
               const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
