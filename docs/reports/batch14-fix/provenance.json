@@ -121,7 +121,14 @@
       "finished": true,
       "deaths": 0,
       "issues": 0
-    }
+    },
+    "remotePassedFiles": 490,
+    "remotePassedTests": 2687,
+    "smokeUnitPassedTests": 6,
+    "smokeBrowserPassedTests": 31,
+    "invariantsSimulationPassedTests": 28,
+    "invariantsBrowserPassedTests": 12,
+    "allExitCodes": 0
   },
   "l10StagingFix": {
     "failedAttempt": "test-results/playtest/batch14-fix-attempt4",
@@ -173,5 +180,56 @@
       "src/sim/missions/LevelTenFinale.ts"
     ],
     "conclusion": "Directly reproduced the staging fault from the failed campaign checkpoint. Old versus new campaign outcomes alone do not identify a causal commit: staging depends on the courier offset at charge completion, and these staging/aim defects already existed at the range start."
-  }
+  },
+  "finalCampaign": {
+    "command": "npm run playtest -- --levels L1-L10 --quality low --zoom 1.5 --no-skip --out test-results/playtest/batch14-fix",
+    "finishedLevels": 10,
+    "P0": 0,
+    "P1": 0,
+    "P2": 4,
+    "L7Deaths": 0,
+    "L10Deaths": 0,
+    "L7SurvivorsIn": 21,
+    "L7SurvivorsOut": 17,
+    "skippedObjectives": 0,
+    "sourceGameRevision": "b7e211ca7",
+    "sourceHashesMatchFinal": true,
+    "jsonCopies": {
+      "summary.json": "c8a8eb9b440c9990df45d7574e802f99e964ec4313b1ea1b5a2a84c358e869af",
+      "campaign-L6.json": "1b5a9e5a1ce8e6358431909f9d533fda0306db55bb6c2bc4e7c0c4831d46ee46",
+      "runs-campaign.json": "3f670f4d4403da7c5d3e4a04190e03a66d2bca24c2edbaf8af41771176dce322",
+      "issues-campaign.json": "84453365980de5264dfadbea6c4d99b0858f2513779d1c511c4cb3885eb34f7e",
+      "campaign-frames.json": "d63f02e9f7ec1402418f9a36c45503ee5ec35ec8cd1836286d1a9e3a40495aef",
+      "campaign-completion.json": "b65dda0605ac9dc2503a554d20f03fe5aaa52a6deee0aeb4e0cf806205464073"
+    }
+  },
+  "finalInvariants": {
+    "stages": [
+      {
+        "stage": "remote-sim",
+        "code": 0,
+        "seconds": 231.117,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/remote-sim.log"
+      },
+      {
+        "stage": "build",
+        "code": 0,
+        "seconds": 16.634,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/build.log"
+      },
+      {
+        "stage": "Mac-WebGPU-low",
+        "code": 0,
+        "seconds": 198.168,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/Mac-WebGPU-low.log",
+        "quietAdmission": false
+      }
+    ],
+    "nativeQuietAdmission": false,
+    "allAssertionsRetained": true
+  },
+  "validationNote": "No game, asset, tool or test sources changed during the exact campaign and final gates; later commits only contain report receipts."
 }

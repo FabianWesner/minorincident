@@ -126,13 +126,70 @@
       "issues-campaign.json",
       "campaign-frames.json",
       "campaign-completion.json"
-    ]
+    ],
+    "sourceHashesMatchFinal": true
   },
   "smoke": {
-    "status": "pending"
+    "status": "passed",
+    "exitCode": 0,
+    "command": "E2E_PORT=4551 SCENE_PORT=4552 E2E_UNITS=1 npm run test:smoke -- --workers=1",
+    "unitPassedTests": 6,
+    "browserStats": {
+      "startTime": "2026-10-25T00:41:22.290Z",
+      "duration": 256675.66,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browserReceipt": "smoke-browser.json",
+    "logSha256": "51950b1e87c4924d5860c1fb43b3d3636ae320f6ed2c4aaffb629b35611d92ed"
   },
   "invariants": {
-    "status": "pending"
+    "status": "passed",
+    "exitCode": 0,
+    "command": "QA_INVARIANTS_BUILD_UNITS=1 QA_INVARIANTS_NO_QUIET=1 MI_RUNNER_IP=2.31.10.108 E2E_PORT=4551 SCENE_PORT=4552 E2E_UNITS=1 npm run qa:invariants",
+    "simulationPassedTests": 28,
+    "simulationFailedTests": 0,
+    "simulationPendingTests": 0,
+    "browserStats": {
+      "startTime": "2026-10-25T00:50:03.714Z",
+      "duration": 187399.56100000002,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "stages": [
+      {
+        "stage": "remote-sim",
+        "code": 0,
+        "seconds": 231.117,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/remote-sim.log"
+      },
+      {
+        "stage": "build",
+        "code": 0,
+        "seconds": 16.634,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/build.log"
+      },
+      {
+        "stage": "Mac-WebGPU-low",
+        "code": 0,
+        "seconds": 198.168,
+        "revision": "602cd24f8dee4db55e07c8776db0c559decc3b6b",
+        "log": "test-results/qa-invariants/Mac-WebGPU-low.log",
+        "quietAdmission": false
+      }
+    ],
+    "receipts": [
+      "invariants-run.json",
+      "invariants-sim.json",
+      "invariants-browser.json"
+    ],
+    "logSha256": "bee49f706a1093a9851ce28d0641f22c879e59184e55e765b6cf485309a6b08f"
   },
   "invariantSimulationEarly": {
     "exitCode": 0,
@@ -148,5 +205,6 @@
     "skippedFiles": 3,
     "passedTests": 2630,
     "pendingTests": 9
-  }
+  },
+  "reportRevisionParent": "602cd24f8dee4db55e07c8776db0c559decc3b6b"
 }
