@@ -24,7 +24,7 @@ test.each([
       const batch = (crowd as unknown as { batch(model: string, lod: string): Batch }).batch('npc.civilian-man-a', lod);
       const update = vi.spyOn(batch, 'update').mockImplementation(() => {});
       prepare.mockClear();
-      try { await batch.init(); expect(prepare).toHaveBeenCalledTimes(lod === expected ? 1 : 0); }
+      try { await batch.init(); expect(prepare).toHaveBeenCalledTimes(lod === expected ? 3 : 0); }
       finally { update.mockRestore(); batch.dispose(); baked.geometry.dispose(); }
     }
   } finally { prepare.mockRestore(); crowd.dispose(); }

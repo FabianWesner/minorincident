@@ -1,0 +1,17 @@
+{
+  "name": "qa-heroine-ponytail-turn",
+  "note": "Q-172: heroine (tier 2) sprints, then a 180 degree reversal; close camera. The ponytail must stay behind her crown through the turn (no hair mop over the head).",
+  "ground": "sidewalk",
+  "size": 30,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-6, 0], "yaw": 0, "look": { "model": "female", "gearTier": 2 }, "state": "idle" }
+  ],
+  "script": [
+    { "frame": 20, "actor": "courier", "do": { "run": [[6, 0], [-4, 0]] } }
+  ],
+  "camera": { "mode": "close", "target": "courier", "radius": 3.2, "azimuth": 200 },
+  "frames": 300,
+  "shots": [90, 150, 165, 180, 195, 210],
+  "sheet": 6,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "courierAttachmentGapMaxCm": 2 }
+}

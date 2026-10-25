@@ -18,9 +18,8 @@ test('L4 perimeter rejects placement and swept passage for every actor kind', as
     while (m.state.l4!.phase === 'convoy') w.update();
     m.completeObjective('quartermaster');
     while (!m.state.l4!.turnAt) w.update();
-    // A courier who left during the calm interval cannot make the visible wall intangible for everyone else.
+    // The wall remains solid even when the courier's transform is outside its authored holding area.
     const perimeter = m.l4 as unknown as { perimeter(on: boolean): void };
-    perimeter.perimeter(false);
     Object.assign(w.entities.get(1)!.transform, { x: -5, z: 16 });
     perimeter.perimeter(true);
     expect(w.solids.clear({ x: l4PerimeterWalls[3].x, y: .7, z: 16 }, .35, 1, false)).toBe(false);

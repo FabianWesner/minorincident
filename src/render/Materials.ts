@@ -1,6 +1,6 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -14,6 +14,7 @@ export class Materials {
   readonly wind;
   readonly texture: DataTexture;
   private readonly cache = new Map<string, PaletteMaterial>();
+  private readonly textureReleases = new Map<string, () => void>();
   private readonly nearestCache = new Map<string, number>();
   private readonly swatches = paletteTokens.map(token => new Color(palette[token]));
   private readonly owned: PaletteMaterial[] = [];
@@ -99,6 +100,43 @@ export class Materials {
     if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, emissive, world ? undefined : color.clone(), false, world ? { base: this.sample(uniform(this.nearest(color))) } : undefined); material.color.copy(color); material.name = name; material.userData.emissiveStrength = emissive; this.cache.set(key, material); }
     return material;
   }
+  /** Textured-figure route (3D pipeline): an opaque glTF base-colour map through the full game graph (shadow, bounce,
+   * fill/rim, fog, weather, blood feedback). ONE route for every textured lane (skinned courier, textured crowds/props):
+   * one material per map+tint+side, ref-counted per map. Callers either pair each fromTexture with releaseTexture, or
+   * (registry-owned atlases) rely on the map's dispose event; the last release drops the materials (the map stays with its asset). */
+  private readonly textureOwners = new Map<string, number>();
+  private readonly textureKeys = new Map<string, Set<string>>();
+  fromTexture(name: string, map: Texture, tint: Color = new Color(0xffffff), side: Side = FrontSide): PaletteMaterial {
+    const key = `texture:${map.uuid}:${tint.getHexString()}:${side}`;
+    let material = this.cache.get(key);
+    if (!material) {
+      material = this.shaded(texture(map).rgb.mul(uniform(tint.clone())));
+      material.name = name; material.color.copy(tint); material.side = side;
+      material.map = map; material.userData.sharedPalette = true; material.userData.textureKey = key;
+      this.cache.set(key, material);
+      let keys = this.textureKeys.get(map.uuid);
+      if (!keys) {
+        keys = new Set(); this.textureKeys.set(map.uuid, keys);
+        const release = () => { map.removeEventListener('dispose', release); this.textureReleases.delete(map.uuid); this.dropTexture(map); };
+        map.addEventListener('dispose', release); this.textureReleases.set(map.uuid, release);
+      }
+      keys.add(key);
+    }
+    this.textureOwners.set(map.uuid, (this.textureOwners.get(map.uuid) ?? 0) + 1);
+    return material;
+  }
+  releaseTexture(map: Texture): void {
+    const owners = (this.textureOwners.get(map.uuid) ?? 0) - 1;
+    if (owners > 0) { this.textureOwners.set(map.uuid, owners); return; }
+    this.dropTexture(map);
+  }
+  private dropTexture(map: Texture): void {
+    this.textureOwners.delete(map.uuid);
+    for (const key of this.textureKeys.get(map.uuid) ?? []) { this.cache.get(key)?.dispose(); this.cache.delete(key); }
+    this.textureKeys.delete(map.uuid);
+  }
+  /** Live textured-figure maps (diagnostics/tests). */
+  get texturedMaterials(): number { return this.textureKeys.size; }
   /** Rigid character parts share their authored vertex swatches and blood mask. */
   fromVertexColors(name: string): PaletteMaterial {
     const key = `vertices:${name}`;
@@ -135,6 +173,7 @@ export class Materials {
     material.transparent = transparent; this.owned.push(material); return material;
   }
   dispose(): void {
+    for (const release of this.textureReleases.values()) release();
     for (const material of this.cache.values()) material.dispose();
     for (const material of this.owned) material.dispose();
     this.cache.clear(); this.nearestCache.clear(); this.owned.length = 0; this.texture.dispose();

@@ -235,3 +235,21 @@ test('T-E32-20 live save resumes accrued charge and captured living boss exactly
     expect(boss.state.mode).not.toBe('dead'); step(); expect(m.state.counters['charge-ticks']).toBe(121);
   } finally { w.dispose(); }
 });
+
+
+test('resuming a late L10 save clears expired player stagger on the new clock', async () => {
+  const { w, m, boss } = await finale();
+  try {
+    w.tick = 57000;
+    const p = w.entities.get(1)!;
+    p.combat!.staggerUntil = 54512;
+    const saved = m.saveResume();
+    w.tick = 0; m.loadResume(saved);
+    expect(p.combat!.staggerUntil).toBeLessThanOrEqual(w.tick);
+    boss.entity()!.health.current = 0;
+    const start = { ...p.transform };
+    w.setInput({ move: { x: 0, z: 1 } });
+    for (let i = 0; i < 120; i++) w.update();
+    expect(Math.hypot(p.transform.x - start.x, p.transform.z - start.z)).toBeGreaterThan(2);
+  } finally { w.dispose(); }
+});

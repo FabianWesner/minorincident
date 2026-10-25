@@ -1,0 +1,415 @@
+{
+  "runtimeCommit": "f0a15ff82",
+  "platform": "Linux",
+  "suite": "npx vitest run tests/unit tests/levels --maxWorkers=4",
+  "initialSoldiers": 20,
+  "line1Fallback": 7,
+  "breakT": 178.02,
+  "afterRetreat": {
+    "seconds": 90,
+    "alive": 7
+  },
+  "snapshots": [
+    {
+      "seconds": 0,
+      "army": 16,
+      "infected": 48,
+      "pockets": [
+        0,
+        1
+      ],
+      "pocketSpawned": {
+        "0": 0
+      },
+      "reserved": 25
+    },
+    {
+      "seconds": 30,
+      "army": 14,
+      "infected": 59,
+      "pockets": [
+        1
+      ],
+      "pocketSpawned": {
+        "0": 6
+      },
+      "reserved": 18
+    },
+    {
+      "seconds": 60,
+      "army": 11,
+      "infected": 75,
+      "pockets": [],
+      "pocketSpawned": {
+        "0": 6,
+        "1": 6
+      },
+      "reserved": 12
+    },
+    {
+      "seconds": 90,
+      "army": 7,
+      "infected": 81,
+      "pockets": [],
+      "pocketSpawned": {
+        "0": 6,
+        "1": 6
+      },
+      "reserved": 12
+    }
+  ],
+  "survivors": [
+    {
+      "id": 100,
+      "at": {
+        "x": -23.18323964735777,
+        "z": -2.559704673699728,
+        "y": 0.7,
+        "yaw": 0.3599494642378713
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": {
+          "x": 4.846446609406726,
+          "z": -3.853553390593274
+        },
+        "runSpeed": 3.8,
+        "post": {
+          "x": 4.846446609406726,
+          "z": -3.853553390593274
+        },
+        "hold": true,
+        "targetId": 1083,
+        "nextAttack": 18117,
+        "hits": 306,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 0,
+        "baton": false,
+        "stepAfter": 12119,
+        "mag": 4,
+        "burstN": 1,
+        "strikeTarget": 1083,
+        "repoHits": 212,
+        "reloadUntil": 17711,
+        "calloutAt": 17603
+      }
+    },
+    {
+      "id": 105,
+      "at": {
+        "x": -3.3037416344265913,
+        "z": 41.26891282320668,
+        "y": 0.83,
+        "yaw": -1.6669372039699173
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": 42.6,
+          "z": 43.8
+        },
+        "hold": true,
+        "targetId": 0,
+        "nextAttack": 18123,
+        "hits": 488,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 0,
+        "baton": false,
+        "mag": 4,
+        "burstN": 1,
+        "strikeTarget": 1103,
+        "still": {
+          "x": -3.3240798701978918,
+          "z": 41.1449634071766,
+          "tick": 18042
+        },
+        "repoHits": 488,
+        "stepAfter": 15081,
+        "reloadUntil": 14209,
+        "calloutAt": 11204
+      }
+    },
+    {
+      "id": 109,
+      "at": {
+        "x": -6.397222736415585,
+        "z": 30.37137611707623,
+        "y": 0.7,
+        "yaw": -3.0654162711102866
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": 40,
+          "z": 42.8
+        },
+        "hold": true,
+        "targetId": 1166,
+        "nextAttack": 18154,
+        "hits": 536,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 18112,
+        "baton": true,
+        "still": {
+          "x": -6.450436918906818,
+          "z": 30.684007047446578,
+          "tick": 18060
+        },
+        "stepAfter": 14819,
+        "mag": 9,
+        "burstN": 0,
+        "strikeTarget": 1166,
+        "repoHits": 528,
+        "reloadUntil": 14825,
+        "aimMoveRestUntil": 14361,
+        "calloutAt": 7796
+      }
+    },
+    {
+      "id": 114,
+      "at": {
+        "x": -70.37197995827147,
+        "z": 42.79775616428132,
+        "y": 0.7,
+        "yaw": -3.143756169307089
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": -70.64644660940672,
+          "z": 42.95355339059328
+        },
+        "hold": true,
+        "targetId": 0,
+        "nextAttack": 18127,
+        "hits": 222,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 0,
+        "baton": false,
+        "still": {
+          "x": -70.37197995827147,
+          "z": 42.79775616428132,
+          "tick": 18091
+        },
+        "mag": 12,
+        "burstN": 0,
+        "strikeTarget": 1144,
+        "repoHits": 216,
+        "stepAfter": 18008,
+        "reloadUntil": 17554
+      }
+    },
+    {
+      "id": 115,
+      "at": {
+        "x": -71.08294214880195,
+        "z": 48.72089513699855,
+        "y": 0.7,
+        "yaw": -1.4494617930188878
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": -71,
+          "z": 49.4
+        },
+        "hold": true,
+        "targetId": 0,
+        "nextAttack": 18105,
+        "hits": 215,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 0,
+        "baton": false,
+        "mag": 2,
+        "burstN": 2,
+        "strikeTarget": 1144,
+        "reloadUntil": 18065,
+        "still": {
+          "x": -70.99721033335557,
+          "z": 49.422830430122296,
+          "tick": 18091
+        },
+        "repoHits": 204,
+        "stepAfter": 17971
+      }
+    },
+    {
+      "id": 116,
+      "at": {
+        "x": -66.68475556098275,
+        "z": 46.75091164621532,
+        "y": 0.7,
+        "yaw": -1.2124978137589024
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": -67.5,
+          "z": 44.5
+        },
+        "hold": true,
+        "targetId": 0,
+        "nextAttack": 18105,
+        "hits": 260,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 0,
+        "baton": false,
+        "still": {
+          "x": -66.92492010277682,
+          "z": 46.08458965762846,
+          "tick": 18091
+        },
+        "mag": 5,
+        "burstN": 2,
+        "strikeTarget": 1144,
+        "repoHits": 260,
+        "step": {
+          "x": -67.38082736186207,
+          "z": 44.52414801810919,
+          "until": 18147
+        },
+        "stepAfter": 18177,
+        "reloadUntil": 17985
+      }
+    },
+    {
+      "id": 119,
+      "at": {
+        "x": -13.716068136386758,
+        "z": 34.08737899514793,
+        "y": 0.7,
+        "yaw": -0.16043462633560818
+      },
+      "hp": 120,
+      "ally": {
+        "role": "soldier",
+        "engaged": true,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": {
+          "x": 38.4,
+          "z": 44.4
+        },
+        "hold": true,
+        "targetId": 1092,
+        "nextAttack": 18169,
+        "hits": 479,
+        "forceUntil": 0,
+        "gun": {
+          "damage": 18,
+          "shotS": 0.4,
+          "rangeM": 26,
+          "nearM": 20,
+          "hitNear": 0.65,
+          "hitFar": 0.35
+        },
+        "weapon": "rifle",
+        "range": 24,
+        "lastHp": 120,
+        "strikeAt": 18127,
+        "baton": true,
+        "mag": 8,
+        "burstN": 2,
+        "strikeTarget": 1092,
+        "still": {
+          "x": -13.679502470751947,
+          "z": 34.082213372982444,
+          "tick": 18072
+        },
+        "repoHits": 476,
+        "stepAfter": 15000,
+        "aimMoveRestUntil": 14124,
+        "reloadUntil": 14289,
+        "calloutAt": 5875
+      }
+    }
+  ]
+}

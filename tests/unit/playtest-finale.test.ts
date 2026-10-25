@@ -46,3 +46,9 @@ test('finale dodging needs a visible nearby threat and remembered console, and s
     expect(finaleDodgeGoal(level, step, { x: 0, z: 0 }, console, { x: d, z: 0, d })).toBeNull();
   }
 });
+
+test('Q-161 the campaign driver skips carried weapons whose ammo or charges are empty', () => {
+  const carried = ['weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
+  expect(campaignCombatWeapon('L7', carried, ['weapon.rocket-launcher', 'weapon.army-mg'])).toBe('weapon.handgun');
+  expect(campaignCombatWeapon('L10', carried, carried)).toBeNull();
+});

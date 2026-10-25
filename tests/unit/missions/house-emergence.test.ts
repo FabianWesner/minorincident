@@ -1,7 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
-import { floorAt, layoutHouseDoors } from '../../../src/sim/outbreak/HouseEmergence';
+import type { SimWorld } from '../../../src/sim/world/SimWorld';
+import type { EntitySnapshot } from '../../../src/sim/world/types';
+import { floorAt, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
+import { loadL4 } from '../../../tools/sim-runner/l4Bots';
 
 /** PO P1 10-08 "a zombie spawning out of nowhere": the beat-9 residents come out of a real front door. */
 describe('HouseEmergence door geometry', () => {
@@ -27,4 +30,39 @@ describe('HouseEmergence door geometry', () => {
     expect(floorAt(door, 1.59)).toBeCloseTo(.45, 5);
     for (let s = -1; s < 3; s += .01) expect(floorAt(door, s + .01)).toBeLessThanOrEqual(floorAt(door, s) + 1e-9);
   });
+});
+
+
+test('L4 tent walk waits for body clearance and retains a downed resident until recovery', () => {
+  const e = { id: 7, health: { current: 0, max: 60 }, transform: { x: 0, y: .7, z: 0, yaw: 0 }, emerging: true,
+    infected: { recoverAt: 1 }, combat: { radius: .35 } } as EntitySnapshot;
+  let clear = false;
+  const w = { entities: { get: () => e }, solids: { clear: (_p: unknown, _r: number, _id: number, bodies = true) => { expect(bodies).toBe(true); return clear; }, admit: () => true },
+    spatial: { set: () => undefined }, openDoors: new Map() } as unknown as SimWorld;
+  const house: HouseEmergence = { strictRoute: true, door: 0, house: 'tent', x: -1, z: 0, nx: 1, nz: 0, floor: [], sx: 0, sz: 0, route: [[0, 1]], ox: 0, oz: 1,
+    next: 0, ids: [7], walking: [{ id: 7, until: 0, leg: 0 }] };
+  expect(walkResidents(w, house, 20)).toEqual([]);
+  expect(e.emerging).toBe(true); expect(house.walking).toHaveLength(1);
+  e.health.current = 60; e.infected!.recoverAt = -1;
+  expect(walkResidents(w, house, 21)).toEqual([]);
+  expect(e.transform.z).toBe(0); expect(house.walking![0].leg).toBe(0);
+  clear = true;
+  for (let tick = 22; tick < 100 && house.walking!.length; tick++) walkResidents(w, house, tick);
+  expect(house.walking).toHaveLength(0); expect(e.emerging).toBeUndefined(); expect(e.transform.z).toBeCloseTo(1);
+});
+
+test('a pooled tent resident returns as an ordinary street arrival without doorway ownership', async () => {
+  const { world } = await loadL4(3, 'low'), ai = world.infected!;
+  const id = ai.spawn('infected.runner', { x: 8, z: 0 }), resident = world.entities.get(id)!;
+  resident.emerging = true;
+  resident.infected!.l4FlankTarget = 999;
+  resident.doorLane = { x: 8, z: 0, ox: 0, oz: 1, half: .6, start: -1, end: 1 };
+  ai.release(resident);
+  const next = world.entities.get(ai.spawn('infected.runner', { x: 8, z: 0 }))!;
+  expect(next).toBe(resident);
+  expect(next.id).not.toBe(id);
+  expect(next.emerging).toBeUndefined();
+  expect(next.doorLane).toBeUndefined();
+  expect(next.infected!.l4FlankTarget).toBeUndefined();
+  world.dispose();
 });

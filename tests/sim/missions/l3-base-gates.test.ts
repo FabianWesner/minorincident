@@ -60,3 +60,17 @@ test('PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without enterin
   expect(shots).toBeGreaterThan(0);
   expect(ai.infectedNav.clear(l3.finale.barrierX, 0, .35)).toBe(false);
 }, 120_000);
+
+
+test('evacuation names the living officer still outside and updates the remaining distance', async () => {
+  const loaded = await loadL3(1); world = loaded.world;
+  const m = loaded.mission, s = m.state.l3!, p = world.entities.get(1)!, officer = world.entities.get(s.officerIds[0])!;
+  s.squad = [{ id: officer.id, farSince: 0 }];
+  s.crossedAt = 1; s.doneAt = 0; world.tick = 1 + 16 * 60;
+  Object.assign(p.transform, { x: l3.map.zoneX + 2, z: 0 });
+  Object.assign(officer.transform, { x: l3.map.zoneX - 18, z: 0 });
+  officer.health.current = officer.health.max; delete officer.infection;
+  expect(l3EvacuationText(m)).toContain('Officer 1: 20 m away');
+  officer.transform.x += 10;
+  expect(l3EvacuationText(m)).toContain('Officer 1: 10 m away');
+});

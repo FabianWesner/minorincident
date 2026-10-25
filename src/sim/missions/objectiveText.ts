@@ -17,7 +17,11 @@ export function objectiveText(mission: Mission, fallback: string): string {
   if (s.l4?.phase === 'war') {
     const third = s.l4.director.lines[2];
     const end = Math.min(s.l4.warAt + l4.lineBreak.defenseS * 60, (third.brokeAt || s.l4.turnAt + l4.director.lines[2].dueS * 60) + l4.lineBreak.fallBackS * 60);
-    return `${fallback} · ${clock(end - w.tick)} remaining`;
+    // PO 10-23: the fight is at the wall. An Alpha battering a breach site, then the open breach, name the place.
+    const b = s.l4.breaches ?? {}, open = (['west', 'north', 'south'] as const).filter(k => b[k]?.openAt).sort((p, q) => b[q]!.openAt - b[p]!.openAt)[0];
+    const coming = (['west', 'north', 'south'] as const).find(k => b[k]?.announcedAt && !b[k]?.openAt);
+    const text = open ? `Hold the ${open} breach` : coming ? `Alpha at the ${coming} wall` : fallback;
+    return `${text} · ${clock(end - w.tick)} remaining`;
   }
   if (s.l4?.barredAt && s.steps.wait?.status === 'active') return `${fallback} · ${clock(s.l4.barredAt+l4.cellar.battleAfterBarredS*60-w.tick)} remaining`;
   if (s.l6) {

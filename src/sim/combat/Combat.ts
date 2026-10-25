@@ -11,6 +11,7 @@ import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
 import { actionExplosions } from '../../data/explosions';
+import { weaponKey } from '../../data/weaponKeys';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -71,6 +72,16 @@ export class Combat {
   update(frame: InputFrame): void {
     const player = this.world.entities.get(1)!;
     if (!player.weapons) return;
+    const loadout = this.runner.loadout;
+    const emptySide = (['LEFT', 'RIGHT'] as const).find(side => frame[side === 'LEFT' ? 'left' : 'right'].down && !loadout.hasAmmo(loadout.current(side)));
+    if (emptySide && player.health.current > 0 && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
+      this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
+      const best = loadout.activeEntries().filter(e => weaponKey(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
+        .sort((a, b) => weaponKey(b.id)! - weaponKey(a.id)!)[0]!;
+      loadout.state.selectedSide = best.side; loadout.state[best.side].index = best.index; loadout.state[best.side].swapUntil = this.world.tick + 15;
+      this.world.controls.reset();
+      frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
+    }
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update(frame);
@@ -88,7 +99,7 @@ export class Combat {
     this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
-      if (!attack.autoAim) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
+      if (!attack.autoAim) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);

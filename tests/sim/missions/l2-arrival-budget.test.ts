@@ -6,7 +6,9 @@ test('@E20 phone arrival reservations survive checkpoint restore without accumul
   const { world, mission } = await loadL2(1, 'low');
   try {
     const director = world.infected!.director;
-    const expected = Math.ceil(l2.cluster.count * l2.escape.lowScale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * l2.escape.lowScale), 0);
+    const expected = Math.ceil(l2.cluster.count * l2.escape.lowScale)
+      + l2.rescue.ambushDoors.reduce((n, [, count]) => n + Math.ceil(count * l2.escape.lowScale), 0)
+      + l2.escape.scattered.reduce((n, g) => n + Math.ceil(g[2] * l2.escape.lowScale), 0);
     expect(director.cap).toBe(30);
     expect(director.reserved).toBe(expected);
     director.reserved += 2;
@@ -19,18 +21,19 @@ test('@E20 phone arrival reservations survive checkpoint restore without accumul
   } finally { world.dispose(); }
 });
 
-test('@E20 restored phone quota includes only pending cluster and first two street beats', async () => {
+test('@E20 restored quota includes pending route pockets and the phone bridge cluster', async () => {
   const { world, mission } = await loadL2(1, 'low');
   try {
     const s = mission.state.l2!, director = world.infected!.director;
     const request = (id: number, home: readonly number[]) => ({ id, door: 'refuge-door-1', at: 0, home: { x: home[0], z: home[1] } });
     s.escapeSpawned = true;
-    s.pending = [request(-2, l2.cluster.home), request(0, l2.escape.groups[0]), request(123, l2.escape.groups[1]), request(-1, l2.cluster.home), request(0, l2.escape.groups[2])];
+    s.doorsOpenAt = 1;
+    s.pending = [request(-2, l2.cluster.home), { ...request(0, l2.escape.scattered[0]), door: 'l2-route-edge-1' }, request(123, l2.escape.groups[1]), request(-1, l2.cluster.home), request(0, l2.escape.groups[2])];
     director.reserved += 2;
     mission.l2!.restore(0);
     expect(director.reserved).toBe(4);
     director.setTier('high');
     mission.l2!.restore(0);
-    expect(director.reserved).toBe(2);
+    expect(director.reserved).toBe(3);
   } finally { world.dispose(); }
 });

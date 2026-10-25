@@ -1,7 +1,6 @@
 import { objectiveText } from '../sim/missions/objectiveText';
 import { devicePrompt } from './devicePrompt';
 import { l5Survivors } from '../data/l5';
-import { l4CellarDistance } from '../data/l4';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
 import { SurvivorRadar } from './SurvivorRadar';
@@ -60,6 +59,7 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
+  private emptyWeapon: { id: string; until: number } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
   private readonly bark = node('div', 'corgi-bark', 'Woof!');
@@ -175,12 +175,17 @@ export class Hud {
   loaded(): void {
     this.clear();
     this.damagedUntil = this.barkUntil = this.civilianBarkUntil = this.weaponHintUntil = -1; this.weaponActionId = '';
+    this.emptyWeapon = null;
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark', 'ally.callout'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
+    if (event.type === 'combat.empty' && event.sourceId === 1) {
+      this.emptyWeapon = { id: event.actionId, until: this.game.world.tick + 120 };
+      return;
+    }
     if (event.type === 'civilian.bark' || event.type === 'ally.callout') {
       if (this.game.world.missions?.state.l1?.say?.id === event.id) return; // The story bubble already captions this bark.
       if (this.civilianBark.textContent !== event.text) this.civilianBark.textContent = event.text;
@@ -270,7 +275,7 @@ export class Hud {
     attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
-    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? l4CellarDistance({ x: px, z: pz }, this.cellarTurn) : null;
+    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? mission.l4!.cellarDistance(this.cellarTurn) : null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     if (cellarDistance !== null) this.place(this.routePin, this.cellarTurn.x, this.cellarTurn.z, px, pz, true);
     setHidden(this.objectivePin, !anchor);
@@ -313,11 +318,12 @@ export class Hud {
       }
       const slot = world.combat!.runner.loadout.current(side), def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id), selected = player.weapons!.selectedSide === side;
       const name = label(slot.id);
-      const stats = def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
+      const empty = !world.combat!.runner.loadout.hasAmmo(slot);
+      const stats = empty ? 'Empty' : def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
       const progress = until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1;
-      if (selected) shown = { id: slot.id, name, stats, progress, ammo: slot.magazine, charges: slot.charges, state: slot.reloadUntil > world.tick ? 'reloading' : until > world.tick && stats !== 'Ready' ? 'cooldown' : 'ready' };
+      if (selected) shown = { id: slot.id, name, stats, progress, ammo: slot.magazine, charges: slot.charges, state: empty ? 'empty' : slot.reloadUntil > world.tick ? 'reloading' : until > world.tick && stats !== 'Ready' ? 'cooldown' : 'ready' };
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
     const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
@@ -346,7 +352,8 @@ export class Hud {
         if (this.weaponActionId) this.weaponHintUntil = world.tick + 120;
         this.weaponActionId = shown.id; this.weapon.icon.src = actionIconUrl(action(shown.id).iconId);
       }
-      text(this.weapon.hint, shown.name); setHidden(this.weapon.hint, world.tick > this.weaponHintUntil);
+      const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until ? `${label(this.emptyWeapon.id)} · Empty` : null;
+      text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'click, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));

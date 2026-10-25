@@ -11,6 +11,8 @@ export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolea
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
+  /** Last selected campaign action, restored when a new level loadout is materialized. */
+  selectedAction?: string;
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];

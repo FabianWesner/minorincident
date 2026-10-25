@@ -1,6 +1,7 @@
 import { catalog } from '../../data/actions/catalog';
 import type { SimWorld } from '../world/SimWorld';
 import type { CampaignSave } from './Campaign';
+import { logSelectionFallback } from './selection';
 
 /** S7: commit once after the completed crawl, before saving or requesting navigation. */
 export function commitCrossingHandover(save: CampaignSave, world: SimWorld): void {
@@ -17,6 +18,8 @@ export function commitCrossingHandover(save: CampaignSave, world: SimWorld): voi
   save.crossingHandover = { applied: true, ...(corgi ? { corgi: structuredClone(corgi) } : {}), checkpoint: 'cure-crash', anchor: { ...player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons, shelteredPassengers: structuredClone(shelteredPassengers) };
   save.ownedActions = ['weapon.fire-axe', ...save.ownedActions.filter(id => catalog[id]?.category === 'ability')];
   save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
+  if (save.selectedAction && save.selectedAction !== 'weapon.fire-axe') logSelectionFallback(save.selectedAction, 'weapon.fire-axe', 'scripted crossing arsenal loss');
+  save.selectedAction = 'weapon.fire-axe';
   save.completedLevels = Math.max(9, save.completedLevels); save.unlockedLevel = 10;
   delete save.pending; delete save.transport; delete save.l9Crash;
   if (world.combat) { world.combat.projectiles.length = 0; world.combat.setLoadout(save.racks.LEFT, save.racks.RIGHT); }

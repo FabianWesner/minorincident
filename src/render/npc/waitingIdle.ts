@@ -4,9 +4,13 @@ const waitingClips = ['npc-cower', 'npc-hug', 'npc-glance', 'npc-look-around'] a
  * holds a weapon waits alert (glancing or looking around), never crouched or hugging. */
 const armedClips = ['npc-glance', 'npc-look-around'] as const;
 const weapons = new Set(['pistol', 'hunting-rifle', 'rifle', 'shotgun', 'pipe', 'bat', 'crowbar', 'machete', 'axe']);
-export function waitingIdle(id: number, handProp?: string | null): typeof waitingClips[number] {
+/** PO 10-23 Q-159 ("Also in L4 people behave strange"): chatting pairs crouched face to face in the open with no threat in sight.
+ * Nobody cowers without a threat; a calm waiter (`threatened` false) glances instead. */
+export function waitingIdle(id: number, handProp?: string | null, threatened = false): typeof waitingClips[number] {
   const hash = Math.imul(id, 2654435761) >>> 16;
-  return handProp && weapons.has(handProp) ? armedClips[hash % armedClips.length] : waitingClips[hash % waitingClips.length];
+  if (handProp && weapons.has(handProp)) return armedClips[hash % armedClips.length];
+  const clip = waitingClips[hash % waitingClips.length];
+  return clip === 'npc-cower' && !threatened ? 'npc-glance' : clip;
 }
 /** Spread adjacent IDs over the whole cycle instead of starting neighbouring people together. */
 export function idleOffset(id: number): number { return ((Math.imul(id, 2654435761) >>> 0) / 4294967296) * 4; }

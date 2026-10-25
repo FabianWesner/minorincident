@@ -28,7 +28,14 @@ export class ControlIntent {
       raw = { ...raw, left: side === 'LEFT' ? { ...raw.left } : { down: false, held: false, up: false }, right: side === 'RIGHT' ? { ...raw.left } : { down: false, held: false, up: false },
         ...(raw.attackTarget ? { attackTarget: { ...raw.attackTarget, side } } : {}) };
     }
-    if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset(false);
+    const moving = Math.hypot(raw.move.x, raw.move.z) > 0;
+    const heldGunTarget = this.attack && raw.mouseAttack && raw.pointerTarget && raw[this.attack.side === 'LEFT' ? 'left' : 'right'].held
+      && this.world.combat?.runner.loadout.definition(this.world.combat.runner.loadout.current(this.attack.side).id).category === 'ranged';
+    // WASD takes over locomotion while a held gun target keeps aiming/firing.
+    // Clearing that command leaves pointerTarget set and silently suppresses every subsequent shot.
+    const keepMovingGun = moving && heldGunTarget && !raw.attackTarget;
+    if ((raw.cancelMove || moving) && !keepMovingGun || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset(false);
+    if (moving) this.moveTarget = null;
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(false); return raw; }
     if (raw.moveTarget) {
       const requested = this.world.missions?.interactSnap(raw.moveTarget) ?? raw.moveTarget;
@@ -107,16 +114,19 @@ export class ControlIntent {
         const def = action(attack.mouseAttack && actionId === 'weapon.kick' ? 'weapon.fists' : actionId), range = def.range * .85;
         frame.aim = { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }; frame.aimPoint = { x: t.x, z: t.z };
         frame.selectorSide = attack.side;
+        const manualGun = moving && attack.mouseAttack && def.category === 'ranged' && button.held;
+        const pulled = button.down;
         button.down = button.held = false;
         // Approach toward 85 % of the reach but strike as soon as the target is inside 95 % of it: the
         // arrival slowdown plus the bounded locomotion response otherwise creeps for seconds before a swing.
         // Out of reach: the click becomes an approach-and-strike command; the recovery-buffer expiry no longer applies.
         // Brake for a point 0.35 m past the strike distance: the swing starts on entering reach, never after a creep.
-        if (distance > Math.max(range + .08, def.range * .95)) { delete attack.until; this.walk(frame, t, distance - range + .25); }
+        if (manualGun) { button.down = pulled; button.held = true; }
+        else if (distance > Math.max(range + .08, def.range * .95)) { delete attack.until; this.walk(frame, t, distance - range + .25); }
         else {
           // Stop at range rather than drifting through the target during wind-up.
           frame.navigation = true; frame.move = { x: 0, z: 0 };
-          if ((!combat.runner.running[attack.side] || this.world.tick >= combat.runner.running[attack.side]!.endsAt) && combat.runner.loadout.usable(attack.side, this.world.tick)) {
+          if ((!combat.runner.running[attack.side] || this.world.tick >= combat.runner.running[attack.side]!.endsAt) && (combat.runner.loadout.usable(attack.side, this.world.tick) || pulled && !combat.runner.loadout.hasAmmo(combat.runner.loadout.current(attack.side)))) {
             button.down = true;
           }
         }

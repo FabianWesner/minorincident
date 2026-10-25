@@ -43,8 +43,28 @@ test('Q-124 settled bodies change detail after approach and retreat without losi
       const colors = child.geometry.getAttribute('_variant'); expect(colors.getX(0) % 2).toBeCloseTo(tint.r);
       expect(child.geometry.getAttribute('_overlay').getZ(0)).toBeCloseTo(.4);
     }
+    // Courier clearance reaches frozen GPU instances too, after their first placement.
+    pool.begin(() => e, () => ({ x: 2, z: 3 }));
+    expect(pool.drawn()).toEqual([{ id: 7, x: 2, y: 0, z: 3 }]);
+    expect(pool.snapshot().instances).toBe(1);
     e.hidden = true; pool.begin(() => e); update(0); expect(pool.snapshot().instances).toBe(0);
   } finally { pool.dispose(); far.dispose(); near.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
+test('Q-166 settled corpses mute eye emitters and desaturate their frozen surface', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 9, corpse: true, transform: { x: 0, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+  try {
+    pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    const geometry = (pool.children[0] as InstancedMesh).geometry, sourceColor = baked.geometry.getAttribute('color'), sourceFlags = baked.geometry.getAttribute('_parts');
+    const color = geometry.getAttribute('color'), flags = geometry.getAttribute('_parts');
+    const colored = Array.from({ length: sourceColor.count }, (_, i) => i).find(i => sourceFlags.getZ(i) === 0 && Math.max(sourceColor.getX(i), sourceColor.getY(i), sourceColor.getZ(i)) - Math.min(sourceColor.getX(i), sourceColor.getY(i), sourceColor.getZ(i)) > .1)!;
+    const before = [sourceColor.getX(colored), sourceColor.getY(colored), sourceColor.getZ(colored)], after = [color.getX(colored), color.getY(colored), color.getZ(colored)];
+    expect(Math.max(...after) - Math.min(...after)).toBeCloseTo((Math.max(...before) - Math.min(...before)) * .45);
+    const eye = Array.from({ length: sourceFlags.count }, (_, i) => i).find(i => sourceFlags.getZ(i) > 0);
+    expect(eye).toBeDefined(); expect(flags.getZ(eye!)).toBe(0); expect(Math.max(color.getX(eye!), color.getY(eye!), color.getZ(eye!))).toBeLessThan(.2);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });
 
 test('dropped accessories grow beyond their initial instance capacity @E07', () => {
@@ -102,6 +122,8 @@ test('distant corpse pages cull independently while every body persists @E07', (
   const visible = pool.children.filter(mesh => frustum.intersectsObject(mesh));
   expect(visible.reduce((count, mesh) => count + (mesh as InstancedMesh).count, 0)).toBe(2);
   expect(pool.snapshot().instances).toBe(4);
+  pool.cull(frustum);
+  for (const page of pool.children as InstancedMesh[]) expect(page.visible).toBe(page.count > 0);
   const pages = pool.children as InstancedMesh[];
   expect(pages[1].material).toBe(pages[0].material);
   expect(pages[1].geometry.getAttribute('position')).toBe(pages[0].geometry.getAttribute('position'));
@@ -115,15 +137,17 @@ test('L6 prewarmed corpse pages stay empty until a real body joins @E24', () => 
   const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
   pool.prepare('runner', baked.geometry, material, baked.clip, frame);
   const page = pool.children[0] as InstancedMesh, geometry = page.geometry, frozen = page.material;
+  expect(page.visible).toBe(false);
   expect(pool.snapshot()).toMatchObject({ instances: 0, draws: 0, figures: [] });
   pool.prepare('runner', baked.geometry, material, baked.clip, frame);
   expect(pool.children).toHaveLength(1);
   const e = { id: 7, corpse: true } as EntitySnapshot;
   pool.place(e, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
-  expect(page.geometry).toBe(geometry); expect(page.material).toBe(frozen);
+  expect(page.geometry).toBe(geometry); expect(page.material).toBe(frozen); expect(page.visible).toBe(true);
   expect(pool.snapshot()).toMatchObject({ instances: 1, draws: 1 });
   pool.begin(id => id === 7 ? e : undefined);
   expect(pool.snapshot().instances).toBe(1);
+  pool.begin(() => undefined); expect(page.visible).toBe(false);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 
@@ -308,6 +332,40 @@ test('@E27-AC15 moving corpse pages update bounds once and settled float32 poses
   } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
 });
 
+test('a stationary courier reuses settled placement; walking rechecks its footprint and thrown bodies keep moving', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 2, corpse: true, transform: { x: 3, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+  pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(3, 0, 0), new Color('white'), [0, 0, 0]);
+  const focus = { x: 0, z: 0 }, resting = vi.fn(() => ({ x: focus.x + 3, y: .22, z: 0, yaw: focus.x * .3 }));
+  try {
+    pool.begin(() => e, resting, focus); pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(1);
+    focus.x = 2; pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(2); expect(pool.drawn()[0].x).toBe(5); expect(pool.drawn()[0].y).toBeCloseTo(.22);
+    const matrix = new Matrix4(); (pool.children[0] as InstancedMesh).getMatrixAt(0, matrix);
+    expect(Math.atan2(-matrix.elements[2], matrix.elements[0])).toBeCloseTo(.6);
+    e.corpseThrown = true; pool.begin(() => e, resting, focus);
+    expect(resting).toHaveBeenCalledTimes(3);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
+test('identities without retained accessory geometry share a frozen body page while retaining per-instance appearance', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  try {
+    for (const id of [2, 3]) {
+      const e = { id, archetype: 'infected.runner', corpse: true, transform: { x: id, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+      const look = { ...resolveCrowdAppearance(e), accessory: `removed-hat-${id}`, hidesHair: true };
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4().makeTranslation(id, 0, 0), new Color(id === 2 ? 'red' : 'blue'), [0, 0, 0], String(id), [], look);
+    }
+    expect(pool.children).toHaveLength(1);
+    expect(pool.snapshot().instances).toBe(2);
+    const page = pool.children[0] as InstancedMesh, tint = page.geometry.getAttribute('_variant');
+    expect(tint.getX(0) % 2).not.toBe(tint.getX(1) % 2);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
 test('permanent frozen bodies drop the live fade mask while the living material keeps it', () => {
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), material = materials.shaded(vec3(1));
   const liveMask = vec3(1).x.greaterThan(.5); material.maskNode = liveMask;
@@ -344,4 +402,25 @@ test('camera culling retains every corpse and restores its exact identity, pose 
     add(3, 10, '#70b030'); aim(9.5); expect(page.count).toBe(1); expect(pool.snapshot().instances).toBe(2); expect(pool.has(1)).toBe(true);
     aim(0); expect(pool.snapshot().figures.filter(f => f.drawn).map(f => f.id)).toEqual([1]); expect(pool.drawn().find(f => f.id === 1)!.x).toBe(0);
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
+
+test('Q-166 identity corpse roots skip page world composition without changing placement', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const material = new MeshLambertNodeMaterial(), scene = new Scene();
+  for (const automatic of [true, false]) {
+    const pool = new StaticCorpses(); pool.matrixWorldAutoUpdate = automatic; scene.add(pool);
+    const e = { id: 7, corpse: true } as EntitySnapshot, placement = new Matrix4().makeRotationY(.7).setPosition(2, .44, 3);
+    try {
+      pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, placement, new Color('white'), [0, 0, 0]);
+      const page = pool.children[0] as InstancedMesh, compose = vi.spyOn(page.matrixWorld, 'multiplyMatrices');
+      scene.updateMatrixWorld(true); scene.updateMatrixWorld(true);
+      expect(page.matrixWorldAutoUpdate).toBe(automatic);
+      expect(compose.mock.calls.length).toBe(automatic ? 2 : 0);
+      expect(page.matrixWorld.equals(new Matrix4())).toBe(true);
+      const actual = new Matrix4(); page.getMatrixAt(0, actual);
+      expect(actual.elements).toEqual(placement.elements.map(Math.fround));
+    } finally { scene.remove(pool); pool.dispose(); }
+  }
+  baked.geometry.dispose(); material.dispose();
 });

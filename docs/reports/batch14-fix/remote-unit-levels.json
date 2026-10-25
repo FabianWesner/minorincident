@@ -1,0 +1,28 @@
+{
+  "command": "npx vitest run tests/unit tests/levels tests/sim/missions/l7-encounters.test.ts tests/sim/missions/l10-finale.test.ts tests/sim/missions/l3-base-gates.test.ts tests/sim/ai/mega-pursuit.test.ts tests/sim/combat/projectile-lead.test.ts --maxWorkers=4",
+  "runner": "2.31.10.108",
+  "exitCode": 0,
+  "success": true,
+  "passedFiles": 490,
+  "skippedFiles": 3,
+  "passedTests": 2687,
+  "failedTests": 0,
+  "pendingTests": 9,
+  "sourceHashes": {
+    "src/sim/ai/MegaPursuit.ts": "729ca0925339f715fa02e139948b6e297a7f7e827710d1a887e1173c2e102f27",
+    "src/sim/combat/AimAssist.ts": "49f6220e2fb7107d2e917ac40a6347fc9960e6d464e10e81cab83a5a02b3f4ca",
+    "src/sim/combat/Combat.ts": "85069292f07269b9365bed9166f41ed4a576106fcb83c4489bef7c30e21ebb30",
+    "src/sim/entities/Player.ts": "75e6ba42282bcb0f31d4e418063892682c38a6e76cf49ca48f50215fdd6ba3e7",
+    "src/sim/missions/LevelEightZoo.ts": "16908c9b5e0610db27f7b25a933659b2d87badb49ff4b651a6435dfda4f54d7e",
+    "src/sim/missions/LevelFourWar.ts": "a36596bd82fb601dab1eae6778b433ccdf9c832aea7bc2d576f5f857579badad",
+    "src/sim/missions/LevelSevenEncounters.ts": "84a7b8413cf0744827722188d6098fd614e22ae3447fd69fceb66a24728c3ee2",
+    "src/sim/missions/LevelSixSubway.ts": "f69d15278ad24323fba95a7b07caa28bdf31f8171411f96625ebaf2ff9f73cf7",
+    "src/sim/missions/LevelThreeCollapse.ts": "9aabc1fd46f8beec496adaaa6bce203070467a9cdaf376ecdad3a29fd67227a2",
+    "src/sim/npc/defence.ts": "4b3458641c5642796cdbbe616831c55de886480614cc337aed0751df96362b8b",
+    "src/sim/npc/types.ts": "e505c3403a9fe1340d43d5d870f357a0dabd2675365e689afac4d5f13f492f46",
+    "src/ui/Hud.ts": "2f70a92456eca2bbcf353e2601f89244a4c63398a5e7499863a8f478e1ac19f8",
+    "src/ui/MissionUI.ts": "7d1d387a262bb8f314951ae1a76e5d5e95f5d7019333763f8f6e3c57a0f4dd94"
+  },
+  "receiptSha256": "e308f7fb9654ef87f1eb9b2ed6508d6649e760204b19532b838c75690188dd18",
+  "failures": []
+}

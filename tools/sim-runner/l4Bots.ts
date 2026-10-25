@@ -33,7 +33,7 @@ export async function loadL4(seed: number, tier: 'high' | 'low' = 'high'): Promi
 }
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 
-export function runL4(world: SimWorld, mission: Mission, profile: L4Profile, opts: { seed?: number; route?: L4RouteChoice; maxSeconds?: number; stopWhen?: (m: Mission) => boolean; god?: boolean } = {}): L4Report {
+export function runL4(world: SimWorld, mission: Mission, profile: L4Profile, opts: { seed?: number; route?: L4RouteChoice; maxSeconds?: number; stopWhen?: (m: Mission) => boolean; god?: boolean; zoom?: number } = {}): L4Report {
   const bot = new LevelFourBot(world, profile, opts.route ?? 'auto'), maxTicks = (opts.maxSeconds ?? 600) * 60, start = world.tick;
   if (opts.god) world.combat!.damage.god = true;
   const timeline: L4Report['timeline'] = [], deathsAt: string[] = [], tank: number[] = [], edges = new Set<number>();
@@ -56,7 +56,7 @@ export function runL4(world: SimWorld, mission: Mission, profile: L4Profile, opt
     maxConcurrent = Math.max(maxConcurrent, world.infected!.director.count);
     let humans = 0; for (const e of world.entities.iterate()) if (e.civilian && !e.infection && e.health.current > 0 && !e.hidden) humans++;
     maxCharacters = Math.max(maxCharacters, humans + world.infected!.active.filter(e => e.health.current > 0).length);
-    followFrustum(world); world.applyInput(bot.sample(), 'keyboard'); world.update();
+    followFrustum(world, opts.zoom ?? 1); world.applyInput(bot.sample(), 'keyboard'); world.update();
   }
   offs.forEach(off => off()); world.clearInput(); world.combat!.damage.god = false;
   const s = mission.state.l4!, hazards = [...world.entities.iterate()].filter(e => e.hazard?.kind === 'fire').length;

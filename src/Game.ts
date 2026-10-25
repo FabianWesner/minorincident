@@ -16,6 +16,7 @@ import { l5 } from './data/l5';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { heldAction } from './sim/progression/selection';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel } from './sim/progression/carryover';
@@ -66,6 +67,7 @@ export class Game {
   private readonly rescueFade = new RescueFade();
   readonly ticker = new Ticker();
   campaign: CampaignSave | null = null;
+  private appliedCampaign: CampaignSave | null = null;
   /** Anonymous play telemetry (src/telemetry), installed after boot on the live site; null in tests and local dev. */
   telemetry: TelemetrySink | null = null;
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
@@ -346,7 +348,6 @@ export class Game {
     else this.campaignUI.credits(save);
   }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
-    const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
     // ?debug=1 starts locked levels from the level list (PO #76); the save's progress is not changed by it.
@@ -356,22 +357,27 @@ export class Game {
     // Settings can save the previous live world: clear its resume only after those updates.
     // An explicit level is a whole-level restart; the menu's Resume action omits it.
     if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
-    await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
-      // A fresh handover equips the carried firearm; menu Resume keeps its loadout selection.
-      if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
-    }, record: true } : undefined);
+    await this.loadLevel(`L${level??save.unlockedLevel}`);
     this.view.settings(settings);
   }
-  applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
+  applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.appliedCampaign=this.campaign;this.view.update(1);}}
   saveCampaign():boolean {
     if(!this.campaign)return false;
-    if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
-    if (this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
+    const liveCampaign = this.appliedCampaign === this.campaign && !!this.world.progression?.campaign;
+    const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
+    // New-game and Continue settings may save before their campaign owns the live world.
+    if (liveCampaign && !this.loading && held && this.world.scenario === `L${this.campaign.unlockedLevel}` && (phase === 'playing' || phase === 'retry')) {
+      this.campaign.selectedAction = heldAction(held);
+      this.campaign.racks = { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) };
+      for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
+    }
+    if (liveCampaign && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
+    if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
       this.campaign.cureResume = { ...this.world.missions.saveResume(), cameraZoom: this.view.view.getState().targetZoom };
     }
-    if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
+    if(liveCampaign){this.world.progression!.campaign=structuredClone(this.campaign);}
     return this.saves.write(this.campaign);
   }
   campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}

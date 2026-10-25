@@ -66,6 +66,16 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
+  // L4's breached heavy can be finished only by a nearby soldier. The shared
+  // down/recovery rule remains intact for the player and every other level.
+  const finishable = (target: EntitySnapshot) => {
+    const p = target.transform, wall = l4.perimeter;
+    return !!world.missions?.def.l4 && a.role === 'soldier' && !!a.gun
+      && target.archetype === 'infected.alpha' && target.health.current <= 0
+      && (target.infected?.recoverAt ?? -1) >= tick && !target.corpse
+      && p.x > wall.x0 && p.x < wall.x1 && p.z > wall.z0 && p.z < wall.z1
+      && dist(p, e.transform) <= 6;
+  };
   // The army covers the retreat. Continue the ordinary self-defence shot while moving through the open checkpoint.
   if (world.missions?.def.l3 && a.follow && a.run && player && player.transform.x > l3.finale.passX && e.transform.x < l3.map.zoneX && c.state !== 'grabbed') {
     npcs.move(e, a.run, a.follow.moveMs, c, .5);
@@ -73,6 +83,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
   const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
+  // L4 armed civilians protect their own patch or the real shelter they use;
+  // they do not leave the camp to hunt a distant street wave.
+  const civilianDefence = (target: EntitySnapshot) => {
+    if (a.role !== 'civilian' || !world.missions?.def.l4) return true;
+    const haven = c.l1?.haven;
+    return dist(target.transform, e.transform) <= 8 || !!haven && Math.hypot(target.transform.x - haven.x, target.transform.z - haven.z) <= 8;
+  };
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
   // Police keep the strict rule everywhere (PO 10-12: "Ideally the Zombies will win against police") and only shove off screen.
@@ -81,16 +98,16 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const onScreen = a.role === 'officer' || allyOnScreen(world, e.transform);
   const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
     || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM;
-  const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
+  const policeCanEngage = (target: EntitySnapshot) => !target.emerging && policeRule(target) && civilianDefence(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   // Hearing only controls civilian panic and forced work. An ordinary soldier
   // already fighting has no use for this extra line-of-sight scan.
   const audibleThreat = (a.role === 'civilian' || a.forceUntil > tick)
-    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
+    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
   if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
   if (!c.survivor && tick >= (c.dangerUntil ?? 0) && a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
     let close = 0;
-    for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
+    for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
     if (close >= civ.panicInfected) {
       a.panicUntil = tick + ticks(civ.panicS); a.targetId = 0; a.strikeAt = 0; c.story = null;
       c.state = 'flee'; c.entered = tick; c.until = tick; if (c.l1) c.l1.repickAt = tick;
@@ -116,10 +133,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Engaged fighters already scan their targets below; only idle fighters and
   // followers considering regrouping consume the separate close-threat result.
   const closeThreat = (!a.engaged || follower)
-    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
+    && ai.active.some(o => (o.health.current > 0 || finishable(o)) && !o.hidden && !o.infected?.hidden && !o.infectionRise && !o.emerging && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
-    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }
@@ -130,14 +147,20 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     const reachM = gun ? (a.follow ? Math.min(gun.rangeM, a.follow.engageM) : gun.rangeM) : shooter ? l2.allies.officer.rangeM + 4 : ff.engageM;
     let target = c.state === 'grabbed' ? world.entities.get(c.attacker) : a.targetId ? world.entities.get(a.targetId) : undefined;
     // Recheck the camera/self-defence rule on cached targets as well as new scans.
-    if (target && !policeCanEngage(target)) { target = undefined; a.targetId = 0; }
+    if (target && (!policeCanEngage(target) || target.health.current <= 0 && !finishable(target))) { target = undefined; a.targetId = 0; }
     if (c.state !== 'grabbed' && !forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % (a.role === 'soldier' ? 15 : 6) === 0)) {
       // Soldiers concentrate on visible Alphas within their firing range; other allies keep the rescue priority.
       let best: EntitySnapshot | undefined, score = Infinity;
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       const compound = world.missions?.def.l3 && a.role === 'soldier';
+      const alphaPriority = (candidate: EntitySnapshot | undefined) => {
+        if (a.role !== 'soldier' || candidate?.archetype !== 'infected.alpha') return 0;
+        if (finishable(candidate)) return 3;
+        const p = candidate.transform, wall = l4.perimeter;
+        return world.missions?.def.l4 && p.x > wall.x0 && p.x < wall.x1 && p.z > wall.z0 && p.z < wall.z1 ? 2 : 1;
+      };
       for (const o of ai.active) {
-        if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise) continue;
+        if (o.health.current <= 0 && !finishable(o) || o.hidden || o.infected?.hidden || o.infectionRise) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
         const defending = a.role === 'officer' && d <= pt.defendM;
         // Half a metre of hysteresis: a fighter stepping between firing positions keeps a target at the edge of its range.
@@ -153,11 +176,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         // next outside pursuer. Visibility, cover, range and friendly-fire clearance still apply.
         const breach = compound && o.transform.x >= l3.map.zoneX;
         const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0) - (breach ? l3.soldiers.coverM : 0);
-        const alpha = a.role === 'soldier' && o.archetype === 'infected.alpha';
-        const bestAlpha = a.role === 'soldier' && best?.archetype === 'infected.alpha';
+        const alpha = alphaPriority(o), bestAlpha = alphaPriority(best);
         // A candidate that cannot outrank the current visible choice needs no
         // cover rays. Keep the exact Alpha/rescue/current-target score and ties.
-        if (((alpha && !bestAlpha) || (alpha === bestAlpha && s < score)) && visible(e.transform, o.transform, o.id)) { score = s; best = o; }
+        if ((alpha > bestAlpha || (alpha === bestAlpha && s < score)) && visible(e.transform, o.transform, o.id)) { score = s; best = o; }
       }
       if (best && best.id !== a.targetId && (defence(best) || heard(best))) a.nextAttack = Math.min(a.nextAttack, tick + 15);
       if (best && best.id !== a.targetId && a.role === 'soldier' && dist(best.transform, e.transform) < 5) callout(world, e, "They're inside!");
@@ -170,9 +192,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id)
         && (!shooter || a.baton || world.combat!.query.alliedShotClear(e, victim, tick) && inView(victim));
       if (!allowed) a.baton = false;
-      if (allowed && victim?.infected && victim.health.current > 0 && world.combat) {
+      if (allowed && victim?.infected && (victim.health.current > 0 || finishable(victim) && dist(e.transform, victim.transform) <= 2.4) && world.combat) {
         const dx = victim.transform.x - e.transform.x, dz = victim.transform.z - e.transform.z, d = Math.hypot(dx, dz);
-        if (a.baton) {
+        if (a.baton && !finishable(victim)) {
           // Police shove/baton at arm's length: heavy stagger and knockback, little damage.
           a.baton = false;
           if (d <= pt.batonReachM * 1.15) world.combat.damage.apply({ attackId: 0, actionId: 'weapon.fists', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: pt.batonDamage, multiplier: 1, type: 'melee', knockback: victim.archetype === 'infected.alpha' ? 0 : .6, stagger: victim.archetype === 'infected.alpha' ? 0 : .5 });
@@ -182,7 +204,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
           const hit = d <= gun.rangeM + .5 && new Rng(world.seed, `ally-shot:${e.id}:${a.hits}`).next() < gunHitChance(gun, d);
           world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role, ...(a.weapon ? { weapon: a.weapon } : {}), hit, from: { x: e.transform.x, z: e.transform.z }, to: { x: victim.transform.x, z: victim.transform.z } });
           // An Alpha (E07 heavy) shrugs off allied rifle stagger; damage is unchanged (l4-collapse: crowds of soldiers otherwise pin it forever).
-          if (hit) world.combat.damage.apply({ attackId: 0, actionId: a.actionId ?? 'weapon.pistol', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: 0, stagger: victim.archetype === 'infected.alpha' ? 0 : .25 });
+          if (hit) world.combat.damage.apply({ attackId: 0, actionId: a.actionId ?? 'weapon.pistol', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: gun.damage, multiplier: 1, type: 'bullet', permanent: finishable(victim), knockback: 0, stagger: victim.archetype === 'infected.alpha' ? 0 : .25 });
         } else {
           const def = shooter ? l2.allies.officer : ff, reach = shooter ? (a.range ?? l2.allies.officer.rangeM) + 4 : ff.reachM * 1.1;
           if (d <= reach) world.combat.damage.apply({ attackId: 0, actionId: shooter ? 'weapon.pistol' : 'weapon.fire-axe', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: def.damage, multiplier: 1, type: shooter ? 'bullet' : 'melee', knockback: shooter ? 0 : .3, stagger: shooter ? .25 : .1 });
@@ -194,8 +216,17 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     if (c.state === 'grabbed' && target) a.targetId = target.id;
     if (target) {
       if (!visible(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
+      const finishing = finishable(target);
+      if (finishing && dist(e.transform, target.transform) > 2.2) {
+        c.story = null; a.step = undefined;
+        npcs.move(e, target.transform, a.runSpeed, c, 2.1);
+        return true;
+      }
+      // Completing an L4 fallback while firing must release the run order,
+      // otherwise it suppresses firing-position movement forever at the post.
+      if (world.missions?.def.l4 && a.run && dist(e.transform, a.run) <= .35) a.run = null;
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
-      if (c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
+      if (!finishing && c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
         if (a.run && !subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);
         else if (follower && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform);
       }
@@ -203,7 +234,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const reach = defence(target) ? Math.max(reachM, pt.defendM) : gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
       if (d > reach * .9 && !a.hold && !a.follow && !a.run) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
       // The travel-facing interval lowers the gun while the fighter keeps its retreat order.
-      if (travelFacing) return true;
+      if (travelFacing && !finishing) return true;
       e.transform.yaw = -Math.atan2(dz, dx);
       const reloading = tick < (a.reloadUntil ?? 0);
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot' && !reloading) c.story = { clip: 'shoot', start: tick };
@@ -211,7 +242,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       // A subway guard catching the column keeps shooting, but a firing-position
       // backstep must not override its retreat movement. Contact shoves still run.
       const columnRun = a.run && c.survivor?.mode === 'follow' && !!world.missions?.state.l6;
-      if (shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && (!columnRun || d <= pt.batonReachM) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
+      if (!finishing && shooter && !a.strikeAt && (a.role === 'officer' || !a.run) && (!columnRun || d <= pt.batonReachM) && e.transform.y < 2.5 && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach + (shooter ? .5 : 0) && tick >= a.nextAttack && world.combat) {
         // A person in the line of fire holds the shot (never a friendly-fire roll).
         // After a second of waiting the shooter sidesteps to clear it (nobody stands for long behind someone).

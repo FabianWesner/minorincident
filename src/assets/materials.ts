@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { Mesh, Scene, type Material, type Object3D } from 'three/webgpu';
+import { Color, Mesh, Scene, type Texture, type Material, type Object3D } from 'three/webgpu';
 import { palette, type PaletteToken } from '../data/palette';
 import { Materials } from '../render/Materials';
 import { Lighting } from '../render/Lighting';
@@ -20,6 +20,11 @@ export class AssetMaterials {
         // Legacy vehicle panes use 52–88% alpha, which still conceals seats at
         // the game lens. Keep their tint and lower authored alpha, with clear glazing.
         const opacity = vehicle && source.transparent ? Math.min(source.opacity, .25) : source.opacity;
+        const importedTexture = source as Material & { map?: Texture; color?: Color };
+        if (root.userData.assetTextureMode === 'baseColor' && importedTexture.map) {
+          if (world || source.transparent || source.alphaTest || !node.geometry.hasAttribute('uv')) throw new Error('Figure atlas requires opaque TEXCOORD_0');
+          return this.shading.fromTexture(source.name, importedTexture.map, importedTexture.color ?? new Color(0xffffff), source.side);
+        }
         const match = source.name.match(/^(pal|emi)_(.+)$/);
         if (!match || !Object.hasOwn(palette, match[2])) {
           const imported = source as Material & { color?: import('three').Color };

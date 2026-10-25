@@ -1,0 +1,55 @@
+{
+  "tests": [
+    {
+      "file": "levels/L4-movement.test.ts",
+      "name": "@E22 cellar guidance gives a reachable turn from the armory chair corner",
+      "status": "passed",
+      "durationMs": 3839.8888100001495
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "finale staging keeps the authored distance and chooses a connected approach outside sealed factory pockets",
+      "status": "passed",
+      "durationMs": 52.47630799992476
+    },
+    {
+      "file": "sim/combat/projectile-lead.test.ts",
+      "name": "projectile assistance preserves deliberate interception lead while direct and hitscan aim retain body snap",
+      "status": "passed",
+      "durationMs": 78.20402900036424
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "resuming a late L10 save clears expired player stagger on the new clock",
+      "status": "passed",
+      "durationMs": 24.485092999995686
+    },
+    {
+      "file": "sim/missions/l3-base-gates.test.ts",
+      "name": "evacuation names the living officer still outside and updates the remaining distance",
+      "status": "passed",
+      "durationMs": 1433.9034389997832
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "L6 ambient strolling speed is not an injury; explicit and legacy story injuries survive L7 entry",
+      "status": "passed",
+      "durationMs": 1093.0618300000206
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "a distant L7 follower routes around the building rather than snapping its local goal back to the same wall",
+      "status": "passed",
+      "durationMs": 1920.3164050000487
+    }
+  ],
+  "hashes": {
+    "tests/sim/missions/l7-encounters.test.ts": "aed72ec842a782fe688f4b10a6f61796e8d79274a872c6329a496ba2a2cd5eb9",
+    "tests/sim/combat/projectile-lead.test.ts": "c6018e9f48cd6cbc23237cfbff70be34ecf4b921c968aacacb8cdeffc9eac9d5",
+    "tests/sim/ai/mega-pursuit.test.ts": "5ab22e0bef0db16af474eda9864d7896864a0373194e64020defb1b804fdc144",
+    "tests/levels/L4-movement.test.ts": "a78002acedd0871ac00cb349d30827646c9911897619fb404562eacb1358451a",
+    "tests/sim/missions/l10-finale.test.ts": "5ed3613596e28658eb7ad4b0292a8a56837fed92a42b4a6f74627eb385f6edc9",
+    "tests/sim/missions/l3-base-gates.test.ts": "5d1812b8c117f95e523622d47b66f3aec36c630cff12edf198a0804682953de6"
+  },
+  "existingThresholdChanges": false
+}

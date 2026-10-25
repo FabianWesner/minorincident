@@ -19,11 +19,14 @@ export class AssetRegistry {
   private readonly definitions: Map<string, AssetDef>;
   private readonly cache = new Map<string, Promise<Object3D>>();
   private readonly materials: AssetMaterials;
+  private readonly figureTextures = new Set<import('three').Texture>();
   private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
-  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; materials?: Materials } = {}) {
+  private readonly textureSize: 512 | 1024;
+  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; materials?: Materials; textureSize?: 512 | 1024 } = {}) {
     this.materials = new AssetMaterials(options.materials);
+    this.textureSize = options.textureSize ?? 1024;
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
@@ -52,7 +55,7 @@ export class AssetRegistry {
     return (await pending).clone(true);
   }
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
-    const def = this.definition(id);
+    const def = this.definition(id); id = def.id;
     // Abilities and UI entries deliberately have no geometry or placeholder.
     if (def.nonModel) { const root = new Group(); root.name = id; root.userData.assetId = id; return root; }
     const requested = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
@@ -82,7 +85,8 @@ export class AssetRegistry {
         const root = new Group(); root.add(mesh); return root;
       } catch (error) { return fallback(String(error)); }
     }
-    const path = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb);
+    const highPath = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb);
+    const path = def.textureMode && this.textureSize === 512 ? highPath.replace(/\.glb$/, '.low.glb') : highPath;
     if (!path) return fallback(`missing ${lod}`);
     let root: Object3D | undefined;
     try {
@@ -102,10 +106,18 @@ export class AssetRegistry {
         }
       }
       root.userData.assetId = def.id;
+      root.userData.assetTextureMode = def.textureMode;
+      if (def.textureMode) root.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+          const map = (material as import('three').MeshStandardMaterial).map;
+          if (map) this.figureTextures.add(map);
+        }
+      });
       root.userData.diner = def.id === 'bld.joes-diner';
-      root.userData.paletteWorld = !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
+      root.userData.paletteWorld = !def.textureMode && !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
       if (vehicleDecayFallback(def, decay)) applyVehicleDecay(root, decay!);
-      this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
+      this.materials.swap(root, !def.textureMode && !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
       return root;
     } catch (error) {
       root?.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
@@ -121,6 +133,21 @@ export class AssetRegistry {
       return fallback(String(error));
     }
   }
+  /** Decoded RGBA8 atlas allocation, including generated mip levels (not file bytes). */
+  textureMemory(): { count: number; decodedBytes: number } {
+    let decodedBytes = 0;
+    for (const map of this.figureTextures) {
+      const image = map.image as { width?: number; height?: number } | undefined;
+      let width = image?.width ?? 0, height = image?.height ?? 0;
+      if (!width || !height) continue;
+      do {
+        decodedBytes += width * height * 4;
+        if (!map.generateMipmaps || width === 1 && height === 1) break;
+        width = Math.max(1, Math.floor(width / 2)); height = Math.max(1, Math.floor(height / 2));
+      } while (true);
+    }
+    return { count: this.figureTextures.size, decodedBytes };
+  }
   async dispose(): Promise<void> {
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>();
     for (const pending of this.cache.values()) (await pending).traverse((node) => {
@@ -132,6 +159,8 @@ export class AssetRegistry {
     for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
+    for (const texture of this.figureTextures) texture.dispose();
+    this.figureTextures.clear();
     this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
   }
 }

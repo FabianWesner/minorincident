@@ -178,7 +178,10 @@ export class InfectedSystem {
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infected!.scripted; delete entity.infected!.clearingStreet;
+    // A released tent resident no longer owns its old doorway. Pooled street
+    // arrivals must receive normal movement and body separation again.
+    delete entity.emerging; delete entity.doorLane;
+    delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
@@ -292,7 +295,8 @@ export class InfectedSystem {
       }
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (b.scripted && !b.specialAttack) {
-        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
+        const breachSpeed = b.breachApproach ? b.l1?.runSpeed : undefined;
+        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, breachSpeed);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       const provoker = this.provoker(e, b);
@@ -558,7 +562,7 @@ export class InfectedSystem {
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
       if (target && target.health.current > 0 && (target.barricade || target.kind === 'physics-prop' ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
-        const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+        const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage) * (e.archetype !== 'infected.alpha' ? target.barricade?.slot.hordeShare ?? 1 : 1), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }
       return true;
@@ -636,6 +640,8 @@ export class InfectedSystem {
   /** Downed infected stay active and groan once on the ground; at `recoverAt` they get up at full health and hunt by sight again. */
   private recover(e: EntitySnapshot): void {
     const b = e.infected!, c = e.combat!, tick = this.world.tick, getUp = Math.round(infectedRecovery.getUpS * 60);
+    // Tent residents wait for a clear footprint before visibly standing back up.
+    if (this.world.scenario === 'L4' && e.emerging && !this.world.solids.clear(e.transform, e.combat!.radius, e.id)) return;
     e.health.current = e.health.max; b.recoverAt = -1; b.deadAt = -1; b.grabUntil = 0; b.until = 0; b.cooldown = tick + getUp; b.targetId = 0; b.heardTargetId = 0;
     c.attacking = false; c.statuses.length = 0; c.staggerUntil = tick + getUp;
     // The CrowdView heavy reaction plays `get-up` from its 0.7 s mark: start the reaction there and hold still meanwhile.
@@ -742,11 +748,14 @@ export class InfectedSystem {
     return sent;
   }
   /** Director pressure: rush to a human and prefer it over nearer bystanders until `untilTick` (L4 alarm on the courier). */
-  press(id: number, targetId: number, untilTick: number): boolean {
+  press(id: number, targetId: number, untilTick: number, focusBiasM?: number): boolean {
     const target = this.world.entities.get(targetId), brain = this.world.entities.get(id)?.infected?.l1;
-    if (!target || !brain || !this.rush(id, target.transform, untilTick)) return false;
+    if (!target || !brain) return false;
+    // An emerging resident may already have seen a defender on this tick.
+    // Keep the pressure preference even when its live chase owns movement.
     brain.focusId = targetId; brain.focusUntil = untilTick;
-    return true;
+    if (focusBiasM !== undefined) brain.focusBiasM = focusBiasM; else delete brain.focusBiasM;
+    return this.rush(id, target.transform, untilTick);
   }
   private goTo(id: number, point: { x: number; z: number }, untilTick: number, distractionId: number): boolean {
     const e = this.world.entities.get(id), brain = e?.infected?.l1;
@@ -775,6 +784,9 @@ export class InfectedSystem {
     for (const e of this.active) {
       const brain = e.infected!.l1;
       if (!brain || e.health.current <= 0 || brain.distractionId === event.id) continue;
+      // L4's finite street arrivals keep their camp destination through distant
+      // rifle reports; visible people can still interrupt via perception.
+      if (this.world.scenario === 'L4' && brain.mode === 'attracted' && brain.search.completeApproach) continue;
       if (Math.hypot(e.transform.x - event.position.x, e.transform.z - event.position.z) > event.radius) continue;
       this.goTo(e.id, event.position, event.until + l1Ticks(low + rng.next() * (high - low)), event.id);
     }
@@ -962,6 +974,10 @@ export class InfectedSystem {
     const contact = e.combat!.radius + (this.world.entities.get(target.id)?.combat?.radius ?? .35) + .3;
     if (distance <= contact && this.l1!.lineOfSight(e.transform, target.position)) { this.startBite(e, b, brain, target); return; }
     this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
+    // L4 high resolves contact reached during this move. Separation runs afterward;
+    // checking only before steering can leave a moving human just outside the
+    // grab boundary on every tick, despite the runner reaching it each time.
+    if (this.world.scenario === 'L4' && this.director.tier === 'high' && Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= contact && this.l1!.lineOfSight(e.transform, target.position)) this.startBite(e, b, brain, target);
   }
   private startBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, target: HumanTarget): void {
     const tick = this.world.tick, victim = this.world.entities.get(target.id);
@@ -1011,7 +1027,10 @@ export class InfectedSystem {
       s.next = 0; brain.mode = 'search'; b.state = 'attracted'; brain.looking = true; brain.lookYaw = e.transform.yaw + 1.2; brain.pauseUntil = tick + 30;
       return;
     }
-    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed * 0.85);
+    // A directed L4 pursuit must close on retreating soldiers at its normal
+    // chase pace; the slower sound-investigation walk let the army kite it.
+    const retreat = this.world.missions?.state.l4?.director.lines[2].brokeAt && brain.focusId && brain.focusId !== 1 && tick < (brain.focusUntil ?? 0);
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed * (retreat ? 1 : .85));
   }
   private searchL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
     const s = brain.search, tick = this.world.tick, rng = this.l1Rng!;

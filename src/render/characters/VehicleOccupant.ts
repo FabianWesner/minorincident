@@ -48,10 +48,22 @@ export class VehicleOccupant extends Group {
       const model = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(url)).scene;
       alignSkeleton(model);
       const material = materials.fromVertexColors(`vehicle:${asset}`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
-      const old = new Set<import('three').Material>();
-      model.traverse(node => { if (node instanceof Mesh) { for (const m of Array.isArray(node.material) ? node.material : [node.material]) old.add(m); node.material = material; node.castShadow = node.receiveShadow = true; } });
+      const old = new Set<import('three').Material>(), releases: (() => void)[] = [];
+      model.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const source = (Array.isArray(node.material) ? node.material[0] : node.material) as import('three').MeshStandardMaterial;
+        for (const m of Array.isArray(node.material) ? node.material : [node.material]) old.add(m);
+        // Textured bodies (female courier) keep their map through the shared texture route.
+        const map = source.name === 'tex_baseColor' ? source.map as import('three/webgpu').Texture | null : null;
+        if (map) {
+          const textured = materials.fromTexture(`vehicle:${asset}:tex`, map); textured.movingFigure.value = 1; textured.userData.sharedPalette = true;
+          node.material = textured; releases.push(() => { materials.releaseTexture(map); map.dispose(); });
+        } else node.material = material;
+        node.castShadow = node.receiveShadow = true;
+      });
       for (const m of old) m.dispose();
-      return new VehicleOccupant(actorId, asset, model, true);
+      const occupant = new VehicleOccupant(actorId, asset, model, true); occupant.releases = releases;
+      return occupant;
     }
     const model = await registry.loadAsset(asset, 'lod1');
     // Registry clones share their source resources; batching owns copies only.
@@ -69,7 +81,8 @@ export class VehicleOccupant extends Group {
     });
     return new VehicleOccupant(actorId, asset, model, true);
   }
-  dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); this.removeFromParent(); }
+  private releases: (() => void)[] = [];
+  dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
   pose(seat: Object3D, wheel?: Vector3, fit = 1, driverLean = -.5): void {
     // Compact car cushions/roofs are authored for smaller seated figures than the standing hero.

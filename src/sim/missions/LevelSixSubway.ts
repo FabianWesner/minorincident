@@ -352,6 +352,7 @@ export class LevelSixSubway {
     const s=this.s,out=s.survivors.filter(r=>r.status==='out');
     const escapedSurvivors=out.map(r=>{
       const e=structuredClone(this.w.entities.get(r.id)!);
+      if(e.civilian?.survivor)e.civilian.survivor.injured=r.injured;
       // Carried shelter residents can retain their earlier routine walk speed;
       // serialize the injury speed actually used by the L6 group follower.
       if(r.injured&&e.civilian?.l1)e.civilian.l1.walkSpeed=Math.min(e.civilian.l1.walkSpeed,1.4);

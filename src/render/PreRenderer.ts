@@ -1,5 +1,5 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
-import { InstancedMesh, Light, LineSegments, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type DataTexture } from 'three/webgpu';
+import { InstancedMesh, Light, LineSegments, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type Texture } from 'three/webgpu';
 import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
@@ -161,10 +161,11 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // pipeline compilation and blocks the renderer. Live/background loading keeps
     // its 4 MiB paint budget; cold foreground loading has an opaque card.
     if (pause) {
-      const textures = new Set<DataTexture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
+      const textures = new Set<Texture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
       let bytes = 0;
       for (const texture of textures) {
-        const size = texture.image.data?.byteLength ?? 0;
+        const image = texture.image as { data?: { byteLength: number }; width?: number; height?: number };
+        const size = image.data?.byteLength ?? (image.width ?? 0) * (image.height ?? 0) * 4;
         if ((background || cooperative) && bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
         renderer.initTexture(texture); bytes += size;
       }

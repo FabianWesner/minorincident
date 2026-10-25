@@ -3,6 +3,8 @@ import { action, catalog } from '../../data/actions/catalog';
 import type { ActionDef } from '../../data/actions/schema';
 import type { SimWorld } from '../world/SimWorld';
 import { gearTier,modifiers,powerScore,rackSize,type CampaignSave } from './Campaign';
+import { restoreSelectedAction } from './selection';
+export { restoreSelectedAction } from './selection';
 /** Materialize once at a level/loadout boundary, never in a simulation/render tick. */
 export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   const m=modifiers(save),defs:Record<string,ActionDef>={};
@@ -39,7 +41,16 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   player.entity.health.max=100+m.health;player.entity.health.current=player.entity.health.max;
   player.progressionSpeed=(4.5+m.speed)/4.5;player.select(save.character,gearTier(save));
   if(world.vehicles){world.vehicles.progressionArmor=m.ramArmor;world.vehicles.progressionBoost=1+m.boost;}
-  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
+  if(world.combat){
+    const level=/^L([1-9]|10)$/.exec(world.scenario??'');
+    const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);
+    world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);
+    if(save.selectedAction!==undefined){
+      save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,save);
+      world.progression.campaign!.selectedAction=save.selectedAction;
+    }
+    if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;
+  }
 }
 /** The racks a level starts with. The level's rack size is a floor, never a cut: a rack that grew by a pickup (L5's basement
  * shotgun, Pickups' extra slot) is carried whole (E24: "The player keeps the existing arsenal"; P1 10-20 lost shotgun in L6). */

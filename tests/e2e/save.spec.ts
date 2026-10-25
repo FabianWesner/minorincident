@@ -15,7 +15,8 @@ test('@E13 @E13-AC05 L1 completion saves before Continue; reload unlocks L2 and 
     const bike = a.getState().entities.find(e => e.kind === 'bicycle')!;
     a.teleport(bike.id, { x: 20, z: 10 });
     const gate = a.getState().entities.find(e => e.interactable?.label === 'Gate')!;
-    a.teleport('player', { x: gate.transform.x + .8, z: gate.transform.z });
+    // Stand perpendicular to the hinge so companion protection has a defined inside.
+    a.teleport('player', { x: gate.transform.x - Math.sin(gate.transform.yaw) * .8, z: gate.transform.z + Math.cos(gate.transform.yaw) * .8 });
     a.input.set({ interact: true }); await a.step(1); a.input.clear();
     if (a.getEntity(gate.id)!.interactable!.open) throw new Error('Gate did not close');
     for (let i = 0; i < 100 && a.missions.state()!.phase !== 'result'; i++) {

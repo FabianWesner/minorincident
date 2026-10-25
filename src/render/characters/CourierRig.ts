@@ -1,4 +1,4 @@
-import { Quaternion, Vector3, type Object3D } from 'three';
+import { Matrix4, Quaternion, Vector3, type Object3D } from 'three';
 import type { CharacterRig } from './rig';
 
 /** Courier skeleton v2 (assets/char.courier-female-skin/build.py). The runtime joint contract is unchanged;
@@ -117,7 +117,20 @@ export class CourierLiving {
     this.irisRest = [bones.irisL.position.clone(), bones.irisR.position.clone()];
     for (let i = 0; i < bones.pony.length; i++) this.pony.push({ p: new Vector3(), prev: new Vector3(), length: 0 });
     this.blinkAt = 1.5 + 3 * hash(seed);
+    // Colliders never start inside the rest ponytail: a body whose tail sits closer to the skull (the heroine's high
+    // ponytail, 10-24) shrinks the spheres to its rest clearance instead of being pushed out of its own bind pose.
+    if (bones.pony.length) {
+      rig.root.updateMatrixWorld(true);
+      const scale = rig.head.getWorldScale(this.scratch).y, head = new Vector3(-.03, .17, 0).applyMatrix4(rig.head.matrixWorld), chest = new Vector3(-.04, .02, 0).applyMatrix4(bones.chest.matrixWorld);
+      for (let i = 0; i < bones.pony.length; i++) {
+        const tail = i + 1 < bones.pony.length ? bones.pony[i + 1].getWorldPosition(this.scratch2) : bones.pony[i].localToWorld(this.scratch2.copy(bones.pony[i].position));
+        this.headRadius = Math.min(this.headRadius, tail.distanceTo(head) / scale - .013);
+        this.chestRadius = Math.min(this.chestRadius, tail.distanceTo(chest) / scale - .013);
+      }
+    }
   }
+  private headRadius = .2;
+  private chestRadius = .13;
   present(input: PresentInput): void {
     const fresh = input.evaluation !== this.lastEvaluation;
     for (const [node, q] of this.base) if (fresh) q.copy(node.quaternion); else node.quaternion.copy(q);
@@ -234,8 +247,9 @@ export class CourierLiving {
     head.matrixWorld.decompose(this.scratch, this.ponyRotation, this.ponyScale);
     this.ponyAnchor.setFromMatrixPosition(bones[0].matrixWorld);
     const scale = this.ponyScale.y;
-    this.sphereCenters[0].set(-.03, .17, 0).applyMatrix4(head.matrixWorld); this.sphereRadii[0] = .2 * scale;
-    this.sphereCenters[1].set(-.04, .02, 0).applyMatrix4(this.bones.chest.matrixWorld); this.sphereRadii[1] = .13 * scale;
+    this.sphereCenters[0].set(-.03, .17, 0).applyMatrix4(head.matrixWorld); this.sphereRadii[0] = this.headRadius * scale;
+    this.headInverse.copy(head.matrixWorld).invert();
+    this.sphereCenters[1].set(-.04, .02, 0).applyMatrix4(this.bones.chest.matrixWorld); this.sphereRadii[1] = this.chestRadius * scale;
   }
   private stepPony(h: number): void {
     const bones = this.bones.pony;
@@ -255,11 +269,25 @@ export class CourierLiving {
         const center = this.sphereCenters[c], r = this.sphereRadii[c] + .012 * scale;
         if (next.distanceTo(center) < r) { next.sub(center).setLength(r).add(center); next.sub(parent).setLength(particle.length).add(parent); }
       }
-      particle.prev.copy(particle.p); particle.p.copy(next); parent = particle.p;
+      // Crown plane (Q-172): the tail never swings forward past the skull centre's vertical plane in the head frame, so a 180°
+      // run turn cannot flip it over the crown onto her forehead. The forward overshoot is removed and its velocity dropped.
+      const limited = this.crownLimit(next);
+      if (limited) { next.sub(parent).setLength(particle.length).add(parent); this.crownLimit(next); }
+      particle.prev.copy(limited ? next : particle.p); particle.p.copy(next); parent = particle.p;
     }
     this.ponyReady = true;
     this.stats.tip.copy(this.pony[this.pony.length - 1].p);
   }
+  /** Head-frame crown limit: moves `point` back onto the plane x = crownX (head forward is +x) when it is in front of it. */
+  private crownLimit(point: Vector3): boolean {
+    const local = this.crownScratch.copy(point).applyMatrix4(this.headInverse);
+    if (local.x <= this.crownX) return false;
+    local.x = this.crownX; point.copy(local).applyMatrix4(this.rig.head.matrixWorld); return true;
+  }
+  private readonly headInverse = new Matrix4();
+  private readonly crownScratch = new Vector3();
+  /** Skull-centre plane of the head collider (head-local x); the rest ponytail starts behind it. */
+  private readonly crownX = -.03;
   private applyPony(): void {
     const bones = this.bones.pony;
     if (!bones.length || !this.ponyReady) return;

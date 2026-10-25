@@ -1,10 +1,11 @@
 import { survivor } from '../../data/survivor';
-import { l4PerimeterWalls } from '../../data/l4Perimeter';
+import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4BreachApproaches, l4TentEntrances, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
+import { emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
@@ -26,8 +27,8 @@ const fresh = (): L4State => ({
   phase: 'convoy', rideAt: 0, arrivedAt: 0, gunAt: 0, turnDueAt: 0, turnAt: 0, warAt: 0, lineBreakAt: 0, lineCause: '', descendAt: 0, barredAt: 0, doneAt: 0, markerAt: 0,
   convoyIds: [], convoyS: [], convoyV: 0, seated: false, evacueeIds: [], turnerIds: [], soldierIds: [], qmId: 0, hmgIds: [], residentIds: [], medkitIds: [], armed: [],
   soldiersAtTurn: 0, civiliansAtTurn: 0, infectedAtT30: -1, killsAtBreak: 0, infectedAtBreak: 0, soldiersAtBreak: 0, soldiersAtCellar: 0,
-  alphaIds: [], alphaAnchors: [], wave: 0, waveAt: 0, pend: [0, 0, 0, 0, 0, 0, 0], carIds: [], emergedIds: [], collapseWaveAt: 0, collapseIds: [], collapseWaves: 0, pendingDoor: [], pockets: [],
-  edgeNext: [0, 0, 0, 0, 0, 0, 0], edgeCursor: [0, 0, 0, 0, 0, 0, 0], insideAt: 0, insideCursor: 0, origin: {}, gateIds: [], barkAt: 0,
+  alphaIds: [], alphaAnchors: [], wave: 0, waveAt: 0, pend: [0, 0, 0, 0, 0, 0, 0], carIds: [], emergedIds: [], collapseWaveAt: 0, collapseIds: [], collapseWaves: 0, collapseEdgeCursor: 0, pendingDoor: [], pockets: [], pocketSpawned: {},
+  edgeNext: [0, 0, 0, 0, 0, 0, 0], edgeCursor: [0, 0, 0, 0, 0, 0, 0], insideAt: 0, insideCursor: 0, insidePending: 0, origin: {}, tentDoors: [], alarmPending: 0, alarmCursor: 0, gateIds: [], barkAt: 0,
   tankId: 0, tankS: 0, tankFireAt: 0, tankShots: 0, tankPhase: 'off', heliId: 0, heliAngle: 0, heliPhase: 'off', heliAt: 0, heliBurstAt: 0, heliBurst: 0, heliShots: 0, heliTarget: null,
   hmgBursts: 0, hmgLastAt: {}, fuelId: 0, craterId: 0, burning: [], fires: 0, glass: [], scorch: 0, lastShot: {},
   kills: { player: 0, soldiers: 0, armedCivilians: 0, unarmedCivilians: 0, heli: 0, tank: 0, other: 0 }, director: freshDirector(),
@@ -40,6 +41,7 @@ const fresh = (): L4State => ({
  * All state lives in `mission.state.l4`, so checkpoints restore it.
  */
 export class LevelFourWar {
+  private readonly cellarGuide = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly route = l4Route();
   private readonly stations = l4ConvoyStations(this.route.length);
   private readonly clearance: L4ConvoyClearance;
@@ -48,10 +50,17 @@ export class LevelFourWar {
   constructor(private readonly mission: Mission) {
     this.clearance = new L4ConvoyClearance(mission.world, () => this.s, this.route);
     this.spectacle = new L4Spectacle(mission.world, () => this.s, () => this.allyEntities());
-    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats') });
+    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats'), breachOpen: side => this.breachOpen(side), breachSegments: side => l4Breaches[side].segments.map(i => this.wallSegment(i)).filter((e): e is EntitySnapshot => !!e?.barricade?.intact), announceBreach: (side, id) => this.announceBreach(side, id) });
   }
   private get s(): L4State { return this.mission.state.l4!; }
   private get world() { return this.mission.world; }
+  /** The street turn can lie behind reception furniture. Show its reachable approach. */
+  cellarDistance(next: Point): number {
+    const p = this.world.entities.get(1)!.transform, distance = l4CellarDistance(p, next);
+    const nav = this.world.infected!.nav.forPlayer(survivor.radius + .02, .25);
+    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000, true);
+    return distance;
+  }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
   /** The longer collapse shares the existing cap with the camp. Its street
@@ -62,8 +71,9 @@ export class LevelFourWar {
     return l4CollapseGroups.reduce((sum, group) => sum + Math.ceil((group[3] ?? 0) * (this.low ? .5 : 1)), 0);
   }
   private reserveSlots(): void {
-    const ai = this.world.infected!;
-    ai.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - this.s.alphaIds.length + this.streetReserve();
+    const ai = this.world.infected!, s = this.s;
+    const pockets = s.phase === 'collapse' ? s.pockets.reduce((sum, i) => sum + (this.low ? 3 : 6) - (s.pocketSpawned?.[i] ?? 0), 0) : 0;
+    ai.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + this.streetReserve() + pockets;
     // A bitten human already owns a future slot; scripted emergence must count
     // it just as the ordinary spawn director does (otherwise streets deadlock).
     let turning = 0; for (const e of this.world.entities.iterate()) if (e.infection && !e.infected) turning++;
@@ -128,7 +138,8 @@ export class LevelFourWar {
     this.spawnMedkits();
     this.spectacle.spawnFuelTruck();
     this.clearance.install();
-    world.events.on('sim.tick', () => this.perimeterVaults(), 1.9);
+    // PO 10-23: the wall is the front. A segment breaks only by logged E26 damage; its body/nav blockers go and the horde floods in.
+    world.events.on('barricade.broken', e => { if (e.type === 'barricade.broken' && e.groupId === 'l4-wall') this.wallBroken(e.slotId); });
     this.mission.radio('L4.briefing');
     // Gunfire is a loud event (E22 section 5): the player's machine gun 30 m, HMG 40 m, every other shot 20 m.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === l4.machineGun.id) this.gunshot(1, e.position, 30); });
@@ -390,37 +401,111 @@ export class LevelFourWar {
   // ---------------------------------------------------------------------------------------------------------- the perimeter (PO 10-13)
   private fence: number[] = [];
   private fenceWorld: object | null = null;
-  /** The low military wall blocks every ground body; infected retain their authored vault approach. */
+  /**
+   * The military wall (PO 10-13 solid perimeter; PO 10-23 "make them destructable, so Zombies or alphas can tear them down"): every
+   * segment is an E26 slot (physics, nav and its HP), plus the full-height wire as a body barrier. No vaulting: the horde piles up at
+   * the wire and claws at it until an Alpha tears a breach open (`l4Breaches`).
+   */
   private perimeter(on: boolean): void {
-    const physics = this.world.physics;
+    const physics = this.world.physics, barricades = this.world.barricades;
     if (this.fenceWorld !== physics.world) { this.fence = []; this.fenceWorld = physics.world; }
     const t = this.world.entities.get(1)!.transform, r = l4.perimeter;
     const inside = t.x >= r.x0 + .6 && t.x <= r.x1 - .6 && t.z >= r.z0 + .6 && t.z <= r.z1 - .6;
     this.world.infected!.nav.setPlayerBounds(on && inside ? { x0: r.x0 + .2, x1: r.x1 - .2, z0: r.z0 + .2, z1: r.z1 - .2 } : null);
-    if (!on) { for (const [i, h] of this.fence.entries()) { physics.removeBlocker(h); this.world.solids.setBarrier(l4PerimeterWalls[i].id, null); } this.fence = []; return; }
-    if (this.fence.length || !physics.playerBody) return;
-    for (const wall of l4PerimeterWalls) {
-      this.fence.push(physics.addBlocker(wall));
-      this.world.solids.setBarrier(wall.id, wall);
+    if (!on) {
+      // "Fall back!": the army opens the camp; the remaining wall stops blocking anyone (no break event: nothing was destroyed).
+      for (const [i, slot] of l4WallSlots.entries()) {
+        this.world.solids.setBarrier(slot.id, null);
+        const e = this.wallSegment(i); if (!e?.barricade?.intact) continue;
+        e.barricade.intact = false; e.kind = 'device'; this.world.interactables!.unblock(e.id); this.world.spatial.delete(e.id);
+      }
+      this.fence = []; return;
+    }
+    if (this.fence.length || !physics.playerBody || !barricades) return;
+    for (const [i, slot] of l4WallSlots.entries()) {
+      let e = this.wallSegment(i);
+      if (!e && !this.s.lineBreakAt) { e = this.world.entities.get(barricades.spawn(slot))!; e.faction = 'military-wall'; if (e.interactable) e.interactable.enabled = false; }
+      if (!e?.barricade?.intact) continue;
+      const seg = l4PerimeterSegments[i], alongX = seg.yaw === 0;
+      this.world.solids.setBarrier(slot.id, { x: seg.x, z: seg.z, y: .56, halfY: .56, halfX: alongX ? seg.length / 2 + .01 : .2, halfZ: alongX ? .2 : seg.length / 2 + .01 });
+    }
+    this.fence = [1];
+  }
+  private readonly wallIds: number[] = [];
+  /** The wall segment's E26 entity (cached by slot index; checkpoint loads keep entity ids). */
+  private wallSegment(i: number): EntitySnapshot | undefined {
+    const cached = this.world.entities.get(this.wallIds[i]);
+    if (cached?.barricade?.slot.id === l4WallSlots[i].id) return cached;
+    const e = this.world.entities.values().find(x => x.barricade?.slot.id === l4WallSlots[i].id);
+    if (e) this.wallIds[i] = e.id;
+    return e;
+  }
+  /** Some segment of this breach site is down (infected can path through it). */
+  breachOpen(side: L4BreachSide): boolean { return l4Breaches[side].segments.some(i => { const e = this.wallSegment(i); return !!e && !e.barricade?.intact; }); }
+  /** A breach segment fell: the wire goes with it, and the first fall at a site is the beat (radio, camera, objective ring at the gap). */
+  private wallBroken(slotId: string): void {
+    const i = l4WallSlots.findIndex(x => x.id === slotId); if (i < 0) return;
+    this.world.solids.setBarrier(slotId, null);
+    const side = l4BreachOf(i), s = this.s; if (!side || s.phase !== 'war') return;
+    const breaches = s.breaches ??= {}, b = breaches[side] ??= { announcedAt: 0, openAt: 0 };
+    if (b.openAt) return;
+    const first = !Object.values(breaches).some(x => x && x.openAt);
+    b.openAt = this.world.tick;
+    if (first) this.director.breachLine1();
+    this.mission.radio(`L4.breach-${side}`);
+    if (first && this.mission.def.cinematics[`l4-breach-${side}`]) this.mission.cinematic(`l4-breach-${side}`);
+    this.mission.state.marker = `l4-breach-${side}`;
+  }
+  /**
+   * The flood (PO 10-23 "tear them down and then float oin"): once a breach is open, the pile clawing at the wire runs along it to the
+   * nearest gap and pours through (outside point, then inside point; the order ends once inside). The wall is too long for the budgeted
+   * detour search of a single attacker, so the controller sends them, as it sends the street groups.
+   */
+  private funnel(): void {
+    const open = (['west', 'north', 'south'] as const).filter(side => this.breachOpen(side));
+    const r = l4.perimeter, inside = (p: Point) => p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1;
+    // An attracted infected outside whose goal lies in the camp has no route while the wall stands: its goal becomes the wire in
+    // front of it (the pile at the fence), where the E26 rule makes it claw at the segment in its way.
+    for (const e of this.world.infected!.active) {
+      const l1 = e.infected!.l1; if (!l1 || l1.mode !== 'attracted' || !l1.hasGoal || e.infected!.scripted || e.health.current <= 0 || inside(e.transform) || !inside({ x: l1.goalX, z: l1.goalZ })) continue;
+      const t = e.transform, x = Math.max(r.x0 - 1.2, Math.min(r.x1 + 1.2, t.x)), z = Math.max(r.z0 - 1.2, Math.min(r.z1 + 1.2, t.z));
+      const wire = x > r.x0 && x < r.x1 && z > r.z0 && z < r.z1 ? { x: t.x < r.x0 ? r.x0 - 1.2 : r.x1 + 1.2, z } : { x, z };
+      l1.goalX = wire.x; l1.goalZ = wire.z;
+    }
+    if (!open.length) return;
+    const sites = open.map(side => { const { centre } = l4BreachSite(side), o = l4Breaches[side].out; return { outer: this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45) }; });
+    const player = this.world.entities.get(1)!.transform;
+    for (const e of this.world.infected!.active) {
+      const b = e.infected!; if (e.health.current <= 0 || e.hidden || e.archetype === 'infected.alpha' || b.specialAttack || b.vault) continue;
+      if (b.breachApproach && b.scripted) {
+        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4)) {
+          // Fan out onto the courier's side of the plaza. A group must finish
+          // crossing rather than stop to fight the first guard at the gap.
+          const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
+          const dx = e.transform.x - target.x, dz = e.transform.z - target.z, d = Math.hypot(dx, dz) || 1, lane = (e.id % 5 - 2) * 1.1;
+          b.scripted = this.snap({ x: target.x + dx / d * 6 - dz / d * lane, z: target.z + dz / d * 6 + dx / d * lane }, .45);
+          b.breachApproach = 'inside';
+        } else if (b.breachApproach === 'inside' && (dist(e.transform, b.scripted) < 1.4 || dist(e.transform, this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player) < (this.low ? 9 : 6))) {
+          delete b.scripted; delete b.breachApproach;
+        }
+        continue;
+      }
+      if (inside(e.transform)) continue;
+      if (b.scripted) continue;
+      const t = e.transform, wire = Math.min(Math.abs(t.x - r.x0), Math.abs(t.x - r.x1), Math.abs(t.z - r.z0), Math.abs(t.z - r.z1));
+      if (wire > 4 || t.x < r.x0 - 4 || t.x > r.x1 + 4 || t.z < r.z0 - 4 || t.z > r.z1 + 4) continue;
+      b.scripted = sites.sort((p, q) => dist(p.outer, t) - dist(q.outer, t))[0].outer;
+      b.breachApproach = 'outside';
     }
   }
-  /** An explicit vault lifts the body above the wire before crossing the solid wall. */
-  private perimeterVaults(): void {
-    if (!this.fence.length) return;
-    const nav = this.world.infected!.nav;
-    for (const e of this.world.infected!.active) {
-      const brain = e.infected!;
-      if (brain.vault || e.health.current <= 0 || e.hidden || e.infectionRise || e.attachedTo !== undefined) continue;
-      const t = e.transform, r = l4.perimeter;
-      const side = t.x < r.x0 ? 2 : t.x > r.x1 ? 3 : t.z < r.z0 ? 0 : t.z > r.z1 ? 1 : -1;
-      if (side < 0) continue;
-      const wall = l4PerimeterWalls[side], alongX = side >= 2, axis = alongX ? 'x' : 'z', other = alongX ? 'z' : 'x';
-      if (Math.abs(t[axis] - wall[axis]) > 1 || Math.abs(t[other] - wall[other]) > (alongX ? wall.halfZ : wall.halfX)) continue;
-      const to = { x: t.x, z: t.z }; to[axis] = wall[axis] + (side === 0 || side === 2 ? 1 : -1);
-      const radius = e.combat?.radius ?? .35;
-      // Bodies can leave the landing during the 1.2 s arc; the contact transaction checks each actual pose.
-      if (nav.clear(to.x, to.z, radius) && this.world.solids.clear({ ...to, y: .7 }, radius, e.id, false)) brain.vault = { started: this.world.tick, from: { x: t.x, z: t.z }, to, height: 1.4 };
-    }
+  /** An Alpha is on its way to a breach site: HUD line, minimap pin and ring at the wall, and its roar (heard off screen). */
+  announceBreach(side: L4BreachSide, alphaId: number): void {
+    const s = this.s, breaches = s.breaches ??= {}, b = breaches[side] ??= { announcedAt: 0, openAt: 0 };
+    if (b.announcedAt || b.openAt || s.phase !== 'war') return;
+    b.announcedAt = this.world.tick;
+    this.mission.radio(`L4.alpha-${side}`);
+    this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: alphaId, attackId: 0, special: 'alpha.roar', duration: .6 });
+    if (!Object.values(breaches).some(x => x && x.openAt)) this.mission.state.marker = `l4-breach-${side}`;
   }
   private gateWalls(): CoverWall[] {
     return this.s.gateIds.map(id => this.world.entities.get(id)).filter((e): e is EntitySnapshot => !!e).map(e => ({ x: e.transform.x, y: .5, z: e.transform.z, halfX: .4, halfY: .5, halfZ: 1.5 }));
@@ -439,6 +524,7 @@ export class LevelFourWar {
   }
   /** "Fall back!": the soldiers open the gate (the barriers go) and the courier may leave. */
   private openGate(): void {
+    this.perimeter(false);
     this.gateNav(false);
     for (const id of this.s.gateIds) { const e = this.world.entities.get(id); if (e) e.hidden = true; }
     this.perimeter(false);
@@ -512,40 +598,8 @@ export class LevelFourWar {
     s.turnAt = s.warAt = Math.max(1, tick); s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
     const ids: number[] = [];
-    const courier = world.entities.get(1)!.transform, ai = world.infected!;
-    const entries = l4Inside.map((at, k) => ({ at: { x: at[0], z: at[1] }, origin: l4Emergence.length + k }))
-      .filter(({ at }) => dist(at, courier) >= l4.war.inside.minM && (ai.director.offscreen(at) || ai.director.occluded(at)));
-    // A wide camera may see every camp door. Keep the alarm pressure by using the street mouths instead.
-    if (entries.length * l4.war.group[1] < this.alarmInfected()) {
-      entries.push(...l4Emergence.map((entry, k) => ({ at: { x: entry.at[0], z: entry.at[1] }, origin: k, edge: entry.edge, door: entry.door }))
-        .filter(({ at, edge, door }) => edge < l4Edges.length - 1 && dist(at, courier) >= (door ? l4.war.inside.minM : 30) && (ai.director.offscreen(at) || door && ai.director.occluded(at))));
-    }
-    // Nearby concealed exits reach the camp first; distant street mouths must not consume the whole alarm allocation.
-    entries.sort((a, b) => dist(a.at, courier) - dist(b.at, courier));
-    const count = Math.min(this.alarmInfected(), entries.length * l4.war.group[1]);
-    const soldiers = this.liveSoldiers();
-    for (let n = 0; n < count; n++) {
-      const { at, origin } = entries[Math.floor(n / l4.war.group[1])];
-      const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true, l4.war.headroom, false, true);
-      if (!id) break;
-      const arrival = world.entities.get(id)!;
-      // Keep every alarm identity at its authored exit. A crowded/parked hull
-      // can defer an arrival here instead of displacing it beyond that mouth.
-      Object.assign(arrival.transform, at);
-      world.solids.admit(arrival, 'l4.alarm.exit', 1.9);
-      ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
-      // No soldier moves or takes damage during this synchronous arrival batch.
-      // Preserve stable ties without sorting the same roster for every arrival.
-      let soldier: EntitySnapshot | undefined, nearest = Infinity;
-      for (const candidate of soldiers) {
-        const d = dist(candidate.transform, at);
-        if (d < nearest) { nearest = d; soldier = candidate; }
-      }
-      // PO 10-19 ("start the alarm and attack at the moment when I picked up the MP"): the nearest
-      // concealed exit's group goes for the courier, so the attack lands on her inside the solid perimeter.
-      if (n < l4.war.group[1]) ai.press(id, 1, tick + ticks(12));
-      else if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
-    }
+    s.tentDoors = l4TentEntrances.map((_, i) => this.tentDoor(i)); s.alarmPending = this.alarmInfected(); s.alarmCursor = 0;
+    ids.push(...this.spawnAlarmTents());
     world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
     this.mission.radio('L4.perimeter-active');
     if (!this.mission.state.states.turned) this.mission.setState('turned', true);
@@ -593,18 +647,136 @@ export class LevelFourWar {
     return true;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
-  private emerge(at: Point, push = false, headroom: number = l4.war.headroom, streetSlot = false, deferAdmission = false): number {
-    const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    const reserved = ai.director.reserved - (streetSlot ? 1 : 0);
-    const keep = streetSlot ? 0 : Math.max(0, headroom - this.streetReserve());
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns;
+  private headroom(): number { return this.low ? l4.war.headroomLow : l4.war.headroom; }
+  private tentDoor(i: number): HouseEmergence {
+    const entry = l4TentEntrances[i], last = entry.route.at(-1) ?? entry.step;
+    return { strictRoute: true, door: 0, house: `l4-reception-tent-${i}`, x: entry.at[0], z: entry.at[1], nx: entry.out[0], nz: entry.out[1], width: 1.2,
+      floor: entry.floor ? [[1.2, entry.floor]] : [], sx: entry.step[0], sz: entry.step[1], route: entry.route.map(p => [p[0], p[1]]),
+      ox: last[0], oz: last[1], next: 0, ids: [], walking: [] };
+  }
+  private walkAlarmTents(): void {
+    const ai = this.world.infected!;
+    this.spawnAlarmTents();
+    for (const door of this.s.tentDoors) for (const id of walkResidents(this.world, door, this.world.tick))
+      ai.press(id, 1, this.world.tick + ticks(18), 30);
+  }
+  /** Keep breached groups moving with the nearest live defender or courier. Targets can move while the flood crosses the plaza. */
+  private followBreachHorde(): void {
+    const { world } = this.mission, tick = world.tick, ai = world.infected!, player = world.entities.get(1)!;
+    if (this.s.phase === 'collapse' || !this.low && this.s.director.lines[2].brokeAt) {
+      const soldiers = this.liveSoldiers();
+      if (!soldiers.length) return;
+      const assigned = new Map<number, number>();
+      if (!this.low) for (const e of ai.active) {
+        const id = e.infected?.l1?.focusId;
+        if (id && e.health.current > 0 && !e.hidden) assigned.set(id, (assigned.get(id) ?? 0) + 1);
+      }
+      for (const e of ai.active) {
+        if (e.archetype === 'infected.alpha' && e.health.current > 0 && !e.hidden && !e.infected?.specialAttack && dist(e.transform, player.transform) > l4.director.escape.nearM && tick % 60 === e.id % 60) {
+          // Surviving Alphas finish the battle with the retreating army rather
+          // than retaining their now-silent tank staging point forever.
+          const target = soldiers.reduce((a, b) => dist(a.transform, e.transform) < dist(b.transform, e.transform) ? a : b), b = e.infected!;
+          const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
+          b.heardTargetId = target.id;
+          if (d > 11 || !world.combat!.query.visible(e.transform, target.transform)) b.scripted = this.snap(target.transform, .55);
+          else {
+            delete b.scripted;
+            ai.startSpecial(e.id, d <= 3.5 ? 'alpha.ground-slam' : 'alpha.charge', { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: d <= 3.5 ? 4 : 1, dx: dx / d, dz: dz / d });
+          }
+          continue;
+        }
+        const brain = e.infected?.l1;
+        if (!brain || e.health.current <= 0 || e.hidden || e.emerging || e.infected?.scripted && !e.infected.breachApproach || dist(e.transform, player.transform) <= l4.director.escape.nearM && (!brain.focusId || brain.focusId === 1) || tick % 60 !== e.id % 60 || brain.mode === 'bite' || e.infected?.state === 'attack') continue;
+        // Keep following a retreating defender after crossing the perimeter.
+        // Completing an earlier approach must not freeze the target outside.
+        if (e.infected?.breachApproach) { delete e.infected.scripted; delete e.infected.breachApproach; }
+        const targets = soldiers.slice().sort((a, b) => dist(a.transform, e.transform) - dist(b.transform, e.transform));
+        // Retain a cohort's assigned soldier while it moves. Re-ranking the
+        // four nearest every second made runners zigzag between retreat groups.
+        const current = soldiers.find(soldier => soldier.id === brain.focusId);
+        // Preserve assignments while a cohort advances. Redirect only excess
+        // pursuers: one remote pocket must not absorb the whole army's flood.
+        const uncovered = !this.low && (!current || (assigned.get(current.id) ?? 0) > 12)
+          ? targets.find(soldier => (assigned.get(soldier.id) ?? 0) < 8) : undefined;
+        const target = uncovered ?? current ?? targets[0];
+        if (target !== current) {
+          if (current) assigned.set(current.id, (assigned.get(current.id) ?? 0) - 1);
+          assigned.set(target.id, (assigned.get(target.id) ?? 0) + 1);
+        }
+        if (brain.focusId === target.id && dist(target.transform, { x: brain.goalX, z: brain.goalZ }) < 2 && (brain.focusUntil ?? 0) > tick + ticks(10)) continue;
+        // The retreat is still a battle: distant groups pursue the army while
+        // close pursuers remain with the courier in the escape corridor.
+        brain.mode = 'wander'; brain.targetId = 0;
+        ai.press(e.id, target.id, tick + ticks(dist(e.transform, target.transform) / 1.6 + 20), 30);
+        brain.search.completeApproach = true;
+        brain.goalX = target.transform.x; brain.goalZ = target.transform.z;
+        brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z;
+      }
+      return;
+    }
+    const defenders = [player, ...this.liveSoldiers().filter(e => this.insideRing(e.transform))].filter(e => e.health.current > 0 && !e.hidden);
+    for (const e of ai.active) {
+      const origin = this.s.origin[e.id];
+      // Street and interior groups track the courier as she moves through the
+      // hold. Tent walkouts keep their flap route; the collapse phase keeps its
+      // defender target so the lines still engage and fall on their beats.
+      const interior = origin !== undefined && origin >= l4Emergence.length + l4TentEntrances.length;
+      if (origin === undefined || (origin >= l4Emergence.length && !(this.s.phase === 'war' && interior))) continue;
+      const brain = e.infected?.l1;
+      const refreshInterior = this.s.phase === 'war' && interior;
+      const retargetEvery = refreshInterior ? 180 : 60;
+      if (!brain || (!refreshInterior && (!brain.focusId || !brain.focusUntil || tick >= brain.focusUntil)) || e.health.current <= 0 || e.hidden || e.emerging || tick % retargetEvery !== e.id % retargetEvery) continue;
+      if (brain.mode === 'chase' || brain.mode === 'bite' || e.infected?.state === 'attack') continue;
+      let target = player;
+      if (this.low && e.infected!.l4FlankTarget) {
+        const assigned = world.entities.get(e.infected!.l4FlankTarget!);
+        const flank = this.human(assigned) ? assigned : this.liveSoldiers().filter(soldier => dist(soldier.transform, player.transform) >= 20)
+          .sort((a, b) => dist(a.transform, e.transform) - dist(b.transform, e.transform))[0];
+        if (flank) { target = flank; e.infected!.l4FlankTarget = flank.id; } else delete e.infected!.l4FlankTarget;
+      } else if (!this.low) {
+        const soldiers = defenders.filter(e => e.id !== 1);
+        if (soldiers.length) target = soldiers.reduce((a, b) => dist(a.transform, e.transform) < dist(b.transform, e.transform) ? a : b);
+      } else if (!interior && !Object.values(this.s.breaches ?? {}).some(b => b?.openAt)) {
+        for (const candidate of defenders) if (dist(candidate.transform, e.transform) < dist(target.transform, e.transform)) target = candidate;
+      }
+      if (target.id === brain.focusId && dist(target.transform, { x: brain.goalX, z: brain.goalZ }) < 2 && (brain.focusUntil ?? 0) > tick + ticks(10)) continue;
+      const until = tick + ticks(Math.max(l4.war.emergeLeashM, dist(e.transform, target.transform) / 1.6 + 20));
+      ai.press(e.id, target.id, until, target.id === 1 ? 40 : 15);
+      brain.search.completeApproach = true;
+      if (interior) { brain.goalX = target.transform.x; brain.goalZ = target.transform.z; brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z; }
+    }
+  }
+  private spawnAlarmTents(): number[] {
+    const { world } = this.mission, s = this.s, ids: number[] = [];
+    while (s.alarmPending > 0 && s.tentDoors.length) {
+      // Reserve every identity at the alarm. Extra rows wait invisibly inside
+      // the tent through body admission, then take their turn through its flap.
+      const doorIndex = s.alarmCursor % s.tentDoors.length, row = Math.floor(s.alarmCursor / s.tentDoors.length);
+      const id = emergeResident(world, s.tentDoors[doorIndex], world.tick, { archetype: 'infected.runner', inside: .9 + (row % 3) * .8 });
+      if (!id) break;
+      ids.push(id); s.emergedIds.push(id); s.origin[id] = l4Emergence.length + doorIndex;
+      s.alarmPending--; s.alarmCursor++;
+    }
+    return ids;
+  }
+  private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false): number {
+    const { world } = this.mission, ai = world.infected!;
+    // Scripted mouths must respect the same view rule as ordinary requests.
+    // Callers keep their pending count when no source is safe, so the group is
+    // retried at a later eligible mouth instead of being dropped.
+    if (!(ai.director.offscreen(at) || ai.director.occluded(at))) return 0;
+    const reserved = ai.director.reserved - (reservedSlot ? 1 : 0);
+    const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
+    const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
+    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
-    // Keep the authored point rather than snapping it through a coarse route
-    // margin. The alarm caller assigns its exit and performs one final
-    // admission synchronously; other emergences retain normal admission.
-    const id = o.spawnPedestrian(at, {}, !deferAdmission), e = world.entities.get(id)!;
-    o.turnNow(e, undefined, !deferAdmission);
-    if (!e.infected) return 0;
+    // These arrivals were already infected before entering the district.
+    // Use the existing infected pool/model batches; real camp civilians still
+    // turn in place with their own identity, clothes and accessories.
+    const id = ai.spawn('infected.runner', at), e = world.entities.get(id)!;
+    // Admission can shift around another body. Validate the admitted pose too,
+    // before it is drawn, and retain the caller's quota if that shift exposed it.
+    if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
     return id;
   }
@@ -639,13 +811,25 @@ export class LevelFourWar {
     if (tick >= (collapse ? s.collapseWaveAt : s.waveAt) && !(collapse && world.infected!.director.count >= l4.war.collapseCapInfected)) {
       const w = collapse ? s.collapseWaves : s.wave, scale = (this.low ? .5 : 1) * (collapse ? 1 : l4.war.waveScale), base = collapse ? l4.war.collapseWaveSize : l4.war.waveSize[Math.min(w, l4.war.waveSize.length - 1)];
       const n = Math.max(1, Math.ceil(base * scale)), ring = collapse ? l4Edges.length : l4Edges.length - 1, edges: number[] = [];
-      if (collapse) for (let k = 0; k < l4.war.edgesPerWave; k++) { const i = (w + k) % ring; edges.push(i); s.pend[i] = Math.min(l4.war.pendMax, (s.pend[i] ?? 0) + n); }
+      if (collapse) for (let k = 0; k < l4.war.edgesPerWave; k++) { const i = (w + k) % ring; edges.push(i); s.pend[i] = (s.pend[i] ?? 0) + n; }
       // PO 10-13 ("from all directios, not in bulk"): a war wave adds to every street edge (the same total), released in small groups.
-      else { const each = Math.ceil(n * l4.war.edgesPerWave / ring); for (let i = 0; i < ring; i++) { edges.push(i); s.pend[i] = Math.min(l4.war.pendMax, (s.pend[i] ?? 0) + each); } }
+      else { const each = Math.ceil(n * l4.war.edgesPerWave / ring); for (let i = 0; i < ring; i++) { edges.push(i); s.pend[i] = (s.pend[i] ?? 0) + each; } }
       world.events.emit({ type: 'l4.wave', tick, wave: w, count: collapse ? n * edges.length : Math.ceil(n * l4.war.edgesPerWave / ring) * ring, edges });
       if (collapse) { s.collapseWaves++; s.collapseWaveAt = tick + ticks(every); } else { s.wave++; s.waveAt = tick + ticks(every); }
     }
-    if (tick % 10 === 0) { this.finishDowned(); if (s.phase === 'war') { this.flushGroups(); this.emergeInside(); } else this.flushEdges(); }
+    // The tents are the opening alarm beat, not a recurring stream source.
+    // The tent walkouts are a one-time alarm beat. Subsequent interior
+    // arrivals use separated camp exits while street groups flow through breaches.
+    if (tick % 10 === 0) {
+      this.finishDowned();
+      if (s.phase === 'war') { this.emergeInside(); this.flushGroups(); }
+      else {
+        // The broken line keeps flooding through its open breaches while the
+        // high-tier army retreats. A phase change must not switch that supply off.
+        if (s.phase === 'collapse' && !this.low && this.liveSoldiers().length) this.emergeInside();
+        this.flushEdges();
+      }
+    }
   }
   /**
    * The war (PO 10-13): each street edge releases one small group (2-5, seeded) at a time from one of its emergence points in turn (street
@@ -654,24 +838,51 @@ export class LevelFourWar {
    */
   private flushGroups(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, centre = l4.map.centre, tick = world.tick, w = l4.war;
+    let crowded = false, bodies = 0;
+    if (this.low) for (const e of world.entities.iterate()) {
+      if (e.faction === 'infected' && e.health.current <= 0 && !e.hidden && dist(e.transform, p) <= w.inside.bodyField.radiusM && ++bodies >= w.inside.bodyField.count) { crowded = true; break; }
+    }
+    const groupReserve = !this.low && s.insidePending && Object.values(s.breaches ?? {}).some(b => b?.openAt) ? Math.min(s.insidePending, 10) : 0;
     for (let i = 0; i < l4Edges.length - 1; i++) {
       if (s.pend[i] <= 0 || tick < s.edgeNext[i]) continue;
       const points = l4Emergence.map((e, k) => ({ e, k })).filter(x => x.e.edge === i);
-      for (let tries = 0; tries < points.length; tries++) {
-        const { e, k } = points[(s.edgeCursor[i] + tries) % points.length], at = this.snap({ x: e.at[0], z: e.at[1] }, .45);
-        if (!(ai.director.offscreen(at) || e.door && ai.director.occluded(at)) || dist(at, p) < (e.door ? w.inside.minM : 30) || this.inGap(at)) continue;
+      const intended = points[s.edgeCursor[i] % points.length].e.at;
+      const eligible = points.map(({ e, k }) => ({ e, k, at: this.snap({ x: e.at[0], z: e.at[1] }, .45) }))
+        .filter(x => (ai.director.offscreen(x.at) || x.e.door && ai.director.occluded(x.at))
+          && dist(x.at, p) >= (x.e.door ? w.inside.minM : 22) && !this.inGap(x.at))
+        .sort((a, b) => dist(a.at, { x: intended[0], z: intended[1] }) - dist(b.at, { x: intended[0], z: intended[1] }) || a.k - b.k);
+      for (const { k, at } of eligible) {
         const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`), size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)));
-        // They go for the soldiers in the camp on their side (the nearest one inside the ring), not for the plaza centre where the courier is.
-        const soldier = this.liveSoldiers().filter(x => this.insideRing(x.transform)).sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0]?.transform, to = soldier ? { x: soldier.x, z: soldier.z } : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
+        const defenders = this.liveSoldiers(), soldiers = defenders.filter(x => this.insideRing(x.transform));
+        const soldier = soldiers.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
+        // Keep half the cohorts on the courier; send the other half to an
+        // occupied defender flank once permanent deaths saturate her position.
+        const flank = crowded && (s.edgeCursor[i] + s.wave + i) % 2 ? defenders.filter(e => dist(e.transform, p) >= 20).sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0] : undefined;
+        const target = this.low && Object.values(s.breaches ?? {}).some(b => b?.openAt) ? flank ?? world.entities.get(1)! : soldier ?? world.entities.get(1)!;
+        const to = target ? { x: target.transform.x, z: target.transform.z }
+            : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
+        let admitted = 0;
         for (let g = 0; g < size; g++) {
-          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }); if (!id) break;
+          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }, false, Math.max(this.headroom(), this.streetReserve() + groupReserve)); if (!id) break;
+          admitted++;
+          if (flank && target.id === flank.id) world.entities.get(id)!.infected!.l4FlankTarget = flank.id;
           s.pend[i]--; s.emergedIds.push(id); s.origin[id] = k;
           // A wide group must enter the hold area before spreading onto its defenders. Offsetting an edge post
           // outside the wire left a few members circling the parked convoy instead of joining the assault.
           const perimeter = l4.perimeter;
-          ai.rush(id, { x: Math.max(perimeter.x0 + 2, Math.min(perimeter.x1 - 2, to.x + (g - size / 2) * 1.5)), z: Math.max(perimeter.z0 + 2, Math.min(perimeter.z1 - 2, to.z + ((id % 5) - 2) * 1.5)) }, tick + ticks(w.emergeLeashM));
+          const goal = { x: Math.max(perimeter.x0 + 2, Math.min(perimeter.x1 - 2, to.x + (g - size / 2) * 1.5)), z: Math.max(perimeter.z0 + 2, Math.min(perimeter.z1 - 2, to.z + ((id % 5) - 2) * 1.5)) };
+          const until = tick + ticks(Math.max(w.emergeLeashM, dist(at, goal) / 1.6 + 20));
+          if (target) ai.press(id, target.id, until, target.id === 1 ? 40 : 15);
+          else ai.rush(id, goal, until, true);
+          // An authored wave must finish its street approach; the ordinary
+          // ten-second investigation cutoff stranded the new distant sources.
+          const brain = world.entities.get(id)?.infected?.l1;
+          if (brain) brain.search.completeApproach = true;
         }
-        s.edgeCursor[i] = (s.edgeCursor[i] + tries + 1) % points.length;
+        // If this mouth became blocked after eligibility was measured, keep
+        // the remainder queued and try the next authored mouth this tick.
+        if (!admitted) continue;
+        s.edgeCursor[i] = (s.edgeCursor[i] + 1) % points.length;
         s.edgeNext[i] = tick + ticks(w.groupEveryS[0] + rng.next() * (w.groupEveryS[1] - w.groupEveryS[0]));
         break;
       }
@@ -684,36 +895,117 @@ export class LevelFourWar {
    */
   private emergeInside(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, tick = world.tick, w = l4.war.inside;
-    if (!s.insideAt) s.insideAt = s.warAt + ticks(w.everyS);
-    if (tick < s.insideAt) return;
-    for (let tries = 0; tries < l4Inside.length; tries++) {
-      const k = (s.insideCursor + tries) % l4Inside.length, at = this.snap({ x: l4Inside[k][0], z: l4Inside[k][1] }, .45);
-      if (dist(at, p) < w.minM || !(ai.director.offscreen(at) || ai.director.occluded(at))) continue;
-      const rng = new Rng(world.seed, `l4-inside:${s.insideCursor}`), size = w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1));
-      const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0]?.transform ?? l4.map.centre;
-      for (let g = 0; g < size; g++) {
-        const id = this.emerge({ x: at.x + g * .8, z: at.z }); if (!id) break;
-        s.emergedIds.push(id); s.origin[id] = l4Emergence.length + k;
-        ai.rush(id, { x: soldier.x, z: soldier.z }, tick + ticks(12));
+    // Supplemental pressure waits once this part of the plaza is saturated
+    // with permanent bodies. Authored street waves still arrive; moving to a
+    // fresh flank resumes the queued cohorts instead of building a new carpet.
+    if (this.low) {
+      let bodies = 0, outer = 0;
+      for (const e of world.entities.iterate()) if (e.faction === 'infected' && e.health.current <= 0 && !e.hidden) {
+        const d = dist(e.transform, p); if (d <= w.bodyField.radiusM) bodies++; if (d <= 14) outer++;
       }
-      s.insideCursor = k + 1; s.insideAt = tick + ticks(w.everyS);
-      return;
+      if (bodies >= w.bodyField.count) {
+        if (outer >= w.bodyField.outerCount) return;
+        const active = ai.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && this.insideRing(e.transform)).length;
+        if (active >= w.bodyField.activeFloor) return;
+      }
     }
+    if (!s.insideAt) s.insideAt = s.warAt + ticks(w.everyS);
+    if (!s.insidePending) {
+      if (tick < s.insideAt) return;
+      const rng = new Rng(world.seed, `l4-inside:${s.insideCursor}`);
+      s.insidePending = w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1));
+    }
+    // Reception tents supply only the opening alarm group. The continuing
+    // interior outbreak uses separated camp exits; this prevents later
+    // victims from queueing at a single tent flap under the firing line.
+    const retreat = s.phase === 'collapse' && !this.low, defenders = retreat ? this.liveSoldiers() : [];
+    const battleDistance = (at: Point) => defenders.reduce((d, e) => Math.min(d, dist(at, e.transform)), Infinity);
+    // Once the army leaves the camp, its reinforcements arrive at authored
+    // street mouths near the remaining fights. Feeding only the old breaches
+    // left distant retreat posts unopposed while runners crossed an empty plaza.
+    const camp = l4BreachApproaches.map(({ side, at: [x, z] }, k) => ({ k, side, at: this.snap({ x, z }, .45), minM: w.minM })).filter(({ side }) => this.breachOpen(side));
+    const streets = retreat ? l4Emergence.map(({ at: [x, z], door }, k) => ({ k: l4BreachApproaches.length + k, at: this.snap({ x, z }, .45), minM: door ? 12 : 24 })) : [];
+    const sources = [...camp, ...streets]
+      .filter(({ at, minM }) => dist(at, p) >= minM && (ai.director.offscreen(at) || ai.director.occluded(at)))
+      .filter(({ at }) => !retreat || battleDistance(at) >= 6)
+      .sort((a, b) => retreat ? battleDistance(a.at) - battleDistance(b.at) : dist(a.at, p) - dist(b.at, p));
+    if (!sources.length) return;
+    const room = Math.floor(ai.director.cap * this.director.aliveShare()) - ai.director.reserved - Math.max(0, this.headroom() - this.streetReserve()) - ai.director.pendingTurns - ai.director.count;
+    // Wait for a cohort instead of feeding each newly freed slot back through
+    // the same gap alone under rifle fire. The street queue reserves this room.
+    if (!this.low && room < Math.min(s.insidePending, 10)) return;
+    // A whole group uses several concealed camp exits instead of queueing in
+    // one doorway. This keeps interior pressure up while opening the tent flaps
+    // only for the alarm beat.
+    let admitted = 0;
+    const pending = s.insidePending;
+    const maxExits = Math.min(4, sources.length), selected: typeof sources = [];
+    if (retreat) {
+      for (const source of sources) if (selected.length < maxExits && selected.every(other => dist(source.at, other.at) >= 8)) selected.push(source);
+    } else {
+      for (let quadrant = 0; quadrant < 4 && selected.length < maxExits; quadrant++) {
+        const candidate = sources.find(({ k, at }) => Math.floor((Math.atan2(at.z - p.z, at.x - p.x) + Math.PI) / (Math.PI / 2)) % 4 === quadrant && !selected.some(x => x.k === k));
+        if (candidate) selected.push(candidate);
+      }
+      for (const candidate of sources) if (selected.length < maxExits && !selected.some(x => x.k === candidate.k)) selected.push(candidate);
+    }
+    const exits = selected.length;
+    const released = new Map<number, number>();
+    for (let g = 0; g < pending; g++) {
+      const source = selected[(s.insideCursor + g) % exits], lane = Math.floor(g / exits);
+      // A cohort can span several mouths, but each high-tier street mouth
+      // still releases the authored small group rather than one large burst.
+      if (!this.low && (released.get(source.k) ?? 0) >= l4.war.group[1]) continue;
+      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 });
+      if (!id) continue;
+      released.set(source.k, (released.get(source.k) ?? 0) + 1);
+      admitted++; s.insidePending--; s.emergedIds.push(id); s.origin[id] = l4Emergence.length + l4TentEntrances.length + source.k;
+      const soldiers = this.low ? [] : this.liveSoldiers();
+      const target = soldiers.length ? soldiers.reduce((a, b) => dist(a.transform, source.at) < dist(b.transform, source.at) ? a : b) : world.entities.get(1)!;
+      ai.press(id, target.id, tick + ticks(45), 30);
+      const brain = world.entities.get(id)?.infected?.l1;
+      if (brain) { brain.search.completeApproach = true; brain.goalX = target.transform.x; brain.goalZ = target.transform.z; brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z; }
+    }
+    if (!admitted) return;
+    s.insideCursor = (s.insideCursor + admitted) % exits;
+    if (!s.insidePending) s.insideAt = tick + ticks(w.everyS);
+    // No eligible hidden exit or no capacity this tick: retain the authored
+    // demand and retry rather than silently consuming this interior wave.
   }
   private flushEdges(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, centre = l4.map.centre;
-    for (let i = 0; i < s.pend.length; i++) {
+    // Let a coherent breach cohort accumulate its existing slots. Consuming
+    // every single opening here would starve that cohort at the shared cap.
+    if (s.phase === 'collapse' && !this.low && s.insidePending && this.liveSoldiers().length) {
+      const room = Math.floor(ai.director.cap * this.director.aliveShare()) - ai.director.reserved - Math.max(0, this.headroom() - this.streetReserve()) - ai.director.pendingTurns - ai.director.count;
+      if (room < Math.min(s.insidePending, 10)) return;
+    }
+    const defenders = this.liveSoldiers().filter(e => ai.hearing.humans.get(e.id));
+    const battleDistance = (point: Point) => defenders.reduce((d, e) => Math.min(d, dist(e.transform, point)), Infinity);
+    // At a full cap only one slot may open between updates. Rotate the first
+    // edge so western demand cannot consume every reinforcement slot.
+    const first = this.low ? 0 : s.collapseEdgeCursor ?? 0;
+    for (let offset = 0; offset < s.pend.length; offset++) {
+      const i = (first + offset) % s.pend.length;
       if (s.pend[i] <= 0) continue;
       // The courier can remain within 30 m of an edge's first mouth after Fall back.
       // Keep that edge's quota queued and use another authored mouth, rather than starving it forever.
       const at = [this.spectacle.edgePoint(i), ...l4Emergence.filter(e => e.edge === i).map(e => ({ x: e.at[0], z: e.at[1] }))]
-        .map(point => this.snap(point, .45)).find(point => ai.director.offscreen(point) && dist(point, p) >= 32 && !this.inGap(point));
+        .map(point => this.snap(point, .45)).filter(point => ai.director.offscreen(point) && dist(point, p) >= 32 && !this.inGap(point))
+        .sort((a, b) => battleDistance(a) - battleDistance(b))[0];
       if (!at) continue;
+      const defender = defenders.sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
       for (let k = 0; k < 3 && s.pend[i] > 0; k++) {
         const point = this.snap({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }, .45);
         const id = this.emerge(point); if (!id) break;
-        s.pend[i]--; (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
-        ai.rush(id, { x: centre.x + (k - .5) * 6, z: centre.z + ((id % 5) - 2) * 3 }, world.tick + ticks(l4.war.emergeLeashM));
+        s.pend[i]--; s.collapseEdgeCursor = (i + 1) % s.pend.length;
+        (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
+        // Once the army retreats, street waves join its real remaining fights
+        // instead of spending their whole approach on the vacated plaza centre.
+        const goal = defender?.transform ?? { x: centre.x + (k - .5) * 6, z: centre.z + ((id % 5) - 2) * 3 };
+        const until = world.tick + ticks(Math.max(l4.war.emergeLeashM, dist(point, goal) / 1.6 + 20));
+        if (defender) { ai.press(id, defender.id, until, 30); const brain = world.entities.get(id)?.infected?.l1; if (brain) brain.search.completeApproach = true; }
+        else ai.rush(id, goal, until, true);
       }
     }
   }
@@ -789,7 +1081,11 @@ export class LevelFourWar {
       const brain = a.infected!, open = this.gapOpen(), outside = this.escapeDistance(a.transform) >= e.gapM, near = dist(a.transform, p) <= e.nearM;
       if (brain.clearingStreet && (!open || outside || near || a.health.current <= 0)) { delete brain.clearingStreet; delete brain.scripted; }
       if (!open || a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || near || outside) continue;
-      if (brain.scripted || brain.l1?.mode === 'bite' || brain.state === 'attack') continue;
+      if (a.emerging || brain.l1?.mode === 'bite' || brain.state === 'attack') continue;
+      // A scripted street arrival can land in the corridor after it has begun
+      // moving. The escape window owns that body now; discard the old approach
+      // so the visible gap is cleared with the same physical side step.
+      if (brain.scripted) delete brain.scripted;
       // Off the street first (ally-combat-feel: allies no longer shoot the runners down off screen, so they must leave the corridor
       // themselves): the nearest clear point beside the route, then on toward the fight.
       const side = this.offStreet(a.transform);
@@ -797,7 +1093,10 @@ export class LevelFourWar {
       // rush() deliberately refuses an ongoing chase. Own only this short physical walk, then return the
       // body to ordinary perception beyond the street; close pursuers, bites and Alpha jobs keep their combat.
       if (side) { brain.scripted = { ...side }; brain.clearingStreet = true; }
-      else ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
+      else {
+        if (brain.l1?.mode === 'chase') { brain.l1.mode = 'wander'; brain.l1.targetId = 0; brain.l1.hasGoal = false; }
+        ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
+      }
     }
   }
   /** A clear point `gapM + 3` m from the escape route on the side `p` is on (null when the street is walled in there). */
@@ -892,13 +1191,22 @@ export class LevelFourWar {
     for (const i of [...s.pockets]) {
       const pocket = l4Pockets[i], c = { x: pocket.at[0][0], z: pocket.at[0][1] };
       if (!ai.director.offscreen(c) || dist(c, p) < 24 || this.inGap({ x: pocket.foes[0], z: pocket.foes[1] })) continue;
-      s.pockets = s.pockets.filter(k => k !== i);
+      const admitted = s.pocketSpawned ??= {};
+      const first = admitted[i] === undefined;
+      admitted[i] ??= 0;
       const survivors = this.liveSoldiers().filter(e => !s.hmgIds.includes(e.id)).sort((a, b) => dist(a.transform, c) - dist(b.transform, c)).slice(0, pocket.at.length);
-      for (const [k, e] of survivors.entries()) {
+      if (first) for (const [k, e] of survivors.entries()) {
         const [x, z] = pocket.at[k], ally = e.civilian!.ally;
         if (ally) { ally.post = { x, z }; ally.hold = true; ally.engaged = true; }
       }
-      for (let k = 0; k < (this.low ? 3 : 6); k++) { const id = this.emerge({ x: pocket.foes[0] - k * .9, z: pocket.foes[1] }); if (id) ai.rush(id, c, world.tick + ticks(20)); }
+      // Keep every authored foe pending until admitted. A full live cap used
+      // to discard the pocket after moving its soldiers, leaving them safe.
+      for (let k = admitted[i]; k < (this.low ? 3 : 6); k++) {
+        const id = this.emerge({ x: pocket.foes[0] - k * .9, z: pocket.foes[1] }, false, 0, true);
+        if (!id) break;
+        admitted[i]++; this.reserveSlots(); ai.rush(id, c, world.tick + ticks(20));
+      }
+      if (admitted[i] === (this.low ? 3 : 6)) s.pockets = s.pockets.filter(k => k !== i);
     }
   }
   /** Section 5.9: the player (and the corgi) go down alone; nobody and nothing follows (the yard is walled off, its nav island is unreachable). */
@@ -968,13 +1276,17 @@ export class LevelFourWar {
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
+    if (s.phase === 'war' && tick % 15 === 7 && this.fence.length) this.funnel();
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (s.gunAt && tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
+      if ((s.phase === 'war' || s.phase === 'collapse') && tick % 10 === 0) this.director.releaseCutOff();
       this.alphas(); this.waves();
+      if (s.phase === 'war' || s.phase === 'collapse') this.followBreachHorde();
       if (s.phase === 'war') {
+        this.walkAlarmTents();
         if (s.infectedAtT30 < 0 && tick >= s.warAt + ticks(30)) s.infectedAtT30 = world.infected!.active.filter(e => e.health.current > 0).length;
         if (s.tankPhase === 'off' && tick >= s.warAt + ticks(l4.tank.enterAfterS)) this.spectacle.startTank();
         if (s.heliPhase === 'off' && tick >= s.warAt + ticks(8)) { this.spectacle.startHeli(); this.mission.radio('L4.war'); }

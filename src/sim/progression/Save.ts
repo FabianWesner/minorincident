@@ -25,6 +25,7 @@ function dropLegacyL3Weapons(raw:unknown):unknown {
   if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
   const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>legacyL3.has(id)?'weapon.handgun':id))]:ids;
   const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
+  if(typeof raw.selectedAction==='string'&&legacyL3.has(raw.selectedAction))out.selectedAction='weapon.handgun';
   if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;
@@ -83,7 +84,7 @@ export function migrate(raw:unknown):unknown {
     const crash = raw.l9Crash as NonNullable<CampaignSave['l9Crash']>;
     if (crash.state.finished) {
       const transport = validTransport(raw.transport) ? raw.transport as NonNullable<CampaignSave['transport']> : null;
-      const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fire-axe', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] }, crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability' && id !== 'weapon.fire-axe'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
+      const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fire-axe', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] }, selectedAction: 'weapon.fire-axe', crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability' && id !== 'weapon.fire-axe'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
       delete out.l9Crash; delete out.transport; delete out.pending; raw = out;
     }
   }
@@ -93,6 +94,8 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>lastLevel||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>lastLevel||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(Number(raw.completedLevels)>=6&&Number(raw.unlockedLevel)>=Number(raw.completedLevels))))return false;
   if(!strings(raw.ownedActions)||(raw.crossingHandover === undefined && (!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')))||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
+  // A scripted loss may leave a known historical selection; loadout restoration resolves and logs its fallback.
+  if(raw.selectedAction!==undefined&&(typeof raw.selectedAction!=='string'||!Object.hasOwn(catalog,raw.selectedAction)))return false;
   if (save.completedLevels >= 9 && !save.crossingHandover) return false;
   if (raw.crossingHandover !== undefined) {
     const h = raw.crossingHandover;

@@ -1,0 +1,29 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/weapon-carryover
+
+ ❯ |functional| tests/unit/progression/selected-weapon.test.ts (24 tests | 1 failed) 568ms
+   × @E13 Q-158 Continue does not capture the outgoing world while applying saved audio settings 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/progression/selected-weapon.test.ts > @E13 Q-158 Continue does not capture the outgoing world while applying saved audio settings
+AssertionError: expected 'weapon.handgun' to be 'weapon.fire-axe' // Object.is equality
+
+Expected: "weapon.fire-axe"
+Received: "weapon.handgun"
+
+ ❯ tests/unit/progression/selected-weapon.test.ts:107:22
+    105|   g.audio.set = () => { g.saveCampaign(); };
+    106|   await g.continueCampaign(incoming);
+    107|   expect(selected()).toBe('weapon.fire-axe');
+       |                      ^
+    108| });
+    109|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 23 passed (24)
+   Start at  22:38:49
+   Duration  2.42s (transform 62%, tests 24%, import 14%)

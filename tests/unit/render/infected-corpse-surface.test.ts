@@ -28,7 +28,8 @@ for (const low of [true, false]) for (const asset of regularInfectedModels) {
     const def = { ...infectedDefinitions.find(d => d.id === 'infected.runner')!, asset };
     try {
       await (crowd as unknown as { loadBatch(definition: typeof def, lod: 'lod2'): Promise<void> }).loadBatch(def, 'lod2');
-      expect(prepare).toHaveBeenCalledOnce();
+      expect(prepare).toHaveBeenCalledTimes(3);
+      expect(prepare.mock.calls.map(call => call[0])).toEqual(['death-back', 'death-side', 'death-crumple'].map(pose => `infected.runner:${pose}:0`));
       const geometry = prepare.mock.calls[0][1], clip = prepare.mock.calls[0][3];
       expect(geometry.userData).toMatchObject({ crowdLod: 'lod2', corpseSource: definition.corpseGlb });
       expect(geometry.index!.count / 3).toBeLessThanOrEqual(2000);
@@ -63,6 +64,7 @@ for(const coat of ['', 'black', 'cream']) test(`PO #93 L10 dog ${coat||'base'} c
   try{
     await (crowd as unknown as {loadBatch(definition:typeof def,lod:'lod2'):Promise<void>}).loadBatch(def,'lod2');
     expect(load).toHaveBeenCalledWith('inf.dog','lod0',coat||undefined);
+    expect(prepare).toHaveBeenCalledTimes(3);
     expect(prepare.mock.calls[0][1].userData.corpseSource).toBe(asset.glb);
     expect(prepare.mock.calls[0][1].index!.count).toBeGreaterThan(3000);
   }finally{load.mockRestore();prepare.mockRestore();crowd.dispose();world.dispose();}

@@ -1,5 +1,6 @@
+import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Sphere, Vector3, type Frustum, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -28,6 +29,7 @@ export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
   private readonly slots = new Map<string, { page: Chunk; index: number }>();
   private readonly moved = new Matrix4();
+  private readonly movedScale = new Vector3();
   private readonly placedSphere = new Sphere();
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
@@ -38,6 +40,8 @@ export class StaticCorpses extends Group {
   private readonly detailNeighbors: number[] = [];
   private readonly detailQuery = { x: Infinity, z: Infinity, r: 8 };
   private detailDirty = false;
+  private focusX = Infinity;
+  private focusZ = Infinity;
   has(id: number): boolean { return this.bodies.has(String(id)); }
   /** Scene Lab probe: where each frozen body is drawn (matrix translation = the figure's feet). */
   drawn(): { id: number; x: number; y: number; z: number }[] {
@@ -45,7 +49,9 @@ export class StaticCorpses extends Group {
     for (const [key, body] of this.bodies) { const slot = this.slots.get(key); if (!slot) continue; slot.page.mesh.getMatrixAt(slot.index, m); out.push({ id: body.id, x: m.elements[12], y: m.elements[13], z: m.elements[14] }); }
     return out;
   }
-  begin(get: (id: number) => EntitySnapshot | undefined): void {
+  begin(get: (id: number) => EntitySnapshot | undefined, resting?: (body: EntitySnapshot) => { x: number; y?: number; z: number; yaw?: number }, focus?: { x: number; z: number }): void {
+    const movedFocus = !focus || focus.x !== this.focusX || focus.z !== this.focusZ;
+    if (focus) { this.focusX = focus.x; this.focusZ = focus.z; }
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
     // hidden or deleted (level unload or restart) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
     let gone: string[] | null = null;
@@ -54,16 +60,23 @@ export class StaticCorpses extends Group {
       const current = get(body.id);
       if (current && current !== body) { this.reset(); gone = null; movedPages = null; break; }
       if (!current || current.hidden) { (gone ??= []).push(key); continue; }
-      // Only thrown bodies change their instance matrix. Handle them during the
-      // lifecycle pass instead of walking every permanent body a second time.
-      if (body.corpseThrown) {
+      // Thrown bodies follow their flight; settled bodies can yield the
+      // courier's footprint. Update both during the existing lifecycle pass.
+      const pose = (movedFocus || body.corpseThrown ? resting?.(body) : undefined) ?? (body.corpseThrown ? body.transform : undefined);
+      if (pose) {
         const slot = this.slots.get(key)!;
         slot.page.mesh.getMatrixAt(slot.index, this.moved);
-        if (this.moved.elements[12] !== Math.fround(body.transform.x) || this.moved.elements[13] !== Math.fround(body.transform.y - .7) || this.moved.elements[14] !== Math.fround(body.transform.z)) {
-          this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
+        const y = pose.y ?? (body.corpseThrown ? body.transform.y - .7 : this.moved.elements[13]);
+        const rotated = pose.yaw !== undefined && Math.abs(Math.atan2(Math.sin(pose.yaw - Math.atan2(-this.moved.elements[2], this.moved.elements[0])), Math.cos(pose.yaw - Math.atan2(-this.moved.elements[2], this.moved.elements[0])))) > 1e-6;
+        if (rotated) {
+          this.movedScale.setFromMatrixScale(this.moved);
+          this.moved.makeRotationY(pose.yaw!); this.moved.scale(this.movedScale);
+        }
+        if (rotated || this.moved.elements[12] !== Math.fround(pose.x) || this.moved.elements[13] !== Math.fround(y) || this.moved.elements[14] !== Math.fround(pose.z)) {
+          this.moved.setPosition(pose.x, y, pose.z);
           slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true;
           const detail = this.detailBodies.get(body.id);
-          if (detail) { detail.x = body.transform.x; detail.z = body.transform.z; this.detailSpatial.set(body.id, detail.x, detail.z); this.detailDirty = true; }
+          if (detail) { detail.x = pose.x; detail.z = pose.z; this.detailSpatial.set(body.id, detail.x, detail.z); this.detailDirty = true; }
           slot.page.spheres[slot.index].copy(slot.page.mesh.geometry.boundingSphere!).applyMatrix4(this.moved);
           (movedPages ??= new Set()).add(slot.page.mesh);
         }
@@ -87,7 +100,9 @@ export class StaticCorpses extends Group {
     // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry. 40 m cells (l4-collapse-2; was 16 m): every
     // page is its own InstancedMesh and three builds a node program per InstancedMesh (its uuid is in the cache key), so each new page
     // compiled mid-fight (~60 builds in the L4 war, the line-break hitches).
-    const appearanceKey = look?.accessory ? `${key}:${look.accessory}` : key;
+    // Accessory identity splits pages only when its geometry is retained.
+    // Plain bodies can share the same remaining hair mask.
+    const appearanceKey = source.userData.corpseAccessory && look?.accessory ? `${key}:${look.accessory}` : look?.hidesHair ? `${key}:hairless` : key;
     const cellKey = `${appearanceKey}/${Math.floor(instance.elements[12] / CELL)}/${Math.floor(instance.elements[14] / CELL)}`;
     const prepared = this.chunks.get(appearanceKey);
     if (!this.chunks.has(cellKey) && prepared?.every(page => page.keys.length === 0)) {
@@ -97,9 +112,10 @@ export class StaticCorpses extends Group {
     if (!page || page.keys.length >= 128) {
       page = this.createPage(cellKey, source, material, clip, frame, hiddenParts, look?.hidesHair);
     }
-    const index = page.keys.length; page.mesh.count = index + 1;
+    const index = page.keys.length; page.mesh.count = index + 1; page.mesh.visible = true;
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
     page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
+    if (page.mesh.instanceColor) { page.mesh.instanceColor.setXYZ(index, .64, .64, .64); page.mesh.instanceColor.needsUpdate = true; }
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Cover every joining body's
@@ -128,12 +144,13 @@ export class StaticCorpses extends Group {
     const { page, index } = slot, mesh = page.mesh, last = page.keys.length - 1;
     if (index !== last) {
       mesh.getMatrixAt(last, this.moved); mesh.setMatrixAt(index, this.moved);
-      for (const attribute of [page.tint, page.overlay]) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
+      for (const attribute of [page.tint, page.overlay, page.mesh.instanceColor].filter((a): a is InstancedBufferAttribute => !!a)) for (let c = 0; c < attribute.itemSize; c++) attribute.array[index * attribute.itemSize + c] = attribute.array[last * attribute.itemSize + c];
       const moved = page.keys[last]; page.keys[index] = moved; this.slots.get(moved)!.index = index;
       page.spheres[index] = page.spheres[last]; page.probe.figures[index] = page.probe.figures[last];
     }
-    page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last;
+    page.keys.length = page.spheres.length = page.probe.figures.length = last; mesh.count = last; mesh.visible = last > 0;
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     if (last > 0) this.bounds(page);
     return true;
   }
@@ -146,7 +163,7 @@ export class StaticCorpses extends Group {
       let visible = 0, changed = false;
       for (let i = 0; i < page.keys.length; i++) if (frustum.intersectsSphere(page.spheres[i])) {
         if (i !== visible) {
-          for (const attribute of [page.mesh.instanceMatrix, page.tint, page.overlay]) for (let c = 0; c < attribute.itemSize; c++) {
+          for (const attribute of [page.mesh.instanceMatrix, page.tint, page.overlay, page.mesh.instanceColor].filter((a): a is InstancedBufferAttribute => !!a)) for (let c = 0; c < attribute.itemSize; c++) {
             const a = i * attribute.itemSize + c, b = visible * attribute.itemSize + c, value = attribute.array[a]; attribute.array[a] = attribute.array[b]; attribute.array[b] = value;
           }
           [page.keys[i], page.keys[visible]] = [page.keys[visible], page.keys[i]];
@@ -156,7 +173,7 @@ export class StaticCorpses extends Group {
         }
         visible++;
       }
-      page.mesh.count = visible;
+      page.mesh.count = visible; page.mesh.visible = visible > 0;
       if (changed) page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     }
   }
@@ -225,7 +242,7 @@ export class StaticCorpses extends Group {
         if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
         else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
         const matrices = clip.matrices, frameOffset = Math.floor(frame) * clip.parts.length * 16;
-        for (const name of ['position', 'normal', 'color', '_parts']) {
+        for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name);
           // GPU backends may pad normals to vec4. Frozen geometry retains the
           // semantic xyz layout warmed before combat, including accessory pages.
@@ -260,6 +277,14 @@ export class StaticCorpses extends Group {
           geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
         }
       }
+      // Frozen infected retain the complete head surface, but the packed
+      // emissive flag is live-only: dead eyes must not glow in the corpse field.
+      const flags = geometry.getAttribute('_parts'), colors = geometry.getAttribute('color');
+      if (colors?.itemSize >= 3) for (let i = 0; i < colors.count; i++) {
+        const red = colors.getX(i), green = colors.getY(i), blue = colors.getZ(i), gray = red * .2126 + green * .7152 + blue * .0722;
+        colors.setXYZ(i, gray + (red - gray) * .45, gray + (green - gray) * .45, gray + (blue - gray) * .45);
+        if (flags?.itemSize >= 3 && flags.getZ(i) > 0) { colors.setXYZ(i, gray * .12, gray * .12, gray * .12); flags.setZ(i, 0); }
+      }
       if (!geometry.boundingSphere) geometry.computeBoundingSphere();
       // One frozen material per source material: every death frame / gore mask shares its shader (l4-collapse-2: a copy per mask
       // compiled a new pipeline mid-fight for each new dismemberment combination).
@@ -268,7 +293,7 @@ export class StaticCorpses extends Group {
         if (material instanceof PaletteMaterial) {
           let shared = sharedFrozenMaterials.get(material);
           if (!shared) {
-            const copy = material.frozenCopy(); copy.positionNode = null; copy.normalNode = null; copy.maskNode = null;
+            const copy = material.frozenCopy(true); copy.positionNode = null; copy.normalNode = null; copy.maskNode = null;
             shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
           }
           shared.users++; frozenMaterial = shared.material;
@@ -289,14 +314,15 @@ export class StaticCorpses extends Group {
     const frozen = this.frozenPose(source, material, clip, frame, hiddenParts, hidesHair);
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
-    for (const name of ['position', 'normal', 'color', '_parts']) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
+    for (const name of ['position', 'normal', 'color', '_parts', ...(frozen.geometry.hasAttribute('uv') ? ['uv'] : [])]) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
     geometry.setIndex(frozen.geometry.getIndex());
     geometry.boundingSphere = frozen.geometry.boundingSphere!.clone();
+    interleaveTexturedCrowd(geometry);
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
-    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.name = `corpses:${key}`;
+    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0; mesh.visible = false; mesh.name = `corpses:${key}`;
     if (frozen.material instanceof PaletteMaterial) {
       // Spatial/death/gore pages share the layout, while their matrices,
       // appearance and bounds remain independent. Avoid a node build per UUID.
@@ -307,6 +333,9 @@ export class StaticCorpses extends Group {
     // Placement lives in instance matrices. The page transform is permanently identity;
     // avoid composing it again for every retained spatial/appearance page each frame.
     mesh.matrixAutoUpdate = false;
+    // L4 identity roots opt out of world composition too; placement stays in
+    // the instance matrices. Other levels retain normal parent transforms.
+    mesh.matrixWorldAutoUpdate = this.matrixWorldAutoUpdate;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[], spheres: [] as Sphere[] }; pages.push(page); this.add(mesh);

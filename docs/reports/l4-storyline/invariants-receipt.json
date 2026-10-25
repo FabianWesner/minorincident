@@ -1,0 +1,47 @@
+{
+  "command": "E2E_PORT=4431 SCENE_PORT=4432 E2E_UNITS=1 npm run qa:invariants",
+  "exitCode": 0,
+  "remoteTests": {
+    "passed": 27,
+    "failed": 0
+  },
+  "MacTests": {
+    "startTime": "2026-10-24T04:22:00.361Z",
+    "duration": 176594.503,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "rawReceipts": [
+    {
+      "stage": "remote-sim",
+      "code": 0,
+      "seconds": 1887.225,
+      "revision": "e7aad78b2db21caf345d22fb62d5ae50ba3728c5",
+      "log": "test-results/qa-invariants/remote-sim.log"
+    },
+    {
+      "stage": "build",
+      "code": 0,
+      "seconds": 6.498,
+      "revision": "e7aad78b2db21caf345d22fb62d5ae50ba3728c5",
+      "log": "test-results/qa-invariants/build.log"
+    },
+    {
+      "stage": "Mac-WebGPU-low",
+      "code": 0,
+      "seconds": 240.453,
+      "revision": "e7aad78b2db21caf345d22fb62d5ae50ba3728c5",
+      "log": "test-results/qa-invariants/Mac-WebGPU-low.log"
+    }
+  ],
+  "provenance": {
+    "coordinatorStartedAtRevision": "e7aad78b2db21caf345d22fb62d5ae50ba3728c5",
+    "MacBuildRevision": "b10569043",
+    "simulationSourcesUnchangedSinceRemoteStage": true,
+    "runtimeSourcesUnchangedSinceFinalRenderer": "f9d5b87822f898b0a90caed5cfa66637a62c5281",
+    "runtimeSourceEquivalence": true,
+    "note": "The coordinator paused while its remote child finished, keeping builds out of quiet timing. Its remote-stage elapsed time includes that intentional pause; Mac stages rebuilt the final runtime after timing."
+  }
+}

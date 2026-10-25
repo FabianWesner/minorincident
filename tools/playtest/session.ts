@@ -4,13 +4,14 @@ import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
 import { EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, campaignEndingComplete, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
-import { campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
+import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
 import { clickGroundInput, dodgeWalkKeys, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
 import { VehicleRecovery } from './driving';
 import type { Game } from '../../src/Game';
+import { l2Routes } from '../../src/debug/bot/LevelTwoBot';
 
 /**
  * One browser session of the playtest driver (run under tools/e2e-lock.sh by play.ts).
@@ -31,7 +32,6 @@ export interface Issue { level: string; tick: number; x: number; z: number; seve
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
 
 const hold = (ms: number) => new Promise(r => setTimeout(r, ms));
-const ranged = /pistol|shotgun|rifle|smg|revolver|minigun|rocket|crossbow|gun|launcher/;
 
 export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[]; issues: Issue[] }> {
   mkdirSync(o.out, { recursive: true }); mkdirSync(join(o.out, 'captures'), { recursive: true });
@@ -151,6 +151,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let fetchHint: { x: number; z: number } | null = null, escort: { id: number; x: number; z: number } | null = null;
   let cureConsole: { x: number; z: number } | null = null;
   let escortClearance = new EscortClearance();
+  let marketWaypoint = 0, marketWalkLogged = false;
+  let marketLastPosition: { x: number; z: number } | null = null;
   let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
@@ -181,7 +183,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if(process.env.PLAYTEST_GOD==='1'){await page.evaluate(()=>window.__SS__!.cheats.god(true));log({fixture:'god-mode',level:e.level});}
     run = { level: e.level!, entry: o.entry, heroine: o.heroine, finished: false, skipped: [], wallSeconds: 0, simSeconds: 0, maxNoProgressSeconds: 0, deaths: 0, assists: 0, attacks: {}, weaponsStart: e.player?.weapons ?? [], weaponsEnd: [], steps: [] };
     await page.evaluate(() => {
-      const observation = window as unknown as { __playtestAttacks: Record<string, number>; __playtestCompleted?: unknown[] };
+      const observation = window as unknown as { __playtestAttacks: Record<string, number>; __playtestCompleted?: unknown[]; __playtestDamage: unknown[] };
       observation.__playtestAttacks = {};
       observation.__playtestCompleted ??= [];
       const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
@@ -191,10 +193,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         observation.__playtestCompleted!.push({ level: event.id, tick: world.tick, result: structuredClone(event.result), steps: mission.def.steps.map(s => ({ id: s.id, optional: !!s.optional, status: mission.state.steps[s.id].status })) });
       });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
+      observation.__playtestDamage = [];
+      if (world.scenario === 'L4') {
+        world.events.on('combat.hit', event => {
+          if (event.type === 'combat.hit' && (event.sourceId === 1 || event.targetId === 1)) observation.__playtestDamage.push({ ...event, source: world.entities.get(event.sourceId)?.archetype, target: world.entities.get(event.targetId)?.archetype });
+        });
+        world.events.on('player.damaged', event => { if (event.type === 'player.damaged') observation.__playtestDamage.push(event); });
+      }
+
     });
     runs.push(run); lastShot = -1e9; wallStart = Date.now(); tickStart = e.tick; zoomed = false; assistMode = false; stuckLogged = new Set(); allyWatch.clear(); enemyWatch.clear(); fetchHint = null; escort = null;
     lastProgress = { key: '', tick: e.tick, wall: Date.now(), best: Infinity };
     visibleProgress = new PlaytestProgress();lastObservation=0;
+    marketWaypoint = 0; marketWalkLogged = false; marketLastPosition = null;
     log({ levelStart: e.level, tick: e.tick, weapons: run.weaponsStart, owned: await page.evaluate(() => window.__SS__!.campaign.state()?.ownedActions ?? []) });
     if (e.level === 'L6') writeFileSync(join(o.out, 'campaign-L6.json'), JSON.stringify(await page.evaluate(() => window.__SS__!.campaign.state())));
   };
@@ -214,7 +225,65 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let aimHeld: number | null = null, lastAimClick = 0, lastCrowdKick = 0;
   let dodgePosition = { x: 0, z: 0, at: 0 }, dodgeAttempt = 0, dodgeDetourUntil = 0, dodgeDetourKeys: string[] = [];
   const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
+  let l4Dodge: { x: number; z: number; until: number } | null = null;
   const fight = async (e: Eyes): Promise<boolean> => {
+    // Carried guns cannot fire from a vehicle; keep following the driving objective.
+    if (e.driving || e.player?.riding) return false;
+    // Resume gameplay keyboard focus after a retry or a HUD button click.
+    if (e.level === 'L4' && (e.step === 'hold' || e.step === 'hide')) await page.locator('canvas').focus();
+    if (e.level === 'L4' && e.step === 'hide' && e.route && e.player) {
+      // Read the street bearing, visible bodies and nearby health packs. Step
+      // around a blocking crowd instead of walking into its melee ring.
+      const length = Math.hypot(e.route.dx, e.route.dz) || 1, dx = e.route.dx / length, dz = e.route.dz / length;
+      const kit = e.player.hp < e.player.max * .75 ? e.healthKits?.filter(k => (k.x - e.player!.x) * dx + (k.z - e.player!.z) * dz > -3).sort((a, b) => a.d - b.d)[0] : undefined;
+      if (kit && !e.enemies.some(body => body.d < 2.5)) { await clickGround(kit.screen.x, kit.screen.y); return true; }
+      const ahead = e.enemies.find(body => body.d < 6 && ((body.x - e.player!.x) * dx + (body.z - e.player!.z) * dz) / Math.max(.1, body.d) > .15);
+      if ((!l4Dodge || e.tick >= l4Dodge.until) && ahead) {
+        const side = (sign: number) => ({ x: e.player!.x + dx * 2 - dz * sign * 4, z: e.player!.z + dz * 2 + dx * sign * 4 });
+        const cost = (p: { x: number; z: number }) => e.enemies.reduce((n, body) => n + Math.max(0, 7 - Math.hypot(body.x - p.x, body.z - p.z)), 0);
+        const left = side(-1), right = side(1), to = cost(left) <= cost(right) ? left : right;
+        l4Dodge = { ...to, until: e.tick + 60 };
+      }
+      const dodge = l4Dodge && e.tick < l4Dodge.until && Math.hypot(l4Dodge.x - e.player.x, l4Dodge.z - e.player.z) > .7 ? l4Dodge : null;
+      const to = dodge ?? { x: e.player.x + dx * 4, z: e.player.z + dz * 4 };
+      const points = await page.evaluate(({ p, to }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(to, 'player')], { p: e.player, to });
+      const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+      const contact = e.player.weapons.includes('weapon.army-mg') && e.enemies.find(body => body.d < 14 && body.archetype !== 'infected.alpha');
+      await releaseAim();
+      if (contact) {
+        await page.mouse.move(contact.screen.x, contact.screen.y);
+        const fire = contact.d < 2.4 ? 'KeyJ' : 'KeyK';
+        await page.keyboard.up(fire); keysDown.delete(fire);
+        await press([...keys, fire]); return true;
+      }
+      if (dodge) { await press(keys); return true; }
+      if (keysDown.has('Space') || keysDown.has('KeyJ') || keysDown.has('KeyK')) await press([]);
+      return false;
+    }
+
+    if (e.level === 'L4' && e.step === 'hold' && e.player?.weapons.includes('weapon.army-mg')) {
+      const target = e.enemies.find(body => body.d < 20 && !body.corpse);
+      await releaseAim();
+      if (target) {
+        const crowd = e.enemies.filter(body => body.d < 5).length;
+        const away = crowd >= 3 || target.d < 2.5 || target.archetype === 'infected.alpha' && target.d < 10 ? { x: Math.max(-25, Math.min(-18, e.player.x + (e.player.x - target.x))), z: Math.max(-10, Math.min(10, e.player.z + (e.player.z - target.z))) } : null;
+        const points = away ? await page.evaluate(({ p, to }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(to, 'player')], { p: e.player, to: away }) : null;
+        const move = points ? wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y) : [];
+        const fire = target.d < 2.4 ? 'KeyJ' : 'KeyK';
+        await page.mouse.move(target.screen.x, target.screen.y); await page.keyboard.up(fire); keysDown.delete(fire); await press([...move, fire]); return true;
+      }
+      if (keysDown.has('KeyJ') || keysDown.has('KeyK')) await press([]);
+      // Defend from inside the gap, rather than standing on the Alpha's entry.
+      if (e.distance !== null && e.distance < 6 && /breach|wall/.test(e.objective)) { await press([]); return true; }
+      return false;
+    }
+    // During the L4 retreat, outrun a visible Alpha instead of planting the
+    // courier for a repeating close-range duel. The sim bot uses the same
+    // escape policy; the browser still follows the displayed street arrow.
+    if (e.level === 'L4' && e.step === 'hide' && e.enemies.some(body => body.archetype === 'infected.alpha' && body.d < 14)) {
+      await releaseAim(); if (keysDown.has('Space') || keysDown.has('KeyJ') || keysDown.has('KeyK')) await press([]);
+      return false;
+    }
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
     // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
     const lostTime = (Date.now() - lastProgress.wall) / 1000 > 30;
@@ -286,7 +355,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
       // Retain the branch's passing gun policy: one body click per target, held until it changes.
       // The unarmed chain's repeated clicks must not interrupt a firearm's target command.
-      if (keysDown.has('Space')) await press([]);
+      await press([]);
       if (aimHeld !== threat.id) {
         await releaseAim();
         await page.mouse.move(threat.aim.x, threat.aim.y); await page.mouse.down(); aimHeld = threat.id;
@@ -345,6 +414,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
   /** Where the player would aim for: the ring if on screen, else a point toward the edge arrow. */
   const goalScreen = async (e: Eyes): Promise<{ x: number; y: number } | null> => {
+    // Read the north-up route pin: its height-free direction stays accurate at
+    // every zoom, including the final metre before a street turn.
+    if (e.level === 'L4' && e.step === 'hide' && e.route && e.player) return page.evaluate(({ p, route }) => {
+      // A distant map pin can project beyond the viewport; click a short
+      // visible piece of that street instead of clamping it onto a building.
+      const scale = Math.min(1, 4 / (Math.hypot(route.dx, route.dz) || 1));
+      return window.__SS__!.input.project({ x: p.x + route.dx * scale, z: p.z + route.dz * scale }, 'player');
+    }, { p: e.player, route: e.route });
     if (!e.marker || !e.marker.visible) return null;
     if (!e.marker.offscreen) {
       // The DOM diamond floats 1.8 m above the anchor; click the ring on the ground under it.
@@ -541,11 +618,28 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if(Date.now()-lastObservation>=1000) {
       lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max})),...(e.level==='L6'?{allies:e.allies.filter(b=>b.drawn&&b.hp>0&&!b.corpse).map(b=>({id:b.id,x:b.x,z:b.z,hp:b.hp,kind:b.kind}))}:{}),marker:ring,noProgressSeconds:observed.seconds}});
+      if (e.level === 'L4' || process.env.PLAYTEST_COMBAT_AUDIT === '1' && (e.level === 'L5' || e.level === 'L9')) {
+        const damage = await page.evaluate(() => {
+          const observation = window as unknown as { __playtestDamage?: unknown[] };
+          return observation.__playtestDamage?.splice(0) ?? [];
+        });
+        if (damage.length) log({ damage });
+        const controls = await page.evaluate(() => {
+          const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+          const p = g.world.entities.get(1)!;
+          const runner = g.world.combat!.runner, side = runner.loadout.state.selectedSide, slot = runner.loadout.current(side);
+          return { focus: document.activeElement?.tagName, frame: g.world.inputFrame, staggerUntil: p.combat?.staggerUntil, attacks: (window as unknown as { __playtestAttacks: Record<string, number> }).__playtestAttacks,
+            selected: side, slot, definition: runner.loadout.definition(slot.id), gunReady: runner.gunReady, intent: g.world.controls.snapshot() };
+        });
+        log({ controls: { tick: e.tick, keys: [...keysDown], visible: e.enemies.slice(0, 6).map(b => ({ id: b.id, d: b.d, archetype: b.archetype })), ...controls } });
+      }
+
     }
     if (e.distance !== null && e.distance < lastProgress.best - 2) { lastProgress.best = e.distance; lastProgress.wall = Date.now(); }
     const stuckSim = (e.tick - lastProgress.tick) / 60, stuckWall = (Date.now() - lastProgress.wall) / 1000;
     run.maxNoProgressSeconds=Math.max(run.maxNoProgressSeconds,observed.seconds);
     if (e.player && e.player.hp < lastHp && e.player.hp <= 0) run.deaths++;
+    if (e.player && e.player.hp <= 0) { await releaseAim(); await press([]); lastHp = 0; await hold(120); continue; }
     lastHp = e.player?.hp ?? 0;
     await watchAllies(e);
 
@@ -623,15 +717,53 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
-    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons);
+    const weapon = e.player && campaignCombatWeapon(e.level, e.player.weapons, e.player.emptyWeapons);
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();
       await page.keyboard.press(`Digit${shortcut}`); await hold(300);
       log({ selectedCarriedWeapon: weapon, level: e.level, tick: e.tick }); continue;
     }
-    if (await fight(e)) { await hold(120); continue; }
+    const marketCrowd = e.level === 'L2' && e.step === 'bridge' && e.enemies.filter(b => b.d < 4).length >= 3;
+    if (!marketCrowd && await fight(e)) { await hold(120); continue; }
     if (e.driving) { if (ring) await drive(e, ring); else await press([]); await hold(120); continue; }
+
+    if (e.level === 'L2' && e.step === 'bridge' && e.player) {
+      // Use the known Main Row → Juniper → Elm street walk. Repeated clicks toward a distant
+      // bridge pin cut into fenced backyards; this is map-based steering through real keys,
+      // with combat, all objectives and the final gate interaction still live.
+      const route = l2Routes.direct;
+      if (!marketWalkLogged) { marketWalkLogged = true; run.assists++; assist('nav-route', { route: 'Main Row → Juniper → Elm → bridge', input: 'physical WASD; no objective or world writes' }); }
+      if (marketLastPosition && Math.hypot(e.player.x - marketLastPosition.x, e.player.z - marketLastPosition.z) > 8) {
+        marketWaypoint = route.reduce((best, p, i) => Math.hypot(e.player!.x - p.x, e.player!.z - p.z) < Math.hypot(e.player!.x - route[best].x, e.player!.z - route[best].z) ? i : best, 0);
+      }
+      marketLastPosition = { x: e.player.x, z: e.player.z };
+      while (marketWaypoint < route.length - 1 && Math.hypot(e.player.x - route[marketWaypoint].x, e.player.z - route[marketWaypoint].z) < 2.5) marketWaypoint++;
+      const goal = route[marketWaypoint];
+      const points = await page.evaluate(({ p, goal }) => {
+        const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+        const out = { x: goal.x, z: goal.z };
+        // The same navigation used by click-to-move locates the street around parked cars.
+        w.infected?.nav.steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, .45, out, Infinity, true);
+        return [a.input.project(p, 'player'), a.input.project(out, 'player')];
+      }, { p: e.player, goal });
+      await releaseAim();
+      const keys = wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y);
+      if (marketCrowd && e.player.weapons.includes('weapon.fire-axe')) {
+        const enemy = e.enemies.find(b => b.d < 3);
+        if (enemy) { await page.mouse.move(enemy.screen.x, enemy.screen.y); keys.push('KeyJ'); }
+      }
+      if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: Date.now() };
+      if (Date.now() - navPos.wall > 3000) {
+        const sides = [['KeyW'], ['KeyD'], ['KeyS'], ['KeyA']]; sideStep = (sideStep + 1) % sides.length;
+        await press(sides[sideStep]); await hold(500); navPos.wall = Date.now();
+        log({ marketStreetBlocked: marketWaypoint, tick: e.tick });
+      }
+      await press(keys);
+      await hold(180);
+      if (Date.now() - navLog > 3000) { navLog = Date.now(); log({ marketStreetWalk: marketWaypoint, goal, tick: e.tick }); }
+      continue;
+    }
 
     // Escort the person we just fetched, rather than running to the bring ring and leaving them out of view.
     // Only drawn allies update this remembered position; losing sight sends us back to where we last saw them.
@@ -689,17 +821,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // Far rings: walk the street route (the nav grid stands in for the player's map sense); clicks take over within 25 m.
     const far = ringDist !== null && ringDist > 25;
     const stalled = far || (Date.now() - lastPos.wall) / 1000 > 10 || stuckWall > 30 || Date.now() < navUntil;
-    if (e.level === 'L10' && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
+    const l4Route = e.level === 'L4' && e.step === 'hide' && !!e.route;
+    if ((e.level === 'L10' || l4Route) && !atRing && ring && e.player && Date.now() - lastPos.wall > 3000) {
       // A raised marker can make repeated ground clicks stop on the stair edge.
       // Project both visible positions onto the courier's current floor and
       // walk toward the marker with physical keys, without reading navigation.
       const points = await page.evaluate(({ p, goal }) => {
         const a = window.__SS__!;
         return [a.input.project(p, 'player'), a.input.project(goal, 'player')];
-      }, { p: e.player, goal: ring });
-      const keys = dodgeWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, unstickDir++);
-      await releaseAim(); await press(keys); await hold(700); await press([]);
-      log({ visibleMarkerUnstick: e.tick, keys }); continue;
+      }, { p: e.player, goal: l4Route
+        ? { x: e.player.x + e.route!.dx, z: e.player.z + e.route!.dz } : ring });
+      const dx = points[1].x - points[0].x, dy = points[1].y - points[0].y;
+      // L4 hide route: follow the floor-relative minimap route; elsewhere rotate the bearing so a blocked one is not repeated.
+      const keys = e.route ? wasdToward(e, e.view.w / 2 + dx, e.view.h / 2 + dy) : dodgeWalkKeys(dx, dy, unstickDir++);
+      await releaseAim(); await press(keys); await hold(e.route && Math.hypot(e.route.dx, e.route.dz) < 4 ? 250 : 700); await press([]);
+      log({ visibleMarkerUnstick: e.tick, keys, guidance: e.marker?.guidance, arrow: e.marker && { x: e.marker.x, y: e.marker.y } }); continue;
     }
     if (e.level !== 'L10' && stalled && !atRing && ring && e.player) {
       if (!navAssist) { navAssist = true; if (!far) navEpisodes++; navUntil = navEpisodes >= 2 ? Infinity : Date.now() + 20_000; if (!far) run.assists++; assist(far ? 'nav-follow' : 'nav-locate', { from: { x: e.player.x, z: e.player.z }, ring, distance: e.distance }); }

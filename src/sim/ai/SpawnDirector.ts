@@ -65,10 +65,17 @@ export class SpawnDirector {
       const m = this.frustum;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
       const cz = m[2] * x + m[6] * y + m[10] * z + m[14], w = m[3] * x + m[7] * y + m[11] * z + m[15];
-      return w > 0 && Math.abs(cx) <= w * 1.1 && Math.abs(cy) <= w * 1.1 && Math.abs(cz) <= w;
+      // Keep the whole spawn silhouette outside a six metre camera-space
+      // guard band. Multiplying by the projection scale turns metres at the
+      // spawn's depth into clip-space units, so the rule holds at every zoom.
+      const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
+      const marginX = marginM * Math.hypot(m[0], m[4], m[8]);
+      const marginY = marginM * Math.hypot(m[1], m[5], m[9]);
+      return w > 0 && Math.abs(cx) <= w * 1.1 + marginX && Math.abs(cy) <= w * 1.1 + marginY && Math.abs(cz) <= w;
     }
     const c = this.camera, dx = x - c.x, dz = z - c.z;
-    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
+    const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
+    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 + marginM;
   }
   /**
    * Ally fire rule (PO 2026-10-13: "visibility range of soldiers is so high, that they kill all Zombies before i see them myself"):
@@ -107,7 +114,14 @@ export class SpawnDirector {
     const x0 = Math.min(origin.x, position.x - .5), x1 = Math.max(origin.x, position.x + .5);
     const z0 = Math.min(origin.z, position.z - .5), z1 = Math.max(origin.z, position.z + .5);
     const y0 = Math.min(origin.y, .1), y1 = Math.max(origin.y, 1.9);
-    for (const wall of this.ai.world.combat?.definition.walls ?? []) {
+    for (const district of this.ai.world.districts?.districts ?? []) for (const building of district.layout.buildings) {
+      const aabb = building.aabb, wall: CoverWall = {
+        x: district.origin[0] + (aabb.min[0] + aabb.max[0]) / 2,
+        y: (aabb.min[1] + aabb.max[1]) / 2,
+        z: district.origin[1] + (aabb.min[2] + aabb.max[2]) / 2,
+        halfX: (aabb.max[0] - aabb.min[0]) / 2, halfY: (aabb.max[1] - aabb.min[1]) / 2,
+        halfZ: (aabb.max[2] - aabb.min[2]) / 2,
+      };
       if (wall.halfY * 2 < 2.2 || wall.x + wall.halfX < x0 || wall.x - wall.halfX > x1 ||
         wall.z + wall.halfZ < z0 || wall.z - wall.halfZ > z1 || wall.y + wall.halfY < y0 || wall.y - wall.halfY > y1) continue;
       walls.push(wall);
@@ -138,7 +152,7 @@ export class SpawnDirector {
   safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
     const target = this.ai.perchFor(id, position, perched) ?? position;
     const player = this.ai.world.entities.get(1)!;
-    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && this.offscreen(target) && this.ai.infectedNav.clear(target.x, target.z, infectedDef(id).radius);
+    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && (this.offscreen(target) || this.occluded(target)) && this.ai.infectedNav.clear(target.x, target.z, infectedDef(id).radius);
   }
   request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype);

@@ -13,7 +13,6 @@ import type { CoverWall } from '../combat/HitQuery';
 
 const TICKS = 60, ticks = (s: number) => Math.round(s * TICKS);
 const NAV_TRUCK = 900_201;
-const arrivalHomes = [l2.cluster.home, ...l2.escape.groups.slice(0, 2)];
 /** Market openings (front east, loading south) and the checkpoint entrances (main gate, north and south side gates). */
 const WALLS: Record<string, CoverWall> = {
   'door-front': { x: -51.3, y: .9, z: -42.2, halfX: .2, halfY: .9, halfZ: 4.6 },
@@ -58,18 +57,21 @@ export class LevelTwoRescue {
   private get s(): L2State { return this.mission.state.l2!; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
-  /** The phone cap must leave room for the authored bridge cluster and its two
-   * preceding street beats. Bite conversions use the director's existing budget. */
+  /** Authored route encounters own slots before bites; the phone also reserves its bridge cluster. */
   private reserveArrivals(): void {
     const ai = this.world.infected!;
     // The finite market alarm owns its slots before ambient street arrivals or bites fill the cap.
     let count = this.s.doorsOpenAt ? this.s.ambush.filter(a => !a.id).length : l2.rescue.ambushDoors.reduce((n, [, size]) => n + Math.ceil(size * (ai.director.tier === 'low' ? l2.escape.lowScale : 1)), 0);
+    if (!this.s.doorsOpenAt) {
+      const scale = (ai.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
+      count += l2.escape.scattered.reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
+    } else count += this.s.pending.filter(q => q.id === 0 && q.door.startsWith('l2-route-edge-')).length;
     if (ai.director.tier === 'low') {
       if (!this.s.escapeSpawned) {
         const scale = l2.escape.lowScale * (1 - this.relief());
-        count += Math.ceil(l2.cluster.count * scale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
+        count += Math.ceil(l2.cluster.count * scale);
       } else for (const q of this.s.pending) {
-        if ((q.id === 0 || q.id === -2) && arrivalHomes.some(p => p[0] === q.home.x && p[1] === q.home.z)) count++;
+        if (q.id === -2) count++;
       }
     }
     ai.director.reserved += count - this.reservedArrivals;
@@ -377,8 +379,18 @@ export class LevelTwoRescue {
     const scale = this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1;
     for (const [door, count] of l2.rescue.ambushDoors) for (let i = 0; i < Math.ceil(count * scale); i++) s.ambush.push({ id: 0, door, at: tick + ticks(.05 + i * .45 + (k++ % 3) * .1) });
     this.emergeAmbush(tick);
+    this.spawnRoute();
     if (!this.mission.state.states['doors-open']) this.mission.setState('doors-open', true);
     this.mission.requestCheckpoint('doors');
+  }
+  private spawnRoute(): void {
+    const s = this.s, scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
+    this.world.infected!.director.strict = true;
+    // These corners must be populated before the walk: waiting for the radio can put the first one in view.
+    for (const [i, [x, z, size]] of l2.escape.scattered.entries()) {
+      for (let n = 0; n < Math.ceil(size * scale); n++) s.pending.push({ id: 0, door: `l2-route-edge-${i + 1}`, at: 0, home: { x, z } });
+    }
+    this.reserveArrivals(); this.emergePending(true);
   }
   private emergeAmbush(tick: number): void {
     const s = this.s;
@@ -408,9 +420,11 @@ export class LevelTwoRescue {
     // Street population: home + leash only (no rush, which would start the panic flow). The ambush runs at the forecourt.
     if (brain && home) {
       brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM;
-      if (door.startsWith('l2-street-edge-')) {
-        // Watch the incoming street; perception still chooses the closest visible human.
-        const yaw = home.x === -30 || home.x === -64 ? Math.PI / 2 : Math.PI;
+      if (door.startsWith('l2-street-edge-') || door.startsWith('l2-route-edge-')) {
+        if (door.startsWith('l2-route-edge-')) brain.leashM = 1.5;
+        // Juniper/Maple corners watch the approach from the north; Elm watches west.
+        // Include Juniper's curb setbacks so a lone figure notices the walk before the courier passes.
+        const yaw = Math.abs(home.x + 30) <= 5 || home.x === -64 ? Math.PI / 2 : Math.PI;
         e.transform.yaw = brain.lookYaw = yaw; brain.looking = true;
         brain.pauseUntil = world.tick + ticks(l2.escape.streetLookS);
       } else {
@@ -432,14 +446,12 @@ export class LevelTwoRescue {
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
     // Death-loop relief: a courier who keeps dying on the break-away meets a thinner street population.
     const scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
-    // The phone cap reserves two street beats before the bridge; desktop has room for the full cluster first.
+    // The route pockets are already present. Admit the unchanged bridge quota before other streets can consume its slots.
     const cluster: Pending[] = [];
     const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).filter(e => e.d.startsWith('refuge-door-')).slice(0, 4);
     for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) cluster.push({ id: -2, door: list[i % list.length].d, at: 0, home });
-    const low = this.world.infected!.director.tier === 'low';
-    if (!low) s.pending.push(...cluster);
-    for (const [index, [x, z, size]] of l2.escape.groups.entries()) {
-      if (index === 2 && low) s.pending.push(...cluster);
+    s.pending.push(...cluster);
+    for (const [x, z, size] of l2.escape.groups) {
       const home = { x, z }, list = near(home).slice(0, 1);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
@@ -452,7 +464,10 @@ export class LevelTwoRescue {
     for (const q of s.pending as Pending[]) {
       if (q.id > 0 || q.id === -1 || (!all && spawned >= 2)) continue;
       const a = this.anchor(q.door);
-      if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) continue;
+      // Route corners use the director's normal 18 m exclusion: a courier waiting at the truck
+      // is only 22 m from the first corner. The full silhouette must still be outside the frame.
+      const exclusionM = q.door.startsWith('l2-route-edge-') ? 18 : 25;
+      if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < exclusionM) continue;
       const cluster = q.id === -2, id = this.emerge(q.door, q.home, q.home);
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
@@ -484,7 +499,7 @@ export class LevelTwoRescue {
       if (s.seated) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);
     }
     if (s.phase === 'ride') this.ride();
-    if (s.escapeSpawned) this.emergePending();
+    if (s.pending.length) this.emergePending();
     if (s.phase === 'arrived') {
       if (!s.crewExitAt && tick - s.arrivedAt >= ticks(.8)) this.crewExit();
       if (s.crewExitAt && !s.atDoorsAt) {

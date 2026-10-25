@@ -121,7 +121,7 @@ try{
             const still=results.reduce((best,r)=>r.score>results[best].score?r.frame:best,0);
             await sheet(scratch,id,images,still);
             rows.push({id,stop,zoom,score:Math.max(...results.map(r=>r.score)),globalChanged:Math.max(...results.map(r=>r.globalChanged)),frames:results,sheet:`${id}.jpg`,baseline:base,candidate:{proof,frames,hashes}});
-            for(const lane of ['baseline','candidate'])for(let frame=0;frame<6;frame++)rmSync(resolve(raw,`${id}-${lane}-${frame}.png`));
+            if(!process.env.AB_KEEP_RAW)for(const lane of ['baseline','candidate'])for(let frame=0;frame<6;frame++)rmSync(resolve(raw,`${id}-${lane}-${frame}.png`));
             report('running');console.log(`[score] ${id}: ${(Math.max(...results.map(r=>r.score))*100).toFixed(2)}%`);
           }
         }catch(error){errors.push({side,stop:id,message:error instanceof Error?error.message:String(error)});console.error(`[unmeasured] ${side} ${id}: ${errors.at(-1)!.message}`);report('running');}

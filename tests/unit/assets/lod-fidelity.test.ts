@@ -1,3 +1,4 @@
+import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { Box3, Mesh, Vector3, type Material, type Object3D } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -19,7 +20,7 @@ const defs = ((Array.isArray(manifest) ? manifest : (manifest as { assets: Def[]
 
 async function load(path: string): Promise<Object3D> {
   const bytes = readFileSync(path);
-  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene;
+  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
 }
 interface Summary { box: Box3; area: Map<string, number>; total: number; tris: Float32Array }
 function summarize(root: Object3D): Summary {

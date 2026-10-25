@@ -15,6 +15,8 @@ export interface BarricadeSlot {
   sandbag?: boolean;
   /** Army/destructible cover can break without exposing a player rebuild interaction. */
   playerBuildable?: boolean;
+  /** Share of their damage that attackers other than the Alpha deal to this slot (L4 military wall: the horde scratches, an Alpha tears it down). */
+  hordeShare?: number;
 }
 /** Serialized on the slot entity: checkpoints preserve HP, coverage and participating prop IDs. */
 export interface BarricadeState { slot: BarricadeSlot; coverage: number; props: string[]; carId?: number; intact: boolean; hitTick: number; breaks: number }

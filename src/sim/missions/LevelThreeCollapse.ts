@@ -741,5 +741,12 @@ export function l3EvacuationText(mission: Mission | null | undefined): string | 
   const s = mission?.state.l3;
   if (!s?.crossedAt || s.doneAt) return null;
   const seconds = Math.max(0, Math.ceil(l3.finale.evacuationS - (mission!.world.tick - s.crossedAt) / TICKS));
-  return seconds > 0 ? `Checkpoint reached · Evacuation in ${seconds} s` : 'Checkpoint reached · Waiting for the rescued group';
+  if (seconds > 0) return `Checkpoint reached · Evacuation in ${seconds} s`;
+  const world = mission!.world, player = world.entities.get(1)!;
+  for (const [index, member] of s.squad.entries()) {
+    const officer = world.entities.get(member.id);
+    if (officer && officer.health.current > 0 && !officer.infection && officer.transform.x < l3.map.zoneX)
+      return `Checkpoint reached · Waiting for the rescued group · Officer ${index + 1}: ${Math.ceil(dist(officer.transform, player.transform))} m away`;
+  }
+  return 'Checkpoint reached · Waiting for the rescued group';
 }

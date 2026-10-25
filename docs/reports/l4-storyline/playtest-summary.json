@@ -1,0 +1,152 @@
+{
+  "mode": "campaign",
+  "quality": "low",
+  "heroine": "female",
+  "zoom": 1.5,
+  "levels": [
+    "L4"
+  ],
+  "runs": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 340,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 17.116666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 1453,
+        "weapon.fire-axe": 5
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure",
+        "weapon.molotov"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy · 58 m",
+          "tick": 11,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1836,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2056,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7200000286102295,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 313 m",
+          "tick": 13233,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door · 5 m",
+          "tick": 19433,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.4
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.4
+            ],
+            "playerY": 0.7700001001358032,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down · 0:07 remaining",
+          "tick": 19593,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 1,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 1,
+    "P3": 0
+  }
+}

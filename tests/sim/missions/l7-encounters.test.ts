@@ -221,3 +221,31 @@ test('T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident f
   expect(e.civilian!.survivor?.mode).toBe('follow');
   expect(e.health.current).toBe(carried.health.current);
 });
+
+
+test('L6 ambient strolling speed is not an injury; explicit and legacy story injuries survive L7 entry', async () => {
+  const source = await load(), template = source.entities.get(source.l7Encounters!.state.roster[0].id)!;
+  const incoming = [false, true, undefined, undefined].map((injured, slot) => {
+    const e = structuredClone(template); e.id = 800 + slot;
+    Object.assign(e.civilian!.survivor!, { key: `carry-${slot}`, leader: 0, slot: slot === 2 ? 5 : slot });
+    delete e.civilian!.survivor!.injured;
+    if (injured !== undefined) e.civilian!.survivor!.injured = injured;
+    e.civilian!.l1!.walkSpeed = slot === 1 ? 2.2 : 1.2;
+    return e;
+  });
+  const w = await load('low', incoming);
+  expect(w.l7Encounters!.state.roster.map(r => r.injured)).toEqual([false, true, true, false]);
+  expect(incoming[0].civilian!.l1!.walkSpeed).toBe(1.2);
+});
+
+test('a distant L7 follower routes around the building rather than snapping its local goal back to the same wall', async () => {
+  const source = await load(), guard = structuredClone(source.entities.get(source.l7Encounters!.state.roster[0].id)!);
+  guard.id = 800; guard.civilian!.survivor!.injured = false;
+  const w = await load('low', [guard]), e = w.entities.get(guard.id)!;
+  teleport(w, -30, 50);
+  Object.assign(e.transform, { x: 89.9875, z: 36.2183, y: .7 }); w.spatial.set(e.id, e.transform.x, e.transform.z);
+  const start = { ...e.transform };
+  step(w, 60 * 40);
+  expect(Math.hypot(e.transform.x - start.x, e.transform.z - start.z)).toBeGreaterThan(15);
+  expect(Math.hypot(e.transform.x + 30, e.transform.z - 50)).toBeLessThan(100);
+}, 60_000);

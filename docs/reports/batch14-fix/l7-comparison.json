@@ -1,0 +1,2480 @@
+[
+  {
+    "name": "batch14-large-base",
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 206,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 8.694,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 81,
+          "ability.corgi-lure": 1
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 1,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 22/22 nearby \u00b7 307\u00a0m",
+            "tick": 124,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+            "tick": 10543,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.7200000286102295,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "survivorsIn": 22,
+    "initialInjured": 17,
+    "survivorsOut": 0,
+    "survivorDeaths": [
+      {
+        "id": 125,
+        "key": "shelter-0",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6358,
+            "sourceId": 310,
+            "targetId": 125,
+            "position": {
+              "x": 196.69918493567064,
+              "z": 12.772321059140607
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6358,
+          "sourceId": 310,
+          "targetId": 125,
+          "position": {
+            "x": 196.69918493567064,
+            "z": 12.772321059140607
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 126,
+        "key": "shelter-1",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2612,
+            "sourceId": 282,
+            "targetId": 126,
+            "position": {
+              "x": 231.09253260982692,
+              "z": 21.6776115552677
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6862,
+            "sourceId": 300,
+            "targetId": 126,
+            "position": {
+              "x": 191.29631410766876,
+              "z": 15.017659250119209
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6862,
+          "sourceId": 300,
+          "targetId": 126,
+          "position": {
+            "x": 191.29631410766876,
+            "z": 15.017659250119209
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 127,
+        "key": "shelter-2",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2460,
+            "sourceId": 282,
+            "targetId": 127,
+            "position": {
+              "x": 233.30939598745553,
+              "z": 20.229969678760952
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6525,
+            "sourceId": 310,
+            "targetId": 127,
+            "position": {
+              "x": 193.8867041333168,
+              "z": 9.960703876028084
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6525,
+          "sourceId": 310,
+          "targetId": 127,
+          "position": {
+            "x": 193.8867041333168,
+            "z": 9.960703876028084
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 128,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 5957,
+            "sourceId": 310,
+            "targetId": 128,
+            "position": {
+              "x": 197.97965572924855,
+              "z": 21.057705235486733
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 5957,
+          "sourceId": 310,
+          "targetId": 128,
+          "position": {
+            "x": 197.97965572924855,
+            "z": 21.057705235486733
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 129,
+        "key": "shelter-4",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 9051,
+            "sourceId": 345,
+            "targetId": 129,
+            "position": {
+              "x": 81.69852989227739,
+              "z": 24.970600321528593
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 9051,
+          "sourceId": 345,
+          "targetId": 129,
+          "position": {
+            "x": 81.69852989227739,
+            "z": 24.970600321528593
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 130,
+        "key": "shelter-5",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7223,
+            "sourceId": 297,
+            "targetId": 130,
+            "position": {
+              "x": 196.8661586076222,
+              "z": 14.579902206493427
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7223,
+          "sourceId": 297,
+          "targetId": 130,
+          "position": {
+            "x": 196.8661586076222,
+            "z": 14.579902206493427
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 131,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 8928,
+            "sourceId": 309,
+            "targetId": 131,
+            "position": {
+              "x": 90.416584600798,
+              "z": 25.1547442583041
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 8928,
+          "sourceId": 309,
+          "targetId": 131,
+          "position": {
+            "x": 90.416584600798,
+            "z": 25.1547442583041
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 132,
+        "key": "shelter-7",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2005,
+            "sourceId": 268,
+            "targetId": 132,
+            "position": {
+              "x": 233.67030380549124,
+              "z": 12.718153481716543
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6221,
+            "sourceId": 310,
+            "targetId": 132,
+            "position": {
+              "x": 196.59981984228318,
+              "z": 14.31015769119101
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6221,
+          "sourceId": 310,
+          "targetId": 132,
+          "position": {
+            "x": 196.59981984228318,
+            "z": 14.31015769119101
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 134,
+        "key": "shelter-9",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2143,
+            "sourceId": 268,
+            "targetId": 134,
+            "position": {
+              "x": 232.2612972529519,
+              "z": 14.65985114436912
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6674,
+            "sourceId": 297,
+            "targetId": 134,
+            "position": {
+              "x": 189.7192501550682,
+              "z": 10.448217983975528
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6674,
+          "sourceId": 297,
+          "targetId": 134,
+          "position": {
+            "x": 189.7192501550682,
+            "z": 10.448217983975528
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 135,
+        "key": "shelter-10",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6181,
+            "sourceId": 297,
+            "targetId": 135,
+            "position": {
+              "x": 197.58971584599706,
+              "z": 15.72206791619707
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6181,
+          "sourceId": 297,
+          "targetId": 135,
+          "position": {
+            "x": 197.58971584599706,
+            "z": 15.72206791619707
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 136,
+        "key": "shelter-11",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6323,
+            "sourceId": 297,
+            "targetId": 136,
+            "position": {
+              "x": 197.84003189892792,
+              "z": 13.338895875862121
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6323,
+          "sourceId": 297,
+          "targetId": 136,
+          "position": {
+            "x": 197.84003189892792,
+            "z": 13.338895875862121
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 138,
+        "key": "shelter-13",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7273,
+            "sourceId": 310,
+            "targetId": 138,
+            "position": {
+              "x": 189.9788991772463,
+              "z": 8.98040249598152
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7273,
+          "sourceId": 310,
+          "targetId": 138,
+          "position": {
+            "x": 189.9788991772463,
+            "z": 8.98040249598152
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 139,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 1472,
+            "sourceId": 282,
+            "targetId": 139,
+            "position": {
+              "x": 235.86292477458434,
+              "z": 18.86821848849946
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 8463,
+            "sourceId": 309,
+            "targetId": 139,
+            "position": {
+              "x": 118.19896336309694,
+              "z": 13.926894042591798
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 8463,
+          "sourceId": 309,
+          "targetId": 139,
+          "position": {
+            "x": 118.19896336309694,
+            "z": 13.926894042591798
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 140,
+        "key": "shelter-15",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7151,
+            "sourceId": 328,
+            "targetId": 140,
+            "position": {
+              "x": 196.48557663534208,
+              "z": 12.607543422898354
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7151,
+          "sourceId": 328,
+          "targetId": 140,
+          "position": {
+            "x": 196.48557663534208,
+            "z": 12.607543422898354
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 141,
+        "key": "shelter-16",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2298,
+            "sourceId": 268,
+            "targetId": 141,
+            "position": {
+              "x": 229.02945017703738,
+              "z": 16.642166850747063
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6485,
+            "sourceId": 297,
+            "targetId": 141,
+            "position": {
+              "x": 196.11162108141198,
+              "z": 9.89953434314157
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6485,
+          "sourceId": 297,
+          "targetId": 141,
+          "position": {
+            "x": 196.11162108141198,
+            "z": 9.89953434314157
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 142,
+        "key": "shelter-17",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6949,
+            "sourceId": 297,
+            "targetId": 142,
+            "position": {
+              "x": 194.72363369627607,
+              "z": 15.709258565187968
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6949,
+          "sourceId": 297,
+          "targetId": 142,
+          "position": {
+            "x": 194.72363369627607,
+            "z": 15.709258565187968
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 144,
+        "key": "shelter-19",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7088,
+            "sourceId": 300,
+            "targetId": 144,
+            "position": {
+              "x": 193.32915539707565,
+              "z": 12.280065273381911
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7088,
+          "sourceId": 300,
+          "targetId": 144,
+          "position": {
+            "x": 193.32915539707565,
+            "z": 12.280065273381911
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 147,
+        "key": "shelter-22",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7198,
+            "sourceId": 326,
+            "targetId": 147,
+            "position": {
+              "x": 189.5536464596711,
+              "z": 10.488811557515932
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7198,
+          "sourceId": 326,
+          "targetId": 147,
+          "position": {
+            "x": 189.5536464596711,
+            "z": 10.488811557515932
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 148,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6389,
+            "sourceId": 301,
+            "targetId": 148,
+            "position": {
+              "x": 169.98927194086096,
+              "z": 15.268493539871136
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6389,
+          "sourceId": 301,
+          "targetId": 148,
+          "position": {
+            "x": 169.98927194086096,
+            "z": 15.268493539871136
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 29,
+        "key": "rosa",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2455,
+            "sourceId": 268,
+            "targetId": 29,
+            "position": {
+              "x": 226.43525162441762,
+              "z": 19.681635300403926
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 7131,
+            "sourceId": 324,
+            "targetId": 29,
+            "position": {
+              "x": 194.64452381286824,
+              "z": 11.466803604560788
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7131,
+          "sourceId": 324,
+          "targetId": 29,
+          "position": {
+            "x": 194.64452381286824,
+            "z": 11.466803604560788
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 30,
+        "key": "okafor",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 7235,
+            "sourceId": 300,
+            "targetId": 30,
+            "position": {
+              "x": 192.14073790274907,
+              "z": 9.4057279781351
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 7235,
+          "sourceId": 300,
+          "targetId": 30,
+          "position": {
+            "x": 192.14073790274907,
+            "z": 9.4057279781351
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 32,
+        "key": "sam",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 6924,
+            "sourceId": 324,
+            "targetId": 32,
+            "position": {
+              "x": 194.8047110837463,
+              "z": 16.66942822912836
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 6924,
+          "sourceId": 324,
+          "targetId": 32,
+          "position": {
+            "x": 194.8047110837463,
+            "z": 16.66942822912836
+          },
+          "turns": false
+        }
+      }
+    ],
+    "onscreenAliveSamples": 548,
+    "drawnSamples": 548,
+    "maxMissingDraws": 0,
+    "frameMs": {
+      "n": 12007,
+      "p50": 16.69999999999709,
+      "p95": 16.70000000001164,
+      "max": 83.40000000000873
+    },
+    "authoritativeResult": {
+      "time": 201.45,
+      "kills": 129,
+      "knockdowns": 0,
+      "damage": 160.39999999999884,
+      "deaths": 1,
+      "rescued": 0,
+      "optionalObjectives": [],
+      "survivors": []
+    },
+    "escapedIds": [],
+    "issues": [
+      {
+        "level": "L7",
+        "tick": 5325,
+        "x": 204.6,
+        "z": 15,
+        "severity": "P2",
+        "kind": "enemy-unhittable",
+        "text": "Infected #325 (chase) 0.9 m away took no damage from 8 s of attacks (hp 60/60)",
+        "captures": [
+          "captures/campaign-L7-5325-enemy-unhittable.jpg"
+        ],
+        "step": "corridor",
+        "objective": "Bring the group to the evacuation corridor \u00b7 Group 19/22 nearby \u00b7 Waiting for Survivor 2 \u00b7 237\u00a0m"
+      }
+    ]
+  },
+  {
+    "name": "batch14-large-zebra",
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 227,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 20.915,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 97,
+          "ability.corgi-lure": 1
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 2,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 22/22 nearby \u00b7 307\u00a0m",
+            "tick": 123,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 41\u00a0m",
+            "tick": 11941,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "survivorsIn": 22,
+    "initialInjured": 17,
+    "survivorsOut": 1,
+    "survivorDeaths": [
+      {
+        "id": 125,
+        "key": "shelter-0",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2140,
+            "sourceId": 264,
+            "targetId": 125,
+            "position": {
+              "x": 232.40387610085654,
+              "z": 15.872405577879602
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2140,
+          "sourceId": 264,
+          "targetId": 125,
+          "position": {
+            "x": 232.40387610085654,
+            "z": 15.872405577879602
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 126,
+        "key": "shelter-1",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2254,
+            "sourceId": 264,
+            "targetId": 126,
+            "position": {
+              "x": 232.78673098893498,
+              "z": 14.351047189359067
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2254,
+          "sourceId": 264,
+          "targetId": 126,
+          "position": {
+            "x": 232.78673098893498,
+            "z": 14.351047189359067
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 127,
+        "key": "shelter-2",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3673,
+            "sourceId": 267,
+            "targetId": 127,
+            "position": {
+              "x": 200.43871241718782,
+              "z": 13.643616601718072
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 3673,
+          "sourceId": 267,
+          "targetId": 127,
+          "position": {
+            "x": 200.43871241718782,
+            "z": 13.643616601718072
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 128,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 11937,
+            "sourceId": 361,
+            "targetId": 128,
+            "position": {
+              "x": 84.40734349929745,
+              "z": 21.246065168323586
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 11937,
+          "sourceId": 361,
+          "targetId": 128,
+          "position": {
+            "x": 84.40734349929745,
+            "z": 21.246065168323586
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 130,
+        "key": "shelter-5",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2720,
+            "sourceId": 264,
+            "targetId": 130,
+            "position": {
+              "x": 222.7545828514487,
+              "z": 12.53266209608438
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2720,
+          "sourceId": 264,
+          "targetId": 130,
+          "position": {
+            "x": 222.7545828514487,
+            "z": 12.53266209608438
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 131,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 8781,
+            "sourceId": 340,
+            "targetId": 131,
+            "position": {
+              "x": 75.52464767280304,
+              "z": 29.111717134221276
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 8781,
+          "sourceId": 340,
+          "targetId": 131,
+          "position": {
+            "x": 75.52464767280304,
+            "z": 29.111717134221276
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 132,
+        "key": "shelter-7",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2353,
+            "sourceId": 264,
+            "targetId": 132,
+            "position": {
+              "x": 233.26220441797096,
+              "z": 13.859980625552888
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2353,
+          "sourceId": 264,
+          "targetId": 132,
+          "position": {
+            "x": 233.26220441797096,
+            "z": 13.859980625552888
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 134,
+        "key": "shelter-9",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2199,
+            "sourceId": 263,
+            "targetId": 134,
+            "position": {
+              "x": 234.32047808463705,
+              "z": 13.077115379487205
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2199,
+          "sourceId": 263,
+          "targetId": 134,
+          "position": {
+            "x": 234.32047808463705,
+            "z": 13.077115379487205
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 135,
+        "key": "shelter-10",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3837,
+            "sourceId": 267,
+            "targetId": 135,
+            "position": {
+              "x": 199.82186402960613,
+              "z": 17.816412173436948
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 3837,
+          "sourceId": 267,
+          "targetId": 135,
+          "position": {
+            "x": 199.82186402960613,
+            "z": 17.816412173436948
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 136,
+        "key": "shelter-11",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3971,
+            "sourceId": 267,
+            "targetId": 136,
+            "position": {
+              "x": 203.50412444763293,
+              "z": 16.641616766384672
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 3971,
+          "sourceId": 267,
+          "targetId": 136,
+          "position": {
+            "x": 203.50412444763293,
+            "z": 16.641616766384672
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 138,
+        "key": "shelter-13",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2899,
+            "sourceId": 264,
+            "targetId": 138,
+            "position": {
+              "x": 217.9742035006631,
+              "z": 13.76091503916176
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2899,
+          "sourceId": 264,
+          "targetId": 138,
+          "position": {
+            "x": 217.9742035006631,
+            "z": 13.76091503916176
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 139,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 11929,
+            "sourceId": 321,
+            "targetId": 139,
+            "position": {
+              "x": 85.24635465685813,
+              "z": 17.45917447692688
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 11929,
+          "sourceId": 321,
+          "targetId": 139,
+          "position": {
+            "x": 85.24635465685813,
+            "z": 17.45917447692688
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 140,
+        "key": "shelter-15",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2325,
+            "sourceId": 263,
+            "targetId": 140,
+            "position": {
+              "x": 234.98654514364208,
+              "z": 14.09016220562075
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2325,
+          "sourceId": 263,
+          "targetId": 140,
+          "position": {
+            "x": 234.98654514364208,
+            "z": 14.09016220562075
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 141,
+        "key": "shelter-16",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3076,
+            "sourceId": 264,
+            "targetId": 141,
+            "position": {
+              "x": 213.45929388976194,
+              "z": 15.154791709808826
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 3076,
+          "sourceId": 264,
+          "targetId": 141,
+          "position": {
+            "x": 213.45929388976194,
+            "z": 15.154791709808826
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 142,
+        "key": "shelter-17",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 4105,
+            "sourceId": 267,
+            "targetId": 142,
+            "position": {
+              "x": 204.77812947291633,
+              "z": 14.298945091072284
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 4105,
+          "sourceId": 267,
+          "targetId": 142,
+          "position": {
+            "x": 204.77812947291633,
+            "z": 14.298945091072284
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 144,
+        "key": "shelter-19",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2493,
+            "sourceId": 263,
+            "targetId": 144,
+            "position": {
+              "x": 237.006023033211,
+              "z": 17.71461370094939
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2493,
+          "sourceId": 263,
+          "targetId": 144,
+          "position": {
+            "x": 237.006023033211,
+            "z": 17.71461370094939
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 147,
+        "key": "shelter-22",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2537,
+            "sourceId": 264,
+            "targetId": 147,
+            "position": {
+              "x": 228.02640731740473,
+              "z": 11.610865326627382
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2537,
+          "sourceId": 264,
+          "targetId": 147,
+          "position": {
+            "x": 228.02640731740473,
+            "z": 11.610865326627382
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 148,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 4357,
+            "sourceId": 324,
+            "targetId": 148,
+            "position": {
+              "x": 158.501444405076,
+              "z": 5.361724443384111
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 4357,
+          "sourceId": 324,
+          "targetId": 148,
+          "position": {
+            "x": 158.501444405076,
+            "z": 5.361724443384111
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 29,
+        "key": "rosa",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 4264,
+            "sourceId": 267,
+            "targetId": 29,
+            "position": {
+              "x": 207.14231830225754,
+              "z": 10.9165606766942
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 4264,
+          "sourceId": 267,
+          "targetId": 29,
+          "position": {
+            "x": 207.14231830225754,
+            "z": 10.9165606766942
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 30,
+        "key": "okafor",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2651,
+            "sourceId": 263,
+            "targetId": 30,
+            "position": {
+              "x": 235.64036029318595,
+              "z": 20.963083150506716
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 2651,
+          "sourceId": 263,
+          "targetId": 30,
+          "position": {
+            "x": 235.64036029318595,
+            "z": 20.963083150506716
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 32,
+        "key": "sam",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 4528,
+            "sourceId": 267,
+            "targetId": 32,
+            "position": {
+              "x": 197.00285627747937,
+              "z": 15.641856463418435
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 4528,
+          "sourceId": 267,
+          "targetId": 32,
+          "position": {
+            "x": 197.00285627747937,
+            "z": 15.641856463418435
+          },
+          "turns": false
+        }
+      }
+    ],
+    "onscreenAliveSamples": 542,
+    "drawnSamples": 542,
+    "maxMissingDraws": 0,
+    "frameMs": {
+      "n": 13414,
+      "p50": 16.69999999999709,
+      "p95": 16.79999999998836,
+      "max": 83.40000000000873
+    },
+    "authoritativeResult": {
+      "time": 224.88333333333333,
+      "kills": 102,
+      "knockdowns": 0,
+      "damage": 30,
+      "deaths": 0,
+      "rescued": 1,
+      "optionalObjectives": [],
+      "survivors": [
+        "shelter-4"
+      ]
+    },
+    "escapedIds": [
+      129
+    ],
+    "issues": [
+      {
+        "level": "L7",
+        "tick": 11872,
+        "x": -30.1,
+        "z": 50,
+        "severity": "P2",
+        "kind": "stuck-at-ring",
+        "text": "20 s without objective progress standing at the ring (0.0 m); HUD: \"Bring the group to the evacuation corridor \u00b7 Group 1/3 nearby \u00b7 Waiting for Survivor 4 \u00b7 0\u00a0m\"",
+        "captures": [
+          "captures/campaign-L7-11872-stuck-at-ring.jpg"
+        ],
+        "step": "corridor",
+        "objective": "Bring the group to the evacuation corridor \u00b7 Group 1/3 nearby \u00b7 Waiting for Survivor 4 \u00b7 0\u00a0m"
+      }
+    ]
+  },
+  {
+    "name": "batch14-large-lead",
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 317,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 13.865,
+        "deaths": 3,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 118,
+          "ability.corgi-lure": 3
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 1,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 22/22 nearby \u00b7 307\u00a0m",
+            "tick": 122,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 41\u00a0m",
+            "tick": 17261,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "survivorsIn": 22,
+    "initialInjured": 4,
+    "survivorsOut": 3,
+    "survivorDeaths": [
+      {
+        "id": 126,
+        "key": "shelter-1",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10465,
+            "sourceId": 293,
+            "targetId": 126,
+            "position": {
+              "x": 182.1627528642716,
+              "z": 8.078535842926787
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10465,
+          "sourceId": 293,
+          "targetId": 126,
+          "position": {
+            "x": 182.1627528642716,
+            "z": 8.078535842926787
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 127,
+        "key": "shelter-2",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 5926,
+            "sourceId": 315,
+            "targetId": 127,
+            "position": {
+              "x": 191.88335688673166,
+              "z": 13.811473776848558
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 11079,
+            "sourceId": 293,
+            "targetId": 127,
+            "position": {
+              "x": 152.7896208979912,
+              "z": 6.128523861848003
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 11079,
+          "sourceId": 293,
+          "targetId": 127,
+          "position": {
+            "x": 152.7896208979912,
+            "z": 6.128523861848003
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 128,
+        "key": "shelter-3",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10222,
+            "sourceId": 293,
+            "targetId": 128,
+            "position": {
+              "x": 190.253831180902,
+              "z": 13.197462489730544
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10222,
+          "sourceId": 293,
+          "targetId": 128,
+          "position": {
+            "x": 190.253831180902,
+            "z": 13.197462489730544
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 129,
+        "key": "shelter-4",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 11289,
+            "sourceId": 275,
+            "targetId": 129,
+            "position": {
+              "x": 163.86023216890138,
+              "z": 1.3524859952629231
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 11289,
+          "sourceId": 275,
+          "targetId": 129,
+          "position": {
+            "x": 163.86023216890138,
+            "z": 1.3524859952629231
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 130,
+        "key": "shelter-5",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2937,
+            "sourceId": 307,
+            "targetId": 130,
+            "position": {
+              "x": 237.79474273634995,
+              "z": 14.768855224167561
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6577,
+            "sourceId": 299,
+            "targetId": 130,
+            "position": {
+              "x": 205.12902440997797,
+              "z": 15.473261714536877
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 10953,
+            "sourceId": 294,
+            "targetId": 130,
+            "position": {
+              "x": 198.15629465392254,
+              "z": 3.408190806387795
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10953,
+          "sourceId": 294,
+          "targetId": 130,
+          "position": {
+            "x": 198.15629465392254,
+            "z": 3.408190806387795
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 131,
+        "key": "shelter-6",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 4541,
+            "sourceId": 295,
+            "targetId": 131,
+            "position": {
+              "x": 238.45498047848216,
+              "z": 22.79136266572464
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 12375,
+            "sourceId": 338,
+            "targetId": 131,
+            "position": {
+              "x": 136.9652040330742,
+              "z": 11.34035053193784
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 12375,
+          "sourceId": 338,
+          "targetId": 131,
+          "position": {
+            "x": 136.9652040330742,
+            "z": 11.34035053193784
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 134,
+        "key": "shelter-9",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 16098,
+            "sourceId": 335,
+            "targetId": 134,
+            "position": {
+              "x": 19.15764608468947,
+              "z": 45.24448327565046
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 16098,
+          "sourceId": 335,
+          "targetId": 134,
+          "position": {
+            "x": 19.15764608468947,
+            "z": 45.24448327565046
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 135,
+        "key": "shelter-10",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3118,
+            "sourceId": 308,
+            "targetId": 135,
+            "position": {
+              "x": 240.63237043486373,
+              "z": 17.989302655756905
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 10770,
+            "sourceId": 294,
+            "targetId": 135,
+            "position": {
+              "x": 204.70908598322947,
+              "z": 5.06443192766666
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10770,
+          "sourceId": 294,
+          "targetId": 135,
+          "position": {
+            "x": 204.70908598322947,
+            "z": 5.06443192766666
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 136,
+        "key": "shelter-11",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10169,
+            "sourceId": 318,
+            "targetId": 136,
+            "position": {
+              "x": 186.12272848226698,
+              "z": -1.6353793755683452
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10169,
+          "sourceId": 318,
+          "targetId": 136,
+          "position": {
+            "x": 186.12272848226698,
+            "z": -1.6353793755683452
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 138,
+        "key": "shelter-13",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 15890,
+            "sourceId": 335,
+            "targetId": 138,
+            "position": {
+              "x": 28.2319618717448,
+              "z": 44.06878542146823
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 15890,
+          "sourceId": 335,
+          "targetId": 138,
+          "position": {
+            "x": 28.2319618717448,
+            "z": 44.06878542146823
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 139,
+        "key": "shelter-14",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10389,
+            "sourceId": 275,
+            "targetId": 139,
+            "position": {
+              "x": 190.99516320006697,
+              "z": 6.016048300232857
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10389,
+          "sourceId": 275,
+          "targetId": 139,
+          "position": {
+            "x": 190.99516320006697,
+            "z": 6.016048300232857
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 140,
+        "key": "shelter-15",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 3102,
+            "sourceId": 306,
+            "targetId": 140,
+            "position": {
+              "x": 243.18621309522214,
+              "z": 16.886721458737078
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 6740,
+            "sourceId": 299,
+            "targetId": 140,
+            "position": {
+              "x": 203.65947451397207,
+              "z": 12.037614406396424
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 10572,
+            "sourceId": 294,
+            "targetId": 140,
+            "position": {
+              "x": 212.6794090667201,
+              "z": 6.1343337293589295
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10572,
+          "sourceId": 294,
+          "targetId": 140,
+          "position": {
+            "x": 212.6794090667201,
+            "z": 6.1343337293589295
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 141,
+        "key": "shelter-16",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 17255,
+            "sourceId": 335,
+            "targetId": 141,
+            "position": {
+              "x": -2.116903087130312,
+              "z": 44.47532616800986
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 17255,
+          "sourceId": 335,
+          "targetId": 141,
+          "position": {
+            "x": -2.116903087130312,
+            "z": 44.47532616800986
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 142,
+        "key": "shelter-17",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 9947,
+            "sourceId": 318,
+            "targetId": 142,
+            "position": {
+              "x": 195.1439539630643,
+              "z": -0.7480495861868762
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 9947,
+          "sourceId": 318,
+          "targetId": 142,
+          "position": {
+            "x": 195.1439539630643,
+            "z": -0.7480495861868762
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 147,
+        "key": "shelter-22",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 15622,
+            "sourceId": 335,
+            "targetId": 147,
+            "position": {
+              "x": 42.919684974800106,
+              "z": 41.74997671149851
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 15622,
+          "sourceId": 335,
+          "targetId": 147,
+          "position": {
+            "x": 42.919684974800106,
+            "z": 41.74997671149851
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 148,
+        "key": "shelter-23",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 11141,
+            "sourceId": 275,
+            "targetId": 148,
+            "position": {
+              "x": 159.89782166354505,
+              "z": 4.671028138532816
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 11141,
+          "sourceId": 275,
+          "targetId": 148,
+          "position": {
+            "x": 159.89782166354505,
+            "z": 4.671028138532816
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 29,
+        "key": "rosa",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10655,
+            "sourceId": 293,
+            "targetId": 29,
+            "position": {
+              "x": 175.41432437879686,
+              "z": 10.105983713994565
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10655,
+          "sourceId": 293,
+          "targetId": 29,
+          "position": {
+            "x": 175.41432437879686,
+            "z": 10.105983713994565
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 30,
+        "key": "okafor",
+        "injured": true,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 2963,
+            "sourceId": 308,
+            "targetId": 30,
+            "position": {
+              "x": 238.79919678746032,
+              "z": 15.500234673952335
+            },
+            "turns": false
+          },
+          {
+            "type": "outbreak.bite",
+            "tick": 10327,
+            "sourceId": 294,
+            "targetId": 30,
+            "position": {
+              "x": 220.15100815554115,
+              "z": 5.554364124916734
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10327,
+          "sourceId": 294,
+          "targetId": 30,
+          "position": {
+            "x": 220.15100815554115,
+            "z": 5.554364124916734
+          },
+          "turns": false
+        }
+      },
+      {
+        "id": 32,
+        "key": "sam",
+        "injured": false,
+        "status": "dead",
+        "biteHistory": [
+          {
+            "type": "outbreak.bite",
+            "tick": 10854,
+            "sourceId": 275,
+            "targetId": 32,
+            "position": {
+              "x": 167.89019793327716,
+              "z": 5.988598203408173
+            },
+            "turns": false
+          }
+        ],
+        "cause": {
+          "type": "outbreak.bite",
+          "tick": 10854,
+          "sourceId": 275,
+          "targetId": 32,
+          "position": {
+            "x": 167.89019793327716,
+            "z": 5.988598203408173
+          },
+          "turns": false
+        }
+      }
+    ],
+    "onscreenAliveSamples": 837,
+    "drawnSamples": 837,
+    "maxMissingDraws": 0,
+    "frameMs": {
+      "n": 18610,
+      "p50": 16.69999999999709,
+      "p95": 16.79999999998836,
+      "max": 116.70000000000437
+    },
+    "authoritativeResult": {
+      "time": 312.73333333333335,
+      "kills": 181,
+      "knockdowns": 0,
+      "damage": 365.3,
+      "deaths": 3,
+      "rescued": 3,
+      "optionalObjectives": [],
+      "survivors": [
+        "shelter-7",
+        "shelter-19",
+        "shelter-0"
+      ]
+    },
+    "escapedIds": [
+      132,
+      144,
+      125
+    ],
+    "issues": [
+      {
+        "level": "L7",
+        "tick": 3225,
+        "x": 201.3,
+        "z": 15.1,
+        "severity": "P2",
+        "kind": "enemy-unhittable",
+        "text": "Infected #260 (chase) 0.9 m away took no damage from 8 s of attacks (hp 158.93147631694046/300)",
+        "captures": [
+          "captures/campaign-L7-3225-enemy-unhittable.jpg"
+        ],
+        "step": "corridor",
+        "objective": "Bring the group to the evacuation corridor \u00b7 Group 18/18 nearby \u00b7 234\u00a0m"
+      }
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+Command: sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4
+Source commit: 08e67ba4f
+
+stdout | tests/levels/start-checkpoint-clearance.test.ts > L10: every player start and reached checkpoint has no NPC within 0.8 m
+{"level":"L10","checkpoints":["cure-crash","start","cure-residential","cure-industrial","cure-military","cure-research-entry","cure-research","cure-corridor","cure-complex","cure-disperse-ready"],"declared":["cure-crash","cure-residential","cure-industrial","cure-military","cure-research-entry","cure-corridor","cure-complex","cure-research","cure-disperse-ready"]}
+
+ ✓  functional  tests/levels/start-checkpoint-clearance.test.ts (10 tests) 913622ms
+   ✓ L1: every player start and reached checkpoint has no NPC within 0.8 m 26907ms
+   ✓ L2: every player start and reached checkpoint has no NPC within 0.8 m 35279ms
+   ✓ L3: every player start and reached checkpoint has no NPC within 0.8 m 91925ms
+   ✓ L4: every player start and reached checkpoint has no NPC within 0.8 m 199979ms
+   ✓ L5: every player start and reached checkpoint has no NPC within 0.8 m 19490ms
+   ✓ L6: every player start and reached checkpoint has no NPC within 0.8 m 41466ms
+   ✓ L7: every player start and reached checkpoint has no NPC within 0.8 m 292610ms
+   ✓ L8: every player start and reached checkpoint has no NPC within 0.8 m 37349ms
+   ✓ L9: every player start and reached checkpoint has no NPC within 0.8 m 17566ms
+   ✓ L10: every player start and reached checkpoint has no NPC within 0.8 m 151048ms
+ ✓  functional  tests/levels/L6-campaign.test.ts (2 tests) 718845ms
+   ✓ T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover 370338ms
+   ✓ T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover 348504ms
+
+ Test Files  461 passed | 3 skipped (464)
+      Tests  2531 passed | 9 skipped (2540)
+   Start at  21:20:58
+   Duration  3482.79s (tests 99%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 40s, remote total 3488s)

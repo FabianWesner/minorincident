@@ -1,4 +1,4 @@
-import { leastCrowdedModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
+import { leastCrowdedModel, crowdAppearance, shirtTones, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
@@ -17,6 +17,8 @@ import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } f
 
 const ticks = (seconds: number) => Math.round(seconds * 60);
 const civ = l1v2.civilians;
+/** PO Q-159: a sheltering or hiding person cowers only while a live infected is this close (metres). */
+export const cowerThreatM = 15;
 /** Seconds of each transformation phase except collapse, which takes the rest of the 3.0 +/- 0.5 s (section 5.7). */
 const phaseS = { stagger: .5, eyes: .7, rise: .6 } as const;
 /** Skin blend toward ash-green at the end of the collapse (section 5.7: 0 to 40 %). */
@@ -173,6 +175,16 @@ export class Outbreak {
   dressInfected(): void {
     for (const e of this.world.infected!.active) {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
+      // L4's arriving horde shares the seven existing infected model batches.
+      // Original people already own an appearance and keep it through a turn.
+      const variant = e.infected?.variant;
+      if (this.world.scenario === 'L4' && regularInfectedModels.some(model => model === variant)) {
+        // The native infected renderer owns these seven batches. Giving them
+        // an appearance would route them to the NPC renderer, which loads only
+        // npc.* models, and make the arriving horde invisible.
+        delete e.appearance;
+        continue;
+      }
       const asset = this.crowdModel(e.transform, true);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
       e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier, bornInfected: true };
@@ -192,6 +204,7 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (c.state === 'calm') this.shelterCower(e);
       if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {
@@ -219,9 +232,25 @@ export class Outbreak {
     }
   }
 
+  /** PO Q-159 ("people behave strange"): sheltering/hiding people cower only while a live infected is within `cowerThreatM`; otherwise they stand alert. */
+  threatNear(e: EntitySnapshot): boolean {
+    for (const a of this.world.infected?.active ?? []) if (a.health.current > 0 && !a.hidden && !a.infected?.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
+    for (const a of this.turning) if (a !== e && a.health.current > 0 && !a.hidden && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < cowerThreatM) return true;
+    return false;
+  }
+  private shelterCower(e: EntitySnapshot): void {
+    const c = e.civilian!, anchor = c.schedule?.[c.scheduleStep ?? 0]?.anchor;
+    if (anchor !== 'refuge/shelter' && anchor !== 'fight/hide' || c.story && c.story.clip !== 'npc-cower') return;
+    if (c.ally) { if (c.story?.clip === 'npc-cower') c.story = null; return; }
+    const near = this.threatNear(e);
+    if (!near && c.story) c.story = null;
+    else if (near && !c.story) c.story = { clip: 'npc-cower', start: this.world.tick };
+  }
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.world.npcs!.civilians.release(c.attacker);
     if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
+    // PO Q-159: a sheltering cower ends when the person runs again.
+    if (state !== 'calm' && c.story?.clip === 'npc-cower' && !c.survivor) c.story = null;
     if (state === 'finished') e.health.current = 0;
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
@@ -332,9 +361,9 @@ export class Outbreak {
     if (h.sx === undefined || Math.hypot(e.transform.x - h.sx, e.transform.z - (h.sz ?? 0)) > .4) { h.sx = e.transform.x; h.sz = e.transform.z; h.since = tick; }
     if (left <= 1.2 || left <= 6 && tick - (h.since ?? tick) > 60) {
       this.state(e, 'calm'); c.path.length = 0; c.goal = -1;
-      c.schedule = [{ activity: 'look', anchor: h.cower ? 'fight/hide' : 'l2/haven', target: { x: h.x, z: h.z }, facing: h.cower ?? { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
-      // A person hiding from a gunfight crouches there, facing the fight.
-      if (h.cower) c.story = { clip: 'npc-cower', start: tick };
+      c.schedule = [{ activity: 'look', anchor: h.cower ? 'fight/hide' : 'l2/haven', target: { x: h.x, z: h.z }, facing: h.cower ? { x: h.x * 2 - h.cower.x, z: h.z * 2 - h.cower.z } : { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      // A person hiding from a gunfight crouches there, back to the fight (PO Q-159), while infected are close.
+      if (h.cower && !c.ally && this.threatNear(e)) c.story = { clip: 'npc-cower', start: tick };
       return;
     }
     const before = { x: e.transform.x, z: e.transform.z };
@@ -389,7 +418,7 @@ export class Outbreak {
     // This synchronous search changes no actor. Borrow the same targets once,
     // rather than rescanning every district entity for each clear candidate.
     const neighbours = this.refugeOccupied; neighbours.length = 0;
-    let gathered = false;
+    let gathered = false, crowded: Vec2 | null = null;
     for (let radius = 1.4; radius <= 4; radius += .65) for (let k = 0; k < 9; k++) {
       const a = angle + ((k + e.id % 9) % 9 - 4) * Math.PI / 12;
       const p = { x: refuge.x + Math.cos(a) * radius, z: refuge.z + Math.sin(a) * radius };
@@ -403,17 +432,22 @@ export class Outbreak {
       for (const at of neighbours) {
         if (Math.hypot(at.x - p.x, at.z - p.z) < .85) { occupied = true; break; }
       }
-      if (!occupied && nav.visible(refuge, p, .35)) { neighbours.length = 0; return p; }
+      if (!nav.visible(refuge, p, .35)) continue;
+      // PO Q-159: a crowded doorway is still the shelter. Huddle at its first clear spot instead of "sheltering" where the person stood.
+      crowded ??= p;
+      if (!occupied) { neighbours.length = 0; return p; }
     }
     neighbours.length = 0;
-    return { x: e.transform.x, z: e.transform.z };
+    return crowded ?? { x: e.transform.x, z: e.transform.z };
   }
   private shelter(e: EntitySnapshot): void {
     const c = e.civilian!, at = { x: e.transform.x, z: e.transform.z };
     this.state(e, 'calm'); c.path.length = 0; c.goal = -1; delete c.l1!.doorAt;
-    c.schedule = [{ activity: 'look', anchor: 'refuge/shelter', target: at, facing: c.threat, ticks: ticks(600) }];
+    // PO Q-159: huddle facing the shelter (the doorway, the tent), back to the threat; the cower lasts only while infected are close (`shelterCower`).
+    const refuge = this.refuges.find(r => r.id === c.l1!.refuge), facing = refuge && Math.hypot(refuge.x - at.x, refuge.z - at.z) > .3 ? { x: refuge.x, z: refuge.z } : { x: at.x * 2 - c.threat.x, z: at.z * 2 - c.threat.z };
+    c.schedule = [{ activity: 'look', anchor: 'refuge/shelter', target: at, facing, ticks: ticks(600) }];
     c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
-    c.story = { clip: 'npc-cower', start: this.world.tick };
+    c.story = !c.ally && this.threatNear(e) ? { clip: 'npc-cower', start: this.world.tick } : null;
     e.hidden = false; this.world.spatial.set(e.id, at.x, at.z);
   }
   private escape(e: EntitySnapshot): void {

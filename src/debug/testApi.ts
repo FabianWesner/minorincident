@@ -23,6 +23,7 @@ import { renderAudio } from './audioHarness';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import { CrowdFigureProbe } from '../render/characters/CrowdFigureProbe';
+import { corpseLayout } from '../render/characters/CorpseLayout';
 import type { Action, BindingMap } from '../data/bindings';
 import type { Recording } from '../input/Recorder';
 import type { Game } from '../Game';
@@ -129,7 +130,7 @@ export interface SSTestApi {
     /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
     figureJoints(on: boolean): void;
     /** Blank-viewport probe: camera pose/matrices/near/far, visible scene children, the first mesh under five screen points, renderer and PostFx diagnostics. */
-    renderProbe(): Record<string, unknown>; cpuProfile(): Record<string, number> };
+    renderProbe(): Record<string, unknown>; corpseLayout(): { count: number; sunkPairs: number; heapPairs: number; repeatedPairs: number; maxDisplacementM: number; courierClear: boolean }; cpuProfile(): Record<string, number> };
   perf(): ReturnType<Game['perf']>;
   /** Telemetry replays (`?telemetry=record` keeps the input log in memory; tools/replay/play.ts feeds it back). */
   replay: ReturnType<typeof replayApi>;
@@ -274,7 +275,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       },
     },
     weather: { probe: (mode, assetId) => { game.view.weatherMask(mode === 'precipitation' || mode === 'dense-precipitation' ? 'weather' : mode ? assetId ?? null : null); weatherRayDither.value = mode === 'dense-precipitation' ? 0 : 1; weatherSurface.probe.value = mode === 'up' ? 1 : mode === 'snow' ? 2 : mode === 'wet' ? 3 : mode === 'tracks' ? 4 : 0; game.view.update(1); }, override: (kind, intensity) => { game.world.weather?.setOverride(kind, intensity); game.view.update(1); }, strike: at => game.world.weather?.strike(at) },
-    debug: { cpuProfile: () => profileCpu(game), renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; }, renderProbe: () => game.view.renderProbe() },
+    debug: { corpseLayout: () => corpseLayout(game.world).audit(), cpuProfile: () => profileCpu(game), renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; }, renderProbe: () => game.view.renderProbe() },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(), replay: replayApi(game),
   };
   window.__SS__ = api; return api;

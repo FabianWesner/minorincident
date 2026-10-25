@@ -20,6 +20,12 @@ for (const variant of ['female', 'male']) test(`@E18-AC01 ${variant} low skin pr
     }
     expect(reduced[i].getMaterial()?.getName()).toBe(original[i].getMaterial()?.getName());
   }
+  // The textured female body (10-24) is 6k triangles, already under the low budget: its low file is the same body.
+  const triangles = original.reduce((n, primitive) => n + primitive.getIndices()!.getCount() / 3, 0);
+  if (triangles <= 30_000) {
+    for (let i = 0; i < original.length; i++) expect(reduced[i].getIndices()!.getArray()).toEqual(original[i].getIndices()!.getArray());
+    return;
+  }
   const proof = await simplifyCourierSkin(source);
   expect(proof.after).toBeLessThanOrEqual(30_000);
   expect(proof.after).toBeLessThan(proof.before);
