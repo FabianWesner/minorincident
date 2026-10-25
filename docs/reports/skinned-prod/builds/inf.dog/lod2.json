@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/lod2.glb",
   "out": "docs/reports/skinned-prod/builds/inf.dog/lod2.raw.glb",
-  "bytes": 180004,
+  "bytes": 179800,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/source/flat-lod2.glb",
   "scale": 1.2007691766429784,
   "yaw": 90,
@@ -48,43 +48,57 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 24,
+      "rim": 27,
+      "triangles": 23,
+      "loops": 2,
       "distance": 0.1736587471551947,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
       "rim": 12,
+      "triangles": 10,
+      "loops": 1,
       "distance": 0.10205400225558395,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
       "rim": 14,
+      "triangles": 12,
+      "loops": 1,
       "distance": 0.09114649756782484,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.005211708082139555,
       "method": "closed-part-surface"
     },
     {
       "part": "foreArmR",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.010933676586722499,
       "method": "closed-part-surface"
     },
     {
       "part": "legL",
-      "rim": 16,
+      "rim": 19,
+      "triangles": 15,
+      "loops": 2,
       "distance": 0.14692995237887782,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
       "rim": 16,
+      "triangles": 14,
+      "loops": 1,
       "distance": 0.10983306686406377,
       "method": "cut-boundary"
     }

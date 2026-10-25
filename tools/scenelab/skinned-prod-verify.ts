@@ -5,7 +5,7 @@ import { PNG } from 'pngjs';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
-import type { InstancedMesh } from 'three';
+import type { InstancedMesh, RenderTarget } from 'three';
 import { authoredClips, strides } from '../../src/render/characters/clips';
 import { idleOffset } from '../../src/render/npc/waitingIdle';
 import { civilianClips } from '../../src/render/characters/bakeInfected';
@@ -40,18 +40,29 @@ async function focusCap(session: SceneSession, id: number, cap: number, frozen: 
       }
       return result;
     };
-    const centre = mesh.position.clone().set(0, 0, 0), normal = centre.clone(); let triangles = 0;
+    const centre = mesh.position.clone().set(0, 0, 0), normal = centre.clone(); let triangles = 0, area = 0;
     const indices = geometry.index, count = indices?.count ?? position.count;
     for (let t = 0; t < count; t += 3) {
       const ids = [0, 1, 2].map(k => indices ? indices.getX(t + k) : t + k);
       if (ids.some(i => parts.getW(i) !== 1024 + cap)) continue;
-      const [a, b, c] = ids.map(pointAt); centre.add(a).add(b).add(c); normal.add(b.clone().sub(a).cross(c.clone().sub(a))); triangles++;
+      const [a, b, c] = ids.map(pointAt), faceNormal = b.clone().sub(a).cross(c.clone().sub(a)), weight = faceNormal.length(); centre.addScaledVector(a.clone().add(b).add(c), weight); normal.add(faceNormal); area += weight; triangles++;
     }
     if (!triangles || normal.lengthSq() < 1e-12) throw Error('Degenerate wound surface');
-    centre.divideScalar(triangles * 3); normal.normalize(); const camera = centre.clone().addScaledVector(normal, 3); camera.y = Math.max(.12, camera.y);
+    centre.divideScalar(area * 3); normal.normalize(); const cameraDirection = normal.clone(); cameraDirection.y = Math.max(.15, cameraDirection.y); cameraDirection.normalize(); const camera = centre.clone().addScaledVector(cameraDirection, 3); camera.y = Math.max(.12, camera.y);
     window.__SCENE__!.setCamera({ mode: 'pose', position: [camera.x, camera.y, camera.z], target: [centre.x, centre.y, centre.z] });
     return { triangles, centre: centre.toArray(), normal: normal.toArray(), camera: camera.toArray(), frozen };
   }, { id, cap, frozen });
+}
+
+async function hdr(session: SceneSession) {
+  return session.page.evaluate(async () => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const target = (game.view as unknown as { postFx: { scenePass: { renderTarget: RenderTarget } } }).postFx.scenePass.renderTarget;
+    const pixels = await game.view.renderer.readRenderTargetPixelsAsync(target, 0, 0, target.width, target.height);
+    let nonfinite = 0;
+    for (const value of pixels) if (pixels instanceof Float32Array ? !Number.isFinite(value) : (value & 0x7c00) === 0x7c00) nonfinite++;
+    return { nonfinite };
+  });
 }
 
 const out = resolve('docs/reports/skinned-prod'), receipts = [];
@@ -107,6 +118,7 @@ try {
       }
       if (cases.has('details')) {
         for (const [label, limb, height] of [['arm', 0, 1.25], ['leg', 2, .8], ['head', 4, 1.5]] as const) {
+          if (process.env.DETAIL_LABELS && !process.env.DETAIL_LABELS.split(',').includes(label)) continue;
           await session.load({ ...spec, name: `skin-cap-${label}`, actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
             { id: 'cut', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.nurse', accessories: [] } }],
             camera: { mode: 'pose', position: [2.6, height + 1.2, -3.4], target: [0, height, 0] } });
@@ -117,11 +129,14 @@ try {
             (game.view as unknown as { crowd: { detach(id: number, limb: number): void } }).crowd.detach(id, limb);
           }, { id, limb });
           const capIndex = limb === 0 ? 1 : limb === 2 ? 5 : 0;
+          await focusCap(session, id, capIndex, false); await session.step(1);
           const liveCamera = await focusCap(session, id, capIndex, false);
           await session.screenshot(resolve(out, `nurse-cap-${label}-${backend}.png`));
+          const liveHDR = await hdr(session); console.log(JSON.stringify({ backend, label, liveHDR }));
           await session.page.evaluate(() => window.__SCENE__!.command('cut', { corpse: true })); await session.step(180);
           const frozenCamera = await focusCap(session, id, capIndex, true);
           await session.screenshot(resolve(out, `nurse-frozen-${label}-${backend}.png`));
+          const frozenHDR = await hdr(session); console.log(JSON.stringify({ backend, label, frozenHDR }));
           const frozen = await session.page.evaluate(id => {
             const game = (window.__SCENE__ as unknown as { game: Game }).game;
             const crowd = (game.view as unknown as { crowd: { staticCorpses: { slots: Map<string, { page: { mesh: InstancedMesh }; index: number }> } } }).crowd;
@@ -131,8 +146,9 @@ try {
             for (const i of referenced) if (parts.getW(i) >= 1024) caps[parts.getW(i) - 1024] = (caps[parts.getW(i) - 1024] ?? 0) + 1;
             return { caps, vertices: g.getAttribute('position').count, triangles: (g.index?.count ?? parts.count) / 3 };
           }, id);
+          if (liveHDR.nonfinite || frozenHDR.nonfinite) throw Error(`${label}/${backend}: nonfinite wound HDR`);
           if (Object.keys(frozen.caps).length !== 1) throw Error(`${label}: missing or extra frozen caps`);
-          receipts.push({ case: 'details', asset: 'inf.nurse', label, backend, frozen, liveCamera, frozenCamera, errors: [...session.errors] });
+          receipts.push({ case: 'details', asset: 'inf.nurse', label, backend, frozen, liveCamera, frozenCamera, liveHDR, frozenHDR, errors: [...session.errors] });
         }
         await session.load({ ...spec, name: 'skin-hit-flash', actors: [{ id: 'courier', kind: 'courier', at: [0, 12] },
           { id: 'hit', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], state: 'idle', look: { model: 'inf.common-worker', accessories: [] } }],

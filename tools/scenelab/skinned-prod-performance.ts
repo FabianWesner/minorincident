@@ -1,5 +1,6 @@
 /** Identical 200-AI, six-model scene on main and this lane. ABBA, native headless Metal, one browser per reservation. */
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { get } from 'node:http';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
@@ -109,6 +110,9 @@ try {
     return { backend, mainP95: before, skinP95: after, deltaMs: after - before, passed: rows.length === 4 && after - before <= 1 };
   });
   writeJson(resolve(out, 'performance-summary.json'), summaries);
+  // Recheck the reported L6 regression before releasing the same quiet reservation.
+  execFileSync('npx', ['playwright', 'test', '--config=tests/qa/invariants/playwright.config.ts', '--project=chromium', '--workers=1', '--grep', '8 load time L6:'], { cwd: root, stdio: 'inherit', env: process.env });
+  writeJson(resolve(out, 'load-L6-final.json'), JSON.parse(readFileSync(resolve(root, 'test-results/qa-invariants/load-L6.json'), 'utf8')));
   if (summaries.some(row => !row.passed)) throw Error('Low p95 exceeded main +1 ms');
   }
 } finally { stopServer(); process.chdir(root); writeJson(resolve(out, 'performance.json'), receipts); }

@@ -1,7 +1,8 @@
-import { premultiplyRow, skinnedVertexMatrix } from './skinnedCrowd';
+import { premultiplyRow, skinnedVertexMatrix, skinnedWoundNormal } from './skinnedCrowd';
 import { interleaveTexturedCrowd } from './crowdTexture';
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Sphere, type Frustum, Vector3, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
+import { normalViewGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -311,6 +312,7 @@ export class StaticCorpses extends Group {
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
           frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = material.userData.frozenSurfaceMask ?? null;
         }
+        if (clip.binds) frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
         this.frozenMaterials.set(material, frozenMaterial);
       }
       frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);

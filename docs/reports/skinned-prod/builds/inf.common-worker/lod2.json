@@ -1,16 +1,16 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.common-worker/model.lod2.glb",
   "out": "docs/reports/skinned-prod/builds/inf.common-worker/lod2.raw.glb",
-  "bytes": 260488,
+  "bytes": 262044,
   "body": "rigid parts welded by position",
-  "vertices": 1698,
-  "weldedVertices": 411,
-  "triangles": 844,
+  "vertices": 1691,
+  "weldedVertices": 409,
+  "triangles": 840,
   "components": 8,
   "openEdges": 57,
   "unrelatedSeams": 0,
   "maxInfluences": 3,
-  "zeroNormals": 0,
+  "zeroNormals": 2,
   "jointNames": [
     "root",
     "hip",
@@ -34,42 +34,56 @@
     {
       "part": "head",
       "rim": 5,
+      "triangles": 3,
+      "loops": 1,
       "distance": 0.0868688310845685,
       "method": "source-opening"
     },
     {
       "part": "armL",
-      "rim": 6,
+      "rim": 13,
+      "triangles": 7,
+      "loops": 3,
       "distance": 0.08495170962523789,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 10,
-      "distance": 0.05818775038379781,
+      "rim": 19,
+      "triangles": 11,
+      "loops": 4,
+      "distance": 0.07436824442670709,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
-      "rim": 4,
+      "rim": 7,
+      "triangles": 3,
+      "loops": 2,
       "distance": 0.03375492168322212,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
-      "rim": 4,
+      "rim": 10,
+      "triangles": 4,
+      "loops": 3,
       "distance": 0.13341188202921359,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 3,
-      "distance": 0.04751173733415538,
-      "method": "closed-part-surface"
+      "rim": 13,
+      "triangles": 5,
+      "loops": 4,
+      "distance": 0.04868386658626473,
+      "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 11,
+      "rim": 20,
+      "triangles": 14,
+      "loops": 3,
       "distance": 0.026953446829250993,
       "method": "cut-boundary"
     }
@@ -86,7 +100,7 @@
     },
     "legR/torso": {
       "seamVertices": 31,
-      "band": 0.14027301968932018,
+      "band": 0.14051570040185005,
       "blended": 27
     },
     "armL/torso": {
@@ -96,7 +110,7 @@
     },
     "legL/torso": {
       "seamVertices": 17,
-      "band": 0.14027301968932018,
+      "band": 0.14051570040185005,
       "blended": 18
     },
     "foreArmL/armL": {

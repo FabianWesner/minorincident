@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a/lod2.glb",
   "out": "docs/reports/skinned-prod/builds/npc.civilian-man-a/lod2.raw.glb",
-  "bytes": 201648,
+  "bytes": 201692,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-man-a/source/flat-lod2.glb",
   "scale": 1.6916635836927865,
   "yaw": 90,
@@ -37,42 +37,56 @@
     {
       "part": "head",
       "rim": 9,
+      "triangles": 7,
+      "loops": 1,
       "distance": 0.07714768772955023,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 3,
-      "distance": 0.07351298077528846,
-      "method": "closed-part-surface"
+      "rim": 7,
+      "triangles": 5,
+      "loops": 1,
+      "distance": 0.19481458390613715,
+      "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 3,
-      "distance": 0.0728494101974028,
-      "method": "closed-part-surface"
+      "rim": 8,
+      "triangles": 6,
+      "loops": 1,
+      "distance": 0.21197429476758395,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.046784426852702975,
       "method": "closed-part-surface"
     },
     {
       "part": "foreArmR",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.054094670286274286,
       "method": "closed-part-surface"
     },
     {
       "part": "legL",
       "rim": 15,
+      "triangles": 13,
+      "loops": 1,
       "distance": 0.1191550692224124,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
       "rim": 14,
+      "triangles": 12,
+      "loops": 1,
       "distance": 0.07363952640639033,
       "method": "cut-boundary"
     }

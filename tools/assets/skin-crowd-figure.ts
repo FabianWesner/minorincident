@@ -351,7 +351,7 @@ scene.addChild(out.createNode('skin_body').setMesh(bodyMesh).setSkin(skin));
 // The rigid export's old discs can lie inside a weighted neck/shoulder.
 // Close the actual boundary left when whole triangles of a limb are removed.
 // Rim vertices retain the body's weights, so their posed seam stays welded.
-const capFits: { part: string; rim: number; distance: number; method: string }[] = [];
+const capFits: { part: string; rim: number; triangles: number; loops: number; distance: number; method: string }[] = [];
 {
   const cuts: Record<string, readonly string[]> = { head: ['head'], armL: ['armL', 'foreArmL', 'handL'], armR: ['armR', 'foreArmR', 'handR'], foreArmL: ['foreArmL', 'handL'], foreArmR: ['foreArmR', 'handR'], legL: ['legL', 'shinL', 'footL'], legR: ['legR', 'shinR', 'footR'] };
   for (const parts of crowdLimbParts(quadruped)) cuts[parts[0]] = parts;
@@ -380,8 +380,20 @@ const capFits: { part: string; rim: number; distance: number; method: string }[]
       }
     }
     const outgoing = new Map<number, { b: number; key: string }[]>();
-    for (const [key, edge] of edges) if (edge.count === 1) outgoing.set(edge.a, [...outgoing.get(edge.a) ?? [], { b: edge.b, key }]);
+    for (const [key, edge] of edges) if (edge.count % 2 === 1) {
+      outgoing.set(edge.a, [...outgoing.get(edge.a) ?? [], { b: edge.b, key }]);
+      outgoing.set(edge.b, [...outgoing.get(edge.b) ?? [], { b: edge.a, key }]);
+    }
     const visited = new Set<string>(), loops: number[][] = [];
+    const splitLoops = (walk: number[]): void => {
+      const seen = new Map<number, number>();
+      for (let i = 0; i < walk.length; i++) {
+        const previous = seen.get(walk[i]);
+        if (previous !== undefined) { splitLoops(walk.slice(previous, i)); splitLoops(walk.slice(0, previous).concat(walk.slice(i))); return; }
+        seen.set(walk[i], i);
+      }
+      if (walk.length >= 3) loops.push(walk);
+    };
     for (const [start, choices] of outgoing) for (const first of choices) {
       if (visited.has(first.key)) continue;
       const loop = [start]; let edge = first, current = start;
@@ -389,10 +401,10 @@ const capFits: { part: string; rim: number; distance: number; method: string }[]
         visited.add(edge.key); current = edge.b; if (current === start) break;
         loop.push(current); const next = outgoing.get(current)?.find(candidate => !visited.has(candidate.key)); if (!next) break; edge = next;
       }
-      if (current === start && loop.length >= 3) loops.push(loop);
+      if (current === start) splitLoops(loop);
     }
     const fresh = (loop: number[]) => loop.filter((a, i) => { const b = loop[(i + 1) % loop.length]; return (originalEdges.get(a < b ? `${a}/${b}` : `${b}/${a}`) ?? 0) > 1; }).length / loop.length;
-    const created = loops.filter(loop => fresh(loop) >= .8);
+    const created = loops.filter(loop => fresh(loop) > 0);
     if (created.length) loops.splice(0, loops.length, ...created);
     const cutRoot = quadruped && part === 'head' && jointNode.has('neck') ? 'neck' : part;
     const pivot = new Vector3().setFromMatrixPosition(world(jointNode.get(cutRoot)!));
@@ -408,7 +420,7 @@ const capFits: { part: string; rim: number; distance: number; method: string }[]
     const alignment = (loop: number[]) => Math.abs(normalOf(loop).normalize().dot(missing.clone().sub(centreOf(loop)).normalize()));
     loops.sort((a, b) => centreOf(a).distanceToSquared(pivot) / Math.max(.01, alignment(a) ** 2) - centreOf(b).distanceToSquared(pivot) / Math.max(.01, alignment(b) ** 2));
     let loop = loops[0], centre = loop && centreOf(loop), surface = false;
-    if (!loop || centre!.distanceTo(pivot) > .18 || alignment(loop) < .4) {
+    if (!created.length && (!loop || centre!.distanceTo(pivot) > .18 || alignment(loop) < .4)) {
       // A legacy rigid partition can already close the retained shoulder.
       // Its nearest outward surface becomes the blood cap, offset by 0.5 mm.
       let best = Infinity;
@@ -422,29 +434,57 @@ const capFits: { part: string; rim: number; distance: number; method: string }[]
       }
     }
     if (!loop || !centre) throw Error(`No retained skin surface for stump_${part}`);
-    const distance = centre.distanceTo(pivot); if (distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
-    const direction = missing.clone().sub(centre).normalize();
-    if (normalOf(loop).dot(direction) < 0) loop.reverse();
-    let parentName = parentJoint.get(part); while (parentName && removed.includes(parentName)) parentName = parentJoint.get(parentName);
-    const parentIndex = parentName ? JOINTS.indexOf(parentName) : 0;
-    const capParts: number[] = [Math.max(0, parentIndex)];
-    const capPositions: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
-    centre.addScaledVector(direction, .001).toArray(capPositions);
-    capJoints.push(Math.max(0, parentIndex), 0, 0, 0); capWeights.push(1, 0, 0, 0);
-    for (const w of loop) {
-      const i = representative.get(w)!; at(w).addScaledVector(direction, surface ? .0005 : 0).toArray(capPositions, capPositions.length);
-      capParts.push(semanticParts[i]);
-      capJoints.push(...J.subarray(i * 4, i * 4 + 4)); capWeights.push(...W.subarray(i * 4, i * 4 + 4));
+    const distance = centre.distanceTo(pivot); if (!created.length && distance > .35) throw Error(`Distant retained skin surface for stump_${part}: ${distance}`);
+    const selected = created.length ? created : [loop];
+    const capParts: number[] = [], capPositions: number[] = [], capNormals: number[] = [], capJoints: number[] = [], capWeights: number[] = [], triangles: number[] = [];
+    for (const boundary of selected) {
+      // Reverse the retained body's oriented boundary. No rigid fan centre: every
+      // cap vertex follows the exact same weighted pose as its body counterpart.
+      const rim = boundary.slice().reverse();
+      if (normalOf(rim).dot(missing.clone().sub(centreOf(rim))) < 0) rim.reverse();
+      const normal = normalOf(rim).normalize();
+      // The seam is a nonplanar spatial polygon (a planar projection can cross
+      // itself and silently lose vertices). Minimize the 3D triangle area over
+      // all triangulations while preserving the complete ordered boundary.
+      const points = rim.map(at), size = rim.length, costs = new Float64Array(size * size), splits = new Int32Array(size * size), ab = new Vector3(), ac = new Vector3();
+      for (let span = 2; span < size; span++) for (let a = 0; a + span < size; a++) {
+        const b = a + span; let best = Infinity, split = -1;
+        for (let k = a + 1; k < b; k++) {
+          const area = ab.subVectors(points[k], points[a]).cross(ac.subVectors(points[b], points[a])).length();
+          const cost = area < 1e-10 ? Infinity : costs[a * size + k] + costs[k * size + b] + area;
+          if (cost < best) { best = cost; split = k; }
+        }
+        costs[a * size + b] = best; splits[a * size + b] = split;
+      }
+      if (!Number.isFinite(costs[size - 1])) throw Error(`Degenerate stump_${part} boundary`);
+      const faces: number[][] = [], pending = [[0, size - 1]];
+      while (pending.length) {
+        const [a, b] = pending.pop()!; if (b - a < 2) continue;
+        const k = splits[a * size + b]; faces.push([a, k, b]); pending.push([a, k], [k, b]);
+      }
+      const edgeCounts = new Map<string, number>();
+      for (const face of faces) for (let k = 0; k < 3; k++) { const a = face[k], b = face[(k + 1) % 3], key = a < b ? `${a}/${b}` : `${b}/${a}`; edgeCounts.set(key, (edgeCounts.get(key) ?? 0) + 1); }
+      for (let a = 0; a < rim.length; a++) { const b = (a + 1) % rim.length, key = a < b ? `${a}/${b}` : `${b}/${a}`; if (edgeCounts.get(key) !== 1) throw Error(`Open stump_${part} boundary ${key}`); }
+      const base = capParts.length;
+      for (const w of rim) {
+        const i = representative.get(w)!; at(w).addScaledVector(normal, surface ? .0005 : 0).toArray(capPositions, capPositions.length);
+        normal.toArray(capNormals, capNormals.length); capParts.push(semanticParts[i]);
+        capJoints.push(...J.subarray(i * 4, i * 4 + 4)); capWeights.push(...W.subarray(i * 4, i * 4 + 4));
+      }
+      for (const face of faces) {
+        const [a, b, c] = face.map(i => at(rim[i]));
+        if (b.sub(a).cross(c.sub(a)).dot(normal) < 0) face.reverse();
+        triangles.push(...face.map(i => i + base));
+      }
     }
-    for (let i = 0; i < loop.length; i++) triangles.push(0, i + 1, (i + 1) % loop.length + 1);
     const attribute = (values: number[], type: 'VEC3' | 'VEC4') => out.createAccessor().setType(type).setArray(new Float32Array(values));
     const cap = out.createPrimitive().setMaterial(capMaterial).setAttribute('_CROWD_PART', out.createAccessor().setType('SCALAR').setArray(new Uint16Array(capParts))).setAttribute('POSITION', attribute(capPositions, 'VEC3'))
-      .setAttribute('NORMAL', attribute(capPositions.map((_, i) => i % 3 === 1 ? 1 : 0), 'VEC3'))
+      .setAttribute('NORMAL', attribute(capNormals, 'VEC3'))
       .setAttribute('JOINTS_0', out.createAccessor().setType('VEC4').setArray(new Uint16Array(capJoints))).setAttribute('WEIGHTS_0', attribute(capWeights, 'VEC4'))
       .setIndices(out.createAccessor().setType('SCALAR').setArray(new Uint32Array(triangles)));
     for (const child of target.listChildren()) child.dispose();
     target.setMesh(out.createMesh(`stump_${part}`).addPrimitive(cap)).setSkin(skin);
-    capFits.push({ part, rim: loop.length, distance, method: surface ? 'closed-part-surface' : fresh(loop) >= .8 ? 'cut-boundary' : 'source-opening' });
+    capFits.push({ part, rim: capParts.length, triangles: triangles.length / 3, loops: selected.length, distance, method: surface ? 'closed-part-surface' : created.length ? 'cut-boundary' : 'source-opening' });
   }
 }
 if (!eyes.length) {

@@ -1,7 +1,7 @@
 {
   "id": "inf.common-worker",
   "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.common-worker",
-  "elapsedSeconds": 7.92,
+  "elapsedSeconds": 10.866,
   "manualSteps": [],
   "receipts": [
     {
@@ -12,15 +12,15 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/inf.common-worker.lod0.glb",
-          "bytes": 437732,
-          "sha256": "b8984ed3bab15f209959dea0ea0e4ec7f237664e92b74040f12bce0e2e2db1ef",
+          "bytes": 439988,
+          "sha256": "05961e32fb60b60a296c0d7f351bfe31b75c5e596186b0b40388f6fb6af726dc",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/inf.common-worker.lod0.low.glb",
-          "bytes": 279520,
-          "sha256": "be7c9cb661ac613464006b12e65f1cf30a070ea8391bac481232aef34b3a173b",
+          "bytes": 281776,
+          "sha256": "5c215cafc529ccc570ee787ba46a87eec7c375e90a01385c58a3f572bd3a29c8",
           "errors": []
         }
       ]
@@ -33,15 +33,15 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/inf.common-worker.lod1.glb",
-          "bytes": 181016,
-          "sha256": "e1a7b5194b21a78892622d53b10b12049a081462cc30d8625aaeacd415e0ef55",
+          "bytes": 182404,
+          "sha256": "86a00cced3ee762f8f6038fdb85f9beb004cc7ff574629ec9a5e39090e847e31",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/inf.common-worker.lod1.low.glb",
-          "bytes": 181016,
-          "sha256": "e1a7b5194b21a78892622d53b10b12049a081462cc30d8625aaeacd415e0ef55",
+          "bytes": 182404,
+          "sha256": "86a00cced3ee762f8f6038fdb85f9beb004cc7ff574629ec9a5e39090e847e31",
           "errors": []
         }
       ]
@@ -54,18 +54,23 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/inf.common-worker.lod2.glb",
-          "bytes": 144800,
-          "sha256": "6ebd2f98a82309a62c9a52a27d4f46d83a21d29d0a0a811000fbfb355b11be22",
+          "bytes": 146080,
+          "sha256": "57357c3f68da509e4a33fae664e445811a405c20bf424d4c28618e040e8a79f7",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/inf.common-worker.lod2.low.glb",
-          "bytes": 144800,
-          "sha256": "6ebd2f98a82309a62c9a52a27d4f46d83a21d29d0a0a811000fbfb355b11be22",
+          "bytes": 146080,
+          "sha256": "57357c3f68da509e4a33fae664e445811a405c20bf424d4c28618e040e8a79f7",
           "errors": []
         }
       ]
     }
-  ]
+  ],
+  "preparedBakes": {
+    "inf.common-worker:lod0:infected": "/assets/civilians/inf.common-worker.lod0.infected.4ccf5ce8f2c159e8.bin.gz",
+    "inf.common-worker:lod1:infected": "/assets/civilians/inf.common-worker.lod1.infected.0402d25ef8313ba5.bin.gz",
+    "inf.common-worker:lod2:infected": "/assets/civilians/inf.common-worker.lod2.infected.011e595aadec3495.bin.gz"
+  }
 }

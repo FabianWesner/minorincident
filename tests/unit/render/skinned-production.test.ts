@@ -138,7 +138,7 @@ for (const id of ['inf.common-worker', 'inf.nurse', 'npc.civilian-man-b', 'inf.d
     for (const part of ['head', 'armL', 'legL']) {
       const cap = scene.getObjectByName(`stump_${part}`) as SkinnedMesh;
       expect(cap.isSkinnedMesh, `${id} ${part}`).toBe(true); cap.skeleton.update();
-      for (let i = 1; i < cap.geometry.getAttribute('position').count; i++) {
+      for (let i = 0; i < cap.geometry.getAttribute('position').count; i++) {
         cap.getVertexPosition(i, point).applyMatrix4(cap.matrixWorld); let distance = Infinity;
         for (let j = 0; j < positions.length; j += 3) distance = Math.min(distance, point.distanceToSquared(target.fromArray(positions, j)));
         expect(Math.sqrt(distance), `${id} ${clip} ${part} rim ${i}`).toBeLessThan(.0011);
@@ -173,3 +173,33 @@ test('held skin bounds reuse exact vertices and invalidate when the same mutable
   }
   geometry.dispose(); palette.texture.dispose();
 });
+
+
+test('every newly opened wound boundary is closed by cap edges at all production LODs', async () => {
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+  for (const def of manifest.filter(d => 'crowdSkin' in d && d.crowdSkin)) for (const lod of [0, 1, 2]) {
+    const path = lod === 0 ? def.glb : lod === 1 ? def.lods!.lod1 : def.lods!.lod2;
+    const { scene } = await loader.parseAsync(stripGlbTextures(readFileSync(path!)), '');
+    const fit = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${def.id}/lod${lod}.json`, 'utf8'));
+    const tolerance = fit.body === 'rigid parts welded by position' ? 2e-4 : 1e-6;
+    const body = (scene.getObjectByName('skin_body') as SkinnedMesh).geometry;
+    const joints = (scene.getObjectByName('skin_body') as SkinnedMesh).skeleton.bones.map(b => b.name);
+    const positions = body.getAttribute('position'), owners = body.getAttribute('_crowd_part'), indices = body.index!;
+    const vertex = (i: number) => [positions.getX(i), positions.getY(i), positions.getZ(i)].map(v => Math.round(v / tolerance)).join(',');
+    const key = (a: string, b: string) => a < b ? `${a}/${b}` : `${b}/${a}`;
+    const original = new Map<string, number>();
+    for (let t = 0; t < indices.count; t += 3) for (let k = 0; k < 3; k++) { const edge = key(vertex(indices.getX(t + k)), vertex(indices.getX(t + (k + 1) % 3))); original.set(edge, (original.get(edge) ?? 0) + 1); }
+    for (const removed of crowdLimbParts(joints.includes('legFL'))) {
+      const retained = new Map<string, number>();
+      for (let t = 0; t < indices.count; t += 3) {
+        const ids = [0, 1, 2].map(k => indices.getX(t + k)); if (ids.some(i => removed.includes(joints[owners.getX(i)]))) continue;
+        for (let k = 0; k < 3; k++) { const edge = key(vertex(ids[k]), vertex(ids[(k + 1) % 3])); retained.set(edge, (retained.get(edge) ?? 0) + 1); }
+      }
+      const cap = (scene.getObjectByName(`stump_${removed[0]}`) as SkinnedMesh).geometry, p = cap.getAttribute('position'), capEdges = new Map<string, number>(), ci = cap.index!;
+      const cv = (i: number) => [p.getX(i), p.getY(i), p.getZ(i)].map(v => Math.round(v / tolerance)).join(',');
+      for (let t = 0; t < ci.count; t += 3) for (let k = 0; k < 3; k++) { const edge = key(cv(ci.getX(t + k)), cv(ci.getX(t + (k + 1) % 3))); capEdges.set(edge, (capEdges.get(edge) ?? 0) + 1); }
+      // Interior diagonal pairs cancel, including coincident UV seam vertices.
+      for (const [edge, count] of retained) if (count === 1 && (original.get(edge) ?? 0) > 1) expect((capEdges.get(edge) ?? 0) % 2, `${def.id} LOD${lod} ${removed[0]} ${edge}`).toBe(1);
+    }
+  }
+}, 120000);

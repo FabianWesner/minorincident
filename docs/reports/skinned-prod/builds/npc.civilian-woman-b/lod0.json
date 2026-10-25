@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/lod0.glb",
   "out": "docs/reports/skinned-prod/builds/npc.civilian-woman-b/lod0.raw.glb",
-  "bytes": 745472,
+  "bytes": 749988,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/source/flat-lod0.glb",
   "scale": 1.7788413310443096,
   "yaw": 90,
@@ -37,43 +37,57 @@
     {
       "part": "head",
       "rim": 19,
+      "triangles": 17,
+      "loops": 1,
       "distance": 0.07311811612434028,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 3,
-      "distance": 0.10522426428274728,
-      "method": "closed-part-surface"
+      "rim": 45,
+      "triangles": 43,
+      "loops": 1,
+      "distance": 0.21551242126262404,
+      "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 3,
-      "distance": 0.10012855790174159,
-      "method": "closed-part-surface"
+      "rim": 28,
+      "triangles": 26,
+      "loops": 1,
+      "distance": 0.16455008920938377,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
       "rim": 35,
+      "triangles": 33,
+      "loops": 1,
       "distance": 0.08260974662189757,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
       "rim": 22,
+      "triangles": 20,
+      "loops": 1,
       "distance": 0.08792702577817248,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
       "rim": 49,
-      "distance": 0.05040362681498201,
+      "triangles": 43,
+      "loops": 3,
+      "distance": 0.0568037835528452,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 48,
-      "distance": 0.04877397056459649,
+      "rim": 62,
+      "triangles": 52,
+      "loops": 5,
+      "distance": 0.0632015659095999,
       "method": "cut-boundary"
     }
   ],

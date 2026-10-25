@@ -1,7 +1,7 @@
 {
   "id": "amb.zebra",
   "source": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/amb.zebra",
-  "elapsedSeconds": 7.127,
+  "elapsedSeconds": 8.4,
   "manualSteps": [],
   "receipts": [
     {
@@ -12,15 +12,15 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/amb.zebra.lod0.glb",
-          "bytes": 367220,
-          "sha256": "a23faa3d6a7385a9d708c7bd844bf2e01e4dc4ccd026a835c94a13d140c96587",
+          "bytes": 375512,
+          "sha256": "03320f0636a24fe543624a6e15c2df0ae5cca24dc1b5ccbd707abf61144c0618",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/amb.zebra.lod0.low.glb",
-          "bytes": 223808,
-          "sha256": "1ed9afd083abc1f2dd562c2e638270c345bf3b258ed3306402a1ec3d04dadee2",
+          "bytes": 232096,
+          "sha256": "a344a09ffd8e90813e2b6533c8e20b9aa9259469cd21460ee3f2e5fc92773140",
           "errors": []
         }
       ]
@@ -33,15 +33,15 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/amb.zebra.lod1.glb",
-          "bytes": 142108,
-          "sha256": "4ccadfdedf9f4cc94b6fbf5cdf4f5dac861093784eac44beab1116f3f7997f3d",
+          "bytes": 148848,
+          "sha256": "250edb3c312deb579cb6bbff5ce7a67c1804d2db8133738ceb90fe941d28db59",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/amb.zebra.lod1.low.glb",
-          "bytes": 142108,
-          "sha256": "4ccadfdedf9f4cc94b6fbf5cdf4f5dac861093784eac44beab1116f3f7997f3d",
+          "bytes": 148848,
+          "sha256": "250edb3c312deb579cb6bbff5ce7a67c1804d2db8133738ceb90fe941d28db59",
           "errors": []
         }
       ]
@@ -54,18 +54,23 @@
         {
           "low": false,
           "path": "public/assets/models/skinned/amb.zebra.lod2.glb",
-          "bytes": 117240,
-          "sha256": "a7d12d0b0860191a16f853f0e5c77fad214eb6e16066d63c00edd550abf73e1a",
+          "bytes": 121752,
+          "sha256": "7cb4243159424b7cf16f4e0041ed7734d5a78f7ec514414e37e1e0ef1e71f29a",
           "errors": []
         },
         {
           "low": true,
           "path": "public/assets/models/skinned/amb.zebra.lod2.low.glb",
-          "bytes": 117240,
-          "sha256": "a7d12d0b0860191a16f853f0e5c77fad214eb6e16066d63c00edd550abf73e1a",
+          "bytes": 121752,
+          "sha256": "7cb4243159424b7cf16f4e0041ed7734d5a78f7ec514414e37e1e0ef1e71f29a",
           "errors": []
         }
       ]
     }
-  ]
+  ],
+  "preparedBakes": {
+    "amb.zebra:lod0:infected": "/assets/civilians/amb.zebra.lod0.infected.b08a4360b5ce013a.bin.gz",
+    "amb.zebra:lod1:infected": "/assets/civilians/amb.zebra.lod1.infected.8cfc18a9737b8872.bin.gz",
+    "amb.zebra:lod2:infected": "/assets/civilians/amb.zebra.lod2.infected.17bf011ceb575a5f.bin.gz"
+  }
 }

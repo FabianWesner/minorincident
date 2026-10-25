@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/lod0.glb",
   "out": "docs/reports/skinned-prod/builds/npc.civilian-woman-a/lod0.raw.glb",
-  "bytes": 1064344,
+  "bytes": 1079908,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/source/flat-lod0.glb",
   "scale": 2.0646940390249777,
   "yaw": 135,
@@ -36,45 +36,59 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 68,
-      "distance": 0.13172114631689516,
+      "rim": 108,
+      "triangles": 96,
+      "loops": 6,
+      "distance": 0.12742057479158952,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 3,
-      "distance": 0.11531392643416062,
-      "method": "closed-part-surface"
+      "rim": 55,
+      "triangles": 49,
+      "loops": 3,
+      "distance": 0.20834971769126123,
+      "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 24,
+      "rim": 59,
+      "triangles": 53,
+      "loops": 3,
       "distance": 0.06585575969755739,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
-      "rim": 3,
-      "distance": 0.10837364317549825,
-      "method": "closed-part-surface"
+      "rim": 51,
+      "triangles": 45,
+      "loops": 3,
+      "distance": 0.11238503203728333,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
       "rim": 23,
+      "triangles": 21,
+      "loops": 1,
       "distance": 0.10008213751021368,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 3,
-      "distance": 0.09904047519117552,
-      "method": "closed-part-surface"
+      "rim": 27,
+      "triangles": 25,
+      "loops": 1,
+      "distance": 0.3822244097215401,
+      "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 3,
-      "distance": 0.07403865521515321,
-      "method": "closed-part-surface"
+      "rim": 60,
+      "triangles": 54,
+      "loops": 3,
+      "distance": 0.14936726190393887,
+      "method": "cut-boundary"
     }
   ],
   "removedClosureTriangles": 0,

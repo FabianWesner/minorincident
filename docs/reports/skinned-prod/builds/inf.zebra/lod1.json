@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.zebra/model.lod1.glb",
   "out": "docs/reports/skinned-prod/builds/inf.zebra/lod1.raw.glb",
-  "bytes": 417768,
+  "bytes": 423332,
   "body": "rigid parts welded by position",
   "vertices": 1873,
   "weldedVertices": 652,
@@ -45,45 +45,59 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 3,
-      "distance": 0.0429714736742867,
-      "method": "closed-part-surface"
+      "rim": 21,
+      "triangles": 9,
+      "loops": 6,
+      "distance": 0.3054081136060978,
+      "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 3,
-      "distance": 0.03429957868316469,
-      "method": "closed-part-surface"
+      "rim": 35,
+      "triangles": 23,
+      "loops": 6,
+      "distance": 0.026523383464464118,
+      "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 3,
-      "distance": 0.02053787955932401,
-      "method": "closed-part-surface"
+      "rim": 19,
+      "triangles": 7,
+      "loops": 6,
+      "distance": 0.3906196367398652,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
       "rim": 3,
-      "distance": 0.23672735284708585,
-      "method": "closed-part-surface"
+      "triangles": 1,
+      "loops": 1,
+      "distance": 0.13439096284509186,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
-      "rim": 3,
-      "distance": 0.2034466155369227,
-      "method": "closed-part-surface"
+      "rim": 6,
+      "triangles": 2,
+      "loops": 2,
+      "distance": 0.27357505572752655,
+      "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 3,
-      "distance": 0.07481206145554421,
-      "method": "closed-part-surface"
+      "rim": 26,
+      "triangles": 14,
+      "loops": 6,
+      "distance": 0.04092962448443625,
+      "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 3,
-      "distance": 0.050951957159621364,
-      "method": "closed-part-surface"
+      "rim": 15,
+      "triangles": 7,
+      "loops": 4,
+      "distance": 0.22703196398187758,
+      "method": "cut-boundary"
     }
   ],
   "removedClosureTriangles": 0,

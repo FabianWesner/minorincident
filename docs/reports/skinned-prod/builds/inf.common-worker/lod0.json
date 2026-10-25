@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/inf.common-worker/model.glb",
   "out": "docs/reports/skinned-prod/builds/inf.common-worker/lod0.raw.glb",
-  "bytes": 724936,
+  "bytes": 729844,
   "body": "rigid parts welded by position",
   "vertices": 8924,
   "weldedVertices": 2869,
@@ -34,42 +34,56 @@
     {
       "part": "head",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.02512358890144235,
       "method": "source-opening"
     },
     {
       "part": "armL",
-      "rim": 11,
+      "rim": 20,
+      "triangles": 16,
+      "loops": 2,
       "distance": 0.09618761977948251,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 16,
-      "distance": 0.09936967113883469,
+      "rim": 35,
+      "triangles": 31,
+      "loops": 2,
+      "distance": 0.04164104573108583,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
-      "rim": 7,
+      "rim": 16,
+      "triangles": 12,
+      "loops": 2,
       "distance": 0.03656587612739243,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
-      "rim": 8,
-      "distance": 0.10436966870858043,
+      "rim": 20,
+      "triangles": 16,
+      "loops": 2,
+      "distance": 0.1291242488371254,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 3,
-      "distance": 0.09657316169302464,
-      "method": "closed-part-surface"
+      "rim": 27,
+      "triangles": 23,
+      "loops": 2,
+      "distance": 0.0605407058692193,
+      "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 22,
+      "rim": 36,
+      "triangles": 32,
+      "loops": 2,
       "distance": 0.05793538584762355,
       "method": "cut-boundary"
     }

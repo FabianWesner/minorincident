@@ -1,7 +1,7 @@
 {
   "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/amb.zebra/model.lod2.glb",
   "out": "docs/reports/skinned-prod/builds/amb.zebra/lod2.raw.glb",
-  "bytes": 329620,
+  "bytes": 332216,
   "body": "rigid parts welded by position",
   "vertices": 748,
   "weldedVertices": 225,
@@ -45,45 +45,59 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 3,
-      "distance": 0.14537749024633267,
-      "method": "closed-part-surface"
+      "rim": 9,
+      "triangles": 3,
+      "loops": 3,
+      "distance": 0.3257649623605168,
+      "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 3,
-      "distance": 0.01658818769986602,
-      "method": "closed-part-surface"
+      "rim": 28,
+      "triangles": 12,
+      "loops": 8,
+      "distance": 0.3540617609337666,
+      "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 3,
-      "distance": 0.10130019573285819,
-      "method": "closed-part-surface"
+      "rim": 6,
+      "triangles": 2,
+      "loops": 2,
+      "distance": 0.24122115081495607,
+      "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.18754417996045053,
       "method": "closed-part-surface"
     },
     {
       "part": "foreArmR",
       "rim": 3,
+      "triangles": 1,
+      "loops": 1,
       "distance": 0.1738305092127754,
       "method": "closed-part-surface"
     },
     {
       "part": "legL",
-      "rim": 3,
-      "distance": 0.1380420373109883,
-      "method": "closed-part-surface"
+      "rim": 15,
+      "triangles": 9,
+      "loops": 3,
+      "distance": 0.27720712321252533,
+      "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 3,
-      "distance": 0.12639490801414333,
-      "method": "closed-part-surface"
+      "rim": 12,
+      "triangles": 4,
+      "loops": 4,
+      "distance": 0.2506209084224979,
+      "method": "cut-boundary"
     }
   ],
   "removedClosureTriangles": 0,

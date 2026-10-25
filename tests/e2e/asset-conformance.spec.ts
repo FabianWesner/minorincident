@@ -53,7 +53,7 @@ for (const [id,limb] of [['inf.common-worker','armR'],['inf.suburban-mom','head'
     expect(result.hiddenBefore).toBe(true); expect(result.visibleAfter).toBe(true);
     if (manifest.find(def => def.id === id)!.crowdSkin) {
       const source = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/lod0.json`, 'utf8'));
-      expect(result.capTriangles).toBe(source.capFits.find((cap: { part: string }) => cap.part === limb).rim);
+      expect(result.capTriangles).toBe(source.capFits.find((cap: { part: string }) => cap.part === limb).triangles);
       expect(result.removedTriangles).toBeGreaterThan(0);
     } else expect(result.capTriangles).toBe(56);
     expect(result.jointError).toBeLessThan(.001);
