@@ -1,4 +1,4 @@
-import { AmbientLight, Box3, DirectionalLight, HemisphereLight, Mesh, PerspectiveCamera, RenderTarget, Scene, Vector3, WebGPURenderer, type Object3D } from 'three/webgpu';
+import { AmbientLight, Box3, DirectionalLight, HemisphereLight, Mesh, SkinnedMesh, PerspectiveCamera, RenderTarget, Scene, Vector3, WebGPURenderer, type Object3D } from 'three/webgpu';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -24,7 +24,7 @@ export interface AssetViewerApi {
   inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
   info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
-  goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number }>;
+  goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number; removedTriangles: number }>;
   crowdProbe?(): Promise<{ instances: number; materials: number; drawCalls: number; poseError: number }>;
 }
 declare global { interface Window { __ASSET__?: AssetViewerApi } }
@@ -83,14 +83,15 @@ export async function assetViewer(): Promise<void> {
     object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
   }
   async function load(): Promise<void> {
-    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
+    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); object.traverse(node => { if (node instanceof Mesh && node.geometry.userData.viewerGore) node.geometry.dispose(); }); }
     object = params.has('crowd') && params.has('test')
       ? new Crowd((await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
       : await registry.loadAsset(id, (document.querySelector<HTMLSelectElement>('#quality')?.value ?? 'high') as 'high' | 'lod1' | 'lod2', decay.value || undefined);
     exploded = false;
     scene.add(object); applyAssetPower();
-    new Box3().setFromObject(object).getCenter(center);
-    new Box3().setFromObject(object).getSize(size); extent = Math.max(size.x,size.y,size.z);
+    const silhouette = registry.definition(id).crowdSkin ? object.getObjectByName('skin_body') ?? object : object;
+    new Box3().setFromObject(silhouette).getCenter(center);
+    new Box3().setFromObject(silhouette).getSize(size); extent = Math.max(size.x,size.y,size.z);
     await view(4);
     const picker = document.querySelector<HTMLSelectElement>('#nodes')!; picker.replaceChildren();
     object.traverse((node) => { if (node.name) { const option = document.createElement('option'); option.text = node.name; picker.add(option); } });
@@ -168,9 +169,31 @@ export async function assetViewer(): Promise<void> {
     const hiddenBefore=!cap.visible, jointError=limb.getWorldPosition(new Vector3()).distanceTo(cap.getWorldPosition(new Vector3()));
     let capTriangles=0;
     cap.traverse(node=>{if(node instanceof Mesh)capTriangles+=(node.geometry.index?.count ?? node.geometry.attributes.position.count)/3;});
-    limb.removeFromParent(); cap.visible=true;
+    let removedTriangles = 0;
+    if (registry.definition(id).crowdSkin) {
+      // The body is one skin: keep its bones and remove the same owned triangles as the crowd shader.
+      const removed = new Set<string>(); limb.traverse(node => removed.add(node.name));
+      object.traverse(node => {
+        if (!(node instanceof SkinnedMesh) || !['skin_body', 'skin_eyes'].includes(node.name)) return;
+        const original = node.geometry, geometry = original.clone(), semantic = geometry.getAttribute('_crowd_part'), joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), index = geometry.index;
+        const owner = (i: number) => {
+          if (semantic) return semantic.getX(i);
+          let major = 0; for (let k = 1; k < 4; k++) if (weights.getComponent(i, k) > weights.getComponent(i, major)) major = k;
+          return joints.getComponent(i, major);
+        };
+        const kept: number[] = [];
+        for (let t = 0; t < (index?.count ?? geometry.getAttribute('position').count); t += 3) {
+          const triangle = [0, 1, 2].map(k => index ? index.getX(t + k) : t + k);
+          if (triangle.some(i => removed.has(node.skeleton.bones[owner(i)].name))) removedTriangles++;
+          else kept.push(...triangle);
+        }
+        geometry.setIndex(kept); geometry.userData.viewerGore = true; node.geometry = geometry; if (!kept.length) node.visible = false;
+        if (original.userData.viewerGore) original.dispose();
+      });
+    } else limb.removeFromParent();
+    cap.visible=true;
     await renderer.compileAsync(scene,camera); render(); render();
-    return {hiddenBefore,visibleAfter:cap.visible,capTriangles,jointError};
+    return {hiddenBefore,visibleAfter:cap.visible,capTriangles,jointError,removedTriangles};
   }, crowdProbe: async () => {
     if (!(object instanceof Crowd)) throw new Error('Not the crowd-bake probe');
     const { crowdPoseError } = await import('./crowdProbe');

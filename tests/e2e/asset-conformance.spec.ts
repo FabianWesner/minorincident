@@ -51,7 +51,12 @@ for (const [id,limb] of [['inf.common-worker','armR'],['inf.suburban-mom','head'
     await page.evaluate(()=>window.__ASSET__!.ready);
     const result=await page.evaluate(limb=>window.__ASSET__!.goreProbe!(limb),limb);
     expect(result.hiddenBefore).toBe(true); expect(result.visibleAfter).toBe(true);
-    expect(result.capTriangles).toBe(id === 'inf.common-worker' ? 2 : 56); expect(result.jointError).toBeLessThan(.001);
+    if (manifest.find(def => def.id === id)!.crowdSkin) {
+      const source = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${id}/lod0.json`, 'utf8'));
+      expect(result.capTriangles).toBe(source.capFits.find((cap: { part: string }) => cap.part === limb).rim);
+      expect(result.removedTriangles).toBeGreaterThan(0);
+    } else expect(result.capTriangles).toBe(56);
+    expect(result.jointError).toBeLessThan(.001);
     mkdirSync('test-results/epics/E17/conformance-2',{recursive:true});
     await page.locator('canvas').screenshot({path:`test-results/epics/E17/conformance-2/${id}.${limb}.png`});
   });
