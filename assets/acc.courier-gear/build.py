@@ -288,8 +288,8 @@ def build_gear(body, lod):
         g0 = -.004 if not male else .010                          # glove starts at the wrist (his watch band stays above the cuff)
         def glove(p, v, d, h=h, ah=ah, armown=armown, g0=g0):
             return min((p - h).dot(ah) + g0, armown(v))
-        g.add('glove', glove, .0035, ramp=.006, params=dict(side=sg, h=tuple(h), ah=tuple(ah)), budget=160)
-        c0, c1 = (-.040, .010) if not male else (-.018, .024)
+        g.add('glove', glove, .0045, ramp=.006, params=dict(side=sg, h=tuple(h), ah=tuple(ah)), budget=160)
+        c0, c1 = (-.052, .008) if not male else (-.018, .024)
         def cuff(p, v, d, h=h, af=af, armown=armown, c0=c0, c1=c1):
             u = (p - h).dot(af); return min(u - c0, c1 - u, armown(v))
         g.add('cuff', cuff, .0075 if not male else .0065, ramp=.006, params=dict(side=sg, h=tuple(h), af=tuple(af), c0=c0, c1=c1), budget=60)
