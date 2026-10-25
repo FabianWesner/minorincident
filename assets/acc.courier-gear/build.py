@@ -174,11 +174,12 @@ class Gear:
         self.tris = []    # (a, b, c, piece)
         self.tier_end = []; self.pieces = []; self.log = []
     def add(self, kind, field, thick, ramp=.012, keep='largest', budget=100, params=None, rim=.016):
+        # the low quality tier keeps 85 % of the hands' budget: decimated to half, the low glove read as a faceted plate (PO plays low)
         body = self.body
         bm = cut_piece(body, field, thick, keep)
         surf = BVHTree.FromBMesh(bm)   # the cut patch on the outer skin: anchors snap to it, never to an inner shell
         bm = thin_boundary(bm, rim * (1, 1.5, 2.2)[self.lod])
-        bm = decimate(bm, budget * (1, .5, .22)[self.lod] / max(1, len(bm.faces)))
+        bm = decimate(bm, budget * (1, .85 if kind in ('glove', 'cuff') else .5, .22)[self.lod] / max(1, len(bm.faces)))
         bm.normal_update()
         pid = len(self.pieces); self.pieces.append((kind, params or {}))
         verts = list(bm.verts); idx = {v: i for i, v in enumerate(verts)}
