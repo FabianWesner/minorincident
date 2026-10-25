@@ -36,7 +36,9 @@ The old ray-fit gear wrapped khaki bands round her knuckles and a band round her
 - Gear catalog `courier-gear-*` matrix: 72/72 WebGPU and 72/72 WebGL2 (144/144). After the low-tier change, the low rows were re-run: 36/36 + 36/36.
   - `courierAttachmentGapMaxCm`: max 1.5 cm (gate 2), at t4 swing male.
 - Remote `tests/unit tests/levels`: 487 files passed, 3 skipped, 0 failed (exit 0).
-- typecheck, lint (changed files) and `assets:validate` pass. The gear and loading unit tests: 27/27.
+- typecheck, lint (changed files) and `assets:validate` pass. The gear and loading unit tests: 27/27; remote `tests/unit/render tests/unit/assets` on the final build 1332/1332.
+- Smoke: Vitest 6/6; Playwright `--grep @smoke` 35/35 on a fresh build (includes the unflagged WebGPU pipeline smoke).
+- `qa:invariants:sim:remote`: 28/28. `qa:invariants:render` is left to the orchestrator's quiet window (skinned-prod holds the perf window).
 
 ## Open
 - From a low side angle her right glove shows an angular tip at the cuff.
