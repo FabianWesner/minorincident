@@ -1,0 +1,221 @@
+{
+  "candidateRuntimeRevision": "bc86d7204",
+  "baselineMainRevision": "0009f107d",
+  "baselineWorktree": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod-baseline",
+  "conditions": {
+    "at": "2026-10-25T22:00:02.913Z",
+    "load": [
+      1.87744140625,
+      2.416015625,
+      2.6728515625
+    ],
+    "otherHeadlessChrome": 0,
+    "localVitest": 0,
+    "localTypecheck": 0,
+    "localBlender": 0,
+    "localBuild": 0,
+    "browserSlots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "command": [
+      "node",
+      "--import",
+      "tsx",
+      "tools/scenelab/skinned-prod-performance.ts"
+    ]
+  },
+  "method": "ABBA independently on WebGL2 and WebGPU; initial low tier; 1280×720, DPR 1, native uncapped headless Metal; at least 12 s per observation, first 120 frames excluded",
+  "observations": [
+    {
+      "backend": "webgl",
+      "variant": "main",
+      "samples": 2346,
+      "p95": 6.100000000000364,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 171438,
+      "boneBytes": 13601280,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [],
+      "errors": []
+    },
+    {
+      "backend": "webgl",
+      "variant": "skin",
+      "samples": 2023,
+      "p95": 6.80000000000291,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 184777,
+      "boneBytes": 13610112,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "errors": []
+    },
+    {
+      "backend": "webgl",
+      "variant": "skin",
+      "samples": 2000,
+      "p95": 7,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 184771,
+      "boneBytes": 13610112,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "errors": []
+    },
+    {
+      "backend": "webgl",
+      "variant": "main",
+      "samples": 2273,
+      "p95": 6.299999999999272,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 171438,
+      "boneBytes": 13601280,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [],
+      "errors": []
+    },
+    {
+      "backend": "webgpu",
+      "variant": "main",
+      "samples": 2247,
+      "p95": 6.599999999998545,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 171438,
+      "boneBytes": 13601280,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [],
+      "errors": []
+    },
+    {
+      "backend": "webgpu",
+      "variant": "skin",
+      "samples": 1907,
+      "p95": 7.5,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 184777,
+      "boneBytes": 13610112,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "errors": []
+    },
+    {
+      "backend": "webgpu",
+      "variant": "skin",
+      "samples": 1927,
+      "p95": 7.400000000001455,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 184777,
+      "boneBytes": 13610112,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "errors": []
+    },
+    {
+      "backend": "webgpu",
+      "variant": "main",
+      "samples": 2231,
+      "p95": 6.69999999999709,
+      "minBodies": 200,
+      "draws": 19,
+      "triangles": 171438,
+      "boneBytes": 13601280,
+      "assets": [
+        "inf.common-worker",
+        "inf.dog",
+        "inf.nurse",
+        "inf.zebra",
+        "npc.civilian-man-b",
+        "npc.civilian-woman-a"
+      ],
+      "skins": [],
+      "errors": []
+    }
+  ]
+}

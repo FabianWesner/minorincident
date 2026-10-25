@@ -1,0 +1,371 @@
+{
+  "level": "L6",
+  "candidate": {
+    "ms": 2466.1000003814697,
+    "backend": "webgpu",
+    "quality": "low",
+    "tick": 1,
+    "phase": "playing",
+    "drawCalls": 85,
+    "bundle": "http://127.0.0.1:4631/build/index-B1RG8tlc.js",
+    "preparation": {
+      "workers": 8,
+      "submitted": 36,
+      "completed": 36,
+      "prebuilt": 36,
+      "failed": 0
+    },
+    "phases": [
+      {
+        "name": "view:actors",
+        "start": -173.89999961853027,
+        "ms": 29.5
+      },
+      {
+        "name": "view:lod-ready",
+        "start": -144.39999961853027,
+        "ms": 0.10000038146972656
+      },
+      {
+        "name": "view:warm-up",
+        "start": -144.29999923706055,
+        "ms": 5
+      },
+      {
+        "name": "level:layouts",
+        "start": 40.70000076293945,
+        "ms": 3.59999942779541
+      },
+      {
+        "name": "transition:L6:first-frame",
+        "start": 40.70000076293945,
+        "ms": 2316.0999994277954
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "start": 44.30000019073486,
+        "ms": 0
+      },
+      {
+        "name": "level:sim",
+        "start": 44.30000019073486,
+        "ms": 95.5
+      },
+      {
+        "name": "level:world+nav",
+        "start": 45.20000076293945,
+        "ms": 77.39999961853027
+      },
+      {
+        "name": "level:mission+cast",
+        "start": 122.60000038146973,
+        "ms": 9
+      },
+      {
+        "name": "level:physics-prepare",
+        "start": 131.60000038146973,
+        "ms": 8.100000381469727
+      },
+      {
+        "name": "level:view",
+        "start": 139.80000019073486,
+        "ms": 2170.5
+      },
+      {
+        "name": "view:districts+character",
+        "start": 166.4000005722046,
+        "ms": 817.3999996185303
+      },
+      {
+        "name": "view:civilian-crowd",
+        "start": 182.70000076293945,
+        "ms": 772.5
+      },
+      {
+        "name": "view:infected-crowd",
+        "start": 183.10000038146973,
+        "ms": 788.5
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "start": 930.5,
+        "ms": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "start": 957.9000005722046,
+        "ms": 0
+      },
+      {
+        "name": "view:route-lods",
+        "start": 983.8000001907349,
+        "ms": 14
+      },
+      {
+        "name": "view:actors",
+        "start": 1003.6000003814697,
+        "ms": 41
+      },
+      {
+        "name": "view:lod-ready",
+        "start": 1044.6000003814697,
+        "ms": 16
+      },
+      {
+        "name": "view:warm-up",
+        "start": 1060.6000003814697,
+        "ms": 1229.6000003814697
+      },
+      {
+        "name": "Texture atlas upload",
+        "start": 1065.5,
+        "ms": 13.800000190734863
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "start": 1065.5,
+        "ms": 1132.9000005722046
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 1079.5,
+        "ms": 1009.1000003814697
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 2207.1000003814697,
+        "ms": 16.600000381469727
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 2207.1000003814697,
+        "ms": 31.300000190734863
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 2223.7000007629395,
+        "ms": 14.699999809265137
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 2238.4000005722046,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 2256.5,
+        "ms": 4.700000762939453
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 2261.2000007629395,
+        "ms": 12.399999618530273
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 2261.2000007629395,
+        "ms": 28.899999618530273
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 2273.6000003814697,
+        "ms": 16.5
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 2290.1000003814697,
+        "ms": 0
+      },
+      {
+        "name": "level:audio",
+        "start": 2310.4000005722046,
+        "ms": 0.19999980926513672
+      },
+      {
+        "name": "level:hud",
+        "start": 2312.7000007629395,
+        "ms": 10.299999237060547
+      }
+    ]
+  },
+  "baseline": {
+    "ms": 2673.6000003814697,
+    "backend": "webgpu",
+    "quality": "low",
+    "tick": 2,
+    "phase": "playing",
+    "drawCalls": 85,
+    "bundle": "https://minor-incident.com/build/index-Dog88jbr.js",
+    "preparation": {
+      "workers": 8,
+      "submitted": 34,
+      "completed": 34,
+      "prebuilt": 34,
+      "failed": 0
+    },
+    "phases": [
+      {
+        "name": "view:actors",
+        "start": -212.39999961853027,
+        "ms": 57.59999942779541
+      },
+      {
+        "name": "view:lod-ready",
+        "start": -154.80000019073486,
+        "ms": 0.10000038146972656
+      },
+      {
+        "name": "view:warm-up",
+        "start": -154.69999980926514,
+        "ms": 5.199999809265137
+      },
+      {
+        "name": "level:layouts",
+        "start": 38.40000057220459,
+        "ms": 34.89999961853027
+      },
+      {
+        "name": "transition:L6:first-frame",
+        "start": 38.40000057220459,
+        "ms": 2516.0999994277954
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "start": 73.30000019073486,
+        "ms": 0
+      },
+      {
+        "name": "level:sim",
+        "start": 73.30000019073486,
+        "ms": 96.80000019073486
+      },
+      {
+        "name": "level:world+nav",
+        "start": 74.30000019073486,
+        "ms": 78
+      },
+      {
+        "name": "level:mission+cast",
+        "start": 152.30000019073486,
+        "ms": 9.5
+      },
+      {
+        "name": "level:physics-prepare",
+        "start": 161.80000019073486,
+        "ms": 8.199999809265137
+      },
+      {
+        "name": "level:view",
+        "start": 170.10000038146973,
+        "ms": 2317.5
+      },
+      {
+        "name": "view:districts+character",
+        "start": 196.5,
+        "ms": 567.1999998092651
+      },
+      {
+        "name": "view:civilian-crowd",
+        "start": 212.30000019073486,
+        "ms": 914.8999996185303
+      },
+      {
+        "name": "view:infected-crowd",
+        "start": 212.69999980926514,
+        "ms": 488.1000003814697
+      },
+      {
+        "name": "view:route-lods",
+        "start": 763.6999998092651,
+        "ms": 62.5
+      },
+      {
+        "name": "view:actors",
+        "start": 832.1000003814697,
+        "ms": 393.5999994277954
+      },
+      {
+        "name": "view:lod-ready",
+        "start": 1225.6999998092651,
+        "ms": 41.30000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "start": 1267,
+        "ms": 1202.4000005722046
+      },
+      {
+        "name": "Texture atlas upload",
+        "start": 1272.5,
+        "ms": 20.100000381469727
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "start": 1272.5,
+        "ms": 1108.4000005722046
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 1292.6999998092651,
+        "ms": 961
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 2388,
+        "ms": 16.5
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 2388,
+        "ms": 33.10000038146973
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 2404.5,
+        "ms": 16.600000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 2421.1000003814697,
+        "ms": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "start": 2436.5,
+        "ms": 4.600000381469727
+      },
+      {
+        "name": "L1 warm-up draw",
+        "start": 2441.1000003814697,
+        "ms": 13.199999809265137
+      },
+      {
+        "name": "L1 driver warm-up",
+        "start": 2441.1000003814697,
+        "ms": 28.09999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "start": 2454.300000190735,
+        "ms": 14.899999618530273
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "start": 2469.199999809265,
+        "ms": 0
+      },
+      {
+        "name": "level:audio",
+        "start": 2487.6000003814697,
+        "ms": 0.3000001907348633
+      },
+      {
+        "name": "level:hud",
+        "start": 2489.800000190735,
+        "ms": 35.69999980926514
+      }
+    ]
+  },
+  "baselineURL": "https://minor-incident.com",
+  "limitMs": 2940.960000419617
+}

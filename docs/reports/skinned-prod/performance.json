@@ -1,1 +1,894 @@
-[]
+[
+  {
+    "variant": "main",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1987,
+        "triangles": 748,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 560,
+        "triangles": 743,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 989,
+        "triangles": 1146,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 293,
+        "triangles": 384,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 747,
+        "triangles": 611,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1815,
+        "triangles": 900,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      }
+    ],
+    "backend": "webgl",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [],
+    "samples": 2346,
+    "p95": 6.100000000000364,
+    "p50": 4.799999999999272,
+    "triangles": 171438,
+    "updateCpuMs": 3.1000003814697266,
+    "renderCpuMs": 0.8999996185302734,
+    "simMs": 0,
+    "elapsedMs": 12005.900000572205,
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1583,
+        "triangles": 994,
+        "meanInfluences": 1.665824384080859,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 1331,
+        "triangles": 940,
+        "meanInfluences": 1.5394440270473329,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1569,
+        "triangles": 891,
+        "meanInfluences": 1.4098151688973868,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 1196,
+        "triangles": 865,
+        "meanInfluences": 1.7433110367892977,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 731,
+        "triangles": 647,
+        "meanInfluences": 1.4186046511627908,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 966,
+        "triangles": 608,
+        "meanInfluences": 1.1128364389233953,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      }
+    ],
+    "backend": "webgl",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "samples": 2023,
+    "p95": 6.80000000000291,
+    "p50": 5.399999999999636,
+    "triangles": 184777,
+    "updateCpuMs": 2.8000001907348633,
+    "renderCpuMs": 1.5,
+    "simMs": 0,
+    "elapsedMs": 12006.199999809265,
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1583,
+        "triangles": 994,
+        "meanInfluences": 1.665824384080859,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 1331,
+        "triangles": 940,
+        "meanInfluences": 1.5394440270473329,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1569,
+        "triangles": 891,
+        "meanInfluences": 1.4098151688973868,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 1196,
+        "triangles": 865,
+        "meanInfluences": 1.7433110367892977,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 731,
+        "triangles": 647,
+        "meanInfluences": 1.4186046511627908,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 966,
+        "triangles": 608,
+        "meanInfluences": 1.1128364389233953,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      }
+    ],
+    "backend": "webgl",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "samples": 2000,
+    "p95": 7,
+    "p50": 5.5,
+    "triangles": 184771,
+    "updateCpuMs": 3.8000001907348633,
+    "renderCpuMs": 1,
+    "simMs": 1.3000001907348633,
+    "elapsedMs": 12009.89999961853,
+    "errors": []
+  },
+  {
+    "variant": "main",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1987,
+        "triangles": 748,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 560,
+        "triangles": 743,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 989,
+        "triangles": 1146,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 293,
+        "triangles": 384,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 747,
+        "triangles": 611,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1815,
+        "triangles": 900,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      }
+    ],
+    "backend": "webgl",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [],
+    "samples": 2273,
+    "p95": 6.299999999999272,
+    "p50": 4.899999999999636,
+    "triangles": 171438,
+    "updateCpuMs": 2.6000003814697266,
+    "renderCpuMs": 0.8999996185302734,
+    "simMs": 0,
+    "elapsedMs": 12004.699999809265,
+    "errors": []
+  },
+  {
+    "variant": "main",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1987,
+        "triangles": 748,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 560,
+        "triangles": 743,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 989,
+        "triangles": 1146,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 293,
+        "triangles": 384,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 747,
+        "triangles": 611,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1815,
+        "triangles": 900,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      }
+    ],
+    "backend": "webgpu",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [],
+    "samples": 2247,
+    "p95": 6.599999999998545,
+    "p50": 4.899999999999636,
+    "triangles": 171438,
+    "updateCpuMs": 2.6999998092651367,
+    "renderCpuMs": 0.9000005722045898,
+    "simMs": 0,
+    "elapsedMs": 12005.39999961853,
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1583,
+        "triangles": 994,
+        "meanInfluences": 1.665824384080859,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 1331,
+        "triangles": 940,
+        "meanInfluences": 1.5394440270473329,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1569,
+        "triangles": 891,
+        "meanInfluences": 1.4098151688973868,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 1196,
+        "triangles": 865,
+        "meanInfluences": 1.7433110367892977,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 731,
+        "triangles": 647,
+        "meanInfluences": 1.4186046511627908,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 966,
+        "triangles": 608,
+        "meanInfluences": 1.1128364389233953,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      }
+    ],
+    "backend": "webgpu",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "samples": 1907,
+    "p95": 7.5,
+    "p50": 5.700000000000728,
+    "triangles": 184777,
+    "updateCpuMs": 3.3000001907348633,
+    "renderCpuMs": 1.1999998092651367,
+    "simMs": 0,
+    "elapsedMs": 12007.5,
+    "errors": []
+  },
+  {
+    "variant": "skin",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1583,
+        "triangles": 994,
+        "meanInfluences": 1.665824384080859,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 1331,
+        "triangles": 940,
+        "meanInfluences": 1.5394440270473329,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1569,
+        "triangles": 891,
+        "meanInfluences": 1.4098151688973868,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 1196,
+        "triangles": 865,
+        "meanInfluences": 1.7433110367892977,
+        "poseTexture": [
+          76,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 731,
+        "triangles": 647,
+        "meanInfluences": 1.4186046511627908,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 966,
+        "triangles": 608,
+        "meanInfluences": 1.1128364389233953,
+        "poseTexture": [
+          124,
+          1541
+        ]
+      }
+    ],
+    "backend": "webgpu",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "samples": 1927,
+    "p95": 7.400000000001455,
+    "p50": 5.600000000002183,
+    "triangles": 184777,
+    "updateCpuMs": 3.3000001907348633,
+    "renderCpuMs": 1.1999998092651367,
+    "simMs": 0,
+    "elapsedMs": 12006.39999961853,
+    "errors": []
+  },
+  {
+    "variant": "main",
+    "initialQuality": "low",
+    "batches": [
+      {
+        "asset": "npc.civilian-woman-a",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 1987,
+        "triangles": 748,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "npc.civilian-man-b",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 32,
+        "vertices": 560,
+        "triangles": 743,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.nurse",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 34,
+        "vertices": 989,
+        "triangles": 1146,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.dog",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 33,
+        "vertices": 293,
+        "triangles": 384,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.zebra",
+        "lod": "lod2",
+        "instances": 33,
+        "integerFrames": 30,
+        "vertices": 747,
+        "triangles": 611,
+        "meanInfluences": 1,
+        "poseTexture": [
+          124,
+          1540
+        ]
+      },
+      {
+        "asset": "inf.common-worker",
+        "lod": "lod2",
+        "instances": 34,
+        "integerFrames": 33,
+        "vertices": 1815,
+        "triangles": 900,
+        "meanInfluences": 1,
+        "poseTexture": [
+          76,
+          1540
+        ]
+      }
+    ],
+    "backend": "webgpu",
+    "quality": "low",
+    "count": 200,
+    "minBodies": 200,
+    "maxDraws": 19,
+    "missing": [],
+    "assets": [
+      "inf.common-worker",
+      "inf.dog",
+      "inf.nurse",
+      "inf.zebra",
+      "npc.civilian-man-b",
+      "npc.civilian-woman-a"
+    ],
+    "skins": [],
+    "samples": 2231,
+    "p95": 6.69999999999709,
+    "p50": 4.899999999999636,
+    "triangles": 171438,
+    "updateCpuMs": 2.6999998092651367,
+    "renderCpuMs": 1,
+    "simMs": 0,
+    "elapsedMs": 12004.599999427795,
+    "errors": []
+  }
+]
