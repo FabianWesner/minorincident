@@ -30,11 +30,12 @@ try {
       await session.step(120); await session.ready();
       const profiler = process.env.PROFILE ? await session.page.context().newCDPSession(session.page) : undefined;
       if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.start'); }
-      let overlap = false;
+      let overlap = false; const cpuOverlap = new Set<string>();
       const monitor = setInterval(() => {
         const processes = execFileSync('ps', ['-axo', 'command='], { encoding: 'utf8' }).split('\n');
         const browsers = processes.filter(line => /^\/(?:.*\/)?(?:chrome-headless-shell|Chromium|Google Chrome) /.test(line) && !line.includes('--type=') && (line.includes('headless') || line.includes('--remote-debugging')));
         if (browsers.length > 1) overlap = true;
+        for (const process of processes) if (/^\/Applications\/Blender[.]app\/Contents\/MacOS\/Blender |^(?:\/[^ ]*\/)?blender |^(?:\/[^ ]*\/)?node .*\/(?:vite|vite[.]js) build(?: |$)|^(?:\/[^ ]*\/)?node \(vitest/.test(process)) cpuOverlap.add(process);
       }, 500);
       let result;
       try {
@@ -77,6 +78,7 @@ try {
       } finally { clearInterval(monitor); }
       if (profiler) writeJson(resolve(out, `cpu-profile-${variant}-${backend}.json`), await profiler.send('Profiler.stop'));
       if (overlap) throw Error('Concurrent browser detected; timing is invalid');
+      if (cpuOverlap.size) throw Error(`Concurrent local CPU/render work detected; timing is invalid: ${[...cpuOverlap].join('; ')}`);
       receipts.push({ variant, ...result, errors: [...session.errors] }); writeJson(resolve(out, 'performance.json'), receipts);
       console.log(JSON.stringify({ variant, ...result, errors: session.errors.length }));
       if (result.quality !== 'low' || result.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || result.count !== 200 || result.minBodies !== 200 || result.maxDraws > 30 || variant === 'skin' && result.skins.length < 6 || session.errors.length) throw Error('Invalid 200-AI receipt');
