@@ -6,6 +6,7 @@ import { AnimationMixer, Box3, Matrix4, Mesh, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import type { Document } from '@gltf-transform/core';
+import { cloneDocument } from '@gltf-transform/functions';
 import manifest from '../../../src/assets/manifest.json';
 import { variantPath, type AssetDef } from '../../../src/assets/types';
 import { assetIO } from '../../../tools/assets/io';
@@ -121,7 +122,10 @@ for (const lod of [0, 1, 2]) {
         expect(validation.triangles, label).toBeLessThanOrEqual(dogBudget(def)[lod]);
         expect(validation.materials, label).toBeLessThanOrEqual(infected ? 6 : 4);
         expect(validation.fileKB, label).toBeLessThanOrEqual(500);
-        expect(coplanarOverlaps(doc), label).toEqual([]);
+        // Wound caps and their uncut body surface are mutually exclusive at runtime.
+        const live = cloneDocument(doc);
+        for (const node of live.getRoot().listNodes()) if (node.getExtras().hidden) node.setMesh(null);
+        expect(coplanarOverlaps(live), label).toEqual([]);
         // Authored closed solids at every tier: no perforated decimation shells.
         const source = await io.read(sourcePath(def.id, lod, variant));
         for (const surface of surfaces(source, 'node')) expect([...surface.edges.values()].every(n => n === 2), `${label} ${surface.name}`).toBe(true);

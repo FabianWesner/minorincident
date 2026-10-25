@@ -81,6 +81,7 @@ export class CrowdAccessories extends Group {
   }
   private readonly corpseSources = new Map<string, BufferGeometry>();
   private readonly fits = new Map<string, Matrix4>();
+  private readonly accessoryFits = new Map<string, Matrix4>();
   private readonly skinnedModels = new Set<string>();
   private readonly skullLods = new Map<string, number>();
   private readonly measuredGlasses = new Map<string, number>();
@@ -109,7 +110,7 @@ export class CrowdAccessories extends Group {
     this.skullLods.set(model, rank);
     const frames = glassesTop(geometry);
     if (geometry.userData.crowdBinds && frames !== null) this.measuredGlasses.set(model, frames);
-    for (const key of this.lifts.keys()) if (key.endsWith(`/${model}`)) this.lifts.delete(key);
+    for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
     if (geometry.userData.crowdBinds) this.skinnedModels.add(model);
     const scale = skull.size.divide(referenceSkull.size);
     // Map the reference skull onto this skull: centre to centre, per-axis size ratio.
@@ -190,9 +191,13 @@ export class CrowdAccessories extends Group {
   }
   infectedDrawCalls(): number { return this.infectedBatches.size; }
   private fit(id: string, model: string): void {
+    const key = `${id}/${model}`, cached = this.accessoryFits.get(key);
+    if (cached) { this.fitTransform.copy(cached); return; }
     this.authoredOrRetargeted(id, model);
     const lift = this.glassesLift(id, model);
     if (lift) this.fitTransform.premultiply(this.liftMatrix.makeTranslation(0, lift, 0));
+    // Both immutable pieces contribute to width/clearance; wait until both exist.
+    if (this.batches.has(`${id}:lod0`) && this.batches.has(`${id}:lod1`)) this.accessoryFits.set(key, this.fitTransform.clone());
   }
   private authoredOrRetargeted(id: string, model: string): void {
     const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
@@ -208,7 +213,7 @@ export class CrowdAccessories extends Group {
       let width = 0;
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (!geometry) continue;
-        geometry.computeBoundingBox(); width = Math.max(width, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).z);
+        if (!geometry.boundingBox) geometry.computeBoundingBox(); width = Math.max(width, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).z);
       }
       if (width > referenceSkull.size.z * scale.z * limit) this.fitTransform.premultiply(new Matrix4().makeTranslation(0, 0, centre.z).multiply(new Matrix4().makeScale(1, 1, referenceSkull.size.z * scale.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -centre.z)));
     }

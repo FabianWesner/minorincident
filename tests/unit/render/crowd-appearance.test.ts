@@ -13,6 +13,7 @@ import { interleaveTexturedCrowd } from '../../../src/render/characters/crowdTex
 import { packCrowdParts } from '../../../src/assets/crowdParts';
 import { decodeCivilianBake } from '../../../src/assets/civilianBakeData';
 import manifest from '../../../src/assets/manifest.json';
+import civilianBakes from '../../../src/assets/civilianBakes.json';
 
 async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
   const def = manifest.find(d => d.id === id)!;
@@ -89,15 +90,20 @@ for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}
 
 test('prebuilt pedestrian bakes receive hair/trousers tags without an extra attribute @E08', async () => {
   const { gunzipSync } = await import('node:zlib');
-  const { readdirSync } = await import('node:fs');
   for (const id of ['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly']) {
-    const path = readdirSync('public/assets/civilians').find(f => f.startsWith(`${id}.lod1.`))!;
-    const bytes = gunzipSync(readFileSync(`public/assets/civilians/${path}`));
+    const path = (civilianBakes as Record<string, string>)[`${id}:lod1`];
+    const bytes = gunzipSync(readFileSync(`public${path}`));
     const baked = decodeCivilianBake(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset+bytes.byteLength));
     const names = Object.keys(baked.geometry.attributes); markCrowdAppearance(baked.geometry);
     expect(Object.keys(baked.geometry.attributes)).toEqual(names);
     const look = renderedCrowdLook(1,id,baked.geometry,new Color('#3178ac'),null);
-    expect(look.hair, id).not.toBeNull(); expect(look.trousers, id).not.toBeNull();
+    if (manifest.find(def => def.id === id)?.crowdSkin) {
+      // Textured clothing/hair keep their authored paint; skin alone accepts infection tint.
+      expect(look.hair, id).toBeNull(); expect(look.trousers, id).toBeNull();
+      expect(baked.geometry.hasAttribute('uv'), id).toBe(true);
+      expect(baked.geometry.hasAttribute('_skin'), id).toBe(true); expect(baked.clip.binds, id).toBeDefined();
+      expect(look.skin, id).not.toBeNull();
+    } else { expect(look.hair, id).not.toBeNull(); expect(look.trousers, id).not.toBeNull(); }
     if (id === 'npc.civilian-man-b' || id === 'npc.civilian-elderly') {
       const parts = baked.geometry.getAttribute('_parts');
       expect(Array.from({length:parts.count}, (_, i) => parts.getW(i)).some(w => w >= 4), `${id} headwear mask`).toBe(true);

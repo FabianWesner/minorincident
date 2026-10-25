@@ -12,9 +12,10 @@ import { packCrowdParts } from '../../../src/assets/crowdParts';
 import { characterNodes } from '../../../src/data/survivor';
 import manifest from '../../../src/assets/manifest.json';
 
-async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
+async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2', reference = false) {
   const def = manifest.find(d => d.id === id)!;
-  const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
+  const paths = reference && def.rigidBaseline ? def.rigidBaseline : def;
+  const bytes = readFileSync(lod === 'lod0' ? paths.glb : paths.lods![lod]!);
   const source = JSON.parse(bytes.toString('utf8', 20, 20 + bytes.readUInt32LE(12)));
   const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
   // Node geometry loading retains the production atlas/material markers.
@@ -26,10 +27,10 @@ async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
       if (index !== undefined && source.materials[index]?.pbrMetallicRoughness?.baseColorTexture) (material as MeshStandardMaterial).map = atlas;
     }
   });
-  gltf.scene.userData.assetId = id; gltf.scene.userData.assetTextureMode = def.textureMode; return gltf.scene;
+  gltf.scene.userData.assetId = id; gltf.scene.userData.assetTextureMode = reference ? undefined : def.textureMode; return gltf.scene;
 }
-async function crowdGeometry(id: string, lod: 'lod1' | 'lod2') {
-  const baked = bakeInfected(await model(id, lod));
+async function crowdGeometry(id: string, lod: 'lod1' | 'lod2', reference = false) {
+  const baked = bakeInfected(await model(id, lod, reference));
   deinterleaveGeometry(baked.geometry); const geometry = mergeVertices(baked.geometry);
   packCrowdParts(geometry); markCrowdAppearance(geometry, regularInfectedModels.some(m => m === id));
   return geometry;
@@ -43,7 +44,7 @@ test('ordinary infected accessories keep the authored reference proportions on t
   const { CrowdAccessories, bakedSkull, referenceSkull } = await import('../../../src/render/characters/CrowdAccessories');
   const { AssetRegistry } = await import('../../../src/assets/registry');
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
-  const reference = bakedSkull(await crowdGeometry('npc.civilian-man-a', 'lod1'))!;
+  const reference = bakedSkull(await crowdGeometry('npc.civilian-man-a', 'lod1', true))!;
   expect(reference.size.distanceTo(referenceSkull.size)).toBeLessThan(.003);
   expect(reference.centre.distanceTo(referenceSkull.centre)).toBeLessThan(.003);
   const accessories = new CrowdAccessories(); await accessories.init();
@@ -75,7 +76,11 @@ test('ordinary infected accessories keep the authored reference proportions on t
     (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete(id); accessories.registerSkull(id, geometry);
     for (const acc of ids) {
       const got = relative(id, skull, acc), want = expected.get(acc)!;
-      for (const axis of ['x', 'y', 'z'] as const) expect(got.size[axis], `${id} ${lod} ${acc} ${axis}`).toBeCloseTo(want.size[axis], 2);
+      for (const axis of ['x', 'y', 'z'] as const) {
+        const brimLimit = acc.endsWith('sun-hat') ? 1.4 : acc.endsWith('bucket-hat') ? 1.3 : 1.15;
+        const expected = geometry.userData.crowdBinds && axis === 'z' && acc.startsWith('acc.hat-') ? Math.min(want.size[axis], brimLimit) : want.size[axis];
+        expect(got.size[axis], `${id} ${lod} ${acc} ${axis}`).toBeCloseTo(expected, 2);
+      }
       expect(got.bottom, `${id} ${lod} ${acc} bottom`).toBeCloseTo(want.bottom, 2);
       expect(got.top, `${id} ${lod} ${acc} top`).toBeCloseTo(want.top, 2);
     }

@@ -40,7 +40,7 @@ try {
       try {
         result = await session.page.evaluate(async () => {
           const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
-          const crowd = (game.view as unknown as { crowd: { batches: Map<string, { count: number; asset: string; mesh: InstancedMesh; probe: { figures: { id: number; drawn: boolean }[] } }> } }).crowd;
+          const crowd = (game.view as unknown as { crowd: { batches: Map<string, { count: number; asset: string; lod: string; texture: { image: { width: number; height: number } }; mesh: InstancedMesh; probe: { figures: { id: number; drawn: boolean }[] } }> } }).crowd;
           const frames: number[] = [], assets = new Set<string>(), skins = new Set<string>();
           let missing: unknown[] = [];
           let previous = 0, minBodies = Infinity, maxDraws = 0;
@@ -62,7 +62,15 @@ try {
           }
           api.pause(); frames.sort((a, b) => a - b);
           const perf = api.perf();
-          return { backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
+          // Inspect after sampling: identical LOD/quality choices and the actual vertex/bone workload.
+          const batches = [...crowd.batches.values()].filter(b => b.count).map(b => {
+            const g = b.mesh.geometry, skin = g.getAttribute('_skin'), vertices = g.getAttribute('position').count;
+            let influences = 0;
+            if (skin) for (let i = 0; i < skin.count; i++) influences += 1 + Number(skin.getY(i) > 0) + Number(skin.getZ(i) > 0) + Number(skin.getW(i) % 1 > 0);
+            return { asset: b.asset, lod: b.lod, instances: b.count, vertices, triangles: (g.index?.count ?? vertices) / 3,
+              meanInfluences: skin ? influences / vertices : 1, poseTexture: [b.texture.image.width, b.texture.image.height] };
+          });
+          return { batches, backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
             missing, assets: [...assets].sort(), skins: [...skins].sort(), samples: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1],
             p50: frames[Math.ceil(frames.length * .5) - 1], triangles: perf.triangles, updateCpuMs: perf.updateCpuMs, renderCpuMs: perf.renderCpuMs, simMs: perf.simMs, elapsedMs: performance.now() - started };
         });

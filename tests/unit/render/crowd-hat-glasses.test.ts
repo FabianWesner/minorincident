@@ -46,6 +46,16 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   // Register every LOD first, as the game does before any hat is drawn.
   const geometries = new Map<string, Awaited<ReturnType<typeof bake>>>();
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) { const g = await bake(id, lod); geometries.set(`${id}:${lod}`, g); accessories.registerSkull(id, g); }
+  const retarget = vi.spyOn(accessories as unknown as { authoredOrRetargeted(id: string, model: string): void }, 'authoredOrRetargeted');
+  const first = fitted('npc.civilian-man-a', 'lod1', hats[0]);
+  for (let repeat = 0; repeat < 5; repeat++) expect(fitted('npc.civilian-man-a', 'lod1', hats[0]).equals(first)).toBe(true);
+  expect(retarget).toHaveBeenCalledTimes(1);
+  // Replacing the registered skull invalidates the completed fit as well as its frame-clearance lift.
+  (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete('npc.civilian-man-a');
+  accessories.registerSkull('npc.civilian-man-a', geometries.get('npc.civilian-man-a:lod1')!);
+  expect(fitted('npc.civilian-man-a', 'lod1', hats[0]).equals(first)).toBe(true);
+  expect(retarget).toHaveBeenCalledTimes(2);
+  retarget.mockRestore();
   const spectacled = l1Pedestrians.models.filter(id => glassesTop(geometries.get(`${id}:lod0`)!) !== null);
   expect(spectacled.sort()).toEqual(Object.keys(spectacleTops).sort());
   for (const id of spectacled) {
