@@ -43,7 +43,7 @@ try {
         const processes = execFileSync('ps', ['-axo', 'command='], { encoding: 'utf8' }).split('\n');
         const browsers = processes.filter(line => /^\/(?:.*\/)?(?:chrome-headless-shell|Chromium|Google Chrome) /.test(line) && !line.includes('--type=') && (line.includes('headless') || line.includes('--remote-debugging')));
         if (browsers.length > 1) overlap = true;
-        for (const process of processes) if (/^\/Applications\/Blender[.]app\/Contents\/MacOS\/Blender |^(?:\/[^ ]*\/)?blender |^(?:\/[^ ]*\/)?node .*\/(?:vite|vite[.]js) build(?: |$)|^(?:\/[^ ]*\/)?node \(vitest/.test(process)) cpuOverlap.add(process);
+        for (const process of processes) if (/^\/Applications\/Blender[.]app\/Contents\/MacOS\/Blender |^(?:\/[^ ]*\/)?blender |^(?:\/[^ ]*\/)?node .*\/(?:vite|vite[.]js) build(?: |$)|^(?:\/[^ ]*\/)?node (?:\(vitest|.*(?:node_modules\/(?:[.]bin\/vitest|vitest\/vitest[.]mjs)|typescript\/bin\/tsc)(?: |$))/.test(process)) cpuOverlap.add(process);
       }, 500);
       let result;
       try {
