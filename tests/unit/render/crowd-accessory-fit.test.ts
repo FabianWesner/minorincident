@@ -67,8 +67,9 @@ test('ordinary infected accessories keep the authored reference proportions on t
     let eyeTop = -Infinity, exposed = 0, masked = 0;
     for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getZ(i) > 0) eyeTop = Math.max(eyeTop, position.getY(i));
     for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === 0 && parts.getZ(i) <= 0) {
-      if (parts.getW(i) >= 4) masked++; else if (position.getY(i) > eyeTop + .06) exposed++;
+      if (parts.getW(i) < 4 && position.getY(i) > eyeTop + .06) exposed++;
     }
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && !parts.getZ(i) && parts.getW(i) >= 4 && parts.getW(i) < 8) masked++;
     expect(exposed, `${id} ${lod} unmasked own headwear`).toBe(0); expect(masked, `${id} ${lod} masked own headwear`).toBeGreaterThan(0);
     // CrowdView keeps the first registered LOD per model; check each LOD's own fit.
     (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete(id); accessories.registerSkull(id, geometry);

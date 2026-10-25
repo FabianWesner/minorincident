@@ -13,30 +13,7 @@
 import { BufferAttribute, DataTexture, Matrix4, type BufferGeometry } from 'three';
 import { float, Fn, If, attribute, int, ivec2, mat4, textureLoad } from 'three/tsl';
 import type { Node, TextureNode } from 'three/webgpu';
-import type { AssetDef } from '../../assets/types';
 import { crowdBlendedMatrix, poseTexture, type CrowdClip } from '../../assets/crowd';
-
-export type SkinnedCrowdMode = 'off' | 'skin' | 'rigid';
-export function skinnedCrowdMode(): SkinnedCrowdMode {
-  if (typeof location === 'undefined') return 'off';
-  const value = new URLSearchParams(location.search).get('skinCrowd');
-  return value === '1' ? 'skin' : value === 'rigid' ? 'rigid' : 'off';
-}
-
-/** Prototype assets (tools/assets/skin-crowd-figure.ts). `.low.glb` carries the 512 atlas. */
-const skinnedAssets: Record<string, { dimensions: AssetDef['dimensions'] }> = {
-  'inf.common-worker': { dimensions: { x: .95, y: 1.8, z: 1.35, tolerance: .15 } },
-  'npc.civilian-woman-a': { dimensions: { x: .68, y: 1.8, z: 1.05, tolerance: .15 } },
-};
-export const skinnedCrowdAssets = Object.keys(skinnedAssets);
-export function skinnedCrowdManifest(manifest: AssetDef[]): AssetDef[] {
-  return manifest.map(def => {
-    const skinned = skinnedAssets[def.id];
-    if (!skinned) return def;
-    const file = (lod: string) => `public/assets/models/skinned/${def.id}.${lod}.glb`;
-    return { ...def, glb: file('lod0'), lods: { lod1: file('lod1'), lod2: file('lod2') }, textureMode: 'baseColor' as const, corpseGlb: undefined, lowGlb: undefined, dimensions: skinned.dimensions };
-  });
-}
 
 /** Inverse rest (bind) matrices of every clip part, in the bake's world frame. */
 export function restInverses(parts: { matrixWorld: Matrix4 }[]): Float32Array {

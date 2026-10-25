@@ -1,0 +1,72 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave1/inf.nurse/lod2.glb",
+  "out": "docs/reports/skinned-prod/builds/inf.nurse/lod2.raw.glb",
+  "bytes": 182728,
+  "body": "automatic 512-cell voxel union of closed source partitions",
+  "scale": 1,
+  "yaw": 0,
+  "meanDistanceToRigidSurface": 0.045072390860597396,
+  "vertices": 955,
+  "weldedVertices": 288,
+  "triangles": 792,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 90,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "head/torso": {
+      "seamVertices": 25,
+      "band": 0.03441588700904201,
+      "blended": 7
+    },
+    "torso/hip": {
+      "seamVertices": 33,
+      "band": 0.06883177401808402,
+      "blended": 47
+    },
+    "armL/torso": {
+      "seamVertices": 21,
+      "band": 0.05899866344407201,
+      "blended": 11
+    },
+    "armR/torso": {
+      "seamVertices": 8,
+      "band": 0.05899866344407201,
+      "blended": 0
+    },
+    "legL/hip": {
+      "seamVertices": 91,
+      "band": 0.06883177401808402,
+      "blended": 194
+    },
+    "legR/hip": {
+      "seamVertices": 17,
+      "band": 0.06883177401808402,
+      "blended": 7
+    }
+  }
+}

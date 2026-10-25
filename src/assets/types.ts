@@ -13,6 +13,8 @@ export interface AccessoryDef {
   fits: Record<string, AccessoryFit & { hasHeadwear?: boolean }>;
 }
 export interface AssetDef {
+  /** Welded crowd body on the production joints; selected directly without a query flag. */
+  crowdSkin?: boolean;
   /** Opaque figure atlas; low-tier siblings use the .low.glb suffix. */
   textureMode?: 'baseColor';
   /** Optional lower-resolution atlas image for one shared textured-figure map. */

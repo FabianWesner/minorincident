@@ -1,6 +1,6 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
 import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial, type MeshStandardMaterial, type SkinnedMesh, type Texture } from 'three';
-import { packSkin, restInverses, skinnedCrowdMode } from './skinnedCrowd';
+import { packSkin, restInverses } from './skinnedCrowd';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, groundClips, sampleClip, strideScale } from './clips';
@@ -94,7 +94,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
     // hoof bounds together instead of moving a whole upper leg away from its shoulder.
     const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
-    const hoofPoints = preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
+    const declaredHooves = root.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
+    const hoofPoints = declaredHooves ? Object.entries(declaredHooves).flatMap(([name, points]) => {
+      const paw = root.getObjectByName(name); return paw ? points.map(point => ({ paw, point: new Vector3().fromArray(point) })) : [];
+    }) : preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
       const paw = root.getObjectByName(name); if (!paw) return [];
       const points: { paw: Object3D; point: Vector3 }[] = [];
       paw.traverse(node => {
@@ -154,13 +157,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
   // skinned-crowd prototype: one welded SkinnedMesh body. Every vertex of such a figure stays in the bind
   // (world rest) space; the pose atlas is premultiplied by the inverse rest matrices on upload.
   let skinnedFigure = false; root.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) skinnedFigure = true; });
-  const skinMode = skinnedFigure ? skinnedCrowdMode() : 'off';
   const binds = skinnedFigure ? restInverses(parts) : undefined;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
-    const capIndex = texturedHumanoid ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(node.name.replace(/^stump_/, '')) : -1;
-    const cap = node.name.startsWith('stump_') && capIndex >= 0;
-    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !(cap && ancestor === node)) return;
+    let capNode: Object3D | null = node;
+    while (capNode && !capNode.name.startsWith('stump_')) capNode = capNode.parent;
+    const capIndex = texturedHumanoid && capNode ? ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].indexOf(capNode.name.replace(/^stump_/, '')) : -1;
+    const cap = capIndex >= 0;
+    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if ((!ancestor.visible || ancestor.name.startsWith('stump_')) && !cap) return;
     // A named animated part can itself be a Mesh (not only a parent joint).
     let owner: Object3D | null = node;
     while (owner && !parts.includes(owner)) owner = owner.parent;
@@ -216,14 +220,25 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     if (skinnedFigure) {
       const skinIndex = geometry.getAttribute('skinIndex'), skinWeight = geometry.getAttribute('skinWeight');
       const map = (node as SkinnedMesh).skeleton?.bones.map(bone => parts.findIndex(p => p.name === bone.name)) ?? [];
+      if (map.some(part => part < 0 || part >= 32)) throw new Error('Crowd skin joints must belong to the 32-part pose contract');
       const joints = new Float32Array(count * 4), weights = new Float32Array(count * 4);
       for (let i = 0; i < count; i++) for (let c = 0; c < 4; c++) {
         if (skinIndex) { joints[i * 4 + c] = Math.max(0, map[skinIndex.getComponent(i, c)] ?? part); weights[i * 4 + c] = skinWeight.getComponent(i, c); }
         else { joints[i * 4 + c] = part; weights[i * 4 + c] = c === 0 ? 1 : 0; }
       }
-      const packed = packSkin(joints, weights, count, skinMode === 'rigid');
+      const packed = packSkin(joints, weights, count, false);
       indices.set(packed.dominant);
-      if (skinMode !== 'rigid') geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
+      const point = new Vector3(), inverse = new Matrix4();
+      for (let i = 0; i < count; i++) {
+        const name = parts[indices[i]].name;
+        inverse.fromArray(binds!, indices[i] * 16);
+        point.fromBufferAttribute(geometry.getAttribute('position'), i).applyMatrix4(inverse);
+        const region = geometry.getAttribute('_crowd_region');
+        shirt[i] = cap || !material.map ? -10 : region ? region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+        emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
+      }
+      geometry.setAttribute('_skin', new BufferAttribute(packed.skin, 4));
+      geometry.deleteAttribute('_crowd_region');
       geometry.deleteAttribute('skinIndex'); geometry.deleteAttribute('skinWeight');
     }
     if (preserveUV) {
@@ -258,8 +273,10 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
   }
   const clip: CrowdClip = cached || { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  if (binds) clip.binds = binds;
+  if (binds) { clip.binds = binds; geometry.userData.crowdBinds = Array.from(binds); }
   if (preserveUV) geometry.userData.crowdAtlas = true;
+  const spectacleTop = root.getObjectByName('root')?.userData.spectacleTop;
+  if (typeof spectacleTop === 'number') geometry.userData.crowdGlassesTop = spectacleTop;
   const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root), texture };
   if (key) {
     bakedCrowds.set(key, { clip, transforms });

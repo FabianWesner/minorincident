@@ -1,4 +1,4 @@
-import { Color, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
+import { Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
@@ -78,7 +78,13 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
   if (geometry.userData.crowdAtlas) {
     // Source paint owns skin, hair and wounds. Only the authored crown yields
     // to shared hats; palette matching would hide the entire textured face.
-    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && position.getY(i) > .4 && !parts.getZ(i)) parts.setW(i, 4);
+    const binds = geometry.userData.crowdBinds as number[] | undefined;
+    const inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined, point = new Vector3();
+    let low = Infinity, high = -Infinity;
+    const headY = (i: number) => { point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse); return point.y; };
+    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
+    const crown = inverse ? low + (high - low) * .82 : .4;
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024 && headY(i) > crown && !parts.getZ(i)) parts.setW(i, 4);
     return;
   }
   // Ordinary infected: the glowing eyes bound the face; any surface clearly above them belongs to hair or headwear.

@@ -1,3 +1,4 @@
+import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { dogCoat } from '../../data/dogAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
@@ -141,7 +142,7 @@ export class NpcView extends Group {
       let hero = this.heroes.get(e.id);
       if (hero && hero.model !== drawnModel) { this.remove(hero.root); hero.humanAnimator?.dispose(); hero.badge?.remove(); this.heroes.delete(e.id); hero = undefined; }
       if (!hero) {
-        const root = prototype.clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
+        const root = prototype.getObjectByName('skin_body') ? cloneSkeleton(prototype) as Group : prototype.clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }

@@ -4,7 +4,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** World points of a drawn body: feet midpoint, hips, head centre (metres). */
 export interface PickBody { feet: Vector3; hip: Vector3; head: Vector3 }
 
-interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean }
+interface Entry { frame: number; instance: Matrix4; palette: CrowdPosePalette; pose: number; outgoing: number; weight: number; geometry?: BufferGeometry; worldParts?: Matrix4[]; boundsReady?: boolean; vertices?: Float32Array }
 
 /** The bodies the crowd renderers drew last frame, for click picking against what the player sees (not the sim
  * capsule): a lunging, hunched or lying infected is clicked where it is drawn. Recording copies one matrix per
@@ -19,6 +19,8 @@ export class PickBodies {
   private readonly part = new Matrix4();
   private readonly world = new Matrix4();
   private readonly point = new Vector3();
+  private readonly influence = new Vector3();
+  private readonly inverseBind = new Matrix4();
   reset(): void { this.entries.clear(); this.frame++; }
   begin(): void { this.frame++; if (this.entries.size > 2048) this.entries.clear(); }
   add(id: number, instance: Matrix4, palette: CrowdPosePalette, pose: number, outgoing: number, weight: number, geometry?: BufferGeometry): void {
@@ -44,6 +46,7 @@ export class PickBodies {
   bounds(id: number, out: Box3, projection?: Matrix4): Box3 | null {
     const entry = this.entries.get(id);
     if (!entry || entry.frame !== this.frame || !entry.geometry) return null;
+    if (entry.palette.clip.binds && entry.geometry.hasAttribute('_skin')) return this.skinBounds(entry, out, projection);
     let boxes = this.geometryBounds.get(entry.geometry);
     if (!boxes) {
       boxes = entry.palette.clip.parts.map(() => new Box3());
@@ -75,6 +78,7 @@ export class PickBodies {
   top(id: number, projection: Matrix4): number | null {
     const entry = this.entries.get(id);
     if (!entry || entry.frame !== this.frame || !entry.geometry) return null;
+    if (entry.palette.clip.binds && entry.geometry.hasAttribute('_skin')) return this.skinBounds(entry, this.topBounds, projection)?.max.y ?? null;
     if (!entry.boundsReady && !this.bounds(id, this.topBounds)) return null;
     const boxes = this.geometryBounds.get(entry.geometry)!;
     let top = -Infinity;
@@ -100,6 +104,35 @@ export class PickBodies {
   private joint(entry: Entry, part: number, out: Vector3): void {
     entry.palette.part(entry.pose, entry.outgoing, entry.weight, part, this.part);
     out.setFromMatrixPosition(this.world.multiplyMatrices(entry.instance, this.part));
+  }
+  /** Exact posed skin vertices, cached for world bounds and projected health-bar height in the same frame. */
+  private skinBounds(entry: Entry, out: Box3, projection?: Matrix4): Box3 | null {
+    const geometry = entry.geometry!, clip = entry.palette.clip, positions = geometry.getAttribute('position');
+    const parts = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
+    const vertices = entry.vertices?.length === positions.count * 3 ? entry.vertices : entry.vertices = new Float32Array(positions.count * 3);
+    if (!entry.boundsReady) {
+      const matrices = entry.worldParts ??= [];
+      for (let p = 0; p < clip.parts.length; p++) {
+        const matrix = matrices[p] ??= new Matrix4();
+        entry.palette.part(entry.pose, entry.outgoing, entry.weight, p, matrix);
+        matrix.multiply(this.inverseBind.fromArray(clip.binds!, p * 16)).premultiply(entry.instance);
+      }
+      for (let i = 0; i < positions.count; i++) {
+        const packed = skin.getX(i), w1 = skin.getY(i), w2 = skin.getZ(i), w3 = skin.getW(i);
+        this.point.set(0, 0, 0);
+        const apply = (part: number, weight: number) => { if (weight > 0) this.point.addScaledVector(this.influence.fromBufferAttribute(positions, i).applyMatrix4(matrices[part]), weight); };
+        apply(parts.getX(i), 1 - w1 - w2 - w3); apply(packed % 32, w1); apply(Math.floor(packed / 32) % 32, w2); apply(Math.floor(packed / 1024), w3);
+        this.point.toArray(vertices, i * 3);
+      }
+      entry.boundsReady = true;
+    }
+    out.makeEmpty();
+    for (let i = 0; i < positions.count; i++) {
+      // Stump caps are hidden until a limb is removed, and never raise a health bar.
+      if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+      this.point.fromArray(vertices, i * 3); if (projection) this.point.applyMatrix4(projection); out.expandByPoint(this.point);
+    }
+    return out.isEmpty() ? null : out;
   }
 }
 

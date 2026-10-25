@@ -1,0 +1,111 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident/.claude/worktrees/skinned-prod/assets/amb.zebra/model.glb",
+  "out": "docs/reports/skinned-prod/builds/amb.zebra/lod0.raw.glb",
+  "bytes": 674204,
+  "body": "rigid parts welded by position",
+  "vertices": 5776,
+  "weldedVertices": 2405,
+  "triangles": 5745,
+  "components": 18,
+  "openEdges": 0,
+  "unrelatedSeams": 830,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR",
+    "body",
+    "neck",
+    "jaw",
+    "tail",
+    "legFL",
+    "legFR",
+    "legBL",
+    "legBR",
+    "pawFL",
+    "pawFR",
+    "pawBL",
+    "pawBR"
+  ],
+  "rigKind": "quadruped",
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 1,
+  "joints": 28,
+  "eyes": 2,
+  "seams": {
+    "neck/body": {
+      "seamVertices": 132,
+      "band": 0.09867606755920463,
+      "blended": 126
+    },
+    "tail/body": {
+      "seamVertices": 25,
+      "band": 0.09479961262808907,
+      "blended": 15
+    },
+    "pawFL/foreArmL": {
+      "seamVertices": 50,
+      "band": 0.09479961262808907,
+      "blended": 68
+    },
+    "foreArmL/legFL": {
+      "seamVertices": 42,
+      "band": 0.09867606755920463,
+      "blended": 39
+    },
+    "foreArmR/legFR": {
+      "seamVertices": 43,
+      "band": 0.09867606755920463,
+      "blended": 36
+    },
+    "pawFR/foreArmR": {
+      "seamVertices": 63,
+      "band": 0.09479961262808907,
+      "blended": 80
+    },
+    "head/neck": {
+      "seamVertices": 82,
+      "band": 0.09479961262808907,
+      "blended": 83
+    },
+    "jaw/head": {
+      "seamVertices": 67,
+      "band": 0.06771400902006361,
+      "blended": 47
+    },
+    "shinL/legBL": {
+      "seamVertices": 37,
+      "band": 0.09867606755920463,
+      "blended": 13
+    },
+    "shinR/legBR": {
+      "seamVertices": 35,
+      "band": 0.09867606755920463,
+      "blended": 15
+    },
+    "pawBL/shinL": {
+      "seamVertices": 44,
+      "band": 0.09479961262808907,
+      "blended": 53
+    },
+    "pawBR/shinR": {
+      "seamVertices": 45,
+      "band": 0.09479961262808907,
+      "blended": 57
+    }
+  }
+}

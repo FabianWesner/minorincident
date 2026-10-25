@@ -25,7 +25,8 @@ import { join } from 'node:path';
 import { Document, NodeIO, type Node as GNode } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
-import { Matrix4, Vector3 } from 'three';
+import { PNG } from 'pngjs';
+import { Matrix4, Ray, Vector3 } from 'three';
 
 class MinHeap {
   private keys: number[] = []; private values: number[] = [];
@@ -40,12 +41,15 @@ class MinHeap {
 
 const args = process.argv.slice(2);
 const arg = (key: string, fallback?: string) => { const i = args.indexOf(key); return i >= 0 ? args[i + 1] : fallback; };
-const rigPath = arg('--rig')!, outPath = arg('--out')!, texturePath = arg('--texture'), bodyPath = arg('--body'), reportPath = arg('--report');
+const rigPath = arg('--rig')!, outPath = arg('--out')!, texturePath = arg('--texture'), reportPath = arg('--report');
+let bodyPath = arg('--body');
 if (!rigPath || !outPath) throw new Error('Expected --rig and --out');
 
-const JOINTS = ['root', 'hip', 'torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'] as const;
+const HUMANOID = ['root', 'hip', 'torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'];
+// Production dog/zebra rigs retain the humanoid aliases on the same leg chains. Lion rigs may omit the paw aliases.
+const QUADRUPED = [...HUMANOID, 'body', 'neck', 'jaw', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'pawFL', 'pawFR', 'pawBL', 'pawBR'];
 /** Geodesic blend half-width per child joint (metres at 1.8 m figure height). */
-const BAND: Record<string, number> = { hip: .06, torso: .07, head: .035, armL: .06, armR: .06, foreArmL: .05, foreArmR: .05, handL: .03, handR: .03, legL: .07, legR: .07, shinL: .055, shinR: .055, footL: .035, footR: .035 };
+const BAND: Record<string, number> = { hip: .06, torso: .07, head: .035, armL: .06, armR: .06, foreArmL: .05, foreArmR: .05, handL: .03, handR: .03, legL: .07, legR: .07, shinL: .055, shinR: .055, footL: .035, footR: .035, body: .08, neck: .06, jaw: .025, tail: .035, legFL: .06, legFR: .06, legBL: .06, legBR: .06, pawFL: .035, pawFR: .035, pawBL: .035, pawBR: .035 };
 
 await MeshoptDecoder.ready;
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
@@ -53,6 +57,9 @@ const rig = await io.read(rigPath);
 const sceneRoot = rig.getRoot().listScenes()[0];
 const world = (node: GNode) => new Matrix4().fromArray(node.getWorldMatrix());
 const nodes = rig.getRoot().listNodes();
+const quadruped = arg('--rig-kind') === 'quadruped' || nodes.some(n => n.getName() === 'body' || n.getName() === 'legFL');
+const JOINTS = (quadruped ? QUADRUPED : HUMANOID).filter(name => nodes.some(n => n.getName() === name));
+for (const name of ['root', 'hip', 'head', ...quadruped ? [] : HUMANOID]) if (!JOINTS.includes(name)) throw new Error(`missing joint ${name}`);
 const jointNode = new Map(JOINTS.map(name => [name, nodes.find(n => n.getName() === name)!] as const));
 for (const [name, node] of jointNode) if (!node) throw new Error(`missing joint ${name}`);
 const parentJoint = new Map<string, string | null>();
@@ -64,7 +71,8 @@ for (const name of JOINTS) {
 // ---- rigid surface (positions in world space, owner joint) ----------------------------------------
 interface Surface { pos: number[]; uv: number[]; owner: number[]; tris: number[] }
 const rigid: Surface = { pos: [], uv: [], owner: [], tris: [] };
-const eyes: { pos: number[]; owner: number; tris: number[] }[] = [];
+let removedClosureTriangles = 0, removedDegenerateTriangles = 0;
+const eyes: { pos: number[]; uv: number[]; owner: number; tris: number[] }[] = [];
 let texture: { image: Uint8Array; mime: string } | undefined;
 const v = new Vector3();
 const hidden = (node: GNode) => { for (let n: GNode | null = node; n; n = n.getParentNode()) if (n.getName().startsWith('stump_') || (n.getExtras() as { hidden?: boolean }).hidden) return true; return false; };
@@ -78,21 +86,39 @@ for (const node of nodes) {
     const map = prim.getMaterial()?.getBaseColorTexture();
     if (map && !texture) texture = { image: map.getImage()!, mime: map.getMimeType() };
     const eye = (node.getExtras() as { crowdEye?: boolean }).crowdEye === true;
-    const target = eye ? { pos: [] as number[], owner: ownerIndex, tris: [] as number[] } : undefined;
+    const target = eye ? { pos: [] as number[], uv: [] as number[], owner: ownerIndex, tris: [] as number[] } : undefined;
     const base = eye ? 0 : rigid.pos.length / 3, el: number[] = [];
     for (let i = 0; i < position.getCount(); i++) {
       position.getElement(i, el); v.set(el[0], el[1], el[2]).applyMatrix4(m);
-      if (target) { target.pos.push(v.x, v.y, v.z); continue; }
+      if (target) { target.pos.push(v.x, v.y, v.z); if (uv) { uv.getElement(i, el); target.uv.push(el[0], el[1]); } else target.uv.push(0, 0); continue; }
       rigid.pos.push(v.x, v.y, v.z); rigid.owner.push(ownerIndex);
       if (uv) { uv.getElement(i, el); rigid.uv.push(el[0], el[1]); } else rigid.uv.push(0, 0);
     }
     const count = index ? index.getCount() : position.getCount();
-    for (let i = 0; i < count; i++) (target ? target.tris : rigid.tris).push((index ? index.getScalar(i) : i) + base);
+    for (let i = 0; i < count; i += 3) {
+      const ids = [0, 1, 2].map(k => index ? index.getScalar(i + k) : i + k);
+      if (!target && args.includes('--strip-closures') && uv) {
+        const a = uv.getElement(ids[0], []), b = uv.getElement(ids[1], []), c = uv.getElement(ids[2], []);
+        // Rigid cut closures are deliberately mapped to a single quiet atlas texel. The original surface has UV area.
+        if (Math.abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) < 1e-12) { removedClosureTriangles++; continue; }
+      }
+      const points = target ? target.pos : rigid.pos, offset = target ? 0 : base;
+      const [a, b, c] = ids.map(i => new Vector3().fromArray(points, (i + offset) * 3));
+      if (b.sub(a).cross(c.sub(a)).length() < 1e-12) { removedDegenerateTriangles++; continue; }
+      (target ? target.tris : rigid.tris).push(...ids.map(k => k + base));
+    }
     if (target) eyes.push(target);
   }
 }
 
 // ---- body ---------------------------------------------------------------------------------------
+let recovered: string | undefined;
+if (args.includes('--reconstruct-body') && !bodyPath) {
+  recovered = mkdtempSync(join(tmpdir(), 'crowd-surface-'));
+  const input = join(recovered, 'source.json'); bodyPath = join(recovered, 'body.glb');
+  writeFileSync(input, JSON.stringify(rigid));
+  execFileSync('python3', ['tools/blender/run.py', 'tools/assets/skin-crowd-surface.py', input, bodyPath], { stdio: 'pipe' });
+}
 let body: Surface = rigid, fit: Record<string, unknown> = { body: 'rigid parts welded by position' };
 if (bodyPath) {
   const doc = await io.read(bodyPath);
@@ -125,12 +151,16 @@ if (bodyPath) {
   body = { pos: best!.pos, uv: uvs, owner, tris };
   fit = { body: bodyPath, scale, yaw: best!.yaw, meanDistanceToRigidSurface: best!.error };
 }
+if (recovered) { fit.body = 'automatic 512-cell voxel union of closed source partitions'; rmSync(recovered, { recursive: true, force: true }); }
+
+const used = [...new Set(body.tris)], remap = new Map(used.map((v, i) => [v, i]));
+body = { pos: used.flatMap(i => body.pos.slice(i * 3, i * 3 + 3)), uv: used.flatMap(i => body.uv.slice(i * 2, i * 2 + 2)), owner: used.map(i => body.owner[i]), tris: body.tris.map(i => remap.get(i)!) };
 
 // ---- weld, graph --------------------------------------------------------------------------------
 const n = body.pos.length / 3, weldOf = new Int32Array(n), keys = new Map<string, number>();
 let welded = 0;
 for (let i = 0; i < n; i++) {
-  const key = `${Math.round(body.pos[i * 3] / 2e-4)},${Math.round(body.pos[i * 3 + 1] / 2e-4)},${Math.round(body.pos[i * 3 + 2] / 2e-4)}`;
+  const key = `${Math.round(body.pos[i * 3] / (bodyPath ? 1e-6 : 2e-4))},${Math.round(body.pos[i * 3 + 1] / (bodyPath ? 1e-6 : 2e-4))},${Math.round(body.pos[i * 3 + 2] / (bodyPath ? 1e-6 : 2e-4))}`;
   let w = keys.get(key); if (w === undefined) { w = welded++; keys.set(key, w); } weldOf[i] = w;
 }
 const wpos = new Float64Array(welded * 3), owners: Map<number, number>[] = Array.from({ length: welded }, () => new Map());
@@ -223,10 +253,23 @@ for (let t = 0; t < body.tris.length; t += 3) {
 // ---- output document --------------------------------------------------------------------------------
 const out = new Document(); out.createBuffer();
 const copy = new Map<GNode, GNode>();
-const clone = (node: GNode): GNode | null => {
-  if (node.getMesh() && !node.getName().startsWith('stump_')) return null; // stump_* stay as hidden empty nodes (required node contract)
-  const c = out.createNode(node.getName()).setTranslation(node.getTranslation()).setRotation(node.getRotation()).setScale(node.getScale()).setExtras({ ...node.getExtras() });
-  copy.set(node, c); for (const child of node.listChildren()) { const cc = clone(child); if (cc) c.addChild(cc); } return c;
+const capMaterial = out.createMaterial('pal_blood').setBaseColorFactor([.4508, .006, .0137, 1]).setMetallicFactor(0).setRoughnessFactor(1);
+const clone = (node: GNode, cap = false): GNode | null => {
+  cap ||= node.getName().startsWith('stump_');
+  if (node.getMesh() && !cap) return null;
+  const c = out.createNode(node.getName()).setTranslation(node.getTranslation()).setRotation(node.getRotation()).setScale(node.getScale()).setExtras({ ...node.getExtras(), ...(node.getName().startsWith('stump_') ? { hidden: true } : {}) });
+  copy.set(node, c);
+  if (cap && node.getMesh()) {
+    const mesh = out.createMesh(node.getName());
+    for (const source of node.getMesh()!.listPrimitives()) {
+      const primitive = out.createPrimitive().setMaterial(capMaterial);
+      for (const semantic of ['POSITION', 'NORMAL']) { const a = source.getAttribute(semantic); if (a) primitive.setAttribute(semantic, out.createAccessor().setType(a.getType()).setArray(a.getArray()!.slice()).setNormalized(a.getNormalized())); }
+      const index = source.getIndices(); if (index) primitive.setIndices(out.createAccessor().setType('SCALAR').setArray(index.getArray()!.slice()));
+      mesh.addPrimitive(primitive);
+    }
+    c.setMesh(mesh);
+  }
+  for (const child of node.listChildren()) { const cc = clone(child, cap); if (cc) c.addChild(cc); } return c;
 };
 const scene = out.createScene('scene');
 for (const top of sceneRoot.listChildren()) { const c = clone(top); if (c) scene.addChild(c); }
@@ -235,7 +278,7 @@ const inverseBinds = new Float32Array(JOINTS.length * 16);
 JOINTS.forEach((name, i) => new Matrix4().fromArray(jointNode.get(name)!.getWorldMatrix()).invert().toArray(inverseBinds, i * 16));
 const skin = out.createSkin('crowd_skin').setSkeleton(outJoints[0]).setInverseBindMatrices(out.createAccessor().setType('MAT4').setArray(inverseBinds));
 for (const j of outJoints) skin.addJoint(j);
-const material = out.createMaterial('atlas_body').setBaseColorFactor([1, 1, 1, 1]).setMetallicFactor(0).setRoughnessFactor(1);
+const material = out.createMaterial('tex_baseColor').setBaseColorFactor([1, 1, 1, 1]).setMetallicFactor(0).setRoughnessFactor(1);
 let image: Uint8Array | undefined = texturePath ? readFileSync(texturePath) : texture?.image;
 let mime = texturePath ? (texturePath.endsWith('.webp') ? 'image/webp' : texturePath.endsWith('.png') ? 'image/png' : 'image/jpeg') : texture?.mime;
 const textureMax = arg('--texture-max');
@@ -246,6 +289,7 @@ if (image && textureMax) {
   execFileSync('sips', ['-Z', textureMax, '-s', 'format', 'jpeg', '-s', 'formatOptions', '88', input, '--out', output], { stdio: 'ignore' });
   image = readFileSync(output); mime = 'image/jpeg'; rmSync(dir, { recursive: true });
 }
+if (mime === 'image/ktx2') out.createExtension((await import('@gltf-transform/extensions')).KHRTextureBasisu).setRequired(true);
 if (image) material.setBaseColorTexture(out.createTexture('atlas').setImage(new Uint8Array(image)).setMimeType(mime!));
 const prim = out.createPrimitive().setMaterial(material);
 const positions = new Float32Array(n * 3), normals = new Float32Array(n * 3), uvs = new Float32Array(n * 2), J = new Uint16Array(n * 4), W = new Float32Array(n * 4);
@@ -258,6 +302,22 @@ for (let i = 0; i < n; i++) {
   uvs[i * 2] = body.uv[i * 2]; uvs[i * 2 + 1] = body.uv[i * 2 + 1];
   for (let k = 0; k < 4; k++) { J[i * 4 + k] = joints4[w * 4 + k]; W[i * 4 + k] = weights4[w * 4 + k]; }
 }
+if (args.includes('--healthy') && texture && texture.mime !== 'image/ktx2') {
+  const directory = mkdtempSync(join(tmpdir(), 'crowd-skin-region-')), input = join(directory, 'image.' + texture.mime.split('/')[1]), output = join(directory, 'image.png');
+  writeFileSync(input, texture.image); execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' });
+  const png = PNG.sync.read(readFileSync(output)), regions = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const part = JOINTS[body.owner[i]];
+    if (/^hand[LR]$/.test(part)) { regions[i] = 1; continue; }
+    if (part !== 'head') continue;
+    const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), y = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height))), offset = (y * png.width + x) * 4;
+    const r = png.data[offset], g = png.data[offset + 1], b = png.data[offset + 2];
+    // Healthy skin paint is warm and moderately saturated; dark/auburn hair, neutral frames and red wounds stay authored.
+    regions[i] = Number(r > 48 && g / Math.max(1, r) > .5 && g / Math.max(1, r) < .96 && b < r * 1.05);
+  }
+  prim.setAttribute('_CROWD_REGION', out.createAccessor().setType('SCALAR').setArray(regions));
+  rmSync(directory, { recursive: true, force: true });
+}
 prim.setAttribute('POSITION', out.createAccessor().setType('VEC3').setArray(positions));
 prim.setAttribute('NORMAL', out.createAccessor().setType('VEC3').setArray(normals));
 prim.setAttribute('TEXCOORD_0', out.createAccessor().setType('VEC2').setArray(uvs));
@@ -266,31 +326,90 @@ prim.setAttribute('WEIGHTS_0', out.createAccessor().setType('VEC4').setArray(W))
 prim.setIndices(out.createAccessor().setType('SCALAR').setArray(n > 65535 ? new Uint32Array(body.tris) : new Uint16Array(body.tris)));
 const bodyMesh = out.createMesh('skin_body').addPrimitive(prim);
 scene.addChild(out.createNode('skin_body').setMesh(bodyMesh).setSkin(skin));
+if (!eyes.length) {
+  // Healthy-source bodies need dormant eye discs too: CivilianMaterial reveals them only as infection takes hold.
+  const head = JOINTS.indexOf('head'), inverse = world(jointNode.get('head')!).invert(), rest = inverse.clone().invert();
+  const local: Vector3[] = []; for (let i = 0; i < body.owner.length; i++) if (body.owner[i] === head) local.push(new Vector3().fromArray(body.pos, i * 3).applyMatrix4(inverse));
+  if (local.length) {
+    const lo = new Vector3(Infinity, Infinity, Infinity), hi = new Vector3(-Infinity, -Infinity, -Infinity);
+    for (const p of local) { lo.min(p); hi.max(p); }
+    const a = new Vector3(), b = new Vector3(), c = new Vector3(), hit = new Vector3();
+    for (const side of [-1, 1]) {
+      const y = lo.y + (hi.y - lo.y) * .61, z = (lo.z + hi.z) / 2 + side * (hi.z - lo.z) * .19;
+      const ray = new Ray(new Vector3(hi.x + 1, y, z), new Vector3(-1, 0, 0)); let x = -Infinity;
+      for (let t = 0; t < body.tris.length; t += 3) {
+        const ids = body.tris.slice(t, t + 3); if (!ids.some(i => body.owner[i] === head)) continue;
+        [a, b, c].forEach((p, k) => p.fromArray(body.pos, ids[k] * 3).applyMatrix4(inverse));
+        if (ray.intersectTriangle(a, b, c, false, hit)) x = Math.max(x, hit.x);
+      }
+      if (!Number.isFinite(x)) continue;
+      const pos: number[] = [], radius = Math.min(.012, (hi.y - lo.y) * .025);
+      for (const [dy, dz] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) new Vector3(x + .001, y + dy * radius, z + dz * radius).applyMatrix4(rest).toArray(pos, pos.length);
+      eyes.push({ pos, uv: [0, 0, 0, 1, 1, 1, 1, 0], owner: head, tris: [0, 1, 2, 0, 2, 3] });
+    }
+  }
+}
 if (eyes.length) {
   // Infected eye discs: rigid on the head, emissive by material name (bakeInfected's emi_ rule).
-  const eyeMaterial = out.createMaterial('emi_eye').setBaseColorFactor([1, .23, .18, 1]).setMetallicFactor(0).setRoughnessFactor(1);
-  // The game's radial eye-disc shader is not on main: shrink each disc's square quad to its inner 40 %.
-  const pos: number[] = [], tris: number[] = [];
-  for (const e of eyes) {
-    const base = pos.length / 3, k = e.pos.length / 3, centre = [0, 1, 2].map(c => e.pos.filter((_, i) => i % 3 === c).reduce((x, y) => x + y, 0) / k);
-    for (let i = 0; i < e.pos.length; i++) pos.push(centre[i % 3] + (e.pos[i] - centre[i % 3]) * .4);
-    tris.push(...e.tris.map(t => t + base));
-  }
+  const eyeMaterial = capMaterial;
+  const pos: number[] = [], tris: number[] = [], eyeUV: number[] = [];
+  for (const e of eyes) { const base = pos.length / 3; pos.push(...e.pos); eyeUV.push(...e.uv); tris.push(...e.tris.map(t => t + base)); }
   const count = pos.length / 3, eyeNormals = new Float32Array(count * 3), j = new Uint16Array(count * 4), wt = new Float32Array(count * 4);
   for (let i = 0; i < count; i++) { j[i * 4] = eyes[0].owner; wt[i * 4] = 1; eyeNormals[i * 3] = 1; }
   const ep = out.createPrimitive().setMaterial(eyeMaterial)
     .setAttribute('POSITION', out.createAccessor().setType('VEC3').setArray(new Float32Array(pos)))
     .setAttribute('NORMAL', out.createAccessor().setType('VEC3').setArray(eyeNormals))
-    .setAttribute('TEXCOORD_0', out.createAccessor().setType('VEC2').setArray(new Float32Array(count * 2)))
+    .setAttribute('TEXCOORD_0', out.createAccessor().setType('VEC2').setArray(new Float32Array(eyeUV)))
     .setAttribute('JOINTS_0', out.createAccessor().setType('VEC4').setArray(j))
     .setAttribute('WEIGHTS_0', out.createAccessor().setType('VEC4').setArray(wt))
     .setIndices(out.createAccessor().setType('SCALAR').setArray(new Uint16Array(tris)));
-  scene.addChild(out.createNode('skin_eyes').setMesh(out.createMesh('skin_eyes').addPrimitive(ep)).setSkin(skin));
+  scene.addChild(out.createNode('skin_eyes').setExtras({ crowdEye: true }).setMesh(out.createMesh('skin_eyes').addPrimitive(ep)).setSkin(skin));
 }
-for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true });
+for (const source of rig.getRoot().listAnimations()) {
+  const animation = out.createAnimation(source.getName());
+  for (const channel of source.listChannels()) {
+    const target = copy.get(channel.getTargetNode()!); if (!target) continue;
+    const sourceSampler = channel.getSampler()!, input = sourceSampler.getInput()!, output = sourceSampler.getOutput()!;
+    const sampler = out.createAnimationSampler().setInterpolation(sourceSampler.getInterpolation())
+      .setInput(out.createAccessor().setType(input.getType()).setArray(input.getArray()!.slice()))
+      .setOutput(out.createAccessor().setType(output.getType()).setArray(output.getArray()!.slice()));
+    animation.addSampler(sampler).addChannel(out.createAnimationChannel().setTargetNode(target).setTargetPath(channel.getTargetPath()!).setSampler(sampler));
+  }
+}
+let spectacleTop: number | undefined;
+if (args.includes('--spectacles') && texture && texture.mime !== 'image/ktx2') {
+  const directory = mkdtempSync(join(tmpdir(), 'crowd-spectacles-')), input = join(directory, 'image.' + texture.mime.split('/')[1]), output = join(directory, 'image.png');
+  writeFileSync(input, texture.image); execFileSync('sips', ['-s', 'format', 'png', input, '--out', output], { stdio: 'ignore' });
+  const png = PNG.sync.read(readFileSync(output)), inverse = world(jointNode.get('head')!).invert(), head = JOINTS.indexOf('head');
+  const vertices = body.owner.flatMap((owner, i) => owner === head ? [{ i, point: new Vector3().fromArray(body.pos, i * 3).applyMatrix4(inverse) }] : []);
+  const lo = new Vector3(Infinity, Infinity, Infinity), hi = new Vector3(-Infinity, -Infinity, -Infinity);
+  for (const { point } of vertices) { lo.min(point); hi.max(point); }
+  const samples = vertices.filter(({ i, point }) => {
+    const y = (point.y - lo.y) / (hi.y - lo.y), z = Math.abs(point.z - (lo.z + hi.z) / 2) / (hi.z - lo.z);
+    if (y < .45 || y > .78 || z < .25 || point.x < (lo.x + hi.x) / 2) return false;
+    const x = Math.max(0, Math.min(png.width - 1, Math.floor(body.uv[i * 2] * png.width))), row = Math.max(0, Math.min(png.height - 1, Math.floor(body.uv[i * 2 + 1] * png.height)));
+    const rgb = [...png.data.subarray((row * png.width + x) * 4, (row * png.width + x) * 4 + 3)];
+    return Math.max(...rgb) < 70 && Math.max(...rgb) - Math.min(...rgb) < 22;
+  });
+  if (samples.length >= 4) spectacleTop = Math.max(...samples.map(({ point }) => point.y));
+  rmSync(directory, { recursive: true, force: true });
+}
+const soleBounds = (name: string) => {
+  const part = JOINTS.indexOf(name); if (part < 0) return undefined;
+  const inverse = world(jointNode.get(name)!).invert(), lo = new Vector3(Infinity, Infinity, Infinity), hi = new Vector3(-Infinity, -Infinity, -Infinity), point = new Vector3();
+  for (let i = 0; i < body.owner.length; i++) if (body.owner[i] === part) { point.fromArray(body.pos, i * 3).applyMatrix4(inverse); lo.min(point); hi.max(point); }
+  return Number.isFinite(lo.x) ? [...lo.toArray(), ...hi.toArray()] : undefined;
+};
+const soleBoxes = ['footL', 'footR'].map(soleBounds);
+const animalSoles = Object.fromEntries(['FL', 'FR', 'BL', 'BR'].flatMap(side => {
+  const name = JOINTS.includes(`paw${side}`) ? `paw${side}` : `leg${side}`, box = soleBounds(name);
+  return box ? [[name, [box[0], box[3]].flatMap(x => [box[2], box[5]].map(z => [x, box[1], z]))]] : [];
+}));
+for (const node of out.getRoot().listNodes()) if (node.getName() === 'root') node.setExtras({ ...node.getExtras(), skinnedCrowd: true, crowdAtlas: true, ...(spectacleTop !== undefined ? { spectacleTop } : {}), ...(soleBoxes.every(Boolean) ? { meshSoles: true, soleBounds: soleBoxes } : {}), ...(quadruped ? { animalSoles } : {}) });
+if (bodyPath && (openEdges > 0 || components !== 1)) throw new Error(`Continuous source must remain closed and connected: ${components} components, ${openEdges} open edges`);
 const bytes = await io.writeBinary(out);
 writeFileSync(outPath, bytes);
-const report = { rig: rigPath, out: outPath, bytes: bytes.length, ...fit, vertices: n, weldedVertices: welded, triangles: body.tris.length / 3, components, openEdges, unrelatedSeams, maxInfluences, zeroNormals, joints: JOINTS.length, eyes: eyes.length, seams };
+const report = { rig: rigPath, out: outPath, bytes: bytes.length, ...fit, vertices: n, weldedVertices: welded, triangles: body.tris.length / 3, components, openEdges, unrelatedSeams, maxInfluences, zeroNormals, jointNames: JOINTS, rigKind: quadruped ? 'quadruped' : 'humanoid', removedClosureTriangles, removedDegenerateTriangles, spectacleTop, joints: JOINTS.length, eyes: eyes.length, seams };
 if (reportPath) writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify(report));
 

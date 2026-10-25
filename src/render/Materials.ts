@@ -1,6 +1,6 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side, type Texture, type WebGPURenderer } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -18,7 +18,7 @@ export class Materials {
   private readonly nearestCache = new Map<string, number>();
   private readonly swatches = paletteTokens.map(token => new Color(palette[token]));
   private readonly owned: PaletteMaterial[] = [];
-  constructor(private readonly lighting: Lighting) {
+  constructor(private readonly lighting: Lighting, readonly renderer?: WebGPURenderer) {
     this.wind = lighting.clock;
     const data = new Uint8Array(paletteTokens.length * 8);
     const sheets: Partial<Record<PaletteToken, string>>[] = [{}, worldPalette];

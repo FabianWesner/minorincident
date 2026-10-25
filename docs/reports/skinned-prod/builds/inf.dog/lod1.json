@@ -1,0 +1,113 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/lod1.glb",
+  "out": "docs/reports/skinned-prod/builds/inf.dog/lod1.raw.glb",
+  "bytes": 221868,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/source/flat-lod1.glb",
+  "scale": 1.1951902011330642,
+  "yaw": 90,
+  "meanDistanceToRigidSurface": 0.0032468850486179666,
+  "vertices": 1448,
+  "weldedVertices": 662,
+  "triangles": 1320,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 322,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR",
+    "body",
+    "neck",
+    "jaw",
+    "tail",
+    "legFL",
+    "legFR",
+    "legBL",
+    "legBR",
+    "pawFL",
+    "pawFR",
+    "pawBL",
+    "pawBR"
+  ],
+  "rigKind": "quadruped",
+  "removedClosureTriangles": 0,
+  "joints": 28,
+  "eyes": 2,
+  "seams": {
+    "shinL/legBL": {
+      "seamVertices": 21,
+      "band": 0.045858011950105866,
+      "blended": 20
+    },
+    "neck/body": {
+      "seamVertices": 34,
+      "band": 0.05002692212738822,
+      "blended": 36
+    },
+    "shinR/legBR": {
+      "seamVertices": 29,
+      "band": 0.045858011950105866,
+      "blended": 27
+    },
+    "pawBR/shinR": {
+      "seamVertices": 20,
+      "band": 0.029182371240976463,
+      "blended": 14
+    },
+    "jaw/head": {
+      "seamVertices": 39,
+      "band": 0.02084455088641176,
+      "blended": 12
+    },
+    "pawFL/foreArmL": {
+      "seamVertices": 20,
+      "band": 0.029182371240976463,
+      "blended": 16
+    },
+    "tail/body": {
+      "seamVertices": 21,
+      "band": 0.029182371240976463,
+      "blended": 17
+    },
+    "foreArmR/legFR": {
+      "seamVertices": 21,
+      "band": 0.04168910177282352,
+      "blended": 19
+    },
+    "head/neck": {
+      "seamVertices": 32,
+      "band": 0.029182371240976463,
+      "blended": 23
+    },
+    "pawBL/shinL": {
+      "seamVertices": 14,
+      "band": 0.029182371240976463,
+      "blended": 12
+    },
+    "foreArmL/legFL": {
+      "seamVertices": 17,
+      "band": 0.04168910177282352,
+      "blended": 17
+    },
+    "pawFR/foreArmR": {
+      "seamVertices": 14,
+      "band": 0.029182371240976463,
+      "blended": 13
+    }
+  }
+}

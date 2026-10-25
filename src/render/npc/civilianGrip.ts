@@ -60,14 +60,14 @@ function subdivideHand(geometry: BufferGeometry, handPart: number): void {
   });
 }
 
-export function prepareGrip(geometry: BufferGeometry, handPart: number): void {
-  subdivideHand(geometry, handPart);
+export function prepareGrip(geometry: BufferGeometry, handPart: number, binds?: Float32Array): void {
+  if (!binds) subdivideHand(geometry, handPart);
   const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_part_index'), skin = geometry.getAttribute('_shirt');
-  const values = new Float32Array(positions.count * 3), point = new Vector3();
+  const values = new Float32Array(positions.count * 3), point = new Vector3(), inverse = binds ? new Matrix4().fromArray(binds, handPart * 16) : undefined, rest = inverse?.clone().invert();
   for (let i = 0; i < positions.count; i++) {
     point.fromBufferAttribute(positions, i);
     const hand = parts.getX(i) === handPart && skin.getX(i) < 0;
-    if (hand) gripPoint(point);
+    if (hand) { if (inverse) point.applyMatrix4(inverse); gripPoint(point); if (rest) point.applyMatrix4(rest); }
     point.toArray(values, i * 3);
   }
   geometry.setAttribute('_gripPosition', new BufferAttribute(values, 3));

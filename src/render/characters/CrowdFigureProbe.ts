@@ -23,6 +23,11 @@ export class CrowdFigureProbe {
   /** Probe actual paw/hoof geometry, never the animal rig's dummy humanoid feet. */
   animal(model: Object3D): void {
     model.updateMatrixWorld(true);
+    const declared = model.getObjectByName('root')?.userData.animalSoles as Record<string, number[][]> | undefined;
+    if (declared) {
+      this.animalSoles = Object.entries(declared).map(([part, points]) => ({ part, heel: new Vector3().fromArray(points[0]), toe: new Vector3().fromArray(points.at(-1)!) }));
+      return;
+    }
     this.animalSoles = ['FL', 'FR', 'BL', 'BR'].flatMap(side => {
       const part = model.getObjectByName(`paw${side}`) ?? model.getObjectByName(`leg${side}`);
       if (!part) return [];

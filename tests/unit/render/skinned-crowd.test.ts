@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BufferAttribute, Matrix4, Quaternion, Vector3 } from 'three';
-import { packSkin, premultiplyRow, restInverses, skinnedCrowdManifest, skinnedVertexMatrix } from '../../../src/render/characters/skinnedCrowd';
-import type { AssetDef } from '../../../src/assets/types';
+import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../../src/render/characters/skinnedCrowd';
+import manifest from '../../../src/assets/manifest.json';
 
 const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
 
@@ -35,12 +35,12 @@ describe('skinned-crowd prototype', () => {
     const blended = a.toArray().map((v, i) => v * .75 + b.elements[i] * .25);
     expect([...out].map(v => +v.toFixed(5))).toEqual(blended.map(v => +v.toFixed(5)));
   });
-  it('only redirects the two prototype archetypes, to textured skinned LODs', () => {
-    const manifest = [{ id: 'inf.common-worker', glb: 'x.glb', lods: {}, dimensions: { x: 1, y: 1, z: 1, tolerance: .1 } }, { id: 'inf.jogger', glb: 'j.glb' }] as unknown as AssetDef[];
-    const [worker, jogger] = skinnedCrowdManifest(manifest);
+  it('converted archetypes select the production skin directly while unconverted figures retain their rigid models', () => {
+    const worker = manifest.find(def => def.id === 'inf.common-worker')!;
+    const woman = manifest.find(def => def.id === 'npc.civilian-woman-a')!;
+    const jogger = manifest.find(def => def.id === 'inf.jogger')!;
     expect(worker.glb).toBe('public/assets/models/skinned/inf.common-worker.lod0.glb');
-    expect(worker.lods?.lod2).toBe('public/assets/models/skinned/inf.common-worker.lod2.glb');
-    expect(worker.textureMode).toBe('baseColor');
-    expect(jogger).toBe(manifest[1]);
+    expect(woman.glb).toBe('public/assets/models/skinned/npc.civilian-woman-a.lod0.glb');
+    expect(jogger.glb).not.toContain('/skinned/');
   });
 });

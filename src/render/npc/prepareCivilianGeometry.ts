@@ -1,4 +1,4 @@
-import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Color, type Group } from 'three';
+import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Color, Matrix4, Vector3, type Group } from 'three';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { bakeInfected, civilianClips } from '../characters/bakeInfected';
 import { simplifyCrowdLod } from '../characters/crowdLodGeometry';
@@ -44,7 +44,7 @@ export function prepareCivilianRig(model: Group, id: string, placeholder = false
 /** The worker and fallback prepare the same immutable CPU geometry and vertex layout. */
 export async function prepareCivilianGeometry(model: Group, modelId: string, distant: boolean, placeholder = false): Promise<PreparedCivilian> {
   const baked = bakeInfected(model, [], false, civilianClips);
-    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
+    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'), baked.clip.binds);
     const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
@@ -79,10 +79,11 @@ export async function prepareCivilianGeometry(model: Group, modelId: string, dis
     // The closed uniform of the distant guard keeps its existing reduction; retaining
     // its tiny folds adds 17,496 triangles to low L5. Near guards keep the full surface.
     const retainSurface = !distant || modelId !== 'npc.national-guard';
-    if (!placeholder) await simplifyCrowdLod(baked.geometry, distant ? .01 : .005, distant ? .3 : .5, retainSurface, .98);
+    if (!placeholder && !baked.clip.binds) await simplifyCrowdLod(baked.geometry, distant ? .01 : .005, distant ? .3 : .5, retainSurface, .98);
   const grip = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
+  if (baked.clip.binds) { const matrix = new Matrix4().fromArray(baked.clip.binds, baked.clip.parts.indexOf('handR') * 16), point = new Vector3(); for (let i = 0; i < grip.length; i += 3) point.fromArray(grip, i).applyMatrix4(matrix).toArray(grip, i); }
   packCrowdParts(baked.geometry);
-  const names = ['position', 'normal', 'color', '_parts', '_gripPosition'], stride = 16;
+  const names = ['position', 'normal', 'color', '_parts', '_gripPosition', ...(baked.texture ? ['uv'] : []), ...(baked.clip.binds ? ['_skin'] : [])], stride = names.reduce((n, name) => n + baked.geometry.getAttribute(name).itemSize, 0);
   const data = new InterleavedBuffer(new Float32Array(baked.geometry.getAttribute('position').count * stride), stride);
   let offset = 0;
   for (const name of names) {

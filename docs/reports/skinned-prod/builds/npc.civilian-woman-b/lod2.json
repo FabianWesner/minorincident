@@ -1,0 +1,73 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/lod2.glb",
+  "out": "docs/reports/skinned-prod/builds/npc.civilian-woman-b/lod2.raw.glb",
+  "bytes": 199528,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/source/flat-lod2.glb",
+  "scale": 1.787316073380677,
+  "yaw": 90,
+  "meanDistanceToRigidSurface": 0.0028435855531702393,
+  "vertices": 1126,
+  "weldedVertices": 421,
+  "triangles": 854,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 26,
+  "maxInfluences": 4,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "spectacleTop": 0.15035450788757465,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "armR/torso": {
+      "seamVertices": 21,
+      "band": 0.09688694490451946,
+      "blended": 23
+    },
+    "legR/hip": {
+      "seamVertices": 23,
+      "band": 0.09688694490451946,
+      "blended": 25
+    },
+    "head/torso": {
+      "seamVertices": 30,
+      "band": 0.06999989746929718,
+      "blended": 25
+    },
+    "legL/hip": {
+      "seamVertices": 22,
+      "band": 0.09688694490451946,
+      "blended": 22
+    },
+    "torso/hip": {
+      "seamVertices": 47,
+      "band": 0.09688694490451946,
+      "blended": 52
+    },
+    "armL/torso": {
+      "seamVertices": 10,
+      "band": 0.09688694490451946,
+      "blended": 10
+    }
+  }
+}

@@ -1,5 +1,6 @@
 // Adapted from Bruno Simon's ResourcesLoader (MIT): loaders + promise cache.
 import { Box3, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -32,8 +33,9 @@ export class AssetRegistry {
     this.textureTier = this.textureSize === 512 ? 'low' : 'high';
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    if (options.renderer) {
-      this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(options.renderer);
+    const renderer = options.renderer ?? options.materials?.renderer;
+    if (renderer) {
+      this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
       gltf.setKTX2Loader(this.ktx);
     }
     this.load = options.load ?? (async (url) => {
@@ -55,7 +57,7 @@ export class AssetRegistry {
     const key = `${id}:corpse:${decay ?? ''}`;
     let pending = this.cache.get(key);
     if (!pending) { pending = this.prototype(def, 'lod0', decay, def.corpseGlb); this.cache.set(key, pending); }
-    return (await pending).clone(true);
+    const prototype = await pending; return def.crowdSkin ? cloneSkeleton(prototype) : prototype.clone(true);
   }
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
     const def = this.definition(id); id = def.id;
@@ -69,7 +71,7 @@ export class AssetRegistry {
     if (!pending) {
       pending = this.prototype(def, lod, decay, quality === 'low' ? def.lowGlb : undefined); this.cache.set(key, pending);
     }
-    return (await pending).clone(true);
+    const prototype = await pending; return def.crowdSkin ? cloneSkeleton(prototype) : prototype.clone(true);
   }
   private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string, lowGlb?: string): Promise<Object3D> {
     const fallback = (reason: string): Group => {

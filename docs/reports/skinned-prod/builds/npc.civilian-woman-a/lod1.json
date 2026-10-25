@@ -1,0 +1,107 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/lod1.glb",
+  "out": "docs/reports/skinned-prod/builds/npc.civilian-woman-a/lod1.raw.glb",
+  "bytes": 451468,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-a/source/flat-lod1.glb",
+  "scale": 2.058812228327142,
+  "yaw": 135,
+  "meanDistanceToRigidSurface": 0.003561671404479333,
+  "vertices": 3636,
+  "weldedVertices": 1121,
+  "triangles": 2486,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 276,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "footR/shinR": {
+      "seamVertices": 20,
+      "band": 0.06458206508774365,
+      "blended": 20
+    },
+    "torso/hip": {
+      "seamVertices": 95,
+      "band": 0.06999996760000779,
+      "blended": 113
+    },
+    "head/torso": {
+      "seamVertices": 105,
+      "band": 0.06458206508774365,
+      "blended": 122
+    },
+    "footL/shinL": {
+      "seamVertices": 22,
+      "band": 0.06458206508774365,
+      "blended": 21
+    },
+    "legR/hip": {
+      "seamVertices": 50,
+      "band": 0.06999996760000779,
+      "blended": 63
+    },
+    "foreArmL/armL": {
+      "seamVertices": 7,
+      "band": 0.06458206508774365,
+      "blended": 7
+    },
+    "shinL/legL": {
+      "seamVertices": 11,
+      "band": 0.06458206508774365,
+      "blended": 11
+    },
+    "handR/foreArmR": {
+      "seamVertices": 14,
+      "band": 0.05999997222857809,
+      "blended": 13
+    },
+    "legL/hip": {
+      "seamVertices": 18,
+      "band": 0.06999996760000779,
+      "blended": 16
+    },
+    "shinR/legR": {
+      "seamVertices": 11,
+      "band": 0.06458206508774365,
+      "blended": 11
+    },
+    "armL/torso": {
+      "seamVertices": 13,
+      "band": 0.06458206508774365,
+      "blended": 13
+    },
+    "handL/foreArmL": {
+      "seamVertices": 11,
+      "band": 0.05999997222857809,
+      "blended": 9
+    },
+    "armR/torso": {
+      "seamVertices": 19,
+      "band": 0.06458206508774365,
+      "blended": 24
+    }
+  }
+}

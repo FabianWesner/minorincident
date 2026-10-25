@@ -1,6 +1,6 @@
 import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
-import { Box3, Vector3 } from 'three';
+import { Box3, Vector3, Mesh, Texture, type MeshStandardMaterial } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test, vi } from 'vitest';
@@ -14,14 +14,25 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 
 async function model(path: string) {
   const bytes = readFileSync(path);
-  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '')).scene;
+  const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
+  const def = manifest.find(d => d.glb === path || d.lods?.lod2 === path);
+  if (def?.textureMode) {
+    const json = JSON.parse(bytes.toString('utf8', 20, 20 + bytes.readUInt32LE(12))), atlas = new Texture(); atlas.image = { width: 1, height: 1 } as never;
+    gltf.scene.userData.assetTextureMode = def.textureMode;
+    gltf.scene.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      const index = gltf.parser.associations.get(material)?.materials;
+      if (index !== undefined && json.materials[index]?.pbrMetallicRoughness?.baseColorTexture) (material as MeshStandardMaterial).map = atlas;
+    } });
+  }
+  return gltf.scene;
 }
 for (const low of [true, false]) for (const asset of regularInfectedModels) {
-  test(`PO #85 @E32 @E07 ${asset} ${low ? 'low' : 'high'} chooses a closed corpse mesh instead of the living LOD`, async () => {
+  test(`PO #85 @E32 @E07 ${asset} ${low ? 'low' : 'high'} retains the complete corpse surface, weighted skins or closed rigid shells`, async () => {
     const world = new SimWorld(), crowd = new CrowdView(world, low); world.scenario = 'L10';
     const definition = manifest.find(d => d.id === asset)!;
-    expect(definition.corpseGlb).toBe(`public/assets/models/${asset}.corpse.glb`);
-    const corpseModel = await model(definition.corpseGlb!);
+    const skin = 'crowdSkin' in definition && definition.crowdSkin;
+    if (!skin) expect(definition.corpseGlb).toBe(`public/assets/models/${asset}.corpse.glb`);
+    const corpseModel = await model(definition.corpseGlb ?? definition.lods!.lod2!);
     expect(corpseModel.userData.deliveryLodGenerated).not.toBe(true);
     const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockResolvedValue(await model(definition.lods!.lod2!));
     const loadCorpse = vi.spyOn(AssetRegistry.prototype, 'loadCorpse').mockResolvedValue(corpseModel);
@@ -32,7 +43,8 @@ for (const low of [true, false]) for (const asset of regularInfectedModels) {
       expect(prepare).toHaveBeenCalledTimes(3);
       expect(prepare.mock.calls.map(call => call[0])).toEqual(['death-back', 'death-side', 'death-crumple'].map(pose => `infected.runner:${pose}:0`));
       const geometry = prepare.mock.calls[0][1], clip = prepare.mock.calls[0][3];
-      expect(geometry.userData).toMatchObject({ crowdLod: 'lod2', corpseSource: definition.corpseGlb });
+      expect(geometry.userData).toMatchObject({ crowdLod: 'lod2', corpseSource: definition.corpseGlb ?? definition.lods!.lod2 });
+      if (skin) { expect(clip.binds).toBeDefined(); expect(geometry.hasAttribute('_skin')).toBe(true); }
       expect(geometry.index!.count / 3).toBeLessThanOrEqual(2000);
       const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts');
       const index = geometry.index!, bounds = new Map<number, Box3>(), point = new Vector3();
@@ -40,9 +52,10 @@ for (const low of [true, false]) for (const asset of regularInfectedModels) {
         const owner = parts.getX(index.getX(i));
         for (let j = 0; j < 3; j++) {
           const vertex = index.getX(i + j);
-          expect(parts.getX(vertex)).toBe(owner);
-          if (!bounds.has(owner)) bounds.set(owner, new Box3());
-          bounds.get(owner)!.expandByPoint(point.fromBufferAttribute(positions, vertex));
+          if (!skin) expect(parts.getX(vertex)).toBe(owner);
+          const part = parts.getX(vertex);
+          if (!bounds.has(part)) bounds.set(part, new Box3());
+          bounds.get(part)!.expandByPoint(point.fromBufferAttribute(positions, vertex));
         }
       }
       // Every major anatomical part survives the offline reduction. This catches

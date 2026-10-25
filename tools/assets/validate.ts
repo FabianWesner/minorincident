@@ -72,6 +72,19 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
+  const weighted = new Set<Node>();
+  for (const skin of root.listSkins()) {
+    const joints = skin.listJoints();
+    for (const node of nodes.filter(n => n.getSkin() === skin)) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      const ids = primitive.getAttribute('JOINTS_0'), weights = primitive.getAttribute('WEIGHTS_0');
+      if (!ids || !weights) { errors.push(`skin ${skin.getName()}: missing joint/weight attributes`); continue; }
+      for (let i = 0; i < ids.getCount(); i++) {
+        const js = ids.getElement(i, []), ws = weights.getElement(i, []);
+        if (Math.abs(ws.reduce((a, b) => a + b, 0) - 1) > .0001) errors.push(`skin ${skin.getName()}: weights must sum to one`);
+        for (let k = 0; k < 4; k++) if (ws[k] > 0) { if (!joints[js[k]]) errors.push(`skin ${skin.getName()}: joint out of range`); else for (let joint: Node | null = joints[js[k]]; joint; joint = joint.getParentNode()) weighted.add(joint); }
+      }
+    }
+  }
   const bounds = root.listScenes()[0] ? visibleBounds(root.listScenes()[0]) : { min: [0, 0, 0], max: [0, 0, 0] };
   const dimensions = bounds.max.map((v, i) => v - bounds.min[i]);
   for (const [i, axis] of ['x', 'y', 'z'].entries()) {
@@ -85,7 +98,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   if (source) for (const name of semanticNodeNames(source)) {
     const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
-    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh()) && !weighted.has(packed) && !(lod > 0 && def.lodOptionalGeometryNodes?.includes(name))) errors.push(`node ${name}: lost source geometry`);
     if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
   }
   for (const name of def.animatedNodes) {
@@ -93,7 +106,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     const original = source?.getRoot().listNodes().find(node => node.getName() === name);
     // Amputees retain empty animation pivots; packing must preserve the source geometry contract.
     const originallyEmpty = original && !descendants(original).some(node => node.getMesh());
-    if (node && !originallyEmpty && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
+    if (node && !originallyEmpty && !weighted.has(node) && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
   }
   if (source) for (const animation of source.getRoot().listAnimations()) {
     const packed = root.listAnimations().find(candidate => candidate.getName() === animation.getName());

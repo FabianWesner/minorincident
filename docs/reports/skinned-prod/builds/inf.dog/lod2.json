@@ -1,0 +1,73 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/lod2.glb",
+  "out": "docs/reports/skinned-prod/builds/inf.dog/lod2.raw.glb",
+  "bytes": 167228,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.dog/source/flat-lod2.glb",
+  "scale": 1.2007691766429784,
+  "yaw": 90,
+  "meanDistanceToRigidSurface": 0.006078746075062808,
+  "vertices": 626,
+  "weldedVertices": 266,
+  "triangles": 528,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 262,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR",
+    "body",
+    "neck",
+    "jaw",
+    "tail",
+    "legFL",
+    "legFR",
+    "legBL",
+    "legBR",
+    "pawFL",
+    "pawFR",
+    "pawBL",
+    "pawBR"
+  ],
+  "rigKind": "quadruped",
+  "removedClosureTriangles": 0,
+  "joints": 28,
+  "eyes": 2,
+  "seams": {
+    "tail/body": {
+      "seamVertices": 23,
+      "band": 0.029182371240976463,
+      "blended": 6
+    },
+    "jaw/head": {
+      "seamVertices": 13,
+      "band": 0.02084455088641176,
+      "blended": 0
+    },
+    "head/neck": {
+      "seamVertices": 21,
+      "band": 0.029182371240976463,
+      "blended": 6
+    },
+    "neck/body": {
+      "seamVertices": 20,
+      "band": 0.05002692212738822,
+      "blended": 12
+    }
+  }
+}
