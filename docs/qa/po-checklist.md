@@ -29,3 +29,6 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - L9 bridge collapse: the APC falls whole; no floating wheels, no vanishing hull (Q-136).
 - L9 approach: no giant flat white arrow over the APC (Q-146).
 - L10 Alpha slam telegraph reads as a ground effect, not debug lines (Q-147).
+- Male courier (both survivors are player figures, P1): walk, run, attacks, gear tiers 0-4, L6 headlamp and L10 canister match the heroine's quality; A/B with `npm run qa:ab -- --survivor male` (batch16).
+- Suit zombie crowds read as separate bodies at low quality and zoom 1 (no dark shard mass), and stay visible at night in L10 (Q-179).
+- No gameplay frame over 200 ms at the L10 Mega fight and death (Q-180).
