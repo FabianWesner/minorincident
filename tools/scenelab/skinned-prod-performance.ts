@@ -65,10 +65,11 @@ try {
           const perf = api.perf();
           // Inspect after sampling: identical LOD/quality choices and the actual vertex/bone workload.
           const batches = [...crowd.batches.values()].filter(b => b.count).map(b => {
-            const g = b.mesh.geometry, skin = g.getAttribute('_skin'), vertices = g.getAttribute('position').count;
-            let influences = 0;
+            const g = b.mesh.geometry, skin = g.getAttribute('_skin'), vertices = g.getAttribute('position').count, state = g.getAttribute('_state');
+            let influences = 0, integerFrames = 0;
+            for (let i = 0; i < b.count; i++) if (state.getX(i) % 1 === 0) integerFrames++;
             if (skin) for (let i = 0; i < skin.count; i++) influences += 1 + Number(skin.getY(i) > 0) + Number(skin.getZ(i) > 0) + Number(skin.getW(i) % 1 > 0);
-            return { asset: b.asset, lod: b.lod, instances: b.count, vertices, triangles: (g.index?.count ?? vertices) / 3,
+            return { asset: b.asset, lod: b.lod, instances: b.count, integerFrames, vertices, triangles: (g.index?.count ?? vertices) / 3,
               meanInfluences: skin ? influences / vertices : 1, poseTexture: [b.texture.image.width, b.texture.image.height] };
           });
           return { batches, backend: perf.backend, quality: api.getState().render.quality, count: api.getState().ai?.count, minBodies, maxDraws,
