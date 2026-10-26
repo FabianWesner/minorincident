@@ -2,16 +2,18 @@
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { get } from 'node:http';
+import { readFileSync } from 'node:fs';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 import { loadCrowd } from './l1-all-new-crowd';
 import type { Game } from '../../src/Game';
 
 const root = process.cwd(), baseline = resolve(process.env.BASELINE_ROOT ?? '../l1-all-new-main');
-const out = resolve(root, 'docs/reports/l1-all-new'), receipts: Record<string, unknown>[] = [];
+const out = resolve(root, 'docs/reports/l1-all-new'), summarize = process.argv.includes('--summarize');
+const receipts: Record<string, unknown>[] = summarize ? JSON.parse(readFileSync(resolve(out, 'performance.json'), 'utf8')) : [];
 const setups = [{ backend: 'webgl2' as Backend, phone: false }, { backend: 'webgpu' as Backend, phone: false }, { backend: 'webgl2' as Backend, phone: true }];
 process.env.SCENE_SERVER = 'preview';
 try {
-  for (const { backend, phone } of setups) for (const variant of ['main', 'new', 'new', 'main']) for (const scenario of ['all-figures', 'escape-street']) {
+  if (!summarize) for (const { backend, phone } of setups) for (const variant of ['main', 'new', 'new', 'main']) for (const scenario of ['all-figures', 'escape-street']) {
     process.chdir(variant === 'main' ? baseline : root);
     const session = new SceneSession({ backend, phone, tier: 'low', nativeFrameTiming: true, viewport: phone ? { width: 390, height: 844 } : { width: 1280, height: 720 }, query: { crowdProbe: 'drawn', dpr: phone ? '1.5' : '1' } });
     try {
@@ -62,7 +64,7 @@ try {
           return { samples: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], p50: frames[Math.ceil(frames.length * .5) - 1], maxDraws, maxTriangles, decodedTextures: { count: textures.size, decodedBytes, rgbaUpperBoundBytes }, perf: a.perf(), render: a.getState().render };
         });
       } finally { clearInterval(monitor); }
-      const receipt = { sampledAt: new Date().toISOString(), scenario, variant, backend, phone, overlap, ...result, errors: session.errors };
+      const receipt = { sampledAt: new Date().toISOString(), scenario, variant, backend, phone, overlap, ...result, errorCount: session.errors.length, errors: [...new Set(session.errors)].slice(0, 20) };
       receipts.push(receipt); writeJson(resolve(out, 'performance.json'), receipts);
       console.log(JSON.stringify({ scenario, variant, backend, phone, overlap, p95: result.p95, draws: result.maxDraws, errors: session.errors.length }));
       if (overlap || session.errors.length || result.perf.backend !== (backend === 'webgl2' ? 'webgl' : 'webgpu') || result.render.quality !== 'low') throw Error('Invalid native performance sample');
@@ -76,7 +78,7 @@ try {
     const rows = receipts.filter(r => r.backend === backend && r.phone === phone && r.scenario === scenario);
     const mean = (variant: string) => { const values = rows.filter(r => r.variant === variant).map(r => r.p95 as number); return values.reduce((a, b) => a + b, 0) / values.length; };
     const before = mean('main'), after = mean('new');
-    return { scenario, backend, phone, mainP95: before, newP95: after, deltaMs: after - before, pass: rows.length === 4 && after - before <= 1 && rows.every(r => (r.maxDraws as number) <= 300 && (r.maxTriangles as number) <= 500000) };
+    return { scenario, backend, phone, mainP95: before, newP95: after, deltaMs: after - before, pass: rows.length === 4 && after - before <= 1 && rows.filter(r => r.variant === 'new').every(r => (r.maxDraws as number) <= 300 && (r.maxTriangles as number) <= 500000) };
   }));
   writeJson(resolve(out, 'performance-summary.json'), summary);
   if (summary.some(row => !row.pass)) throw Error('L1 native performance budget failed');

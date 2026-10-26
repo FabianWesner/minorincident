@@ -4,8 +4,8 @@
 - The zero-manual script binds unbound cast/l1 bodies, retains separate gear and shares the coat geometry; [build receipts](builds/).
 - Corgi retains the old detailed rigid teal backpack at each LOD; its atlas, weighted tongue and paw contacts are integrated.
 - [Peds](01-pedestrians.jpg), [clerk](02-npc.depot-clerk.jpg), [tech A](03-npc.lab-tech-a.jpg), [tech B](04-npc.lab-tech-b.jpg), [guard](05-npc.lab-guard.jpg), [firefighter](06-npc.firefighter-alive.jpg), [corgi](07-corgi.jpg), [dogs](08-dogs.jpg): native 120/400 px old/new front/back captures.
-- Review remains open: cap/helmet eye clearance is being corrected; inherited ped texture/face readability still needs assessment in the production crowd.
-- Targeted skin, wound, hat, backpack, tongue and paw regression: 27 passed; typecheck passed before the latest visual adjustment.
+- Review remains open: cap/helmet eye clearance is corrected; final crowd, motion and scene reviews remain.
+- Targeted skin, winding, picking, layout, atlas, backpack, tongue and paw regression: 42 passed; typecheck/lint passed.
 - Captured 30/30 figures together in the L1 street; final before/after sheet and scripted depot/lab/firefighter scenes pending.
 - Native Mac/phone comparison, texture memory, draws and five cold loads: pending.
 - Validator, remote unit+levels, smoke/WebGPU, invariants and full no-skip campaign plus male L1: pending final gates.

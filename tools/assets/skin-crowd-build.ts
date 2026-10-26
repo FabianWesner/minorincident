@@ -15,6 +15,9 @@ import { Matrix4, Vector3 } from 'three';
 const source = resolve(process.argv[2] ?? ''), id = basename(source);
 const authored = existsSync(join(source, 'model.glb'));
 if (!process.argv[2] || !existsSync(join(source, authored ? 'model.glb' : 'lod0.glb'))) throw Error('Usage: skin-crowd-build.sh <cast/<id> directory>');
+// Healthy and infected dogs retain one body, world scale and skeleton. Build the
+// canonical healthy body first, so a single inf.dog invocation is still sufficient.
+if (id === 'inf.dog' && !existsSync(join(source, 'rig.json')) && existsSync(join(source, 'source/manifest.json'))) execFileSync('sh', ['tools/assets/skin-crowd-build.sh', join(dirname(source), 'amb.dog')], { stdio: 'inherit' });
 const castAt = source.lastIndexOf('/cast/'), pipeline = process.env.CROWD_PIPELINE ?? (castAt >= 0 ? source.slice(0, castAt) : join(dirname(dirname(execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim())), 'minorincident_3dpipeline'));
 const basis = join(pipeline, 'vendor/basis-encoder-2.1');
 const manifestPath = 'src/assets/manifest.json', manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as AssetDef[];
@@ -23,7 +26,7 @@ const output = 'public/assets/models/skinned', report = join(process.env.CROWD_R
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;
-const alignment = unbound ? JSON.parse(readFileSync(join(source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number } : undefined;
+const alignment = unbound ? JSON.parse(readFileSync(join(id === 'inf.dog' ? join(dirname(source), 'amb.dog') : source, 'source/manifest.json'), 'utf8')) as { initial_game_height_scale: number; game_alignment_rotation_y_degrees: number } : undefined;
 const io = await assetIO(), started = Date.now(), receipts = [];
 // A carried object fused into the body cannot follow the game's prop lifecycle.
 // Refuse it before changing any active asset; anatomy fits inside this hand envelope.
@@ -41,12 +44,13 @@ if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
   }
 }
 for (const lod of [0, 1, 2]) {
-  const rig = unbound ? join(assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  const rig = unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === lod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
   if (alignment) args.push('--body-yaw-fixed');
+  if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
   if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
@@ -61,7 +65,7 @@ for (const lod of [0, 1, 2]) {
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
-  let bodyBudget: number | undefined;
+  let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
     const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
@@ -82,12 +86,13 @@ for (const lod of [0, 1, 2]) {
       for (let i = 0; i < weights.getCount(); i++) if (Math.abs(weights.getElement(i, []).reduce((a, b) => a + b, 0) - 1) > .0001) errors.push(`unnormalized weights ${i}`);
     }
     if (document.getRoot().listTextures().some(t => t.getMimeType() !== 'image/ktx2')) errors.push('non-KTX2 texture');
+    if (document.getRoot().listTextures().some(t => t.getSize()?.some(n => n % 4))) errors.push('texture extent is not aligned to its 4x4 GPU block');
     if (errors.length) throw Error(`${id} LOD${lod}: ${errors.slice(0, 5).join('; ')}`);
     tiers.push({ low, path: target, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), errors });
     if (id === 'inf.dog' || id === 'amb.dog') for (const coat of def.decayVariants) {
       const sibling = variantPath(target, coat);
       const coatSource = join(dirname(source), `${id}.${coat}`, 'source', `assembled-lod${lod}.glb`);
-      await compressSkin(raw, sibling, basis, low || lod > 0 ? 512 : 1024, existsSync(coatSource) ? undefined : coat, existsSync(coatSource) ? coatSource : undefined);
+      await compressSkin(raw, sibling, basis, low || lod > 0 ? 512 : 1024, existsSync(coatSource) ? undefined : coat, existsSync(coatSource) ? coatSource : undefined, unbound && id === 'inf.dog');
       if (readFileSync(sibling).length > [600000, 250000, 150000][lod]) throw Error(`${id}.${coat}: LOD${lod} byte limit`);
       if (lod === 0 && !low) await io.write(variantPath(join(assets, 'model.skin.glb'), coat), await io.read(sibling));
     }

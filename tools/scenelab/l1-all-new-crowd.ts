@@ -1,6 +1,6 @@
 /** A fixed 30-figure L1 street: every migrated model and dog coat in one production renderer. */
 import { resolve } from 'node:path';
-import { SceneSession, stopServer, writeJson } from './session';
+import { SceneSession, stopServer, writeJson, type Backend } from './session';
 import type { SceneSpec, ActorSpec } from '../../src/debug/scenelab/spec';
 import type { Game } from '../../src/Game';
 
@@ -35,14 +35,16 @@ export async function loadCrowd(session: SceneSession) {
 }
 if (process.argv[1]?.endsWith('l1-all-new-crowd.ts')) {
   const out = resolve(process.env.CROWD_OUT ?? 'test-results/l1-all-new/crowd');
-  const session = new SceneSession({ backend: 'webgl2', tier: 'low', viewport: { width: 1600, height: 900 }, query: { crowdProbe: 'full' } });
+  const session = new SceneSession({ backend: (process.env.BACKEND ?? 'webgl2') as Backend, tier: 'low', viewport: { width: 1600, height: 900 }, query: { crowdProbe: 'full' } });
   try {
     await session.open();
     await session.page.addInitScript("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
     await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
     await loadCrowd(session);
     await session.screenshot(resolve(out, 'crowd30.png'));
-    writeJson(resolve(out, 'receipt.json'), { metrics: await session.metrics(), render: await session.page.evaluate(() => window.__SS__!.getState().render), errors: session.errors });
-    if (session.errors.length) throw Error(session.errors.join('\n'));
+    await session.page.waitForTimeout(1500);
+    const errors = [...new Set(session.errors)].slice(0, 12);
+    writeJson(resolve(out, 'receipt.json'), { metrics: await session.metrics(), render: await session.page.evaluate(() => window.__SS__!.getState().render), errorCount: session.errors.length, errors });
+    if (session.errors.length) throw Error(errors.join('\n'));
   } finally { await session.close(); stopServer(); }
 }

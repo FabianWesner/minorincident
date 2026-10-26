@@ -19,7 +19,8 @@ import { sampleClip } from '../../../src/render/characters/clips';
 async function baked(id: string) {
   const def = manifest.find(d => d.id === id)!;
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(def.glb)), '');
-  scene.traverse(node => { if (node instanceof Mesh && !Array.isArray(node.material) && node.material.name === 'tex_baseColor') (node.material as import('three').MeshStandardMaterial).map = new Texture(); });
+  const atlas = new Texture();
+  scene.traverse(node => { if (node instanceof Mesh && !Array.isArray(node.material) && node.material.name === 'tex_baseColor') (node.material as import('three').MeshStandardMaterial).map = atlas; });
   const result = bakeInfected(scene, def.animatedNodes, false, civilianClips, undefined, !id.startsWith('npc.'));
   packCrowdParts(result.geometry);
   if (!id.startsWith('npc.')) compactCrowdGeometry(result.geometry);
@@ -41,7 +42,7 @@ test('converted assets load each requested LOD without hidden wound transforms c
   } finally { await registry.dispose(); }
 }, 120000);
 
-for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'inf.common-worker', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
+for (const id of ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive', 'inf.common-worker', 'amb.dog', 'inf.dog', 'inf.zebra']) test(`${id}: all civilian clips retain finite weighted bodies and exact posed picking bounds`, async () => {
   const { geometry, clip } = await baked(id), positions = geometry.getAttribute('position'), tags = geometry.getAttribute('_parts'), skin = geometry.getAttribute('_skin');
   expect(clip.frames).toBe(civilianClips.length * framesPerClip); expect(clip.binds).toBeDefined(); expect(skin.count).toBe(positions.count);
   expect(clip.matrices.every(Number.isFinite)).toBe(true);

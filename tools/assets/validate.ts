@@ -156,6 +156,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     }
   }
   for (const material of root.listMaterials()) if (!validMaterial(material.getName())) errors.push(`material: unknown ${material.getName()}`);
+  for (const texture of root.listTextures()) if (texture.getMimeType() === 'image/ktx2' && texture.getSize()?.some(size => size % 4)) errors.push(`texture ${texture.getName()}: compressed extent must align to the 4x4 WebGPU block`);
   const materials = root.listMaterials().length, fileKB = bytes / 1024;
   // Cheap side props can retain their authored silhouette at every distance.
   const cheapProp = def.category === 'prop' && def.budget.triangles <= 12000;

@@ -25,7 +25,7 @@ interface Ktx {
 interface Basis { initializeBasis(): void; BasisEncoder: new () => Encoder; KTX2File: new (data: Uint8Array) => Ktx }
 
 /** Pipeline Apache-2.0 Basis encoder: ETC1S q192, full sRGB mip chain (PLAYBOOK §5). */
-export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string): Promise<void> {
+export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string, coatBaseHalf = false): Promise<void> {
   const require = createRequire(import.meta.url);
   const factory = require(join(basisRoot, 'basis_encoder.js')) as (options: { wasmBinary: Uint8Array }) => Promise<Basis>;
   const basis = await factory({ wasmBinary: readFileSync(join(basisRoot, 'basis_encoder.wasm')) }); basis.initializeBasis();
@@ -33,11 +33,16 @@ export async function compressSkin(input: string, output: string, basisRoot: str
   try {
     if (coatSource) {
       const source = await io.read(coatSource), atlas = source.getRoot().listTextures()[0];
-      for (const texture of doc.getRoot().listTextures()) if (texture.getName() === 'atlas') texture.setImage(atlas.getImage()).setMimeType(atlas.getMimeType());
+      let image = atlas.getImage()!, mime = atlas.getMimeType();
+      if (coatBaseHalf) {
+        const png = PNG.sync.read(Buffer.from(image)), half = new PNG({ width: png.width, height: png.height / 2 });
+        half.data.set(png.data.subarray(0, half.data.length)); image = new Uint8Array(PNG.sync.write(half)); mime = 'image/png';
+      }
+      for (const texture of doc.getRoot().listTextures()) if (texture.getName() === 'atlas') texture.setImage(image).setMimeType(mime);
     }
     for (const texture of doc.getRoot().listTextures()) {
       const image = texture.getImage()!, size = texture.getSize()!;
-      if (!coat && texture.getMimeType() === 'image/ktx2' && Math.max(...size) <= maxSize) continue;
+      if (!coat && texture.getMimeType() === 'image/ktx2' && Math.max(...size) <= maxSize && size.every(n => n % 4 === 0)) continue;
       let png: Buffer;
       if (texture.getMimeType() === 'image/ktx2') {
         const file = new basis.KTX2File(image);
@@ -54,6 +59,10 @@ export async function compressSkin(input: string, output: string, basisRoot: str
       }
       const path = join(directory, 'image.png'); writeFileSync(path, png);
       execFileSync('sips', ['-Z', String(maxSize), path], { stdio: 'ignore' });
+      const resized = PNG.sync.read(readFileSync(path));
+      // WebGPU requires the base extent of block-compressed textures to align
+      // to the 4x4 block, including rectangular atlases (512x341 was invalid).
+      if (resized.width % 4 || resized.height % 4) execFileSync('sips', ['-z', String(Math.max(4, Math.round(resized.height / 4) * 4)), String(Math.max(4, Math.round(resized.width / 4) * 4)), path], { stdio: 'ignore' });
       const decoded = PNG.sync.read(readFileSync(path)), encoder = new basis.BasisEncoder();
       if (coat) for (let i = 0; i < decoded.data.length; i += 4) {
         const r = decoded.data[i] / 255, g = decoded.data[i + 1] / 255, b = decoded.data[i + 2] / 255;

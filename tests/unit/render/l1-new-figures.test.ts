@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
 import { Box3, Mesh, SkinnedMesh, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -8,6 +9,8 @@ import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { CorgiTongue } from '../../../src/render/characters/CorgiTongue';
 import { PawContacts } from '../../../src/render/characters/PawContacts';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
+import { variantPath } from '../../../src/assets/types';
+import { assetIO } from '../../../tools/assets/io';
 
 async function load(path: string) {
   return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(path)), '')).scene;
@@ -52,4 +55,38 @@ test('L1 corgi: all four weighted paws participate in standing, walking, trottin
     for (let i = 0; i < body.geometry.getAttribute('position').count; i++) lowest = Math.min(lowest, body.getVertexPosition(i, point).applyMatrix4(body.matrixWorld).y);
   }
   expect(lowest).toBeGreaterThanOrEqual(-.02);
+});
+
+test('all six L1 dog appearances retain one body, rig, UV layout and world scale at every LOD @E08 @E17', async () => {
+  for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
+    let canonical: string | undefined;
+    for (const id of ['amb.dog', 'inf.dog']) for (const coat of [undefined, 'black', 'cream']) {
+      const def = manifest.find(d => d.id === id)!;
+      const root = await load(variantPath((lod === 'lod0' ? def.glb : def.lods![lod])!, coat));
+      const body = root.getObjectByName('skin_body') as SkinnedMesh, hash = createHash('sha256');
+      const rows: string[] = [];
+      for (let i = 0; i < body.geometry.getAttribute('position').count; i++) rows.push(['position', 'uv', 'skinIndex', 'skinWeight'].flatMap(name => {
+        const attribute = body.geometry.getAttribute(name);
+        return Array.from({ length: attribute.itemSize }, (_, k) => Math.round(attribute.getComponent(i, k) * 1e6));
+      }).join(','));
+      hash.update(rows.sort().join('\n')); hash.update(body.skeleton.bones.map(b => b.name).join(','));
+      const actual = hash.digest('hex'); canonical ??= actual;
+      expect(actual, `${id}.${coat ?? 'brown'}/${lod}`).toBe(canonical);
+    }
+  }
+});
+
+test('all L1 compressed deliveries have WebGPU-valid 4x4 texture extents @E17', async () => {
+  const io = await assetIO();
+  for (const id of ['amb.dog', 'inf.dog', 'char.corgi', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']) {
+    const def = manifest.find(d => d.id === id)!;
+    for (const lod of ['lod0', 'lod1', 'lod2'] as const) for (const low of [false, true]) for (const coat of id.endsWith('.dog') ? [undefined, 'black', 'cream'] : [undefined]) {
+      const file = variantPath(((lod === 'lod0' ? def.glb : def.lods![lod])!).replace(/\.glb$/, low ? '.low.glb' : '.glb'), coat);
+      const doc = await io.read(file);
+      for (const texture of doc.getRoot().listTextures()) {
+        expect(texture.getMimeType()).toBe('image/ktx2');
+        expect(texture.getSize()!.every(n => n % 4 === 0), file).toBe(true);
+      }
+    }
+  }
 });

@@ -1,7 +1,7 @@
 import { stripGlbTextures } from '../helpers/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
-import { Color, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute } from 'three';
+import { Color, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Mesh, Texture } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -19,6 +19,8 @@ async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
   const def = manifest.find(d => d.id === id)!;
   const bytes = readFileSync(lod === 'lod0' ? def.glb : def.lods![lod]!);
   const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
+  const atlas = new Texture();
+  if (def.crowdSkin) scene.traverse(node => { if (node instanceof Mesh && !Array.isArray(node.material) && node.material.name === 'tex_baseColor') (node.material as import('three').MeshStandardMaterial).map = atlas; });
   scene.userData.assetId = id; return scene;
 }
 
@@ -53,7 +55,7 @@ test('crowd model balancing holds locally after clustered waves and deaths, excl
 });
 
 for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01`, async () => {
-  const infected = bakeInfected(await model('inf.common-worker', lod));
+  const infected = bakeInfected(await model('inf.common-worker', lod), manifest.find(d => d.id === 'inf.common-worker')!.animatedNodes, false, undefined, undefined, true);
   deinterleaveGeometry(infected.geometry);
   const indexed = mergeVertices(infected.geometry); infected.geometry.dispose(); infected.geometry = indexed;
   packCrowdParts(infected.geometry); markCrowdAppearance(infected.geometry);
@@ -76,15 +78,25 @@ for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}
   for (const [name,size] of [['_clip_frame',1],['_variant',4],['_overlay',4]] as const) civilian.geometry.setAttribute(name, new InstancedBufferAttribute(new Float32Array(size),size));
   const matrices = new InstancedInterleavedBuffer(new Float32Array(16),16,1);
   for (let c=0;c<4;c++) civilian.geometry.setAttribute(`_crowd${c}`,new InterleavedBufferAttribute(matrices,4,c*4));
-  expect(crowdVertexLayout(civilian.geometry)).toEqual({ buffers:5, locations:12, webgpu:true, webgl2:true });
+  const skinned = manifest.find(d => d.id === 'npc.civilian-elderly')!.crowdSkin;
+  expect(crowdVertexLayout(civilian.geometry)).toEqual({ buffers: 5, locations: skinned ? 14 : 12, webgpu:true, webgl2:true });
   const look = renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null);
   expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null)).toBe(look);
   const clone = civilian.geometry.clone(); expect(renderedCrowdLook(1,'npc.civilian-elderly',clone,new Color('#3178ac'),null).key).toBe(look.key); clone.dispose();
-  expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#b95862'),null).key).not.toBe(look.key);
-  expect(look.hair).not.toBeNull(); expect(look.skin).not.toBeNull(); expect(look.trousers).not.toBeNull(); expect(look.shirt).not.toBeNull();
-  const looks = Array.from({length:20}, (_,i) => renderedCrowdLook(i+1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null));
-  expect(crowdVariety(looks).per20[0].distinct).toBeGreaterThanOrEqual(15);
-  expect(crowdVariety(looks).largestSameLookShare).toBeLessThanOrEqual(.25);
+  expect(look.skin).not.toBeNull();
+  if (skinned) {
+    // Painted clothing/hair follow the other four migrated pedestrians; an arbitrary
+    // shirt tint must not claim a different visible outfit on the same atlas.
+    expect(look.hair).toBeNull(); expect(look.trousers).toBeNull(); expect(look.shirt).toBeNull();
+    expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#b95862'),null).key).toBe(look.key);
+    expect(civilian.geometry.hasAttribute('uv')).toBe(true); expect(civilian.geometry.hasAttribute('_skin')).toBe(true);
+  } else {
+    expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#b95862'),null).key).not.toBe(look.key);
+    expect(look.hair).not.toBeNull(); expect(look.trousers).not.toBeNull(); expect(look.shirt).not.toBeNull();
+    const looks = Array.from({length:20}, (_,i) => renderedCrowdLook(i+1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null));
+    expect(crowdVariety(looks).per20[0].distinct).toBeGreaterThanOrEqual(15);
+    expect(crowdVariety(looks).largestSameLookShare).toBeLessThanOrEqual(.25);
+  }
   infected.geometry.dispose(); civilian.geometry.dispose();
 }, 60000);
 
