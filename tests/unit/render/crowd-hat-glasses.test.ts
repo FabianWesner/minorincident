@@ -77,7 +77,8 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   // PO 2026-10-22 P1-115 "What are they doing?": brim width relative to the head (lateral and fore-aft), every base and LOD.
   const limit = (hat: string) => (hat.endsWith('sun-hat') ? 1.4 : hat.endsWith('bucket-hat') ? 1.3 : 1.15) + .03;
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1'] as const) {
-    const skull = bakedSkull(geometries.get(`${id}:${lod}`)!)!;
+    const skull = bakedSkull(geometries.get(`${id}:${lod}`)!)!, bare = skinnedBrow(geometries.get(`${id}:${lod}`)!);
+    if (bare) expect(bare.width, `${id} ${lod} hair cannot enlarge the bare skull`).toBeLessThanOrEqual(skull.size.z + 1e-6);
     for (const hat of hats) { const size = fitted(id, lod, hat).getSize(new Vector3()), brow = skinnedBrow(geometries.get(`${id}:${lod}`)!); expect(size.z / (brow?.width ?? skull.size.z), `${id} ${lod} ${hat} brim/skull at brow`).toBeLessThanOrEqual(brow ? 1.15 + 1e-6 : limit(hat)); }
   }
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
