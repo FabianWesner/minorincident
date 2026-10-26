@@ -6,7 +6,7 @@ Completed on `lane/cleanup-repo`, from base `ecbbd06bdf51e33a1c5cdf47e5d3f65b5a1
 | --- | ---: | ---: |
 | Tracked files | 42,798 | 19,701 |
 | Tracked bytes | 4,945,721,663 | 2,241,721,011 |
-| Fresh worktree disk, KiB | 4,921,608 | 2,231,384 |
+| Fresh worktree disk, KiB | 4,921,608 | 2,231,432 |
 | `docs/reports/` files | 26,099 | 8,710 |
 | `docs/reports/` bytes | 2,635,367,566 | 806,930,135 |
 | Tracked `test-results/` files / bytes | 6,132 / 914,527,320 | 0 / 0 |
