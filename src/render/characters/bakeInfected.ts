@@ -235,7 +235,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
         inverse.fromArray(binds!, indices[i] * 16);
         point.fromBufferAttribute(geometry.getAttribute('position'), i).applyMatrix4(inverse);
         const region = geometry.getAttribute('_crowd_region');
-        shirt[i] = cap || !material.map ? -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
+        shirt[i] = cap ? -10 : (region?.getX(i) ?? 0) > 2.5 ? -12 : !material.map ? /^(pal_)?skin/.test(material.name) || (region?.getX(i) ?? 0) > .5 ? -11 : -10 : region ? region.getX(i) > 1.5 ? -6 : region.getX(i) > .5 ? -1 : 0 : name === 'head' || /^hand[LR]$/.test(name) ? -1 : 0;
         emissive[i] = node.userData.crowdEye === true || material.name === 'emi_infectedEye' ? 2 : 0;
       }
       // Integer bits in the fourth weight identify every limb touched by a
@@ -255,7 +255,7 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     }
     if (preserveUV) {
       const sourceUV = geometry.getAttribute('uv'), uv = new Float32Array(count * 2);
-      for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; if (!material.map) shirt[i] = -10; }
+      for (let i = 0; i < count; i++) { uv[i * 2] = sourceUV?.getX(i) ?? 0; uv[i * 2 + 1] = sourceUV?.getY(i) ?? 0; if (!material.map && !skinnedFigure) shirt[i] = -10; }
       geometry.setAttribute('uv', new BufferAttribute(uv, 2));
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1));

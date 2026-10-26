@@ -23,13 +23,13 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const atlas = options.atlas ? sampleTexture(options.atlas, attribute('uv', 'vec2')) : undefined;
     const covered = variant.x.div(512).floor().mod(2).equal(1), scalp = options.skinned ? varying(parts.x.equal(3).and(parts.z.lessThan(.5)).and(parts.y.notEqual(-6)).and(parts.w.lessThan(4)).select(parts.w.div(3).mul(covered.select(1, 0)), 0), 'coveredScalp') : float(0);
-    const authoredClothing = atlas ? mix(crowdAppearanceColor(), atlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
+    const authoredClothing = atlas ? mix(crowdAppearanceColor(), atlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1)) : crowdAppearanceColor();
     const clothing = options.skinned ? mix(authoredClothing, crowdCoveredScalpColor().mul(.8), scalp) : authoredClothing;
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
-    const skinMask = options.skinned && atlas ? paintedSkinMask(atlas).mul(scalp.oneMinus()) : parts.y.equal(-1).select(1, 0);
+    const skinMask = options.skinned && atlas ? parts.y.equal(-11).select(1, paintedSkinMask(atlas).mul(scalp.oneMinus())) : parts.y.equal(-1).select(1, 0);
     const sick = mix(vec3(luminance(clothing)).mul(.6), options.atlas ? vec3(.42, .49, .35).mul(luminance(clothing).max(.2)) : crowdSkinColor(true), .8), skinShift = skinMask.mul(decay.mul(2.5).min(1));
     const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
     const grimy = parts.y.lessThan(-3).select(clothing, clothing.mul(dirt.mul(-.42).add(1)));

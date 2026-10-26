@@ -1,59 +1,61 @@
-/** Q-190: retain PROD's helmet shell on the new firefighter's skinned body. */
+/** Q-190: retain PROD's complete helmet/head assembly on the new skinned firefighter. */
 import { Matrix4, Vector3 } from 'three';
-import { getBounds } from '@gltf-transform/functions';
+import { MeshoptSimplifier } from 'meshoptimizer';
+import { simplify, weld, joinPrimitives, compactPrimitive, getBounds } from '@gltf-transform/functions';
 import { assetIO } from './io';
 
-export async function restoreFireHelmet(path: string, source: string): Promise<void> {
+export async function restoreFireHelmet(path: string, source: string, lod = 0): Promise<void> {
   const io = await assetIO(), doc = await io.read(path), old = await io.read(source);
+  if (lod > 0) { await MeshoptSimplifier.ready; await old.transform(weld(), simplify({ simplifier: MeshoptSimplifier, ratio: lod === 2 ? .35 : .55, error: .01 })); }
   const targetBounds = getBounds(doc.getRoot().listNodes().find(node => node.getName() === 'skin_body')!), sourceBounds = getBounds(old.getRoot().listScenes()[0]);
   const scale = (targetBounds.max[1] - targetBounds.min[1]) / (sourceBounds.max[1] - sourceBounds.min[1]);
   const alignment = new Matrix4().makeTranslation(0, targetBounds.min[1] - sourceBounds.min[1] * scale, 0).scale(new Vector3(scale, scale, scale));
   const skin = doc.getRoot().listSkins()[0], headIndex = skin.listJoints().findIndex(n => n.getName() === 'head');
   const helmet = doc.createMesh('prod_fire_helmet'), point = new Vector3(), normal = new Vector3();
   const selected: { node: import('@gltf-transform/core').Node; primitive: import('@gltf-transform/core').Primitive }[] = [];
-  let brim = Infinity;
+  let brim = Infinity, neck = Infinity;
+  const irises = [new Vector3(-Infinity, 0, 0), new Vector3(-Infinity, 0, 0)];
   for (const node of old.getRoot().listNodes()) if (node.getName().startsWith('head__') || node.getParentNode()?.getName() === 'head') for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
-    if (!/pal_(brick|survivorRed|schoolBusYellow|silver|uiDark|picketWhite)$/.test(primitive.getMaterial()!.getName())) continue;
     const p = primitive.getAttribute('POSITION')!, m = new Matrix4().fromArray(node.getWorldMatrix()).premultiply(alignment);
     if (/pal_(brick|survivorRed)$/.test(primitive.getMaterial()!.getName())) { const indices = primitive.getIndices(); for (let i = 0; i < (indices?.getCount() ?? p.getCount()); i++) brim = Math.min(brim, point.fromArray(p.getElement(indices ? indices.getScalar(i) : i, [])).applyMatrix4(m).y); }
+    const indices = primitive.getIndices();
+    for (let i = 0; i < (indices?.getCount() ?? p.getCount()); i++) {
+      point.fromArray(p.getElement(indices ? indices.getScalar(i) : i, [])).applyMatrix4(m);
+      if (/pal_skin/.test(primitive.getMaterial()!.getName())) neck = Math.min(neck, point.y);
+      if (/pal_eyeBrown/.test(primitive.getMaterial()!.getName())) irises[point.z < 0 ? 0 : 1].x = Math.max(irises[point.z < 0 ? 0 : 1].x, point.x);
+    }
     selected.push({ node, primitive });
   }
-  if (!Number.isFinite(brim)) throw Error('PROD helmet shell is missing');
+  if (!Number.isFinite(brim) || !Number.isFinite(neck)) throw Error('PROD helmet shell is missing');
   const body = doc.getRoot().listNodes().find(n => n.getName() === 'skin_body')!.getMesh()!;
   for (const primitive of body.listPrimitives()) {
-    const names = primitive.listSemantics(), attributes = names.map(name => primitive.getAttribute(name)!);
-    const position = primitive.getAttribute('POSITION')!, indices = primitive.getIndices(), joints = primitive.getAttribute('JOINTS_0')!;
-    const output = names.map(() => [] as number[]), kept: number[] = [], plane = brim - .004;
-    type Vertex = number[][];
-    const read = (i: number): Vertex => attributes.map(a => a.getElement(i, []) as number[]);
-    const pos = names.indexOf('POSITION');
-    const interpolate = (a: Vertex, b: Vertex, t: number): Vertex => a.map((values, k) => /^JOINTS_|^_CROWD_PART$/.test(names[k]) ? (t < .5 ? values : b[k]).slice() : values.map((v, c) => v + (b[k][c] - v) * t));
-    for (let i = 0; i < (indices?.getCount() ?? position.getCount()); i += 3) {
-      const tri = [0, 1, 2].map(k => indices ? indices.getScalar(i + k) : i + k);
-      let polygon = tri.map(read);
-      if (tri.some(v => (joints.getElement(v, []) as number[]).includes(headIndex))) {
-        const clipped: Vertex[] = [];
-        for (let k = 0; k < polygon.length; k++) {
-          const a = polygon[k], b = polygon[(k + 1) % polygon.length], da = a[pos][1] - plane, db = b[pos][1] - plane;
-          if (da <= 0) clipped.push(a);
-          if ((da < 0 && db > 0) || (da > 0 && db < 0)) clipped.push(interpolate(a, b, da / (da - db)));
-        }
-        polygon = clipped;
-      }
-      for (let k = 1; k + 1 < polygon.length; k++) for (const vertex of [polygon[0], polygon[k], polygon[k + 1]]) {
-        kept.push(output[pos].length / 3);
-        vertex.forEach((values, channel) => output[channel].push(...values));
-      }
+    // Keep the original semantic neck boundary, which shares its exact cap.
+    // A horizontal clip crosses the shoulder blend and leaves the drooping
+    // painted brim below the cut; replacing the complete head avoids both.
+    const owners = primitive.getAttribute('_CROWD_PART')!, indices = primitive.getIndices(), kept: number[] = [];
+    for (let i = 0; i < (indices?.getCount() ?? owners.getCount()); i += 3) {
+      const triangle = [0, 1, 2].map(k => indices ? indices.getScalar(i + k) : i + k);
+      if (triangle.some(v => owners.getScalar(v) === headIndex)) continue;
+      kept.push(...triangle);
     }
-    names.forEach((name, k) => primitive.setAttribute(name, doc.createAccessor().setType(attributes[k].getType()).setArray(/^JOINTS_|^_CROWD_PART$/.test(name) ? new Uint16Array(output[k]) : new Float32Array(output[k]))));
     primitive.setIndices(doc.createAccessor().setType('SCALAR').setArray(new Uint32Array(kept)));
+    compactPrimitive(primitive);
+    // The removed painted hood left a bronze band across the coat collar.
+    // Keep its geometry and use the authored dark PPE collar color instead.
+    const p = primitive.getAttribute('POSITION')!, region = primitive.getAttribute('_CROWD_REGION')!, owner = primitive.getAttribute('_CROWD_PART')!, colors = new Float32Array(p.getCount() * 3).fill(1);
+    const headY = skin.listJoints()[headIndex].getWorldTranslation()[1], torso = skin.listJoints().findIndex(n => n.getName() === 'torso');
+    for (let i = 0; i < p.getCount(); i++) {
+      const v = p.getElement(i, []) as number[];
+      if (owner.getScalar(i) === torso && v[1] > headY + .01 && Math.abs(v[0]) < .32 && Math.abs(v[2]) < .25) { region.setScalar(i, 3); colors.set([.015, .022, .035], i * 3); }
+    }
+    primitive.setAttribute('COLOR_0', doc.createAccessor().setType('VEC3').setArray(colors));
   }
+  const headMaterial = doc.createMaterial('pal_picketWhite').setRoughnessFactor(1);
   for (const { node, primitive } of selected) {
     const p = primitive.getAttribute('POSITION')!, n = primitive.getAttribute('NORMAL')!, index = primitive.getIndices()!, matrix = new Matrix4().fromArray(node.getWorldMatrix()).premultiply(alignment);
     const positions: number[] = [], normals: number[] = [], joints: number[] = [], weights: number[] = [], indices: number[] = [];
     for (let i = 0; i < index.getCount(); i += 3) {
       const tri = [0, 1, 2].map(k => index.getScalar(i + k));
-      if (tri.some(v => point.fromArray(p.getElement(v, [])).applyMatrix4(matrix).y < brim - .002)) continue;
       for (const v of tri) {
         indices.push(positions.length / 3); point.fromArray(p.getElement(v, [])).applyMatrix4(matrix).toArray(positions, positions.length);
         normal.fromArray(n.getElement(v, [])).transformDirection(matrix).toArray(normals, normals.length);
@@ -61,11 +63,22 @@ export async function restoreFireHelmet(path: string, source: string): Promise<v
       }
     }
     if (!indices.length) continue;
-    const material = doc.createMaterial(primitive.getMaterial()!.getName()).setBaseColorFactor(primitive.getMaterial()!.getBaseColorFactor()).setRoughnessFactor(1);
-    const result = doc.createPrimitive().setMaterial(material);
+    const color = primitive.getMaterial()!.getBaseColorFactor().slice(0, 3), colors = Array.from({ length: indices.length }, () => color).flat();
+    const result = doc.createPrimitive().setMaterial(headMaterial).setAttribute('COLOR_0', doc.createAccessor().setType('VEC3').setArray(new Float32Array(colors)));
     for (const [name, type, array] of [['POSITION', 'VEC3', new Float32Array(positions)], ['NORMAL', 'VEC3', new Float32Array(normals)], ['TEXCOORD_0', 'VEC2', new Float32Array(positions.length / 3 * 2)], ['JOINTS_0', 'VEC4', new Uint16Array(joints)], ['WEIGHTS_0', 'VEC4', new Float32Array(weights)]] as const) result.setAttribute(name, doc.createAccessor().setType(type).setArray(array));
+    result.setAttribute('_CROWD_PART', doc.createAccessor().setType('SCALAR').setArray(new Uint16Array(indices.length).fill(headIndex)));
+    result.setAttribute('_CROWD_REGION', doc.createAccessor().setType('SCALAR').setArray(new Float32Array(indices.length).fill(/^pal_skin/.test(primitive.getMaterial()!.getName()) ? 1 : 0)));
     result.setIndices(doc.createAccessor().setType('SCALAR').setArray(new Uint32Array(indices))); helmet.addPrimitive(result);
   }
+  const pieces = helmet.listPrimitives(), joined = joinPrimitives(pieces);
+  for (const piece of pieces) { helmet.removePrimitive(piece); piece.dispose(); }
+  helmet.addPrimitive(joined);
   doc.getRoot().listNodes().find(node => node.getName() === 'skin_body')!.addChild(doc.createNode('prod_fire_helmet').setMesh(helmet).setSkin(skin));
+  // Dormant infected irises stay on the retained authored eyes, not on the removed visor.
+  const eyes = doc.getRoot().listNodes().find(node => node.getName() === 'skin_eyes');
+  for (const primitive of eyes?.getMesh()?.listPrimitives() ?? []) {
+    const p = primitive.getAttribute('POSITION')!;
+    for (let i = 0; i < p.getCount(); i++) { const v = p.getElement(i, []) as number[]; v[0] = irises[v[2] < 0 ? 0 : 1].x + .003; p.setElement(i, v); }
+  }
   await io.write(path, doc);
 }

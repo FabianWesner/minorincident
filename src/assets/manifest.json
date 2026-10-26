@@ -149,13 +149,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/char.corgi/build.py",
-    "glb": "public/assets/models/char.corgi.glb",
-    "sourceGlb": "assets/char.corgi/model.glb",
+    "glb": "public/assets/models/skinned/char.corgi.lod0.glb",
+    "sourceGlb": "assets/char.corgi/model.skin.glb",
     "dimensions": {
-      "x": 1.67207366530916,
-      "y": 0.9531968384981155,
+      "x": 1.223001778125763,
+      "y": 0.9531978517770767,
       "z": 0.8469999972730875,
-      "tolerance": 0.1
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -191,9 +191,18 @@
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/char.corgi.lod1.glb",
-      "lod2": "public/assets/models/char.corgi.lod2.glb"
-    }
+      "lod1": "public/assets/models/skinned/char.corgi.lod1.glb",
+      "lod2": "public/assets/models/skinned/char.corgi.lod2.glb"
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/char.corgi.glb",
+      "lods": {
+        "lod1": "public/assets/models/char.corgi.lod1.glb",
+        "lod2": "public/assets/models/char.corgi.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "equip.backpack-teal",
@@ -317,14 +326,13 @@
     "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.common-worker/build.py",
-    "glb": "public/assets/models/inf.common-worker.glb",
-    "corpseGlb": "public/assets/models/inf.common-worker.corpse.glb",
-    "sourceGlb": "assets/inf.common-worker/model.glb",
+    "glb": "public/assets/models/skinned/inf.common-worker.lod0.glb",
+    "sourceGlb": "assets/inf.common-worker/model.skin.glb",
     "dimensions": {
-      "x": 0.9213,
-      "y": 1.8,
-      "z": 1.3163,
-      "tolerance": 0.1
+      "x": 0.898840606212616,
+      "y": 1.8331796560612617,
+      "z": 1.4120743870735168,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -374,21 +382,30 @@
     ],
     "sockets": [],
     "budget": {
-      "triangles": 40000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 6000,
+      "materials": 2,
+      "fileKB": 600,
+      "drawCalls": 30
     },
     "decayVariants": [],
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.common-worker.lod1.glb",
-      "lod2": "public/assets/models/inf.common-worker.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.common-worker.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.common-worker.lod2.glb"
     },
-    "sourceScale": 1.08101627,
+    "sourceScale": 1,
+    "textureMode": "baseColor",
     "authoredLodTriangles": {
-      "lod1": 6000,
-      "lod2": 5000
+      "lod1": 2500,
+      "lod2": 900
+    },
+    "crowdSkin": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.common-worker.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.common-worker.lod1.glb",
+        "lod2": "public/assets/models/inf.common-worker.lod2.glb"
+      }
     }
   },
   {
@@ -2460,12 +2477,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.nurse.glb",
+    "glb": "public/assets/models/skinned/inf.nurse.lod0.glb",
     "dimensions": {
-      "x": 0.6871,
-      "y": 1.8,
-      "z": 1.256,
-      "tolerance": 0.1
+      "x": 0.8639602363109589,
+      "y": 1.800002215173663,
+      "z": 1.18299001455307,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -2521,12 +2538,21 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/inf.nurse/model.glb",
+    "sourceGlb": "assets/inf.nurse/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.03975713,
     "lods": {
-      "lod1": "public/assets/models/inf.nurse.lod1.glb",
-      "lod2": "public/assets/models/inf.nurse.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.nurse.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.nurse.lod2.glb"
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.nurse.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.nurse.lod1.glb",
+        "lod2": "public/assets/models/inf.nurse.lod2.glb"
+      }
     }
   },
   {
@@ -4031,6 +4057,10 @@
       "lod1": "public/assets/models/veh.school-bus.lod1.glb",
       "lod2": "public/assets/models/veh.school-bus.lod2.glb"
     },
+    "lodOptionalGeometryNodes": [
+      "door_far_0:pal_uiDark",
+      "door_near_0:pal_uiDark"
+    ],
     "dimensions": {
       "x": 8.0328,
       "y": 3.4178,
@@ -6621,12 +6651,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-elderly.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
     "dimensions": {
-      "x": 0.5788,
-      "y": 1.78,
-      "z": 0.8497,
-      "tolerance": 0.1
+      "x": 0.5267418026924133,
+      "y": 1.3990000486373901,
+      "z": 0.7994961142539978,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -6679,14 +6709,23 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-elderly/model.glb",
+    "sourceGlb": "assets/npc.civilian-elderly/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb"
     },
     "sourceScale": 1.27233734,
     "script": "assets/npc.civilian-elderly/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-elderly.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.patient-zero-courier",
@@ -7164,12 +7203,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.firefighter-alive.glb",
+    "glb": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
     "dimensions": {
-      "x": 0.6766,
-      "y": 1.8,
-      "z": 0.9105,
-      "tolerance": 0.1
+      "x": 0.5868440568447113,
+      "y": 1.4557309448719025,
+      "z": 0.7463776171207428,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -7222,14 +7261,23 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.firefighter-alive/model.glb",
+    "sourceGlb": "assets/npc.firefighter-alive/model.skin.glb",
     "sourceForward": "+X",
     "sourceScale": 1.2364922,
     "lods": {
-      "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
-      "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.firefighter-alive.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.firefighter-alive.lod2.glb"
     },
-    "script": "assets/npc.firefighter-alive/build.py"
+    "script": "assets/npc.firefighter-alive/build.py",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.firefighter-alive.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
+        "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.national-guard",
@@ -8945,7 +8993,7 @@
     "dimensions": {
       "x": 2.6517,
       "y": 5.0093,
-      "z": 6.0,
+      "z": 6,
       "tolerance": 0.03
     },
     "forward": "+X",
@@ -10541,12 +10589,12 @@
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.zebra.glb",
+    "glb": "public/assets/models/skinned/amb.zebra.lod0.glb",
     "dimensions": {
-      "x": 2.85,
-      "y": 2.45,
-      "z": 0.78,
-      "tolerance": 0.08
+      "x": 2.957338809967041,
+      "y": 2.43770432472229,
+      "z": 0.7800000011920929,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -10632,16 +10680,24 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "script": "assets/amb.zebra/build.py",
-    "sourceGlb": "assets/amb.zebra/model.glb",
+    "sourceGlb": "assets/amb.zebra/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/amb.zebra.lod1.glb",
-      "lod2": "public/assets/models/amb.zebra.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.zebra.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.zebra.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 2000,
       "lod2": 700
+    },
+    "textureMode": "baseColor",
+    "crowdSkin": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.zebra.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.zebra.lod1.glb",
+        "lod2": "public/assets/models/amb.zebra.lod2.glb"
+      }
     }
   },
   {
@@ -10649,12 +10705,12 @@
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.zebra.glb",
+    "glb": "public/assets/models/skinned/inf.zebra.lod0.glb",
     "dimensions": {
-      "x": 2.85,
-      "y": 2.45,
-      "z": 0.78,
-      "tolerance": 0.08
+      "x": 2.957338809967041,
+      "y": 2.43770432472229,
+      "z": 0.7800000011920929,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -10740,16 +10796,24 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "script": "assets/inf.zebra/build.py",
-    "sourceGlb": "assets/inf.zebra/model.glb",
+    "sourceGlb": "assets/inf.zebra/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.zebra.lod1.glb",
-      "lod2": "public/assets/models/inf.zebra.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.zebra.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.zebra.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 2000,
       "lod2": 700
+    },
+    "textureMode": "baseColor",
+    "crowdSkin": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.zebra.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.zebra.lod1.glb",
+        "lod2": "public/assets/models/inf.zebra.lod2.glb"
+      }
     }
   },
   {
@@ -10760,7 +10824,7 @@
     "glb": "public/assets/models/amb.elephant.glb",
     "dimensions": {
       "x": 4.6,
-      "y": 3.0,
+      "y": 3,
       "z": 1.85,
       "tolerance": 0.1
     },
@@ -11241,12 +11305,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-man-a.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-man-a.lod0.glb",
     "dimensions": {
-      "x": 0.4691,
-      "y": 1.8,
-      "z": 0.8363,
-      "tolerance": 0.1
+      "x": 0.6107770204544067,
+      "y": 1.799998577535007,
+      "z": 0.9524039328098297,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -11302,26 +11366,35 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-man-a/model.glb",
+    "sourceGlb": "assets/npc.civilian-man-a/model.skin.glb",
     "script": "assets/npc.civilian-man-a/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-man-a.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-man-a.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-man-a.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-man-a.lod2.glb"
     },
-    "sourceScale": 1.25727403
+    "sourceScale": 1.25727403,
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-man-a.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-man-a.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-man-a.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.civilian-man-b",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-man-b.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-man-b.lod0.glb",
     "dimensions": {
-      "x": 0.5293,
-      "y": 1.8,
-      "z": 0.8383,
-      "tolerance": 0.1
+      "x": 0.6643280982971191,
+      "y": 1.7999968834676565,
+      "z": 1.0899359583854675,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -11374,26 +11447,35 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-man-b/model.glb",
+    "sourceGlb": "assets/npc.civilian-man-b/model.skin.glb",
     "script": "assets/npc.civilian-man-b/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-man-b.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-man-b.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-man-b.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-man-b.lod2.glb"
     },
-    "sourceScale": 1.25201906
+    "sourceScale": 1.25201906,
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-man-b.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-man-b.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-man-b.lod2.glb"
+      }
+    }
   },
   {
     "id": "npc.civilian-woman-a",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-woman-a.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-woman-a.lod0.glb",
     "dimensions": {
-      "x": 0.6587,
-      "y": 1.8,
-      "z": 0.9618,
-      "tolerance": 0.1
+      "x": 0.6775166392326355,
+      "y": 1.7999991976281535,
+      "z": 1.0451307594776154,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -11449,26 +11531,35 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-woman-a/model.glb",
+    "sourceGlb": "assets/npc.civilian-woman-a/model.skin.glb",
     "script": "assets/npc.civilian-woman-a/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-woman-a.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-woman-a.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-woman-a.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-woman-a.lod2.glb"
     },
-    "sourceScale": 1.27293605
+    "sourceScale": 1.27293605,
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-woman-a.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-woman-a.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-woman-a.lod2.glb"
+      }
+    }
   },
   {
     "id": "npc.civilian-woman-b",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-woman-b.glb",
+    "glb": "public/assets/models/skinned/npc.civilian-woman-b.lod0.glb",
     "dimensions": {
-      "x": 0.5418,
-      "y": 1.8,
-      "z": 0.8113,
-      "tolerance": 0.1
+      "x": 0.6254254281520844,
+      "y": 1.7999973617791056,
+      "z": 0.9184211492538452,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -11521,14 +11612,23 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.civilian-woman-b/model.glb",
+    "sourceGlb": "assets/npc.civilian-woman-b/model.skin.glb",
     "script": "assets/npc.civilian-woman-b/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/npc.civilian-woman-b.lod1.glb",
-      "lod2": "public/assets/models/npc.civilian-woman-b.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.civilian-woman-b.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.civilian-woman-b.lod2.glb"
     },
-    "sourceScale": 1.28571343
+    "sourceScale": 1.28571343,
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.civilian-woman-b.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.civilian-woman-b.lod1.glb",
+        "lod2": "public/assets/models/npc.civilian-woman-b.lod2.glb"
+      }
+    }
   },
   {
     "id": "prop.barricade",
@@ -12775,7 +12875,7 @@
       "lod2": 200
     },
     "dimensions": {
-      "x": 3.0,
+      "x": 3,
       "y": 1.99,
       "z": 3.041,
       "tolerance": 0.1
@@ -14560,12 +14660,12 @@
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.lab-tech-a.glb",
+    "glb": "public/assets/models/skinned/npc.lab-tech-a.lod0.glb",
     "dimensions": {
-      "x": 0.478,
-      "y": 1.365,
-      "z": 0.831,
-      "tolerance": 0.3
+      "x": 0.5120624005794525,
+      "y": 1.3650687058237736,
+      "z": 0.9063678681850433,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -14621,23 +14721,32 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.lab-tech-a/model.glb",
+    "sourceGlb": "assets/npc.lab-tech-a/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.lab-tech-a.lod1.glb",
-      "lod2": "public/assets/models/npc.lab-tech-a.lod2.glb"
-    }
+      "lod1": "public/assets/models/skinned/npc.lab-tech-a.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.lab-tech-a.lod2.glb"
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.lab-tech-a.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.lab-tech-a.lod1.glb",
+        "lod2": "public/assets/models/npc.lab-tech-a.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.lab-tech-b",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.lab-tech-b.glb",
+    "glb": "public/assets/models/skinned/npc.lab-tech-b.lod0.glb",
     "dimensions": {
-      "x": 0.502,
-      "y": 1.38,
-      "z": 0.75,
-      "tolerance": 0.3
+      "x": 0.5549028366804123,
+      "y": 1.379550131109113,
+      "z": 0.7052275836467743,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -14693,24 +14802,33 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.lab-tech-b/model.glb",
+    "sourceGlb": "assets/npc.lab-tech-b/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.lab-tech-b.lod1.glb",
-      "lod2": "public/assets/models/npc.lab-tech-b.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.lab-tech-b.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.lab-tech-b.lod2.glb"
     },
-    "compactMeshopt": true
+    "compactMeshopt": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.lab-tech-b.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.lab-tech-b.lod1.glb",
+        "lod2": "public/assets/models/npc.lab-tech-b.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.lab-guard",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.lab-guard.glb",
+    "glb": "public/assets/models/skinned/npc.lab-guard.lod0.glb",
     "dimensions": {
-      "x": 0.532,
-      "y": 1.386,
-      "z": 0.976,
-      "tolerance": 0.3
+      "x": 0.5804823637008667,
+      "y": 1.3863473424959238,
+      "z": 1.0332542657852173,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -14766,24 +14884,33 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.lab-guard/model.glb",
+    "sourceGlb": "assets/npc.lab-guard/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.lab-guard.lod1.glb",
-      "lod2": "public/assets/models/npc.lab-guard.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.lab-guard.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.lab-guard.lod2.glb"
     },
-    "compactMeshopt": true
+    "compactMeshopt": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.lab-guard.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.lab-guard.lod1.glb",
+        "lod2": "public/assets/models/npc.lab-guard.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "npc.depot-clerk",
     "category": "character",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.depot-clerk.glb",
+    "glb": "public/assets/models/skinned/npc.depot-clerk.lod0.glb",
     "dimensions": {
-      "x": 0.463,
-      "y": 1.424,
-      "z": 0.75,
-      "tolerance": 0.3
+      "x": 0.5089016407728195,
+      "y": 1.423680933263654,
+      "z": 0.7825035154819489,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -14839,12 +14966,21 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/npc.depot-clerk/model.glb",
+    "sourceGlb": "assets/npc.depot-clerk/model.skin.glb",
     "lods": {
-      "lod1": "public/assets/models/npc.depot-clerk.lod1.glb",
-      "lod2": "public/assets/models/npc.depot-clerk.lod2.glb"
+      "lod1": "public/assets/models/skinned/npc.depot-clerk.lod1.glb",
+      "lod2": "public/assets/models/skinned/npc.depot-clerk.lod2.glb"
     },
-    "compactMeshopt": true
+    "compactMeshopt": true,
+    "rigidBaseline": {
+      "glb": "public/assets/models/npc.depot-clerk.glb",
+      "lods": {
+        "lod1": "public/assets/models/npc.depot-clerk.lod1.glb",
+        "lod2": "public/assets/models/npc.depot-clerk.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "bld.house-d",
@@ -16436,9 +16572,9 @@
       "lod2": "public/assets/models/int.fire-station-bay.lod2.glb"
     },
     "dimensions": {
-      "x": 12.0,
+      "x": 12,
       "y": 4.300000190734863,
-      "z": 10.0,
+      "z": 10,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -17738,7 +17874,7 @@
       "lod2": 4000
     },
     "decayDimensions": {
-      "y": 12.0
+      "y": 12
     },
     "decayVariants": [
       "w5",
@@ -18163,7 +18299,7 @@
     "glb": "public/assets/models/int.metro-exit.glb",
     "sourceForward": "+X",
     "dimensions": {
-      "x": 12.0,
+      "x": 12,
       "y": 5.81,
       "z": 7.6,
       "tolerance": 0.03
@@ -18230,8 +18366,8 @@
     "glb": "public/assets/models/kit.metro-tunnel.glb",
     "sourceForward": "+X",
     "dimensions": {
-      "x": 12.0,
-      "y": 5.0,
+      "x": 12,
+      "y": 5,
       "z": 7.6,
       "tolerance": 0.03
     },
@@ -18299,7 +18435,7 @@
     "glb": "public/assets/models/kit.metro-track.glb",
     "sourceForward": "+X",
     "dimensions": {
-      "x": 12.0,
+      "x": 12,
       "y": 0.97,
       "z": 7.6,
       "tolerance": 0.03
@@ -18395,7 +18531,7 @@
     "glb": "public/assets/models/kit.maintenance-corridor.glb",
     "sourceForward": "+X",
     "dimensions": {
-      "x": 10.0,
+      "x": 10,
       "y": 3.9,
       "z": 4.6,
       "tolerance": 0.03
@@ -18670,9 +18806,9 @@
     "sourceGlb": "assets/int.metro-station/model.glb",
     "glb": "public/assets/models/int.metro-station.glb",
     "dimensions": {
-      "x": 60.0,
+      "x": 60,
       "y": 5.75,
-      "z": 36.0,
+      "z": 36,
       "tolerance": 0.03
     },
     "forward": "+X",
@@ -20468,7 +20604,7 @@
     "glb": "public/assets/models/inf.elephant.glb",
     "dimensions": {
       "x": 4.6,
-      "y": 3.0,
+      "y": 3,
       "z": 1.85,
       "tolerance": 0.1
     },
@@ -20899,9 +21035,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -20911,9 +21047,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -20924,9 +21060,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -20936,9 +21072,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -20950,8 +21086,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -20962,9 +21098,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21022,9 +21158,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21034,9 +21170,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21047,9 +21183,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21059,9 +21195,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21073,8 +21209,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21085,9 +21221,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21145,9 +21281,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21157,9 +21293,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21170,9 +21306,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21182,9 +21318,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21196,8 +21332,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21208,9 +21344,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21268,9 +21404,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21280,9 +21416,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21293,9 +21429,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21305,9 +21441,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21319,8 +21455,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21331,9 +21467,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21391,9 +21527,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21403,9 +21539,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21416,9 +21552,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21428,9 +21564,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21442,8 +21578,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21454,9 +21590,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21514,9 +21650,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21526,9 +21662,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21539,9 +21675,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21551,9 +21687,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21565,8 +21701,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21577,9 +21713,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21637,9 +21773,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21649,9 +21785,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21662,9 +21798,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21674,9 +21810,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21688,8 +21824,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21700,9 +21836,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21760,9 +21896,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21772,9 +21908,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21785,9 +21921,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21797,9 +21933,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21811,8 +21947,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21823,9 +21959,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -21883,9 +22019,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -21895,9 +22031,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21908,9 +22044,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -21920,9 +22056,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21934,8 +22070,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -21946,9 +22082,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -22006,9 +22142,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -22018,9 +22154,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22031,9 +22167,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -22043,9 +22179,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22057,8 +22193,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22069,9 +22205,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -22129,9 +22265,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -22141,9 +22277,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22154,9 +22290,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -22166,9 +22302,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22180,8 +22316,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22192,9 +22328,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -22252,9 +22388,9 @@
             0.838
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-man-b": {
@@ -22264,9 +22400,9 @@
             0.812
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22277,9 +22413,9 @@
             0.944
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         },
         "npc.civilian-woman-b": {
@@ -22289,9 +22425,9 @@
             0.738
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22303,8 +22439,8 @@
           ],
           "offset": [
             -0.01,
-            0.0,
-            0.0
+            0,
+            0
           ],
           "hasHeadwear": true
         },
@@ -22315,9 +22451,9 @@
             0.825
           ],
           "offset": [
-            0.0,
-            0.0,
-            0.0
+            0,
+            0,
+            0
           ]
         }
       }
@@ -22565,12 +22701,12 @@
     "category": "prop",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/amb.dog.glb",
+    "glb": "public/assets/models/skinned/amb.dog.lod0.glb",
     "dimensions": {
-      "x": 1.6297,
-      "y": 1.0085,
-      "z": 0.4519,
-      "tolerance": 0.1
+      "x": 1.2436516284942627,
+      "y": 1.0032700383663178,
+      "z": 0.4295501112937927,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -22660,28 +22796,37 @@
       "cream"
     ],
     "script": "assets/amb.dog/build.py",
-    "sourceGlb": "assets/amb.dog/model.glb",
+    "sourceGlb": "assets/amb.dog/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/amb.dog.lod1.glb",
-      "lod2": "public/assets/models/amb.dog.lod2.glb"
+      "lod1": "public/assets/models/skinned/amb.dog.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.dog.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 1500,
       "lod2": 700
-    }
+    },
+    "rigidBaseline": {
+      "glb": "public/assets/models/amb.dog.glb",
+      "lods": {
+        "lod1": "public/assets/models/amb.dog.lod1.glb",
+        "lod2": "public/assets/models/amb.dog.lod2.glb"
+      }
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   },
   {
     "id": "inf.dog",
     "category": "infected",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/inf.dog.glb",
+    "glb": "public/assets/models/skinned/inf.dog.lod0.glb",
     "dimensions": {
-      "x": 1.6482,
-      "y": 0.755,
-      "z": 0.4517,
-      "tolerance": 0.1
+      "x": 1.2436516284942627,
+      "y": 1.0032700383663178,
+      "z": 0.4295501112937927,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
@@ -22771,15 +22916,24 @@
       "cream"
     ],
     "script": "assets/inf.dog/build.py",
-    "sourceGlb": "assets/inf.dog/model.glb",
+    "sourceGlb": "assets/inf.dog/model.skin.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/inf.dog.lod1.glb",
-      "lod2": "public/assets/models/inf.dog.lod2.glb"
+      "lod1": "public/assets/models/skinned/inf.dog.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.dog.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 2000,
       "lod2": 1000
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor",
+    "rigidBaseline": {
+      "glb": "public/assets/models/inf.dog.glb",
+      "lods": {
+        "lod1": "public/assets/models/inf.dog.lod1.glb",
+        "lod2": "public/assets/models/inf.dog.lod2.glb"
+      }
     }
   },
   {
@@ -23450,7 +23604,7 @@
       "lod2": "public/assets/models/bld.cure-duplex.lod2.glb"
     },
     "dimensions": {
-      "x": 10.0,
+      "x": 10,
       "y": 9.03,
       "z": 14.16,
       "tolerance": 0.1
@@ -23584,7 +23738,7 @@
     "dimensions": {
       "x": 23.1736,
       "y": 9.98,
-      "z": 32.0,
+      "z": 32,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -23627,7 +23781,7 @@
     },
     "dimensions": {
       "x": 11.2473,
-      "y": 7.0,
+      "y": 7,
       "z": 8.2,
       "tolerance": 0.1
     },
@@ -23758,7 +23912,7 @@
       "lod2": "public/assets/models/bld.cure-guard-post.lod2.glb"
     },
     "dimensions": {
-      "x": 9.0,
+      "x": 9,
       "y": 7.2,
       "z": 9.35,
       "tolerance": 0.1

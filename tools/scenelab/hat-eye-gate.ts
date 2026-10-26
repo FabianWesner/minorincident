@@ -1,5 +1,6 @@
 /** Q-187..189: production hat bounds, depth-tested native eye pixels, and face-paint continuity. */
 import assert from 'node:assert/strict';
+import { eyeComponents, faceTintError } from './eye-components';
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
@@ -39,7 +40,7 @@ async function eyePass(name: string) {
     if (r - Math.max(g, blue) > 25) { redPixels++; peak = Math.max(peak, luma(r, g, blue)); }
   }
   await session.page.evaluate(() => (window as unknown as { eyeMask: { restore(): void } }).eyeMask.restore());
-  return { pixels, reference, retained, visibility: reference ? retained / reference : 0, redPixels, peak };
+  return { eyes: eyeComponents(black, naked, wearing), pixels, reference, retained, visibility: reference ? retained / reference : 0, redPixels, peak };
 }
 try {
   await session.open();
@@ -94,9 +95,8 @@ try {
       });
       const retagged = PNG.sync.read(await session.screenshot(resolve(out, `${model}-continuous-tint.png`)));
       const original = PNG.sync.read(readFileSync(resolve(out, `${name}-close-native.png`)));
-      let error = 0, maxError = 0;
-      for (let i = 0; i < original.data.length; i++) if (i % 4 !== 3) { const d = Math.abs(original.data[i] - retagged.data[i]); error += d; maxError = Math.max(maxError, d); }
-      continuity.set(model, { meanError: error / (original.width * original.height * 3), maxError, taggedVertices });
+      const read = (pass: string) => PNG.sync.read(readFileSync(resolve(out, `${name}-close-${pass}.png`)));
+      continuity.set(model, { ...faceTintError(original, retagged, read('black'), read('eyes')), taggedVertices });
       await session.page.evaluate(() => {
         const saved = (window as unknown as { savedFaceTags: { geometry: BufferGeometry; values: [number, number][] }[] }).savedFaceTags;
         for (const row of saved) { const parts = row.geometry.getAttribute('_parts'); for (const [i, y] of row.values) parts.setY(i, y); parts.needsUpdate = true; }
@@ -109,7 +109,7 @@ try {
       eyePixels.push({ zoom, ...await eyePass(`${name}-z${zoom}`) });
     }
     const pass = fit.accessoryInstances > 0 && fit.ratio <= 1.15 + 1e-6 && fit.bottom >= fit.brow!.y && fit.forwardY >= -1e-5 && fit.forehead > 0 && fit.retainedForehead / fit.forehead >= .95
-      && eyePixels.every(e => e.pixels > 0 && e.visibility >= .95) && (!infected || peakRatio >= .95 && peakRatio <= 1.05 && continuity.get(model)!.taggedVertices > 10 && continuity.get(model)!.meanError < .25);
+      && eyePixels.every(e => e.eyes.length === 2 && e.eyes.every(eye => eye.visibility >= .95) && e.pixels > 0 && e.visibility >= .95) && (!infected || peakRatio >= .95 && peakRatio <= 1.05 && continuity.get(model)!.taggedVertices > 10 && continuity.get(model)!.meanError < .25);
     receipts.push({ model, hat, infected, pass, pose, ...fit, close, peakRatio: infected ? peakRatio : null, eyePixels });
     writeJson(resolve(out, 'hat-eye-gate.json'), { pass: false, backend, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
     console.log(`${name}: ${pass ? 'PASS' : 'FAIL'} ratio=${fit.ratio.toFixed(3)} peak=${infected ? peakRatio.toFixed(3) : 'live'} eyes=${eyePixels.map(e => `${e.zoom}:${e.pixels}/${e.visibility.toFixed(2)}`).join(',')}`);

@@ -75,6 +75,11 @@ for (const id of ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.firefighter-alive']) 
     if (name === 'head' && skin) face++;
   }
   expect(hands).toBeGreaterThan(20); expect(handSkin / hands).toBeLessThan(.1);
+  if (id === 'npc.firefighter-alive') {
+    const retained = root.getObjectByName('prod_fire_helmet')!;
+    retained.traverse(node => { if (node instanceof SkinnedMesh) { const r = node.geometry.getAttribute('_crowd_region'); for (let i = 0; i < r.count; i++) if (r.getX(i) === 1) face++; } });
+    expect(retained, 'PROD head and helmet retained on the skinned body').toBeTruthy();
+  }
   expect(face).toBeGreaterThan(10);
   if (id === 'npc.firefighter-alive') expect(uniformSkin / uniform).toBeLessThan(.1);
 });
