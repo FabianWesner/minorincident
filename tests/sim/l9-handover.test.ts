@@ -48,6 +48,7 @@ for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${charac
     const evidence = structuredClone(save.crossingHandover); completeCampaignLevel(save, 9, m.state.result!, w); expect(save.crossingHandover).toEqual(evidence);
     next.loadComposition(compositions.L10, [cureLayout], 31); applyCampaign(next, reloaded.save);
     const opening = next.loadMission(resolveCampaignMission('L10', next.districts!)); opening.begin(); next.update();
+    expect(opening.state.subtitle?.text).toBe('The crash took our weapons. The axe is all we have.');
     expect(next.entities.get(1)!.survivor).toMatchObject({ variant: character, gearTier: 4 });
     expect(opening.state.checkpoint).toBe('cure-crash'); expect(next.vehicles!.active).toBeNull(); expect(next.vehicles!.cars.size).toBe(0);
     expect(next.entities.get(1)!.health.current).toBe(next.entities.get(1)!.health.max);

@@ -45,10 +45,8 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
     const level=/^L([1-9]|10)$/.exec(world.scenario??'');
     const {size,LEFT,RIGHT}=campaignLoadout(save,level?Number(level[1]):save.unlockedLevel);
     world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);
-    if(save.selectedAction!==undefined){
-      save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,save);
-      world.progression.campaign!.selectedAction=save.selectedAction;
-    }
+    save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,save);
+    world.progression.campaign!.selectedAction=save.selectedAction;
     if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;
   }
 }
