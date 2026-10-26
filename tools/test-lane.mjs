@@ -1,4 +1,4 @@
-// Keep lane timing beside disposable receipts, including failing and interrupted runs.
+// Keep lane timing beside disposable receipts, including failing runs.
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { hostname } from 'node:os';

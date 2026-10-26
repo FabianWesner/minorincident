@@ -31,4 +31,4 @@ lines.push('', `${cells.length}/40 cells recorded.`, '');
 writeFileSync(`${root}/${phase}-table.md`, lines.join('\n'));
 writeFileSync(`${root}/${phase}-ranked.json`, JSON.stringify(offenders.sort((a,b) => b.ratio-a.ratio), null, 2));
 console.log(lines.join('\n'));
-if (existsSync(`${root}/notes.md`)) writeFileSync(`${root}/README.md`, readFileSync(`${root}/notes.md`, 'utf8') + '\n' + lines.join('\n'));
+if (existsSync('docs/reports/perf-sweep/notes.md')) writeFileSync(`${root}/README.md`, readFileSync('docs/reports/perf-sweep/notes.md', 'utf8') + '\n' + lines.join('\n'));

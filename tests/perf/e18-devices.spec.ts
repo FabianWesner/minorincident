@@ -42,7 +42,7 @@ for (const [profile, platform, rate] of [['Pixel 7', 'android', 4], ['iPhone 14'
 
 // Re-enable the original physical gate automatically when the user's recordings arrive.
 test('T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification', () => {
-  const dir = 'test-results/perf/devices';
+  const dir = 'tests/fixtures/perf/devices';
   const files = existsSync(dir) ? readdirSync(dir).filter(f => f.endsWith('.json') && !f.startsWith('emulated-')) : [];
   test.skip(files.length === 0, 'AC08 real-device recordings pending user run at final verification; emulated profiles recorded');
   const recordings = files.map(file => JSON.parse(readFileSync(`${dir}/${file}`, 'utf8')) as { platform: string });

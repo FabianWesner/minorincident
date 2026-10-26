@@ -89,3 +89,6 @@ __pycache__/
 epics-pipeline/.meshopt-cache/
 test-results/look-round/ref/
 .wrangler/
+
+# Tests always write receipts here; CI rejects forced additions to this tree.
+# Pin inputs under tests/fixtures/ instead of unignoring generated artifacts.

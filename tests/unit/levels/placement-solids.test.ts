@@ -34,6 +34,6 @@ test('@E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders on
   const unique = [...new Set(found)].sort();
   mkdirSync('test-results', { recursive: true });
   writeFileSync('test-results/placement-offenders.json', JSON.stringify({ count: unique.length, pairs: unique }, null, 1));
-  if (process.env.UPDATE_PLACEMENT_BASELINE === '1') writeFileSync(baselinePath, JSON.stringify({ note: 'Known prop-vs-solid placement pairs on 2026-10-13 (qa-low-tier): layout backlog. Remove entries as they are fixed; never add one to pass a new placement.', pairs: unique }, null, 1));
+  if (process.env.UPDATE_PLACEMENT_BASELINE === '1') writeFileSync('test-results/placement-baseline.json', JSON.stringify({ note: 'Known prop-vs-solid placement pairs on 2026-10-13 (qa-low-tier): layout backlog. Remove entries as they are fixed; never add one to pass a new placement.', pairs: unique }, null, 1));
   expect(unique.filter(p => !baseline.has(p))).toEqual([]);
 }, 300_000);
