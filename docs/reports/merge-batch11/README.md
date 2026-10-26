@@ -14,20 +14,20 @@ The existing real-asset test now also requires at least 30% triangle reduction f
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Remote unit + levels + sim after pair 1 | 3,155 passed, 7 timing failures, 11 skipped; 508 files | [Full log](pair1-remote.log) |
-| Remote unit + levels + sim after pair 2 | **3,164 passed, 9 skipped; 505 passing files, 3 skipped** | [Full log](pair2-remote.log) |
-| Final focused geometry tests | **21 passed** on Hetzner, four workers | [Log](final-geometry-unit.log) |
-| Final L5 low counters | **2 passed** | [Log](final-l5-counters.log) |
+| Remote unit + levels + sim after pair 1 | 3,155 passed, 7 timing failures, 11 skipped; 508 files | [Full log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/pair1-remote.log) |
+| Remote unit + levels + sim after pair 2 | **3,164 passed, 9 skipped; 505 passing files, 3 skipped** | [Full log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/pair2-remote.log) |
+| Final focused geometry tests | **21 passed** on Hetzner, four workers | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/final-geometry-unit.log) |
+| Final L5 low counters | **2 passed** | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/final-l5-counters.log) |
 | Focused area matrix before the integration fix | WebGL2 **156/158**, WebGPU **156/158**; all low cells pass; only convoy high/1 and high/1.5 fail | [WebGL2](focused-webgl2/index.md), [WebGPU](focused-webgpu/index.md) |
 | Phone credits at 390×844 | **6/6 WebGL2, 6/6 WebGPU** | [WebGL2](credits-phone-webgl2/index.md), [WebGPU](credits-phone-webgpu/index.md) |
-| Initial native E18 batch | **20 passed, 2 L5 counter failures subsequently fixed, 4 predefined skips**; 5.2-minute exclusive batch | [Log](e18-native.log), [admission conditions](e18-conditions.jsonl) |
-| Independent selected functional e2e, port 3623 | **108/108 passed**, one worker to share browser capacity, 25.0 minutes | [Log](gate-functional.log) |
+| Initial native E18 batch | **20 passed, 2 L5 counter failures subsequently fixed, 4 predefined skips**; 5.2-minute exclusive batch | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/e18-native.log), [admission conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/e18-conditions.jsonl) |
+| Independent selected functional e2e, port 3623 | **108/108 passed**, one worker to share browser capacity, 25.0 minutes | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/gate-functional.log) |
 | Final geometry matrices | **18/18 WebGL2 and 18/18 WebGPU** | [WebGL2](final-webgl2/index.md), [WebGPU](final-webgpu/index.md) |
-| Final native E18 counters / frame times | **10 passed, 1 predefined manual skip**; high horde p95 **6.3 ms**, throttled low **12.5 ms**; 1.5-minute exclusive batch | [Log](final-e18-native.log), [conditions](final-e18-conditions.jsonl), [measurements](e18-final/) |
-| Supplied browser gate, ports 3621/3622 | Typecheck/lint/build and **16/16 smoke** pass; full WebGPU matrix **1,261/1,266**, all cells measured in **80 min 33 s**; exits 1 on five reds | [Log](gate-browser.log), [full matrix](full-matrix/index.md), [all row records](full-matrix/index.json) |
-| Final L1 grade/look stage, run separately after matrix exit | Exit **0**, six existing `fixme` skips for retired L1 flow; current L1 playthrough passed in the 108-case functional battery | [Log](gate-l1-native.log), [conditions](gate-l1-conditions.jsonl) |
+| Final native E18 counters / frame times | **10 passed, 1 predefined manual skip**; high horde p95 **6.3 ms**, throttled low **12.5 ms**; 1.5-minute exclusive batch | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/final-e18-native.log), [conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/final-e18-conditions.jsonl), [measurements](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/e18-final) |
+| Supplied browser gate, ports 3621/3622 | Typecheck/lint/build and **16/16 smoke** pass; full WebGPU matrix **1,261/1,266**, all cells measured in **80 min 33 s**; exits 1 on five reds | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/gate-browser.log), [full matrix](full-matrix/index.md), [all row records](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/full-matrix/index.json) |
+| Final L1 grade/look stage, run separately after matrix exit | Exit **0**, six existing `fixme` skips for retired L1 flow; current L1 playthrough passed in the 108-case functional battery | [Log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/gate-l1-native.log), [conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/gate-l1-conditions.jsonl) |
 
-All full Node sweeps ran on Hetzner with at most four workers. Timing retries used `tools/remote/timing-isolated.sh` and one worker. Browser work stayed headless on the Mac, Metal for WebGL2, unique ports, through the browser locks. Native timing used quiet-run; the first reservation lasted 5.2 minutes and was released before the intervening ordinary browser batches. No local Vitest sweeps. The final exclusive reservation lasted 1.5 minutes, after both final ordinary matrix batches. The new reduction assertion fails five models against the original whole-part fallback ([negative check](regression-negative.log)).
+All full Node sweeps ran on Hetzner with at most four workers. Timing retries used `tools/remote/timing-isolated.sh` and one worker. Browser work stayed headless on the Mac, Metal for WebGL2, unique ports, through the browser locks. Native timing used quiet-run; the first reservation lasted 5.2 minutes and was released before the intervening ordinary browser batches. No local Vitest sweeps. The final exclusive reservation lasted 1.5 minutes, after both final ordinary matrix batches. The new reduction assertion fails five models against the original whole-part fallback ([negative check](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/regression-negative.log)).
 
 ## Final native E18 measurements
 
@@ -36,11 +36,11 @@ All full Node sweeps ran on Hetzner with at most four workers. Timing retries us
 | High horde, 200 infected + 40 civilians | 71 / 600 | 571,113 / 1,500,000 | 6.3 / 16.7 ms |
 | Low horde, 100 infected + 40 civilians, phone viewport, 4× CPU throttle | 69 / 300 | 127,759 / 500,000 | 12.5 / 33.3 ms |
 
-The separate native desktop reference test records **5.8 ms** p95. All seven fixed-camera counters pass, including L5 female **494,218** and male **498,874** triangles. Full measurements are in [e18-final](e18-final/).
+The separate native desktop reference test records **5.8 ms** p95. All seven fixed-camera counters pass, including L5 female **494,218** and male **498,874** triangles. Full measurements are in [e18-final](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/e18-final).
 
 ## Red table
 
-“Red on main” uses starting main `c31833b25`, before any repair. The exact new convoy fixture was copied into the comparison checkout, with its original gates. Timing host differences are recorded rather than hidden. For APC coverage, main was rebuilt with only the new measurement hooks, catalog runner and identical fixture; its normal rendering behavior remains baseline. The exact [instrumentation patch](main-measurement-instrumentation.patch) is retained for reproduction.
+“Red on main” uses starting main `c31833b25`, before any repair. The exact new convoy fixture was copied into the comparison checkout, with its original gates. Timing host differences are recorded rather than hidden. For APC coverage, main was rebuilt with only the new measurement hooks, catalog runner and identical fixture; its normal rendering behavior remains baseline. The exact [instrumentation patch](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-measurement-instrumentation.patch) is retained for reproduction.
 
 | Red | Integration observation | Red on main? | Comparison / disposition |
 | --- | --- | --- | --- |
@@ -53,13 +53,13 @@ The separate native desktop reference test records **5.8 ms** p95. All seven fix
 | Zoo routines low, zoom 1.5 | clipping 2, limit 0 | **Yes**: 2 | [Starting-main matrix](main-zoo-low-webgpu/index.md); inherited; unchanged gate |
 | L5 low female triangles | 606,976 originally; **494,218 final** | **No**: 486,647 | Integration fix above; unchanged 500k limit |
 | L5 low male triangles | 611,632 originally; **498,874 final** | **No**: 491,303 | Integration fix above |
-| Residency 200 p95 | 4.260 ms shared; all 11 tests pass isolated | **No** in isolated comparison | [Isolated](pair1-isolated.log), [main](main-timing-comparison.log); timing noise under job rule |
-| L10 assault high p95 | 4.893 ms shared; all 5 tests pass isolated | **No** in isolated comparison | [Isolated](pair1-assault-isolated.log), [main](main-timing-comparison.log); timing noise |
-| Alpha support 200 p95 | 4.535 ms shared; isolated pass | **No** | [Isolated batch](pair1-performance-isolated.log), [main](main-performance-comparison.log); timing noise |
-| Alpha physical 200 p95 | 4.306 ms shared; isolated pass | **No** | Same isolated batch; [same-host main](main-same-runner-timing.log); timing noise |
-| Zoo S1 200 p95 | 5.888 ms shared, 4.134 ms isolated on 2.28.24.66 | **Yes**: 5.620 ms isolated on same host | [Same-host main](main-same-runner-timing.log); both pass on 94.130.181.173; inherited host-dependent budget failure |
+| Residency 200 p95 | 4.260 ms shared; all 11 tests pass isolated | **No** in isolated comparison | [Isolated](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/pair1-isolated.log), [main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-timing-comparison.log); timing noise under job rule |
+| L10 assault high p95 | 4.893 ms shared; all 5 tests pass isolated | **No** in isolated comparison | [Isolated](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/pair1-assault-isolated.log), [main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-timing-comparison.log); timing noise |
+| Alpha support 200 p95 | 4.535 ms shared; isolated pass | **No** | [Isolated batch](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/pair1-performance-isolated.log), [main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-performance-comparison.log); timing noise |
+| Alpha physical 200 p95 | 4.306 ms shared; isolated pass | **No** | Same isolated batch; [same-host main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-same-runner-timing.log); timing noise |
+| Zoo S1 200 p95 | 5.888 ms shared, 4.134 ms isolated on 2.28.24.66 | **Yes**: 5.620 ms isolated on same host | [Same-host main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-same-runner-timing.log); both pass on 94.130.181.173; inherited host-dependent budget failure |
 | Zoo S2 200 p95 | 4.200 ms shared, 5.745 ms isolated on 2.28.24.66 | **Yes**: 6.819 ms isolated on same host | Same comparison; inherited host-dependent budget failure |
-| Alpha mixed 200 p95 | 5.213 ms shared; isolated 4.669 / 4.164 ms on 2.28.24.66 | **No** in two isolated same-host main runs | [Integration retry](alpha-same-runner-final.log), [main](main-same-runner-alpha.log), [repeat](main-alpha-repeat.log). Unresolved timing discrepancy on that host; final full suite passes on 94.130.181.173. Simulation/core/physics sources are identical to main; no speculative sim fix. |
+| Alpha mixed 200 p95 | 5.213 ms shared; isolated 4.669 / 4.164 ms on 2.28.24.66 | **No** in two isolated same-host main runs | [Integration retry](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/alpha-same-runner-final.log), [main](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-same-runner-alpha.log), [repeat](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch11/main-alpha-repeat.log). Unresolved timing discrepancy on that host; final full suite passes on 94.130.181.173. Simulation/core/physics sources are identical to main; no speculative sim fix. |
 
 The main convoy also fails low/zoom 1.5 on both backends (14 pixels); integration passes that cell. The convoy final-frame diagnostic places the outside difference at the screen edge; canvas-only pixels also differ, so DOM HUD changes are not its sole cause. [Diagnostic](convoy-diagnostic/result.json), [difference image](convoy-diagnostic/canvas-diff.png). These inherited reds remain under the explicit “red on main = report, don't fix here” rule.
 
