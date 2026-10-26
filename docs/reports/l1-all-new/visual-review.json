@@ -1,0 +1,90 @@
+{
+  "reviewedAt": "2026-10-26T04:26:20.555155+00:00",
+  "runtimeReference": "760a5faaa",
+  "currentRevision": "ee9dde3e5f57c5120a8c1c22fe907164406c3a33",
+  "runtimeMatchesReference": true,
+  "captureCount": 14,
+  "nativeFigurePixels": [
+    120,
+    400
+  ],
+  "reviewed": [
+    "game-camera old/new front/back for every figure",
+    "30-figure occupied L1 crowd before/after",
+    "depot, lab and firefighter scripts",
+    "healthy, turned and corpse states",
+    "corgi original detailed backpack, tongue, collar, tail, trot, sit, bark, bicycle/APC/bus seating"
+  ],
+  "findings": {
+    "womanATote": "Authored v2 body already contains the tote and strap; duplicate fallback was reverted.",
+    "infectionPaint": "Exposed skin turns; gloves, uniforms, hair and carried props retain their authored colour.",
+    "headwear": "Reviewed cap/helmet/fringe clearance and visible eyes at both figure sizes.",
+    "depot": "Three existing PROD soft contacts, no new actor contacts and no piercing; baseline comparison retained in scenes.json.",
+    "textureDetail": "V2 authored textures are softer than the old palette assets; no lost major props found."
+  },
+  "scenes": {
+    "total": 39,
+    "nativePasses": 38,
+    "acceptedWithProdComparison": [
+      "qa-handover-depot"
+    ]
+  },
+  "captures": [
+    {
+      "file": "01-pedestrians.jpg",
+      "sha256": "2d80a8120d92e9fbc73263d54a56dd0a47af949098950d8ed5e1d43b8edfda5b"
+    },
+    {
+      "file": "02-npc.depot-clerk.jpg",
+      "sha256": "6973038527cbd749b55ee2d82911f60f9ebf33cfb280d2ef5c7b308d30dd7d78"
+    },
+    {
+      "file": "03-npc.lab-tech-a.jpg",
+      "sha256": "c5016218d464a0f00793a859344a432f4ca3df1d92d7d31dadc80b2ac520fc5a"
+    },
+    {
+      "file": "04-npc.lab-tech-b.jpg",
+      "sha256": "1dbac3a789c5fb9d2f372cccddae8785eaff5d223c5c54033dcf94b15498f197"
+    },
+    {
+      "file": "05-npc.lab-guard.jpg",
+      "sha256": "17fd454601b4f97453ab47ef356987fbe0ca6ca8098f726747a51bbe27dcb67f"
+    },
+    {
+      "file": "06-npc.firefighter-alive.jpg",
+      "sha256": "114e9125503fc2803db539f532fd5a934e7acd1e96bf8f9da8edb355c9d74422"
+    },
+    {
+      "file": "07-corgi.jpg",
+      "sha256": "8a9042f933c6cc8e0bb12580fc66f858affaf7234d38ea792ffc423f8472d8e6"
+    },
+    {
+      "file": "08-dogs.jpg",
+      "sha256": "8334a010ff8454ae6d21c2b33b2b4f7e00dce8a8a56364c3d9f3210bec72417e"
+    },
+    {
+      "file": "09-crowd-before.jpg",
+      "sha256": "15daedc584bf109f9d2d3de72160c33dc23de008c9a06b1a444894cf71b9f17b"
+    },
+    {
+      "file": "10-crowd-after.jpg",
+      "sha256": "69467f8065dc391a50613ca7a03f3969da8088e011888a871ae4c8a660b72706"
+    },
+    {
+      "file": "11-depot-scene.jpg",
+      "sha256": "ecf0ba810adca1562f2ee35802dcad4883345b650c4888ae0aa902de9557262d"
+    },
+    {
+      "file": "12-lab-scene.jpg",
+      "sha256": "36c8ddf34a6791c7a95f67259ef1b1ce1f7e332b88c7e20cb7b1668df43e0b86"
+    },
+    {
+      "file": "13-firefighter-scene.jpg",
+      "sha256": "6c76f6550a754111ba33b86070dcde94b227b4c3cb0517345731a46e30717a00"
+    },
+    {
+      "file": "14-states-and-motion.jpg",
+      "sha256": "5cbb713b7c1c34be38603ca3bc523411d81bb9f466a11b553375660aa9ea16d8"
+    }
+  ]
+}
