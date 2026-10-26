@@ -12,6 +12,7 @@ export class ControlIntent {
   boundaryFeedback(point: Vec2): void { this.blockedMove = { point: { ...point }, until: this.world.tick + 180 }; }
   private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly waypoint = { x: 0, z: 0 };
+  private keyboardFacing: Vec2 | null = null;
   private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number; ground?: boolean } | null = null;
   /** The infected the current click command attacks (melee resolves it first, so a downed target takes the ground hit). */
   get targetId(): number | null { return this.attack?.id ?? null; }
@@ -20,7 +21,7 @@ export class ControlIntent {
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
-  reset(clearFeedback = true): void { if (clearFeedback) this.blockedMove = null; this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
+  reset(clearFeedback = true): void { if (clearFeedback) this.blockedMove = null; this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; this.keyboardFacing = null; }
   resolve(raw: InputFrame): InputFrame {
     const player = this.world.entities.get(1)!;
     if ((raw.mouseAttack || raw.activeAttack) && player.weapons && !raw.pointerGround) {
@@ -94,7 +95,7 @@ export class ControlIntent {
         this.moveTarget = { x: prop.transform.x + Math.cos(angle) * reach, z: prop.transform.z + Math.sin(angle) * reach };
       }
     }
-    if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') return raw;
+    if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') { this.keyboardFacing = null; return raw; }
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };
     if (raw.pointerGround) frame.left = { down: false, held: false, up: raw.left.up };
     const combat = player.weapons ? this.world.combat : null, attack = this.attack;
@@ -140,11 +141,17 @@ export class ControlIntent {
     }
     if (raw.aimSource === 'assist' && combat && !this.attack) {
       const p = player.transform, length = Math.hypot(frame.move.x, frame.move.z);
-      const facing = length > 0 ? { x: frame.move.x / length, z: frame.move.z / length } : { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) };
+      const firing = frame.left.down || frame.left.held || frame.right.down || frame.right.held;
+      // Idle keyboard fire keeps the facing it started with: the courier turning toward a snapped target must not
+      // re-centre the cone on that target (a burst then walked sideways from zombie to zombie, Q-196).
+      if (length > 0) this.keyboardFacing = { x: frame.move.x / length, z: frame.move.z / length };
+      else if (!firing || !this.keyboardFacing) this.keyboardFacing = { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) };
+      const facing = { ...this.keyboardFacing };
       frame.aim = facing; frame.aimPoint = null;
       const side = frame.right.down || frame.right.held ? 'RIGHT' : frame.left.down || frame.left.held ? 'LEFT' : combat.runner.loadout.state.selectedSide;
-      combat.assist.facing(p, facing, action(combat.runner.loadout.current(side).id).range);
-    }
+      const def = action(combat.runner.loadout.current(side).id);
+      combat.assist.facing(p, facing, def.range, def.projectile?.speed);
+    } else this.keyboardFacing = null;
     return frame;
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {

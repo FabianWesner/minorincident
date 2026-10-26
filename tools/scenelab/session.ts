@@ -240,6 +240,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('megaStepMaxM', metrics.megaAlpha?.stepMaxM ?? Infinity, e.megaStepMaxM);
   const atLeast = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value >= limit, value, limit }); };
   atLeast('specialActiveMin', metrics.specials?.filter(s => s.stage === 'active' && (!e.specialActiveMove || s.move === e.specialActiveMove)).length ?? 0, e.specialActiveMin);
+  atLeast('aimShotsMin', metrics.aim?.shots ?? 0, e.aimShotsMin);
+  atLeast('aimHitShareMin', metrics.aim?.hitShare ?? 0, e.aimHitShareMin);
+  add('aimIntentErrorMaxDeg', metrics.aim?.shots ? metrics.aim.intentErrorMaxDeg : Infinity, e.aimIntentErrorMaxDeg);
   atLeast('courierHpMin', Object.values(metrics.actors).find(a => a.kind === 'courier')?.health ?? 0, e.courierHpMin);
   atLeast('megaCoarseFramesMin', metrics.megaAlpha?.modes.coarse ?? 0, e.megaCoarseFramesMin);
   atLeast('megaDetailedFramesMin', metrics.megaAlpha?.modes.detailed ?? 0, e.megaDetailedFramesMin);

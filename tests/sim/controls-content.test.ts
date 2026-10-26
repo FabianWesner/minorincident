@@ -30,19 +30,23 @@ test('@E03 @E19 @E03-AC05 @E19-AC16 bicycle WASD uses local throttle, brakes the
     expect(b.heading).toBeLessThan(heading);
   }
 });
-test('@E05 @E05-AC11 auto-aim picks the nearest on-screen target in ±35 degrees and otherwise keeps straight', async () => {
+test('@E05 @E05-AC11 Q-196 auto-aim picks the on-screen target closest to the aim ray within ±25 degrees and otherwise keeps straight', async () => {
   const w = await arena(), assist = w.combat!.assist;
   const spawn = (x: number, z: number) => w.infected!.spawn('infected.runner', { x, z });
   spawn(1, 2); // Nearer but outside the cone.
-  const near = spawn(4, 1), far = spawn(6, 0);
+  const near = spawn(4, 1.2), far = spawn(6, .3); // 16.7° and 2.9° off the aim: the aligned one wins (PO 10-26)
   const aim = { x: 1, z: 0 }; assist.facing({ x: 0, z: 0 }, aim, 22);
-  expect(aim.x).toBeCloseTo(4 / Math.sqrt(17)); expect(aim.z).toBeCloseTo(1 / Math.sqrt(17));
+  expect(aim.x).toBeCloseTo(6 / Math.hypot(6, .3)); expect(aim.z).toBeCloseTo(.3 / Math.hypot(6, .3));
+  w.infected!.release(w.entities.get(far)!);
+  assist.facing({ x: 0, z: 0 }, Object.assign(aim, { x: 1, z: 0 }), 22);
+  expect(aim.x).toBeCloseTo(4 / Math.hypot(4, 1.2)); expect(aim.z).toBeCloseTo(1.2 / Math.hypot(4, 1.2));
+  const back = spawn(6, .3);
   // Exclude the nearer target using the actual sim-camera viewport rule.
   w.infected!.director.setFrustum(new Matrix4().makeOrthographic(-10, 10, .5, -.5, .1, 100).multiply(new Matrix4().makeTranslation(0, -.35, -10)).elements);
   // Both eligible targets are outside this narrow frame's vertical extent.
   assist.facing({ x: 0, z: 0 }, Object.assign(aim, { x: 1, z: 0 }), 22);
   expect(aim).toEqual({ x: 1, z: 0 });
-  w.infected!.release(w.entities.get(near)!); w.infected!.release(w.entities.get(far)!);
+  w.infected!.release(w.entities.get(near)!); w.infected!.release(w.entities.get(back)!);
   assist.facing({ x: 0, z: 0 }, Object.assign(aim, { x: 1, z: 0 }), 22);
   expect(aim).toEqual({ x: 1, z: 0 });
 });
