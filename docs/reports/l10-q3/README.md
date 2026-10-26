@@ -56,11 +56,11 @@ The E32 verifier now uses one functional browser worker. Its former two-unit res
 
 ## Evidence
 
-Scene Lab: opening/carry **12/12 WebGL + 12/12 WebGPU**; walking seam **6/6 WebGL + 6/6 WebGPU**, high/low × zoom 0.5/1.0/1.5, after fresh `npm run build`. Logs are `test-results/l10-q3/scenes-{webgl,webgpu}/index.md`; retained compact sheets and gate indexes are in [evidence/](evidence/). New focused coverage: **13/13 tests** on Hetzner (first-minute/seam, dog, cure), `test-results/l10-q3/coverage-final.json`. Typecheck/lint/build pass.
+Scene Lab: opening/carry **12/12 WebGL + 12/12 WebGPU**; walking seam **6/6 WebGL + 6/6 WebGPU**, high/low × zoom 0.5/1.0/1.5, after fresh `npm run build`. Logs are `test-results/l10-q3/scenes-{webgl,webgpu}/index.md`; retained compact sheets and gate indexes are in [evidence/](evidence). New focused coverage: **13/13 tests** on Hetzner (first-minute/seam, dog, cure), `test-results/l10-q3/coverage-final.json`. Typecheck/lint/build pass.
 
 Full unit after the renderer fix: **1,453 passed, 7 existing skipped**; the subsequent verifier admission guard and prefetch cases pass in the focused tooling run on Hetzner; E32 consolidation: **149/149 selected tests pass**, including `tests/levels/L10.test.ts` and all selected L10 sim files, with both runner slots held for the timing phase. Full sim sweep: **1,034 passed / 3 CPU timing failures** (director 4.72 ms, high L10 assault 8.49 ms, NPC patrol 4.50 ms, all versus 4 ms); all three unchanged timing assertions pass in the isolated recheck (**3/3**). The full sweep itself exited 1 and is retained separately; no suite-level green result is invented.
 
-Initial native R1–R4/seam timing: **8/8 passed**, high/low × zoom 1.0/0.5 × WebGL/WebGPU, one headless native Metal worker under quiet-run. The browser batch ran 10.7 min and released its reservation; the outer 1,100-second cancellation bound was not reached. Final native raw results, the initial quiet preflight conditions and final verifier log ([verify-run.txt](evidence/perf/verify-run.txt)) are retained in [evidence/perf/](evidence/perf/).
+Initial native R1–R4/seam timing: **8/8 passed**, high/low × zoom 1.0/0.5 × WebGL/WebGPU, one headless native Metal worker under quiet-run. The browser batch ran 10.7 min and released its reservation; the outer 1,100-second cancellation bound was not reached. Final native raw results, the initial quiet preflight conditions and final verifier log ([verify-run.txt](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-q3/evidence/perf/verify-run.txt)) are retained in [evidence/perf/](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-q3/evidence/perf).
 
 Post-fix `npm run verify -- E32`: **158 selected Vitest tests + 57 browser tests passed** with remote sim and one browser worker. All **8/8 post-fix native timing checks pass**; the verifier exits 0. The final performance batch ran 10.7 min, released its quiet reservation and stayed within the 1,100-second outer bound. Final native counters replace the baseline in `evidence/perf/`; command exit codes are in `evidence/verify-checks.json`. Browser selection includes actual audio RMS/voice/HUD cases, cure/checkpoint/finale wiring and WebGPU smoke. The strict production-pressure diagnostic remains a reported AC10 failure outside that passing fixture selection.
 
@@ -101,7 +101,7 @@ Reproduce (expected exit 1 on this implementation):
 sh tools/remote/run.sh "$PWD" --pull test-results/l10-q3/pressure-audit.json -- npx tsx docs/reports/l10-q3/evidence/pressure-audit.ts
 ```
 
-[Measured audit](evidence/pressure-audit.json) and [reproducer](evidence/pressure-audit.ts) are retained. This is a reported production-contract failure, separate from the passing Vitest fixture consolidation.
+[Measured audit](evidence/pressure-audit.json) and [reproducer](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-q3/evidence/pressure-audit.ts) are retained. This is a reported production-contract failure, separate from the passing Vitest fixture consolidation.
 
 **E32-AC04 calibrated newbie timing:** no calibrated human/newbie profile is proven by this lane. The complete-policy 20:41 run is retained against the 47-minute authored regional defaults; it cannot sign off the 45–50-minute novice band. No pacing changes or idle padding were made.
 
