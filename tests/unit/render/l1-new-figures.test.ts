@@ -15,8 +15,8 @@ import { bakedSkull } from '../../../src/render/characters/CrowdAccessories';
 import { characterNodes } from '../../../src/data/survivor';
 import { authoredClips, sampleClip } from '../../../src/render/characters/clips';
 
-for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']) test(`${id}: gestures retain glove seams and physical prop ownership @E08 @E17`, async () => {
-  const def = manifest.find(d => d.id === id)!, root = await load(def.glb), body = root.getObjectByName('skin_body') as SkinnedMesh;
+for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']) for (const lod of ['lod0', 'lod1', 'lod2'] as const) test(`${id}/${lod}: gestures retain glove seams and physical prop ownership @E08 @E17`, async () => {
+  const def = manifest.find(d => d.id === id)!, root = await load((lod === 'lod0' ? def.glb : def.lods![lod])!), body = root.getObjectByName('skin_body') as SkinnedMesh;
   root.updateMatrixWorld(true);
   const rest = Array.from({ length: body.geometry.getAttribute('position').count }, (_, i) => body.getVertexPosition(i, new Vector3()).clone());
   for (const name of ['clipboard', 'clipboard-paper', 'clipboard-clip']) {
@@ -37,7 +37,6 @@ for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', '
     }
   }
   stretched.sort((a, b) => b.after - a.after);
-  if (stretched.length) console.log(JSON.stringify({ id, worst: stretched[0], vertices: [stretched[0].a, stretched[0].b].map(i => ({ rest: rest[i].toArray(), weights: [0, 1, 2, 3].map(k => [body.skeleton.bones[body.geometry.getAttribute('skinIndex').getComponent(i, k)].name, body.geometry.getAttribute('skinWeight').getComponent(i, k)]) })) }));
   expect(stretched.slice(0, 5), `${id} worst gesture edges`).toEqual([]);
 });
 
@@ -50,6 +49,13 @@ test('L1 skinned headwear excludes bun height and glasses while retaining skull 
   expect(skull.size.x).toBeCloseTo(.8); expect(skull.size.y).toBeCloseTo(.3);
   expect(skull.centre.y).toBeCloseTo(1.35); expect(skull.size.z).toBeCloseTo(.3);
   geometry.dispose();
+});
+
+test('all repaired L1 human tiers retain one closed anatomical surface @E08 @E17', () => {
+  for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']) for (const lod of [0, 1, 2]) {
+    const report = JSON.parse(readFileSync(`docs/reports/l1-all-new/builds/${id}/lod${lod}.json`, 'utf8'));
+    expect(report.components, `${id}/${lod}`).toBe(1); expect(report.openEdges, `${id}/${lod}`).toBe(0);
+  }
 });
 
 async function load(path: string) {

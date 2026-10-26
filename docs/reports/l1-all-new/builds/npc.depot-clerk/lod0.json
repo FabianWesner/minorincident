@@ -1,24 +1,42 @@
 {
   "rig": "assets/npc.depot-clerk/model.glb",
   "out": "docs/reports/l1-all-new/builds/npc.depot-clerk/lod0.raw.glb",
-  "bytes": 2112896,
+  "bytes": 2092296,
   "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.depot-clerk/source/assembled-lod0.glb",
-  "scale": 1.359335065062721,
+  "scale": 1.3593350674278013,
   "yaw": 90,
   "translation": [
-    -0.03575039605463419,
-    0.6863765216928067,
-    0.0007149164545743047
+    -0.03575039604960294,
+    0.6863765228870214,
+    0.0007149164558181709
   ],
-  "meanDistanceToRigidSurface": 0.02811933886077828,
-  "vertices": 5572,
-  "weldedVertices": 2589,
-  "triangles": 5278,
+  "meanDistanceToRigidSurface": 0.023097474405862715,
+  "anatomyMaterials": [
+    "pal_skinWarm",
+    "pal_picketWhite",
+    "pal_brick"
+  ],
+  "contactRepair": {
+    "removedTriangles": 58,
+    "closedBoundaries": 2,
+    "removedScrapTriangles": 0
+  },
+  "weightRelaxationPasses": 2,
+  "propBindings": [
+    {
+      "prop": "clerk-name-badge",
+      "intended": "torso",
+      "owner": "torso"
+    }
+  ],
+  "vertices": 5617,
+  "weldedVertices": 2591,
+  "triangles": 5282,
   "bodyTriangleBudget": null,
   "components": 1,
   "openEdges": 0,
-  "unrelatedSeams": 438,
-  "maxInfluences": 3,
+  "unrelatedSeams": 6,
+  "maxInfluences": 4,
   "zeroNormals": 0,
   "jointNames": [
     "root",
@@ -42,58 +60,58 @@
   "capFits": [
     {
       "part": "head",
-      "rim": 83,
-      "triangles": 75,
-      "loops": 4,
-      "distance": 0.047743008941884546,
+      "rim": 32,
+      "triangles": 30,
+      "loops": 1,
+      "distance": 0.048710878528024734,
       "method": "cut-boundary"
     },
     {
       "part": "armL",
-      "rim": 53,
-      "triangles": 49,
-      "loops": 2,
-      "distance": 0.07036772496738501,
+      "rim": 18,
+      "triangles": 16,
+      "loops": 1,
+      "distance": 0.14664744333011392,
       "method": "cut-boundary"
     },
     {
       "part": "armR",
-      "rim": 57,
-      "triangles": 51,
-      "loops": 3,
-      "distance": 0.06405584194877559,
+      "rim": 12,
+      "triangles": 10,
+      "loops": 1,
+      "distance": 0.15259240940815164,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmL",
-      "rim": 21,
-      "triangles": 19,
+      "rim": 8,
+      "triangles": 6,
       "loops": 1,
-      "distance": 0.061142191723648494,
+      "distance": 0.06074263360601707,
       "method": "cut-boundary"
     },
     {
       "part": "foreArmR",
-      "rim": 23,
-      "triangles": 21,
+      "rim": 9,
+      "triangles": 7,
       "loops": 1,
-      "distance": 0.07737295621202801,
+      "distance": 0.06632912087291135,
       "method": "cut-boundary"
     },
     {
       "part": "legL",
-      "rim": 32,
-      "triangles": 30,
-      "loops": 1,
-      "distance": 0.05387946717216389,
+      "rim": 45,
+      "triangles": 39,
+      "loops": 3,
+      "distance": 0.08145136310089107,
       "method": "cut-boundary"
     },
     {
       "part": "legR",
-      "rim": 39,
+      "rim": 43,
       "triangles": 37,
-      "loops": 1,
-      "distance": 0.06099761645977165,
+      "loops": 3,
+      "distance": 0.09134613874500111,
       "method": "cut-boundary"
     }
   ],
@@ -102,75 +120,75 @@
   "joints": 16,
   "eyes": 2,
   "seams": {
-    "armR/torso": {
-      "seamVertices": 64,
-      "band": 0.04745603102621883,
-      "blended": 76
-    },
     "head/torso": {
-      "seamVertices": 116,
-      "band": 0.0325909768045412,
-      "blended": 118
-    },
-    "armL/torso": {
-      "seamVertices": 55,
-      "band": 0.04745603102621883,
-      "blended": 71
+      "seamVertices": 100,
+      "band": 0.12573667701454994,
+      "blended": 372
     },
     "handR/foreArmR": {
-      "seamVertices": 23,
-      "band": 0.0325909768045412,
-      "blended": 23
+      "seamVertices": 22,
+      "band": 0.1045497943033208,
+      "blended": 61
     },
     "handL/foreArmL": {
       "seamVertices": 28,
-      "band": 0.0325909768045412,
-      "blended": 28
+      "band": 0.11475870304891542,
+      "blended": 83
     },
     "shinL/legL": {
-      "seamVertices": 38,
-      "band": 0.04350136177403393,
-      "blended": 39
+      "seamVertices": 39,
+      "band": 0.1680883392076751,
+      "blended": 126
     },
-    "torso/hip": {
-      "seamVertices": 10,
-      "band": 0.05536536953058863,
-      "blended": 13
-    },
-    "legR/hip": {
-      "seamVertices": 4,
-      "band": 0.05536536953058863,
-      "blended": 6
+    "legR/torso": {
+      "seamVertices": 53,
+      "band": 0.17084171199163192,
+      "blended": 226
     },
     "foreArmR/armR": {
       "seamVertices": 16,
-      "band": 0.03954669252184902,
-      "blended": 17
+      "band": 0.10577890424705025,
+      "blended": 41
+    },
+    "armR/torso": {
+      "seamVertices": 24,
+      "band": 0.11394757961966816,
+      "blended": 134
+    },
+    "armL/torso": {
+      "seamVertices": 30,
+      "band": 0.12146166518197449,
+      "blended": 143
     },
     "foreArmL/armL": {
-      "seamVertices": 22,
-      "band": 0.03954669252184902,
-      "blended": 22
+      "seamVertices": 17,
+      "band": 0.09341101042668278,
+      "blended": 43
     },
     "footR/shinR": {
-      "seamVertices": 34,
-      "band": 0.0325909768045412,
-      "blended": 34
+      "seamVertices": 35,
+      "band": 0.10630766960662248,
+      "blended": 102
     },
     "footL/shinL": {
       "seamVertices": 45,
-      "band": 0.0325909768045412,
-      "blended": 45
+      "band": 0.12499816754246916,
+      "blended": 119
+    },
+    "legL/torso": {
+      "seamVertices": 45,
+      "band": 0.17084171199163192,
+      "blended": 209
+    },
+    "legR/legL": {
+      "seamVertices": 12,
+      "band": 0.17084171199163192,
+      "blended": 60
     },
     "shinR/legR": {
-      "seamVertices": 33,
-      "band": 0.04350136177403393,
-      "blended": 35
-    },
-    "legL/hip": {
-      "seamVertices": 3,
-      "band": 0.05536536953058863,
-      "blended": 5
+      "seamVertices": 38,
+      "band": 0.15634237930756004,
+      "blended": 123
     }
   }
 }
