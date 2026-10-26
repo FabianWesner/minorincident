@@ -23,18 +23,18 @@ The audit body's blue-white seams dominate almost-black clothing. Afterward the 
 | Check | Result |
 | --- | --- |
 | Typecheck, lint, fresh production build | pass; final runtime changes were built by the E25 verifier |
-| Full Hetzner unit run, <=4 workers | 1,584 passed, seven skipped, one failure: unchanged E29-AC01 traceability; [summary](unit-summary.txt) |
+| Full Hetzner unit run, <=4 workers | 1,584 passed, seven skipped, one failure: unchanged E29-AC01 traceability; [summary](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/unit-summary.txt) |
 | E25 selected Node + smoke assertions, remote, one worker | 32 passed / zero failed; [results](E25-node.json) |
 | Initial WebGL catalog, both tiers, zoom 0.5/1/1.5 | 42/42 numeric gates pass; [rows](catalog-webgl2.json) |
 | Refined WebGL storm/fog/snow catalog, same matrix | 18/18 numeric gates pass; [rows](catalog-webgl2-weather.json) |
-| Original eye probe, before fixture repair | reproduced failure: red dominance -59; [log](eye.log.gz) |
-| Rejected northwest-spawn experiment | all four backend/tier cases fail: sampling includes bright sidewalk/lamp surfaces; [log](eye-fixed.log.gz) |
-| First viewport test | correctly found hidden full-health repair prompt; expectation corrected afterward; [log](panels.log.gz) |
+| Original eye probe, before fixture repair | reproduced failure: red dominance -59; [log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/eye.log.gz) |
+| Rejected northwest-spawn experiment | all four backend/tier cases fail: sampling includes bright sidewalk/lamp surfaces; [log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/eye-fixed.log.gz) |
+| First viewport test | correctly found hidden full-health repair prompt; expectation corrected afterward; [log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/panels.log.gz) |
 | Final corrected eye/viewport/weather regression set | unmeasured: cancelled at fairness cap |
 | Final WebGPU matrix, phone bounds, expanded L6 states | unmeasured: cancelled at fairness cap |
 | Native E18 budgets | unmeasured; no quiet reservation acquired, no budget pass claimed |
-| Full sim + tests/levels on Hetzner | still active at handoff; initial shared-runner E18 timing assertions fail; [partial log](sim-snapshot.log.gz) |
-| Isolated sim performance repeat on Hetzner | waiting for both runner slots at handoff; [partial log](sim-perf-isolated-snapshot.log.gz) |
+| Full sim + tests/levels on Hetzner | still active at handoff; initial shared-runner E18 timing assertions fail; [partial log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/sim-snapshot.log.gz) |
+| Isolated sim performance repeat on Hetzner | waiting for both runner slots at handoff; [partial log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/ui-night/sim-perf-isolated-snapshot.log.gz) |
 
 `MI_VERIFY_REMOTE_SIM=1 E2E_PORT=4499 SCENE_PORT=4500 npm run verify -- E25` passed typecheck/lint/build and its 32 Node assertions; it was terminated as its Mac browser phase queued. E26/E28 full verifier repeats and the deploy-gate browser battery have not run. No epic status was changed.
 
