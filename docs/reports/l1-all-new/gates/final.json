@@ -1,0 +1,181 @@
+{
+  "status": "passed",
+  "preparedAt": "2026-10-26T06:40:27.636598+00:00",
+  "branch": "lane/l1-all-new",
+  "runtimeReference": "760a5faaa",
+  "runtimeAndPipelineUnchangedSinceReference": true,
+  "trees": {
+    "src": "c2a9fece53426c19828384bf301de568a4d8996f",
+    "assets": "c959333f2e43a5df4929ecd1b30f219be8e488c0",
+    "public": "c8dcc2e0e612ebf99d2a0d1c1495301eded08afc",
+    "tools/assets": "f61540454c0b26da2359d75a656b494ef2007f57",
+    "tests/unit": "bf06974c985799447ba267c00002addb83acc04a",
+    "tests/levels": "8c3bad70f284d2bf20ecf24713df3b1cbf14cd73"
+  },
+  "base": {
+    "skinnedProduction": "5e008d4a0",
+    "main": "0009f107d",
+    "merge": "a815adc95"
+  },
+  "automaticBuilds": {
+    "models": 13,
+    "checkedDeliveries": 78,
+    "manualSteps": 0,
+    "receipt": "../build-integrity.json"
+  },
+  "review": {
+    "censusIds": 20,
+    "nativeViews": 160,
+    "pixels": [
+      120,
+      400
+    ],
+    "selectedCaptures": 14,
+    "scenes": 39,
+    "nativeScenePasses": 38,
+    "depotInheritedSoftContacts": 3,
+    "depotNoNewContact": true,
+    "crowdSubmittedAndDrawn": 30,
+    "receipt": "../visual-review.json"
+  },
+  "performance": {
+    "comparisons": [
+      {
+        "scenario": "all-figures",
+        "backend": "webgl2",
+        "phone": false,
+        "mainP95": 5.649999999999636,
+        "newP95": 5,
+        "deltaMs": -0.6499999999996362,
+        "pass": true
+      },
+      {
+        "scenario": "escape-street",
+        "backend": "webgl2",
+        "phone": false,
+        "mainP95": 4.899999999999636,
+        "newP95": 4.849999999999909,
+        "deltaMs": -0.04999999999972715,
+        "pass": true
+      },
+      {
+        "scenario": "all-figures",
+        "backend": "webgpu",
+        "phone": false,
+        "mainP95": 4.600000000000364,
+        "newP95": 4.25,
+        "deltaMs": -0.3500000000003638,
+        "pass": true
+      },
+      {
+        "scenario": "escape-street",
+        "backend": "webgpu",
+        "phone": false,
+        "mainP95": 4.450000000000728,
+        "newP95": 4.349999999999454,
+        "deltaMs": -0.10000000000127329,
+        "pass": true
+      },
+      {
+        "scenario": "all-figures",
+        "backend": "webgl2",
+        "phone": true,
+        "mainP95": 20.44999999999891,
+        "newP95": 15.499999999998181,
+        "deltaMs": -4.950000000000728,
+        "pass": true
+      },
+      {
+        "scenario": "escape-street",
+        "backend": "webgl2",
+        "phone": true,
+        "mainP95": 20.200000000000728,
+        "newP95": 17.649999999999636,
+        "deltaMs": -2.5500000000010914,
+        "pass": true
+      }
+    ],
+    "samples": 24,
+    "overlaps": 0,
+    "gpuErrors": 0,
+    "coldLoads": {
+      "summary": [
+        {
+          "variant": "main",
+          "samples": [
+            2292.3999996185303,
+            2277.1000003814697,
+            2326.4000005722046,
+            2275.7999992370605,
+            2260.199999809265
+          ],
+          "worstMs": 2326.4000005722046,
+          "bundles": [
+            "http://127.0.0.1:4672/build/index-Dog88jbr.js"
+          ]
+        },
+        {
+          "variant": "new",
+          "samples": [
+            2306.9000005722046,
+            1875.5,
+            1842.4000005722046,
+            1877.8999996185303,
+            1893.1999998092651
+          ],
+          "worstMs": 2306.9000005722046,
+          "bundles": [
+            "http://127.0.0.1:4672/build/index-cySs_3y-.js"
+          ]
+        }
+      ],
+      "relative": 0.9916179504834922,
+      "pass": true
+    }
+  },
+  "gates": {
+    "validatorRows": 1262,
+    "validatorErrors": 0,
+    "targetedTestsPassed": 135,
+    "remoteUnitAndLevelTestsPassed": 2774,
+    "remoteExistingSkips": 9,
+    "invariantSimPassed": 28,
+    "invariantNativePassed": 12,
+    "e17SelectedUnitPassed": 103,
+    "e17BrowserPassed": 51,
+    "e17PhotoViews": 316,
+    "e17Turntables": 371,
+    "standaloneSmokeUnitPassed": 6,
+    "standaloneSmokeBrowserPassed": 35,
+    "unflaggedWebgpuDistinctCases": 4,
+    "unflaggedWebgpuExecutions": 8,
+    "postReviewTypecheckAndLint": "passed"
+  },
+  "campaign": {
+    "levelsFinished": 10,
+    "skippedSteps": 0,
+    "severity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 7,
+      "P3": 0
+    },
+    "receipt": "../campaign/summary.json"
+  },
+  "maleL1": {
+    "levelsFinished": 1,
+    "skippedSteps": 0,
+    "severity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "receipt": "../campaign-male/summary.json"
+  },
+  "retainedAttempt": "../gate-attempts/campaign-first.json.gz",
+  "attemptNote": "An initial L3 checkpoint stall did not recur in the focused L3 or complete final campaign; the original P0 receipt is retained.",
+  "captureHelperNote": "Final comparison-only helpers apply the existing production eye-disc mask and include the pre-existing v2 common-worker fallback; production and pipeline files stayed frozen. Typecheck and lint were rerun after these helper edits.",
+  "deployment": false,
+  "elapsedSecondsAtPreparation": 26060
+}

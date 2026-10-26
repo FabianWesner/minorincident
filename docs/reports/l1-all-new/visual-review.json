@@ -32,19 +32,19 @@
   "captures": [
     {
       "file": "01-pedestrians.jpg",
-      "sha256": "2d80a8120d92e9fbc73263d54a56dd0a47af949098950d8ed5e1d43b8edfda5b"
+      "sha256": "7970064205288e3b32742fa96bfb5db9e109593e5fe33d2df30f8a2264866beb"
     },
     {
       "file": "02-npc.depot-clerk.jpg",
-      "sha256": "6973038527cbd749b55ee2d82911f60f9ebf33cfb280d2ef5c7b308d30dd7d78"
+      "sha256": "b9211aaa454809186716e815aefb2d9bde5665ac951a6b7eed713ee3da72b75e"
     },
     {
       "file": "03-npc.lab-tech-a.jpg",
-      "sha256": "c5016218d464a0f00793a859344a432f4ca3df1d92d7d31dadc80b2ac520fc5a"
+      "sha256": "193da30751f7caa53436cec1abb8b34e8cb9e8a5a23aa4fbf9c8e70edd44ce79"
     },
     {
       "file": "04-npc.lab-tech-b.jpg",
-      "sha256": "1dbac3a789c5fb9d2f372cccddae8785eaff5d223c5c54033dcf94b15498f197"
+      "sha256": "c66e2fb6829d1a56f115cf186e5e6093ae97ba5ca99be55734345d6ba270de88"
     },
     {
       "file": "05-npc.lab-guard.jpg",
@@ -52,7 +52,7 @@
     },
     {
       "file": "06-npc.firefighter-alive.jpg",
-      "sha256": "114e9125503fc2803db539f532fd5a934e7acd1e96bf8f9da8edb355c9d74422"
+      "sha256": "b64fed6f3d654b41340cd58aeba806d450bdd1452b52c27b105408d3c9a64bdc"
     },
     {
       "file": "07-corgi.jpg",
@@ -60,7 +60,7 @@
     },
     {
       "file": "08-dogs.jpg",
-      "sha256": "8334a010ff8454ae6d21c2b33b2b4f7e00dce8a8a56364c3d9f3210bec72417e"
+      "sha256": "4252c690cd08c4512bcc7e0a347f6183ddf6ea4ddf4809b5f97f5ae7b85c576a"
     },
     {
       "file": "09-crowd-before.jpg",
@@ -86,5 +86,26 @@
       "file": "14-states-and-motion.jpg",
       "sha256": "5cbb713b7c1c34be38603ca3bc523411d81bb9f466a11b553375660aa9ea16d8"
     }
-  ]
+  ],
+  "censusCoverage": {
+    "potentialIds": 20,
+    "alreadyConvertedFallback": "inf.common-worker",
+    "fallbackReviewedAt": "2026-10-26T06:33:24.867608+00:00",
+    "nativeFigurePixels": [
+      120,
+      400
+    ],
+    "oldNewViews": [
+      "front",
+      "back"
+    ],
+    "note": "The pre-existing v2 common-worker fallback is included in 01-pedestrians.jpg; it remains on the base branch production skin."
+  },
+  "finalReviewedAt": "2026-10-26T06:33:24.867608+00:00",
+  "captureSource": {
+    "tools/scenelab/l1-all-new-review.ts": "dc45ddb2fb8b2cd11e2aab36bc0de825aac0da0bc95cd3803d2c70d78dd25329",
+    "tools/scenelab/l1-all-new-review-material.ts": "c1dc257ed1ea42b12a3152883eb47f567eb02b7d6a6610d8f119edaf268005ed",
+    "tools/scenelab/l1-all-new-sheets.py": "77f0078730393f14c416168baabc0f0b5ad6a922d1702754cc5a6894d22942fa"
+  },
+  "eyeMaterialReview": "Comparison meshes apply the existing production circular eye-disc mask; healthy figures hide the infection emitters. All 160 native views regenerated and reviewed."
 }

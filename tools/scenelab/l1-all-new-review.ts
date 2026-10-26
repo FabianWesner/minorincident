@@ -23,13 +23,28 @@ try {
     const def = (variant === 'old' ? old : current).find(d => d.id === base)!;
     const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip }) => {
       const modulePath = '/src/assets/registry.ts', threePath = '/node_modules/three/build/three.webgpu.js';
-      const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath);
+      const reviewMaterialPath = '/tools/scenelab/l1-all-new-review-material.ts';
+      const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath), { reviewEyeMaterial } = await import(reviewMaterialPath);
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
       const view = game.view as unknown as { scene: import('three').Scene; camera: import('three').PerspectiveCamera; renderer: import('three/webgpu').WebGPURenderer; materials: import('../../src/render/Materials').Materials };
       const state = window as unknown as { reviewRoot?: import('three').Object3D; reviewRegistry?: import('../../src/assets/registry').AssetRegistry };
+      state.reviewRoot?.traverse(node => {
+        if (!(node as import('three').Mesh).isMesh) return;
+        const materials = (node as import('three').Mesh).material;
+        for (const material of Array.isArray(materials) ? materials : [materials]) if (material.userData.reviewEyeMask) material.dispose();
+      });
       state.reviewRoot?.removeFromParent(); await state.reviewRegistry?.dispose();
       const registry = state.reviewRegistry = new AssetRegistry((event: unknown) => { throw Error(JSON.stringify(event)); }, { renderer: view.renderer, materials: view.materials, manifest: [def] });
       const root = state.reviewRoot = await registry.loadAsset(def.id, pixels === 120 ? 'lod1' : 'lod0', coat) as import('three').Object3D;
+      // Match CrowdView/CivilianMaterial: healthy figures hide the infection
+      // emitters; infected eye quads are circular discs in the game shader.
+      root.traverse(node => {
+        const mesh = node as import('three').Mesh;
+        if (!mesh.isMesh || !mesh.userData.crowdEye) return;
+        mesh.visible = def.id.startsWith('inf.');
+        if (!mesh.visible) return;
+        mesh.material = Array.isArray(mesh.material) ? mesh.material.map(reviewEyeMaterial) : reviewEyeMaterial(mesh.material);
+      });
       if (def.id.startsWith('npc.')) {
         const box = new Box3().setFromObject(root.getObjectByName('skin_body') ?? root); root.scale.multiplyScalar(1.8 / (box.max.y - box.min.y));
       }
