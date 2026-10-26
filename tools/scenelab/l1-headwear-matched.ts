@@ -8,7 +8,8 @@ import type { Game } from '../../src/Game';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { CameraPose } from '../../src/render/View';
 
-const out = resolve('docs/reports/l1-hats-faces/matched');
+const out = resolve(process.env.MATCH_OUT ?? 'docs/reports/l1-hats-faces/matched');
+const quality = process.env.MATCH_QUALITY ?? 'low', zoom = Number(process.env.MATCH_ZOOM ?? 1.5), only = process.env.MATCH_SHOTS?.split(',');
 mkdirSync(out, { recursive: true });
 const servers = [];
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
@@ -22,36 +23,40 @@ const shots: Shot[] = [
   { id: '05-l2-firefighter-front', level: 'L2', frames: 60, model: 'npc.firefighter-alive' },
   { id: '06-l2-firefighter-back', level: 'L2', frames: 60, model: 'npc.firefighter-alive', rear: true },
   { id: '07-infected-headwear-probe', level: 'SceneLab', frames: 240, infected: true, isolated: true },
-];
+  // crowd-texture-quality: the remaining L1 pedestrian bases and L1 scripted staff.
+  { id: '08-l1-start-man-a', level: 'L1', frames: 1, model: 'npc.civilian-man-a' },
+  { id: '09-l1-start-woman-a', level: 'L1', frames: 1, model: 'npc.civilian-woman-a' },
+  { id: '10-l1-street-infected', level: 'L1', checkpoint: 'bat', frames: 300, infected: true },
+].filter(shot => !only || only.includes(shot.id));
 const matches = new Map<string, { ids: number[]; camera: CameraPose; positions: number[][] }>();
 const receipts: object[] = [];
 try {
-  for (const [side, dist, port] of [['prod', 'test-results/l1-hats-faces/prod-dist', 4682], ['candidate', 'dist', 4681]] as const) {
+  for (const [side, dist, port] of [['prod', process.env.MATCH_PROD_DIST ?? 'test-results/l1-hats-faces/prod-dist', Number(process.env.SCENE_PORT ?? 4682)], ['candidate', 'dist', Number(process.env.E2E_PORT ?? 4681)]] as const) {
     const server = await preview({ configFile: false, build: { outDir: resolve(dist) }, preview: { host: '127.0.0.1', port, strictPort: true } }); servers.push(server);
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(); page.setDefaultTimeout(180000);
     page.on('pageerror', error => errors.push(`${side}: ${error.message}`));
     page.on('console', message => { if (message.type() === 'error' && /pipeline creation failed|Tint IR|MTLFunction/i.test(message.text())) errors.push(`${side}: ${message.text()}`); });
     await page.addInitScript('globalThis.__name = fn => fn');
-    await page.goto(`http://127.0.0.1:${port}/?test=1&scenelab=1&renderer=webgpu&profile=1&dpr=1&quality=low&audio=muted&seed=1`);
+    await page.goto(`http://127.0.0.1:${port}/?test=1&scenelab=1&renderer=webgpu&profile=1&dpr=1&quality=${quality}&audio=muted&seed=1`);
     await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120000 });
     await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     await page.addStyleTag({ content: '#hud,.hud,.story-bubble,.mission-subtitle,.telemetry-consent{visibility:hidden!important}' });
     const images: { id: string; data: string }[] = [];
     for (const shot of shots) {
       const match = matches.get(shot.id);
-      const receipt = await page.evaluate(async ({ shot, match }) => {
+      const receipt = await page.evaluate(async ({ shot, match, zoom }) => {
         const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
         if (shot.isolated) {
           await window.__SCENE__!.load({ name: 'matched-infected-headwear', ground: 'asphalt', time: 'L1', dof: false, size: 100,
             actors: [{ id: 'courier', kind: 'courier', at: [4, 4] },
               { id: 'hoodie', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model: 'npc.civilian-man-b', accessories: ['acc.hat-beanie'], handProp: null }, state: 'idle' },
               { id: 'glasses', kind: 'pedestrian', at: [1, -1], yaw: -45, look: { model: 'npc.civilian-woman-b', accessories: ['acc.hat-sun-hat'], handProp: null }, state: 'idle' }],
-            script: [{ frame: 1, actor: 'hoodie', do: { infect: { instant: true } } }, { frame: 1, actor: 'glasses', do: { infect: { instant: true } } }], camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+            script: [{ frame: 1, actor: 'hoodie', do: { infect: { instant: true } } }, { frame: 1, actor: 'glasses', do: { infect: { instant: true } } }], camera: { mode: 'game', target: [0, .8, 0], zoom } });
           await window.__SCENE__!.step(shot.frames);
         } else {
           await a.loadLevel(shot.level, { seed: 1, ...(shot.checkpoint ? { checkpoint: shot.checkpoint } : {}) }); a.pause(); a.cheats.god(true); a.missions.begin(); game.ui.show(null);
-          a.camera.follow(); a.camera.zoom(1.5); if (shot.infected) a.bot.start('complete'); await a.step(shot.frames); if (shot.infected) { a.bot.stop(); a.input.clear(); }
+          a.camera.follow(); a.camera.zoom(zoom); if (shot.infected) a.bot.start('complete'); await a.step(shot.frames); if (shot.infected) { a.bot.stop(); a.input.clear(); }
         }
         await a.screenshotReady(); game.ui.show(null);
         const player = game.world.entities.get(1)!.transform;
@@ -77,7 +82,7 @@ try {
         a.camera.cinematic(camera, true); game.view.update(1); await a.screenshotReady();
         return { ids: selected.map(e => e.id), positions, camera, tick: game.world.tick, seed: 1, level: shot.level, checkpoint: shot.checkpoint ?? 'start', backend: a.perf().backend,
           subjects: selected.map(e => ({ id: e.id, model: e.appearance?.asset ?? e.civilian?.model, yaw: e.transform.yaw, infected: !!e.infected, accessory: accessory(e) })) };
-      }, { shot, match });
+      }, { shot, match, zoom });
       if (!match) matches.set(shot.id, receipt);
       else assert.deepEqual(receipt.positions, match.positions, `${shot.id}: seed, ticks and subject positions match PROD`);
       assert.equal(receipt.backend, 'webgpu');
@@ -95,16 +100,16 @@ try {
   const left = JSON.parse(fs.readFileSync(resolve(out, 'prod-images.json'), 'utf8')) as { id: string; data: string }[];
   const right = JSON.parse(fs.readFileSync(resolve(out, 'candidate-images.json'), 'utf8')) as typeof left;
   for (let i = 0; i < left.length; i++) {
-    const jpg = await page.evaluate(async ({ a, b }) => {
+    const jpg = await page.evaluate(async ({ a, b, label, tag }) => {
       const load = (data: string) => new Promise<HTMLImageElement>(resolve => { const image = new Image(); image.onload = () => resolve(image); image.src = `data:image/png;base64,${data}`; });
       const [l, r] = await Promise.all([load(a), load(b)]), canvas = document.createElement('canvas'); canvas.width = 1920; canvas.height = 564;
       const g = canvas.getContext('2d')!; g.fillStyle = '#111'; g.fillRect(0, 0, 1920, 564); g.drawImage(l, 0, 24, 960, 540); g.drawImage(r, 960, 24, 960, 540);
-      g.fillStyle = '#fff'; g.font = '16px sans-serif'; g.fillText('PROD 0009f107d', 12, 18); g.fillText('Candidate: seed 1 / same tick, subjects and camera', 972, 18);
+      g.fillStyle = '#fff'; g.font = '16px sans-serif'; g.fillText(label, 12, 18); g.fillText(`Candidate: seed 1 / same tick, subjects and camera (${tag})`, 972, 18);
       return canvas.toDataURL('image/jpeg', .88).split(',')[1];
-    }, { a: left[i].data, b: right[i].data });
+    }, { a: left[i].data, b: right[i].data, label: process.env.MATCH_PROD_LABEL ?? "PROD 0009f107d", tag: `${quality}, zoom ${zoom}` });
     writeFileSync(resolve(out, `${left[i].id}.jpg`), Buffer.from(jpg, 'base64'));
   }
-  for (const side of ['prod', 'candidate']) { fs.unlinkSync(resolve(out, `${side}-images.json`)); for (const shot of shots) fs.unlinkSync(resolve(out, `${shot.id}-${side}.png`)); }
+  for (const side of ['prod', 'candidate']) if (!process.env.MATCH_KEEP) { fs.unlinkSync(resolve(out, `${side}-images.json`)); for (const shot of shots) fs.unlinkSync(resolve(out, `${shot.id}-${side}.png`)); }
   await context.close();
   writeFileSync(resolve(out, 'captures.json'), JSON.stringify({ errors, receipts }, null, 2));
   assert.deepEqual(errors, []);
