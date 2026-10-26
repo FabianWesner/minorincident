@@ -13,7 +13,7 @@ The original 230-AC baseline is 167 met / 59 partial / 3 missing / 1 obsolete. T
 | E29-AC03 | partial → met | [browser-webgl2.json](../l7-entry/evidence/browser-webgl2.json), [browser-webgpu.json](../l7-entry/evidence/browser-webgpu.json), [real-input.json](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/postmerge-10/evidence/l6-after-rng/real-input.json) |
 | E29-AC16 | missing → met | [l7-checkpoints.test.ts](../../../tests/levels/l7-checkpoints.test.ts), [handover.json](../l7-entry/evidence/handover.json), [README.md](../l7-entry/README.md), [E29-summary.json](evidence/E29-summary.json) |
 | E29-AC17 | missing → partial | [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json), [l7-real-input.spec.ts](../../../tests/e2e/levels/l7-real-input.spec.ts) |
-| E30-AC06 | partial → met | [calm-high.json](../wave3-sim/evidence/calm-high.json), [calm-low.json](../wave3-sim/evidence/calm-low.json), [review.md](../wave3-sim/evidence/review.md) |
+| E30-AC06 | partial → met | [calm-high.json](../wave3-sim/evidence/calm-high.json), [calm-low.json](../wave3-sim/evidence/calm-high.json), [review.md](../wave3-sim/evidence/review.md) |
 | E32-AC04 | partial → obsolete | PO 2026-10-09 no long bot batteries; scheduler/orchestrator explicitly drops the novice 45–50 min proof as an acceptance gate. Complete campaign regression remains AC32. |
 | E32-AC07 | partial → met | [l10-dogs.test.ts](../../../tests/sim/ai/l10-dogs.test.ts), [a.md](../spec-audit/a.md), [README.md](../postmerge-3/README.md) |
 | E32-AC18 | partial → met | [playwright.json](../merge-batch10/evidence/priority-initial/playwright.json), [l10-minigun-input.spec.ts](../../../tests/e2e/levels/l10-minigun-input.spec.ts) |
