@@ -50,6 +50,16 @@ export async function restoreFireHelmet(path: string, source: string, lod = 0): 
     }
     primitive.setAttribute('COLOR_0', doc.createAccessor().setType('VEC3').setArray(colors));
   }
+  // Close the retained body's original neck boundary under the smaller
+  // authored head. Reuse its fitted wound cap as a dark, living PPE collar.
+  const collar = doc.createMesh('prod_fire_collar'), collarMaterial = doc.createMaterial('pal_uiDark').setBaseColorFactor([.015, .022, .035, 1]).setRoughnessFactor(1);
+  for (const primitive of doc.getRoot().listNodes().find(n => n.getName() === 'stump_head')!.getMesh()!.listPrimitives()) {
+    const copy = primitive.clone().setMaterial(collarMaterial), p = primitive.getAttribute('POSITION')!, n = primitive.getAttribute('NORMAL')!, positions: number[] = [];
+    for (let i = 0; i < p.getCount(); i++) point.fromArray(p.getElement(i, [])).addScaledVector(normal.fromArray(n.getElement(i, [])), -.001).toArray(positions, positions.length);
+    copy.setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(new Float32Array(positions)));
+    copy.setAttribute('TEXCOORD_0', doc.createAccessor().setType('VEC2').setArray(new Float32Array(p.getCount() * 2))); collar.addPrimitive(copy);
+  }
+  doc.getRoot().listNodes().find(n => n.getName() === 'skin_body')!.addChild(doc.createNode('prod_fire_collar').setMesh(collar).setSkin(skin));
   const headMaterial = doc.createMaterial('pal_picketWhite').setRoughnessFactor(1);
   for (const { node, primitive } of selected) {
     const p = primitive.getAttribute('POSITION')!, n = primitive.getAttribute('NORMAL')!, index = primitive.getIndices()!, matrix = new Matrix4().fromArray(node.getWorldMatrix()).premultiply(alignment);
