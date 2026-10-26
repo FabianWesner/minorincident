@@ -170,6 +170,9 @@ export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSa
   else if(level===10) save=preset('L10-default');
   else if(level===9) { save=preset('L8-default'); save.completedLevels=8; save.unlockedLevel=9; }
   else save=preset(`L${level}-default` as ProgressionPreset);
+  // Level-list starts use the level's normal boundary arsenal, but still honor the
+  // weapon the player was carrying when it exists in that arsenal.
+  if (current?.selectedAction && [...save.racks.LEFT, ...save.racks.RIGHT].includes(current.selectedAction)) save.selectedAction = current.selectedAction;
   if(current){save.character=current.character;save.seed=current.seed;save.settings=structuredClone(current.settings);}
   return save;
 }

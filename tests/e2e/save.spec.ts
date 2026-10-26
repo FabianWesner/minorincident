@@ -78,6 +78,8 @@ test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, pr
   test.setTimeout(180_000);await page.goto(`${testUrl}&debug`);await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
   const save=preset('L5-default');save.character='male';save.settings={cameraShake:false,gore:'Reduced',aimAssist:'High',muted:true};
   await page.evaluate(async save=>{const a=window.__SS__!;await a.loadScenario('combat-arena');a.campaign.restore(save);a.settings.set(save.settings);a.campaign.save();},save);
+  // Loading a pre-selection save now records the best usable starting weapon.
+  save.selectedAction='weapon.army-mg';
   await page.locator('[data-audio-controls] summary').click();await page.getByRole('checkbox',{name:'Mono audio',exact:true}).check();save.settings.mono=true;
   await page.reload();await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
   await page.getByTestId('start-game').click();await page.getByTestId('level-L5').click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
@@ -98,7 +100,7 @@ test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverabl
 });
 test('T-E13-07-browser @E13 @E13-AC07 loadLevel L5 with named preset starts its expected valid loadout',async({page})=>{
   test.setTimeout(180_000);await boot(page);await page.evaluate(()=>window.__SS__!.loadLevel('L5',{progression:'L5-default'}));
-  const save=preset('L5-default'),state=await page.evaluate(()=>window.__SS__!.getState());expect(state.progression!.campaign).toEqual(save);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);expect(state.player!.survivor!.gearTier).toBe(3);
+  const save=preset('L5-default'),state=await page.evaluate(()=>window.__SS__!.getState());save.selectedAction='weapon.army-mg';expect(state.progression!.campaign).toEqual(save);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);expect(state.player!.survivor!.gearTier).toBe(3);
 });
 for(const scheme of ['mouse','keyboard','touch']as const)test(`T-E13-09-${scheme} @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via ${scheme} only`,async({page,browser})=>{
   test.setTimeout(180_000);

@@ -39,6 +39,33 @@ describe('weapon carry across level handovers', () => {
     restoreSelectedAction(resumed, save);
     expect(resumed.current(resumed.state.selectedSide).id).toBe('weapon.rocket-launcher');
   });
+  it('prefers usable guns over axe, then axe over bat when all guns are empty', () => {
+    const save = newCampaign();
+    save.ownedActions.push('weapon.bat', 'weapon.fire-axe', 'weapon.pistol', 'weapon.smg');
+    const loadout = new Loadout(['weapon.bat', 'weapon.fire-axe'], ['weapon.pistol', 'weapon.smg']);
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.pistol');
+    loadout.state.RIGHT.rack[0].magazine = 0;
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.smg');
+    loadout.state.RIGHT.rack[1].magazine = 0;
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.fire-axe');
+    save.ownedActions = save.ownedActions.filter(id => id !== 'weapon.fire-axe');
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.bat');
+    expect(loadout.state.LEFT.swapUntil).toBe(0);
+    expect(loadout.state.RIGHT.swapUntil).toBe(0);
+  });
+  it('uses the best racked weapon when bare hands were selected but are absent from the destination racks', () => {
+    const save = preset('L8-default'); save.selectedAction = 'weapon.fists';
+    const boundary = campaignLoadout(save, 8);
+    const loadout = new Loadout(boundary.LEFT, boundary.RIGHT, undefined, boundary.size);
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.rocket-launcher');
+  });
+  it('chooses an owned melee weapon without a number key before unarmed for an old save', () => {
+    const save = newCampaign(); save.unlockedLevel = 2; save.completedLevels = 1;
+    save.ownedActions.push('weapon.crowbar');
+    save.racks = { LEFT: ['weapon.crowbar'], RIGHT: ['weapon.kick'] };
+    const loadout = new Loadout(save.racks.LEFT, save.racks.RIGHT);
+    expect(restoreSelectedAction(loadout, save)).toBe('weapon.crowbar');
+  });
   it('key 1 selects innate bare hands while leaving the carried arsenal unchanged', () => {
     const save=preset('L8-default');
     expect([...save.racks.LEFT,...save.racks.RIGHT]).not.toContain('weapon.fists');

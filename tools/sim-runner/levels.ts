@@ -8,6 +8,7 @@ import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 import { followFrustum } from './l3Bots';
 import { preset, reservedCampaignIds, type CampaignSave } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
+import { heldAction } from '../../src/sim/progression/selection';
 import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
 import { emptyInput, type InputFrame } from '../../src/input/InputFrame';
@@ -195,6 +196,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     if(campaign&&report.completed&&!onComplete){
       campaign.results??={};campaign.results[level]=structuredClone(mission.state.result!);
       const weapons=world.entities.get(1)!.weapons!;campaign.racks={LEFT:weapons.LEFT.rack.map(s=>s.id),RIGHT:weapons.RIGHT.rack.map(s=>s.id)};
+      campaign.selectedAction=heldAction(weapons);
       campaign.ownedActions=[...new Set([...campaign.ownedActions,...campaign.racks.LEFT,...campaign.racks.RIGHT])];
       if(level==='L5')campaign.survivors=[...mission.state.result?.survivors??[]];
     }
