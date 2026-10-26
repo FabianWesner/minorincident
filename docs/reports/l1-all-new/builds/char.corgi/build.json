@@ -1,0 +1,78 @@
+{
+  "id": "char.corgi",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/char.corgi",
+  "elapsedSeconds": 7.646,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/char.corgi/model.glb",
+      "sourceSha256": "44e4be7347af2b17c16f185f688ec0e7660a0df0e7cc5b0694824bb490846747",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/char.corgi/source/assembled-lod0.glb",
+      "bodySha256": "308c198f2e5f69b7a05047bbdeef3060760bbb13d259d7983edb77f89c927648",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/char.corgi.lod0.glb",
+          "bytes": 369412,
+          "sha256": "eae5d5eb84c02afefcd1ab66086b02b7eb792c0c15aef04ed8750eb34de207e5",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/char.corgi.lod0.low.glb",
+          "bytes": 323496,
+          "sha256": "91ea5797375deb968fc67c5b5de89be2eaf2b899ea4a555aeb7d3a64de1ba9ab",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/char.corgi/model.lod1.glb",
+      "sourceSha256": "20b74d723bfa523b8dc0f0a3b18ca136d95bb5d8c28a88cf36bd2fa58fe6d76f",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/char.corgi/source/assembled-lod1.glb",
+      "bodySha256": "b157633eddd9b151d02f5357687e9dbc492c4f25a8da3c1fdb907b965df81cc5",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/char.corgi.lod1.glb",
+          "bytes": 104244,
+          "sha256": "b29868de589dac0f81746223a423845efe6684075381679b0818e130401ff685",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/char.corgi.lod1.low.glb",
+          "bytes": 104244,
+          "sha256": "b29868de589dac0f81746223a423845efe6684075381679b0818e130401ff685",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/char.corgi/model.lod2.glb",
+      "sourceSha256": "13fb2d014c08cac93715638066b356eef8ec2f3ccacd9883e59b0fe82a4cafef",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/char.corgi/source/assembled-lod2.glb",
+      "bodySha256": "1543a5334ac177a8c81af3b049a1798760e924e325d59b7b8d3bebf5323a9f49",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/char.corgi.lod2.glb",
+          "bytes": 79592,
+          "sha256": "61845e291c8d4ed07bbafaa418ec5ef7a9c7810151a14316fd0fb2b5f7a2b28e",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/char.corgi.lod2.low.glb",
+          "bytes": 79592,
+          "sha256": "61845e291c8d4ed07bbafaa418ec5ef7a9c7810151a14316fd0fb2b5f7a2b28e",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {}
+}

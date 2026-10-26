@@ -8,6 +8,7 @@ export function batchRigidParts(root: Object3D, parts: readonly string[], materi
   const groups = new Map<Object3D, Mesh[]>(), oldGeometry = new Set<BufferGeometry>(), oldMaterials = new Set<Material>();
   root.traverse(node => {
     if (!(node instanceof Mesh)) return;
+    if ('isSkinnedMesh' in node || (Array.isArray(node.material) ? node.material : [node.material]).some(source => 'map' in source && source.map)) return;
     for (let parent: Object3D | null = node; parent; parent = parent.parent) if (!parent.visible) return;
     let owner: Object3D | null = node;
     while (owner && !parts.includes(owner.name)) owner = owner.parent;

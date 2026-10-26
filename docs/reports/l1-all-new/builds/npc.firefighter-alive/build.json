@@ -1,0 +1,85 @@
+{
+  "id": "npc.firefighter-alive",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.firefighter-alive",
+  "elapsedSeconds": 12.053,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.firefighter-alive/model.glb",
+      "sourceSha256": "42316ad2a412cc14ccb415692addfa626879d3008204c690a293cf65e128ee36",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.firefighter-alive/source/assembled-lod0.glb",
+      "bodySha256": "40f4921351ad670072955a591246d4c539c4fd29256e3b58453b25e511021056",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.glb",
+          "bytes": 276208,
+          "sha256": "0ff25e6f8cda0aeae5b55e026a7af75651822b913eb41d5089a892f89afe1ff4",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod0.low.glb",
+          "bytes": 207720,
+          "sha256": "4b5343976fe8d2f4930c75c64fd03e325fb86158637b1edbef2671cb6a329a64",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.firefighter-alive/model.glb",
+      "sourceSha256": "42316ad2a412cc14ccb415692addfa626879d3008204c690a293cf65e128ee36",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.firefighter-alive/source/assembled-lod1.glb",
+      "bodySha256": "4cd9ce8ce5cbfbc3b234402d4b258a3e3b7abfcc2f56ff2114ef4f4a3a3e32b1",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod1.glb",
+          "bytes": 142728,
+          "sha256": "794ed73f89bcfab307554b62237444c79a83dab1a9ad19b76cc5adfe40e40f5b",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod1.low.glb",
+          "bytes": 142728,
+          "sha256": "794ed73f89bcfab307554b62237444c79a83dab1a9ad19b76cc5adfe40e40f5b",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.firefighter-alive/model.glb",
+      "sourceSha256": "42316ad2a412cc14ccb415692addfa626879d3008204c690a293cf65e128ee36",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.firefighter-alive/source/assembled-lod2.glb",
+      "bodySha256": "3f1661c99ba79eadff3e1a65d5896e878cca09f75ad29633e87692b843850f76",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod2.glb",
+          "bytes": 104932,
+          "sha256": "7d00414405a95d24adf6e8aa7f21c0dcbe3d7e14ef39099f56495e24d6757545",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.firefighter-alive.lod2.low.glb",
+          "bytes": 104932,
+          "sha256": "7d00414405a95d24adf6e8aa7f21c0dcbe3d7e14ef39099f56495e24d6757545",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.firefighter-alive:lod0:infected": "/assets/civilians/npc.firefighter-alive.lod0.infected.32602dd13260c813.bin.gz",
+    "npc.firefighter-alive:lod0": "/assets/civilians/npc.firefighter-alive.lod0.700ced5baa31c1fc.bin.gz",
+    "npc.firefighter-alive:lod1:infected": "/assets/civilians/npc.firefighter-alive.lod1.infected.7224533658150270.bin.gz",
+    "npc.firefighter-alive:lod1": "/assets/civilians/npc.firefighter-alive.lod1.389437c52c1121f6.bin.gz",
+    "npc.firefighter-alive:lod2:infected": "/assets/civilians/npc.firefighter-alive.lod2.infected.a753f57eec72b9ed.bin.gz",
+    "npc.firefighter-alive:lod2": "/assets/civilians/npc.firefighter-alive.lod2.9b748543c38b51ae.bin.gz"
+  }
+}

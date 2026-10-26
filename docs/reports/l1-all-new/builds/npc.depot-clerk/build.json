@@ -1,0 +1,85 @@
+{
+  "id": "npc.depot-clerk",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.depot-clerk",
+  "elapsedSeconds": 12.263,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.depot-clerk/model.glb",
+      "sourceSha256": "7f5094c0697b87a65c4a217922252d2f8d52cd13192cc426425e7a3e62d1dae1",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.depot-clerk/source/assembled-lod0.glb",
+      "bodySha256": "b7a962a477fb6518941e282ae18faeb87aef7bf2798fed8f995e3ce8c5f1452e",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod0.glb",
+          "bytes": 270076,
+          "sha256": "7b2d888921a4ca993b7b7819c942c9020621b69b5b65890774a1c3ba17db17ac",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod0.low.glb",
+          "bytes": 203716,
+          "sha256": "acc250c1fe94e22f0174fe55abae24878802b42c607bed660a5b94040c0601f5",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.depot-clerk/model.glb",
+      "sourceSha256": "7f5094c0697b87a65c4a217922252d2f8d52cd13192cc426425e7a3e62d1dae1",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.depot-clerk/source/assembled-lod1.glb",
+      "bodySha256": "66af98a320a0899c01c735df105315103eb4d254c01b020502255c4d207b30b9",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod1.glb",
+          "bytes": 140280,
+          "sha256": "eb7f6e3c898949b94f06d1e6c243b2ac0491118a4229a808ae33dc0b2787b569",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod1.low.glb",
+          "bytes": 140280,
+          "sha256": "eb7f6e3c898949b94f06d1e6c243b2ac0491118a4229a808ae33dc0b2787b569",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.depot-clerk/model.glb",
+      "sourceSha256": "7f5094c0697b87a65c4a217922252d2f8d52cd13192cc426425e7a3e62d1dae1",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.depot-clerk/source/assembled-lod2.glb",
+      "bodySha256": "775bcf608fc9e15729c1862027a77655438fb92c53c6c65d0b01407044333785",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod2.glb",
+          "bytes": 101248,
+          "sha256": "1995d47f94b1f84f13a1f5067fb0bfc1a14f5850c91d1b4ff170d12dd56bd184",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.depot-clerk.lod2.low.glb",
+          "bytes": 101248,
+          "sha256": "1995d47f94b1f84f13a1f5067fb0bfc1a14f5850c91d1b4ff170d12dd56bd184",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.depot-clerk:lod0:infected": "/assets/civilians/npc.depot-clerk.lod0.infected.c022dbc37a3f7fbd.bin.gz",
+    "npc.depot-clerk:lod0": "/assets/civilians/npc.depot-clerk.lod0.4bad33e456931fa3.bin.gz",
+    "npc.depot-clerk:lod1:infected": "/assets/civilians/npc.depot-clerk.lod1.infected.69ae53164e9c10a1.bin.gz",
+    "npc.depot-clerk:lod1": "/assets/civilians/npc.depot-clerk.lod1.b4eb8ca3a047f00e.bin.gz",
+    "npc.depot-clerk:lod2:infected": "/assets/civilians/npc.depot-clerk.lod2.infected.d59a7d4739a18609.bin.gz",
+    "npc.depot-clerk:lod2": "/assets/civilians/npc.depot-clerk.lod2.9434911e6c80b63a.bin.gz"
+  }
+}

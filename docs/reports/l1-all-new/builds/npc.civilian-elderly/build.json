@@ -1,0 +1,85 @@
+{
+  "id": "npc.civilian-elderly",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.civilian-elderly",
+  "elapsedSeconds": 9.895,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.civilian-elderly/model.glb",
+      "sourceSha256": "59533bacc885cd95b55d2d1fe531db1f0e21e7f0016df223b7a888b835f598ad",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.civilian-elderly/source/assembled-lod0.glb",
+      "bodySha256": "32847e060c5bcff79863091cac9372597f85004654ab375f9bc838b2f7be7a7b",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.glb",
+          "bytes": 366592,
+          "sha256": "3a5a3f9ac31e4eeee115c550a54482bd4a6a86d48f271dde531bef5f058a57ac",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod0.low.glb",
+          "bytes": 276460,
+          "sha256": "f5d7a7e3ad7b3fc2a8e611554ab3f921c407478614e504d32d154074e65118d6",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.civilian-elderly/model.glb",
+      "sourceSha256": "59533bacc885cd95b55d2d1fe531db1f0e21e7f0016df223b7a888b835f598ad",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.civilian-elderly/source/assembled-lod1.glb",
+      "bodySha256": "42b9a7a6af81d56e74b5f54e6a4d5309ce79c164159979301f9731dcc390f572",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.glb",
+          "bytes": 177444,
+          "sha256": "f5e6de2cf4d6929001ce52682214388c6359816de8acc0aed8fad2d3af1ff630",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod1.low.glb",
+          "bytes": 177444,
+          "sha256": "f5e6de2cf4d6929001ce52682214388c6359816de8acc0aed8fad2d3af1ff630",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.civilian-elderly/model.glb",
+      "sourceSha256": "59533bacc885cd95b55d2d1fe531db1f0e21e7f0016df223b7a888b835f598ad",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.civilian-elderly/source/assembled-lod2.glb",
+      "bodySha256": "d8c0cafc105c400e9fb87a78c2193649dea33e5e1f5d834149cc9e5fb86b68ce",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.glb",
+          "bytes": 126924,
+          "sha256": "390852eca648bd3033f202c9243a2aa3600b30dca93b091672fa7cdb448ec6c4",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.civilian-elderly.lod2.low.glb",
+          "bytes": 126924,
+          "sha256": "390852eca648bd3033f202c9243a2aa3600b30dca93b091672fa7cdb448ec6c4",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.civilian-elderly:lod0:infected": "/assets/civilians/npc.civilian-elderly.lod0.infected.ef7a4037e616e164.bin.gz",
+    "npc.civilian-elderly:lod0": "/assets/civilians/npc.civilian-elderly.lod0.c4cf1a39c32911aa.bin.gz",
+    "npc.civilian-elderly:lod1:infected": "/assets/civilians/npc.civilian-elderly.lod1.infected.52b496d638d9420a.bin.gz",
+    "npc.civilian-elderly:lod1": "/assets/civilians/npc.civilian-elderly.lod1.a1f589d97e832737.bin.gz",
+    "npc.civilian-elderly:lod2:infected": "/assets/civilians/npc.civilian-elderly.lod2.infected.d91e64cddcdf88c2.bin.gz",
+    "npc.civilian-elderly:lod2": "/assets/civilians/npc.civilian-elderly.lod2.3f949ee707755a1c.bin.gz"
+  }
+}

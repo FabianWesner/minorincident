@@ -1,4 +1,4 @@
-import { Box3, Mesh, Quaternion, Vector3, type Matrix4, type Object3D } from 'three';
+import { Box3, Mesh, Quaternion, Vector3, type Matrix4, type Object3D, type SkinnedMesh } from 'three';
 
 /** Swinging paw clearance above the floor (m). */
 const swingLift = .04;
@@ -18,12 +18,27 @@ export class PawContacts {
   private clip = '';
   constructor(private readonly root: Object3D, template = root) {
     template.updateWorldMatrix(true, true); template.getWorldPosition(this.origin);
+    const body = template.getObjectByName('skin_body') as SkinnedMesh | undefined;
+    const weightedPoints = (owner: Object3D): Vector3[] => {
+      if (!body?.isSkinnedMesh) return [];
+      const geometry = body.geometry, joints = geometry.getAttribute('skinIndex'), weights = geometry.getAttribute('skinWeight'), points: Vector3[] = [];
+      for (let i = 0; i < joints.count; i++) {
+        let major = 0; for (let k = 1; k < 4; k++) if (weights.getComponent(i, k) > weights.getComponent(i, major)) major = k;
+        let bone: Object3D | null = body.skeleton.bones[joints.getComponent(i, major)];
+        while (bone && bone !== owner) bone = bone.parent;
+        if (bone) points.push(body.getVertexPosition(i, new Vector3()).applyMatrix4(body.matrixWorld));
+      }
+      return points;
+    };
     this.feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(name => {
       const leg = root.getObjectByName(name), original = template.getObjectByName(name); if (!leg || !original) return [];
       const bounds = new Box3(); original.traverse(node => { if (node instanceof Mesh) bounds.expandByObject(node); });
+      const weighted = weightedPoints(original);
+      for (const point of weighted) bounds.expandByPoint(point);
       if (bounds.isEmpty()) return [];
       const paw = bounds.getCenter(new Vector3()); paw.y = bounds.min.y;
       const vertices: Vector3[] = [];
+      for (const point of weighted) vertices.push(original.worldToLocal(point.clone()));
       original.traverse(node => {
         if (!(node instanceof Mesh)) return;
         const positions = node.geometry.attributes.position, indices = node.geometry.index;
@@ -43,6 +58,7 @@ export class PawContacts {
       const originalKnee = knee ? original.getObjectByName((knee as Object3D).name) : undefined, pawKnee = originalKnee ? originalKnee.worldToLocal(paw.clone()) : null;
       // The lower limb's vertices on the knee (sampled): its drawn sole once the knee bends.
       const kneeVertices: Vector3[] = [];
+      if (originalKnee) for (const point of weightedPoints(originalKnee)) kneeVertices.push(originalKnee.worldToLocal(point));
       originalKnee?.traverse(node => {
         if (!(node instanceof Mesh)) return;
         const positions = node.geometry.attributes.position, indices = node.geometry.index, count = indices?.count ?? positions.count;

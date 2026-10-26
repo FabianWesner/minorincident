@@ -45,13 +45,17 @@ export class CorgiTongue {
   static readonly moveSpeed = .6;
   static readonly afterRunSeconds = 4;
   private readonly parts: { mesh: Mesh; pivot: Vector3; position: Vector3; scale: Vector3 }[] = [];
+  private readonly joints: { joint: Object3D; scale: Vector3 }[] = [];
   private pantUntil = -Infinity;
   private last = -1;
   /** 0 = retracted (hidden), 1 = fully out. */
   out = 0;
   constructor(root: Object3D) {
     const groups = new Map<Object3D | null, Mesh[]>();
-    root.traverse(node => { if (node.userData.corgiTongue) groups.set(node.parent, [...groups.get(node.parent) ?? [], node as Mesh]); });
+    root.traverse(node => {
+      if (node.userData.corgiTongueJoint) this.joints.push({ joint: node, scale: node.scale.clone() });
+      if (node.userData.corgiTongue) groups.set(node.parent, [...groups.get(node.parent) ?? [], node as Mesh]);
+    });
     for (const meshes of groups.values()) {
       // Tongue and groove share one root pivot: the rear (-X, the corgi faces +X) centre of their bounds, inside the mouth.
       const box = new Box3(); for (const mesh of meshes) { const b = indexedBounds(mesh); if (b) box.union(b); }
@@ -61,7 +65,7 @@ export class CorgiTongue {
     }
     this.apply(0, 0);
   }
-  get found(): boolean { return this.parts.length > 0; }
+  get found(): boolean { return this.parts.length > 0 || this.joints.length > 0; }
   update(time: number, speed: number): void {
     if (speed > CorgiTongue.runSpeed) this.pantUntil = time + CorgiTongue.afterRunSeconds;
     const target = speed > CorgiTongue.moveSpeed || time < this.pantUntil ? 1 : 0;
@@ -74,6 +78,7 @@ export class CorgiTongue {
     // Panting: the out tongue flicks a little (2.6 Hz) instead of hanging still.
     const s = out < .05 ? 0 : out * (.9 + .1 * Math.sin(time * Math.PI * 2 * 2.6));
     const k = Math.max(s, 1e-3);
+    for (const { joint, scale } of this.joints) joint.scale.copy(scale).multiplyScalar(k);
     // Scale about the pivot in the mesh's own frame: p' = pivot + k (p - pivot), composed with its authored transform.
     for (const { mesh, pivot, position, scale } of this.parts) {
       mesh.visible = s > 0;

@@ -1,0 +1,84 @@
+{
+  "rig": "assets/char.corgi/model.glb",
+  "out": "docs/reports/l1-all-new/builds/char.corgi/lod0.raw.glb",
+  "bytes": 2873212,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/char.corgi/source/assembled-lod0.glb",
+  "scale": 1.219117411476442,
+  "yaw": 90,
+  "translation": [
+    0.04042424079596946,
+    0.4742750235710256,
+    -0.0026774275256761237
+  ],
+  "meanDistanceToRigidSurface": 0.03833089388295874,
+  "tongue": {
+    "vertices": 79,
+    "pivot": [
+      0.179575542846944,
+      -0.03159822928997713,
+      0.009444930233753944
+    ]
+  },
+  "vertices": 3984,
+  "weldedVertices": 2202,
+  "triangles": 4400,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 6,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "head",
+    "body",
+    "tail",
+    "legFL",
+    "legFR",
+    "legBL",
+    "legBR",
+    "tongue"
+  ],
+  "rigKind": "quadruped",
+  "capFits": [],
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "joints": 9,
+  "eyes": 0,
+  "seams": {
+    "legFL/body": {
+      "seamVertices": 76,
+      "band": 0.03673106094547634,
+      "blended": 77
+    },
+    "legFR/body": {
+      "seamVertices": 74,
+      "band": 0.03673106094547634,
+      "blended": 76
+    },
+    "legBL/body": {
+      "seamVertices": 76,
+      "band": 0.03673106094547634,
+      "blended": 78
+    },
+    "tongue/head": {
+      "seamVertices": 49,
+      "band": 0.01588663132546865,
+      "blended": 20
+    },
+    "legBR/body": {
+      "seamVertices": 77,
+      "band": 0.03673106094547634,
+      "blended": 79
+    },
+    "head/body": {
+      "seamVertices": 104,
+      "band": 0.03673106094547634,
+      "blended": 106
+    },
+    "tail/body": {
+      "seamVertices": 61,
+      "band": 0.03673106094547634,
+      "blended": 63
+    }
+  }
+}

@@ -25,12 +25,16 @@ interface Ktx {
 interface Basis { initializeBasis(): void; BasisEncoder: new () => Encoder; KTX2File: new (data: Uint8Array) => Ktx }
 
 /** Pipeline Apache-2.0 Basis encoder: ETC1S q192, full sRGB mip chain (PLAYBOOK §5). */
-export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string): Promise<void> {
+export async function compressSkin(input: string, output: string, basisRoot: string, maxSize = 1024, coat?: string, coatSource?: string): Promise<void> {
   const require = createRequire(import.meta.url);
   const factory = require(join(basisRoot, 'basis_encoder.js')) as (options: { wasmBinary: Uint8Array }) => Promise<Basis>;
   const basis = await factory({ wasmBinary: readFileSync(join(basisRoot, 'basis_encoder.wasm')) }); basis.initializeBasis();
   const io = await assetIO(), doc = await io.read(input), directory = mkdtempSync(join(tmpdir(), 'crowd-codec-'));
   try {
+    if (coatSource) {
+      const source = await io.read(coatSource), atlas = source.getRoot().listTextures()[0];
+      for (const texture of doc.getRoot().listTextures()) if (texture.getName() === 'atlas') texture.setImage(atlas.getImage()).setMimeType(atlas.getMimeType());
+    }
     for (const texture of doc.getRoot().listTextures()) {
       const image = texture.getImage()!, size = texture.getSize()!;
       if (!coat && texture.getMimeType() === 'image/ktx2' && Math.max(...size) <= maxSize) continue;

@@ -55,7 +55,7 @@ export class NpcView extends Group {
    * before it first becomes visible. Clones share the actual hero geometry and
    * materials, without adding a simulated companion or changing its state. */
   prewarmCorgi(at: Vector3): () => void {
-    const root = this.dog.clone(true);
+    const root = this.dog.getObjectByName('skin_body') ? cloneSkeleton(this.dog) : this.dog.clone(true);
     root.position.copy(at);
     this.add(root);
     return () => root.removeFromParent();
@@ -72,6 +72,12 @@ export class NpcView extends Group {
     this.dog.traverse(node => {
       if (!(node instanceof Mesh)) return;
       const remap = (old: Material) => {
+        if (this.dog.userData.assetTextureMode === 'baseColor' && (old as import('three').MeshStandardMaterial).map) {
+          const material = old as import('../PaletteMaterial').PaletteMaterial;
+          material.movingFigure.value = 1;
+          if (this.world.scenario === 'L7' || this.world.scenario === 'L6') { material.figureFill.value = this.world.scenario === 'L6' ? 8 : 4; material.figureRim.value = .5; material.companion.value = 1; }
+          return material;
+        }
         const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
         const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.movingFigure.value = 1; material.side = old.side; material.userData.sharedPalette = true; return material;
       };

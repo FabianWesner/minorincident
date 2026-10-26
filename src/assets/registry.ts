@@ -101,7 +101,7 @@ export class AssetRegistry {
       for (const name of [...contract.requiredNodes, ...contract.animatedNodes, ...(decay ? [] : contract.sockets)]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
       root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
       if (lod !== 'lod0' && def.lods?.[lod]) {
-        const bounds = new Box3().setFromObject(def.crowdSkin ? root.getObjectByName('skin_body') ?? root : root), size = bounds.getSize(new Vector3());
+        const bounds = new Box3().setFromObject(def.crowdSkin && def.id !== 'char.corgi' ? root.getObjectByName('skin_body') ?? root : root), size = bounds.getSize(new Vector3());
         const dimensions = decay ? { ...def.dimensions, ...def.decayDimensions } : def.dimensions;
         if (bounds.isEmpty() || ['x', 'y', 'z'].some(axis => Math.abs(size[axis as 'x' | 'y' | 'z'] / dimensions[axis as 'x' | 'y' | 'z'] - 1) > dimensions.tolerance)) {
           // A malformed LOD must not stretch a building beyond its authored lot.

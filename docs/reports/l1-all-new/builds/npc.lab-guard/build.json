@@ -1,0 +1,85 @@
+{
+  "id": "npc.lab-guard",
+  "source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.lab-guard",
+  "elapsedSeconds": 9.638,
+  "manualSteps": [],
+  "receipts": [
+    {
+      "lod": 0,
+      "source": "assets/npc.lab-guard/model.glb",
+      "sourceSha256": "466128b61c82776a62b96e5e6096b5749ee730e5afc672b08b496ecb1143653d",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.lab-guard/source/assembled-lod0.glb",
+      "bodySha256": "10859c348d959a92d30dd55caefb71bfddc61858839833cf36389fab64ac8e09",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod0.glb",
+          "bytes": 237524,
+          "sha256": "a5911e37eca34edd150e3df1b7593cef4b02ce71b2ad7d4f5d2ecb5ee23d753c",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod0.low.glb",
+          "bytes": 189952,
+          "sha256": "9b088718dde3db9635c0d079713cb4d5f469f2b39b3fe8803bc388bd450b1327",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "source": "assets/npc.lab-guard/model.glb",
+      "sourceSha256": "466128b61c82776a62b96e5e6096b5749ee730e5afc672b08b496ecb1143653d",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.lab-guard/source/assembled-lod1.glb",
+      "bodySha256": "427a2aa4684862d87651c9da759607f9e2d206a723a2e628296b152fa8d0e75c",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod1.glb",
+          "bytes": 127952,
+          "sha256": "fd757f156e7d824bc4a472517d7231dfc4dfc72bb0513477baaf34cf9d9b7ae1",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod1.low.glb",
+          "bytes": 127952,
+          "sha256": "fd757f156e7d824bc4a472517d7231dfc4dfc72bb0513477baaf34cf9d9b7ae1",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "source": "assets/npc.lab-guard/model.glb",
+      "sourceSha256": "466128b61c82776a62b96e5e6096b5749ee730e5afc672b08b496ecb1143653d",
+      "bodySource": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/l1/npc.lab-guard/source/assembled-lod2.glb",
+      "bodySha256": "6d4a9afe27a5226fea8562c9934f9c0cce888c2c65ebe0fe16c17b262d5be539",
+      "tiers": [
+        {
+          "low": false,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod2.glb",
+          "bytes": 91868,
+          "sha256": "6b5b1bfabbd4665710d23944c2f5898ecebaa4d7f65171d89b840e52efc6588c",
+          "errors": []
+        },
+        {
+          "low": true,
+          "path": "public/assets/models/skinned/npc.lab-guard.lod2.low.glb",
+          "bytes": 91868,
+          "sha256": "6b5b1bfabbd4665710d23944c2f5898ecebaa4d7f65171d89b840e52efc6588c",
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "preparedBakes": {
+    "npc.lab-guard:lod0:infected": "/assets/civilians/npc.lab-guard.lod0.infected.7b9e174ab4422c87.bin.gz",
+    "npc.lab-guard:lod0": "/assets/civilians/npc.lab-guard.lod0.2f664f8ab9b50432.bin.gz",
+    "npc.lab-guard:lod1:infected": "/assets/civilians/npc.lab-guard.lod1.infected.c42ba3295f73d026.bin.gz",
+    "npc.lab-guard:lod1": "/assets/civilians/npc.lab-guard.lod1.c8e9b2fb4999ca8b.bin.gz",
+    "npc.lab-guard:lod2:infected": "/assets/civilians/npc.lab-guard.lod2.infected.139c7e63c2903b72.bin.gz",
+    "npc.lab-guard:lod2": "/assets/civilians/npc.lab-guard.lod2.da9b36e85ebc6abc.bin.gz"
+  }
+}

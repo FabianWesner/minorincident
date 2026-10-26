@@ -1,0 +1,11 @@
+# L1 all new — in progress
+- Base: `lane/skinned-prod` (`5e008d4a0`), merged main `0009f107d`; lane merge `a815adc95`. No deploy.
+- All five peds, five named NPCs, healthy/infected dog coats and corgi now select skinned v2 deliveries; couriers retain main's new tier gear.
+- The zero-manual script binds unbound cast/l1 bodies, retains separate gear and shares the coat geometry; [build receipts](builds/).
+- Corgi retains the old detailed rigid teal backpack at each LOD; its atlas, weighted tongue and paw contacts are integrated.
+- [Peds](01-pedestrians.jpg), [clerk](02-npc.depot-clerk.jpg), [tech A](03-npc.lab-tech-a.jpg), [tech B](04-npc.lab-tech-b.jpg), [guard](05-npc.lab-guard.jpg), [firefighter](06-npc.firefighter-alive.jpg), [corgi](07-corgi.jpg), [dogs](08-dogs.jpg): native 120/400 px old/new front/back captures.
+- Review remains open: cap/helmet eye clearance is being corrected; inherited ped texture/face readability still needs assessment in the production crowd.
+- Targeted skin, wound, hat, backpack, tongue and paw regression: 27 passed; typecheck passed before the latest visual adjustment.
+- Captured 30/30 figures together in the L1 street; final before/after sheet and scripted depot/lab/firefighter scenes pending.
+- Native Mac/phone comparison, texture memory, draws and five cold loads: pending.
+- Validator, remote unit+levels, smoke/WebGPU, invariants and full no-skip campaign plus male L1: pending final gates.

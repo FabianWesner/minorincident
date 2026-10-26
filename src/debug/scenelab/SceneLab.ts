@@ -14,7 +14,7 @@ import { completeCampaignLevel } from '../../sim/progression/carryover';
 import { levelNineMission } from '../../levels/L9/mission';
 import { crowdVariety } from '../../render/characters/CrowdAppearance';
 import { propFootprint } from '../../sim/interact/PropSystem';
-import { Box3, Matrix4, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
+import { Box3, Matrix4, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute, type SkinnedMesh } from 'three';
 import { ArmyCheckpointBoom } from '../../sim/missions/ArmyCheckpointBoom';
 import { l2 } from '../../data/l2';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -1554,13 +1554,20 @@ export class SceneLab {
     return found;
   }
   private readonly paws = new WeakMap<Object3D, { node: Object3D; local: Vector3 }>();
+  private readonly weightedSoles = new WeakMap<Object3D, { body: SkinnedMesh; vertices: number[] }>();
   /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. A jointed leg's own paw
    * node (amb.dog pawFL...) carries the anchor: PawContacts may bend its knee. */
   private paw(leg: Object3D): number[] {
     let paw = this.paws.get(leg);
     if (!paw) {
       let node: Object3D = leg; leg.traverse(n => { if (node === leg && n !== leg && /^paw/.test(n.name)) node = n; });
-      const bounds = new Box3(); node.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y;
+      const bounds = new Box3(); node.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); });
+      if (bounds.isEmpty()) {
+        let root: Object3D | null = leg; while (root && !root.userData.animalSoles) root = root.parent;
+        const declared = root?.userData.animalSoles?.[node.name] as number[][] | undefined;
+        if (declared) for (const point of declared) bounds.expandByPoint(node.localToWorld(new Vector3().fromArray(point)));
+      }
+      const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y;
       paw = { node, local: node.worldToLocal(p) }; this.paws.set(leg, paw);
     }
     return paw.node.localToWorld(paw.local.clone()).toArray();
@@ -1573,6 +1580,23 @@ export class SceneLab {
       const positions = n.geometry.attributes.position, indices = n.geometry.index;
       for (let i = 0; i < (indices?.count ?? positions.count); i++) bottom = Math.min(bottom, vertex.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(n.matrixWorld).y);
     });
+    if (!Number.isFinite(bottom)) {
+      let weighted = this.weightedSoles.get(leg);
+      if (!weighted) {
+        let root = leg; while (root.parent && !root.userData.animalSoles) root = root.parent;
+        const body = root.parent?.getObjectByName('skin_body') as SkinnedMesh | undefined;
+        if (body?.isSkinnedMesh) {
+          const indices = body.geometry.getAttribute('skinIndex'), weights = body.geometry.getAttribute('skinWeight'), vertices: number[] = [];
+          for (let i = 0; i < indices.count; i++) {
+            let major = 0; for (let k = 1; k < 4; k++) if (weights.getComponent(i, k) > weights.getComponent(i, major)) major = k;
+            let owner: Object3D | null = body.skeleton.bones[indices.getComponent(i, major)]; while (owner && owner !== leg) owner = owner.parent;
+            if (owner) vertices.push(i);
+          }
+          weighted = { body, vertices }; this.weightedSoles.set(leg, weighted);
+        }
+      }
+      if (weighted) for (const i of weighted.vertices) bottom = Math.min(bottom, weighted.body.getVertexPosition(i, vertex).applyMatrix4(weighted.body.matrixWorld).y);
+    }
     return bottom;
   }
   private bones(j: Record<string, number[]>, shoulders?: number[]): Bone[] {

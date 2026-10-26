@@ -1,4 +1,4 @@
-import { readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { expect, test, vi } from 'vitest';
 import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4, Mesh, SkinnedMesh, Texture, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -179,10 +179,12 @@ test('held skin bounds reuse exact vertices and invalidate when the same mutable
 
 test('every newly opened wound boundary is closed by cap edges at all production LODs', async () => {
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-  for (const def of manifest.filter(d => 'crowdSkin' in d && d.crowdSkin)) for (const lod of [0, 1, 2]) {
+  // The immune companion never loses limbs; severable crowd figures must retain every cap.
+  for (const def of manifest.filter(d => 'crowdSkin' in d && d.crowdSkin && d.id !== 'char.corgi')) for (const lod of [0, 1, 2]) {
     const path = lod === 0 ? def.glb : lod === 1 ? def.lods!.lod1 : def.lods!.lod2;
     const { scene } = await loader.parseAsync(stripGlbTextures(readFileSync(path!)), '');
-    const fit = JSON.parse(readFileSync(`docs/reports/skinned-prod/builds/${def.id}/lod${lod}.json`, 'utf8'));
+    const current = `docs/reports/l1-all-new/builds/${def.id}/lod${lod}.json`;
+    const fit = JSON.parse(readFileSync(existsSync(current) ? current : `docs/reports/skinned-prod/builds/${def.id}/lod${lod}.json`, 'utf8'));
     const tolerance = fit.body === 'rigid parts welded by position' ? 2e-4 : 1e-6;
     const body = (scene.getObjectByName('skin_body') as SkinnedMesh).geometry;
     const joints = (scene.getObjectByName('skin_body') as SkinnedMesh).skeleton.bones.map(b => b.name);
