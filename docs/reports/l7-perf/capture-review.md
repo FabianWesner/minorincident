@@ -21,8 +21,8 @@ Clipping is not zero in the inherited plaza: 63 static pairs before and after; l
 
 | Fixture | Start | End / sequence |
 | --- | --- | --- |
-| Northgate, low, 240 ticks | [Start](captures/northgate-shot-0000.png) | [End](captures/northgate-shot-0240.png), [sheet](captures/northgate-sheet.jpg) |
-| Corgi, low, 240 ticks | [Start](captures/corgi-shot-0000.png) | [End](captures/corgi-shot-0240.png), [sheet](captures/corgi-sheet.jpg) |
+| Northgate, low, 240 ticks | [Start](../l7-district/northgate-low-before.png) | [End](../l7-district/northgate-low-after.png), [sheet](captures/northgate-sheet.jpg) |
+| Corgi, low, 240 ticks | [Start](../l7-district/corgi-low-before.png) | [End](../l7-district/corgi-low-after.png), [sheet](captures/corgi-sheet.jpg) |
 
 The courier walks west along the apron with facing matching velocity: 0° yaw drift, zero sink, 0.2 cm foot-slide p95 and no sustained jitter (maximum one frame). The corgi follows without intersecting the courier or wreck; both remain grounded and drawn. Both fixtures report zero static/actor clipping and zero missed in-view frames. The rocket pickup and wreck remain visible; the growing smoke column stays readable against the night ground.
 
