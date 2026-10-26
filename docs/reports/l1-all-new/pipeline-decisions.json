@@ -22,5 +22,22 @@
     "six dog coat geometry/rig/UV equality"
   ],
   "infectionPaint": "For unbound humans, sample exposed face paint inside the retained anatomical face frame. Match that paint on exposed limbs; blue/black gloves, uniforms and headwear keep their source colour. Reject inputs without measurable face paint.",
-  "carriedProps": "Rigid authored hand props carry explicit non-skin atlas tags; they follow the physical hand without inheriting infection skin tint."
+  "carriedProps": "Rigid authored hand props carry explicit non-skin atlas tags; they follow the physical hand without inheriting infection skin tint.",
+  "qaAccessoryOracle": {
+    "productionChanged": false,
+    "toleranceMetres": 0.002,
+    "changes": [
+      "Use independently loaded accessory vertices after the reviewed .2 rad brim tilt, fore/aft centring, and max-LOD head/frame seating.",
+      "Atlas geometric-frame inventory follows source spectacleTop metadata; shared legacy build.py contains inactive clerk branches in lab staff files. Fused painted eyewear remains covered by source-UV/pixel tests and native captures."
+    ],
+    "combinations": 2484,
+    "eligible": 2106,
+    "geometricFrameHeads": 18,
+    "positiveControl": "passed",
+    "negativeControl": {
+      "shiftMetres": 0.4,
+      "badBounds": 2106,
+      "expectedFailure": true
+    }
+  }
 }

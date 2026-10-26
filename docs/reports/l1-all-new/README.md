@@ -8,4 +8,4 @@
 - [Scene receipts](gates/scenes.json): 38 native passes; depot retains PROD’s three soft contacts, no new contacts or piercing. [Crowd](gates/crowd.json): 30/30 figures, zero GPU errors.
 - Targeted checks: 135 passed; typecheck/lint/build passed. [Validator](gates/validator.json): 1262 rows, zero errors.
 - [Quiet ABBA timing](performance-summary.json): all six Mac/phone comparisons pass (+1 ms limit), 24 samples, zero GPU errors/overlap; WebGPU crowd draws 339→145, decoded texture data 285.10→287.22 MiB. [Worst of five cold loads](cold-loads/summary.json): 2.307 s vs PROD 2.326 s; both limits pass.
-- Remote unit+levels, smoke including unflagged WebGPU, invariants, E17 and full no-skip L1–L10 plus male L1 are running/pending.
+- [Remote unit+levels](gates/remote-unit-levels-release.json): 2774 passed, zero failures, nine existing skips. Invariants, E17, smoke/unflagged WebGPU and no-skip campaign/male L1 are running/pending.

@@ -53,12 +53,21 @@ function bounds(geometry: BufferGeometry, matrix = new Matrix4(), selected?: (i:
   for (let i = 0; i < p.count; i++) if (!selected || selected(i)) result.expandByPoint(point.fromBufferAttribute(p, i).applyMatrix4(matrix));
   return result;
 }
+const accessoryVertices = new Map<string, Vector3[]>();
 async function authoredBounds(id: string, lod: Lod): Promise<Box3> {
   const root = await asset(id, lod === 'lod2' ? 'lod1' : lod); root.updateMatrixWorld(true);
   const pivot = root.getObjectByName('head'), inverse = pivot && !(pivot instanceof Mesh) ? pivot.matrixWorld.clone().invert() : new Matrix4();
-  const result = new Box3();
-  root.traverse(node => { if (node instanceof Mesh) result.union(bounds(node.geometry, inverse.clone().multiply(node.matrixWorld))); });
-  return result;
+  const points: Vector3[] = [];
+  root.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    const p = node.geometry.getAttribute('position'), matrix = inverse.clone().multiply(node.matrixWorld);
+    for (let i = 0; i < p.count; i++) points.push(new Vector3().fromBufferAttribute(p, i).applyMatrix4(matrix));
+  });
+  accessoryVertices.set(`${id}/${lod}`, points);
+  return new Box3().setFromPoints(points);
+}
+function fittedAccessoryBounds(id: string, lod: Lod, matrix: Matrix4): Box3 {
+  return new Box3().setFromPoints(accessoryVertices.get(`${id}/${lod}`)!.map(p => p.clone().applyMatrix4(matrix)));
 }
 function authoredSkull(root: Group, headName = 'head') {
   root.updateMatrixWorld(true); const head = root.getObjectByName(headName); if (!head) return null;
@@ -127,6 +136,7 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
     // Independent source: vertices in the authored GLB head frame plus its per-model manifest fit.
     // Tolerance is the source LOD's measured extent / 1024 (quantization), with a 2 mm floating-point floor.
     let combinations = 0, eligible = 0, glassesHeads = 0;
+    const minimumSeats = new Map<string, number>(), measuredFrameTops = new Map<string, number>();
     for (const model of models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
       const root = await asset(model, lod);
       if (model.startsWith('npc.')) prepareCivilianRig(root, model);
@@ -139,11 +149,21 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
         const skin = root.getObjectByName('skin_body') as Mesh, region = skin.geometry.getAttribute('_crowd_region'), p = skin.geometry.getAttribute('position'), inverse = root.getObjectByName('head')!.matrixWorld.clone().invert().multiply(skin.matrixWorld), point = new Vector3();
         let top = -Infinity;
         for (let i = 0; i < p.count; i++) if (region?.getX(i) > 1.5) top = Math.max(top, point.fromBufferAttribute(p, i).applyMatrix4(inverse).y);
-        if (Number.isFinite(top)) civilianFrameTop = top;
+        if (Number.isFinite(top)) {
+          measuredFrameTops.set(model, Math.max(measuredFrameTops.get(model) ?? -Infinity, top));
+          civilianFrameTop = measuredFrameTops.get(model);
+        }
+        minimumSeats.set(model, Math.max(minimumSeats.get(model) ?? -Infinity, skull!.centre.y - skull!.size.y * .25 + .002));
       }
       // Glasses are authored into these civilian heads, not separate acc.* models.
       // Their dark front-face vertices must remain on the face and owned by the head joint.
-      if (authoredGlasses.has(model) || authoredGlasses.has(model.replace(/\.aftermath$/, ''))) {
+      // Shared legacy build.py files contain an unexecuted depot-clerk spectacles
+      // branch for the lab staff too. Atlas sources declare geometric frame tags
+      // explicitly; fused painted eyewear is checked by the source-UV/pixel gates.
+      const geometricGlasses = geometry.userData.crowdBinds
+        ? root.getObjectByName('root')?.userData.spectacleTop !== undefined
+        : authoredGlasses.has(model) || authoredGlasses.has(model.replace(/\.aftermath$/, ''));
+      if (geometricGlasses) {
         glassesHeads++;
         // Palette-folded aftermath heads retain the source rig/shape but no separate skin material.
         let glassSkull = skull;
@@ -221,13 +241,21 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
           const limit = id.endsWith('sun-hat') ? 1.4 : id.endsWith('bucket-hat') ? 1.3 : 1.15;
           const width = Math.max(...(['lod0', 'lod1'] as const).map(l => raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform).getSize(new Vector3()).z));
           if (width > skull!.size.z * limit) expectedTransform.premultiply(new Matrix4().makeTranslation(0, 0, skull!.centre.z).multiply(new Matrix4().makeScale(1, 1, skull!.size.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -skull!.centre.z)));
+          const envelope = new Box3();
+          for (const l of ['lod0', 'lod1'] as const) envelope.union(raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform));
+          const offset = envelope.getCenter(new Vector3()).x - skull!.centre.x, allowance = skull!.size.x * .2;
+          if (Math.abs(offset) > allowance) expectedTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
+          // The reviewed skinned fit raises the front brim around the skull centre.
+          // Rotate authored vertices: rotating their axis-aligned box overestimates the silhouette.
+          if (model.startsWith('npc.')) expectedTransform.premultiply(new Matrix4().makeTranslation(skull!.centre.x, skull!.centre.y, 0).multiply(new Matrix4().makeRotationZ(.2)).multiply(new Matrix4().makeTranslation(-skull!.centre.x, -skull!.centre.y, 0)));
         }
-        if (id.startsWith('acc.hat-') && civilianFrameTop !== undefined) {
+        if (id.startsWith('acc.hat-') && (civilianFrameTop !== undefined || minimumSeats.has(model))) {
           // Both LODs share one fit; use the lower authored brim so switching LOD cannot move the hat.
-          const bottom = Math.min(...(['lod0', 'lod1'] as const).map(l => raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform).min.y));
-          expectedTransform.premultiply(new Matrix4().makeTranslation(0, Math.max(0, civilianFrameTop + .012 - bottom), 0));
+          const bottom = Math.min(...(['lod0', 'lod1'] as const).map(l => fittedAccessoryBounds(id, l, expectedTransform).min.y));
+          const seat = Math.max(civilianFrameTop === undefined ? -Infinity : civilianFrameTop + .012, minimumSeats.get(model) ?? -Infinity);
+          expectedTransform.premultiply(new Matrix4().makeTranslation(0, Math.max(0, seat - bottom), 0));
         }
-        const expected = raw.get(`${id}/${lod}`)!.clone().applyMatrix4(expectedTransform);
+        const expected = fittedAccessoryBounds(id, lod, expectedTransform);
         const tolerance = Math.max(.002, expected.getSize(new Vector3()).length() / 1024);
         const head = new Matrix4().makeRotationY(.43).setPosition(3, 1.4, -7), world = new Matrix4().makeRotationY(-.7).setPosition(11, .2, 9);
         const otherJoint = new Matrix4().makeRotationX(-.9).setPosition(-13, 4, 22);

@@ -1,0 +1,24 @@
+diff --git a/tools/playtest/session.ts b/tools/playtest/session.ts
+index 35660afc4..bec623eb8 100644
+--- a/tools/playtest/session.ts
++++ b/tools/playtest/session.ts
+@@ -72,6 +72,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
+     const e = eyes, item: Issue = { level: frame?.level ?? e?.level ?? '?', tick: frame?.tick ?? e?.tick ?? -1, x: +(frame?.x ?? e?.player?.x ?? 0).toFixed(1), z: +(frame?.z ?? e?.player?.z ?? 0).toFixed(1), severity, kind, text, captures: [], step: frame ? null : e?.step ?? null, objective: frame ? '' : e?.objective ?? '' };
+     if (shot) item.captures.push(await capture(`${item.level}-${item.tick}-${kind}`));
+     issues.push(item); log({ issue: item }); console.log(`[${severity}] ${item.level} t${item.tick} (${item.x},${item.z}) ${kind}: ${text}`);
++    if (item.level === 'L3' && kind === 'stuck-at-ring') log({ arrivalDiagnostic: await page.evaluate(() => {
++      const a = window.__SS__!, s = a.missions.state()?.l3;
++      return { tick: a.tick(), state: s && { phase: s.phase, crossedAt: s.crossedAt, barrierClosedAt: s.barrierClosedAt, squad: s.squad },
++        actors: a.query({}).filter(e => e.companion || s?.squad.some(m => m.id === e.id) || !e.infected && e.health.current > 0 && e.transform.x > 210 && e.transform.x < 218).map(e => ({ id: e.id, kind: e.kind, transform: e.transform, health: e.health, hidden: e.hidden, passengerOf: e.passengerOf, companion: e.companion, civilian: e.civilian })) };
++    }) });
+     writeFileSync(join(o.out, `issues-${o.tag}.json`), JSON.stringify(issues, null, 2));
+     return item;
+   };
+@@ -898,6 +903,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
+   writeFileSync(join(o.out, `${o.tag}-completion.json`), JSON.stringify(await page.evaluate(() => ({
+     levels: (window as unknown as { __playtestCompleted?: unknown[] }).__playtestCompleted ?? [],
+     campaign: window.__SS__!.campaign.state(), mission: window.__SS__!.missions.state(),
++    arrivalGroup: window.__SS__!.query({}).filter(e => e.companion || window.__SS__!.missions.state()?.l3?.squad.some(m => m.id === e.id)).map(e => ({ id: e.id, transform: e.transform, health: e.health, companion: e.companion, civilian: e.civilian })),
+     backend: window.__SS__!.getState().render.backend, quality: window.__SS__!.getState().render.quality, camera: window.__SS__!.getState().render.camera,
+   })), null, 2));
+   if (process.env.PLAYTEST_FRAME_GATE === '1') assert.deepEqual(longFrames.filter(f => f.playMs > 200 && f.level && o.levels.includes(f.level)), [], 'No gameplay frame may exceed 200 ms');
