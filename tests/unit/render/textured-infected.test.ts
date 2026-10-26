@@ -8,7 +8,7 @@ import { bakeInfected, framesPerClip } from '../../../src/render/characters/bake
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 
 test('textured suit retains UVs, centimetre caps, joint poses and frozen corpse texels across all LODs @E07 @E17', async () => {
   const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);

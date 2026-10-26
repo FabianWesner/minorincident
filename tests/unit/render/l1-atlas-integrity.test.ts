@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../../src/assets/manifest.json';
 import bakes from '../../../src/assets/civilianBakes.json';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { decodeCivilianBake } from '../../../src/assets/civilianBakeData';
 import { prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
 

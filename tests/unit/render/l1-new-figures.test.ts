@@ -8,7 +8,7 @@ import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4, Mesh, SkinnedMes
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../../src/assets/manifest.json';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { CorgiTongue } from '../../../src/render/characters/CorgiTongue';
 import { PawContacts } from '../../../src/render/characters/PawContacts';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';

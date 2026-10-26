@@ -1,4 +1,4 @@
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test, vi } from 'vitest';

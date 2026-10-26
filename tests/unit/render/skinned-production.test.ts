@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { MeshLambertNodeMaterial } from 'three/webgpu';
 import manifest from '../../../src/assets/manifest.json';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
 import { crowdLimbParts, packCrowdParts } from '../../../src/assets/crowdParts';
 import { compactCrowdGeometry } from '../../../src/render/characters/compactCrowdGeometry';
