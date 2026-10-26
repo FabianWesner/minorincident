@@ -7,5 +7,5 @@
 - Review remains open: cap/helmet eye clearance is corrected; final crowd, motion and scene reviews remain.
 - Targeted skin, winding, picking, layout, atlas, backpack, tongue and paw regression: 42 passed; typecheck/lint passed.
 - Captured 30/30 figures together in the L1 street; final before/after sheet and scripted depot/lab/firefighter scenes pending.
-- Native Mac/phone comparison, texture memory, draws and five cold loads: pending.
-- Validator, remote unit+levels, smoke/WebGPU, invariants and full no-skip campaign plus male L1: pending final gates.
+- [Native Mac/phone ABBA](performance-summary.json): six p95 comparisons pass (+1 ms allowance); all-figure draws 339→145, decoded texture data 285.10→288.05 MiB; [worst of five cold loads](cold-loads/summary.json) 1.937 s vs PROD 2.344 s (both limits pass).
+- [Validator](gates/validator.json): 1262 rows, zero errors; remote unit+levels, smoke/WebGPU, invariants and full no-skip campaign plus male L1 remain running/pending.

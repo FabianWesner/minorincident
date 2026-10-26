@@ -37,7 +37,7 @@ def group(ids,file):
  for im in ims:sheet.paste(im,((width-im.width)//2,y));y+=im.height+8
  sheet.save(out/file,quality=90,optimize=True)
 
-peds=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly']
+peds=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','char.courier-female','char.courier-male']
 group(peds,'01-pedestrians.jpg')
 for n,id in enumerate(['npc.depot-clerk','npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.firefighter-alive'],2):group([id],f'{n:02}-{id}.jpg')
 group(['char.corgi'],'07-corgi.jpg')

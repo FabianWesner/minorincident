@@ -1,0 +1,56 @@
+[
+  {
+    "scenario": "all-figures",
+    "backend": "webgl2",
+    "phone": false,
+    "mainP95": 5.5,
+    "newP95": 5.049999999999272,
+    "deltaMs": -0.4500000000007276,
+    "pass": true
+  },
+  {
+    "scenario": "escape-street",
+    "backend": "webgl2",
+    "phone": false,
+    "mainP95": 4.949999999999818,
+    "newP95": 4.75,
+    "deltaMs": -0.1999999999998181,
+    "pass": true
+  },
+  {
+    "scenario": "all-figures",
+    "backend": "webgpu",
+    "phone": false,
+    "mainP95": 4.600000000000364,
+    "newP95": 4.2500000000009095,
+    "deltaMs": -0.3499999999994543,
+    "pass": true
+  },
+  {
+    "scenario": "escape-street",
+    "backend": "webgpu",
+    "phone": false,
+    "mainP95": 4.450000000000728,
+    "newP95": 4.200000000000728,
+    "deltaMs": -0.25,
+    "pass": true
+  },
+  {
+    "scenario": "all-figures",
+    "backend": "webgl2",
+    "phone": true,
+    "mainP95": 25.19999999999891,
+    "newP95": 15.799999999999272,
+    "deltaMs": -9.399999999999636,
+    "pass": true
+  },
+  {
+    "scenario": "escape-street",
+    "backend": "webgl2",
+    "phone": true,
+    "mainP95": 18.649999999997817,
+    "newP95": 18,
+    "deltaMs": -0.6499999999978172,
+    "pass": true
+  }
+]
