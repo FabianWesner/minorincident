@@ -32,3 +32,6 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - Male courier (both survivors are player figures, P1): walk, run, attacks, gear tiers 0-4, L6 headlamp and L10 canister match the heroine's quality; A/B with `npm run qa:ab -- --survivor male` (batch16).
 - Suit zombie crowds read as separate bodies at low quality and zoom 1 (no dark shard mass), and stay visible at night in L10 (Q-179).
 - No gameplay frame over 200 ms at the L10 Mega fight and death (Q-180).
+- v2 crowd hats: live and turned peds show their eyes at zoom 1.5; no hat wider than ~1.2× the head, none tipped into a disc in front of the face; A/B against PROD at the same seed (Q-187, Q-188).
+- Turned v2 faces read as tinted skin with eyes, not a triangle mosaic (Q-189).
+- Firefighters seen from behind read as a helmet over a head, not a jack-o'-lantern (Q-190).
