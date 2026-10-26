@@ -21,6 +21,12 @@ for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', '
   const rest = Array.from({ length: body.geometry.getAttribute('position').count }, (_, i) => body.getVertexPosition(i, new Vector3()).clone());
   for (const name of ['clipboard', 'clipboard-paper', 'clipboard-clip']) {
     const prop = root.getObjectByName(name); if (!prop) continue;
+    prop.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      const region = node.geometry.getAttribute('_crowd_region');
+      expect(region, `${id}/${name} carried paint tag`).toBeDefined();
+      expect(Array.from({ length: region.count }, (_, i) => region.getX(i))).toEqual(Array(region.count).fill(0));
+    });
     let owner = prop.parent; while (owner && !/^hand[LR]$/.test(owner.name)) owner = owner.parent;
     expect(owner, `${id}/${name} hand binding`).toBeTruthy();
     const centre = new Box3().setFromObject(prop).getCenter(new Vector3());
