@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "platform": "darwin",
+  "headless": true,
+  "launchArgs": [
+    "--use-angle=metal",
+    "--ignore-gpu-blocklist",
+    "--enable-gpu"
+  ],
+  "unsafeWebgpuFlag": false,
+  "source": "tests/e2e/webgpu-pipelines.spec.ts",
+  "sourceSha256": "df71cc529b2e966076340f6e581259f84c40216409d94ea1bc3ad4b85b14c7b9",
+  "receipt": "e17-browser.json",
+  "cases": [
+    "T-E02-webgpu-pipelines-l1 @smoke @E02 WebGPU low: the menu \u2192 L1 start compiles every render pipeline (suit zombies drawn)",
+    "T-E02-webgpu-pipelines-scene @smoke @E02 WebGPU low: textured crowd and frozen corpse pages compile",
+    "T-E02-webgpu-pipelines-l1 @smoke @E02 WebGPU high: the menu \u2192 L1 start compiles every render pipeline (suit zombies drawn)",
+    "T-E02-webgpu-pipelines-scene @smoke @E02 WebGPU high: textured crowd and frozen corpse pages compile"
+  ]
+}
