@@ -3,6 +3,7 @@
 A living record, updated after every lane or experiment. Short entries with evidence. Per-lane detail lives in epics-pipeline/agent-scorecard.md (git-ignored); this file holds the durable conclusions.
 
 ## QA and regressions
+- **Didn't work:** handling only `webglcontextlost`. A lost WebGPU device (GPU process reset) froze the view for the rest of the session while sim, HUD and radar ran on (Q-197, L4 PROD 10-26); content soaks to 815 corpses never reproduced it. A frozen-view report with a live HUD means device loss or per-frame GPU errors: check the recovery path (`Browser.crashGpuProcess` over CDP reproduces it, tests/e2e/l4-corpse-stall.spec.ts), and compare canvas-only screenshots, since the DOM HUD changes every frame.
 - **Didn't work:** QA that only checked the batch's own changes. The PO found 14 issues in L1–L4 on PROD 13h that bots and Opus QA had passed (10-22). Most were older than 13g. No one had ever compared against PROD.
 - **Worked:** the three-layer regression gate (docs/qa/regression-gate.md):
   - The invariant sweep (`qa:invariants`) went red on 7 real game problems on its first run and found the 24 s L8 load.
