@@ -253,7 +253,7 @@ export class GameView implements Lifecycle {
   }
   /** Three's WebGL fallback reports loss but does not rebuild its backend on restore.
    * Recreate renderer GPU state on the same canvas so touch/pointer listeners survive. */
-  retireLostRenderer(): void { this.lostRendererDisposal = this.renderer.dispose(); }
+  retireLostRenderer(): void { this.lostRendererDisposal = this.renderer.dispose().catch(error => console.warn('Lost renderer disposal failed', error)); }
   async restoreContext(): Promise<void> {
     const canvas = this.renderer.domElement;
     this.reset(); this.environment?.dispose(); this.environment = undefined; await this.lostRendererDisposal; this.lostRendererDisposal = null;
@@ -872,7 +872,18 @@ export class GameView implements Lifecycle {
     }
     return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
   }
+  /** Game reports render failures (log once, telemetry). */
+  onRenderError: ((kind: string, error: unknown) => void) | null = null;
+  /** Q-197: one failing subsystem must never stop the whole view. A throw in the frame's update work still draws the
+   * scene as it stands (the failed part keeps its last state) and is reported; a throwing draw is reported too. */
   update(alpha = 1): void {
+    try { this.updateFrame(alpha); } catch (error) {
+      this.onRenderError?.('update', error);
+      if (this.warming || this.frozenFrame || this.contextLost) return;
+      try { this.renderer.render(this.scene, this.camera); } catch (error) { this.onRenderError?.('render', error); }
+    }
+  }
+  private updateFrame(alpha: number): void {
     this.vfx?.updateSpecialState();
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame && !this.frozenUpdates) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
