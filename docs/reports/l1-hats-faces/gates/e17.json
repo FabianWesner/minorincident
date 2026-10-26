@@ -1,0 +1,119 @@
+{
+  "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+  "command": "E2E_PORT=4681 SCENE_PORT=4682 E2E_UNITS=2 sh tools/e2e-lock.sh env E2E_UNITS=1 npm run verify -- E17",
+  "checks": {
+    "target": "E17",
+    "epics": [
+      "E17"
+    ],
+    "pattern": "@(?:E17)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E17)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E17/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E17)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "T-E17-08-all",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "T-E17-08-all",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "units": {
+    "success": true,
+    "numTotalTests": 4047,
+    "numPassedTests": 106,
+    "numFailedTests": 0,
+    "numPendingTests": 3941,
+    "numTotalTestSuites": 745,
+    "numPassedTestSuites": 745,
+    "numFailedTestSuites": 0
+  },
+  "unitsRawSha256": "f9d29cb6af76a6eae141962d805cd7ad75e60f99cbdef3e401844716feb04130",
+  "browserMain": {
+    "startTime": "2026-10-26T10:57:46.898Z",
+    "duration": 791832.801,
+    "expected": 51,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browserInventory": {
+    "startTime": "2026-10-26T11:10:59.257Z",
+    "duration": 406927.626,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "turntables": {
+    "assets": 371,
+    "viewsPerAsset": 5,
+    "errors": [],
+    "rawSha256": "348d6d6ae80ef5f8c49db52ebf4d8fff61d2b80803ecb3abd43b2eb7c4cead3f"
+  },
+  "photoInventory": {
+    "rows": 316,
+    "placeholderRows": 0,
+    "rawSha256": "5edc735225f43be20939941ed30d1d529eadc2c10734992b6760d956b07d51c7"
+  }
+}

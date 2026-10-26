@@ -1,0 +1,166 @@
+{
+  "mode": "campaign",
+  "quality": "low",
+  "heroine": "female",
+  "zoom": 1.5,
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+  "command": "E2E_PORT=4681 SCENE_PORT=4682 PLAYTEST_BACKEND=webgpu npm run playtest -- --levels L1-L3 --quality low --mode campaign --heroine female --zoom 1.5 --no-skip --out test-results/playtest/l1-hats-faces-final",
+  "seed": 1,
+  "backend": "webgpu",
+  "runs": [
+    {
+      "level": "L1",
+      "entry": "new",
+      "finished": true,
+      "wallSeconds": 144,
+      "simSeconds": 141,
+      "deaths": 0,
+      "assists": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 13.9
+    },
+    {
+      "level": "L2",
+      "entry": "new",
+      "finished": true,
+      "wallSeconds": 106,
+      "simSeconds": 0,
+      "deaths": 0,
+      "assists": 1,
+      "skipped": [],
+      "maxNoProgressSeconds": 12.333
+    },
+    {
+      "level": "L3",
+      "entry": "new",
+      "finished": true,
+      "wallSeconds": 212,
+      "simSeconds": 0,
+      "deaths": 0,
+      "assists": 0,
+      "skipped": [],
+      "maxNoProgressSeconds": 10.772
+    }
+  ],
+  "completedLevels": 3,
+  "unlockedLevel": 4,
+  "results": {
+    "L1": {
+      "time": 141.35,
+      "kills": 0,
+      "knockdowns": 13,
+      "damage": 50,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": [],
+      "delivered": true,
+      "infected": 28,
+      "turned": 0,
+      "escaped": 7
+    },
+    "L2": {
+      "time": 102.98333333333333,
+      "kills": 0,
+      "knockdowns": 16,
+      "damage": 144,
+      "deaths": 0,
+      "rescued": 4,
+      "optionalObjectives": []
+    },
+    "L3": {
+      "time": 209.91666666666666,
+      "kills": 0,
+      "knockdowns": 49,
+      "damage": 0,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    }
+  },
+  "steps": {
+    "L1": [
+      {
+        "id": "pickup",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "deliver",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "escape",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "weapon",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "firestation",
+        "optional": false,
+        "status": "completed"
+      }
+    ],
+    "L2": [
+      {
+        "id": "axe",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "calm",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "board",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "ride",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "doors",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "bridge",
+        "optional": false,
+        "status": "completed"
+      }
+    ],
+    "L3": [
+      {
+        "id": "armory",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "defend",
+        "optional": false,
+        "status": "completed"
+      },
+      {
+        "id": "checkpoint",
+        "optional": false,
+        "status": "completed"
+      }
+    ]
+  },
+  "rawSummarySha256": "74c1e2af7683860fd7b339ff7cba4afc0d5b4fd157e732565a983723ec6b1670"
+}
