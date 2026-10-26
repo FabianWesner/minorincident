@@ -2,7 +2,7 @@
 
 Recommend **four shared GPU contexts**, one GPU Chrome root, at most two SwiftShader contexts, and one exclusive timing context. At four clients the measured queue-inclusive Scene Lab throughput rose from **6.66 to 21.89 scenes/min (3.28×)**. The four-lane job load finished in **3.29 s versus 52.79 s**, with mean browser admission wait **0.69 s versus 30.03 s**. These comparisons use the one-GPU safety-constrained baseline described below.
 
-Implementation and migration: commits `bc167a02c`, `f7f4b65d6` and `9a8e347d1` on `lane/browser-pool`, based on `986a168a7`. [Operation, compatibility, timeouts and flags](../../../tools/browser-pool/README.md). Raw measurements and decoded capture hashes: [measurements.json](measurements.json). Check receipts: [verification.json](verification.json).
+Implementation and migration: commits `bc167a02c`, `f7f4b65d6` and `9a8e347d1` on `lane/browser-pool`, based on `986a168a7`. [Operation, compatibility, timeouts and flags](../../../tools/browser-pool/README.md). Raw measurements and decoded capture hashes: [measurements.json](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/browser-pool/measurements.json). Check receipts: [verification.json](verification.json).
 
 ## Method and scope
 
