@@ -1,0 +1,24 @@
+{
+  "applicationRevision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+  "documentationRevision": "dc0fd3758",
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/l1-hats-faces/remote-static.json --env E2E_PORT=4681 --env SCENE_PORT=4682 -- npx vitest run tests/unit/static.test.ts --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/l1-hats-faces/remote-static.json",
+  "success": true,
+  "passed": 1,
+  "failed": 0,
+  "assertions": [
+    {
+      "name": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+      "status": "passed",
+      "durationMs": 142352.211558
+    }
+  ],
+  "rawReport": "test-results/l1-hats-faces/remote-static.json",
+  "rawSha256": "ddef84e357bdf00ee59c9c149cf3377efc44f32b27f627de1ccfc153c2e9d0c4",
+  "preflight": {
+    "revision": "3d6035323",
+    "passed": 2776,
+    "failed": 1,
+    "pending": 9,
+    "failure": "tests/unit/static.test.ts exceeded its existing 180000 ms deadline in the full-suite run (226345 ms); isolated rerun passed without source or timeout changes."
+  }
+}

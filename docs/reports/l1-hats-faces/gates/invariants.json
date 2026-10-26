@@ -1,0 +1,41 @@
+{
+  "stages": [
+    {
+      "stage": "remote-sim",
+      "code": 0,
+      "seconds": 1652.904,
+      "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+      "log": "test-results/qa-invariants/remote-sim.log"
+    },
+    {
+      "stage": "build",
+      "code": 0,
+      "seconds": 16.847,
+      "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+      "log": "test-results/qa-invariants/build.log"
+    },
+    {
+      "stage": "Mac-WebGPU-low",
+      "code": 0,
+      "seconds": 208.027,
+      "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+      "log": "test-results/qa-invariants/Mac-WebGPU-low.log",
+      "quietAdmission": true
+    }
+  ],
+  "simulation": {
+    "success": true,
+    "numTotalTests": 28,
+    "numPassedTests": 28,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  },
+  "browser": {
+    "startTime": "2026-10-26T11:21:05.944Z",
+    "duration": 196974.467,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "revision": "795896ad91b6e9a9b47e549f269b62e3ce7c86de",
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/l1-hats-faces/remote-final.json --env E2E_PORT=4681 --env SCENE_PORT=4682 -- npx vitest run tests/unit tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/l1-hats-faces/remote-final.json",
+  "runner": "94.130.181.173",
+  "success": true,
+  "passed": 2777,
+  "failed": 0,
+  "pending": 9,
+  "files": 494,
+  "durationMs": 4460908.544921875,
+  "skippedChecks": [],
+  "skipReasons": {
+    "Darwin-only browser capacity tests": 7,
+    "opt-in L4_PROBE diagnostics": 2
+  },
+  "rawReport": "test-results/l1-hats-faces/remote-final.json",
+  "rawSha256": "50d5a0e247eafae88c62868319ac8afe8428242db925ab50abf498acd38c45e8",
+  "earlierBuildTimeoutAndIsolatedPass": "remote-static.json"
+}
