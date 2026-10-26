@@ -57,35 +57,35 @@ Each link opens the three reviewed campaign positions. Metrics are maxima across
 | Level | Tier | Backend | Reviewed captures | Frame p95 ms | Draws | Triangles |
 | --- | --- | --- | --- | ---: | ---: | ---: |
 
-| L1 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L1-high-webgl2-sheet.jpg) | 9.3 | 215 | 802,548 |
-| L1 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L1-high-webgpu-sheet.jpg) | 6.4 | 215 | 802,548 |
-| L1 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L1-low-webgl2-sheet.jpg) | 5.3 | 185 | 381,027 |
-| L1 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L1-low-webgpu-sheet.jpg) | 4.5 | 185 | 381,027 |
-| L2 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L2-high-webgl2-sheet.jpg) | 11.1 | 294 | 895,601 |
-| L2 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L2-high-webgpu-sheet.jpg) | 7.8 | 294 | 895,601 |
-| L2 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L2-low-webgl2-sheet.jpg) | 7.8 | 256 | 471,144 |
-| L2 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L2-low-webgpu-sheet.jpg) | 6.1 | 256 | 471,144 |
-| L3 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L3-high-webgl2-sheet.jpg) | 8.8 | 189 | 654,777 |
-| L3 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L3-high-webgpu-sheet.jpg) | 6.0 | 189 | 654,777 |
-| L3 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L3-low-webgl2-sheet.jpg) | 6.1 | 163 | 343,750 |
-| L3 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L3-low-webgpu-sheet.jpg) | 5.1 | 163 | 343,750 |
-| L4 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L4-high-webgl2-sheet.jpg) | 9.6 | 288 | 1,184,444 |
-| L4 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L4-high-webgpu-sheet.jpg) | 9.4 | 288 | 1,184,444 |
-| L4 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L4-low-webgl2-sheet.jpg) | 7.1 | 259 | 429,487 |
-| L4 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L4-low-webgpu-sheet.jpg) | 6.6 | 259 | 429,487 |
-| L5 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L5-high-webgl2-sheet.jpg) | 6.1 | 227 | 552,205 |
-| L5 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L5-high-webgpu-sheet.jpg) | 5.0 | 227 | 552,205 |
-| L5 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L5-low-webgl2-sheet.jpg) | 5.2 | 206 | 309,642 |
-| L5 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L5-low-webgpu-sheet.jpg) | 5.4 | 206 | 309,642 |
-| L6 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L6-high-webgl2-sheet.jpg) | 5.2 | 196 | 285,206 |
-| L6 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L6-high-webgpu-sheet.jpg) | 4.0 | 196 | 285,206 |
-| L6 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L6-low-webgl2-sheet.jpg) | 4.9 | 175 | 203,654 |
-| L6 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L6-low-webgpu-sheet.jpg) | 3.5 | 175 | 203,654 |
-| L7 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L7-high-webgl2-sheet.jpg) | 11.7 | 198 | 956,997 |
-| L7 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L7-high-webgpu-sheet.jpg) | 11.2 | 198 | 961,789 |
-| L7 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L7-low-webgl2-sheet.jpg) | 6.8 | 123 | 185,000 |
-| L7 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L7-low-webgpu-sheet.jpg) | 5.9 | 123 | 185,000 |
-| L8 | high | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L8-high-webgl2-sheet.jpg) | 7.5 | 208 | 334,993 |
-| L8 | high | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L8-high-webgpu-sheet.jpg) | 6.2 | 208 | 334,993 |
-| L8 | low | webgl2 | [start / fight / finale](../../test-results/zoom-out-15/L8-low-webgl2-sheet.jpg) | 6.2 | 190 | 117,795 |
-| L8 | low | webgpu | [start / fight / finale](../../test-results/zoom-out-15/L8-low-webgpu-sheet.jpg) | 4.7 | 190 | 117,795 |
+| L1 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L1-high-webgl2-sheet.jpg`) | 9.3 | 215 | 802,548 |
+| L1 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L1-high-webgpu-sheet.jpg`) | 6.4 | 215 | 802,548 |
+| L1 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L1-low-webgl2-sheet.jpg`) | 5.3 | 185 | 381,027 |
+| L1 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L1-low-webgpu-sheet.jpg`) | 4.5 | 185 | 381,027 |
+| L2 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L2-high-webgl2-sheet.jpg`) | 11.1 | 294 | 895,601 |
+| L2 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L2-high-webgpu-sheet.jpg`) | 7.8 | 294 | 895,601 |
+| L2 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L2-low-webgl2-sheet.jpg`) | 7.8 | 256 | 471,144 |
+| L2 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L2-low-webgpu-sheet.jpg`) | 6.1 | 256 | 471,144 |
+| L3 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L3-high-webgl2-sheet.jpg`) | 8.8 | 189 | 654,777 |
+| L3 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L3-high-webgpu-sheet.jpg`) | 6.0 | 189 | 654,777 |
+| L3 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L3-low-webgl2-sheet.jpg`) | 6.1 | 163 | 343,750 |
+| L3 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L3-low-webgpu-sheet.jpg`) | 5.1 | 163 | 343,750 |
+| L4 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L4-high-webgl2-sheet.jpg`) | 9.6 | 288 | 1,184,444 |
+| L4 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L4-high-webgpu-sheet.jpg`) | 9.4 | 288 | 1,184,444 |
+| L4 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L4-low-webgl2-sheet.jpg`) | 7.1 | 259 | 429,487 |
+| L4 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L4-low-webgpu-sheet.jpg`) | 6.6 | 259 | 429,487 |
+| L5 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L5-high-webgl2-sheet.jpg`) | 6.1 | 227 | 552,205 |
+| L5 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L5-high-webgpu-sheet.jpg`) | 5.0 | 227 | 552,205 |
+| L5 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L5-low-webgl2-sheet.jpg`) | 5.2 | 206 | 309,642 |
+| L5 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L5-low-webgpu-sheet.jpg`) | 5.4 | 206 | 309,642 |
+| L6 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L6-high-webgl2-sheet.jpg`) | 5.2 | 196 | 285,206 |
+| L6 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L6-high-webgpu-sheet.jpg`) | 4.0 | 196 | 285,206 |
+| L6 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L6-low-webgl2-sheet.jpg`) | 4.9 | 175 | 203,654 |
+| L6 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L6-low-webgpu-sheet.jpg`) | 3.5 | 175 | 203,654 |
+| L7 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L7-high-webgl2-sheet.jpg`) | 11.7 | 198 | 956,997 |
+| L7 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L7-high-webgpu-sheet.jpg`) | 11.2 | 198 | 961,789 |
+| L7 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L7-low-webgl2-sheet.jpg`) | 6.8 | 123 | 185,000 |
+| L7 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L7-low-webgpu-sheet.jpg`) | 5.9 | 123 | 185,000 |
+| L8 | high | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L8-high-webgl2-sheet.jpg`) | 7.5 | 208 | 334,993 |
+| L8 | high | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L8-high-webgpu-sheet.jpg`) | 6.2 | 208 | 334,993 |
+| L8 | low | webgl2 | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L8-low-webgl2-sheet.jpg`) | 6.2 | 190 | 117,795 |
+| L8 | low | webgpu | [start / fight / finale] (Unavailable at cleanup: `../../test-results/zoom-out-15/L8-low-webgpu-sheet.jpg`) | 4.7 | 190 | 117,795 |
