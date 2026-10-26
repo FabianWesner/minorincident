@@ -14,6 +14,6 @@ The [retention policy](../../process/evidence-retention.md) keeps all report tex
 | `docs/reports/` files / bytes | 26,099 / 2,635,367,566 | Pending final audit |
 | Tracked `test-results/` files / bytes | 6,132 / 914,527,320 | 0 / 0 |
 
-The before measurement used a detached fresh worktree without dependencies or ignored outputs; it was removed immediately after measurement. Git history has not been rewritten. Archive moves pause below 4 GiB free space.
+The before measurement used a detached fresh worktree without dependencies or ignored outputs; it was removed immediately after measurement. Git history has not been rewritten. Archive moves pause below 6 GiB free space.
 
 Verification and the final archive inventory are pending. The archive pass paused at the requested disk threshold; no completion is claimed by this checkpoint.
