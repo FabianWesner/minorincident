@@ -21,7 +21,7 @@ try {
   for (const id of ids) for (const variant of ['old', 'new']) for (const pixels of [120, 400]) for (const yaw of [-45, 135]) {
     const coat = id.match(/\.(black|cream)$/)?.[1], base = coat ? id.replace(/\.(black|cream)$/, '') : id;
     const def = (variant === 'old' ? old : current).find(d => d.id === base)!;
-    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat }) => {
+    const framing = await session.page.evaluate(async ({ def, pixels, yaw, moving, coat, clip }) => {
       const modulePath = '/src/assets/registry.ts', threePath = '/node_modules/three/build/three.webgpu.js';
       const { AssetRegistry } = await import(modulePath), { Box3, Vector3 } = await import(threePath);
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
@@ -37,6 +37,10 @@ try {
       if (moving && def.id.startsWith('npc.')) {
         const modulePath = '/src/render/characters/NpcAnimator.ts', { NpcAnimator } = await import(modulePath);
         new NpcAnimator(root).update(.3, 3.2, .96, false);
+      }
+      if (clip && def.id.startsWith('npc.')) {
+        const path = '/src/render/characters/clips.ts', { sampleClip, authoredClips } = await import(path);
+        sampleClip(root, clip, authoredClips.get(clip).duration * .5);
       }
       root.traverse(node => { if ('isMesh' in node) { node.castShadow = node.receiveShadow = true; } });
       view.scene.add(root); root.updateMatrixWorld(true);
@@ -56,7 +60,7 @@ try {
         distance *= (bounds[3] - bounds[1]) / pixels;
       }
       return { bounds, targetPixels: pixels, actualPixels: bounds[3] - bounds[1], yaw, lod: pixels === 120 ? 'lod1' : 'lod0' };
-    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat });
+    }, { def, pixels, yaw, moving: process.env.POSE === 'run', coat, clip: process.env.CLIP });
     const file = resolve(out, `${id}-${variant}-${pixels}-${yaw}.png`);
     await session.screenshot(file); receipts.push({ id, variant, file, ...framing });
     writeJson(resolve(out, 'receipts.json'), receipts);

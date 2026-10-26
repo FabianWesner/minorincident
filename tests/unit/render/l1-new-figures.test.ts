@@ -13,6 +13,33 @@ import { variantPath } from '../../../src/assets/types';
 import { assetIO } from '../../../tools/assets/io';
 import { bakedSkull } from '../../../src/render/characters/CrowdAccessories';
 import { characterNodes } from '../../../src/data/survivor';
+import { authoredClips, sampleClip } from '../../../src/render/characters/clips';
+
+for (const id of ['npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']) test(`${id}: gestures retain glove seams and physical prop ownership @E08 @E17`, async () => {
+  const def = manifest.find(d => d.id === id)!, root = await load(def.glb), body = root.getObjectByName('skin_body') as SkinnedMesh;
+  root.updateMatrixWorld(true);
+  const rest = Array.from({ length: body.geometry.getAttribute('position').count }, (_, i) => body.getVertexPosition(i, new Vector3()).clone());
+  for (const name of ['clipboard', 'clipboard-paper', 'clipboard-clip']) {
+    const prop = root.getObjectByName(name); if (!prop) continue;
+    let owner = prop.parent; while (owner && !/^hand[LR]$/.test(owner.name)) owner = owner.parent;
+    expect(owner, `${id}/${name} hand binding`).toBeTruthy();
+    const centre = new Box3().setFromObject(prop).getCenter(new Vector3());
+    const other = root.getObjectByName(owner!.name === 'handL' ? 'handR' : 'handL')!;
+    expect(centre.distanceTo(owner!.getWorldPosition(new Vector3())), `${id}/${name} nearest physical hand`).toBeLessThanOrEqual(centre.distanceTo(other.getWorldPosition(new Vector3())));
+  }
+  const stretched: { clip: string; phase: number; before: number; after: number; a: number; b: number }[] = [];
+  for (const clip of ['npc-give', 'npc-wave', 'ff-pry']) for (const phase of [.25, .5, .75]) {
+    sampleClip(root, clip, authoredClips.get(clip)!.duration * phase); root.updateMatrixWorld(true);
+    const posed = rest.map((_, i) => body.getVertexPosition(i, new Vector3()).clone()), index = body.geometry.index!;
+    for (let t = 0; t < index.count; t += 3) for (let edge = 0; edge < 3; edge++) {
+      const a = index.getX(t + edge), b = index.getX(t + (edge + 1) % 3), before = rest[a].distanceTo(rest[b]), after = posed[a].distanceTo(posed[b]);
+      if (after > Math.max(.25, before * 4)) stretched.push({ clip, phase, before, after, a, b });
+    }
+  }
+  stretched.sort((a, b) => b.after - a.after);
+  if (stretched.length) console.log(JSON.stringify({ id, worst: stretched[0], vertices: [stretched[0].a, stretched[0].b].map(i => ({ rest: rest[i].toArray(), weights: [0, 1, 2, 3].map(k => [body.skeleton.bones[body.geometry.getAttribute('skinIndex').getComponent(i, k)].name, body.geometry.getAttribute('skinWeight').getComponent(i, k)]) })) }));
+  expect(stretched.slice(0, 5), `${id} worst gesture edges`).toEqual([]);
+});
 
 test('L1 skinned headwear excludes bun height and glasses while retaining skull depth @E08', () => {
   const geometry = new BufferGeometry(), head = characterNodes.indexOf('head');

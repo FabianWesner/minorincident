@@ -44,7 +44,7 @@ if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
   }
 }
 for (const lod of [0, 1, 2]) {
-  const rig = unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  const rig = unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${unbound && id.startsWith('npc.') ? 0 : lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === lod);
@@ -53,6 +53,7 @@ for (const lod of [0, 1, 2]) {
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (metadata) args.push('--reconstruct-body');
   if (id.startsWith('npc.')) args.push('--healthy');
+  if (unbound && id.startsWith('npc.')) args.push('--fit-rig-height');
   if (['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) args.push('--spectacles');
   if (lod > 0 && ['npc.civilian-woman-b', 'npc.civilian-elderly'].includes(id)) {
     const measured = JSON.parse(readFileSync(join(report, 'lod0.json'), 'utf8')) as { spectacleTop: number };
@@ -78,7 +79,7 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    await compressSkin(raw, target, basis, low || lod > 0 ? 512 : 1024);
+    await compressSkin(raw, target, basis, lod === 2 && unbound && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024);
     const bytes = readFileSync(target), document = await io.read(target), errors: string[] = [];
     if (bytes.length > [600000, 250000, 150000][lod]) errors.push(`size ${bytes.length} exceeds LOD${lod}`);
     if (!document.getRoot().listSkins().length) errors.push('missing skin');

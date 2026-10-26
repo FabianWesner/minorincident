@@ -131,7 +131,11 @@ for (const lod of [0, 1, 2]) {
         for (const surface of surfaces(source, 'node')) expect([...surface.edges.values()].every(n => n === 2), `${label} ${surface.name}`).toBe(true);
         const names = doc.getRoot().listMaterials().map(m => m.getName());
         if (def.crowdSkin) {
-          expect(doc.getRoot().listNodes().find(n => n.getName() === 'skin_eyes')?.getExtras().crowdEye, label).toBe(true);
+          // Healthy v2 dogs keep their painted eyes; infection selects the same
+          // body with the separate dormant/emissive eye surface.
+          const eyes = doc.getRoot().listNodes().find(n => n.getName() === 'skin_eyes');
+          if (infected) expect(eyes?.getExtras().crowdEye, label).toBe(true);
+          else expect(eyes, label).toBeUndefined();
           expect(names, label).toContain('tex_baseColor');
           expect(doc.getRoot().listTextures().every(t => t.getMimeType() === 'image/ktx2'), label).toBe(true);
         } else {
@@ -178,7 +182,9 @@ for (const lod of [0, 1, 2]) {
       }
       expect(new Set(mains).size, `${def.id}: three distinct palette coats`).toBe(3);
     }
-    expect(heights.get('inf.dog')! / heights.get('amb.dog')!, 'the infected dog carries a lower stance').toBeLessThan(.85);
+    const ratio = heights.get('inf.dog')! / heights.get('amb.dog')!;
+    if (dogs.every(def => def.crowdSkin)) expect(ratio, 'v2 coats share one body and world scale').toBeCloseTo(1, 5);
+    else expect(ratio, 'the infected dog carries a lower stance').toBeLessThan(.85);
     // Same rig: node names and parents are identical between the healthy and infected dog and between coats.
     const hierarchy = async (def: AssetDef, variant?: string) => (await io.read(lodPath(def, lod, variant))).getRoot().listNodes().filter(n => def.requiredNodes.includes(n.getName()) || def.animatedNodes.includes(n.getName())).map(n => `${n.getName()}<${n.getName() === 'root' ? '' : n.getParentNode()?.getName() ?? ''}`).sort();
     expect(await hierarchy(dogs[1])).toEqual(await hierarchy(dogs[0]));
