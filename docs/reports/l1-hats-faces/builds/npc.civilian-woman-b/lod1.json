@@ -1,0 +1,184 @@
+{
+  "rig": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/lod1.glb",
+  "out": "docs/reports/l1-hats-faces/builds/npc.civilian-woman-b/lod1.raw.glb",
+  "bytes": 587884,
+  "body": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/npc.civilian-woman-b/source/flat-lod1.glb",
+  "scale": 1.7874384713059035,
+  "yaw": 90,
+  "translation": [
+    -0.0088665951561126,
+    0.904005310833423,
+    -0.0017286638706768276
+  ],
+  "meanDistanceToRigidSurface": 0.00029675375664297616,
+  "skinPaint": {
+    "samples": 0,
+    "ratios": [
+      0.7843137254901961,
+      0.6313725490196078
+    ]
+  },
+  "vertices": 2569,
+  "weldedVertices": 1063,
+  "triangles": 2178,
+  "bodyTriangleBudget": null,
+  "components": 1,
+  "openEdges": 0,
+  "unrelatedSeams": 138,
+  "maxInfluences": 3,
+  "zeroNormals": 0,
+  "jointNames": [
+    "root",
+    "hip",
+    "torso",
+    "head",
+    "armL",
+    "armR",
+    "foreArmL",
+    "foreArmR",
+    "handL",
+    "handR",
+    "legL",
+    "legR",
+    "shinL",
+    "shinR",
+    "footL",
+    "footR"
+  ],
+  "rigKind": "humanoid",
+  "capFits": [
+    {
+      "part": "head",
+      "rim": 15,
+      "triangles": 13,
+      "loops": 1,
+      "distance": 0.09230330952175544,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armL",
+      "rim": 30,
+      "triangles": 28,
+      "loops": 1,
+      "distance": 0.18224535514059567,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "armR",
+      "rim": 21,
+      "triangles": 19,
+      "loops": 1,
+      "distance": 0.16452106718181803,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmL",
+      "rim": 20,
+      "triangles": 18,
+      "loops": 1,
+      "distance": 0.07478353019963763,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "foreArmR",
+      "rim": 11,
+      "triangles": 9,
+      "loops": 1,
+      "distance": 0.0849687889481565,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legL",
+      "rim": 36,
+      "triangles": 34,
+      "loops": 1,
+      "distance": 0.052078959236238564,
+      "method": "cut-boundary"
+    },
+    {
+      "part": "legR",
+      "rim": 28,
+      "triangles": 22,
+      "loops": 3,
+      "distance": 0.029683113285307535,
+      "method": "cut-boundary"
+    }
+  ],
+  "removedClosureTriangles": 0,
+  "removedDegenerateTriangles": 0,
+  "spectacleTop": 0.15759971451727772,
+  "joints": 16,
+  "eyes": 2,
+  "seams": {
+    "handR/foreArmR": {
+      "seamVertices": 21,
+      "band": 0.059999912116540446,
+      "blended": 21
+    },
+    "torso/hip": {
+      "seamVertices": 72,
+      "band": 0.0699998974692972,
+      "blended": 89
+    },
+    "legR/hip": {
+      "seamVertices": 49,
+      "band": 0.0699998974692972,
+      "blended": 66
+    },
+    "armR/torso": {
+      "seamVertices": 27,
+      "band": 0.06109310466526607,
+      "blended": 31
+    },
+    "foreArmR/armR": {
+      "seamVertices": 13,
+      "band": 0.06109310466526607,
+      "blended": 13
+    },
+    "footR/shinR": {
+      "seamVertices": 23,
+      "band": 0.06109310466526607,
+      "blended": 24
+    },
+    "head/torso": {
+      "seamVertices": 29,
+      "band": 0.06109310466526607,
+      "blended": 29
+    },
+    "legL/hip": {
+      "seamVertices": 45,
+      "band": 0.0699998974692972,
+      "blended": 48
+    },
+    "handL/foreArmL": {
+      "seamVertices": 10,
+      "band": 0.059999912116540446,
+      "blended": 10
+    },
+    "shinR/legR": {
+      "seamVertices": 28,
+      "band": 0.06109310466526607,
+      "blended": 28
+    },
+    "armL/torso": {
+      "seamVertices": 24,
+      "band": 0.06109310466526607,
+      "blended": 27
+    },
+    "foreArmL/armL": {
+      "seamVertices": 10,
+      "band": 0.06109310466526607,
+      "blended": 10
+    },
+    "footL/shinL": {
+      "seamVertices": 24,
+      "band": 0.06109310466526607,
+      "blended": 25
+    },
+    "shinL/legL": {
+      "seamVertices": 31,
+      "band": 0.06109310466526607,
+      "blended": 29
+    }
+  }
+}

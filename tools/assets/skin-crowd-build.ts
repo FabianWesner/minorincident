@@ -1,3 +1,4 @@
+import { restoreFireHelmet } from './restore-fire-helmet';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
@@ -74,6 +75,7 @@ for (const lod of [0, 1, 2]) {
   let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
+    if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, lod ? 'model.lod1.glb' : 'model.glb'));
     const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);
     if (total <= triangleLimit) break;
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
@@ -105,6 +107,10 @@ for (const lod of [0, 1, 2]) {
   }
   if (lod === 0) {
     const document = await io.read(tiers[0].path), bounds = getBounds(id === 'char.corgi' ? document.getRoot().listScenes()[0] : document.getRoot().listNodes().find(node => node.getName() === 'skin_body')!);
+    if (id === 'npc.firefighter-alive') {
+      const helmet = getBounds(document.getRoot().listNodes().find(node => node.getName() === 'prod_fire_helmet')!);
+      for (let axis = 0; axis < 3; axis++) { bounds.min[axis] = Math.min(bounds.min[axis], helmet.min[axis]); bounds.max[axis] = Math.max(bounds.max[axis], helmet.max[axis]); }
+    }
     def.dimensions = { x: bounds.max[0] - bounds.min[0], y: bounds.max[1] - bounds.min[1], z: bounds.max[2] - bounds.min[2], tolerance: .15 };
     await io.write(join(assets, 'model.skin.glb'), await io.read(raw));
   }

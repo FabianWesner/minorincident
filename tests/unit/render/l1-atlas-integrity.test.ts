@@ -27,7 +27,7 @@ for (const id of figures) for (const lod of ['lod0', 'lod1', 'lod2'] as const) t
   const position = geometry.getAttribute('position'), uv = geometry.getAttribute('uv'), parts = geometry.getAttribute('_parts');
   let absent = 0, total = 0;
   for (let i = 0; i < position.count; i++) {
-    if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5) continue;
+    if (parts.getW(i) >= 1024 || parts.getZ(i) > 1.5 || parts.getY(i) === -10) continue; // Retained PROD helmet uses palette colors, without atlas UVs.
     total++;
     if (!source.has(key(point.fromBufferAttribute(position, i), uv.getX(i), uv.getY(i)))) absent++;
   }

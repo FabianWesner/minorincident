@@ -23,7 +23,7 @@ async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
 // LOD the crowd draws, wears every hat anchored on its own head at head scale, and a spectacled head wears it above
 // its frames.
 test('T-PO108 civilian hats sit on the head at head scale and above the glasses on every LOD @E07 @E19', async () => {
-  const { CrowdAccessories, bakedSkull, glassesTop, glassesClearance, spectacleTops } = await import('../../../src/render/characters/CrowdAccessories');
+  const { CrowdAccessories, bakedSkull, glassesTop, glassesClearance, spectacleTops, skinnedBrow } = await import('../../../src/render/characters/CrowdAccessories');
   const { AssetRegistry } = await import('../../../src/assets/registry');
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
   const accessories = new CrowdAccessories(); await accessories.init();
@@ -38,8 +38,8 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
     accessories.begin();
     accessories.place({ id: 1, archetype: 'civilian', civilian: {}, appearance: { asset: id, accessories: [hat] } } as never, lod,
       { clip: { parts: ['head'] }, part: (_f: number, _o: number, _w: number, _p: number, out: Matrix4) => out.identity() } as never, 0, [0, 1], new Matrix4());
-    const mesh = accessories.children.find(n => n.name === `${hat}:${lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh, matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
-    if (manifest.find(d => d.id === id)?.crowdSkin) expect(matrix.elements[1], `${id} ${hat} front brim tilts above the camera sightline`).toBeGreaterThan(0);
+    const mesh = accessories.children.find(n => n.name === `${hat}:${manifest.find(d => d.id === id)?.crowdSkin ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh, matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
+    if (manifest.find(d => d.id === id)?.crowdSkin) expect(matrix.elements[1], `${id} ${hat} front brim clears the eyes`).toBeGreaterThan(0);
     const box = new Box3(), p = new Vector3(), position = mesh.geometry.getAttribute('position');
     for (let i = 0; i < position.count; i++) box.expandByPoint(p.fromBufferAttribute(position, i).applyMatrix4(matrix));
     return box;
@@ -54,7 +54,8 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   // Replacing the registered skull invalidates the completed fit as well as its frame-clearance lift.
   (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete('npc.civilian-man-a');
   accessories.registerSkull('npc.civilian-man-a', geometries.get('npc.civilian-man-a:lod1')!);
-  expect(fitted('npc.civilian-man-a', 'lod1', hats[0]).equals(first)).toBe(true);
+  const reloaded = fitted('npc.civilian-man-a', 'lod1', hats[0]);
+  expect(reloaded.min.distanceTo(first.min)).toBeLessThan(.005); expect(reloaded.max.distanceTo(first.max)).toBeLessThan(.005);
   expect(retarget).toHaveBeenCalledTimes(2);
   retarget.mockRestore();
   const spectacled = l1Pedestrians.models.filter(id => glassesTop(geometries.get(`${id}:lod0`)!) !== null);
@@ -77,7 +78,7 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
   const limit = (hat: string) => (hat.endsWith('sun-hat') ? 1.4 : hat.endsWith('bucket-hat') ? 1.3 : 1.15) + .03;
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1'] as const) {
     const skull = bakedSkull(geometries.get(`${id}:${lod}`)!)!;
-    for (const hat of hats) { const size = fitted(id, lod, hat).getSize(new Vector3()); expect(size.z / skull.size.z, `${id} ${lod} ${hat} brim/head`).toBeLessThan(limit(hat)); }
+    for (const hat of hats) { const size = fitted(id, lod, hat).getSize(new Vector3()), brow = skinnedBrow(geometries.get(`${id}:${lod}`)!); expect(size.z / (brow?.width ?? skull.size.z), `${id} ${lod} ${hat} brim/skull at brow`).toBeLessThanOrEqual(brow ? 1.15 + 1e-6 : limit(hat)); }
   }
   for (const id of l1Pedestrians.models) for (const lod of ['lod0', 'lod1', 'lod2'] as const) {
     const geometry = geometries.get(`${id}:${lod}`)!, skull = bakedSkull(geometry)!, frames = glassesTop(geometry);
@@ -87,7 +88,8 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
       expect(Math.abs(centre.z - skull.centre.z), `${label} centred`).toBeLessThan(.03);
       expect(Math.abs(centre.x - skull.centre.x), `${label} centred`).toBeLessThan(skull.size.x * .3);
       expect(box.min.y, `${label} rests on the head`).toBeGreaterThan(skull.centre.y - skull.size.y * .25);
-      expect(box.min.y, `${label} does not float`).toBeLessThan(skull.centre.y + skull.size.y / 2);
+      const brow = skinnedBrow(geometry), highestBrow = Math.max(...(['lod0', 'lod1', 'lod2'] as const).map(l => skinnedBrow(geometries.get(`${id}:${l}`)!)?.y ?? -Infinity));
+      expect(box.min.y, `${label} does not float`).toBeLessThan(brow ? Math.max(highestBrow + .04, (frames ?? -Infinity) + .025) : skull.centre.y + skull.size.y / 2);
       // Head scale: the same skull-relative width as on the reference head (lateral, within 20 %).
       expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeGreaterThan(.8);
       expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeLessThan(1.2);

@@ -1,3 +1,5 @@
+import { skinnedBrow } from './headMeasurements';
+export { skinnedBrow } from './headMeasurements';
 import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instanceColor } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -87,6 +89,7 @@ export class CrowdAccessories extends Group {
   private readonly fits = new Map<string, Matrix4>();
   private readonly accessoryFits = new Map<string, Matrix4>();
   private readonly skinnedModels = new Set<string>();
+  private readonly brows = new Map<string, ReturnType<typeof skinnedBrow>>();
   private readonly skullLods = new Map<string, number>();
   private readonly measuredGlasses = new Map<string, number>();
   private readonly minimumHatY = new Map<string, number>();
@@ -115,7 +118,14 @@ export class CrowdAccessories extends Group {
     if (geometry.userData.crowdBinds) {
       // One immutable fit serves all LODs. Their skin bounds can differ by a few
       // millimetres; keep even a shallow beanie above every LOD's upper face.
-      const minimum = skull.centre.y - skull.size.y * .25 + .002;
+      const brow = skinnedBrow(geometry);
+      if (brow) {
+        const previous = this.brows.get(model);
+        if (previous) { brow.width = Math.min(previous.width, brow.width); brow.depth = Math.min(previous.depth, brow.depth); }
+        this.brows.set(model, brow);
+        if (!previous || brow.width !== previous.width || brow.depth !== previous.depth) for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
+      }
+      const minimum = (brow?.y ?? skull.centre.y + skull.size.y * .15) + .018;
       if (minimum > (this.minimumHatY.get(model) ?? -Infinity)) {
         this.minimumHatY.set(model, minimum);
         for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
@@ -196,9 +206,18 @@ export class CrowdAccessories extends Group {
   place(e: EntitySnapshot, lod: AccessoryLod, poses: CrowdPosePalette, frame: number, blend: readonly number[], transform: Matrix4, hiddenHead = false): void {
     const slot = this.slot(e), head = poses.clip.parts.indexOf('head');
     if (!slot || head < 0 || hiddenHead || e.corpse) return;
-    const mesh = this.batches.get(`${this.ids[slot - 1]}:${lod === 'lod2' ? 'lod1' : lod}`); if (!mesh || mesh.count >= 350) return;
+    const model = this.look(e).model;
+    const mesh = this.batches.get(`${this.ids[slot - 1]}:${this.skinnedModels.has(model) && definitions.get(this.ids[slot - 1])?.slot === 'hat' ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`); if (!mesh || mesh.count >= 350) return;
     poses.part(frame, blend[0], blend[1], head, this.headTransform).premultiply(transform);
-    const id = this.ids[slot - 1], model = this.look(e).model;
+    const id = this.ids[slot - 1];
+    if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat' && e.faction === 'infected') {
+      // Keep the brim level through the infected hunch, rotating about the skull rather than the neck pivot.
+      const skull = this.brows.get(model)?.centre ?? new Vector3();
+      const centre = skull.clone().applyMatrix4(this.headTransform), scale = new Vector3().setFromMatrixScale(this.headTransform);
+      const m = this.headTransform.elements, yaw = Math.atan2(-m[2], m[0]);
+      this.headTransform.makeRotationY(yaw).scale(scale);
+      this.headTransform.setPosition(centre.sub(skull.clone().applyMatrix4(this.headTransform)));
+    }
     this.fit(id, model);
     this.headTransform.multiply(this.fitTransform);
     mesh.setMatrixAt(mesh.count, this.headTransform);
@@ -226,13 +245,15 @@ export class CrowdAccessories extends Group {
     this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
     if (this.skinnedModels.has(model) && definitions.get(id)?.slot === 'hat') {
       const scale = new Vector3().setFromMatrixScale(skull), centre = new Vector3(referenceSkull.centre.x, referenceSkull.centre.y, referenceSkull.centre.z).applyMatrix4(skull);
-      const limit = id.endsWith('sun-hat') ? 1.4 : id.endsWith('bucket-hat') ? 1.3 : 1.15;
-      let width = 0;
+      const limit = 1.15, skullDepth = this.brows.get(model)?.depth ?? referenceSkull.size.x * scale.x, skullWidth = this.brows.get(model)?.width ?? referenceSkull.size.z * scale.z;
+      let width = 0, depth = 0, height = 0;
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (!geometry) continue;
         if (!geometry.boundingBox) geometry.computeBoundingBox(); width = Math.max(width, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).z);
+        depth = Math.max(depth, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).x);
+        height = Math.max(height, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).y);
       }
-      if (width > referenceSkull.size.z * scale.z * limit) this.fitTransform.premultiply(new Matrix4().makeTranslation(0, 0, centre.z).multiply(new Matrix4().makeScale(1, 1, referenceSkull.size.z * scale.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -centre.z)));
+      this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, 0, centre.z).multiply(new Matrix4().makeScale(Math.min(1, skullDepth * limit / depth), Math.min(1, referenceSkull.size.y * scale.y * .42 / height), Math.min(1, skullWidth * limit / width))).multiply(new Matrix4().makeTranslation(-centre.x, 0, -centre.z)));
       const bounds = new Box3();
       for (const lod of ['lod0', 'lod1']) {
         const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
@@ -240,10 +261,8 @@ export class CrowdAccessories extends Group {
       if (!bounds.isEmpty()) {
         const offset = bounds.getCenter(new Vector3()).x - centre.x, allowance = referenceSkull.size.x * scale.x * .2;
         if (Math.abs(offset) > allowance) this.fitTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
-        // Tilt the front brim upward so the game camera can see the eyes.
-        // The existing frame-clearance lift then seats its back edge, rather
-        // than raising the complete hat clear of the head.
-        if (model.startsWith('npc.')) this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.2)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
+        this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.45)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
+
       }
     }
   }

@@ -1,3 +1,4 @@
+import { skinnedBrow } from './headMeasurements';
 import { Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
@@ -82,9 +83,18 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
     const inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined, point = new Vector3();
     let low = Infinity, high = -Infinity;
     const headY = (i: number) => { point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse); return point.y; };
-    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === -1 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
-    const crown = inverse ? low + (high - low) * .82 : .4;
-    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024 && headY(i) > crown && !parts.getZ(i)) parts.setW(i, 4);
+    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
+    const brow = skinnedBrow(geometry);
+    let frameTop = -Infinity;
+    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
+    const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : inverse ? low + (high - low) * .82 : .4;
+    const rear = brow ? brow.centre.x - brow.depth * .7 : 0;
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
+      const y = headY(i);
+      // Interpolation reconstructs a continuous cut plane. Binary vertex flags leave triangular shards of hair.
+      const plane = crown + (brow ? Math.tan(.45) * (point.x - rear) : 0);
+      parts.setW(i, inverse ? 4 + Math.max(-.9, Math.min(.9, (y - plane) / Math.max(.001, high - low))) : y > crown ? 4 : 0);
+    }
     return;
   }
   // Ordinary infected: the glowing eyes bound the face; any surface clearly above them belongs to hair or headwear.
