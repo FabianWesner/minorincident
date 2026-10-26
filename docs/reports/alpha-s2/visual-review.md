@@ -9,8 +9,8 @@ Main contains two `inf.alpha` manifest entries; the later placeholder wins the a
 ## Retained before/after set
 
 - Before, neutral game camera: [charge](before/before-alpha-charge/shot-0030.png), [slam](before/before-alpha-ground-slam/shot-0030.png).
-- After charge: [windup](after/qa-alpha-charge/shot-0047.png), [impact](after/qa-alpha-charge/shot-0090.png), [sequence](after/qa-alpha-charge/sheet.jpg).
-- After slam: [windup](after/qa-alpha-ground-slam/shot-0059.png), [impact](after/qa-alpha-ground-slam/shot-0090.png), [sequence](after/qa-alpha-ground-slam/sheet.jpg).
+- After charge: [windup](../l5-encounters/alpha-charge-before.png), [impact](../l5-encounters/alpha-charge-after.png), [sequence](after/qa-alpha-charge/sheet.jpg).
+- After slam: [windup](../l5-encounters/alpha-ground-slam-before.png), [impact](../l5-encounters/alpha-ground-slam-after.png), [sequence](after/qa-alpha-ground-slam/sheet.jpg).
 - Phone: [charge](phone/qa-alpha-charge-low/shot-0047.png), [slam](phone/qa-alpha-ground-slam-low/shot-0047.png), each with retained sequence sheet in the same directory.
 - Landscape: [charge](landscape/qa-alpha-charge-low/shot-0047.png), [slam](landscape/qa-alpha-ground-slam-low/shot-0047.png), each with retained sequence sheet.
 - Adult follower: [before impact](after/qa-alpha-escort/shot-0059.png), [down](after/qa-alpha-escort/shot-0090.png), [recovered](after/qa-alpha-escort/shot-0150.png); reproduced by `SCENE_PORT=3379 sh tools/e2e-lock.sh npx tsx tools/scenelab/alpha-escort-capture.ts`. This additional capture uses the unchanged main manifest: Alpha is the known placeholder, while the follower is a real civilian GLB.
