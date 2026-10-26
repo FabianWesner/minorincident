@@ -204,12 +204,14 @@ function* bakeInfectedSteps(root: Group, animatedNodes: readonly string[] = [], 
     doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt' || texturedHumanoid && /^(torso|arm|foreArm|leg|shin)/.test(owner?.name ?? ''); if (clothing) shirtColor = material.color.clone();
+    // Shared atlas materials can disable vertexColors; skinned palette regions
+    // still own their authored COLOR_0 data (e.g. the firefighter's dark collar).
     const sourceColor = geometry.getAttribute('color');
     const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
-      colors[i * 3] = base[0] * (material.vertexColors && sourceColor ? sourceColor.getX(i) : 1);
-      colors[i * 3 + 1] = base[1] * (material.vertexColors && sourceColor ? sourceColor.getY(i) : 1);
-      colors[i * 3 + 2] = base[2] * (material.vertexColors && sourceColor ? sourceColor.getZ(i) : 1);
+      colors[i * 3] = base[0] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getX(i) : 1);
+      colors[i * 3 + 1] = base[1] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getY(i) : 1);
+      colors[i * 3 + 2] = base[2] * (sourceColor && (material.vertexColors || skinnedFigure) ? sourceColor.getZ(i) : 1);
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       const eyeRegion = texturedHumanoid && owner === rig.head && geometry.getAttribute('position').getY(i) > .25 && geometry.getAttribute('position').getY(i) < .43 && geometry.getAttribute('position').getX(i) > -.02;

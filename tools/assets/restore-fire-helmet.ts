@@ -46,7 +46,7 @@ export async function restoreFireHelmet(path: string, source: string, lod = 0): 
     const headY = skin.listJoints()[headIndex].getWorldTranslation()[1], torso = skin.listJoints().findIndex(n => n.getName() === 'torso');
     for (let i = 0; i < p.getCount(); i++) {
       const v = p.getElement(i, []) as number[];
-      if (owner.getScalar(i) === torso && v[1] > headY + .01 && Math.abs(v[0]) < .32 && Math.abs(v[2]) < .25) { region.setScalar(i, 3); colors.set([.015, .022, .035], i * 3); }
+      if (owner.getScalar(i) === torso && v[1] > headY - .03 && Math.abs(v[0]) < .32 && Math.abs(v[2]) < .25) { region.setScalar(i, 3); colors.set([.015, .022, .035], i * 3); }
     }
     primitive.setAttribute('COLOR_0', doc.createAccessor().setType('VEC3').setArray(colors));
   }

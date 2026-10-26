@@ -13,7 +13,7 @@ mkdirSync(out, { recursive: true });
 const servers = [];
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
 const errors: string[] = [];
-type Shot = { id: string; level: string; checkpoint?: string; frames: number; model?: string; infected?: boolean; rear?: boolean };
+type Shot = { id: string; level: string; checkpoint?: string; frames: number; model?: string; infected?: boolean; rear?: boolean; isolated?: boolean };
 const shots: Shot[] = [
   { id: '01-l1-start-glasses', level: 'L1', frames: 1, model: 'npc.civilian-woman-b' },
   { id: '02-l1-lamp-hoodie', level: 'L1', frames: 1, model: 'npc.civilian-man-b' },
@@ -21,6 +21,7 @@ const shots: Shot[] = [
   { id: '04-l1-infected-pair', level: 'L1', checkpoint: 'bat', frames: 450, infected: true },
   { id: '05-l2-firefighter-front', level: 'L2', frames: 60, model: 'npc.firefighter-alive' },
   { id: '06-l2-firefighter-back', level: 'L2', frames: 60, model: 'npc.firefighter-alive', rear: true },
+  { id: '07-infected-headwear-probe', level: 'SceneLab', frames: 240, infected: true, isolated: true },
 ];
 const matches = new Map<string, { ids: number[]; camera: CameraPose; positions: number[][] }>();
 const receipts: object[] = [];
@@ -41,8 +42,18 @@ try {
       const match = matches.get(shot.id);
       const receipt = await page.evaluate(async ({ shot, match }) => {
         const a = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
-        await a.loadLevel(shot.level, { seed: 1, ...(shot.checkpoint ? { checkpoint: shot.checkpoint } : {}) }); a.pause(); a.cheats.god(true); a.missions.begin(); game.ui.show(null);
-        a.camera.follow(); a.camera.zoom(1.5); if (shot.infected) a.bot.start('complete'); await a.step(shot.frames); if (shot.infected) { a.bot.stop(); a.input.clear(); } await a.screenshotReady(); game.ui.show(null);
+        if (shot.isolated) {
+          await window.__SCENE__!.load({ name: 'matched-infected-headwear', ground: 'asphalt', time: 'L1', dof: false, size: 100,
+            actors: [{ id: 'courier', kind: 'courier', at: [4, 4] },
+              { id: 'hoodie', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model: 'npc.civilian-man-b', accessories: ['acc.hat-beanie'], handProp: null }, state: 'idle' },
+              { id: 'glasses', kind: 'pedestrian', at: [1, -1], yaw: -45, look: { model: 'npc.civilian-woman-b', accessories: ['acc.hat-sun-hat'], handProp: null }, state: 'idle' }],
+            script: [{ frame: 1, actor: 'hoodie', do: { infect: { instant: true } } }, { frame: 1, actor: 'glasses', do: { infect: { instant: true } } }], camera: { mode: 'game', target: [0, .8, 0], zoom: 1.5 } });
+          await window.__SCENE__!.step(shot.frames);
+        } else {
+          await a.loadLevel(shot.level, { seed: 1, ...(shot.checkpoint ? { checkpoint: shot.checkpoint } : {}) }); a.pause(); a.cheats.god(true); a.missions.begin(); game.ui.show(null);
+          a.camera.follow(); a.camera.zoom(1.5); if (shot.infected) a.bot.start('complete'); await a.step(shot.frames); if (shot.infected) { a.bot.stop(); a.input.clear(); }
+        }
+        await a.screenshotReady(); game.ui.show(null);
         const player = game.world.entities.get(1)!.transform;
         const accessories = game.view.scene.getObjectByName('crowd-accessories') as unknown as { slot(e: EntitySnapshot): number; ids: string[] };
         const accessory = (e: EntitySnapshot) => accessories.ids[accessories.slot(e) - 1] ?? null;
@@ -61,7 +72,7 @@ try {
         if (selected.length !== (shot.infected ? 2 : 1) || selected.some(e => !e)) throw Error(`No seeded subjects for ${shot.id}: ${people.length}`);
         const positions = selected.map(e => [e.transform.x, e.transform.y, e.transform.z]);
         const target = positions.reduce((p, row) => p.map((v, i) => v + row[i] / positions.length), [0, 0, 0]); target[1] += shot.infected ? .65 : .2;
-        const yaw = (shot.infected ? -Math.PI / 4 : selected[0].transform.yaw) + (shot.rear ? Math.PI : 0), r = shot.infected ? 6 : 3.5;
+        const yaw = (shot.infected ? -Math.PI / 4 : selected[0].transform.yaw) + (shot.rear ? Math.PI : 0), r = shot.isolated ? 4.5 : shot.infected ? 6 : 3.5;
         const camera = match?.camera ?? { target: target as [number, number, number], position: [target[0] + r * Math.cos(yaw), target[1] + r * .85, target[2] - r * Math.sin(yaw)] as [number, number, number] };
         a.camera.cinematic(camera, true); game.view.update(1); await a.screenshotReady();
         return { ids: selected.map(e => e.id), positions, camera, tick: game.world.tick, seed: 1, level: shot.level, checkpoint: shot.checkpoint ?? 'start', backend: a.perf().backend,

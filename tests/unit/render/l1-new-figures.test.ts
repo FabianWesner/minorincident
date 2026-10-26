@@ -1,3 +1,6 @@
+import { gunzipSync } from 'node:zlib';
+import { decodeCivilianBake } from '../../../src/assets/civilianBakeData';
+import civilianBakes from '../../../src/assets/civilianBakes.json';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
@@ -161,4 +164,12 @@ test('all L1 compressed deliveries have WebGPU-valid 4x4 texture extents @E17', 
       }
     }
   }
+});
+
+for (const lod of ['lod0', 'lod1', 'lod2'] as const) test(`firefighter ${lod}: authored dark collar colors survive textured-material preparation @E17`, () => {
+  const path = (civilianBakes as Record<string, string>)[`npc.firefighter-alive:${lod}`], bytes = gunzipSync(readFileSync(`public${path}`));
+  const { geometry } = decodeCivilianBake(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength));
+  const parts = geometry.getAttribute('_parts'), colors = geometry.getAttribute('color'); let collar = 0;
+  for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -12) { collar++; expect(Math.max(colors.getX(i), colors.getY(i), colors.getZ(i))).toBeLessThan(.1); }
+  expect(collar).toBeGreaterThan(10); geometry.dispose();
 });

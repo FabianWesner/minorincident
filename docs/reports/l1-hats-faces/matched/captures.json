@@ -147,9 +147,9 @@
           1.5478927338625696
         ],
         "position": [
-          63.044196384827316,
-          4.984999999999999,
-          4.517741214846069
+          64.3169885909631,
+          6.515,
+          5.790533420981855
         ]
       },
       "tick": 451,
@@ -251,6 +251,59 @@
           "yaw": 5.076367936894332,
           "infected": false,
           "accessory": null
+        }
+      ]
+    },
+    {
+      "side": "prod",
+      "shot": "07-infected-headwear-probe",
+      "ids": [
+        3,
+        4
+      ],
+      "positions": [
+        [
+          2.96544922902093,
+          0.7,
+          3.689992415791787
+        ],
+        [
+          3.6546080604663564,
+          0.7,
+          2.9767188030139575
+        ]
+      ],
+      "camera": {
+        "target": [
+          3.3100286447436433,
+          1.35,
+          3.3333556094028722
+        ],
+        "position": [
+          6.492009160083107,
+          5.175,
+          6.515336124742336
+        ]
+      },
+      "tick": 240,
+      "seed": 1,
+      "level": "SceneLab",
+      "checkpoint": "start",
+      "backend": "webgpu",
+      "subjects": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-b",
+          "yaw": -0.2911396057879816,
+          "infected": true,
+          "accessory": "acc.hat-beanie"
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-woman-b",
+          "yaw": -1.2452701732549094,
+          "infected": true,
+          "accessory": "acc.hat-sun-hat"
         }
       ]
     },
@@ -400,9 +453,9 @@
           1.5478927338625696
         ],
         "position": [
-          63.044196384827316,
-          4.984999999999999,
-          4.517741214846069
+          64.3169885909631,
+          6.515,
+          5.790533420981855
         ]
       },
       "tick": 451,
@@ -504,6 +557,59 @@
           "yaw": 5.076367936894332,
           "infected": false,
           "accessory": null
+        }
+      ]
+    },
+    {
+      "side": "candidate",
+      "shot": "07-infected-headwear-probe",
+      "ids": [
+        3,
+        4
+      ],
+      "positions": [
+        [
+          2.96544922902093,
+          0.7,
+          3.689992415791787
+        ],
+        [
+          3.6546080604663564,
+          0.7,
+          2.9767188030139575
+        ]
+      ],
+      "camera": {
+        "target": [
+          3.3100286447436433,
+          1.35,
+          3.3333556094028722
+        ],
+        "position": [
+          6.492009160083107,
+          5.175,
+          6.515336124742336
+        ]
+      },
+      "tick": 240,
+      "seed": 1,
+      "level": "SceneLab",
+      "checkpoint": "start",
+      "backend": "webgpu",
+      "subjects": [
+        {
+          "id": 3,
+          "model": "npc.civilian-man-b",
+          "yaw": -0.2911396057879816,
+          "infected": true,
+          "accessory": "acc.hat-beanie"
+        },
+        {
+          "id": 4,
+          "model": "npc.civilian-woman-b",
+          "yaw": -1.2452701732549094,
+          "infected": true,
+          "accessory": "acc.hat-sun-hat"
         }
       ]
     }
