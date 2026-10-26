@@ -66,6 +66,7 @@ for (const lod of [0, 1, 2]) {
   if (metadata?.class === 'quadruped') args.push('--rig-kind', 'quadruped');
   if (unbound && existsSync(join(source, 'props.json'))) args.push('--props', join(source, `source/assembled-lod${sourceLod}.glb`), '--props-recipe', join(source, 'props.json'), '--props-lod', String(sourceLod));
   if (id === 'char.corgi') args.push('--retain-corgi-props');
+  if (id === 'npc.civilian-woman-a') args.push('--retain-tote', join('public/assets/models', `${id}${lod ? `.lod${lod}` : ''}.glb`));
   if (unbound && ['npc.lab-guard', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.lab-guard' ? 'navy' : 'red');
   if (unbound && id === 'npc.lab-tech-a') args.push('--clear-headwear', 'brown');
   if (id === 'char.corgi' || id === 'amb.dog') args.push('--no-eye-discs');
