@@ -10,4 +10,4 @@ Fixture provenance: tests/scenes/catalog/vfx-vehicle-contact.json is copied verb
 
 The supplied baseline sheet is preserved as [baseline-sheet.jpg](baseline-sheet.jpg), copied without modification from commit `4685986d0`, lane/vfx-stunning docs/reports/vfx-stunning/sheets/vehicle-roll-before.jpg. Compare the baseline nose lift in frames 108–180 with the [fixed high/zoom-0.5 sheet](webgl2/apc-sedan-contact@high-z0.5/sheet.jpg).
 
-The default `scene:matrix` filter includes `apc-sedan-*`; [list-only discovery](matrix-registration.txt) confirms its six tier/zoom configurations per backend. The [full verification summary](verification-summary.json) preserves the original failures and their controlled rechecks, including zero-vehicle zoo baseline/current results.
+The default `scene:matrix` filter includes `apc-sedan-*`; [list-only discovery](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/apc-sedan/matrix-registration.txt) confirms its six tier/zoom configurations per backend. The [full verification summary](verification-summary.json) preserves the original failures and their controlled rechecks, including zero-vehicle zoo baseline/current results.
