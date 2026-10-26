@@ -29,7 +29,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
-    const skinMask = options.skinned && atlas ? paintedSkinMask(atlas) : parts.y.equal(-1).select(1, 0);
+    const skinMask = options.skinned && atlas ? paintedSkinMask(atlas).mul(scalp.oneMinus()) : parts.y.equal(-1).select(1, 0);
     const sick = mix(vec3(luminance(clothing)).mul(.6), options.atlas ? vec3(.42, .49, .35).mul(luminance(clothing).max(.2)) : crowdSkinColor(true), .8), skinShift = skinMask.mul(decay.mul(2.5).min(1));
     const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
     const grimy = parts.y.lessThan(-3).select(clothing, clothing.mul(dirt.mul(-.42).add(1)));

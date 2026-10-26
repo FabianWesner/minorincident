@@ -10,7 +10,8 @@ const out = resolve(process.env.HAT_OUT ?? 'test-results/l1-hats-faces');
 const models = (process.env.HAT_MODELS ?? 'npc.civilian-man-a,npc.civilian-man-b,npc.civilian-woman-a,npc.civilian-woman-b,npc.civilian-elderly,npc.depot-clerk').split(',');
 const hats = (process.env.HAT_IDS ?? 'baseball-cap,beanie,sun-hat,hard-hat,flat-cap,bucket-hat').split(',').map(id => `acc.hat-${id}`);
 const tier = process.env.HAT_TIER === 'high' ? 'high' : 'low';
-const session = new SceneSession({ backend: 'webgl2', tier, viewport: { width: 1600, height: 900 }, seed: 18, query: { crowdProbe: 'full' } });
+const backend = process.env.HAT_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const session = new SceneSession({ backend, tier, viewport: { width: 1600, height: 900 }, seed: 18, query: { crowdProbe: 'full' } });
 const continuity = new Map<string, { meanError: number; maxError: number; taggedVertices: number }>();
 const receipts: { model: string; hat: string; infected: boolean; pass: boolean; [key: string]: unknown }[] = [];
 const linear = (v: number) => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
@@ -110,10 +111,10 @@ try {
     const pass = fit.accessoryInstances > 0 && fit.ratio <= 1.15 + 1e-6 && fit.bottom >= fit.brow!.y && fit.forwardY >= -1e-5 && fit.forehead > 0 && fit.retainedForehead / fit.forehead >= .95
       && eyePixels.every(e => e.pixels > 0 && e.visibility >= .95) && (!infected || peakRatio >= .95 && peakRatio <= 1.05 && continuity.get(model)!.taggedVertices > 10 && continuity.get(model)!.meanError < .25);
     receipts.push({ model, hat, infected, pass, pose, ...fit, close, peakRatio: infected ? peakRatio : null, eyePixels });
-    writeJson(resolve(out, 'hat-eye-gate.json'), { pass: false, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
+    writeJson(resolve(out, 'hat-eye-gate.json'), { pass: false, backend, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
     console.log(`${name}: ${pass ? 'PASS' : 'FAIL'} ratio=${fit.ratio.toFixed(3)} peak=${infected ? peakRatio.toFixed(3) : 'live'} eyes=${eyePixels.map(e => `${e.zoom}:${e.pixels}/${e.visibility.toFixed(2)}`).join(',')}`);
   }
   const pass = receipts.every(r => r.pass) && session.errors.length === 0;
-  writeJson(resolve(out, 'hat-eye-gate.json'), { pass, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
+  writeJson(resolve(out, 'hat-eye-gate.json'), { pass, backend, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
   assert.ok(pass, `${receipts.filter(r => !r.pass).length}/${receipts.length} hat/eye cases failed; ${session.errors.length} GPU errors`);
 } finally { await session.close(); stopServer(); }
