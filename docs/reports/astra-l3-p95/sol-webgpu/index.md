@@ -16,9 +16,9 @@
 | l3-p95-camera-cutaway@low-z0.5 | pass | [sheet](l3-p95-camera-cutaway@low-z0.5.jpg) |
 | l3-p95-camera-cutaway@low-z1 | pass | [sheet](l3-p95-camera-cutaway@low-z1.jpg) |
 | l3-p95-camera-cutaway@low-z1.5 | pass | [sheet](l3-p95-camera-cutaway@low-z1.5.jpg) |
-| l3-p95-pose-texture@high-z0.5 | pass | [sheet](l3-p95-pose-texture@high-z0.5.jpg) |
-| l3-p95-pose-texture@high-z1 | pass | [sheet](l3-p95-pose-texture@high-z1.jpg) |
+| l3-p95-pose-texture@high-z0.5 | pass | [sheet](../../l3-s1-tune/getup-webgpu-high-z0.5.jpg) |
+| l3-p95-pose-texture@high-z1 | pass | [sheet](../../l3-s1-tune/getup-webgpu-high-z1.jpg) |
 | l3-p95-pose-texture@high-z1.5 | pass | [sheet](l3-p95-pose-texture@high-z1.5.jpg) |
-| l3-p95-pose-texture@low-z0.5 | pass | [sheet](l3-p95-pose-texture@low-z0.5.jpg) |
-| l3-p95-pose-texture@low-z1 | pass | [sheet](l3-p95-pose-texture@low-z1.jpg) |
+| l3-p95-pose-texture@low-z0.5 | pass | [sheet](../../l3-s1-tune/getup-webgpu-low-z0.5.jpg) |
+| l3-p95-pose-texture@low-z1 | pass | [sheet](../../l3-s1-tune/getup-webgpu-low-z1.jpg) |
 | l3-p95-pose-texture@low-z1.5 | pass | [sheet](l3-p95-pose-texture@low-z1.5.jpg) |
