@@ -58,6 +58,21 @@ test('all repaired L1 human tiers retain one closed anatomical surface @E08 @E17
   }
 });
 
+for (const id of ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.firefighter-alive']) for (const lod of ['lod0', 'lod1', 'lod2'] as const) test(`${id}/${lod}: infection preserves glove and uniform paint @E08 @E17`, async () => {
+  const def = manifest.find(d => d.id === id)!, root = await load((lod === 'lod0' ? def.glb : def.lods![lod])!);
+  const body = root.getObjectByName('skin_body') as SkinnedMesh, owner = body.geometry.getAttribute('_crowd_part'), region = body.geometry.getAttribute('_crowd_region');
+  let hands = 0, handSkin = 0, uniform = 0, uniformSkin = 0, face = 0;
+  for (let i = 0; i < owner.count; i++) {
+    const name = body.skeleton.bones[owner.getX(i)].name, skin = region.getX(i) === 1;
+    if (/^hand/.test(name)) { hands++; handSkin += Number(skin); }
+    if (/^(arm|foreArm|leg|shin)/.test(name)) { uniform++; uniformSkin += Number(skin); }
+    if (name === 'head' && skin) face++;
+  }
+  expect(hands).toBeGreaterThan(20); expect(handSkin / hands).toBeLessThan(.1);
+  expect(face).toBeGreaterThan(10);
+  if (id === 'npc.firefighter-alive') expect(uniformSkin / uniform).toBeLessThan(.1);
+});
+
 async function load(path: string) {
   return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(path)), '')).scene;
 }
