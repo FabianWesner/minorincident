@@ -9,14 +9,16 @@ export class Ticker implements Lifecycle {
   private handle: number | null = null;
   private previous: number | null = null;
   private frames = 0;
+  private disposed = false;
   init(): void { this.handle = requestAnimationFrame(this.frame); }
   private readonly frame = (now: number): void => {
     const seconds = this.previous === null ? 0 : Math.max(0, (now - this.previous) / 1000);
     this.previous = now;
-    this.events.emit({ type: 'frame', tick: ++this.frames, seconds });
-    this.handle = requestAnimationFrame(this.frame);
+    // A throwing frame listener must not end the frame loop (it froze the game for good); the error still surfaces.
+    try { this.events.emit({ type: 'frame', tick: ++this.frames, seconds }); }
+    finally { if (!this.disposed) this.handle = requestAnimationFrame(this.frame); }
   };
   update(): void {}
   reset(): void { this.previous = null; }
-  dispose(): void { if (this.handle !== null) cancelAnimationFrame(this.handle); this.handle = null; this.events.dispose(); }
+  dispose(): void { this.disposed = true; if (this.handle !== null) cancelAnimationFrame(this.handle); this.handle = null; this.events.dispose(); }
 }

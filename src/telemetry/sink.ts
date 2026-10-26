@@ -14,4 +14,6 @@ export interface TelemetrySink {
   scenarioUnloaded(): void;
   /** Wheel/pinch zoom changed the follow camera (a sim input through the spawn frustum). */
   zoom(delta: number): void;
+  /** A render failure (lost GPU device, uncaptured GPU error, a throwing render subsystem); once per kind and message. */
+  renderError(kind: string, message: string): void;
 }

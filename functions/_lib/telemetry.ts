@@ -9,7 +9,7 @@ export const limits = {
   sessionsPerPlayerDay: 120, replayChunk: 256 * 1024, replayBytesPerSession: 24 * 1024 * 1024, chunksPerAttempt: 600,
   dataKeys: 8, dataBytes: 320, maxFuture: 5 * 60_000, maxPast: 36 * 3600_000,
 } as const;
-export const eventTypes = ['session_start', 'heartbeat', 'session_end', 'level_start', 'level_complete', 'level_restart', 'death', 'quit', 'checkpoint', 'weapon_pickup', 'perf'] as const;
+export const eventTypes = ['session_start', 'heartbeat', 'session_end', 'level_start', 'level_complete', 'level_restart', 'death', 'quit', 'checkpoint', 'weapon_pickup', 'perf', 'render_error'] as const;
 export type EventType = typeof eventTypes[number];
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const level = /^[A-Za-z0-9_-]{1,24}$/, build = /^[A-Za-z0-9._-]{1,40}$/, word = /^[\w .:/-]{0,40}$/, key = /^[a-z][a-z0-9_]{0,15}$/;

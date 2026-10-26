@@ -94,6 +94,8 @@ export function installInterleavedBufferDisposal(backend: {
 // (instancing) / texture (bones) paths, whose shader text is shared by every object of a material.
 (NodeBuilder.prototype as unknown as { getUniformBufferLimit(): number }).getUniformBufferLimit = () => 0;
 
+/** Canvas events: a lost WebGPU device, and an uncaptured GPU error (detail: { type, message }). */
+export const gpuDeviceLostEvent = 'mi-gpu-device-lost', gpuErrorEvent = 'mi-gpu-error';
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
   private canvasOverlay = false;
@@ -188,8 +190,24 @@ export class Renderer extends WebGPURenderer {
     if (params.get('test') === '1' && params.has('tone')) this.toneMapping = params.get('tone') === 'agx' ? AgXToneMapping : ACESFilmicToneMapping;
     if (params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
     // Game owns recovery and pauses before another draw can reach the lost backend.
-    const report = this.onDeviceLost;
-    this.onDeviceLost = info => { if (info.api !== 'WebGL') report.call(this, info); };
+    // WebGPU has no 'contextlost' DOM event: three only sets _isDeviceLost and skips every later render, so the
+    // view froze while the sim, HUD and radar kept running (Q-197, L4 on PROD). Forward the loss to the canvas
+    // as an event Game recovers from (a new device on the same canvas), like WebGL's webglcontextlost.
+    this.onDeviceLost = info => {
+      if (info.api === 'WebGL') return;
+      // three's default handler only logs an error and stops drawing; Game reports the loss and rebuilds.
+      (this as unknown as { _isDeviceLost: boolean })._isDeviceLost = true;
+      this.domElement.dispatchEvent(new CustomEvent(gpuDeviceLostEvent, { detail: { message: info.message, reason: info.reason } }));
+    };
+    // An uncaptured validation error invalidates the whole frame's command buffer, not one draw. Forward each
+    // to Game, which recovers when they repeat every frame (a stuck view) and reports them to telemetry.
+    const uncaptured = this.onError;
+    this.onError = info => {
+      uncaptured.call(this, info);
+      // three r186 passes { api, type, message } (its typings still say string).
+      const error = info as unknown as string | { type?: string; message?: string };
+      this.domElement.dispatchEvent(new CustomEvent(gpuErrorEvent, { detail: typeof error === 'string' ? { type: 'GPUError', message: error } : { type: error.type, message: error.message } }));
+    };
     // Game owns RAF and resets once per rendered frame, including explicit paused captures.
     this.info.autoReset = false;
     // r186 async warm-up restores _currentRenderContext before building bindings.

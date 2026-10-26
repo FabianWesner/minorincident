@@ -12,7 +12,7 @@ Client code: `src/telemetry/`. Never sent: IP addresses (the server does not sto
 | player id | random UUID in `localStorage` key `mi.pid` (no cookies); a per-session id if storage throws |
 | session id | random UUID per page load |
 | context | device class (`desktop`/`phone`/`tablet`), quality tier, backend (`webgl`/`webgpu`), build commit, viewport bucket (rounded to 160 px) |
-| events | `session_start`, `heartbeat` (30 s), `session_end`, `level_start`, `level_complete`, `level_restart`, `death` (level, tick, x/z, cause archetype), `quit` (level, tick, why = `home`/`close`/`next`), `checkpoint`, `weapon_pickup`, `perf` (every 2nd beat: frame p50/p95 ms, sim ms, draw calls) |
+| events | `session_start`, `heartbeat` (30 s), `session_end`, `level_start`, `level_complete`, `level_restart`, `death` (level, tick, x/z, cause archetype), `quit` (level, tick, why = `home`/`close`/`next`), `checkpoint`, `weapon_pickup`, `perf` (every 2nd beat: frame p50/p95 ms, sim ms, draw calls), `render_error` (once per kind and message: `device-lost`, `gpu-error`, `update`, `render`; short message, backend) |
 | replay | per level attempt: the input frame the sim consumes for every fixed tick (delta/RLE, float64, gzip), plus campaign save at level start, seed, level, quality, build, viewport |
 
 Batches go out every 30 s and on `visibilitychange`/`pagehide` (`navigator.sendBeacon`). Telemetry is off for `?test`, `?scenelab`,
