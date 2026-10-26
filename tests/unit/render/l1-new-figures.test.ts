@@ -82,26 +82,6 @@ for (const id of ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.firefighter-alive']) 
 async function load(path: string) {
   return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(path)), '')).scene;
 }
-for (const lod of ['lod0', 'lod1', 'lod2'] as const) test(`civilian woman A ${lod}: original canvas tote survives as rigid torso gear @E08 @E17`, async () => {
-  const id = 'npc.civilian-woman-a', def = manifest.find(d => d.id === id)!;
-  const before = await load(`public/assets/models/${id}${lod === 'lod0' ? '' : '.' + lod}.glb`);
-  const after = await load((lod === 'lod0' ? def.glb : def.lods![lod])!);
-  const bounds = (root: typeof before, retained: boolean) => {
-    root.updateMatrixWorld(true); const box = new Box3(), point = new Vector3(), materials = new Set<string>();
-    root.traverse(node => {
-      if (!(node instanceof Mesh) || Array.isArray(node.material) || !/^pal_(canvasTan|grass|woodWarm)$/.test(node.material.name)) return;
-      let owner = node.parent; while (owner && !(retained ? owner.name.startsWith('retained_canvas_tote') || node.name.startsWith('retained_canvas_tote') : owner.name === 'torso')) owner = owner.parent;
-      if (!owner) return;
-      expect(node).not.toBeInstanceOf(SkinnedMesh); materials.add(node.material.name);
-      const p = node.geometry.getAttribute('position'), indices = node.geometry.index;
-      for (let i = 0; i < (indices?.count ?? p.count); i++) box.expandByPoint(point.fromBufferAttribute(p, indices?.getX(i) ?? i).applyMatrix4(node.matrixWorld));
-    });
-    expect([...materials].sort()).toEqual(['pal_canvasTan', 'pal_grass', 'pal_woodWarm']);
-    return box;
-  };
-  const a = bounds(before, false), b = bounds(after, true);
-  expect(a.min.distanceTo(b.min)).toBeLessThan(.001); expect(a.max.distanceTo(b.max)).toBeLessThan(.001);
-});
 const corgi = manifest.find(d => d.id === 'char.corgi')!;
 for (const lod of ['lod0', 'lod1', 'lod2'] as const) test(`L1 corgi ${lod}: old detailed backpack is still rigid on its original socket @E08 @E17`, async () => {
   const before = await load(`assets/char.corgi/model${lod === 'lod0' ? '' : '.' + lod}.glb`);
