@@ -1,6 +1,6 @@
 # E23-AC18 visual review — 2026-10-22
 
-Opened each production W0/W5 pair at full resolution, the actual successful five-person real-input escort frame, and the retained [comparison sheet](../../../docs/reports/ac-close-l4-l6/l5-production-pairs-group.jpg). Also compared the authorized diorama/time-of-day references and the inherited current-base G/D review sheets. Pair test `T-E23-18` passes with the original >30% changed-pixel gate; the photo fixture now gives persistent fire/smoke an ordinary presentation-clock settling interval while simulation stays paused. This does not change gameplay or weather. The successful route hands all five to L6 with zero deaths/errors (AC17 evidence).
+Opened each production W0/W5 pair at full resolution, the actual successful five-person real-input escort frame, and the retained [comparison sheet](l5-production-pairs-group.jpg). Also compared the authorized diorama/time-of-day references and the inherited current-base G/D review sheets. Pair test `T-E23-18` passes with the original >30% changed-pixel gate; the photo fixture now gives persistent fire/smoke an ordinary presentation-clock settling interval while simulation stays paused. This does not change gameplay or weather. The successful route hands all five to L6 with zero deaths/errors (AC17 evidence).
 
 ## Scores and scene observations
 
