@@ -239,7 +239,7 @@ export class StaticCorpses extends Group {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
         const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
         const capNames = ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'];
-        const visible = (i: number) => (!clip.binds || parts.getZ(i) <= 1.5) && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) && !hidden.has(parts.getX(i)) : !hidden.has(parts.getX(i))) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
+        const visible = (i: number) => (!clip.binds || parts.getZ(i) <= 1.5) && (parts.getW(i) >= 1024 ? hiddenParts.includes(capNames[parts.getW(i) - 1024]) && !hidden.has(parts.getX(i)) : !hidden.has(parts.getX(i))) && !(hidesHair && !source.userData.headwearMorph && (parts.getY(i) === -2 || parts.getW(i) % 128 >= 4 && parts.getW(i) % 128 < 8));
         // Colour tags may differ at vertices of one triangle. Keep whole triangles
         // in triangle soup; indexed geometry is filtered through its index below.
         const kept: number[] = [];
@@ -250,7 +250,7 @@ export class StaticCorpses extends Group {
         const skinPose = skin && clip.binds ? new Float32Array(clip.parts.length * 16) : undefined;
         if (skinPose) premultiplyRow(clip.matrices, skinPose, clip.binds!, frameOffset, clip.parts.length, 0);
         for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
-          const original = source.getAttribute(name);
+          const original = source.getAttribute(name), coveredScalp = name === 'position' && hidesHair && source.userData.headwearMorph ? source.getAttribute('_gripPosition') : undefined;
           // GPU backends may pad normals to vec4. Frozen geometry retains the
           // semantic xyz layout warmed before combat, including accessory pages.
           const size = name === 'position' || name === 'normal' ? 3 : original.itemSize;
@@ -261,7 +261,8 @@ export class StaticCorpses extends Group {
               // Blend the premultiplied joint matrices of this vertex.
               const skinned = skin && clip.binds ? skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix, skinPose) : undefined;
               const matrices = skinned ?? clip.matrices;
-              const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
+              const sample = coveredScalp && parts.getX(i) === clip.parts.indexOf('head') ? coveredScalp : original;
+              const m = skinned ? 0 : frameOffset + parts.getX(i) * 16, x = sample.getX(i), y = sample.getY(i), z = sample.getZ(i);
               let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;
               let ny = matrices[m + 1] * x + matrices[m + 5] * y + matrices[m + 9] * z;
               let nz = matrices[m + 2] * x + matrices[m + 6] * y + matrices[m + 10] * z;

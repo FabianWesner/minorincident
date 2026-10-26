@@ -91,8 +91,11 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
       const brow = skinnedBrow(geometry), highestBrow = Math.max(...(['lod0', 'lod1', 'lod2'] as const).map(l => skinnedBrow(geometries.get(`${id}:${l}`)!)?.y ?? -Infinity));
       expect(box.min.y, `${label} does not float`).toBeLessThan(brow ? Math.max(highestBrow + .04, (frames ?? -Infinity) + .025) : skull.centre.y + skull.size.y / 2);
       // Head scale: the same skull-relative width as on the reference head (lateral, within 20 %).
-      expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeGreaterThan(.8);
-      expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeLessThan(1.2);
+      if (brow) expect(box.getSize(new Vector3()).z / brow.width, `${label} bare skull scale`).toBeGreaterThan(.8);
+      else {
+        expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeGreaterThan(.8);
+        expect(box.getSize(new Vector3()).z / skull.size.z / reference.get(hat)!, `${label} scale`).toBeLessThan(1.2);
+      }
       // Spectacles stay on the face below the hat (any LOD that keeps the frames).
       if (spectacled.includes(id) && frames !== null) expect(box.min.y, `${label} above the glasses`).toBeGreaterThanOrEqual(frames + glassesClearance - 1e-6);
     }

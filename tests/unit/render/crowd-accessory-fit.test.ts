@@ -41,7 +41,7 @@ async function crowdGeometry(id: string, lod: 'lod1' | 'lod2', reference = false
 // and shoulders. Each unauthored head must now carry an accessory in the same skull-relative size and height as the
 // authored reference civilian.
 test('ordinary infected accessories keep the authored reference proportions on their own skull @E07-AC13 @E08', async () => {
-  const { CrowdAccessories, bakedSkull, referenceSkull } = await import('../../../src/render/characters/CrowdAccessories');
+  const { CrowdAccessories, bakedSkull, referenceSkull, skinnedBrow } = await import('../../../src/render/characters/CrowdAccessories');
   const { AssetRegistry } = await import('../../../src/assets/registry');
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
   const reference = bakedSkull(await crowdGeometry('npc.civilian-man-a', 'lod1', true))!;
@@ -52,11 +52,11 @@ test('ordinary infected accessories keep the authored reference proportions on t
     accessories.begin();
     accessories.place({ id: 1, archetype: 'infected.runner', appearance: { asset: model, accessories: [acc] } } as never, 'lod1',
       { clip: { parts: ['head'] }, part: (_f: number, _o: number, _w: number, _p: number, out: Matrix4) => out.identity() } as never, 0, [0, 1], new Matrix4());
-    const mesh = accessories.children.find(n => n.name === `${acc}:lod1`) as InstancedMesh, matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
+    const mesh = accessories.children.find(n => n.name.startsWith(`${acc}:`) && (n as InstancedMesh).count > 0) as InstancedMesh, matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
     const box = new Box3(), p = new Vector3(), position = mesh.geometry.getAttribute('position');
     for (let i = 0; i < position.count; i++) box.expandByPoint(p.fromBufferAttribute(position, i).applyMatrix4(matrix));
     const bottom = skull.centre.y - skull.size.y / 2;
-    return { size: box.getSize(new Vector3()).divide(skull.size), bottom: (box.min.y - bottom) / skull.size.y, top: (box.max.y - bottom) / skull.size.y };
+    return { width: box.getSize(new Vector3()).z, bottomY: box.min.y, size: box.getSize(new Vector3()).divide(skull.size), bottom: (box.min.y - bottom) / skull.size.y, top: (box.max.y - bottom) / skull.size.y };
   };
   const ids = crowdAccessoryIds.filter(id => !id.startsWith('acc.placeholder-'));
   expect(ids.length).toBeGreaterThan(0);
@@ -76,13 +76,16 @@ test('ordinary infected accessories keep the authored reference proportions on t
     (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete(id); accessories.registerSkull(id, geometry);
     for (const acc of ids) {
       const got = relative(id, skull, acc), want = expected.get(acc)!;
-      for (const axis of ['x', 'y', 'z'] as const) {
-        const brimLimit = acc.endsWith('sun-hat') ? 1.4 : acc.endsWith('bucket-hat') ? 1.3 : 1.15;
-        const expected = geometry.userData.crowdBinds && axis === 'z' && acc.startsWith('acc.hat-') ? Math.min(want.size[axis], brimLimit) : want.size[axis];
-        expect(got.size[axis], `${id} ${lod} ${acc} ${axis}`).toBeCloseTo(expected, 2);
+      if (geometry.userData.crowdBinds && acc.startsWith('acc.hat-')) {
+        // Q-187: v2 hats use the bare brow instead of the rigid reference's hair bounds.
+        const brow = skinnedBrow(geometry)!;
+        expect(got.width, `${id} ${lod} ${acc} bare brow width`).toBeLessThanOrEqual(brow.width * 1.15 + 1e-6);
+        expect(got.bottomY, `${id} ${lod} ${acc} eye clearance`).toBeGreaterThanOrEqual(brow.y);
+      } else {
+        for (const axis of ['x', 'y', 'z'] as const) expect(got.size[axis], `${id} ${lod} ${acc} ${axis}`).toBeCloseTo(want.size[axis], 2);
+        expect(got.bottom, `${id} ${lod} ${acc} bottom`).toBeCloseTo(want.bottom, 2);
+        expect(got.top, `${id} ${lod} ${acc} top`).toBeCloseTo(want.top, 2);
       }
-      expect(got.bottom, `${id} ${lod} ${acc} bottom`).toBeCloseTo(want.bottom, 2);
-      expect(got.top, `${id} ${lod} ${acc} top`).toBeCloseTo(want.top, 2);
     }
   }
   accessories.dispose();

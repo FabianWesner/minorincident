@@ -1,5 +1,5 @@
 import { paintedSkinMask } from '../characters/paintedSkin';
-import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility } from '../characters/CrowdAppearance';
+import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility, crowdCoveredScalpColor } from '../characters/CrowdAppearance';
 import { type Node, DoubleSide, FrontSide, MeshLambertNodeMaterial, type DataTexture, type Texture } from 'three/webgpu';
 import { attribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos, texture as sampleTexture, varying, float } from 'three/tsl';
 import { crowdBlendedMatrix, poseTexture } from '../../assets/crowd';
@@ -22,7 +22,9 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z.min(1), mark = options.skinned ? float(0) : parts.w.mod(4), vein = mark.equal(1).select(1, 0), blood = mark.equal(2).select(1, 0), socket = mark.equal(3).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const atlas = options.atlas ? sampleTexture(options.atlas, attribute('uv', 'vec2')) : undefined;
-    const clothing = atlas ? mix(crowdAppearanceColor(), atlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
+    const covered = variant.x.div(512).floor().mod(2).equal(1), scalp = options.skinned ? varying(parts.x.equal(3).and(parts.z.lessThan(.5)).and(parts.y.notEqual(-6)).and(parts.w.lessThan(4)).select(parts.w.div(3).mul(covered.select(1, 0)), 0), 'coveredScalp') : float(0);
+    const authoredClothing = atlas ? mix(crowdAppearanceColor(), atlas.rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.equal(-10)).select(0, 1)) : crowdAppearanceColor();
+    const clothing = options.skinned ? mix(authoredClothing, crowdCoveredScalpColor().mul(.8), scalp) : authoredClothing;
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
@@ -52,7 +54,8 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const instance = mat4(attribute('_crowd0', 'vec4'), attribute('_crowd1', 'vec4'), attribute('_crowd2', 'vec4'), attribute('_crowd3', 'vec4')), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
     const matrix = options.skinned ? skinnedCrowdMatrix(pose, part, overlay.w, outgoing, weight, options.bindRow) : crowdBlendedMatrix(pose, part, overlay.w, outgoing, weight);
-    const position = mix(positionGeometry, attribute('_gripPosition', 'vec3'), grip);
+    const alternate = options.skinned ? parts.x.equal(3).select(covered.select(1, 0), grip) : grip;
+    const position = mix(positionGeometry, attribute('_gripPosition', 'vec3'), alternate);
     // A skinned vertex is in world bind space. Collapsing hidden crown vertices
     // to zero stretches its seam down to the body origin; discard the surface instead.
     material.positionNode = instance.mul(matrix.mul(vec4(options.skinned ? position : position.mul(crowdHeadwearVisibility()).mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;

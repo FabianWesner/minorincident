@@ -1,3 +1,5 @@
+import manifest from '../../assets/manifest.json' with { type: 'json' };
+import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
@@ -115,6 +117,7 @@ class CivilianBatch extends Group {
   private readonly overlay: InterleavedBufferAttribute;
   private readonly shirt = new Color();
   private registry?: AssetRegistry;
+  private surface?: CrowdSurfaceBinding;
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
@@ -135,19 +138,21 @@ class CivilianBatch extends Group {
     this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
+    const skinned = manifest.some(def => def.id === this.model && 'crowdSkin' in def && def.crowdSkin);
     let key: string | undefined = `${this.model}:${this.lod}`;
     // The small initial L1 cast uses the existing worker source path: shipping
     // its full pose atlases costs more than downloading the meshes and baking
     // off-thread. Later tiers still stream their prebuilt atlases during play.
-    const source = this.world.scenario === 'L1' && this.world.missions?.state.phase === 'briefing';
+    const source = !skinned && this.world.scenario === 'L1' && this.world.missions?.state.phase === 'briefing';
+    const loadedSkin = skinned ? (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod) : undefined;
     const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod, source);
     // Level handover (10-20): the appearance marking is a pure function of the baked vertices. Mark the retained copy
     // once; every level then clones an already marked geometry instead of re-marking it (~50-150 ms per model at 1x).
     if (cached && !cached.marked) { markCrowdAppearance(cached.geometry); cached.marked = true; }
     let placeholder = false, model: Group;
-    if (cached?.rig) model = cached.rig.clone(true);
+    if (cached?.rig && !skinned) model = cached.rig.clone(true);
     else {
-      const loaded = await (this.registry ??= new AssetRegistry(() => {})).loadAsset(this.model, this.lod);
+      const loaded = await (loadedSkin ?? (this.registry ??= new AssetRegistry(() => {}, { materials: this.shading, textureSize: this.world.infected?.director.tier === 'low' ? 512 : 1024 })).loadAsset(this.model, this.lod));
       placeholder = !!loaded.userData.placeholder; model = placeholder ? createCivilianPlaceholder() : loaded as Group;
       prepareCivilianRig(model, this.model, placeholder); if (placeholder) key = undefined;
     }
@@ -155,7 +160,8 @@ class CivilianBatch extends Group {
     if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
       const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
     }
-    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model, this.distant, placeholder);
+    const baked = cached && !placeholder ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model, this.distant, placeholder);
+    if (baked.clip.binds && !placeholder) baked.texture = crowdTexture(model);
     if (!baked.marked) { markCrowdAppearance(baked.geometry); baked.marked = true; }
     this.gunAim = new CrowdGunAim(model, baked.clip.parts);
     this.strideScale = baked.strideScale;
@@ -169,18 +175,20 @@ class CivilianBatch extends Group {
       }
     }
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
-    this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.userData.crowdLod = this.lod;
+    this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
-    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture);
+    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture, { bindRow: this.poses.bindRow, skinned: !!baked.clip.binds, atlas: baked.texture });
     const material = shared.material; this.releaseMaterial = shared.release;
-    this.mesh = new InstancedMesh(baked.geometry, material, this.capacity); this.mesh.userData.preRenderTextures = [this.texture]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
+    const surface = this.surface = { bind: () => shared.bindTexture(this.texture, baked.texture), textures: baked.texture ? [baked.texture] : [] };
+    crowdSurfaceBindings.set(baked.geometry, surface);
+    this.mesh = new InstancedMesh(baked.geometry, material, this.capacity); this.mesh.userData.preRenderTextures = [this.texture, ...(baked.texture ? [baked.texture] : [])]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
     for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
-    this.mesh.onBeforeRender = () => { shared.bindTexture(this.texture); matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
+    this.mesh.onBeforeRender = () => { surface.bind(); matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
     // The shared graph performs its full transform through geometry attributes.
     // Keep Three's instancing API, but omit its redundant implicit transform.
     Object.defineProperty(this.mesh, 'isInstancedMesh', { value: false, writable: true });
@@ -362,10 +370,23 @@ class CivilianBatch extends Group {
     const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, true, low && canHoldCrowdPose(e, tick) ? 2 : 1);
+    if (this.bakedClip.binds && !e.corpse && !heavy) {
+      // A narrow painted forehead hides tiny eyes when the rigid infected clip pitches the whole head down.
+      // Keep the gaze forward over the torso hunch; rigid PROD figures retain their authored poses.
+      frame = this.poses.correct(e.id, frame, ...blend, pose => {
+        const offset = this.bakedClip.parts.indexOf('head') * 16;
+        this.hand.fromArray(pose, offset).premultiply(this.transform);
+        this.spoutPoint.setFromMatrixPosition(this.hand); this.gunDirection.setFromMatrixScale(this.hand);
+        this.tilt.makeRotationY(presented.yaw).multiply(this.sway.makeRotationZ(-.12)).scale(this.gunDirection).setPosition(this.spoutPoint);
+        this.tilt.premultiply(this.hand.copy(this.transform).invert()).toArray(pose, offset);
+      });
+      blend[0] = frame; blend[1] = 1;
+    }
     if (e.corpse) {
       this.tintOf(e, index, 1);
       const source = this.accessories?.corpseSource(e, this.mesh.geometry, this.model, this.bakedClip.parts.indexOf('head')) ?? this.mesh.geometry;
       const death = corpsePose(e.id);
+      if (this.surface) crowdSurfaceBindings.set(source, this.surface);
       this.corpses.place(e, `${this.model}:${death}`, source, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1], String(e.id), [], resolveCrowdAppearance(e));
       return false;
     }

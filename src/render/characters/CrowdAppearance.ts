@@ -1,5 +1,5 @@
 import { skinnedBrow } from './headMeasurements';
-import { Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
+import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
@@ -87,13 +87,35 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
     const brow = skinnedBrow(geometry);
     let frameTop = -Infinity;
     if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getY(i) === -6) frameTop = Math.max(frameTop, headY(i));
-    const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : inverse ? low + (high - low) * .82 : .4;
-    const rear = brow ? brow.centre.x - brow.depth * .7 : 0;
-    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
-      const y = headY(i);
-      // Interpolation reconstructs a continuous cut plane. Binary vertex flags leave triangular shards of hair.
-      const plane = crown + (brow ? Math.tan(.45) * (point.x - rear) : 0);
-      parts.setW(i, inverse ? 4 + Math.max(-.9, Math.min(.9, (y - plane) / Math.max(.001, high - low))) : y > crown ? 4 : 0);
+    const grip = geometry.getAttribute('_gripPosition');
+    if (brow && inverse && grip) {
+      // Reuse the hand alternate-position stream for a closed bare scalp. A
+      // textured cap cannot be cut away without opening the welded forehead.
+      const rest = inverse.clone().invert(), eyes = new Box3(), skin = new Box3();
+      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024) {
+        point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+        if (parts.getZ(i) > 1.5) eyes.expandByPoint(point);
+        else if (parts.getY(i) === -1) skin.expandByPoint(point);
+      }
+      const eye = eyes.getCenter(new Vector3()), front = eye.x - .025, back = skin.min.x;
+      const centre = new Vector3((front + back) * .5, brow.y - .09, brow.centre.z);
+      const radii = new Vector3(Math.max(.08, (front - back) * .5), .21, brow.width * .5), alternate = new Vector3();
+      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
+        point.fromBufferAttribute(position, i).applyMatrix4(inverse);
+        const t = Math.max(0, Math.min(1, (point.y - (brow.y - .045)) / .065)), weight = t * t * (3 - 2 * t);
+        alternate.copy(point).sub(centre).divide(radii);
+        if (alternate.length() > 1) alternate.normalize();
+        alternate.multiply(radii).add(centre);
+        // The cap bill retracts behind the iris plane as its crown closes.
+        alternate.x = Math.min(alternate.x, front);
+        alternate.lerp(point, 1 - weight).applyMatrix4(rest);
+        grip.setXYZ(i, alternate.x, alternate.y, alternate.z);
+        parts.setW(i, weight * 3);
+      }
+      geometry.userData.headwearMorph = true;
+    } else {
+      const crown = brow ? Math.max(brow.y + .018, frameTop + .012) : inverse ? low + (high - low) * .82 : .4;
+      for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) parts.setW(i, headY(i) > crown ? 4 : 0);
     }
     return;
   }
@@ -164,6 +186,10 @@ export function crowdVariety(looks: readonly CrowdLook[]) {
   const all = counts(looks.map(l => l.key)), models = counts(looks.map(l => l.model));
   const groups = Array.from({ length: Math.ceil(looks.length / 20) }, (_, i) => { const start = Math.min(i * 20, Math.max(0, looks.length - 20)), sample = looks.slice(start, start + 20); return { figures: sample.length, distinct: counts(sample.map(l => l.key)).distinct }; });
   return { figures: looks.length, distinct: all.distinct, per20: groups, largestSameLookShare: looks.length ? all.largest / looks.length : 0, largestModelShare: looks.length ? models.largest / looks.length : 0 };
+}
+
+export function crowdCoveredScalpColor() {
+  return varying(pickColor(colors.hair, attribute('_variant', 'vec4').x.div(2).floor().mod(8)), 'crowdCoveredScalpColor');
 }
 
 /** Authored hats give way to the selected rigid accessory without stacking two hats. */

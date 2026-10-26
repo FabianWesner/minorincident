@@ -44,7 +44,7 @@ try {
   await session.open();
   await session.page.evaluate("window.__name = (fn, name) => Object.defineProperty(fn, 'name', { value: name, configurable: true });");
   await session.load({ name: 'suit-eye-reference', ground: 'asphalt', time: 'L1', dof: false, size: 100,
-    actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }, { id: 'figure', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], yaw: -45, look: { model: 'inf.common-worker' }, state: 'idle' }],
+    actors: [{ id: 'courier', kind: 'courier', at: [4, 4] }, { id: 'figure', kind: 'infected', archetype: 'infected.sprinter', at: [0, 0], yaw: -45, look: { model: 'inf.common-worker' }, state: 'idle' }],
     camera: { mode: 'game', target: 'figure', zoom: 1.5 } });
   await session.step(60); await session.ready();
   await session.page.evaluate(() => window.__SCENE__!.setCamera({ mode: 'close', target: 'figure', radius: 5, azimuth: 45 }));
@@ -53,9 +53,10 @@ try {
   for (const model of models) for (const hat of hats) for (const infected of [false, true]) {
     const name = `${model}-${hat}-${infected ? 'infected' : 'live'}`;
     await session.load({ name, ground: 'asphalt', time: 'L1', dof: false, size: 100,
-      actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }, { id: 'figure', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model, accessories: [hat], handProp: null }, state: 'idle' }],
+      actors: [{ id: 'courier', kind: 'courier', at: [4, 4] }, { id: 'figure', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model, accessories: [hat], handProp: null }, state: 'idle' }],
       script: infected ? [{ frame: 1, actor: 'figure', do: { infect: { instant: true } } }] : [], camera: { mode: 'game', target: 'figure', zoom: 1.5 } });
     await session.step(infected ? 240 : 60); await session.ready();
+    const pose = await session.describe();
     const fit = await session.page.evaluate(async ({ model, hat }) => {
       const path = '/src/render/characters/CrowdAccessories.ts', three = '/node_modules/three/build/three.webgpu.js';
       const { skinnedBrow, bakedSkull } = await import(path), { Box3, Matrix4, Vector3 } = await import(three);
@@ -108,7 +109,7 @@ try {
     }
     const pass = fit.accessoryInstances > 0 && fit.ratio <= 1.15 + 1e-6 && fit.bottom >= fit.brow!.y && fit.forwardY >= -1e-5 && fit.forehead > 0 && fit.retainedForehead / fit.forehead >= .95
       && eyePixels.every(e => e.pixels > 0 && e.visibility >= .95) && (!infected || peakRatio >= .95 && peakRatio <= 1.05 && continuity.get(model)!.taggedVertices > 10 && continuity.get(model)!.meanError < .25);
-    receipts.push({ model, hat, infected, pass, ...fit, close, peakRatio: infected ? peakRatio : null, eyePixels });
+    receipts.push({ model, hat, infected, pass, pose, ...fit, close, peakRatio: infected ? peakRatio : null, eyePixels });
     writeJson(resolve(out, 'hat-eye-gate.json'), { pass: false, tier, seed: 18, suitReference, continuity: Object.fromEntries(continuity), receipts, errors: session.errors });
     console.log(`${name}: ${pass ? 'PASS' : 'FAIL'} ratio=${fit.ratio.toFixed(3)} peak=${infected ? peakRatio.toFixed(3) : 'live'} eyes=${eyePixels.map(e => `${e.zoom}:${e.pixels}/${e.visibility.toFixed(2)}`).join(',')}`);
   }
