@@ -5,7 +5,7 @@
 - Corgi retains the old detailed rigid teal backpack at each LOD; its atlas, weighted tongue and paw contacts are integrated.
 - [Peds](01-pedestrians.jpg), [clerk](02-npc.depot-clerk.jpg), [tech A](03-npc.lab-tech-a.jpg), [tech B](04-npc.lab-tech-b.jpg), [guard](05-npc.lab-guard.jpg), [firefighter](06-npc.firefighter-alive.jpg), [corgi](07-corgi.jpg), [dogs](08-dogs.jpg): native 120/400 px old/new front/back captures.
 - Review remains open: cap/helmet/fringe clearance, painted-hair infection tags and skinned crown masking are corrected; final captures are being regenerated.
-- Targeted skin, winding, picking, layout, atlas, headwear/glasses, backpack, tongue and paw regression: 46 passed; final typecheck/lint/build running.
+- Targeted skin, winding, picking, atlas, headwear, gestures, backpack, tongue and paw regressions: 108 passed; strict rendered-height checks: 18 passed. Typecheck/lint/build pass.
 - Captured 30/30 figures together in the L1 street; final before/after sheet and scripted depot/lab/firefighter scenes pending.
 - Prior [Mac/phone ABBA](performance-summary.json) and [five cold loads](cold-loads/summary.json) passed; remeasurement is required after the visual corrections (prior draws 339→145, decoded texture data 285.10→288.05 MiB, worst load 1.937 s vs PROD 2.344 s).
 - [Validator](gates/validator.json): 1262 rows, zero errors; remote unit+levels, smoke/WebGPU, invariants and full no-skip campaign plus male L1 remain running/pending.

@@ -1,0 +1,24 @@
+{
+  "automaticHumanFit": "Bind source anatomy in the retained rig frame; production fitCivilianHeight scales geometry, bones, props and stride together to adult metres.",
+  "rawHeightExceptions": [
+    "npc.civilian-elderly",
+    "npc.firefighter-alive"
+  ],
+  "renderedAdultContractMetres": [
+    1.75,
+    1.85
+  ],
+  "heightProof": "tests/unit/render/figure-height.test.ts checks every skinned adult at every LOD in both tiers.",
+  "paintedLods": "LOD0 uses authored source LOD0. LOD1 and LOD2 use repaired authored source LOD1, retaining UV islands; LOD2 uses a 256 px atlas within the existing 4000-triangle/150 kB budget.",
+  "anatomyRepair": "Neutralize preposed arms, use indexed anatomical reference surfaces, resolve enclosed owner islands, open fused glove/hip contacts, close their boundaries, and smooth local blend bands. All build receipts have zero manual steps.",
+  "headwear": "Tilt the front brim 0.2 radians upward on skinned NPCs; retain measured skull width, centering and frame clearance.",
+  "regressions": [
+    "all 18 human LOD gestures",
+    "closed connected source surfaces",
+    "production atlas coordinate integrity",
+    "strict rendered adult height",
+    "old corgi backpack bounds and palette",
+    "weighted corgi tongue and paws",
+    "six dog coat geometry/rig/UV equality"
+  ]
+}

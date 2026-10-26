@@ -240,6 +240,10 @@ export class CrowdAccessories extends Group {
       if (!bounds.isEmpty()) {
         const offset = bounds.getCenter(new Vector3()).x - centre.x, allowance = referenceSkull.size.x * scale.x * .2;
         if (Math.abs(offset) > allowance) this.fitTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
+        // Tilt the front brim upward so the game camera can see the eyes.
+        // The existing frame-clearance lift then seats its back edge, rather
+        // than raising the complete hat clear of the head.
+        if (model.startsWith('npc.')) this.fitTransform.premultiply(new Matrix4().makeTranslation(centre.x, centre.y, 0).multiply(new Matrix4().makeRotationZ(.2)).multiply(new Matrix4().makeTranslation(-centre.x, -centre.y, 0)));
       }
     }
   }

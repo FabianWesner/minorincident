@@ -44,7 +44,11 @@ if (metadata?.class !== 'quadruped' && !def.animatedNodes.includes('body')) {
   }
 }
 for (const lod of [0, 1, 2]) {
-  const rig = unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${unbound && id.startsWith('npc.') ? 0 : lod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
+  // The authored human LOD2 can attach a hand only to the thigh. Retain the
+  // sound LOD1 anatomy (well inside the 4k far-tier budget) with a smaller atlas.
+  // Never position-simplify a painted body across its UV islands.
+  const sourceLod = unbound && id.startsWith('npc.') && lod === 2 ? 1 : lod;
+  const rig = unbound ? join(id === 'inf.dog' ? 'assets/amb.dog' : assets, id === 'char.corgi' && lod ? `model.lod${lod}.glb` : 'model.glb') : join(source, authored ? `model${lod ? `.lod${lod}` : ''}.glb` : `lod${lod}.glb`), body = join(source, `source/${unbound ? 'assembled' : 'flat'}-lod${sourceLod}.glb`), raw = join(report, `lod${lod}.raw.glb`);
   const args = ['tools/assets/skin-crowd-figure.ts', '--rig', rig, '--out', raw, '--report', join(report, `lod${lod}.json`)];
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === lod);
@@ -60,7 +64,7 @@ for (const lod of [0, 1, 2]) {
     args.push('--spectacle-top', String(measured.spectacleTop));
   }
   if (metadata?.class === 'quadruped') args.push('--rig-kind', 'quadruped');
-  if (unbound && existsSync(join(source, 'props.json'))) args.push('--props', join(source, `source/assembled-lod${lod}.glb`), '--props-recipe', join(source, 'props.json'), '--props-lod', String(lod));
+  if (unbound && existsSync(join(source, 'props.json'))) args.push('--props', join(source, `source/assembled-lod${sourceLod}.glb`), '--props-recipe', join(source, 'props.json'), '--props-lod', String(sourceLod));
   if (id === 'char.corgi') args.push('--retain-corgi-props');
   if (unbound && ['npc.lab-guard', 'npc.firefighter-alive'].includes(id)) args.push('--clear-headwear', id === 'npc.lab-guard' ? 'navy' : 'red');
   if (unbound && id === 'npc.lab-tech-a') args.push('--clear-headwear', 'brown');
@@ -68,11 +72,6 @@ for (const lod of [0, 1, 2]) {
   const cheap = def.category === 'prop' && def.budget.triangles <= 12000;
   const triangleLimit = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.ceil(def.budget.triangles * .15) : lod === 2 && !cheap ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
   let bodyBudget: number | undefined = unbound && id === 'inf.dog' ? (JSON.parse(readFileSync(join(dirname(report), 'amb.dog', `lod${lod}.json`), 'utf8')) as { bodyTriangleBudget: number | null }).bodyTriangleBudget ?? undefined : undefined;
-  if (unbound && id.startsWith('npc.') && lod > 0) {
-    const tier = await io.read(join(source, `source/assembled-lod${lod}.glb`));
-    const bodyMesh = tier.getRoot().listNodes().find(node => node.getName() === 'body' && node.getMesh())?.getMesh() ?? tier.getRoot().listMeshes()[0];
-    bodyBudget = bodyMesh.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
-  }
   for (let attempt = 0; attempt < 4; attempt++) {
     execFileSync(process.execPath, ['--import', 'tsx', ...args, ...bodyBudget ? ['--body-budget', String(bodyBudget)] : []], { stdio: 'pipe' });
     const document = await io.read(raw), total = document.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0) ?? 0), 0);

@@ -39,6 +39,7 @@ test('T-PO108 civilian hats sit on the head at head scale and above the glasses 
     accessories.place({ id: 1, archetype: 'civilian', civilian: {}, appearance: { asset: id, accessories: [hat] } } as never, lod,
       { clip: { parts: ['head'] }, part: (_f: number, _o: number, _w: number, _p: number, out: Matrix4) => out.identity() } as never, 0, [0, 1], new Matrix4());
     const mesh = accessories.children.find(n => n.name === `${hat}:${lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh, matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
+    if (manifest.find(d => d.id === id)?.crowdSkin) expect(matrix.elements[1], `${id} ${hat} front brim tilts above the camera sightline`).toBeGreaterThan(0);
     const box = new Box3(), p = new Vector3(), position = mesh.geometry.getAttribute('position');
     for (let i = 0; i < position.count; i++) box.expandByPoint(p.fromBufferAttribute(position, i).applyMatrix4(matrix));
     return box;

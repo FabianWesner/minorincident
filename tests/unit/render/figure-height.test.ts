@@ -47,6 +47,10 @@ for (const quality of ['high', 'low']) for (const lod of ['lod0', 'lod1', 'lod2'
       }
       expect(height / target, `${skin.id}: ${height} m / ${target} m`).toBeGreaterThanOrEqual(.92);
       expect(height / target, `${skin.id}: ${height} m / ${target} m`).toBeLessThanOrEqual(1.08);
+      if (npc && skin.crowdSkin && target === 1.8) {
+        expect(height, `${skin.id}: rendered adult height`).toBeGreaterThanOrEqual(1.75);
+        expect(height, `${skin.id}: rendered adult height`).toBeLessThanOrEqual(1.85);
+      }
       if (npc) {
         const child = /^(npc.civilian-kid|npc.brother)$/.test(skin.id);
         const archetypes = [...civilianRoles.map(d => `npc.${d.role}`), 'npc.child', 'npc.ally', ...infectedDefinitions.map(d => d.id)];
