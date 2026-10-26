@@ -4,8 +4,8 @@ Fresh integration build; headless Chromium with Metal. These are new captures fr
 
 | Opened sheet | What is visible |
 | --- | --- |
-| [WebGPU night, high, zoom 0.5](focused-webgpu/night-bodies-eyes-night@high-z0.5/sheet.jpg) | Seven infected keep continuous torsos and limbs through the sampled motion. Small red eyes remain visible against the dark street. Clothing colors and the orange courier distinguish the figures. |
-| [WebGPU night, low, zoom 0.5](focused-webgpu/night-bodies-eyes-night@low-z0.5/sheet.jpg) | All seven bodies remain complete with distinct clothing silhouettes at the lower geometry tier. No disconnected torso patches are visible. |
+| [WebGPU night, high, zoom 0.5](final-webgpu/night-bodies-eyes-night@high-z0.5/sheet.jpg) | Seven infected keep continuous torsos and limbs through the sampled motion. Small red eyes remain visible against the dark street. Clothing colors and the orange courier distinguish the figures. |
+| [WebGPU night, low, zoom 0.5](final-webgpu/night-bodies-eyes-night@low-z0.5/sheet.jpg) | All seven bodies remain complete with distinct clothing silhouettes at the lower geometry tier. No disconnected torso patches are visible. |
 | [WebGPU seethrough, low, zoom 0.5](focused-webgpu/seethrough-apc-behind-building@low-z0.5/sheet.jpg) | The APC's hull, wheels, windscreen and lights stay readable through the fine dithered obstruction. The adjacent red sedan keeps its solid outline. |
 | [WebGPU convoy, high, zoom 1](focused-webgpu/seethrough-scripted-convoy@high-z1/sheet.jpg) | The player bus remains whole along the moving route, through dithered facades and trees. Its light-colored roof and dark windows remain distinct. The pixel-reference gate nevertheless fails; see the red table. |
 | [WebGPU crash, high, zoom 0.5](focused-webgpu/vfx-vehicle-crash@high-z0.5/sheet.jpg) | The red car chars and opens into a wreck, with a brief large orange fireball and flying panels. The frame does not turn completely white; the wreck remains recognizable. Flames and darker smoke settle afterward. Still sheets cannot establish animated heat-haze quality. |
@@ -13,7 +13,7 @@ Fresh integration build; headless Chromium with Metal. These are new captures fr
 
 ## WebGL2 parity review
 
-Opened [crash high/zoom 0.5](focused-webgl2/vfx-vehicle-crash@high-z0.5/sheet.jpg) and [night high/zoom 1](focused-webgl2/night-bodies-eyes-night@high-z1/sheet.jpg). The crash keeps the same orange fireball, visible debris and recognizable charred body seen on WebGPU, without full-frame whiteout. At the wider night camera the seven infected remain separate, complete figures with the orange courier to their right; no torso holes are visible.
+Opened [crash high/zoom 0.5](focused-webgl2/vfx-vehicle-crash@high-z0.5/sheet.jpg) and [night high/zoom 1](final-webgl2/night-bodies-eyes-night@high-z1/sheet.jpg). The crash keeps the same orange fireball, visible debris and recognizable charred body seen on WebGPU, without full-frame whiteout. At the wider night camera the seven infected remain separate, complete figures with the orange courier to their right; no torso holes are visible.
 
 Both backend matrices complete at 156/158 passing cells. Every low-tier cell passes. The only integration failures are the two high-tier convoy references at zoom 1 and 1.5: WebGL2 407/3,200 outside pixels; WebGPU 412/3,204.
 
@@ -37,7 +37,7 @@ Opened [WebGPU crash low/zoom 0.5](focused-webgpu/vfx-vehicle-crash@low-z0.5/she
 
 ## Completed full-gate matrix review
 
-Reopened the final full-matrix [seethrough APC low/WebGPU/zoom 0.5](full-matrix/seethrough-apc-behind-building@low-z0.5/sheet.jpg), [night infected low/WebGPU/zoom 0.5](full-matrix/night-bodies-eyes-night@low-z0.5/sheet.jpg), [vehicle crash high/WebGPU/zoom 0.5](full-matrix/vfx-vehicle-crash@high-z0.5/sheet.jpg), and the [390×844 credits](credits-phone-webgpu/ui-menu-credits@low-z0.5/sheet.jpg). The APC keeps its hull, wheels and lights behind the thin dithered obstruction; the neighboring sedan remains solid. The seven infected keep continuous limbs and torsos, distinct clothing, small red eyes and an orange courier. The crash progresses from a red car through localized flames to a charred wreck, then a large orange fireball with flying panels; the surroundings remain visible. Phone credits wrap within the rounded panel and preserve a large visible Back button.
+Reopened the final full-matrix [seethrough APC low/WebGPU/zoom 0.5](focused-webgpu/seethrough-apc-behind-building@low-z0.5/sheet.jpg), [night infected low/WebGPU/zoom 0.5](final-webgpu/night-bodies-eyes-night@low-z0.5/sheet.jpg), [vehicle crash high/WebGPU/zoom 0.5](focused-webgpu/vfx-vehicle-crash@high-z0.5/sheet.jpg), and the [390×844 credits](credits-phone-webgpu/ui-menu-credits@low-z0.5/sheet.jpg). The APC keeps its hull, wheels and lights behind the thin dithered obstruction; the neighboring sedan remains solid. The seven infected keep continuous limbs and torsos, distinct clothing, small red eyes and an orange courier. The crash progresses from a red car through localized flames to a charred wreck, then a large orange fireball with flying panels; the surroundings remain visible. Phone credits wrap within the rounded panel and preserve a large visible Back button.
 
 Opened the full-matrix [zoo high/zoom 1.5](full-matrix/wave3-zoo-routines@high-z1.5/sheet.jpg). Green-uniformed staff remain distinct from visitors, with attached bags/caps and complete figures. The two numeric clipping events are not obvious at contact-sheet scale.
 
