@@ -14,9 +14,9 @@ One existing-runner simulation test per PO bug, with high and low quality. Seed 
 | L4 active 15-second intervals | 1/3 / 1/3 | 5/6 / 6/6 |
 | L4 newbie deaths | 2 / 1 | 2 / 1 |
 
-The L4 high-tier baseline rate was concentrated entirely in the first interval beside the army. The longer ending now engages 51 distinct infected at high quality and 18 at low quality. Its 15-second counts are `[41,1,0,2,16,2]` / `[4,4,5,1,6,5]`, versus `[23,0,0]` / `[4,0,0]` before. The final-source pressure rerun passes; JSON is in [after/](after/).
+The L4 high-tier baseline rate was concentrated entirely in the first interval beside the army. The longer ending now engages 51 distinct infected at high quality and 18 at low quality. Its 15-second counts are `[41,1,0,2,16,2]` / `[4,4,5,1,6,5]`, versus `[23,0,0]` / `[4,0,0]` before. The final-source pressure rerun passes; JSON is in [after/](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/finale-stretches/after).
 
-The unchanged caps are L2 60/30 infected, L4 120/60 infected and 190/95 characters. Death limits remain L2 ≤1 and L4 ≤2; no test or performance budget was relaxed. Baseline JSON is in [before/](before/); after JSON and the final checks accompany this report.
+The unchanged caps are L2 60/30 infected, L4 120/60 infected and 190/95 characters. Death limits remain L2 ≤1 and L4 ≤2; no test or performance budget was relaxed. Baseline JSON is in [before/](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/finale-stretches/before); after JSON and the final checks accompany this report.
 
 ## What changed
 
@@ -38,7 +38,7 @@ The polyline is 297.2 m; navigation measures approximately 302–305 m, or **2:3
 
 Seven Scene Lab scenes are in the matrix catalog: bridge, L2 streets, L4 egress, Lakeshore, Metro, reused frontage and relocated cellar. All **84/84** matrix rows pass ([gate records](qa-matrix.json)). The matrix covers WebGL2/WebGPU × high/low × zoom 1.5/1.0/0.5, including both PO-required zooms. Frame/draw/triangle gates use existing E18 limits; the bridge's high/low triangle limits are 1.5M/500k. A small optional low-tier limit in the existing Scene Lab evaluator expresses that existing tier distinction.
 
-Inspected [game-camera sheets](captures/) show:
+Inspected [game-camera sheets](captures) show:
 
 - **L2 streets:** the four figures enter the frame and close on the courier; both sidewalks remain clear. At zoom 0.5, individual bodies and weapon poses remain legible.
 - **Bridge:** police lightbars, officers and the approaching group read as a defended line. Officers enter the close camera as the courier crosses the open central barriers and fire at the crowd.
