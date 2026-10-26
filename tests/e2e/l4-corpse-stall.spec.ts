@@ -22,7 +22,7 @@ async function requireWebgpu(page: Page): Promise<void> {
 /** The canvas alone: the HUD, radar and debug text change every frame even when the 3D view is frozen. */
 async function canvasShot(page: Page): Promise<Buffer> {
   const style = await page.addStyleTag({ content: '* { visibility: hidden !important } canvas { visibility: visible !important }' });
-  try { return await page.screenshot(); } finally { await style.evaluate(node => node.remove()); }
+  try { return await page.screenshot(); } finally { await style.evaluate(node => (node as Element).remove()); }
 }
 /** Walk the courier a few metres per step; every canvas image must differ from the previous one. */
 async function stalls(page: Page, steps: number): Promise<number[]> {
@@ -42,18 +42,20 @@ async function stalls(page: Page, steps: number): Promise<number[]> {
   return stalled;
 }
 
-for (const backend of (process.env.STALL_BACKENDS ?? 'webgpu').split(',') as ('webgpu' | 'webgl')[]) {
-  test(`T-Q197-l4-corpse-stall @E19 ${backend} low: L4 with >= 400 corpses and >= 50 downed keeps presenting frames`, async ({ page }) => {
+// STALL_BACKENDS=webgpu,webgl and STALL_LEVELS=L1,L4,L10 widen the default (WebGPU, L4) for render-path changes.
+for (const level of (process.env.STALL_LEVELS ?? 'L4').split(',')) for (const backend of (process.env.STALL_BACKENDS ?? 'webgpu').split(',') as ('webgpu' | 'webgl')[]) {
+  test(`T-Q197-l4-corpse-stall @E19 ${backend} low: ${level} with >= 400 corpses and >= 50 downed keeps presenting frames`, async ({ page }) => {
     test.setTimeout(420_000);
     if (backend === 'webgpu') await requireWebgpu(page);
     const failures: string[] = [];
     page.on('console', m => { if ((m.type() === 'error' || m.type() === 'warning') && gpuFailure.test(m.text())) failures.push(m.text()); });
     await boot(page, testUrl.replace('renderer=webgl', `renderer=${backend}`).replace('quality=high', 'quality=low'));
-    const fill = await page.evaluate(async () => {
+    const fill = await page.evaluate(async level => {
       const a = window.__SS__!;
-      await a.loadLevel('L4', { seed: 1, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true);
-      // The PO's spot at the hold step (Q-197 readout: -19.45, 10.82 near D-FAIR/l4-reception-4).
-      a.teleport('player', { x: -19.45, z: 10.82 }); await a.step(5);
+      await a.loadLevel(level, { seed: 1, ...(level === 'L1' ? {} : { progression: `${level}-default` as 'L4-default' }) }); a.pause(); a.missions.begin(); a.cheats.god(true);
+      // The PO's spot at the L4 hold step (Q-197 readout: -19.45, 10.82 near D-FAIR/l4-reception-4); other levels: their start.
+      if (level === 'L4') a.teleport('player', { x: -19.45, z: 10.82 });
+      await a.step(5);
       const frame = () => new Promise(requestAnimationFrame);
       const counts = () => {
         const infected = a.query({ kind: 'infected' });
@@ -71,7 +73,7 @@ for (const backend of (process.env.STALL_BACKENDS ?? 'webgpu').split(',') as ('w
       for (let w = 0; w < 40 && counts().corpses < 420; w++) { wave(14, w, i => 3 + (w % 8) * 3.5 + (i % 3)); await a.step(2); a.cheats.killAll(); await a.step(30); await frame(); }
       for (let w = 0; w < 8 && counts().downed < 60; w++) { wave(10, w, () => 4 + (w % 5) * 4); await a.step(2); a.cheats.downAll(); await a.step(20); await frame(); }
       return { ...counts(), backend: a.perf().backend };
-    });
+    }, level);
     expect(fill.backend).toBe(backend);
     expect(fill.corpses, 'corpses on the plaza').toBeGreaterThanOrEqual(400);
     expect(fill.downed, 'downed infected').toBeGreaterThanOrEqual(50);
