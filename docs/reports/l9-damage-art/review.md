@@ -28,7 +28,7 @@ Audio checks use the real Web Audio graph at both qualities: eight HP boundary f
 
 [Asset budgets](asset-budgets.json): complete hull + cab + 48 overlay triangles = **9,546 / 2,074 / 1,082** triangles, against **12,000 / 5,000 / 2,000**. Every derived state uses **four materials / 12 draws**. The original LOD0 GLB remains 160,964 bytes. Damage geometry is appended to the existing cab roof batch; the shared E27 pool stays capped at 400/120 puffs.
 
-The [quiet-run conditions](perf-conditions.jsonl) confirm native headless Metal WebGL2, no concurrent browser/Vitest work, and load below 3. The populated fixture reuses L9-S1's stationary chase population (AI runs, movement is held spatially stable), at 0 HP with heavy smoke. High viewport: 1600×900; low: 390×844 and 4× CPU throttling.
+The [quiet-run conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l9-damage-art/perf-conditions.jsonl) confirm native headless Metal WebGL2, no concurrent browser/Vitest work, and load below 3. The populated fixture reuses L9-S1's stationary chase population (AI runs, movement is held spatially stable), at 0 HP with heavy smoke. High viewport: 1600×900; low: 390×844 and 4× CPU throttling.
 
 | Quality / zoom | Infected | Frame p95 ms | Sim p95 ms | Draws | Triangles | Heap MB |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -39,6 +39,6 @@ The [quiet-run conditions](perf-conditions.jsonl) confirm native headless Metal 
 
 All E18 limits hold in this lane fixture. Raw records: [high z1](high-z1.json), [high z0.5](high-z0.5.json), [low z1](low-z1.json), [low z0.5](low-z0.5.json). Scene Lab's isolated matrix peaks at 21 draws / 99,086 triangles on either backend. Full crossing route/stream/crash performance and physical iOS/Android checks remain the other E31 lanes' gates; this report does not claim those broader criteria complete.
 
-Validation: typecheck, lint and production build pass. Hetzner full unit suite: 1,269 passed / 7 existing skips with one worker; final focused asset/floor/audio-registry checks: 13 passed. E31 verification: 34 unit/sim checks and 34 browser/smoke checks passed. L1 real-input finale, both L2 axe-start paths and high/low APC audio tests passed; all 17 L4 ride configurations passed with one worker under [quiet-run](ride-conditions.jsonl).
+Validation: typecheck, lint and production build pass. Hetzner full unit suite: 1,269 passed / 7 existing skips with one worker; final focused asset/floor/audio-registry checks: 13 passed. E31 verification: 34 unit/sim checks and 34 browser/smoke checks passed. L1 real-input finale, both L2 axe-start paths and high/low APC audio tests passed; all 17 L4 ride configurations passed with one worker under [quiet-run](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l9-damage-art/ride-conditions.jsonl).
 
 The parallel ride run initially exceeded its existing 0.6 px RMS gate in two configurations (0.84 / 0.68 px); the full quiet rerun passed every configuration. A loaded remote full-unit run hit the unchanged 300 s production-asset validator timeout; its isolated retry passed in 211 s, and the subsequent full serial suite passed. Test thresholds and budgets were retained.
