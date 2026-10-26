@@ -64,7 +64,7 @@ The next HUD pass exposed a real remaining overlap at 1280×720 with `ui=1`: a v
 
 The L5 transition sheets retain the requested zoom ratio across the first emergence frame. Nearby building camera clearance can contract the outward 1.5 view to nearly the same composition as zoom 1; this is the existing camera collision behavior, not a missing zoom input.
 
-Production [build log](browser-build.log) and [final scene execution log](browser-matrix.log) are retained with the capture metrics.
+Production [build log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-build.log) and [final scene execution log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-matrix.log) are retained with the capture metrics.
 
 ### Cinematic subtitle correction
 
@@ -74,8 +74,8 @@ The expanded portrait Controls capture also showed a full-HUD input wider than i
 
 ## Retained validation proofs
 
-- [Typecheck](browser-typecheck.log), [lint](browser-lint.log), [focused remote regression run](browser-focused.log), [machine-readable summary](browser-validation.json).
-- [Shared remote timing execution](browser-shared-perf.log), [isolated remote timing execution](browser-isolated-perf.log).
+- [Typecheck](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-typecheck.log), [lint](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-lint.log), [focused remote regression run](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-focused.log), [machine-readable summary](browser-validation.json).
+- [Shared remote timing execution](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-shared-perf.log), [isolated remote timing execution](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-isolated-perf.log).
 - [Alpha high](browser-alpha-200.json), [Alpha low](browser-alpha-100.json), [zoo high](browser-zoo-200.json), [zoo low](browser-zoo-100.json).
 - [E18 counter summaries](browser-e18-counters.json), [rejected WebGPU pipeline errors](webgpu-buffer-failure.json).
 
@@ -83,7 +83,7 @@ Only report evidence is retained from this lane's browser outputs. Obsolete fail
 
 ### Final HUD / L5 result
 
-**16/16 pass**, 2.7 minutes, one browser/worker, after the final CSS build. All 24 closed-panel sheets (both quality tiers), all 12 expanded-panel sheets and all four L5 transition sheets were opened. [The per-viewport/backend review links every sheet](hud-captures.md); [execution log](browser-hud.log). Both backends retain the separate top summaries across all zooms and presentation modes. Expanded controls fit in the reserved columns; the faint speaker bubble starts below the open tools; compact desktop subtitles now clear the lower bar. No console errors or failed-request guard failures remain. The first emergence frame keeps the courier visible and the requested player zoom on all twelve tier/backend/zoom combinations.
+**16/16 pass**, 2.7 minutes, one browser/worker, after the final CSS build. All 24 closed-panel sheets (both quality tiers), all 12 expanded-panel sheets and all four L5 transition sheets were opened. [The per-viewport/backend review links every sheet](hud-captures.md); [execution log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-hud.log). Both backends retain the separate top summaries across all zooms and presentation modes. Expanded controls fit in the reserved columns; the faint speaker bubble starts below the open tools; compact desktop subtitles now clear the lower bar. No console errors or failed-request guard failures remain. The first emergence frame keeps the courier visible and the requested player zoom on all twelve tier/backend/zoom combinations.
 
 ### Native desktop frame timing
 
@@ -91,6 +91,6 @@ Quiet preflight finally completed at 19:04 UTC with load 2.76, no other headless
 
 Headless Chrome on **Apple M4 / ANGLE Metal** passed the unchanged **16.7 ms p95** gate at **5.8 ms** (p50 4.1 ms), with 200 enemies, 12.002 seconds, 721 simulation ticks and 2,819 rendered frames. The suite reports **1 pass / 1 existing skip**: its old WebGPU-only parity test is still explicitly skipped; the sixty scene rows and sixteen HUD/L5 tests provide the actual native WebGPU evidence here. This is a desktop high-tier frame result, not a claim of unmeasured WebGPU or phone frame timing.
 
-The [native performance capture](browser/native-headless.png) was opened: a dense moving crowd occupies the middle of the lit tiled slab, with individual outfits/heads visible and no blank or failed-render regions. This performance camera is separate from the six PO reproductions. Retained [frame measurements](browser-native-gpu.json), [execution log](browser-native.log) and [quiet conditions](browser-native-conditions.jsonl) identify the measurement conditions. The isolated zoo high **5.54/4 ms simulation failure remains unresolved**; E18 and the deploy gate are not declared green.
+The [native performance capture](browser/native-headless.png) was opened: a dense moving crowd occupies the middle of the lit tiled slab, with individual outfits/heads visible and no blank or failed-render regions. This performance camera is separate from the six PO reproductions. Retained [frame measurements](browser-native-gpu.json), [execution log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-native.log) and [quiet conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/vfx-hud-polish/browser-native-conditions.jsonl) identify the measurement conditions. The isolated zoo high **5.54/4 ms simulation failure remains unresolved**; E18 and the deploy gate are not declared green.
 
 Final disk cleanup removed about **0.86 GiB** of obsolete lane outputs, including duplicate captures/traces and the production `dist` after all browser checks finished. Report-linked proofs and captures remain; tracked unrelated result files were restored. No temporary baseline worktree belongs to this lane.
