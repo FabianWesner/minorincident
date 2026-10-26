@@ -7,7 +7,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import manifest from '../../../src/assets/manifest.json';
 import { AssetRegistry } from '../../../src/assets/registry';
-import { CrowdAccessories, bakedSkull } from '../../../src/render/characters/CrowdAccessories';
+import { CrowdAccessories, bakedSkull, skinnedBrow } from '../../../src/render/characters/CrowdAccessories';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
 import { markCrowdAppearance, resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
 import { regularInfectedModels } from '../../../src/data/crowdAppearance';
@@ -74,12 +74,17 @@ function authoredSkull(root: Group, headName = 'head') {
   const inverse = head.matrixWorld.clone().invert(), box = new Box3(), point = new Vector3();
   const skin = root.getObjectByName('skin_body') as import('three').SkinnedMesh | undefined;
   if (skin) {
-    const p = skin.geometry.getAttribute('position'), joints = skin.geometry.getAttribute('skinIndex'), weights = skin.geometry.getAttribute('skinWeight');
-    const headIndex = skin.skeleton.bones.findIndex(b => b.name === headName), matrix = inverse.clone().multiply(skin.matrixWorld);
-    for (let i = 0; i < p.count; i++) {
-      const js = [joints.getX(i), joints.getY(i), joints.getZ(i), joints.getW(i)], ws = [weights.getX(i), weights.getY(i), weights.getZ(i), weights.getW(i)];
-      if (js[ws.indexOf(Math.max(...ws))] === headIndex) box.expandByPoint(point.fromBufferAttribute(p, i).applyMatrix4(matrix));
-    }
+    // A retained authored head may be a second skinned mesh under the body.
+    skin.traverse(node => {
+      const mesh = node as import('three').SkinnedMesh;
+      if (!mesh.isSkinnedMesh) return;
+      const p = mesh.geometry.getAttribute('position'), joints = mesh.geometry.getAttribute('skinIndex'), weights = mesh.geometry.getAttribute('skinWeight');
+      const headIndex = mesh.skeleton.bones.findIndex(b => b.name === headName), matrix = inverse.clone().multiply(mesh.matrixWorld);
+      for (let i = 0; i < p.count; i++) {
+        const js = [joints.getX(i), joints.getY(i), joints.getZ(i), joints.getW(i)], ws = [weights.getX(i), weights.getY(i), weights.getZ(i), weights.getW(i)];
+        if (js[ws.indexOf(Math.max(...ws))] === headIndex) box.expandByPoint(point.fromBufferAttribute(p, i).applyMatrix4(matrix));
+      }
+    });
     return box.isEmpty() ? null : { size: box.getSize(new Vector3()), centre: box.getCenter(new Vector3()) };
   }
   head.traverse(node => {
@@ -237,18 +242,6 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
           const ratio = skull!.size.clone().divide(reference.size);
           expectedTransform.premultiply(new Matrix4().makeTranslation(...skull!.centre.toArray()).multiply(new Matrix4().makeScale(...ratio.toArray())).multiply(new Matrix4().makeTranslation(...reference.centre.clone().negate().toArray())));
         }
-        if (skinned && id.startsWith('acc.hat-')) {
-          const limit = id.endsWith('sun-hat') ? 1.4 : id.endsWith('bucket-hat') ? 1.3 : 1.15;
-          const width = Math.max(...(['lod0', 'lod1'] as const).map(l => raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform).getSize(new Vector3()).z));
-          if (width > skull!.size.z * limit) expectedTransform.premultiply(new Matrix4().makeTranslation(0, 0, skull!.centre.z).multiply(new Matrix4().makeScale(1, 1, skull!.size.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -skull!.centre.z)));
-          const envelope = new Box3();
-          for (const l of ['lod0', 'lod1'] as const) envelope.union(raw.get(`${id}/${l}`)!.clone().applyMatrix4(expectedTransform));
-          const offset = envelope.getCenter(new Vector3()).x - skull!.centre.x, allowance = skull!.size.x * .2;
-          if (Math.abs(offset) > allowance) expectedTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
-          // The reviewed skinned fit raises the front brim around the skull centre.
-          // Rotate authored vertices: rotating their axis-aligned box overestimates the silhouette.
-          if (model.startsWith('npc.')) expectedTransform.premultiply(new Matrix4().makeTranslation(skull!.centre.x, skull!.centre.y, 0).multiply(new Matrix4().makeRotationZ(.2)).multiply(new Matrix4().makeTranslation(-skull!.centre.x, -skull!.centre.y, 0)));
-        }
         if (id.startsWith('acc.hat-') && (civilianFrameTop !== undefined || minimumSeats.has(model))) {
           // Both LODs share one fit; use the lower authored brim so switching LOD cannot move the hat.
           const bottom = Math.min(...(['lod0', 'lod1'] as const).map(l => fittedAccessoryBounds(id, l, expectedTransform).min.y));
@@ -261,12 +254,20 @@ test('1 accessories: actual head-local bounds and scale for every crowd model ×
         const otherJoint = new Matrix4().makeRotationX(-.9).setPosition(-13, 4, 22);
         const poses = { clip: { parts: [...characterNodes] }, part: (_f: number, _o: number, _w: number, part: number, out: Matrix4) => out.copy(part === characterNodes.indexOf('head') ? head : otherJoint) } as CrowdPosePalette;
         renderer.begin(); renderer.place(e, lod, poses, 0, [0, 1], world); renderer.finish();
-        const mesh = renderer.children.find(m => m.name === `${id}:${lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh;
+        const mesh = renderer.children.find(m => m.name === `${id}:${skinned && id.startsWith('acc.hat-') ? 'lod0' : lod === 'lod2' ? 'lod1' : lod}`) as InstancedMesh;
         const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
         const headLocal = world.clone().multiply(head).invert().multiply(matrix);
         if (process.env.QA_INVARIANTS_BREAK === 'accessories') headLocal.premultiply(new Matrix4().makeTranslation(0, .4, 0));
         const actual = bounds(mesh.geometry, headLocal);
-        if (!mesh.visible || mesh.count !== 1 || oracle.accessory({ attach: 'head', offset: [actual.min.distanceTo(expected.min), actual.max.distanceTo(expected.max)], tolerance })) errors.push(`${model}/${lod}/${tier}/${id}: head bounds ${actual.min.toArray()}..${actual.max.toArray()}, authored ${expected.min.toArray()}..${expected.max.toArray()}, tolerance ${tolerance}`);
+        if (skinned && id.startsWith('acc.hat-')) {
+          // Q-187 replaces the former hair-sized 1.3–1.4x calibration with
+          // independent skull, eye-clearance and attachment requirements.
+          const brow = skinnedBrow(geometry)!, size = actual.getSize(new Vector3()), centre = actual.getCenter(new Vector3());
+          const seat = Math.max(brow.y, civilianFrameTop === undefined ? -Infinity : civilianFrameTop + .012);
+          if (!mesh.visible || mesh.count !== 1 || size.z > Math.min(brow.width, skull!.size.z) * 1.15 + 1e-6
+            || actual.min.y < seat - .002 || actual.min.y > Math.max(brow.y + .06, (civilianFrameTop ?? -Infinity) + .03)
+            || Math.abs(centre.z - skull!.centre.z) > .03 || Math.abs(centre.x - skull!.centre.x) > skull!.size.x * .3) errors.push(`${model}/${lod}/${tier}/${id}: bare skull fit or eye clearance failed: ${actual.min.toArray()}..${actual.max.toArray()}`);
+        } else if (!mesh.visible || mesh.count !== 1 || oracle.accessory({ attach: 'head', offset: [actual.min.distanceTo(expected.min), actual.max.distanceTo(expected.max)], tolerance })) errors.push(`${model}/${lod}/${tier}/${id}: head bounds ${actual.min.toArray()}..${actual.max.toArray()}, authored ${expected.min.toArray()}..${expected.max.toArray()}, tolerance ${tolerance}`);
         // Textured crowds retain the separately fitted head-piece draw at every
         // LOD; only palette bodies use livingSource's merged accessory path.
         if (lod !== 'lod0' && !geometry.hasAttribute('uv')) {
