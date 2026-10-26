@@ -12,7 +12,7 @@ import { prepareStop, readyFrame, tour, type Finding, type TourStop } from './ab
 import { perceptualDiff } from './ab-metrics';
 
 const {values}=parseArgs({options:{baseline:{type:'string',default:'https://minor-incident.com'},candidate:{type:'string'},'dist-dir':{type:'string',default:'dist'},inject:{type:'string'},levels:{type:'string',default:'L1-L10'},threshold:{type:'string',default:'.02'},out:{type:'string'},seed:{type:'string',default:'1'},survivor:{type:'string',default:'female'},stops:{type:'string'},help:{type:'boolean'}}});
-if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out docs/reports/qa-ab/<date>-<label>] [--seed 1] [--survivor female|male] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
+if(values.help){console.log('npm run qa:ab -- --candidate <url|dist> [--baseline <url>] [--levels L1-L4] [--threshold .02] [--out test-results/qa-ab/<date>-<label>] [--seed 1] [--survivor female|male] [--stops substring[,substring]] [--dist-dir dist] [--inject hide-npc|hats|tank|bench|all]');process.exit(0);}
 if(!values.candidate)throw new Error('--candidate <url|dist> is required');
 if(values.inject&&(!['hide-npc','hats','tank','bench','all'].includes(values.inject)||values.candidate!=='dist'))throw new Error('--inject requires candidate dist and hide-npc|hats|tank|bench|all');
 const threshold=Number(values.threshold),seed=Number(values.seed);
@@ -27,7 +27,7 @@ const stops=tour.filter(s=>levels.includes(s.level)&&(!values.stops||values.stop
 if(!stops.length)throw new Error('No matching tour stops');
 const sources={baseline:values.baseline!,candidate:values.candidate};
 for(const source of Object.values(sources))if(source!=='dist'&&!/^https?:\/\//.test(source))throw new Error(`Expected an HTTP(S) URL or dist: ${source}`);
-const startedAt=new Date().toISOString(),output=resolve(values.out??`docs/reports/qa-ab/${startedAt.slice(0,10)}-${startedAt.slice(11,19).replaceAll(':','')}`);
+const startedAt=new Date().toISOString(),output=resolve(values.out??`test-results/qa-ab/${startedAt.slice(0,10)}-${startedAt.slice(11,19).replaceAll(':','')}`);
 if(existsSync(resolve(output,'summary.json')))throw new Error(`Report already exists: ${output}. Choose a new --out.`);
 mkdirSync(output,{recursive:true});const raw=resolve('test-results/qa-ab',basename(output),'captures');mkdirSync(raw,{recursive:true});
 const variants=stops.flatMap(stop=>[1.5,1].map(zoom=>({stop,zoom,id:`${stop.id}-z${zoom}`})));

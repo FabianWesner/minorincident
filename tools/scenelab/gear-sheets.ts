@@ -5,7 +5,7 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 /** npm run gear:sheets -- --backend webgpu --tier high --out test-results/gear-sheets/webgpu-high
  * One browser: for both survivors and gear tiers 0-4, four hi-res PNG shots each (front 3/4 close, back 3/4 close, mid-bat-swing close,
- * game camera at the closest player zoom 0.5). compose.py-style tiling into JPG sheets happens outside (docs/reports/gear-art). */
+ * game camera at the closest player zoom 0.5). compose.py-style tiling into JPG sheets happens outside (test-results/gear-art). */
 const args = process.argv.slice(2), flag = (n: string) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : undefined; };
 const backend = (flag('backend') ?? 'webgpu') as Backend, tier = (flag('tier') ?? 'high') as 'high' | 'low', out = flag('out') ?? 'test-results/gear-sheets';
 const base = readSpec('tests/scenes/catalog/courier-gear-tier4-swing-female.json');

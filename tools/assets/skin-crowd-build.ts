@@ -23,7 +23,7 @@ const castAt = source.lastIndexOf('/cast/'), pipeline = process.env.CROWD_PIPELI
 const basis = join(pipeline, 'vendor/basis-encoder-2.1');
 const manifestPath = 'src/assets/manifest.json', manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as AssetDef[];
 const def = manifest.find(a => a.id === id); if (!def) throw Error(`Unknown cast id ${id}`);
-const output = 'public/assets/models/skinned', report = join(process.env.CROWD_REPORT ?? 'docs/reports/skinned-prod/builds', id), assets = join('assets', id);
+const output = 'public/assets/models/skinned', report = join(process.env.CROWD_REPORT ?? 'test-results/skinned-prod/builds', id), assets = join('assets', id);
 mkdirSync(output, { recursive: true }); mkdirSync(report, { recursive: true }); mkdirSync(assets, { recursive: true });
 const metadata = existsSync(join(source, 'rig.json')) ? JSON.parse(readFileSync(join(source, 'rig.json'), 'utf8')) as { class?: string; lods: { lod: number; uniform_scale?: number; world_scale?: number; rotation_y_degrees?: number }[] } : undefined;
 const unbound = existsSync(join(source, 'source/manifest.json')) && !metadata;

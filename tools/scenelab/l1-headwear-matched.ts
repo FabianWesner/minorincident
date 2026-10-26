@@ -8,7 +8,7 @@ import type { Game } from '../../src/Game';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { CameraPose } from '../../src/render/View';
 
-const out = resolve('docs/reports/l1-hats-faces/matched');
+const out = resolve('test-results/l1-hats-faces/matched');
 mkdirSync(out, { recursive: true });
 const servers = [];
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });

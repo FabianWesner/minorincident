@@ -2,11 +2,11 @@ import { readFileSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { l3Roadblocks } from '../../src/levels/L3/layout';
 const session = new SceneSession({viewport:{width:1680,height:940}});
-const out = process.argv[2] ?? 'docs/reports/l3-route';
+const out = process.argv[2] ?? 'test-results/l3-route';
 try {
   await session.open();
   for (const label of ['before','after']) {
-    await session.page.setContent(readFileSync(`docs/reports/l3-route/${label}.svg`,'utf8'));
+    await session.page.setContent(readFileSync(`tests/fixtures/reports/l3-route/${label}.svg`,'utf8'));
     await session.page.locator('svg').screenshot({path:`${out}/${label}.png`});
   }
   await session.inspectLevel('L3');

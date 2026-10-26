@@ -9,7 +9,7 @@ import { test, expect, boot, testUrl } from '../fixtures';
  * see-through hole covers the whole screen; inside the subject's screen box at least 80 % of the pixels must already match the reference.
  */
 test.use({ trace: 'off' });
-const out = process.env.SEETHROUGH_SHOTS; // keeps the frames of the worst sample, e.g. docs/reports/fix-camera-ramp/after
+const out = process.env.SEETHROUGH_SHOTS; // keeps the frames of the worst sample, e.g. test-results/fix-camera-ramp/after
 const MIN_VISIBLE = .8;
 
 async function box(page: Page, size: { width: number; height: number }) {

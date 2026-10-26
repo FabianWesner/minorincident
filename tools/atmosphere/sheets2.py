@@ -1,11 +1,11 @@
 """Atmosphere 2: one page per level, before | after, rows high zoom 1 and low zoom 0.5 (game camera, seed 1).
 Reads test-results/atmo2/{before,after}/<backend>/L<n>-<tier>-z<zoom>.jpg (tools/atmosphere/capture.ts with
-ATMOSPHERE_OUT=test-results/atmo2) and writes docs/reports/atmosphere-2/sheets/<backend>/L<n>.jpg. No retouching."""
+ATMOSPHERE_OUT=test-results/atmo2) and writes test-results/atmosphere-2/sheets/<backend>/L<n>.jpg. No retouching."""
 import sys
 from pathlib import Path
 from PIL import Image, ImageDraw
 
-src, out = Path('test-results/atmo2'), Path('docs/reports/atmosphere-2/sheets')
+src, out = Path('test-results/atmo2'), Path('test-results/atmosphere-2/sheets')
 backends = sys.argv[1:] or ['webgl2']
 rows = (('high', '1'), ('low', '0.5'))
 W, H, T = 640, 360, 18

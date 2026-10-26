@@ -6,7 +6,7 @@ import { PNG } from 'pngjs';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
 const phase = process.argv[3] ?? 'after';
-const out = `docs/reports/night-bodies-eyes/${phase}/${backend}`;
+const out = `test-results/night-bodies-eyes/${phase}/${backend}`;
 mkdirSync(out, { recursive: true });
 const rows: object[] = [];
 const lum = (r: number, g: number, b: number) => {

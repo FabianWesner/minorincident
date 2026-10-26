@@ -19,7 +19,7 @@ for i, (name, (file, row)) in enumerate(before.items()):
     d.text((6, 22 + i * H + H // 2 - 6), name, fill=(230, 230, 230))
     if name == 'city-edge': d.text((6, 22 + i * H + H // 2 + 8), '(before: old viewpoint)', fill=(160, 160, 160))
     y = 46 if row == 0 else 359
-    cell = Image.open(f'docs/reports/look-l9/{file}.jpg').crop((0, y, 520, y + 293)).resize((W, H))
+    cell = Image.open(f'tests/fixtures/reports/look-l9/{file}.jpg').crop((0, y, 520, y + 293)).resize((W, H))
     sheet.paste(cell, (LBL, 22 + i * H))
     for j, (_, root, z) in enumerate(columns[1:], 1):
         pngs = sorted(glob.glob(f'{root}/l9look-{name}-z{z}*/shot-*.png'))

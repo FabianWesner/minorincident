@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import type { Game } from '../../src/Game';
 import type { RenderTarget } from 'three/webgpu';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
-const reportDir = resolve(process.env.TEX_REPORT_DIR ?? 'docs/reports/tex-infected');
+const reportDir = resolve(process.env.TEX_REPORT_DIR ?? 'test-results/tex-infected');
 const receipts: unknown[]=[];
 try {
   for(const backend of ['webgl2','webgpu'] as Backend[]) {

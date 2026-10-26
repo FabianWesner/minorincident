@@ -25,7 +25,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     expect(result.events.some(e => e.type === 'combat.hit' && e.targetId === ids.north)).toBe(true);
     expect(result.events.some(e => e.type === 'combat.hit' && e.targetId === ids.south)).toBe(false);
     await page.evaluate(() => window.__SS__!.screenshotReady());
-    mkdirSync('docs/reports/controls-content/captures', { recursive: true });
-    await page.screenshot({ path: `docs/reports/controls-content/captures/north-${renderer}-${quality}-z${zoom}.png` });
+    mkdirSync('test-results/controls-content/captures', { recursive: true });
+    await page.screenshot({ path: `test-results/controls-content/captures/north-${renderer}-${quality}-z${zoom}.png` });
   });
 }

@@ -116,7 +116,7 @@ test('T-E15-07 @E15 @E15-AC07 @vision golden-hour and night showcases have revie
     expect(await page.evaluate(() => window.__SS__!.getState().render.lighting!.preset)).toBe(lighting);
   }
   // A completed review must cite the exact images, with all must and ≥70% should checks passing.
-  const review = readFileSync(`${output}/review.md`, 'utf8');
+  const review = readFileSync('tests/fixtures/epics/E15/review.md', 'utf8');
   for (const tier of ['L4', 'L6']) for (const item of ['D1', 'D2', 'D3', 'D4', 'D5']) expect(review).toMatch(new RegExp(`${tier}-${item}.*PASS`));
 });
 

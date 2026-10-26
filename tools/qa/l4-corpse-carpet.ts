@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { launchBrowser } from '../browser-pool/client';
 import { preview } from 'vite';
 
-const out = resolve(process.env.L4_CORPSE_OUT ?? 'docs/reports/l4-corpse-carpet/captures');
+const out = resolve(process.env.L4_CORPSE_OUT ?? 'test-results/l4-corpse-carpet/captures');
 const port = Number(process.env.E2E_PORT ?? 4471);
 if (port === 3300) throw new Error('Use the lane port');
 mkdirSync(out, { recursive: true });

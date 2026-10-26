@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools/blender'))
 from sslib import export
 ASSETS = ['apartment-block-a', 'apartment-block-b', 'town-hall', 'church', 'kessler-hardware', 'metro-entrance', 'storefront-row']
-REPORT = ROOT / 'docs/reports/l7-district/geometry.json'
+REPORT = ROOT / 'test-results/l7-district/geometry.json'
 report = {}
 # `-- --only name[,name]` rebuilds just those shells and keeps the other entries of the report.
 if '--only' in sys.argv:

@@ -6,7 +6,7 @@ import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..'), main = resolve(process.env.TEX_MAIN_ROOT ?? '/private/tmp/tex-infected-main-36a960fc');
 const afterDist = process.env.TEX_DIST ?? 'dist';
 process.env.SCENE_SERVER = 'preview';
-const reportDir = resolve(worktree, process.env.TEX_REPORT_DIR ?? 'docs/reports/tex-infected');
+const reportDir = resolve(worktree, process.env.TEX_REPORT_DIR ?? 'test-results/tex-infected');
 const report = resolve(reportDir, 'performance.json');
 const receipts: { variant: string; scene: string; backend: string; p95: number; maxCrowdDraws: number; triangles: number; errors: string[] }[] = [];
 try {

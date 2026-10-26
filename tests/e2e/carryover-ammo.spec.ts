@@ -37,5 +37,5 @@ test('@E05 Q-161 empty trigger displays the empty cue, emits the dry click and s
   await expect(page.getByTestId('weapon-active')).toContainText('Empty');
   const dry = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.empty'));
   expect(dry).toHaveLength(1);
-  await page.screenshot({ path: 'docs/reports/carryover-ammo/empty-hud.png' });
+  await page.screenshot({ path: 'test-results/carryover-ammo/empty-hud.png' });
 });

@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from PIL import Image, ImageDraw
 
-root = Path('docs/reports/atmosphere')
+root = Path('test-results/atmosphere')
 for backend in ('webgl2', 'webgpu'):
     output = root / 'sheets' / backend
     output.mkdir(parents=True, exist_ok=True)

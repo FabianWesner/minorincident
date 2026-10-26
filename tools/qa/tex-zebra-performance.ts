@@ -2,7 +2,7 @@
 import { spawn, execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
-const out='docs/reports/tex-zebra'; mkdirSync(out,{recursive:true});
+const out='test-results/tex-zebra'; mkdirSync(out,{recursive:true});
 const baseline=process.env.ZEBRA_BASELINE??'/Users/wesner/Workspace/tex-zebra-baseline';
 const old=spawn(process.execPath,['node_modules/vite/bin/vite.js','--host','127.0.0.1','--port','4511','--strictPort','--configLoader','runner'],{cwd:baseline,stdio:'ignore'});
 const rows: unknown[]=[];

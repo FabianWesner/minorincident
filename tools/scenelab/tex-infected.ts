@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { PNG } from 'pngjs';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 const worktree = resolve(import.meta.dirname, '../..');
-const report = resolve(worktree, 'docs/reports/tex-infected');
+const report = resolve(worktree, 'test-results/tex-infected');
 const raw = '/private/tmp/tex-infected-captures';
 const variant = process.env.TEX_VARIANT ?? 'after';
 const motion = process.env.TEX_MODE === 'motion';

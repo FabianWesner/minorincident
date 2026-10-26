@@ -10,7 +10,7 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 
 const worktree = resolve(import.meta.dirname, '../..');
-const report = resolve(worktree, 'docs/reports/tex-infected');
+const report = resolve(worktree, 'test-results/tex-infected');
 const raw = '/private/tmp/tex-infected-readability';
 const variant = process.env.TEX_VARIANT ?? 'after';
 if (process.env.TEX_ROOT) process.chdir(process.env.TEX_ROOT);

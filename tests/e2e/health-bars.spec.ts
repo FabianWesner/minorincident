@@ -6,7 +6,7 @@ import { healthBarColors, nightHealthBarGains } from '../../src/ui/health';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 test.describe.configure({ mode: 'serial' });
-const output = process.env.HEALTH_BAR_OUT ?? 'docs/reports/alpha-bars';
+const output = process.env.HEALTH_BAR_OUT ?? 'test-results/alpha-bars';
 const night = process.env.HEALTH_BAR_NIGHT === '1';
 const backend = process.env.HEALTH_BAR_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const fixture = readSpec('tests/scenes/health-bars/shared.json');

@@ -3,7 +3,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { SceneSession, origin, stopServer } from './session';
 import { PNG } from 'pngjs';
-const out = 'docs/reports/elephant-asset';
+const out = 'test-results/elephant-asset';
 const session = new SceneSession({ viewport: { width: 480, height: 360 } });
 const qualities = ['high', 'lod1', 'lod2'] as const;
 const ids = ['amb.elephant', 'inf.elephant', 'inf.lion', 'inf.gorilla'];

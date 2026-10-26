@@ -8,7 +8,7 @@ import type { Game } from '../../src/Game';
 // Desktop viewport on both tiers isolates quality cost from phone CPU emulation.
 const phone = process.env.SWEEP_PHONE === '1';
 const phase = process.env.SWEEP_PHASE ?? 'after';
-const dir = phone ? `docs/reports/phone-perf/${phase}` : `docs/reports/perf-sweep/${phase}`;
+const dir = phone ? `test-results/phone-perf/${phase}` : `test-results/perf-sweep/${phase}`;
 if (phone) test.use({ ...devices['Pixel 7'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, defaultBrowserType: 'chromium' });
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: [
   '--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist',

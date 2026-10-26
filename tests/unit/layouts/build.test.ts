@@ -4,6 +4,12 @@ import { expect, test, vi } from 'vitest';
 import { buildLayout, districts, layoutSourceHash } from '../../../tools/layouts/build';
 
 vi.mock('node:child_process',()=>({spawnSync:vi.fn()}));
+vi.mock('node:fs', async importOriginal => {
+  const fs = await importOriginal<typeof import('node:fs')>();
+  return { ...fs, readFileSync: vi.fn(fs.readFileSync) };
+});
+
+const actualFs = await vi.importActual<typeof import('node:fs')>('node:fs');
 
 test('T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal', () => {
   // Unit tests exercise the build/cache contract from committed exports, without Blender.
@@ -21,15 +27,18 @@ test('T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay 
       expect(readFileSync(path,'utf8')).toBe(original);
     }
     const key=layoutSourceHash('D-RES');
-    writeFileSync(gameplay,source+'\n// gameplay tuning: no static layout change\n');
+    // Simulate source changes without ever touching tracked authoring/gameplay files.
+    const fs = actualFs;
+    vi.mocked(readFileSync).mockImplementation((path, options) => path === gameplay ? source+'\n// gameplay tuning: no static layout change\n' : fs.readFileSync(path, options));
     expect(layoutSourceHash('D-RES')).toBe(key);
     expect(buildLayout('D-RES').rebuilt).toBe(false);
-    writeFileSync(layout,script+'\n# authoring change\n');
+    vi.mocked(readFileSync).mockImplementation((path, options) => path === layout ? script+'\n# authoring change\n' : fs.readFileSync(path, options));
     expect(layoutSourceHash('D-RES')).not.toBe(key);
     vi.mocked(spawnSync).mockReturnValue({status:1,stdout:'intentional exporter failure',stderr:''} as ReturnType<typeof spawnSync>);
     expect(()=>buildLayout('D-RES',true)).toThrow('intentional exporter failure');
   } finally {
-    writeFileSync(gameplay,source);writeFileSync(layout,script);
+    vi.mocked(readFileSync).mockReset();
+    vi.mocked(readFileSync).mockImplementation(actualFs.readFileSync);
     for(const [path,bytes] of cache) {if(bytes)writeFileSync(path,bytes);else if(existsSync(path))unlinkSync(path);}
     vi.mocked(spawnSync).mockReset();
   }

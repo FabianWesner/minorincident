@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 from PIL import Image
 import numpy as np
-report = Path('docs/reports/tex-infected')
+report = Path('test-results/tex-infected')
 raw = Path('/private/tmp/tex-infected-readability')
 main = json.loads((report/'main-readability.json').read_text())
 after = json.loads((report/'after-readability.json').read_text())

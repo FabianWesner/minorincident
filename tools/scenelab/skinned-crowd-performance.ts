@@ -12,7 +12,7 @@ import type { Game } from '../../src/Game';
 import { resolve } from 'node:path';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 process.env.SCENE_SERVER ??= 'preview';
-const reportDir = resolve(import.meta.dirname, '../../docs/reports/skinned-crowd');
+const reportDir = resolve(import.meta.dirname, '../../test-results/skinned-crowd');
 const variants: Record<string, { query: Record<string, string>; worker: boolean }> = {
   'main-mix': { query: {}, worker: false }, 'main-worker': { query: {}, worker: true },
   skin: { query: { skinCrowd: '1' }, worker: true }, 'skin-rigid': { query: { skinCrowd: 'rigid' }, worker: true },

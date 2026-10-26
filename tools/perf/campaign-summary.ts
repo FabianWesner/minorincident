@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
-const root = 'docs/reports/perf-sweep';
+const root = 'test-results/perf-sweep';
 const phase = process.argv[2] ?? 'after';
 type Row = { spot: { id: string }; p50: number; p95: number; p99: number; hitch: number; simMs: number; drawCalls: number; triangles: number; heapMB: number; updateMs: number; renderMs: number; backend: string };
 type Cell = { level: string; tier: string; backend: string; sourceRevision?: string; rows: Row[] };

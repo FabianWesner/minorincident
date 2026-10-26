@@ -34,8 +34,8 @@ test.describe('HUD Home button @ui-home', () => {
       });
     });
     expect(overlaps).toEqual([]);
-    mkdirSync('docs/reports/ui-home-button', { recursive: true });
-    await page.screenshot({ path: `docs/reports/ui-home-button/after-hud-${info.project.name}.png` });
+    mkdirSync('test-results/ui-home-button', { recursive: true });
+    await page.screenshot({ path: `test-results/ui-home-button/after-hud-${info.project.name}.png` });
     // Keyboard: Home takes focus like any button, Escape still toggles the pause bar (Home hides while paused).
     await home.focus(); await expect(home).toBeFocused();
     await page.keyboard.press('Escape'); await expect(page.getByTestId('menu-pause')).toBeVisible();

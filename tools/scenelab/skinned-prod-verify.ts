@@ -65,7 +65,7 @@ async function hdr(session: SceneSession) {
   });
 }
 
-const out = resolve('docs/reports/skinned-prod'), receipts = [];
+const out = resolve('test-results/skinned-prod'), receipts = [];
 const backends = (process.env.BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[];
 const cases = new Set((process.env.CASES ?? 'humans,gore,details,clips,animals,infection,accessories,lod').split(','));
 const spec: SceneSpec = {

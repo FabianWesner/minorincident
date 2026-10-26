@@ -2,7 +2,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from './session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
-const out = process.argv[2] ?? 'docs/reports/fire-engine-wreck/after';
+const out = process.argv[2] ?? 'test-results/fire-engine-wreck/after';
 const session = new SceneSession();
 const metrics: unknown[] = [];
 mkdirSync(out, { recursive: true });

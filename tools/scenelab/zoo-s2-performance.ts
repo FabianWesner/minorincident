@@ -26,7 +26,7 @@ try{
     const perf=a.perf(),crowd=a.getState().render.crowd;
     const result={quality,gpu,backend:perf.backend,headless:true,unthrottled:true,count:a.getState().ai!.count,elephantCount:crowd?.batches.filter(b=>b.id==='inf.elephant').reduce((n,b)=>n+b.instances,0),specialActivations:a.events().filter(e=>e.type==='infected.special'&&e.stage==='active').length,durationMs:performance.now()-start,ticks:a.tick()-startTick,renderedFrames:perf.renderedFrames-startFrame,samples:frames.length,frameMsP95:frames[Math.ceil(frames.length*.95)-1],frameMsP50:frames[Math.ceil(frames.length*.5)-1],simMsP95:sim[Math.ceil(sim.length*.95)-1],heapBytes:perf.heapBytes,drawCalls:perf.drawCalls,triangles:perf.triangles,crowdDrawCalls:crowd?.meshDrawCalls,nonInstancedMeshes:crowd?.nonInstancedMeshes,recordedAt:new Date().toISOString()};a.pause();return result;
    },tier);
-   const heap=await cdp.send('Runtime.getHeapUsage');out.push({...proof,cdpHeapUsedBytes:heap.usedSize,consoleErrors:guard.errors});writeFileSync('docs/reports/zoo-s2/frame-performance.json',JSON.stringify(out,null,2)+'\n');
+   const heap=await cdp.send('Runtime.getHeapUsage');out.push({...proof,cdpHeapUsedBytes:heap.usedSize,consoleErrors:guard.errors});writeFileSync('test-results/zoo-s2/frame-performance.json',JSON.stringify(out,null,2)+'\n');
   }finally{await browser.close();}
  }
 }finally{server.kill();}
