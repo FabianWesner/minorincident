@@ -1,6 +1,6 @@
 # Capture guide
 
-Every proof has `-webgl2.png` and `-webgpu.png` versions. The gallery uses low quality; the LOD distance series explicitly uses high quality. Wound close-ups deliberately magnify the low LOD. Numerical receipts are in [visual-verification.json](visual-verification.json).
+Every proof has `-webgl2.png` and `-webgpu.png` versions. The gallery uses low quality; the LOD distance series explicitly uses high quality. Wound close-ups deliberately magnify the low LOD. Numerical receipts are in [visual-verification.json](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/skinned-prod/visual-verification.json).
 
 | Proof | Captures | What is checked |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Every proof has `-webgl2.png` and `-webgpu.png` versions. The gallery uses low q
 | Severed frozen corpses | [arm](nurse-frozen-arm-webgpu.png), [leg](nurse-frozen-leg-webgl2.png), [head](nurse-frozen-head-webgpu.png) | Removed parts remain absent after 180 ticks; the retained cap is visible. All twelve live/frozen wound HDR readbacks must contain zero nonfinite channels. |
 | Combat and flash | [before](flash-before-webgl2.png), [after](flash-after-webgl2.png), [explosive kill](explosive-severance-webgpu.png) | Flash brightens visible body pixels; the combat damage route emits all five detached parts. |
 | Headwear and infection | [healthy glasses](healthy-glasses-webgl2.png), [turned body](turning-glasses-webgpu.png) | Hat and spectacle fit, retained clothing paint, desaturated skin and red eyes. The fit oracle separately checks the 12 mm spectacle clearance. |
-| Shared atlas graphs | [living civilians](mixed-atlases-live-webgpu.png), [frozen civilians](mixed-atlases-frozen-webgpu.png) | Orange and red clothing remain distinct when textured civilians share their shader graph; frozen pages rebind their own atlas. [Receipts](texture-sharing.json) include finite HDR checks. |
+| Shared atlas graphs | [living civilians](mixed-atlases-live-webgpu.png), [frozen civilians](mixed-atlases-frozen-webgpu.png) | Orange and red clothing remain distinct when textured civilians share their shader graph; frozen pages rebind their own atlas. [Receipts](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/skinned-prod/texture-sharing.json) include finite HDR checks. |
 | Quadrupeds | [animals](quadrupeds-webgpu.png) | Healthy/infected zebra and dog on the quadruped skeleton, including the paw/hoof contact probes. |
 | LOD changes | [near](lod-3-webgl2.png), [middle](lod-14-webgl2.png), [far](lod-48-webgl2.png) | A weighted body is submitted at each production LOD; the receipt records the selected batch. |
 
@@ -18,4 +18,4 @@ Every proof has `-webgl2.png` and `-webgpu.png` versions. The gallery uses low q
 
 ## Full campaign
 
-[Summary](campaign/summary.json), [runs](campaign/runs-campaign.json), [issues](campaign/issues-campaign.json) and the compressed [event log](campaign/log-campaign.jsonl.gz) cover one continuous fresh-profile L1–L10 run on the production build, low quality, zoom 1.5, with `--no-skip`. All ten levels finish, including the Mega Alpha and credits; P0/P1 are zero. The five retained P2 observations are two L6 combat stalls, one L9 navigation delay, one L10 navigation delay and the L10 epilogue wait. Per-level result images and all five issue images are in `campaign/captures/`.
+[Summary](campaign/summary.json), [runs](campaign/runs-campaign.json), [issues](campaign/issues-campaign.json) and the compressed [event log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/skinned-prod/campaign/log-campaign.jsonl.gz) cover one continuous fresh-profile L1–L10 run on the production build, low quality, zoom 1.5, with `--no-skip`. All ten levels finish, including the Mega Alpha and credits; P0/P1 are zero. The five retained P2 observations are two L6 combat stalls, one L9 navigation delay, one L10 navigation delay and the L10 epilogue wait. Per-level result images and all five issue images are in `campaign/captures/`.
