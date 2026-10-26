@@ -38,7 +38,7 @@ Every group observed **at most one GPU Chrome root**. WindowServer remained PID 
 
 ## Correctness
 
-**143/143 pooled captures have exactly zero changed decoded RGBA pixels** against the serial old-path reference; all 143 repeated before captures also match that reference. Backend, viewport, quality, authored frame count and gates are preserved. Representative identical pair: [old Grove frame 0](grove-before.png), [pooled Grove frame 0](grove-after.png).
+**143/143 pooled captures have exactly zero changed decoded RGBA pixels** against the serial old-path reference; all 143 repeated before captures also match that reference. Backend, viewport, quality, authored frame count and gates are preserved. Representative identical pair: [old Grove frame 0](grove-after.png), [pooled Grove frame 0](grove-after.png).
 
 Initial validation exposed job-local zoom being lost when a multi-spec Scene Lab job changed leases. That value also affects fog/DOF at photo camera poses. The runner now carries its presentation zoom between its own contexts, keeping other clients isolated; the full pooled capture sweep was repeated after the correction. No scene criteria, simulation ticks or screenshot comparisons were relaxed.
 
