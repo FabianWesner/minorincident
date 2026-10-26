@@ -4,6 +4,6 @@ The normal gameplay captures pass vehicle visibility. The old broad debug refere
 
 | Scene | Vehicle visibility | Outside changed pixels | Sheet |
 | --- | --- | --- | --- |
-| seethrough-scripted-convoy@high-z0.5 | 71.44% | 0 | [sheet](seethrough-scripted-convoy@high-z0.5/sheet.jpg) |
+| seethrough-scripted-convoy@high-z0.5 | 71.44% | 0 | [sheet](../../merge-batch11/focused-webgl2/seethrough-scripted-convoy@high-z0.5/sheet.jpg) |
 | seethrough-scripted-convoy@high-z1 | 63.24% | 407 | [sheet](seethrough-scripted-convoy@high-z1/sheet.jpg) |
-| seethrough-scripted-convoy@high-z1.5 | 61.43% | 3200 | [sheet](seethrough-scripted-convoy@high-z1.5/sheet.jpg) |
+| seethrough-scripted-convoy@high-z1.5 | 61.43% | 3200 | [sheet](../../merge-batch11/focused-webgl2/seethrough-scripted-convoy@high-z1.5/sheet.jpg) |
