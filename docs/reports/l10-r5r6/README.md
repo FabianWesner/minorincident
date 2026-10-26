@@ -23,7 +23,7 @@ Final focused remote validation: 38/38 pass, including both-tier R5/R6 input-dri
 
 Scene catalog fixtures: `l10-d3-*` cover research entry/terminal/pickup/exit, rocket supply, corridor breach and both new region seams. Final matrix: **108/108 pass**, WebGL2 and actual WebGPU × high/low × zoom 1.5/1.0/0.5, nine scenes per configuration. The binding 1.0/0.5 pairs are included. Captures and the review are preserved in [review.md](review.md); all four backend/tier overview sheets were opened and inspected. The lab forecourt, reachable terminal front, canister glow and rocket fixture are readable; the seam ground is flat and feet remain supported.
 
-Native Metal performance: **8/8 pass**, WebGL and actual WebGPU × high/low × zoom 1.0/0.5, one headless Chrome worker under `tools/perf/quiet-run.sh`, after a fresh build. Each config sweeps seven entry/story/breach/seam positions. The preflight records all four browser locks held, no other headless Chrome/local Vitest, and load 2.95. See [perf](perf/) and the compact validation table.
+Native Metal performance: **8/8 pass**, WebGL and actual WebGPU × high/low × zoom 1.0/0.5, one headless Chrome worker under `tools/perf/quiet-run.sh`, after a fresh build. Each config sweeps seven entry/story/breach/seam positions. The preflight records all four browser locks held, no other headless Chrome/local Vitest, and load 2.95. See [perf](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-r5r6/perf) and the compact validation table.
 
 | Quality | Max frame p95 | Max sim p95 | Draws | Triangles | Heap MB | Detailed cells |
 | --- | --- | --- | --- | --- | --- | --- |

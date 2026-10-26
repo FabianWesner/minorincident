@@ -8,7 +8,7 @@ import type { CampaignSave } from '../../src/sim/progression/Campaign';
 import type { MissionCheckpoint } from '../../src/sim/missions/types';
 
 export interface HandoverFixture { campaign: CampaignSave; resume: { current: MissionCheckpoint; checkpoint: MissionCheckpoint } }
-export const handoverFixturePath = 'docs/reports/fixes-13j/evidence/l6-result-fixture.json.gz';
+export const handoverFixturePath = 'tests/fixtures/reports/fixes-13j/evidence/l6-result-fixture.json.gz';
 export const readHandoverFixture = (): HandoverFixture => JSON.parse(gunzipSync(readFileSync(handoverFixturePath)).toString());
 export interface HandoverSample { attempt: number; second: number; tick: number; phase: string | undefined; menu: string | null; x: number; z: number; objective: string; deaths: number }
 

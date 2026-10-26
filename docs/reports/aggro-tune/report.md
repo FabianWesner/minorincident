@@ -76,7 +76,7 @@ CPU suites use `tools/remote/run.sh`, at most four Vitest workers. Browser check
 
 ## Reproduction
 
-The temporary seeds 1–3 harness is archived in [diagnostics.patch](diagnostics.patch). Apply it, then run:
+The temporary seeds 1–3 harness is archived in [diagnostics.patch](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/aggro-tune/diagnostics.patch). Apply it, then run:
 
 ```sh
 sh tools/remote/run.sh "$PWD" --pull test-results/aggro-tune -- npx vitest run tests/levels/aggro-diagnostic --maxWorkers=4

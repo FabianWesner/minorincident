@@ -10,4 +10,4 @@ All 1,548 rows measured in 5655.483 seconds; raw 1,531 pass / 17 fail. Twelve ex
 | seethrough-scripted-convoy@low-z1 | seeThroughCutPixelsOutside 122571 > 0 | [sheet](full-matrix-reviewed/seethrough-scripted-convoy@low-z1.jpg) |
 | seethrough-scripted-convoy@low-z1.5 | seeThroughCutPixelsOutside 205216 > 0 | [sheet](full-matrix-reviewed/seethrough-scripted-convoy@low-z1.5.jpg) |
 
-[All row results](full-matrix-index.json), [all compact measurements](full-matrix-metrics.jsonl), [approved L4 baselines](accepted-facade-baseline.json).
+[All row results](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch13a/full-matrix-index.json), [all compact measurements](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/merge-batch13a/full-matrix-metrics.jsonl), [approved L4 baselines](accepted-facade-baseline.json).

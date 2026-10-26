@@ -33,7 +33,7 @@ Commands and final results are recorded below; final performance and capture che
 
 A final focused cache test exposed Three’s `NodeMaterial.copy` copying a TypeScript-private map by reference. The cache now uses Three’s underscored internal-property convention, retaining separate source/corpse caches. The test passes; full remote units, own weather/barricade checks and smoke are repeated after this cache-only correction. The 21-case campaign run and paired timings preceded that correction; surface graph math is unchanged. The last development catalog overlapped this edit and reloaded during the clear capture (10/11 passed); the replacement catalog serves the immutable preview build.
 
-Raw logs and verifier checks: [validation evidence](../../test-results/integrate-e26-e28/validation/). The first campaign run had 20 passes and one assisted L1 capture failure; the camera-consumption fix above passed its targeted rerun and then the full 21-test suite. Verification builds and E26/E28 browser checks are serialized, preventing `dist` rebuilds underneath active captures.
+Raw logs and verifier checks: [validation evidence](/Users/wesner/Workspace/mi-evidence-archive/test-results/integrate-e26-e28/validation). The first campaign run had 20 passes and one assisted L1 capture failure; the camera-consumption fix above passed its targeted rerun and then the full 21-test suite. Verification builds and E26/E28 browser checks are serialized, preventing `dist` rebuilds underneath active captures.
 
 ## Campaign performance
 

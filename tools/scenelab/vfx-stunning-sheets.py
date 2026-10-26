@@ -9,7 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path('test-results/vfx-stunning')
-OUT = Path('docs/reports/vfx-stunning')
+OUT = Path('test-results/vfx-stunning')
 (OUT / 'sheets').mkdir(parents=True, exist_ok=True)
 SCENES = {p.stem: json.loads(p.read_text()) for p in sorted(Path('tests/scenes/catalog').glob('vfx-*.json'))}
 PEAK = {'vfx-alpha-hit': 24, 'vfx-explosion': 24, 'vfx-gore': 24,

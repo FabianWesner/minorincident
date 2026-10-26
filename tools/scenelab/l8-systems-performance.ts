@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from './session';
 import { zooStaffLook } from '../../src/data/zooStaff';
 import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
-const output = 'docs/reports/l8-systems'; mkdirSync(output, { recursive: true });
+const output = 'test-results/l8-systems'; mkdirSync(output, { recursive: true });
 const results = [];
 try {
   for (const tier of ['high', 'low'] as const) {

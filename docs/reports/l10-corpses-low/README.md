@@ -30,7 +30,7 @@ Every before/after body ID and transform matches exactly in all 28 capture rows.
 | L7 evacuation start | low | 400 / 400 |
 | L8 zoo start | low | 196 / 196 |
 
-The manifests assert the actual backend, quality, camera zoom, nonempty frozen-body pages, and zero browser errors: [before](before/evidence.json), [after](after/evidence.json), [PROD](prod/evidence.json). All requested zooms are actual game ratios: 0.5 close, 1 default, 1.5 wide.
+The manifests assert the actual backend, quality, camera zoom, nonempty frozen-body pages, and zero browser errors: [before](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/before/evidence.json), [after](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/after/evidence.json), [PROD](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/prod/evidence.json). All requested zooms are actual game ratios: 0.5 close, 1 default, 1.5 wide.
 
 ## Visual review
 
@@ -51,24 +51,24 @@ The result is a coarse corpse LOD: small facial/sculpt details remain angular at
 
 Native headless Chrome/Metal, uncapped RAF cadence, zoom 1, same fixed finale field, three repeats per backend in each of two runs (six total). Each repeat warms for 1 second and records 5 seconds. Inspection runs the normal view update/render while simulation time stays fixed, keeping the body field identical. This measures the renderer/view cost of the corpse change; it is not a live-AI or phone performance certification.
 
-Timing is admitted through `tools/perf/quiet-run.sh`, with all browser slots reserved, no competing headless Chrome or local Vitest, and load below 3. Each admitted run is below the 20-minute limit. Conditions and raw samples: [before conditions](perf-before-conditions.jsonl), [before samples](perf-before/evidence.json), [after conditions](perf-after-conditions.jsonl), [after samples](perf-after/evidence.json).
+Timing is admitted through `tools/perf/quiet-run.sh`, with all browser slots reserved, no competing headless Chrome or local Vitest, and load below 3. Each admitted run is below the 20-minute limit. Conditions and raw samples: [before conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/perf-before-conditions.jsonl), [before samples](perf-before/evidence.json), [after conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/perf-after-conditions.jsonl), [after samples](perf-after/evidence.json).
 
 | Backend | Before p95 repeats (ms) | After p95 repeats (ms) | Median p95 before → after |
 | --- | --- | --- | --- |
 | WebGL | 3.4 / 3.8 / 3.3; 3.7 / 3.5 / 3.5 | 3.5 / 3.9 / 3.7; 3.3 / 3.3 / 3.5 | **3.5 → 3.5 ms** |
 | WebGPU | 2.3 / 2.2 / 2.3; 2.4 / 2.3 / 2.3 | 2.3 / 2.2 / 2.2; 2.4 / 2.4 / 2.3 | **2.3 → 2.3 ms** |
 
-The first separated run gave WebGL 3.4 → 3.7 ms and WebGPU 2.3 → 2.2 ms median p95. To resolve that mixed result, the second run measured baseline then fix consecutively under one exclusive reservation: WebGL 3.5 → 3.3 ms and WebGPU 2.3 → 2.4 ms. All repeats are retained above; the aggregate median p95 is unchanged on both backends. These sub-millisecond variations do not show a reproducible frame-time regression. [Paired conditions](perf-paired-conditions.jsonl), [paired baseline](perf-paired-before/evidence.json), [paired fix](perf-paired-after/evidence.json), and [aggregate](performance-summary.json).
+The first separated run gave WebGL 3.4 → 3.7 ms and WebGPU 2.3 → 2.2 ms median p95. To resolve that mixed result, the second run measured baseline then fix consecutively under one exclusive reservation: WebGL 3.5 → 3.3 ms and WebGPU 2.3 → 2.4 ms. All repeats are retained above; the aggregate median p95 is unchanged on both backends. These sub-millisecond variations do not show a reproducible frame-time regression. [Paired conditions](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/perf-paired-conditions.jsonl), [paired baseline](perf-paired-before/evidence.json), [paired fix](perf-paired-after/evidence.json), and [aggregate](performance-summary.json).
 
 L10 low capture counters on both backends: **112 → 112 draws; 263,563 → 236,732 submitted triangles (−10.2%); 282 → 282 bodies**. No corpse removal or additional culling is used to obtain the reduction.
 
 ## Validation
 
-- `npm run typecheck`: [PASS](typecheck.log).
-- `npm run lint`: [PASS](lint.log).
-- `npm run build`: [PASS](build.log); final preview corpse file hashes match source.
+- `npm run typecheck`: [PASS](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/typecheck.log).
+- `npm run lint`: [PASS](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/lint.log).
+- `npm run build`: [PASS](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/build.log); final preview corpse file hashes match source.
 - Guard: `tests/unit/render/infected-corpse-surface.test.ts` covers all seven variants at both tiers, requires the dedicated corpse source, verifies retained major anatomical parts and rigid triangle ownership, and bounds mesh size. The existing prewarm guard now loads the actual dedicated body.
-- Required remote command: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: **PASS, exit 0** on final implementation/assets: 417 files passed / 3 skipped, 2,271 tests passed / 9 skipped, 2,547.23 seconds. [Full remote log](remote-suite.log).
+- Required remote command: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/levels --maxWorkers=4`: **PASS, exit 0** on final implementation/assets: 417 files passed / 3 skipped, 2,271 tests passed / 9 skipped, 2,547.23 seconds. [Full remote log](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l10-corpses-low/remote-suite.log).
 
 ## Reproduce
 

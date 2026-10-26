@@ -22,7 +22,7 @@ for (const [count, budget] of [[200, 4], [100, 6]] as const) test(`T-E07-11-zoo-
     }
     times.sort((a, b) => a - b);
     const proof = { count, zoo: ids.length, activations, simMsP95: times[Math.ceil(times.length * .95) - 1], budgetMs: budget };
-    mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSync(`docs/reports/zoo-s2/perf-${count}.json`, JSON.stringify(proof, null, 2) + '\n');
+    mkdirSync('test-results/zoo-s2', { recursive: true }); writeFileSync(`test-results/zoo-s2/perf-${count}.json`, JSON.stringify(proof, null, 2) + '\n');
     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toBeLessThanOrEqual(budget);
   } finally { w.dispose(); }
 });

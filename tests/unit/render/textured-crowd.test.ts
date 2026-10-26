@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { afterEach, expect, test, vi } from 'vitest';
 import { DataTexture, Mesh, MeshBasicMaterial, Matrix4, Color, Float32BufferAttribute, Scene, type Material } from 'three';
 import { MeshLambertNodeMaterial, InstancedMesh } from 'three/webgpu';

@@ -10,7 +10,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path('test-results/vfx2')
-OUT = Path('docs/reports/vfx-stunning-2')
+OUT = Path('test-results/vfx-stunning-2')
 (OUT / 'sheets').mkdir(parents=True, exist_ok=True)
 KEYS = {'vfx-explosion': [20, 50, 110], 'vfx-rifle-impact': [16, 28, 44],
         'vfx-molotov-fire': [24, 72, 168], 'vfx-vehicle-crash': [192, 216, 288]}

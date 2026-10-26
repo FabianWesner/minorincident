@@ -1,4 +1,4 @@
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { Box3, Color, Mesh, MeshBasicNodeMaterial, Vector3 } from 'three/webgpu';

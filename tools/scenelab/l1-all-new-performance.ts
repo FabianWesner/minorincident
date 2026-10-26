@@ -8,7 +8,7 @@ import { loadCrowd } from './l1-all-new-crowd';
 import type { Game } from '../../src/Game';
 
 const root = process.cwd(), baseline = resolve(process.env.BASELINE_ROOT ?? '../l1-all-new-main');
-const out = resolve(root, 'docs/reports/l1-all-new'), summarize = process.argv.includes('--summarize');
+const out = resolve(root, 'test-results/l1-all-new'), summarize = process.argv.includes('--summarize');
 const receipts: Record<string, unknown>[] = summarize ? JSON.parse(readFileSync(resolve(out, 'performance.json'), 'utf8')) : [];
 const setups = [{ backend: 'webgl2' as Backend, phone: false }, { backend: 'webgpu' as Backend, phone: false }, { backend: 'webgl2' as Backend, phone: true }];
 process.env.SCENE_SERVER = 'preview';

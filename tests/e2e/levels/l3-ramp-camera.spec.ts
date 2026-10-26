@@ -5,7 +5,7 @@ import { highwayPoint } from '../../../src/levels/L3/highway';
 
 /** PO 10-12: "When the group goes up the highway bridge the figure is out of the view port (just see the shoes on top)". */
 test.use({ trace: 'off' });
-const shots = process.env.RAMP_SHOTS; // e.g. docs/reports/fix-camera-ramp/after: keeps the desktop captures of this run
+const shots = process.env.RAMP_SHOTS; // e.g. test-results/fix-camera-ramp/after: keeps the desktop captures of this run
 const MARGIN = .9; // NDC: the whole figure stays inside 90 % of the half-viewport
 const ramps = [{ id: 'a', position: [155.5, 0, 0] as [number, number, number], yaw: Math.PI }, { id: 'b', position: [191.5, 0, 0] as [number, number, number], yaw: 0 }];
 

@@ -2,7 +2,7 @@
 
 Recommend **four shared GPU contexts**, one GPU Chrome root, at most two SwiftShader contexts, and one exclusive timing context. At four clients the measured queue-inclusive Scene Lab throughput rose from **6.66 to 21.89 scenes/min (3.28×)**. The four-lane job load finished in **3.29 s versus 52.79 s**, with mean browser admission wait **0.69 s versus 30.03 s**. These comparisons use the one-GPU safety-constrained baseline described below.
 
-Implementation and migration: commits `bc167a02c`, `f7f4b65d6` and `9a8e347d1` on `lane/browser-pool`, based on `986a168a7`. [Operation, compatibility, timeouts and flags](../../../tools/browser-pool/README.md). Raw measurements and decoded capture hashes: [measurements.json](measurements.json). Check receipts: [verification.json](verification.json).
+Implementation and migration: commits `bc167a02c`, `f7f4b65d6` and `9a8e347d1` on `lane/browser-pool`, based on `986a168a7`. [Operation, compatibility, timeouts and flags](../../../tools/browser-pool/README.md). Raw measurements and decoded capture hashes: [measurements.json](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/browser-pool/measurements.json). Check receipts: [verification.json](verification.json).
 
 ## Method and scope
 
@@ -38,7 +38,7 @@ Every group observed **at most one GPU Chrome root**. WindowServer remained PID 
 
 ## Correctness
 
-**143/143 pooled captures have exactly zero changed decoded RGBA pixels** against the serial old-path reference; all 143 repeated before captures also match that reference. Backend, viewport, quality, authored frame count and gates are preserved. Representative identical pair: [old Grove frame 0](grove-before.png), [pooled Grove frame 0](grove-after.png).
+**143/143 pooled captures have exactly zero changed decoded RGBA pixels** against the serial old-path reference; all 143 repeated before captures also match that reference. Backend, viewport, quality, authored frame count and gates are preserved. Representative identical pair: [old Grove frame 0](grove-after.png), [pooled Grove frame 0](grove-after.png).
 
 Initial validation exposed job-local zoom being lost when a multi-spec Scene Lab job changed leases. That value also affects fog/DOF at photo camera poses. The runner now carries its presentation zoom between its own contexts, keeping other clients isolated; the full pooled capture sweep was repeated after the correction. No scene criteria, simulation ticks or screenshot comparisons were relaxed.
 

@@ -9,7 +9,7 @@ import { menuStart } from './ui-helpers';
  */
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
 const bat = { x: layout.anchors['garage-bat'].position[0], z: layout.anchors['garage-bat'].position[2] };
-const shotDir = process.env.RESPAWN_SHOTS ? `docs/reports/fix-respawn-bat` : '';
+const shotDir = process.env.RESPAWN_SHOTS ? `test-results/fix-respawn-bat` : '';
 test.use({ headless: true });
 
 test('E19 @E19 respawn after the bat: real-click pickup, die at the house with infected around, respawn on the pickup with the bat equipped', async ({ page }) => {

@@ -13,8 +13,8 @@ L2, 1600×900, headless Chromium with ANGLE Metal, all nine campaign shortcuts c
 | Camera ratio | High | Low |
 | --- | --- | --- |
 | 0.5 | [Capture](hud-high-zoom-0.5.png) | [Capture](hud-low-zoom-0.5.png) |
-| 1 | [Capture](hud-high-zoom-1.png) | [Capture](hud-low-zoom-1.png) |
-| 1.5 | [Capture](hud-high-zoom-1.5.png) | [Capture](hud-low-zoom-1.5.png) |
+| 1 | [Capture](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/weapon-keys/hud-high-zoom-1.png) | [Capture](hud-low-zoom-1.png) |
+| 1.5 | [Capture](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/weapon-keys/hud-high-zoom-1.5.png) | [Capture](hud-low-zoom-1.5.png) |
 
 Exact captured camera values are recorded in [captures.json](captures.json).
 

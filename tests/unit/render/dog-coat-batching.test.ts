@@ -1,4 +1,4 @@
-import { stripGlbTextures } from '../helpers/stripGlbTextures';
+import { stripGlbTextures } from '../../../tools/assets/stripGlbTextures';
 /** Diagnose whether palette variants can share one animated geometry without changing surfaces. */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, vi, expect } from 'vitest';

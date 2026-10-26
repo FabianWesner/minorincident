@@ -11,7 +11,7 @@ import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { bakeInfected } from '../../src/render/characters/bakeInfected';
 
-const output = process.argv[2] ?? 'docs/reports/heap-budgets/evidence/bake-equivalence.json';
+const output = process.argv[2] ?? 'test-results/heap-budgets/evidence/bake-equivalence.json';
 mkdirSync(dirname(output), { recursive: true });
 const hash = (array: ArrayBufferView) => createHash('sha256').update(new Uint8Array(array.buffer, array.byteOffset, array.byteLength)).digest('hex');
 const geometrySignature = (geometry: BufferGeometry) => Object.fromEntries(Object.entries(geometry.attributes).map(([name, attribute]) => {

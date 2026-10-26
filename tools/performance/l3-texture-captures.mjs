@@ -1,7 +1,7 @@
 // Run under tools/e2e-lock.sh; fixed seed/tick/camera, separate from load timing.
 import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
-const [base, label] = process.argv.slice(2), dir = 'docs/reports/l3-textures-data';
+const [base, label] = process.argv.slice(2), dir = 'test-results/l3-textures-data';
 mkdirSync(dir, { recursive: true });
 const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--ignore-certificate-errors-spki-list=' + process.env.LOAD_SPKI] });
 try {

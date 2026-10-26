@@ -44,18 +44,18 @@ This is **historical diagnostic coverage**, not acceptance of the final commit. 
 | L9 | 7 | 21.0 | 4.3 | 243.09 |
 | L10 | 46 | 35.0 | 5.4 | 450.53 |
 
-[Raw complete intermediate matrix](candidate18-full/). Its L10 heap regression came from an experimental 1 m ground grid. Restoring the original 2 m grid brought the opening to about 174 MB; perimeter instancing later reduced it to about 163 MB. All 46 L10 windows still need remeasurement after those fixes. Iteration summaries, including rejected experiments, are preserved in [iterations.json](iterations.json).
+[Raw complete intermediate matrix](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate18-full). Its L10 heap regression came from an experimental 1 m ground grid. Restoring the original 2 m grid brought the opening to about 174 MB; perimeter instancing later reduced it to about 163 MB. All 46 L10 windows still need remeasurement after those fixes. Iteration summaries, including rejected experiments, are preserved in [iterations.json](iterations.json).
 
 ## Retained changes and profile evidence
 
 - Crowd contacts and IK reuse already-current matrices; sibling joints share inverse parents. Private quaternion-only pose bones avoid Euler synchronization. Rigid decorations and ordinary arms retain atlas matrices; throw/chest-beat layers acquire joint TRS when needed. Numerical oracles cover layers, scales, reflections and world matrices.
 - Low ordinary far-band pedestrians below 160 rendered CSS pixels use authored GPU gait. Infected no longer do (10-14: the baked pose skips the ground solve and failed corgi-behaviour@low-z1.5 with 37 cm slide and 21 cm sink); they keep procedural contacts. Nearby figures, actions, reactions, specials and rising bodies remain procedural. Barely moving ordinary phone figures can hold their complete world pose on alternate frames for less than 25 ms with at most 5 cm displacement; clip changes solve immediately. Geometry LOD and all crowd/effect counts remain intact.
 - Armed pedestrians' CPU aim mirror loads the torso branch and ancestors, rather than the complete skeleton. Exact Float32 comparisons cover carry, aim, recoil and hand props across three authored NPC models. Pose-row interpolation computes frame bounds once per row.
-- Drawn-ground queries reject triangles using conservative bounds and cache only proven uniform flat support. The original 2 m cell size is retained. [L2 ground profile](candidate10-l2-profile/).
-- Character contact queries cache eligible positions in the existing bucket order, retaining updates/removal/reuse semantics. Exact multi-tick horde comparisons pass. [Query profiles](candidate17-l3-profile/).
-- Static hit queries traverse the crossed 8 m cells with a conservative DDA and closest-hit early exit. Padded queries retain the original path. Numerical comparisons cover 5,000 rays, ties and edges. [L3 combat profile](candidate10-l3-profile/).
+- Drawn-ground queries reject triangles using conservative bounds and cache only proven uniform flat support. The original 2 m cell size is retained. [L2 ground profile](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate10-l2-profile).
+- Character contact queries cache eligible positions in the existing bucket order, retaining updates/removal/reuse semantics. Exact multi-tick horde comparisons pass. [Query profiles](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate17-l3-profile).
+- Static hit queries traverse the crossed 8 m cells with a conservative DDA and closest-hit early exit. Padded queries retain the original path. Numerical comparisons cover 5,000 rays, ties and edges. [L3 combat profile](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate10-l3-profile).
 - Footprint rasterization marks touched rows once and skips zero-coverage arithmetic; existing reconstructed-upload digests remain unchanged. Tyre/occupant contacts avoid redundant full-vehicle hierarchy walks; matrix and hand-contact oracles pass.
-- L2 prefetch previously consumed 23.1 MB of response data during a measured window. The same requests/concurrency now run in a dedicated worker and consume native blobs. Unit tests and a real headless worker download/cleanup test passed. [Prefetch diagnostic](candidate14-l2-profile/).
+- L2 prefetch previously consumed 23.1 MB of response data during a measured window. The same requests/concurrency now run in a dedicated worker and consume native blobs. Unit tests and a real headless worker download/cleanup test passed. [Prefetch diagnostic](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate14-l2-profile).
 - Lighting's existing sun/spot selection is preserved rather than accidentally enabling a second night shadow map. The renderer shares one scene matrix update with nested shadow passes. Material/view uniforms use their appropriate shared render scopes. Desktop effects remain enabled.
 - L10's perimeter contained 4,316 individual rail/post meshes; L3's contained 528. Repeated posts now share their original geometry/material in 16 m spatial instance batches. Every post, rail, placement and shadow setting is retained; disposal is tracked. [Scene census](census24-l10/L10-low-webgl.json). The experimental generic renderer traversal hook was removed.
 
@@ -63,7 +63,7 @@ No budgets, population caps, content counts or desktop effects were reduced. No 
 
 ## Remaining profile finding
 
-Latest profiles still show crowd pose correction, renderer submission/uniform updates and contact queries as substantial costs: [L3 profile](candidate26-l3-profile/), [L10 profile](candidate26-l10-profile/), [per-figure animation eligibility](candidate27-policy/L3-low-webgl.json).
+Latest profiles still show crowd pose correction, renderer submission/uniform updates and contact queries as substantial costs: [L3 profile](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate26-l3-profile), [L10 profile](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/candidate26-l10-profile), [per-figure animation eligibility](candidate27-policy/L3-low-webgl.json).
 
 The detailed draw breakdown identifies **36 NPC shadow submissions in L3 and 35 in L10**, alongside existing shared contact shadows. These are exact NPC counts; the broader shadow category also contains other passes. Corgi rigid-part batching is currently enabled only in L7; reusing that established batching elsewhere is a promising follow-up that can preserve detailed shadows. A phone-only blob-shadow experiment was withdrawn before native timing and is **not committed**. NPC shadow behavior remains unchanged in this candidate.
 
@@ -82,8 +82,8 @@ Targeted confirmation passed 5/5. A complete intermediate unit run passed 1,415 
 
 ## Validation performed / outstanding
 
-- Latest retained runtime: 299 focused render tests passed; typecheck, lint and build passed on the corresponding late candidates. [Logs](validation/). The final report and E18 command-selection cleanup were not followed by another run after the stop instruction.
-- Last complete unit suite: intermediate candidate 12, 1,415 passed / seven skipped. [Summary](validation/full-unit-candidate12-summary.txt). **A full suite on the final commit remains outstanding.**
+- Latest retained runtime: 299 focused render tests passed; typecheck, lint and build passed on the corresponding late candidates. [Logs](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/validation). The final report and E18 command-selection cleanup were not followed by another run after the stop instruction.
+- Last complete unit suite: intermediate candidate 12, 1,415 passed / seven skipped. [Summary](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/phone-perf/validation/full-unit-candidate12-summary.txt). **A full suite on the final commit remains outstanding.**
 - Native L7 margin and latest L2/L3 measurements are above. No final all-level green result is claimed.
 - Final authored stress/transition probes, corrected touch L9 routes, phone Mega Alpha probe, latest desktop visual regressions, automatic quality, and full E18 verification remain outstanding.
 - An earlier E18 verification selected unsupported remote WebGPU smoke cases: 11 WebGL functional cases passed and five WebGPU cases failed. Selection now follows the manual-WebGPU policy and serializes E18 native browser tests. The corrected verification was not rerun.

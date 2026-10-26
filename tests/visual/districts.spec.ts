@@ -165,14 +165,14 @@ for (const id of districtIds) {
   });
 }
 test("T-E10-09 @E10 @E10-AC09 all district diorama and decay review must items pass", () => {
-  const review = readFileSync(`${output}/review.md`, "utf8");
+  const review = readFileSync('tests/fixtures/epics/E10/review.md', "utf8");
   for (const id of districtIds)
     for (const item of ["A1", "A2", "A3", "A4", "E1", "E2"])
       expect(review).toMatch(new RegExp(`${id} ${item}: PASS`));
 });
 
 test("T-E10-review-thresholds @E10 @E10-AC09 @E10-AC04 reviewed diorama/decay should items meet the 70% threshold", () => {
-  const review = readFileSync(`${output}/review.md`, "utf8");
+  const review = readFileSync('tests/fixtures/epics/E10/review.md', "utf8");
   for (const id of districtIds) {
     expect(
       ["A5", "A6", "A7", "A8"].filter((item) =>

@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 raw = Path('test-results/l1-all-new')
-out = Path('docs/reports/l1-all-new')
+out = Path('test-results/l1-all-new')
 font = ImageFont.truetype('/System/Library/Fonts/Menlo.ttc', 20)
 
 def cell(path, label, width=800):

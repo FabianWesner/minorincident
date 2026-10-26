@@ -18,4 +18,4 @@ Actual passenger follow-camera captures, at ticks 1016 and 1017:
 - webgpu high: [zoom 1.0](ride/webgpu-high-z1.jpg), [zoom 0.5](ride/webgpu-high-z0.5.jpg).
 - webgpu low: [zoom 1.0](ride/webgpu-low-z1.jpg), [zoom 0.5](ride/webgpu-low-z0.5.jpg).
 
-Native E18 overviews: [war high](perf/l4-war-line-high.png), [war low](perf/l4-war-line-low.png), [collapse high](perf/l4-collapse-high.png), [collapse low](perf/l4-collapse-low.png).
+Native E18 overviews: [war high](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l4-boundary-refuge/perf/l4-war-line-high.png), [war low](perf/l4-war-line-low.png), [collapse high](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/l4-boundary-refuge/perf/l4-collapse-high.png), [collapse low](perf/l4-collapse-low.png).

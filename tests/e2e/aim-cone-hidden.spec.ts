@@ -14,7 +14,7 @@ for (const [query, drawn] of [['', false], ['&aimcone=1', true]] as const) {
         a.input.set({ aim: { x: 1, z: 0 }, aimPoint: { x: 4, z: 0 } }); await window.__SCENE__!.step(1); a.input.clear();
         return a.getState().render.actions!.indicator;
       }, side);
-      if (side === 'LEFT') { await page.evaluate(() => window.__SS__!.screenshotReady()); mkdirSync('docs/reports/ui-home-button', { recursive: true }); await page.screenshot({ path: `docs/reports/ui-home-button/${drawn ? 'before' : 'after'}-sector.png` }); }
+      if (side === 'LEFT') { await page.evaluate(() => window.__SS__!.screenshotReady()); mkdirSync('test-results/ui-home-button', { recursive: true }); await page.screenshot({ path: `test-results/ui-home-button/${drawn ? 'before' : 'after'}-sector.png` }); }
       expect(state.shape).toBe('cone');
       if (drawn) expect(state.vertices).toBeGreaterThan(0); else expect(state.vertices).toBe(0);
     }

@@ -5,7 +5,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { loadavg } from 'node:os';
 import { preset, newCampaign } from '../../src/sim/progression/Campaign.ts';
 const [base='https://minor-incident.com', label='prod', levels='L3', profiles='50mbit', modes='select'] = process.argv.slice(2);
-const dir=process.env.LOAD_DATA_DIR??'docs/reports/l3-load-data'; mkdirSync(dir,{recursive:true});
+const dir=process.env.LOAD_DATA_DIR??'test-results/l3-load-data'; mkdirSync(dir,{recursive:true});
 const output=`${dir}/${label}.json`;
 const results=process.env.RESUME==='1'&&existsSync(output)?JSON.parse(readFileSync(output,'utf8')):[];
 let activePage, activeErrors, browser;

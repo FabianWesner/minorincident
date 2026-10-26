@@ -7,7 +7,7 @@ import type { Game } from '../../src/Game';
 import { compositions } from '../../src/levels/compositions';
 
 const out = 'test-results/edges-all/captures'; mkdirSync(out, { recursive: true });
-const baseline = JSON.parse(readFileSync('docs/reports/edges-all/height-steps-before.json', 'utf8')) as { results: { level: string; missing: HeightStep[] }[] };
+const baseline = JSON.parse(readFileSync('tests/fixtures/reports/edges-all/height-steps-before.json', 'utf8')) as { results: { level: string; missing: HeightStep[] }[] };
 const requests = [
   ['L2', 'annex', 'carry-annex-rubble-1/geometry-0', 64, -12.5],
   ['L3', 'west-onramp', ':991/highway-0-119', 144, -1.5],

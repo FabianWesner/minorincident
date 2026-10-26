@@ -4,8 +4,8 @@ The original `infected.alpha` sim definition already selected the Alpha GLB. The
 
 | Scene | Before | After | Inspected appearance |
 | --- | --- | --- | --- |
-| LOD0 f30 | [before](before/qa-alpha-asset-lod0/shot-0030.png) | [after](after/qa-alpha-asset-lod0/shot-0030.png) | Left firefighter helmet, axe and equipment become a taller, broader Alpha with claws, swept hair and red lesions; the worker on the right retains its smaller silhouette. |
-| LOD1 f30 | [before](before/qa-alpha-asset-lod1/shot-0030.png) | [after](after/qa-alpha-asset-lod1/shot-0030.png) | The same replacement remains clear at the normal game angle and middle distance. |
+| LOD0 f30 | [before](before/qa-alpha-asset-lod0/shot-0030.png) | [after](../alpha-asset/after/qa-alpha-asset-lod0/shot-0030.png) | Left firefighter helmet, axe and equipment become a taller, broader Alpha with claws, swept hair and red lesions; the worker on the right retains its smaller silhouette. |
+| LOD1 f30 | [before](before/qa-alpha-asset-lod1/shot-0030.png) | [after](../alpha-asset/after/qa-alpha-asset-lod1/shot-0030.png) | The same replacement remains clear at the normal game angle and middle distance. |
 | LOD2 f30 | [before](before/qa-alpha-asset-lod2/shot-0030.png) | [after](after/qa-alpha-asset-lod2/shot-0030.png) | The distant Alpha is visibly larger than the worker; the firefighter helmet is gone. |
 | Roar f57 | [before](before/qa-alpha-roar/shot-0057.png) | [after](after/qa-alpha-roar/shot-0057.png) | Real `infected.alpha` retains its correct GLB and broad silhouette; the cyan tell ring remains visible while planted feet permit a stepped turn. |
 | Roar f150 | [before](before/qa-alpha-roar/shot-0150.png) | [after](after/qa-alpha-roar/shot-0150.png) | The regular infected approaches the fixed origin with raised swing feet and a grounded stance; the Alpha remains planted. |

@@ -7,7 +7,7 @@ import { PNG } from 'pngjs';
 
 // Compact, auditable results plus exact decoded-pixel comparisons. No browser work.
 const root = resolve(process.argv[2] ?? 'test-results/render-parallel');
-const output = process.argv[3] ?? 'docs/reports/render-test-parallel-data.json';
+const output = process.argv[3] ?? 'test-results/render-test-parallel-data.json';
 const baseline = new Map(), setups = [];
 const hash = file => createHash('sha256').update(PNG.sync.read(readFileSync(file)).data).digest('hex');
 const shots = dir => readdirSync(dir, { withFileTypes: true }).flatMap(entry => {

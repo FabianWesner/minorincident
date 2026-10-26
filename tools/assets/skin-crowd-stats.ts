@@ -1,5 +1,5 @@
 /** skinned-crowd prototype: per-LOD vertex/influence statistics and the pose-atlas texel fetches per vertex.
- *   npx tsx tools/assets/skin-crowd-stats.ts > docs/reports/skinned-crowd/vertex-stats.json */
+ *   npx tsx tools/assets/skin-crowd-stats.ts > test-results/skinned-crowd/vertex-stats.json */
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);

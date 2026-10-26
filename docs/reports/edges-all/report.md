@@ -25,7 +25,7 @@ The unit test calls the same audit and asserts ten level rows and zero uncovered
 | L9 | 99 | 0 | 0 |
 | L10 | 1666 | 7.07 | 0 |
 
-Total newly covered: **287.91 m / 587 segments**. [Before coordinates](height-steps-before.json) · [After audit](height-steps-after.json). Counts differ slightly from the original L7 report because this worktree includes newer main and L6 collider changes.
+Total newly covered: **287.91 m / 587 segments**. [Before coordinates](../../../tests/fixtures/reports/edges-all/height-steps-before.json) · [After audit](height-steps-after.json). Counts differ slightly from the original L7 report because this worktree includes newer main and L6 collider changes.
 
 ## Capture and contrast recipe
 

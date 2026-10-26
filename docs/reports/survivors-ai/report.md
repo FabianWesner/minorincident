@@ -52,13 +52,13 @@ Gameplay source ends at `0b2ad7b1b`; the packaging-only follow-up is `8586349e9`
 
 | Check | Result | Retained evidence |
 | --- | --- | --- |
-| Final focused cases plus all L8 level tests | **34 passed locally and remotely**, including all 24 new focused unit/level cases | [remote JSON, gzip](results/legacy-soldier-remote-final.json.gz) |
+| Final focused cases plus all L8 level tests | **34 passed locally and remotely**, including all 24 new focused unit/level cases | [remote JSON, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/legacy-soldier-remote-final.json.gz) |
 | Scene Lab, six scenes × WebGPU high/low, zoom 1 | **12 passed**, all captures inspected; affected armed scene refreshed on both tiers after the final gameplay follow-ups | [visual review](visual-review.md), [metrics](scene-evidence.json) |
-| Remote `tests/unit tests/levels` sweep | **2,162 passed / 4 failed / 11 skipped**; three older assertions and the bundle warning are resolved below | [full snapshot JSON, gzip](results/remote-full-snapshot.json.gz) |
-| Fresh remote unit sweep | **1,761 passed / 2 failed / 9 skipped**; asset decode timeout and bundle warning both cleared in isolation | [unit JSON, gzip](results/unit-final.json.gz) |
-| Broader remote level/regression follow-up | **100 passed / 1 failed**; the remaining old 405-second L3 assertion has a fresh passing 420-second run | [regressions, gzip](results/final-regressions.json.gz), [fresh L3 criterion, gzip](results/l3-criterion-final.json.gz) |
-| Isolated remote production asset inventory and static gate | **2 passed**; original 300/180-second deadlines retained; typecheck, lint and build succeed without warnings | [isolated results, gzip](results/isolated-checks-chunked.json.gz) |
-| Final `npm run verify -- E23` | Final simulation **74 passed**, headless browser checks **55 passed**; native performance **unmeasured** at the task cutoff | [simulation](results/E23-final-simulation.json.gz), [browser](results/E23-final-browser.json.gz), [workflow](results/E23-final-workflow.log.gz) |
+| Remote `tests/unit tests/levels` sweep | **2,162 passed / 4 failed / 11 skipped**; three older assertions and the bundle warning are resolved below | [full snapshot JSON, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/remote-full-snapshot.json.gz) |
+| Fresh remote unit sweep | **1,761 passed / 2 failed / 9 skipped**; asset decode timeout and bundle warning both cleared in isolation | [unit JSON, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/unit-final.json.gz) |
+| Broader remote level/regression follow-up | **100 passed / 1 failed**; the remaining old 405-second L3 assertion has a fresh passing 420-second run | [regressions, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/final-regressions.json.gz), [fresh L3 criterion, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/l3-criterion-final.json.gz) |
+| Isolated remote production asset inventory and static gate | **2 passed**; original 300/180-second deadlines retained; typecheck, lint and build succeed without warnings | [isolated results, gzip](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/isolated-checks-chunked.json.gz) |
+| Final `npm run verify -- E23` | Final simulation **74 passed**, headless browser checks **55 passed**; native performance **unmeasured** at the task cutoff | [simulation](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/E23-final-simulation.json.gz), [browser](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/E23-final-browser.json.gz), [workflow](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/E23-final-workflow.log.gz) |
 
 The full sweep's four failures were: E21 complete time at 405.4 seconds against the former 405 ceiling; the unsupported first-beat casualty inference (`20 < 20`); the old mission-ring `depthTest: false` assertion; and the build chunk warning. Fresh L3, L4 and ring checks pass with the reported criteria/renderer corrections. The separate roof data chunk clears the static gate while retaining the original 2 MB limit. All L1–L10 start/checkpoint clearance cases and the continuous L1→L9/L10 campaign replays pass in the full sweep.
 
@@ -66,7 +66,7 @@ All browser work is headless, with at most one browser owned by this lane, ports
 
 ### Remaining native measurement
 
-The final E23 workflow was stopped while waiting for the exclusive shared GPU reservation, to finish within the four-hour task cap. No native frame/heap sample ran, so the overall E23 verifier remains incomplete at this gate. The other lane’s browser was left untouched. All five completed commands (typecheck, lint, build, remote simulation and headless browser checks) exited zero: [command audit](results/E23-final-functional-checks.json.gz).
+The final E23 workflow was stopped while waiting for the exclusive shared GPU reservation, to finish within the four-hour task cap. No native frame/heap sample ran, so the overall E23 verifier remains incomplete at this gate. The other lane’s browser was left untouched. All five completed commands (typecheck, lint, build, remote simulation and headless browser checks) exited zero: [command audit](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/survivors-ai/results/E23-final-functional-checks.json.gz).
 
 Rerun when GPU capacity is available:
 

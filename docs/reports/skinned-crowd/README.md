@@ -40,7 +40,7 @@
 - **Suit zombie:** 10 shells (body, head, small pieces).
 - **Woman:** 1 component, 0 open edges. 138 edges where a hand or forearm is fused to the dress or hip are not blended ("unrelated seams"). Those triangles stretch when the arm swings.
 
-Vertex numbers are in [vertex-stats.json](vertex-stats.json), and per-LOD weld/seam receipts are in [assets/](assets/).
+Vertex numbers are in [vertex-stats.json](vertex-stats.json), and per-LOD weld/seam receipts are in [assets/](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/skinned-crowd/assets).
 
 ## Measurements (200 AI, low, perf-horde-200, every actor `inf.common-worker`, quiet-run, ABBA)
 | | main rigid (procedural worker) | skinned TRELLIS | same body, 1 influence |

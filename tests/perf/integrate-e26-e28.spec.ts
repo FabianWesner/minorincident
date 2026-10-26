@@ -36,7 +36,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     if (tier === 'high') expect.soft(result.frameP95).toBeLessThanOrEqual(level === 'L1' ? 16.7 : 14);
     else expect(result.frameP50).toBeLessThanOrEqual(1000 / 30);
     if (process.env.INTEGRATION_PHASE === 'after') {
-      const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+      const before = JSON.parse(readFileSync(`tests/fixtures/integrate-e26-e28/perf/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
     }
   });

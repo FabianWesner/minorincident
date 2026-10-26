@@ -19,7 +19,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### R-01 — Two byte-identical GLB texture strippers
 
-**Evidence:** [`tools/assets/stripGlbTextures.ts`](../../../tools/assets/stripGlbTextures.ts:1) and [`tests/unit/helpers/stripGlbTextures.ts`](../../../tests/unit/helpers/stripGlbTextures.ts:1) are byte-for-byte identical 32-line implementations. The tools copy is used by `tools/crowdfoot/harness.ts:1,18–20`; the test copy is imported by the GLB loader tests under `tests/unit/assets/` and `tests/unit/render/`.
+**Evidence:** [`tools/assets/stripGlbTextures.ts`](../../../tools/assets/stripGlbTextures.ts#L1) and [`tests/unit/helpers/stripGlbTextures.ts`](../../../tools/assets/stripGlbTextures.ts#L1) are byte-for-byte identical 32-line implementations. The tools copy is used by `tools/crowdfoot/harness.ts:1,18–20`; the test copy is imported by the GLB loader tests under `tests/unit/assets/` and `tests/unit/render/`.
 
 **Simplification:** Keep the tools copy, which already serves the non-test harness; update the tests to import it and delete `tests/unit/helpers/stripGlbTextures.ts` (31 executable LOC plus its comment). Avoid creating a third generic helper layer.
 
@@ -27,7 +27,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### R-02 — Player animation capture scripts repeat setup and encoding
 
-**Evidence:** [`tools/playeranim/capture.ts:1–40`](../../../tools/playeranim/capture.ts:1) and [`tools/playeranim/fable-capture.ts:1–40`](../../../tools/playeranim/fable-capture.ts:1) both resolve the same ffmpeg path, open a browser through `../skinpilot/browser`, advance deterministic frames, take image buffers, and encode WebM. `game-capture.ts:1–18,35–62` and `roundhouse-capture.ts:1–17,24–60` repeat the encoder setup as well. Their scenarios and output contracts differ, so deleting one whole script is not safe.
+**Evidence:** [`tools/playeranim/capture.ts:1–40`](../../../tools/playeranim/capture.ts#L1) and [`tools/playeranim/fable-capture.ts:1–40`](../../../tools/playeranim/fable-capture.ts#L1) both resolve the same ffmpeg path, open a browser through `../skinpilot/browser`, advance deterministic frames, take image buffers, and encode WebM. `game-capture.ts:1–18,35–62` and `roundhouse-capture.ts:1–17,24–60` repeat the encoder setup as well. Their scenarios and output contracts differ, so deleting one whole script is not safe.
 
 **Simplification:** Keep all scenario-specific entry points; extract only the shared browser-frame collection / ffmpeg encoding routine and options into one player-animation helper. Estimate 60–100 LOC removed across callers.
 
@@ -53,7 +53,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### S-01 — Render imports concrete mission implementations for constants/rules
 
-**Evidence:** [`src/render/InteractionView.ts:1,15–19`](../../../src/render/InteractionView.ts:1) imports `LevelSixSubway` and calls `gateWait()` inside a presentation predicate. [`src/render/L3Props.ts:1–4`](../../../src/render/L3Props.ts:1) imports `L3_GATES` from the large `LevelThreeCollapse` mission module. Render code therefore loads mission logic to obtain view-facing gate data.
+**Evidence:** [`src/render/InteractionView.ts:1,15–19`](../../../src/render/InteractionView.ts#L1) imports `LevelSixSubway` and calls `gateWait()` inside a presentation predicate. [`src/render/L3Props.ts:1–4`](../../../src/render/L3Props.ts#L1) imports `L3_GATES` from the large `LevelThreeCollapse` mission module. Render code therefore loads mission logic to obtain view-facing gate data.
 
 **Simplification:** Move the gate geometry/anchor constants and the small gate-position function to a level-data/presentation contract consumed by both mission and render code. Keep progression and state transitions in simulation. Estimate 10–30 LOC removed or relocated, plus less runtime coupling.
 
@@ -61,7 +61,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### S-02 — Campaign UI owns simulation/progression operations
 
-**Evidence:** [`src/ui/CampaignUI.ts:1–5,18–27`](../../../src/ui/CampaignUI.ts:1) imports progression operations (`pickUpgrades`, `finishRewards`, etc.) and holds `Game`; `screen()` directly pauses the clock, clears input, and calls `world.clearInput()` at line 22. `showMenu()` also chooses the UI route and mutates campaign state at lines 29–34. The module's comment says the campaign screens are separate from gameplay HUD, but the controller still crosses both presentation and state ownership.
+**Evidence:** [`src/ui/CampaignUI.ts:1–5,18–27`](../../../src/ui/CampaignUI.ts#L1) imports progression operations (`pickUpgrades`, `finishRewards`, etc.) and holds `Game`; `screen()` directly pauses the clock, clears input, and calls `world.clearInput()` at line 22. `showMenu()` also chooses the UI route and mutates campaign state at lines 29–34. The module's comment says the campaign screens are separate from gameplay HUD, but the controller still crosses both presentation and state ownership.
 
 **Simplification:** Keep DOM construction and user-facing text in CampaignUI; expose narrow start/continue/reward commands from the campaign coordinator for state changes and pauses. Do not move every button into a generic UI framework.
 
@@ -69,7 +69,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### S-03 — GameView update is an orchestration god method
 
-**Evidence:** [`src/render/GameView.ts:875–1129`](../../../src/render/GameView.ts:875) is a 255-line `update(alpha)` method. It handles freeze/context early returns, destination markers, player/vehicle/crowd presentation, visibility and culling, interactions, mission UI, lighting and profiling while reading `SimWorld` throughout. The class is 1,276 lines (`wc -l`).
+**Evidence:** [`src/render/GameView.ts:875–1129`](../../../src/render/GameView.ts#L875) is a 255-line `update(alpha)` method. It handles freeze/context early returns, destination markers, player/vehicle/crowd presentation, visibility and culling, interactions, mission UI, lighting and profiling while reading `SimWorld` throughout. The class is 1,276 lines (`wc -l`).
 
 **Simplification:** First extract cohesive update phases already represented by owned view objects (for example destination/interaction markers and presentation diagnostics); keep frame ordering in GameView. Avoid moving stateful systems wholesale or adding a generic update pipeline.
 
@@ -79,7 +79,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### O-01 — SceneLab is a 1,717-line probe, simulation, and renderer controller
 
-**Evidence:** [`src/debug/scenelab/SceneLab.ts:95–228`](../../../src/debug/scenelab/SceneLab.ts:95) owns the `SceneLab` class and setup; `228–913` sets worlds, actors, vehicles, handovers, commands, effects, and camera; `963–1257` steps/records gameplay and probes; `1258–1717` samples geometry, clips, LODs, metrics, and debug controls. The same object has to know about simulation entities and renderer internals.
+**Evidence:** [`src/debug/scenelab/SceneLab.ts:95–228`](../../../src/debug/scenelab/SceneLab.ts#L95) owns the `SceneLab` class and setup; `228–913` sets worlds, actors, vehicles, handovers, commands, effects, and camera; `963–1257` steps/records gameplay and probes; `1258–1717` samples geometry, clips, LODs, metrics, and debug controls. The same object has to know about simulation entities and renderer internals.
 
 **Simplification:** Extract one probe family at a time behind narrow read-only inputs (for example clipping/LOD metrics first). Keep scene orchestration in SceneLab. This is code organization, not a promise of LOC deletion.
 
@@ -87,7 +87,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### O-02 — InfectedSystem combines scheduling, attacks, lifecycle, and navigation
 
-**Evidence:** [`src/sim/ai/InfectedSystem.ts:1–25`](../../../src/sim/ai/InfectedSystem.ts:1) imports appearance, multiple level data modules, perception/search, and motion; the class is 1,586 lines. Its `update()` is [`245–487`](../../../src/sim/ai/InfectedSystem.ts:245), 243 lines. Attack resolution and down/recovery/death logic continue at `531–681`; L1-specific initialization and movement continue later in the same class.
+**Evidence:** [`src/sim/ai/InfectedSystem.ts:1–25`](../../../src/sim/ai/InfectedSystem.ts#L1) imports appearance, multiple level data modules, perception/search, and motion; the class is 1,586 lines. Its `update()` is [`245–487`](../../../src/sim/ai/InfectedSystem.ts#L245), 243 lines. Attack resolution and down/recovery/death logic continue at `531–681`; L1-specific initialization and movement continue later in the same class.
 
 **Simplification:** Extract only a cohesive phase with existing state boundaries (for example attack resolution) after mapping its event/order dependencies. Keep the public `InfectedSystem` facade and avoid a rewrite. No behavior/LOC savings are assumed until a seam is proven.
 
@@ -105,7 +105,7 @@ Reviewed the current `lane/code-review` checkout at `0009f107` (same tree as `ma
 
 ### D-02 — Large generated data is a false-positive dead-code target
 
-**Evidence:** [`src/data/physicsAssets.ts:1`](../../../src/data/physicsAssets.ts:1) is 8,216 lines and explicitly says it is generated from production GLB data by `tools/assets/physics-metadata.ts`. It is the largest TypeScript file, but its size is data, not a handwritten god module.
+**Evidence:** [`src/data/physicsAssets.ts:1`](../../../src/data/physicsAssets.ts#L1) is 8,216 lines and explicitly says it is generated from production GLB data by `tools/assets/physics-metadata.ts`. It is the largest TypeScript file, but its size is data, not a handwritten god module.
 
 **Simplification:** Keep it generated and keep its generator as the source of truth. Do not hand-trim, split, or run a dead-code remover against generated entries without checking manifest/runtime references.
 

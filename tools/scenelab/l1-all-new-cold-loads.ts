@@ -9,7 +9,7 @@ import { writeJson } from './session';
 const root = process.cwd(), baseline = resolve(process.env.BASELINE_ROOT ?? '../l1-all-new-main');
 const port = Number(process.env.SCENE_PORT ?? 4672), origin = `http://127.0.0.1:${port}`;
 assert.notEqual(port, 3300);
-const out = resolve(root, 'docs/reports/l1-all-new/cold-loads');
+const out = resolve(root, 'test-results/l1-all-new/cold-loads');
 mkdirSync(out, { recursive: true });
 const available = () => new Promise<boolean>(done => {
   const request = get(origin, { agent: false }, response => { response.resume(); done(response.statusCode === 200); });

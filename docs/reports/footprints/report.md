@@ -4,7 +4,7 @@ Replaced the five-texel cross in the weather surface mask with alternating, trav
 
 The bridge/wall cause is in `WeatherView`: the original mask wrapped world X/Z every 64 m and ignored both surface height and normal. `WeatherSystem` also discarded the walker's height. Thus a recorded bridge track could appear on walls and the ground beneath it. Tracks now retain support height; the shader accepts matching upward-facing surfaces only, with separate ground/elevated layers and bounded coordinates. The emitter rejects unsupported feet, rides, vaults, perched animals, teleport gaps and a lateral foot crossing a support edge/barrier. The exact walker in the described production screenshot cannot be identified from its description; no navigation fault was reproduced.
 
-The headless GPU fixture stamps at 6 m and measures 9,789 footprint pixels on the bridge surface, **0 below it**, **0 on a vertical wall**, and **0 at the old 64 m repetition**; no browser errors. See [surface evidence](surface-proof.json), [bridge](surface-bridge.png), [ground below](surface-ground.png) and [wall](surface-wall.png). Reproduce with `SCENE_PORT=3425 sh tools/e2e-lock.sh npx tsx tools/look/footprints-surfaces.ts`.
+The headless GPU fixture stamps at 6 m and measures 9,789 footprint pixels on the bridge surface, **0 below it**, **0 on a vertical wall**, and **0 at the old 64 m repetition**; no browser errors. See [surface evidence](surface-proof.json), [bridge](surface-bridge.png), [ground below](surface-ground.png) and [wall](surface-ground.png). Reproduce with `SCENE_PORT=3425 sh tools/e2e-lock.sh npx tsx tools/look/footprints-surfaces.ts`.
 
 ## Inspected captures
 

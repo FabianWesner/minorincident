@@ -2,7 +2,7 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 raw = Path('/private/tmp/tex-infected-readability')
-out = Path('docs/reports/tex-infected')
+out = Path('test-results/tex-infected')
 fonts = ['/System/Library/Fonts/Menlo.ttc', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf']
 font = next((ImageFont.truetype(p, 16) for p in fonts if Path(p).exists()), ImageFont.load_default())
 def label(image, text, at=(0, 0)):

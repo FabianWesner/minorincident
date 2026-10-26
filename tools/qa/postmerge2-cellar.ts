@@ -4,7 +4,7 @@ import { PNG } from 'pngjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { View } from '../../src/render/View';
 import { SceneSession, stopServer, type Backend } from '../scenelab/session';
-const out = 'docs/reports/postmerge-2/cellar';
+const out = 'test-results/postmerge-2/cellar';
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {

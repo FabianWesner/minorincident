@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, origin, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
-const out='docs/reports/fixes-13g';mkdirSync(out,{recursive:true});const rows:unknown[]=[];
+const out='test-results/fixes-13g';mkdirSync(out,{recursive:true});const rows:unknown[]=[];
 const session=new SceneSession({backend:'webgl2',tier:'low'});
 try{
   await session.open();const page=session.page;page.setDefaultTimeout(120_000);

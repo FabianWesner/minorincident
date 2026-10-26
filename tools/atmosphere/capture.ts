@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { SceneSession, stopServer, port, origin, type Backend } from '../scenelab/session';
 
 const phase = process.argv[2] ?? 'before', backend = (process.argv[3] ?? 'webgl2') as Backend;
-const root = `${process.env.ATMOSPHERE_OUT ?? 'docs/reports/atmosphere'}/${phase}/${backend}`;
+const root = `${process.env.ATMOSPHERE_OUT ?? 'test-results/atmosphere'}/${phase}/${backend}`;
 const zooms = (process.env.ATMOSPHERE_ZOOMS ?? '0.5,1,1.5').split(',').map(Number);
 const tiers = (process.env.ATMOSPHERE_TIERS ?? 'high,low').split(',') as ('high' | 'low')[];
 const levels = (process.env.ATMOSPHERE_LEVELS ?? '1,2,3,4,5,6,7,8,9,10').split(',').map(Number);

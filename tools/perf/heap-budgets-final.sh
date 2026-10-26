@@ -2,7 +2,7 @@
 # One bounded, serial native gate + matched frame capture batch. Build before admission.
 set -u
 [ "${MI_PERF_LOCK_HELD:-}" = 1 ] || { echo 'Use tools/perf/quiet-run.sh -> tools/e2e-lock.sh' >&2; exit 2; }
-heap_out=${HEAP_FINAL_OUT:-docs/reports/heap-budgets/evidence/final}
+heap_out=${HEAP_FINAL_OUT:-test-results/heap-budgets/evidence/final}
 heap_baseline=${HEAP_BASELINE_DIST:?Set HEAP_BASELINE_DIST to the preserved baseline build}
 mkdir -p "$heap_out"
 python3 - "$heap_out" "$heap_baseline" <<'PYRECEIPT'
@@ -38,7 +38,7 @@ HEAP_AUDIT_DIST="$PWD/dist" HEAP_AUDIT_OUT="$heap_out/candidate" HEAP_AUDIT_SNAP
 heap_candidate_rc=$?
 npx tsx tools/perf/heap-pixel-diff.ts "$heap_out/baseline-control" "$heap_out/candidate" "$heap_out/pixels"
 heap_pixels_rc=$?
-npx tsx tools/perf/heap-pixel-diff.ts docs/reports/heap-budgets/evidence/before "$heap_out/baseline-control" "$heap_out/baseline-repeat-pixels"
+npx tsx tools/perf/heap-pixel-diff.ts tests/fixtures/reports/heap-budgets/evidence/before "$heap_out/baseline-control" "$heap_out/baseline-repeat-pixels"
 heap_repeat_rc=$?
 python3 - "$heap_out" "$heap_native_rc" "$heap_control_rc" "$heap_candidate_rc" "$heap_pixels_rc" "$heap_repeat_rc" <<'PY'
 from pathlib import Path

@@ -57,7 +57,7 @@ What I see in them:
 | --- | --- |
 | Scene Lab matrix `atmosphere*,night-read-*`, high+low × zoom 0.5/1/1.5 | **WebGL2 126/126, WebGPU 126/126** ([GL](matrix/webgl2/index.md), [GPU](matrix/webgpu/index.md)). Includes the two new scenes `atmosphere2-clouds-l2` and `atmosphere2-embers-l7`. Night-read gates: typical ≥ 2.5, floor ≥ 2.0. L9 road 2.7/2.7. |
 | Playwright (Mac, 1 worker): `e25-lighting`, `weather` (E28-AC12 moods, all kinds × both backends × both tiers), `l3-contrast`, `l7-night`, `smoke` | **41 passed, 2 failed**. The two failures are T-E29-14 L7 courier contrast high/low (2.087 / 2.162 vs ≥ 3). They are **pre-existing**: the identical values (2.077 / 2.160) appear with the unchanged `d80f5ef0d` build, and with the L6 grade disabled. |
-| E25-AC13 night-street | Courier contrast 3.159 (high) / 3.346–3.348 (low) on WebGL and WebGPU; brightest-eye red margins 106–110 (≥ 60). [JSON](validation/) |
+| E25-AC13 night-street | Courier contrast 3.159 (high) / 3.346–3.348 (low) on WebGL and WebGPU; brightest-eye red margins 106–110 (≥ 60). [JSON](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/atmosphere-2/validation) |
 | WebGPU shader | The first grade used chained channel swizzles of the sampled colour, which failed WebGPU/Metal pipeline creation (Tint: "swizzle view instruction still has usages after lowering", 16 WebGPU spec failures). Channels now come from dot products. Bisected and confirmed: the original fails, the fix passes. |
 | Unit | `tests/unit/render/atmosphere.test.ts` 7/7 locally (neutral defaults, validation, per-level distinct grades, clouds by day only, haze beyond the focus, beam weight). Typecheck and lint pass. |
 | Hetzner unit+levels+sim | Final tree `193bb220a`: **3151 passed / 0 failed / 9 skipped**. First run (before the fixes): 3145 / 4 sim-timing failures / 11 skipped; those did not repeat. |
@@ -65,7 +65,7 @@ What I see in them:
 ## Cost (E18)
 
 - Campaign counters ([counters.json](counters.json), 50 paired stills, both backends): +0–2 draws, ≤ +94 triangles. Maximum high 217 draws / 709k triangles; low 201 / 293k. All within the 600/1.5M and 300/500k caps.
-- Native timing, `tools/perf/quiet-run.sh`. Two separate reservations of ~3 min each (branch, then later the `d80f5ef0d` baseline build), real Chrome/Metal ([summary](perf/summary.txt), raw JSON in `perf/before`, `perf/after`):
+- Native timing, `tools/perf/quiet-run.sh`. Two separate reservations of ~3 min each (branch, then later the `d80f5ef0d` baseline build), real Chrome/Metal ([summary](/Users/wesner/Workspace/mi-evidence-archive/docs/reports/atmosphere-2/perf/summary.txt), raw JSON in `perf/before`, `perf/after`):
 
 | Spec | Baseline | Branch | Budget |
 | --- | --- | --- | --- |
