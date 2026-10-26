@@ -45,6 +45,7 @@
     "qa:ab": "sh tools/qa/ab.sh",
     "scene": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts",
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
+    "scene:hat-eye": "E2E_UNITS=1 sh tools/e2e-lock.sh tsx tools/scenelab/hat-eye-gate.ts",
     "scene:mcp": "tsx tools/scenelab/mcp.ts",
     "browser:pool": "tsx tools/browser-pool/daemon.ts",
     "gear:sheets": "sh tools/e2e-lock.sh tsx tools/scenelab/gear-sheets.ts",

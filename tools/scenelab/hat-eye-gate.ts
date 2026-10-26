@@ -10,7 +10,7 @@ const out = resolve(process.env.HAT_OUT ?? 'test-results/l1-hats-faces');
 const models = (process.env.HAT_MODELS ?? 'npc.civilian-man-a,npc.civilian-man-b,npc.civilian-woman-a,npc.civilian-woman-b,npc.civilian-elderly,npc.depot-clerk').split(',');
 const hats = (process.env.HAT_IDS ?? 'baseball-cap,beanie,sun-hat,hard-hat,flat-cap,bucket-hat').split(',').map(id => `acc.hat-${id}`);
 const tier = process.env.HAT_TIER === 'high' ? 'high' : 'low';
-const backend = process.env.HAT_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const backend = process.env.HAT_BACKEND === 'webgl2' ? 'webgl2' : 'webgpu';
 const session = new SceneSession({ backend, tier, viewport: { width: 1600, height: 900 }, seed: 18, query: { crowdProbe: 'full' } });
 const continuity = new Map<string, { meanError: number; maxError: number; taggedVertices: number }>();
 const receipts: { model: string; hat: string; infected: boolean; pass: boolean; [key: string]: unknown }[] = [];

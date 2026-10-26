@@ -1,7 +1,7 @@
 import { Box3, Matrix4, Vector3, type BufferGeometry } from 'three';
 import { characterNodes } from '../../data/survivor';
 
-/** Bare brow width: intersect skin samples around the authored eye line, excluding hair and frames. */
+/** Bare skull envelope from exposed skin, narrowed by the brow cross-section. Hair never enlarges the fit. */
 export function skinnedBrow(geometry: BufferGeometry): { width: number; depth: number; y: number; centre: Vector3 } | null {
   const binds = geometry.userData.crowdBinds as number[] | undefined;
   if (!binds) return null;
@@ -19,5 +19,5 @@ export function skinnedBrow(geometry: BufferGeometry): { width: number; depth: n
     point.fromBufferAttribute(position, i).applyMatrix4(inverse);
     if (Math.abs(point.y - y) <= band && point.x >= skin.min.x) brow.expandByPoint(point);
   }
-  return { width: brow.isEmpty() ? skin.max.z - skin.min.z : brow.max.z - brow.min.z, depth: brow.isEmpty() ? skin.max.x - skin.min.x : brow.max.x - brow.min.x, y, centre: skin.getCenter(new Vector3()) };
+  return { width: Math.min(skin.max.z - skin.min.z, brow.isEmpty() ? Infinity : brow.max.z - brow.min.z), depth: Math.min(skin.max.x - skin.min.x, brow.isEmpty() ? Infinity : brow.max.x - brow.min.x), y, centre: skin.getCenter(new Vector3()) };
 }
