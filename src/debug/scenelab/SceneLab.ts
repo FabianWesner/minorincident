@@ -68,7 +68,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'autoAim'; move: Point; until: number; side: 'LEFT' | 'RIGHT' }
+  | { type: 'autoAim'; move: Point; at: number; until: number; side: 'LEFT' | 'RIGHT' }
   | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean; inPlace?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
@@ -186,7 +186,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.cureStats = null;
-    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
+    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 }; this.aim = { intent: null, shots: [], hit: new Set() };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [], cutLowProps: [], cutPlacements: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
@@ -245,6 +245,14 @@ export class SceneLab {
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     world.combat!.damage.god = true;
+    world.combat!.assist.setting = spec.aimAssist ?? 'Default';
+    // Q-196 keyboard aim: each courier gun shot against the autoAim intent, and whether it struck a living infected.
+    world.events.on('combat.attack', ev => {
+      if (ev.type !== 'combat.attack' || ev.sourceId !== 1 || !this.aim.intent || world.combat!.runner.loadout.definition(ev.actionId).category !== 'ranged') return;
+      const i = this.aim.intent, d = ev.direction;
+      this.aim.shots.push({ frame: this.frame, attackId: ev.attackId, errorDeg: Math.abs(Math.atan2(i.x * d.z - i.z * d.x, i.x * d.x + i.z * d.z)) * 180 / Math.PI });
+    });
+    world.events.on('combat.hit', ev => { if (ev.type === 'combat.hit' && ev.sourceId === 1 && world.entities.get(ev.targetId)?.faction === 'infected') this.aim.hit.add(ev.attackId); });
     world.events.on('infected.special', ev => { if (ev.type === 'infected.special') this.specials.push({ frame: this.frame, sourceId: ev.sourceId, move: ev.move, stage: ev.stage }); });
     // Pursuit metrics: infected swings at the courier and bites on pedestrians (first frame of each).
     world.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.targetId === 1) { this.attacks.courier++; if (this.attacks.firstFrame < 0) this.attacks.firstFrame = this.frame; } });
@@ -723,7 +731,11 @@ export class SceneLab {
       else if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
-      else if ('autoAim' in a) actor.plan = { type: 'autoAim', move: a.autoAim.move, until: this.frame + ticks(a.autoAim.seconds ?? 1), side: a.autoAim.side ?? 'RIGHT' };
+      else if ('autoAim' in a) {
+        actor.plan = { type: 'autoAim', move: a.autoAim.move, at: this.frame, until: this.frame + ticks(a.autoAim.seconds ?? 1), side: a.autoAim.side ?? 'RIGHT' };
+        const [mx, mz] = a.autoAim.move, length = Math.hypot(mx, mz), yaw = world.entities.get(actor.entity)!.transform.yaw;
+        this.aim.intent = length ? { x: mx / length, z: mz / length } : { x: Math.cos(yaw), z: -Math.sin(yaw) };
+      }
       else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move, inPlace: a.inPlace };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
@@ -1036,7 +1048,7 @@ export class SceneLab {
       else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
     } else if (plan?.type === 'autoAim') {
       if (this.frame >= plan.until) courier.plan = null;
-      else { frame.move = toPoint(plan.move); frame.aimSource = 'assist'; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
+      else { frame.move = toPoint(plan.move); frame.aimSource = 'assist'; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: this.frame === plan.at, held: true, up: false }; } // J/K press edge selects the side, as real keys do
     } else if (plan?.type === 'drive') {
       if (this.frame >= plan.until) { courier.plan = null; frame.brake = true; }
       else frame.drive = { throttle: plan.throttle, steer: plan.steer };
@@ -1114,6 +1126,7 @@ export class SceneLab {
    */
   private readonly pursuit = new Map<string, { stuckRun: number; stuckRunMax: number; stuckFrame: number; lostNearFrames: number; overshootMaxM: number }>();
   private attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
+  private aim: { intent: { x: number; z: number } | null; shots: { frame: number; attackId: number; errorDeg: number }[]; hit: Set<number> } = { intent: null, shots: [], hit: new Set() };
   private samplePursuit(actor: LabActor, e: EntitySnapshot): void {
     const b = e.infected, brain = b?.l1, tick = this.world.tick;
     if (!b || !brain || e.health.current <= 0 || e.corpse || e.hidden || e.emerging) return;
@@ -1679,6 +1692,7 @@ export class SceneLab {
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, tiltMaxDeg: this.vehicleMotion.get(id)?.tiltMaxDeg ?? 0, tiltFrame: this.vehicleMotion.get(id)?.tiltFrame ?? -1, slipMaxDeg: this.vehicleMotion.get(id)?.slipMaxDeg ?? 0, slipFrame: this.vehicleMotion.get(id)?.slipFrame ?? -1, driven: this.world.vehicles!.active === entity, headlightsDarkFrames: this.vehicleMotion.get(id)?.darkFrames ?? 0, firstDarkFrame: this.vehicleMotion.get(id)?.firstDarkFrame ?? -1, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, hullWindups: this.attacks.hull, hullHits: this.attacks.hullHits, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
+      aim: { shots: this.aim.shots.length, hitShare: this.aim.shots.length ? +(this.aim.shots.filter(x => this.aim.hit.has(x.attackId)).length / this.aim.shots.length).toFixed(3) : 0, intentErrorMaxDeg: +Math.max(0, ...this.aim.shots.map(x => x.errorDeg)).toFixed(2), misses: this.aim.shots.filter(x => !this.aim.hit.has(x.attackId)).map(x => ({ frame: x.frame, errorDeg: +x.errorDeg.toFixed(2) })) },
       cure: this.cureStats ? { ...this.cureStats, last: undefined, health: undefined } : null, megaAlpha: this.megaReport(), minigun: this.gunReport(), specials: this.specials,
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, appearance, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
