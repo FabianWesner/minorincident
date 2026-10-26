@@ -18,13 +18,17 @@ const hairColors = hairTones.map(c => new Color(c));
 const referenceBase = 'npc.civilian-man-a';
 /** Its baked LOD1 skin skull in head-local metres (bakeInfected path; pinned by tests/unit/render/crowd-accessory-fit.test.ts). */
 export const referenceSkull = { size: new Vector3(.301, .334, .381), centre: new Vector3(.009, .118, 0) };
-/** Bounds of head-part skin vertices (`_parts.x` = head, `_parts.y` = -1) in head-local space. */
+/** Skin height/width in head-local space. Painted faces cover only the front;
+ * retain the full head depth so a hat stays centred over the skull, not the nose. */
 export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: Vector3 } | null {
-  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), bounds = new Box3(), point = new Vector3();
+  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), bounds = new Box3(), depth = new Box3(), point = new Vector3();
   const binds = geometry.userData.crowdBinds as number[] | undefined, inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined;
-  for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && (inverse || parts.getY(i) === -1) && parts.getW(i) < 1024 && !parts.getZ(i)) {
-    point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse); bounds.expandByPoint(point);
+  for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) !== -6 && parts.getW(i) < 1024 && !parts.getZ(i)) {
+    point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse);
+    if (parts.getY(i) === -1) bounds.expandByPoint(point);
+    if (inverse) depth.expandByPoint(point);
   }
+  if (!bounds.isEmpty() && !depth.isEmpty()) { bounds.min.x = depth.min.x; bounds.max.x = depth.max.x; }
   return bounds.isEmpty() ? null : { size: bounds.getSize(new Vector3()), centre: bounds.getCenter(new Vector3()) };
 }
 /** Head-local height of a spectacle frame: near-black neutral, untagged head vertices in front of the skull centre
@@ -85,6 +89,7 @@ export class CrowdAccessories extends Group {
   private readonly skinnedModels = new Set<string>();
   private readonly skullLods = new Map<string, number>();
   private readonly measuredGlasses = new Map<string, number>();
+  private readonly minimumHatY = new Map<string, number>();
   private readonly fitTransform = new Matrix4();
   constructor(private readonly shading?: Materials) {
     super(); this.name = 'crowd-accessories';
@@ -105,11 +110,23 @@ export class CrowdAccessories extends Group {
    * shoulders, reading as multicoloured patches over the horde). */
   registerSkull(model: string, geometry: BufferGeometry): void {
     const rank = geometry.userData.crowdLod === 'lod1' ? 0 : geometry.userData.crowdLod === 'lod0' ? 1 : 2;
-    if (this.fits.has(model) && rank >= (this.skullLods.get(model) ?? 2)) return;
     const skull = bakedSkull(geometry); if (!skull) return;
-    this.skullLods.set(model, rank);
     const frames = glassesTop(geometry);
-    if (geometry.userData.crowdBinds && frames !== null) this.measuredGlasses.set(model, frames);
+    if (geometry.userData.crowdBinds) {
+      // One immutable fit serves all LODs. Their skin bounds can differ by a few
+      // millimetres; keep even a shallow beanie above every LOD's upper face.
+      const minimum = skull.centre.y - skull.size.y * .25 + .002;
+      if (minimum > (this.minimumHatY.get(model) ?? -Infinity)) {
+        this.minimumHatY.set(model, minimum);
+        for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
+      }
+      if (frames !== null && frames > (this.measuredGlasses.get(model) ?? -Infinity)) {
+        this.measuredGlasses.set(model, frames);
+        for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
+      }
+    }
+    if (this.fits.has(model) && rank >= (this.skullLods.get(model) ?? 2)) return;
+    this.skullLods.set(model, rank);
     for (const cache of [this.lifts, this.accessoryFits]) for (const key of cache.keys()) if (key.endsWith(`/${model}`)) cache.delete(key);
     if (geometry.userData.crowdBinds) this.skinnedModels.add(model);
     const scale = skull.size.divide(referenceSkull.size);
@@ -216,21 +233,31 @@ export class CrowdAccessories extends Group {
         if (!geometry.boundingBox) geometry.computeBoundingBox(); width = Math.max(width, geometry.boundingBox!.clone().applyMatrix4(this.fitTransform).getSize(new Vector3()).z);
       }
       if (width > referenceSkull.size.z * scale.z * limit) this.fitTransform.premultiply(new Matrix4().makeTranslation(0, 0, centre.z).multiply(new Matrix4().makeScale(1, 1, referenceSkull.size.z * scale.z * limit / width)).multiply(new Matrix4().makeTranslation(0, 0, -centre.z)));
+      const bounds = new Box3();
+      for (const lod of ['lod0', 'lod1']) {
+        const geometry = this.batches.get(`${id}:${lod}`)?.geometry; if (geometry?.boundingBox) bounds.union(geometry.boundingBox.clone().applyMatrix4(this.fitTransform));
+      }
+      if (!bounds.isEmpty()) {
+        const offset = bounds.getCenter(new Vector3()).x - centre.x, allowance = referenceSkull.size.x * scale.x * .2;
+        if (Math.abs(offset) > allowance) this.fitTransform.premultiply(new Matrix4().makeTranslation(Math.sign(offset) * allowance - offset, 0, 0));
+      }
     }
   }
   /** PO 10-22 #108 "Glasses are on the hat": hats were fitted to the bare skull, so a brim sat below the frames of
    * a spectacled head (civilian-woman-b, elderly) and the temples poked out through the crown. Seat such a hat with
    * its lowest point just above the frames, the way people wear a hat over glasses. Cached per hat/model. */
   private glassesLift(id: string, model: string): number {
-    let top = this.measuredGlasses.get(model) ?? spectacleTops[model.replace(/\.aftermath$/, '')]; if (top === undefined || definitions.get(id)?.slot !== 'hat') return 0;
-    if (this.skinnedModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
+    let top = this.measuredGlasses.get(model) ?? spectacleTops[model.replace(/\.aftermath$/, '')];
+    const seat = this.minimumHatY.get(model);
+    if (definitions.get(id)?.slot !== 'hat' || top === undefined && seat === undefined) return 0;
+    if (top !== undefined && this.skinnedModels.has(model) && !this.measuredGlasses.has(model)) top = this.glassesPoint.set(0, top, 0).applyMatrix4(this.fits.get(model)!).y;
     const key = `${id}/${model}`, cached = this.lifts.get(key); if (cached !== undefined) return cached;
     // One lift for both LOD pieces, so a LOD change never moves the hat.
     const meshes = [this.batches.get(`${id}:lod0`), this.batches.get(`${id}:lod1`)].filter(mesh => !!mesh); if (!meshes.length) return 0;
     const point = new Vector3();
     let bottom = Infinity;
     for (const mesh of meshes) { const position = mesh.geometry.getAttribute('position'); for (let i = 0; i < position.count; i++) bottom = Math.min(bottom, point.fromBufferAttribute(position, i).applyMatrix4(this.fitTransform).y); }
-    const lift = Math.max(0, top + glassesClearance - bottom); this.lifts.set(key, lift); return lift;
+    const lift = Math.max(0, Math.max(top === undefined ? -Infinity : top + glassesClearance, seat ?? -Infinity) - bottom); this.lifts.set(key, lift); return lift;
   }
   private readonly lifts = new Map<string, number>();
   private readonly glassesPoint = new Vector3();

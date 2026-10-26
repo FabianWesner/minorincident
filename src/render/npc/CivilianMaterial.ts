@@ -49,7 +49,10 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const instance = mat4(attribute('_crowd0', 'vec4'), attribute('_crowd1', 'vec4'), attribute('_crowd2', 'vec4'), attribute('_crowd3', 'vec4')), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
     const matrix = options.skinned ? skinnedCrowdMatrix(pose, part, overlay.w, outgoing, weight, options.bindRow) : crowdBlendedMatrix(pose, part, overlay.w, outgoing, weight);
-    material.positionNode = instance.mul(matrix.mul(vec4(mix(positionGeometry, attribute('_gripPosition', 'vec3'), grip).mul(crowdHeadwearVisibility()).mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
+    const position = mix(positionGeometry, attribute('_gripPosition', 'vec3'), grip);
+    // A skinned vertex is in world bind space. Collapsing hidden crown vertices
+    // to zero stretches its seam down to the body origin; discard the surface instead.
+    material.positionNode = instance.mul(matrix.mul(vec4(options.skinned ? position : position.mul(crowdHeadwearVisibility()).mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     const finger = part.equal(handIndex).and(parts.y.equal(-1)).and(positionGeometry.y.lessThan(-.045)).and(positionGeometry.y.greaterThan(-.2));
     const curl = positionGeometry.y.negate().sub(.045).div(.035).clamp(0, Math.PI).mul(finger.select(grip, 0));
     const bentNormal = vec3(normalGeometry.x.mul(cos(curl)).sub(normalGeometry.y.mul(sin(curl))), normalGeometry.x.mul(sin(curl)).add(normalGeometry.y.mul(cos(curl))), normalGeometry.z);
@@ -60,7 +63,10 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
       material.maskNode = eyeDisc.not().or(eyeGlow.greaterThan(.01).and(radius.lessThanEqual(1)));
       material.userData.frozenSurfaceMask = eyeDisc.not();
     }
-    if (options.skinned) material.maskNode = material.maskNode ? (material.maskNode as Node<'bool'>).and(parts.w.lessThan(1024)) : parts.w.lessThan(1024);
+    if (options.skinned) {
+      const visible = parts.w.lessThan(1024).and(crowdHeadwearVisibility().greaterThan(.5)).and(vein.lessThan(.5).or(decay.greaterThan(.25)));
+      material.maskNode = material.maskNode ? (material.maskNode as Node<'bool'>).and(visible) : visible;
+    }
     entry = { material, pose, atlas, uses: 0 }; cache.set(key, entry);
   }
   const owned = entry; owned.uses++; let released = false;

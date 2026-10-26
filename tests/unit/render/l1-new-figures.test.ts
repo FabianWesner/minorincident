@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { expect, test } from 'vitest';
-import { Box3, Mesh, SkinnedMesh, Vector3 } from 'three';
+import { Box3, BufferGeometry, Float32BufferAttribute, Matrix4, Mesh, SkinnedMesh, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../../src/assets/manifest.json';
@@ -11,6 +11,19 @@ import { PawContacts } from '../../../src/render/characters/PawContacts';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
 import { variantPath } from '../../../src/assets/types';
 import { assetIO } from '../../../tools/assets/io';
+import { bakedSkull } from '../../../src/render/characters/CrowdAccessories';
+import { characterNodes } from '../../../src/data/survivor';
+
+test('L1 skinned headwear excludes bun height and glasses while retaining skull depth @E08', () => {
+  const geometry = new BufferGeometry(), head = characterNodes.indexOf('head');
+  geometry.setAttribute('position', new Float32BufferAttribute([-.1, 1.2, -.15, .15, 1.5, .15, -.4, 1.8, -.4, .4, 2.2, .4, .3, 1.6, .2], 3));
+  geometry.setAttribute('_parts', new Float32BufferAttribute([head, -1, 0, 0, head, -1, 0, 0, head, 0, 0, 0, head, 0, 0, 4, head, -6, 0, 0], 4));
+  geometry.userData.crowdBinds = Array.from({ length: characterNodes.length }, () => new Matrix4().toArray()).flat();
+  const skull = bakedSkull(geometry)!;
+  expect(skull.size.x).toBeCloseTo(.8); expect(skull.size.y).toBeCloseTo(.3);
+  expect(skull.centre.y).toBeCloseTo(1.35); expect(skull.size.z).toBeCloseTo(.3);
+  geometry.dispose();
+});
 
 async function load(path: string) {
   return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(path)), '')).scene;

@@ -82,7 +82,7 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
     const inverse = binds ? new Matrix4().fromArray(binds, characterNodes.indexOf('head') * 16) : undefined, point = new Vector3();
     let low = Infinity, high = -Infinity;
     const headY = (i: number) => { point.fromBufferAttribute(position, i); if (inverse) point.applyMatrix4(inverse); return point.y; };
-    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
+    if (inverse) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === -1 && parts.getW(i) < 1024 && !parts.getZ(i)) { const y = headY(i); low = Math.min(low, y); high = Math.max(high, y); }
     const crown = inverse ? low + (high - low) * .82 : .4;
     for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getW(i) < 1024 && headY(i) > crown && !parts.getZ(i)) parts.setW(i, 4);
     return;

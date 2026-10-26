@@ -34,7 +34,17 @@ for file, scene, frames in [
     grid([cell(scenes / scene / f'shot-{frame:04}.png', f'{scene} / frame {frame}') for frame in frames], file)
 
 models = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive']
-cells = [cell(scenes / f'{model}-states' / 'shot-0003.png', f'{model} / live | turned | corpse') for model in models]
+cells = []
+for model in models:
+    phases = []
+    for state in ['healthy', 'turned', 'corpse']:
+        im = Image.open(scenes / f'{model}-{state}' / 'shot-0180.png').convert('RGB').crop((400, 0, 1200, 900))
+        phases.append(im.resize((400, 450), Image.Resampling.LANCZOS))
+    row = Image.new('RGB', (1200, 488), '#24242c')
+    ImageDraw.Draw(row).text((8, 8), f'{model} / live | turned | corpse', font=font, fill='white')
+    for i, im in enumerate(phases):
+        row.paste(im, (i * 400, 38))
+    cells.append(row)
 for scene, frames in [('corgi-tongue-female', [300, 880, 1540]), ('corgi-tongue-male', [600]), ('corgi-sit', [420]), ('corgi-behaviour', [430, 520]), ('dog-bike-follow', [330])]:
     cells.extend(cell(scenes / scene / f'shot-{frame:04}.png', f'{scene} / frame {frame}') for frame in frames)
 grid(cells, '14-states-and-motion.jpg')
