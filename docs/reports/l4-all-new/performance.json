@@ -1,0 +1,166 @@
+{
+  "scope": "Matched 30-figure D-FAIR L4 street; Scene Lab also preloads its catalog. Texture bytes are decoded/compressed mip allocations, not download bytes. Old assets supplied from immutable 83503eb18 manifest/bakes over browser routes; same game code and camera.",
+  "timingStatus": "PERF PENDING: shared host busy (load average 6-8). PO quiet-window gate remains low p95 <= main +1ms and five cold-load worst <= PROD *1.10.",
+  "crowd": [
+    {
+      "config": "high-webgl2",
+      "old": {
+        "drawsP95": 78,
+        "trianglesP95": 171779,
+        "decodedTextureBytes": 340354736,
+        "textureCount": 204,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "new": {
+        "drawsP95": 78,
+        "trianglesP95": 159579,
+        "decodedTextureBytes": 348503768,
+        "textureCount": 231,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "deltaDecodedBytes": 8149032
+    },
+    {
+      "config": "high-webgpu",
+      "old": {
+        "drawsP95": 78,
+        "trianglesP95": 171779,
+        "decodedTextureBytes": 340354736,
+        "textureCount": 204,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "new": {
+        "drawsP95": 78,
+        "trianglesP95": 159579,
+        "decodedTextureBytes": 348503768,
+        "textureCount": 231,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "deltaDecodedBytes": 8149032
+    },
+    {
+      "config": "low-webgl2",
+      "old": {
+        "drawsP95": 77,
+        "trianglesP95": 163365,
+        "decodedTextureBytes": 301832320,
+        "textureCount": 182,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "new": {
+        "drawsP95": 77,
+        "trianglesP95": 151469,
+        "decodedTextureBytes": 305150408,
+        "textureCount": 205,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "deltaDecodedBytes": 3318088
+    },
+    {
+      "config": "low-webgpu",
+      "old": {
+        "drawsP95": 77,
+        "trianglesP95": 163365,
+        "decodedTextureBytes": 301832320,
+        "textureCount": 182,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "new": {
+        "drawsP95": 77,
+        "trianglesP95": 151469,
+        "decodedTextureBytes": 305150408,
+        "textureCount": 205,
+        "actors": 30,
+        "submittedModelBatches": [
+          "inf.crawler",
+          "infected.riot",
+          "inf.firefighter",
+          "inf.hazmat",
+          "inf.alpha",
+          "inf.alpha-worker",
+          "inf.alpha-hoodie",
+          "inf.alpha-fire",
+          "inf.alpha-suit"
+        ]
+      },
+      "deltaDecodedBytes": 3318088
+    }
+  ]
+}

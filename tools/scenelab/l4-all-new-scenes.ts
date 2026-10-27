@@ -40,6 +40,24 @@ const corpses: SceneSpec = {
   camera: { mode: 'game', target: [0, .4, 0], zoom: 1.5 }, frames: 120, shots: [120], trace: true,
   expect: { consoleErrors: 0, groundingCorpsesMin: 9 },
 };
+function resourceSnapshot() {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const textures = new Set<import('three').Texture>();
+      game.view.scene.traverse(node => {
+        const mesh = node as import('three').Mesh;
+        if (mesh.isMesh) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) for (const value of Object.values(material)) if (value && typeof value === 'object' && 'isTexture' in value) textures.add(value as import('three').Texture);
+        for (const texture of node.userData.preRenderTextures ?? []) textures.add(texture);
+      });
+      let decodedBytes = 0, rgbaUpperBoundBytes = 0;
+      for (const texture of textures) {
+        const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } };
+        if (!image?.width || !image.height) continue;
+        const mips = texture.mipmaps as { data?: { byteLength: number } }[];
+        decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
+        rgbaUpperBoundBytes += image.data?.byteLength ?? Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps || mips.length > 1 ? 4 / 3 : 1));
+      }
+      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
+}
 const session = new SceneSession({ backend, tier, viewport: { width: 1600, height: 900 }, query: { crowdProbe: 'full' } });
 const receipts: unknown[] = [];
 try {
@@ -78,42 +96,37 @@ try {
   if (mode === 'battle') {
     await session.page.evaluate(async () => {
       const api = window.__SS__!; await api.loadLevel('L4', { seed: 3, checkpoint: 'turn', progression: 'L4-default' });
-      api.pause(); api.cheats.god(true); api.teleport('player', { x: -22.85, z: .7 }); api.camera.follow(); api.camera.zoom(1);
+      api.pause(); api.cheats.god(true); api.teleport('player', { x: -29, z: 4 }); api.camera.follow(); api.camera.zoom(1);
     });
     for (const seconds of [30, 60, 120, 180]) {
       await session.page.evaluate(async seconds => {
         const api = window.__SS__!, target = api.missions.state()!.l4!.turnAt + seconds * 60;
-        while (api.tick() < target) await api.step(Math.min(60, target - api.tick()));
+        while (api.tick() < target) { api.teleport('player', { x: -29, z: 4 }); await api.step(Math.min(60, target - api.tick())); }
         await api.screenshotReady();
       }, seconds);
       const state = await session.page.evaluate(() => ({ tick: window.__SS__!.tick(), mission: window.__SS__!.missions.state(), layout: window.__SS__!.debug.corpseLayout(), render: window.__SS__!.getState().render, figures: window.__SS__!.crowdFigures() }));
-      receipts.push({ seconds, state }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
+      const resources = await session.page.evaluate(resourceSnapshot);
+      receipts.push({ seconds, state, resources }); writeJson(`${out}/receipts.json`, receipts); await session.screenshot(`${out}/${seconds}s.png`);
     }
     await session.page.evaluate(() => window.__SS__!.camera.zoom(1.5)); await session.ready(); await session.screenshot(`${out}/180s-zoom1.5.png`);
+    if (process.env.L4_TIMING === '1') {
+      const hostLoad = loadavg();
+      const cadence = await session.page.evaluate(async () => {
+        const api = window.__SS__!; api.resume(); const frames: number[] = []; let previous = 0, warm: Record<string, number> = {};
+        for (let i = 0; i < 720; i++) { const now = await new Promise<number>(requestAnimationFrame); if (i === 119) warm = { ...api.perf().nodeBuildMaterials }; if (i >= 120 && previous) frames.push(now - previous); previous = now; }
+        api.pause(); frames.sort((a, b) => a - b);
+        return { count: frames.length, p95: frames[Math.ceil(frames.length * .95) - 1], max: frames.at(-1), over200: frames.filter(t => t > 200).length, builds: Object.entries(api.perf().nodeBuildMaterials).filter(([key, count]) => count !== (warm[key] ?? 0)), perf: api.perf() };
+      });
+      writeJson(`${out}/cadence.json`, { variant, tier, backend, hostLoad, cadence, timingStatus: 'Shared-host diagnostic; quiet p95/main and PROD five-cold-load comparison pending' });
+      assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
+    }
   }
   if (mode === 'crowd' || mode === 'corpses' || mode === 'perf') {
     const spec = mode === 'corpses' ? corpses : crowd30;
     const result = await runSpec(session, spec, { out, sheet: 0 });
     receipts.push(result); assert.ok(result.pass, JSON.stringify(result.failed));
     const metrics = await session.metrics();
-    const resources = await session.page.evaluate(() => {
-      const game = (window.__SCENE__ as unknown as { game: Game }).game;
-      const textures = new Set<import('three').Texture>();
-      game.view.scene.traverse(node => {
-        const mesh = node as import('three').Mesh;
-        if (mesh.isMesh) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) for (const value of Object.values(material)) if (value && typeof value === 'object' && 'isTexture' in value) textures.add(value as import('three').Texture);
-        for (const texture of node.userData.preRenderTextures ?? []) textures.add(texture);
-      });
-      let decodedBytes = 0, rgbaUpperBoundBytes = 0;
-      for (const texture of textures) {
-        const image = texture.image as { width?: number; height?: number; data?: { byteLength: number } };
-        if (!image?.width || !image.height) continue;
-        const mips = texture.mipmaps as { data?: { byteLength: number } }[];
-        decodedBytes += mips.reduce((n, mip) => n + (mip.data?.byteLength ?? 0), 0) || image.data?.byteLength || Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps ? 4 / 3 : 1));
-        rgbaUpperBoundBytes += image.data?.byteLength ?? Math.ceil(image.width * image.height * 4 * (texture.generateMipmaps || mips.length > 1 ? 4 / 3 : 1));
-      }
-      return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
-    });
+    const resources = await session.page.evaluate(resourceSnapshot);
     if (mode === 'crowd' || mode === 'perf') {
       assert.equal(Object.keys(metrics.actors).length, 30);
       assert.ok(Object.values(metrics.actors).every(a => a.drawnFrames > 0), 'Every street-crowd figure submitted');

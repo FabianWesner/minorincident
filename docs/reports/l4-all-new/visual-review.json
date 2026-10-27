@@ -1,0 +1,88 @@
+{
+  "camera": "production isometric game camera, front -45/back 135 degrees",
+  "nativePixels": [
+    120,
+    400
+  ],
+  "configs": [
+    "high-webgl2",
+    "high-webgpu",
+    "low-webgl2",
+    "low-webgpu"
+  ],
+  "baselineAssets": "83503eb18",
+  "figureSheets": [
+    {
+      "id": "inf.crawler",
+      "sheet": "01-inf.crawler.jpg",
+      "sha256": "4a05f7adc744f39e061530a809cd296869dc48efc3e647a02ad8a343075ed071",
+      "reviewed": true,
+      "review": "Both wrists and hands use the face skin palette; higher wrist selected anatomically. Brown hair no longer bleeds white, red eyes and mouth/teeth read at 120px. Prone production bake checked in street crowd."
+    },
+    {
+      "id": "inf.riot-cop",
+      "sheet": "02-inf.riot-cop.jpg",
+      "sha256": "f0e31873a12ec0b35c949b2dfa892fc711d724c974a08603ef50d359d466c7aa",
+      "reviewed": true,
+      "review": "Shield, POLICE mark and baton retained at every LOD; navy helmet clears eyes. Face and exposed hand palette consistent; no floating equipment."
+    },
+    {
+      "id": "inf.firefighter",
+      "sheet": "03-inf.firefighter.jpg",
+      "sha256": "d9d75889117a8f4dfcb01738b1a12d43fcb9d1d1fbf7dc07f789d2982c45fdd6",
+      "reviewed": true,
+      "review": "Red helmet, yellow turnout outfit, reflective bands and axe remain readable; eyes clear helmet brim; face/hands use the same infected skin palette."
+    },
+    {
+      "id": "inf.hazmat",
+      "sheet": "04-inf.hazmat.jpg",
+      "sha256": "067c0c7e5ae361a348a2acf3e57ef2fcd954ebb7d16127bbbd928d8dc84ff0cb",
+      "reviewed": true,
+      "review": "Yellow suit and dark respirator/visor remain distinct, no exposed human skin; closed body with no missing limbs or garment bleed."
+    },
+    {
+      "id": "inf.alpha",
+      "sheet": "05-inf.alpha.jpg",
+      "sha256": "680bf00ed1c0d66c69b3d72db179569071a982bb472fe7f08f53abae354e7271",
+      "reviewed": true,
+      "review": "Large grey face/arms consistent, eyes visible below brown crown; continuous ripped white top/dark trousers, no UV peach seam. Solid corpse checked separately."
+    },
+    {
+      "id": "inf.alpha-worker",
+      "sheet": "06-inf.alpha-worker.jpg",
+      "sha256": "c240feaf804dd734472d4595987fc89ce0a6a6b90051ea769524ca3c1cc5b6e8",
+      "reviewed": true,
+      "review": "Hard hat follows the new head, face/arms consistent; worker outfit and large silhouette distinct from base. Solid corpse checked separately."
+    },
+    {
+      "id": "inf.alpha-hoodie",
+      "sheet": "07-inf.alpha-hoodie.jpg",
+      "sha256": "0c32995051bfa3b290fb8cdaff895419417e3c894c0bcc518722d2ca748efb3f",
+      "reviewed": true,
+      "review": "Green hood follows crown rather than floating at shoulders; grey face/hands remain separate from green garment; all runtime variants retain independent batches."
+    },
+    {
+      "id": "inf.alpha-fire",
+      "sheet": "08-inf.alpha-fire.jpg",
+      "sha256": "f29c5f61d85d0221f500a086faa982fe523f9ceb7fd2cdb8781b96df4e13107c",
+      "reviewed": true,
+      "review": "Gold firefighter headwear and orange/yellow outfit stay separate from grey face/hands; no eye paint-over; large corpse retains outfit identity."
+    },
+    {
+      "id": "inf.alpha-suit",
+      "sheet": "09-inf.alpha-suit.jpg",
+      "sha256": "29b2e6b99f74957680a5ed9a8eded0e42ef89da1610ef48176d5abcb4b13476a",
+      "reviewed": true,
+      "review": "Navy crown and torn dark suit retain grey face/hands and red eyes; no garment bleed into beard/eyes; corpse remains a whole body."
+    }
+  ],
+  "pipelineCommit": "6c85513",
+  "newInferences": 1,
+  "paidHfCreditsEUR": 0,
+  "guard": "Inherited from L3 when corrected body lands on main; no duplicate build retained. Shared weapon fix 4216c70a5.",
+  "runtimeReview": {
+    "street": "30 figures old/new on high/low WebGL2/WebGPU, zoom 1 and 1.5. All nine converted model batches submitted independently. Crawler prone; shield/axe retained; carryover pedestrian infected crouch poses match baseline.",
+    "corpses": "All nine old/new on high/low WebGL2/WebGPU, three close groups each. Whole continuous bodies and retained outfit colours; shield/axe remain attached. All five Alpha variants remain solid with radius 1 and block movement; courier cut active and legal relocation checked.",
+    "gunReview": "16 high/WebGL2 native close-ups: four angles of rifle, hunting rifle, pistol, shotgun. No plank silhouettes or floating weapons. Shared path will be reconciled with L3 before final acceptance."
+  }
+}
