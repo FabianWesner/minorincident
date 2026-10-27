@@ -35,7 +35,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     headless: true,
     launchOptions: { args: gpuArgs },
-    ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS } } : {}),
+    ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS, headers: { 'x-mi-job': process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? 'playwright' } } } : {}),
   },
   projects: [
     { name: 'chromium', ...(process.env.MI_REMOTE === '1' ? { testMatch: '**/e2e/**/*.spec.ts' } : {}), testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },

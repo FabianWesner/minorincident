@@ -1,5 +1,5 @@
 import { chromium, type Browser, type BrowserContextOptions, type LaunchOptions } from '@playwright/test';
-import { delay, gpuAdmission, reserveLegacySlots } from './host';
+import { gpuAdmission, reserveLegacySlots } from './host';
 import { ensurePool } from './ensure';
 
 type Health = { protocol: number; endpoints: { gpu: string; swiftshader: string }; exclusive: { id: string; granted: boolean }[] };
@@ -20,23 +20,14 @@ export async function poolHealth(): Promise<Health | null> {
 export async function poolEndpoint(): Promise<string | undefined> {
   if (process.env.E2E_LEGACY === '1' || process.env.BROWSER_POOL === 'off' || process.env.MI_REMOTE === '1') return undefined;
   if (process.env.MI_BROWSER_POOL !== '1') await ensurePool();
-  const deadline = Date.now() + Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000);
-  while (true) {
-    const health = await poolHealth();
-    if (!health) {
-      if (process.env.MI_BROWSER_POOL === '1') throw new Error('Pool disappeared after wrapper admission; refusing an unguarded browser launch');
-      return undefined;
-    }
-    const exclusive = process.env.MI_BROWSER_POOL_EXCLUSIVE;
-    if (exclusive && !health.exclusive.some(e => e.id === exclusive && e.granted)) throw new Error('Exclusive pool reservation is missing or not granted');
-    if (exclusive || health.exclusive.length === 0) {
-      const backend = process.env.BROWSER_POOL_BACKEND ?? (process.platform === 'darwin' ? 'gpu' : 'swiftshader');
-      if (backend !== 'gpu' && backend !== 'swiftshader') throw new Error('BROWSER_POOL_BACKEND must be gpu or swiftshader');
-      return health.endpoints[backend] + (exclusive ? `?exclusive=${encodeURIComponent(exclusive)}` : '');
-    }
-    if (Date.now() >= deadline) throw new Error('Pool exclusive admission exceeded wait deadline');
-    await delay(500);
-  }
+  const health = await poolHealth();
+  if (!health) throw new Error('Pool disappeared after admission; refusing an unguarded browser launch');
+  const exclusive = process.env.MI_BROWSER_POOL_EXCLUSIVE;
+  if (exclusive && !health.exclusive.some(e => e.id === exclusive && e.granted)) throw new Error('Exclusive pool reservation is missing or not granted');
+  const backend = process.env.BROWSER_POOL_BACKEND ?? (process.platform === 'darwin' ? 'gpu' : 'swiftshader');
+  if (backend !== 'gpu' && backend !== 'swiftshader') throw new Error('BROWSER_POOL_BACKEND must be gpu or swiftshader');
+  // Queue at the daemon's handshake so status includes clients behind exclusive runs.
+  return health.endpoints[backend] + (exclusive ? `?exclusive=${encodeURIComponent(exclusive)}` : '');
 }
 
 /** A remote Browser.close disconnects this client; it never kills the shared Chrome. */

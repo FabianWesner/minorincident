@@ -9,7 +9,9 @@ try { buildCommit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { enco
 let cacheDir = '.vite-cache';
 try {
   const common = execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim();
-  const cacheKey = createHash('sha256').update(readFileSync('package-lock.json')).update(readFileSync('vite.config.ts')).digest('hex').slice(0, 20);
+  // Vite 6 optimizer metadata hashes config.root and embeds absolute package paths.
+  // Keep optimizer writers isolated; the dependency store and immutable dist are shared.
+  const cacheKey = createHash('sha256').update(readFileSync('package-lock.json')).update(readFileSync('vite.config.ts')).update(resolve('.')).digest('hex').slice(0, 20);
   cacheDir = resolve(process.env.MI_WORKTREE_CACHE ?? dirname(common) + '/.mi-worktree-cache', 'vite', cacheKey);
 } catch { /* Source archives use the local cache. */ }
 export default defineConfig({

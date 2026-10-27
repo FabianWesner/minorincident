@@ -16,7 +16,8 @@ if ! command -v lockf >/dev/null 2>&1; then
   fallback_seconds="${E2E_RESERVATION_SECONDS:-600}"
   case "$fallback_seconds" in ''|*[!0-9]*|0) echo 'E2E_RESERVATION_SECONDS must be a positive integer' >&2; exit 2;; esac
   [ "$fallback_seconds" -le 600 ] || { echo 'Browser reservations are capped at 10 minutes; split the batch.' >&2; exit 2; }
-  exec python3 "$root/tools/browser-job.py" --seconds "$fallback_seconds" -- "$@"
+  fallback_run=$((fallback_seconds - 5)); [ "$fallback_run" -gt 0 ] || fallback_run=1
+  exec python3 "$root/tools/browser-job.py" --seconds "$fallback_run" -- "$@"
 fi
 if [ "${MI_E2E_JOB_HELD:-}" != 1 ]; then
   export MI_E2E_JOB_HELD=1

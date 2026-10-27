@@ -27,6 +27,7 @@ const deadline = Date.now() + admissionMs;
 const cooldown = `${process.env.E2E_LOCK ?? '/tmp/minor-incident-e2e.lock'}.quiet-finished`;
 let token: string | undefined, started = false, cancelled = false;
 let child: ReturnType<typeof spawn> | undefined;
+let heartbeat: ReturnType<typeof setInterval> | undefined;
 process.on('SIGINT', () => { cancelled = true; child?.kill('SIGINT'); });
 process.on('SIGTERM', () => { cancelled = true; child?.kill('SIGTERM'); });
 const request = async (path: string, method = 'GET') => {
@@ -45,6 +46,7 @@ try {
     }
     if (cancelled) throw new Error('Exclusive admission cancelled');
     token = (await request(`/exclusive?job=${encodeURIComponent(process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? '')}`, 'POST') as { id: string }).id;
+    heartbeat = setInterval(() => { void request(`/exclusive/${token}`).catch(() => { cancelled = true; child?.kill('SIGTERM'); }); }, 5000);
     while (!cancelled) {
       const status = await request(`/exclusive/${token}?quiet=1`) as { granted: boolean; grantedAt?: number; conditions: { quiet: boolean; load: number[]; busy: unknown[] } };
       if (status.granted && !reservedAt) reservedAt = status.grantedAt ?? Date.now();
@@ -73,17 +75,15 @@ try {
     if (!endpoint) throw new Error('Pool disappeared after wrapper admission');
     process.env.MI_BROWSER_POOL_WS = endpoint;
   }
-  let heartbeat: ReturnType<typeof setInterval> | undefined;
-  if (token) heartbeat = setInterval(() => { void request(`/exclusive/${token}`).catch(() => child?.kill('SIGTERM')); }, 5000);
+  if (cancelled) throw new Error('Browser admission cancelled');
   started = true;
-  try {
-    const remaining = capSeconds - (reservedAt ? Math.ceil((Date.now() - reservedAt) / 1000) : 0);
-    const args = ['tools/browser-job.py', '--seconds', String(Math.max(1, remaining - 5)), '--', ...command];
-    child = spawn('python3', args, { stdio: 'inherit', env: { ...process.env, MI_E2E_JOB_HELD: '1' } });
-    process.exitCode = await new Promise<number>((resolve, reject) => { child!.once('error', reject); child!.once('exit', (code, signal) => resolve(code ?? (signal ? 128 : 1))); });
-  } finally { if (heartbeat) clearInterval(heartbeat); }
+  const remaining = capSeconds - (reservedAt ? Math.ceil((Date.now() - reservedAt) / 1000) : 0);
+  const args = ['tools/browser-job.py', '--seconds', String(Math.max(1, remaining - 5)), '--', ...command];
+  child = spawn('python3', args, { stdio: 'inherit', env: { ...process.env, MI_E2E_JOB_HELD: '1' } });
+  process.exitCode = await new Promise<number>((resolve, reject) => { child!.once('error', reject); child!.once('exit', (code, signal) => resolve(code ?? (signal ? 128 : 1))); });
 } catch (error) { console.error(String(error)); process.exitCode = 75; }
 finally {
+  if (heartbeat) clearInterval(heartbeat);
   if (token) await request(`/exclusive/${token}/release`, 'POST').catch(error => { console.error(String(error)); process.exitCode ||= 1; });
   if (quiet && started) writeFileSync(cooldown, String(Math.floor(Date.now() / 1000)) + '\n');
 }
