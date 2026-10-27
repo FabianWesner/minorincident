@@ -1,4 +1,5 @@
 import { cloneData } from '../../core/clone';
+import { solidLargeCorpse } from '../world/SolidRegistry';
 import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
@@ -232,8 +233,7 @@ export class InfectedSystem {
     this.release(entity); this.world.entities.replace(body);
     // Only the explicitly solid large bodies enter actor occupancy queries;
     // small human corpses remain visual debris and walkable as before.
-    if (body.archetype === 'infected.alpha' || body.infected?.variant.includes('mega-alpha')
-      || ['infected.elephant', 'infected.gorilla', 'infected.lion', 'infected.zebra'].includes(body.archetype ?? '')) {
+    if (solidLargeCorpse(body)) {
       this.world.spatial.set(body.id, body.transform.x, body.transform.z);
     }
   }

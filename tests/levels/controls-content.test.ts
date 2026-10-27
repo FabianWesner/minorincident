@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import { l4, l4Inside } from '../../src/data/l4';
+import { l4 } from '../../src/data/l4';
 import { L4Collapse } from '../../src/sim/missions/L4Collapse';
 import { L4Spectacle, spawnSetPiece } from '../../src/sim/missions/L4Spectacle';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
@@ -39,11 +39,12 @@ test('@E22 @E22-AC11 tank aims at a safe fallback during cooldown and fires on s
   expect(shots).toHaveLength(1); expect(shots[0].tick).toBe(600);
 }, 120_000);
 
-test('@E22 @E22-AC13 first-line pressure can use concealed camp exits after the immediate pickup alarm', async () => {
+test('@E22 @E22-AC13 first-line pressure uses exterior flanks after the immediate pickup alarm', async () => {
   const l = await loadL4(2); world = l.world; const m = l.mission, s = m.state.l4!;
   m.completeObjective('ride'); world.update(); m.completeObjective('quartermaster');
   Object.assign(world.entities.get(1)!.transform, { x: -21, z: -8 });
-  const exit = l4Inside.find(([x, z]) => Math.hypot(x + 21, z + 8) >= 12)!;
+  // Q-192 removes concealed camp/tent exits: even occluded sources must be beyond the perimeter.
+  const exit = l4.director.flanks[0].find(([x, z]) => world!.infected!.nav.clear(x, z, .45) && Math.hypot(x + 21, z + 8) >= 12)!;
   vi.spyOn(world.infected!.director, 'offscreen').mockReturnValue(false);
   vi.spyOn(world.infected!.director, 'occluded').mockImplementation(p => p.x === exit[0] && p.z === exit[1]);
   const spawned: { x: number; z: number }[] = [];
@@ -55,4 +56,6 @@ test('@E22 @E22-AC13 first-line pressure can use concealed camp exits after the 
   expect(spawned).toHaveLength(1);
   expect(Math.hypot(spawned[0].x - exit[0], spawned[0].z - exit[1])).toBeLessThanOrEqual(1);
   expect(world.infected!.nav.clear(spawned[0].x, spawned[0].z, .45)).toBe(true);
+  const p = l4.perimeter;
+  expect(spawned[0].x < p.x0 || spawned[0].x > p.x1 || spawned[0].z < p.z0 || spawned[0].z > p.z1).toBe(true);
 }, 120_000);

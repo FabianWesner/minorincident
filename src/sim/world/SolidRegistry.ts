@@ -15,12 +15,12 @@ const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
 export function actorRadius(e: EntitySnapshot): number {
   // Corgi uses a 0.88 m wide capsule, with fore/aft probes for its longer body.
-  if (e.corpse && e.infected?.variant?.includes('mega-alpha')) return 1.45;
-  if (e.corpse && e.archetype === 'infected.alpha') return 1;
+  if (e.health.current <= 0 && e.infected?.variant?.includes('mega-alpha')) return 1.45;
+  if (e.health.current <= 0 && e.archetype === 'infected.alpha') return 1;
   return e.companion ? .44 : e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
-function solidLargeCorpse(e: EntitySnapshot): boolean {
-  return !!e.corpse && (!!e.civilian?.zooAnimal || e.archetype === 'infected.alpha' || !!e.infected?.variant?.includes('mega-alpha'));
+export function solidLargeCorpse(e: EntitySnapshot): boolean {
+  return e.health.current <= 0 && (!!e.civilian?.zooAnimal || /^infected\.(alpha|lion|gorilla|elephant|zebra|flamingo)$/.test(e.archetype ?? '') || !!e.infected?.variant?.includes('mega-alpha'));
 }
 function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse || solidLargeCorpse(e)) && e.civilian?.state !== 'finished' && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;

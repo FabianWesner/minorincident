@@ -16,7 +16,7 @@ for (const tier of ['high', 'low'] as const) {
       const live = () => [...w.entities.iterate()].filter(e => e.infected && !e.hidden && e.health.current > 0 && e.archetype !== 'infected.alpha');
       const authored = l4.calm.alarmInfected[tier];
       const alarmIds = m.state.l4!.emergedIds.slice(0, authored);
-      expect(alarmIds.length, 'the full authored alarm group is assigned to the authored tent doors').toBe(authored);
+      expect(alarmIds.length, 'the full authored alarm group is assigned to exterior streets').toBe(authored);
       expect(alarmIds.filter(id => !w.entities.get(id)?.emerging).length, 'the alarm group arrives at exterior street mouths, never walking out of tents').toBe(authored);
       let emergedAt30 = 0;
       for (let i = 0; i < 75 * 60; i++) {

@@ -4,6 +4,7 @@ import { crowdTexture, interleaveTexturedCrowd } from './characters/crowdTexture
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { regularInfectedModels } from '../data/crowdAppearance';
+import { l4InfectedArchetypes, l4InfectedLooks } from '../data/l4';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
@@ -134,6 +135,7 @@ export class CrowdView extends Group {
     const started = performance.now();
     const variants = manifest.filter(a => (a.status === 'integrated' || a.status === 'final') && a.category === 'infected' && !a.textureMode && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && !e.civilian.pet && e.civilian.model ? [e.civilian.model] : []));
+    if (this.world.scenario === 'L4') for (const model of l4InfectedLooks) if (model.startsWith('npc.')) models.add(model);
     const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];
     const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
     // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
@@ -145,6 +147,7 @@ export class CrowdView extends Group {
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
+    if (this.world.scenario === 'L4') for (const model of [...l4InfectedArchetypes, ...l4InfectedLooks]) l1Roles.add(model);
     // Ordinary and turned pedestrians keep their CivilianCrowd batches (keepsLook
     // below). Only explicit infected model overrides need this view's NPC assets.
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }

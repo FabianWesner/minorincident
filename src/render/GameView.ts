@@ -67,6 +67,7 @@ import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
 import { courierForegroundWanted } from './courierForeground';
+import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 /** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
@@ -783,10 +784,8 @@ export class GameView implements Lifecycle {
   /** Keep the courier's silhouette in front when an Alpha, Mega or zoo corpse overlaps her feet. */
   private nearLargeCorpse(at: { x: number; z: number }): boolean {
     for (const e of this.world.entities.iterate()) {
-      if (!e.corpse || e.hidden || e.infected?.hidden) continue;
-      const large = e.archetype === 'infected.alpha' || e.infected?.variant?.includes('mega-alpha')
-        || ['infected.elephant', 'infected.gorilla', 'infected.lion', 'infected.zebra'].includes(e.archetype ?? '');
-      if (large && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
+      if (e.hidden || e.infected?.hidden) continue;
+      if (solidLargeCorpse(e) && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
     }
     return false;
   }

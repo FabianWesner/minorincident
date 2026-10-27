@@ -58,6 +58,8 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
         engaged: soldiers.filter(e => e.civilian!.ally?.engaged).length,
         peds: peds.length, fleeing: peds.filter(e => e.civilian!.state === 'flee' || e.civilian!.state === 'hide' || e.civilian!.state === 'alarmed').length,
         infected: infected.length, alphas: infected.filter(e => e.archetype === 'infected.alpha').length,
+        models: Object.fromEntries([...new Set(infected.map(e => e.infected!.model ?? e.infected!.variant))].map(model => [model, infected.filter(e => (e.infected!.model ?? e.infected!.variant) === model).length])),
+        drawnModels: [...new Set(a.crowdFigures().filter(f => f.drawn && f.appearance).map(f => f.appearance!.model))],
       };
     });
     await page.screenshot({ path: `${output}/${name}-${label}.png` });

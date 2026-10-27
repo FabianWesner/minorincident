@@ -1,5 +1,5 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { l4, l4Emergence } from '../../src/data/l4';
+import { l4, l4Emergence, l4TentEntrances } from '../../src/data/l4';
 import { PerspectiveCamera, Vector3 } from 'three';
 import { loadL4, runL4 } from './l4Bots';
 
@@ -15,8 +15,8 @@ const seen = new Set<number>();
 const alphaAudit = new Map<number, { id: number; entered: number | null; downed: number | null; finished: number | null }>();
 const pressureSamples: unknown[] = [];
 const originalPeople = new Set<number>();
-const spawns: { t: number; id: number; arch: string; x: number; z: number; dPlayer: number; inView: boolean; emerging: boolean; transformation: boolean; origin: number | null; inside: boolean }[] = [];
-const seconds: { t: number; phase: string; alive: number; inside: number; near: number; insideActive: number; nearActive: number; archetypes: Record<string, number>; corpses14: number; corpseBands: number[]; wire: number; step: string | null; courier: { x: number; z: number } }[] = [];
+const spawns: { t: number; id: number; arch: string; model: string; source: string; x: number; z: number; dPlayer: number; inView: boolean; emerging: boolean; transformation: boolean; origin: number | null; inside: boolean }[] = [];
+const seconds: { t: number; phase: string; alive: number; inside: number; near: number; insideActive: number; nearActive: number; archetypes: Record<string, number>; models: Record<string, number>; corpses14: number; corpseBands: number[]; wire: number; step: string | null; courier: { x: number; z: number } }[] = [];
 const inWallEntries: { t: number; id: number; archetype: string; source: string }[] = [];
 const previousInside = new Map<number, boolean>(); let wallBaseline = false;
 // Game camera view at zoom 1: radius 19, polar 0.3π → the frame covers roughly ±17 m by ±11 m around the courier on the ground.
@@ -43,7 +43,10 @@ const r = runL4(w, m, profile, { seed, god: true, maxSeconds: 520, stopWhen: mm 
   for (const e of w.infected!.active) if (!seen.has(e.id) && !e.hidden && e.health.current > 0) {
     seen.add(e.id);
     const p = w.entities.get(1)!.transform;
-    if (s.turnAt) spawns.push({ t: +((w.tick - s.turnAt) / 60).toFixed(1), id: e.id, arch: e.archetype, x: +e.transform.x.toFixed(1), z: +e.transform.z.toFixed(1), dPlayer: +Math.hypot(e.transform.x - p.x, e.transform.z - p.z).toFixed(1), inView: inView(e.transform) && !w.infected!.director.occluded(e.transform), emerging: !!e.emerging, transformation: originalPeople.has(e.id), origin: s.origin[e.id] ?? null, inside: inside(e.transform) });
+    const origin = s.origin[e.id], transformed = originalPeople.has(e.id), internal = inside(e.transform);
+    const tent = internal && l4TentEntrances.some(t => Math.hypot(e.transform.x - t.at[0], e.transform.z - t.at[1]) < 3);
+    const source = transformed ? 'bite-conversion' : internal ? tent ? 'tent' : 'illegal-internal' : origin === undefined ? e.archetype === 'infected.alpha' ? 'alpha-street' : 'exterior-flank' : origin >= l4Emergence.length ? 'wire/breach' : l4Emergence[origin].door ? 'street-door' : 'street-mouth';
+    if (s.turnAt) spawns.push({ t: +((w.tick - s.turnAt) / 60).toFixed(1), id: e.id, arch: e.archetype, model: e.infected!.model ?? e.infected!.variant, source, x: +e.transform.x.toFixed(1), z: +e.transform.z.toFixed(1), dPlayer: +Math.hypot(e.transform.x - p.x, e.transform.z - p.z).toFixed(1), inView: inView(e.transform) && !w.infected!.director.occluded(e.transform), emerging: !!e.emerging, transformation: transformed, origin: origin ?? null, inside: internal });
   }
   if (s.turnAt) for (const e of w.infected!.active) if (e.archetype === 'infected.alpha') {
     let row = alphaAudit.get(e.id);
@@ -59,8 +62,10 @@ const r = runL4(w, m, profile, { seed, god: true, maxSeconds: 520, stopWhen: mm 
     const bodies = [...w.entities.iterate()].filter(e => e.faction === 'infected' && e.health.current <= 0 && !e.hidden);
     const corpseBands = [6, 8, 10, 14].map(r => bodies.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= r).length);
     const archetypes: Record<string, number> = {};
+    const models: Record<string, number> = {};
     for (const e of live) archetypes[e.archetype ?? 'unknown'] = (archetypes[e.archetype ?? 'unknown'] ?? 0) + 1;
-    seconds.push({ t: (w.tick - s.turnAt) / 60, phase: s.phase, alive: live.length, inside: live.filter(e => inside(e.transform)).length, insideActive: live.filter(e => !e.emerging && inside(e.transform)).length, nearActive: live.filter(e => !e.emerging && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, near: live.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, archetypes, corpses14: corpseBands[3], corpseBands, wire: live.filter(e => !inside(e.transform) && e.transform.x > per.x0 - 4 && e.transform.x < per.x1 + 4 && e.transform.z > per.z0 - 4 && e.transform.z < per.z1 + 4).length, step: mm.def.steps.find(d => mm.state.steps[d.id].status === 'active')?.id ?? null, courier: { x: +p.x.toFixed(1), z: +p.z.toFixed(1) } });
+    for (const e of live) { const model = e.infected!.model ?? e.infected!.variant; models[model] = (models[model] ?? 0) + 1; }
+    seconds.push({ t: (w.tick - s.turnAt) / 60, phase: s.phase, alive: live.length, inside: live.filter(e => inside(e.transform)).length, insideActive: live.filter(e => !e.emerging && inside(e.transform)).length, nearActive: live.filter(e => !e.emerging && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, near: live.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 12).length, archetypes, models, corpses14: corpseBands[3], corpseBands, wire: live.filter(e => !inside(e.transform) && e.transform.x > per.x0 - 4 && e.transform.x < per.x1 + 4 && e.transform.z > per.z0 - 4 && e.transform.z < per.z1 + 4).length, step: mm.def.steps.find(d => mm.state.steps[d.id].status === 'active')?.id ?? null, courier: { x: +p.x.toFixed(1), z: +p.z.toFixed(1) } });
   }
   return process.env.L4_CENSUS_HOLD_ONLY === '1' && !!s.turnAt && s.phase !== 'war' && w.tick > s.turnAt + 60;
 }, zoom: Number(process.env.L4_CENSUS_ZOOM ?? 1.5) });
@@ -69,7 +74,8 @@ mkdirSync(outDir, { recursive: true });
 const archetypeAt = (time: number) => seconds.find(row => row.t === time)?.archetypes ?? {};
 const inWallByMinute = Object.fromEntries([0, 1, 2, 3].map(minute => [minute, inWallEntries.filter(e => e.t >= minute * 60 && e.t < (minute + 1) * 60).length]));
 const sourceCounts = Object.fromEntries(['street-mouth', 'street-door', 'wire/breach', 'other'].map(source => [source, inWallEntries.filter(e => e.source === source).length]));
-const out = { seed, tier, profile, outcome: r.outcome, timeline: r.timeline, kills: r.kills_, breakAfterS: r.breakAfterS, seconds, spawns, inWallEntries, inWallByMinute, sourceCounts, archetypesAt60: archetypeAt(60), archetypesAt150: archetypeAt(150), alphaAudit: [...alphaAudit.values()], pressureSamples };
+const spawnSourceCounts = Object.fromEntries(['tent', 'illegal-internal', 'street-mouth', 'street-door', 'wire/breach', 'alpha-street', 'exterior-flank', 'bite-conversion'].map(source => [source, spawns.filter(e => e.source === source).length]));
+const out = { seed, tier, profile, outcome: r.outcome, timeline: r.timeline, kills: r.kills_, breakAfterS: r.breakAfterS, seconds, spawns, spawnSourceCounts, inWallEntries, inWallByMinute, sourceCounts, archetypesAt60: archetypeAt(60), archetypesAt150: archetypeAt(150), alphaAudit: [...alphaAudit.values()], pressureSamples };
 writeFileSync(`${outDir}/census-${tier}-${seed}-${profile}.json`, JSON.stringify(out, null, 1));
 // Per minute of the war (from the turn): infected inside the perimeter (mean), spawns in view, Alphas.
 for (let min = 0; min < 6; min++) {
@@ -83,6 +89,7 @@ console.log('visible admissions', JSON.stringify({ all: visible.length, transfor
 const hold = seconds.filter(s => s.phase === 'war' && s.step === 'hold');
 console.log('hold contact', JSON.stringify({ contact: hold.filter(s => s.nearActive > 0).length, seconds: hold.length, percent: 100 * hold.filter(s => s.nearActive > 0).length / hold.length, corpses14: Object.fromEntries([20, 60, 150].map(t => [t, seconds.find(s => s.t === t)?.corpses14])) }));
 console.log('in-wall entries/min', JSON.stringify(inWallByMinute), 'source types', JSON.stringify(sourceCounts));
+console.log('spawns by source', JSON.stringify(spawnSourceCounts));
 for (const [t, mix] of [[60, archetypeAt(60)], [150, archetypeAt(150)]] as const) { const total = Object.values(mix).reduce((a, b) => a + b, 0); console.log(`living archetypes @${t}s`, JSON.stringify({ total, mix: Object.fromEntries(Object.entries(mix).map(([id, n]) => [id, { count: n, percent: total ? +(100 * n / total).toFixed(1) : 0 }])) })); }
 console.log('breaches', JSON.stringify(Object.fromEntries(Object.entries(m.state.l4!.breaches ?? {}).map(([k, v]) => [k, { announced: +((v!.announcedAt - m.state.l4!.turnAt) / 60).toFixed(1), open: v!.openAt ? +((v!.openAt - m.state.l4!.turnAt) / 60).toFixed(1) : null }]))));
 console.log('timeline', JSON.stringify(r.timeline.map(x => `${x.type}@${x.t.toFixed(0)}`)));

@@ -1,7 +1,7 @@
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4InfectedArchetypes, l4InfectedLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -755,6 +755,8 @@ export class LevelFourWar {
   }
   private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false): number {
     const { world } = this.mission, ai = world.infected!;
+    // Every authored pressure path shares this guard, including collapse-director flanks.
+    if (!this.outsidePerimeter(at)) return 0;
     // Scripted mouths must respect the same view rule as ordinary requests.
     // Callers keep their pending count when no source is safe, so the group is
     // retried at a later eligible mouth instead of being dropped.
@@ -768,8 +770,8 @@ export class LevelFourWar {
     // Use the existing infected pool/model batches; real camp civilians still
     // turn in place with their own identity, clothes and accessories.
     // The arrival roster mixes silhouette and combat archetypes at the source.
-    // Cycle deterministically so every wave remains varied even on a fixed seed.
-    const roster = ['infected.runner', 'infected.crawler', 'infected.sprinter', 'infected.riot', 'infected.firefighter', 'infected.hazmat'] as const;
+    // Refill the least represented living archetype so slower survivors cannot dominate later waves.
+    const roster = l4InfectedArchetypes;
     const counts = new Map<string, number>(roster.map(archetype => [archetype, 0]));
     for (const living of ai.active) if (living.health.current > 0 && !living.hidden && counts.has(living.archetype ?? '')) counts.set(living.archetype!, counts.get(living.archetype!)! + 1);
     const minimum = Math.min(...counts.values()), choices = roster.filter(archetype => counts.get(archetype) === minimum);
@@ -778,6 +780,15 @@ export class LevelFourWar {
     // Admission can shift around another body. Validate the admitted pose too,
     // before it is drawn, and retain the caller's quota if that shift exposed it.
     if (!(ai.director.offscreen(e.transform) || ai.director.occluded(e.transform))) { ai.release(e); return 0; }
+    if (!this.outsidePerimeter(e.transform)) { ai.release(e); return 0; }
+    if (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter') {
+      const looks = new Map<string, number>(l4InfectedLooks.map(model => [model, 0]));
+      for (const living of ai.active) if (living.health.current > 0 && !living.hidden) {
+        const model = living.infected!.model ?? living.infected!.variant;
+        if (looks.has(model)) looks.set(model, looks.get(model)! + 1);
+      }
+      e.infected!.model = l4InfectedLooks.reduce((least, model) => looks.get(model)! < looks.get(least)! ? model : least);
+    }
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
     return id;
   }
