@@ -133,7 +133,7 @@ try {
     const spec: SceneSpec = { name: `${model}-${state}`, ground: 'asphalt', time: 'L3', size: 100,
       actors: [{ id: 'courier', kind: 'courier', at: [40, 40] }, { id: 'figure', kind: 'pedestrian', at: [0, 0], yaw: -45, look: { model, handProp: 'rifle', role: 'soldier', tint: '#4b5a3a' }, state: { ally: { role: 'soldier', weapon: 'rifle' } } }],
       script: [...state !== 'healthy' ? [{ frame: 1, actor: 'figure', do: { infect: { instant: true } } }] : [], ...state === 'corpse' ? [{ frame: 2, actor: 'figure', do: { corpse: true as const } }] : []],
-      camera: { mode: 'close', target: [0, .7, 0], radius: 6, azimuth: 45 }, frames: 180, shots: [3, 90, 180], expect: { consoleErrors: 0 } };
+      camera: { mode: 'close', target: 'figure', radius: 6, azimuth: 45 }, frames: 180, shots: [3, 90, 180], expect: { consoleErrors: 0 } };
     const result = await runSpec(session, spec, { out: resolve(out, spec.name!), sheet: 60 });
     receipts.push({ model, state, ...result }); writeJson(`${out}/receipts.json`, receipts); assert.ok(result.pass, JSON.stringify(result.failed));
   }
