@@ -440,7 +440,7 @@ describe('L4 The Safe City Falls', () => {
     expect(r.killsAtBreak).toBeGreaterThanOrEqual(60);
   }, HEAVY);
 
-  for (const tier of ['high', 'low'] as const) test(`T-E22-12-alphas-${tier} @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps`, async () => {
+  for (const tier of ['high', 'low'] as const) test(`T-E22-12-alphas-${tier} @E22 @E22-AC12 first Alphas use the district mouths after the alarm, inside both caps`, async () => {
     const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     w.combat!.damage.god = true;
     expect(s.alphaIds).toEqual([]);

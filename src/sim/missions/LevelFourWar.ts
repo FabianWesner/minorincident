@@ -590,7 +590,7 @@ export class LevelFourWar {
   }
   private turn(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
-    // The alarm brings new infected out of camp buildings; the evacuees remain human.
+    // The alarm announces the exterior horde; the evacuees remain human and panic.
     const first = { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
     this.perimeter(true);
