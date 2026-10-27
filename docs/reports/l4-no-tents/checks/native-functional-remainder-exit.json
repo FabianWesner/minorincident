@@ -1,0 +1,17 @@
+{
+  "exitCode": 1,
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "--grep",
+    "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "--grep-invert",
+    "@perf|T-E22-12-special-|T-E22-19-production|T-E22-bus-audio|T-E22-convoy-music|S-11 T-E16-21|S-02 @smoke|S-07 @smoke|T-E22-09-12-13-systems-|T-L4-physical",
+    "--project=chromium",
+    "--workers=2",
+    "--trace=off"
+  ]
+}
