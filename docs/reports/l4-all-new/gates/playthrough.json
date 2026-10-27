@@ -1,5 +1,6 @@
 {
-  "command": "PLAYTEST_GOD=0 E2E_PORT=3486 npx tsx tools/playtest/play.ts --levels L4 --quality low --mode campaign --no-skip --level-minutes 25",
+  "revision": "27bac9a09fe3bf8706aef6b2b7019afe67999f72",
+  "command": "PLAYTEST_GOD=0 E2E_PORT=3486 npx tsx tools/playtest/play.ts --levels L4 --quality low --mode campaign --no-skip --out test-results/l4-all-new/playthrough-integrated --level-minutes 25",
   "exitCode": 0,
   "report": {
     "mode": "campaign",
@@ -16,14 +17,14 @@
         "heroine": "female",
         "finished": true,
         "skipped": [],
-        "wallSeconds": 281,
+        "wallSeconds": 279,
         "simSeconds": 0,
-        "maxNoProgressSeconds": 19.728,
-        "deaths": 1,
-        "assists": 1,
+        "maxNoProgressSeconds": 24.383,
+        "deaths": 0,
+        "assists": 0,
         "attacks": {
-          "weapon.army-mg": 1464,
-          "weapon.fire-axe": 54
+          "weapon.army-mg": 1851,
+          "weapon.fire-axe": 14
         },
         "weaponsStart": [
           "weapon.fire-axe",
@@ -44,8 +45,8 @@
         "steps": [
           {
             "id": "ride",
-            "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
-            "tick": 12,
+            "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+            "tick": 11,
             "marker": {
               "anchor": "l4-plaza",
               "ring": {
@@ -61,7 +62,7 @@
           {
             "id": "quartermaster",
             "text": "Report to the quartermaster \u00b7 10\u00a0m",
-            "tick": 1832,
+            "tick": 1830,
             "marker": {
               "anchor": "l4-quartermaster",
               "ring": {
@@ -81,7 +82,7 @@
           {
             "id": "hold",
             "text": "Hold the plaza with the army \u00b7 3:10 remaining",
-            "tick": 2028,
+            "tick": 2025,
             "marker": {
               "anchor": "l4-quartermaster",
               "ring": null,
@@ -92,8 +93,8 @@
           },
           {
             "id": "hide",
-            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 89\u00a0m",
-            "tick": 12710,
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 324\u00a0m",
+            "tick": 12881,
             "marker": {
               "anchor": "l4-cellar-door",
               "ring": {
@@ -106,14 +107,14 @@
                 0.13,
                 -45.28
               ],
-              "playerY": 0.7200000286102295,
+              "playerY": 0.7049999833106995,
               "pinVisible": true
             }
           },
           {
             "id": "bar",
             "text": "Bar the cellar door \u00b7 5\u00a0m",
-            "tick": 15906,
+            "tick": 15779,
             "marker": {
               "anchor": "l4-brace",
               "ring": {
@@ -126,14 +127,14 @@
                 0.05,
                 -1.4
               ],
-              "playerY": 0.8500000238418579,
+              "playerY": 0.7049999833106995,
               "pinVisible": true
             }
           },
           {
             "id": "wait",
             "text": "Stay down \u00b7 0:07 remaining",
-            "tick": 16058,
+            "tick": 15932,
             "marker": {
               "anchor": "l4-brace",
               "ring": null,
@@ -145,43 +146,110 @@
         ]
       }
     ],
-    "issues": 2,
+    "issues": 4,
     "bySeverity": {
       "P0": 0,
       "P1": 0,
-      "P2": 2,
+      "P2": 4,
       "P3": 0
     }
   },
   "observations": [
     {
       "level": "L4",
-      "tick": 4060,
-      "x": -26.9,
-      "z": -0.6,
+      "tick": 10419,
+      "x": -22.5,
+      "z": -5.2,
       "severity": "P2",
       "kind": "enemy-frozen",
-      "text": "Infected #215 in state chase 9.0 m away has not moved for ~5 s",
+      "text": "Infected #409 in state chase 7.3 m away has not moved for ~5 s",
       "captures": [
-        "captures/campaign-L4-4060-enemy-frozen.jpg"
+        "captures/campaign-L4-10419-enemy-frozen.jpg"
       ],
       "step": "hold",
-      "objective": "Hold the west breach \u00b7 2:37 remaining \u00b7 9\u00a0m"
+      "objective": "Hold the south breach \u00b7 0:51 remaining \u00b7 25\u00a0m"
     },
     {
       "level": "L4",
-      "tick": 6712,
-      "x": -21.8,
-      "z": -5.1,
+      "tick": 11018,
+      "x": -22.5,
+      "z": -5.2,
       "severity": "P2",
       "kind": "enemy-frozen",
-      "text": "Infected #270 in state chase 8.0 m away has not moved for ~5 s",
+      "text": "Infected #439 in state chase 7.9 m away has not moved for ~5 s",
       "captures": [
-        "captures/campaign-L4-6712-enemy-frozen.jpg"
+        "captures/campaign-L4-11018-enemy-frozen.jpg"
       ],
       "step": "hold",
-      "objective": "Hold the west breach \u00b7 1:52 remaining \u00b7 16\u00a0m"
+      "objective": "Hold the south breach \u00b7 0:41 remaining \u00b7 25\u00a0m"
+    },
+    {
+      "level": "L4",
+      "tick": 13419,
+      "x": -22.5,
+      "z": -5.2,
+      "severity": "P2",
+      "kind": "enemy-frozen",
+      "text": "Infected #512 in state chase 5.0 m away has not moved for ~5 s",
+      "captures": [
+        "captures/campaign-L4-13419-enemy-frozen.jpg"
+      ],
+      "step": "hide",
+      "objective": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 324\u00a0m"
+    },
+    {
+      "level": "L4",
+      "tick": 14107,
+      "x": -18.7,
+      "z": -7.4,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 325.0 m, no marker: false); HUD: \"Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 325\u00a0m\"",
+      "captures": [
+        "captures/campaign-L4-14107-stuck-navigating.jpg"
+      ],
+      "step": "hide",
+      "objective": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 325\u00a0m"
     }
   ],
-  "interruptedAttempt": "test-results/l4-all-new/playthrough-before-route-fix; obsolete minimap-route selector; fixed to mission-route-pin in 064cc1635, physical input preserved"
+  "navigationAssists": [
+    {
+      "t": "2026-10-27T21:58:09.310Z",
+      "assist": "nav-follow",
+      "level": "L4",
+      "tick": 11,
+      "from": {
+        "x": -57.48399353027344,
+        "z": 43.83667755126953
+      },
+      "ring": {
+        "x": -17,
+        "y": 0,
+        "z": 3
+      },
+      "distance": 58
+    },
+    {
+      "t": "2026-10-27T22:01:57.662Z",
+      "assist": "nav-follow",
+      "level": "L4",
+      "tick": 13575,
+      "from": {
+        "x": -22.450031280517578,
+        "z": -5.229870796203613
+      },
+      "ring": {
+        "x": -79.29999999999998,
+        "y": 0,
+        "z": -45.2801
+      },
+      "distance": 324
+    }
+  ],
+  "driverFix": "064cc1635 uses the live mission-route-pin and MissionUI map scale. Earlier pre-fix attempt retained at test-results/l4-all-new/playthrough-before-route-fix; passing pre-Guard run retained at playthrough.",
+  "observationReview": {
+    "enemyFrozenWarnings": 3,
+    "transientNavigationWarnings": 1,
+    "result": "Completed without deaths, objective skips or counted assists; no P0/P1. Read-only nav-follow events retained."
+  }
 }

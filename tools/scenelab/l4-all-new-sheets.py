@@ -47,6 +47,13 @@ def runtime():
   '13-story-tank-cellar.jpg':[(ROOT/f'story-new-high-webgl2/{n}/shot-{f:04}.png',n) for n,f in [('qa-l4-tank-heli',170),('qa-l4-kessler-cellar',20),('qa-l4-kessler-cellar',150),('l4-finale-cellar',0)]],
   '14-breach-old-new.jpg':[(ROOT/f'battle-{v}-high-webgl2/{t}s.png',f'{v} | {t}s after turn | zoom 1') for t in [30,60,120,180] for v in ['old','new']],
  }
+ # The original authored cellar pose camera keeps the roof closed. Retain its
+ # raw time sheet and show the actual game-camera interior from the input run.
+ import re
+ input_frames=list((ROOT/'playthrough-integrated/captures').glob('campaign-L4-t*.jpg'))
+ if input_frames:
+  cellar=max(input_frames,key=lambda p:int(re.search(r'-t(\d+)\.jpg$',p.name).group(1)))
+  sheets['13-story-tank-cellar.jpg'][2]=(cellar,'L4 real-input cellar | no god, no skips')
  for name,cells in sheets.items():grid(cells,OUT/name)
  # Keep the shared held-gun review alongside L4's story beats, within fourteen report files.
  weapon_sources=[]

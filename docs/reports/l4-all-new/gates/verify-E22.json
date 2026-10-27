@@ -1,0 +1,23 @@
+{
+  "target": "E22",
+  "epics": [
+    "E22"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 8.767
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 5.322
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 17.327
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "testedRevision": "27bac9a09fe3bf8706aef6b2b7019afe67999f72",
+  "mainMerged": "82b4a2664",
+  "sourcePipelineRevision": "6c85513",
+  "at": "2026-10-27T22:04:22.695458+00:00",
+  "exitCodes": {
+    "npm run assets:validate": 0,
+    "npm run verify -- E22": 0,
+    "npm test": 0,
+    "npm run test:smoke": 0,
+    "npm run scene:gate": 0,
+    "L4 real-input playthrough --no-skip": 0
+  },
+  "validator": {
+    "revision": "713d75c64",
+    "command": "npm run assets:validate",
+    "entries": 1262,
+    "errors": 0
+  },
+  "unitTests": 99,
+  "smoke": {
+    "qa": {
+      "startTime": "2026-10-27T21:46:44.426Z",
+      "duration": 181842.28900000002,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "public": {
+      "startTime": "2026-10-27T21:49:54.434Z",
+      "duration": 4933.353,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "wallSeconds": 204.752384541,
+    "freezeGuard": {
+      "lateShaderBuilds": 0,
+      "maxFrameMsRounded": 17,
+      "measuredFrames": 169
+    },
+    "compiledGpuLimits": {
+      "webgl": {
+        "attributes": 13,
+        "varyings": 14,
+        "buffers": 0
+      },
+      "webgpu": {
+        "attributes": 13,
+        "varyings": 14,
+        "buffers": 8
+      }
+    }
+  },
+  "sceneGate": {
+    "pass": 43,
+    "known": 5,
+    "unexpected": 0,
+    "missing": 0
+  },
+  "playthrough": {
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 279,
+    "deaths": 0,
+    "countedAssists": 0,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 4,
+      "P3": 0
+    },
+    "god": false
+  },
+  "runtimeReview": {
+    "scriptedSceneChecks": 28,
+    "weaponViews": 80,
+    "corpseConfigurations": 8,
+    "identicalPhysicalStatePairs": 16,
+    "warmFrames": 4800,
+    "lateShaderBuilds": 0,
+    "framesOver200ms": 0,
+    "maxFrameMs": 16.8
+  },
+  "nativeReviewAssetHashesUnchanged": true,
+  "quietPerformanceAcceptance": "pending PO quiet-window p95/main and PROD five-cold-load measurement"
+}
