@@ -1,10 +1,10 @@
 # Remote runner pool (Hetzner)
 
 The Mac is the bottleneck for heavy tests. `tools/remote/` runs a command for your worktree on Hetzner `cx33` servers
-(4 shared vCPU, 8 GB, Ubuntu 24.04, Node 26.0.0, Playwright Chromium + deps, FFmpeg for the existing audio measurements, 4 GB swap), named `mi-runner-1..4`,
+(4 shared vCPU, 8 GB, Ubuntu 24.04, Node 26.0.0, Playwright Chromium + deps, FFmpeg for the existing audio measurements, 4 GB swap), named `mi-runner-1..3`,
 all labelled `project=minor-incident`. Each runner has 2 job slots (like `sim-lock.sh`).
 
-Use the pool for CPU suites (unit, levels and sim; at most four Vitest workers). The deploy browser gate stays local with at most two GPU browsers. Remote SwiftShader browser runs are opt-in through `npm run scene:matrix:remote` and `npm run test:e2e:remote`; the full remote matrix is too slow for the gate. See [deploy gate](../qa/deploy-gate.md).
+Lanes run focused tests plus `npm run test:gate`. The orchestrator runs the full suite plus `npm run test:nightly` once per merge batch. Use the pool for CPU suites (unit, levels and sim; at most four Vitest workers). The deploy browser gate stays local with at most two GPU browsers. Remote SwiftShader browser runs are opt-in through `npm run scene:matrix:remote` and `npm run test:e2e:remote`; the full remote matrix is too slow for the gate. See [deploy gate](../qa/deploy-gate.md).
 
 ## Use (lanes)
 ```sh
@@ -17,7 +17,13 @@ sh tools/remote/run.sh $PWD --env FOO=1 --with epics-pipeline/refs -- <command>
 sh tools/remote/status.sh        # servers, slots, queue, load, price
 ```
 * Do NOT wrap in `sim-lock.sh` / `e2e-lock.sh` (they are Mac locks; on the runner the slot limit does that). Use `--maxWorkers=2` / `--workers=2`.
-* The exit code is the remote command's. Output streams live. If all slots are busy the call waits (queue).
+* The exit code is the command's. Output streams live. Dispatch is FIFO across lanes; the queue and local slot appear in `status.sh`.
+* If no remote runner has a free slot (or the pool is unreachable), supported CPU suites may use the Mac fallback: `tests/unit`, `tests/sim`, `tests/levels`, `test:gate`, and `test:nightly`. It admits one local job only when no browser reservation/Chrome GPU process or quiet-run is active, load is below 6, and at least 4 GB RAM is free. Vitest commands are capped at four workers and wait for browser/quiet-Mac admission before starting. Shell wrappers, non-Vitest scripts (including the bot-based `npm run test:levels`), and browser/perf commands are ineligible for Mac fallback. Use direct `npx vitest run tests/levels/...` for focused level tests.
+* The Mac uses the worktree argument as its working directory, applies `--env`, and streams the normal Vitest reporters/exit code. `--pull` results are already in that worktree; `--with` needs no copy locally. No dependency installation or browser launch happens on the Mac fallback.
+* New files wait whenever a GPU/browser reservation or `quiet-run` starts. Current files finish; the job retains its single local slot and resumes without rerunning finished files. Vitest's public threads-pool API gates each file's run message, including sequential timing projects. Paused coordinators advertise `mi-local-cpu-yielded`; active files advertise Vitest so both quiet-run preflights wait for them to drain. This adapter targets the pinned Vitest 5 API; rerun the focused checks on upgrades.
+* Admission uses lane-infra's `tools/browser-busy.sh` when available, including the main checkout's merged helper. Until then it probes the actual legacy locks, pooled GPU/exclusive reservations, and Chrome processes. The RAM threshold counts free physical pages, excluding inactive caches, compressed memory and swap. Unavailable samples refuse admission.
+* FIFO tickets live under `$TMPDIR/minor-incident-remote-queue/` (override `MI_LOCAL_QUEUE` only for isolated checks). Dead owners are removed. The head dispatches remote-first, holding its place through sync until actual remote slot admission, or through atomic local slot acquisition. `status.sh` shows each waiting lane and local running/yielded phase with active file count. All lanes must use this runner version and the same TMPDIR for machine-wide FIFO ordering.
+* Each admission appends one locked JSON line to `$TMPDIR/mi-waits.jsonl`: `{lane, lock:"remote"|"local", waitMs, ts}`. Wait covers queue entry through slot acquisition, including remote sync. Set `MI_LANE` to name the lane; the default is the worktree basename. `MI_LOCAL_FALLBACK=0` disables only Mac dispatch.
 * Playwright needs a build first: put `npm run build &&` in the command (`dist/` is not synced). Linux uses SwiftShader (no GPU), the config handles that.
 * Synced: tracked + untracked-not-ignored files. Not synced: `node_modules`, `dist`, `.git`, `test-results/`, `initial-drafts/`, `experiment/`, `references/`, `drafts-pipeline/`, `epics-pipeline/`, `folio-2025/`, and `assets/**/*.{blend,wav,ogg,mp3,webm,mp4}`. Use `--with <path>` to add one.
 * `node_modules` is installed with `npm ci` only when `package.json`/`package-lock.json` changed (cached by hash on the runner, hardlinked into each workspace).
@@ -30,8 +36,7 @@ sh tools/remote/status.sh        # servers, slots, queue, load, price
 * Never put secrets in the command or `--env`. The runner has no `.env`.
 
 ## Pool and scaling
-`run.sh` asks `pool.py pick` for the runner with a free slot (least busy first). If all are full it queues; after 5 min of waiting (`MI_SCALE_WAIT`)
-it creates another (cap 4, `MI_MAX_RUNNERS`), from the base snapshot when one exists (about 1 min) otherwise from a fresh Ubuntu image + `cloud-init.yaml` (about 4 min).
+`run.sh` asks `pool.py try` for an already-free slot before doing sync work. Queued remote jobs count against capacity. When all are busy/unreachable it can admit an eligible local CPU suite; otherwise it waits in the shared FIFO queue. It never scales the pool while waiting. The pool cap is three existing-size runners; there is no limit-increase request. Provisioning remains an explicit orchestrator operation.
 Runners other than `mi-runner-1` are deleted after 4 h without any job (`MI_IDLE_HOURS`); `run.sh` triggers that check after every run, and `sh tools/remote/scale.sh watch` does it every 10 min.
 
 Orchestrator commands: `sh tools/remote/provision.sh [name]` (add one), `provision.sh --snapshot` (refresh the base snapshot from mi-runner-1), `sh tools/remote/scale.sh add|reap|watch`,
@@ -45,3 +50,16 @@ The API token `HETZNER_API_KEY` is read from the main checkout's `.env` (never p
 * Browsers run SwiftShader, not Metal: slower rendering, `--use-angle=swiftshader` (see `playwright.config.ts`). Visual goldens captured on macOS may differ in pixels; run golden/visual specs on the Mac.
 * x86_64 vs arm64: Node/V8 uses its own math library, sim results are expected identical (checked by comparing test results).
 * The runner is about 2x slower per job than an idle-ish Mac core (measured: unit suite 122 s vs 60 s, story-bots 166 s vs 74 s with the Mac at load 7), so use it for throughput and to keep the Mac free, not for a single quick run. Very long files (tests/levels/L1.test.ts ran > 60 min at 100% of one core) stay slow either way.
+
+## Focused checks and throughput demo
+
+```sh
+python3 -I tools/remote/check.py --unit
+# Full focused check (real Vitest fixture files, four-worker cap, GPU lock drain/resume):
+sh tools/remote/run.sh "$PWD" -- python3 -I tools/remote/check.py
+# In an orchestrator-scheduled idle window, against a worktree with cleanup's gate tags:
+python3 tools/remote/benchmark.py <worktree> before test-results/mac-runner-demo
+python3 tools/remote/benchmark.py <worktree> after test-results/mac-runner-demo
+```
+
+The benchmark runs four complete `test:gate` commands per phase. It uses one slot per remote runner (`RUNNER_SLOTS=1`), disables local fallback for the baseline, then enables it for the comparison. It retains each command, raw log, JSON test receipt, wall time and timestamped admission/finish events. The after phase requires observed overlap of three remote jobs and one local job; a busy Mac is never overridden to manufacture that result. Compare equal revision/package hashes and test counts, and report any failures and competing workload alongside wall times.

@@ -11,6 +11,8 @@
     "test:unit": "node tools/test-lane.mjs unit vitest run tests/unit",
     "test:levels": "node tools/test-lane.mjs levels sh tools/sim-lock.sh tsx tools/sim-runner/index.ts --level all --policy complete --seeds 3 --completion-only",
     "test:sim": "node tools/test-lane.mjs sim vitest run tests/sim",
+    "test:gate": "vitest run tests/unit tests/sim tests/levels tests/qa/invariants --maxWorkers=4 --testNamePattern='^(?!.*@nightly)'",
+    "test:nightly": "vitest run tests/unit tests/sim tests/levels tests/qa/invariants --maxWorkers=4 --testNamePattern=@nightly",
     "test:e2e": "node tools/test-lane.mjs e2e sh tools/e2e-lock.sh playwright test --project=chromium",
     "test:e2e:mobile": "node tools/test-lane.mjs e2e-mobile sh tools/e2e-lock.sh playwright test --project=pixel-7 --project=pixel-7-landscape --project=iphone-14 --project=iphone-14-landscape",
     "test:e2e:webkit": "node tools/test-lane.mjs e2e-webkit sh tools/e2e-lock.sh playwright test --project=webkit",

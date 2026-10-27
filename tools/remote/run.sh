@@ -1,5 +1,5 @@
 #!/bin/sh
-# Run a command for a worktree on the shared Hetzner runner (host alias `mi-runner`, see docs/tools/remote-runner.md).
+# Run a command for a worktree on the Hetzner pool or an admitted CPU-only Mac slot (host alias `mi-runner`, see docs/tools/remote-runner.md).
 #   sh tools/remote/run.sh <worktree> [--pull <path>]... [--with <path>]... [--env K=V]... -- <command...>
 # Syncs tracked + untracked-not-ignored files (minus heavy dev-only dirs) into the worktree's cache dir on the runner,
 # copies that cache into a private per-run job dir, installs node_modules on a package-lock change, waits for one of
@@ -8,6 +8,7 @@
 set -u
 D=$(cd "$(dirname "$0")" && pwd)
 KEY="${MI_RUNNER_KEY:-$HOME/.ssh/mi-runner}"
+case "${RUNNER_SLOTS:-2}" in ''|*[!0-9]*|0) echo "run.sh: RUNNER_SLOTS must be a positive integer" >&2; exit 64;; esac
 usage() { echo "usage: sh tools/remote/run.sh <worktree> [--pull <path>]... [--with <path>]... [--env K=V]... -- <command...>" >&2; exit 64; }
 [ $# -ge 3 ] || usage
 WT=$(cd "$1" 2>/dev/null && pwd -P) || { echo "run.sh: no such worktree: $1" >&2; exit 64; }
@@ -40,6 +41,7 @@ JOB_STARTED=""
 RUN="$JOB.run"                              # detached-run state on the runner: log, pid, exit (deleted with the job dir)
 CHUNK=$(mktemp "${TMPDIR:-/tmp}/mi-remote-chunk.XXXXXX")
 LAUNCHED=""
+LOCAL_PID=""
 SSHO=""; HOST=""
 cleanup() {
   rm -f "$LIST" "$CHUNK"
@@ -53,7 +55,7 @@ kill_remote() {
   return 0
 }
 trap cleanup EXIT
-trap 'echo "[remote] interrupted; killing remote job" >&2; kill_remote; exit 130' INT TERM HUP
+trap '[ -z "$LOCAL_PID" ] || { kill -TERM "$LOCAL_PID" 2>/dev/null; wait "$LOCAL_PID"; }; kill_remote; exit 130' INT TERM HUP
 
 # File list: tracked + untracked-not-ignored, minus deleted files and dev-only heavy paths (override with --with <path>).
 MI_WITH="$WITH" python3 -I - "$WT" > "$LIST" <<'PY'
@@ -75,11 +77,30 @@ sys.stdout.buffer.write(b"".join(f.encode("utf-8", "surrogateescape") + b"\0" fo
 PY
 [ -s "$LIST" ] || { echo "run.sh: empty file list" >&2; exit 70; }
 
-# Pick the least-loaded runner with a free slot (waits; adds a runner after 5 min of waiting, max 4).
-IP="${MI_RUNNER_IP:-}"
-if [ -z "$IP" ]; then
-  IP=$(python3 -I "$D/pool.py" pick) || { echo "run.sh: no runner available" >&2; exit 69; }
-fi
+# Every lane takes a machine-wide FIFO ticket before choosing either slot type.
+TICKET=$(python3 -I "$D/local-slot.py" enqueue "$$" "$WT") || exit 70
+ticket_cleanup() { [ -z "${TICKET:-}" ] || python3 -I "$D/local-slot.py" remove "$TICKET"; }
+trap 'ticket_cleanup; cleanup' EXIT
+echo "[runner] queued FIFO $(basename "$TICKET"); remote preferred, eligible Mac CPU fallback"
+while :; do
+  SELECTED=$(python3 -I "$D/local-slot.py" choose "$TICKET" "$WT" -- "$@")
+  if [ -n "$SELECTED" ]; then
+    if [ "$SELECTED" = local ]; then
+      echo "[remote] runners full or unreachable; trying FIFO local Mac slot"
+      MI_LOCAL_ENVS="$ENVS" python3 -I "$D/local-slot.py" run "$TICKET" "$WT" -- "$@" &
+      LOCAL_PID=$!
+      wait "$LOCAL_PID"; RC=$?; LOCAL_PID=""
+      # 75 is an admission race only while the ticket still exists. The actual
+      # command may also exit 75; it must never be executed twice.
+      if [ "$RC" -eq 75 ] && [ -f "$TICKET" ]; then sleep 2; continue; fi
+      echo "[local] done exit=$RC (results already in $WT)"
+      exit "$RC"
+    fi
+    IP=$SELECTED
+    break
+  fi
+  sleep 3
+done
 HOST="runner@$IP"
 SSHO="-i $KEY -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=$HOME/.ssh/known_hosts_mi-runner -o LogLevel=ERROR -o ControlMaster=auto -o ControlPath=$HOME/.ssh/cm-mir-%C -o ControlPersist=5m -o ServerAliveInterval=15 -o ServerAliveCountMax=8"
 
@@ -127,6 +148,8 @@ JOB_STARTED=1
 PRUNE='for d in $(find /srv/mi/jobs -mindepth 1 -maxdepth 1 -mmin +180); do live=; for c in /proc/[0-9]*/cwd; do t=$(readlink "$c" 2>/dev/null) || continue; case $t in "$d"|"$d"/*) live=1; break;; esac; done; [ -n "$live" ] || rm -rf -- "$d"; done; avail=$(df -Pk /srv/mi | awk "NR==2{print int(\$4/1048576)}"); [ "$avail" -ge 8 ] || echo "[remote] WARNING: $(hostname) has ${avail} GB free after prune (under 8 GB)" >&2'
 retry ssh $SSHO "$HOST" "$PRUNE; rm -rf -- $JOB && cp -a $CACHE $JOB" || { echo "run.sh: cannot create job dir" >&2; exit 70; }
 rmdir "$LOCK" 2>/dev/null; LOCKED=""
+# The caller owns the scheduler protocol even when the target is another lane.
+retry scp -q $SSHO "$D/exec.sh" "$HOST:$JOB/tools/remote/exec.sh" || exit 70
 T1=$(date +%s)
 
 # Remote side: slot + node_modules cache + run (tools/remote/exec.sh travels with the worktree).
@@ -136,10 +159,17 @@ ENVARGS=""; OLDIFS=$IFS; IFS='
 echo "[remote] sync $((T1 - T0))s, $(tr -cd '\0' < "$LIST" | wc -c | tr -d ' ') files; job $JOB; queueing for a slot"
 # The job is started detached (own session, output to $RUN/log, exit code to $RUN/exit), so a dropped ssh cannot kill it.
 # Launch is idempotent (skipped when $RUN/pid exists), so ssh retries cannot start the job twice.
-INNER="cd $JOB && MI_SLUG=$SLUG MI_ENVS=$(sq "$ENVARGS") bash tools/remote/exec.sh --$ARGS; echo \$? > $RUN/exit.tmp && mv $RUN/exit.tmp $RUN/exit"
+MI_QUEUE_ID="$SLUG-$$-$(date +%s)"
+INNER="cd $JOB && MI_SLUG=$SLUG MI_QUEUE_ID=$MI_QUEUE_ID MI_SLOT_ACK=$RUN/slot RUNNER_SLOTS=${RUNNER_SLOTS:-2} MI_ENVS=$(sq "$ENVARGS") bash tools/remote/exec.sh --$ARGS; echo \$? > $RUN/exit.tmp && mv $RUN/exit.tmp $RUN/exit"
 LAUNCH="mkdir -p $RUN && { [ -f $RUN/pid ] || { nohup setsid sh -c $(sq "$INNER") > $RUN/log 2>&1 < /dev/null & echo \$! > $RUN/pid.tmp && mv $RUN/pid.tmp $RUN/pid; }; } && echo started"
 retry ssh $SSHO -T "$HOST" "$LAUNCH" >/dev/null || { echo "run.sh: could not start remote job" >&2; exit 70; }
 LAUNCHED=1
+# Admission acknowledgement persists even for a command that exits immediately.
+# Keep FIFO order through sync and actual remote slot acquisition.
+retry ssh $SSHO "$HOST" "while [ ! -f $RUN/slot ] && [ ! -f $RUN/exit ]; do sleep 1; done" || { kill_remote; exit 69; }
+python3 -I "$D/local-slot.py" record "$TICKET" remote
+python3 -I "$D/local-slot.py" remove "$TICKET"
+TICKET=""
 
 # Follow the log with a reconnecting loop. Each poll reads the job state, then the log from the last byte offset,
 # so a dropped connection resumes exactly where it stopped (no duplicated or missing output). Gives up after 10 failed polls.

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Hetzner runner pool for Minor Incident (mi-runner-1..4, cx33). Stdlib only. See docs/tools/remote-runner.md.
+"""Hetzner runner pool for Minor Incident (mi-runner-1..3, cx33). Stdlib only. See docs/tools/remote-runner.md.
 
   pool.py pick               wait for a runner with a free job slot (scales up after MI_SCALE_WAIT s), print its IPv4
+  pool.py try                print a currently free runner IPv4, or exit 3 without waiting/scaling
   pool.py status             servers + slots (used by status.sh)
-  pool.py create [NAME]      add a runner (hard cap MI_MAX_RUNNERS=4), from the newest snapshot if there is one
+  pool.py create [NAME]      add a runner (hard cap MI_MAX_RUNNERS=3), from the newest snapshot if there is one
   pool.py snapshot [NAME]    snapshot a runner (default mi-runner-1) as the boot image for new runners
   pool.py reap               delete runners (except MI_KEEP) with no job for MI_IDLE_HOURS (default 4)
   pool.py delete NAME|--all [--snapshots]
@@ -14,7 +15,7 @@ import json, os, subprocess, sys, time, urllib.request, urllib.error, concurrent
 API = "https://api.hetzner.cloud/v1"
 LABEL = "project=minor-incident"
 PREFIX = "mi-runner-"
-MAX = int(os.environ.get("MI_MAX_RUNNERS", "4"))
+MAX = min(3, int(os.environ.get("MI_MAX_RUNNERS", "3")))
 SLOTS = int(os.environ.get("RUNNER_SLOTS", "2"))
 SCALE_WAIT = int(os.environ.get("MI_SCALE_WAIT", "300"))
 IDLE_H = float(os.environ.get("MI_IDLE_HOURS", "4"))
@@ -158,6 +159,23 @@ def pick():
             log(f"all runners full ({', '.join(x['name'] + ':' + str(x['running']) + '/' + str(SLOTS) + '+' + str(x['waiting']) + 'q' for x in sts)}); waiting {int(waited)}s"); announced = True
         time.sleep(5)
 
+def pick_now():
+    """Select an already provisioned free slot without waiting or scaling."""
+    try:
+        fixed = os.environ.get("MI_RUNNER_IP")
+        ss = ([{"name": "explicit", "public_net": {"ipv4": {"ip": fixed}}}] if fixed
+              else [s for s in servers() if s["status"] == "running"])
+        sts = [x for x in states(ss) if x]
+    except Exception as e:
+        log(f"runner pool unavailable: {e}")
+        return 4
+    free = [x for x in sts if x["running"] + x["waiting"] < SLOTS and x["last"]]
+    if not free:
+        return 3
+    free.sort(key=lambda x: (x["running"] + x["waiting"], x["load"]))
+    print(free[0]["ip"])
+    return 0
+
 def delete(name):
     for s in servers():
         if s["name"] == name:
@@ -179,7 +197,7 @@ def cost():
     p = [x for x in t["prices"] if x["location"] == "nbg1"][0]
     h, m = float(p["price_hourly"]["gross"]), float(p["price_monthly"]["gross"])
     n = len(servers())
-    print(f"cx33 gross: {h:.4f} EUR/h, {m:.2f} EUR/month (capped) per runner; 1 runner {h:.4f}/h {m:.2f}/mo; 4 runners {4*h:.4f}/h {4*m:.2f}/mo; running now: {n}")
+    print(f"cx33 gross: {h:.4f} EUR/h, {m:.2f} EUR/month (capped) per runner; 1 runner {h:.4f}/h {m:.2f}/mo; 3 runners {3*h:.4f}/h {3*m:.2f}/mo; running now: {n}")
 
 def status():
     ss = servers()
@@ -207,6 +225,7 @@ if __name__ == "__main__":
     a = sys.argv[1:] or ["status"]
     c = a[0]
     if c == "pick": pick()
+    elif c == "try": sys.exit(pick_now())
     elif c == "status": status()
     elif c == "create": create(a[1] if len(a) > 1 else None)
     elif c == "snapshot": snapshot(a[1] if len(a) > 1 else "mi-runner-1")

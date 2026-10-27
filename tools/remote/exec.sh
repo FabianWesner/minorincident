@@ -1,28 +1,44 @@
 #!/bin/bash
 # Runs ON the runner, inside the synced workspace: take a slot, make sure node_modules matches package-lock.json, run the command.
-# Called by tools/remote/run.sh. RUNNER_SLOTS (default 2) commands run at once, the rest queue FIFO-ish (polling).
+# Called by tools/remote/run.sh. RUNNER_SLOTS (default 2) commands run at once; waiting jobs acquire free slots in FIFO order.
 set -u
 [ "${1:-}" = "--" ] && shift
 export PATH=/usr/local/bin:$PATH
 SLOTS="${RUNNER_SLOTS:-2}"
 mkdir -p /srv/mi/locks /srv/mi/queue /srv/mi/nm
-QF="/srv/mi/queue/$$.job"
+QF="/srv/mi/queue/$(date +%s%N)-$$.job"
+printf '%s\n' "$$" > "$QF.pid"
 date +%s > /srv/mi/last-activity
 printf '%s\t%s\t%s\n' "${MI_SLUG:-?}" "$(date +%s)" "$*" > "$QF"
-trap 'rm -f "$QF"; date +%s > /srv/mi/last-activity' EXIT
+trap 'rm -f "$QF" "$QF.pid"; date +%s > /srv/mi/last-activity' EXIT
 trap 'exit 143' TERM INT HUP   # a killed detached job still runs its EXIT trap (slot queue file, last-activity)
 # 1. slot (flock on one of N files, kept open on fd 9 for the whole run)
 got=""
 while [ -z "$got" ]; do
-  i=0
-  while [ "$i" -lt "$SLOTS" ]; do
-    exec 9>"/srv/mi/locks/slot.$i"
-    if flock -n 9; then got=$i; break; fi
-    i=$((i + 1))
+  exec 8>/srv/mi/locks/dispatch; flock 8
+  # New clients serialize queue creation through Mac FIFO; also order slot
+  # acquisition here for older clients and jobs whose SSH connection was lost.
+  head=""
+  for q in $(LC_ALL=C ls /srv/mi/queue/*.job 2>/dev/null | sort); do
+    if [ -f "$q.pid" ] && ! kill -0 "$(cat "$q.pid")" 2>/dev/null; then rm -f "$q" "$q.pid"; continue; fi
+    [ "$(awk -F'\t' 'NR==1{print NF}' "$q")" -lt 4 ] || continue
+    head=$q; break
   done
-  [ -z "$got" ] && sleep 2
+  if [ "$head" = "$QF" ]; then
+    i=0
+    while [ "$i" -lt "$SLOTS" ]; do
+      exec 9>"/srv/mi/locks/slot.$i"
+      if flock -n 9; then got=$i; break; fi
+      i=$((i + 1))
+    done
+    if [ -n "$got" ]; then
+      printf '%s\t%s\t%s\t%s\n' "${MI_SLUG:-?}" "$(date +%s)" "slot$got" "$*" > "$QF.run"; mv "$QF.run" "$QF"
+      [ -z "${MI_SLOT_ACK:-}" ] || date +%s > "$MI_SLOT_ACK"
+    fi
+  fi
+  flock -u 8
+  [ -n "$got" ] || sleep 1
 done
-printf '%s\t%s\t%s\t%s\n' "${MI_SLUG:-?}" "$(date +%s)" "slot$got" "$*" > "$QF.run"; mv "$QF.run" "$QF"
 echo "[runner] slot $got acquired; load $(cut -d' ' -f1-3 /proc/loadavg)"
 # 2. node_modules cache keyed by package-lock hash (hardlink copy, so changes to a workspace never touch the cache)
 H=$(sha256sum package-lock.json package.json | sha256sum | cut -c1-16)
