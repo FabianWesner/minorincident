@@ -11,11 +11,11 @@ import { backoffAdmission } from '../../tools/browser-pool/host';
 const exec = promisify(execFile), dirs: string[] = [];
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
 
-test.skipIf(process.platform !== 'darwin')('e2e-lock: units are reserved across concurrent jobs, never exceed two GPU browsers, and invalid reservations are refused', async () => {
+test.skipIf(process.platform !== 'darwin')('e2e-lock legacy fallback (E2E_LEGACY=1): units are reserved across concurrent jobs, never exceed two GPU browsers, and invalid reservations are refused', async () => {
   const dir = mkdtempSync(`${tmpdir()}/mi-capacity-test-`); dirs.push(dir);
   writeFileSync(`${dir}/python3`, '#!/bin/sh\ncase "$1" in *mac-gpu-guard.py) exit 0;; esac\nexec /usr/bin/python3 "$@"\n'); chmodSync(`${dir}/python3`, 0o755);
   const script = resolve('tools/e2e-lock.sh'), log = `${dir}/events`;
-  const env = { ...process.env, PATH: `${dir}:${process.env.PATH}`, MI_E2E_LOCK_HELD: '', MI_E2E_UNITS_HELD: '', E2E_LOCK: `${dir}/lock`, E2E_SLOTS: '3', E2E_UNITS: '1' };
+  const env = { ...process.env, E2E_LEGACY: '1', PATH: `${dir}:${process.env.PATH}`, MI_E2E_LOCK_HELD: '', MI_E2E_UNITS_HELD: '', E2E_LOCK: `${dir}/lock`, E2E_SLOTS: '3', E2E_UNITS: '1' };
   const code = String.raw`const fs=require('fs');const units=Number(process.env.MI_E2E_UNITS_HELD);fs.appendFileSync(process.argv[1],JSON.stringify({units})+'\n');setTimeout(()=>fs.appendFileSync(process.argv[1],JSON.stringify({units:-units})+'\n'),150)`;
   const completed = await Promise.allSettled([2, 1, 2, 1, 1, 2].map(units => exec('sh', [script, process.execPath, '-e', code, log], { env: { ...env, E2E_UNITS: String(units) }, timeout: 15_000 })));
   for (const run of completed) expect(run.status, run.status === 'rejected' ? String(run.reason) : undefined).toBe('fulfilled');
