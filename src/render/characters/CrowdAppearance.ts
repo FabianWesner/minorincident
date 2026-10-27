@@ -1,7 +1,7 @@
 import { skinnedBrow } from './headMeasurements';
 import { Box3, Color, Matrix4, Vector3, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
-import { attribute, varying, vec3 } from 'three/tsl';
+import { attribute, varying, vec3, vec4 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
 import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -60,12 +60,13 @@ export function crowdAppearanceColor(infected = false) {
   return varying(parts.y.equal(-1).select(skin.mul(shade.div(infected ? .35 : .45).clamp(.65, 1.2)),
     parts.y.equal(-4).select(source.mul(accessory), parts.y.equal(-5).select(source.mul(hair), parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))))), 'crowdAppearanceColor');
 }
-/** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers), picked per vertex. */
+/** Per-person tones for the classed regions of textured figures (hair, skin, shirt, trousers). Two varyings only:
+ * the crowd pipelines sit at the 16 vertex-output limit, so skin is picked per pixel from its index (six tones). */
 export function crowdRegionColours(infected = false) {
   const variant = attribute('_variant', 'vec4');
-  return { hair: varying(pickColor(colors.hair, variant.x.div(2).floor().mod(8)), 'crowdRegionHair'),
-    skin: varying(pickColor(infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6)), 'crowdRegionSkin'),
-    trousers: varying(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), 'crowdRegionTrousers'), shirt: variant.xyz.mod(2) };
+  const hairSkin = varying(vec4(pickColor(colors.hair, variant.x.div(2).floor().mod(8)), variant.y.div(2).floor().mod(6)), 'crowdRegionHairSkin');
+  const trousers = varying(pickColor(colors.trousers, variant.z.div(2).floor().mod(8)), 'crowdRegionTrousers');
+  return { hair: hairSkin.xyz, skin: pickColor(infected ? colors.infected : colors.skin, hairSkin.w.round()), trousers, shirt: variant.xyz.mod(2) };
 }
 const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
 const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));
