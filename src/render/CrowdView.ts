@@ -1,6 +1,6 @@
 import { paintedSkinMask } from './characters/paintedSkin';
 import { crowdLimbParts } from '../assets/crowdParts';
-import { crowdTexture, interleaveTexturedCrowd } from './characters/crowdTexture';
+import { crowdTexture, interleaveTexturedCrowd, crowdSurfaceBindings } from './characters/crowdTexture';
 import { shareDogCoatPalette } from './characters/shareDogCoatPalette';
 import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { regularInfectedModels } from '../data/crowdAppearance';
@@ -94,6 +94,7 @@ export class CrowdView extends Group {
   private readonly bounds = new Sphere(new Vector3(), 1);
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
+  private readonly sharedSkinMaterials = new Map<string, { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; atlas: ReturnType<typeof sampleTexture> }>();
   private readonly transform = new Matrix4();
   /** Displayed turn rate cap (rad/s): sim facing snaps become stepped turns. */
   private readonly presentation = new MotionPresentation(crowdTurnRate);
@@ -355,6 +356,10 @@ export class CrowdView extends Group {
       // Keep a default attribute even in scenes that do not load the cream coat.
       const dogPalette = asset === 'inf.dog' && !def.decay && lod === 'lod1';
       if (dogPalette) baked.geometry.setAttribute('_dogCream', baked.geometry.getAttribute('color'));
+      const materialKey = this.world.scenario === 'L4' && skinned && infectedAtlas && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}` : undefined;
+      let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
+      let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
+      if (!material) {
       const paletteColor = textured ? parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(crowdAppearanceColor(true), attribute('color', 'vec3')) : dogPalette ? variant.x.mod(2).greaterThan(.5).select(attribute('_dogCream', 'vec3'), attribute('color', 'vec3')) : human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
       const atlasUV = attribute('uv', 'vec2');
       const sourceColor = atlas && !infectedAtlas ? paletteColor.mul(mix(vec3(1), sampleTexture(atlas, atlasUV).rgb, parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, 1))) : paletteColor;
@@ -363,6 +368,7 @@ export class CrowdView extends Group {
       // Read channels off the vec4 sample, never off its .rgb view: Tint (Dawn/Metal) fails to
       // lower a chained swizzle (`sample.xyz.x`) and the whole pipeline is dropped (hotfix-16).
       const texelSample = infectedAtlas && baked.texture ? sampleTexture(baked.texture, uv()) : undefined;
+      surfaceAtlas = texelSample;
       const texel = texelSample?.rgb;
       const capSurface = parts.w.greaterThanEqual(1024);
       const painted = texel ? mix(sourceColor, texel.pow(.85).mul(mix(vec3(1), sourceColor, .08)), parts.y.equal(-4).or(parts.y.equal(-5)).or(parts.y.lessThanEqual(-10)).select(0, parts.w.mod(128).lessThan(8).select(1, 0))) : sourceColor;
@@ -384,7 +390,7 @@ export class CrowdView extends Group {
       // white constant still dominates its near-black albedo.
       const atlasFill = infectedAtlas ? albedo.mul(.18).mul(eye.oneMinus()) : vec3(0);
       const glow = emission.mul(eye).add(atlasFill).add(feedbackState.w.mod(2).mul(base.mul(base.oneMinus().mul(1.1))).mul(figureMask ?? 1));
-      const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if (material instanceof PaletteMaterial) { material.figureRim.value = .25; material.figureFill.value = 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
@@ -424,25 +430,6 @@ export class CrowdView extends Group {
         const cap = capSurface.and(parts.w.sub(1024).equal(capNames.indexOf(names[0])));
         visible = cap.select(names[0] === 'legL' ? detached.max(feedbackState.y) : detached, visible);
       });
-      const slot = lod === 'lod0' ? this.heroSlots.get(key) : undefined;
-      interleaveTexturedCrowd(baked.geometry);
-      const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity); mesh.userData.preRenderTextures = [texture, ...(baked.texture ? [baked.texture] : [])];
-      // Material.copy serializes enumerable metadata; compressed textures are live GPU resources.
-      Object.defineProperty(material.userData, 'preRenderTextures', { value: baked.texture ? [baked.texture] : [], writable: true, configurable: true, enumerable: false });
-      if (baked.texture) {
-        const image = baked.texture.image as { width: number; height: number };
-        let w = image.width, h = image.height, bytes = 0;
-        while (true) { bytes += w * h * 4; if (w === 1 && h === 1) break; w = Math.max(1, w >> 1); h = Math.max(1, h >> 1); }
-        mesh.userData.crowdAtlas = { id: baked.texture.uuid, width: image.width, height: image.height, decodedBytesWithMips: bytes };
-      }
-      mesh.instanceMatrix.setUsage(StreamDrawUsage);
-      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.receiveShadow = inlineAccessories; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
-      // E17's explicit instance * part transform order.
-      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
-      mesh.onBeforeRender = () => { if (sharedPose) sharedPose.value = texture; matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
-      // Bind the current batch's matrices per draw, as CivilianCrowd does. Captured
-      // buffer nodes can keep a retired LOD's GPU buffer in a shared shader state.
-      for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
       const column = (offset: number) => attribute(`_crowd${offset / 4}`, 'vec4');
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(skinned ? positionGeometry : positionGeometry.mul(visible).mul(crowdHeadwearVisibility()), 1))).xyz;
@@ -458,6 +445,39 @@ export class CrowdView extends Group {
       // normalNode would interpolate packed joint ids into unrelated or out-of-range atlas rows: NaN normals, black bloom blocks).
       const normal = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
       material.normalNode = skinned ? skinnedWoundNormal(varying(normal, 'skinnedCrowdNormal')) : normal;
+      if (materialKey && sharedPose && surfaceAtlas) {
+        sharedSkin = { material, pose: sharedPose, atlas: surfaceAtlas }; this.sharedSkinMaterials.set(materialKey, sharedSkin);
+      }
+      }
+      const slot = lod === 'lod0' ? this.heroSlots.get(key) : undefined;
+      interleaveTexturedCrowd(baked.geometry);
+      const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity); mesh.userData.preRenderTextures = [texture, ...(baked.texture ? [baked.texture] : [])];
+      // Material.copy serializes enumerable metadata; compressed textures are live GPU resources.
+      Object.defineProperty(material.userData, 'preRenderTextures', { value: baked.texture ? [baked.texture] : [], writable: true, configurable: true, enumerable: false });
+      if (baked.texture) {
+        const image = baked.texture.image as { width: number; height: number };
+        let w = image.width, h = image.height, bytes = 0;
+        while (true) { bytes += w * h * 4; if (w === 1 && h === 1) break; w = Math.max(1, w >> 1); h = Math.max(1, h >> 1); }
+        mesh.userData.crowdAtlas = { id: baked.texture.uuid, width: image.width, height: image.height, decodedBytesWithMips: bytes };
+      }
+      mesh.instanceMatrix.setUsage(StreamDrawUsage);
+      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.receiveShadow = inlineAccessories; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
+      // E17's explicit instance * part transform order.
+      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
+      let bindSurface = () => { if (sharedPose) sharedPose.value = texture; };
+      mesh.onBeforeRender = () => { bindSurface(); matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
+      // Bind the current batch's matrices per draw, as CivilianCrowd does. Captured
+      // buffer nodes can keep a retired LOD's GPU buffer in a shared shader state.
+      for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
+      if (sharedSkin && baked.texture) {
+        // Each living or frozen draw binds its own pose and colour atlas.
+        const binding = sharedSkin, atlas = baked.texture;
+        bindSurface = () => { binding.pose.value = texture; binding.atlas.value = atlas; };
+        const surface = { bind: bindSurface, textures: [atlas] };
+        crowdSurfaceBindings.set(mesh.geometry, surface);
+        const body = this.corpseGeometry.get(key);
+        if (body) crowdSurfaceBindings.set(body, surface);
+      }
       Object.defineProperty(mesh, 'isInstancedMesh', { value: false, writable: true });
       mesh.userData.staticInstanceAttributes = true;
       mesh.userData.staticInstancePosition = material.positionNode;
@@ -729,6 +749,6 @@ export class CrowdView extends Group {
     const released = new Set<MeshLambertNodeMaterial>();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); const material = batch.mesh.material as MeshLambertNodeMaterial; if (!released.has(material)) { released.add(material); material.dispose(); } batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.loadedModels.clear(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.sharedSkinMaterials.clear(); this.loadedModels.clear(); this.clear(); void this.registry.dispose();
   }
 }
