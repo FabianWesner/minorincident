@@ -45,7 +45,7 @@ Helpers that tools import (not tests) live in `tests/helpers`, `tests/e2e/{fixtu
 - test files under `tests/` exceed **45**,
 - the default run (`npm test`) takes longer than **4 min** (smoke: 4 min, nightly: 20 min).
 
-At the rewrite (2026-10-27) the suite had 119 collected (132 run) cases in 37 files; `npm test` took 15 s on the Mac and 45 s on a runner.
+At the rewrite (2026-10-27) the suite had 120 collected (133 run) cases in 37 files; `npm test` took 10-15 s on the Mac and 45 s on a runner.
 
 ## How to add a test
 
@@ -58,4 +58,4 @@ At the rewrite (2026-10-27) the suite had 119 collected (132 run) cases in 37 fi
 
 ## Regression check
 
-The rewrite was validated by injecting representative regressions into `src/` and confirming the new suite fails (determinism, save/carry-over, aim, collision, spawn admission, GPU limits, asset contract, skinned crowd). See `docs/reports/test-rewrite/README.md`.
+The rewrite was validated by injecting representative regressions into `src/` and confirming the new suite fails (determinism, save/carry-over, aim, collision, spawn admission, GPU limits, asset contract, skinned crowd). Numbers, coverage map and injection table: [test rewrite report](../reports/test-rewrite/README.md).
