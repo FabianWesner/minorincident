@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { l4, l4Anchors, l4Edges, l4Emergence, l4BreachApproaches, l4CollapseGroups, l4Route, l4ConvoyStations, l4OffscreenMouths, l4CellarDistance } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
@@ -306,14 +306,19 @@ describe('L4 The Safe City Falls', () => {
     expect(l.mission.state.states['line-broken']).toBe(true);
     // Losing half a line's soldiers breaks it from its earliest beat on (not before): line 1 falls at 50 s instead of 62 s.
     const f = await loadL4(3); const fs = f.mission.state.l4!;
+    // Q-192 brings the physical breach into the opening alarm. This casualty-only
+    // fixture isolates that independent line-1 trigger; L4-collapse tests the real breach beat.
+    const director = (f.mission.l4 as unknown as { director: { breachLine1(): void } }).director;
+    vi.spyOn(director, 'breachLine1').mockImplementation(() => {});
     // The idle courier is protected, as in T-E22-11: this part measures the director's overrun beat, not her survival (ally-combat-feel:
     // a retry at the turn checkpoint after her death resets the line and hides the beat).
     f.world.combat!.damage.god = true;
     while (fs.phase === 'convoy') f.world.update();
     step(f.world, 3 * 60); f.mission.completeObjective('quartermaster'); while (fs.phase !== 'war') f.world.update();
     for (const id of fs.director.lines[0].soldierIds.slice(0, 6)) f.world.entities.get(id)!.health.current = 0;
-    step(f.world, 40 * 60); expect(fs.director.lines[0].brokeAt).toBe(0);
-    step(f.world, 11 * 60); expect(fs.director.lines[0].cause).toBe('overrun'); expect((fs.director.lines[0].brokeAt - fs.turnAt) / 60).toBeCloseTo(l4.director.lines[0].earliestS, 0); f.world.dispose();
+    // The earlier wall breach pauses for a cinematic; measure the director's simulation clock.
+    while (f.world.tick < fs.turnAt + 40 * 60) f.world.update(); expect(fs.director.lines[0].brokeAt).toBe(0);
+    while (f.world.tick < fs.turnAt + 51 * 60) f.world.update(); expect(fs.director.lines[0].cause).toBe('overrun'); expect((fs.director.lines[0].brokeAt - fs.turnAt) / 60).toBeCloseTo(l4.director.lines[0].earliestS, 0); f.world.dispose();
   }, HEAVY);
 
   test('T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run', async () => {
