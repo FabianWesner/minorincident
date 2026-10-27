@@ -13,6 +13,10 @@ The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 
 
 Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section "Quality x zoom matrix".
 
+## Cleanup checkpoint (2026-10-27)
+
+The PO has assigned a subsequent full test-suite rewrite. The scripts below are the current partition, **not a verified green release gate**: the last completed expanded gate took 16m 05.71s and failed three cases; two asset setup failures were corrected afterward, and the boss-staging expectation is superseded by Q-200. The expanded nightly was interrupted under the wrap directive. See the [failure list and measurements](tests-cleanup.md) before using this checkpoint for release approval.
+
 ## Nightly simulation layer
 
 Run `sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh --whole-run npm run test:nightly` once nightly and before a release. Tests tagged `@nightly` are excluded from `test:gate`; the two scripts partition the same unit/sim/levels/headless-invariants inventory. Both retain Vitest's isolated timing project before functional tests. The nightly layer retains one seed-1 complete L1→L10 continuity run, including the L1→L9 axe reset and L5→L6 racks/roster checks, and the distinct newbie L1→L6 timing regression. Slow soak/diagnostic tests also belong here. Per-level ordinary-input completion remains in the gate, including a standalone L9 crossing/crash run.
