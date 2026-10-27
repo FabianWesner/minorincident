@@ -327,7 +327,7 @@
     "checkedFiles": 3001,
     "differences": [],
     "host": "88.99.168.213",
-    "status": "running",
+    "status": "cancelled after same two CPU timeouts",
     "reservation": "both runner slots held for entire complete tests/unit command"
   },
   "remoteCapacity": {
@@ -380,5 +380,37 @@
     "approvedExtensionHours": 1.5,
     "extensionPurpose": "remote unit retry and campaign",
     "latestDeadlineLocal": "2026-10-27 06:51 Europe/Berlin"
+  },
+  "remoteSerialSnapshot": {
+    "sha256": "c2210eae7b1f11d81fe4973bf0e5fb44eb2df9019288054336f1a5e5d871bc55",
+    "checkedFiles": 3001,
+    "differences": [],
+    "host": "88.99.168.213",
+    "maxWorkers": 1,
+    "status": "running"
+  },
+  "remoteUnitFourWorkerAttempt": {
+    "cancelledAfterFailures": true,
+    "failedCases": [
+      "\u00d7 T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 302801ms",
+      "\u00d7 L9: one campaign navigation bake matches the previous mask/rebake path 121379ms"
+    ],
+    "replacement": "complete tests/unit with --maxWorkers=1 and exclusive runner; no assertions, timeouts, or skips changed"
+  },
+  "productionDeliveryBuild": {
+    "commit": "5ea486286b644ed27eb89396724daaf37763f671",
+    "branchEnvironment": "main",
+    "VITE_QA_HOOKS": "unset",
+    "exitCode": 0,
+    "jsCssBytes": 11088094,
+    "totalDistBytes": 422911901,
+    "hookHits": []
+  },
+  "remoteSerialRecoveryProgress": {
+    "inventoryValidationFileMilliseconds": 254426,
+    "inventoryTestLimitMilliseconds": 300000,
+    "maxWorkers": 1,
+    "assertionsAndLimitsUnchanged": true,
+    "fullFolderPending": true
   }
 }
