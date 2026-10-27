@@ -34,8 +34,9 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
       // The sim steers the first turn around reception furniture. The screen
       // arrow must agree with that reachable turn shown by the minimap pin,
       // rather than the unsteered authored vertex (L4-movement tests its path).
-      const pin = document.querySelector<HTMLElement>('[data-testid=minimap-route]')!, p = a.getState().player!.transform;
-      const next = { x: p.x + (parseFloat(pin.style.left) - 50) * 100 / 40, z: p.z + (parseFloat(pin.style.top) - 50) * 100 / 40 };
+      const pin = document.querySelector<HTMLElement>('[data-testid=minimap-route]')!;
+      // The minimap pin publishes its exact world turn (its left/top are scaled and edge-clamped).
+      const next = { x: Number(pin.dataset.worldX), z: Number(pin.dataset.worldZ) };
       const ndc = a.camera.project(next.x, 1.8, next.z), flip = ndc[2] > 1 ? -1 : 1;
       const expectedAngle = Math.atan2(-ndc[1] * innerHeight * flip, ndc[0] * innerWidth * flip);
       const arrow = document.querySelector<HTMLElement>('[data-testid=mission-marker]')!, rect = arrow.getBoundingClientRect();
