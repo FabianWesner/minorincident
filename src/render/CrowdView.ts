@@ -122,13 +122,13 @@ export class CrowdView extends Group {
   private cullDistance = 60;
   setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; this.footwork.cap = this.low ? 12 : 40; this.registry.setTextureTier(tier); }
   private readonly logs: { id: string; reason: string }[] = [];
-  constructor(private readonly world: SimWorld, private low = false, private readonly shading?: Materials, private readonly accessories?: CrowdAccessories) {
+  constructor(private readonly world: SimWorld, private low = false, private readonly shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) {
     super(); this.name = 'infected-crowd'; this.add(this.staticCorpses);
     // L4 figures carry world-space instance matrices. These identity roots
     // must not force every permanent corpse page's world matrix each frame.
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.staticCorpses.matrixAutoUpdate = this.staticCorpses.matrixWorldAutoUpdate = false; }
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
-    this.registry = new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
+    this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
@@ -749,6 +749,6 @@ export class CrowdView extends Group {
     const released = new Set<MeshLambertNodeMaterial>();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); const material = batch.mesh.material as MeshLambertNodeMaterial; if (!released.has(material)) { released.add(material); material.dispose(); } batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.sharedSkinMaterials.clear(); this.loadedModels.clear(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.sharedSkinMaterials.clear(); this.loadedModels.clear(); this.clear(); if (!this.sharedRegistry) void this.registry.dispose();
   }
 }

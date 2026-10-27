@@ -9,6 +9,7 @@ import { PropFixtureView } from './PropFixtureView';
 import { pickBodies } from './characters/PickBodies';
 import { ContactShadows } from './ContactShadows';
 import { NpcView } from './npc/NpcView';
+import { AssetRegistry } from '../assets/registry';
 import { lookViewpoints } from '../data/lookViewpoints';
 import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
@@ -124,6 +125,7 @@ export class GameView implements Lifecycle {
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
+  private crowdRegistry: AssetRegistry | null = null;
   private healthBars: HealthBars | null = null;
   private readonly barScene = new Scene();
   private readonly barOccluded = (target: Vector3) => this.districts?.occludesBar(this.camera, target) ?? false;
@@ -532,11 +534,14 @@ export class GameView implements Lifecycle {
     return this.mountedGunView?.ready();
   }
   private startActors(character: Promise<unknown>): Promise<unknown> {
+    // L4 draws these same skinned people healthy and infected. Parse each exact
+    // model/LOD once; both views get independent rig clones and share its atlas.
+    const registry = this.world.scenario === 'L4' ? this.crowdRegistry ??= new AssetRegistry(() => {}, { materials: this.materials!, textureSize: this.quality === 'low' ? 512 : 1024 }) : undefined;
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch)); this.npcs.setQuality(this.quality); }
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch), registry); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = this.params.has('debug') || this.params.get('aimcone') === '1'; }
-    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
+    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories, registry); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
@@ -1270,6 +1275,7 @@ export class GameView implements Lifecycle {
     if (this.healthBars) { this.healthBars.removeFromParent(); this.healthBars.dispose(); this.healthBars = null; }
     if (this.accessories) { this.scene.remove(this.accessories); this.accessories.dispose(); this.accessories = null; }
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
+    if (this.crowdRegistry) { void this.crowdRegistry.dispose(); this.crowdRegistry = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
