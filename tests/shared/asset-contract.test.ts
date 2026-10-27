@@ -35,9 +35,11 @@ test('the asset validator rejects every contract violation, and every production
     expect(validateDocument(fresh.doc, fresh.def, 1024).errors.join('\n'), error).toContain(error);
   }
   expect(new Set(manifest.map(a => a.id)).size).toBe(manifest.length);
-  const reports = await validateAssets(manifest as AssetDef[], true);
-  expect(reports.length).toBeGreaterThan(20);
-  // The production inventory is clean (1,262 reports on 2026-10-27): any validator error is a regression, including a
-  // missing GLB/LOD file (the old @nightly filter only looked at five error kinds and let a missing file through).
+  // Per change: the first shipped asset of every category plus the school bus (door/seat node contract) end to end.
+  // The whole inventory (1,262 reports, about 80 s on the Mac and > 5 min on a runner) is in tests/nightly/content-invariants.
+  const assets = manifest as AssetDef[], categories = [...new Set(assets.map(a => a.category))];
+  const sample = [...categories.map(category => assets.find(a => a.category === category && a.lods?.lod1)).filter(a => a !== undefined), assets.find(a => a.id === 'veh.school-bus')!];
+  const reports = await validateAssets(sample, true);
+  expect(reports.length).toBeGreaterThanOrEqual(sample.length);
   expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
-}, 300_000);
+}, 120_000);

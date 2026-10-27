@@ -18,6 +18,8 @@ import { solidOverlaps } from '../../src/levels/placementClearance';
 import { stripStrayDecorations } from '../../src/render/decorationFilter';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { stripGlbTextures } from '../../tools/assets/stripGlbTextures';
+import { validateAssets } from '../../tools/assets/validate';
+import type { AssetDef } from '../../src/assets/types';
 import lodBaseline from './lod-fidelity.baseline.json';
 
 const layoutFiles = readdirSync('public/assets/layouts').filter(f => f.endsWith('.layout.json'));
@@ -98,6 +100,14 @@ test('LOD fidelity: every static asset LOD keeps LOD0 extent (12 %), visible mat
   }
   mkdirSync('test-results', { recursive: true }); writeFileSync('test-results/lod-fidelity.json', JSON.stringify(report, null, 1));
   expect(fresh).toEqual([]);
+}, 900_000);
+
+// --- The asset validator over the whole production inventory (the per-change test runs it on a sample). The inventory
+// was clean on 2026-10-27 (1,262 reports), so any error is a regression, including a missing GLB/LOD file.
+test('asset inventory: every production asset and LOD passes the validator', async () => {
+  const reports = await validateAssets(manifest as AssetDef[], true);
+  expect(reports.length).toBeGreaterThan(1000);
+  expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
 }, 900_000);
 
 // --- PO 10-13 "Flowers growing on stone": after the render filter every drawn daisy stands on soil, in every district and tier.

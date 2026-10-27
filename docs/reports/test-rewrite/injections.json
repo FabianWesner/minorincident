@@ -70,16 +70,14 @@
   },
   {
     "id": "asset-contract",
-    "what": "a shipped prop points one LOD at a missing file (pick.medkit)",
+    "what": "a shipped prop (outside the per-change sample) points one LOD at a missing file (prop.cure-quarantine-fence)",
     "file": "src/assets/manifest.json",
     "caught": true,
-    "failed": [
-      "tests/shared/asset-contract.test.ts › the asset validator rejects every contract violation, and every production asset passes it"
+    "failed": [],
+    "nightly": [
+      "tests/nightly/content-invariants.test.ts › asset inventory: every production asset and LOD passes the validator"
     ],
-    "round1": {
-      "what": "a shipped prop points one LOD at a missing file (pick.medkit)",
-      "caught": false
-    }
+    "previous": "manifest's first prop (inside the per-change sample): caught per change"
   },
   {
     "id": "skinned",

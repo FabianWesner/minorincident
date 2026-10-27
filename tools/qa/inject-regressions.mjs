@@ -17,14 +17,15 @@ export const injections = [
     from: 'Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 &&', to: 'Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 0 &&' },
   { id: 'gpu-limits', what: 'frozen corpse pages stop interleaving their surface (one vertex buffer per attribute, Q-201 class)', file: 'src/render/characters/StaticCorpses.ts',
     from: '    if (shared) for (const [name, attribute] of Object.entries(shared)) geometry.setAttribute(name, attribute);\n    else { interleaveCrowdSurface(geometry); interleavedSurfaces.set(frozen.geometry, { ...geometry.attributes }); }', to: '    void shared;' },
-  { id: 'asset-contract', what: 'a shipped prop points one LOD at a missing file', file: 'src/assets/manifest.json', json: true },
+  { id: 'asset-contract', what: 'a shipped prop (outside the per-change sample) points one LOD at a missing file', file: 'src/assets/manifest.json', json: true,
+    nightly: ['tests/nightly/content-invariants.test.ts', '-t', 'asset inventory'] },
   { id: 'skinned', what: 'skinned crowd packing normalizes the extra influences without the dominant weight', file: 'src/render/characters/skinnedCrowd.ts',
     from: '    const sum = w[0] + w[1] + w[2] + w[3] || 1;', to: '    const sum = w[1] + w[2] + w[3] || 1;' },
 ];
 
 function apply(injection, text) {
   if (injection.json) {
-    const manifest = JSON.parse(text), prop = manifest.find(a => a.category === 'prop' && a.lods?.lod1);
+    const manifest = JSON.parse(text), prop = manifest.findLast(a => a.category === 'prop' && a.lods?.lod1);
     prop.lods.lod1 = prop.lods.lod1.replace(/\.glb$/, '.missing.glb'); injection.what += ` (${prop.id})`;
     return JSON.stringify(manifest, null, 2) + '\n';
   }
@@ -39,11 +40,12 @@ for (const injection of injections.filter(i => !wanted.length || wanted.includes
   try {
     writeFileSync(injection.file, apply(injection, original));
     spawnSync('npx', ['vitest', 'run', '--project', 'default', '--configLoader', 'runner', '--maxWorkers=3', '--reporter=dot', '--reporter=json', `--outputFile=${out}`], { stdio: 'inherit' });
+    if (injection.nightly) spawnSync('npx', ['vitest', 'run', ...injection.nightly, '--configLoader', 'runner', '--reporter=dot', '--reporter=json', `--outputFile=${out.replace('.json', '-nightly.json')}`], { stdio: 'inherit' });
   } finally { writeFileSync(injection.file, original); }
-  const report = JSON.parse(readFileSync(out, 'utf8'));
-  const failed = report.testResults.flatMap(file => file.assertionResults.filter(t => t.status === 'failed').map(t => `${file.name.replace(/^.*\/tests\//, 'tests/')} › ${t.title}`));
-  results.push({ id: injection.id, what: injection.what, file: injection.file, caught: failed.length > 0, failed });
-  console.log(`[inject] ${injection.id}: ${failed.length ? `caught by ${failed.length}` : 'NOT CAUGHT'}`);
+  const failures = path => JSON.parse(readFileSync(path, 'utf8')).testResults.flatMap(file => file.assertionResults.filter(t => t.status === 'failed').map(t => `${file.name.replace(/^.*\/tests\//, 'tests/')} › ${t.title}`));
+  const failed = failures(out), nightly = injection.nightly ? failures(out.replace('.json', '-nightly.json')) : [];
+  results.push({ id: injection.id, what: injection.what, file: injection.file, caught: failed.length + nightly.length > 0, failed, ...(injection.nightly ? { nightly } : {}) });
+  console.log(`[inject] ${injection.id}: per-change ${failed.length ? `caught by ${failed.length}` : 'not caught'}${injection.nightly ? `, nightly ${nightly.length ? `caught by ${nightly.length}` : 'not caught'}` : ''}`);
   writeFileSync('test-results/inject/summary.json', JSON.stringify(results, null, 2) + '\n');
 }
 process.exitCode = results.every(r => r.caught) ? 0 : 1;
