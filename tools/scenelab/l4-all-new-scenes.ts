@@ -28,7 +28,7 @@ const crowd30: SceneSpec = {
     const model = i < 22 ? converted[i - 13] : ['inf.common-worker', 'npc.national-guard', ...civilians][(i - 22) % 7];
     return { id: `infected-${i}`, kind: 'infected', at, yaw: -45, archetype: archetype(model), look: { model }, state: 'idle' };
   }),
-  camera: { mode: 'game', target: [-20, .6, 0], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
+  camera: { mode: 'game', target: [-19, .6, 1], zoom: 1.5 }, frames: 3, shots: [3], expect: { consoleErrors: 0 },
 };
 const corpses: SceneSpec = {
   name: 'l4-converted-corpses', ground: 'asphalt', time: 'L4', size: 100,
@@ -105,6 +105,12 @@ try {
       }
       return { textureCount: textures.size, decodedBytes, rgbaUpperBoundBytes, render: window.__SS__!.getState().render };
     });
+    if (mode === 'crowd' || mode === 'perf') {
+      assert.equal(Object.keys(metrics.actors).length, 30);
+      assert.ok(Object.values(metrics.actors).every(a => a.drawnFrames > 0), 'Every street-crowd figure submitted');
+      const active = new Set(resources.render.crowd?.batches.filter(b => b.instances > 0).map(b => b.id));
+      for (const id of converted) assert.ok(active.has(id === 'inf.riot-cop' ? 'infected.riot' : id), `${id}: distinct model batch submitted`);
+    }
     writeJson(`${out}/receipt.json`, { base, variant, tier, backend, result, metrics, resources, errors: session.errors });
     if (mode === 'perf') {
       const hostLoad = loadavg(), pool = await fetch('http://127.0.0.1:4329/status').then(r => r.json());
@@ -117,7 +123,7 @@ try {
       writeJson(`${out}/cadence.json`, { variant, tier, backend, hostLoad, pool, cadence, timingStatus: 'shared-pool diagnostic; final quiet p95 and PROD five-cold-load comparison pending' });
       assert.equal(cadence.over200, 0); assert.deepEqual(cadence.builds, []);
     }
-    for (const zoom of [1, 1.5]) { await session.page.evaluate(({ zoom, corpses }) => window.__SCENE__!.setCamera({ mode: 'game', target: corpses ? [0, .4, 0] : [-20, .6, 0], zoom }), { zoom, corpses: mode === 'corpses' }); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
+    for (const zoom of [1, 1.5]) { await session.page.evaluate(({ zoom, corpses }) => window.__SCENE__!.setCamera({ mode: 'game', target: corpses ? [0, .4, 0] : [-19, .6, 1], zoom }), { zoom, corpses: mode === 'corpses' }); await session.ready(); await session.screenshot(`${out}/zoom-${zoom}.png`); }
     if (mode === 'corpses') {
       const proof = await session.page.evaluate(async () => {
         const game = (window.__SCENE__ as unknown as { game: Game }).game;

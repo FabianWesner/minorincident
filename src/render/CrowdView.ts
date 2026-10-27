@@ -12,7 +12,7 @@ import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
-import { crowdModelKey, registerCrowdModel } from './crowdModels';
+import { crowdModelKey, isCrowdVariant, registerCrowdModel } from './crowdModels';
 import { markInfectedEyeCores } from './characters/infectedEyes';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
@@ -135,7 +135,8 @@ export class CrowdView extends Group {
   }
   async init(): Promise<void> {
     const started = performance.now();
-    const variants = manifest.filter(a => (a.status === 'integrated' || a.status === 'final') && a.category === 'infected' && !a.textureMode && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
+    const nativeAssets = new Set(infectedDefinitions.map(d => d.asset));
+    const variants = manifest.filter(a => isCrowdVariant(a, nativeAssets));
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && !e.civilian.pet && e.civilian.model ? [e.civilian.model] : []));
     if (this.world.scenario === 'L4') for (const model of l4InfectedLooks) if (model.startsWith('npc.')) models.add(model);
     const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];

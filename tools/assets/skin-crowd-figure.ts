@@ -303,10 +303,12 @@ if (arg('--clear-headwear')) {
   }
   const crown = cap.filter(i => body.pos[i * 3 + 1] > eyeY + headHeight * (pickedEyes ? -.25 : arg('--clear-headwear') === 'brown' ? .1 : .05)), brimY = Math.min(...crown.map(i => body.pos[i * 3 + 1]));
   const key = (i: number) => body.pos.slice(i * 3, i * 3 + 3).map(x => Math.round(x / 1e-6)).join(','), lifts = new Map<string, number>();
+  const forwardMargin = pickedEyes ? .08 : .02, clearance = pickedEyes ? .07 : .035;
+  const liftFraction = arg('--clear-headwear') === 'brown' ? pickedEyes ? .5 : .35 : pickedEyes ? .3 : .2;
   for (const i of crown) {
     const x = body.pos[i * 3], y = body.pos[i * 3 + 1];
-    if (arg('--clear-headwear') !== 'brown' && y > brimY + headHeight * .3 || x < eyeX - .08) continue;
-    const delta = Math.min(headHeight * (arg('--clear-headwear') === 'brown' ? .5 : .3), Math.max(0, eyeY + Math.tan(Math.PI * .2) * (x - eyeX) + .07 - y));
+    if (arg('--clear-headwear') !== 'brown' && y > brimY + headHeight * (pickedEyes ? .3 : .22) || x < eyeX - forwardMargin) continue;
+    const delta = Math.min(headHeight * liftFraction, Math.max(0, eyeY + Math.tan(Math.PI * .2) * (x - eyeX) + clearance - y));
     lifts.set(key(i), Math.max(lifts.get(key(i)) ?? 0, delta));
   }
   const changes = body.owner.map((_, i) => lifts.get(key(i)) ?? 0);

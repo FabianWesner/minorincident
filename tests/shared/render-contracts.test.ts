@@ -17,10 +17,23 @@ import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
 import type { EntitySnapshot } from '../../src/sim/world/types';
+import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
 const CROWD = { attributes: 14, buffers: 7 };
 const deathFrame = () => infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+
+test('crowd registration retains converted textured variants with their own model identity', () => {
+  const native = new Set(['inf.runner']), aliases = new Map<string, string>();
+  const variant = { id: 'inf.outfit', status: 'integrated', category: 'infected' } as const;
+  expect(isCrowdVariant(variant, native)).toBe(true);
+  expect(isCrowdVariant({ ...variant, textureMode: 'baseColor' }, native)).toBe(false);
+  expect(isCrowdVariant({ ...variant, textureMode: 'baseColor', crowdSkin: true }, native)).toBe(true);
+  expect(isCrowdVariant({ ...variant, id: 'inf.runner', crowdSkin: true }, native)).toBe(false);
+  expect(isCrowdVariant({ ...variant, id: 'inf.corpse-poses', crowdSkin: true }, native)).toBe(false);
+  expect(registerCrowdModel(aliases, { id: variant.id, asset: variant.id })).toBe(variant.id);
+  expect(aliases.get(variant.id)).toBe(variant.id);
+});
 
 test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never both); frozen corpse pages stay within buffer headroom', () => {
   const geometry = new BufferGeometry();
