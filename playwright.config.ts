@@ -1,4 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
+import { poolEndpoint } from './tools/browser-pool/client';
+for (let i = 0; i < process.argv.length; i++) {
+  const arg = process.argv[i];
+  const workers = arg === '--workers' ? process.argv[++i] : arg.startsWith('--workers=') ? arg.slice('--workers='.length) : undefined;
+  if ((arg === '--workers' || workers !== undefined) && workers !== '1' && workers !== '2') throw new Error('Playwright is limited to 1 or 2 workers on this machine');
+}
+const endpoint = await poolEndpoint();
+if (endpoint) { process.env.MI_BROWSER_POOL_WS = endpoint; process.env.MI_BROWSER_POOL = '1'; }
 
 // Playwright forces color in child workers; avoid conflicting inherited NO_COLOR.
 delete process.env.NO_COLOR;
@@ -21,7 +29,7 @@ export default defineConfig({
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
-  timeout: process.platform === 'darwin' ? 60_000 : 180_000,
+  timeout: process.platform === 'darwin' && process.env.BROWSER_POOL_BACKEND !== 'swiftshader' ? 60_000 : 180_000,
   // Separate artifacts for simultaneous browser runs using isolated preview ports.
   outputDir: `test-results/playwright/run${process.env.E2E_PORT ? `-${port}` : ''}`,
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],
@@ -32,7 +40,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
     headless: true,
     launchOptions: { args: gpuArgs },
-    ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS } } : {}),
+    ...(process.env.MI_BROWSER_POOL_WS ? { connectOptions: { wsEndpoint: process.env.MI_BROWSER_POOL_WS, headers: { 'x-mi-job': process.env.MI_SLUG ?? process.cwd().split('/').at(-1) ?? 'playwright' } } } : {}),
   },
   // Test strategy (docs/qa/test-strategy.md): the per-change browser suite is tests/e2e (smoke + GPU limits, <= 6 tests);
   // tests/nightly/*.spec.ts are nightly performance budgets (project "perf", run through tools/perf/quiet-run.sh).
@@ -43,7 +51,7 @@ export default defineConfig({
     { name: 'pixel-7-landscape', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: '**/e2e/smoke.spec.ts', use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
-    { name: 'webkit', testMatch: '**/e2e/smoke.spec.ts', use: { browserName: 'webkit', launchOptions: { args: [] }, connectOptions: undefined } },
+    ...(process.env.E2E_LEGACY === '1' ? [{ name: 'webkit', testMatch: '**/e2e/smoke.spec.ts', use: { browserName: 'webkit' as const, launchOptions: { args: [] }, connectOptions: undefined } }] : []),
   ],
   // Test the optimized QA output, including the query-gated API chunk.
   webServer: { command: `npx vite preview${process.env.E2E_DIST ? ` --outDir '${process.env.E2E_DIST.replaceAll("'", "'\\''")}'` : ''} --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },

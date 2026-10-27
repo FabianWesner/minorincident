@@ -1,0 +1,141 @@
+{
+  "revision": "d770f9fe7531b69ff36f509d4ba2da7013d160f9",
+  "cloneIsolation": true,
+  "worktree": "/private/tmp/mi-infra-concurrent-25530",
+  "jobs": [
+    {
+      "name": "a-smoke",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "node_modules/playwright/cli.js",
+        "test",
+        "tests/e2e/smoke.spec.ts",
+        "--grep",
+        "@smoke",
+        "--project=chromium",
+        "--workers=1",
+        "--repeat-each=3"
+      ],
+      "startedAt": 1793082677.880455,
+      "finishedAt": 1793082693.501703,
+      "durationMs": 15621,
+      "code": 0
+    },
+    {
+      "name": "a-scene",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/scenelab/catalog.ts",
+        "--dir",
+        "specs/scenes",
+        "--filter",
+        "bench-sitter",
+        "--jobs",
+        "1",
+        "--size",
+        "800x600",
+        "--out",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/test-results/lane-infra/concurrency/a-scene"
+      ],
+      "startedAt": 1793082677.881846,
+      "finishedAt": 1793082691.963018,
+      "durationMs": 14081,
+      "code": 1
+    },
+    {
+      "name": "b-smoke",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "node_modules/playwright/cli.js",
+        "test",
+        "tests/e2e/smoke.spec.ts",
+        "--grep",
+        "@smoke",
+        "--project=chromium",
+        "--workers=1",
+        "--repeat-each=3"
+      ],
+      "startedAt": 1793082677.883272,
+      "finishedAt": 1793082692.994783,
+      "durationMs": 15112,
+      "code": 0
+    },
+    {
+      "name": "b-scene",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "node",
+        "--import",
+        "tsx",
+        "tools/scenelab/catalog.ts",
+        "--dir",
+        "specs/scenes",
+        "--filter",
+        "bench-sitter",
+        "--jobs",
+        "1",
+        "--size",
+        "800x600",
+        "--out",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/test-results/lane-infra/concurrency/b-scene"
+      ],
+      "startedAt": 1793082677.885083,
+      "finishedAt": 1793082691.706979,
+      "durationMs": 13822,
+      "code": 1
+    }
+  ],
+  "sceneResults": {
+    "a": {
+      "seconds": 12.069,
+      "rows": [
+        {
+          "name": "bench-sitter",
+          "file": "specs/scenes/bench-sitter.json",
+          "pass": false,
+          "seconds": 10.861,
+          "frames": 300,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high",
+          "gates": "ok consoleErrors 0/0; FAIL clipping 1/0; ok canvas.f0.varianceMin 3217.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f19.varianceMin 3216.4/1; ok canvas.f19.variedTilesMin 64/8; ok canvas.f38.varianceMin 3219.3/1; ok canvas.f38.variedTilesMin 64/8; ok canvas.f57.varianceMin 3222.2/1; ok canvas.f57.variedTilesMin 64/8; ok canvas.f76.varianceMin 3218.6/1; ok canvas.f76.variedTilesMin 64/8; ok canvas.f95.varianceMin 3188.4/1; ok canvas.f95.variedTilesMin 64/8; ok canvas.f114.varianceMin 3507.4/1; ok canvas.f114.variedTilesMin 64/8; ok canvas.f133.varianceMin 4194.4/1; ok canvas.f133.variedTilesMin 64/8; ok canvas.f152.varianceMin 4424.8/1; ok canvas.f152.variedTilesMin 64/8; ok canvas.f171.varianceMin 4529.2/1; ok canvas.f171.variedTilesMin 64/8; ok canvas.f190.varianceMin 4502.3/1; ok canvas.f190.variedTilesMin 64/8; ok canvas.f209.varianceMin 4549.0/1; ok canvas.f209.variedTilesMin 64/8; ok canvas.f228.varianceMin 4414.6/1; ok canvas.f228.variedTilesMin 64/8; ok canvas.f247.varianceMin 4554.6/1; ok canvas.f247.variedTilesMin 64/8; ok canvas.f266.varianceMin 4624.0/1; ok canvas.f266.variedTilesMin 64/8; ok canvas.f285.varianceMin 4677.2/1; ok canvas.f285.variedTilesMin 64/8; ok canvas.f300.varianceMin 4702.6/1; ok canvas.f300.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [
+            "clipping 1 > 0"
+          ],
+          "sheet": "bench-sitter/sheet.jpg",
+          "sheetKb": 179
+        }
+      ]
+    },
+    "b": {
+      "seconds": 12.273,
+      "rows": [
+        {
+          "name": "bench-sitter",
+          "file": "specs/scenes/bench-sitter.json",
+          "pass": false,
+          "seconds": 11.228,
+          "frames": 300,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high",
+          "gates": "ok consoleErrors 0/0; FAIL clipping 1/0; ok canvas.f0.varianceMin 3217.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f19.varianceMin 3216.4/1; ok canvas.f19.variedTilesMin 64/8; ok canvas.f38.varianceMin 3219.3/1; ok canvas.f38.variedTilesMin 64/8; ok canvas.f57.varianceMin 3222.2/1; ok canvas.f57.variedTilesMin 64/8; ok canvas.f76.varianceMin 3218.6/1; ok canvas.f76.variedTilesMin 64/8; ok canvas.f95.varianceMin 3188.4/1; ok canvas.f95.variedTilesMin 64/8; ok canvas.f114.varianceMin 3507.4/1; ok canvas.f114.variedTilesMin 64/8; ok canvas.f133.varianceMin 4194.4/1; ok canvas.f133.variedTilesMin 64/8; ok canvas.f152.varianceMin 4424.8/1; ok canvas.f152.variedTilesMin 64/8; ok canvas.f171.varianceMin 4529.2/1; ok canvas.f171.variedTilesMin 64/8; ok canvas.f190.varianceMin 4502.3/1; ok canvas.f190.variedTilesMin 64/8; ok canvas.f209.varianceMin 4549.0/1; ok canvas.f209.variedTilesMin 64/8; ok canvas.f228.varianceMin 4414.6/1; ok canvas.f228.variedTilesMin 64/8; ok canvas.f247.varianceMin 4554.6/1; ok canvas.f247.variedTilesMin 64/8; ok canvas.f266.varianceMin 4624.0/1; ok canvas.f266.variedTilesMin 64/8; ok canvas.f285.varianceMin 4677.2/1; ok canvas.f285.variedTilesMin 64/8; ok canvas.f300.varianceMin 4702.6/1; ok canvas.f300.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [
+            "clipping 1 > 0"
+          ],
+          "sheet": "bench-sitter/sheet.jpg",
+          "sheetKb": 179
+        }
+      ]
+    }
+  }
+}

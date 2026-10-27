@@ -1,9 +1,9 @@
+import { launchBrowser } from '../browser-pool/client';
 /** Fixed game-camera peer evidence for the L5 military asset lane. */
-import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import manifest from '../../src/assets/manifest.json';
 const output = 'test-results/l5-military-wrecks-and-line';
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 480, height: 360 } });
   for (const id of ['veh.tank', 'veh.military-apc', 'veh.military-truck', 'decay.abandoned-checkpoint']) {

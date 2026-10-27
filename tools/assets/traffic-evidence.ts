@@ -1,12 +1,12 @@
+import { launchBrowser } from '../browser-pool/client';
 /** Reproducible L3 delivery evidence at the fixed game camera, 160px silhouette. */
-import { chromium } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import manifest from '../../src/assets/manifest.json';
 
 const ids = process.argv[2]?.split(',') ?? ['veh.sedan-white', 'veh.suv-dark', 'veh.pickup-red', 'veh.ambulance', 'veh.school-bus', 'veh.military-apc'];
 const pixels = Number(process.env.TARGET_PIXELS ?? 160);
 const output = 'test-results/l3-traffic-and-army-vehicles';
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 480, height: 360 } });
   for (const id of ids) {

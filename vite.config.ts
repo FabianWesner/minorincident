@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import { execFileSync } from 'node:child_process';
-import { rmSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { dirname, resolve } from 'node:path';
 import { assetVersionsDefine, rapierWasmFile } from './tools/build/load-plugins';
 let buildCommit = 'unknown';
 try { buildCommit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim(); } catch { /* Source archives may not include Git metadata. */ }
@@ -10,9 +11,17 @@ function stripQaPublicFiles() {
   let outDir = 'dist';
   return { name: 'strip-qa-public-files', apply: 'build' as const, configResolved(config: { build: { outDir: string } }) { outDir = config.build.outDir; }, closeBundle() { rmSync(resolve(outDir, 'perf-device.html'), { force: true }); rmSync(resolve(outDir, 'assets/motionlab'), { recursive: true, force: true }); } };
 }
+let cacheDir = '.vite-cache';
+try {
+  const common = execFileSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' }).trim();
+  // Vite 6 optimizer metadata hashes config.root and embeds absolute package paths.
+  // Keep optimizer writers isolated; the dependency store and immutable dist are shared.
+  const cacheKey = createHash('sha256').update(readFileSync('package-lock.json')).update(readFileSync('vite.config.ts')).update(resolve('.')).digest('hex').slice(0, 20);
+  cacheDir = resolve(process.env.MI_WORKTREE_CACHE ?? dirname(common) + '/.mi-worktree-cache', 'vite', cacheKey);
+} catch { /* Source archives use the local cache. */ }
 export default defineConfig({
   define: { __BUILD_COMMIT__: JSON.stringify(buildCommit), __QA_HOOKS__: JSON.stringify(qaHooks) },
-  cacheDir: '.vite-cache',
+  cacheDir,
   plugins: [rapierWasmFile(), assetVersionsDefine(), ...(!qaHooks ? [stripQaPublicFiles()] : [])],
   resolve: { dedupe: ['three'] },
   optimizeDeps: { entries: ['index.html', 'preview/*.html'] },

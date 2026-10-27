@@ -6,11 +6,11 @@ const exec = promisify(execFile);
 export const delay = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
 
 /** Hold every legacy slot while the daemon owns any Chrome process. */
-export async function reserveLegacySlots(): Promise<() => Promise<void>> {
+export async function reserveLegacySlots(alive = () => true): Promise<() => Promise<void>> {
   if (process.platform !== 'darwin') return async () => {};
   const base = process.env.E2E_LOCK ?? '/tmp/minor-incident-e2e.lock';
-  const deadline = Date.now() + Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000);
-  while (Date.now() < deadline) {
+  const deadline = Date.now() + Math.min(600_000, Number(process.env.BROWSER_POOL_WAIT_MS ?? 600_000));
+  while (alive() && Date.now() < deadline) {
     const command = ['-k', '-t', '0', `${base}.0`, 'lockf', '-k', '-t', '0', `${base}.1`, 'lockf', '-k', '-t', '0', `${base}.2`, 'lockf', '-k', '-t', '0', `${base}.3`, process.execPath, '-e', 'process.stdout.write("locked\\n");process.stdin.resume()'];
     const child: ChildProcess = spawn('lockf', command, { stdio: ['pipe', 'pipe', 'inherit'] });
     const locked = await new Promise<boolean>((resolve, reject) => {
@@ -26,11 +26,12 @@ export async function reserveLegacySlots(): Promise<() => Promise<void>> {
   throw new Error('Pool could not reserve the legacy browser slots before admission deadline');
 }
 
-export async function gpuAdmission(): Promise<void> {
+export async function gpuAdmission(maximumMs = 600_000, alive = () => true): Promise<void> {
   if (process.platform !== 'darwin') return;
-  const deadline = Date.now() + Number(process.env.BROWSER_POOL_WAIT_MS ?? 1_800_000);
+  const deadline = Date.now() + Math.min(maximumMs, Number(process.env.BROWSER_POOL_WAIT_MS ?? maximumMs));
   while (true) {
-    try { await exec('python3', ['tools/mac-gpu-guard.py', '1'], { env: { ...process.env, MI_GPU_BROWSER_LIMIT: '1' } }); return; }
+    if (!alive() || Date.now() >= deadline) throw new Error('GPU admission cancelled or exceeded reservation deadline');
+    try { await exec('python3', ['tools/mac-gpu-guard.py', '1'], { env: { ...process.env, MI_GPU_BROWSER_LIMIT: '1' }, timeout: Math.max(1, deadline - Date.now()) }); if (!alive()) throw new Error('GPU admission client disconnected'); return; }
     catch (error) {
       if ((error as { code?: number }).code !== 75 || Date.now() >= deadline) throw error;
       await delay(1000);
@@ -49,7 +50,7 @@ export async function quietConditions(owned: Set<number>) {
   while (ours.size !== count) { count = ours.size; for (const p of processes) if (ours.has(p.parent)) ours.add(p.pid); }
   const busy = processes.filter(p => !ours.has(p.pid) && (
     (/^\/.*(?:chrome-headless-shell|headless_shell|Google Chrome|Chromium)/.test(p.command) && !p.command.includes('--type=') && /headless/.test(p.command)) ||
-    /^(?:\/[^ ]*\/)?(?:node|Blender|blender)(?: |$)/.test(p.command) && /(?:vitest|vite (?:build)|blender|Blender)/.test(p.command)
+    /^(?:\/[^ ]*\/)?(?:node|Blender|blender)(?: |$)/.test(p.command) && /(?:vitest|vite(?:[.]js)? (?:build)|(?:[/ ])tsc(?: |$)|blender|Blender)/.test(p.command)
   ));
   return { quiet: loadavg()[0] < 3 && busy.length === 0, load: loadavg(), busy: busy.map(p => ({ pid: p.pid, command: p.command.slice(0, 180) })) };
 }

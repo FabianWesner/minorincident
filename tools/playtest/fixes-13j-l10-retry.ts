@@ -1,5 +1,5 @@
+import { launchBrowser } from '../browser-pool/client';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { chromium } from '@playwright/test';
 import { cure } from '../../src/levels/L10/district';
 import type { Game } from '../../src/Game';
 
@@ -15,7 +15,7 @@ mkdirSync(out, { recursive: true });
 const args = process.platform === 'darwin'
   ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist']
   : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args });
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   await page.goto(`${origin}/?test=poses&testApi=1&scenelab=1&renderer=webgl&dpr=1&audio=muted&quality=low`);

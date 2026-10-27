@@ -1,0 +1,48 @@
+{
+  "revision": "e89ba89410761f666fc95b6836940bd45447c34d",
+  "backend": "gpu",
+  "startedAt": "2026-10-27T06:17:36Z",
+  "runs": [
+    {
+      "label": "before",
+      "worktree": "/private/tmp/mi-infra-proof-before-84292",
+      "stagesMs": {
+        "checkoutAndSetup": 15334,
+        "npmCi": 2195,
+        "build": 8954,
+        "smoke": 291412
+      },
+      "freeBefore": 12061605888,
+      "checkoutBytes": 2287550464,
+      "freeAfterCheckout": 9808490496,
+      "depsBytes": 200159232,
+      "depsAreDirectory": true,
+      "resolution": "vite file:///private/tmp/mi-infra-proof-before-84292/node_modules/vite/dist/node/index.js\nvitest file:///private/tmp/mi-infra-proof-before-84292/node_modules/vitest/dist/index.js\nndarray-pixels file:///private/tmp/mi-infra-proof-before-84292/tools/assets/png-pixels/index.js\n",
+      "readyBytes": 2917449728,
+      "freeAfterBuild": 9170108416,
+      "firstGreenSmokeMs": 318358,
+      "freeAfterSmoke": 8800268288,
+      "freeAfterRemoval": 11751714816
+    },
+    {
+      "label": "after",
+      "worktree": "/Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/.claude/worktrees/mi-infra-proof-after-84292",
+      "stagesMs": {
+        "checkoutAndSetup": 14293,
+        "build": 1305,
+        "smoke": 272452
+      },
+      "freeBefore": 11751710720,
+      "checkoutBytes": 2508247040,
+      "freeAfterCheckout": 9460875264,
+      "depsBytes": 220692480,
+      "depsAreDirectory": true,
+      "resolution": "vite file:///Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/.claude/worktrees/mi-infra-proof-after-84292/node_modules/vite/dist/node/index.js\nvitest file:///Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/.claude/worktrees/mi-infra-proof-after-84292/node_modules/vitest/dist/index.js\nndarray-pixels file:///Users/wesner/Workspace/minorincident/.claude/worktrees/lane-infra/.claude/worktrees/mi-infra-proof-after-84292/tools/assets/png-pixels/index.js\n",
+      "readyBytes": 2938195968,
+      "freeAfterBuild": 9463152640,
+      "firstGreenSmokeMs": 288613,
+      "freeAfterSmoke": 12042252288,
+      "freeAfterRemoval": 14349529088
+    }
+  ]
+}

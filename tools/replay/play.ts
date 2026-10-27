@@ -1,8 +1,8 @@
+import { launchBrowser } from '../browser-pool/client';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { chromium } from '@playwright/test';
 import { decodeLog } from '../../src/telemetry/codec';
 import { gunzip } from '../../src/telemetry/gzip';
 import { downloadBundle, defaultBase, type ReplayBundle } from './api';
@@ -53,7 +53,7 @@ if (!(await up())) {
   if (!(await up())) { server.kill(); throw new Error(`replay server did not start on ${port}`); }
 }
 const args = values.backend === 'webgpu' ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
-const browser = await chromium.launch({ headless: true, args });
+const browser = await launchBrowser({ headless: true, args });
 const files: string[] = [];
 let code = 0;
 try {

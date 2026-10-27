@@ -1,0 +1,10 @@
+#!/bin/sh
+# Git calls this for both scheduler --worktree and Claude Agent worktree creation.
+case "${1:-}" in 0000000000000000000000000000000000000000) ;; *) exit 0;; esac
+[ "${3:-}" = 1 ] || exit 0
+wt=$(git rev-parse --show-toplevel) || exit 1
+[ -f "$wt/.git" ] || exit 0
+common=$(git rev-parse --path-format=absolute --git-common-dir) || exit 1
+setup="$wt/tools/worktree-setup.sh"
+[ -f "$setup" ] || setup="$common/mi-tools/tools/worktree-setup.sh"
+[ ! -f "$setup" ] || sh "$setup" "$wt"

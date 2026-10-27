@@ -1,9 +1,9 @@
+import { launchBrowser } from '../browser-pool/client';
 /**
  * Independent asset QA sheet: game camera (FOV25, azimuth45, polar0.30pi) at 135/190 px for LOD0/1/2,
  * plus an inspection ring (4 azimuths) for LOD0 and LOD2. Needs a preview/dev server on E2E_PORT.
  * Usage: E2E_PORT=3361 sh tools/e2e-lock.sh npx tsx tools/assets/qa-sheet.ts <id> [decay|-] <outDir> [peerId]
  */
-import { chromium } from '@playwright/test';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 
@@ -13,7 +13,7 @@ const manifest: { id: string; dimensions: { x: number; y: number; z: number } }[
 const port = process.env.E2E_PORT ?? 3361;
 const label = id + (decay ? `.${decay}` : '');
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=metal'] });
+const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal'] });
 try {
   const page = await browser.newPage({ viewport: { width: 480, height: 360 } });
   await page.goto(`http://127.0.0.1:${port}/preview/?asset=${encodeURIComponent(id)}&production=1&test=1&renderer=webgl&inspection=1`);

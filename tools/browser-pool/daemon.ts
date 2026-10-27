@@ -1,4 +1,6 @@
 import { createServer } from 'node:http';
+import { appendFileSync } from 'node:fs';
+import type { Duplex } from 'node:stream';
 import { randomUUID } from 'node:crypto';
 import { chromium, type BrowserServer } from '@playwright/test';
 import WebSocket, { WebSocketServer, type RawData } from 'ws';
@@ -8,9 +10,9 @@ import { backoffAdmission, delay, gpuAdmission, quietConditions, reserveLegacySl
 // upgrading Playwright requires running tools/browser-pool/check.ts again.
 type Backend = 'gpu' | 'swiftshader';
 type Wire = { id?: number; guid?: string; method?: string; params?: Record<string, unknown>; result?: { context?: { guid: string } }; error?: unknown };
-type Lease = { id: string; backend: Backend; connection: Connection; context?: string; last: number; calls: number; closing: boolean; exclusive?: string };
-type Exclusive = { id: string; last: number; granted: boolean; external?: boolean };
-type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: string };
+type Lease = { id: string; backend: Backend; connection: Connection; context?: string; acquiredAt: number; last: number; calls: number; closing: boolean; exclusive?: string };
+type Exclusive = { id: string; order: number; queuedAt: number; grantedAt?: number; job?: string; last: number; granted: boolean; external?: boolean };
+type Waiter = { connection: Connection; message: Wire; raw: string; exclusive?: string; queuedAt: number; order: number };
 type Connection = { client: WebSocket; upstream: WebSocket; backend: Backend; token?: string; parents: Map<string, string>; types: Map<string, string>; pending: Map<number, { lease?: Lease; create?: Lease }>; leases: Set<Lease>; closed: boolean; job?: string };
 const port = Number(process.env.BROWSER_POOL_PORT ?? 4329);
 if (!Number.isInteger(port) || port < 4321 || port > 4329) throw new Error('Pool port must be 4321–4329');
@@ -21,12 +23,17 @@ const browserIdleMs = Number(process.env.BROWSER_POOL_BROWSER_IDLE_MS ?? 60_000)
 let limit = configuredLimit, stopping = false, lastUse = Date.now(), windowServerCpu: number | null = null;
 let releaseSlots: (() => Promise<void>) | undefined;
 let launchChain: Promise<unknown> = Promise.resolve();
-let negativeId = -1;
+let negativeId = -1, order = 0;
 const browsers = new Map<Backend, { server: BrowserServer; signature: string }>();
 const leases = new Map<string, Lease>(), connections = new Set<Connection>();
 const waiters: Waiter[] = [], exclusives: Exclusive[] = [];
+const starting = new Map<Duplex, { job: string; backend: Backend; queuedAt: number }>();
 const flags = ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'];
 function event(kind: string, data: Record<string, unknown> = {}) { console.log(JSON.stringify({ at: new Date().toISOString(), kind, ...data })); }
+function recordWait(job: string | undefined, kind: string, waitMs: number) {
+  try { appendFileSync(`${process.env.TMPDIR ?? '/tmp'}/mi-waits.jsonl`, JSON.stringify({ at: new Date().toISOString(), lane: job || 'unknown', kind, waitMs }) + '\n'); }
+  catch (error) { event('wait-log-error', { error: String(error) }); }
+}
 function owner(c: Connection, guid = ''): Lease | undefined {
   const seen = new Set<string>();
   while (guid && !seen.has(guid)) {
@@ -55,24 +62,40 @@ function closeLease(lease: Lease, reason: string) {
 }
 function pump() {
   if (stopping) return;
-  while (exclusives.length && Date.now() - exclusives[0].last > 20_000) {
+  while (exclusives.length && (Date.now() - exclusives[0].last > 20_000 || exclusives[0].grantedAt !== undefined && Date.now() - exclusives[0].grantedAt! >= 600_000)) {
     const expired = exclusives.shift()!;
     for (const lease of leases.values()) if (lease.exclusive === expired.id) closeLease(lease, 'Exclusive owner disconnected');
   }
+  // Shared requests before an exclusive barrier drain first. Once granted, only
+  // its owner may create contexts; later shared requests retain their FIFO order.
+  for (let i = waiters.length - 1; i >= 0; i--) if (waiters[i].connection.closed) waiters.splice(i, 1);
+  for (let i = waiters.length - 1; i >= 0; i--) {
+    const w = waiters[i];
+    if (w.exclusive && !exclusives.some(e => e.id === w.exclusive)) { wireError(w.connection, w.message.id, 'Exclusive reservation expired'); waiters.splice(i, 1); }
+  }
   const exclusive = exclusives[0];
-  if (exclusive && !exclusive.granted && leases.size === 0) { exclusive.granted = true; event('exclusive-granted', { id: exclusive.id }); }
-  for (let i = 0; i < waiters.length;) {
-    const waiter = waiters[i], c = waiter.connection;
-    if (c.closed) { waiters.splice(i, 1); continue; }
+  const earlier = () => exclusive && waiters.some(w => !w.exclusive && w.order < exclusive.order);
+  if (exclusive && !exclusive.granted && leases.size === 0 && !earlier()) {
+    exclusive.granted = true; exclusive.grantedAt = Date.now();
+    const waitMs = Date.now() - exclusive.queuedAt;
+    event('exclusive-granted', { id: exclusive.id, job: exclusive.job, waitMs });
+    recordWait(exclusive.job, 'browser-exclusive', waitMs);
+  }
+  while (waiters.length) {
+    const index = exclusive?.granted ? waiters.findIndex(w => w.exclusive === exclusive.id) : 0;
+    if (index < 0) break;
+    const waiter = waiters[index], c = waiter.connection;
     const softwareFull = c.backend === 'swiftshader' && [...leases.values()].filter(l => l.backend === 'swiftshader').length >= 2;
     const permitted = waiter.exclusive
       ? exclusive?.id === waiter.exclusive && exclusive.granted && leases.size === 0
-      : !exclusive && leases.size < limit && !softwareFull;
-    if (!permitted) { i++; continue; }
-    waiters.splice(i, 1);
-    const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
+      : (!exclusive || waiter.order < exclusive.order) && leases.size < limit && !softwareFull;
+    if (!permitted) break;
+    waiters.splice(index, 1);
+    const lease: Lease = { id: randomUUID(), connection: c, backend: c.backend, acquiredAt: Date.now(), last: Date.now(), calls: 1, closing: false, exclusive: waiter.exclusive };
     leases.set(lease.id, lease); c.leases.add(lease); c.pending.set(waiter.message.id!, { create: lease, lease });
-    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, job: c.job, active: leases.size });
+    const waitMs = Date.now() - waiter.queuedAt;
+    event('lease-acquire', { id: lease.id, backend: c.backend, exclusive: !!waiter.exclusive, job: c.job, active: leases.size, waitMs });
+    recordWait(c.job, 'browser', waitMs);
     c.upstream.send(waiter.raw);
   }
 }
@@ -82,7 +105,7 @@ async function closeBrowsers(reason: string, keepSlots = false) {
   if (!keepSlots && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); }
   event('browsers-released', { reason });
 }
-async function browserFor(backend: Backend, options: { args?: string[]; channel?: string }, token?: string) {
+async function browserFor(backend: Backend, options: { args?: string[]; channel?: string }, token?: string, alive = () => true) {
   const normal = new Set([...flags, '--use-angle=metal', '--use-angle=swiftshader', '--enable-gpu', '--enable-unsafe-webgpu', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist']);
   const extra = token ? (options.args ?? []).filter(a => !normal.has(a)) : [];
   const channel = token ? options.channel : undefined;
@@ -93,25 +116,26 @@ async function browserFor(backend: Backend, options: { args?: string[]; channel?
     if (leases.size) throw new Error('Cannot change browser launch flags while a context is active');
     await current.server.close(); browsers.delete(backend);
   }
-  if (!releaseSlots) releaseSlots = await reserveLegacySlots();
+  if (!releaseSlots) releaseSlots = await reserveLegacySlots(alive);
   if (backend === 'gpu') {
     // Do not let SwiftShader occupy CPU during native timing or GPU admission.
     const software = browsers.get('swiftshader');
     if (token && software) { await software.server.close(); browsers.delete('swiftshader'); }
-    await gpuAdmission();
+    await gpuAdmission(600_000, alive);
   }
+  if (!alive()) throw new Error('Browser admission client disconnected');
   const args = backend === 'gpu'
     ? ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist']
     : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
   const server = await chromium.launchServer({ headless: true, args: [...args, ...extra, ...flags], ...(channel ? { channel } : {}) });
-  browsers.set(backend, { server, signature });
+  browsers.set(backend, { server, signature }); lastUse = Date.now();
   server.on('close', () => { if (browsers.get(backend)?.server === server) browsers.delete(backend); });
   event('browser-start', { backend, pid: server.process().pid, channel: channel ?? 'headless-shell' });
   return server;
 }
 function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?: string, job?: string) {
   const c: Connection = { client, upstream, backend, token, parents: new Map(), types: new Map(), pending: new Map(), leases: new Set(), closed: false, job };
-  connections.add(c);
+  connections.add(c); lastUse = Date.now();
   upstream.on('message', (raw: RawData) => {
     const text = raw.toString();
     let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
@@ -137,7 +161,7 @@ function proxy(client: WebSocket, upstream: WebSocket, backend: Backend, token?:
     let m: Wire; try { m = JSON.parse(text) as Wire; } catch { client.close(1003, 'Invalid protocol JSON'); return; }
     if (m.method === 'newContext' && c.types.get(m.guid ?? '') === 'Browser') {
       if (token && !exclusives.some(e => e.id === token)) return wireError(c, m.id, 'Exclusive lease expired');
-      waiters.push({ connection: c, message: m, raw: text, exclusive: token }); pump(); return;
+      waiters.push({ connection: c, message: m, raw: text, exclusive: token, queuedAt: Date.now(), order: order++ }); pump(); return;
     }
     // launchPersistentContext / raw CDP context creation would bypass admission.
     if (m.method === 'send' && /^Target[.](createBrowserContext|createTarget)$/.test(String(m.params?.method))) return wireError(c, m.id, 'Raw CDP target creation bypasses context admission');
@@ -167,12 +191,13 @@ const http = createServer((req, res) => { void (async () => {
   if (url.pathname === '/health' || url.pathname === '/status') return json(200, {
     protocol: 1, pid: process.pid, playwright: '1.63.0', limit, configuredLimit, windowServerCpu, idleMs,
     endpoints: { gpu: `ws://127.0.0.1:${port}/ws/gpu`, swiftshader: `ws://127.0.0.1:${port}/ws/swiftshader` },
+    starting: [...starting.values()].map(s => ({ job: s.job, backend: s.backend, waitMs: Date.now() - s.queuedAt })),
     browsers: [...browsers.entries()].map(([backend, b]) => ({ backend, pid: b.server.process().pid })),
-    leases: [...leases.values()].map(l => ({ id: l.id, backend: l.backend, context: l.context, idle: Date.now() - l.last, calls: l.calls, exclusive: !!l.exclusive })),
-    waiting: waiters.length, exclusive: exclusives.map(e => ({ id: e.id, granted: e.granted })),
+    leases: [...leases.values()].map(l => ({ id: l.id, backend: l.backend, context: l.context, heldMs: Date.now() - l.acquiredAt, idle: Date.now() - l.last, calls: l.calls, exclusive: !!l.exclusive, job: l.connection.job ?? null })),
+    waiting: waiters.length, waiters: waiters.map(w => ({ job: w.connection.job ?? null, backend: w.connection.backend, waitMs: Date.now() - w.queuedAt })), exclusive: exclusives.map(e => ({ id: e.id, job: e.job, granted: e.granted, waitMs: (e.grantedAt ?? Date.now()) - e.queuedAt, heldMs: e.grantedAt ? Date.now() - e.grantedAt : 0 })),
   });
   if (url.pathname === '/exclusive' && req.method === 'POST') {
-    const e = { id: randomUUID(), last: Date.now(), granted: false }; exclusives.push(e); pump(); return json(200, e);
+    const e: Exclusive = { id: randomUUID(), order: order++, queuedAt: Date.now(), job: url.searchParams.get('job') ?? undefined, last: Date.now(), granted: false }; exclusives.push(e); pump(); return json(200, e);
   }
   const exclusivePath = /^\/exclusive\/([^/]+)(\/(?:release|external))?$/.exec(url.pathname);
   if (exclusivePath) {
@@ -181,10 +206,12 @@ const http = createServer((req, res) => { void (async () => {
     const e = exclusives[i]; e.last = Date.now();
     if (exclusivePath[2] === '/external' && req.method === 'POST') {
       if (!e.granted || leases.size) return json(409, { error: 'Exclusive reservation has not drained yet' });
+      const externalAt = Date.now();
       e.external = true;
       await closeBrowsers('external-exclusive', true);
       if (!releaseSlots) releaseSlots = await reserveLegacySlots();
       if (!exclusives.includes(e)) { const release = releaseSlots; releaseSlots = undefined; await release(); return json(409, { error: 'Reservation expired' }); }
+      recordWait(e.job, 'browser-external', Date.now() - externalAt);
       return json(200, { prepared: true });
     }
     if (exclusivePath[2] === '/release' && req.method === 'POST') {
@@ -212,6 +239,9 @@ http.on('upgrade', (req, socket, head) => {
   let options: { args?: string[]; channel?: string } = {};
   try { options = JSON.parse(String(req.headers['x-playwright-launch-options'] ?? req.headers['x-mi-launch-options'] ?? '{}')); } catch { socket.destroy(); return; }
   if (!token && options.args?.some(a => a === '--disable-frame-rate-limit' || a === '--disable-gpu-vsync')) { socket.destroy(); return; }
+  const admission = { job: String(req.headers['x-mi-job'] ?? ''), backend, queuedAt: Date.now() };
+  starting.set(socket, admission);
+  socket.once('close', () => starting.delete(socket));
   // Wait outside launchChain: a queued shared handshake must not block the
   // exclusive client that owns admission and needs a differently configured Chrome.
   const connect = () => {
@@ -219,11 +249,15 @@ http.on('upgrade', (req, socket, head) => {
     if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
     launchChain = launchChain.then(async () => {
       if (!token && exclusives.length) { setTimeout(connect, 100).unref(); return; }
-      const browser = await browserFor(backend, options, token);
+      if (token && !exclusives.some(e => e.id === token && e.granted)) { socket.destroy(); return; }
+      const browser = await browserFor(backend, options, token, () => !socket.destroyed);
       if (socket.destroyed) return;
       const upstream = new WebSocket(browser.wsEndpoint());
       await new Promise<void>((resolve, reject) => { upstream.once('open', resolve); upstream.once('error', reject); });
-      ws.handleUpgrade(req, socket, head, client => proxy(client, upstream, backend, token, String(req.headers['x-mi-job'] ?? '')));
+      ws.handleUpgrade(req, socket, head, client => {
+        starting.delete(socket); recordWait(admission.job, 'browser-connect', Date.now() - admission.queuedAt);
+        proxy(client, upstream, backend, token, admission.job);
+      });
     }).catch(async error => { event('connection-error', { error: String(error) }); socket.destroy(); if (!browsers.size && releaseSlots) { const release = releaseSlots; releaseSlots = undefined; await release(); } });
   };
   socket.on('error', () => socket.destroy()); connect();
@@ -232,8 +266,9 @@ let previousWindow: Awaited<ReturnType<typeof windowServerSnapshot>>, previousAt
 let sampling = false;
 const timer = setInterval(() => {
   pump();
+  for (const lease of leases.values()) if (Date.now() - lease.acquiredAt >= 600_000) closeLease(lease, '10-minute browser reservation cap reached; split the batch');
   for (const lease of leases.values()) if (!lease.closing && lease.calls === 0 && Date.now() - lease.last >= idleMs) closeLease(lease, 'Idle browser lease released');
-  if (!leases.size && !waiters.length && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
+  if (!leases.size && !waiters.length && !starting.size && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
     lastUse = Date.now(); launchChain = launchChain.then(() => closeBrowsers('idle')).catch(error => event('idle-error', { error: String(error) }));
   }
   if (sampling || Date.now() - previousAt < 10_000) return;

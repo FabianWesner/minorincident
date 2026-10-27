@@ -1,8 +1,10 @@
 # Shared headless browser pool
 
-From the worktree root, run `npm run browser:pool` and leave that process running. It listens on `127.0.0.1:4329`; Chrome starts lazily. Stop this owned process with Ctrl-C. It closes its own browsers and releases the legacy locks.
+Browser commands start the pool automatically when it is down. It listens on `127.0.0.1:4329`; Chrome starts lazily and the daemon closes it after the existing idle timeout. Check active holders and queued wait times with `sh tools/browser-status.sh`. Set `E2E_LEGACY=1` only for a command that must use the legacy lock path. Each browser command is capped at 10 minutes; split longer batches.
 
-Migrated wrappers discover the pool automatically:
+The remote runner can query `sh tools/browser-busy.sh`; it exits 0 while a GPU browser reservation is active and 1 while idle. Wait acquisitions are appended to `$TMPDIR/mi-waits.jsonl`; summarize them by lane/hour with `node tools/qa/wait-report.mjs`.
+
+Wrappers and direct Scene Lab/Playwright clients discover and start the pool automatically:
 
 ```sh
 E2E_PORT=4322 sh tools/e2e-lock.sh npx playwright test --project=chromium --workers=2
@@ -19,7 +21,7 @@ Scene Lab CLI/catalog and A/B QA release their context after each spec/capture g
 
 Exclusive timing requests block new shared contexts, let current steps finish or expire, then admit one context at a time. Quiet-run retains load < 3, no foreign headless Chrome, no local Vitest/Blender/build, the one-minute cooldown and bounded admission/batch durations. Native channel/uncapped options can restart GPU Chrome after shared contexts drain. Test fixtures reconnect per context. Opaque quiet-run commands run with pooled browsers retired and all legacy locks reserved, so an old direct launcher also runs alone.
 
-The pool reserves legacy slots 0–3 before launching Chrome. Unmigrated tools still use those locks; after idle Chrome release or daemon shutdown they run normally. If discovery finds no pool, wrappers retain the original launch path. A pool disappearing after admission is an error; clients never silently start an unguarded second GPU browser. `BROWSER_POOL=off` explicitly selects the fallback.
+The pool reserves legacy slots 0–3 before launching Chrome. Unmigrated tools still use those locks; after idle Chrome release or daemon shutdown they run normally. If the pool is down, wrappers start it and fail clearly if startup fails. A pool disappearing after admission is an error; clients never silently start an unguarded second GPU browser. `E2E_LEGACY=1` explicitly selects the fallback. `BROWSER_POOL=off` is reserved for admitted opaque exclusive commands and remote runners.
 
 Controls (per command/process; no global configuration):
 
@@ -31,7 +33,7 @@ Controls (per command/process; no global configuration):
 | `BROWSER_POOL_SHARED_LIMIT` | `4` | Maximum active contexts across backends, 1–6; SwiftShader capped at two |
 | `BROWSER_POOL_IDLE_MS` | `60000` | Context/live action idle timeout |
 | `BROWSER_POOL_BROWSER_IDLE_MS` | `60000` | Chrome idle release timeout |
-| `BROWSER_POOL_WAIT_MS` | `1800000` | Client/context admission deadline |
+| `BROWSER_POOL_WAIT_MS` | `1800000` | Maximum time queued for context admission; command runtime is capped at 10 minutes |
 
 Every ten seconds, WindowServer CPU is computed from CPU-time deltas. Above 60%, shared admission drops by one context; three consecutive samples below 30% restore one, up to the configured limit. A missing/restarted WindowServer sample reduces admission to one. Existing active work reaches its next safe point. GPU startup also uses the existing ten-second guard with a one-GPU-browser cap. Status and structured lifecycle/host telemetry are available at `/status` and daemon stdout.
 
@@ -43,6 +45,6 @@ npx tsx tools/browser-pool/benchmark.ts before
 BROWSER_POOL_SHARED_LIMIT=4 npx tsx tools/browser-pool/benchmark.ts after
 ```
 
-`check.ts` uses headless SwiftShader, owns its daemon/PIDs, and checks isolation, queuing, idle cleanup, exclusive drain/restart, profile portability and pool-down fallback. The benchmark reserves all legacy slots for the old path, enforcing one GPU Chrome total. It keeps raw captures, command logs, samples and summaries under `test-results/browser-pool/`. See [measurements and recommendation](../../docs/reports/browser-pool/README.md).
+`check.ts` uses headless SwiftShader, owns its daemon/PIDs, and checks isolation, FIFO admission across exclusive barriers, idle cleanup, exclusive drain/restart, profile portability and explicit legacy fallback. The benchmark reserves all legacy slots for the old path, enforcing one GPU Chrome total. It keeps raw captures, command logs, samples and summaries under `test-results/browser-pool/`. See [measurements and recommendation](../../docs/reports/browser-pool/README.md).
 
 The WebSocket proxy observes the Playwright 1.63.0 protocol rather than CDP. Run these lifecycle checks when upgrading Playwright. This is a local development service; do not expose its loopback endpoint publicly.
