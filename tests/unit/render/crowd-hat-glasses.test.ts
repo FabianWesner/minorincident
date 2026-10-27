@@ -22,7 +22,7 @@ async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
 // the crown) and #115 (L4, "huge flat hexagonal hats cover their whole heads"). Every civilian crowd variant, at every
 // LOD the crowd draws, wears every hat anchored on its own head at head scale, and a spectacled head wears it above
 // its frames.
-test('T-PO108 civilian hats sit on the head at head scale and above the glasses on every LOD @E07 @E19', async () => {
+test('T-PO108 @nightly civilian hats sit on the head at head scale and above the glasses on every LOD @E07 @E19', async () => {
   const { CrowdAccessories, bakedSkull, glassesTop, glassesClearance, spectacleTops, skinnedBrow } = await import('../../../src/render/characters/CrowdAccessories');
   const { AssetRegistry } = await import('../../../src/assets/registry');
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation((id, lod) => model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));

@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { loadL2, runL2 } from '../../../tools/sim-runner/l2Bots';
 
-test('@E20-AC05 ride control latency stays on its observed clock after checkpoint respawn', async () => {
+test('@E20-AC05 @nightly ride control latency stays on its observed clock after checkpoint respawn', async () => {
   const { world, mission } = await loadL2(1);
   let arrivalAt = 0, killed = false;
   try {

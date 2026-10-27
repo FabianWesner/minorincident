@@ -10,7 +10,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import { MegaPursuit } from '../../../src/sim/ai/MegaPursuit';
 
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
-for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @nightly @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32);
@@ -70,7 +70,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
   } finally { w.dispose(); }
 }, 120_000);
 
-test('T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency', async () => {
+test('T-E32-28-D1 @nightly @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency', async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); w.chunks!.setQuality('low');

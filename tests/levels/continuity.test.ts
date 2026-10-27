@@ -13,7 +13,7 @@ import { loadL2, runL2 } from '../../tools/sim-runner/l2Bots';
 const HEAVY = 1_800_000;
 const out = 'test-results/epics/continuity';
 describe('L1 -> L2 world-state continuity', () => {
-  test('T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run\'s carryover', async () => {
+  test('T-CONT-01S @nightly @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run\'s carryover', async () => {
     const { world: w1, mission: m1 } = await loadL1(1);
     const events: string[] = [];
     for (const type of ['l1.blast', 'l1.smoke'] as const) w1.events.on(type, e => { events.push(e.type); });

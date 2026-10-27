@@ -108,7 +108,7 @@ describe('L4 collapse director', () => {
     expect(within14).toBeLessThanOrEqual(150);
   }, HEAVY);
 
-  test('T-E22-13-collapse @E22 @E22-AC13 idle courier: breach flood reaches line 1, soldiers physically fall back, then the three lines fall on their beats', async () => {
+  test('T-E22-13-collapse @E22 @nightly @E22-AC13 idle courier: breach flood reaches line 1, soldiers physically fall back, then the three lines fall on their beats', async () => {
     const l = await loadL4(2); world = l.world;
     // The breach now sends the first line physically past the courier. Losses
     // resolve while the horde pursues the later retreat, rather than on the
@@ -131,7 +131,7 @@ describe('L4 collapse director', () => {
     void inRing;
   }, HEAVY);
 
-  test('T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier', async () => {
+  test('T-E22-13-escape @E22 @nightly @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier', async () => {
     const l = await loadL4(2); world = l.world;
     const tr = war(l.world, l.mission, 2, 'high', false);
     // The gap: infected on the escape street (beyond the pursuers) run off toward the army and nothing emerges on it.
@@ -144,13 +144,13 @@ describe('L4 collapse director', () => {
     expect(tr.pressMax).toBeLessThanOrEqual(16);
   }, HEAVY);
 
-  test('T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows', async () => {
+  test('T-E22-13-collapse-shooter @E22 @nightly @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows', async () => {
     const l = await loadL4(3); world = l.world;
     const tr = war(l.world, l.mission, 3, 'high', true);
     beatsOnTime(tr);
   }, HEAVY);
 
-  test('T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps', async () => {
+  test('T-E22-13-collapse-low @E22 @nightly @E22-AC13 the low tier keeps the beats inside its caps', async () => {
     const l = await loadL4(2, 'low'); world = l.world;
     const tr = war(l.world, l.mission, 2, 'low', false);
     beatsOnTime(tr);

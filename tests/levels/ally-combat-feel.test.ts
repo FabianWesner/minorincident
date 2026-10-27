@@ -116,7 +116,7 @@ function feel(m: FightMetrics): void {
 }
 
 describe('ally combat feel', () => {
-  test('L4 war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up', async () => {
+  test('L4 @nightly war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission;
     runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 300, stopWhen: mm => mm.state.l4!.phase === 'war' });
     const s = m.state.l4!, allies = () => [...s.soldierIds, ...s.armed.map(a => a.id)].map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally);
@@ -138,7 +138,7 @@ describe('ally combat feel', () => {
     expect(r.queued).toBe(0);
   }, HEAVY);
 
-  test('L3 station attack: the police move and fight in view of the idle courier', async () => {
+  test('L3 @nightly station attack: the police move and fight in view of the idle courier', async () => {
     const l = await loadL3(1); world = l.world; const w = l.world, m = l.mission;
     runL3(w, m, 'complete', { stopWhen: mm => !!mm.state.l3!.attackAt });
     w.combat!.damage.god = true;

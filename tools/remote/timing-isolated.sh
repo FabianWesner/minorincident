@@ -1,10 +1,10 @@
 #!/bin/bash
-# Run through tools/remote/run.sh; hold the other runner slot for Vitest's initial timing project.
+# Run through tools/remote/run.sh; hold both slots for timing, or the entire measured command with --whole-run.
 # Example: sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4
 # --all keeps both slots for the full command, including CPU-heavy invariant suites.
 set -euo pipefail
 hold_all=false
-if [ "${1:-}" = --all ]; then hold_all=true; shift; fi
+if [ "${1:-}" = --all ] || [ "${1:-}" = --whole-run ]; then hold_all=true; shift; fi
 own=$(readlink /proc/self/fd/9)
 case "$own" in
   /srv/mi/locks/slot.0) release=11 ;;

@@ -372,10 +372,11 @@ test('a wider house resident keeps its identity and walks clear of the pedestria
     const house: HouseEmergence = { door: 0, house: 'test-door', x: 11, z: 0, nx: 1, nz: 0, floor: [], sx: 12.35, sz: 0, ox: 12.35, oz: 0, route: [], next: 0, ids: [] };
     const id = emergeResident(w, house, w.tick, { archetype: 'infected.alpha' });
     const e = w.entities.get(id)!;
-    expect(e.pendingAdmission).toBeDefined();
+    expect(e.emerging).toBe(true);
     for (let i = 0; i < 300 && house.walking?.length; i++) { walkResidents(w, house, w.tick); tick(w); }
     expect(house.walking).toHaveLength(0); expect(e.pendingAdmission).toBeUndefined();
     expect(e.hidden).not.toBe(true); expect(e.transform.x).toBeGreaterThanOrEqual(12.549);
+    expect(e.doorLane).toBeUndefined(); expect(w.solids.clear(e.transform, e.combat!.radius, id)).toBe(true);
     expect(w.infected!.director.count).toBe(1); expect(w.entities.get(id)).toBe(e);
   } finally { w.dispose(); }
 });
@@ -394,6 +395,7 @@ test('a queued house resident can leave a body-blocked doorstep without crossing
     for (let i = 0; i < 240 && house.walking?.length; i++) { walkResidents(w, house, w.tick); tick(w); }
     expect(house.walking).toHaveLength(0); expect(e.pendingAdmission).toBeUndefined();
     expect(e.hidden).not.toBe(true); expect(e.transform.x).toBeGreaterThanOrEqual(12.349);
+    expect(e.doorLane).toBeUndefined(); expect(w.solids.clear(e.transform, e.combat!.radius, id)).toBe(true);
     expect(w.infected!.director.count).toBe(2); expect(w.entities.get(id)).toBe(e);
   } finally { w.dispose(); }
 });

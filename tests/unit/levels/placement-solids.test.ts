@@ -22,7 +22,7 @@ const moving = (p: Placement) => /^(prop|kit|decay|haz)\./.test(p.assetId) && !/
 const baselinePath = 'tests/unit/levels/placement-solids.baseline.json';
 const baseline = new Set<string>(existsSync(baselinePath) ? (JSON.parse(readFileSync(baselinePath, 'utf8')) as { pairs: string[] }).pairs : []);
 
-test('@E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline)', () => {
+test('@E21 no placed prop @nightly cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline)', () => {
   const found: string[] = [];
   for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9']) {
     const c = compositions[level]; if (!c) continue;

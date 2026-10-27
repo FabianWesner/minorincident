@@ -38,7 +38,10 @@ export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
     for (let i = 0; i < 20 * 60 * 60 && !m.state.states['cure-released'] && p.health.current > 0; i++) {
       const f = emptyInput(), active = m.def.steps.find(s => m.state.steps[s.id].status === 'active');
       if (!active) break;
-      const anchor = m.def.anchors[active.anchor];
+      // The separate boss objective points at the pursuer for HUD guidance.
+      // This arrival fixture defends the console while that boss approaches;
+      // chasing its moving marker would shorten the measured arrival and expose the courier.
+      const anchor = m.def.anchors[active.id === 'mega' ? 'cure-console' : active.anchor];
       let goal = anchor;
       if (active.id === 'dispersal-complex' && waypoint < route.length) {
         const [x,z] = route[waypoint]; goal = { x,z,radius: 2 }; if (Math.hypot(p.transform.x-x,p.transform.z-z)<2) waypoint++;
@@ -58,7 +61,7 @@ export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
         f.selectedSlot = { side: 'RIGHT', index: slot }; f.aimSource = 'keyboard';
         const dx=target.transform.x-p.transform.x,dz=target.transform.z-p.transform.z,d=Math.hypot(dx,dz);
         f.aim={x:dx/d,z:dz/d}; f.aimPoint={x:target.transform.x,z:target.transform.z}; f.right.held=true;
-        if (active.id === 'hold' && d < 10) f.move = walker.step(w, { x: 4002 + (i % 600 < 300 ? 18 : -18), z: -23 }, 1, 'dodge') ?? f.move;
+        if ((active.id === 'hold' || active.id === 'mega') && d < 10) f.move = walker.step(w, { x: 4002 + (i % 600 < 300 ? 18 : -18), z: -23 }, 1, 'dodge') ?? f.move;
       }
       const x = p.transform.x, z = p.transform.z, row = telemetry();
       const beforeBoss = { ...boss.entity()!.transform };

@@ -10,7 +10,7 @@ function clear(w: SimWorld, checkpoint: string): void {
   const near = [...w.entities.iterate()].filter(e => e.id !== 1 && (e.civilian || e.infected || e.companion || e.escort) && !e.hidden && !e.pendingAdmission && !e.corpse && e.health.current > 0 && e.passengerOf === undefined && Math.abs(e.transform.y - p.transform.y) < 1.2 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < .8);
   expect(near.map(e => `${e.id}:${e.archetype}`), checkpoint).toEqual([]);
 }
-for (const level of missionIds) test(`${level}: every player start and reached checkpoint has no NPC within 0.8 m`, async () => {
+for (const level of missionIds) test(`${level} @nightly: every player start and reached checkpoint has no NPC within 0.8 m`, async () => {
   const start = await loadLevel(level, 1);
   try { clear(start, 'start'); } finally { start.dispose(); }
   // Natural inputs reach the actual saved checkpoint anchors. The debug graph walk cannot synthesize spatial checkpoints.
