@@ -669,7 +669,7 @@ export class LevelFourWar {
       if (!soldiers.length) return;
       const assigned = new Map<number, number>();
       if (!this.low) for (const e of ai.active) {
-        const id = e.infected?.l1?.focusId;
+        const id = e.infected?.l1?.focusId ?? e.infected?.l4FlankTarget ?? e.infected?.heardTargetId;
         if (id && e.health.current > 0 && !e.hidden) assigned.set(id, (assigned.get(id) ?? 0) + 1);
       }
       for (const e of ai.active) {
@@ -686,7 +686,23 @@ export class LevelFourWar {
           }
           continue;
         }
-        const brain = e.infected?.l1;
+        const b = e.infected!, brain = b.l1;
+        if (!brain && e.archetype !== 'infected.alpha' && e.health.current > 0 && !e.hidden && !e.emerging && !b.specialAttack && b.grabUntil <= tick && b.state !== 'attack' && (dist(e.transform, player.transform) > l4.director.escape.nearM || (b.l4FlankTarget ?? b.heardTargetId ?? 0) > 1) && tick % 60 === e.id % 60) {
+          // The mixed native archetypes also finish the retreating army. Leaving
+          // them on their alarm target made most of the flood ignore its survivors.
+          const targets = soldiers.slice().sort((a, q) => dist(a.transform, e.transform) - dist(q.transform, e.transform));
+          const current = soldiers.find(soldier => soldier.id === (b.l4FlankTarget ?? b.heardTargetId));
+          const target = (!current || (assigned.get(current.id) ?? 0) > 12 ? targets.find(soldier => (assigned.get(soldier.id) ?? 0) < 8) : undefined) ?? current ?? targets[0];
+          if (target !== current) {
+            if (current) assigned.set(current.id, (assigned.get(current.id) ?? 0) - 1);
+            assigned.set(target.id, (assigned.get(target.id) ?? 0) + 1);
+          }
+          b.l4ArmyApproach = true; b.l4FlankTarget = b.heardTargetId = target.id;
+          delete b.breachApproach;
+          if (dist(e.transform, target.transform) > 3.5 || !world.combat!.query.visible(e.transform, target.transform)) b.scripted = this.snap(target.transform, .45);
+          else { delete b.scripted; ai.press(e.id, target.id, tick + ticks(30)); }
+          continue;
+        }
         if (!brain || e.health.current <= 0 || e.hidden || e.emerging || e.infected?.scripted && !e.infected.breachApproach || dist(e.transform, player.transform) <= l4.director.escape.nearM && (!brain.focusId || brain.focusId === 1) || tick % 60 !== e.id % 60 || brain.mode === 'bite' || e.infected?.state === 'attack') continue;
         // Keep following a retreating defender after crossing the perimeter.
         // Completing an earlier approach must not freeze the target outside.

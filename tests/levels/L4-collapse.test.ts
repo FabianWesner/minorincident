@@ -13,6 +13,7 @@ import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 const HEAVY = 1_800_000;
+const output = process.env.L4_COLLAPSE_OUTPUT ?? 'test-results/epics/E22';
 const inRing = (p: { x: number; z: number }) => { const r = l4.map.ring; return p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1; };
 
 interface Trace {
@@ -36,7 +37,7 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
     if (retreatSettleS && st.lineBreakAt && (w.tick - st.lineBreakAt) % 1800 === 0) {
       retreatAudit.push({ seconds: (w.tick - st.lineBreakAt) / 60, pockets: st.pockets, pocketSpawned: { ...st.pocketSpawned }, reserved: w.infected!.director.reserved,
         soldiers: st.soldierIds.map(id => w.entities.get(id)!).filter(e => e?.civilian && !e.infection && e.health.current > 0).map(e => ({ id: e.id, at: { ...e.transform }, hp: e.health.current, ally: e.civilian!.ally })),
-        infected: w.infected!.active.filter(e => e.health.current > 0).map(e => { const b = e.infected!.l1; return { id: e.id, archetype: e.archetype, at: { ...e.transform }, hp: e.health.current, state: e.infected!.state, emerging: e.emerging, scripted: e.infected!.scripted, focus: b?.focusId, target: b?.targetId, mode: b?.mode, goal: b && [b.goalX, b.goalZ], search: b?.search }; }),
+        infected: w.infected!.active.filter(e => e.health.current > 0).map(e => { const b = e.infected!.l1; return { id: e.id, archetype: e.archetype, at: { ...e.transform }, hp: e.health.current, state: e.infected!.state, emerging: e.emerging, scripted: e.infected!.scripted, focus: b?.focusId, target: b?.targetId, mode: b?.mode, goal: b && [b.goalX, b.goalZ], search: b?.search, nativeTarget: e.infected!.heardTargetId }; }),
       });
     }
     for (const id of corpseIds) if (!w.entities.get(id)?.corpse) { tr.corpseLosses++; corpseIds.delete(id); }
@@ -72,9 +73,9 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
     return st.lineBreakAt > 0 && w.tick - st.lineBreakAt > Math.max(250, (retreatSettleS + 1) * 60);
   } });
   tr.breakT = s.lineBreakAt ? t(s.lineBreakAt) : -1; tr.cause = s.lineCause; tr.knockdowns = s.director.knockdowns; tr.barricades = s.director.barricades; tr.tank = s.tankPhase;
-  mkdirSync('test-results/epics/E22', { recursive: true });
-  if (retreatAudit.length) writeFileSync(`test-results/epics/E22/collapse-${tier}-audit.json`, JSON.stringify(retreatAudit, null, 1) + '\n');
-  writeFileSync(`test-results/epics/E22/collapse-${tier}-${shoot ? 'shooter' : 'idle'}.json`, JSON.stringify(tr, null, 1) + '\n');
+  mkdirSync(output, { recursive: true });
+  if (retreatAudit.length) writeFileSync(`${output}/collapse-${tier}-audit.json`, JSON.stringify(retreatAudit, null, 1) + '\n');
+  writeFileSync(`${output}/collapse-${tier}-${shoot ? 'shooter' : 'idle'}.json`, JSON.stringify(tr, null, 1) + '\n');
   return tr;
 }
 function beatsOnTime(tr: Trace): void {

@@ -37,8 +37,44 @@ test('native routing starts on its own side of a thin street doorway', async () 
     vi.spyOn(ai, 'infectedNav', 'get').mockReturnValue(nav);
     const id = ai.spawn('infected.riot', { x: 6, z: 6 }), e = world.entities.get(id)!;
     Object.assign(e.transform, { x: 1.741, z: 1.329 });
+    const b = e.infected!; b.l4ArmyApproach = true;
+    b.pathGrid = ai.navigation.district(e.transform); b.goal = nav.nearestCell(-1.1, -8, e.combat!.radius);
+    b.path.push(nav.cell(1.75, 2.25), b.goal); b.pathIndex = 0; // stale after a crowd push through the doorway
     const seek = ai as unknown as { budget: number; seek(entity: typeof e, target: { x: number; z: number }): void };
     for (let tick = 0; tick < 900; tick++) { world.tick++; seek.budget = 2000; seek.seek(e, { x: -1.1, z: -8 }); }
     expect(e.transform.z).toBeLessThan(-4);
+  } finally { world.dispose(); }
+});
+
+test('a failed native route yields the shared budget to the next arrival', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena', 3);
+  try {
+    const ai = world.infected!; for (const e of [...ai.active]) ai.release(e);
+    const first = world.entities.get(ai.spawn('infected.riot', { x: 12, z: 0 }))!;
+    const second = world.entities.get(ai.spawn('infected.hazmat', { x: 12, z: 3 }))!;
+    first.infected!.l4ArmyApproach = second.infected!.l4ArmyApproach = true;
+    const nav = ai.navigation.grid(first.transform);
+    vi.spyOn(nav, 'visible').mockReturnValue(false);
+    const path = vi.spyOn(nav, 'path').mockImplementation((_from, _to, result, budget) => { result.length = 0; nav.expansions = budget; return false; });
+    const seek = ai as unknown as { budget: number; seek(entity: typeof first, target: { x: number; z: number }): void };
+    const targetA = { x: -6, z: -8 }, targetB = { x: 6, z: 8 };
+    seek.budget = 2000; seek.seek(first, targetA);
+    world.tick++; seek.budget = 2000; seek.seek(first, targetA); seek.seek(second, targetB);
+    expect(path).toHaveBeenCalledTimes(2);
+    expect(path.mock.calls[1][1]).toBe(nav.nearestCell(targetB.x, targetB.z, second.combat!.radius));
+  } finally { world.dispose(); }
+});
+
+
+test('a scripted Alpha reaches its charge staging gate without a crowd push', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('horde-arena', 3);
+  try {
+    const ai = world.infected!; for (const e of [...ai.active]) ai.release(e);
+    const alpha = world.entities.get(ai.spawn('infected.alpha', { x: 12, z: 0 }))!;
+    world.scenario = 'L4';
+    const target = { x: 12, z: 6 }; alpha.infected!.scripted = target;
+    const seek = ai as unknown as { budget: number; seek(entity: typeof alpha, target: { x: number; z: number }): void };
+    for (let tick = 0; tick < 600; tick++) { world.tick++; seek.budget = 2000; seek.seek(alpha, target); }
+    expect(Math.hypot(alpha.transform.x - target.x, alpha.transform.z - target.z)).toBeLessThan(1.2);
   } finally { world.dispose(); }
 });

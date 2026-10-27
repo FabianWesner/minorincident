@@ -41,7 +41,9 @@ for (const obstruction of ['range', 'hidden', 'wall'] as const) test(`T-E22-12-v
 });
 
 for (const gun of ['rifle', 'hmg', 'pistol', 'legacy'] as const) test(`T-E22-09-shot-block-${gun} @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear`, async () => {
-  const w = await arena(), e = soldier(w, -10, 0), alpha = spawn(w, 'alpha', 8, 0, 'idle');
+  // A pending pistol shot requires a target inside its actual 12 m range.
+  const targetX = gun === 'pistol' ? -10 + l4.civilians.pistol.rangeM - 2 : 8;
+  const w = await arena(), e = soldier(w, -10, 0), alpha = spawn(w, 'alpha', targetX, 0, 'idle');
   move(w, w.entities.get(1)!, 0, -10);
   const human = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: -1, z: 3 }))!;
   human.civilian!.state = 'flee';

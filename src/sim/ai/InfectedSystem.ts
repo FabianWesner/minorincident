@@ -190,7 +190,7 @@ export class InfectedSystem {
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
@@ -1568,6 +1568,7 @@ export class InfectedSystem {
   }
   private seek(e: EntitySnapshot, target: { x: number; z: number }, specialSpeed?: number): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;
+    const armyApproach = !!b.l4ArmyApproach;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
@@ -1577,12 +1578,21 @@ export class InfectedSystem {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
       // cell reachable from the actual body, including after crowd separation.
-      const from = nav.nearestCell(e.transform.x, e.transform.z, e.combat!.radius), to = nav.nearestCell(x, z);
+      const from = nav.nearestCell(e.transform.x, e.transform.z, e.combat!.radius), to = nav.nearestCell(x, z, armyApproach ? e.combat!.radius : undefined);
+      if (armyApproach && !useFlow && b.pathIndex < b.path.length) {
+        const cell = b.path[b.pathIndex]; this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+        // Separation can carry a body past a doorway while its cached route
+        // still starts on the other side. Rebuild from the reachable side.
+        if (!nav.visible(e.transform, this.waypoint, e.combat!.radius)) { b.path.length = 0; b.goal = -1; }
+      }
       let next = from;
       if (useFlow) next = nav.flowNext(from);
       else {
-        if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0) {
-          nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
+        if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0 && (!armyApproach || this.world.tick >= (b.pathRetryAt ?? 0))) {
+          const found = nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
+          // A distant failed request must yield the shared search budget to
+          // later native archetypes, just as pedestrian searches already do.
+          if (!found && armyApproach) b.pathRetryAt = this.world.tick + 15;
         }
         if (b.pathIndex < b.path.length) {
           while (b.pathIndex + 1 < b.path.length) {
@@ -1597,7 +1607,9 @@ export class InfectedSystem {
       x = nav.x(next); z = nav.z(next);
     }
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
-    const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
+    // Scripted staging is a walking waypoint, not a melee target. Applying
+    // attack clearance left Alphas outside the director's 1.2 m charge gate.
+    const remaining = !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
     const speed = Math.min((specialSpeed ?? b.speed) * (b.roar && this.world.tick < b.roar.until ? (b.roar.speedUntil === undefined || this.world.tick < b.roar.speedUntil ? b.roar.speedScale ?? 1.25 : 1) : 1), remaining * (specialSpeed === undefined ? 2 : 60)); moveAgent(e, dx / distance * speed, dz / distance * speed, this.infectedNav, this.world.tick, e.combat!.radius, specialSpeed !== undefined);
   }

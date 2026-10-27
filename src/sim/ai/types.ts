@@ -50,7 +50,7 @@ export interface InfectedState {
   birdDeadMask?: number;
   /** Scheduled civilians retain their exact silhouette and clothes after turning. */
   model?: string;
-  variant: string; path: number[]; pathIndex: number; goal: number; dx: number; dz: number;
+  variant: string; path: number[]; pathIndex: number; pathRetryAt?: number; l4ArmyApproach?: boolean; goal: number; dx: number; dz: number;
   grabHits: number; grabUntil: number; grabX: number; grabZ: number; perched: boolean;
   /** L1 v2 vision/search brain (specs/epic-19 sections 5.2-5.4); absent outside L1. */
   l1?: import('./Search').L1Brain;
