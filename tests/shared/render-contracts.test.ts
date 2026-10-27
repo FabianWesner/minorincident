@@ -22,6 +22,8 @@ import { crowdGunHolds, longGunHolds } from '../../src/render/characters/GunAim'
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { crowdWeaponGeometry, crowdWeaponAssets } from '../../src/render/npc/crowdWeapons';
 import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
+import { installTextureBindingIdentity } from '../../src/render/Renderer';
+import { crowdSurfaceBindings } from '../../src/render/characters/crowdTexture';
 
 /** Crowd headroom below the portable hard limits (16 attributes, 8 WebGPU vertex buffers). */
 const CROWD = { attributes: 14, buffers: 7 };
@@ -72,6 +74,25 @@ test('GPU limits: crowd layouts bind matrix columns or instanceMatrix (never bot
   expect(pageLayout.buffers + 1).toBeLessThanOrEqual(CROWD.buffers); // + placement colour
   expect(pageLayout.locations + 1).toBeLessThanOrEqual(CROWD.attributes);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+test('textured corpse draws bind their surface and upload placements added after warm-up', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const lighting = new Lighting(new Scene()), shading = new Materials(lighting), pool = new StaticCorpses();
+  const material = shading.shaded(vec3(.5)), bind = vi.fn();
+  crowdSurfaceBindings.set(baked.geometry, { bind, textures: [] });
+  try {
+    pool.prepare('runner', baked.geometry, material, baked.clip, deathFrame());
+    const page = pool.children[0] as InstancedMesh;
+    const upload = () => (page.onBeforeRender as () => void).call(page);
+    upload(); bind.mockClear();
+    pool.place({ id: 1 } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, deathFrame(), new Matrix4().makeTranslation(3, 0, 5), new Color('white'), [0, 0, 0]);
+    upload();
+    const placement = page.geometry.getAttribute('_placement0') as InterleavedBufferAttribute;
+    expect(placement.data.version).toBe(page.instanceMatrix.version);
+    expect(placement.data.array[12]).toBe(3); expect(placement.data.array[14]).toBe(5);
+    expect(bind).toHaveBeenCalledOnce();
+  } finally { pool.dispose(); baked.geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
@@ -190,13 +211,31 @@ test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlase
   texture.dispose();
 });
 
+test('switching equal-version colour and pose textures refreshes the GPU binding, including cloned render bindings', () => {
+  const a = new DataTexture(), b = new DataTexture(); a.needsUpdate = b.needsUpdate = true;
+  expect(a.version).toBe(b.version);
+  let value = b;
+  const binding = { isSampledTexture: true, texture: a, generation: a.version as number | undefined,
+    update() { const changed = this.texture !== value; this.texture = value; return changed; } };
+  const manager = { _createBindings: vi.fn() };
+  installTextureBindingIdentity(manager); manager._createBindings([{ bindings: [binding] }]);
+  expect(binding.update()).toBe(true); expect(binding.generation).toBeUndefined();
+  binding.generation = b.version;
+  expect(binding.update()).toBe(false); expect(binding.generation).toBe(b.version);
+  const clone = { ...binding }; manager._createBindings([{ bindings: [clone] }]);
+  value = a;
+  expect(clone.update()).toBe(true); expect(clone.generation).toBeUndefined();
+  expect(binding.texture).toBe(b); expect(binding.generation).toBe(b.version);
+  a.dispose(); b.dispose();
+});
+
 // Soldiers and armed civilians in L3/L4 share the courier's real gun contracts.
 test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
   const shading = new Materials(new Lighting(new Scene())), pose = new DataTexture(), a = new DataTexture(), b = new DataTexture();
   const one = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
   const same = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: a });
   const other = civilianMaterial(shading, false, 2, pose, { bindRow: 0, skinned: true, atlas: b });
-  expect(one.material).toBe(same.material); expect(one.material).not.toBe(other.material);
+  expect(one.material).toBe(same.material); expect(one.material).toBe(other.material);
   one.release(); same.release(); other.release(); shading.dispose();
   const props = new RoutineProps();
   const loadAsset = vi.fn(async (id: string) => {

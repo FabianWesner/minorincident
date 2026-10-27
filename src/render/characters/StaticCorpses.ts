@@ -359,7 +359,10 @@ export class StaticCorpses extends Group {
     mesh.matrixWorldAutoUpdate = this.matrixWorldAutoUpdate;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const surface = crowdSurfaceBindings.get(source);
-    if (surface) mesh.onBeforeRender = surface.bind;
+    if (surface) {
+      const before = mesh.onBeforeRender;
+      mesh.onBeforeRender = function (...args) { before.apply(this, args); surface.bind(); };
+    }
     mesh.userData.preRenderTextures = surface?.textures ?? material.userData.preRenderTextures ?? [];
     const probe = new CrowdFigureProbe(); probe.lod = source.userData.crowdLod ?? 'lod2'; if (__QA_HOOKS__) mesh.onAfterRender = () => { for (let i = 0; i < mesh.count && i < probe.figures.length; i++) probe.figures[i].drawn = true; };
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[], spheres: [] as Sphere[] }; pages.push(page); this.add(mesh);

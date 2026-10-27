@@ -87,6 +87,34 @@ export function installInterleavedBufferDisposal(backend: {
   };
 }
 
+interface SampledBinding {
+  isSampledTexture?: boolean;
+  texture: unknown;
+  generation?: number;
+  update(): boolean;
+}
+const identityUpdates = new WeakSet<SampledBinding['update']>();
+/** r186 compares texture versions when refreshing a sampled binding. Two
+ * different crowd atlases (or pose textures) commonly have the same version,
+ * so a per-draw switch updated the node but retained the old GPU handle.
+ * Invalidate that generation only when the texture identity actually changes. */
+export function installTextureBindingIdentity(bindings: { _createBindings(groups: { bindings: SampledBinding[] }[]): void }): void {
+  const create = bindings._createBindings;
+  bindings._createBindings = function (groups) {
+    for (const group of groups) for (const binding of group.bindings) {
+      if (!binding.isSampledTexture || identityUpdates.has(binding.update)) continue;
+      const update = binding.update;
+      const checked = function (this: SampledBinding): boolean {
+        const before = this.texture, changed = update.call(this);
+        if (this.texture !== before) this.generation = undefined;
+        return changed;
+      };
+      identityUpdates.add(checked); binding.update = checked;
+    }
+    create.call(this, groups);
+  };
+}
+
 // Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
 // buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
 // compiled its own shader module and pipeline (L1 v2: 21 civilian batches x 2 passes = 42 of 130
@@ -150,6 +178,7 @@ export class Renderer extends WebGPURenderer {
   override async init(): Promise<this> {
     await super.init();
     installTextureRanges(this.backend);
+    installTextureBindingIdentity((this as unknown as { _bindings: Parameters<typeof installTextureBindingIdentity>[0] })._bindings);
     if (this.selectedBackend === 'webgpu') installInterleavedBufferDisposal(this.backend as unknown as Parameters<typeof installInterleavedBufferDisposal>[0]);
     installPaletteVariantCache((this as unknown as { _objects: RenderObjects })._objects);
     const nodes = (this as unknown as { _nodes: { getForRender(object: unknown): unknown; getForRenderAsync(object: unknown): Promise<unknown> } })._nodes;

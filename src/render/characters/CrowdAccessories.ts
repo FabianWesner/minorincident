@@ -1,4 +1,5 @@
 import { skinnedBrow } from './headMeasurements';
+import { crowdSurfaceBindings } from './crowdTexture';
 export { skinnedBrow } from './headMeasurements';
 import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instanceColor } from 'three/tsl';
@@ -332,6 +333,8 @@ export class CrowdAccessories extends Group {
     merged.setIndex(source.index);
     merged.userData.corpseBody = source; merged.userData.corpseAccessory = piece;
     merged.userData.appearanceTags = source.userData.appearanceTags;
+    const surface = crowdSurfaceBindings.get(source);
+    if (surface) crowdSurfaceBindings.set(merged, surface);
     this.corpseSources.set(key, merged); return merged;
   }
   finish(): void {
