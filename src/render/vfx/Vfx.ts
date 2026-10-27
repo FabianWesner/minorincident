@@ -284,6 +284,177 @@ export class Vfx extends Group {
       if (distance < 1.75) this.surfaceSplats.spawn(this.time, 12, x + direction.x * Math.max(0, distance - .025), base + .8, z + direction.z * Math.max(0, distance - .025), Math.atan2(direction.z, direction.x) + Math.PI / 2, 0, 0, heavy ? .8 : .45, this.colorblind ? 0 : 5, color);
     }
   }
+  private readonly onVehicleDurabilityHit = (event: GameEvent): void => {
+    if (!(event.type === 'vehicle.durability-hit')) return;
+    if (event.source === 'attack' || event.after >= event.before) return;
+    const car = this.world.entities.get(event.sourceId), contact = this.world.entities.get(event.targetId);
+    if (car && contact && (contact.faction === 'environment' || contact.kind === 'vehicle')) {
+      const dx = contact.transform.x - car.transform.x, dz = contact.transform.z - car.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
+      const def = this.world.vehicles?.cars.get(event.sourceId)?.physics.def, c = Math.cos(car.transform.yaw), s = Math.sin(car.transform.yaw);
+      const edge = def ? Math.min((def.length / 2 + .04) * distance / Math.max(.001, Math.abs(dx * c - dz * s)), (def.width / 2 + .04) * distance / Math.max(.001, Math.abs(dx * s + dz * c))) : 1.5;
+      // Even the three low-tier streaks clear the overlapping hoods before fading.
+      this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .06, .45, 9.81, particleShape.spark, 2.5, 6);
+    }
+    return;
+  };
+  private readonly onCombatHit = (event: GameEvent): void => {
+    if (!(event.type === 'combat.hit' && event.amount > 0)) return;
+    this.blood(event, false);
+    if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
+    this.pulse(event.targetId);
+  };
+  private readonly onCombatKill = (event: GameEvent): void => {
+    if (!(event.type === 'combat.kill')) return;
+    // A knocked-down infected (PO "Infected recover") bleeds like a hard hit, without the kill pool or lost limbs: it gets up again.
+    const down = event.downed !== undefined;
+    this.kills++; this.blood(event, !down);
+    const def = actions[event.actionId], melee = def?.category === 'melee';
+    if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
+    const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
+    const heavy = heavyBlade.test(event.actionId);
+    const shotgun = event.actionId.includes('shotgun') && Math.hypot(event.position.x - (this.world.entities.get(event.sourceId)?.transform.x ?? 0), event.position.z - (this.world.entities.get(event.sourceId)?.transform.z ?? 0)) <= 3;
+    const vehicle = event.cause === 'vehicle' || event.actionId === 'vehicle.high-speed';
+    if (vehicle) { const car = this.world.vehicles?.cars.get(event.sourceId); if (car) this.updateVehicle(car.entity.id, Math.min(1, (this.vehicles.get(car.entity.id)?.blood ?? 0) + .08)); }
+    // Draw on every eligible kill, independent of the gore toggle; never consume the sim RNG.
+    const detach = !down && (explosive || shotgun || vehicle || heavy && this.goreRng.next() < 0.35);
+    if (this.gore === 'Full' && detach) {
+      this.dismemberedKills++;
+      const n = explosive ? limbs : 1, first = Math.floor(this.rng.next() * limbs);
+      for (let i = 0; i < n; i++) {
+        const limb = explosive ? i : first, position = this.targets.detach(event.targetId, limb); this.detached++;
+        this.gibs.spawn(this.time, position?.x ?? event.position.x, position?.y ?? 1, position?.z ?? event.position.z, this.rng, limb === 4);
+      }
+      if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
+      this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
+    }
+  };
+  private readonly onCombatHitStop = (event: GameEvent): void => {
+    if (!(event.type === 'combat.hit-stop')) return;
+    this.hitStop.hit(this.time, event.durationMs / 1000);
+  };
+  private readonly onCombatAttack = (event: GameEvent): void => {
+    if (!(event.type === 'combat.attack')) return;
+    const def = actions[event.actionId];
+    // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
+    if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
+    if (def?.category === 'ranged') {
+      this.gunshot(event.sourceId, event.direction, def.range, event.position);
+      if (event.sourceId === 1 && event.actionId === 'weapon.shotgun') this.targets.shake(this.flashReduction ? .025 : .1);
+    }
+  };
+  private readonly onAllyAttack = (event: GameEvent): void => {
+    if (!(event.type === 'ally.attack' && event.from && event.to)) return;
+    const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
+    this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId, event.role === 'tank' || event.role === 'heli' ? undefined : event.hit === false ? 'miss' : 'hit');
+  };
+  private readonly onCombatExploded = (event: GameEvent): void => {
+    if (!(event.type === 'combat.exploded')) return;
+    if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onExplosion = (event: GameEvent): void => {
+    if (!(event.type === 'explosion')) return;
+    this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius); this.blasts.play(event);
+  };
+  private readonly onCombatEffect = (event: GameEvent): void => {
+    if (!(event.type === 'combat.effect')) return;
+    if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onInfectedSpecial = (event: GameEvent): void => {
+    if (!(event.type === 'infected.special')) return;
+    // Sim stepping can activate a move before the next render update.
+    const tell = this.tells.get(event.attackId);
+    if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
+  };
+  private readonly onTelegraph = (event: GameEvent): void => {
+    if (!(event.type === 'telegraph')) return;
+    if (this.tells.has(event.attackId)) return;
+    // A source has one current attack. Retire its previous tell synchronously,
+    // including paused sim stepping that can run many attacks between render frames.
+    if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
+
+    const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
+    const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
+    const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+    const move = 'move' in event ? event.move : undefined;
+    const area = 'area' in event ? event.area : undefined;
+    const target = 'target' in event ? event.target : undefined;
+    const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
+    const destination = source?.infected?.specialAttack?.destination;
+    const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+      : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
+      : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
+      : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
+    const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+    if (!position) return;
+    const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
+    const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
+    const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
+    const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    if (slot < 0) return;
+    this.visible = true;
+    this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
+    // Select once per presented update, even when many attacks arrive in one sim tick.
+    this.telegraphs.opacity(slot, 0);
+  };
+  private readonly onAttackResolved = (event: GameEvent): void => {
+    if (!(event.type === 'attack.resolved')) return;
+    const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
+  };
+  private readonly onHazardExploded = (event: GameEvent): void => {
+    if (!(event.type === 'hazard.exploded')) return;
+    this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+  };
+  private readonly onVehicleExploded = (event: GameEvent): void => {
+    if (!(event.type === 'vehicle.exploded')) return;
+    const car = this.world.vehicles?.cars.get(event.sourceId), p = this.world.entities.get(event.sourceId)?.transform, def = car?.physics.def;
+    const height = car?.entity.vehicle?.scripted && def && p ? p.y - (def.suspension + def.wheelRadius + .15) + .7 : undefined;
+    if (p) this.explosionOnce(event.tick, p.x, p.z, 6, height);
+  };
+  private readonly onNoise = (event: GameEvent): void => {
+    if (!(event.type === 'noise' && event.kind === 'scream')) return;
+    this.effect('screamer', event.position.x, event.position.z, event.radius);
+  };
+  private readonly onHazardElectrified = (event: GameEvent): void => {
+    if (!(event.type === 'hazard.electrified' || event.type === 'prop.ignited')) return;
+    const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1);
+  };
+  private readonly onOutbreakInfection = (event: GameEvent): void => {
+    if (!(event.type === 'outbreak.infection' && (event.phase === 'eyes' || event.phase === 'rise'))) return;
+    const p = this.world.entities.get(event.entityId)?.transform, rise = event.phase === 'rise';
+    if (p) this.sickPuff(p.x, p.z, rise ? 18 : 10, rise ? .2 : .14, rise ? .7 : .3);
+  };
+  private readonly onPickupCollected = (event: GameEvent): void => {
+    if (!(event.type === 'pickup.collected')) return;
+    const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1);
+  };
+  private readonly onVfxEffect = (event: GameEvent): void => {
+    if (!(event.type === 'vfx.effect')) return;
+    this.effect(event.kind, event.position.x, event.position.z, event.radius, event.position.y);
+  };
+  private readonly eventHandlers: Partial<Record<GameEvent['type'], (event: GameEvent) => void>> = {
+    'vehicle.durability-hit': this.onVehicleDurabilityHit,
+    'combat.hit': this.onCombatHit,
+    'combat.kill': this.onCombatKill,
+    'combat.hit-stop': this.onCombatHitStop,
+    'combat.attack': this.onCombatAttack,
+    'ally.attack': this.onAllyAttack,
+    'combat.exploded': this.onCombatExploded,
+    'explosion': this.onExplosion,
+    'combat.effect': this.onCombatEffect,
+    'infected.special': this.onInfectedSpecial,
+    'telegraph': this.onTelegraph,
+    'attack.resolved': this.onAttackResolved,
+    'hazard.exploded': this.onHazardExploded,
+    'vehicle.exploded': this.onVehicleExploded,
+    'noise': this.onNoise,
+    'hazard.electrified': this.onHazardElectrified,
+    'prop.ignited': this.onHazardElectrified,
+    'outbreak.infection': this.onOutbreakInfection,
+    'pickup.collected': this.onPickupCollected,
+    'vfx.effect': this.onVfxEffect,
+  };
   readonly receive = (event: GameEvent): void => {
     if (event.type === 'vehicle.feedback') {
       let vehicle = this.vehicles.get(event.id);
@@ -301,117 +472,10 @@ export class Vfx extends Group {
       }
       return;
     }
-    if (event.type === 'vehicle.durability-hit') {
-      if (event.source === 'attack' || event.after >= event.before) return;
-      const car = this.world.entities.get(event.sourceId), contact = this.world.entities.get(event.targetId);
-      if (car && contact && (contact.faction === 'environment' || contact.kind === 'vehicle')) {
-        const dx = contact.transform.x - car.transform.x, dz = contact.transform.z - car.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
-        const def = this.world.vehicles?.cars.get(event.sourceId)?.physics.def, c = Math.cos(car.transform.yaw), s = Math.sin(car.transform.yaw);
-        const edge = def ? Math.min((def.length / 2 + .04) * distance / Math.max(.001, Math.abs(dx * c - dz * s)), (def.width / 2 + .04) * distance / Math.max(.001, Math.abs(dx * s + dz * c))) : 1.5;
-        // Even the three low-tier streaks clear the overlapping hoods before fading.
-        this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .06, .45, 9.81, particleShape.spark, 2.5, 6);
-      }
-      return;
-    }
+
     if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
     if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
-    if (event.type === 'combat.hit' && event.amount > 0) {
-      this.blood(event, false);
-      if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
-      this.pulse(event.targetId);
-    } else if (event.type === 'combat.kill') {
-      // A knocked-down infected (PO "Infected recover") bleeds like a hard hit, without the kill pool or lost limbs: it gets up again.
-      const down = event.downed !== undefined;
-      this.kills++; this.blood(event, !down);
-      const def = actions[event.actionId], melee = def?.category === 'melee';
-      if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
-      const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
-      const heavy = heavyBlade.test(event.actionId);
-      const shotgun = event.actionId.includes('shotgun') && Math.hypot(event.position.x - (this.world.entities.get(event.sourceId)?.transform.x ?? 0), event.position.z - (this.world.entities.get(event.sourceId)?.transform.z ?? 0)) <= 3;
-      const vehicle = event.cause === 'vehicle' || event.actionId === 'vehicle.high-speed';
-      if (vehicle) { const car = this.world.vehicles?.cars.get(event.sourceId); if (car) this.updateVehicle(car.entity.id, Math.min(1, (this.vehicles.get(car.entity.id)?.blood ?? 0) + .08)); }
-      // Draw on every eligible kill, independent of the gore toggle; never consume the sim RNG.
-      const detach = !down && (explosive || shotgun || vehicle || heavy && this.goreRng.next() < 0.35);
-      if (this.gore === 'Full' && detach) {
-        this.dismemberedKills++;
-        const n = explosive ? limbs : 1, first = Math.floor(this.rng.next() * limbs);
-        for (let i = 0; i < n; i++) {
-          const limb = explosive ? i : first, position = this.targets.detach(event.targetId, limb); this.detached++;
-          this.gibs.spawn(this.time, position?.x ?? event.position.x, position?.y ?? 1, position?.z ?? event.position.z, this.rng, limb === 4);
-        }
-        if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
-        this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
-      }
-    } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time, event.durationMs / 1000);
-    else if (event.type === 'combat.attack') {
-      const def = actions[event.actionId];
-      // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
-      if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
-      if (def?.category === 'ranged') {
-        this.gunshot(event.sourceId, event.direction, def.range, event.position);
-        if (event.sourceId === 1 && event.actionId === 'weapon.shotgun') this.targets.shake(this.flashReduction ? .025 : .1);
-      }
-    } else if (event.type === 'ally.attack' && event.from && event.to) {
-      const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
-      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId, event.role === 'tank' || event.role === 'heli' ? undefined : event.hit === false ? 'miss' : 'hit');
-    } else if (event.type === 'combat.exploded') {
-      if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
-    } else if (event.type === 'explosion') {
-      this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius); this.blasts.play(event);
-    } else if (event.type === 'combat.effect') {
-      if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
-    } else if (event.type === 'infected.special') {
-      // Sim stepping can activate a move before the next render update.
-      const tell = this.tells.get(event.attackId);
-      if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
-    } else if (event.type === 'telegraph') {
-      if (this.tells.has(event.attackId)) return;
-      // A source has one current attack. Retire its previous tell synchronously,
-      // including paused sim stepping that can run many attacks between render frames.
-      if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
-
-      const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
-      const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-      const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
-      const move = 'move' in event ? event.move : undefined;
-      const area = 'area' in event ? event.area : undefined;
-      const target = 'target' in event ? event.target : undefined;
-      const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
-      const destination = source?.infected?.specialAttack?.destination;
-      const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
-        : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
-        : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
-        : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
-      const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
-      if (!position) return;
-      const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
-      const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-      const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
-      const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
-      const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
-      const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
-      if (slot < 0) return;
-      this.visible = true;
-      this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
-      // Select once per presented update, even when many attacks arrive in one sim tick.
-      this.telegraphs.opacity(slot, 0);
-    } else if (event.type === 'attack.resolved') {
-      const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
-    } else if (event.type === 'hazard.exploded') this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
-    else if (event.type === 'vehicle.exploded') {
-      const car = this.world.vehicles?.cars.get(event.sourceId), p = this.world.entities.get(event.sourceId)?.transform, def = car?.physics.def;
-      const height = car?.entity.vehicle?.scripted && def && p ? p.y - (def.suspension + def.wheelRadius + .15) + .7 : undefined;
-      if (p) this.explosionOnce(event.tick, p.x, p.z, 6, height);
-    }
-    else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
-    else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
-    // E19 section 5.7: the turning reads at the game camera - sickly wisps when the eyes ignite, a puff as the person rises.
-    else if (event.type === 'outbreak.infection' && (event.phase === 'eyes' || event.phase === 'rise')) {
-      const p = this.world.entities.get(event.entityId)?.transform, rise = event.phase === 'rise';
-      if (p) this.sickPuff(p.x, p.z, rise ? 18 : 10, rise ? .2 : .14, rise ? .7 : .3);
-    }
-    else if (event.type === 'pickup.collected') { const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1); }
-    else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius, event.position.y);
+    this.eventHandlers[event.type]?.(event);
   };
   private updateVehicle(id: number, blood = this.vehicles.get(id)?.blood ?? 0): void {
     const e = this.world.entities.get(id); if (!e?.vehicle) return;

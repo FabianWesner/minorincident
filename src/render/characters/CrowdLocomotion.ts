@@ -61,9 +61,17 @@ export class CrowdFootwork {
   }
 }
 
+export interface CrowdPresentation {
+  frame: number; blend: [number, number]; clip: string; phase: number; instance: Matrix4;
+  scale: number; speed: number; time: number; near: boolean;
+  layers?: CrowdLayers; style?: GaitStyle; procedural?: boolean; cadence?: number; holdDistanceM?: number;
+}
 /** One small off-scene skeleton per batch; figures retain only their contact
  * state. The scene still contains instanced meshes, never per-person actors. */
 export class CrowdLocomotion {
+  /** Borrowed scratch input, reused by sequential figure submissions to avoid per-frame option allocations. */
+  readonly presentation: CrowdPresentation = { frame: 0, blend: [0, 1], clip: '', phase: 0, instance: new Matrix4(), scale: 1, speed: 0, time: 0, near: false };
+
   private readonly frame = new Group();
   private readonly nodes: Object3D[];
   private readonly parents: number[];
@@ -261,7 +269,8 @@ export class CrowdLocomotion {
    * footwork runs: world-locked feet with yaw, step turns, knee-profile swings, pelvis over the support leg.
    * Further out moving figures keep the stance plants; standing far figures show the baked clip.
    */
-  present(id: number, poses: CrowdPosePalette, frame: number, blend: [number, number], clip: string, phase: number, instance: Matrix4, scale: number, speed: number, time: number, near: boolean, layers?: CrowdLayers, style?: GaitStyle, procedural = true, cadence = 1, holdDistanceM = .05): number {
+  present(id: number, poses: CrowdPosePalette, input: CrowdPresentation): number {
+    const { blend, clip, instance, time, procedural = true, cadence = 1, holdDistanceM = .05 } = input;
     const step = this.footwork.frameId;
     if (step % 120 === 0 && step !== this.prunedAt) {
       this.prunedAt = step;
@@ -279,14 +288,15 @@ export class CrowdLocomotion {
       instance.copy(previous.instance); poses.reuse(id, previous.frame); blend[1] = 1; previous.seen = time;
       return previous.frame;
     }
-    const result = this.solve(id, poses, frame, blend, clip, phase, instance, scale, speed, time, near, layers, style, procedural);
+    const result = this.solve(id, poses, input);
     if (procedural && cadence > 1) {
       const held = previous ?? { clip, frame: result, instance: new Matrix4(), time, seen: time };
       held.clip = clip; held.frame = result; held.instance.copy(instance); held.time = held.seen = time; this.heldPoses.set(id, held);
     } else this.heldPoses.delete(id);
     return result;
   }
-  private solve(id: number, poses: CrowdPosePalette, frame: number, blend: [number, number], clip: string, phase: number, instance: Matrix4, scale: number, speed: number, time: number, near: boolean, layers?: CrowdLayers, style?: GaitStyle, procedural = true): number {
+  private solve(id: number, poses: CrowdPosePalette, input: CrowdPresentation): number {
+    const { frame, blend, clip, phase, instance, scale, speed, time, near, layers, style, procedural = true } = input;
     if (!procedural) {
       this.footwork.states.delete(id); this.footwork.far.delete(id); this.reset(id);
       // The caller tags the pose mode so entering/leaving the baked band uses the usual TRS transition.

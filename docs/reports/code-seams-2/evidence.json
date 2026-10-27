@@ -1,0 +1,1355 @@
+{
+  "branch": "lane/code-seams-2",
+  "main": "d595b84a0",
+  "captureAudioReference": "b55bfc632",
+  "lines": [
+    {
+      "file": "src/audio/AudioEventMapper.ts",
+      "before": 0,
+      "after": 390
+    },
+    {
+      "file": "src/audio/AudioService.ts",
+      "before": 1113,
+      "after": 780
+    },
+    {
+      "file": "src/debug/performance/profileCpu.ts",
+      "before": 55,
+      "after": 56
+    },
+    {
+      "file": "src/debug/scenelab/SceneLab.ts",
+      "before": 1755,
+      "after": 1636
+    },
+    {
+      "file": "src/debug/scenelab/missionFixtures.ts",
+      "before": 0,
+      "after": 161
+    },
+    {
+      "file": "src/render/CrowdView.ts",
+      "before": 756,
+      "after": 771
+    },
+    {
+      "file": "src/render/characters/CrowdLocomotion.ts",
+      "before": 351,
+      "after": 361
+    },
+    {
+      "file": "src/render/npc/CivilianCrowd.ts",
+      "before": 609,
+      "after": 639
+    },
+    {
+      "file": "src/render/vfx/Vfx.ts",
+      "before": 559,
+      "after": 623
+    },
+    {
+      "file": "src/sim/missions/LevelFourWar.ts",
+      "before": 1399,
+      "after": 1405
+    },
+    {
+      "file": "src/sim/world/SimWorld.ts",
+      "before": 433,
+      "after": 443
+    },
+    {
+      "file": "tools/crowdfoot/harness.ts",
+      "before": 130,
+      "after": 133
+    }
+  ],
+  "typeAssertions": {
+    "before": 98,
+    "after": 95
+  },
+  "audio": {
+    "eventTypes": 182,
+    "cases": 1860,
+    "beforeSha256": "d84b06af747c474edced2663a2d10ba7ea1afd58b4ab43184c924cfeffe44750",
+    "afterSha256": "d84b06af747c474edced2663a2d10ba7ea1afd58b4ab43184c924cfeffe44750"
+  },
+  "scenes": {
+    "scenes": 10,
+    "beforeRows": 56,
+    "afterRows": 56,
+    "passedBefore": 50,
+    "passedAfter": 50,
+    "identical": 56
+  },
+  "structure": {
+    "base": "b55bfc632",
+    "setupCombatAfterInstallation": true,
+    "audioTables": {
+      "l5CueSounds": "9d7db690122e9b77b28497faebfd074923c395618670d816333c03845784da2a",
+      "voicedInfected": "9b43123627ebf14646f6c00544328bce1bb59878f9000bbe83d6ab6b1c7fb009",
+      "fleshLike": "9a35b55ebf4ae31a13d228144d5f7b2990b0efc373889e65e5ac3484e2c7aa04"
+    },
+    "audioEventBody": "2252328fbd464f7c77c277825c8d21b468ee336b58543e34f2fc8b0cd92c63a1",
+    "fixtureBodies": [
+      {
+        "name": "setupL2Release",
+        "body": "9929da8fa2e1abc380c6bec1711764cff907e97caf9fc325544e14e4d8276659"
+      },
+      {
+        "name": "setupL6Subway",
+        "body": "752fc96a102576fc60ea6e97d84adf29256f38e5bc630258c58eec1762033c6d"
+      },
+      {
+        "name": "setupL3Rendezvous",
+        "body": "1fcbe77533a28f7e192dff73d048272fab73557c0d657424cf58ca999f305166"
+      },
+      {
+        "name": "setupL4Convoy",
+        "body": "dadbc10a8b285d3725758bbd2325cae19d67f00e3560e8ec1ddbda81feb4c95b"
+      },
+      {
+        "name": "setupL7Group",
+        "body": "ab4ee01708fb63d7571cea2c7a98ed7b8ed368eb4685e1819534073b2f29e23a"
+      }
+    ],
+    "vfx": {
+      "discriminators": 20,
+      "handlers": 19,
+      "bodies": [
+        {
+          "keys": [
+            "vehicle.durability-hit"
+          ],
+          "body": "51dd93082921000bf2d756aa067442d95c6522bdf105b1f976a924f5fcd0c861"
+        },
+        {
+          "keys": [
+            "combat.hit"
+          ],
+          "body": "822e9ccd6871bc815d4cc55318658c42ffda73006ed86a968ddd793fb8260159"
+        },
+        {
+          "keys": [
+            "combat.kill"
+          ],
+          "body": "3575b578a4ea30b8a93f6dc0d8f3eec4d1c93e830d86645dc00eed62d3c101c7"
+        },
+        {
+          "keys": [
+            "combat.hit-stop"
+          ],
+          "body": "affe96d76758bda510dd5523c85c3f44fb00f026203d910be3e2c0395d58b057"
+        },
+        {
+          "keys": [
+            "combat.attack"
+          ],
+          "body": "7ae377e9643126b0b49a96c4ca4d3ead4b86d18e0bbaa24a20e8044f3065f4c4"
+        },
+        {
+          "keys": [
+            "ally.attack"
+          ],
+          "body": "ae73f982c5a0a4ced994f495b591fd2ab2c21e511e0e8defa14a6ed4fecc7eaf"
+        },
+        {
+          "keys": [
+            "combat.exploded"
+          ],
+          "body": "6ddd25a27ac2e7f5812cbbb959c9b2d359109eab1bb376d22feb3188810c355a"
+        },
+        {
+          "keys": [
+            "explosion"
+          ],
+          "body": "7efa74d470a9ef6dfffa35fa4fccfc180b19c7ea68abedd9df8e732c3c805a4d"
+        },
+        {
+          "keys": [
+            "combat.effect"
+          ],
+          "body": "8e1b201698d16308a97ad01a6a5a2970839fdaa27f6bf88270cad93db04fb65e"
+        },
+        {
+          "keys": [
+            "infected.special"
+          ],
+          "body": "3d98ba1a301a9304986ee3016fce21d966b14fef6560693151b2fac1a8d4b190"
+        },
+        {
+          "keys": [
+            "telegraph"
+          ],
+          "body": "fc4526d0ef24a406285be04b2877054c9cc5cc2fab9d9f53c4c55855242881b8"
+        },
+        {
+          "keys": [
+            "attack.resolved"
+          ],
+          "body": "3d98ba1a301a9304986ee3016fce21d966b14fef6560693151b2fac1a8d4b190"
+        },
+        {
+          "keys": [
+            "hazard.exploded"
+          ],
+          "body": "37a5176439b9cbd2d4736c99d7a6a67b4919e8e3cf899d47896bcccf91ac720a"
+        },
+        {
+          "keys": [
+            "vehicle.exploded"
+          ],
+          "body": "0a45642e26ca6b96a4e050a46e356f7062ca39072be29a4d6e58d591f620c67f"
+        },
+        {
+          "keys": [
+            "noise"
+          ],
+          "body": "b5a5a3873028f88d9f6c1c2b0d438f60aba911ff6dd497255446ffb344987733"
+        },
+        {
+          "keys": [
+            "hazard.electrified",
+            "prop.ignited"
+          ],
+          "body": "df96933aca9dda9e0f56f63e2a9e72a1fa836de366f2f05555484f83ac4de390"
+        },
+        {
+          "keys": [
+            "outbreak.infection"
+          ],
+          "body": "7a11080a9617f96ae5d69d1a46410f57dc60678c4a27bfdba8f5e1c8e3190665"
+        },
+        {
+          "keys": [
+            "pickup.collected"
+          ],
+          "body": "c71b2fc0b3b6915eebc02c4de63e527f5aa45c07a4399fde5f76421cc6a5ee92"
+        },
+        {
+          "keys": [
+            "vfx.effect"
+          ],
+          "body": "8a5fa902e4e6b94aea20c62f70faf7f4c56ece1e2c3f1cf9c254339e7ff15775"
+        }
+      ]
+    },
+    "crowdSolve": "e1c630fc92482cfa4e5b03166e593e752583b5dbeda1030bc5317f4d1eebb4b2"
+  },
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "npmTest": {
+      "files": 22,
+      "cases": 85,
+      "seconds": 17
+    },
+    "smoke": {
+      "cases": 6,
+      "seconds": 128,
+      "unflaggedWebGPU": true,
+      "launchesUnsafeWebGPU": [
+        true,
+        true,
+        false
+      ],
+      "sourceBeforeMainL4OnlyRebase": true
+    },
+    "perf": "pending"
+  },
+  "baselineWorktree": "removed",
+  "sceneRows": [
+    {
+      "name": "aim-assist-keyboard-off@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "high",
+      "beforeSha256": "53a01539993ac2a83afc6aaaed6606fdb35b3ced9b5e9e1be699b0d1a508e375",
+      "afterSha256": "53a01539993ac2a83afc6aaaed6606fdb35b3ced9b5e9e1be699b0d1a508e375",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/aim-assist-keyboard-off@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "aim-assist-keyboard-off@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "high",
+      "beforeSha256": "c4a64f1f4d0b98ccdfec7f1b6e4523844c7d09fbf0c1ddbbded378801d880c99",
+      "afterSha256": "c4a64f1f4d0b98ccdfec7f1b6e4523844c7d09fbf0c1ddbbded378801d880c99",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/aim-assist-keyboard-off@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "aim-assist-keyboard-off@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "high",
+      "beforeSha256": "0d983df54a3d705de16869927f675c2aeac459f00a1761ee329bb40d3d5b06f8",
+      "afterSha256": "0d983df54a3d705de16869927f675c2aeac459f00a1761ee329bb40d3d5b06f8",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/aim-assist-keyboard-off@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "aim-assist-keyboard-off@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "low",
+      "beforeSha256": "697de0e7f0adb8908844834470af26996bb89b500cd87f68b76d40a96c6f8bef",
+      "afterSha256": "697de0e7f0adb8908844834470af26996bb89b500cd87f68b76d40a96c6f8bef",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/aim-assist-keyboard-off@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "aim-assist-keyboard-off@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "low",
+      "beforeSha256": "c6f02dc82b1c7e59e26110d9b1171dc20edf18450e4671d2dd1bebb9d6052d0e",
+      "afterSha256": "c6f02dc82b1c7e59e26110d9b1171dc20edf18450e4671d2dd1bebb9d6052d0e",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/aim-assist-keyboard-off@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "aim-assist-keyboard-off@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 170,
+      "tier": "low",
+      "beforeSha256": "0df1ed2ba8dfa39ca62b7fde83c9aac8f244471d03e1e8c171d78b79195347f3",
+      "afterSha256": "0df1ed2ba8dfa39ca62b7fde83c9aac8f244471d03e1e8c171d78b79195347f3",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/aim-assist-keyboard-off@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/aim-assist-keyboard-off@low-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "alpha-variants-lineup@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "high",
+      "beforeSha256": "bc630eb23c29849c400fcfe5ba2cba3a242f558e08499b54407133ae61c425c8",
+      "afterSha256": "bc630eb23c29849c400fcfe5ba2cba3a242f558e08499b54407133ae61c425c8",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/alpha-variants-lineup@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/alpha-variants-lineup@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "alpha-variants-lineup@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "high",
+      "beforeSha256": "08ea8f7a3fb42414d62567563a0a5fe979ba4b8f37c8e45fe88815b7d672952d",
+      "afterSha256": "08ea8f7a3fb42414d62567563a0a5fe979ba4b8f37c8e45fe88815b7d672952d",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/alpha-variants-lineup@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/alpha-variants-lineup@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "alpha-variants-lineup@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "high",
+      "beforeSha256": "a40ad93879ab7cd1deb34257e7a27864b926b61948feafadf2b1d93907b6dcfa",
+      "afterSha256": "a40ad93879ab7cd1deb34257e7a27864b926b61948feafadf2b1d93907b6dcfa",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/alpha-variants-lineup@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/alpha-variants-lineup@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "alpha-variants-lineup@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "low",
+      "beforeSha256": "8222a3b455bec0d1f367cf59464eccea86dadf52546ed493ec024336eba22baa",
+      "afterSha256": "8222a3b455bec0d1f367cf59464eccea86dadf52546ed493ec024336eba22baa",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/alpha-variants-lineup@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/alpha-variants-lineup@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "alpha-variants-lineup@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "low",
+      "beforeSha256": "af85bec242994f04a4d8745792c4a0ee4740eb9e2af998b5bd70be1b17d7eb5d",
+      "afterSha256": "af85bec242994f04a4d8745792c4a0ee4740eb9e2af998b5bd70be1b17d7eb5d",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/alpha-variants-lineup@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/alpha-variants-lineup@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "alpha-variants-lineup@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 2,
+      "tier": "low",
+      "beforeSha256": "32b28176bf531d92fa869e14d6efcbd96534aaefa1b8293163c2bda24a1add3a",
+      "afterSha256": "32b28176bf531d92fa869e14d6efcbd96534aaefa1b8293163c2bda24a1add3a",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/alpha-variants-lineup@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/alpha-variants-lineup@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "corgi-tongue-female@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "high",
+      "beforeSha256": "518f8cf8c6753fa128f2e05734968188a0a74504ff0107b9bdaa14aa60ef794d",
+      "afterSha256": "518f8cf8c6753fa128f2e05734968188a0a74504ff0107b9bdaa14aa60ef794d",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/corgi-tongue-female@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/corgi-tongue-female@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "corgi-tongue-female@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "high",
+      "beforeSha256": "0c050407c4945d7e6ac3fe2d3569c5f3d743527f16064915619b04b032416f5f",
+      "afterSha256": "0c050407c4945d7e6ac3fe2d3569c5f3d743527f16064915619b04b032416f5f",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/corgi-tongue-female@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/corgi-tongue-female@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "corgi-tongue-female@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "high",
+      "beforeSha256": "bc3554b64ccd9289d13c3bb482779c5bf2b93fb7e24964afa16e26c39a1f56a0",
+      "afterSha256": "bc3554b64ccd9289d13c3bb482779c5bf2b93fb7e24964afa16e26c39a1f56a0",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/corgi-tongue-female@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/corgi-tongue-female@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "corgi-tongue-female@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "low",
+      "beforeSha256": "630733231c3b363597750107c8e4c0a07251e5202e621e107a7b043032fcce70",
+      "afterSha256": "630733231c3b363597750107c8e4c0a07251e5202e621e107a7b043032fcce70",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/corgi-tongue-female@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/corgi-tongue-female@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "corgi-tongue-female@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "low",
+      "beforeSha256": "923b3be300e86d196cb9b9d981ff3815069cd571769320c1b5a51bc75634ea52",
+      "afterSha256": "923b3be300e86d196cb9b9d981ff3815069cd571769320c1b5a51bc75634ea52",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/corgi-tongue-female@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/corgi-tongue-female@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "corgi-tongue-female@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 1560,
+      "tier": "low",
+      "beforeSha256": "6a8bb561fe2bfa5c7c741fa66a40371f2032ff092ffef6a7d6e7f740d609bf56",
+      "afterSha256": "6a8bb561fe2bfa5c7c741fa66a40371f2032ff092ffef6a7d6e7f740d609bf56",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/corgi-tongue-female@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/corgi-tongue-female@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "ped-grip-coffee-standing@high",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 180,
+      "tier": "high",
+      "beforeSha256": "fa848d78955391e8563abf30daa6ad09d162bf887f6c27145237f88c2c287db9",
+      "afterSha256": "fa848d78955391e8563abf30daa6ad09d162bf887f6c27145237f88c2c287db9",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/ped-grip-coffee-standing@high",
+      "lane": "test-results/code-seams-2/scenes-lane-native/ped-grip-coffee-standing@high",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "ped-grip-coffee-standing@low",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 180,
+      "tier": "low",
+      "beforeSha256": "55af07ab10dd5ba3b3da37107cd324dcaae7fd5ddbad01a9607ba18a90be88ef",
+      "afterSha256": "55af07ab10dd5ba3b3da37107cd324dcaae7fd5ddbad01a9607ba18a90be88ef",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/ped-grip-coffee-standing@low",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/ped-grip-coffee-standing@low",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "seat-grip-coffee-game@high-z0.5",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "318b671bc4fe42f1cb7dbbbec10d83cd3f0ebcb7787b15a23ea2d7593ba72d4e",
+      "afterSha256": "318b671bc4fe42f1cb7dbbbec10d83cd3f0ebcb7787b15a23ea2d7593ba72d4e",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/seat-grip-coffee-game@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/seat-grip-coffee-game@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "seat-grip-coffee-game@high-z1",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "8dfe7d08750b0cb6c9fa229586db12e5c5b7346e700cdf469b9354bc4ebd1ccc",
+      "afterSha256": "8dfe7d08750b0cb6c9fa229586db12e5c5b7346e700cdf469b9354bc4ebd1ccc",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/seat-grip-coffee-game@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/seat-grip-coffee-game@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "seat-grip-coffee-game@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "8bdf31b7437829615a87dd5a506e4871090a03eb6525577f024cba5a3abe3cd7",
+      "afterSha256": "8bdf31b7437829615a87dd5a506e4871090a03eb6525577f024cba5a3abe3cd7",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/seat-grip-coffee-game@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/seat-grip-coffee-game@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "seat-grip-coffee-game@low-z0.5",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "1c54b9b56af91805745d6a36dd9f22b5c2ce35e29a9b474342d474bbaabb9850",
+      "afterSha256": "1c54b9b56af91805745d6a36dd9f22b5c2ce35e29a9b474342d474bbaabb9850",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/seat-grip-coffee-game@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/seat-grip-coffee-game@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "seat-grip-coffee-game@low-z1",
+      "passBefore": false,
+      "passAfter": false,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "a426578ac411d04e5bef59a4ebb3a7cb55a7609b42ca2ed0fa7e7b5e22a7e94d",
+      "afterSha256": "a426578ac411d04e5bef59a4ebb3a7cb55a7609b42ca2ed0fa7e7b5e22a7e94d",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/seat-grip-coffee-game@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/seat-grip-coffee-game@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "seat-grip-coffee-game@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "c438e0026c3f598801ef49c2da9a0a59447cd8c72aa5e9677f0b8602fd53d298",
+      "afterSha256": "c438e0026c3f598801ef49c2da9a0a59447cd8c72aa5e9677f0b8602fd53d298",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/seat-grip-coffee-game@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/seat-grip-coffee-game@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-alpha-hit@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "high",
+      "beforeSha256": "cfd94a0ef2e8bf5d81d179ce7828c9900a556cf51d0cddb41b5de26757aabe5b",
+      "afterSha256": "cfd94a0ef2e8bf5d81d179ce7828c9900a556cf51d0cddb41b5de26757aabe5b",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-alpha-hit@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-alpha-hit@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-alpha-hit@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "high",
+      "beforeSha256": "76f31a2fa63b1a19d18da8130ab6b59ca1c03c819c88cccd9b4efe51e5f9e7bf",
+      "afterSha256": "76f31a2fa63b1a19d18da8130ab6b59ca1c03c819c88cccd9b4efe51e5f9e7bf",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-alpha-hit@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-alpha-hit@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-alpha-hit@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "high",
+      "beforeSha256": "6426c3721998dd2ce83918e84a9eb4ec93199f7c256488785e63e07e8b26f679",
+      "afterSha256": "6426c3721998dd2ce83918e84a9eb4ec93199f7c256488785e63e07e8b26f679",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-alpha-hit@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-alpha-hit@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-alpha-hit@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "low",
+      "beforeSha256": "8563352acd6e62d80f0bc12531befefdd6684559b6557dc0c0630cd3d27d12e7",
+      "afterSha256": "8563352acd6e62d80f0bc12531befefdd6684559b6557dc0c0630cd3d27d12e7",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-alpha-hit@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-alpha-hit@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-alpha-hit@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "low",
+      "beforeSha256": "1ead377ff486a6caad1ab78234f3d7817e8c344f1cc343ded497831652c5dfe7",
+      "afterSha256": "1ead377ff486a6caad1ab78234f3d7817e8c344f1cc343ded497831652c5dfe7",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-alpha-hit@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-alpha-hit@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-alpha-hit@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 90,
+      "tier": "low",
+      "beforeSha256": "f4942a5261a3e6d09c7b7d056a8ce316b3bc8aca97280742f0767993a526bff0",
+      "afterSha256": "f4942a5261a3e6d09c7b7d056a8ce316b3bc8aca97280742f0767993a526bff0",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-alpha-hit@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-alpha-hit@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-explosion@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "high",
+      "beforeSha256": "811d5a8f5c165a73a9901b1ec7f01c5257d931c8778b769172bfef237981e4eb",
+      "afterSha256": "811d5a8f5c165a73a9901b1ec7f01c5257d931c8778b769172bfef237981e4eb",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-explosion@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-explosion@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-explosion@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "high",
+      "beforeSha256": "6dbc08678c5b6deff3787f60cfed6f46b548f2aed5a265673f067a91ef84c7cb",
+      "afterSha256": "6dbc08678c5b6deff3787f60cfed6f46b548f2aed5a265673f067a91ef84c7cb",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-explosion@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-explosion@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-explosion@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "high",
+      "beforeSha256": "f3128ed9c22229e2120386e9f2926b6a39b1fbe26a4a695adc032c14770d3d7f",
+      "afterSha256": "f3128ed9c22229e2120386e9f2926b6a39b1fbe26a4a695adc032c14770d3d7f",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-explosion@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-explosion@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-explosion@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "low",
+      "beforeSha256": "8af0e3565536669fda9cdd571a5410ce366a77b9a80437113697cc2ab7367982",
+      "afterSha256": "8af0e3565536669fda9cdd571a5410ce366a77b9a80437113697cc2ab7367982",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-explosion@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-explosion@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-explosion@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "low",
+      "beforeSha256": "1ca2479fc242dd29c0a99e4ce0df65d5c5d03ccdbf601e5f1f8352dbefeb5a1b",
+      "afterSha256": "1ca2479fc242dd29c0a99e4ce0df65d5c5d03ccdbf601e5f1f8352dbefeb5a1b",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-explosion@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-explosion@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-explosion@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 240,
+      "tier": "low",
+      "beforeSha256": "125d94200a53a2269d1f9ab501ea0119317abe135b20b11770777962afc751e6",
+      "afterSha256": "125d94200a53a2269d1f9ab501ea0119317abe135b20b11770777962afc751e6",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-explosion@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-explosion@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-gore@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "ef556baa2ea81f2faaa21205e88688eba2204e4b2b114341ec1d7feabcfeb1c0",
+      "afterSha256": "ef556baa2ea81f2faaa21205e88688eba2204e4b2b114341ec1d7feabcfeb1c0",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-gore@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-gore@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-gore@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "fab6759982459833dcc5d95ecf46222bac9537f0b4c4e443b5e28e56dc27d92e",
+      "afterSha256": "fab6759982459833dcc5d95ecf46222bac9537f0b4c4e443b5e28e56dc27d92e",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-gore@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-gore@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-gore@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "high",
+      "beforeSha256": "8c3320896d1bd1cf8f6ab1cf28862bb4ba38b56c937b19e25d048f8c7eae098f",
+      "afterSha256": "8c3320896d1bd1cf8f6ab1cf28862bb4ba38b56c937b19e25d048f8c7eae098f",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-gore@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-gore@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-gore@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "c820a22c869e370a3cc3e39b971270425b8a93797b7ac7492221e4fddc6322ef",
+      "afterSha256": "c820a22c869e370a3cc3e39b971270425b8a93797b7ac7492221e4fddc6322ef",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-gore@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-gore@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-gore@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "199e2abe366d0c7f0d2706450582a48aa702fcff2400546470e9c6b27d69393b",
+      "afterSha256": "199e2abe366d0c7f0d2706450582a48aa702fcff2400546470e9c6b27d69393b",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-gore@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-gore@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-gore@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 120,
+      "tier": "low",
+      "beforeSha256": "750955c79e254fcaa48202a78edb43b1a5ae83743eb5227ac39e858995cca25f",
+      "afterSha256": "750955c79e254fcaa48202a78edb43b1a5ae83743eb5227ac39e858995cca25f",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-gore@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-gore@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-molotov-fire@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "high",
+      "beforeSha256": "7195a37617722a7dc13a3f7fe214f260cd298d43ffa8fc5d455bf8f7548719f7",
+      "afterSha256": "7195a37617722a7dc13a3f7fe214f260cd298d43ffa8fc5d455bf8f7548719f7",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-molotov-fire@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-molotov-fire@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-molotov-fire@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "high",
+      "beforeSha256": "4e7467fa29d54080017d6b25e99f49da35c1c2541bdcffd179ef60fc64e2abd2",
+      "afterSha256": "4e7467fa29d54080017d6b25e99f49da35c1c2541bdcffd179ef60fc64e2abd2",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-molotov-fire@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-molotov-fire@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-molotov-fire@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "high",
+      "beforeSha256": "046037e5178cdc34c9078bafb873784ca53612709c3c8488d8c84235b387f5ab",
+      "afterSha256": "046037e5178cdc34c9078bafb873784ca53612709c3c8488d8c84235b387f5ab",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-molotov-fire@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-molotov-fire@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-molotov-fire@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "low",
+      "beforeSha256": "b1413338c32b505abcc521eef2398f81a893131d2ae847a8e4b955a491ebd940",
+      "afterSha256": "b1413338c32b505abcc521eef2398f81a893131d2ae847a8e4b955a491ebd940",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-molotov-fire@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-molotov-fire@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-molotov-fire@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "low",
+      "beforeSha256": "8198d4270e8d5b5903e171a6531f3881d09619a9337b0b4af201f5b2ee6037c6",
+      "afterSha256": "8198d4270e8d5b5903e171a6531f3881d09619a9337b0b4af201f5b2ee6037c6",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-molotov-fire@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-molotov-fire@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-molotov-fire@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 180,
+      "tier": "low",
+      "beforeSha256": "242f6396d94954e32338c2292a3ee4e67030ce5e94cbeed09d04251869c6f290",
+      "afterSha256": "242f6396d94954e32338c2292a3ee4e67030ce5e94cbeed09d04251869c6f290",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-molotov-fire@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-molotov-fire@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-smoke-column@high-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "high",
+      "beforeSha256": "cbfc46de7314cfc6ddef0a0610733a44abe4a57f1cf6c02849e232b82044e1c5",
+      "afterSha256": "cbfc46de7314cfc6ddef0a0610733a44abe4a57f1cf6c02849e232b82044e1c5",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-smoke-column@high-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-smoke-column@high-z0.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-smoke-column@high-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "high",
+      "beforeSha256": "039ec665dd8a78367774a1712de663761b6352846ff1216a688178b37bea905e",
+      "afterSha256": "039ec665dd8a78367774a1712de663761b6352846ff1216a688178b37bea905e",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-smoke-column@high-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-smoke-column@high-z1",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-smoke-column@high-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "high",
+      "beforeSha256": "09dfb96fcb90a2775a54c0fc9431a16e31d996fc2a6db465f3d293519ed4ceda",
+      "afterSha256": "09dfb96fcb90a2775a54c0fc9431a16e31d996fc2a6db465f3d293519ed4ceda",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-reference-native/vfx-smoke-column@high-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-native/vfx-smoke-column@high-z1.5",
+      "referenceLaunch": "native",
+      "laneLaunch": "native"
+    },
+    {
+      "name": "vfx-smoke-column@low-z0.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "low",
+      "beforeSha256": "356f2b7947716c8ea0585facdf7e908a46137dbf9522157d00e5fe1a92e9ef43",
+      "afterSha256": "356f2b7947716c8ea0585facdf7e908a46137dbf9522157d00e5fe1a92e9ef43",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-smoke-column@low-z0.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-smoke-column@low-z0.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-smoke-column@low-z1",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "low",
+      "beforeSha256": "00240ad356e3e7de221df6e3b1fd5540550fac2bc8c8befb632148730e4fa13a",
+      "afterSha256": "00240ad356e3e7de221df6e3b1fd5540550fac2bc8c8befb632148730e4fa13a",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-smoke-column@low-z1",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-smoke-column@low-z1",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    },
+    {
+      "name": "vfx-smoke-column@low-z1.5",
+      "passBefore": true,
+      "passAfter": true,
+      "frames": 540,
+      "tier": "low",
+      "beforeSha256": "4fa1a923cfd7af9ba79f1c7c101457e10798c2d94d3f743ac5401b2ee377bb3f",
+      "afterSha256": "4fa1a923cfd7af9ba79f1c7c101457e10798c2d94d3f743ac5401b2ee377bb3f",
+      "identical": true,
+      "reference": "test-results/code-seams-2/scenes-before/vfx-smoke-column@low-z1.5",
+      "lane": "test-results/code-seams-2/scenes-lane-shared/vfx-smoke-column@low-z1.5",
+      "referenceLaunch": "shared",
+      "laneLaunch": "shared"
+    }
+  ],
+  "captureRepeatability": "Shared GPU repeats of main itself show small aim-assist pixel differences. Exact comparison combines 29 completed native main references with 27 original shared main references. Lane high/aim-assist rows use native captures (31); other low-tier rows use the latest shared batches (25). Source paths and launch modes are recorded per row; two low-tier aim rows match across launch modes. No capture gates or tolerances changed.",
+  "sharedSupplement": {
+    "rows": 28,
+    "gateOutcomesEqual": 28,
+    "captureHashesEqual": 26,
+    "mismatches": [
+      "aim-assist-keyboard-off@low-z1",
+      "aim-assist-keyboard-off@low-z0.5"
+    ],
+    "mainRepeatsAlsoDiffer": true,
+    "incompleteBatchesRemaining": 0,
+    "rerunBatches": 1,
+    "rerunReason": "Source rebase interrupted two rows; the full small batch was rerun after sources stabilized."
+  },
+  "bots": {
+    "simReference": "14294e557",
+    "latestMainOnlyQAToolingChanged": true,
+    "beforeSha256": "2f2ae99794539deb4b411c6bc9a22602cdd51c4486895e25d9109740914266bf",
+    "afterSha256": "2f2ae99794539deb4b411c6bc9a22602cdd51c4486895e25d9109740914266bf",
+    "results": [
+      {
+        "level": "L1",
+        "hash": "aee81f05",
+        "report": {
+          "level": "L1",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 111.46666666666667,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 20,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "pickup",
+              "t": 15.466666666666667
+            },
+            {
+              "id": "deliver",
+              "t": 51.81666666666667
+            },
+            {
+              "id": "escape",
+              "t": 65.83333333333333
+            },
+            {
+              "id": "weapon",
+              "t": 81.91666666666667
+            },
+            {
+              "id": "firestation",
+              "t": 106.46666666666667
+            }
+          ],
+          "furthestObjective": "firestation",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 4794,
+            "deferred": 7,
+            "requests": [],
+            "offenders": []
+          }
+        }
+      },
+      {
+        "level": "L4",
+        "hash": "3e0dd566",
+        "report": {
+          "level": "L4",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 313.01666666666665,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 39,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "ride",
+              "t": 30.483333333333334
+            },
+            {
+              "id": "quartermaster",
+              "t": 32.81666666666667
+            },
+            {
+              "id": "hold",
+              "t": 222.83333333333334
+            },
+            {
+              "id": "hide",
+              "t": 304.76666666666665
+            },
+            {
+              "id": "bar",
+              "t": 306.01666666666665
+            },
+            {
+              "id": "wait",
+              "t": 313.01666666666665
+            }
+          ],
+          "furthestObjective": "wait",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 497,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        }
+      },
+      {
+        "level": "L10",
+        "hash": "5eb2f9cd",
+        "report": {
+          "level": "L10",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 1189.4666666666667,
+          "deaths": 0,
+          "kills": 313,
+          "damageTaken": 240,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "crash",
+              "t": 0.016666666666666666
+            },
+            {
+              "id": "residential-fringe",
+              "t": 58.28333333333333
+            },
+            {
+              "id": "industrial-area",
+              "t": 190.23333333333332
+            },
+            {
+              "id": "military-zone",
+              "t": 355.5833333333333
+            },
+            {
+              "id": "research-campus",
+              "t": 528.55
+            },
+            {
+              "id": "research",
+              "t": 594.0166666666667
+            },
+            {
+              "id": "cure",
+              "t": 595.2166666666667
+            },
+            {
+              "id": "research-exit",
+              "t": 616.1
+            },
+            {
+              "id": "destroyed-corridor",
+              "t": 657.0166666666667
+            },
+            {
+              "id": "dispersal-complex",
+              "t": 873.2333333333333
+            },
+            {
+              "id": "install",
+              "t": 948.6
+            },
+            {
+              "id": "hold",
+              "t": 1012.0666666666667
+            },
+            {
+              "id": "mega",
+              "t": 1037.3166666666666
+            },
+            {
+              "id": "release",
+              "t": 1039.4666666666667
+            },
+            {
+              "id": "epilogue",
+              "t": 1189.4666666666667
+            },
+            {
+              "id": "credits",
+              "t": 1206.4666666666667
+            }
+          ],
+          "furthestObjective": "credits",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "cureReleases": 1,
+          "regions": [
+            {
+              "id": "crash-outskirts",
+              "seconds": 66.04999999999754,
+              "travelSeconds": 64.2666666666643,
+              "combatSeconds": 1.7499999999999987,
+              "interactionSeconds": 0.03333333333333333,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 296.44077342764035
+            },
+            {
+              "id": "residential-fringe",
+              "seconds": 120.81666666666109,
+              "travelSeconds": 97.73333333332907,
+              "combatSeconds": 23.083333333333304,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 543.0182448895489
+            },
+            {
+              "id": "industrial-area",
+              "seconds": 164.68333333335653,
+              "travelSeconds": 80.81666666666337,
+              "combatSeconds": 83.84999999999653,
+              "interactionSeconds": 0.016666666666666666,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 740.1355398536468
+            },
+            {
+              "id": "military-zone",
+              "seconds": 181.88333333337022,
+              "travelSeconds": 121.91666666666103,
+              "combatSeconds": 59.966666666664544,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 813.0867588972122
+            },
+            {
+              "id": "research-campus",
+              "seconds": 130.44999999999595,
+              "travelSeconds": 80.2166666666634,
+              "combatSeconds": 50.18333333333177,
+              "interactionSeconds": 0.05,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 575.2138287724591
+            },
+            {
+              "id": "destroyed-corridor",
+              "seconds": 214.23333333339596,
+              "travelSeconds": 167.6166666666922,
+              "combatSeconds": 46.6166666666653,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 962.9982032008924
+            },
+            {
+              "id": "dispersal-complex",
+              "seconds": 311.3500000000455,
+              "travelSeconds": 72.59999999999717,
+              "combatSeconds": 0,
+              "interactionSeconds": 0.03333333333333333,
+              "holdSeconds": 88.71666666666292,
+              "epilogueSeconds": 150.0000000000115,
+              "otherSeconds": 0,
+              "metres": 1246.529657185668
+            }
+          ],
+          "maxConcurrentInfected": 168,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 479,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        }
+      }
+    ]
+  },
+  "rawReceiptSha256": {
+    "typecheck-final-main.log": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "lint-final-main.log": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "npm-test-final-main.log": "84794fdb4e364bad2365500a5b5e9a76249cdb5b23c82bc0999435fa06397718",
+    "smoke.log": "b48be07585172829e976e7f21f30ed00c8acefd9c73416df05d8d9c728869a16",
+    "structure.json": "c9222ef9000a4b65c8d4766b928e60fc4126c8401c78c9b6db1b3cbfd523ece0",
+    "scenes-comparison.json": "6801b2e569a850d129606f680b28dfa578f3693a78522798fd406024456f509d",
+    "bots-before-rebased.json": "2f2ae99794539deb4b411c6bc9a22602cdd51c4486895e25d9109740914266bf",
+    "bots-after-rebased.json": "2f2ae99794539deb4b411c6bc9a22602cdd51c4486895e25d9109740914266bf"
+  }
+}

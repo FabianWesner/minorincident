@@ -1,7 +1,6 @@
+import { setupL2Release, setupL6Subway, setupL3Rendezvous, setupL4Convoy, setupL7Group } from './missionFixtures';
 import { spawnSetPiece } from '../../sim/missions/L4Spectacle';
-import { l3, l3Anchors } from '../../data/l3';
-import { l3BaseCollision } from '../../levels/L3/collision';
-import { missionControls } from '../../sim/missions/controls';
+import { l3 } from '../../data/l3';
 import { cure, curePursuitRoute } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
 import { cureReached } from '../../sim/missions/CureFront';
@@ -50,8 +49,6 @@ import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildingDoors, doorwayOf, inDoorway, type Doorway } from '../../data/buildingDoors';
 import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
-import { LevelSevenDeparture } from '../../sim/missions/LevelSevenDeparture';
-import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
 import { installMegaPursuit } from '../../sim/ai/MegaPursuit';
 import { megaAlpha } from '../../data/megaAlpha';
 import { alphaLooks } from '../../data/alphaLooks';
@@ -75,7 +72,7 @@ type Plan =
   | { type: 'drive'; throttle: number; steer: number; until: number }
   | { type: 'interact' }
   | { type: 'gun'; at: Point | string | null; until: number };
-interface LabActor { distanceM?: number; lastAt?: { x: number; z: number }; maxX?: number; id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
+export interface LabActor { distanceM?: number; lastAt?: { x: number; z: number }; maxX?: number; id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
   /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
   first?: { frame: number; at: [number, number]; outM?: number };
   /** Frames drawn with the far LOD (lod2) within `closeLodM` of the camera. */
@@ -226,6 +223,7 @@ export class SceneLab {
   private boom: ArmyCheckpointBoom | null = null;
   private boomClosedAt = 0;
   private setup(world: SimWorld, spec: SceneSpec): void {
+    const fixtureHost = { tier: this.game.quality.tier, actors: this.actors, vehicles: this.vehicles, teleport: (entity: EntitySnapshot, position: { x: number; z: number }) => this.teleport(entity, position) };
     if (spec.weather) world.weather?.setOverride(spec.weather);
     if (spec.weatherTimeline) world.weather?.setTimeline(spec.weatherTimeline);
     for (let i = 0; i < Math.round((spec.weatherWarmup ?? 0) * 60); i++) { world.tick++; world.weather?.update(); }
@@ -239,16 +237,17 @@ export class SceneLab {
     // Simulation ownership follows the authored actor/vehicle, independently of the shot camera.
     const focus = spec.actors?.find(a => a.kind === 'courier')?.at ?? spec.vehicles?.[0]?.at;
     if (focus) world.chunks?.update(focus);
-    if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
+    if (spec.infectedCap !== undefined) world.requireInfected().director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
-    world.combat!.damage.god = true;
-    world.combat!.assist.setting = spec.aimAssist ?? 'Default';
+    const combat = world.requireCombat();
+    combat.damage.god = true;
+    combat.assist.setting = spec.aimAssist ?? 'Default';
     // Q-196 keyboard aim: each courier gun shot against the autoAim intent, and whether it struck a living infected.
     world.events.on('combat.attack', ev => {
-      if (ev.type !== 'combat.attack' || ev.sourceId !== 1 || !this.aim.intent || world.combat!.runner.loadout.definition(ev.actionId).category !== 'ranged') return;
+      if (ev.type !== 'combat.attack' || ev.sourceId !== 1 || !this.aim.intent || combat.runner.loadout.definition(ev.actionId).category !== 'ranged') return;
       const i = this.aim.intent, d = ev.direction;
       this.aim.shots.push({ frame: this.frame, attackId: ev.attackId, errorDeg: Math.abs(Math.atan2(i.x * d.z - i.z * d.x, i.x * d.x + i.z * d.z)) * 180 / Math.PI });
     });
@@ -294,7 +293,7 @@ export class SceneLab {
     }
     spec.actors?.forEach((a, i) => {
       if (spec.cureEncounter && a.id?.startsWith(`${spec.cureEncounter}:`)) {
-        const at = cureEncounterSpot(world.infected!.nav, { x: a.at![0], z: a.at![1], archetype: a.archetype! }, () => true, spec.cureEncounter === 'dispersal-assault' ? 129 : 17);
+        const at = cureEncounterSpot(world.requireInfected().nav, { x: a.at![0], z: a.at![1], archetype: a.archetype! }, () => true, spec.cureEncounter === 'dispersal-assault' ? 129 : 17);
         if (!at) throw new Error(`No clear cure encounter slot: ${a.id}`);
         a = { ...a, at: [at.x, at.z] };
       }
@@ -318,117 +317,10 @@ export class SceneLab {
         if (mission.state.gates['fire-shutter']) throw new Error('L1 companion admission did not permit closure');
       }
     }
-    if (spec.l2Release) {
-      world.scenario = 'L2'; applyCampaign(world, preset('L2-default'));
-      world.infected!.director.setTier(this.game.quality.tier);
-      const mission = world.loadMission(resolveCampaignMission('L2', world.districts!));
-      mission.begin();
-      if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
-      if (spec.l2Release !== 'start') mission.l2!.completed('doors');
-      if (spec.l2Release === 'bridge' || spec.l2Release === 'checkpoint') {
-        this.teleport(world.entities.get(1)!, { x: -46.5, z: -39 });
-        for (let i = 0; i < 20 * 60; i++) world.update();
-      }
-      const at = spec.actors?.find(a => a.kind === 'courier')?.at;
-      if (at) this.teleport(world.entities.get(1)!, toPoint(at));
-      if (spec.l2Release === 'checkpoint') {
-        mission.l2!.advance();
-        for (let i = 0; i < 60 && !mission.state.l2!.gateClosedAt; i++) world.update();
-        if (!mission.state.l2!.gateClosedAt) throw new Error('L2 checkpoint fixture did not close its gates');
-        // Hold the completed physical closure for inspection, before the normal
-        // two-second handover ends this scene. Combat and contact keep running.
-        mission.state.l2!.phase = 'done';
-        // Reuse production pursuers: the rescue has already filled its cap.
-        // Fixture placement must retain identities/counts rather than add extras.
-        const probes = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden).slice(0, 2);
-        for (const [i, id] of ['jamb-probe', 'panel-probe'].entries()) {
-          const e = probes[i]; if (!e) throw new Error('L2 checkpoint fixture needs two living pursuers');
-          if (!world.solids.relocate(e, { x: i ? 81.9 : 83.107, y: .7, z: 37 }, 'scene.l2-gate-probe', 0, false)) throw new Error('L2 gate probe placement blocked');
-          world.infected!.rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
-          this.actors.set(id, { id, kind: 'infected', entity: e.id, spec: { id, kind: 'infected', archetype: e.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
-        }
-      }
-    }
-    if (spec.l6Subway) {
-      // The courier's look.model picks the survivor (as cureProgression does): the L6 preset alone always loaded the heroine.
-      const l6 = preset('L6-default'), l6Model = spec.actors?.find(actor => actor.kind === 'courier')?.look?.model;
-      if (l6Model === 'male' || l6Model === 'female') l6.character = l6Model;
-      world.scenario = 'L6'; applyCampaign(world, l6);
-      const mission = world.loadMission(resolveCampaignMission('L6', world.districts!)); mission.begin();
-      if (spec.l6Subway !== 'pickup') {
-        const lamp = world.entities.values().find(e => e.archetype === 'pickup.headlamp')!;
-        lamp.interactable!.completed = true; Object.assign(player.transform, lamp.transform);
-        world.physics.playerBody!.setTranslation(player.transform, true); world.update(); world.update();
-      }
-      // PO 10-20 #64/#65 fixtures: 'retreat' starts the group walking from the shelter; 'hatch' also closes the north hatch at x162 (door 6).
-      if (spec.l6Subway === 'retreat' || spec.l6Subway === 'hatch') { mission.completeObjective('shelter'); mission.completeObjective('stop'); }
-      if (spec.l6Subway === 'hatch') { const entry = mission.state.l6!.entries!.find(e => e.door === 6)!; world.entities.get(entry.switchId!)!.interactable!.completed = true; }
-      if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
-        mission.completeObjective('shelter'); mission.completeObjective('stop');
-        for (const [index, r] of mission.state.l6!.survivors.entries()) {
-          const e = world.entities.get(r.id)!;
-          // Admit the fixture through the same solids authority as other scene
-          // teleports. Direct transform writes are rejected on the next tick and
-          // send part of the cast back behind the gate, correctly blocking it.
-          if (!world.solids.relocate(e, { x: 99 + index * 1.1, y: 1.3, z: 15 }, 'scene.l6-gate', 1.5)) throw new Error(`Cannot stage L6 gate survivor ${r.key}`);
-        }
-        // Hold the column at the gate being demonstrated until the courier closes it.
-        // A leader already at 105 guides to the next gate, hiding this gate's panel.
-        mission.state.l6!.leaderX = spec.l6Subway === 'gate' ? 89 : 105; mission.state.l6!.leaderZ = 15;
-      }
-      if (courier?.at) {
-        Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
-        world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, player.transform.x, player.transform.z);
-      }
-      // Frame zero must show guidance for the staged column, rather than the shelter state before relocation.
-      if (spec.l6Subway === 'gate') world.update();
-    }
-    if (spec.l3Rendezvous) {
-      world.scenario = 'L3';
-      world.infected!.excludeInfected(l3BaseCollision);
-      applyCampaign(world, preset('L3-default'));
-      const mission = world.loadMission(resolveCampaignMission('L3', world.districts!));
-      mission.begin(); mission.completeObjective('armory'); mission.completeObjective('defend');
-      const state = mission.state.l3!, api = missionControls(world);
-      state.pending = []; state.waves = []; state.populated = [true, true, true];
-      state.finalePacks = l3.finale.packs.map(p => p[1]);
-      // Distinct clear road positions: stacking ten capsules at one point can reject a teleport
-      // and strand an officer back at the station, correctly preventing the boom from closing.
-      for (const [i, id] of state.officerIds.entries()) api.teleport(id, { x: l3.map.zoneX + 5 + Math.floor(i / 3) * 1.4, z: (i % 3 - 1) * 1.4 });
-      for (const e of world.entities.iterate()) if (e.companion) api.teleport(e.id, { x: l3.map.zoneX + 3, z: 2 });
-      api.teleport('player', { x: l3Anchors['l3-zone'][0], z: 0 });
-      const ai = world.infected!, cap = ai.director.cap;
-      for (let x = l3.finale.barrierX - .8; x > l3.finale.barrierX - 30 && ai.director.count < cap; x -= .8) {
-        for (let z = -9; z <= 9 && ai.director.count < cap; z += .8) {
-          if (!ai.infectedNav.clear(x, z, .35)) continue;
-          const id = ai.spawn('infected.runner', { x, z });
-          ai.rush(id, { x: l3.finale.barrierX + 2, z: 0 }, world.tick + 121 * 60);
-        }
-      }
-    }
-    if (spec.l4Convoy) {
-      applyCampaign(world, preset('L4-default'));
-      world.infected!.director.setTier(this.game.quality.tier);
-      const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
-      mission.begin();
-      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
-        for (let t = 0; t < 60 * 60 && mission.state.l4!.phase === 'convoy'; t++) world.update();
-        if (mission.state.l4!.phase === 'convoy') throw new Error('L4 convoy did not arrive for parked fixture');
-      }
-      if (spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
-        if (spec.l4Convoy === 'pickup' || spec.l4Convoy === 'first-line') { const q = mission.def.anchors['l4-quartermaster']; this.teleport(world.entities.get(1)!, { x: q.x, z: q.z + 1 }); }
-        mission.completeObjective('quartermaster');
-        while (!mission.state.l4!.turnAt) world.update();
-      }
-      if (spec.l4Convoy === 'tank') {
-        for (let t = 0; t < 120 * 60 && mission.state.l4!.tankPhase !== 'hold'; t++) world.update();
-        if (mission.state.l4!.tankPhase !== 'hold') throw new Error('L4 tank did not reach its firing post');
-      }
-      if (spec.l4Convoy === 'first-line') {
-        while (world.tick < mission.state.l4!.turnAt + 33 * 60) world.update();
-      }
-      for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
-    }
+    setupL2Release(world, spec, fixtureHost);
+    setupL6Subway(world, spec);
+    setupL3Rendezvous(world, spec);
+    setupL4Convoy(world, spec, fixtureHost);
     if (spec.l5Aftermath) {
       world.scenario = 'L5';
       applyCampaign(world, preset('L5-default'));
@@ -444,8 +336,8 @@ export class SceneLab {
       if (spec.l5Aftermath.found.length) mission.restore(`survivor-${spec.l5Aftermath.found.length}`);
       mission.state.subtitle = null;
       // Isolate discovery and fear from unrelated infected elsewhere in Fairhaven.
-      const alphaId = spec.l5Aftermath.alphaAt ? world.infected!.active.find(e => e.archetype === 'infected.alpha')?.id : undefined;
-      for (const infected of [...world.infected!.active]) if (infected.id !== alphaId) world.infected!.release(infected);
+      const alphaId = spec.l5Aftermath.alphaAt ? world.requireInfected().active.find(e => e.archetype === 'infected.alpha')?.id : undefined;
+      for (const infected of [...world.requireInfected().active]) if (infected.id !== alphaId) world.requireInfected().release(infected);
       if (courier?.at) {
         Object.assign(player.transform, { x: courier.at[0], z: courier.at[1] });
         world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
@@ -481,7 +373,7 @@ export class SceneLab {
       }
     }
     if (spec.l5Aftermath?.alphaAt) {
-      const at = spec.l5Aftermath.alphaAt, alpha = world.infected!.active.find(e => e.archetype === 'infected.alpha')!;
+      const at = spec.l5Aftermath.alphaAt, alpha = world.requireInfected().active.find(e => e.archetype === 'infected.alpha')!;
       const id = alpha.id; Object.assign(alpha.transform, { x: at[0], z: at[1], yaw: 0 }); world.spatial.set(id, at[0], at[1]);
       if (alpha.infected!.territory) Object.assign(alpha.infected!.territory, { x: at[0], z: at[1] });
       this.actors.set('alpha', { id: 'alpha', kind: 'infected', entity: id, spec: { id: 'alpha', kind: 'infected', archetype: 'infected.alpha' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
@@ -567,20 +459,9 @@ export class SceneLab {
         mission.state.cureFront!.elapsed = ticks; mission.state.cureFront!.radius = ticks / 6;
         mission.l10!.epilogue.update(); mission.l10!.cure.apply();
       }
-      world.combat!.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
+      combat.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
     }
-    if (spec.l7Group) {
-      world.scenario = 'L7';
-      world.l7Encounters = new LevelSevenEncounters(world);
-      world.l7Encounters.prepare(spec.l7Group === 'start' ? undefined : []);
-      for (const e of world.entities.iterate()) if (spec.l7Group !== 'start' && e.civilian?.survivor) world.l7Encounters.state.roster.push({ id: e.id, key: e.civilian.survivor.key, injured: false, status: 'following', passed: false });
-      if (spec.l7Departure) {
-        world.l7Departure = new LevelSevenDeparture(world); world.l7Departure.install();
-        if (spec.l7Departure === 'follow') world.l7Departure.cameraPose = () => null;
-        this.vehicles.set('departure-bus', world.l7Departure.state.busId);
-        world.events.on('sim.tick', () => world.l7Departure?.update(), SimPhase.missions);
-      }
-    }
+    setupL7Group(world, spec, fixtureHost);
     // Dress the authored crowd before view initialization. Otherwise its first
     // tick replaces runners with civilian skins whose batches are still loading.
     outbreak.dressInfected();

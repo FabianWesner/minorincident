@@ -8,15 +8,15 @@ export function profileCpu(game: Game): Record<string, number> {
   const times: Record<string, number> = {}, frame: Record<string, number> = {};
   profiles.set(game, times);
   const wrap = (target: unknown, method: string, category: string, maximum?: string) => {
-    if (!target) return;
-    const object = target as Record<string, (...args: never[]) => unknown>, original = object[method];
+    if (!target || (typeof target !== 'object' && typeof target !== 'function')) return;
+    const original: unknown = Reflect.get(target, method);
     if (typeof original !== 'function') return;
     frame[category] ??= 0;
     if (maximum) frame[maximum] ??= 0;
     let depth = 0;
-    object[method] = function (...args: never[]) {
+    Reflect.set(target, method, function (this: unknown, ...args: unknown[]) {
       const outer = depth++ === 0, start = outer ? performance.now() : 0;
-      try { return original.apply(this, args); }
+      try { return Reflect.apply(original, this, args); }
       finally {
         if (--depth === 0) {
           const elapsed = performance.now() - start;
@@ -24,9 +24,9 @@ export function profileCpu(game: Game): Record<string, number> {
           if (maximum) frame[maximum] = Math.max(frame[maximum], elapsed);
         }
       }
-    };
+    });
   };
-  const view = game.view as unknown as Record<string, unknown>;
+  const view = game.view;
   wrap(game, 'simTick', 'simTick', 'simTickMax');
   wrap(game.world, 'update', 'sim');
   wrap(game.world.physics, 'update', 'physics');
@@ -38,14 +38,15 @@ export function profileCpu(game: Game): Record<string, number> {
   wrap(game.input, 'sample', 'input');
   wrap(view, 'advance', 'camera');
   wrap(view, 'update', 'view');
-  wrap(view.weather, 'update', 'weather');
+  wrap(Reflect.get(view, 'weather'), 'update', 'weather');
   wrap(game.view.renderer, 'render', 'render');
-  wrap(view.crowd, 'update', 'crowd');
-  wrap(view.npcs, 'update', 'npcs');
-  wrap(view.accessories, 'finish', 'accessories');
-  wrap(view.districts, 'updateFoliage', 'occlusion');
-  wrap(view.districts, 'updateDoors', 'doors');
-  wrap(view.districts, 'updateLods', 'lod');
+  wrap(Reflect.get(view, 'crowd'), 'update', 'crowd');
+  wrap(Reflect.get(view, 'npcs'), 'update', 'npcs');
+  wrap(Reflect.get(view, 'accessories'), 'finish', 'accessories');
+  const districts: unknown = Reflect.get(view, 'districts');
+  wrap(districts, 'updateFoliage', 'occlusion');
+  wrap(districts, 'updateDoors', 'doors');
+  wrap(districts, 'updateLods', 'lod');
   wrap(game.view.lightField, 'render', 'lightField');
   wrap(view, 'updateLights', 'lighting');
   wrap(game.ui, 'update', 'ui');

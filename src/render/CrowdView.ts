@@ -680,7 +680,22 @@ export class CrowdView extends Group {
         const detailedFeet = this.low && this.world.scenario === 'L4' && moving && distance > 3 && canHoldCrowdPose(e, this.world.tick)
           ? this.nearIds.has(e.id) : band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar;
         const distantHold = this.low && this.world.scenario === 'L4' && moving && distance > 3 && !this.nearIds.has(e.id) && canHoldCrowdPose(e, this.world.tick);
-        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, detailedFeet && !crawling, layered, style, true, this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1, distantHold ? .08 : .05);
+        { const pose = batch.locomotion.presentation;
+        pose.frame = frame;
+        pose.blend = blend;
+        pose.clip = clip;
+        pose.phase = phase;
+        pose.instance = this.transform;
+        pose.scale = batch.strideScale;
+        pose.speed = motion.speed;
+        pose.time = renderTick / 60;
+        pose.near = detailedFeet && !crawling;
+        pose.layers = layered;
+        pose.style = style;
+        pose.procedural = true;
+        pose.cadence = this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1;
+        pose.holdDistanceM = distantHold ? .08 : .05;
+        frame = batch.locomotion.present(e.id, batch.poses, pose); }
         if (!batch.animal && !batch.mesh.geometry.userData.inlineAccessories ) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry, (feedback?.mask ?? 0) | (b.legLost ? 4 : 0));
         const figure = batch.probe.figures.at(-1);

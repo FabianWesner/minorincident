@@ -58,7 +58,10 @@ export async function drive(asset: string, figure: Figure, seconds: number, plan
       ({ layers, style } = moves.sample(e, attacking ? 'attack' : 'chase', want.attack?.until ?? 0, .6, tick, presented.yaw, speed, moved ? clip : undefined));
     }
     const isNear = typeof near === 'function' ? near(t) : near;
-    frame = (isNear ? loco : farLoco).present(1, palette, frame, blend, clip, phase, transform, strideScale, speed, t, isNear, layers, style);
+    const locomotion = isNear ? loco : farLoco, input = locomotion.presentation;
+    input.frame = frame; input.blend = blend; input.clip = clip; input.phase = phase; input.instance = transform;
+    input.scale = strideScale; input.speed = speed; input.time = t; input.near = isNear; input.layers = layers; input.style = style;
+    frame = locomotion.present(1, palette, input);
     const pose = palette.pose(frame, blend[0], blend[1]);
     const feet = feetParts.map(index => {
       part.multiplyMatrices(transform, new Matrix4().fromArray(pose, index * 16)); part.decompose(p, q, sc);
