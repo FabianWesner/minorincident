@@ -575,7 +575,7 @@ export class AudioService implements Lifecycle {
     }
     /** Event → cue adapter shared by producer events and lab tests. */
     event(event: GameEvent): void {
-        if (event.type === 'sim.tick') this.update();
+        if (event.type === 'sim.tick') { if (this.available()) this.update(); }
         else this.eventMapper.event(event);
     }
     update(): void {
